@@ -1,0 +1,28 @@
+{
+  "driver": "code",
+  "evidence": "none — replace with the plan's evidence",
+  "lanes": [
+    {
+      "id": "slug-kebab",
+      "title": "one line: what the lane changes",
+      "goal": "the lane's full task text",
+      "mode": "sequential",
+      "weight": "S",
+      "depends_on": [],
+      "write_paths": ["src/"],
+      "non_goals": ["paths outside write_paths"],
+      "acceptance": [
+        "gate:g0 the observable verdict this lane must reach"
+      ]
+    }
+  ],
+  "gate_matrix": [
+    {
+      "gate_id": "g0",
+      "argv": ["python3", "-m", "compileall", "src/crew"],
+      "cwd": ".",
+      "expected_exit": 0,
+      "covered_paths": ["src/"]
+    }
+  ]
+}
