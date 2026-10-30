@@ -32,8 +32,8 @@ Never npm create at lane time; this directory IS the starter.
 
 ## Verification
 
-`cd templates/astro && npm ci && npx astro build` exits 0 and emits
-`dist/`. Record the smoke in the lane's done notes.
+Proof argv (the lane's gate runs this verbatim):
+cd templates/astro && npm ci && npx astro build
 
 ## Done contract
 
@@ -45,7 +45,7 @@ elegance: {"rung": 2, "lower_rungs_rejected": {"r0": "S5 lanes cannot scaffold w
 ## Scope census
 
 class: vendored-starter-bootstrap — greenfield dir creation, no existing callers
-callsites: research/WEB-FACTORY-S5-DESIGN-DNA.md (the spec's scaffold step reads templates/astro/), templates/astro/ (the deliverable itself)
-bypass_paths: none — npm create is the bypass the spec forbids
+callsites: research/WEB-FACTORY-S5-DESIGN-DNA.md (the spec's scaffold step reads templates/astro/)
+bypass_paths: PRD-Web-Factory-2026-10-30.md
 siblings: plans/quick/web-factory-runbook-skills.brief.md, plans/quick/web-factory-spec-conformance.brief.md (sibling bootstrap dispatches sharing the same mint schema)
 

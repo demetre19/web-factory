@@ -49,7 +49,7 @@ elegance: {"rung": 2, "lower_rungs_rejected": {"r0": "the NEW-WEBSITE trigger ha
 ## Scope census
 
 class: docs-and-skills-bootstrap — greenfield doc+skill file creation
-callsites: docs/machinery/WEB-FACTORY.md (deliverable), skills/s*/SKILL.md (deliverables), research/WEB-FACTORY-*.md (contracts cited)
-bypass_paths: none — D1 names this document the trigger's landing
+callsites: research/ADVERSARIAL-REVIEW.md (review surface the runbook cites), PRD-Web-Factory-2026-10-30.md (D1 names the landing doc)
+bypass_paths: plans/quick/draft-web-factory-prd.brief.md
 siblings: plans/quick/web-factory-astro-starter.brief.md, plans/quick/web-factory-spec-conformance.brief.md
 
