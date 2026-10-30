@@ -1,0 +1,19 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-s7-gate-deploy",
+  "callsites": [
+    "research/WEB-FACTORY-S7-GATE-DEPLOY.md",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "siblings": [
+    "research/WEB-FACTORY-S2-TONE-PLAN.md",
+    "research/WEB-FACTORY-S3-WRITING.md",
+    "research/WEB-FACTORY-S4-INTERLINK.md",
+    "research/WEB-FACTORY-S5-DESIGN-DNA.md",
+    "plans/quick/web-factory-s6-integrations.plan.json"
+  ],
+  "notes": "Spec-only lane closing the factory's terminal stage (adversarial review F4). callsites = the spec artifact this lane produces plus its own mint manifest; bypass = the adversarial-review lane that named this spec ABSENT at :19 and F4; siblings = the four landed stage specs (S2-S5) that cite S7 as downstream plus the S6 manifest whose spec is still ABSENT — S7's mint preconditions re-check S6's output contract so the gap is declared, not hidden. research/ carried no prior S7 stage document before this lane."
+}
