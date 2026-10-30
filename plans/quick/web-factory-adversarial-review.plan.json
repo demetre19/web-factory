@@ -1,0 +1,65 @@
+{
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/e3759057106f74e1442a0979cb416e57502ddf21fae318da4059a8202b19db52/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "driver": "code",
+  "evidence": "none \u2014 quick lane",
+  "gate_matrix": [
+    {
+      "argv": [
+        "test",
+        "-s",
+        "research/ADVERSARIAL-REVIEW.md"
+      ],
+      "covered_paths": [
+        "research/"
+      ],
+      "cwd": ".",
+      "defer_until_present": [
+        "research/ADVERSARIAL-REVIEW.md"
+      ],
+      "expected_exit": 0,
+      "gate_id": "quick-1"
+    }
+  ],
+  "lanes": [
+    {
+      "acceptance": [
+        "gate:quick-1 Independent adversarial review of the Web Factory stage architecture as a *system*. Evidence/context: the specs live under research/ in this repo \u2014 read them, do not trust their own Contested sections (self-review). Files: DISCOVERY-RESEARCH-web-factory.md, WEB-FACTORY-S1-SITEMAP.md, WEB-FACTORY-S2-TONE-PLAN.md, WEB-FACTORY-S3-WRITING.md, WEB-FACTORY-S4-INTERLINK.md, WEB-FACTORY-S5-DESIGN-DNA.md, WEB-FACTORY-S6-INTEGRATIONS.md, WEB-FACTORY-S7-GATE-DEPLOY.md. Any spec missing at lane time = mark ABSENT and review what exists. Deliverable: research/ADVERSARIAL-REVIEW.md elegance: {\"rung\": 2, \"lower_rungs_rejected\": {\"r1\": \"self-review inside each spec is not independent review\"}, \"trigger_kind\": {\"kind\": \"event\", \"predicate\": \"7 stage specs exist with no cross-stage review\", \"acted_by\": \"the adversarial-review lane\"}}"
+      ],
+      "declaration_source": "flags",
+      "depends_on": [],
+      "difficulty": "easy",
+      "elegance": {
+        "lower_rungs_rejected": {
+          "r1": "self-review inside each spec is not independent review"
+        },
+        "rung": 2,
+        "trigger_kind": {
+          "acted_by": "the adversarial-review lane",
+          "kind": "event",
+          "predicate": "7 stage specs exist with no cross-stage review"
+        }
+      },
+      "goal": "Independent adversarial review of the Web Factory stage architecture as a *system*. Evidence/context: the specs live under research/ in this repo \u2014 read them, do not trust their own Contested sections (self-review). Files: DISCOVERY-RESEARCH-web-factory.md, WEB-FACTORY-S1-SITEMAP.md, WEB-FACTORY-S2-TONE-PLAN.md, WEB-FACTORY-S3-WRITING.md, WEB-FACTORY-S4-INTERLINK.md, WEB-FACTORY-S5-DESIGN-DNA.md, WEB-FACTORY-S6-INTEGRATIONS.md, WEB-FACTORY-S7-GATE-DEPLOY.md. Any spec missing at lane time = mark ABSENT and review what exists. Deliverable: research/ADVERSARIAL-REVIEW.md elegance: {\"rung\": 2, \"lower_rungs_rejected\": {\"r1\": \"self-review inside each spec is not independent review\"}, \"trigger_kind\": {\"kind\": \"event\", \"predicate\": \"7 stage specs exist with no cross-stage review\", \"acted_by\": \"the adversarial-review lane\"}}",
+      "id": "web-factory-adversarial-review",
+      "mode": "sequential",
+      "no_census": "greenfield spec-only repo \u2014 no code surface to census",
+      "non_goals": [
+        "touching anything beyond the lane's declared write_paths"
+      ],
+      "proof": [
+        "test",
+        "-s",
+        "research/ADVERSARIAL-REVIEW.md"
+      ],
+      "proof_source": "primary-gate",
+      "title": "Independent adversarial review of the Web Factory stage architecture as a *system*. Evidence/context: the specs live under research/ in this repo \u2014 read them, do not trust their own Contested sections",
+      "weight": "S",
+      "write_paths": [
+        "research/",
+        "audit/CENSUS-web-factory-adversarial-review.json"
+      ]
+    }
+  ],
+  "max_parallel": 1,
+  "repo": "/Users/apple/Documents/DEV-WORK/Web Factory"
+}
