@@ -1,7 +1,7 @@
 # PRD — Web Factory
 
 **Date:** 2026-10-30
-**Status:** Draft for `APPROVE PRD` typed decision
+**Status:** **APPROVED** — `APPROVE PRD` typed by operator 2026-10-30T14:08 UTC; boss-minted token at `.git/crew-approvals/d907c35bd717f5b6f11153a44160cf963643971970cca4ef1b4a832a634b77fc.json` (doc sha256 3978f20e…)
 **Owner:** operator (boss workspace w57)
 **Deliverable class:** Stage-2 deliverable of the NEW-PRD flow — every stage spec below already exists and is landed; this document is the synthesis, not new stage design.
 
