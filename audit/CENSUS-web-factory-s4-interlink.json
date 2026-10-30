@@ -1,0 +1,17 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-s4-interlink",
+  "callsites": [
+    "research/WEB-FACTORY-S4-INTERLINK.md",
+    "plans/quick/web-factory-s4-interlink.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-s5-design-dna.plan.json",
+    "plans/quick/web-factory-s6-integrations.plan.json",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "notes": "Spec-only lane. callsites = the spec artifact this lane produces plus its own mint manifest; bypass = the adversarial-review lane that reads this spec by name; siblings = the downstream stage plans (S5 consumes site/content-final/, S6 wires integrations, S7 runs the build gate) that share the same stage-spec class. research/ carried no prior S4 stage document before this lane."
+}
