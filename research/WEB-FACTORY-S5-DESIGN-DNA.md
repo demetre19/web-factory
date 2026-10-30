@@ -225,12 +225,31 @@ routes, `src/layouts/`, `src/components/`, `src/styles/` (Tailwind),
    to invent — the lane falls back to the starter's token defaults
    and names every defaulted token in `DESIGN-DNA.md`'s deviation
    list.
+   Fluid typography is REQUIRED, not optional: the type scale is a
+   fluid scale (per-step `clamp(min, vw-based, max)` values — the
+   `utopia.fyi`/type-scale approach), expressed as Tailwind
+   `fontSize` tokens or `--fs-*` custom properties. Sizes interpolate
+   continuously between the mobile and desktop endpoints; NO
+   breakpoint-stepped font sizes (media-query `text-sm`→`text-xl`
+   jumps) — the scale is fluid all the way up and down. Headings,
+   body, and nav/footer type all ride the same scale. The same rule
+   applies to spacing rhythm tokens where the DOX packet supplies a
+   fluid pair.
+
 4. **Components → `src/components/`.** One `.astro` component per
    `COMPONENTS.md` row plus one `@layer components` class per
    `CLASS-SYSTEM.md` row. Shared regions (header/nav/footer/CTA
    block) become components once and import everywhere — the class's
    single owner rule maps to the component file being the single
    definition site.
+   The nav/header component MUST be a real functional menu on mobile
+   (hamburger → full-screen or drawer panel, focus-trapped, dismissible)
+   and the footer a complete site map + NAP/contact block — not
+   placeholders. Nav link LABELS are shortened forms of the route's
+   long category H1 (e.g. H1 `Auto Dent Removal Service` → label
+   `Dent Removal`); the lock binds URL/H1/title, never the label —
+   labels must fit the mobile bar.
+
 5. **Templates → `src/layouts/`.** One layout per template node
    (`service-detail`-class, `article`, `utility`) and one per unique
    page that carries its own structure. Template-instance routes
