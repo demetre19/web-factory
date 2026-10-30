@@ -1,0 +1,18 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-adversarial-review",
+  "callsites": [
+    "research/ADVERSARIAL-REVIEW.md",
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "bypass_paths": [],
+  "siblings": [
+    "research/WEB-FACTORY-S2-TONE-PLAN.md",
+    "research/WEB-FACTORY-S3-WRITING.md",
+    "research/WEB-FACTORY-S4-INTERLINK.md",
+    "research/WEB-FACTORY-S5-DESIGN-DNA.md",
+    "plans/quick/web-factory-s6-integrations.plan.json",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "notes": "Cross-stage review lane. callsites = the review artifact plus its own mint manifest; bypass = none (no consumer reads the review by name); siblings = the four landed stage specs it reviews plus the S6/S7 manifests whose specs were ABSENT at lane time (DISCOVERY-RESEARCH and WEB-FACTORY-S1-SITEMAP have no manifest either — fully unminted). research/ carried no prior adversarial review before this lane."
+}
