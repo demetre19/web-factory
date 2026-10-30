@@ -1,0 +1,26 @@
+{
+  "schema": "scope-census/v1",
+  "lane": "web-factory-s3-writing~r1",
+  "class_key": "web-factory-stage-spec-s3-writing",
+  "declared": "no_census: greenfield spec-only repo — no code surface to census",
+  "searched": [
+    "research/",
+    "plans/quick/",
+    "docs/"
+  ],
+  "needle": "S3|writing|writer|content",
+  "callsites": [
+    "plans/quick/web-factory-s3-writing.plan.json",
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "bypass_paths": [
+    "research/",
+    "docs/"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-s2-tone-plan.plan.json",
+    "plans/quick/web-factory-s4-interlink.plan.json"
+  ],
+  "candidates_found": 4,
+  "note": "Every needle match is a plan manifest that declares or consumes the deliverable, not a prior reviewed artifact — the census is a true negative for an existing S3 spec."
+}
