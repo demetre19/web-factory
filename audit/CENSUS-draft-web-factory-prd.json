@@ -1,0 +1,25 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "draft-web-factory-prd",
+  "callsites": [
+    "PRD-Web-Factory-2026-10-30.md",
+    "plans/quick/draft-web-factory-prd.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/draft-web-factory-prd.brief.md"
+  ],
+  "siblings": [
+    "research/ADVERSARIAL-REVIEW.md",
+    "research/WEB-FACTORY-S2-TONE-PLAN.md",
+    "research/WEB-FACTORY-S3-WRITING.md",
+    "research/WEB-FACTORY-S4-INTERLINK.md",
+    "research/WEB-FACTORY-S5-DESIGN-DNA.md",
+    "research/WEB-FACTORY-S6-INTEGRATIONS.md",
+    "research/WEB-FACTORY-S7-GATE-DEPLOY.md",
+    "research/content-plan.md",
+    "research/tone-profile.md",
+    "research/link-graph.md",
+    "RATIONALE.md"
+  ],
+  "notes": "PRD synthesis lane. callsites = the PRD deliverable plus its mint manifest; bypass = none (no consumer reads the PRD by name — it is the operator APPROVE PRD surface); siblings = the landed stage specs, adversarial review, canonical templates, and per-stage rationales the PRD synthesizes. Upstream inputs living in the prd-herdr repo (research/WEB-FACTORY-S1-SITEMAP.md, research/DISCOVERY-RESEARCH-web-factory.md) and the single-line TRIGGER_ROUTES row in extension/gated.js are cited by the PRD but not siblings of this tree. No prior PRD existed at repo root before this lane."
+}
