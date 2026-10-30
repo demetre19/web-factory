@@ -1,5 +1,5 @@
 {
-  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/1ca9626b17558f39877aabc1cbb8cd14afc58d17e1804d2f61e6d7585da3ed96/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/c8dc92d9c47e8ccf1dbad13f6ae33278d3291a4fedb446329c833a488e378f0b/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
   "driver": "code",
   "evidence": "none \u2014 quick lane",
   "gate_matrix": [
@@ -25,16 +25,35 @@
       "declaration_source": "brief",
       "depends_on": [],
       "elegance": {
+        "census": {
+          "candidates_found": 0,
+          "searched": [
+            "research/",
+            "plans/quick/",
+            "PRD*.md",
+            "docs/"
+          ]
+        },
+        "follow": {
+          "bypass": [
+            {
+              "closed_by": "the APPROVE PRD typed decision",
+              "path": "PRD-Web-Factory-2026-10-30.md is the only write path; nothing else can satisfy the gate"
+            }
+          ],
+          "obliged_actor": "the boss session in workspace w57",
+          "refusal": "operator approval gate \u2014 no PRD lands without an APPROVE PRD typed decision"
+        },
         "lower_rungs_rejected": {
-          "r0": "no document exists to decline writing \u2014 rung 0 is 'do nothing', which fails the operator's APPROVE PRD gate outright",
+          "r0": "no document exists to decline writing \u2014 rung 0 fails the operator APPROVE PRD gate outright",
           "r1": "hand-copying specs into the PRD duplicates them \u2014 the PRD must cite and synthesize, not fork",
           "r2": "a checklist-only PRD without the adversarial fold leaves known defects unrecorded at approval time"
         },
         "rung": 3,
-        "trigger_kind": {
-          "acted_by": "this lane",
-          "kind": "event",
-          "predicate": "no PRD-Web-Factory draft exists for the operator to APPROVE PRD"
+        "trigger": {
+          "observed_state": "queue row draft-web-factory-prd admitted after all 7 stage specs + adversarial review landed on origin/main",
+          "self_triggering": false,
+          "supplied_by": "the operator NEW-PRD workflow \u2014 this lane is the Stage-2 synthesis step it dispatches"
         }
       },
       "goal": "Author `PRD-Web-Factory-2026-10-30.md` at the Web Factory repo root \u2014 the\nproduct-requirements document for the Web Factory: a prd-herdr-driven\nstage pipeline that turns a `NEW-WEBSITE` trigger into a launch-ready\nAstro static site. This PRD is the Stage-2 deliverable of the NEW-PRD\nflow; every stage spec already exists and is landed \u2014 your job is the\nsynthesis, not new stage design.\nBaseline: derived from the goal's own measurements \u2014 2 deliverable of the",
@@ -51,7 +70,8 @@
       "proof_source": "primary-gate",
       "scope_census": {
         "bypass_paths": [
-          "research"
+          "research",
+          "plans"
         ],
         "callsites": [
           "research/ADVERSARIAL-REVIEW.md",
@@ -67,7 +87,9 @@
           "RATIONALE.md",
           "research/",
           "content-plan.md",
-          "link-graph.md"
+          "link-graph.md",
+          "plans/quick/",
+          "docs/"
         ],
         "class_key": "draft-web-factory-prd",
         "siblings": [
@@ -83,7 +105,9 @@
           "RATIONALE.md",
           "research/",
           "content-plan.md",
-          "link-graph.md"
+          "link-graph.md",
+          "plans/quick/",
+          "docs/"
         ]
       },
       "title": "Author `PRD-Web-Factory-2026-10-30.md` at the Web Factory repo root \u2014 the\nproduct-requirements document for the Web Factory: a prd-herdr-driven\nstage pipeline that turns a `NEW-WEBSITE` trigger into a",
