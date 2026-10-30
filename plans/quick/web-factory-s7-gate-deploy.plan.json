@@ -1,0 +1,64 @@
+{
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/e3759057106f74e1442a0979cb416e57502ddf21fae318da4059a8202b19db52/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "driver": "code",
+  "evidence": "none \u2014 quick lane",
+  "gate_matrix": [
+    {
+      "argv": [
+        "test",
+        "-s",
+        "research/WEB-FACTORY-S7-GATE-DEPLOY.md"
+      ],
+      "covered_paths": [
+        "research/"
+      ],
+      "cwd": ".",
+      "defer_until_present": [
+        "research/WEB-FACTORY-S7-GATE-DEPLOY.md"
+      ],
+      "expected_exit": 0,
+      "gate_id": "quick-1"
+    }
+  ],
+  "lanes": [
+    {
+      "acceptance": [
+        "gate:quick-1 Full step-by-step breakdown of **Stage S7 \u2014 Build gate + launch** for the Web Factory: `astro build` + SEO verification gate + rsync deploy to the site declared SSH host, ending in the operator ~10% tweak loop and seal. Deliverable: research/WEB-FACTORY-S7-GATE-DEPLOY.md elegance: {\"rung\": 2, \"lower_rungs_rejected\": {\"r1\": \"inline spec in the PRD draft buries it\"}, \"trigger_kind\": {\"kind\": \"event\", \"predicate\": \"no S7 spec exists\", \"acted_by\": \"the stage-spec lane\"}}"
+      ],
+      "declaration_source": "flags",
+      "depends_on": [],
+      "elegance": {
+        "lower_rungs_rejected": {
+          "r1": "inline spec in the PRD draft buries it"
+        },
+        "rung": 2,
+        "trigger_kind": {
+          "acted_by": "the stage-spec lane",
+          "kind": "event",
+          "predicate": "no S7 spec exists"
+        }
+      },
+      "goal": "Full step-by-step breakdown of **Stage S7 \u2014 Build gate + launch** for the Web Factory: `astro build` + SEO verification gate + rsync deploy to the site declared SSH host, ending in the operator ~10% tweak loop and seal. Deliverable: research/WEB-FACTORY-S7-GATE-DEPLOY.md elegance: {\"rung\": 2, \"lower_rungs_rejected\": {\"r1\": \"inline spec in the PRD draft buries it\"}, \"trigger_kind\": {\"kind\": \"event\", \"predicate\": \"no S7 spec exists\", \"acted_by\": \"the stage-spec lane\"}}",
+      "id": "web-factory-s7-gate-deploy",
+      "mode": "sequential",
+      "no_census": "greenfield spec-only repo",
+      "non_goals": [
+        "touching anything beyond the lane's declared write_paths"
+      ],
+      "proof": [
+        "test",
+        "-s",
+        "research/WEB-FACTORY-S7-GATE-DEPLOY.md"
+      ],
+      "proof_source": "primary-gate",
+      "title": "Full step-by-step breakdown of **Stage S7 \u2014 Build gate + launch** for the Web Factory: `astro build` + SEO verification gate + rsync deploy to the site declared SSH host, ending in the operator ~10% t",
+      "weight": "S",
+      "write_paths": [
+        "research/",
+        "audit/CENSUS-web-factory-s7-gate-deploy.json"
+      ]
+    }
+  ],
+  "max_parallel": 1,
+  "repo": "/Users/apple/Documents/DEV-WORK/Web Factory"
+}
