@@ -129,8 +129,10 @@ Each row's `link_seed` (`anchor text -> slug`) is an obligation, not a
 suggestion. The writer:
 
 1. Places each seed's `anchor text` on a natural sentence in the body
-   and wraps it as a markdown link to `/{slug}` (relative root path —
-   S4 retargets anchors it reorganises).
+   and wraps it as a markdown link to `(<path>)` — the href is the
+   row's `path` verbatim (leading + trailing slash, the same form S4
+   injects and S5 routes on; the seed names the target's `slug`, the
+   writer resolves it to `path` through the plan row).
 2. May place the anchor on a *better* sentence than a mechanical
    insertion would find — the obligation is that the link exists, the
    anchor text appears, and it reads naturally.

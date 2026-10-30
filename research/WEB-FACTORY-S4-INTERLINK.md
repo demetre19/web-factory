@@ -149,14 +149,15 @@ Injection executes `link-graph.md` against the corpus:
   an existing one; idempotence is what makes the pass re-runnable.
 - **Placement `body` — edge not yet present.** Find the anchor text
   verbatim in the body; wrap the first natural occurrence as
-  `[anchor](/<path>/)`. First occurrence, never every occurrence —
-  repeated links to the same target from one page is the exact
+  `[anchor](<row.path>)` — the target row's `path` verbatim (paths
+  already carry leading + trailing slashes; never append another `/`).
+  First occurrence, never every occurrence —
   spam-pattern the cap exists to kill. If the anchor text does not
   occur verbatim, demote the edge to `related` and note it in
   `cleanup-report.md` — a body placement with no anchor text is an
   S3 defect surfacing late, not a reason to rewrite a sentence.
 - **Placement `related`.** Append (or extend) a closing
-  `## Related` block on the source page: `- [anchor](/<path>/)`.
+  `## Related` block on the source page: `- [anchor](<row.path>)`.
   One block per page; all its `related` edges land inside it. The
   block goes last, after the CTA paragraph — it is navigation, not
   pitch.
@@ -214,7 +215,7 @@ contract S5 counts against.
 - **Frontmatter fields** — `title`, `description`, `slug`, `path`,
   `type`, `primary_keyword` are copied byte-for-byte. They are
   writing decisions S3 owns and S5 binds on.
-- **Link targets.** Every injected `[anchor](/<path>/)` keeps its
+- **Link targets.** Every injected `[anchor](<row.path>)` keeps its
   path. Edge count between `content/` and `content-final/` is
   invariant — cleanup may reword an anchor (rule 4) but never adds,
   drops, or retargets a link.
