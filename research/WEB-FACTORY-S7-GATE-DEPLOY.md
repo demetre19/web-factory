@@ -137,14 +137,15 @@ re-verification, not waste.
    refusals naming the upstream stage that owns them.
 2. **Pre-deploy probe.** Resolve the SSH hop before building:
    `ssh <host_alias> 'test -d <docroot> && test -w <docroot>'` via
-   `ProxyJump jump`, as `user`. Creates `docroot/releases/` +
-   `docroot/shared/` if the docroot is writable and empty-shaped.
-   A probe failure stops the lane here — never discover an
-   unreachable host after the gate passes.
+   `ProxyJump jump`, as `user`. Creates `docroot/releases/` if the
+   docroot is writable. A probe failure stops the lane here — never
+   discover an unreachable host after the gate passes.
 3. **Build.** In `sites/<slug>/`: clean `dist/`, run
-   `npx astro build`. Non-zero exit refuses — S7 never deploys a
-   partial build and never edits source to make the build pass; a
-   red build goes back upstream as a defect, not a deploy-lane fix.
+   `npm run build` (the starter's `astro build` script — locked
+   deps, no `npx` resolution). Non-zero exit refuses — S7 never
+   deploys a partial build and never edits source to make the build
+   pass; a red build goes back upstream as a defect, not a
+   deploy-lane fix.
 4. **SEO verification gate** — the checklist below, executed against
    `dist/` + the route manifest. Every check is mechanical and
    file-local; all findings — pass *and* fail — row into
@@ -170,9 +171,11 @@ re-verification, not waste.
    smoke fail triggers the rollback flip *immediately* and refuses —
    the report carries which check failed.
 8. **Hand to the operator.** `prd_step done` is *not* called yet —
-   the lane posts the deployed `<url>` + both reports and waits on
-   the tweak list. This is the factory's review surface going live:
-   the operator sees the real site, not a diff.
+   the lane posts the deployed `<url>` + both reports and raises
+   `prd_step ask` for the tweak list — the ask is the wait
+   mechanism, the answer arrives via inbox. This is the factory's
+   review surface going live: the operator sees the real site, not
+   a diff.
 9. **Operator ~10% tweak loop.** Per tweak batch:
    - Operator lists tweaks; the lane applies them inside
      `sites/<slug>/` — tokens/components for visual changes (single
@@ -214,7 +217,7 @@ is not consent).
 | 9 | Internal links | every `href="/…"` resolves to a built route — zero broken targets |
 | 10 | Self-containment | no `src`/`href` fetches remote `http(s)://` assets outside `url`'s origin (fonts, scripts, styles) — S5's rule re-verified at the artifact |
 | 11 | Image alt | every `<img>` carries a non-empty `alt` |
-| 12 | CTA endpoints | every `<form action>` resolves to a same-site route or an endpoint the S6 integrations spec declares — a form posting nowhere is the dead-CTA defect shipped |
+| 12 | CTA endpoints | every `<form action>` resolves to a same-site route or an endpoint declared in `site-brief.md` or by S6's stage output — a form posting nowhere is the dead-CTA defect shipped |
 | 13 | Heading levels | no skipped levels per page (`h2`→`h4` without `h3`) |
 
 Check 12 is the factory's end-to-end proof: it is the only check that
