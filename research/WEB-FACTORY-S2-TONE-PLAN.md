@@ -28,6 +28,12 @@ S5 design-dna (reads tone-profile only as voice context)
   `link_seed` column. These existence checks live on the S3/S4 gates —
   S2's own gate only proves the artifacts exist and are non-empty.
 
+Canonical templates for both outputs ship beside this spec —
+`research/tone-profile.md` and `research/content-plan.md`. The S2 lane
+copies them into the run's `site/` folder and fills every bracketed
+section; the templates are the reviewed shapes, filling them is not
+freeform authoring.
+
 ## Inputs
 
 | Input | Source | Required |
