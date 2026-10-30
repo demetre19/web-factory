@@ -47,5 +47,5 @@ elegance: {"rung": 1, "lower_rungs_rejected": {"r0": "the specs as written contr
 
 class: spec-conformance-patch — edits to four existing spec documents
 callsites: research/WEB-FACTORY-S2-TONE-PLAN.md, research/WEB-FACTORY-S3-WRITING.md, research/WEB-FACTORY-S4-INTERLINK.md, research/WEB-FACTORY-S5-DESIGN-DNA.md
-bypass_paths: none — the specs are the authority lanes bind
+bypass_paths: plans/quick/draft-web-factory-prd.brief.md
 siblings: plans/quick/web-factory-astro-starter.brief.md, plans/quick/web-factory-runbook-skills.brief.md
