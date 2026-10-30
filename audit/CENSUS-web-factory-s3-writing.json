@@ -5,39 +5,21 @@
   "declared": "no_census: greenfield spec-only repo — no code surface to census",
   "searched": [
     "research/",
-    "plans/quick/*.plan.json",
+    "plans/quick/",
     "docs/"
   ],
   "needle": "S3|writing|writer|content",
   "callsites": [
-    {
-      "path": "plans/quick/web-factory-s3-writing.plan.json",
-      "role": "the mint manifest for this lane — declares the deliverable research/WEB-FACTORY-S3-WRITING.md; it is not the reviewed spec artifact itself"
-    },
-    {
-      "path": "plans/quick/web-factory-adversarial-review.plan.json",
-      "role": "downstream lane manifest — names WEB-FACTORY-S3-WRITING.md as expected review input; it is not the spec artifact"
-    }
+    "plans/quick/web-factory-s3-writing.plan.json",
+    "plans/quick/web-factory-adversarial-review.plan.json"
   ],
   "bypass_paths": [
-    {
-      "path": "research/",
-      "role": "only prior-spec location — carried no S3 spec before this lane"
-    },
-    {
-      "path": "docs/",
-      "role": "decision-record location — carried no S3 spec or decision document"
-    }
+    "research/",
+    "docs/"
   ],
   "siblings": [
-    {
-      "path": "plans/quick/web-factory-s2-tone-plan.plan.json",
-      "role": "upstream stage manifest — declares content-plan.md which S3 consumes, not the S3 spec"
-    },
-    {
-      "path": "plans/quick/web-factory-s4-interlink.plan.json",
-      "role": "downstream stage manifest — consumes site/content/*.md which S3 produces, not the S3 spec"
-    }
+    "plans/quick/web-factory-s2-tone-plan.plan.json",
+    "plans/quick/web-factory-s4-interlink.plan.json"
   ],
   "candidates_found": 4,
   "note": "Every needle match is a plan manifest that declares or consumes the deliverable, not a prior reviewed artifact — the census is a true negative for an existing S3 spec."
