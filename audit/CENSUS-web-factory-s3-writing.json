@@ -1,5 +1,7 @@
 {
+  "schema": "scope-census/v1",
   "lane": "web-factory-s3-writing~r1",
+  "class_key": "web-factory-stage-spec-s3-writing",
   "declared": "no_census: greenfield spec-only repo — no code surface to census",
   "searched": [
     "research/",
@@ -7,24 +9,36 @@
     "docs/"
   ],
   "needle": "S3|writing|writer|content",
-  "candidates_found": 4,
-  "candidates": [
+  "callsites": [
     {
       "path": "plans/quick/web-factory-s3-writing.plan.json",
-      "why_not": "mint manifest for this lane — it declares the deliverable, it is not the reviewed S3 spec artifact itself"
+      "role": "the mint manifest for this lane — declares the deliverable research/WEB-FACTORY-S3-WRITING.md; it is not the reviewed spec artifact itself"
     },
     {
       "path": "plans/quick/web-factory-adversarial-review.plan.json",
-      "why_not": "downstream lane manifest — names WEB-FACTORY-S3-WRITING.md as expected input, it is not the spec artifact"
+      "role": "downstream lane manifest — names WEB-FACTORY-S3-WRITING.md as expected review input; it is not the spec artifact"
+    }
+  ],
+  "bypass_paths": [
+    {
+      "path": "research/",
+      "role": "only prior-spec location — carried no S3 spec before this lane"
+    },
+    {
+      "path": "docs/",
+      "role": "decision-record location — carried no S3 spec or decision document"
+    }
+  ],
+  "siblings": [
+    {
+      "path": "plans/quick/web-factory-s2-tone-plan.plan.json",
+      "role": "upstream stage manifest — declares content-plan.md which S3 consumes, not the S3 spec"
     },
     {
       "path": "plans/quick/web-factory-s4-interlink.plan.json",
-      "why_not": "downstream stage manifest — consumes content/*.md, it is not the S3 spec"
-    },
-    {
-      "path": "plans/quick/web-factory-s2-tone-plan.plan.json",
-      "why_not": "upstream stage manifest — declares content-plan.md which S3 consumes, it is not the S3 spec"
+      "role": "downstream stage manifest — consumes site/content/*.md which S3 produces, not the S3 spec"
     }
   ],
-  "note": "research/ and docs/ carried no prior S3 spec or stage document before this lane; every needle match is a plan manifest that declares or consumes the deliverable, not the reviewed artifact."
+  "candidates_found": 4,
+  "note": "Every needle match is a plan manifest that declares or consumes the deliverable, not a prior reviewed artifact — the census is a true negative for an existing S3 spec."
 }
