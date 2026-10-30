@@ -44,4 +44,12 @@ named failure modes — a pointer into the stage spec, not a copy.
 Runbook exists and resolves OI-2; all 8 skill files exist, each
 self-contained enough that a lane spawned cold knows its contract.
 
-elegance: {"rung": 2, "lower_rungs_rejected": {"r0": "the NEW-WEBSITE trigger has no landing document and lanes have no skills — the factory cannot be invoked without them", "r1": "folding all docs into one giant README buries the per-stage contract boundaries the lanes scope-enforce"}, "trigger": {"supplied_by": "the admit pass reading the repo", "self_triggering": true, "observed_state": "docs/machinery/WEB-FACTORY.md and skills/ absent while the PRD marks them the trigger's landing surface"}, "follow": {"obliged_actor": "the boss session in workspace w57", "refusal": "prd-herdr's TRIGGER_ROUTES row must point at a document that exists — landing the trigger first would 404 the entry point", "bypass": [{"path": "docs/machinery/WEB-FACTORY.md is D1's named landing document", "closed_by": "the runbook existing"}]}, "census": {"searched": ["docs/", "skills/", "research/WEB-FACTORY-*.md"], "candidates_found": 0}}
+elegance: {"rung": 2, "lower_rungs_rejected": {"r0": "the NEW-WEBSITE trigger has no landing document and lanes have no skills — the factory cannot be invoked without them", "r1": "folding all docs into one giant README buries the per-stage contract boundaries the lanes scope-enforce"}, "trigger": {"supplied_by": "the admit pass reading the repo", "self_triggering": true, "observed_state": "docs/machinery/WEB-FACTORY.md and skills/ absent while the PRD marks them the trigger's landing surface"}, "follow": {"obliged_actor": "the boss session in workspace w57", "refusal": "prd-herdr's TRIGGER_ROUTES row must point at a document that exists — landing the trigger first would 404 the entry point", "bypass": [{"path": "docs/machinery/WEB-FACTORY.md is D1's named landing document", "closed_by": "the runbook existing"}]}, "trigger_kind": {"kind": "event", "predicate": "runbook+skills absent while PRD names them the trigger landing", "acted_by": "this lane"}, "census": {"searched": ["docs/", "skills/", "research/WEB-FACTORY-*.md"], "candidates_found": 0}}
+
+## Scope census
+
+class: docs-and-skills-bootstrap — greenfield doc+skill file creation
+callsites: docs/machinery/WEB-FACTORY.md (deliverable), skills/s*/SKILL.md (deliverables), research/WEB-FACTORY-*.md (contracts cited)
+bypass_paths: none — D1 names this document the trigger's landing
+siblings: plans/quick/web-factory-astro-starter.brief.md, plans/quick/web-factory-spec-conformance.brief.md
+

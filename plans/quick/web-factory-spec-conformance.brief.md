@@ -41,4 +41,11 @@ contradicts §4.1/§5's schema or the F5/F8/F9/F10 decisions; the
 canonical templates (`content-plan.md`, `link-graph.md`) stay
 consistent with their specs.
 
-elegance: {"rung": 1, "lower_rungs_rejected": {"r0": "the specs as written contradict the approved PRD's schema-of-record — lanes would mint against two authorities"}, "trigger": {"supplied_by": "the admit pass reading the repo", "self_triggering": true, "observed_state": "PRD-Web-Factory-2026-10-30.md APPROVED while the S2–S5 specs carry the pre-conformance vocabulary"}, "follow": {"obliged_actor": "the boss session in workspace w57", "refusal": "stage lanes bind the spec verbatim — a contradicting spec produces lanes that fail each other's mint gates", "bypass": [{"path": "research/WEB-FACTORY-S2..S5 are the only files carrying the stale vocabulary", "closed_by": "the conformance patch landing"}]}, "census": {"searched": ["research/WEB-FACTORY-S*.md", "PRD-Web-Factory-2026-10-30.md"], "candidates_found": 0}}
+elegance: {"rung": 1, "lower_rungs_rejected": {"r0": "the specs as written contradict the approved PRD's schema-of-record — lanes would mint against two authorities"}, "trigger": {"supplied_by": "the admit pass reading the repo", "self_triggering": true, "observed_state": "PRD-Web-Factory-2026-10-30.md APPROVED while the S2–S5 specs carry the pre-conformance vocabulary"}, "follow": {"obliged_actor": "the boss session in workspace w57", "refusal": "stage lanes bind the spec verbatim — a contradicting spec produces lanes that fail each other's mint gates", "bypass": [{"path": "research/WEB-FACTORY-S2..S5 are the only files carrying the stale vocabulary", "closed_by": "the conformance patch landing"}]}, "trigger_kind": {"kind": "event", "predicate": "specs contradict the approved PRD schema-of-record", "acted_by": "this lane"}, "census": {"searched": ["research/WEB-FACTORY-S*.md", "PRD-Web-Factory-2026-10-30.md"], "candidates_found": 0}}
+
+## Scope census
+
+class: spec-conformance-patch — edits to four existing spec documents
+callsites: research/WEB-FACTORY-S2-TONE-PLAN.md, research/WEB-FACTORY-S3-WRITING.md, research/WEB-FACTORY-S4-INTERLINK.md, research/WEB-FACTORY-S5-DESIGN-DNA.md
+bypass_paths: none — the specs are the authority lanes bind
+siblings: plans/quick/web-factory-astro-starter.brief.md, plans/quick/web-factory-runbook-skills.brief.md
