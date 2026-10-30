@@ -1,0 +1,112 @@
+{
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/79343f3d53a59b9fb09ffa5522bc988ab57df89e87131e15c5b4a54ac255e76a/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "driver": "code",
+  "evidence": "none \u2014 quick lane",
+  "gate_matrix": [
+    {
+      "argv": [
+        "templates/astro/",
+        "builds",
+        "clean",
+        "with",
+        "deps",
+        "pinned;",
+        "templates/STARTER.md"
+      ],
+      "covered_paths": [
+        "templates/astro/",
+        "astro.config",
+        "templates/STARTER.md"
+      ],
+      "cwd": ".",
+      "defer_until_present": [
+        "templates/STARTER.md"
+      ],
+      "expected_exit": 0,
+      "gate_id": "quick-1"
+    }
+  ],
+  "lanes": [
+    {
+      "acceptance": [
+        "gate:quick-1 Create templates/astro/ \u2014 the vendored, self-contained Astro starter\nthat every S5 build lane scaffolds site folders from (D5, OI-1).\nNever npm create at lane time; this directory IS the starter."
+      ],
+      "declaration_source": "brief",
+      "depends_on": [],
+      "elegance": {
+        "census": {
+          "candidates_found": 0,
+          "searched": [
+            "templates/",
+            "package.json",
+            "astro.config*"
+          ]
+        },
+        "follow": {
+          "bypass": [
+            {
+              "closed_by": "the vendored directory existing",
+              "path": "templates/astro/ is the only place S5's spec reads a starter from"
+            }
+          ],
+          "obliged_actor": "the boss session in workspace w57",
+          "refusal": "S5 lanes refuse to scaffold (spec: 'never npm create') \u2014 the starter is a hard precondition"
+        },
+        "lower_rungs_rejected": {
+          "r0": "S5 lanes cannot scaffold without a starter \u2014 no-starter fails the pipeline outright",
+          "r1": "running `npm create astro` inside every S5 lane is nondeterministic (version drift, network dependency at lane time) \u2014 vendoring is the existing-primitive fix"
+        },
+        "rung": 2,
+        "trigger": {
+          "observed_state": "templates/astro/ absent while the PRD is APPROVED and S5's spec requires it",
+          "self_triggering": true,
+          "supplied_by": "the admit pass reading the repo"
+        },
+        "trigger_kind": {
+          "acted_by": "this lane",
+          "kind": "event",
+          "predicate": "templates/astro/ absent while PRD APPROVED"
+        }
+      },
+      "goal": "Create templates/astro/ \u2014 the vendored, self-contained Astro starter\nthat every S5 build lane scaffolds site folders from (D5, OI-1).\nNever npm create at lane time; this directory IS the starter.",
+      "id": "web-factory-astro-starter",
+      "mode": "sequential",
+      "non_goals": [
+        "touching anything beyond the lane's declared write_paths"
+      ],
+      "proof": [
+        "templates/astro/",
+        "builds",
+        "clean",
+        "with",
+        "deps",
+        "pinned;",
+        "templates/STARTER.md"
+      ],
+      "proof_source": "primary-gate",
+      "scope_census": {
+        "bypass_paths": [
+          "PRD-Web-Factory-2026-10-30.md"
+        ],
+        "callsites": [
+          "research/WEB-FACTORY-S5-DESIGN-DNA.md"
+        ],
+        "class_key": "vendored-starter-bootstrap",
+        "siblings": [
+          "plans/quick/web-factory-runbook-skills.brief.md",
+          "plans/quick/web-factory-spec-conformance.brief.md"
+        ]
+      },
+      "title": "Create templates/astro/ \u2014 the vendored, self-contained Astro starter\nthat every S5 build lane scaffolds site folders from (D5, OI-1).\nNever npm create at lane time; this directory IS the starter.",
+      "weight": "M",
+      "write_paths": [
+        "templates/astro/",
+        "astro.config",
+        "templates/STARTER.md",
+        "audit/CENSUS-web-factory-astro-starter.json"
+      ]
+    }
+  ],
+  "max_parallel": 1,
+  "repo": "/Users/apple/Documents/DEV-WORK/Web Factory"
+}
