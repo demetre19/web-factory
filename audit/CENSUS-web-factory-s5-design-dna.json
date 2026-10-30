@@ -1,0 +1,16 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-s5-design-dna",
+  "callsites": [
+    "research/WEB-FACTORY-S5-DESIGN-DNA.md",
+    "plans/quick/web-factory-s5-design-dna.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-s6-integrations.plan.json",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "notes": "Spec-only lane. callsites = the spec artifact this lane produces plus its own mint manifest; bypass = the adversarial-review lane that reads this spec by name; siblings = the downstream stage plans (S6 consumes sites/<slug>/, S7 runs the astro build gate) that share the same stage-spec class. research/ and docs/ carried no prior S5 stage document before this lane."
+}
