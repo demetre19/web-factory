@@ -9,14 +9,14 @@ ordered by blast radius. Verdict at the end.
 
 | Spec | State |
 |---|---|
-| `research/DISCOVERY-RESEARCH-web-factory.md` | **ABSENT** |
-| `research/WEB-FACTORY-S1-SITEMAP.md` | **ABSENT** |
-| `research/WEB-FACTORY-S2-TONE-PLAN.md` | present, reviewed |
-| `research/WEB-FACTORY-S3-WRITING.md` | present, reviewed |
-| `research/WEB-FACTORY-S4-INTERLINK.md` | present, reviewed |
-| `research/WEB-FACTORY-S5-DESIGN-DNA.md` | present, reviewed |
-| `research/WEB-FACTORY-S6-INTEGRATIONS.md` | **ABSENT** (plan manifest exists: `plans/quick/web-factory-s6-integrations.plan.json` — lane never landed) |
-| `research/WEB-FACTORY-S7-GATE-DEPLOY.md` | **ABSENT** (plan manifest exists: `plans/quick/web-factory-s7-gate-deploy.plan.json` — lane never landed) |
+| DISCOVERY-RESEARCH (discovery brief) | **ABSENT** — no file, no manifest |
+| S1 sitemap spec | **ABSENT** — no file, no manifest |
+| S2 tone plan spec (`WEB-FACTORY-S2-TONE-PLAN.md`) | present, reviewed |
+| S3 writing spec (`WEB-FACTORY-S3-WRITING.md`) | present, reviewed |
+| S4 interlink spec (`WEB-FACTORY-S4-INTERLINK.md`) | present, reviewed |
+| S5 design-DNA spec (`WEB-FACTORY-S5-DESIGN-DNA.md`) | present, reviewed |
+| S6 integrations spec | **ABSENT** (plan manifest exists: `plans/quick/web-factory-s6-integrations.plan.json` — lane never landed) |
+| S7 gate+deploy spec | **ABSENT** (plan manifest exists: `plans/quick/web-factory-s7-gate-deploy.plan.json` — lane never landed) |
 
 Four of eight chartered specs never landed. The contiguous chain that
 exists is S2→S5: intake → sitemap → tone+plan → copy → graph+cleanup →
