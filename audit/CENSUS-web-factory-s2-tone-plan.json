@@ -1,0 +1,18 @@
+{
+  "lane": "web-factory-s2-tone-plan~r1",
+  "declared": "no_census: greenfield spec-only repo — no code surface to census",
+  "searched": [
+    "research/",
+    "plans/quick/*.plan.json",
+    "docs/"
+  ],
+  "needle": "S2|tone|content-plan",
+  "candidates_found": 1,
+  "candidates": [
+    {
+      "path": "plans/quick/web-factory-s2-tone-plan.plan.json",
+      "why_not": "mint manifest for this lane — it declares the deliverable, it is not the reviewed S2 spec artifact itself"
+    }
+  ],
+  "note": "research/ and docs/ carried no prior S2 spec or stage document before this lane; the only needle match is this lane's own plan manifest."
+}
