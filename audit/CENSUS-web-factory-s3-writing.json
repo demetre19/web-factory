@@ -1,0 +1,30 @@
+{
+  "lane": "web-factory-s3-writing~r1",
+  "declared": "no_census: greenfield spec-only repo — no code surface to census",
+  "searched": [
+    "research/",
+    "plans/quick/*.plan.json",
+    "docs/"
+  ],
+  "needle": "S3|writing|writer|content",
+  "candidates_found": 4,
+  "candidates": [
+    {
+      "path": "plans/quick/web-factory-s3-writing.plan.json",
+      "why_not": "mint manifest for this lane — it declares the deliverable, it is not the reviewed S3 spec artifact itself"
+    },
+    {
+      "path": "plans/quick/web-factory-adversarial-review.plan.json",
+      "why_not": "downstream lane manifest — names WEB-FACTORY-S3-WRITING.md as expected input, it is not the spec artifact"
+    },
+    {
+      "path": "plans/quick/web-factory-s4-interlink.plan.json",
+      "why_not": "downstream stage manifest — consumes content/*.md, it is not the S3 spec"
+    },
+    {
+      "path": "plans/quick/web-factory-s2-tone-plan.plan.json",
+      "why_not": "upstream stage manifest — declares content-plan.md which S3 consumes, it is not the S3 spec"
+    }
+  ],
+  "note": "research/ and docs/ carried no prior S3 spec or stage document before this lane; every needle match is a plan manifest that declares or consumes the deliverable, not the reviewed artifact."
+}
