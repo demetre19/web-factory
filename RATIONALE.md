@@ -43,3 +43,26 @@ stage pipeline that turns a `NEW-WEBSITE` trigger into a launch-ready
 Astro static site. This PRD is the Stage-2 deliverable of the NEW-PRD
 flow; every stage spec already exists and is landed — your job is the
 synthesis, not new stage design.
+
+
+## 2026-10-31 — web-factory-astro-starter plan.json
+
+Create templates/astro/ — the vendored, self-contained Astro starter
+that every S5 build lane scaffolds site folders from (D5, OI-1).
+Never npm create at lane time; this directory IS the starter.
+
+
+## 2026-10-31 — web-factory-runbook-skills plan.json
+
+Author `docs/machinery/WEB-FACTORY.md` (the operator/runbook surface —
+D1 names it the trigger's landing document) and `skills/<stage>/SKILL.md`
+per-stage lane skills — OI-6. The runbook is how a human and the
+prd-herdr trigger understand the factory; the skills are what each
+lane's pane loads at spawn.
+
+
+## 2026-10-31 — web-factory-spec-conformance plan.json
+
+Apply the OI-3 conformance patch across `research/WEB-FACTORY-S2-*.md`
+through `research/WEB-FACTORY-S5-*.md` — reconcile every spec to the
+schema-of-record declared in `PRD-Web-Factory-2026-10-30.md` §4.1/§5.
