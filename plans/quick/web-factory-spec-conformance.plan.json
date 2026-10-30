@@ -1,0 +1,104 @@
+{
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/79343f3d53a59b9fb09ffa5522bc988ab57df89e87131e15c5b4a54ac255e76a/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "driver": "code",
+  "evidence": "none \u2014 quick lane",
+  "gate_matrix": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import json, pathlib; json.loads(pathlib.Path('.prd/profile.json').read_text())"
+      ],
+      "covered_paths": [
+        "research/WEB-FACTORY-S2-TONE-PLAN.md",
+        "research/WEB-FACTORY-S3-WRITING.md",
+        "research/WEB-FACTORY-S4-INTERLINK.md",
+        "research/WEB-FACTORY-S5-DESIGN-DNA.md"
+      ],
+      "cwd": ".",
+      "expected_exit": 0,
+      "gate_id": "quick-test"
+    }
+  ],
+  "lanes": [
+    {
+      "acceptance": [
+        "gate:quick-test Apply the OI-3 conformance patch across `research/WEB-FACTORY-S2-*.md`\nthrough `research/WEB-FACTORY-S5-*.md` \u2014 reconcile every spec to the\nschema-of-record declared in `PRD-Web-Factory-2026-10-30.md` \u00a74.1/\u00a75."
+      ],
+      "declaration_source": "brief",
+      "depends_on": [],
+      "elegance": {
+        "census": {
+          "candidates_found": 0,
+          "searched": [
+            "research/WEB-FACTORY-S*.md",
+            "PRD-Web-Factory-2026-10-30.md"
+          ]
+        },
+        "follow": {
+          "bypass": [
+            {
+              "closed_by": "the conformance patch landing",
+              "path": "research/WEB-FACTORY-S2..S5 are the only files carrying the stale vocabulary"
+            }
+          ],
+          "obliged_actor": "the boss session in workspace w57",
+          "refusal": "stage lanes bind the spec verbatim \u2014 a contradicting spec produces lanes that fail each other's mint gates"
+        },
+        "lower_rungs_rejected": {
+          "r0": "the specs as written contradict the approved PRD's schema-of-record \u2014 lanes would mint against two authorities"
+        },
+        "rung": 1,
+        "trigger": {
+          "observed_state": "PRD-Web-Factory-2026-10-30.md APPROVED while the S2\u2013S5 specs carry the pre-conformance vocabulary",
+          "self_triggering": true,
+          "supplied_by": "the admit pass reading the repo"
+        },
+        "trigger_kind": {
+          "acted_by": "this lane",
+          "kind": "event",
+          "predicate": "specs contradict the approved PRD schema-of-record"
+        }
+      },
+      "goal": "Apply the OI-3 conformance patch across `research/WEB-FACTORY-S2-*.md`\nthrough `research/WEB-FACTORY-S5-*.md` \u2014 reconcile every spec to the\nschema-of-record declared in `PRD-Web-Factory-2026-10-30.md` \u00a74.1/\u00a75.",
+      "id": "web-factory-spec-conformance",
+      "mode": "sequential",
+      "non_goals": [
+        "touching anything beyond the lane's declared write_paths"
+      ],
+      "proof": [
+        "python3",
+        "-c",
+        "import json, pathlib; json.loads(pathlib.Path('.prd/profile.json').read_text())"
+      ],
+      "proof_source": "primary-gate",
+      "scope_census": {
+        "bypass_paths": [
+          "plans/quick/draft-web-factory-prd.brief.md"
+        ],
+        "callsites": [
+          "research/WEB-FACTORY-S2-TONE-PLAN.md",
+          "research/WEB-FACTORY-S3-WRITING.md",
+          "research/WEB-FACTORY-S4-INTERLINK.md",
+          "research/WEB-FACTORY-S5-DESIGN-DNA.md"
+        ],
+        "class_key": "spec-conformance-patch",
+        "siblings": [
+          "plans/quick/web-factory-astro-starter.brief.md",
+          "plans/quick/web-factory-runbook-skills.brief.md"
+        ]
+      },
+      "title": "Apply the OI-3 conformance patch across `research/WEB-FACTORY-S2-*.md`\nthrough `research/WEB-FACTORY-S5-*.md` \u2014 reconcile every spec to the\nschema-of-record declared in `PRD-Web-Factory-2026-10-30.md`",
+      "weight": "M",
+      "write_paths": [
+        "research/WEB-FACTORY-S2-TONE-PLAN.md",
+        "research/WEB-FACTORY-S3-WRITING.md",
+        "research/WEB-FACTORY-S4-INTERLINK.md",
+        "research/WEB-FACTORY-S5-DESIGN-DNA.md",
+        "audit/CENSUS-web-factory-spec-conformance.json"
+      ]
+    }
+  ],
+  "max_parallel": 1,
+  "repo": "/Users/apple/Documents/DEV-WORK/Web Factory"
+}
