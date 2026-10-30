@@ -8,9 +8,9 @@ Never npm create at lane time; this directory IS the starter.
 
 ## Write paths
 
-- `templates/astro/` — full starter tree (package.json, astro.config,
+- templates/astro/ — full starter tree (package.json, astro.config,
   tsconfig, src/layouts|components|pages|styles, public/)
-- `templates/STARTER.md` — what it is, the pinned dep list, how a lane
+- templates/STARTER.md — what it is, the pinned dep list, how a lane
   copies it, what's safe to edit vs. regenerated
 
 ## Required content
