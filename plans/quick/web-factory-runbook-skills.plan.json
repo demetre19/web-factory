@@ -1,0 +1,102 @@
+{
+  "backend_template": "/Users/apple/.local/bin/python3.12 /Users/apple/.prd-herdr/deployments/79343f3d53a59b9fb09ffa5522bc988ab57df89e87131e15c5b4a54ac255e76a/src/crew_herdr_backend.py '{worktree}' '{brief}' '{lane_id}'",
+  "driver": "code",
+  "evidence": "none \u2014 quick lane",
+  "gate_matrix": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import json, pathlib; json.loads(pathlib.Path('.prd/profile.json').read_text())"
+      ],
+      "covered_paths": [
+        "docs/machinery/WEB-FACTORY.md",
+        "skills/s0-discovery/SKILL.md",
+        "skills/s1-sitemap/SKILL.md"
+      ],
+      "cwd": ".",
+      "expected_exit": 0,
+      "gate_id": "quick-test"
+    }
+  ],
+  "lanes": [
+    {
+      "acceptance": [
+        "gate:quick-test Author `docs/machinery/WEB-FACTORY.md` (the operator/runbook surface \u2014\nD1 names it the trigger's landing document) and `skills/<stage>/SKILL.md`\nper-stage lane skills \u2014 OI-6. The runbook is how a human and the\nprd-herdr trigger understand the factory; the skills are what each\nlane's pane loads at spawn."
+      ],
+      "declaration_source": "brief",
+      "depends_on": [],
+      "elegance": {
+        "census": {
+          "candidates_found": 0,
+          "searched": [
+            "docs/",
+            "skills/",
+            "research/WEB-FACTORY-*.md"
+          ]
+        },
+        "follow": {
+          "bypass": [
+            {
+              "closed_by": "the runbook existing",
+              "path": "docs/machinery/WEB-FACTORY.md is D1's named landing document"
+            }
+          ],
+          "obliged_actor": "the boss session in workspace w57",
+          "refusal": "prd-herdr's TRIGGER_ROUTES row must point at a document that exists \u2014 landing the trigger first would 404 the entry point"
+        },
+        "lower_rungs_rejected": {
+          "r0": "the NEW-WEBSITE trigger has no landing document and lanes have no skills \u2014 the factory cannot be invoked without them",
+          "r1": "folding all docs into one giant README buries the per-stage contract boundaries the lanes scope-enforce"
+        },
+        "rung": 2,
+        "trigger": {
+          "observed_state": "docs/machinery/WEB-FACTORY.md and skills/ absent while the PRD marks them the trigger's landing surface",
+          "self_triggering": true,
+          "supplied_by": "the admit pass reading the repo"
+        },
+        "trigger_kind": {
+          "acted_by": "this lane",
+          "kind": "event",
+          "predicate": "runbook+skills absent while PRD names them the trigger landing"
+        }
+      },
+      "goal": "Author `docs/machinery/WEB-FACTORY.md` (the operator/runbook surface \u2014\nD1 names it the trigger's landing document) and `skills/<stage>/SKILL.md`\nper-stage lane skills \u2014 OI-6. The runbook is how a human and the\nprd-herdr trigger understand the factory; the skills are what each\nlane's pane loads at spawn.\nBaseline: derived from the goal's own measurements \u2014 1 names it the",
+      "id": "web-factory-runbook-skills",
+      "mode": "sequential",
+      "non_goals": [
+        "touching anything beyond the lane's declared write_paths"
+      ],
+      "proof": [
+        "python3",
+        "-c",
+        "import json, pathlib; json.loads(pathlib.Path('.prd/profile.json').read_text())"
+      ],
+      "proof_source": "primary-gate",
+      "scope_census": {
+        "bypass_paths": [
+          "plans/quick/draft-web-factory-prd.brief.md"
+        ],
+        "callsites": [
+          "research/ADVERSARIAL-REVIEW.md",
+          "PRD-Web-Factory-2026-10-30.md"
+        ],
+        "class_key": "docs-and-skills-bootstrap",
+        "siblings": [
+          "plans/quick/web-factory-astro-starter.brief.md",
+          "plans/quick/web-factory-spec-conformance.brief.md"
+        ]
+      },
+      "title": "Author `docs/machinery/WEB-FACTORY.md` (the operator/runbook surface \u2014\nD1 names it the trigger's landing document) and `skills/<stage>/SKILL.md`\nper-stage lane skills \u2014 OI-6. The runbook is how a huma",
+      "weight": "L",
+      "write_paths": [
+        "docs/machinery/WEB-FACTORY.md",
+        "skills/s0-discovery/SKILL.md",
+        "skills/s1-sitemap/SKILL.md",
+        "audit/CENSUS-web-factory-runbook-skills.json"
+      ]
+    }
+  ],
+  "max_parallel": 1,
+  "repo": "/Users/apple/Documents/DEV-WORK/Web Factory"
+}
