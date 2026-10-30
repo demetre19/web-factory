@@ -14,8 +14,10 @@
       "import json, pathlib; json.loads(pathlib.Path('.prd/profile.json').read_text())"
     ]
   },
-  "notes": "argv bootstrapped before real suites exist — build compiles the future src/+skills/ trees, test proves profile parses; replace with real pytest argv at first suite.",
+  "notes": "argv bootstrapped before real suites exist \u2014 build compiles the future src/+skills/ trees, test proves profile parses; replace with real pytest argv at first suite.",
   "module_map": {
+    ".": 1,
+    "plans": 9,
     "reports": 1
   },
   "hot_files": [],
