@@ -1,0 +1,18 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-s2-tone-plan",
+  "callsites": [
+    "research/WEB-FACTORY-S2-TONE-PLAN.md",
+    "research/tone-profile.md",
+    "research/content-plan.md",
+    "plans/quick/web-factory-s2-tone-plan.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-s3-writing.plan.json",
+    "plans/quick/web-factory-s4-interlink.plan.json"
+  ],
+  "notes": "Spec-only lane. callsites = the artifacts this lane produces plus its own mint manifest; bypass = the adversarial-review lane that reads this spec by name; siblings = the downstream stage plans (S3 consumes the content-plan column contract, S4 consumes link seeds) that share the same stage-spec class."
+}
