@@ -33,3 +33,13 @@ Full step-by-step breakdown of **Stage S7 — Build gate + launch** for the Web 
 ## 2026-10-30 — web-factory-adversarial-review plan.json
 
 Independent adversarial review of the Web Factory stage architecture as a *system*. Evidence/context: the specs live under research/ in this repo — read them, do not trust their own Contested sections (self-review). Files: DISCOVERY-RESEARCH-web-factory.md, WEB-FACTORY-S1-SITEMAP.md, WEB-FACTORY-S2-TONE-PLAN.md, WEB-FACTORY-S3-WRITING.md, WEB-FACTORY-S4-INTERLINK.md, WEB-FACTORY-S5-DESIGN-DNA.md, WEB-FACTORY-S6-INTEGRATIONS.md, WEB-FACTORY-S7-GATE-DEPLOY.md. Any spec missing at lane time = mark ABSENT and review what exists. Deliverable: research/ADVERSARIAL-REVIEW.md elegance: {"rung": 2, "lower_rungs_rejected": {"r1": "self-review inside each spec is not independent review"}, "trigger_kind": {"kind": "event", "predicate": "7 stage specs exist with no cross-stage review", "acted_by": "the adversarial-review lane"}}
+
+
+## 2026-10-30 — draft-web-factory-prd plan.json
+
+Author `PRD-Web-Factory-2026-10-30.md` at the Web Factory repo root — the
+product-requirements document for the Web Factory: a prd-herdr-driven
+stage pipeline that turns a `NEW-WEBSITE` trigger into a launch-ready
+Astro static site. This PRD is the Stage-2 deliverable of the NEW-PRD
+flow; every stage spec already exists and is landed — your job is the
+synthesis, not new stage design.
