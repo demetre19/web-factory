@@ -1,0 +1,16 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-s6-integrations",
+  "callsites": [
+    "research/WEB-FACTORY-S6-INTEGRATIONS.md",
+    "plans/quick/web-factory-s6-integrations.plan.json"
+  ],
+  "bypass_paths": [
+    "plans/quick/web-factory-adversarial-review.plan.json"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-s5-design-dna.plan.json",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "notes": "Spec-only lane. callsites = the spec artifact this lane produces plus its own mint manifest; bypass = the adversarial-review lane that names this spec absent (research/ADVERSARIAL-REVIEW.md F4); siblings = the neighboring stage plans (S5 hands sites/<slug>/ to S6, S7 consumes the integrations registry for deploy + seal, discovery mints the run) that share the same stage-spec class. research/ carried no prior S6 stage document before this lane."
+}
