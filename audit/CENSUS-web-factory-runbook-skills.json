@@ -1,0 +1,30 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "web-factory-runbook-skills",
+  "callsites": [
+    "docs/machinery/WEB-FACTORY.md",
+    "skills/s0-discovery/SKILL.md",
+    "skills/s1-sitemap/SKILL.md",
+    "skills/s2-tone-plan/SKILL.md",
+    "skills/s3-writing/SKILL.md",
+    "skills/s4-interlink/SKILL.md",
+    "skills/s5-design-dna/SKILL.md",
+    "skills/s6-integrations/SKILL.md",
+    "skills/s7-gate-deploy/SKILL.md",
+    "plans/quick/web-factory-runbook-skills.plan.json",
+    "PRD-Web-Factory-2026-10-30.md"
+  ],
+  "bypass_paths": [
+    "plans/quick/draft-web-factory-prd.brief.md"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-astro-starter.plan.json",
+    "plans/quick/web-factory-spec-conformance.plan.json",
+    "plans/quick/web-factory-s2-tone-plan.plan.json",
+    "plans/quick/web-factory-s3-writing.plan.json",
+    "plans/quick/web-factory-s5-design-dna.plan.json",
+    "plans/quick/web-factory-s6-integrations.plan.json",
+    "plans/quick/web-factory-s7-gate-deploy.plan.json"
+  ],
+  "notes": "Docs-and-skills bootstrap (greenfield — no docs/machinery/ or skills/ tree existed). callsites = the 9 files this lane authors plus its own mint manifest plus the PRD whose D1 names the runbook the trigger's landing document; bypass = the draft-PRD brief that references the trigger surface by name; siblings = sibling stage-spec lanes sharing the docs/skills bootstrap class (astro-starter owns templates/astro/, conformance owns the S2-S5 spec patch the runbook tracks as OI-3)."
+}
