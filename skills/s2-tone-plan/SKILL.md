@@ -39,7 +39,10 @@ Either file absent → `prd_step ask` naming it; never invent a sitemap.
 - `site/content-plan.md` — columns exactly `slug | path | type |
   primary_keyword | secondary_keywords | intent | word_target |
   heading_skeleton | link_seed | cta` (S3/S4 parse verbatim; cells may
-  not contain `|`/`;`/`->`/`,` except as documented separators — F7),
+  not contain `|`/`;`/`->`/`,` except as documented separators — F7).
+  `type` is the plan vocabulary's `money | article | utility` —
+  `utility` is the `ancillary` alias per PRD D10 (the OI-3 conformance
+  patch reconciles naming across S2–S5),
   plus `## Writer batches` (money first, ≤6 rows per batch, slugs
   `web-writer-<site>-b<N>`, every row in exactly one batch).
 

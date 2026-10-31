@@ -63,9 +63,10 @@ rules.
 - Both-sources rule: DOX covers its routes, refs cover the rest; a
   route takes one authority, never a blend; `DESIGN-DNA.md` records
   the split.
-- `public/` contact route must render the `<form
-  action="/form.php" method="POST">` contract S6 wires, plus the
-  mailto/`sent` fallback branch.
+- Contact/quote route renders the S6 form contract —
+  `<form action="/form.php" method="POST">` with honeypot + timestamp
+  fields — plus the mailto/`sent` fallback branch (both branches ship;
+  S6 flips which renders).
 
 ## Acceptance / done criteria
 
