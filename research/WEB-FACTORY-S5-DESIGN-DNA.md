@@ -143,9 +143,11 @@ site/design-dna/
   it with `provenance` per token (`capture id + viewport + element`).
 - `ROUTE-MANIFEST.json` on the refs branch is *derived from
   `sitemap.md`*, not invented — every sitemap row becomes a route,
-  `type: money|article|utility` maps to template kind
+  `page_class` (`money | article | ancillary` — surfaced as the
+  content-file `type`, where `ancillary` reads `utility`, PRD D10)
+  maps to template kind
   (`service-detail`-class for money, `article` for article,
-  `utility` for utility). The refs provide the visual system; the
+  `utility` for ancillary). The refs provide the visual system; the
   sitemap owns the route list.
 
 ## Output 2 — `sites/<slug>/` (build lane)
@@ -181,7 +183,8 @@ routes, `src/layouts/`, `src/components/`, `src/styles/` (Tailwind),
    (partial packets are not advisory). Confirm `formatVersion`,
    `target: astro`, and that `ROUTE-MANIFEST.json` parses.
 3. **Cross-check routes.** Every `ROUTE-MANIFEST.json` path must match
-   a `sitemap.md` `path`. A DOX route with no sitemap row is *not*
+   a `sitemap.md` `route` (the plan's `path` column carries the same
+   value — `path == route` per D10). A DOX route with no sitemap row is *not*
    silently added — flag it in `DESIGN-DNA.md` and hold that route
    out of the build (route count is S1's authority). A sitemap row
    with no design source gets flagged for the fallback visual system
