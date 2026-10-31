@@ -138,6 +138,11 @@ One file, one table, one row per edge:
 6. **Targets exist.** Every `target_slug` resolves to a plan row. A
    seed targeting a slug the plan does not carry is a defect: flag in
    `## Notes`, drop the edge — never invent a target.
+7. **Related cap.** The `## Related` block carries ≤4 rows per page —
+   it is an overflow valve, not a sump (demoted seeds, capped sources,
+   orphan fixes all land there). An edge pushed past the cap is
+   re-placed as `body` where an anchor exists, or flagged in `## Notes`
+   for operator review — never silently dropped.
 
 ## Output 2 — `site/content/*.md` mutated (apply lane, injection phase)
 
@@ -160,7 +165,8 @@ Injection executes `link-graph.md` against the corpus:
   `## Related` block on the source page: `- [anchor](<row.path>)`.
   One block per page; all its `related` edges land inside it. The
   block goes last, after the CTA paragraph — it is navigation, not
-  pitch.
+  pitch (F5 precedence: CTA paragraph, then Related block, page end).
+  Rows per block are capped at 4 (graph rule 7).
 - **Frontmatter is untouched.** Injection changes body text only;
   `slug`/`path`/`title` are identity fields S5 binds on.
 - **Zero-width first.** Before any link verification, strip invisible
@@ -244,6 +250,14 @@ Every class 3–7 rewrite gets a row; every flagged-but-untouched item
 gets a `## Flags` entry. A reviewer audits the pass without diffing
 the corpus — same contract `DESIGN-DNA.md` gives S5's distill lane.
 
+Rewritten anchors (class 4) get a second record: the apply lane
+appends one `## Notes` line per rewrite to `site/link-graph.md`
+(`file | old anchor | new anchor`) so the graph stays the audit chain
+— the `anchor` column holds the plan's wording, `## Notes` carries
+the shipped wording (F9). This append is the sanctioned exception to
+the one-writer rule on `link-graph.md`; the apply lane adds Notes
+lines only, never edits the edge table.
+
 ## Step-by-step — graph lane (`web-link-graph-<site>`)
 
 1. **Parse the plan.** Read `content-plan.md`; every row is a node
@@ -283,7 +297,8 @@ the corpus — same contract `DESIGN-DNA.md` gives S5's distill lane.
 5. **Cleanup pass.** Read every injected file; apply classes 1–7;
    write `site/content-final/<slug>.md`. One input → one output.
 6. **Write `site/cleanup-report.md`** — header counts, rewrite table,
-   `## Flags`.
+   `## Flags` — and append any anchor rewrites to `link-graph.md`
+   `## Notes` (per rewritten anchor, one line).
 7. **Self-lint (the output contract):**
    - `content-final/` file count equals plan row count — no gaps, no
      extras;

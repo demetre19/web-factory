@@ -73,7 +73,7 @@ title: <page title, ≤60 chars, primary keyword in first half>
 description: <meta description, 140–160 chars>
 slug: <plan row slug>
 path: <plan row path>
-type: money | article | utility
+type: money | article | utility     # utility = sitemap `page_class: ancillary` alias (PRD D10)
 primary_keyword: <verbatim from plan row>
 ---
 
@@ -115,12 +115,13 @@ The `type` column selects the writer posture:
 | Job | Convert — rank for the service term, push to the CTA | Inform — rank long-tail, route authority to money pages |
 | Intent | `commercial` / `transactional` | `informational` |
 | Word target | 800–1200 default | 1200–1800 default |
-| CTA | Every page ends on the row's `cta`; at least one mid-page CTA after the first proof section | One closing CTA, low-pressure; never mid-body sales interruption |
+| CTA | Every page's pitch ends on the row's `cta`; at least one mid-page CTA after the first proof section. A `## Related` navigation block may follow the closing CTA (S4 `related` placement, F5 precedence: CTA paragraph, then Related block, page end) | One closing CTA, low-pressure; never mid-body sales interruption |
 | Trust vocabulary | Mandatory — credentials/guarantees/review cites per tone-profile §Trust vocabulary | Optional, brief |
 | Link posture | Seeds to sibling money pages + the contact/quote slug | Seeds ≥1 link *to* a money page |
 | Tone register | Direct benefit-led, second person | Plain explainer, benefit after clarity |
 
-`utility` rows follow money-page heading rules with `word_target ≤400`
+`utility` rows (sitemap `page_class: ancillary` under the plan alias)
+follow money-page heading rules with `word_target ≤400`
 and no proof requirement.
 
 ### Link seeds — anchors without a graph
@@ -137,8 +138,9 @@ suggestion. The writer:
    insertion would find — the obligation is that the link exists, the
    anchor text appears, and it reads naturally.
 3. If no natural placement exists for a seed, puts it in a closing
-   `## Related`/`## Next step` block rather than forcing a bad
-   sentence — and flags the row in the lane's done notes so S4 knows
+   `## Related` block (the same block name S4 appends to — one name
+   keeps the apply lane's extension rule working) rather than forcing
+   a bad sentence — and flags the row in the lane's done notes so S4 knows
    the graph had a weak seed.
 
 A file missing any of its row's `link_seed` slugs fails lint.

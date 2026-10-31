@@ -19,9 +19,12 @@ S4 link-graph <── content-final <── S3 writer lanes (row = one page)
 S5 design-dna (reads tone-profile only as voice context)
 ```
 
-- **Upstream contract:** S1 produces `sitemap.md` — one row per URL
-  with `slug`, `path`, `type` (money | article | utility), and
-  `primary_keyword`. The intake produces `site-brief.md` — niche,
+- **Upstream contract:** S1 produces `sitemap.md` — the route-table
+  authority (PRD §5.2). One row per route with columns `route`,
+  `kw_group`, `intent`, `parent`, `page_class`
+  (`money | article | ancillary` — the closed type set), `H1`,
+  `title_tag`, `target_keywords`, `status`. The intake produces
+  `site-brief.md` — niche,
   geography, entity, services, competitor/exemplar copy pointers.
 - **Downstream contract:** S3 refuses to mint a writer lane for a page
   with no `content-plan.md` row; S4's link-graph seeds from each row's
@@ -108,17 +111,22 @@ a batch-assignment section.
 | slug | path | type | primary_keyword | secondary_keywords | intent | word_target | heading_skeleton | link_seed | cta |
 |---|---|---|---|---|---|---|---|---|---|
 
-- `slug`, `path`, `type` — copied verbatim from `sitemap.md`. A row
+- `slug` — derived from `route`'s last path segment; `path` — `route`
+  verbatim; `type` — `page_class` verbatim except the sitemap's
+  `ancillary`, which renders as `utility` in the plan vocabulary (D10
+  mapping, PRD §4.1 note). A row
   missing from the sitemap is out of scope; a sitemap row missing here
   is a defect.
-- `primary_keyword` — copied from the sitemap row.
+- `primary_keyword` — head of the sitemap row's `target_keywords`.
 - `secondary_keywords` — comma-separated, 0–3. Long-tail variants the
   writer may work into H2s; never required to rank.
-- `intent` — one of `informational`, `commercial`, `transactional`.
+- `intent` — copied verbatim from the sitemap row's `intent`
+  (closed set: `commercial | comparison | informational |
+  transactional | local | navigational`).
   Money pages default `commercial`; contact/quote pages
   `transactional`.
 - `word_target` — integer. Defaults: money 800–1200, article
-  1200–1800, utility ≤400. Deviation needs a note in the row.
+  1200–1800, ancillary/utility ≤400. Deviation needs a note in the row.
 - `heading_skeleton` — `;`-separated H2 list in order. The writer lane
   may add H3s but must not drop or reorder these H2s. Includes the H1
   (first element, `H1: ...`).
