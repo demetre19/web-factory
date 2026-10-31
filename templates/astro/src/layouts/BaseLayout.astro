@@ -1,0 +1,55 @@
+---
+import '../styles/global.css';
+import SEOHead from '../components/SEOHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+// Every route renders inside this layout: SEOHead gets the page's
+// frontmatter fields copied verbatim, body content lands in <slot />.
+// One layout per template kind (service-detail / article / utility) is
+// the S5 build lane's job — this file is the shared shell they extend.
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+  robots?: string;
+  ogType?: string;
+  /** BCP-47 lang for <html>. */
+  lang?: string;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  image,
+  robots,
+  ogType,
+  lang = 'en',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEOHead
+      title={title}
+      description={description}
+      path={path}
+      image={image}
+      robots={robots}
+      ogType={ogType}
+    />
+  </head>
+  <body>
+    <Header />
+    <main id="main" class="wf-container">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../site';
+
+// Proof-of-build page: the starter must `astro build` green with zero
+// content. The S5 build lane replaces this page (and adds one page file
+// per ROUTE-MANIFEST.json route) — this file is an example, not a route.
+---
+
+<BaseLayout
+  title={`${site.name} — Starter`}
+  description="Vendored Astro starter for Web Factory S5 build lanes."
+  path="/"
+>
+  <h1>{site.name}</h1>
+  <p>
+    This page proves the starter builds clean. S5 build lanes replace it
+    with real routes bound to site/content-final/.
+  </p>
+</BaseLayout>

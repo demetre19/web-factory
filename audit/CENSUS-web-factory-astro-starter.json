@@ -1,0 +1,15 @@
+{
+  "schema": "scope-census/v1",
+  "class_key": "vendored-starter-bootstrap",
+  "callsites": [
+    "research/WEB-FACTORY-S5-DESIGN-DNA.md"
+  ],
+  "bypass_paths": [
+    "PRD-Web-Factory-2026-10-30.md"
+  ],
+  "siblings": [
+    "plans/quick/web-factory-runbook-skills.brief.md",
+    "plans/quick/web-factory-spec-conformance.brief.md"
+  ],
+  "notes": "Greenfield dir creation, no existing callers. callsite = the S5 stage spec whose scaffold step reads templates/astro/ ('cp -R templates/astro sites/<slug>', never npm create). bypass = the PRD, which declares OI-1 (starter does not exist yet) and D5 (vendored starter is the build base) but is not itself a consumer. siblings = sibling bootstrap dispatches sharing the same mint schema. Census searched templates/, package.json, astro.config* — zero candidates found before this lane."
+}

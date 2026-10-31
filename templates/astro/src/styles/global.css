@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Fluid type scale (utopia-style): viewport range 320px→1240px,
+ * body floor 16px / cap 19px, ratio 1.2 → 1.25.
+ * Sizes interpolate continuously — no breakpoint-stepped jumps.
+ * The build lane regenerates this block from TOKENS.json; names stay.
+ */
+:root {
+  --fs--1: clamp(0.8335rem, 0.7621rem + 0.3571vi, 1.0128rem);
+  --fs-0: clamp(1rem, 0.913rem + 0.4348vi, 1.1875rem);
+  --fs-1: clamp(1.2rem, 1.0924rem + 0.538vi, 1.3906rem);
+  --fs-2: clamp(1.44rem, 1.3064rem + 0.668vi, 1.6289rem);
+  --fs-3: clamp(1.728rem, 1.5607rem + 0.8365vi, 1.9066rem);
+  --fs-4: clamp(2.0736rem, 1.8629rem + 1.0535vi, 2.2305rem);
+  --fs-5: clamp(2.4883rem, 2.2192rem + 1.3455vi, 2.6061rem);
+
+  --lh--1: 1.5;
+  --lh-0: 1.6;
+  --lh-1: 1.5;
+  --lh-2: 1.35;
+  --lh-3: 1.25;
+  --lh-4: 1.2;
+  --lh-5: 1.15;
+
+  /* Fluid spacing rhythm (320→1240). */
+  --sp-fluid-s: clamp(0.5rem, 0.3261rem + 0.8696vi, 1rem);
+  --sp-fluid-m: clamp(1rem, 0.6522rem + 1.7391vi, 2rem);
+  --sp-fluid-l: clamp(2rem, 1.3043rem + 3.4783vi, 4rem);
+
+  /* Starter default palette — TOKENS.json replaces these. */
+  --c-ink: #1a1d21;
+  --c-paper: #ffffff;
+  --c-accent: #1f5eff;
+  --c-muted: #5b6470;
+
+  --r-card: 0.5rem;
+  --sh-lift: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px rgb(0 0 0 / 0.08);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    font-size: var(--fs-0);
+    line-height: var(--lh-0);
+    color: var(--c-ink);
+    background: var(--c-paper);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: var(--lh-3);
+    text-wrap: balance;
+  }
+
+  h1 { font-size: var(--fs-5); line-height: var(--lh-5); }
+  h2 { font-size: var(--fs-3); line-height: var(--lh-3); }
+  h3 { font-size: var(--fs-2); line-height: var(--lh-2); }
+  h4 { font-size: var(--fs-1); line-height: var(--lh-1); }
+
+  p, li, td, blockquote {
+    font-size: var(--fs-0);
+    line-height: var(--lh-0);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* One owner per class — CLASS-SYSTEM.md rows add exactly one block
+     each here (or a dedicated file under src/styles/components/). */
+  .wf-container {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: var(--sp-fluid-s);
+  }
+
+  .wf-cta-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--r-card);
+    background: var(--c-accent);
+    color: var(--c-paper);
+    font-size: var(--fs-0);
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
