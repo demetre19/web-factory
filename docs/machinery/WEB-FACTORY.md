@@ -20,7 +20,7 @@ loads at spawn): `skills/s<N>-<name>/SKILL.md`.
 | Stage | Spec | Lane(s) | Reads | Emits |
 |---|---|---|---|---|
 | S0 Discovery | prd-herdr `research/DISCOVERY-RESEARCH-web-factory.md`; intake fields defined by `WEB-FACTORY-S1-SITEMAP.md` §Step 0 + PRD §5.1 | operator Q&A (boss-driven) | operator answers, Maps/GBP category lookups | `site/site-brief.md` |
-| S1 Sitemap | prd-herdr `research/WEB-FACTORY-S1-SITEMAP.md` | one lane | `site-brief.md`, SERP (mandatory), GSC/Cora/entities/embeddings (degradable tiers) | `sites/<slug>/sitemap.md` (route-table authority) + `sites/<slug>/brief.json` |
+| S1 Sitemap | prd-herdr `research/WEB-FACTORY-S1-SITEMAP.md` | one lane | `site-brief.md`, SERP (mandatory), GSC/Cora/entities/embeddings (degradable tiers) | `sites/<slug>/sitemap.md` (route-table authority) + `sites/<slug>/brief.json` (intake record — spec-declared, written by the S1 lane at run time) |
 | S2 Tone+plan | `research/WEB-FACTORY-S2-TONE-PLAN.md` | one lane | `site/sitemap.md`, `site/site-brief.md` | `site/tone-profile.md`, `site/content-plan.md` (+ `## Writer batches`) |
 | S3 Writing | `research/WEB-FACTORY-S3-WRITING.md` | one `pi/WRITER`-bound lane per batch (`web-writer-<site>-b<N>`, ≤6 rows, money first) | `site/content-plan.md`, `site/tone-profile.md`, `site/site-brief.md` | `site/content/<slug>.md` — one file per plan row, one commit per page |
 | S4 Interlink+cleanup | `research/WEB-FACTORY-S4-INTERLINK.md` | two lanes, strictly ordered: `web-link-graph-<site>` then `web-interlink-<site>` | `site/content/`, `site/content-plan.md`, `site/tone-profile.md` | `site/link-graph.md`, injected `site/content/*.md`, `site/content-final/`, `site/cleanup-report.md` |
