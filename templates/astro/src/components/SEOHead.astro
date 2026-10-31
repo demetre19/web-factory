@@ -1,0 +1,49 @@
+---
+// The SEO contract S7's gate greps. Every page renders this via
+// BaseLayout; frontmatter (title, description) is copied from
+// content-final/<slug>.md — never rewritten by the build lane.
+interface Props {
+  /** <title> content — from frontmatter `title`. */
+  title: string;
+  /** meta description — from frontmatter `description`. */
+  description: string;
+  /** Route path from frontmatter `path` (e.g. "/services/dent-removal/").
+      Canonical/OG URLs are derived from it + astro.config `site`. */
+  path?: string;
+  /** Absolute or site-relative OG image URL. Omit = no og:image. */
+  image?: string;
+  /** robots meta — defaults to index,follow; utility routes may noindex. */
+  robots?: string;
+  /** og:type — "website" default, "article" for article routes. */
+  ogType?: string;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  image,
+  robots = 'index,follow',
+  ogType = 'website',
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : undefined;
+const fullTitle = title; // site-name suffix policy is the build lane's call
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical.href} />
+<meta name="robots" content={robots} />
+
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical.href} />
+{ogImage && <meta property="og:image" content={ogImage.href} />}
+
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage.href} />}
