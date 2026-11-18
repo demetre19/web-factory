@@ -100,6 +100,16 @@ The distill lane treats a `variant` row exactly like a reviewed capture:
 its embedded token block is contract-shaped `clamp()` pairs, so
 extraction is verbatim, not derived.
 
+## The plan before the preview
+
+`site-intake variants` produces *token skeletons* only — it is a preview
+of the system, never the design. The real design decision lands in the
+distill lane as `DESIGN-PLAN.md` (`docs/machinery/DESIGN-PLAN.md`):
+idea, rhetoric sequence, forced direction, closed system numbers, motif,
+and per-section `speech_act`/`category`/`surface`/`density`/`composition`
+selected from `docs/machinery/SECTION-CATALOG.md`. A variant pick is the
+*direction input* to that plan; the plan is still written fresh every
+run so no two sites ship the same surface music.
 ## Design roles
 
 `pi/designer` is the default — it owns the design lanes (distill

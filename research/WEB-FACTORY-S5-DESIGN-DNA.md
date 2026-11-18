@@ -132,14 +132,30 @@ The reviewed design authority for the build. Fixed layout:
 
 ```
 site/design-dna/
-  TOKENS.json            # schemaVersion 1: colors, type scale, spacing, radii, shadows, breakpoints
+  DESIGN-PLAN.md         # REQUIRED, written first: idea, rhetoric, system
+                         # numbers, surface music, motif — the forethought
+  TOKENS.json            # schemaVersion 1: colors, type scale, spacing,
+                         # radii, shadows, breakpoints
   CLASS-SYSTEM.md        # class table: name | owner | purpose | token refs
   COMPONENTS.md          # shared component list with prop shapes
   ROUTE-MANIFEST.json    # distilled routes — DOX's verbatim, or refs-derived
   PAGES/<slug>/SPEC.md   # per-route section skeleton + layout spec
-  DESIGN-DNA.md          # the distillation report: sources used, per-token provenance, flagged gaps
-  dox/                   # verified DOX packet members, flattened (absent on refs-only sites)
+  DESIGN-DNA.md          # the distillation report: sources, provenance, gaps
+  preview/system.html    # style tile: surfaces × densities × type ranks ×
+                         # components, produced before any page preview
+  dox/                   # verified DOX packet members, flattened
+                         # (absent on refs-only sites)
 ```
+
+- `DESIGN-PLAN.md` is the plan that exists before anything is drawn
+  (schema: `docs/machinery/DESIGN-PLAN.md`). It carries the idea, the
+  rhetoric sequence, the closed system numbers, the surface music
+  (per-section `surface`/`density`/`composition`), and the motif.
+  `PAGES/*/SPEC.md` section rows copy from it verbatim; a SPEC that
+  contradicts the plan is a refuse, not an improvisation. Section
+  `composition` values come only from
+  `docs/machinery/SECTION-CATALOG.md` — freehand layouts are the same
+  class of defect as freehand hex values.
 
 - `dox/` is the *input authority* staged for audit; everything a build
   decision needs lives at the top level. A refs-only site has no
@@ -530,13 +546,28 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
    `design-dna/` as above. `PAGES/<node>/CONTENT.md` is DOX-internal
    draft content — the real copy is `content-final/`; the distill
    lane copies the spec and acceptance files, not draft prose.
-5. **Derive from refs** (routes without DOX coverage, or the whole
+5. **Write `DESIGN-PLAN.md` first** (schema:
+   `docs/machinery/DESIGN-PLAN.md`) — before `PAGES/*/SPEC.md`, before
+   `TOKENS.json` is finalized. Fill top-to-bottom: intent, the ≤25-word
+   idea, the rhetoric sequence, the forced direction pick, the closed
+   system numbers, the motif, then the per-section surface music
+   (`speech_act`/`category`/`surface`/`density`/`composition` rows from
+   `docs/machinery/SECTION-CATALOG.md`). A blank field is a rejected
+   plan. DOX-branch packets that already carry an equivalent system
+   still get a plan — the DOX's evidence fills the fields, and any
+   deviation from the packet is flagged. Then produce
+   `preview/system.html` — every surface × every density × every type
+   rank × buttons/fields/cards — before any page preview (style tile
+   before mockup).
+6. **Derive from refs** (routes without DOX coverage, or the whole
    site on refs-only): read captured HTML as *text evidence* —
    extract tokens (computed colors, type scale, spacing rhythm,
    radii, shadows), the shared layout regions (header/nav/footer),
    and the section vocabulary. Write `TOKENS.json` with provenance,
    `CLASS-SYSTEM.md`, `COMPONENTS.md`, and `PAGES/<slug>/SPEC.md`
-   section skeletons. `refs/MANIFEST.md` roles steer extraction:
+   section skeletons — each section row declaring `speech_act`,
+   `category`, `surface`, `density`, `composition` copied from
+   `DESIGN-PLAN.md`, never a freehand layout. `refs/MANIFEST.md` roles steer extraction:
    `baseline` rows yield identity (logo, NAP, palette, layout regions);
    `inspiration` rows yield character only (never the business facts);
    `inspo-text` rows yield copy/sections only — text extracted as
@@ -548,13 +579,13 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
    list: replicate what passes, fix what it flags, and record both in
    `DESIGN-DNA.md`. The captured markup is never copied into the
    output — only the observations are.
-6. **Write `DESIGN-DNA.md`.** Sources used, per-token provenance,
+7. **Write `DESIGN-DNA.md`.** Sources used, per-token provenance,
    routes held out, routes on fallback, every deviation flagged. This
    file is the review artifact — a reviewer should audit the
    distillation without opening the DOX ZIP or the captures.
-7. **Commit.** `site: design-dna` — one commit; the packet is
+8. **Commit.** `site: design-dna` — one commit; the packet is
    reviewable as a unit.
-8. **Done.** `prd_step done` — closing names the source mix and flags.
+9. **Done.** `prd_step done` — closing names the source mix and flags.
 
 ## Step-by-step — build lane (`web-build-<site>`)
 
@@ -664,8 +695,12 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
 
 The S5 done-criteria the coordinator checks before minting S6:
 
-- `site/design-dna/` carries `TOKENS.json`, `CLASS-SYSTEM.md`,
-  `ROUTE-MANIFEST.json`, `DESIGN-DNA.md` — all non-empty.
+- `site/design-dna/` carries `DESIGN-PLAN.md`, `TOKENS.json`,
+  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md` — all
+  non-empty. `DESIGN-PLAN.md` is complete top-to-bottom; every
+  `PAGES/*/SPEC.md` section row copies `speech_act`/`category`/
+  `surface`/`density`/`composition` from it, and every `composition`
+  value resolves to `docs/machinery/SECTION-CATALOG.md`.
 - `sites/<slug>/` exists, `astro build` exits 0, and `dist/` holds
   exactly one HTML file per `ROUTE-MANIFEST.json` route.
 - Every `content-final` file is bound to exactly one route (count

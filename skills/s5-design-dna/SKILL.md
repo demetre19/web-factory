@@ -56,7 +56,8 @@ rules.
 
 ## Write set
 
-- Distill: `site/design-dna/` — `TOKENS.json`, `CLASS-SYSTEM.md`,
+- Distill: `site/design-dna/` — `DESIGN-PLAN.md` (written first, the
+  forethought artifact), `TOKENS.json`, `CLASS-SYSTEM.md`,
   `COMPONENTS.md`, `ROUTE-MANIFEST.json`, `PAGES/<slug>/SPEC.md`,
   `DESIGN-DNA.md`, `dox/` (verified packet members, flattened; absent
   on refs-only sites).
@@ -89,7 +90,12 @@ rules.
 
 ## Acceptance / done criteria
 
-- `site/design-dna/` carries all four required members, non-empty.
+- `site/design-dna/` carries `DESIGN-PLAN.md`, `TOKENS.json`,
+  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md` — all
+  non-empty. `DESIGN-PLAN.md` is complete top-to-bottom per
+  `docs/machinery/DESIGN-PLAN.md`; every SPEC section's `composition`
+  resolves to `docs/machinery/SECTION-CATALOG.md`.
+
 - `sites/<slug>/` exists; `astro build` exits 0; `dist/` holds exactly
   one HTML file per `ROUTE-MANIFEST.json` route.
 - Route count parity `ROUTE-MANIFEST.json` ↔ `sitemap.md` ↔
