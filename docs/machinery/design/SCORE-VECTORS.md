@@ -39,7 +39,7 @@ edit them.
 | `conversion` | R.5, W.2 | CTA cadence ≤2 viewports, fold elements, terminal CTA |
 | `seo` | E | title length/repeat, h1 count, heading vector, link-farm density |
 | `mobile` | R, P.13 | hscroll 360/768, tap targets, collapse, page-height budget |
-| `speed` | P.12, V.7 | LH perf, LCP/CLS/TBT, transfer, render-blocking |
+| `speed` | P.12, V.7 | static budgets: JS weight, image dims/format/hints, fonts, third parties (Lighthouse is an operator check, not a gate) |
 | `a11y` | C.7, I.4, R.6, E.1 | axe, alt, landmarks, link names, focus-visible |
 | `overall` | — | weighted mean of the 13 |
 

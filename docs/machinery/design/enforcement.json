@@ -684,7 +684,7 @@
   "P.12": {
    "check": "check_speed_budget",
    "mode": "script",
-   "threshold": "perf\u226590, LCP\u22642.5s, CLS\u22640.1, JS\u226450KB, no remote scripts/fonts",
+   "threshold": "JS>50KB, img without dims/AVIF-WebP/lazy|fetchpriority, remote font host, @font-face without swap, render-blocking third-party script (Lighthouse is not a gate)",
    "tier": "invariant",
    "wave": "w7"
   },

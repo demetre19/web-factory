@@ -854,6 +854,10 @@ BASE = {
     'site/src/components/sections/Macro.astro': SECTIONS['Macro.astro'],
     'site/src/components/sections/EndAct.astro': SECTIONS['EndAct.astro'],
     'site/src/components/sections/Footer.astro': SECTIONS['Footer.astro'],
+    'CHECKLIST/w3.md': '| Rule | Evidence |\n|---|---|\n'
+                       '| T.1 font directory | Inter + Ionicons listed |\n',
+    '.wave': 'w3',
+    'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
     'preview/home.html': PAGE_HTML,
     'shots/home-1280.png': b'PNG',
     'shots/home-light-1280.png': b'PNG',
@@ -982,6 +986,11 @@ MUT = {
     '<p>Fixture Co, 1 Test St</p>','<h1>Fixture Co</h1>')),
  'check_segment_priority': mut(('REPL','preview/home.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
+ 'check_checklist': mut(('SET','CHECKLIST/w3.md',
+    '| Rule | Evidence |\n|---|---|\n| T.1 font directory | |\n')),
+ 'check_novelty': mut(('SET','GATES.json',
+    '{"w5": {"design": "d3"}}'),
+    ('REPL','NOVELTY.json','"distance": 0.44','"distance": 0.90')),
 }
 
 ENV_EXEMPT = {'check_astro_build', 'check_mobbin_auth'}
@@ -1048,6 +1057,14 @@ def main():
                 src = os.path.relpath(
                     os.path.join(FX, '_base', rel), os.path.dirname(dst))
                 os.symlink(src, dst)
+    # check_novelty only bites with a chosen wildcard; no other fixture may
+    # carry a w5 design pick (the wireframe cards only hold d1/d2).
+    for sub in ('pass', 'fail'):
+        gp = os.path.join(FX, 'check_novelty', sub, 'GATES.json')
+        if os.path.lexists(gp):
+            os.remove(gp)
+        with open(gp, 'w') as fh:
+            fh.write('{"w5": {"design": "d3"}}\n')
     print(f'fixtures written: {len(MUT)} checks x pass/fail + _base')
 
 if __name__ == '__main__':

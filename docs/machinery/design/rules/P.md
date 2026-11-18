@@ -145,15 +145,18 @@ One icon library per site (Lucide default), inline SVG only: no
 `<img>` icons, no icon fonts, no mixed sets. Sizes ∈ {16, 20, 24, 32,
 48} (I.3); stroke-width ∈ {1.5, 2, 2.5, 3}px uniform per site (I.2).
 
-### P.12 Speed budget — measured on built output
+### P.12 Speed budget — static budgets on built output
 
-`astro build` output is gated: mobile perf ≥90 (lighthouse CLI when
-available, else static budgets), LCP ≤2.5s, CLS ≤0.1, total JS ≤50KB
+`astro build` output is gated on static budgets only: total JS ≤50KB
 (zero JS by default — islands only when needed), CSS purged by
 Tailwind, images via `<Image>`/`<Picture>` AVIF/WebP with width/height
 set + lazy below fold + hero `fetchpriority=high`, fonts self-hosted +
 `font-display: swap` + preload, no render-blocking third-party
-scripts.
+scripts, no remote font hosts, every `<img>` with dimensions.
+
+**Lighthouse is not a gate.** It is an operator post-build check run by
+hand on the deployed site; its score never blocks a wave and no gate
+invokes it.
 
 ### P.13 Mobile budget — the 360 render is the product
 

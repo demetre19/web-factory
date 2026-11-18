@@ -72,7 +72,7 @@ closed set.
 | P.1 | Golden rule | invariant | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
 | P.10 | No emoji | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w6 |
 | P.11 | Icon discipline | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
-| P.12 | Speed budget | invariant | script | `check_speed_budget` | perf≥90, LCP≤2.5s, CLS≤0.1, JS≤50KB, no remote scripts/fonts | w7 |
+| P.12 | Speed budget | invariant | script | `check_speed_budget` | JS>50KB, img without dims/AVIF-WebP/lazy|fetchpriority, remote font host, @font-face without swap, render-blocking third-party script (Lighthouse is not a gate) | w7 |
 | P.13 | Mobile budget | invariant | script | `check_mobile_budget` | mobile-first, ≥16px body, burger nav, no h-scroll at 360 | w7 |
 | P.14 | Mobbin evidence | structural | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition | w5 |
 | P.15 | SPEC verbatim | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |

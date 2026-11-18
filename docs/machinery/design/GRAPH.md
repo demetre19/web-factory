@@ -1572,179 +1572,179 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → R.8 [loads]
-- → I.8 [loads]
-- → W.10 [loads]
-- → T.6 [loads]
+- → G.1 [loads]
 - → T.8 [loads]
 - → L.13 [loads]
-- → G.1 [loads]
-- → R.2 [loads]
-- → PS.1 [loads]
-- → PS.6 [loads]
-- → V.6 [loads]
-- → V.8 [loads]
-- → M.8 [loads]
-- → S.8 [loads]
-- → E.4 [loads]
 - → C.7 [loads]
+- → W.10 [loads]
+- → I.8 [loads]
+- → R.2 [loads]
+- → E.4 [loads]
 - → E.1 [loads]
+- → PS.6 [loads]
+- → T.6 [loads]
+- → V.6 [loads]
+- → R.8 [loads]
+- → S.8 [loads]
+- → PS.1 [loads]
+- → M.8 [loads]
+- → V.8 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
 - → G.1 [loads]
+- → T.3 [loads]
 - → G.3 [loads]
+- → V.3 [loads]
 - → M.1 [loads]
 - → S.1 [loads]
 - → C.2 [loads]
-- → T.3 [loads]
-- → V.3 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
+- → L.11 [loads]
+- → C.7 [loads]
+- → C.3 [loads]
+- → G.3 [loads]
+- → T.6 [loads]
+- → M.2 [loads]
+- → W.8 [loads]
+- → C.2 [loads]
+- → V.2 [loads]
+- → G.2 [loads]
 - → R.1 [loads]
+- → W.2 [loads]
+- → S.1 [loads]
+- → I.3 [loads]
+- → C.4 [loads]
+- → I.2 [loads]
+- → S.5 [loads]
+- → T.3 [loads]
+- → M.6 [loads]
+- → M.1 [loads]
+- → C.1 [loads]
+- → V.6 [loads]
+- → S.7 [loads]
+- → G.1 [loads]
+- → C.5 [loads]
+- → R.3 [loads]
+- → R.2 [loads]
+- → E.2 [loads]
+- → S.2 [loads]
 - → T.4 [loads]
 - → I.1 [loads]
-- → S.7 [loads]
-- → E.2 [loads]
-- → C.1 [loads]
-- → G.3 [loads]
-- → S.5 [loads]
-- → G.2 [loads]
-- → W.8 [loads]
-- → C.7 [loads]
-- → C.4 [loads]
-- → C.5 [loads]
-- → M.1 [loads]
-- → M.6 [loads]
-- → T.3 [loads]
-- → V.2 [loads]
-- → S.2 [loads]
-- → G.1 [loads]
-- → I.3 [loads]
-- → R.2 [loads]
-- → I.2 [loads]
-- → C.3 [loads]
-- → R.3 [loads]
-- → C.2 [loads]
-- → W.2 [loads]
-- → T.6 [loads]
-- → V.6 [loads]
-- → S.1 [loads]
-- → L.11 [loads]
-- → M.2 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
-- → W.7 [loads]
-- → E.2 [loads]
-- → W.10 [loads]
-- → W.1 [loads]
-- → W.8 [loads]
 - → W.6 [loads]
-- → E.1 [loads]
+- → W.10 [loads]
 - → W.2 [loads]
+- → E.1 [loads]
+- → W.1 [loads]
+- → E.2 [loads]
+- → W.8 [loads]
+- → W.7 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → E.2 [loads]
-- → L.7 [loads]
-- → W.4 [loads]
 - → R.3 [loads]
 - → L.1 [loads]
+- → W.4 [loads]
+- → W.2 [loads]
 - → E.1 [loads]
 - → V.3 [loads]
-- → W.2 [loads]
+- → E.2 [loads]
+- → L.7 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → R.5 [loads]
-- → R.6 [loads]
-- → I.1 [loads]
 - → G.1 [loads]
-- → C.1 [loads]
-- → I.3 [loads]
-- → V.4 [loads]
-- → S.4 [loads]
-- → W.4 [loads]
 - → R.3 [loads]
-- → M.6 [loads]
-- → M.2 [loads]
-- → S.2 [loads]
+- → R.6 [loads]
+- → W.4 [loads]
+- → V.4 [loads]
 - → V.3 [loads]
 - → W.2 [loads]
+- → M.2 [loads]
+- → M.6 [loads]
+- → S.2 [loads]
+- → C.1 [loads]
+- → I.3 [loads]
+- → S.4 [loads]
+- → R.5 [loads]
+- → I.1 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → R.1 [loads]
-- → R.6 [loads]
-- → R.5 [loads]
-- → W.7 [loads]
-- → E.2 [loads]
 - → E.3 [loads]
-- → L.7 [loads]
-- → PS.1 [loads]
 - → R.3 [loads]
-- → V.6 [loads]
+- → R.6 [loads]
+- → R.1 [loads]
 - → M.6 [loads]
-- → PS.6 [loads]
 - → E.1 [loads]
+- → E.2 [loads]
 - → V.3 [loads]
+- → PS.6 [loads]
+- → L.7 [loads]
+- → V.6 [loads]
+- → W.7 [loads]
+- → R.5 [loads]
+- → PS.1 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → L.3 [loads]
-- → I.6 [loads]
-- → S.7 [loads]
-- → V.7 [loads]
-- → E.2 [loads]
-- → T.5 [loads]
-- → C.6 [loads]
-- → V.4 [loads]
-- → E.3 [loads]
-- → S.4 [loads]
-- → V.5 [loads]
-- → S.5 [loads]
-- → G.2 [loads]
-- → I.7 [loads]
-- → R.7 [loads]
-- → W.1 [loads]
-- → W.6 [loads]
+- → L.6 [loads]
 - → C.7 [loads]
-- → T.10 [loads]
-- → I.4 [loads]
+- → V.0 [loads]
+- → V.7 [loads]
+- → M.3 [loads]
+- → C.3 [loads]
 - → R.4 [loads]
-- → W.9 [loads]
-- → R.5 [loads]
-- → C.4 [loads]
-- → W.7 [loads]
 - → T.11 [loads]
+- → L.5 [loads]
+- → S.4 [loads]
+- → M.2 [loads]
+- → W.7 [loads]
+- → W.9 [loads]
+- → T.1 [loads]
+- → W.3 [loads]
+- → G.2 [loads]
+- → T.5 [loads]
+- → W.10 [loads]
+- → L.9 [loads]
+- → S.6 [loads]
+- → I.7 [loads]
+- → M.4 [loads]
+- → T.9 [loads]
+- → V.4 [loads]
+- → C.4 [loads]
+- → L.3 [loads]
+- → R.5 [loads]
+- → G.4 [loads]
+- → S.5 [loads]
+- → T.7 [loads]
 - → T.0 [loads]
 - → M.6 [loads]
-- → M.8 [loads]
-- → W.5 [loads]
-- → V.0 [loads]
-- → S.3 [loads]
-- → L.6 [loads]
-- → L.9 [loads]
-- → W.10 [loads]
-- → M.4 [loads]
-- → C.3 [loads]
-- → M.5 [loads]
-- → L.5 [loads]
-- → L.4 [loads]
-- → G.4 [loads]
-- → W.3 [loads]
-- → T.1 [loads]
-- → V.1 [loads]
-- → T.9 [loads]
-- → S.6 [loads]
-- → S.8 [loads]
+- → C.6 [loads]
+- → T.10 [loads]
 - → V.6 [loads]
+- → S.8 [loads]
+- → V.1 [loads]
+- → S.7 [loads]
+- → R.7 [loads]
+- → I.4 [loads]
+- → M.5 [loads]
+- → E.3 [loads]
+- → S.3 [loads]
+- → W.6 [loads]
+- → L.4 [loads]
+- → V.5 [loads]
+- → W.1 [loads]
+- → E.2 [loads]
+- → I.6 [loads]
+- → W.5 [loads]
+- → M.8 [loads]
 - → V.8 [loads]
-- → T.7 [loads]
-- → M.2 [loads]
-- → M.3 [loads]
 - ← w8 [has_card]
 
 ## check_assembly (check)
@@ -2808,6 +2808,65 @@
 - ← design-genome [contains]
 
 ## gene-cta-restraint (gene)
+- ← pattern-hospitality-service-detail-content-editorial [consumes]
+- ← pattern-government-home-hero-stacked-hero [consumes]
+- ← pattern-ecommerce-category-filters-sort-text-index [consumes]
+- ← pattern-ecommerce-cart-mini-cart-form-panel [consumes]
+- ← pattern-ecommerce-checkout-form-form-panel [consumes]
+- ← pattern-ecommerce-product-gallery-media-gallery [consumes]
+- ← pattern-ecommerce-product-cross-sell-cards-n [consumes]
+- ← pattern-ecommerce-product-add-to-cart-form-panel [consumes]
+- ← pattern-ecommerce-category-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-home-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [consumes]
+- ← pattern-nonprofit-home-hero-full-bleed [consumes]
+- ← pattern-nonprofit-home-call-to-action-full-bleed [consumes]
+- ← pattern-technology-home-logo-sections-logo-wall [consumes]
+- ← pattern-technology-home-feature-editorial [consumes]
+- ← pattern-technology-home-hero-stacked-hero [consumes]
+- ← pattern-agency-portfolio-home-work-grid-cards-n [consumes]
+- ← pattern-agency-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-homes-project-case-study-gallery-media-gallery [consumes]
+- ← pattern-homes-floor-plans-grids-and-cards-cards-n [consumes]
+- ← pattern-homes-home-hero-stacked-hero [consumes]
+- ← pattern-marketplace-listing-grids-and-cards-cards-n [consumes]
+- ← pattern-marketplace-home-hero-stacked-hero [consumes]
+- ← pattern-education-home-hero-stacked-hero [consumes]
+- ← pattern-education-pricing-pricing-cards-n [consumes]
+- ← pattern-real-estate-listing-listing-cards-n [consumes]
+- ← pattern-real-estate-home-hero-stacked-hero [consumes]
+- ← pattern-fashion-lookbook-gallery-media-gallery [consumes]
+- ← pattern-fashion-collection-content-editorial [consumes]
+- ← pattern-jewellery-product-add-to-cart-form-panel [consumes]
+- ← pattern-jewellery-collection-product-grid-cards-n [consumes]
+- ← pattern-automotive-listing-listing-cards-n [consumes]
+- ← pattern-architecture-project-index-work-grid-cards-n [consumes]
+- ← pattern-architecture-home-hero-stacked-hero [consumes]
+- ← pattern-portfolio-work-index-work-grid-cards-n [consumes]
+- ← pattern-portfolio-about-content-editorial [consumes]
+- ← pattern-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-portfolio-case-study-case-study-editorial [consumes]
+- ← pattern-finance-home-hero-stacked-hero [consumes]
+- ← pattern-luxury-goods-brand-story-content-editorial [consumes]
+- ← pattern-luxury-goods-product-add-to-cart-form-panel [consumes]
+- ← pattern-luxury-goods-home-hero-stacked-hero [consumes]
+- ← pattern-events-schedule-schedule-comparison [consumes]
+- ← pattern-personal-brand-service-detail-feature-editorial [consumes]
+- ← pattern-personal-brand-home-hero-stacked-hero [consumes]
+- ← pattern-community-home-feature-editorial [consumes]
+- ← pattern-legal-service-detail-feature-editorial [consumes]
+- ← pattern-legal-home-hero-stacked-hero [consumes]
+- ← pattern-saas-home-testimonials-quote-grid [consumes]
+- ← pattern-saas-home-feature-editorial [consumes]
+- ← pattern-saas-home-hero-stacked-hero [consumes]
+- ← pattern-saas-home-call-to-action-full-bleed [consumes]
+- ← pattern-services-service-detail-gallery-media-gallery [consumes]
+- ← pattern-services-home-feature-editorial [consumes]
+- ← pattern-services-home-hero-stacked-hero [consumes]
+- ← pattern-services-home-call-to-action-full-bleed [consumes]
+- ← pattern-services-service-detail-pricing-cards-n [consumes]
+- ← pattern-media-blog-content-editorial [consumes]
+- ← pattern-media-home-hero-stacked-hero [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -2837,6 +2896,22 @@
 - ← design-genome [contains]
 
 ## gene-density-tier (gene)
+- ← pattern-hospitality-home-hero-full-bleed [consumes]
+- ← pattern-government-service-detail-grids-and-cards-cards-n [consumes]
+- ← pattern-ecommerce-collection-hero-full-bleed [consumes]
+- ← pattern-ecommerce-home-hero-full-bleed [consumes]
+- ← pattern-technology-home-content-editorial [consumes]
+- ← pattern-healthcare-home-hero-full-bleed [consumes]
+- ← pattern-recruitment-listing-listing-cards-n [consumes]
+- ← pattern-fashion-lookbook-gallery-media-gallery [consumes]
+- ← pattern-automotive-home-hero-full-bleed [consumes]
+- ← pattern-portfolio-contact-contact-form-panel [consumes]
+- ← pattern-saas-home-logo-sections-logo-wall [consumes]
+- ← pattern-saas-pricing-faq-faq [consumes]
+- ← pattern-saas-pricing-comparison-comparison [consumes]
+- ← pattern-saas-pricing-pricing-cards-n [consumes]
+- ← pattern-services-service-detail-testimonials-quote-grid [consumes]
+- ← pattern-services-service-detail-faq-faq [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -2866,6 +2941,19 @@
 - ← design-genome [contains]
 
 ## gene-disclosure-tier (gene)
+- ← pattern-hospitality-home-hero-full-bleed [consumes]
+- ← pattern-ecommerce-collection-hero-full-bleed [consumes]
+- ← pattern-ecommerce-home-hero-full-bleed [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
+- ← pattern-healthcare-home-hero-full-bleed [consumes]
+- ← pattern-recruitment-home-hero-split-media [consumes]
+- ← pattern-fashion-home-hero-stacked-hero [consumes]
+- ← pattern-jewellery-home-hero-stacked-hero [consumes]
+- ← pattern-automotive-home-hero-full-bleed [consumes]
+- ← pattern-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-events-home-hero-stacked-hero [consumes]
+- ← pattern-community-home-hero-stacked-hero [consumes]
+- ← pattern-services-service-detail-hero-stacked-hero [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3011,6 +3099,45 @@
 - ← design-genome [contains]
 
 ## gene-image-led-ratio (gene)
+- ← pattern-government-service-detail-grids-and-cards-cards-n [consumes]
+- ← pattern-ecommerce-checkout-form-form-panel [consumes]
+- ← pattern-ecommerce-product-cross-sell-cards-n [consumes]
+- ← pattern-ecommerce-product-trust-badges-badge-center [consumes]
+- ← pattern-ecommerce-home-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-product-reviews-quote-grid [consumes]
+- ← pattern-technology-home-logo-sections-logo-wall [consumes]
+- ← pattern-technology-home-content-editorial [consumes]
+- ← pattern-technology-home-feature-editorial [consumes]
+- ← pattern-technology-home-hero-stacked-hero [consumes]
+- ← pattern-agency-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-recruitment-listing-listing-cards-n [consumes]
+- ← pattern-marketplace-home-hero-stacked-hero [consumes]
+- ← pattern-education-pricing-pricing-cards-n [consumes]
+- ← pattern-automotive-listing-listing-cards-n [consumes]
+- ← pattern-architecture-home-hero-stacked-hero [consumes]
+- ← pattern-architecture-project-case-study-case-study-editorial [consumes]
+- ← pattern-portfolio-contact-contact-form-panel [consumes]
+- ← pattern-portfolio-about-content-editorial [consumes]
+- ← pattern-finance-home-trust-badges-badge-center [consumes]
+- ← pattern-finance-home-hero-stacked-hero [consumes]
+- ← pattern-luxury-goods-product-add-to-cart-form-panel [consumes]
+- ← pattern-events-schedule-schedule-comparison [consumes]
+- ← pattern-legal-home-hero-stacked-hero [consumes]
+- ← pattern-saas-home-testimonials-quote-grid [consumes]
+- ← pattern-saas-home-logo-sections-logo-wall [consumes]
+- ← pattern-saas-pricing-faq-faq [consumes]
+- ← pattern-saas-pricing-comparison-comparison [consumes]
+- ← pattern-saas-home-feature-editorial [consumes]
+- ← pattern-saas-home-call-to-action-full-bleed [consumes]
+- ← pattern-saas-pricing-pricing-cards-n [consumes]
+- ← pattern-services-service-detail-testimonials-quote-grid [consumes]
+- ← pattern-services-home-testimonials-quote-grid [consumes]
+- ← pattern-services-service-detail-faq-faq [consumes]
+- ← pattern-services-service-detail-content-editorial [consumes]
+- ← pattern-services-home-how-it-works-sequence [consumes]
+- ← pattern-services-home-feature-editorial [consumes]
+- ← pattern-services-home-call-to-action-full-bleed [consumes]
+- ← pattern-services-service-detail-pricing-cards-n [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3040,6 +3167,65 @@
 - ← design-genome [contains]
 
 ## gene-layout-archetype (gene)
+- ← pattern-hospitality-service-detail-content-editorial [consumes]
+- ← pattern-ecommerce-category-filters-sort-text-index [consumes]
+- ← pattern-ecommerce-cart-mini-cart-form-panel [consumes]
+- ← pattern-ecommerce-checkout-form-form-panel [consumes]
+- ← pattern-ecommerce-product-gallery-media-gallery [consumes]
+- ← pattern-ecommerce-product-trust-badges-badge-center [consumes]
+- ← pattern-ecommerce-product-add-to-cart-form-panel [consumes]
+- ← pattern-ecommerce-category-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-product-reviews-quote-grid [consumes]
+- ← pattern-nonprofit-home-call-to-action-full-bleed [consumes]
+- ← pattern-technology-home-logo-sections-logo-wall [consumes]
+- ← pattern-technology-home-content-editorial [consumes]
+- ← pattern-technology-home-hero-stacked-hero [consumes]
+- ← pattern-agency-portfolio-home-work-grid-cards-n [consumes]
+- ← pattern-agency-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-homes-floor-plans-grids-and-cards-cards-n [consumes]
+- ← pattern-homes-home-hero-stacked-hero [consumes]
+- ← pattern-marketplace-listing-grids-and-cards-cards-n [consumes]
+- ← pattern-marketplace-home-hero-stacked-hero [consumes]
+- ← pattern-education-home-hero-stacked-hero [consumes]
+- ← pattern-real-estate-listing-listing-cards-n [consumes]
+- ← pattern-real-estate-home-hero-stacked-hero [consumes]
+- ← pattern-fashion-collection-content-editorial [consumes]
+- ← pattern-jewellery-product-add-to-cart-form-panel [consumes]
+- ← pattern-architecture-project-index-work-grid-cards-n [consumes]
+- ← pattern-architecture-home-hero-stacked-hero [consumes]
+- ← pattern-architecture-project-case-study-case-study-editorial [consumes]
+- ← pattern-portfolio-work-index-work-grid-cards-n [consumes]
+- ← pattern-portfolio-contact-contact-form-panel [consumes]
+- ← pattern-portfolio-about-content-editorial [consumes]
+- ← pattern-portfolio-case-study-case-study-editorial [consumes]
+- ← pattern-finance-home-trust-badges-badge-center [consumes]
+- ← pattern-finance-home-hero-stacked-hero [consumes]
+- ← pattern-luxury-goods-brand-story-content-editorial [consumes]
+- ← pattern-luxury-goods-product-add-to-cart-form-panel [consumes]
+- ← pattern-luxury-goods-home-hero-stacked-hero [consumes]
+- ← pattern-events-schedule-schedule-comparison [consumes]
+- ← pattern-community-home-feature-editorial [consumes]
+- ← pattern-legal-service-detail-feature-editorial [consumes]
+- ← pattern-legal-home-hero-stacked-hero [consumes]
+- ← pattern-saas-home-testimonials-quote-grid [consumes]
+- ← pattern-saas-home-logo-sections-logo-wall [consumes]
+- ← pattern-saas-pricing-faq-faq [consumes]
+- ← pattern-saas-pricing-comparison-comparison [consumes]
+- ← pattern-saas-home-feature-editorial [consumes]
+- ← pattern-saas-home-hero-stacked-hero [consumes]
+- ← pattern-saas-home-call-to-action-full-bleed [consumes]
+- ← pattern-saas-pricing-pricing-cards-n [consumes]
+- ← pattern-services-service-detail-testimonials-quote-grid [consumes]
+- ← pattern-services-home-testimonials-quote-grid [consumes]
+- ← pattern-services-service-detail-faq-faq [consumes]
+- ← pattern-services-service-detail-gallery-media-gallery [consumes]
+- ← pattern-services-service-detail-content-editorial [consumes]
+- ← pattern-services-home-how-it-works-sequence [consumes]
+- ← pattern-services-home-feature-editorial [consumes]
+- ← pattern-services-home-call-to-action-full-bleed [consumes]
+- ← pattern-media-blog-content-editorial [consumes]
+- ← pattern-media-home-hero-stacked-hero [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3185,6 +3371,46 @@
 - ← design-genome [contains]
 
 ## gene-proof-type (gene)
+- ← pattern-hospitality-home-hero-full-bleed [consumes]
+- ← pattern-government-home-hero-stacked-hero [consumes]
+- ← pattern-ecommerce-product-gallery-media-gallery [consumes]
+- ← pattern-ecommerce-category-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-home-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-collection-hero-full-bleed [consumes]
+- ← pattern-ecommerce-home-hero-full-bleed [consumes]
+- ← pattern-nonprofit-home-hero-full-bleed [consumes]
+- ← pattern-technology-home-feature-editorial [consumes]
+- ← pattern-agency-portfolio-home-work-grid-cards-n [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
+- ← pattern-healthcare-home-hero-full-bleed [consumes]
+- ← pattern-homes-project-case-study-gallery-media-gallery [consumes]
+- ← pattern-homes-floor-plans-grids-and-cards-cards-n [consumes]
+- ← pattern-homes-home-hero-stacked-hero [consumes]
+- ← pattern-recruitment-home-hero-split-media [consumes]
+- ← pattern-marketplace-listing-grids-and-cards-cards-n [consumes]
+- ← pattern-education-home-hero-stacked-hero [consumes]
+- ← pattern-real-estate-listing-listing-cards-n [consumes]
+- ← pattern-real-estate-home-hero-stacked-hero [consumes]
+- ← pattern-fashion-lookbook-gallery-media-gallery [consumes]
+- ← pattern-fashion-home-hero-stacked-hero [consumes]
+- ← pattern-jewellery-collection-product-grid-cards-n [consumes]
+- ← pattern-jewellery-home-hero-stacked-hero [consumes]
+- ← pattern-automotive-listing-listing-cards-n [consumes]
+- ← pattern-automotive-home-hero-full-bleed [consumes]
+- ← pattern-architecture-project-index-work-grid-cards-n [consumes]
+- ← pattern-portfolio-work-index-work-grid-cards-n [consumes]
+- ← pattern-portfolio-home-hero-stacked-hero [consumes]
+- ← pattern-luxury-goods-home-hero-stacked-hero [consumes]
+- ← pattern-events-home-hero-stacked-hero [consumes]
+- ← pattern-personal-brand-service-detail-feature-editorial [consumes]
+- ← pattern-personal-brand-home-hero-stacked-hero [consumes]
+- ← pattern-community-home-feature-editorial [consumes]
+- ← pattern-community-home-hero-stacked-hero [consumes]
+- ← pattern-legal-service-detail-feature-editorial [consumes]
+- ← pattern-saas-home-hero-stacked-hero [consumes]
+- ← pattern-services-home-hero-stacked-hero [consumes]
+- ← pattern-services-service-detail-hero-stacked-hero [consumes]
+- ← pattern-media-home-hero-stacked-hero [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3243,6 +3469,44 @@
 - ← design-genome [contains]
 
 ## gene-surface-rhythm (gene)
+- ← pattern-hospitality-service-detail-content-editorial [consumes]
+- ← pattern-government-service-detail-grids-and-cards-cards-n [consumes]
+- ← pattern-government-home-hero-stacked-hero [consumes]
+- ← pattern-ecommerce-category-filters-sort-text-index [consumes]
+- ← pattern-ecommerce-cart-mini-cart-form-panel [consumes]
+- ← pattern-ecommerce-product-cross-sell-cards-n [consumes]
+- ← pattern-ecommerce-product-trust-badges-badge-center [consumes]
+- ← pattern-ecommerce-product-add-to-cart-form-panel [consumes]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-product-reviews-quote-grid [consumes]
+- ← pattern-nonprofit-home-hero-full-bleed [consumes]
+- ← pattern-nonprofit-home-call-to-action-full-bleed [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
+- ← pattern-homes-project-case-study-gallery-media-gallery [consumes]
+- ← pattern-recruitment-listing-listing-cards-n [consumes]
+- ← pattern-recruitment-home-hero-split-media [consumes]
+- ← pattern-education-pricing-pricing-cards-n [consumes]
+- ← pattern-fashion-collection-content-editorial [consumes]
+- ← pattern-fashion-home-hero-stacked-hero [consumes]
+- ← pattern-jewellery-product-add-to-cart-form-panel [consumes]
+- ← pattern-jewellery-collection-product-grid-cards-n [consumes]
+- ← pattern-jewellery-home-hero-stacked-hero [consumes]
+- ← pattern-architecture-project-case-study-case-study-editorial [consumes]
+- ← pattern-portfolio-case-study-case-study-editorial [consumes]
+- ← pattern-finance-home-trust-badges-badge-center [consumes]
+- ← pattern-luxury-goods-brand-story-content-editorial [consumes]
+- ← pattern-events-home-hero-stacked-hero [consumes]
+- ← pattern-personal-brand-service-detail-feature-editorial [consumes]
+- ← pattern-personal-brand-home-hero-stacked-hero [consumes]
+- ← pattern-community-home-hero-stacked-hero [consumes]
+- ← pattern-services-home-testimonials-quote-grid [consumes]
+- ← pattern-services-service-detail-gallery-media-gallery [consumes]
+- ← pattern-services-service-detail-content-editorial [consumes]
+- ← pattern-services-home-how-it-works-sequence [consumes]
+- ← pattern-services-home-hero-stacked-hero [consumes]
+- ← pattern-services-service-detail-hero-stacked-hero [consumes]
+- ← pattern-services-service-detail-pricing-cards-n [consumes]
+- ← pattern-media-blog-content-editorial [consumes]
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3402,6 +3666,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-agency-portfolio-home-work-grid-cards-n (pattern)
@@ -3422,6 +3689,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-architecture-home-hero-stacked-hero (pattern)
@@ -3443,6 +3713,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-architecture-project-case-study-case-study-editorial (pattern)
@@ -3464,6 +3737,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-architecture-project-index-work-grid-cards-n (pattern)
@@ -3484,6 +3760,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-automotive-home-hero-full-bleed (pattern)
@@ -3502,6 +3781,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-automotive-listing-listing-cards-n (pattern)
@@ -3521,6 +3803,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-community-home-feature-editorial (pattern)
@@ -3541,6 +3826,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-community-home-hero-stacked-hero (pattern)
@@ -3559,6 +3847,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-cart-mini-cart-form-panel (pattern)
@@ -3581,6 +3872,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-category-filters-sort-text-index (pattern)
@@ -3603,6 +3897,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-category-product-grid-cards-n (pattern)
@@ -3623,6 +3920,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-checkout-form-form-panel (pattern)
@@ -3644,6 +3944,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-collection-hero-full-bleed (pattern)
@@ -3662,6 +3965,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-home-hero-full-bleed (pattern)
@@ -3680,6 +3986,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-home-product-grid-cards-n (pattern)
@@ -3699,6 +4008,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-product-add-to-cart-form-panel (pattern)
@@ -3721,6 +4033,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-product-cross-sell-cards-n (pattern)
@@ -3742,6 +4057,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-product-gallery-media-gallery (pattern)
@@ -3762,6 +4080,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-product-reviews-quote-grid (pattern)
@@ -3783,6 +4104,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-product-trust-badges-badge-center (pattern)
@@ -3804,6 +4128,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-ecommerce-search-results-product-grid-cards-n (pattern)
@@ -3826,6 +4153,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-education-home-hero-stacked-hero (pattern)
@@ -3846,6 +4176,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-education-pricing-pricing-cards-n (pattern)
@@ -3867,6 +4200,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-events-home-hero-stacked-hero (pattern)
@@ -3885,6 +4221,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-events-schedule-schedule-comparison (pattern)
@@ -3906,6 +4245,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-fashion-collection-content-editorial (pattern)
@@ -3928,6 +4270,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-fashion-home-hero-stacked-hero (pattern)
@@ -3946,6 +4291,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-fashion-lookbook-gallery-media-gallery (pattern)
@@ -3965,6 +4313,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-finance-home-hero-stacked-hero (pattern)
@@ -3986,6 +4337,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-finance-home-trust-badges-badge-center (pattern)
@@ -4007,6 +4361,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-government-home-hero-stacked-hero (pattern)
@@ -4026,6 +4383,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-government-service-detail-grids-and-cards-cards-n (pattern)
@@ -4046,6 +4406,9 @@
 - → check_spacing_scale [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-healthcare-home-hero-full-bleed (pattern)
@@ -4064,6 +4427,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-healthcare-service-detail-feature-split-media (pattern)
@@ -4082,6 +4448,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-homes-floor-plans-grids-and-cards-cards-n (pattern)
@@ -4102,6 +4471,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-homes-home-hero-stacked-hero (pattern)
@@ -4122,6 +4494,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-homes-project-case-study-gallery-media-gallery (pattern)
@@ -4141,6 +4516,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-hospitality-home-hero-full-bleed (pattern)
@@ -4159,6 +4537,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-density-tier [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-hospitality-service-detail-content-editorial (pattern)
@@ -4181,6 +4562,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-jewellery-collection-product-grid-cards-n (pattern)
@@ -4200,6 +4584,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-jewellery-home-hero-stacked-hero (pattern)
@@ -4218,6 +4605,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-jewellery-product-add-to-cart-form-panel (pattern)
@@ -4240,6 +4630,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-legal-home-hero-stacked-hero (pattern)
@@ -4261,6 +4654,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-legal-service-detail-feature-editorial (pattern)
@@ -4281,6 +4677,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-luxury-goods-brand-story-content-editorial (pattern)
@@ -4303,6 +4702,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-luxury-goods-home-hero-stacked-hero (pattern)
@@ -4323,6 +4725,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-luxury-goods-product-add-to-cart-form-panel (pattern)
@@ -4344,6 +4749,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-marketplace-home-hero-stacked-hero (pattern)
@@ -4365,6 +4773,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-marketplace-listing-grids-and-cards-cards-n (pattern)
@@ -4385,6 +4796,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-media-blog-content-editorial (pattern)
@@ -4407,6 +4821,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-media-home-hero-stacked-hero (pattern)
@@ -4427,6 +4844,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-nonprofit-home-call-to-action-full-bleed (pattern)
@@ -4449,6 +4869,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-nonprofit-home-hero-full-bleed (pattern)
@@ -4468,6 +4891,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-personal-brand-home-hero-stacked-hero (pattern)
@@ -4487,6 +4913,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-personal-brand-service-detail-feature-editorial (pattern)
@@ -4506,6 +4935,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-portfolio-about-content-editorial (pattern)
@@ -4527,6 +4959,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-portfolio-case-study-case-study-editorial (pattern)
@@ -4549,6 +4984,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-portfolio-contact-contact-form-panel (pattern)
@@ -4570,6 +5008,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-portfolio-home-hero-stacked-hero (pattern)
@@ -4588,6 +5029,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-portfolio-work-index-work-grid-cards-n (pattern)
@@ -4608,6 +5052,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-real-estate-home-hero-stacked-hero (pattern)
@@ -4628,6 +5075,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-real-estate-listing-listing-cards-n (pattern)
@@ -4648,6 +5098,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-recruitment-home-hero-split-media (pattern)
@@ -4666,6 +5119,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-recruitment-listing-listing-cards-n (pattern)
@@ -4686,6 +5142,9 @@
 - → check_spacing_scale [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-home-call-to-action-full-bleed (pattern)
@@ -4707,6 +5166,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-home-feature-editorial (pattern)
@@ -4728,6 +5190,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-home-hero-stacked-hero (pattern)
@@ -4748,6 +5213,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-home-logo-sections-logo-wall (pattern)
@@ -4769,6 +5237,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-home-testimonials-quote-grid (pattern)
@@ -4790,6 +5261,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-pricing-comparison-comparison (pattern)
@@ -4811,6 +5285,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-pricing-faq-faq (pattern)
@@ -4832,6 +5309,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-saas-pricing-pricing-cards-n (pattern)
@@ -4853,6 +5333,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-home-call-to-action-full-bleed (pattern)
@@ -4874,6 +5357,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-home-feature-editorial (pattern)
@@ -4895,6 +5381,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-home-hero-stacked-hero (pattern)
@@ -4914,6 +5403,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-home-how-it-works-sequence (pattern)
@@ -4935,6 +5427,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-home-testimonials-quote-grid (pattern)
@@ -4956,6 +5451,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-content-editorial (pattern)
@@ -4977,6 +5475,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-faq-faq (pattern)
@@ -4998,6 +5499,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-gallery-media-gallery (pattern)
@@ -5020,6 +5524,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-hero-stacked-hero (pattern)
@@ -5038,6 +5545,9 @@
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-surface-rhythm [consumes]
+- → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-pricing-cards-n (pattern)
@@ -5059,6 +5569,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-surface-rhythm [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-services-service-detail-testimonials-quote-grid (pattern)
@@ -5080,6 +5593,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-technology-home-content-editorial (pattern)
@@ -5101,6 +5617,9 @@
 - → check_wireframe_lock [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-density-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-technology-home-feature-editorial (pattern)
@@ -5120,6 +5639,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
+- → gene-proof-type [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-technology-home-hero-stacked-hero (pattern)
@@ -5141,6 +5663,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-technology-home-logo-sections-logo-wall (pattern)
@@ -5162,6 +5687,9 @@
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
+- → gene-layout-archetype [consumes]
+- → gene-image-led-ratio [consumes]
+- → gene-cta-restraint [consumes]
 - ← patterns-index [patterns]
 
 ## patterns-index (index)
@@ -5169,6 +5697,7 @@
 - → patterns-taxonomy [contains]
 - → patterns-validation [patterns]
 - → scorer-patterns [patterns]
+- → patterns/README [patterns]
 - → pattern-hospitality-service-detail-content-editorial [patterns]
 - → pattern-hospitality-home-hero-full-bleed [patterns]
 - → pattern-government-service-detail-grids-and-cards-cards-n [patterns]
@@ -5409,6 +5938,9 @@
 - → scorer-patterns [derives_from]
 - → w2 [used_in]
 - → w5 [used_in]
+- ← patterns-index [patterns]
+
+## patterns/README (doc)
 - ← patterns-index [patterns]
 
 ## primitives (doc)

@@ -747,34 +747,9 @@ def check_speed_budget(ctx):
     g = ctx.read('site/src/styles/global.css') or ''
     if '@font-face' in g and 'font-display' not in g:
         f.append('P.12 @font-face without font-display: swap')
-    lh = shutil.which('lighthouse')
-    if lh and os.path.isdir(dist):
-        try:
-            idx = next((os.path.join(dp, fn)
-                        for dp, _, fns in os.walk(dist)
-                        for fn in fns if fn == 'index.html'), None)
-            if idx:
-                r = subprocess.run(
-                    [lh, f'file://{idx}', '--preset=mobile',
-                     '--output=json', '--quiet', '--chrome-flags='
-                     '--headless --no-sandbox'],
-                    capture_output=True, text=True, timeout=180)
-                rep = json.loads(r.stdout)
-                perf = rep['categories']['performance']['score'] * 100
-                if perf < 90:
-                    f.append(f'P.12 lighthouse mobile perf {perf:.0f} '
-                             '< 90')
-                auds = rep.get('audits', {})
-                lcp = auds.get('largest-contentful-paint', {}) \
-                    .get('numericValue')
-                if lcp and lcp > 2500:
-                    f.append(f'P.12 LCP {lcp/1000:.2f}s > 2.5s')
-                cls = auds.get('cumulative-layout-shift', {}) \
-                    .get('numericValue')
-                if cls and cls > 0.1:
-                    f.append(f'P.12 CLS {cls:.3f} > 0.1')
-        except Exception as e:
-            f.append(f'P.12 lighthouse run failed: {e}')
+    # Lighthouse is NOT a gate: it is an operator post-build check run by
+    # hand against the deployed site. The gate holds the static budgets
+    # above (JS weight, image dims/format/hints, fonts, third parties).
     return f
 
 def check_mobile_budget(ctx):

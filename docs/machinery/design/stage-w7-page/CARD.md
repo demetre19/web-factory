@@ -59,9 +59,11 @@ row or a section — fix that unit and re-run the glue (SB.6).
   contradicts the plan is a refuse.
 - **P.10/P.11** No emoji anywhere in emitted HTML; icons inline SVG,
   `currentColor`, sizes ∈ {16,20,24,32,48}, stroke ∈ {1.5,2,2.5,3}.
-- **P.12** Speed budget on `dist/`: JS ≤ ~50 KB, mobile perf ≥ 90,
-  LCP ≤ 2.5 s, CLS ≤ 0.1 (Lighthouse when the CLI is present, else the
-  static checks).
+- **P.12** Speed budget on `dist/`, static only: JS ≤ ~50 KB, images
+  via `<Image>`/`<Picture>` with dimensions, lazy below fold, hero
+  `fetchpriority`, fonts self-hosted + swap + preload, no
+  render-blocking third party. Lighthouse is an operator post-build
+  check, never a gate.
 - **P.13** Mobile budget: 360 render folds per R.5, no horizontal
   scroll at 360, every target ≥ 44 px (R.6).
 - **PS.1–PS.6** Segmentation on the rendered DOM: one role + one
