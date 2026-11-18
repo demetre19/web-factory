@@ -138,6 +138,9 @@ site:
     media:                                        # PRIMITIVES §V
       treatment: natural | bw | duotone | cinematic       # ≥80% of imagery
       authenticity: t1-first-party | t2-editorial | t3-ai | t4-illustrated
+    copy:                                         # PRIMITIVES §W — closed selections
+      cta_person: first | second                  # first = "Get my quote"; second = "Manage your account" — one per flow
+      reading_level: ≤grade-8                     # fixed; listed to forbid drifting
 
   # ---- motif — recurrence + exactly one break ----
   motif:
@@ -242,6 +245,11 @@ the coordinator hopes was honored:
 - [ ] responsive QA ∈ `PRIMITIVES.md` §R.8 (closed breakpoints,
   min-width only, 1440 ceiling, collapse steps exact, copy budgets,
   ≥44px targets +8px buffer, hover gated by pointer media query)
+- [ ] writing QA ∈ `PRIMITIVES.md` §W.10 (verb-first 2–4-word CTAs,
+  zero banned CTA/error phrases, sentence-case stand-alone headings,
+  placeholder example-only, tooltip ≤15w, empty-state triad, links
+  front-loaded, ≤grade-8, active voice, digits, no string
+  concatenation / text-in-graphics / idioms)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator

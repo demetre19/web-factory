@@ -99,8 +99,8 @@ rules.
   top-to-bottom per `docs/machinery/DESIGN-PLAN.md` AND passes its
   §"Enforcement" mechanical checklist (pages map, composition ∈
   catalog, category ∈ vendored slugs, adjacency, surface/density
-  SPEC↔plan verbatim) plus the `PRIMITIVES.md` §S/I/V/M/R QA gates
-  (shape, icons, media, motion, responsive).
+  SPEC↔plan verbatim) plus the `PRIMITIVES.md` §S/I/V/M/R/W QA gates
+  (shape, icons, media, motion, responsive, writing).
 
 - `sites/<slug>/` exists; `astro build` exits 0; `dist/` holds exactly
   one HTML file per `ROUTE-MANIFEST.json` route.
