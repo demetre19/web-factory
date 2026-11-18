@@ -1,0 +1,21 @@
+{
+  "schema": "design-knobs/v1",
+  "doc": "DNA-MAP.md",
+  "note": "Machine form of the closed knob ranges GENOME/TOKENS define. DNA.json carries the chosen value per knob; a variant is baseline + declared deltas. kind: number (inclusive range, single step), enum (allowed values), map (per-density-tier numbers). tier follows B.1: a declared wildcard may exceed a stylistic knob by at most two steps and never an invariant or structural one.",
+  "knobs": {
+    "type.ratio": {"token": "type.ratio", "kind": "number", "range": [1.125, 1.5], "step": 0.0125, "tier": "stylistic", "rules": ["T.1", "T.3"]},
+    "type.base": {"token": "type.base_px", "kind": "number", "range": [15, 20], "step": 1, "tier": "stylistic", "rules": ["T.6"]},
+    "type.display_weight": {"token": "type.display_weight", "kind": "number", "range": [400, 900], "step": 100, "tier": "stylistic", "rules": ["T.1", "T.5"]},
+    "type.tracking_display": {"token": "type.tracking_display", "kind": "number", "range": [-0.04, 0.0], "step": 0.005, "tier": "stylistic", "rules": ["T.6"]},
+    "space.density_scale": {"token": "space.density_scale", "kind": "number", "range": [0.85, 1.25], "step": 0.05, "tier": "stylistic", "rules": ["G.1", "G.3"]},
+    "space.section_py": {"token": "space.section_py", "kind": "map", "per": {"compact": [32, 96], "regular": [48, 128], "spacious": [72, 176]}, "step": 4, "tier": "structural", "rules": ["G.2", "L.7"]},
+    "grid.gutter": {"token": "grid.gutter_px", "kind": "number", "range": [16, 48], "step": 8, "tier": "structural", "rules": ["R.2"]},
+    "radius.personality": {"token": "radius.personality", "kind": "enum", "allowed": ["p1", "p2", "p3", "p4"], "tier": "stylistic", "rules": ["S.1", "S.2"]},
+    "color.surface_contrast": {"token": "color.surface_contrast", "kind": "number", "range": [0.02, 0.08], "step": 0.01, "tier": "stylistic", "rules": ["C.2", "C.3"]},
+    "color.accent_usage": {"token": "color.accent_usage", "kind": "enum", "allowed": ["cta+motif", "cta-only", "cta+motif+links"], "tier": "structural", "rules": ["C.4", "C.7"]},
+    "color.neutral_tint": {"token": "color.neutral_tint", "kind": "number", "range": [0.01, 0.08], "step": 0.01, "tier": "stylistic", "rules": ["C.3"]},
+    "elevation.level": {"token": "elevation.level", "kind": "number", "range": [0, 3], "step": 1, "tier": "stylistic", "rules": ["S.6", "S.7"]},
+    "motion.level": {"token": "motion.level", "kind": "enum", "allowed": ["none", "subtle", "elegant", "professional", "playful"], "tier": "stylistic", "rules": ["M.1", "M.4"]},
+    "image.treatment": {"token": "image.treatment", "kind": "enum", "allowed": ["natural", "bw", "duotone", "cinematic", "editorial-crop"], "tier": "stylistic", "rules": ["V.5"]}
+  }
+}

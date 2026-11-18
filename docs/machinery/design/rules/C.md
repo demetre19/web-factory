@@ -91,7 +91,25 @@ desaturate to terracotta/rust/ochre (H 15–25°, S 65–80%, L 40–50%).
 `accent_hover` = light −10% (dark +12%); `accent_active` = L ±15%,
 S +5%.
 
-### C.5 Dark surfaces — lightness inversion, never pure black
+### C.5 LIGHT + DARK on every design — invariant
+
+Every design ships **both modes**. This is invariant: a wildcard or a
+declared burst never breaks it (B.1), and a missing mode is a FAIL, not
+a stylistic choice.
+
+- **Tokens define both modes.** `TOKENS.json` carries `color.modes.light`
+  and `color.modes.dark`, every role resolved in each (bg, surface,
+  surface_elevated, border, ink, ink_muted, accent, accent_foreground,
+  inverse). A role defined in one mode only = FAIL.
+- **Tailwind switches by class** — `darkMode: 'class'` (or `selector`),
+  with the `.dark` block in the shared layer re-binding the same role
+  variables. No `dark:`-only hardcoded colours.
+- **A visible toggle on every surface** — the system tile, every
+  preview and every page carries a Light/Dark toggle; the choice
+  persists (localStorage), initialises from `prefers-color-scheme`, and
+  paints with no flash (a head script sets the theme before first paint).
+- **Contrast in both modes** — every C.* contrast check runs twice; a
+  mode that fails any ratio fails the design.
 
 Dark `bg` ≠ `#000000`. Invert the lightness ramp, keep the tint:
 
@@ -103,6 +121,14 @@ Dark `bg` ≠ `#000000`. Invert the lightness ramp, keep the tint:
 | `ink` | `hsl(H_brand, 4%, 92–95%)` — off-white, no glare |
 | `ink_muted` | `hsl(H_brand, 6%, 65–70%)` |
 | `accent` | same hue, L +5–10%, S −10–20% (dark-mode halation) |
+
+**Enforcement** — script `check_dark_mode` @ w3 and w7 (both modes
+defined, `darkMode: 'class'`, `.dark` re-binds every role, toggle on
+tile + pages, dark bg never pure black) and `check_dark_toggle` @ w7
+(toggle present, persisted, `prefers-color-scheme` initial, head script
+before paint). `check_contrast` runs both modes. Reviewer scores
+screenshots in **both** modes; `check_review_modes` @ w8 fails if either
+mode's shots or items are missing.
 
 ### C.6 The derivation workflow (fill order for `system.color`)
 

@@ -3,15 +3,18 @@ id: card-w1
 type: card
 wave: w1
 links:
-  uses: [rules-P, rules-DNA, rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E]
-  enforced_by: [check_mobbin_auth, check_design_mode, check_intent, check_audit_artifacts, check_genotype]
+  uses: [rules-P, rules-DNA, rules-DM, rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, dna-map]
+  enforced_by: [check_mobbin_auth, check_design_mode, check_intent, check_audit_artifacts, check_genotype, check_dna, check_dna_fresh]
 ---
 
 # W1 — DNA + audit (intake, evidence, vertical profile)
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable** — W1
-decides nothing about markup; it produces the evidence and the
-genotype every later Astro artifact binds. (P.1)
+decides nothing about markup; it produces the evidence, the genotype
+and the **DNA v0 map** every later Astro artifact binds. (P.1, LAW.DNA)
+
+**Read DNA map. Every decision traces to it.** Discovery writes **no**
+map; the map is created at W1 **exit** from what discovery found.
 
 ## Job
 
@@ -36,6 +39,26 @@ genotype every later Astro artifact binds. (P.1)
    keep-list of T1 assets (V.6) — `audit.md`.
 5. Collect the rhetoric order (8-act enum, SECTION-CATALOG §1) and the
    operator's `disclosure` density pick. Ordering happens at W5.
+6. **Create DNA v0 at W1 exit** (`DNA.json`, `version: 0`, rendered
+   `DNA.md` — `gate.py dna`). It is built from discovery outputs only:
+   - **invariants bind verbatim** (accent, logo, brand fonts,
+     photography, tone) with `provenance.tag: extracted`;
+   - **likes/dislikes become constraints** (`provenance.tag: chosen` +
+     reason);
+   - **vertical profile** pulled from `dna/<vertical>` (genome
+     statistics);
+   - **genotype + baseline knobs seeded from the pattern library** —
+     `patterns.py search` for the nearest proven genotypes; baseline =
+     their **median**, allowed range = their **IQR clipped to the SOP
+     bounds** (T.6, G.1, R.2); every seeded value records its source
+     `patterns: [ids]` and `n` in `provenance`;
+   - **vector_targets** set from the current-site rating gaps +
+     vertical norms (ease of use, clarity, layout, typography, colour,
+     rhythm, imagery, trust, conversion, SEO, mobile, speed, a11y).
+
+   Every field is provenance-tagged; every genotype/knob value cites ≥1
+   pattern ID or a logged reason. A guessed number at W1 exit is a
+   FAIL (DM.1).
 
 ## Rules that apply
 

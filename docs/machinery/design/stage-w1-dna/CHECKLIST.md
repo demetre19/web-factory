@@ -24,3 +24,8 @@ Copy into `<pipeline-dir>/CHECKLIST/w1.md`. Blank cell = fail (P.9).
 | E.1 audit defects cite rule IDs (T.8/C.7/L.13/S.8/I.8/V.8/M.8/R.8/W.10/E.4/PS.*) | |
 | V.6 keep-list names T1 assets reused verbatim | |
 | E.2 rhetoric order collected (8-act enum) + `disclosure` pick recorded | |
+| DM.1 `DNA.json` v0 created at W1 exit (`version: 0`), `DNA.md` rendered by `gate.py dna` | |
+| DM.1 invariants bound verbatim with `provenance.tag: extracted` (accent, logo, fonts, photography, tone) | |
+| DM.1 every seeded knob records `provenance: {tag, patterns: [ids], n}` (median + IQR of nearest proven genotypes) | |
+| DM.1 `vector_targets` set from rating gaps + vertical norms | |
+| DM.1 `gate.py dna <dir>` exits 0 | |
