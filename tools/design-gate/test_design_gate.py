@@ -16,7 +16,9 @@ import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-FIXTURE = os.path.join(HERE, 'fixtures', 'option-cards.html')
+# testdata/, not fixtures/: fixtures/ is regenerated wholesale by
+# gen_fixtures.py and would delete this file.
+FIXTURE = os.path.join(HERE, 'testdata', 'option-cards.html')
 SCORE = os.path.join(HERE, 'score.py')
 PATTERNS = os.path.join(HERE, 'patterns.py')
 INDEX_META = os.path.join(ROOT, 'docs', 'machinery', 'design', 'patterns',
