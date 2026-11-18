@@ -1057,6 +1057,30 @@ def main():
                 src = os.path.relpath(
                     os.path.join(FX, '_base', rel), os.path.dirname(dst))
                 os.symlink(src, dst)
+    # check_genotype/pass: a real 9-row page (nav, hero, cards, logo-wall,
+    # faq, sequence, faq, form, footer) so D.4's catalog->archetype map is
+    # exercised end to end, not just on the 5-row base page.
+    gp = os.path.join(FX, 'check_genotype', 'pass', 'DESIGN-PLAN.md')
+    if os.path.lexists(gp):
+        os.remove(gp)
+    rows = ''
+    for name, act, comp, cat, surf, dens in (
+            ('proof', 'proof', 'logo-wall', 'logo-sections', 'base',
+             'compact'),
+            ('answers', 'objection', 'faq', 'content', 'base', 'regular'),
+            ('how', 'how', 'sequence', 'how-it-works', 'muted', 'regular'),
+            ('objections', 'objection', 'faq', 'content', 'base',
+             'regular')):
+        rows += (f'      - {{name: {name}, wf_ref: "cards/index.html#d1:'
+                 f'{name}", speech_act: [{act}], category: {cat}, '
+                 f'surface: {surf}, density: {dens}, composition: {comp}, '
+                 'emphasis: headline, align: col-1-edge, stack: text-first, '
+                 'collapse: stacked, media_ratio: none, disclosure: open}\n')
+    plan = BASE['DESIGN-PLAN.md']
+    anchor = '      - {name: end-act,'
+    plan = plan.replace(anchor, rows + anchor, 1)
+    with open(gp, 'w', encoding='utf-8') as fh:
+        fh.write(plan)
     # check_novelty only bites with a chosen wildcard; no other fixture may
     # carry a w5 design pick (the wireframe cards only hold d1/d2).
     for sub in ('pass', 'fail'):

@@ -3217,6 +3217,15 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # D.4 must be satisfiable for the whole closed composition set
+    comps = catalog_compositions()
+    if not comps:
+        f.append('SECTION-CATALOG §2 has no composition table')
+    arch = set(genome_genes().get('layout-archetype') or ())
+    for c in sorted(comps):
+        if not _arch_ok(c, arch):
+            f.append(f'D.4 catalog composition "{c}" maps to no '
+                     'layout-archetype allele (COMP_ARCH)')
     # checks that read global files are unit-tested through their helpers
     if _tier_fails({'T.1': {'tier': 'invariant'}}):
         f.append('check_tiers rejects a valid tier')
@@ -3409,25 +3418,59 @@ def _genotype(plan):
         gt = flat
     return (str(dna.get('profile') or ''), gt)
 
+# Catalog composition -> the layout-archetype alleles that realise it
+# (SECTION-CATALOG §2 names the shape; GENOME `layout-archetype` names the
+# skeleton). A composition is legal when the gene allows any of its
+# archetypes — a real page needs every act, so the map must be total.
+COMP_ARCH = {
+    'split-media': ('split-media', 'asymmetric-offset'),
+    'stacked-hero': ('stacked-center',),
+    'proof-band': ('horizontal-band',),
+    'editorial': ('editorial-single',),
+    'cards-n': ('card-grid-2', 'card-grid-3', 'card-grid-4'),
+    'sequence': ('sequence-steps',),
+    'faq': ('accordion-list',),
+    'comparison': ('table-matrix', 'asymmetric-offset'),
+    'logo-wall': ('horizontal-band',),
+    'stat-band': ('horizontal-band',),
+    'full-bleed': ('full-bleed-media', 'immersive-media'),
+    'badge-center': ('stacked-center',),
+    'media-gallery': ('masonry-grid', 'immersive-media', 'card-grid-4'),
+    'form-panel': ('split-form',),
+    'quote-grid': ('card-grid-2', 'card-grid-3', 'card-grid-4'),
+    'map-finder': ('split-media', 'asymmetric-offset'),
+    'capture-form': ('split-form',),
+    'text-index': ('editorial-single', 'table-matrix'),
+    'app-band': ('split-media',),
+    'hero-act-merge': ('split-media', 'stacked-center'),
+    'link-grid': ('editorial-single', 'table-matrix'),
+    'carousel-track': ('carousel-track',),
+    'table-matrix': ('table-matrix',),
+    'form-inline': ('split-form',),
+}
+
+
+def catalog_compositions():
+    """The closed composition set, read from SECTION-CATALOG §2."""
+    try:
+        t = open(os.path.join(REPO, 'docs', 'machinery',
+                              'SECTION-CATALOG.md'), encoding='utf-8').read()
+    except OSError:
+        return set()
+    sec = t.split('## 2. Compositions', 1)[-1].split('\n## ', 1)[0]
+    return {c for c in re.findall(r'^\| `([a-z0-9-]+)` \|', sec, re.M)
+            if c != 'composition'}
+
+
 def _arch_ok(comp, arch):
     """Catalog composition → layout-archetype allele.
 
     The catalog names components (`cards-n`, `form-panel`); the genome
     names archetypes (`card-grid-3`, `split-form`). A composition is
-    realised when the gene allows its archetype family."""
+    realised when the gene allows any allele of its family."""
     if comp in arch:
         return True
-    if comp.startswith('cards-') and any(a.startswith('card-grid')
-                                         for a in arch):
-        return True
-    if comp in ('form-panel', 'form-inline') and 'split-form' in arch:
-        return True
-    if comp in ('comparison', 'table-matrix') and 'table-matrix' in arch:
-        return True
-    if comp in ('full-bleed',) and ('full-bleed-media' in arch or
-                                    'immersive-media' in arch):
-        return True
-    return False
+    return any(a in arch for a in COMP_ARCH.get(comp, ()))
 
 def check_genotype(ctx):
     """D.1/D.2 (w1) and D.4 (w5): genotype total, profile covers it,
