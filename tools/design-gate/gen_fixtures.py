@@ -976,6 +976,11 @@ MUT = {
      ('APPEND','site/dist/home/index.html',
       '<a class="cta">Act</a><style>@media(max-width:768px)'
       '{.cta{padding:8px}}</style>')),
+ 'check_measurable': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<style>p{text-align:justify}.x{transition-duration:600ms}'
+      'h2{text-transform:uppercase}</style><h2>A BOLD ALL CAPS TITLE '
+      'HEADING</h2>')),
  'check_tile_page_parity': mut(
      ('REPL','site/dist/home/index.html','class="sec-band py-24"',
       'class="sec-band py-24 drift-class"')),

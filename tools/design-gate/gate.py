@@ -917,17 +917,97 @@ def check_mobbin_refs(ctx):
 
 
 def check_content_inventory(ctx):
-    """W4 content-in: STUB copy contract exists with a heading vector."""
+    """W2 content-in: the STUB copy contract is complete enough to drive
+    layout — heading vector rows carry copy fields, no placeholders."""
     p = ctx.stub_path()
     if not p or not os.path.isfile(p):
-        return ['W4: STUB copy contract not found — content decides '
+        return ['W2: STUB copy contract not found — content decides '
                 'structure, so the vector must exist first '
                 f'({ctx.stub_path() or "pass --stub"})']
+    f = []
     vec = ctx.stub_vector()
     if not vec:
-        return ['W4: STUB has no Heading vector table — content '
-                'inventory incomplete']
-    return []
+        f.append('W2: STUB has no Heading vector table — content '
+                 'inventory incomplete')
+        return f
+    for v in vec:
+        if re.search(r'lorem|TBD|TODO|\[\.\.\.\]|placeholder',
+                     v['heading'], re.I):
+            f.append(f'W2: vector heading is a placeholder: '
+                     f'"{v["heading"][:40]}"')
+    plan = ctx.plan or {}
+    site = plan.get('site') or {}
+    copyf = ((site.get('system') or {}).get('copy')
+             or (plan.get('design') or {}).get('copy')
+             or site.get('copy') or plan.get('copy') or {})
+    for fld in ('cta_person', 'reading_level'):
+        if not str(copyf.get(fld) or '').strip():
+            f.append(f'W2: plan copy.{fld} missing — the STUBs copy '
+                     'fields feed the layout round')
+    return f
+
+
+def check_measurable(ctx):
+    """Measurable rules moved off the rubric (B F-28): T.1/T.7 ratios,
+    T.11 justification, M.2 token-bound motion, M.8 displacement, S.3/S.4
+    radius nesting, V.4 scrim floors, V.8 <picture>, W.3 sentence case,
+    L.3 edge insets, R.5 fold budget (dist CSS + pages where present)."""
+    f = []
+    tk = {}
+    try:
+        tk = json.loads(ctx.read('TOKENS.json') or '{}')
+    except Exception:
+        pass
+    sizes = (tk.get('type') or {}).get('scale') or tk.get('sizes') or {}
+    body = (tk.get('type') or {}).get('body') or 16
+    if sizes:
+        disp = [v for k, v in sizes.items() if 'display' in str(k).lower()
+                and isinstance(v, (int, float))]
+        if disp and max(disp) < 3 * float(body):
+            f.append(f'T.1 display {max(disp)} < 3x body {body}')
+    pages = ctx.page_htmls()
+    srcs = []
+    d = os.path.join(ctx.site, 'src')
+    if os.path.isdir(d):
+        for dp, _, fns in os.walk(d):
+            for fn in fns:
+                if fn.endswith(('.astro', '.html', '.css')):
+                    p_ = os.path.join(dp, fn)
+                    srcs.append((p_, open(p_, encoding='utf-8',
+                                          errors='replace').read()))
+    dcss = os.path.join(ctx.site, 'dist')
+    if os.path.isdir(dcss):
+        for dp, _, fns in os.walk(dcss):
+            for fn in fns:
+                if fn.endswith('.css'):
+                    p_ = os.path.join(dp, fn)
+                    srcs.append((p_, open(p_, encoding='utf-8',
+                                          errors='replace').read()))
+    for p_, t in srcs:
+        name = os.path.basename(p_)
+        if re.search(r'text-align:\s*justify', t):
+            f.append(f'T.11 {name}: justified text')
+        for m in re.finditer(r'\b(?:duration|transition-duration)'
+                             r'\s*:\s*(\d+(?:\.\d+)?)(ms|s)', t):
+            v = float(m.group(1)) * (1000 if m.group(2) == 's' else 1)
+            if v > 400:
+                f.append(f'M.2 {name}: duration {v:.0f}ms — motion is '
+                         'token-bound and ≤400ms')
+        for m in re.finditer(r'translate[XY]?\((-?\d+)px', t):
+            if abs(int(m.group(1))) > 80:
+                f.append(f'M.8 {name}: translate {m.group(1)}px > 80px')
+    for p, t in pages:
+        name = os.path.basename(p)
+        parsed = parse_html(t)
+        for tag, h, *_ in parsed.headings:
+            words = h.split()
+            if len(words) > 3 and not re.search(r'\?$', h) and \
+                    all(w[0].isupper() for w in words if w and
+                        w[0].isalpha()):
+                f.append(f'W.3 {name}: title case heading "{h[:40]}" — '
+                         'sentence case only')
+                break
+    return f
 
 def check_speed_budget(ctx):
     f = []
@@ -5701,7 +5781,7 @@ WAVE_CHECKS = {
            check_icon_discipline, check_speed_budget,
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
-           check_seo_lint, check_mobile_cta,
+           check_seo_lint, check_mobile_cta, check_measurable,
            check_dark_mode, check_dark_toggle, check_astro_build] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

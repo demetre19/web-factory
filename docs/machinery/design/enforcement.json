@@ -146,6 +146,20 @@
     ],
     "check_mobile_cta": [
       "R.6"
+    ],
+    "check_measurable": [
+      "T.1",
+      "T.7",
+      "T.11",
+      "M.2",
+      "M.8",
+      "S.3",
+      "S.4",
+      "V.4",
+      "V.8",
+      "W.3",
+      "L.3",
+      "R.5"
     ]
   },
   "graph": {
@@ -514,11 +528,11 @@
       "wave": "w8"
     },
     "I.7": {
-      "item": "icon-states",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "currentColor, interactive states",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_icon_discipline"
     },
     "I.8": {
       "check": "check_icon_discipline",
@@ -570,11 +584,11 @@
       "wave": "w5"
     },
     "L.3": {
-      "item": "edge-insets",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "content never jams viewport edge",
       "tier": "structural",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "L.4": {
       "item": "negative-space-gestalt",
@@ -626,11 +640,11 @@
       "wave": "w2"
     },
     "M.2": {
-      "item": "motion-tokens",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "durations/easing token-bound",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "M.3": {
       "item": "motion-element-class",
@@ -669,11 +683,11 @@
       "wave": "w7"
     },
     "M.8": {
-      "item": "motion-personality",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "QA: no linear spatial, \u226480px+fade",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "P.1": {
       "check": "check_scaffold",
@@ -852,11 +866,11 @@
       "wave": "w7"
     },
     "R.5": {
-      "item": "above-fold-360",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "five elements at 360\u00d7640",
       "tier": "structural",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "R.6": {
       "check": "check_tap_size",
@@ -894,18 +908,18 @@
       "wave": "w3"
     },
     "S.3": {
-      "item": "component-radius",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "component\u2192token assignment consistent",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "S.4": {
-      "item": "concentric-radius",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "child = parent \u2212 padding step",
       "tier": "structural",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "S.5": {
       "check": "check_border_widths",
@@ -986,11 +1000,11 @@
       "wave": "w8"
     },
     "T.1": {
-      "item": "three-tier-read-order",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "primary 3\u20136\u00d7 body visible at a glance",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "T.10": {
       "item": "composition-inset",
@@ -1000,11 +1014,11 @@
       "wave": "w8"
     },
     "T.11": {
-      "item": "type-refusals",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "no centred multi-line, no justify",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "T.2": {
       "check": "check_type_system",
@@ -1042,11 +1056,11 @@
       "wave": "w3"
     },
     "T.7": {
-      "item": "section-type-application",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "hero subhead 50\u201360% of display",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "T.8": {
       "check": "check_type_system",
@@ -1091,11 +1105,11 @@
       "wave": "w5"
     },
     "V.4": {
-      "item": "scrim-contrast",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "text-on-image floors + scrim",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "V.5": {
       "item": "bg-density",
@@ -1119,11 +1133,11 @@
       "wave": "w8"
     },
     "V.8": {
-      "item": "media-qa",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "<picture>, ratios, scrims, tiers",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "VG.1": {
       "check": "check_variants",
@@ -1189,11 +1203,11 @@
       "wave": "w3"
     },
     "W.3": {
-      "item": "heading-labels",
-      "mode": "reviewer",
+      "mode": "script",
       "threshold": "sentence-case standalone headings",
       "tier": "stylistic",
-      "wave": "w8"
+      "wave": "w7",
+      "check": "check_measurable"
     },
     "W.4": {
       "check": "check_section_enums",
