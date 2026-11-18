@@ -127,6 +127,43 @@ Fitted coefficients (seed 7, signed): `footer_is_boilerplate` −1.73,
 `media_context_binding` −0.36, `pattern_fit` +0.31, `macro_micro` +0.31,
 `ps` −0.20.
 
+## 4b. The page-level test — and why the PS checks invert above
+
+The section-level study cannot test the page-structure checks, because a
+section crop has no page. So the shipped scorer was also run on **whole
+pages**: 76 real reference sites (Siteinspire / luxury houses, captured
+headless) against the 44 generic pages, each full page stacked from its
+tiles and measured by the same pixel pass.
+
+| | n | mean structural score |
+|---|---|---|
+| Real reference sites | 76 | 73.8 |
+| Generic / template sites | 44 | 56.1 |
+
+**AUC 0.753** on the structural sub-score (the shipped weights minus
+`pattern_fit`, which needs a section label a page does not carry).
+
+Correlations flip back to the design-intended sign:
+
+| Feature | page-level r | section-level r |
+|---|---|---|
+| `main_content_share` | **+0.423** | −0.374 |
+| `ps` (mean of six) | **+0.395** | −0.464 |
+| `macro_micro` | **+0.352** | −0.056 |
+| `media_context_binding` | **+0.281** | −0.036 |
+| `footer_is_boilerplate` | **+0.247** | −0.469 |
+| `boilerplate_at_edges` | **+0.206** | −0.050 |
+| `priority_order` | −0.042 | −0.032 |
+| `block_role_uniqueness` | 0.000 (saturated) | 0.000 |
+
+This is the evidence for §5's diagnosis: the PS checks work exactly as
+written **on pages**, and their negative coefficients in the section
+study are a framing artefact, not a defect in the checks. It is also why
+the shipped scorer keeps the positive semantic prior.
+
+Reproduce: `uv run --quiet patterns/tools/validate_pages.py` →
+`data/validation/pages.json`.
+
 ## 5. What failed, and why
 
 **The page-structure checks (PS.\*) do not transfer to section crops.**

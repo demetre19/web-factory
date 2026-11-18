@@ -10,7 +10,8 @@ instead of taste.
 TAXONOMY.md    the cell grid: site_type × page_type × section_type, and
                the annotation schema every record must satisfy
 INDEX.md       the 88 pattern rows (generated table, lookup surface)
-VALIDATION.md  does pattern fit predict quality? AUC 0.895, and what fails
+VALIDATION.md  does pattern fit predict quality? AUC 0.895 section-level,
+               AUC 0.753 page-level, and what fails
 scorer.md      the graph node for tools/design-gate/score.py
 <site>/<section>/pattern-<site>-<page>-<section>-<composition>.md
 ```
@@ -142,4 +143,7 @@ model is the operator's call, not the pipeline's.
   says "this looks like work from the curated corpus", nothing about
   whether the copy is any good.
 
-Full numbers and the failure analysis: `VALIDATION.md`.
+Full numbers and the failure analysis: `VALIDATION.md`. Two studies, two
+questions: section-level (does a section match a mined pattern?) and
+page-level (does a whole page look like a real reference site?) —
+`uv run --quiet patterns/tools/validate_pages.py`.
