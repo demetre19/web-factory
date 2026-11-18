@@ -112,6 +112,9 @@ site:
       measure: <e.g. 62ch>                  # binds prose rank (≤65ch); shells may run ≤75ch
       content_width: <e.g. 72rem>
       gutter: <token>
+      edge_padding: [16, 24, 32, 40, 48]         # closed ramp (R.2 — own scale, not G.1)
+      breakpoints: [360, 640, 768, 1024, 1280, 1440, 1920]   # closed set (R.1)
+      stack_order: text-first | visual-first     # text-first = default; visual needs declared hook (R.3)
     color:
       temperature: <matches §direction>
       roles:
