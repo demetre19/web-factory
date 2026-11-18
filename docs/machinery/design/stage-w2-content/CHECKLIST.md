@@ -9,7 +9,7 @@ links:
 
 # W2 checklist — content evidence
 
-Copy into `<pipeline-dir>/CHECKLIST/w4.md`. Blank cell = fail (P.9).
+Copy into `<pipeline-dir>/CHECKLIST/w2.md`. Blank cell = fail (P.9).
 
 | Rule | Evidence |
 |---|---|

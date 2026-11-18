@@ -18,7 +18,7 @@ artifact binds. Discovery writes no map; it exits at W1. (P.1, LAW.DNA)
 1. **Mobbin first.** `~/.mobbin-oauth/refresh.sh` → auth 200, then read
    references for the site's class. `MOBBIN-REFS.md` is a table
    `| id/url | kind | informs | wave |` with **≥3 general-style refs
-   per planned page type** (per-composition cites come at W5, P.14).
+   per planned page type** (per-composition cites come at W3, P.14).
 2. `DESIGN-PLAN.md` `site:` block — slug, date, `design_mode` ∈
    DESIGN-INTAKE enum, `sources` provenance, `intent {who, one_action,
    worst_case}`. Discovery batch: operator likes/dislikes/comparison +

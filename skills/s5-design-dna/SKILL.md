@@ -24,7 +24,7 @@ rules.
 `docs/machinery/design/INDEX.md` — the nine waves (W0 scaffold → W1 DNA
 + audit → W2 content → W3 layout round → W4 look round → W5 system → W6
 components → W7 page → W8 review), the stage cards, the rulebooks
-(`design/rules/`, IDs T/C/L/G/S/I/V/M/R/W/E/P/PS/DNA/B/SB) and the gate
+(`design/rules/`, IDs T/C/L/G/S/I/V/M/R/W/E/P/PS/D/DM/B/VG/SB) and the gate
 commands. First move in any wave: `python3 tools/design-gate/rules.py
 <ID|keyword|wN>` — look the rule up, don't re-read the book.
 `docs/machinery/design/SECTION-BUILD.md` — a page is assembled from

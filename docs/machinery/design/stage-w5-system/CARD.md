@@ -55,7 +55,7 @@ showing every surface × density × type rank × buttons/fields/cards.
 ## Exit gate
 
 ```bash
-python3 tools/design-gate/gate.py w3 <pipeline-dir>
+python3 tools/design-gate/run.py w5 <pipeline-dir>
 ```
 Checks: enums + non-empty fields; spacing ⊆ G.1; breakpoints ⊆ R.1;
 WCAG ratios computed from `system.color.roles` hexes; TOKENS.json +
@@ -65,6 +65,6 @@ Operator approves the rendered tile (`--approve`).
 
 ## Done when
 
-`GATES.json.w3.pass` for current input hashes, the rendered tile
-approved (`--approve`), and `CHECKLIST/w3.md` has no blank evidence
+`GATES.json.w5.pass` for current input hashes and
+`CHECKLIST/w5.md` has no blank evidence
 (P.9).

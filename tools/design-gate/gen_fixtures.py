@@ -1001,7 +1001,13 @@ MUT = {
  'check_speech_acts': mut(('REPL','DESIGN-PLAN.md','rhetoric: [promise, proof, how, act]','rhetoric: [proof, how]')),
  'check_emphasis': mut(('REPL','DESIGN-PLAN.md','emphasis: headline','emphasis: ""')),
  'check_motif': mut(('REPL','DESIGN-PLAN.md','break: {where: end-act, how: inverse}','break: {}')),
- 'check_rhythm': mut(('REPL','DESIGN-PLAN.md','composition: cards-n','composition: split-media'),('REPL','DESIGN-PLAN.md','density: regular','density: spacious')),
+ 'check_rhythm': mut(
+     ('REPL','DESIGN-PLAN.md','composition: cards-n',
+      'composition: split-media'),
+     ('REPL','DESIGN-PLAN.md','density: regular',
+      'density: spacious'),
+     ('REPL','DESIGN-PLAN.md','surface: muted, density: regular',
+      'surface: inverse, density: regular')),
  'check_vector_map': mut(('REPL','DESIGN-PLAN.md','What is testing?','What is invented?')),
  'check_schema_fields': mut(('REPL','DESIGN-PLAN.md',', align: col-1-edge','')),
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
@@ -1182,6 +1188,14 @@ def main():
         ctx_p = gate.Ctx(pd)
         for wv in sorted(gate.APPROVABLE):
             gate.write_approval(ctx_p, wv)
+    # SPEC.md is generated, never hand-written (A F27)
+    for slug in gate.Ctx(base_dir).pages():
+        sp = os.path.join(base_dir, 'PAGES', slug, 'SPEC.md')
+        os.makedirs(os.path.dirname(sp), exist_ok=True)
+        spec = gate.assemble_spec(gate.Ctx(base_dir), slug)
+        with open(sp, 'w') as fh:
+            fh.write(spec)
+        BASE[f'PAGES/{slug}/SPEC.md'] = spec
     # check_tiers pass fixture (global rule → pass only, no fail dir)
     pd = os.path.join(FX, 'check_tiers', 'pass')
     os.makedirs(pd, exist_ok=True)

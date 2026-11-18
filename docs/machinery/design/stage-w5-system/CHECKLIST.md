@@ -9,7 +9,7 @@ links:
 
 # W5 checklist — system evidence
 
-Copy into `<pipeline-dir>/CHECKLIST/w3.md`. Blank cell = fail (P.9).
+Copy into `<pipeline-dir>/CHECKLIST/w5.md`. Blank cell = fail (P.9).
 
 | Rule | Evidence |
 |---|---|

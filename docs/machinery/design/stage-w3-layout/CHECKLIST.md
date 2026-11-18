@@ -9,7 +9,7 @@ links:
 
 # W3 checklist — page-structure evidence
 
-Copy into `<pipeline-dir>/CHECKLIST/w5.md`. Evidence = section slug,
+Copy into `<pipeline-dir>/CHECKLIST/w3.md`. Evidence = section slug,
 row number, or `decisions[]` entry. Blank = fail (P.9).
 
 | Rule | Evidence |

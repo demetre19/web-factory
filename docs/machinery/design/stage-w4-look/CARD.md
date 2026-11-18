@@ -43,19 +43,19 @@ is the single source of coherence (`gate.py dna`).
 - **VG.1–VG.6** picker shape, vectors, all-pass-only, switcher.
 - **C.5** both modes render in the picker itself.
 - **D.3** variants differ in ≥1 knob — duplicates are one variant.
-- **P.3/P.4** no wireframe here — greyscale structure picks at W5.
+- **P.3/P.4** no wireframe here — structure picked at W3.
 
 ## Exit gate
 
 ```bash
-python3 tools/design-gate/run.py w2 <pipeline-dir> --design <variant>
+python3 tools/design-gate/run.py w4 <pipeline-dir> --design <variant>
 ```
 
 Checks: variants.astro absent (HTML picker), 3–5 knob vectors, deltas
 applied + within bounds, sheet in both modes, only passing variants
-rendered. Then the operator approves (`run.py approve w2`).
+rendered. Then the operator approves (`run.py approve w4` — locks DNA v1).
 
 ## Done when
 
-`GATES.json.w2.approved` is true, `design` names the picked variant,
-and `CHECKLIST/w2.md` has no blank evidence (P.9).
+`GATES.json.w4.approved` is true, `design` names the picked variant,
+and `CHECKLIST/w4.md` has no blank evidence (P.9).

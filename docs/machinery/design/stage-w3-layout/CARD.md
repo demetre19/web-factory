@@ -7,17 +7,28 @@ links:
   enforced_by: [check_wireframe_tags, check_mobbin_refs, check_wireframe_lock, check_section_enums, check_speech_acts, check_emphasis, check_motif, check_rhythm, check_vector_map, check_schema_fields, check_genotype, check_burst, check_declared_breaks, check_wildcard, check_section_contracts, check_layout_distinct, check_checklist, check_dna, check_dna_fresh]
 ---
 
-# W3 — Page structure (chosen card → plan rows + ASCII)
+# W3 — Layout round (≥5 options → chosen card → plan rows + lock)
 
-**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable** — the
-locked rows are the contract the Astro page must render; the wireframe
-card itself stays plain HTML (P.1, P.3).
+**GOLDEN RULE: ASTRO is for the final product (W6–W8); previews are
+self-contained HTML.** The layout picker is `preview/layouts.html` —
+real responsive page layouts on the real copy, CSS vars per option,
+light/dark toggle, viewport switch. The locked rows are the contract
+the Astro page must render; the picker itself stays plain HTML
+(P.1, P.3).
 
 **Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
 
 ## Job
 
-Copy the operator-picked card's sections into
+**1. Produce ≥5 layout options.** On the W2 copy and the W1 grid:
+`assemble.py --layouts` writes `preview/layouts.html` with **at least
+five** complete page layouts (one may be the ★ wildcard), each a real
+responsive mock — same copy, different structure. Distinctness floor:
+pairwise **≥30% of sections with a completely different composition**
+(target ~50%); too-similar options are regenerated, never shown.
+After the pick, the fine round is 3 knob nudges ("more like this").
+
+**2. Lock the chosen layout.** Copy the operator-picked card's sections into
 `pages.<slug>.sections[]` **1:1** — order, composition, media ratio,
 disclosure, stack (P.4). Every row carries `wf_ref` =
 `<cards-file>#<design-id>:<data-sec>`. Deviation requires a logged
@@ -39,8 +50,9 @@ query|claim · `zone` macro|micro|end|chrome.
 
 ## Design gates (mechanical — all REQUIRED)
 
-- **Wireframe lock (P.4):** rows match chosen card's `data-*` sections
-  1:1 in order; every row `wf_ref`ed.
+- **Layout lock (P.4):** rows match the chosen card's `data-*`
+  sections 1:1 in order; every row `wf_ref`ed; ≥5 options with
+  pairwise ≥30% section distance (`check_layout_distinct`).
 - **Genotype (D.4):** every row `composition` is an allele of the
   `layout-archetype` gene; the chosen card renders that genotype — a
   card/genotype conflict re-picks the row, never the genotype.
@@ -76,12 +88,12 @@ query|claim · `zone` macro|micro|end|chrome.
 ## Exit gate
 
 ```bash
-python3 tools/design-gate/gate.py w5 <pipeline-dir> --wireframe <cards/index.html> --design <id> --stub <stub.md>
+python3 tools/design-gate/run.py w3 <pipeline-dir> --wireframe <cards/index.html> --design <id> --stub <stub.md>
 ```
 Checks: `data-*` 1:1 + order + wf_ref; all gates above; enums;
-`CHECKLIST/w5.md` no blank evidence. Operator approves locked rows.
+`CHECKLIST/w3.md` no blank evidence. Operator approves locked rows.
 
 ## Done when
 
-`GATES.json.w5.approved` is true with `design` naming the locked card
+`GATES.json.w3.approved` is true with `design` naming the locked card
 and every `check_*` in `enforced_by` green.

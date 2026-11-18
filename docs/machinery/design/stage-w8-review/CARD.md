@@ -26,10 +26,22 @@ reviewer writes `REVIEW.json` + `shots/`; the designer NEVER writes
 
 ```json
 {"reviewer_model": "…", "designer_model": "…",
+ "modes": {"light": {"verdict": "…"}, "dark": {"verdict": "…"}},
  "items": [{"rule": "T.1", "rubric": "three-tier-read-order",
-            "pass": true, "evidence": "shots/home-1280.png",
+            "pass": true, "evidence": "shots/1280-light-home.png",
             "note": "…"}]}
 ```
+
+Screenshots are real PNGs named `shots/<w>-<mode>-<slug>.png` —
+`{1280,768,360} × {light,dark} × every plan slug`, width verified from
+the file header, ≥2 KB. When the items are scored the reviewer binds
+the artifact to the build: `run.py sign-review <dir>` (operator
+terminal) stamps `dist_sha256`, `nonce` and the HMAC signature — an
+unsigned or build-detached REVIEW.json fails the gate.
+
+**Final variants job:** `assemble.py --variants` re-emits
+`preview/variants.html` as baseline + recorded knob deltas; VG.1–VG.6
+run at W8 and every variant must pass, never grey.
 
 Every rubric item scored; `evidence` names a real screenshot; a fail
 blocks like a script fail (P.8). `T.5/T.10`-style combined rows score
@@ -58,7 +70,7 @@ each named rule in `items` (one row per rule).
 - `I.4` icon-text-pairing; `I.6` icon-literal; `I.7` icon-states
 - `V.0` media-words-first; `V.1` media-matrix; `V.4` scrim-contrast;
   `V.5` bg-density; `V.6` authenticity; `V.7` art-direction; `V.8`
-  media-qa
+  media-qa; `VG.1`–`VG.6` variant picker all-pass
 - `M.2` motion-tokens; `M.3` motion-element-class; `M.4`/`M.8`
   motion-personality; `M.5` parallax-license; `M.6` reduced-motion
 - `R.4` copy-density; `R.5` above-fold-360; `R.7` sizing-modes

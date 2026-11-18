@@ -18,18 +18,23 @@ composition in the locked wireframe becomes exactly one
 
 ## Job
 
-One builder per **section**, not per composition. Each builder gets
-only its contract (`sections/<nn>-<sec>.contract.json`), this card, the
-tokens and the components, and returns
-`src/components/sections/<Sec>.astro` — content inside the `Section`
-shell, adapted from the gold exemplar (SB.1–SB.5, `SECTION-BUILD.md`).
-
-Then, for every distinct `composition` in the plan, build the reusable
-`src/components/<comp>.astro` the sections compose from; extend
+**1. Composition components first.** For every distinct `composition`
+in the plan, build the reusable `src/components/<comp>.astro`; extend
 `global.css` `@layer components` with its classes; register each on
 `src/pages/system.astro` (the tile is the catalogue — P.6).
 `COMPONENTS.md` names which component each composition instantiates
 (DESIGN-PLAN hard rule 8).
+
+**2. Section instances.** One builder per **section**, not per
+composition. Each builder gets only its contract
+(`sections/<nn>-<sec>.contract.json`), this card, the tokens and the
+components, and returns `src/components/sections/<Sec>.astro` —
+content inside the `Section` shell, adapted from the gold exemplar
+(SB.1–SB.5, `SECTION-BUILD.md`). An instance renders
+`<Composition/>` — never re-implements it.
+
+**3. Gate each instance** with `gate.py section <dir>` until PASS;
+only then does the wave gate run.
 
 ## Rules that apply (by ID)
 

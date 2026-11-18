@@ -15,7 +15,7 @@ Copy into `<pipeline-dir>/CHECKLIST/w7.md`. Blank = fail (P.9).
 |---|---|
 | SPEC sections[] == plan rows verbatim | |
 | P.7 page assembled only from W6 components | |
-| P.12 JS ≤ 50 KB / perf ≥ 90 / LCP ≤ 2.5 s / CLS ≤ 0.1 (paste numbers) | |
+| P.12 static budget: JS ≤ 50 KB total, img width/height set, below-fold lazy + hero fetchpriority, font-display: swap (gate-computed) | |
 | P.13 360 fold per R.5, no h-scroll at 360, targets ≥ 44 px | |
 | PS.3 main-content share ≥ 80% (paste measure) | |
 | PS.1–PS.6 segmentation checks green | |

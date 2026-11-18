@@ -49,6 +49,11 @@ def main(argv):
         with open(path, 'w', encoding='utf-8') as fh:
             fh.write(txt)
         wrote.append(f'{os.path.relpath(path, ctx.dir)} (marker {h})')
+        sp = os.path.join(ctx.dir, 'PAGES', slug, 'SPEC.md')
+        os.makedirs(os.path.dirname(sp), exist_ok=True)
+        with open(sp, 'w', encoding='utf-8') as fh:
+            fh.write(gate.assemble_spec(ctx, slug))
+        wrote.append(os.path.relpath(sp, ctx.dir))
     print('assembled ' + ', '.join(wrote))
     return 0
 
