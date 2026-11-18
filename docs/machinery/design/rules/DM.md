@@ -121,6 +121,19 @@ this rule exists to prevent.
 **Enforcement** — script `run.py` + `check_dna` (per-artifact hash) +
 `check_dna_fresh` @ every wave (GATES.json recorded hash == current).
 
+## Enforcement
+
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
+
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| DM.1 | invariant | script | `check_dna` | map missing/incomplete, knob outside its range, or seeded value with no pattern id + n | w1 |
+| DM.2 | invariant | script | `check_dna_fresh` | artifact built against a hash that is not the current map hash | w1 |
+| DM.3 | invariant | script | `check_dna` | design value not traceable to a token, knob or allele in the map | w1 |
+| DM.4 | structural | script | `check_variants` | variant not derived from the baseline (undeclared knob delta) | w8 |
+| DM.5 | structural | script | `check_rhythm` | a section's surface/density deviates from the map's rhythm plan | w3 |
+| DM.6 | invariant | script | `check_dna_fresh` | map changed but downstream artifacts were not rebuilt | w1 |
+
 ## Links
 
 - `DNA-MAP.md` — the architecture and the schema narrative.

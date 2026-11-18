@@ -47,8 +47,8 @@ closed; an out-of-range or missing value at W4 fails.
 
 ### B.3 Exactly one wildcard option
 
-At W3 (layout round) and W4 (look round) one — and only one — of the
-options is labelled `wildcard: true`. It carries the same
+At W3 (layout round, ≥5 options) and W4 (look round, exactly 3) one —
+and only one — of the options is labelled `wildcard: true`. It carries the same
 genotype vector shape as the others plus `mutates:` naming the genes
 it moved. The operator sees it labelled **WILDCARD** with its breaks
 listed; it is never presented as the safe default. FAIL: zero or two
@@ -90,20 +90,13 @@ wildcard chosen with no `NOVELTY.json`.
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| B.1 | script | `check_tiers` | rule without tier / unknown tier | w1 |
-| B.2 | script | `check_burst` | `burst` missing or ∉ {0,1,2,3} | w2 |
-| B.3 | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w2 |
-| B.4 | script | `check_declared_breaks` | bad rule_id, invariant break, 2 breaks in one section, missing field | w2 |
-| B.5 | script | `check_style_review` | wildcard chosen, REVIEW.json lacks style items | w8 |
-| B.6 | script | `check_novelty` | distance > bound, or no NOVELTY.json for a chosen wildcard | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- B.1 → P.8 (tiers ↔ gate mechanics), ENFORCEMENT.md (single table)
-- B.2 → D.1, D.3 (mutation ↔ genotype totality and option distinctness)
-- B.3 → C.2, S.1, M.1 (wildcard alleles ↔ direction axes)
-- B.4 → P.4, L.7 (declared break ↔ wireframe lock, rhythm)
-- B.5 → P.9, W.10 (style rubric ↔ checklist evidence, writing QA)
-- B.6 → patterns-index (centroid ↔ mined profile evidence)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| B.1 | invariant | script | `check_tiers` | rule without tier / unknown tier | w1 |
+| B.2 | invariant | script | `check_burst` | burst missing or outside {0,1,2,3} | w3 |
+| B.3 | stylistic | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w3 |
+| B.4 | invariant | script | `check_declared_breaks` | bad rule_id / invariant break / 2 breaks in one section / missing field | w3 |
+| B.5 | invariant | script | `check_style_review` | wildcard chosen without STYLE items in REVIEW.json | w8 |
+| B.6 | invariant | script | `check_novelty` | distance > bound, or no NOVELTY.json | w8 |

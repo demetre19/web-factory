@@ -204,18 +204,15 @@ build self-lint:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| I.1 | script | `check_system_enums` | family+style ∈ closed set; one family | w3 |
-| I.2 | script | `check_icon_discipline` | stroke ∈ {1.5,2,2.5,3}px uniform | w6 |
-| I.3 | script | `check_icon_discipline` | sizes ∈ {16,20,24,32,48} | w6 |
-| I.4 | reviewer | `icon-text-pairing` | icon+text baseline/leading correct | w8 |
-| I.5 | script | `check_icon_discipline` | one library, inline SVG — no icon fonts/img | w6 |
-| I.6 | reviewer | `icon-literal` | literal function, bans honoured | w8 |
-| I.7 | reviewer | `icon-states` | currentColor, interactive states | w8 |
-| I.8 | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- I.3 → R.6 (icon sizes ↔ touch targets)
-- I.1 → P.11 (family set ↔ absolute icon rule)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| I.1 | stylistic | script | `check_system_enums` | family+style ∈ closed set; one family | w5 |
+| I.2 | stylistic | script | `check_icon_discipline` | stroke ∈ {1.5,2,2.5,3}px uniform | w6 |
+| I.3 | stylistic | script | `check_icon_discipline` | sizes ∈ {16,20,24,32,48} | w6 |
+| I.4 | stylistic | reviewer | `icon-text-pairing` | icon+text baseline/leading correct | w8 |
+| I.5 | stylistic | script | `check_icon_discipline` | one library, inline SVG — no icon fonts/img | w6 |
+| I.6 | stylistic | reviewer | `icon-literal` | non-literal function or a banned literal | w8 |
+| I.7 | stylistic | script | `check_icon_discipline` | currentColor, interactive states | w6 |
+| I.8 | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |

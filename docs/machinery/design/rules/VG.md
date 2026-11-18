@@ -11,7 +11,7 @@ links:
 
 The wireframe switcher proved the operator picks better from
 side-by-side than from prose. VG is the same instrument at **hi-fi**:
-3–5 real designs of the same page on one screen, switching variant,
+3 real designs of the same page on one screen, switching variant,
 viewport and mode in place, each labelled with what it is optimising
 for and what it breaks.
 
@@ -22,7 +22,7 @@ full responsive page mockups with real copy and imagery, every value
 driven by the DNA knob vector. Style/system sheets are *implicit*:
 generated and gated, never the choosing surface.
 
-### VG.1 One page, 3–5 variants, mechanical build
+### VG.1 One page, exactly 3 variants, mechanical build
 
 `preview/variants.html` exists and renders **3 (default) to 5** full
 responsive pages — one real design per variant. It is generated —
@@ -93,6 +93,19 @@ edits the picked design in place.
 **Enforcement** — script `check_variants` (score + vector + breaks
 present per entry) and the W8 reviewer (`variant-tiles` rubric item:
 the label matches what the tile actually does).
+
+## Enforcement
+
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
+
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| VG.1 | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w4 |
+| VG.2 | invariant | script | `check_variants` | page variant without its own passing system sheet | w4 |
+| VG.3 | invariant | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w4 |
+| VG.4 | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w4 |
+| VG.5 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
+| VG.6 | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
 
 ## Links
 

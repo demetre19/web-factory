@@ -14,11 +14,10 @@ links:
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Astro is
 for the **final product only** — the W6–W8 build + `dist/`. Every
-**preview / choosing** artefact — the W2 look picker, the W3 system
-sheet, the variant picker, the W5 wireframe cards — is quick
-self-contained HTML under `preview/` (compiled CSS from
-`tailwind.config` + TOKENS/DNA knobs, CSS vars per variant, Light/Dark
-toggle, viewport switch). Components/tokens stay the single source the
+**preview / choosing** artefact — the W3 layout picker, the W4 look
+picker, the W5 system sheet — is quick self-contained HTML under
+`preview/` (compiled CSS from `tailwind.config` + TOKENS/DNA knobs,
+CSS vars per variant, Light/Dark toggle, viewport switch). Components/tokens stay the single source the
 final Astro build consumes. (P.1)
 
 **Read DNA map. Every decision traces to it.** `<pipeline>/DNA.json` +

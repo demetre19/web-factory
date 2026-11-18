@@ -10,105 +10,105 @@ closed set.
 | Rule | Rule name | Tier | Mode | Check / item | FAILs when | Wave |
 |---|---|---|---|---|---|---|
 | B.1 | Every rule has exactly one tier | invariant | script | `check_tiers` | rule without tier / unknown tier | w1 |
-| B.2 | One burst toggle, closed range | invariant | script | `check_burst` | burst missing or outside {0,1,2,3} | w2 |
-| B.3 | Exactly one wildcard option | stylistic | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w2 |
-| B.4 | Declared break contract | invariant | script | `check_declared_breaks` | bad rule_id / invariant break / 2 breaks in one section / missing field | w2 |
+| B.2 | One burst toggle, closed range | invariant | script | `check_burst` | burst missing or outside {0,1,2,3} | w3 |
+| B.3 | Exactly one wildcard option | stylistic | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w3 |
+| B.4 | Declared break contract | invariant | script | `check_declared_breaks` | bad rule_id / invariant break / 2 breaks in one section / missing field | w3 |
 | B.5 | Judged for style, not compliance | invariant | script | `check_style_review` | wildcard chosen without STYLE items in REVIEW.json | w8 |
 | B.6 | Novelty stays inside the profile's orbit | invariant | script | `check_novelty` | distance > bound, or no NOVELTY.json | w8 |
-| C.1 | The 6-role semantic map (closed set) | stylistic | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w3 |
-| C.2 | Temperature | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w2 |
-| C.3 | Neutral construction | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w3 |
+| C.1 | The 6-role semantic map (closed set) | stylistic | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w5 |
+| C.2 | Temperature | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w4 |
+| C.3 | Neutral construction | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w5 |
 | C.4 | Accent | stylistic | reviewer | `accent-harmony` | accent by harmony or extracted, logged | w8 |
-| C.5 | LIGHT + DARK on every design | invariant | script | `check_dark_mode` | either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode | w3 |
+| C.5 | LIGHT + DARK on every design | invariant | script | `check_dark_mode` | either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode | w4 |
 | C.6 | The derivation workflow (fill order for `system.color`) | stylistic | reviewer | `derivation-order` | fill order followed, provenance tags | w8 |
-| C.7 | Colour QA | invariant | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w3 |
+| C.7 | Colour QA | invariant | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w5 |
 | D.1 | One allele per gene | structural | script | `check_genotype` | gene missing / allele not in gene set | w1 |
 | D.2 | The vertical profile is named and covers the genotype | structural | script | `check_genotype` | profile absent or uses_genes incomplete | w1 |
-| D.3 | Direction options are distinct genotypes | structural | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w2 |
-| D.4 | Compositions are layout-archetype alleles | structural | script | `check_genotype` | composition not in layout-archetype alleles | w5 |
+| D.3 | Direction options are distinct genotypes | structural | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w4 |
+| D.4 | Compositions are layout-archetype alleles | structural | script | `check_genotype` | composition not in layout-archetype alleles | w1 |
 | DM.1 | The map is complete and total | invariant | script | `check_dna` | map missing/incomplete, knob outside its range, or seeded value with no pattern id + n | w1 |
-| DM.2 | Every artifact traces to the map | invariant | script | `check_dna_fresh` | artifact built against a hash that is not the current map hash | w3 |
-| DM.3 | No untraceable values | invariant | script | `check_dna` | design value not traceable to a token, knob or allele in the map | w3 |
+| DM.2 | Every artifact traces to the map | invariant | script | `check_dna_fresh` | artifact built against a hash that is not the current map hash | w1 |
+| DM.3 | No untraceable values | invariant | script | `check_dna` | design value not traceable to a token, knob or allele in the map | w1 |
 | DM.4 | Variants derive from the baseline | structural | script | `check_variants` | variant not derived from the baseline (undeclared knob delta) | w8 |
-| DM.5 | The rhythm plan is binding | structural | script | `check_rhythm` | a section's surface/density deviates from the map's rhythm plan | w7 |
-| DM.6 | A changed map invalidates everything downstream | invariant | script | `check_dna_fresh` | map changed but downstream artifacts were not rebuilt | w3 |
-| E.1 | The heading vector is the section list | invariant | script | `check_vector_map` | STUB headings 1:1 in order, verbatim | w5 |
-| E.2 | Two heading classes | structural | script | `check_section_enums` | heading_class query|claim; macro open | w5 |
+| DM.5 | The rhythm plan is binding | structural | script | `check_rhythm` | a section's surface/density deviates from the map's rhythm plan | w3 |
+| DM.6 | A changed map invalidates everything downstream | invariant | script | `check_dna_fresh` | map changed but downstream artifacts were not rebuilt | w1 |
+| E.1 | The heading vector is the section list | invariant | script | `check_vector_map` | STUB heading missing, re-ordered or reworded in plan rows | w3 |
+| E.2 | Two heading classes | structural | script | `check_section_enums` | heading_class query|claim; macro open | w3 |
 | E.3 | SEO invariants (lint) | structural | script | `check_seo_lint` | one h1; no skipped heading ranks | w7 |
 | E.4 | SEO QA | stylistic | script | `check_heading_verbatim` | rendered headings/fs verbatim vs STUB | w7 |
-| G.1 | The closed set | stylistic | script | `check_spacing_scale` | values ⊆ {4,8,12,16,24,32,48,64,96,128} | w3 |
-| G.2 | The proximity law | structural | script | `check_proximity` | group gap vs section gap ≥2× | w3 |
-| G.3 | Density is a named tier | stylistic | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w5 |
+| G.1 | The closed set | stylistic | script | `check_spacing_scale` | any spacing value ∉ {4,8,12,16,24,32,48,64,96,128} | w5 |
+| G.2 | The proximity law | structural | script | `check_proximity` | group gap vs section gap ≥2× | w5 |
+| G.3 | Density is a named tier | stylistic | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w3 |
 | G.4 | Rules and containers as gutter devices | stylistic | reviewer | `gutter-devices` | rules/containers as gutter devices | w8 |
-| I.1 | Style selection | stylistic | script | `check_system_enums` | family+style ∈ closed set; one family | w3 |
+| I.1 | Style selection | stylistic | script | `check_system_enums` | family+style ∈ closed set; one family | w5 |
 | I.2 | Stroke math, corner geometry, the grid | stylistic | script | `check_icon_discipline` | stroke ∈ {1.5,2,2.5,3}px uniform | w6 |
 | I.3 | Size | stylistic | script | `check_icon_discipline` | sizes ∈ {16,20,24,32,48} | w6 |
 | I.4 | Icon + text pairing | stylistic | reviewer | `icon-text-pairing` | icon+text baseline/leading correct | w8 |
 | I.5 | Library governance | stylistic | script | `check_icon_discipline` | one library, inline SVG — no icon fonts/img | w6 |
-| I.6 | Standalone glyphs, literal function, bans | stylistic | reviewer | `icon-literal` | literal function, bans honoured | w8 |
-| I.7 | Color and interactive states | stylistic | script | `check_icon_discipline` | currentColor, interactive states | w7 |
+| I.6 | Standalone glyphs, literal function, bans | stylistic | reviewer | `icon-literal` | non-literal function or a banned literal | w8 |
+| I.7 | Color and interactive states | stylistic | script | `check_icon_discipline` | currentColor, interactive states | w6 |
 | I.8 | Icon QA | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
-| L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w5 |
+| L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
-| L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1440px | w3 |
-| L.12 | Sequential anatomy | structural | script | `check_rhythm` | promise first, act first-and-last | w5 |
-| L.13 | Layout & proximity QA | stylistic | script | `check_rhythm` | S-M-L present; 960/1440 containment; ≤1 frame-break | w5 |
-| L.2 | Gutter boundaries | stylistic | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w5 |
+| L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1440px | w5 |
+| L.12 | Sequential anatomy | structural | script | `check_rhythm` | promise first, act first-and-last | w3 |
+| L.13 | Layout & proximity QA | stylistic | script | `check_rhythm` | S-M-L present; 960/1440 containment; ≤1 frame-break | w3 |
+| L.2 | Gutter boundaries | stylistic | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w3 |
 | L.3 | Edges and corners | structural | script | `check_measurable` | content never jams viewport edge | w7 |
 | L.4 | Negative space | stylistic | reviewer | `negative-space-gestalt` | space assigned, not leftover | w8 |
 | L.5 | The responsive collapse | structural | reviewer | `collapse-integrity` | collapse renders per R.3 | w8 |
 | L.6 | Gestalt grouping | stylistic | reviewer | `negative-space-gestalt` | proximity groups read as semantics | w8 |
-| L.7 | Small-Medium-Large | structural | script | `check_rhythm` | ≥1 density step; no >2 same comp; adjacent comp+density differ | w5 |
-| L.8 | Breaking the frame | stylistic | script | `check_motif` | exactly one motif.break section | w5 |
+| L.7 | Small-Medium-Large | structural | script | `check_rhythm` | ≥1 density step; no >2 same comp; adjacent comp+density differ | w3 |
+| L.8 | Breaking the frame | stylistic | script | `check_motif` | exactly one motif.break section | w3 |
 | L.9 | Asymmetry desktop, symmetry mobile | stylistic | reviewer | `asymmetry-desktop` | asym desktop / sym mobile | w8 |
-| M.1 | The four personalities | stylistic | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w2 |
+| M.1 | The four personalities | stylistic | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w4 |
 | M.2 | Duration & easing tokens | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
 | M.3 | Element-class rules | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
 | M.4 | One focal animation | stylistic | reviewer | `motion-personality` | one focal animation | w8 |
 | M.5 | Parallax | stylistic | reviewer | `parallax-license` | parallax on marketing pages only | w8 |
-| M.6 | Emotional states & reduced motion | structural | script | `check_reduced_motion` | prefers-reduced-motion block present | w3 |
+| M.6 | Emotional states & reduced motion | structural | script | `check_reduced_motion` | prefers-reduced-motion block present | w5 |
 | M.7 | Performance | stylistic | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
 | M.8 | Motion QA | stylistic | script | `check_measurable` | QA: no linear spatial, ≤80px+fade | w7 |
 | P.1 | Golden rule | invariant | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
-| P.10 | No emoji | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w6 |
+| P.10 | No emoji | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w5 |
 | P.11 | Icon discipline | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
 | P.12 | Speed budget | invariant | script | `check_speed_budget` | JS>50KB, img without dims/AVIF-WebP/lazy|fetchpriority, remote font host, @font-face without swap, render-blocking third-party script (Lighthouse is not a gate) | w7 |
 | P.13 | Mobile budget | invariant | script | `check_mobile_budget` | mobile-first, ≥16px body, burger nav, no h-scroll at 360 | w7 |
-| P.14 | Mobbin evidence | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist ⇒ DNA inferred.image_set | w5 |
+| P.14 | Mobbin evidence | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist ⇒ DNA inferred.image_set | w1 |
 | P.15 | SPEC verbatim | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |
 | P.2 | Shared source | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
-| P.3 | Wireframe contract tags | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w5 |
-| P.4 | Wireframe lock | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w5 |
-| P.5 | Tailwind theme | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w3 |
-| P.6 | Component catalogue | structural | script | `check_tile_is_system` | composition→component; tile instantiates all + tile_page_parity at w7 (page classes ⊆ sheet-defined; every composition has a tile counterpart) | w6 |
+| P.3 | Wireframe contract tags | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w3 |
+| P.4 | Wireframe lock | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w3 |
+| P.5 | Tailwind theme | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w5 |
+| P.6 | Component catalogue | structural | script | `check_tile_is_system` | composition with no component, tile missing a component, or page class ∉ sheet-defined set | w5 |
 | P.7 | Page assembly | invariant | script | `check_page_data_attrs` | page sections data-* == plan rows | w7 |
 | P.8 | Gate mechanics | invariant | operator | `approve` | gate pass + recorded approval per wave | w* |
-| P.9 | Checklist evidence | invariant | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w* |
+| P.9 | Checklist evidence | invariant | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w0 |
 | PS.1 | One role, one heading per block | invariant | script | `check_segment_roles` | section w/o data-sec or >1 h1/h2 per block | w7 |
 | PS.2 | Boilerplate at the edges only | invariant | script | `check_segment_region` | chrome block outside top/bottom | w7 |
 | PS.3 | Main-content share ≥80% | invariant | script | `check_segment_share` | main-content share <80% | w7 |
 | PS.4 | Media never floats context-free | invariant | script | `check_segment_media` | img w/o alt or context text in block | w7 |
 | PS.5 | Footer is boilerplate, nothing else | invariant | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
 | PS.6 | Priority order | invariant | script | `check_segment_priority` | main after chrome / aside before main | w7 |
-| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoints ⊆ {360,640,768,1024,1280,1440,1920}, min-width | w3 |
-| R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w3 |
-| R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w5 |
+| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
+| R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
+| R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
 | R.4 | Copy density budgets | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |
 | R.5 | Above-fold mandate & attention decay | structural | script | `check_measurable` | five elements at 360×640 | w7 |
 | R.6 | Touch & pointer targets | invariant | script | `check_tap_size` | targets ≥44px +8px buffer | w7 |
 | R.7 | Sizing modes | stylistic | reviewer | `sizing-modes` | fill/fixed/relative correct | w8 |
-| R.8 | Responsive QA | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1440 ceiling | w3 |
-| S.1 | The four personalities | stylistic | script | `check_direction_axes` | shape ∈ p1..p4 | w2 |
-| S.2 | The radius token scale | stylistic | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w3 |
+| R.8 | Responsive QA | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1440 ceiling | w5 |
+| S.1 | The four personalities | stylistic | script | `check_direction_axes` | shape ∈ p1..p4 | w4 |
+| S.2 | The radius token scale | stylistic | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w5 |
 | S.3 | Component → token assignment | stylistic | script | `check_measurable` | component→token assignment consistent | w7 |
 | S.4 | Concentric nesting | structural | script | `check_measurable` | child = parent − padding step | w7 |
-| S.5 | Border widths & separation | structural | script | `check_border_widths` | border widths ∈ {0,1px,2px} | w3 |
+| S.5 | Border widths & separation | structural | script | `check_border_widths` | border widths ∈ {0,1px,2px} | w5 |
 | S.6 | Secondary shape permissions | stylistic | reviewer | `shape-permissions` | secondary shapes per personality | w8 |
 | S.7 | Elevation ↔ radius coupling | stylistic | reviewer | `elevation-radius` | elevation↔radius coupled | w8 |
 | S.8 | Shape QA | stylistic | reviewer | `one-personality` | one personality throughout | w8 |
-| SB.1 | Contract per plan row | structural | script | `check_section_contracts` | one complete contract per plan row, equal to the row | w5 |
+| SB.1 | Contract per plan row | structural | script | `check_section_contracts` | one complete contract per plan row, equal to the row | w3 |
 | SB.2 | The shell owns rhythm | invariant | script | `check_section_shell` | zero outer layout declarations in section components | w6 |
-| SB.3 | One builder per section, one gate per section | invariant | script | `check_section_gates` | every section gate.json pass=true; classes ⊆ contract | w6 |
+| SB.3 | One builder per section, one gate per section | invariant | script | `check_section_gates` | section gate.json missing/not passing, or class ∉ contract | w6 |
 | SB.4 | The glue is mechanical | invariant | script | `check_assembly` | page source == assemble.py output, marker current | w7 |
 | SB.5 | Gold exemplars, adapted not invented | structural | script | `check_exemplars` | every used composition has an exemplar; every component names one | w6 |
 | SB.6 | Page gates only after section gates | structural | script | `check_scorecard` | scorecard sections ≥90% | w8 |
@@ -116,38 +116,38 @@ closed set.
 | T.1 | Universal rule of contrast | stylistic | script | `check_measurable` | primary 3–6× body visible at a glance | w7 |
 | T.10 | Inset containers vs. severing bars | stylistic | reviewer | `composition-inset` | insets ≥10–15% from edge | w8 |
 | T.11 | DOs / DONTs matrix | stylistic | script | `check_measurable` | no centred multi-line, no justify | w7 |
-| T.2 | The 10 canonical rules | stylistic | script | `check_type_system` | flush-left, ≤2 families, no justify, weight-skip pairing | w3 |
-| T.3 | Classification isolation | stylistic | script | `check_type_system` | fonts ∈ {display,body}, ≤2 stacks, no same-class pairing | w3 |
-| T.4 | Master typeface directory | stylistic | script | `check_type_system` | fonts ∈ T.4 directory or approved substitute | w3 |
+| T.2 | The 10 canonical rules | stylistic | script | `check_type_system` | flush-left, ≤2 families, no justify, weight-skip pairing | w5 |
+| T.3 | Classification isolation | stylistic | script | `check_type_system` | fonts ∈ {display,body}, ≤2 stacks, no same-class pairing | w5 |
+| T.4 | Master typeface directory | stylistic | script | `check_type_system` | fonts ∈ T.4 directory or approved substitute | w5 |
 | T.5 | Composition & spatial rules | stylistic | reviewer | `composition-inset` | blocks anchor to one axis per section | w8 |
-| T.6 | Micro-typography | structural | script | `check_type_system` | measure ≤65ch; body ≥16px | w3 |
+| T.6 | Micro-typography | structural | script | `check_type_system` | measure ≤65ch; body ≥16px | w5 |
 | T.7 | Web section application | stylistic | script | `check_measurable` | hero subhead 50–60% of display | w7 |
-| T.8 | Typography QA | stylistic | script | `check_type_system` | directory, ≤2 families, measure, tracking, text-wrap, overlay tint | w3 |
+| T.8 | Typography QA | stylistic | script | `check_type_system` | directory, ≤2 families, measure, tracking, text-wrap, overlay tint | w5 |
 | T.9 | Reading paths | stylistic | reviewer | `reading-path` | directional flow legible | w8 |
 | V.0 | Positive Selection Architecture | stylistic | reviewer | `media-words-first` | positive selection: words before pixels | w8 |
 | V.1 | Media-by-section decision matrix | stylistic | reviewer | `media-matrix` | media-by-section matrix followed | w8 |
-| V.2 | The four treatments | stylistic | script | `check_system_enums` | one treatment ∈ {natural,bw,duotone,cinematic} | w3 |
-| V.3 | Aspect ratios | structural | script | `check_section_enums` | media_ratio ∈ closed set | w5 |
+| V.2 | The four treatments | stylistic | script | `check_system_enums` | one treatment ∈ {natural,bw,duotone,cinematic} | w5 |
+| V.3 | Aspect ratios | structural | script | `check_section_enums` | media_ratio ∈ closed set | w3 |
 | V.4 | Text-on-image | stylistic | script | `check_measurable` | text-on-image floors + scrim | w7 |
 | V.5 | Background density budget + canvas modulation | stylistic | reviewer | `bg-density` | canvas modulation budget | w8 |
-| V.6 | Authenticity hierarchy | stylistic | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w3 |
+| V.6 | Authenticity hierarchy | stylistic | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w5 |
 | V.7 | Responsive art direction | stylistic | reviewer | `art-direction` | responsive crops per ratio | w8 |
 | V.8 | Media QA | stylistic | script | `check_measurable` | <picture>, ratios, scrims, tiers | w7 |
-| VG.1 | One page, 3–5 variants, mechanical build | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w2 |
-| VG.2 | A variant is a vector, not a mood | invariant | script | `check_variants` | page variant without its own passing system sheet | w2 |
-| VG.3 | Only passing variants appear | invariant | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w2 |
-| VG.4 | The switcher is sticky and complete | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w2 |
+| VG.1 | One page, exactly 3 variants, mechanical build | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w4 |
+| VG.2 | A variant is a vector, not a mood | invariant | script | `check_variants` | page variant without its own passing system sheet | w4 |
+| VG.3 | Only passing variants appear | invariant | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w4 |
+| VG.4 | The switcher is sticky and complete | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w4 |
 | VG.5 | The wildcard is present when burst > 0 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
 | VG.6 | Each tile states its case | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
 | W.1 | Voice is constant; tone is a context selection | stylistic | reviewer | `tone-errors` | voice constant, tone contextual | w8 |
 | W.10 | Writing QA | stylistic | reviewer | `writing-qa` | W QA sweep | w8 |
-| W.2 | CTAs | structural | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w3 |
+| W.2 | CTAs | structural | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w5 |
 | W.3 | Headings & field labels | stylistic | script | `check_measurable` | sentence-case standalone headings | w7 |
-| W.4 | Placeholders, tooltips & progressive disclosure | stylistic | script | `check_section_enums` | disclosure ∈ {open,collapsed,tabbed} | w5 |
+| W.4 | Placeholders, tooltips & progressive disclosure | stylistic | script | `check_section_enums` | disclosure ∈ {open,collapsed,tabbed} | w3 |
 | W.5 | Errors | stylistic | reviewer | `tone-errors` | errors neutral + remediation | w8 |
 | W.6 | Empty states & confirmations | stylistic | reviewer | `empty-states` | empty-state triad | w8 |
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
-| W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w3 |
+| W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
 140 rules — script 109, reviewer 30, operator 1; invariant 40, structural 29, stylistic 71.

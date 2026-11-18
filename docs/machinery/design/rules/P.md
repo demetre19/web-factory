@@ -182,22 +182,22 @@ plan is a refuse, not an improvisation.
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| P.1 | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
-| P.2 | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
-| P.3 | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w5 |
-| P.4 | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w5 |
-| P.5 | script | `check_tailwind_derivation` | config generated from TOKENS.json | w3 |
-| P.6 | script | `check_components_exist` | composition→component; tile instantiates all | w6 |
-| P.7 | script | `check_page_data_attrs` | page sections data-* == plan rows | w7 |
-| P.8 | operator | `approve` | gate pass + recorded approval per wave | w* |
-| P.9 | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w* |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- P.1 → L.10 (golden rule ↔ atomic file structure)
-- P.3 → P.4, V.3 (contract tags ↔ lock ↔ ratios)
-- P.5 → S.2, G.1, C.1 (config ↔ radius/space/colour tokens)
-- P.11 → I.1 (absolute icons ↔ family set)
-- P.12 → M.7 (speed ↔ compositor budget)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| P.1 | invariant | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
+| P.10 | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w5 |
+| P.11 | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
+| P.12 | invariant | script | `check_speed_budget` | JS>50KB, img without dims/AVIF-WebP/lazy|fetchpriority, remote font host, @font-face without swap, render-blocking third-party script (Lighthouse is not a gate) | w7 |
+| P.13 | invariant | script | `check_mobile_budget` | mobile-first, ≥16px body, burger nav, no h-scroll at 360 | w7 |
+| P.14 | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist ⇒ DNA inferred.image_set | w1 |
+| P.15 | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |
+| P.2 | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
+| P.3 | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w3 |
+| P.4 | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w3 |
+| P.5 | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w5 |
+| P.6 | structural | script | `check_tile_is_system` | composition with no component, tile missing a component, or page class ∉ sheet-defined set | w5 |
+| P.7 | invariant | script | `check_page_data_attrs` | page sections data-* == plan rows | w7 |
+| P.8 | invariant | operator | `approve` | gate pass + recorded approval per wave | w* |
+| P.9 | invariant | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w0 |

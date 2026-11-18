@@ -168,18 +168,15 @@ Checked at DESIGN-PLAN review and build self-lint:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| S.1 | script | `check_direction_axes` | shape ∈ p1..p4 | w2 |
-| S.2 | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w3 |
-| S.3 | reviewer | `component-radius` | component→token assignment consistent | w8 |
-| S.4 | reviewer | `concentric-radius` | child = parent − padding step | w8 |
-| S.5 | reviewer | `border-widths` | borders {0,1,2}px | w8 |
-| S.6 | reviewer | `shape-permissions` | secondary shapes per personality | w8 |
-| S.7 | reviewer | `elevation-radius` | elevation↔radius coupled | w8 |
-| S.8 | reviewer | `one-personality` | one personality throughout | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- S.2 → P.5 (radius tokens ↔ config compile)
-- S.4 → G.1 (nesting formula ↔ spacing scale)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| S.1 | stylistic | script | `check_direction_axes` | shape ∈ p1..p4 | w4 |
+| S.2 | stylistic | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w5 |
+| S.3 | stylistic | script | `check_measurable` | component→token assignment consistent | w7 |
+| S.4 | structural | script | `check_measurable` | child = parent − padding step | w7 |
+| S.5 | structural | script | `check_border_widths` | border widths ∈ {0,1px,2px} | w5 |
+| S.6 | stylistic | reviewer | `shape-permissions` | secondary shapes per personality | w8 |
+| S.7 | stylistic | reviewer | `elevation-radius` | elevation↔radius coupled | w8 |
+| S.8 | stylistic | reviewer | `one-personality` | one personality throughout | w8 |

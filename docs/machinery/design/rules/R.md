@@ -174,19 +174,15 @@ Assignment rules; the CSS mechanism is `position`/flex/grid, the
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| R.1 | script | `check_breakpoints` | breakpoints ⊆ {360,640,768,1024,1280,1440,1920}, min-width | w3 |
-| R.2 | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w3 |
-| R.3 | script | `check_schema_fields` | stack text-first; collapse declared per row | w5 |
-| R.4 | reviewer | `copy-density` | copy budgets honoured per breakpoint | w8 |
-| R.5 | reviewer | `above-fold-360` | five elements at 360×640 | w8 |
-| R.6 | script | `check_tap_size` | targets ≥44px +8px buffer | w7 |
-| R.7 | reviewer | `sizing-modes` | fill/fixed/relative correct | w8 |
-| R.8 | script | `check_breakpoints` | closed breakpoints, min-width, 1440 ceiling | w3 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- R.1 → P.13 (breakpoint set ↔ mobile rule)
-- R.3 → P.4 (collapse ↔ wireframe lock)
-- R.6 → P.11 (touch size ↔ icon sizes)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| R.1 | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
+| R.2 | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
+| R.3 | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
+| R.4 | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |
+| R.5 | structural | script | `check_measurable` | five elements at 360×640 | w7 |
+| R.6 | invariant | script | `check_tap_size` | targets ≥44px +8px buffer | w7 |
+| R.7 | stylistic | reviewer | `sizing-modes` | fill/fixed/relative correct | w8 |
+| R.8 | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1440 ceiling | w5 |

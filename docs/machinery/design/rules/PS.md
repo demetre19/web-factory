@@ -69,18 +69,13 @@ argument. FAIL: a main block following a chrome block, or an
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| PS.1 | script | `check_segment_roles` | section w/o data-sec or >1 h1/h2 per block | w7 |
-| PS.2 | script | `check_segment_region` | chrome block outside top/bottom | w7 |
-| PS.3 | script | `check_segment_share` | main-content share <80% | w7 |
-| PS.4 | script | `check_segment_media` | img w/o alt or context text in block | w7 |
-| PS.5 | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
-| PS.6 | script | `check_segment_priority` | main after chrome / aside before main | w7 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- PS.3 → E.1, W.8 (macro share ↔ vector ↔ copy budgets)
-- PS.1 → P.3, P.7 (block roles ↔ data-* contract)
-- PS.2 → L.12 (boilerplate edges ↔ sequential anatomy)
-- PS.6 → R.5 (priority order ↔ above-fold mandate)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| PS.1 | invariant | script | `check_segment_roles` | section w/o data-sec or >1 h1/h2 per block | w7 |
+| PS.2 | invariant | script | `check_segment_region` | chrome block outside top/bottom | w7 |
+| PS.3 | invariant | script | `check_segment_share` | main-content share <80% | w7 |
+| PS.4 | invariant | script | `check_segment_media` | img w/o alt or context text in block | w7 |
+| PS.5 | invariant | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
+| PS.6 | invariant | script | `check_segment_priority` | main after chrome / aside before main | w7 |

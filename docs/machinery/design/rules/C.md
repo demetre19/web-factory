@@ -156,17 +156,14 @@ mode's shots or items are missing.
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| C.1 | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w3 |
-| C.2 | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w2 |
-| C.3 | reviewer | `neutral-tint` | neutrals chromatic 2–6% S | w8 |
-| C.4 | reviewer | `accent-harmony` | accent by harmony or extracted, logged | w8 |
-| C.5 | script | `check_contrast` | inverse/dark ≠ #000 — tinted charcoal | w3 |
-| C.6 | reviewer | `derivation-order` | fill order followed, provenance tags | w8 |
-| C.7 | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w3 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- C.1 → S.7, V.4 (roles ↔ elevation ↔ scrims)
-- C.7 → R.6 (contrast floors ↔ touch targets)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| C.1 | stylistic | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w5 |
+| C.2 | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w4 |
+| C.3 | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w5 |
+| C.4 | stylistic | reviewer | `accent-harmony` | accent by harmony or extracted, logged | w8 |
+| C.5 | invariant | script | `check_dark_mode` | either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode | w4 |
+| C.6 | stylistic | reviewer | `derivation-order` | fill order followed, provenance tags | w8 |
+| C.7 | invariant | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w5 |

@@ -19,7 +19,7 @@ is the single source of coherence (`gate.py dna`).
 
 ## Job
 
-1. Produce **3–5 variant knob vectors** — baseline + declared knob
+1. Produce **3 variant knob vectors** — baseline + declared knob
    deltas only (VG.2); one `wildcard` vector when `burst > 0`. Record
    them in DNA `variants[]` (VG.1, LAW.DNA); knob diffs vs baseline are
    shown on each tile.
@@ -51,7 +51,7 @@ is the single source of coherence (`gate.py dna`).
 python3 tools/design-gate/run.py w4 <pipeline-dir> --design <variant>
 ```
 
-Checks: variants.astro absent (HTML picker), 3–5 knob vectors, deltas
+Checks: variants.html present (HTML picker), exactly 3 knob vectors, deltas
 applied + within bounds, sheet in both modes, only passing variants
 rendered. Then the operator approves (`run.py approve w4` — locks DNA v1).
 

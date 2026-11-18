@@ -224,19 +224,16 @@ Checked at DESIGN-PLAN review and build self-lint:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| V.0 | reviewer | `media-words-first` | positive selection: words before pixels | w8 |
-| V.1 | reviewer | `media-matrix` | media-by-section matrix followed | w8 |
-| V.2 | script | `check_system_enums` | one treatment ∈ {natural,bw,duotone,cinematic} | w3 |
-| V.3 | script | `check_section_enums` | media_ratio ∈ closed set | w5 |
-| V.4 | reviewer | `scrim-contrast` | text-on-image floors + scrim | w8 |
-| V.5 | reviewer | `bg-density` | canvas modulation budget | w8 |
-| V.6 | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w3 |
-| V.7 | reviewer | `art-direction` | responsive crops per ratio | w8 |
-| V.8 | reviewer | `media-qa` | <picture>, ratios, scrims, tiers | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- V.3 → P.3 (ratio set ↔ data-ratio contract)
-- V.6 → P.12 (authenticity ↔ speed/image budget)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| V.0 | stylistic | reviewer | `media-words-first` | positive selection: words before pixels | w8 |
+| V.1 | stylistic | reviewer | `media-matrix` | media-by-section matrix followed | w8 |
+| V.2 | stylistic | script | `check_system_enums` | one treatment ∈ {natural,bw,duotone,cinematic} | w5 |
+| V.3 | structural | script | `check_section_enums` | media_ratio ∈ closed set | w3 |
+| V.4 | stylistic | script | `check_measurable` | text-on-image floors + scrim | w7 |
+| V.5 | stylistic | reviewer | `bg-density` | canvas modulation budget | w8 |
+| V.6 | stylistic | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w5 |
+| V.7 | stylistic | reviewer | `art-direction` | responsive crops per ratio | w8 |
+| V.8 | stylistic | script | `check_measurable` | <picture>, ratios, scrims, tiers | w7 |

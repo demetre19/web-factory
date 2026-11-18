@@ -194,20 +194,17 @@ are shortened labels — the URL=H1 lock binds the route, not the label
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| W.1 | reviewer | `tone-errors` | voice constant, tone contextual | w8 |
-| W.2 | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w3 |
-| W.3 | reviewer | `heading-labels` | sentence-case standalone headings | w8 |
-| W.4 | script | `check_section_enums` | disclosure ∈ {open,collapsed,tabbed} | w5 |
-| W.5 | reviewer | `tone-errors` | errors neutral + remediation | w8 |
-| W.6 | reviewer | `empty-states` | empty-state triad | w8 |
-| W.7 | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
-| W.8 | script | `check_system_enums` | reading_level ≤grade-8 | w3 |
-| W.9 | reviewer | `i18n-copy` | no concat, no idioms | w8 |
-| W.10 | reviewer | `writing-qa` | W QA sweep | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- W.2 → E.2 (CTA copy ↔ heading classes)
-- W.4 → P.3 (disclosure ↔ data-disclosure)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| W.1 | stylistic | reviewer | `tone-errors` | voice constant, tone contextual | w8 |
+| W.10 | stylistic | reviewer | `writing-qa` | W QA sweep | w8 |
+| W.2 | structural | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w5 |
+| W.3 | stylistic | script | `check_measurable` | sentence-case standalone headings | w7 |
+| W.4 | stylistic | script | `check_section_enums` | disclosure ∈ {open,collapsed,tabbed} | w3 |
+| W.5 | stylistic | reviewer | `tone-errors` | errors neutral + remediation | w8 |
+| W.6 | stylistic | reviewer | `empty-states` | empty-state triad | w8 |
+| W.7 | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
+| W.8 | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
+| W.9 | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |

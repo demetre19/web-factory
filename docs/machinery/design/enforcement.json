@@ -277,21 +277,21 @@
       "mode": "script",
       "threshold": "burst missing or outside {0,1,2,3}",
       "tier": "invariant",
-      "wave": "w2"
+      "wave": "w3"
     },
     "B.3": {
       "check": "check_burst",
       "mode": "script",
       "threshold": "0 or 2 wildcards when burst>0; wildcard when burst=0",
       "tier": "stylistic",
-      "wave": "w2"
+      "wave": "w3"
     },
     "B.4": {
       "check": "check_declared_breaks",
       "mode": "script",
       "threshold": "bad rule_id / invariant break / 2 breaks in one section / missing field",
       "tier": "invariant",
-      "wave": "w2"
+      "wave": "w3"
     },
     "B.5": {
       "check": "check_style_review",
@@ -312,14 +312,14 @@
       "mode": "script",
       "threshold": "6-role map bound; ink\u22657:1 bg/surface",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "C.2": {
       "check": "check_direction_axes",
       "mode": "script",
       "threshold": "temperature \u2208 {warm,cool,neutral}",
       "tier": "stylistic",
-      "wave": "w2"
+      "wave": "w4"
     },
     "C.3": {
       "check": "check_neutral_tint",
@@ -327,7 +327,7 @@
       "mode": "script",
       "threshold": "neutrals S 2\u201315%; no #000000",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "C.4": {
       "item": "accent-harmony",
@@ -341,7 +341,7 @@
       "mode": "script",
       "threshold": "either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w4"
     },
     "C.6": {
       "item": "derivation-order",
@@ -355,7 +355,7 @@
       "mode": "script",
       "threshold": "ink\u22657:1, accent_fg\u22654.5:1, ink_muted\u22654.5:1, accent \u226410%",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w5"
     },
     "D.1": {
       "check": "check_genotype",
@@ -376,14 +376,14 @@
       "mode": "script",
       "threshold": "<2 distinct genotype vectors in W2 options",
       "tier": "structural",
-      "wave": "w2"
+      "wave": "w4"
     },
     "D.4": {
       "check": "check_genotype",
       "mode": "script",
       "threshold": "composition not in layout-archetype alleles",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w1"
     },
     "DM.1": {
       "check": "check_dna",
@@ -397,14 +397,14 @@
       "mode": "script",
       "threshold": "artifact built against a hash that is not the current map hash",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w1"
     },
     "DM.3": {
       "check": "check_dna",
       "mode": "script",
       "threshold": "design value not traceable to a token, knob or allele in the map",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w1"
     },
     "DM.4": {
       "check": "check_variants",
@@ -418,28 +418,28 @@
       "mode": "script",
       "threshold": "a section's surface/density deviates from the map's rhythm plan",
       "tier": "structural",
-      "wave": "w7"
+      "wave": "w3"
     },
     "DM.6": {
       "check": "check_dna_fresh",
       "mode": "script",
       "threshold": "map changed but downstream artifacts were not rebuilt",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w1"
     },
     "E.1": {
       "check": "check_vector_map",
       "mode": "script",
-      "threshold": "STUB headings 1:1 in order, verbatim",
+      "threshold": "STUB heading missing, re-ordered or reworded in plan rows",
       "tier": "invariant",
-      "wave": "w5"
+      "wave": "w3"
     },
     "E.2": {
       "check": "check_section_enums",
       "mode": "script",
       "threshold": "heading_class query|claim; macro open",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "E.3": {
       "check": "check_seo_lint",
@@ -459,9 +459,9 @@
     "G.1": {
       "check": "check_spacing_scale",
       "mode": "script",
-      "threshold": "values \u2286 {4,8,12,16,24,32,48,64,96,128}",
+      "threshold": "any spacing value \u2209 {4,8,12,16,24,32,48,64,96,128}",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "G.2": {
       "check": "check_proximity",
@@ -469,14 +469,14 @@
       "mode": "script",
       "threshold": "group gap vs section gap \u22652\u00d7",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "G.3": {
       "check": "check_section_enums",
       "mode": "script",
       "threshold": "density \u2208 {compact,regular,spacious}",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "G.4": {
       "item": "gutter-devices",
@@ -490,7 +490,7 @@
       "mode": "script",
       "threshold": "family+style \u2208 closed set; one family",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "I.2": {
       "check": "check_icon_discipline",
@@ -523,7 +523,7 @@
     "I.6": {
       "item": "icon-literal",
       "mode": "reviewer",
-      "threshold": "literal function, bans honoured",
+      "threshold": "non-literal function or a banned literal",
       "tier": "stylistic",
       "wave": "w8"
     },
@@ -531,7 +531,7 @@
       "mode": "script",
       "threshold": "currentColor, interactive states",
       "tier": "stylistic",
-      "wave": "w7",
+      "wave": "w6",
       "check": "check_icon_discipline"
     },
     "I.8": {
@@ -546,7 +546,7 @@
       "mode": "script",
       "threshold": "align = named edge per row",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.10": {
       "check": "check_scaffold",
@@ -560,28 +560,28 @@
       "mode": "script",
       "threshold": "content_width \u22641440px",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "L.12": {
       "check": "check_rhythm",
       "mode": "script",
       "threshold": "promise first, act first-and-last",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.13": {
       "check": "check_rhythm",
       "mode": "script",
       "threshold": "S-M-L present; 960/1440 containment; \u22641 frame-break",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.2": {
       "check": "check_rhythm",
       "mode": "script",
       "threshold": "adjacent sections stop or break, never graze (adjacency)",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.3": {
       "mode": "script",
@@ -616,14 +616,14 @@
       "mode": "script",
       "threshold": "\u22651 density step; no >2 same comp; adjacent comp+density differ",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.8": {
       "check": "check_motif",
       "mode": "script",
       "threshold": "exactly one motif.break section",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "L.9": {
       "item": "asymmetry-desktop",
@@ -637,7 +637,7 @@
       "mode": "script",
       "threshold": "motion \u2208 {subtle,elegant,professional,playful}",
       "tier": "stylistic",
-      "wave": "w2"
+      "wave": "w4"
     },
     "M.2": {
       "mode": "script",
@@ -673,7 +673,7 @@
       "mode": "script",
       "threshold": "prefers-reduced-motion block present",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "M.7": {
       "check": "check_speed_budget",
@@ -701,7 +701,7 @@
       "mode": "script",
       "threshold": "zero emoji in src/emitted html",
       "tier": "invariant",
-      "wave": "w6"
+      "wave": "w5"
     },
     "P.11": {
       "check": "check_icon_discipline",
@@ -729,7 +729,7 @@
       "mode": "script",
       "threshold": "MOBBIN-REFS.md \u22651 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist \u21d2 DNA inferred.image_set",
       "tier": "invariant",
-      "wave": "w5"
+      "wave": "w1"
     },
     "P.15": {
       "check": "check_spec_verbatim",
@@ -750,28 +750,28 @@
       "mode": "script",
       "threshold": "every card section carries 4 data-* attrs",
       "tier": "invariant",
-      "wave": "w5"
+      "wave": "w3"
     },
     "P.4": {
       "check": "check_wireframe_lock",
       "mode": "script",
       "threshold": "rows match card data-* 1:1 in order, wf_ref",
       "tier": "invariant",
-      "wave": "w5"
+      "wave": "w3"
     },
     "P.5": {
       "check": "check_tailwind_derivation",
       "mode": "script",
       "threshold": "config generated from TOKENS.json",
       "tier": "invariant",
-      "wave": "w3"
+      "wave": "w5"
     },
     "P.6": {
       "check": "check_tile_is_system",
       "mode": "script",
-      "threshold": "composition\u2192component; tile instantiates all + tile_page_parity at w7 (page classes \u2286 sheet-defined; every composition has a tile counterpart)",
+      "threshold": "composition with no component, tile missing a component, or page class \u2209 sheet-defined set",
       "tier": "structural",
-      "wave": "w6"
+      "wave": "w5"
     },
     "P.7": {
       "check": "check_page_data_attrs",
@@ -792,7 +792,7 @@
       "mode": "script",
       "threshold": "no blank evidence in CHECKLIST/<wave>.md",
       "tier": "invariant",
-      "wave": "w*"
+      "wave": "w0"
     },
     "PS.1": {
       "check": "check_segment_roles",
@@ -839,23 +839,23 @@
     "R.1": {
       "check": "check_breakpoints",
       "mode": "script",
-      "threshold": "breakpoints \u2286 {360,640,768,1024,1280,1440,1920}, min-width",
+      "threshold": "breakpoint \u2209 {360,640,768,1024,1280,1440,1920} or max-width only",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "R.2": {
       "check": "check_spacing_scale",
       "mode": "script",
       "threshold": "edge_padding \u2208 {16,24,32,40,48}",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "R.3": {
       "check": "check_schema_fields",
       "mode": "script",
       "threshold": "stack text-first; collapse declared per row",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "R.4": {
       "check": "check_copy_density",
@@ -891,21 +891,21 @@
       "mode": "script",
       "threshold": "closed breakpoints, min-width, 1440 ceiling",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "S.1": {
       "check": "check_direction_axes",
       "mode": "script",
       "threshold": "shape \u2208 p1..p4",
       "tier": "stylistic",
-      "wave": "w2"
+      "wave": "w4"
     },
     "S.2": {
       "check": "check_tailwind_derivation",
       "mode": "script",
       "threshold": "radius tokens \u2208 personality row, compiled to config",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "S.3": {
       "mode": "script",
@@ -927,7 +927,7 @@
       "mode": "script",
       "threshold": "border widths \u2208 {0,1px,2px}",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "S.6": {
       "item": "shape-permissions",
@@ -955,7 +955,7 @@
       "mode": "script",
       "threshold": "one complete contract per plan row, equal to the row",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "SB.2": {
       "check": "check_section_shell",
@@ -967,7 +967,7 @@
     "SB.3": {
       "check": "check_section_gates",
       "mode": "script",
-      "threshold": "every section gate.json pass=true; classes \u2286 contract",
+      "threshold": "section gate.json missing/not passing, or class \u2209 contract",
       "tier": "invariant",
       "wave": "w6"
     },
@@ -1025,21 +1025,21 @@
       "mode": "script",
       "threshold": "flush-left, \u22642 families, no justify, weight-skip pairing",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "T.3": {
       "check": "check_type_system",
       "mode": "script",
       "threshold": "fonts \u2208 {display,body}, \u22642 stacks, no same-class pairing",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "T.4": {
       "check": "check_type_system",
       "mode": "script",
       "threshold": "fonts \u2208 T.4 directory or approved substitute",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "T.5": {
       "item": "composition-inset",
@@ -1053,7 +1053,7 @@
       "mode": "script",
       "threshold": "measure \u226465ch; body \u226516px",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "T.7": {
       "mode": "script",
@@ -1067,7 +1067,7 @@
       "mode": "script",
       "threshold": "directory, \u22642 families, measure, tracking, text-wrap, overlay tint",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "T.9": {
       "item": "reading-path",
@@ -1095,14 +1095,14 @@
       "mode": "script",
       "threshold": "one treatment \u2208 {natural,bw,duotone,cinematic}",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "V.3": {
       "check": "check_section_enums",
       "mode": "script",
       "threshold": "media_ratio \u2208 closed set",
       "tier": "structural",
-      "wave": "w5"
+      "wave": "w3"
     },
     "V.4": {
       "mode": "script",
@@ -1123,7 +1123,7 @@
       "mode": "script",
       "threshold": "authenticity tier declared; T1 keep-list",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "V.7": {
       "item": "art-direction",
@@ -1144,28 +1144,28 @@
       "mode": "script",
       "threshold": "variant not expressed as a knob vector over knobs.json",
       "tier": "invariant",
-      "wave": "w2"
+      "wave": "w4"
     },
     "VG.2": {
       "check": "check_variants",
       "mode": "script",
       "threshold": "page variant without its own passing system sheet",
       "tier": "invariant",
-      "wave": "w2"
+      "wave": "w4"
     },
     "VG.3": {
       "check": "check_variants",
       "mode": "script",
       "threshold": "fewer than 3 or more than 5 variants, or a failing variant shown",
       "tier": "invariant",
-      "wave": "w2"
+      "wave": "w4"
     },
     "VG.4": {
       "check": "check_variants",
       "mode": "script",
       "threshold": "switcher missing variant/viewport/mode, or frames not container-query driven",
       "tier": "structural",
-      "wave": "w2"
+      "wave": "w4"
     },
     "VG.5": {
       "check": "check_variants",
@@ -1200,7 +1200,7 @@
       "mode": "script",
       "threshold": "cta_person \u2208 {first,second}, verb-first 2\u20134w",
       "tier": "structural",
-      "wave": "w3"
+      "wave": "w5"
     },
     "W.3": {
       "mode": "script",
@@ -1214,7 +1214,7 @@
       "mode": "script",
       "threshold": "disclosure \u2208 {open,collapsed,tabbed}",
       "tier": "stylistic",
-      "wave": "w5"
+      "wave": "w3"
     },
     "W.5": {
       "item": "tone-errors",
@@ -1242,7 +1242,7 @@
       "mode": "script",
       "threshold": "reading_level \u2264grade-8",
       "tier": "stylistic",
-      "wave": "w3"
+      "wave": "w5"
     },
     "W.9": {
       "item": "i18n-copy",

@@ -158,24 +158,20 @@ build self-lint:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| L.1 | script | `check_schema_fields` | align = named edge per row | w5 |
-| L.2 | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w5 |
-| L.3 | reviewer | `edge-insets` | content never jams viewport edge | w8 |
-| L.4 | reviewer | `negative-space-gestalt` | space assigned, not leftover | w8 |
-| L.5 | reviewer | `collapse-integrity` | collapse renders per R.3 | w8 |
-| L.6 | reviewer | `negative-space-gestalt` | proximity groups read as semantics | w8 |
-| L.7 | script | `check_rhythm` | ≥1 density step; no >2 same comp; adjacent comp+density differ | w5 |
-| L.8 | script | `check_motif` | exactly one motif.break section | w5 |
-| L.9 | reviewer | `asymmetry-desktop` | asym desktop / sym mobile | w8 |
-| L.10 | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
-| L.11 | script | `check_content_width` | content_width ≤1440px | w3 |
-| L.12 | script | `check_rhythm` | promise first, act first-and-last | w5 |
-| L.13 | script | `check_rhythm` | S-M-L present; 960/1440 containment; ≤1 frame-break | w5 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- L.7 → G.3, C.1 (S-M-L ↔ density tiers ↔ surfaces)
-- L.11 → T.6, R.2 (containment ↔ measure ↔ edge ramp)
-- L.12 → E.1 (page tiers ↔ heading vector)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| L.1 | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
+| L.10 | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
+| L.11 | stylistic | script | `check_content_width` | content_width ≤1440px | w5 |
+| L.12 | structural | script | `check_rhythm` | promise first, act first-and-last | w3 |
+| L.13 | stylistic | script | `check_rhythm` | S-M-L present; 960/1440 containment; ≤1 frame-break | w3 |
+| L.2 | stylistic | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w3 |
+| L.3 | structural | script | `check_measurable` | content never jams viewport edge | w7 |
+| L.4 | stylistic | reviewer | `negative-space-gestalt` | space assigned, not leftover | w8 |
+| L.5 | structural | reviewer | `collapse-integrity` | collapse renders per R.3 | w8 |
+| L.6 | stylistic | reviewer | `negative-space-gestalt` | proximity groups read as semantics | w8 |
+| L.7 | structural | script | `check_rhythm` | ≥1 density step; no >2 same comp; adjacent comp+density differ | w3 |
+| L.8 | stylistic | script | `check_motif` | exactly one motif.break section | w3 |
+| L.9 | stylistic | reviewer | `asymmetry-desktop` | asym desktop / sym mobile | w8 |

@@ -4185,7 +4185,9 @@ def run_wave(ctx):
             fails += chk(ctx)
         except Exception as e:
             fails.append(f'{chk.__name__} errored: {e}')
-    fails += checklist_blank_fails(ctx, ctx.wave)
+    # check_checklist already covers P.9; identical lines from checks
+    # that share a rule (e.g. check_dark_mode at two waves) count once
+    fails = list(dict.fromkeys(fails))
     return _apply_declared_breaks(ctx, fails)
 
 def _apply_declared_breaks(ctx, fails):

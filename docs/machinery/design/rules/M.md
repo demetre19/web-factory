@@ -154,18 +154,15 @@ Checked at DESIGN-PLAN review and build self-lint:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| M.1 | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w2 |
-| M.2 | reviewer | `motion-tokens` | durations/easing token-bound | w8 |
-| M.3 | reviewer | `motion-element-class` | per-class motion rules | w8 |
-| M.4 | reviewer | `motion-personality` | one focal animation | w8 |
-| M.5 | reviewer | `parallax-license` | parallax on marketing pages only | w8 |
-| M.6 | reviewer | `reduced-motion` | fallback present + honoured | w8 |
-| M.7 | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
-| M.8 | reviewer | `motion-personality` | QA: no linear spatial, ≤80px+fade | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- M.2 → P.12 (duration tokens ↔ speed budget)
-- M.6 → R.1 (reduced motion ↔ media feature)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| M.1 | stylistic | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w4 |
+| M.2 | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
+| M.3 | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
+| M.4 | stylistic | reviewer | `motion-personality` | one focal animation | w8 |
+| M.5 | stylistic | reviewer | `parallax-license` | parallax on marketing pages only | w8 |
+| M.6 | structural | script | `check_reduced_motion` | prefers-reduced-motion block present | w5 |
+| M.7 | stylistic | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
+| M.8 | stylistic | script | `check_measurable` | QA: no linear spatial, ≤80px+fade | w7 |

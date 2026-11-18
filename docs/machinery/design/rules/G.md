@@ -47,14 +47,11 @@ proof bands and chrome. Uniform `regular` everywhere is the
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| G.1 | script | `check_spacing_scale` | values ⊆ {4,8,12,16,24,32,48,64,96,128} | w3 |
-| G.2 | reviewer | `proximity-law` | group gap ≥2× tighter than section gap | w8 |
-| G.3 | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w5 |
-| G.4 | reviewer | `gutter-devices` | rules/containers as gutter devices | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- G.1 → R.2 (spacing scale ↔ edge ramp — distinct scales)
-- G.3 → L.7 (density tiers ↔ S-M-L rhythm)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| G.1 | stylistic | script | `check_spacing_scale` | any spacing value ∉ {4,8,12,16,24,32,48,64,96,128} | w5 |
+| G.2 | structural | script | `check_proximity` | group gap vs section gap ≥2× | w5 |
+| G.3 | stylistic | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w3 |
+| G.4 | stylistic | reviewer | `gutter-devices` | rules/containers as gutter devices | w8 |

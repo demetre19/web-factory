@@ -317,8 +317,11 @@ or assign it the ux-auditor counter-review in `audit-remodel`.
 
 - One convergence: every path lands in `design-dna/`. No second build
   path per scenario — same principle as the DOX/refs split.
-- Two gates only (D3): variant picking happens in the tool's own
-  out-of-band preview, never a typed pipeline gate.
+- The variant pick IS a pipeline gate: W3 layout pick and W4 look pick
+  run through `preview/layouts.html` / `preview/variants.html` +
+  `gate.py` + signed operator approval (VG.*). The intake tool's
+  `variants` scenario only produces reference captures (`role:
+  variant`), never a second picking mechanism.
 - Never fabricated: crawler facts are `extracted:`-flagged evidence;
   the operator's edit pass is the ratification.
 - Scenario 4 sub-case: a factory-emitted `sites/<slug>/` never re-runs

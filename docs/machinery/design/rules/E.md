@@ -84,14 +84,11 @@ Rules:
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| E.1 | script | `check_vector_map` | STUB headings 1:1 in order, verbatim | w5 |
-| E.2 | script | `check_section_enums` | heading_class query|claim; macro open | w5 |
-| E.3 | reviewer | `seo-lint` | ≤1 link/section, no invented claims | w8 |
-| E.4 | script | `check_heading_verbatim` | rendered headings/fs verbatim vs STUB | w7 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- E.1 → P.4 (vector ↔ wireframe lock)
-- E.2 → W.4 (heading classes ↔ disclosure)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| E.1 | invariant | script | `check_vector_map` | STUB heading missing, re-ordered or reworded in plan rows | w3 |
+| E.2 | structural | script | `check_section_enums` | heading_class query|claim; macro open | w3 |
+| E.3 | structural | script | `check_seo_lint` | one h1; no skipped heading ranks | w7 |
+| E.4 | stylistic | script | `check_heading_verbatim` | rendered headings/fs verbatim vs STUB | w7 |

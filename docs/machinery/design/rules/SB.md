@@ -110,6 +110,19 @@ never the whole page.
 `gate.json` trail. Threshold: scorecard sections ≥ 90%, and any FAIL
 row resolves to a plan row or a section gate record.
 
+## Enforcement
+
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
+
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| SB.1 | structural | script | `check_section_contracts` | one complete contract per plan row, equal to the row | w3 |
+| SB.2 | invariant | script | `check_section_shell` | zero outer layout declarations in section components | w6 |
+| SB.3 | invariant | script | `check_section_gates` | section gate.json missing/not passing, or class ∉ contract | w6 |
+| SB.4 | invariant | script | `check_assembly` | page source == assemble.py output, marker current | w7 |
+| SB.5 | structural | script | `check_exemplars` | every used composition has an exemplar; every component names one | w6 |
+| SB.6 | structural | script | `check_scorecard` | scorecard sections ≥90% | w8 |
+
 ## Links
 
 - `SECTION-BUILD.md` — the architecture and the Design Library study.

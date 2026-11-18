@@ -190,23 +190,19 @@ the field, box = the container on the field.
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| T.0 | reviewer | `type-restraint` | restraint over excess | w8 |
-| T.1 | reviewer | `three-tier-read-order` | primary 3–6× body visible at a glance | w8 |
-| T.2 | script | `check_type_system` | flush-left, ≤2 families, no justify, weight-skip pairing | w3 |
-| T.3 | script | `check_type_system` | fonts ∈ {display,body}, ≤2 stacks, no same-class pairing | w3 |
-| T.4 | script | `check_type_system` | fonts ∈ T.4 directory or approved substitute | w3 |
-| T.5 | reviewer | `composition-inset` | blocks anchor to one axis per section | w8 |
-| T.6 | script | `check_type_system` | measure ≤65ch; body ≥16px | w3 |
-| T.7 | reviewer | `section-type-application` | hero subhead 50–60% of display | w8 |
-| T.8 | script | `check_type_system` | directory, ≤2 families, measure, tracking, text-wrap, overlay tint | w3 |
-| T.9 | reviewer | `reading-path` | directional flow legible | w8 |
-| T.10 | reviewer | `composition-inset` | insets ≥10–15% from edge | w8 |
-| T.11 | reviewer | `type-refusals` | no centred multi-line, no justify | w8 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- T.6 → R.4, L.11 (measure ↔ copy budgets ↔ containment)
-- T.1 → C.1, L.7 (read order ↔ contrast roles ↔ S-M-L)
-- T.4 → C.2 (typeface choice ↔ temperature)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| T.0 | stylistic | reviewer | `type-restraint` | restraint over excess | w8 |
+| T.1 | stylistic | script | `check_measurable` | primary 3–6× body visible at a glance | w7 |
+| T.10 | stylistic | reviewer | `composition-inset` | insets ≥10–15% from edge | w8 |
+| T.11 | stylistic | script | `check_measurable` | no centred multi-line, no justify | w7 |
+| T.2 | stylistic | script | `check_type_system` | flush-left, ≤2 families, no justify, weight-skip pairing | w5 |
+| T.3 | stylistic | script | `check_type_system` | fonts ∈ {display,body}, ≤2 stacks, no same-class pairing | w5 |
+| T.4 | stylistic | script | `check_type_system` | fonts ∈ T.4 directory or approved substitute | w5 |
+| T.5 | stylistic | reviewer | `composition-inset` | blocks anchor to one axis per section | w8 |
+| T.6 | structural | script | `check_type_system` | measure ≤65ch; body ≥16px | w5 |
+| T.7 | stylistic | script | `check_measurable` | hero subhead 50–60% of display | w7 |
+| T.8 | stylistic | script | `check_type_system` | directory, ≤2 families, measure, tracking, text-wrap, overlay tint | w5 |
+| T.9 | stylistic | reviewer | `reading-path` | directional flow legible | w8 |

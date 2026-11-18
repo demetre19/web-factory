@@ -59,17 +59,11 @@ composition outside the gene's allele set, or a section whose
 
 ## Enforcement
 
-| Rule | Mode | Check / rubric | Threshold that FAILs | Wave |
-|---|---|---|---|---|
-| D.1 | script | `check_genotype` | gene missing / allele ∉ gene set / unknown key | w1 |
-| D.2 | script | `check_genotype` | profile absent or `uses_genes` incomplete | w1 |
-| D.3 | script | `check_genotype_distinct` | <3 distinct genotype vectors in W4 options | w4 |
-| D.4 | script | `check_genotype` | composition ∉ `layout-archetype` alleles | w5 |
+Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
 
-## Links
-
-- D.1 → P.8, P.9 (genotype ↔ gate mechanics, checklist evidence)
-- D.2 → P.14, T.4 (profile ↔ Mobbin reference class, type directory)
-- D.3 → C.2, S.1, M.1 (options ↔ temperature, shape, motion axes)
-- D.4 → P.3, P.4 (compositions ↔ data-* contract, wireframe lock)
-- D.1 → section-catalog (compositions ↔ catalogue)
+| Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
+|---|---|---|---|---|---|
+| D.1 | structural | script | `check_genotype` | gene missing / allele not in gene set | w1 |
+| D.2 | structural | script | `check_genotype` | profile absent or uses_genes incomplete | w1 |
+| D.3 | structural | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w4 |
+| D.4 | structural | script | `check_genotype` | composition not in layout-archetype alleles | w1 |
