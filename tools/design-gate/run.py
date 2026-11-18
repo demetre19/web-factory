@@ -3,6 +3,7 @@
 
   python3 run.py <wave> <pipeline-dir> [gate.py options]
   python3 run.py approve <wave> <pipeline-dir>
+  python3 run.py sign-review <pipeline-dir>
 
 A wave runs only when EVERY earlier wave passed, every approvable one is
 operator-approved for the CURRENT inputs, and no recorded input changed
@@ -76,12 +77,44 @@ def approve(wave, pdir, G):
     return 0
 
 
+def sign_review(pdir, G):
+    """Bind REVIEW.json to the build it graded — reviewer-only, TTY."""
+    if not sys.stdin.isatty():
+        print('run.py sign-review REFUSED: review binding needs an '
+              'interactive terminal (P.8)')
+        return 1
+    ctx = G.Ctx(pdir)
+    ctx.wave = 'w7'
+    rp = os.path.join(pdir, 'REVIEW.json')
+    if not os.path.isfile(rp):
+        print('REVIEW.json missing — the reviewer writes it first')
+        return 1
+    rv = json.load(open(rp))
+    rv['dist_sha256'] = G._dist_sha(ctx)
+    sl = G.dna_slices(G.dna_map(ctx) or {})
+    import secrets, hmac, hashlib
+    rv['nonce'] = secrets.token_hex(8)
+    body = (f"{rv['nonce']}|{rv['dist_sha256']}|{sl.get('core')}|"
+            f"{rv.get('reviewer_model')}")
+    rv['sig'] = hmac.new(G.op_key(create=True), body.encode(),
+                         hashlib.sha256).hexdigest()[:32]
+    with open(rp, 'w') as fh:
+        json.dump(rv, fh, indent=1, sort_keys=True)
+    print(f'signed REVIEW.json · dist {rv["dist_sha256"]} · '
+          f'look {sl.get("core")}')
+    return 0
+
+
 def main():
     a = sys.argv[1:]
     if len(a) >= 3 and a[0] == 'approve':
         sys.path.insert(0, HERE)
         import gate as G
         return approve(a[1], a[2], G)
+    if len(a) >= 2 and a[0] == 'sign-review':
+        sys.path.insert(0, HERE)
+        import gate as G
+        return sign_review(a[1], G)
     if len(a) < 2 or a[0] not in ORDER:
         print(__doc__)
         return 2

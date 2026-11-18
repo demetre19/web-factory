@@ -619,6 +619,10 @@ def check_audit_artifacts(ctx):
 
 
 EMOJI_RE = re.compile(
+    '[\U0001F000-\U0001FAFF\u2600-\u27BF\u2190-\u21FF'
+    '\u2300-\u23FF\u25A0-\u25FF\u2B00-\u2BFF\u203C\u2049\u2122'
+    '\u2139\u3030\u303D\uFE0F\u20E3\u00A9\u00AE]')
+_EMOJI_RE_OLD = re.compile(
     '[\U0001F000-\U0001FAFF☀-➿⬀-⯿️\ufe0f\ufe0e\U000E0020-\U000E007F]'
     '|\U0001F1E6-\U0001F1FF')
 
@@ -2130,6 +2134,44 @@ def check_review_modes(ctx):
     return f
 
 
+def png_dims(path):
+    """(w, h) from the PNG header, or None."""
+    try:
+        with open(path, 'rb') as fh:
+            d = fh.read(33)
+        if d[:8] != b'\x89PNG\r\n\x1a\n' or d[12:16] != b'IHDR':
+            return None
+        import struct
+        return struct.unpack('>II', d[16:24])
+    except Exception:
+        return None
+
+
+SHOT_WIDTHS = (1280, 768, 360)
+
+
+def _dist_sha(ctx):
+    h = hashlib.sha256()
+    for p, _ in ctx.page_htmls():
+        h.update(open(p, 'rb').read())
+    return h.hexdigest()[:16]
+
+
+def _review_sig_ok(ctx, rv):
+    """The review is bound to the build it graded: sig = HMAC(operator
+    key, nonce+dist+dna+round) produced by `run.py sign-review`."""
+    key = op_key()
+    sig = rv.get('sig')
+    nonce = rv.get('nonce')
+    if not sig or not nonce:
+        return False
+    sl = dna_slices(dna_map(ctx) or {})
+    body = f'{nonce}|{rv.get("dist_sha256")}|{sl.get("core")}|'            f'{rv.get("reviewer_model")}'
+    want = hmac.new(key or b'', body.encode(),
+                    hashlib.sha256).hexdigest()[:32]
+    return hmac.compare_digest(str(sig), want)
+
+
 def check_review_completeness(ctx):
     f = []
     rj = ctx.read('REVIEW.json')
@@ -2145,6 +2187,13 @@ def check_review_completeness(ctx):
                  'review required (P.8)')
     if not rv.get('designer_model') or not rv.get('reviewer_model'):
         f.append('REVIEW.json must name reviewer_model + designer_model')
+    # the reviewer artifact is bound to the build it graded
+    if rv.get('dist_sha256') != _dist_sha(ctx):
+        f.append('REVIEW.json dist_sha256 != current dist — the review '
+                 'is not bound to this build')
+    if not _review_sig_ok(ctx, rv):
+        f.append('REVIEW.json unsigned — `run.py sign-review <dir>` in an '
+                 'operator terminal binds reviewer + build (P.8)')
     items = rv.get('items') or []
     rubric = {rid for rid, e in _enforcement_rules().items()
               if e.get('mode') == 'reviewer'}
@@ -2159,9 +2208,26 @@ def check_review_completeness(ctx):
     missing = rubric - scored
     if missing:
         f.append(f'rubric items unscored: {sorted(missing)}')
-    if not os.path.isdir(os.path.join(ctx.dir, 'shots')):
-        f.append('shots/ dir missing (1280/768/360 evidence)')
+    # screenshots are evidence, not filenames: width = viewport, both
+    # modes, non-trivial bytes (B F-07)
+    for slug in (ctx.pages() or {'index': {}}):
+        for w in SHOT_WIDTHS:
+            for mode in ('light', 'dark'):
+                fn = f'shots/{w}-{mode}-{slug}.png'
+                p = os.path.join(ctx.dir, fn)
+                if not os.path.isfile(p):
+                    f.append(f'{fn} missing — {w}px/{mode} evidence')
+                    continue
+                dims = png_dims(p)
+                if not dims:
+                    f.append(f'{fn}: not a PNG')
+                elif dims[0] != w:
+                    f.append(f'{fn}: width {dims[0]}px != viewport {w}px')
+                if os.path.getsize(p) < 2000:
+                    f.append(f'{fn}: {os.path.getsize(p)} bytes — '
+                             'a blank screenshot is not evidence')
     return f
+
 
 # ---------------------------------------------------------------- section build
 #
@@ -2472,10 +2538,16 @@ def page_path(ctx):
     return os.path.join(ctx.site, 'src', 'pages', f'{slug}.astro'), slug
 
 
-def assemble_page(ctx):
-    """SB.4 — deterministic page source from plan order."""
-    contracts = build_contracts(ctx)
-    path, slug = page_path(ctx)
+def assemble_page(ctx, slug=None):
+    """SB.4 — deterministic page source from plan order.
+
+    Multi-page plans assemble every slug; assemble.py writes one file
+    per slug (B F-40)."""
+    slug = slug or page_path(ctx)[1]
+    contracts = [c for c in build_contracts(ctx) if c['page'] == slug]
+    path, _ = page_path(ctx)
+    if slug != _:
+        path = os.path.join(ctx.site, 'src', 'pages', slug + '.astro')
     imports = ["import Section from '../components/Section.astro';"]
     for c in contracts:
         imports.append(f"import {camel(c['section'])} from "
@@ -2498,24 +2570,31 @@ def assemble_page(ctx):
 
 
 def check_assembly(ctx):
-    """SB.4 — the page file is exactly what assemble.py generates."""
-    path, txt, h = assemble_page(ctx)
-    if not os.path.isfile(path):
-        return [f'SB.4 {os.path.relpath(path, ctx.dir)} missing — run '
-                'assemble.py']
-    got = open(path, encoding='utf-8', errors='replace').read()
+    """SB.4 — every plan page is exactly what assemble.py generates."""
     f = []
-    if f'assembled: {h}' not in got:
-        f.append(f'SB.4 assembled marker stale — contracts changed after '
-                 'the last assemble.py run (never hand-edit the page)')
-    norm = lambda s: '\n'.join(x.rstrip() for x in s.strip().split('\n'))
-    if norm(got) != norm(txt):
-        f.append('SB.4 page source differs from assemble.py output — '
-                 'regenerate the glue')
-    for c in build_contracts(ctx):
-        if f'<{camel(c["section"])} />' not in got:
-            f.append(f'SB.4 section component {camel(c["section"])} not '
-                     'rendered in plan order')
+    for slug in (ctx.pages() or {'index': {}}):
+        path, txt, h = assemble_page(ctx, slug)
+        if not os.path.isfile(path):
+            f.append(f'SB.4 {os.path.basename(path)} missing — run '
+                     'assemble.py')
+            continue
+        cur = open(path, encoding='utf-8').read()
+        if cur != txt:
+            f.append('SB.4 ' + os.path.basename(path) + ' differs from '
+                     'assemble.py output — regenerate the glue')
+            continue
+        cur_h = re.search(r'assembled: ([0-9a-f]+)', cur)
+        if not cur_h or cur_h.group(1) != h:
+            f.append('SB.4 assembled marker stale — contracts changed '
+                     'after the last assemble.py run (never hand-edit '
+                     'the page)')
+        else:
+            for c in build_contracts(ctx):
+                if c['page'] == slug and \
+                        f'<{camel(c["section"])} />' not in cur:
+                    f.append(f'SB.4 section component '
+                             f'{camel(c["section"])} not rendered in '
+                             'plan order')
     return f
 
 
@@ -4294,6 +4373,7 @@ def cli_selftest():
 
 
 def cmd_selftest():
+    os.environ.setdefault('DESIGN_GATE_OPERATOR_KEY', 'fixture-key')
     fx = os.path.join(HERE, 'fixtures')
     checks = {c.__name__: c for lst in WAVE_CHECKS.values()
               for c in lst}
@@ -5601,13 +5681,15 @@ WAVE_CHECKS = {
            check_wildcard, check_section_contracts,
            check_layout_distinct],
     'w4': [check_direction_axes, check_genotype,
+           check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
            check_dark_mode, check_variants],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
-           check_border_widths, check_reduced_motion, check_dark_mode],
+           check_border_widths, check_reduced_motion, check_dark_mode,
+           check_dark_toggle],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
@@ -5631,11 +5713,11 @@ WAVE_INPUTS = {
     'w0': ['site/package.json', 'site/astro.config.mjs',
            'site/src/styles/global.css'],
     'w1': ['DESIGN-PLAN.md', 'audit.md', 'MOBBIN-REFS.md'],
-    'w2': ['DESIGN-PLAN.md'],
-    'w3': ['DESIGN-PLAN.md', 'TOKENS.json',
-           'site/src/pages/system.astro', 'site/src/styles/global.css'],
-    'w4': ['STUB.md'],
-    'w5': ['DESIGN-PLAN.md', 'MOBBIN-REFS.md'],
+    'w2': ['STUB.md'],
+    'w3': ['DESIGN-PLAN.md', 'MOBBIN-REFS.md', 'preview/layouts.html'],
+    'w4': ['DESIGN-PLAN.md', 'preview/variants.html'],
+    'w5': ['DESIGN-PLAN.md', 'TOKENS.json', 'preview/system.html',
+           'site/src/styles/global.css'],
     'w6': ['DESIGN-PLAN.md', 'COMPONENTS.md',
            'site/src/pages/system.astro'],
     'w7': ['DESIGN-PLAN.md'],

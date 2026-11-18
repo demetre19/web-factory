@@ -9,12 +9,34 @@ Layout: fixtures/_base/ is the shared good pipeline. Each fail/ dir is
 _base with one seeded violation; each pass/ dir symlinks to _base
 unless the check needs extra files (OVERRIDES).
 """
-import json, os, shutil, sys
+import hashlib, hmac, json, os, shutil, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
 sys.path.insert(0, HERE)
 import gate  # noqa: E402  (hash helpers for the fixture DNA)
+
+
+def _png(w, h):
+    """A real PNG of (w,h) ≥2KB so screenshot checks see dimensions."""
+    import struct, zlib
+    def chunk(t, d):
+        c = t + d
+        return struct.pack('>I', len(d)) + c + struct.pack('>I', zlib.crc32(c) & 0xffffffff)
+    ihdr = struct.pack('>IIBBBBB', w, h, 8, 2, 0, 0, 0)
+    raw = b''.join(b'\x00' + b'\x11\x22\x33' * w for _ in range(h))
+    pad = b'x' * 2048
+    return (b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', ihdr)
+            + chunk(b'IDAT', zlib.compress(raw))
+            + chunk(b'tEXt', pad) + chunk(b'IEND', b''))
+
+
+SHOTS = {}
+for _w in (1280, 768, 360):
+    for _mode in ('light', 'dark'):
+        SHOTS[f'shots/{_w}-{_mode}-home.png'] = _png(_w, 320)
+SHOTS['shots/vs-wireframe.png'] = _png(1280, 320)
+SHOTS['shots/vs-tile.png'] = _png(1280, 320)
 
 PLAN = '''# DESIGN-PLAN — fixture site
 
@@ -372,348 +394,349 @@ REVIEW = '''{
 "modes": {"light": {"pass": true}, "dark": {"pass": true}},
 "reviewer_model": "opus-4",
 "designer_model": "swe-2",
+"nonce": "fixture-nonce",
 "items": [
 {
 "rule": "C.3",
 "rubric": "neutral-tint",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "C.4",
 "rubric": "accent-harmony",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "C.6",
 "rubric": "derivation-order",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "E.3",
 "rubric": "seo-lint",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "G.2",
 "rubric": "proximity-law",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "G.4",
 "rubric": "gutter-devices",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "I.4",
 "rubric": "icon-text-pairing",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "I.6",
 "rubric": "icon-literal",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "I.7",
 "rubric": "icon-states",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "L.3",
 "rubric": "edge-insets",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "L.4",
 "rubric": "negative-space-gestalt",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "L.5",
 "rubric": "collapse-integrity",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "L.6",
 "rubric": "negative-space-gestalt",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "L.9",
 "rubric": "asymmetry-desktop",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.2",
 "rubric": "motion-tokens",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.3",
 "rubric": "motion-element-class",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.4",
 "rubric": "motion-personality",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.5",
 "rubric": "parallax-license",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.6",
 "rubric": "reduced-motion",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "M.8",
 "rubric": "motion-personality",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "R.4",
 "rubric": "copy-density",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "R.5",
 "rubric": "above-fold-360",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "R.7",
 "rubric": "sizing-modes",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.3",
 "rubric": "component-radius",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.4",
 "rubric": "concentric-radius",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.5",
 "rubric": "border-widths",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.6",
 "rubric": "shape-permissions",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.7",
 "rubric": "elevation-radius",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "S.8",
 "rubric": "one-personality",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.0",
 "rubric": "type-restraint",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.1",
 "rubric": "three-tier-read-order",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.5",
 "rubric": "composition-inset",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.7",
 "rubric": "section-type-application",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.9",
 "rubric": "reading-path",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.10",
 "rubric": "composition-inset",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "T.11",
 "rubric": "type-refusals",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.0",
 "rubric": "media-words-first",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.1",
 "rubric": "media-matrix",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.4",
 "rubric": "scrim-contrast",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.5",
 "rubric": "bg-density",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.7",
 "rubric": "art-direction",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "V.8",
 "rubric": "media-qa",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.1",
 "rubric": "tone-errors",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.3",
 "rubric": "heading-labels",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.5",
 "rubric": "tone-errors",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.6",
 "rubric": "empty-states",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.7",
 "rubric": "link-scent",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.9",
 "rubric": "i18n-copy",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 },
 {
 "rule": "W.10",
 "rubric": "writing-qa",
 "pass": true,
-"evidence": "shots/home-1280.png",
+"evidence": "shots/1280-light-home.png",
 "note": ""
 }
 ],
@@ -898,13 +921,7 @@ BASE = {
     '.wave': 'w3',
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
     'site/dist/home/index.html': PAGE_HTML,
-    'shots/home-1280.png': b'PNG',
-    'shots/home-light-1280.png': b'PNG',
-    'shots/home-dark-1280.png': b'PNG',
-    'shots/home-768.png': b'PNG',
-    'shots/home-360.png': b'PNG',
-    'shots/vs-wireframe.png': b'PNG',
-    'shots/vs-tile.png': b'PNG',
+    **SHOTS,
 }
 
 # check -> mutator(files dict). 'DEL x' deletes, 'APPEND x y' appends.
@@ -1032,7 +1049,10 @@ MUT = {
  'check_dark_toggle': mut(('REPL','site/dist/home/index.html',
     'data-theme-toggle','data-nope')),
  'check_variants': mut(('REPL','DNA.json','"id": "v3"','"id": "v9"')),
- 'check_review_modes': mut(('DEL','shots/home-dark-1280.png')),
+ 'check_review_modes': mut(
+     ('DEL','shots/1280-dark-home.png'),
+     ('DEL','shots/768-dark-home.png'),
+     ('DEL','shots/360-dark-home.png')),
  'check_section_shell': mut(('REPL','site/src/components/split-media.astro',
     'class="grid gap-stack md:grid-cols-2"','class="py-24 grid gap-stack md:grid-cols-2"')),
  'check_section_allowed': mut(('REPL','site/src/components/cards-n.astro',
@@ -1115,6 +1135,20 @@ def main():
         elif os.path.isfile(full):
             BASE[rel] = open(full, encoding='utf-8').read()
 
+    # bind the review artifact to the build it graded (P.8)
+    os.environ.setdefault('DESIGN_GATE_OPERATOR_KEY', 'fixture-key')
+    ctx_b = gate.Ctx(base_dir)
+    ctx_b.wave = 'w7'
+    rv = json.loads(BASE['REVIEW.json'])
+    rv['dist_sha256'] = gate._dist_sha(ctx_b)
+    sl = gate.dna_slices(gate.dna_map(ctx_b))
+    body = (f"{rv['nonce']}|{rv['dist_sha256']}|{sl.get('core')}|"
+            f"{rv.get('reviewer_model')}")
+    rv['sig'] = hmac.new(gate.op_key(create=True), body.encode(),
+                         hashlib.sha256).hexdigest()[:32]
+    BASE['REVIEW.json'] = json.dumps(rv, indent=1)
+    with open(os.path.join(base_dir, 'REVIEW.json'), 'w') as fh:
+        fh.write(BASE['REVIEW.json'])
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)

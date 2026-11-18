@@ -42,12 +42,14 @@ def main(argv):
         print(f'assembled picker → {os.path.relpath(path, ctx.dir)} '
               f'(marker {h})')
         return 0
-    path, txt, h = gate.assemble_page(ctx)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as fh:
-        fh.write(txt)
-    print(f'assembled {len(gate.build_contracts(ctx))} sections '
-          f'→ {os.path.relpath(path, ctx.dir)} (marker {h})')
+    wrote = []
+    for slug in (ctx.pages() or {'index': {}}):
+        path, txt, h = gate.assemble_page(ctx, slug)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as fh:
+            fh.write(txt)
+        wrote.append(f'{os.path.relpath(path, ctx.dir)} (marker {h})')
+    print('assembled ' + ', '.join(wrote))
     return 0
 
 
