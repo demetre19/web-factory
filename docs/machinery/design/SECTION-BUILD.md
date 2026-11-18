@@ -31,16 +31,24 @@ DESIGN-PLAN row                      (W5, operator-locked wireframe)
   ↓ gate.py contracts                SB.1 — sections/<nn>-<sec>.contract.json
 contract + card + tokens + exemplar  (W6 — one builder per section)
   ↓ gate.py section --sec <name>     SB.3 — sections/<nn>-<sec>.gate.json
-src/components/sections/<Sec>.astro
+src/components/<composition>.astro   P.6 — the skeleton, once (tile shows it)
+src/components/sections/<Sec>.astro  SB.2 — the instance: binds the row's
+                                     verbatim content, renders <Composition />
   ↓ assemble.py                      SB.4 — site/src/pages/<slug>.astro
 <Section sec comp wf-ref ratio disclosure surface density>
   ↓ gate.py w7 / w8                  SB.6 — rhythm, PS.*, scorecard, speed
 ```
 
-Nothing in this chain is written by a model except the section
-component body (and the section content, which comes verbatim from the
-STUB). The plan, the contracts, the glue and the page file are
-generated.
+Nothing in this chain is written by a model except the composition
+component body and the section instance's content (which comes verbatim
+from the STUB). The plan, the contracts, the glue and the page file are
+generated. Per-section gates read the instance *and* every component it
+imports, so one implementation is checked once.
+
+**Page scoping.** `page_htmls()` returns only the plan's own pages
+(`dist/<slug>/index.html` or `dist/<slug>.html`). `system`,
+`variants`, `404` and `500` are never in the page suite — they are
+gated by `check_tile_is_system`, `check_variants` and C.5 instead.
 
 ## 3. The shell owns rhythm (SB.2)
 

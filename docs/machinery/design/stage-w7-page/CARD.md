@@ -59,6 +59,9 @@ row or a section — fix that unit and re-run the glue (SB.6).
   contradicts the plan is a refuse.
 - **P.10/P.11** No emoji anywhere in emitted HTML; icons inline SVG,
   `currentColor`, sizes ∈ {16,20,24,32,48}, stroke ∈ {1.5,2,2.5,3}.
+- **Scope** Every page check reads the plan's own pages only
+  (`dist/<slug>/index.html` / `dist/<slug>.html`). `system`,
+  `variants`, `404`, `500` are excluded and gated by their own checks.
 - **P.12** Speed budget on `dist/`, static only: JS ≤ ~50 KB, images
   via `<Image>`/`<Picture>` with dimensions, lazy below fold, hero
   `fetchpriority`, fonts self-hosted + swap + preload, no

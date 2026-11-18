@@ -48,10 +48,19 @@ render its own `<section>` wrapper, `py-*`/`px-*`/`my-*`/`mx-*` outer
 spacing, `bg-*` background, or `max-w-*` container. It renders content
 inside the shell.
 
-**Enforcement** — script `check_section_shell` @ w6. Threshold: zero
-outer-layout declarations in any `components/sections/*.astro`; every
-one imports and renders `<Section`. Spacing between sections is then
-impossible to get wrong.
+**One implementation, two layers.** The skeleton of a composition lives
+once in `src/components/<composition>.astro` (P.6 — the component the
+system tile instantiates). The section instance binds its plan row's
+verbatim content and renders that component:
+`<SplitMedia heading=… fs=… />`. A section instance that re-writes the
+skeleton instead of rendering the component is a duplicate design and
+fails.
+
+**Enforcement** — script `check_section_shell` @ w6, reading the
+instance plus every component it imports. Threshold: zero outer-layout
+declarations in either file; `exemplar:` present; the instance renders
+`<Component />` for its row's composition. Spacing between sections is
+then impossible to get wrong.
 
 ### SB.3 One builder per section, one gate per section
 

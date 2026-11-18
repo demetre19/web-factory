@@ -254,6 +254,7 @@ import FooterBar from '../components/footer-bar.astro';
 
 COMP_ASTRO = '<div class="sec-band"><slot /></div>\n'
 
+
 SECTIONS = {
     'Nav.astro': '''---
 exemplar: nav-bar
@@ -317,6 +318,24 @@ exemplar: footer-bar
 </footer>
 ''',
 }
+# The composition component owns the skeleton (P.6); the section instance
+# binds the plan row's content and renders it (SB.2) — one implementation.
+COMPONENTS = {}
+for _fn, _src in SECTIONS.items():
+    _fm, _body = _src.split('---', 2)[1], _src.split('---', 2)[2]
+    _comp = _fm.strip().split('exemplar:')[1].strip()
+    COMPONENTS[_comp] = _body.lstrip('\n')
+SECTIONS = {
+    _fn: ('---\nexemplar: ' + _comp + '\nimport '
+          + ''.join(w.capitalize() for w in _comp.split('-'))
+          + " from '../" + _comp + ".astro';\n---\n<"
+          + ''.join(w.capitalize() for w in _comp.split('-')) + ' />\n')
+    for _fn, _comp in (('Nav.astro', 'nav-bar'), ('Hero.astro', 'split-media'),
+                       ('Macro.astro', 'cards-n'),
+                       ('EndAct.astro', 'form-panel'),
+                       ('Footer.astro', 'footer-bar'))
+}
+
 
 COMPONENTS_MD = '''# COMPONENTS
 nav-bar → nav-bar.astro
@@ -843,11 +862,8 @@ BASE = {
     'site/src/styles/global.css': GLOBAL_CSS,
     'site/src/pages/system.astro': SYSTEM_ASTRO,
     'site/src/pages/index.astro': '',
-    'site/src/components/nav-bar.astro': COMP_ASTRO,
-    'site/src/components/split-media.astro': COMP_ASTRO,
-    'site/src/components/cards-n.astro': COMP_ASTRO,
-    'site/src/components/form-panel.astro': COMP_ASTRO,
-    'site/src/components/footer-bar.astro': COMP_ASTRO,
+    **{f'site/src/components/{k}.astro': v
+       for k, v in COMPONENTS.items()},
     'site/src/components/Section.astro': SECTION_ASTRO,
     'site/src/components/sections/Nav.astro': SECTIONS['Nav.astro'],
     'site/src/components/sections/Hero.astro': SECTIONS['Hero.astro'],
@@ -960,9 +976,9 @@ MUT = {
     'data-theme-toggle','data-nope')),
  'check_variants': mut(('REPL','DNA.json','"id": "v3"','"id": "v9"')),
  'check_review_modes': mut(('DEL','shots/home-dark-1280.png')),
- 'check_section_shell': mut(('REPL','site/src/components/sections/Hero.astro',
+ 'check_section_shell': mut(('REPL','site/src/components/split-media.astro',
     'class="grid gap-stack md:grid-cols-2"','class="py-24 grid gap-stack md:grid-cols-2"')),
- 'check_section_allowed': mut(('REPL','site/src/components/sections/Macro.astro',
+ 'check_section_allowed': mut(('REPL','site/src/components/cards-n.astro',
     'text-fluid-2','text-[42px]')),
  'check_section_gates': mut(('SET','sections/01-hero.gate.json',
     '{"section": "hero", "pass": false, "failures": ["seeded"]}')),

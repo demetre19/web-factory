@@ -436,19 +436,36 @@ class Ctx:
         return self._stub_rows
 
     def page_htmls(self):
-        """[(path, text)] built/emitted page html (dist first, preview/)."""
+        """[(path, text)] the plan's own pages (dist first, preview/).
+
+        Only a plan slug is THE design. The system sheet, the variant
+        picker, 404 and any other route are excluded: they are gated by
+        their own checks (check_tile_is_system, check_variants), not by
+        the page suite (P.3, E.1, PS.*). A slug counts when it renders
+        as `<slug>/index.html` or `<slug>.html`.
+        """
+        slugs = {str(k) for k in self.pages()}
+        skip = {'system', 'variants', '404', '500'}
         out = []
         for root in (os.path.join(self.site, 'dist'),
                      os.path.join(self.dir, 'preview')):
-            if os.path.isdir(root):
-                for dp, _, fns in os.walk(root):
-                    for fn in sorted(fns):
-                        if fn == 'system.html':
-                            continue
-                        if fn.endswith('.html'):
-                            p = os.path.join(dp, fn)
-                            out.append((p, open(p, encoding='utf-8',
-                                                errors='replace').read()))
+            if not os.path.isdir(root):
+                continue
+            for dp, _, fns in os.walk(root):
+                for fn in sorted(fns):
+                    if not fn.endswith('.html'):
+                        continue
+                    p = os.path.join(dp, fn)
+                    rel = os.path.relpath(p, root).replace(os.sep, '/')
+                    slug = rel[:-5]
+                    if slug.endswith('/index'):
+                        slug = slug[:-6]
+                    if '/' in slug or slug in skip:
+                        continue
+                    if slug not in slugs:
+                        continue
+                    out.append((p, open(p, encoding='utf-8',
+                                        errors='replace').read()))
         return out
 
     def components(self):
@@ -1883,26 +1900,49 @@ def check_section_shell(ctx):
         return ['SB.2 no site/src/components/sections/*.astro — section '
                 'build missing']
     for fn, p in files:
-        txt = open(p, encoding='utf-8', errors='replace').read()
-        if '<section' in txt or '</section>' in txt:
-            f.append(f'SB.2 {fn}: renders its own <section> — the Section '
-                     'shell owns the band')
-        if '<style' in txt:
-            f.append(f'SB.2 {fn}: <style> block — styles live in the '
-                     'shared layer')
-        body = re.sub(r'^---.*?---', '', txt, flags=re.S)
-        root = re.search(r'<(\w[\w-]*)([^>]*)>', body)
-        if root:
-            cls = re.search(r'class="([^"]*)"', root.group(2) or '')
-            for c in (cls.group(1).split() if cls else []):
-                base = c.split(':')[-1]
-                if base in OUTER_EXACT or OUTER_SPACING.match(base):
-                    f.append(f'SB.2 {fn}: root sets outer layout '
-                             f'"{c}" — padding/background/width belong to '
-                             'Section.astro')
-        if 'exemplar:' not in txt:
+        parts = section_parts(ctx, fn)
+        if not parts:
+            f.append(f'SB.2 {fn}: unreadable')
+            continue
+        inst = parts[0][1]
+        for label, txt in parts:
+            if '<section' in txt or '</section>' in txt:
+                f.append(f'SB.2 {label}: renders its own <section> — the '
+                         'Section shell owns the band')
+            if '<style' in txt:
+                f.append(f'SB.2 {label}: <style> block — styles live in '
+                         'the shared layer')
+            body = re.sub(r'^---.*?---', '', txt, flags=re.S)
+            root = re.search(r'<(\w[\w-]*)([^>]*)>', body)
+            if root:
+                cls = re.search(r'class="([^"]*)"', root.group(2) or '')
+                for c in (cls.group(1).split() if cls else []):
+                    base = c.split(':')[-1]
+                    if base in OUTER_EXACT or OUTER_SPACING.match(base):
+                        f.append(f'SB.2 {label}: root sets outer layout '
+                                 f'"{c}" — padding/background/width belong '
+                                 'to Section.astro')
+        if 'exemplar:' not in inst:
             f.append(f'SB.2 {fn}: no exemplar: frontmatter — adapt the '
                      'gold exemplar (SB.5)')
+        # SB.2 — one implementation: the instance renders its composition
+        # component (P.6) instead of re-writing the skeleton.
+        for _, r in ctx.rows():
+            if camel(str(r.get('name'))) + '.astro' != fn:
+                continue
+            for comp in str(r.get('composition') or '').split('+'):
+                comp = comp.strip()
+                if not comp:
+                    continue
+                cfile = os.path.join(ctx.site, 'src', 'components',
+                                     comp + '.astro')
+                if not os.path.isfile(cfile):
+                    continue
+                if '<' + camel(comp) not in inst:
+                    f.append(f'SB.2 {fn}: does not render its composition '
+                             f'component <{camel(comp)} /> — the skeleton '
+                             f'lives in src/components/{comp}.astro (P.6), '
+                             'never duplicated in the section')
     return f
 
 
@@ -1910,7 +1950,7 @@ def check_section_allowed(ctx):
     """SB.3 — only contract classes/token utilities; no literals."""
     f = []
     for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
-        txt = open(p, encoding='utf-8', errors='replace').read()
+        _, txt = section_text(ctx, fn)
         bad = _class_set(ctx, txt)
         if bad:
             f.append(f'SB.3 {fn}: classes outside the layer/token '
@@ -2020,15 +2060,42 @@ def check_assembly(ctx):
     return f
 
 
+def section_parts(ctx, fn):
+    """[(file, source)] the section instance plus every local component
+    it imports. The instance binds the row's content and renders its
+    composition component (P.6/SB.2); the skeleton lives in
+    src/components/. A per-section gate reads both, so one
+    implementation is checked once."""
+    p = os.path.join(ctx.site, 'src', 'components', 'sections', fn)
+    if not os.path.isfile(p):
+        return []
+    txt = open(p, encoding='utf-8', errors='replace').read()
+    parts = [(fn, txt)]
+    for imp in re.findall(r"^\s*import \w+ from '([^']+)'", txt, re.M):
+        q = os.path.normpath(os.path.join(os.path.dirname(p), imp))
+        if os.path.isfile(q):
+            parts.append((os.path.basename(q),
+                          open(q, encoding='utf-8',
+                               errors='replace').read()))
+    return parts
+
+
+def section_text(ctx, fn):
+    parts = section_parts(ctx, fn)
+    if not parts:
+        return None, ''
+    return os.path.join(ctx.site, 'src', 'components', 'sections', fn), \
+        '\n'.join(t for _, t in parts)
+
+
 def section_failures(ctx, contract):
     """Per-section gate: everything checkable without the page."""
     f = []
     name = contract['section']
     fn = camel(name) + '.astro'
-    p = os.path.join(ctx.site, 'src', 'components', 'sections', fn)
-    if not os.path.isfile(p):
+    p, txt = section_text(ctx, fn)
+    if not p:
         return [f'SB.3 {fn} missing']
-    txt = open(p, encoding='utf-8', errors='replace').read()
     for bad in _class_set(ctx, txt):
         f.append(f'SB.3 {fn}: class "{bad}" outside layer/token utilities')
     for m in re.finditer(r'#[0-9a-fA-F]{3,8}\b', txt):
