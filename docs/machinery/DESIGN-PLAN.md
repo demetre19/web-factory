@@ -80,6 +80,8 @@ site:
     density:       sparse | balanced | dense
     finish:        flat | textured | glossy | raw
     type_contrast: serif-display/sans-text | mono-accents | single-family-weight-contrast
+    shape:         p1-sharp | p2-subtle | p3-friendly | p4-playful    # PRIMITIVES §S.1
+    motion:        subtle | elegant | professional | playful          # PRIMITIVES §M.1
     refused:       <the generic default this direction replaces, named>
 
   # ---- system numbers — closed set, every value a token ----
@@ -125,6 +127,14 @@ site:
     contrast_axes:                            # ONE axis per pair
       heading_vs_body: size
       accent_usage: cta_and_motif_only
+
+    icons:                                        # PRIMITIVES §I — closed selections
+      family: lucide | heroicons | phosphor | feather | custom
+      style: outline | solid | duotone | hand-drawn | 3d-hero-only
+      stroke_class: light | regular | bold        # 1.5 | 2.0 | 2.5–3.0px
+    media:                                        # PRIMITIVES §V
+      treatment: natural | bw | duotone | cinematic       # ≥80% of imagery
+      authenticity: t1-first-party | t2-editorial | t3-ai | t4-illustrated
 
   # ---- motif — recurrence + exactly one break ----
   motif:
@@ -218,6 +228,17 @@ the coordinator hopes was honored:
   neutrals 2–6%S, ink ≥7:1, accent derived by harmony formula,
   accent_fg by luminance, ≤10% accent area, dark surfaces tinted
   charcoal not black)
+- [ ] shape QA ∈ `PRIMITIVES.md` §S.8 (one personality, token radii
+  only, concentric nesting, borders {0,1,2}, elevation↔radius paired)
+- [ ] icon QA ∈ `PRIMITIVES.md` §I.8 (single family, closed sizes,
+  uniform stroke, labelled where required, zero emoji)
+- [ ] media QA ∈ `PRIMITIVES.md` §V.8 (one treatment ≥80%, closed
+  aspect ratios, scrim/contrast floors, authenticity tier, <picture>)
+- [ ] motion QA ∈ `PRIMITIVES.md` §M.8 (token durations, no linear
+  spatial, one focal animation, ≤80px+fade, reduced-motion fallback)
+- [ ] responsive QA ∈ `PRIMITIVES.md` §R.8 (closed breakpoints,
+  min-width only, 1440 ceiling, collapse steps exact, copy budgets,
+  ≥44px targets +8px buffer, hover gated by pointer media query)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator

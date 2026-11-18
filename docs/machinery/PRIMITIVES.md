@@ -509,3 +509,893 @@ proof bands and chrome. Uniform `regular` everywhere is the
 - **Section gap**: the largest gap on the page is always *between*
   sections; a gap inside a section that exceeds the section gap is
   trapped whitespace (L.4).
+
+---
+
+## S. Shape — radius, borders & separation
+
+Source: operator shape SOP
+(`research/sop-sources/SOP-RADIUS-SHAPE.md`).
+
+Corners are a declared decision, not a browser default. A site picks
+exactly one shape personality, one radius-token column, and one
+separation strategy per layout block — anything outside the closed
+sets below is a defect.
+
+### S.1 The four personalities — closed set
+
+| ID | Personality | Radius range | Brand attributes |
+|---|---|---|---|
+| P1 | Sharp / Geometric | **0–2px** | technical, dense, editorial, luxury |
+| P2 | Subtle / Professional | **4–8px** | corporate, SaaS — the enterprise baseline |
+| P3 | Friendly / Soft | **12–16px** | warm, human, B2C |
+| P4 | Playful / Pill | **≥20px** + full-round | youthful, social |
+
+**Single Radius System:** the brief's brand attributes pick exactly
+ONE personality; mixing personalities on one site is banned. The pick
+serializes to `direction.shape` in DESIGN-PLAN (`p1 | p2 | p3 | p4`) —
+a forced direction axis alongside `temperature`/`density`/`finish`/
+`type_contrast`. P2 is the default absent a signal (the enterprise
+baseline); P4 requires an explicit youthful/social brief attribute —
+the same gate `direction.motion: playful` passes in M.1.
+
+### S.2 The radius token scale — closed set
+
+Six tokens; the pixel value of each is fixed by the chosen
+personality column:
+
+| Token | P1 | P2 | P3 | P4 |
+|---|---|---|---|---|
+| `radius-none` | 0 | 0 | 0 | 0 |
+| `radius-sm` | 0 | 2 | 4 | 6 |
+| `radius-md` | 1 | 4 | 8 | 12 |
+| `radius-lg` | 2 | 8 | 12 | 16 |
+| `radius-xl` | 2 | 12 | 16 | 24 |
+| `radius-full` | 9999px | 9999px | 9999px | 9999px |
+
+A hardcoded px radius is a refuse — same contract as a literal hex
+outside TOKENS.json (C.1). The chosen column lands in TOKENS.json;
+markup names tokens, never numbers.
+
+### S.3 Component → token assignment
+
+| Component class | Token |
+|---|---|
+| badges, tags | `radius-sm` |
+| buttons, inputs, selects | `radius-md` |
+| cards, dropdowns, popovers | `radius-lg` |
+| modals, drawers | `radius-xl` |
+| avatars, dots, pills | `radius-full` |
+
+**Radius hierarchy:** `R(control) ≤ R(container) ≤ R(overlay)` — a
+button inside a card inside a modal steps up, never down. An inner
+radius never exceeds its parent's; the sole exception is a declared
+`radius-full` (the avatar stays circular inside the square P1 card).
+
+### S.4 Concentric nesting — the formula
+
+`R_inner = R_outer − P_padding` — nested rounding is arithmetic, not
+eyeballing.
+
+- **Zero-collapse:** if `P_padding ≥ R_outer` → `R_inner = 0`. A
+  child that can't keep the curve goes square; radius never goes
+  negative and is never clamped to a "close enough" value.
+- **Shared-edge collapse:** in merged control groups (button groups,
+  segmented controls, input+addon) the shared edges collapse to 0 —
+  two radii meeting on a merged edge is a double-seam defect.
+- **Flush-media inheritance:** edge-to-edge media inside a container
+  (the card-top image, the `media` composition's panel) inherits the
+  parent's outer radius on the edges it shares with the container, 0
+  on the interior edge.
+- **No mixed-radius sections:** a grid never combines sharp and soft
+  cards — the S.1 ban applied at block level; one token per repeated
+  component, everywhere it recurs.
+
+### S.5 Border widths & separation
+
+**Border widths — closed set `{0, 1px, 2px}`:**
+
+- `1px` = baseline: controls, cards, dividers (the G.4 hairline rule).
+- `2px` = focus/active only — never a resting width.
+- `0` = flush — a separation strategy, below.
+- Sub-pixel / fractional borders banned.
+
+**Border colour:** neutral tokens at rest (`border` default/subtle —
+C.1's `border` role, ≥1.5–3:1 vs surface). Accent colour (the C.4
+harmony hue) appears on borders only for focus / selected / error /
+success states; a resting accent border spends the ≤10% accent budget
+(C.1) on chrome.
+
+**Separation strategies — pick exactly ONE per layout block** (one
+`pages.<slug>.sections` row):
+
+| Strategy | Means | Legal when |
+|---|---|---|
+| `border-only` | 1px neutral border | low-contrast canvas (surface ≈ bg) |
+| `shadow-only` | elevation shadow, no border | uniform canvas |
+| `hybrid` | 1px border + `shadow-xs` | universal default |
+| `flush` / tinted | no border or shadow — tinted surface | contrasting canvas (`surface` ≠ `bg`; the `inverse`/`brand`/`media` surfaces carry it) |
+
+No arbitrary mixing of strategies on one page. The strategy is
+declared on the section row beside `surface:`/`density:`; which ones
+are legal follows the C.1 surface-vs-bg contrast — on a near-equal
+canvas `flush` cannot separate, so a border or shadow is required.
+
+### S.6 Secondary shape permissions — by personality
+
+| Shape | P1 | P2 | P3 | P4 |
+|---|---|---|---|---|
+| Circular avatars | ✓ | ✓ | ✓ | ✓ |
+| Square avatars | ✓ | ✓ | banned | banned |
+| Pill badges / tags | — | — | permitted | required |
+| Pill buttons | — | — | banned | ✓ |
+| Decorative arches, organic blobs | banned | banned | banned | ✓ |
+
+P3's pills live on tags/badges only — P3 buttons stay `radius-md`.
+
+### S.7 Elevation ↔ radius coupling
+
+Shadow blur scales with corner radius — soft geometry gets soft
+elevation, sharp geometry gets none:
+
+| Level | Shadow token | Blur | Paired radius |
+|---|---|---|---|
+| L0 | `shadow-none` | 0 | any |
+| L1 | `shadow-xs` | 2–4px | `radius-md` |
+| L2 | `shadow-md` | 8–12px | `radius-lg` |
+| L3 | `shadow-lg` | 16–24px | `radius-xl` |
+| L4 | `shadow-xl` | 32–48px | `radius-xl` / `radius-full` |
+
+A deep shadow on a sharp corner is a defect — the same rule as L.8's
+"soft shadows, subtle never hard-edge," stated from the shape side.
+
+### S.8 Shape QA — mechanical checklist
+
+Checked at DESIGN-PLAN review and build self-lint:
+
+- [ ] One personality site-wide — `direction.shape` set; no second
+  personality's token values present
+- [ ] Every radius a member of the S.2 column — zero hardcoded px
+- [ ] Concentric math holds: `R_inner = R_outer − P_padding`;
+  zero-collapse and shared-edge collapse applied
+- [ ] Border widths ∈ {0, 1, 2}px — no sub-pixel widths
+- [ ] Resting borders neutral (C.1 `border`); accent borders only on
+  focus/selected/error/success
+- [ ] One separation strategy per layout block; no strategy mixing on
+  a page
+- [ ] Hierarchy holds: `R(control) ≤ R(container) ≤ R(overlay)`;
+  only `radius-full` exceeds its parent
+- [ ] Secondary shapes within S.6 permissions — arches/blobs absent
+  unless `direction.shape: p4`
+- [ ] Shadow level paired per S.7 — no deep shadow on a sharp corner
+- [ ] No emoji glyphs; no rogue controls — every control built from
+  the S.3 token classes
+
+---
+
+## I. Icons — the graphic marker system
+
+Source: operator SOP `research/sop-sources/SOP-ICONS.md`. Icons are
+atoms (L.10) — closed style, closed size set, one library per site,
+semantic color tokens only. An icon outside the sets below is a
+defect, same contract as type and colour.
+
+### I.1 Style selection — five closed styles, one family
+
+The closed style set:
+
+| Style | Character | Brand attribute → pick |
+|---|---|---|
+| **Outline/Stroke** | single-weight strokes on the grid | technical, minimal |
+| **Solid/Filled** | filled silhouettes | bold, playful, consumer |
+| **Duotone** | two-tone fills (base + accent layer) | premium, editorial |
+| **Hand-Drawn** | irregular strokes, human wobble | artisan, creative |
+| **3D/Illustrated** | rendered dimensional scenes | hero/feature callouts **≥32px only** — banned in transactional UI |
+
+**Single Icon Family rule:** one library renders 100% of a site's
+icons. Mixing libraries (Feather + Material, Lucide + Heroicons) is
+forbidden — two stroke philosophies on one page is a defect.
+
+**Outline/solid isolation:** outline and solid variants never sit
+side-by-side. One exception — the *active-state toggle*: outline at
+rest → solid when selected (nav items, tab bars). Any other
+outline+solid adjacency is a mixed-variant defect.
+
+The pick serializes in DESIGN-PLAN as
+`system.icons: {family, style, stroke_class}` — closed-set values,
+never free text.
+
+### I.2 Stroke math, corner geometry, the grid
+
+**Stroke weight = icon size × 0.0833** (24px icon → 2px stroke).
+Three named classes bound to the paired type rank's weight
+(`system.type.ranks[].weight`):
+
+| Stroke class | Weight | Pairs with font weights |
+|---|---|---|
+| light | 1.5px | 300–400 |
+| regular (default) | 2px | 400–500 |
+| bold | 2.5–3px | 600–700 — also required for 16px micro icons |
+
+**Corner geometry matches the site radius personality (§S.1, the
+`direction.shape` pick):** rounded personalities →
+`stroke-linecap: round` + `stroke-linejoin: round` + 1.5–2px inner
+corner radius; sharp personalities → square caps + miter joins + 0px
+inner radius. An icon whose caps contradict the site's declared
+personality is a defect.
+
+| Keyline | Bounds |
+|---|---|
+| Circle | 20px Ø |
+| Square | 18×18 |
+| Vertical rectangle | 16×20 |
+| Horizontal rectangle | 20×16 |
+
+### I.3 Size — the closed set and the line-height rule
+
+Closed size set **{12, 16, 20, 24, 32, 48}** — no others:
+
+| Size | Role |
+|---|---|
+| 12 | micro-dots, inline status marks |
+| 16 | dense UI, table rows |
+| 20 | default UI |
+| 24 | nav, buttons |
+| 32 | section headers |
+| 48 | hero, empty states |
+
+**Icon size = the paired text's line-height** — the icon shares the
+text's optical band, never a guessed size:
+
+| Text | Line-height | Icon |
+|---|---|---|
+| caption 16 | 16 | 16 |
+| body 16 | 24 | 20–24 |
+| heading 24 | 32 | 32 |
+| heading 32 | 40 | 48 |
+
+**Optical centering:** asymmetric glyphs nudge inside their box to
+read centered — play triangle +1–2px toward its point, chevron +1px
+toward its direction, ▼ +1px down. Geometric center ≠ optical
+center; ship the optical one.
+
+### I.4 Icon + text pairing
+
+- **Labels are mandatory** in info-dense and transactional UI.
+  Icon-only is legal only for the eight universal glyphs (I.6) and
+  still requires `aria-label`.
+- **Position carries semantics:** icon-left = primary action /
+  navigation / entity marker; icon-right = directional / external
+  link / disclosure affordance. Icon-above only for mobile
+  bottom-nav, collapsed sidebars, and marketing cards — never in
+  dense UI.
+- **Gap scale** (all members of the G.1 space scale):
+
+  | Icon | Gap |
+  |---|---|
+  | 16px | 4px |
+  | 20px | 8px |
+  | 24px | 8–12px |
+  | 32px | 12–16px |
+
+- **Alignment:** `display: flex` + `align-items: center` is the
+  standard icon+text row. Baseline hacks are a defect.
+
+### I.5 Library governance
+
+Approved libraries (closed set):
+
+| Library | Position |
+|---|---|
+| **Lucide** | primary — 2px stroke on 24px grid (matches I.2 regular class) |
+| **Heroicons** | Tailwind-native; 20/24 in outline + solid |
+| **Phosphor** | weight variants incl. duotone — the duotone-style pick |
+| **Feather** | legacy minimal |
+| **Custom SVG** | proprietary domains / trademarks only |
+
+Rules:
+
+1. **Coverage audit before adoption** — enumerate the site's needed
+   glyphs, verify the chosen library covers them.
+2. Gaps are filled by **custom glyphs authored to match** the
+   library's grid, stroke, and radius (I.2, I.3) — never by adopting
+   a second library (I.1 single-family rule).
+3. Custom SVG inherits the same lint gates: 24×24 grid, stroke
+   class, corner geometry, keylines.
+
+### I.6 Standalone glyphs, literal function, bans
+
+**Eight universal standalone glyphs** — the only icons legal without
+a visible label:
+
+`search` `cart` `hamburger` `close` `notifications` `profile`
+`settings` `help`
+
+Standalone still requires `aria-label`. Every other icon needs a
+visible label or tooltip — icon-only outside the eight is a defect.
+
+- **Literal-function rule:** the glyph depicts its function —
+  trash = delete, pencil = edit. Metaphor glyphs (rocket = submit)
+  are banned in transactional UI.
+- **Decorative-icon ban:** every icon earns a functional role. An
+  icon that only decorates is removed, not tolerated. (This is also
+  why SECTION-CATALOG bans icon+heading+text card grids as a
+  substitute composition.)
+- **Emoji ban:** raw unicode emoji is banned in UI — already a
+  factory constant (DESIGN-INTAKE "No emoji, ever"; S5 anti-pattern
+  lint; tone-profile `emoji: false` on the copy side). This section
+  codifies *why*: emoji renders inconsistently across platforms,
+  breaks the stroke/radius rules (I.2), and injects screen-reader
+  noise. Scope: all icon slots — stars, checks, arrows ship as
+  inline SVG paths.
+
+### I.7 Color and interactive states
+
+- **`currentColor` is the default** — the icon inherits its text
+  context; hardcoded fills are a defect.
+- **Semantic tokens** (closed set): `icon-default`, `icon-muted`,
+  `icon-action`, `icon-action-hover`, `icon-on-action`,
+  `icon-disabled`, `icon-success`, `icon-warning`, `icon-error`,
+  `icon-info`. These bind to the C.1 role tokens — `icon-action`
+  resolves to `accent`, `icon-on-action` to `accent_fg` (C.4
+  luminance rule), never to raw hex.
+- **Interactive states:**
+
+  | State | Rule |
+  |---|---|
+  | hover | color + background shift (token pair) |
+  | active | `scale(.95)`, 0.1s |
+  | focus | 2px ring + 2px offset |
+  | disabled | opacity .4 |
+
+### I.8 Icon QA — mechanical checklist
+
+Source gate, all ten items mechanically checkable at plan and
+build self-lint:
+
+- [ ] Single icon family — 100% one library, no mixed imports (I.1)
+- [ ] Style matches brand attribute per the I.1 matrix
+- [ ] No mixed variants — outline+solid adjacent only as an
+  active-state toggle (I.1)
+- [ ] Every icon size ∈ {12, 16, 20, 24, 32, 48} (I.3)
+- [ ] Uniform stroke — one stroke class per context, = size × 0.0833
+  (I.2)
+- [ ] Icon↔text gap ∈ {4, 8, 12, 16} (I.4)
+- [ ] Labels present where required — non-universal glyphs carry a
+  visible label or tooltip (I.4, I.6)
+- [ ] Zero emoji — no raw unicode pictograms anywhere in UI (I.6)
+- [ ] Semantic color tokens only — `currentColor` or `icon-*`
+  tokens, no literal hex (I.7)
+- [ ] A11y — standalone glyphs carry `aria-label`; decorative-free
+  markup means labelled or `aria-hidden` (I.6)
+
+---
+
+## V. Visual media — the art-direction rules
+
+Source: operator imagery SOP (2 docs merged),
+`research/sop-sources/SOP-IMAGERY.md`. Media is selected and
+art-directed, never decorated — every image earns its pixels against
+the closed sets below. A gray box or a filler stock frame in any
+composition is a defect.
+
+### V.0 Positive Selection Architecture — words before pixels
+
+The rule is positive, not negative: not "never generic stock" but
+**choose imagery that places a human protagonist inside an active
+moment.** Stories sell; features don't. Words are decided before
+pixels — the image dramatizes the copy's argument, it does not
+fill the layout's empty half.
+
+Selection workflow, in order:
+
+1. Words-first story diagnosis — the section's `speech_act` and its
+   one-sentence claim (`pages.<slug>.idea`).
+2. Graphic universe refs — the visual world the direction implies
+   (`direction.temperature`, `direction.finish`).
+3. Visual metaphors — what the image *says*, mapped to the claim.
+4. Grid + % modulation — aspect ratio (V.3) and canvas share (V.5)
+   assigned per section.
+5. Production verify — V.8 checklist before any asset ships.
+
+### V.1 Media-by-section decision matrix
+
+Media type is a function of `speech_act` × archetype — picked from
+this table, never freehand:
+
+| Section / `speech_act` | Archetype | Media type |
+|---|---|---|
+| Hero (`promise`) | luxury / craft | first-party real photo or cinematic video |
+| Hero (`promise`) | SaaS | product UI walkthrough |
+| Hero (`promise`) | conceptual | custom AI narrative scene (V.6 T3 rules) |
+| Proof | any | first-party real facility/team only — stock here is a trust defect |
+| Detail | physical | macro real photo |
+| Detail | abstract / service | vector illustration or 3D |
+| Background | any | atmospheric loop or low-frequency texture (V.5 budget) |
+
+Classification rules:
+
+- **Real photo REQUIRED** for high-ticket physical goods, real
+  services, team verification.
+- **Illustration** for abstract / software / playful — with **100%
+  style unity**: never mix flat vector + 3D clay + hand-drawn on one
+  site. One taxonomy per site.
+- **3D only as brand metaphor.** Chrome spheres, glassmorphism
+  ribbons = trend clutter, a defect.
+- **Icons = scannable utility markers, never decorative** (utility
+  rules §I; corner personality follows §S.1).
+
+### V.2 The four treatments — pick ONE per site
+
+One treatment covers **≥80% of imagery** on the site. A site does
+not grade photo-by-photo; `direction.temperature` (§C.2) and
+`direction.finish` select the treatment, the treatment is a system.
+
+| Treatment | Fits | Numeric bounds |
+|---|---|---|
+| **Natural / Documentary** | warm/natural palettes | skin tones true; saturation −5..+10; no crushed shadows; natural light only |
+| **High-contrast B&W** | luxury / minimalist | crushed blacks, bright highlights, +10% midtone; pairs with extreme type contrast (T.1) |
+| **Duotone / brand-tinted** | corporate / athletic | dark brand color → shadows, light → highlights; tint hue = `H_accent`/`H_brand` (§C.4); ≥4.5:1 in all text zones |
+| **Cinematic grade** | editorial / high-end | saturation −15..−25; shadows cool 210–230°; highlights warm 35–45°; contrast 1.15–1.30× |
+
+A one-off treatment is legal only as **declared focal emphasis** —
+the `motif.break` mechanism (§L.8). Undeclared style drift between
+images is a defect.
+
+### V.3 Aspect ratios — closed set + safe-crop rules
+
+| Use | Ratios |
+|---|---|
+| Hero | 21:9 or 16:9 (mobile alt 9:16) |
+| Narrative split (`split-media`) | 4:3 or 3:2 |
+| Square card | 1:1 |
+| Portrait | 3:4 or 4:5 |
+| Macro detail | 1:2 or 3:4 |
+
+A ratio outside the set is a defect. Safe-crop rules apply to every
+crop, every breakpoint:
+
+1. **Rule-of-thirds focal lock** — the subject locks to a third,
+   never dead-center unless the composition declares it.
+2. **Action vector points INWARD** toward the text; a subject facing
+   off-canvas bleeds attention out of the section.
+3. **15% outer margin safe zone** — no critical content in the outer
+   15% (the same ≥10–15% edge law as T.2 rule 8 / L.3).
+4. **Aligned horizon lines** across adjacent media.
+
+`object-fit` decision:
+
+| Media | Fit |
+|---|---|
+| Backgrounds, heroes | `cover` |
+| UI screenshots, logos, product catalog | `contain` — container background matches `surface` token |
+
+`contain` on a photograph is a defect; `cover` on a UI screenshot
+crops the evidence — also a defect.
+
+### V.4 Text-on-image — contrast floors + scrim formulas
+
+Contrast floors under overlaid text: **7:1 display / 4.5:1 body**
+(the C.1 floors applied to the image region, not the canvas). Local
+background luminance under text: **≤20% under white text, ≥85%
+under dark** — the same luminance gate as `accent_fg` (§C.4).
+
+Approved scrims (the V.4 refinement of the T.7 40–60% tint rule —
+one of these three, not a guess):
+
+| Scrim | Formula |
+|---|---|
+| Linear to-top | `linear-gradient(rgba(0,0,0,.88) → .65 → .20 → 0)` |
+| Radial centered | `radial-gradient(rgba(0,0,0,.75) → .45 → .10 → 0)` |
+| Solid brand tint | `rgba(dark, .65)` multiply (dark = §C.5 charcoal) |
+
+Complexity decision:
+
+- **High spatial complexity under the text zone → text moves to a
+  `surface` beside the image** — the `split-media` composition
+  (catalog §2). This is what the `media` surface is *for*: only under
+  a real image overlay, never as a tint (catalog §4).
+- **Low complexity + scrim → text-on-image permitted.**
+
+Overlay typography follows T.6: display rank skips weights (never
+weight-400 over imagery), tracking tightens on large display,
+tracking increases slightly on micro-copy over dark.
+
+### V.5 Background density budget + canvas modulation
+
+Background media (atmospheric loops, textures behind content) holds
+a density budget:
+
+- **No sharp micro-details** in any region under content.
+- Busy images: **blur ≥16px** or `backdrop-filter: blur(12px)`.
+- **Brightness variance <15%** inside text zones.
+- The `media` surface requires a real image or video — a tint
+  labeled as media is a defect (catalog §4).
+
+Inset media (photos inside cards, `split-media` columns):
+- Corner radius ∈ the site's shape-personality radius tokens (§S.2
+  scale; component map §S.3) — rounded and sharp never mixed on one
+  page.
+- Shadows subtle, high-diffusion: `0 20px 40px -15px
+  rgba(0,0,0,.07)`. Hard offset shadows only under a neo-brutalist
+  `direction.finish`.
+
+**Modulated canvas %** — media share of the page is rhythm, not
+accumulation:
+
+1. **100% full-bleed hero** →
+2. **80/10 editorial** (media-dominant block) →
+3. **60/40 split** (`split-media`, text ≈0.45–0.6 per catalog §2) →
+4. **Solid type-only breaks** — the cognitive rest between media
+   sections (the layout-layer `spacious` spend, G.3).
+
+Split-media seam rules: image focal point off-center; clean negative
+space **at the seam** where image meets text column; horizons
+aligned across adjacent splits (V.3 rule 4). `split-media` stacks
+media-under-text on mobile unless the plan declares otherwise (L.5).
+
+### V.6 Authenticity hierarchy — T1→T4 + the banned list
+
+Every image is assigned a tier; higher tiers are preferred wherever
+the subject is real:
+
+| Tier | Source | Rule |
+|---|---|---|
+| **T1** | First-party (real team / facility / product) | **mandatory** on About, Team, Case studies |
+| **T2** | Editorial stock | unstaged only, graded to the site's one treatment (V.2) |
+| **T3** | Prompt-engineered AI | only for a specific narrative impossible to stock; prompt must specify lens (e.g. 85mm f/1.4), lighting, grain, palette — **never fake team, testimonials, or inventory** |
+| **T4** | Stylized vector / 3D kits | abstract utility only |
+
+**Banned list — zero tolerance:**
+
+- Staged corporate stock: handshakes, blank-whiteboard pointers,
+  headset reps.
+- Fake AI headshots (any invented human presented as real).
+- Watermarked or visibly compressed assets.
+- Corporate-Memphis flat clip-art.
+
+### V.7 Responsive art direction
+
+Art direction survives the breakpoint, it doesn't just shrink:
+
+1. **`<picture>` with art-directed crops per breakpoint** — mobile
+   4:5/9:16 vs desktop 16:9 (ratios ∈ V.3 set), not one crop scaled.
+2. **Formats:** AVIF primary + WebP + legacy fallback, in that order.
+3. **Densities:** `@1x`/`@2x` everywhere, `+@3x` on mobile.
+4. **Hero master ≥3840px** wide.
+5. **Loading:** hero `loading="eager"` + `fetchpriority="high"`
+   (the LCP asset); all below-fold media `lazy` + async decode.
+
+### V.8 Media QA — mechanical checklist
+
+Checked at DESIGN-PLAN review and build self-lint:
+
+- [ ] Positive selection met: every image is human-in-environment or
+  narrative, not filler
+- [ ] Brand metaphor grounded; 3D = metaphor only, no trend clutter
+- [ ] Taxonomy unmixed: no flat-vector + 3D-clay + hand-drawn blend
+- [ ] Single treatment ≥80% of imagery; any one-off is declared
+  (`motif.break`)
+- [ ] Every aspect ratio ∈ V.3 closed set
+- [ ] Focal point in safe zone; action vector points inward
+- [ ] Text-on-image floors met: 7:1 display / 4.5:1 body; approved
+  scrim used; luminance ≤20%/≥85% in text zone
+- [ ] Background density under budget: no micro-detail, blur ≥16px,
+  variance <15%
+- [ ] Every asset assigned T1–T4; zero banned-list hits
+- [ ] `<picture>` art-directed per breakpoint; AVIF/WebP/fallback;
+  @1x–@3x; hero eager+`fetchpriority="high"`, below-fold lazy
+
+---
+
+## M. Motion — functional animation rules
+
+Source: operator motion SOP
+(`research/sop-sources/SOP-MOTION.md`).
+
+Motion is functional, never decoration. Every animation answers to one
+of four types; anything that answers to none is a defect:
+
+| Type | Job |
+|---|---|
+| **Conversational** | dialogue flow (prototypes — rarely ships to static builds) |
+| **Functional** | task feedback — confirms the click, the load, the state change |
+| **Structural** | spatial hierarchy — shows where an element came from / went to |
+| **Emotional** | brand/state moments — the one licensed flourish |
+
+Motion is spent like accent colour (C.1 isolation): one focal moment
+per viewport, everything else inert. A page that animates everything
+animates nothing.
+
+### M.1 The four personalities — closed set
+
+The brief's `motion_personality` field picks exactly one; it serializes
+to `direction.motion` in DESIGN-PLAN. Static brochure sites default to
+**Subtle** or **Professional** — Playful requires an explicit brief
+attribute (consumer/youth/celebration), Elegant requires a
+luxury/editorial one.
+
+| Token | Behaviour | Brand attributes |
+|---|---|---|
+| `subtle` | near-instant, **<4px offset** | utilitarian, data-dense |
+| `elegant` | flowing transitions, **no scale distortion** | luxury, editorial |
+| `professional` | axis growth (Y/X expand), **no overshoot** | B2B, corporate |
+| `playful` | elastic overshoot, scale pop | consumer, youth, celebration |
+
+### M.2 Duration & easing tokens
+
+Durations are a closed token set — an animation whose duration is not
+a member is a defect:
+
+| Token | Range | Use |
+|---|---|---|
+| `micro` | **100–300ms** | hovers, moves <10px |
+| `standard` | **300–400ms** | modals, expands — **exits faster than entrances** |
+| `structural` | **500–700ms** | containers, staggered drawers |
+| `idle_nudge` | **1s delay → 3s pulse loop** | attention pull on a resting CTA |
+| `milestone` | **1500ms** | rare success moment only |
+
+Easing rules:
+
+| Situation | Curve |
+|---|---|
+| Entering the viewport | ease-out — `cubic-bezier(0,0,.2,1)` |
+| Exiting the viewport | ease-in — `cubic-bezier(.4,0,1,1)` |
+| Moving while on-screen | ease-both — `cubic-bezier(.4,0,.2,1)` |
+| pop / reverse-pop | `playful` personality only |
+| bounce / elastic | success states only (M.6) |
+
+**Linear is BANNED for spatial moves** — it reads as machinery, not
+interface. (Linear survives only on opacity-only fades.)
+
+### M.3 Element-class rules
+
+| Element | Rule |
+|---|---|
+| CTA hover | subtle Y-shift or bar expand, **300ms** |
+| Modal enter | slide-up / scale, **300–400ms** ease-out |
+| Modal exit | **300ms** ease-in — always faster than its enter |
+| Accordion | stagger **200ms per category** + icon rotate **135°** |
+| Skeleton / progressive data | **500ms delay**, then 0%→100% fill |
+| Frequent page transitions | **300ms** opacity fade + **<80px** slide |
+
+**NEVER animate:**
+
+- body text
+- top-nav links — color/underline state change only
+- error / security banners
+- continuous distracting loops (the `idle_nudge` token is the only
+  licensed loop)
+
+### M.4 One focal animation — property parenting
+
+**One focal animation per viewport.** Two competing simultaneous
+animations is a defect — the motion-layer equivalent of C.1's "no
+third accent surface."
+
+Multiple elements animate as **one coordinated sequence**, never in
+parallel:
+
+1. Primary element moves; children follow at a **100ms parent-child
+   offset**.
+2. Secondary elements move at **~50% of the primary's displacement**.
+3. **Decouple the curves**: opacity and position run on separate
+   easing, so a fade can finish while a slide still settles.
+
+### M.5 Parallax — licensed on marketing pages only
+
+- **LEGAL** on marketing/landing pages (`page_class: money`).
+- **BANNED** in utility/dashboard/transactional surfaces
+  (`page_class: utility`).
+- Layer velocity ordered by perceived distance: **foreground fastest,
+  background slowest**. An inverted layer order is a defect.
+- **No scroll-jacking** — parallax binds to scroll position; scroll
+  hijack / snap-steal binds only to declared drag/swipe boundaries.
+
+### M.6 Emotional states & reduced motion
+
+| State | Rule |
+|---|---|
+| Success | celebratory licensed — pop/bounce OK (`milestone` 1500ms is the cap) |
+| Failure / error | clean efficient only — **bounce banned** |
+
+**Reduced motion is mandatory**: `prefers-reduced-motion` disables ALL
+spatial movement — every translate, scale, rotate falls back to a
+**150ms opacity crossfade**. No strobing, no rotation under the
+fallback.
+
+### M.7 Performance — the compositor budget
+
+- Animate `transform` + `opacity` **ONLY** — the GPU-composited pair.
+- Layout properties are banned from animation: `width`, `height`,
+  `margin`, `top`/`left`. A layout-property animation is a defect, not
+  an optimisation target.
+- Max translation **80px**, paired with an opacity fade (matches the
+  M.3 page-transition bound).
+- **60fps budget** — if a sequence can't hold 60, cut displacement
+  before cutting duration.
+- View transitions use **matching layer names** between the outgoing
+  and incoming tree — mismatched names break the morph.
+
+### M.8 Motion QA — mechanical checklist
+
+Checked at DESIGN-PLAN review and build self-lint:
+
+- [ ] Every animation classified to a type (conversational /
+  functional / structural / emotional)
+- [ ] Every duration ∈ M.2 token set; exits faster than entrances
+- [ ] No linear easing on spatial moves
+- [ ] One focal animation per viewport; multi-element = one 100ms-offset
+  sequence
+- [ ] All translations ≤80px and paired with opacity fade
+- [ ] Frequent transitions ≤300ms
+- [ ] Error/failure states bounce-free
+- [ ] `prefers-reduced-motion` fallback present: 150ms crossfade, all
+  spatial movement disabled
+
+---
+
+## R. Responsive — breakpoints, geometry & density
+
+Source: `research/sop-sources/SOP-RESPONSIVE.md` (SOP-DES-005 numeric
+spec merged with a Framer mechanics doc; where they conflict, DES-005
+wins — closed numbers, mobile-first authoring). These rules bind
+`composition` collapse, `density`, and `pages.<slug>.page_class` in
+DESIGN-PLAN.
+
+### R.1 The closed breakpoint set — 7 stops, `min-width` only
+
+| Token | px | Class |
+|---|---|---|
+| `xs` | 360 | small mobile |
+| `sm` | 640 | large mobile |
+| `md` | 768 | tablet |
+| `lg` | 1024 | small laptop |
+| `xl` | 1280 | desktop |
+| `2xl` | 1440 | max content |
+| `3xl` | 1920 | ultra-wide canvas |
+
+- Arbitrary px media queries banned — every query stops on a member of
+  the set.
+- Mobile-first `min-width` authoring only; `max-width` degradation
+  banned.
+
+Per-breakpoint behavior:
+
+| Range | Behavior |
+|---|---|
+| <640 | single column; drawer nav; bottom sheets |
+| 640–767 | 2-col micro-grids; edge margin 16→24 |
+| 768–1023 | 2-col splits; centered modals 560px |
+| 1024–1279 | horizontal nav; 3-col grids; persistent sidebars |
+| 1280–1439 | 4-col grids; full type scale |
+| 1440+ | content clamps at 1440px; margins auto |
+| 1920+ | canvas bleeds; container fixed |
+
+### R.2 Container geometry — the closed ramp
+
+`max_width` ceiling: **1440px**. Content never exceeds it; canvas and
+`surface`s may bleed past (L.11 — only surfaces/media bleed, content
+holds).
+
+| Token | Edge padding | Grid gap | Columns |
+|---|---|---|---|
+| `xs` | 16 | 16 | 4 |
+| `sm` | 24 | 16 | 8 |
+| `md` | 24 | 24 | 8 |
+| `lg` | 32 | 24 | 12 |
+| `xl` | 40 | 32 | 12 |
+| `2xl` / `3xl` | 48 | 32 | 12 |
+
+Ramps: edge padding `16→24→32→40→48`; grid gap `16→24→32`; columns
+`4→8→12`. Edge padding is its own closed ramp — `40` is legal here
+though it is *not* a G.1 member; grid gaps and every other spacing
+value stay strictly on G.1.
+
+### R.3 Collapse rules — per composition
+
+| `composition` | `xl`+ | `lg` | `md` | <768 |
+|---|---|---|---|---|
+| `cards-4` | 4 | 3 | 2 | 1 |
+| `cards-3` | 3 | 3 | 2 | 1 |
+| `split-media` | 2-col | 2-col | stacked | stacked |
+
+`split-media`: 2-column ≥1024, stacked <1024 — the L.5 collapse made
+exact.
+
+**Stack order: TEXT FIRST on mobile by default** — headline before
+media (L.5 media-under-text; L.9 mobile symmetry). Visual-first ONLY
+for product-UI-hook sections, and only when the plan declares it. An
+undeclared visual-first stack is a defect.
+
+### R.4 Copy density budgets — hard caps
+
+| Slot | Words | Chars | Extra |
+|---|---|---|---|
+| Hero H1 | 4–8 | ≤60ch | — |
+| Hero subhead | 12–25 | ≤160ch | — |
+| CTA label | 2–4 | ≤25ch | `nowrap` |
+| Card title | 2–5 | ≤35ch | — |
+| Card desc | 15–30 | ≤200ch | ≤4 lines |
+| Eyebrow | 1–3 | ≤20ch | — |
+| H2 | 3–7 | ≤50ch | — |
+| Section para | 15–35 | ≤240ch | — |
+| Prose | 40–80 | ≤500ch | measure 45–75ch; body prose holds T.6's 52–65ch |
+| List item | 5–15 | ≤100ch | 3–7 items per list |
+
+Page-class budgets — keyed to `pages.<slug>.page_class` in DESIGN-PLAN:
+
+| `page_class` | Budget |
+|---|---|
+| `money` | 150–250 words per viewport; cards, not prose |
+| `article` | 400–600 words per viewport + a breaker every 250–300 words (subhead, quote, card, image, `hr`) |
+| `utility` | labels 1–3w; tooltips ≤15w; tables paginate 8–12 rows |
+
+**Scannability:** never >250 words uninterrupted — a defect unless
+broken by H2/H3, card grid, callout, image, or `hr`.
+
+### R.5 Above-fold mandate & attention decay
+
+Fold = 360×640 mobile / 1440×900 desktop. Five elements visible without
+scroll:
+
+1. nav
+2. H1
+3. subhead
+4. CTA
+5. visual anchor
+
+**CTA cadence:** ≤2 viewports between CTAs; every `money`-class page
+ends with a terminal CTA (the `act` speech_act).
+
+Attention-decay budgets per fold:
+
+| Fold | Budget |
+|---|---|
+| fold 1 | <50 words |
+| folds 2–3 | peak density — grids, proof |
+| folds 4–5 | accordions, comparisons, case blocks |
+| fold 6+ | offload |
+
+**Offload rule:** content >300 words moves to a subpage via summary
+card (15–30w + "Read more →"). Max ~6 viewports per page.
+
+### R.6 Touch & pointer targets
+
+- Touch: ≥44×44 (iOS) / ≥48×48 (Android), 8px insulation buffer
+  between targets — the L.13 ≥44px item made exact.
+- Pointer: ≥32×32, 40 preferred.
+- Hover: every `:hover` wrapped in
+  `@media (hover: hover) and (pointer: fine)` — the sticky-touch bug
+  guard.
+- Gap between targets: touch 12–16px vs pointer 8px.
+
+### R.7 Sizing modes — Framer mechanics in our CSS
+
+Assignment rules; the CSS mechanism is `position`/flex/grid, the
+*assignment* is the rule.
+
+| Mode | Legal use only |
+|---|---|
+| Fixed px | icons, avatars, logos (radius/size per S.3 component map) |
+| Fill width + fit-content height | section containers |
+| Relative | inside stacks/flows |
+| Absolute | badges, decoration — never layout structure |
+| Fixed (viewport-anchored) | nav, persistent CTA |
+| Sticky | section headers |
+
+### R.8 Responsive QA — mechanical checklist
+
+- [ ] Every breakpoint ∈ {360, 640, 768, 1024, 1280, 1440, 1920}; no
+  arbitrary px queries
+- [ ] `min-width` authoring only; zero `max-width` queries
+- [ ] Container clamps at 1440px; margins auto past it
+- [ ] Edge padding follows the 16/24/32/40/48 ramp
+- [ ] Collapse steps exact: `cards-4` 4→3→2→1, `cards-3` 3→2→1,
+  `split-media` stacked <1024
+- [ ] Mobile stack is text-first; visual-first only where the plan
+  declares a product-UI hook
+- [ ] Copy budgets met per slot (R.4); prose measure 45–75ch (T.6)
+- [ ] No >250w uninterrupted run; `article` pages break every 250–300w
+- [ ] Touch targets ≥44×44/48×48 with 8px buffer; pointer ≥32×32
+- [ ] All `:hover` gated in `@media (hover: hover) and (pointer: fine)`
