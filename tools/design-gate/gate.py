@@ -2518,6 +2518,16 @@ def _modes(ctx):
                     got[k] = v
             out[mode] = got
     if not out:
+        dm = (dna_map(ctx) or {}).get('modes') or {}
+        for mode, roles in dm.items():
+            got = {}
+            for k, v in (roles or {}).items():
+                v = v.get('value') if isinstance(v, dict) else v
+                if isinstance(v, str) and v.startswith('#'):
+                    got[k] = v
+            if got:
+                out[mode] = got
+    if not out:
         roles = (_system(ctx).get('color') or {}).get('roles') or {}
         light = {}
         for k, v in roles.items():
@@ -2545,10 +2555,12 @@ def check_dark_mode(ctx):
     """C.5 — both modes defined, class-switched, dark never pure black."""
     f = []
     modes = _modes(ctx)
+    src = 'TOKENS.json color.modes' if ctx.read('TOKENS.json') \
+        else 'the DNA map modes'
     for need in ('light', 'dark'):
         if need not in modes or not modes[need]:
-            f.append(f'C.5 {need} mode not defined in TOKENS.json '
-                     'color.modes — both modes ship, invariant')
+            f.append(f'C.5 {need} mode not defined in {src} — both modes '
+                     'ship, invariant')
     light, dark = modes.get('light') or {}, modes.get('dark') or {}
     for role in MODE_ROLES:
         if role in light and role not in dark:
@@ -2564,6 +2576,8 @@ def check_dark_mode(ctx):
             if l is not None and l * 100 > DARK_MAX_L:
                 f.append(f'C.5 dark bg luminance {l * 100:.0f}% > '
                          f'{DARK_MAX_L:.0f}% — not a dark surface')
+    if not _wave_ge(ctx, 'w3'):
+        return f                       # W2 options declare modes only
     cfg = ctx.read('site/tailwind.config.js', 'site/tailwind.config.mjs',
                    'site/tailwind.config.cjs') or ''
     if not re.search(r'darkMode\s*:\s*[\'"](class|selector)[\'"]', cfg):
@@ -2573,8 +2587,9 @@ def check_dark_mode(ctx):
         f.append('C.5 no .dark block in the shared layer — the mode switch '
                  're-binds role variables there')
     tile = ctx.read('site/src/pages/system.astro') or ''
-    surfaces = [('system tile', tile)] + \
-        [('page', t) for _, t in ctx.page_htmls()]
+    surfaces = [('system tile', tile)]
+    if _wave_ge(ctx, 'w7'):
+        surfaces += [('page', t) for _, t in ctx.page_htmls()]
     for label, txt in surfaces:
         if txt and 'data-theme-toggle' not in txt:
             f.append(f'C.5 {label}: no data-theme-toggle — every surface '
