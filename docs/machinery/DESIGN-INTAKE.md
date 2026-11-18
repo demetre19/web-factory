@@ -95,6 +95,16 @@ imply a treatment that isn't decided, and compete with the real
 accent. The only colour on a card is the C.1 role map (bg, surface,
 ink, accent, inverse) + a single grey ramp for placeholders.
 
+**Real-assets rule:** when the operator supplies a site (redesign)
+or content, the *extracted* artifacts bind the cards directly —
+the site's accent colour is a brand constant, not a direction
+choice (all three cards carry it verbatim; only neutrals, type,
+shape, density differ); provided copy fills the sections, never
+invented placeholder headlines. Content dictates layout: section
+selection fits the extracted content inventory — a direction never
+demands copy that doesn't exist, and copy is never rewritten to
+flatter a layout.
+
 **Phase C — confirm the open fields.** Whatever Phase A left
 `inferred`, the cards' pick usually resolves; remaining gaps get
 asked in one batch: audience nuance, CTA person, media availability
