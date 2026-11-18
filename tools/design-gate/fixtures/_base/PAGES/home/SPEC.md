@@ -3,7 +3,7 @@
 ```yaml
 sections:
   - {align: center-axis, category: headers, collapse: burger, composition: nav-bar, density: compact, disclosure: open, emphasis: nav, media_ratio: none, name: nav, speech_act: ['chrome'], stack: text-first, surface: base, wf_ref: cards/index.html#d1:nav}
-  - {align: col-1-edge, category: hero, collapse: stacked, composition: split-media, density: spacious, disclosure: open, emphasis: headline, media_ratio: 3:4, name: hero, speech_act: ['promise', 'act'], stack: text-first, surface: base, wf_ref: cards/index.html#d1:hero}
+  - {align: col-1-edge, category: hero, collapse: stacked, composition: split-media, density: spacious, disclosure: open, emphasis: headline, media_ratio: 16:9, name: hero, speech_act: ['promise', 'act'], stack: text-first, surface: base, wf_ref: cards/index.html#d1:hero}
   - {align: col-1-edge, category: content, collapse: 2-col, composition: cards-n, density: regular, disclosure: open, emphasis: answer, media_ratio: none, name: macro, speech_act: ['detail'], stack: text-first, surface: muted, vector: [{'heading': 'What is testing?', 'fs': 'Testing is the thing.'}], wf_ref: cards/index.html#d1:macro}
   - {align: col-1-edge, category: contact, collapse: stacked, composition: form-panel, density: spacious, disclosure: open, emphasis: form, media_ratio: none, name: end-act, speech_act: ['act'], stack: text-first, surface: inverse, wf_ref: cards/index.html#d1:end-act}
   - {align: center-axis, category: footer, collapse: 1-col, composition: footer-bar, density: compact, disclosure: open, emphasis: columns, media_ratio: none, name: footer, speech_act: ['chrome'], stack: text-first, surface: base, wf_ref: cards/index.html#d1:footer}

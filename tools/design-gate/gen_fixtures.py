@@ -103,7 +103,7 @@ pages:
     rhetoric: [promise, proof, how, act]
     sections:
       - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open}
-      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "3:4", disclosure: open}
+      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open}
       - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
       - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open}
       - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open}
@@ -113,7 +113,7 @@ pages:
 WIREFRAME = '''<!doctype html><html><head><meta name="viewport" content="width=device-width"></head><body>
 <div class="card" id="d1">
 <nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>
-<section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="3:4" data-disclosure="open"></section>
+<section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open"></section>
 <section class="sec" data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open"></section>
 <section class="sec" data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open"></section>
 <section class="sec" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open"></section>
@@ -148,7 +148,7 @@ SPEC = '''# SPEC — /fixture/
 page: home
 sections:
   - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open}
-  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "3:4", disclosure: open}
+  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open}
   - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
   - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open}
   - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open}
@@ -246,7 +246,7 @@ PAGE_HTML = '''<!doctype html><html><head>
      class="flex items-center gap-4">
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
 </nav>
-<section data-sec="hero" data-comp="split-media" data-ratio="3:4" data-disclosure="open" class="sec-band py-24">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" class="sec-band py-24">
   <h1 class="text-fluid-0">Testing Site</h1>
   <p>Testing is the thing.</p>
   <img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero">
@@ -1006,6 +1006,8 @@ MUT = {
       'composition: split-media'),
      ('REPL','DESIGN-PLAN.md','density: regular',
       'density: spacious'),
+     ('REPL','DESIGN-PLAN.md','media_ratio: "16:9"',
+      'media_ratio: "1:1"'),
      ('REPL','DESIGN-PLAN.md','surface: muted, density: regular',
       'surface: inverse, density: regular')),
  'check_vector_map': mut(('REPL','DESIGN-PLAN.md','What is testing?','What is invented?')),

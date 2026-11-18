@@ -926,6 +926,11 @@ def check_content_inventory(ctx):
             f.append(f'W2: heading "{v["heading"][:40]}" has no first '
                      'sentence — every vector row carries its body '
                      'block opening (content dictates layout)')
+        elif len(v['fs']) > 500:
+            f.append(f'W2: first sentence under "{v["heading"][:40]}" '
+                     f'is {len(v["fs"])} chars — R.4 hard cap is 500; '
+                     'split or route the excess upstream before layout '
+                     'sizes disclosure (A F20)')
     plan = ctx.plan or {}
     site = plan.get('site') or {}
     copyf = ((site.get('system') or {}).get('copy')
@@ -1668,6 +1673,27 @@ def check_rhythm(ctx):
                              f'≥3 interior rows — step S-M-L every '
                              '≤2 (L.7)')
                     break
+        # 360×640 fold arithmetic (A F33): hero row's py + h1 + subhead
+        # + CTA + media must leave ≥5 elements visible
+        hero = next((r for r in interior
+                     if str(r.get('category')) in
+                     ('hero', 'headers') or 'hero' in str(r.get('name'))
+                     or 'promise' in str(r.get('speech_act'))), None)
+        if hero is not None:
+            dens = str(hero.get('density'))
+            py = {'compact': 36, 'regular': 48,
+                  'spacious': 64}.get(dens, 48)   # 360-tier section py
+            ratio = str(hero.get('media_ratio') or 'none')
+            mh = {'none': 0, '16:9': 180, '4:3': 240, '1:1': 320,
+                  '4:5': 400, '3:4': 427}.get(ratio, 200)
+            # nav + h1 + subhead + cta + media vs the 640 fold
+            est = 48 + 72 + 40 + 44 + mh + 2 * py
+            if est > 640:
+                f.append(f'{slug}: hero fold estimate {est}px > 640 '
+                         f'(density {dens} py={py} + media {ratio}) — '
+                         'the 360 fold cannot hold five elements '
+                         '(R.5); tighten density or media ratio at '
+                         'the layout round')
         # adjacent rows sharing BOTH composition and density
         for i in range(1, len(interior)):
             a, b = interior[i-1], interior[i]
