@@ -1909,7 +1909,7 @@ def check_section_shell(ctx):
 def check_section_allowed(ctx):
     """SB.3 — only contract classes/token utilities; no literals."""
     f = []
-    for fn, p in _section_files(ctx):
+    for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
         bad = _class_set(ctx, txt)
         if bad:
@@ -1957,7 +1957,7 @@ def check_exemplars(ctx):
                 fn.endswith('.astro') for fn in os.listdir(d)):
             f.append(f'SB.5 no gold exemplar for composition "{comp}" '
                      f'({os.path.relpath(d, REPO)}/)')
-    for fn, p in _section_files(ctx):
+    for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
         m = re.search(r'^exemplar:\s*(\S+)', txt, re.M)
         if not m:
@@ -2394,7 +2394,7 @@ def check_dna_fresh(ctx):
     if not h:
         return ['DM.1 DNA.json missing']
     cd = contracts_dir(ctx)
-    if os.path.isdir(cd):
+    if os.path.isdir(cd) and _wave_ge(ctx, 'w5'):
         for fn in sorted(os.listdir(cd)):
             if not fn.endswith('.contract.json'):
                 continue
@@ -2405,7 +2405,7 @@ def check_dna_fresh(ctx):
             if c.get('dna_hash') != h:
                 f.append(f'DM.2 {fn}: dna_hash {c.get("dna_hash")!r} != '
                          f'{h} — built against a different map')
-    for fn, p in _section_files(ctx):
+    for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
         mm = re.search(r'^dna_hash:\s*(\S+)', txt, re.M)
         if not mm:
@@ -3262,6 +3262,30 @@ def cli_selftest():
                          '## Modes (both ship', '## Variants'):
                 if want not in txt:
                     f.append(f'DNA.md missing section "{want}"')
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    # DM.6 — run.py refuses and resets when the map hash changed
+    tmp = tempfile.mkdtemp()
+    try:
+        pdir = os.path.join(tmp, 'p')
+        shutil.copytree(os.path.join(HERE, 'fixtures', '_base'), pdir,
+                        symlinks=True)
+        c1 = Ctx(pdir)
+        c1.wave = 'w1'
+        with open(os.path.join(pdir, 'GATES.json'), 'w') as fh:
+            json.dump({'w0': {'pass': True, 'approved': True,
+                              'dna': None},
+                       'w1': {'pass': True, 'approved': True,
+                              'inputs_sha256': input_hashes(c1),
+                              'dna': 'deadbeef'}}, fh)
+        r = subprocess.run([sys.executable, os.path.join(HERE, 'run.py'),
+                            'w2', pdir], capture_output=True, text=True)
+        if r.returncode == 0 or 'DNA map changed' not in r.stdout:
+            f.append('run.py does not refuse a wave after the DNA map '
+                     f'changed: {r.stdout.strip()[:120]}')
+        g = json.load(open(os.path.join(pdir, 'GATES.json')))
+        if g.get('w1', {}).get('pass') is not False:
+            f.append('run.py did not reset downstream gates on a DNA change')
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     return f
