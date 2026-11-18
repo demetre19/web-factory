@@ -1,28 +1,29 @@
 #!/usr/bin/env python3
 """gate.py — the Web Factory design wave gates.
 
-One mechanical gate per wave (W0–W7), mirroring the SEO SOP
+One mechanical gate per wave (W0–W8), mirroring the SEO SOP
 stage_gate/article_gate contract: a wave is done when this exits 0,
 not when its files exist. Writes/updates <pipeline-dir>/GATES.json
-{wave, pass, failures[], inputs_sha256, approved}.
+{wave, pass, failures[], inputs_sha256, dna, approved}.
 
   python3 gate.py <wave> <pipeline-dir> [--wireframe <cards.html>]
-                  [--design <id>] [--stub <stub.md>] [--approve]
-  python3 gate.py coverage        # every rule ID has an enforcement
-  python3 gate.py selftest        # every script check catches its fixture
+                  [--design <id>] [--stub <stub.md>]
+  python3 gate.py coverage|selftest|consistency|graph|enforcement
+  python3 gate.py dna|contracts|section|segment|score|wildcard <dir>
 
-Waves: w0 scaffold · w1 brief+audit · w2 direction · w3 system ·
-w4 wireframe-lock · w5 components · w6 page · w7 review.
+Waves: w0 scaffold · w1 brief+discovery · w2 look · w3 system sheet ·
+w4 content inventory · w5 wireframe lock · w6 components ·
+w7 page assembly · w8 review.
 
-The designer model never runs this: QA is never self-graded (P.8).
+The designer model never runs this: QA is never self-graded (P.8), and
+approval comes only from `run.py approve` in an operator terminal.
 Python 3 stdlib only.
 """
-import argparse, hashlib, html.parser, json, os, re, subprocess, sys
+import argparse, hashlib, hmac, html.parser, json, os, re, shutil, \
+    subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
-import argparse, hashlib, html.parser, json, os, re, shutil, \
-    subprocess, sys
 SCORE_VECTORS = os.path.join(
     REPO, 'docs', 'machinery', 'design', 'score-vectors.json')
 ENFORCEMENT = os.path.join(REPO, 'docs', 'machinery', 'design', 'enforcement.json')
@@ -1786,7 +1787,8 @@ def build_contracts(ctx):
     """[{...contract...}] in plan order, one per plan row."""
     rows = ctx.rows()
     dmap = dna_map(ctx) or {}
-    dh = dna_hash_of(dmap) if dmap else ''
+    sl = dna_slices(dmap) if dmap else {}
+    dh = sl.get('core', '')
     out = []
     for i, (slug, r) in enumerate(rows):
         name = r.get('name')
@@ -1798,8 +1800,9 @@ def build_contracts(ctx):
         out.append({
             'schema': CONTRACT_SCHEMA,
             'dna_hash': dh,
+            'structure_hash': sl.get('structure', ''),
             'dna': {
-                'profile': dmap.get('profile'),
+                'profile': dmap.get('vertical_profile'),
                 'genotype': dmap.get('genotype'),
                 'knobs': dmap.get('knobs'),
                 'rhythm': dmap.get('rhythm'),
@@ -2197,17 +2200,57 @@ def dna_map(ctx):
         return None
 
 
-def dna_hash_of(m):
-    """sha256 of the canonical JSON minus the `hash` field."""
-    if not m:
-        return ''
-    body = {k: v for k, v in m.items() if k != 'hash'}
-    return hashlib.sha256(json.dumps(body, sort_keys=True)
+# ---- split hashes (F05)
+#
+# One map, three locks: the site LOOK locks at W3, page STRUCTURE at W5,
+# variant deltas at W8. Each lock hashes only its own slice, so a legal
+# addition in a later wave cannot void an earlier operator approval.
+STRUCTURE_GENES = ('layout-archetype', 'page-macro-structure',
+                   'density-tier', 'image-led-ratio')
+CORE_FIELDS = ('version', 'site', 'vertical_profile', 'knobs', 'modes',
+               'invariants', 'constraints', 'vector_targets', 'provenance')
+LOOK_GENES = None           # filled at import: genotype minus STRUCTURE_GENES
+
+
+def _h(obj):
+    return hashlib.sha256(json.dumps(obj, sort_keys=True)
                           .encode()).hexdigest()[:16]
+
+
+def dna_slices(m):
+    """The three hashable slices of one map."""
+    if not m:
+        return {}
+    gt = dict(m.get('genotype') or {})
+    struct_gt = {g: gt.get(g) for g in STRUCTURE_GENES if g in gt}
+    look_gt = {g: v for g, v in gt.items() if g not in STRUCTURE_GENES}
+    core = {k: m.get(k) for k in CORE_FIELDS}
+    core['genotype'] = look_gt
+    return {
+        'core': _h(core),
+        'structure': _h({'genotype': struct_gt,
+                         'rhythm': m.get('rhythm') or [],
+                         'pages': m.get('pages') or {}}),
+        'variants': _h(m.get('variants') or []),
+    }
+
+
+def dna_hashes(m):
+    """{core, structure, variants} — recomputed, never trusted from file."""
+    return dna_slices(m or {})
+
+
+def dna_hash_of(m):
+    """The LOOK hash — what every artifact built before W5 binds to."""
+    return dna_slices(m).get('core', '') if m else ''
 
 
 def dna_hash(ctx):
     return dna_hash_of(dna_map(ctx))
+
+
+def dna_hash_kind(ctx, kind='core'):
+    return dna_slices(dna_map(ctx)).get(kind, '')
 
 
 def _knob_ok(knob, value, knobs):
@@ -2308,17 +2351,27 @@ def check_dna(ctx):
         return ['DM.1 DNA.json missing — the map is the single source of '
                 'coherence (gate.py dna)']
     required = ['version', 'site', 'vertical_profile', 'genotype',
-                'knobs', 'modes', 'provenance', 'vector_targets']
+                'knobs', 'provenance', 'vector_targets', 'invariants']
     if _wave_ge(ctx, 'w2'):
-        required.append('variants')
+        required += ['modes', 'variants']
     if _wave_ge(ctx, 'w5'):
         required.append('rhythm')
+    dm_mode = str((ctx.plan.get('site') or {}).get('design_mode') or '')
+    if _wave_ge(ctx, 'w1') and dm_mode and dm_mode != 'new-build':
+        required.append('constraints')
     for field in required:
         if m.get(field) in (None, '', [], {}):
             f.append(f'DM.1 DNA.json: "{field}" missing or empty')
-    if m.get('hash') != dna_hash_of(m):
-        f.append('DM.1 DNA.json: hash field is stale — the map was edited '
-                 'without re-hashing (locked maps bump version + hash)')
+    want = dna_slices(m)
+    got = m.get('hashes') or {}
+    for kind in ('core', 'structure', 'variants'):
+        if not got.get(kind):
+            f.append(f'DM.1 DNA.json: hashes.{kind} missing — run '
+                     '`gate.py dna` to re-hash the map')
+        elif got[kind] != want.get(kind):
+            f.append(f'DM.1 DNA.json: hashes.{kind} is stale — the map '
+                     f'was edited without re-hashing (expected '
+                     f'{want.get(kind)})')
     genes = genome_genes()
     gt = m.get('genotype') or {}
     for g, alleles in genes.items():
@@ -2342,14 +2395,13 @@ def check_dna(ctx):
             f.append(f'DM.1 vector_targets names unknown vector(s): '
                      f'{extra[:4]}')
         for k, v in vt.items():
-            if not isinstance(v, (int, float)) or not 0 <= v <= 1:
+            if not isinstance(v, (int, float)) or not 0 <= v <= 10:
                 f.append(f'DM.1 vector_targets.{k} = {v!r} — expected '
-                         '0.0-1.0')
+                         '0-10 (the scorecard scale)')
     ver = m.get('version')
-    wave = getattr(ctx, 'wave', None)
-    if wave not in ('w0', 'w1', 'selftest', None) and \
-            isinstance(ver, int) and ver < 1:
-        f.append(f'DM.1 DNA map still v{ver} — it locks to v1 at W3 exit')
+    if _wave_ge(ctx, 'w4') and isinstance(ver, int) and ver < 1:
+        f.append(f'DM.1 DNA map still v{ver} — W3 approval locks it to v1 '
+                 '(gate.py w3 --approve)')
     knobs = knob_set()
     prov = m.get('provenance') or {}
     if knobs:
@@ -2453,13 +2505,20 @@ def check_dna(ctx):
 
 
 def check_dna_fresh(ctx):
-    """Condition 2 — artifacts and recorded gates carry the current hash."""
+    """Condition 2 — each artifact carries the hash slice it consumed.
+
+    Look artifacts (contracts' dna_hash, section dna_hash:) bind the
+    CORE hash; structure artifacts additionally bind the STRUCTURE hash;
+    the picker binds the VARIANTS hash. A later legal addition therefore
+    invalidates only its own consumers (F05).
+    """
     f = []
     if getattr(ctx, 'wave', None) == 'w0':
         return f
-    h = dna_hash(ctx)
-    if not h:
+    sl = dna_slices(dna_map(ctx))
+    if not sl.get('core'):
         return ['DM.1 DNA.json missing']
+    core, struct = sl['core'], sl['structure']
     cd = contracts_dir(ctx)
     if os.path.isdir(cd) and _wave_ge(ctx, 'w5'):
         for fn in sorted(os.listdir(cd)):
@@ -2469,18 +2528,26 @@ def check_dna_fresh(ctx):
                 c = json.load(open(os.path.join(cd, fn)))
             except Exception:
                 continue
-            if c.get('dna_hash') != h:
+            if c.get('dna_hash') != core:
                 f.append(f'DM.2 {fn}: dna_hash {c.get("dna_hash")!r} != '
-                         f'{h} — built against a different map')
+                         f'{core} — built against a different look')
+            if c.get('structure_hash') != struct:
+                f.append(f'DM.2 {fn}: structure_hash '
+                         f'{c.get("structure_hash")!r} != {struct} — the '
+                         'structure lock moved; regenerate contracts')
     for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
         mm = re.search(r'^dna_hash:\s*(\S+)', txt, re.M)
         if not mm:
             f.append(f'DM.2 {fn}: no dna_hash: frontmatter — builders echo '
-                     'the map hash they built against')
-        elif mm.group(1) != h:
-            f.append(f'DM.2 {fn}: dna_hash {mm.group(1)} != {h} — rebuild '
-                     'this section against the current map')
+                     'the look hash they built against')
+        elif mm.group(1) != core:
+            f.append(f'DM.2 {fn}: dna_hash {mm.group(1)} != {core} — '
+                     'rebuild this section against the current look')
+        sm = re.search(r'^structure_hash:\s*(\S+)', txt, re.M)
+        if _wave_ge(ctx, 'w6') and sm and sm.group(1) != struct:
+            f.append(f'DM.2 {fn}: structure_hash {sm.group(1)} != {struct} '
+                     '— the wireframe lock moved; rebuild this section')
     if os.path.isfile(ctx.gates_path):
         try:
             g = json.load(open(ctx.gates_path))
@@ -2488,17 +2555,25 @@ def check_dna_fresh(ctx):
             g = {}
         for w, e in sorted(g.items()):
             rec = (e or {}).get('dna')
-            if rec and rec != h:
-                f.append(f'DM.6 GATES.json {w} recorded dna {rec} != {h} — '
-                         'a changed map invalidates every downstream wave '
-                         '(run.py rebuilds from that wave)')
+            if not rec:
+                continue
+            want = rec.get('structure') if isinstance(rec, dict) and \
+                WAVE_SEQ.index(w) >= WAVE_SEQ.index('w5') else \
+                (rec.get('core') if isinstance(rec, dict) else rec)
+            have = struct if isinstance(rec, dict) and \
+                WAVE_SEQ.index(w) >= WAVE_SEQ.index('w5') else core
+            if want and want != have:
+                f.append(f'DM.6 GATES.json {w} recorded a different map '
+                         f'({want} != {have}) — run.py rebuilds from {w}')
     return f
 
 
 def render_dna_md(m):
-    h = dna_hash_of(m)
+    sl = dna_slices(m)
     lines = ['# DNA map — the single source of coherence', '',
-             f'`hash: {h}` · version `{m.get("version")}` · site '
+             f'`look: {sl.get("core")}` · `structure: '
+             f'{sl.get("structure")}` · `variants: '
+             f'{sl.get("variants")}` · version `{m.get("version")}` · site '
              f'`{m.get("site")}` · vertical `{m.get("vertical_profile")}`',
              '', 'Every wave, section, variant and review reads this file '
              'first. Nothing defines a design value that is not traceable '
@@ -2553,7 +2628,10 @@ def cmd_dna(pipeline):
         for x in fails:
             print('  -', x)
         return 1
-    print(f'dna PASS — hash {dna_hash(ctx)}; DNA.md rendered')
+    sl = dna_slices(m or {})
+    print(f'dna PASS — look {sl.get("core")} · structure '
+          f'{sl.get("structure")} · variants {sl.get("variants")}; '
+          'DNA.md rendered')
     return 0
 
 
@@ -3090,6 +3168,97 @@ def check_seo_lint(ctx):
 
 
 
+# ---- operator approvals (P.8) -------------------------------------------
+#
+# Approval is an OPERATOR act. The designer's pipeline dir is writable by
+# the designer, so a flag there is self-grading (B F-01). `run.py approve`
+# requires an interactive TTY, then HMAC-signs {wave, input hash, DNA
+# slices} with a key that only that command creates. Gates re-verify the
+# signature against the CURRENT inputs; a changed input voids the approval.
+
+OPERATOR_HOME = os.path.expanduser('~/.web-factory')
+
+
+def op_key(create=False):
+    p = os.path.join(OPERATOR_HOME, 'operator.key')
+    if os.path.isfile(p):
+        return open(p, 'rb').read().strip()
+    if not create:
+        return None
+    os.makedirs(OPERATOR_HOME, exist_ok=True)
+    k = os.urandom(32).hex().encode()
+    with open(p, 'wb') as fh:
+        fh.write(k)
+    os.chmod(p, 0o600)
+    return k
+
+
+def _sig(rec, key):
+    body = {k: v for k, v in rec.items() if k != 'sig'}
+    return hmac.new(key, json.dumps(body, sort_keys=True).encode(),
+                    hashlib.sha256).hexdigest()[:32]
+
+
+def approvals_path(ctx):
+    return os.path.join(OPERATOR_HOME, 'approvals',
+                        _h(os.path.abspath(ctx.dir)) + '.json')
+
+
+def read_approvals(ctx):
+    p = approvals_path(ctx)
+    if not os.path.isfile(p):
+        return {}
+    try:
+        return json.load(open(p))
+    except Exception:
+        return {}
+
+
+def input_hashes_for(ctx, wave):
+    keep = getattr(ctx, 'wave', None)
+    ctx.wave = wave
+    try:
+        return input_hashes(ctx)
+    finally:
+        ctx.wave = keep
+
+
+def approval_state(ctx, wave):
+    """('ok'|'missing'|'stale'|'unsigned') for wave's operator approval."""
+    key = op_key()
+    rec = (read_approvals(ctx) or {}).get(wave)
+    if not rec:
+        return 'missing'
+    if not key or rec.get('sig') != _sig(rec, key):
+        return 'unsigned'
+    sl = dna_slices(dna_map(ctx) or {})
+    if rec.get('inputs') != _h(input_hashes_for(ctx, wave)):
+        return 'stale'
+    if rec.get('dna') != {'core': sl.get('core'),
+                          'structure': sl.get('structure')}:
+        return 'stale'
+    return 'ok'
+
+
+def write_approval(ctx, wave, by='operator'):
+    key = op_key(create=True)
+    sl = dna_slices(dna_map(ctx) or {})
+    rec = {'wave': wave,
+           'inputs': _h(input_hashes_for(ctx, wave)),
+           'dna': {'core': sl.get('core'), 'structure': sl.get('structure')},
+           'by': by,
+           'ts': __import__('datetime').datetime.now().isoformat(
+               timespec='seconds')}
+    rec['sig'] = _sig(rec, key)
+    p = approvals_path(ctx)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    allr = read_approvals(ctx)
+    allr[wave] = rec
+    with open(p, 'w') as fh:
+        json.dump(allr, fh, indent=2, sort_keys=True)
+    return rec
+
+
 def input_hashes(ctx):
     files = list(WAVE_INPUTS.get(ctx.wave, []))
     if ctx.wave == 'w5':
@@ -3119,8 +3288,34 @@ def input_hashes(ctx):
             h[os.path.relpath(p, ctx.dir)] = None
     return h
 
+def ancestry_fails(ctx):
+    """ORDER — no wave runs unless every earlier wave passed (and every
+    approvable one is operator-approved for the CURRENT inputs)."""
+    f = []
+    if ctx.wave not in WAVE_SEQ or ctx.wave == 'w0':
+        return f
+    g = load_gates(ctx)
+    for w in WAVE_SEQ[:WAVE_SEQ.index(ctx.wave)]:
+        e = g.get(w) or {}
+        if not e.get('pass'):
+            f.append(f'ORDER: {w} has not passed — run it first '
+                     f'(python3 tools/design-gate/run.py {w} <dir>)')
+            continue
+        if w in APPROVABLE:
+            st = approval_state(ctx, w)
+            if st != 'ok':
+                f.append(f'P.8 {w} approval {st} — operator runs '
+                         f'`run.py approve {w} <dir>` in a terminal '
+                         '(a flag inside the pipeline cannot approve)')
+        if e.get('inputs_sha256') and e['inputs_sha256'] != \
+                input_hashes_for(ctx, w):
+            f.append(f'ORDER: {w} inputs changed since it passed — '
+                     f're-gate {w}')
+    return f
+
+
 def run_wave(ctx):
-    fails = []
+    fails = ancestry_fails(ctx)
     if not os.path.isfile(os.path.join(ctx.dir, 'DESIGN-PLAN.md')) \
             and ctx.wave != 'w0':
         fails.append('DESIGN-PLAN.md missing')
@@ -3161,18 +3356,17 @@ def write_gate(ctx, fails, approve):
         'pass': not fails,
         'failures': fails,
         'inputs_sha256': input_hashes(ctx),
-        'dna': dna_hash(ctx) or None,
+        'dna': {'core': sl.get('core'), 'structure': sl.get('structure')}
+               if (sl := dna_slices(dna_map(ctx) or {})) else None,
         'ts': __import__('datetime').datetime.now().isoformat(
             timespec='seconds'),
     })
     if ctx.wave in ('w2', 'w5') and getattr(ctx.args, 'design', None):
         entry['design'] = ctx.design_id()
-    if approve:
-        entry['approved'] = True
-    elif 'approved' not in entry:
-        entry['approved'] = False
-    if fails:
-        entry['approved'] = False
+    # never trust a stored flag: approval is re-verified against the
+    # signed operator record and the CURRENT inputs (B F-01/F-08)
+    entry['approved'] = (not fails and
+                         approval_state(ctx, ctx.wave) == 'ok')
     g[ctx.wave] = entry
     with open(ctx.gates_path, 'w') as fh:
         json.dump(g, fh, indent=2, sort_keys=True)
@@ -3350,35 +3544,77 @@ def cli_selftest():
             f.append('gate.py dna renders no DNA.md')
         else:
             txt = open(md, encoding='utf-8').read()
-            for want in ('hash:', '## Genotype', '## System knobs',
+            for want in ('look:', '## Genotype', '## System knobs',
                          '## Modes (both ship', '## Variants'):
                 if want not in txt:
                     f.append(f'DNA.md missing section "{want}"')
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
-    # DM.6 — run.py refuses and resets when the map hash changed
+    # ORDER / P.8 / DM.6 — run.py and gate.py refuse on ancestry,
+    # missing operator approval, and a changed DNA slice.
     tmp = tempfile.mkdtemp()
+    saved_home = gate_self.OPERATOR_HOME
     try:
+        home = os.path.join(tmp, 'home')
+        os.makedirs(home)
+        gate_self.OPERATOR_HOME = os.path.join(home, '.web-factory')
         pdir = os.path.join(tmp, 'p')
         shutil.copytree(os.path.join(HERE, 'fixtures', '_base'), pdir,
                         symlinks=True)
         c1 = Ctx(pdir)
         c1.wave = 'w1'
-        with open(os.path.join(pdir, 'GATES.json'), 'w') as fh:
-            json.dump({'w0': {'pass': True, 'approved': True,
-                              'dna': None},
+        gp = os.path.join(pdir, 'GATES.json')
+        with open(gp, 'w') as fh:
+            json.dump({'w0': {'pass': True, 'dna': None},
                        'w1': {'pass': True, 'approved': True,
-                              'inputs_sha256': input_hashes(c1),
-                              'dna': 'deadbeef'}}, fh)
-        r = subprocess.run([sys.executable, os.path.join(HERE, 'run.py'),
-                            'w2', pdir], capture_output=True, text=True)
+                              'inputs_sha256': input_hashes(c1)}}, fh)
+        env = dict(os.environ, HOME=home)
+        rp = os.path.join(HERE, 'run.py')
+        r = subprocess.run([sys.executable, rp, 'w2', pdir],
+                           capture_output=True, text=True, env=env)
+        if r.returncode == 0 or 'approval missing' not in r.stdout:
+            f.append('run.py does not refuse a wave whose approvable '
+                     f'ancestor is unsigned: {r.stdout.strip()[:120]}')
+        g = json.load(open(gp))
+        if g.get('w2', {}).get('pass'):
+            f.append('run.py gated w2 without its ancestors being clean')
+        # signed approval → w2 runs, then a changed DNA core stops it
+        gate_self.write_approval(c1, 'w1')
+        r = subprocess.run([sys.executable, rp, 'w2', pdir],
+                           capture_output=True, text=True, env=env)
+        if 'approval' in r.stdout and 'REFUSED' in r.stdout:
+            f.append(f'run.py rejects a valid signed approval: '
+                     f'{r.stdout.strip()[:120]}')
+        sl = dna_slices(dna_map(c1))
+        g = json.load(open(gp))
+        g['w1'].update({'pass': True, 'dna': {'core': 'deadbeef',
+                                              'structure': sl['structure']},
+                        'inputs_sha256': input_hashes(c1)})
+        with open(gp, 'w') as fh:
+            json.dump(g, fh)
+        r = subprocess.run([sys.executable, rp, 'w2', pdir],
+                           capture_output=True, text=True, env=env)
         if r.returncode == 0 or 'DNA map changed' not in r.stdout:
             f.append('run.py does not refuse a wave after the DNA map '
                      f'changed: {r.stdout.strip()[:120]}')
-        g = json.load(open(os.path.join(pdir, 'GATES.json')))
+        g = json.load(open(gp))
         if g.get('w1', {}).get('pass') is not False:
             f.append('run.py did not reset downstream gates on a DNA change')
+        # gate.py itself refuses a wave with no ancestry (no bypass)
+        r = subprocess.run([sys.executable, os.path.join(HERE, 'gate.py'),
+                            'w4', pdir], capture_output=True, text=True,
+                           env=env)
+        if r.returncode == 0 or 'ORDER' not in r.stdout:
+            f.append('gate.py wN runs without its ancestors passing '
+                     f'(bypass): {r.stdout.strip()[:120]}')
+        # gate.py --approve is not an approval channel
+        r = subprocess.run([sys.executable, os.path.join(HERE, 'gate.py'),
+                            'w3', pdir, '--approve'], capture_output=True,
+                           text=True, env=env)
+        if r.returncode != 2 or 'operator-only' not in r.stdout:
+            f.append('gate.py --approve is still an approval channel')
     finally:
+        gate_self.OPERATOR_HOME = saved_home
         shutil.rmtree(tmp, ignore_errors=True)
     return f
 
@@ -3437,13 +3673,25 @@ def main():
                     ['coverage', 'selftest', 'consistency', 'graph',
                      'score', 'segment', 'wildcard', 'enforcement',
                      'contracts', 'section', 'dna'])
-    ap.add_argument('pipeline_dir', nargs='?', default='.')
+    ap.add_argument('pipeline_dir', nargs='?', default=None,
+                    help='pipeline dir — REQUIRED for every pipeline '
+                         'command (no silent cwd writes)')
     ap.add_argument('--wireframe')
     ap.add_argument('--design')
     ap.add_argument('--stub')
     ap.add_argument('--approve', action='store_true')
     ap.add_argument('--sec', help='section name for `gate.py section`')
     a = ap.parse_args()
+    if a.wave not in ('coverage', 'selftest', 'consistency', 'graph',
+                      'enforcement') and not a.pipeline_dir:
+        print(f'gate.py {a.wave}: pipeline_dir is required')
+        return 2
+    if a.approve:
+        print('approval is operator-only (P.8) — run in a terminal:\n'
+              f'  python3 tools/design-gate/run.py approve '
+              f'{a.wave} {a.pipeline_dir or "<pipeline-dir>"}\n'
+              'gate.py never records approval itself.')
+        return 2
     if a.wave == 'coverage':
         return cmd_coverage()
     if a.wave == 'selftest':
@@ -3474,8 +3722,6 @@ def main():
     print(f'{a.wave} {status} — {a.pipeline_dir}')
     for x in fails:
         print('  -', x)
-    if a.approve and not fails:
-        print(f'  approved: true')
     return 0 if not fails else 1
 
 # ---------------------------------------------------------------- genome
@@ -4512,7 +4758,11 @@ for _w in list(WAVE_CHECKS):
     WAVE_CHECKS[_w].append(check_dna)
     WAVE_CHECKS[_w].append(check_dna_fresh)
 
-APPROVABLE = {'w2', 'w3', 'w5', 'w6', 'w7', 'w8'}
+# The five operator decision points (A F23): confirm discovery, pick the
+# look, approve the system sheet (locks DNA v1), pick the wireframe
+# (locks structure), sign off the final page. Everything else is
+# mechanical.
+APPROVABLE = {'w1', 'w2', 'w3', 'w5', 'w8'}
 
 if __name__ == '__main__':
     sys.exit(main())

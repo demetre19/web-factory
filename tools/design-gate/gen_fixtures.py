@@ -13,6 +13,8 @@ import json, os, shutil, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
+sys.path.insert(0, HERE)
+import gate  # noqa: E402  (hash helpers for the fixture DNA)
 
 PLAN = '''# DESIGN-PLAN — fixture site
 
@@ -770,7 +772,6 @@ const { sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
 '''
 
 def dna_doc():
-    import hashlib
     doc = {
         "version": 1,
         "site": "fixture",
@@ -791,7 +792,11 @@ def dna_doc():
         },
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},
-        "extracted": {"accent": "#0055AA"},
+        "invariants": {"accent": "#0055AA", "logo": "wordmark",
+                       "fonts": {"display": "Inter", "body": "Inter"}},
+        "constraints": {"likes": ["calm editorial spacing"],
+                        "dislikes": ["gradient meshes"],
+                        "references": ["mobbin:app/linear"]},
         "rhythm": [
             {"section": "nav", "surface": "base", "density": "compact"},
             {"section": "hero", "surface": "base", "density": "spacious"},
@@ -815,10 +820,10 @@ def dna_doc():
              "wildcard_breaks": ["S.1"]},
         ],
         "vector_targets": {
-            "ease_of_use": 0.6, "clarity": 0.7, "layout": 0.5,
-            "typography": 0.6, "colour": 0.5, "rhythm": 0.5,
-            "imagery": 0.4, "trust": 0.7, "conversion": 0.8,
-            "seo": 0.6, "mobile": 0.7, "speed": 0.8, "a11y": 0.7,
+            "ease_of_use": 7, "clarity": 8, "layout": 6,
+            "typography": 7, "colour": 6, "rhythm": 6,
+            "imagery": 5, "trust": 8, "conversion": 9,
+            "seo": 8, "mobile": 8, "speed": 9, "a11y": 8,
         },
         "provenance": {
             "type.ratio": {"tag": "snapped",
@@ -835,9 +840,7 @@ def dna_doc():
                             "space.section_py", "grid.gutter")},
         },
     }
-    body = {k: v for k, v in doc.items() if k != "hash"}
-    doc["hash"] = hashlib.sha256(
-        json.dumps(body, sort_keys=True).encode()).hexdigest()[:16]
+    doc["hashes"] = gate.dna_slices(doc)
     return doc
 
 
@@ -1022,14 +1025,15 @@ def main():
         with open(p, mode) as fh:
             fh.write(content)
     # section-build artefacts: contracts, per-section gates, assembled page
-    sys.path.insert(0, HERE)
-    import gate
     base_dir = os.path.join(FX, '_base')
     # builders echo the DNA hash they built against (DM.2)
-    h = gate.dna_hash(gate.Ctx(base_dir))
+    sl = gate.dna_slices(gate.dna_map(gate.Ctx(base_dir)))
+    h, sh = sl['core'], sl['structure']
     for name in list(SECTIONS):
         rel = f'site/src/components/sections/{name}'
-        body = BASE[rel].replace('---\nexemplar:', f'---\ndna_hash: {h}\nexemplar:', 1)
+        body = BASE[rel].replace(
+            '---\nexemplar:',
+            f'---\ndna_hash: {h}\nstructure_hash: {sh}\nexemplar:', 1)
         BASE[rel] = body
         with open(os.path.join(base_dir, rel), 'w', encoding='utf-8') as fh:
             fh.write(body)
