@@ -32,6 +32,47 @@ How the operator conversation runs on any path that ends in
 <url>'s home page"). Analysis first; questions only for gaps;
 the operator never configures settings — they pick a direction.
 
+## Redesign path — Phase 0 diagnosis before any card
+
+When the request is "redesign <existing page>", the loop gains a
+Phase 0 *before* direction cards. The existing page is evidence,
+not a blank brief — the agent must diagnose it, not just reuse it.
+
+**Step 1 — defect table.** The live page is audited against (a) the
+STUB's heading vector (missing macro answers, wrong H1 form, vector
+drift) and (b) `PRIMITIVES.md` mechanical rules (density rhythm,
+contrast moment, disclosure, banned patterns). Output: a table of
+named defects with evidence — never vibes.
+
+**Step 2 — keep-list.** Real assets extracted: photos, logos,
+accreditation marks, accent colour, copy that already works. These
+are T1 — cards reuse them verbatim, never replace with placeholders
+or stock.
+
+**Step 3 — preference ask (structured, one batch).** Before cards,
+the operator answers three questions:
+
+1. *Likes* — what survives? (multi-select from the page's real
+   blocks + "rebuild entirely")
+2. *Dislikes* — what defects matter? (multi-select from the defect
+   table + anything the audit missed)
+3. *Density* — the disclosure pick: light (FAQ collapses, scope
+   stays open) / medium (FAQ + micro-zone fold) / heavy (everything
+   compressible folds; page ≈5–6 quiet blocks).
+
+The density answer binds `disclosure:` per plan row — macro stays
+`open` (the article must read), micro folds per the pick. "Less
+cluttered" is a selection from {open, collapsed, tabbed}, never a
+redesigner's hunch.
+
+**Only then Phase B** — three cards that *fix the named defects*,
+carry the keep-list verbatim, and apply the chosen disclosure tier.
+A card that ignores a named defect fails Phase B review.
+Phase 0's ask is a `disclosure` decision, so it's exempt from the
+"zero questions" rule — but it still ships in one structured batch,
+never a conversation.
+
+
 **Phase A — analyze (zero questions).** From the site and/or brief,
 extraction pass (DESIGN-PLAN §Guideline prefill) fills:
 who / one_action / worst_case from the copy; the `rhetoric` sequence

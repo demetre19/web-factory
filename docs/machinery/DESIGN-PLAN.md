@@ -287,6 +287,7 @@ pages:
         fs: <mandated first sentence — the copy contract, renders verbatim>
         zone: macro | micro | end
         heading_class: query | claim    # E.2: query=small/muted/label; claim=full rank
+        disclosure: open | collapsed | tabbed   # E.2: macro=open only; micro may collapse per operator density pick
       - {…one row per section, in rhetoric order…}
   # …one entry per route/SPEC…
 
