@@ -40,3 +40,7 @@ folds, logo/cert strip (equal grid cells), stat blocks, inverse panel,
 form (outlined ≥44px fields, noun labels, faint placeholder bars),
 burger + drawer (nav collapse below tablet). All grey, G.1 spacing.
 
+Self-check before opening: every `.xbox`/`.video` must have non-zero
+height at 1280, 768 and 360 (height = width ÷ declared ratio). A
+collapsed media box is a defect, not a style.
+

@@ -110,7 +110,12 @@ slots. Logo/cert strips distribute evenly across the content width
 (space-between or equal grid cells), landscape slots of one size —
 a left-clustered logo row is a defect. Primitives available: X-box
 media, video, copy bars, real headings, outlined CTA, folds, logo
-strip, stat blocks, inverse panel, form. Nav collapses to a burger
+strip, stat blocks, inverse panel, form. Video = an X-box at its
+declared aspect ratio, same sizing rules as images. **Media sizing
+invariant:** every media primitive (image X-box, video) renders at
+its declared V.3 aspect ratio — height = width ÷ ratio at every
+viewport; a media block with zero/collapsed height, or chrome (play
+button, chip) outside its box, is a defect. Nav collapses to a burger
 below tablet — one row always. Headings are real text —
 the **per-direction type
 scale is the only real design value on a card**: correct ranks

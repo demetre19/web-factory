@@ -193,12 +193,12 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
 .endact .tag{color:#c8c8c8}
 
 /* VIDEO primitive — 16:9 X-box, play circle, duration chip, caption bar */
-.video{position:relative}
+.video{position:relative;width:100%;max-width:720px;margin-inline:auto}
 .play{position:absolute;inset:0;margin:auto;width:64px;height:64px;
       border:2px solid var(--line);border-radius:50%}
 .play::after{content:"";position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);
       border:12px solid transparent;border-left:18px solid var(--line)}
-.dur{position:absolute;top:8px;left:8px;border:1.5px solid var(--line);border-radius:var(--r);
+.dur{position:absolute;bottom:8px;left:8px;border:1.5px solid var(--line);border-radius:var(--r);
      background:var(--paper);color:var(--mut);font:600 .68rem/1 system-ui;padding:4px 8px}
 .vcap{display:block;margin-top:8px;height:10px;border-radius:5px;background:var(--bar);width:38%}
 
