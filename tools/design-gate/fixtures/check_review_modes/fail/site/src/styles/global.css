@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-ink: #111111;
+  --c-paper: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 150ms !important;
+    transition: opacity 150ms linear !important;
+    transform: none !important;
+  }
+}
+
+.dark {
+  --c-ink: #EDEBE7;
+  --c-paper: #14181A;
+}
+
+@layer components {
+  .sec-band { padding-block: var(--py); }
+  .sec-inner { max-width: 72rem; margin-inline: auto; }
+  .ratio-portrait { aspect-ratio: 3 / 4; }
+  .variant-stage { container-type: inline-size; }
+  .variant-switcher { position: sticky; top: 0; }
+  .btn-primary { min-height: var(--tap); }
+  .burger { display: none; }
+  .inverse { background: var(--c-ink); color: var(--c-paper); }
+  .fold-row { border-top: 1px solid var(--c-line); }
+  .card-grid { display: grid; gap: var(--space-4); }
+}

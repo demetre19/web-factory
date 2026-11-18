@@ -15,10 +15,17 @@
   }
 }
 
+.dark {
+  --c-ink: #EDEBE7;
+  --c-paper: #14181A;
+}
+
 @layer components {
   .sec-band { padding-block: var(--py); }
   .sec-inner { max-width: 72rem; margin-inline: auto; }
   .ratio-portrait { aspect-ratio: 3 / 4; }
+  .variant-stage { container-type: inline-size; }
+  .variant-switcher { position: sticky; top: 0; }
   .btn-primary { min-height: var(--tap); }
   .burger { display: none; }
   .inverse { background: var(--c-ink); color: var(--c-paper); }

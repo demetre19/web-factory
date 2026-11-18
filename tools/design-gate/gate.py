@@ -923,30 +923,35 @@ def check_content_width(ctx):
     return []
 
 def check_contrast(ctx):
-    roles = (_system(ctx).get('color') or {}).get('roles') or {}
+    """C.1/C.7/C.5 — contrast floors, computed in EVERY mode."""
     f = []
-    ink, bg, surf = (role_hex(roles, k) for k in ('ink', 'bg', 'surface'))
-    af, ac = role_hex(roles, 'accent_foreground'), role_hex(roles, 'accent')
-    im = role_hex(roles, 'ink_muted')
-    if ink and bg:
-        r = contrast(ink, bg)
-        if r is not None and r < 7:
-            f.append(f'C.1/C.7 ink:bg {r:.1f}:1 < 7:1')
-    if ink and surf:
-        r = contrast(ink, surf)
-        if r is not None and r < 7:
-            f.append(f'C.1/C.7 ink:surface {r:.1f}:1 < 7:1')
-    if af and ac:
-        r = contrast(af, ac)
-        if r is not None and r < 4.5:
-            f.append(f'C.1/C.7 accent_fg:accent {r:.1f}:1 < 4.5:1')
-    if im and bg:
-        r = contrast(im, bg)
-        if r is not None and r < 4.5:
-            f.append(f'C.1/C.7 ink_muted:bg {r:.1f}:1 < 4.5:1')
-    inv = role_hex(roles, 'inverse')
-    if inv and inv.lower() in ('#000', '#000000'):
-        f.append('C.5 inverse is pure black — tinted charcoal required')
+    modes = _modes(ctx)
+    if not modes:
+        return ['C.1 no colour roles found (TOKENS.json / plan)']
+    for mode, roles in modes.items():
+        tag = f'[{mode}]'
+
+        def hx(k):
+            v = roles.get(k)
+            return v if isinstance(v, str) else None
+        ink, bg, surf = hx('ink'), hx('bg'), hx('surface')
+        af, ac = hx('accent_foreground'), hx('accent')
+        im = hx('ink_muted')
+        for label, a, b, floor in (
+                ('ink:bg', ink, bg, 7), ('ink:surface', ink, surf, 7),
+                ('accent_fg:accent', af, ac, 4.5),
+                ('ink_muted:bg', im, bg, 4.5),
+                ('accent:surface', ac, surf, 3)):
+            if not a or not b:
+                continue
+            r = contrast(a, b)
+            if r is not None and r < floor:
+                f.append(f'C.1/C.7 {tag} {label} {r:.1f}:1 < {floor}:1')
+        for name in ('inverse', 'bg'):
+            v = hx(name)
+            if v and v.lower() in ('#000', '#000000'):
+                f.append(f'C.5 {tag} {name} is pure black — tinted charcoal '
+                         'required')
     return f
 
 def _font_directory():
@@ -1663,6 +1668,33 @@ def check_segment_priority(ctx):
                      'main block')
     return f
 
+def check_review_modes(ctx):
+    """C.5 — the reviewer scores BOTH modes; shots prove it."""
+    f = []
+    raw = ctx.read('REVIEW.json')
+    if raw is None:
+        return ['C.5 REVIEW.json missing — mode coverage unverifiable']
+    try:
+        rv = json.loads(raw)
+    except Exception as e:
+        return [f'C.5 REVIEW.json unparseable: {e}']
+    modes = rv.get('modes') or {}
+    if isinstance(modes, list):
+        modes = {m: {} for m in modes}
+    for need in ('light', 'dark'):
+        if need not in modes:
+            f.append(f'C.5 REVIEW.json has no "{need}" mode verdict — '
+                     'contrast and the rubric run in both modes')
+    shots = os.path.join(ctx.dir, 'shots')
+    if os.path.isdir(shots):
+        names = os.listdir(shots)
+        for need in ('light', 'dark'):
+            if not any(need in n.lower() for n in names):
+                f.append(f'C.5 no {need}-mode screenshot in shots/ — '
+                         'evidence for both modes is required')
+    return f
+
+
 def check_review_completeness(ctx):
     f = []
     rj = ctx.read('REVIEW.json')
@@ -1754,6 +1786,8 @@ def _stub_for(ctx, name, index):
 def build_contracts(ctx):
     """[{...contract...}] in plan order, one per plan row."""
     rows = ctx.rows()
+    dmap = dna_map(ctx) or {}
+    dh = dna_hash_of(dmap) if dmap else ''
     out = []
     for i, (slug, r) in enumerate(rows):
         name = r.get('name')
@@ -1764,6 +1798,13 @@ def build_contracts(ctx):
         layer = sorted(_layer_classes(ctx))
         out.append({
             'schema': CONTRACT_SCHEMA,
+            'dna_hash': dh,
+            'dna': {
+                'profile': dmap.get('profile'),
+                'genotype': dmap.get('genotype'),
+                'knobs': dmap.get('knobs'),
+                'rhythm': dmap.get('rhythm'),
+            },
             'page': slug,
             'index': i,
             'section': name,
@@ -2071,6 +2112,688 @@ def cmd_section(pipeline, name):
         else:
             print(f'{c["section"]}: PASS')
     return rc
+
+
+# ---------------------------------------------------------------- DNA map
+#
+# LAW.DNA (docs/machinery/design/DNA-MAP.md) — one map per run is the
+# single source of coherence. gate.dna implements its seven FAIL
+# conditions and runs inside every wave gate.
+
+KNOBS_PATH = os.path.join(DESIGN_DIR, 'knobs.json')
+MODE_ROLES = ('bg', 'surface', 'surface_elevated', 'border', 'ink',
+              'ink_muted', 'accent', 'accent_foreground', 'inverse')
+VARIANT_VECTORS = {'best-predicted', 'typography-led', 'imagery-led',
+                   'density-led', 'rhythm-led', 'wildcard'}
+
+
+def knob_set():
+    try:
+        return json.load(open(KNOBS_PATH))['knobs']
+    except Exception:
+        return {}
+
+
+def dna_path(ctx):
+    return os.path.join(ctx.dir, 'DNA.json')
+
+
+def dna_map(ctx):
+    p = dna_path(ctx)
+    if not os.path.isfile(p):
+        return None
+    try:
+        return json.load(open(p))
+    except Exception:
+        return None
+
+
+def dna_hash_of(m):
+    """sha256 of the canonical JSON minus the `hash` field."""
+    if not m:
+        return ''
+    body = {k: v for k, v in m.items() if k != 'hash'}
+    return hashlib.sha256(json.dumps(body, sort_keys=True)
+                          .encode()).hexdigest()[:16]
+
+
+def dna_hash(ctx):
+    return dna_hash_of(dna_map(ctx))
+
+
+def _knob_ok(knob, value, knobs):
+    spec = knobs.get(knob)
+    if not spec:
+        return False, f'"{knob}" not in knobs.json'
+    kind = spec.get('kind', 'number')
+    if kind == 'enum':
+        if str(value) not in [str(x) for x in spec.get('allowed') or []]:
+            return False, (f'"{knob}" {value!r} not in '
+                           f'{spec.get("allowed")}')
+        return True, ''
+    if kind == 'map':
+        if not isinstance(value, dict):
+            return False, f'"{knob}" must be a per-tier map'
+        per = spec.get('per') or {}
+        step = float(spec.get('step') or 0)
+        for tier, v in value.items():
+            if tier not in per:
+                return False, f'"{knob}" unknown tier "{tier}"'
+            lo, hi = per[tier]
+            try:
+                vv = float(v)
+            except (TypeError, ValueError):
+                return False, f'"{knob}.{tier}" {v!r} not numeric'
+            if not lo <= vv <= hi:
+                return False, f'"{knob}.{tier}" {vv} outside [{lo}, {hi}]'
+            if step and abs(((vv - lo) / step) - round((vv - lo) / step)) > 1e-6:
+                return False, f'"{knob}.{tier}" {vv} off the {step} step'
+        return True, ''
+    lo, hi = spec['range']
+    step = float(spec.get('step') or 0)
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        return False, f'"{knob}" value {value!r} not numeric'
+    if not lo <= v <= hi:
+        return False, f'"{knob}" {v} outside [{lo}, {hi}]'
+    if step:
+        n = round((v - lo) / step)
+        if abs(lo + n * step - v) > 1e-6:
+            return False, f'"{knob}" {v} off the {step} step'
+    return True, ''
+
+
+def _deltas_ok(base, deltas, knobs, wildcard):
+    """Condition 4 — a variant is baseline + declared deltas."""
+    f = []
+    for k, v in (deltas or {}).items():
+        spec = knobs.get(k)
+        if not spec:
+            f.append(f'DM.4 delta knob "{k}" not in knobs.json — untraceable')
+            continue
+        ok, why = _knob_ok(k, v, knobs)
+        if not ok:
+            if wildcard and spec.get('tier') == 'stylistic' and \
+                    spec.get('kind', 'number') == 'number':
+                lo, hi = spec['range']
+                band = 2 * float(spec.get('step') or 0)
+                try:
+                    vv = float(v)
+                except (TypeError, ValueError):
+                    vv = None
+                if vv is not None and lo - band - 1e-6 <= vv <= hi + band + 1e-6:
+                    continue
+            f.append(f'DM.4 delta {why}')
+        if k in (base or {}) and str(base[k]) == str(v):
+            f.append(f'DM.4 delta "{k}" equals the baseline — a delta must '
+                     'change something')
+    return f
+
+
+def check_dna(ctx):
+    """Conditions 1, 3, 6, 7 (+ completeness and knob ranges)."""
+    f = []
+    m = dna_map(ctx)
+    if m is None:
+        return ['DM.1 DNA.json missing — the map is the single source of '
+                'coherence (gate.py dna)']
+    for field in ('version', 'site', 'vertical_profile', 'genotype',
+                  'knobs', 'modes', 'rhythm', 'variants', 'provenance',
+                  'vector_targets'):
+        if m.get(field) in (None, '', [], {}):
+            f.append(f'DM.1 DNA.json: "{field}" missing or empty')
+    if m.get('hash') != dna_hash_of(m):
+        f.append('DM.1 DNA.json: hash field is stale — the map was edited '
+                 'without re-hashing (locked maps bump version + hash)')
+    genes = genome_genes()
+    gt = m.get('genotype') or {}
+    for g, alleles in genes.items():
+        if g not in gt:
+            f.append(f'DM.1 genotype missing gene "{g}" (D.1 totality)')
+        elif alleles and str(gt[g]) not in alleles:
+            f.append(f'DM.1 genotype "{g}: {gt[g]}" not in the closed set')
+    for g in gt:
+        if genes and g not in genes:
+            f.append(f'DM.3 genotype gene "{g}" is not in GENOME — '
+                     'untraceable')
+    ver = m.get('version')
+    wave = getattr(ctx, 'wave', None)
+    if wave not in ('w0', 'w1', 'selftest', None) and \
+            isinstance(ver, int) and ver < 1:
+        f.append(f'DM.1 DNA map still v{ver} — it locks to v1 at W3 exit')
+    knobs = knob_set()
+    prov = m.get('provenance') or {}
+    if knobs:
+        for k in knobs:
+            if k not in (m.get('knobs') or {}):
+                f.append(f'DM.1 knob "{k}" missing from DNA.json')
+            elif k not in prov:
+                f.append(f'DM.1 knob "{k}" has no provenance tag '
+                         '(extracted|snapped|inferred|chosen)')
+            else:
+                e = prov[k]
+                if isinstance(e, dict):
+                    tag = e.get('tag')
+                    if tag not in ('extracted', 'snapped', 'inferred',
+                                   'chosen'):
+                        f.append(f'DM.1 knob "{k}" provenance tag '
+                                 f'{tag!r} invalid')
+                    if tag in ('snapped', 'inferred'):
+                        if not (e.get('patterns') or []):
+                            f.append(f'DM.1 knob "{k}" seeded from the '
+                                     'pattern library but cites no pattern '
+                                     'ID (DNA v0 seeding)')
+                        if not isinstance(e.get('n'), int) or e['n'] < 1:
+                            f.append(f'DM.1 knob "{k}" provenance lacks the '
+                                     'sample size n')
+                elif isinstance(e, str):
+                    if e not in ('extracted', 'snapped', 'inferred',
+                                 'chosen'):
+                        f.append(f'DM.1 knob "{k}" provenance tag {e!r} '
+                                 'invalid')
+        for k, v in (m.get('knobs') or {}).items():
+            ok, why = _knob_ok(k, v, knobs)
+            if not ok:
+                f.append(f'DM.1 knob {why}')
+    for mode in ('light', 'dark'):
+        roles = (m.get('modes') or {}).get(mode) or {}
+        if not roles:
+            f.append(f'C.5 modes.{mode} missing — both modes ship '
+                     '(condition 7)')
+            continue
+        for role in MODE_ROLES:
+            if role not in roles:
+                f.append(f'C.5 modes.{mode}.{role} missing (condition 7)')
+    rhythm = m.get('rhythm') or []
+    if isinstance(rhythm, dict):
+        rhythm = [{'section': k, 'surface': (v or {}).get('surface'),
+                   'density': (v or {}).get('density')}
+                  for k, v in rhythm.items()]
+    plan_rows = {str(r.get('name')): r for _, r in ctx.rows()}
+    for entry in rhythm:
+        name = str(entry.get('section'))
+        row = plan_rows.get(name)
+        if not row:
+            f.append(f'DM.3 rhythm plan names section "{name}" that is not '
+                     'a plan row')
+            continue
+        if entry.get('surface') and str(row.get('surface')) != str(
+                entry['surface']):
+            f.append(f'DM.6 row "{name}" surface "{row.get("surface")}" '
+                     f'deviates from the map "{entry["surface"]}"')
+        if entry.get('density') and str(row.get('density')) != str(
+                entry['density']):
+            f.append(f'DM.6 row "{name}" density "{row.get("density")}" '
+                     f'deviates from the map "{entry["density"]}"')
+    for name in plan_rows:
+        if rhythm and not any(str(e.get('section')) == name for e in rhythm):
+            f.append(f'DM.6 row "{name}" has no rhythm-plan entry')
+    plan_dna = (ctx.plan.get('dna') or {})
+    if plan_dna:
+        prof = plan_dna.get('profile')
+        if prof and prof != m.get('vertical_profile'):
+            f.append(f'DM.3 plan profile "{prof}" != DNA map '
+                     f'"{m.get("vertical_profile")}"')
+        pgt = plan_dna.get('genotype') or {}
+        if isinstance(pgt, list):
+            flat = {}
+            for it in pgt:
+                if isinstance(it, dict):
+                    flat.update({str(k): str(v) for k, v in it.items()})
+            pgt = flat
+        for g, a in pgt.items():
+            if str((m.get('genotype') or {}).get(g)) != str(a):
+                f.append(f'DM.3 plan genotype {g}={a} != DNA map '
+                         f'{(m.get("genotype") or {}).get(g)}')
+    raw = ctx.read('TOKENS.json')
+    if raw:
+        try:
+            tok = json.loads(raw)
+        except Exception:
+            tok = {}
+        for k, v in (tok.get('knobs') or {}).items():
+            if k not in (m.get('knobs') or {}):
+                f.append(f'DM.3 TOKENS.json knob "{k}" untraceable — not in '
+                         'the DNA map')
+            elif str(m['knobs'][k]) != str(v):
+                f.append(f'DM.3 TOKENS.json {k}={v} != DNA map '
+                         f'{m["knobs"][k]}')
+    return f
+
+
+def check_dna_fresh(ctx):
+    """Condition 2 — artifacts and recorded gates carry the current hash."""
+    f = []
+    h = dna_hash(ctx)
+    if not h:
+        return ['DM.1 DNA.json missing']
+    cd = contracts_dir(ctx)
+    if os.path.isdir(cd):
+        for fn in sorted(os.listdir(cd)):
+            if not fn.endswith('.contract.json'):
+                continue
+            try:
+                c = json.load(open(os.path.join(cd, fn)))
+            except Exception:
+                continue
+            if c.get('dna_hash') != h:
+                f.append(f'DM.2 {fn}: dna_hash {c.get("dna_hash")!r} != '
+                         f'{h} — built against a different map')
+    for fn, p in _section_files(ctx):
+        txt = open(p, encoding='utf-8', errors='replace').read()
+        mm = re.search(r'^dna_hash:\s*(\S+)', txt, re.M)
+        if not mm:
+            f.append(f'DM.2 {fn}: no dna_hash: frontmatter — builders echo '
+                     'the map hash they built against')
+        elif mm.group(1) != h:
+            f.append(f'DM.2 {fn}: dna_hash {mm.group(1)} != {h} — rebuild '
+                     'this section against the current map')
+    if os.path.isfile(ctx.gates_path):
+        try:
+            g = json.load(open(ctx.gates_path))
+        except Exception:
+            g = {}
+        rec = g.get('dna')
+        if rec and rec != h:
+            f.append(f'DM.6 GATES.json recorded dna {rec} != {h} — a changed '
+                     'map invalidates every downstream wave (run.py)')
+    return f
+
+
+def render_dna_md(m):
+    h = dna_hash_of(m)
+    lines = ['# DNA map — the single source of coherence', '',
+             f'`hash: {h}` · version `{m.get("version")}` · site '
+             f'`{m.get("site")}` · vertical `{m.get("vertical_profile")}`',
+             '', 'Every wave, section, variant and review reads this file '
+             'first. Nothing defines a design value that is not traceable '
+             'here (LAW.DNA).', '', '## Genotype', '']
+    for g, a in sorted((m.get('genotype') or {}).items()):
+        lines.append(f'- `{g}` = `{a}`')
+    lines += ['', '## System knobs', '',
+              '| Knob | Value | Token | Tier | Provenance |',
+              '|---|---|---|---|---|']
+    knobs = knob_set()
+    prov = m.get('provenance') or {}
+    for k, v in sorted((m.get('knobs') or {}).items()):
+        spec = knobs.get(k) or {}
+        val = json.dumps(v) if isinstance(v, (dict, list)) else v
+        lines.append(f'| `{k}` | {val} | `{spec.get("token", "")}` | '
+                     f'{spec.get("tier", "")} | {prov.get(k, "—")} |')
+    lines += ['', '## Rhythm plan', '', '| Section | Surface | Density |',
+              '|---|---|---|']
+    rhythm = m.get('rhythm') or []
+    if isinstance(rhythm, dict):
+        rhythm = [{'section': k, **(v or {})} for k, v in rhythm.items()]
+    for e in rhythm:
+        lines.append(f'| `{e.get("section")}` | {e.get("surface")} | '
+                     f'{e.get("density")} |')
+    lines += ['', '## Modes (both ship — C.5)', '',
+              '| Role | Light | Dark |', '|---|---|---|']
+    lm = (m.get('modes') or {}).get('light') or {}
+    dm = (m.get('modes') or {}).get('dark') or {}
+    for role in sorted(set(lm) | set(dm)):
+        lines.append(f'| `{role}` | `{lm.get(role, "")}` | '
+                     f'`{dm.get(role, "")}` |')
+    lines += ['', '## Variants (baseline + deltas)', '']
+    for v in m.get('variants') or []:
+        d = ', '.join(f'{k} {m.get("knobs", {}).get(k)}→{x}'
+                      for k, x in sorted((v.get('deltas') or {}).items()))
+        lines.append(f'- `{v.get("id")}` · {v.get("vector")} · '
+                     f'{d or "baseline"} · sheet '
+                     f'{v.get("sheet_pass")} · score {v.get("score")}')
+    return '\n'.join(lines) + '\n'
+
+
+def cmd_dna(pipeline):
+    ctx = Ctx(pipeline)
+    fails = check_dna(ctx) + check_dna_fresh(ctx) + check_variants(ctx)
+    m = dna_map(ctx)
+    if m is not None:
+        with open(os.path.join(ctx.dir, 'DNA.md'), 'w',
+                  encoding='utf-8') as fh:
+            fh.write(render_dna_md(m))
+    if fails:
+        print(f'dna FAIL ({len(fails)}):')
+        for x in fails:
+            print('  -', x)
+        return 1
+    print(f'dna PASS — hash {dna_hash(ctx)}; DNA.md rendered')
+    return 0
+
+
+# ---------------------------------------------------------------- modes + variants
+#
+# C.5 — LIGHT + DARK is invariant on every surface.
+# VG.1–VG.6 — the hi-fi picker: system sheet first, then the page; each
+# tile is a knob vector = DNA baseline + declared deltas.
+
+DARK_MAX_L = 20.0
+
+
+def _modes(ctx):
+    """{mode: {role: hex}} from TOKENS.json color.modes (plan fallback)."""
+    out = {}
+    raw = ctx.read('TOKENS.json')
+    if raw:
+        try:
+            tok = json.loads(raw)
+        except Exception:
+            tok = {}
+        for mode, block in ((tok.get('color') or {}).get('modes')
+                            or {}).items():
+            roles = (block or {}).get('roles') or block or {}
+            got = {}
+            for k, v in roles.items():
+                v = v.get('value') if isinstance(v, dict) else v
+                if isinstance(v, str) and v.startswith('#'):
+                    got[k] = v
+            out[mode] = got
+    if not out:
+        roles = (_system(ctx).get('color') or {}).get('roles') or {}
+        light = {}
+        for k, v in roles.items():
+            v = v.get('value') if isinstance(v, dict) else v
+            if isinstance(v, str) and v.startswith('#'):
+                light[k] = v
+        out['light'] = light
+    return out
+
+
+def _luminance(h):
+    h = h.strip().lstrip('#')
+    if len(h) == 3:
+        h = ''.join(c * 2 for c in h)
+    try:
+        ch = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    except (ValueError, IndexError):
+        return None
+    ch = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+          for c in ch]
+    return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2]
+
+
+def check_dark_mode(ctx):
+    """C.5 — both modes defined, class-switched, dark never pure black."""
+    f = []
+    modes = _modes(ctx)
+    for need in ('light', 'dark'):
+        if need not in modes or not modes[need]:
+            f.append(f'C.5 {need} mode not defined in TOKENS.json '
+                     'color.modes — both modes ship, invariant')
+    light, dark = modes.get('light') or {}, modes.get('dark') or {}
+    for role in MODE_ROLES:
+        if role in light and role not in dark:
+            f.append(f'C.5 role "{role}" resolved in light but not dark')
+        if role in dark and role not in light:
+            f.append(f'C.5 role "{role}" resolved in dark but not light')
+    if dark:
+        bg = str(dark.get('bg', ''))
+        if bg.lower() in ('#000', '#000000'):
+            f.append('C.5 dark bg is pure black — tinted charcoal required')
+        else:
+            l = _luminance(bg) if bg.startswith('#') else None
+            if l is not None and l * 100 > DARK_MAX_L:
+                f.append(f'C.5 dark bg luminance {l * 100:.0f}% > '
+                         f'{DARK_MAX_L:.0f}% — not a dark surface')
+    cfg = ctx.read('site/tailwind.config.js', 'site/tailwind.config.mjs',
+                   'site/tailwind.config.cjs') or ''
+    if not re.search(r'darkMode\s*:\s*[\'"](class|selector)[\'"]', cfg):
+        f.append("C.5 tailwind config missing darkMode: 'class'")
+    css = ctx.read('site/src/styles/global.css') or ''
+    if not re.search(r'(\.dark|\[data-theme=["\']dark["\']\])\s*\{', css):
+        f.append('C.5 no .dark block in the shared layer — the mode switch '
+                 're-binds role variables there')
+    tile = ctx.read('site/src/pages/system.astro') or ''
+    surfaces = [('system tile', tile)] + \
+        [('page', t) for _, t in ctx.page_htmls()]
+    for label, txt in surfaces:
+        if txt and 'data-theme-toggle' not in txt:
+            f.append(f'C.5 {label}: no data-theme-toggle — every surface '
+                     'carries a Light/Dark toggle')
+    return f
+
+
+def check_dark_toggle(ctx):
+    """C.5 — toggle persists, honours prefers-color-scheme, paints first."""
+    f = []
+    pages = ctx.page_htmls()
+    if not pages:
+        return []
+    layout = ctx.read('site/src/layouts/BaseLayout.astro') or ''
+    for p, txt in pages:
+        name = os.path.basename(p)
+        if 'data-theme-toggle' not in txt:
+            f.append(f'C.5 {name}: no Light/Dark toggle')
+        head = txt.split('</head>')[0] if '</head>' in txt else ''
+        if not re.search(r'<script(?![^>]*\bsrc=)[^>]*>', head):
+            f.append(f'C.5 {name}: no inline head script — the theme must '
+                     'paint before first frame (no flash)')
+        if 'prefers-color-scheme' not in head:
+            f.append(f'C.5 {name}: initial mode ignores '
+                     'prefers-color-scheme')
+        if 'localStorage' not in txt and 'localStorage' not in layout:
+            f.append(f'C.5 {name}: mode choice not persisted (localStorage)')
+    return f
+
+
+def _variants(ctx):
+    """Variant records: DNA.json variants (LAW.DNA) or VARIANT-GATES.json."""
+    m = dna_map(ctx) or {}
+    if m.get('variants'):
+        return m['variants']
+    raw = ctx.read('VARIANT-GATES.json')
+    if not raw:
+        return []
+    try:
+        return json.loads(raw).get('variants') or []
+    except Exception:
+        return []
+
+
+def check_variants(ctx):
+    """VG.1–VG.6 + LAW.DNA conditions 4 and 5."""
+    f = []
+    path = os.path.join(ctx.site, 'src', 'pages', 'variants.astro')
+    if not os.path.isfile(path):
+        return ['VG.1 src/pages/variants.astro missing — run '
+                'assemble.py --variants']
+    txt = open(path, encoding='utf-8', errors='replace').read()
+    shown = re.findall(r'data-variant="([^"]+)"', txt)
+    if not 3 <= len(shown) <= 5:
+        f.append(f'VG.1 {len(shown)} variants rendered — 3 default, 5 max')
+    for need in ('variant', 'viewport', 'mode'):
+        if f'data-switch="{need}"' not in txt:
+            f.append(f'VG.4 switcher missing data-switch="{need}"')
+    css = ctx.read('site/src/styles/global.css') or ''
+    if 'sticky' not in txt + css:
+        f.append('VG.4 switcher is not sticky')
+    css = ctx.read('site/src/styles/global.css') or ''
+    if not any(t in txt + css for t in ('@container', 'cqw', 'container-type')):
+        f.append('VG.4 frames not container-query driven — 1:1 viewports, '
+                 'not a scaled desktop')
+    for pane in ('system', 'page'):
+        if f'data-pane="{pane}"' not in txt:
+            f.append(f'VG.1 no data-pane="{pane}" — every variant shows its '
+                     'system sheet AND its page (sheet first)')
+    entries = _variants(ctx)
+    if not entries:
+        return f + ['VG.3 no variant records — DNA.json variants missing']
+    knobs = knob_set()
+    m = dna_map(ctx) or {}
+    dh = dna_hash_of(m) if m else ''
+    base = m.get('knobs') or {}
+    passing, wild = set(), []
+    for e in entries:
+        vid = e.get('id')
+        if not e.get('pass'):
+            f.append(f'VG.3 variant {vid} fails a gate — remove it from the '
+                     'picker, never show it greyed')
+        else:
+            passing.add(str(vid))
+        if e.get('vector') not in VARIANT_VECTORS:
+            f.append(f'VG.2 variant {vid}: vector "{e.get("vector")}" not in '
+                     f'{sorted(VARIANT_VECTORS)}')
+        if e.get('vector') == 'wildcard':
+            wild.append(e)
+        sheet = e.get('sheet_pass') or {}
+        for mode in ('light', 'dark'):
+            if sheet.get(mode) is not True:
+                f.append(f'VG.1 variant {vid}: system sheet not gated in '
+                         f'{mode} mode — sheet first, both modes '
+                         '(condition 5)')
+        if dh and e.get('dna_hash') and e['dna_hash'] != dh:
+            f.append(f'DM.2 variant {vid}: dna_hash {e["dna_hash"]} != {dh}')
+        f.extend(_deltas_ok(base, e.get('deltas') or {}, knobs,
+                            e.get('vector') == 'wildcard'))
+        if not (e.get('deltas') or {}) and not e.get('baseline'):
+            f.append(f'VG.2 variant {vid}: no deltas — a variant is a knob '
+                     'vector, not a mood (mark the baseline one baseline: '
+                     'true)')
+        if e.get('score') is None:
+            f.append(f'VG.6 variant {vid}: no predicted score on the tile')
+    for sid in shown:
+        if sid not in passing:
+            f.append(f'VG.3 rendered variant "{sid}" is not a passing '
+                     'variant')
+    burst = 0
+    mm = re.search(r'^burst:\s*(\d)', ctx.plan_text, re.M)
+    if mm:
+        burst = int(mm.group(1))
+    if burst > 0 and len(wild) != 1:
+        f.append(f'VG.5 burst={burst} needs exactly one wildcard variant, '
+                 f'found {len(wild)}')
+    if burst == 0 and wild:
+        f.append('VG.5 burst=0 but a variant claims the wildcard')
+    for w in wild:
+        if not w.get('wildcard_breaks'):
+            f.append('VG.5 wildcard variant carries no declared breaks '
+                     '(B.4 record required)')
+    return f
+
+
+def assemble_variants(ctx):
+    """VG.1 — deterministic picker: system sheet + page per knob vector."""
+    entries = [e for e in _variants(ctx) if e.get('pass')][:5]
+    contracts = build_contracts(ctx)
+    m = dna_map(ctx) or {}
+    base = m.get('knobs') or {}
+    modes = m.get('modes') or {}
+    imports = ["import Section from '../../components/Section.astro';"]
+    seen = set()
+    for c in contracts:
+        n = camel(c['section'])
+        if n in seen:
+            continue
+        seen.add(n)
+        imports.append(f"import {n} from "
+                       f"'../../components/sections/{n}.astro';")
+    h = hashlib.sha256(json.dumps([entries, base], sort_keys=True)
+                       .encode()).hexdigest()[:12]
+
+    def sheet(kn):
+        rows = []
+        lm, dm = modes.get('light') or {}, modes.get('dark') or {}
+        for role in sorted(set(lm) | set(dm)):
+            lv, dv = lm.get(role, ''), dm.get(role, '')
+            r = contrast(lv, dv) if str(lv).startswith('#') and \
+                str(dv).startswith('#') else None
+            rows.append(
+                f'<tr><td><code>{role}</code></td>'
+                f'<td class="swatch swatch-{role}">--color-{role}</td>'
+                f'<td class="swatch swatch-{role}">--color-{role} (dark)</td>'
+                f'<td>{f"{r:.1f}:1" if r else "—"}</td></tr>')
+        kn_txt = ', '.join(f'{k} {base.get(k)}→{v}'
+                           for k, v in sorted((kn or {}).items()))
+        return ('<table class="sheet-roles"><caption>Colour roles — light / '
+                'dark / contrast</caption>' + ''.join(rows) + '</table>'
+                f'<p class="sheet-type">type.ratio '
+                f'{knobs_val(kn, base, "type.ratio")} · display '
+                f'{knobs_val(kn, base, "type.display_weight")}</p>'
+                f'<p class="sheet-space">section padding '
+                f'{json.dumps(knobs_val(kn, base, "space.section_py"))} · '
+                f'gutter {knobs_val(kn, base, "grid.gutter")}</p>'
+                f'<p class="sheet-shape">radius '
+                f'{knobs_val(kn, base, "radius.personality")} · elevation '
+                f'{knobs_val(kn, base, "elevation.level")}</p>'
+                '<p class="sheet-controls"><button class="btn-primary">'
+                'Button</button><input class="rounded-card border '
+                'border-muted" placeholder="Field" /><span class="rounded-card '
+                'border border-muted">Card</span></p>'
+                f'<p class="sheet-knobs" data-knobs="{kn_txt}">'
+                f'{kn_txt or "baseline — no knob diff"}</p>')
+
+    tiles = []
+    for e in entries:
+        vid = e['id']
+        deltas = e.get('deltas') or {}
+        page = '\n'.join(
+            f'        <Section sec="{c["section"]}" '
+            f'comp="{c["composition"]}" wf-ref="{c["wf_ref"]}" '
+            f'ratio="{c["media_ratio"]}" disclosure="{c["disclosure"]}" '
+            f'surface="{c["surface"]}" density="{c["density"]}">\n'
+            f'          <{camel(c["section"])} />\n        </Section>'
+            for c in contracts)
+        breaks = ', '.join(e.get('wildcard_breaks') or []) or 'none'
+        diff = ', '.join(f'{k} {base.get(k)}→{v}'
+                         for k, v in sorted(deltas.items())) or 'baseline'
+        tiles.append(
+            f'  <article class="variant-frame" data-variant="{vid}" '
+            f'data-vector="{e.get("vector")}" data-score="{e.get("score")}" '
+            f'data-breaks="{breaks}" data-dna="{e.get("dna_hash", "")}" '
+            f'data-knobs="{diff}">\n'
+            f'    <header class="variant-label">{vid} · {e.get("vector")} · '
+            f'score {e.get("score")} · {diff} · breaks: {breaks}</header>\n'
+            f'    <nav class="variant-tabs"><button data-tab="system">System'
+            f'</button><button data-tab="page">Page</button></nav>\n'
+            f'    <div class="variant-panes">\n'
+            f'      <div data-pane="system" class="variant-stage" '
+            f'data-variant-scope="{vid}">{sheet(deltas)}</div>\n'
+            f'      <div data-pane="page" class="variant-stage" '
+            f'data-variant-scope="{vid}">\n{page}\n      </div>\n'
+            f'    </div>\n  </article>')
+    txt = f'''---
+// assembled: {h} — generated by assemble.py --variants; never edit
+{chr(10).join(imports)}
+---
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    (function () {{
+      var saved = localStorage.getItem('theme');
+      var mode = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = mode;
+    }})();
+  </script>
+</head>
+<body class="variants-page">
+  <div class="variant-switcher" data-switch="variant">
+    {''.join(f'<button data-goto="{e["id"]}">{e["id"]}</button>' for e in entries)}
+    <span data-switch="viewport">
+      <button data-viewport="desktop">Desktop</button>
+      <button data-viewport="tablet">Tablet</button>
+      <button data-viewport="mobile">Mobile</button>
+    </span>
+    <span data-switch="mode">
+      <button data-mode="light">Light</button>
+      <button data-mode="dark">Dark</button>
+    </span>
+    <button data-theme-toggle>Light/Dark</button>
+  </div>
+  <main class="variant-grid">
+{chr(10).join(tiles)}
+  </main>
+</body>
+</html>
+'''
+    return os.path.join(ctx.site, 'src', 'pages', 'variants.astro'), txt, h
+
+
+def knobs_val(kn, base, key):
+    return (kn or {}).get(key, (base or {}).get(key))
 
 
 # ---------------------------------------------------------------- measurable
@@ -2479,7 +3202,7 @@ def main():
     ap.add_argument('wave', choices=list(WAVE_CHECKS) +
                     ['coverage', 'selftest', 'consistency', 'graph',
                      'score', 'segment', 'wildcard', 'enforcement',
-                     'contracts', 'section'])
+                     'contracts', 'section', 'dna'])
     ap.add_argument('pipeline_dir', nargs='?', default='.')
     ap.add_argument('--wireframe')
     ap.add_argument('--design')
@@ -2503,6 +3226,8 @@ def main():
         return cmd_wildcard(a)
     if a.wave == 'enforcement':
         return cmd_enforcement()
+    if a.wave == 'dna':
+        return cmd_dna(a.pipeline_dir)
     if a.wave == 'contracts':
         return cmd_contracts(a.pipeline_dir)
     if a.wave == 'section':
@@ -3384,12 +4109,14 @@ WAVE_CHECKS = {
     'w1': [check_mobbin_auth, check_design_mode, check_intent,
            check_genotype, check_tiers, check_audit_artifacts],
     'w2': [check_direction_axes, check_genotype, check_genotype_distinct,
-           check_burst, check_declared_breaks, check_wildcard],
+           check_burst, check_declared_breaks, check_wildcard,
+           check_dark_mode, check_variants],
     'w3': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
-           check_border_widths, check_reduced_motion, check_astro_build],
+           check_border_widths, check_reduced_motion, check_dark_mode,
+           check_astro_build],
     'w4': [check_content_inventory],
     'w5': [check_wireframe_tags, check_mobbin_refs,
            check_wireframe_lock, check_section_enums,
@@ -3408,9 +4135,11 @@ WAVE_CHECKS = {
            check_icon_discipline, check_speed_budget,
            check_mobile_budget, check_viewport, check_tap_size,
            check_rhythm_render, check_copy_density, check_seo_lint,
-           check_astro_build] + SEGMENT_ALL,
+           check_dark_mode, check_dark_toggle, check_astro_build] \
+           + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,
-           check_style_review, check_novelty],
+           check_style_review, check_novelty, check_review_modes,
+           check_variants],
 }
 
 WAVE_INPUTS = {
@@ -3429,6 +4158,8 @@ WAVE_INPUTS = {
 }
 for _w in list(WAVE_CHECKS):
     WAVE_CHECKS[_w].append(check_checklist)
+    WAVE_CHECKS[_w].append(check_dna)
+    WAVE_CHECKS[_w].append(check_dna_fresh)
 
 APPROVABLE = {'w2', 'w3', 'w5', 'w6', 'w7', 'w8'}
 

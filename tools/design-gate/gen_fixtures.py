@@ -9,7 +9,7 @@ Layout: fixtures/_base/ is the shared good pipeline. Each fail/ dir is
 _base with one seeded violation; each pass/ dir symlinks to _base
 unless the check needs extra files (OVERRIDES).
 """
-import os, shutil, sys
+import json, os, shutil, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
@@ -148,10 +148,17 @@ GLOBAL_CSS = '''@tailwind base;
   }
 }
 
+.dark {
+  --c-ink: #EDEBE7;
+  --c-paper: #14181A;
+}
+
 @layer components {
   .sec-band { padding-block: var(--py); }
   .sec-inner { max-width: 72rem; margin-inline: auto; }
   .ratio-portrait { aspect-ratio: 3 / 4; }
+  .variant-stage { container-type: inline-size; }
+  .variant-switcher { position: sticky; top: 0; }
   .btn-primary { min-height: var(--tap); }
   .burger { display: none; }
   .inverse { background: var(--c-ink); color: var(--c-paper); }
@@ -162,9 +169,16 @@ GLOBAL_CSS = '''@tailwind base;
 
 TAILWIND_CFG = '''/** generated from TOKENS.json — fixture */
 export default {
+  darkMode: 'class',
   content: ['./src/**/*.{astro,html}'],
   theme: { extend: {
-    colors: { ink: '#111111', paper: '#ffffff', accent: '#0055aa' },
+    colors: { ink: '#221f1b', paper: '#fdfcfa', accent: '#0055aa',
+      surface: '#f1efec', border: '#d8d3cc', inverse: '#1d2325',
+      darkbg: '#14181a', darksurface: '#1c2224', darkink: '#edebe7',
+      darkborder: '#2c3437', darkinverse: '#f4f2ee',
+      darkelev: '#232a2c', darkaccent: '#4c93d6', darkaccentfg: '#0e1416',
+      muted: '#6f665d', darkmuted: '#a8a49d', elev: '#ebe7e1',
+      white: '#ffffff' },
     fontSize: { 'fluid-0': 'var(--fs-0)' },
     borderRadius: { card: 'var(--r-card)' },
     spacing: { tap: '44px' },
@@ -172,12 +186,38 @@ export default {
 }
 '''
 
-TOKENS = '''{"color": {"roles": {"bg": "#FFFFFF", "ink": "#111111",
-"accent": "#0055AA"}}}'''
+KNOBS = {
+    "type.ratio": 1.25, "type.base": 16, "type.display_weight": 700,
+    "type.tracking_display": -0.02, "space.density_scale": 1.0,
+    "space.section_py": {"compact": 48, "regular": 72, "spacious": 112},
+    "grid.gutter": 24, "radius.personality": "p3",
+    "color.surface_contrast": 0.05, "color.accent_usage": "cta+motif",
+    "color.neutral_tint": 0.03, "elevation.level": 1,
+    "motion.level": "subtle", "image.treatment": "natural",
+}
+
+LIGHT = {"bg": "#FDFCFA", "surface": "#F1EFEC", "surface_elevated": "#EBE7E1",
+         "border": "#D8D3CC", "ink": "#221F1B", "ink_muted": "#6F665D",
+         "accent": "#0055AA", "accent_foreground": "#FFFFFF",
+         "inverse": "#1D2325"}
+DARK = {"bg": "#14181A", "surface": "#1C2224", "surface_elevated": "#232A2C",
+        "border": "#2C3437", "ink": "#EDEBE7", "ink_muted": "#A8A49D",
+        "accent": "#4C93D6", "accent_foreground": "#0E1416",
+        "inverse": "#F4F2EE"}
+
+TOKENS = json.dumps({
+    "knobs": KNOBS,
+    "color": {
+        "modes": {"light": {"roles": LIGHT}, "dark": {"roles": DARK}},
+        "roles": LIGHT,
+    },
+}, indent=1)
 
 PAGE_HTML = '''<!doctype html><html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var s=localStorage.getItem('theme');var m=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=m;})();</script>
 </head><body>
+<button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
 <nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"
      class="flex items-center gap-4">
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
@@ -208,6 +248,7 @@ import CardsN from '../components/cards-n.astro';
 import FormPanel from '../components/form-panel.astro';
 import FooterBar from '../components/footer-bar.astro';
 ---
+<button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
 <NavBar /><SplitMedia /><CardsN /><FormPanel /><FooterBar />
 '''
 
@@ -294,6 +335,7 @@ MOBBIN = '''# MOBBIN-REFS
 '''
 
 REVIEW = '''{
+"modes": {"light": {"pass": true}, "dark": {"pass": true}},
 "reviewer_model": "opus-4",
 "designer_model": "swe-2",
 "items": [
@@ -708,7 +750,80 @@ const { sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
 </section>
 '''
 
+def dna_doc():
+    import hashlib
+    doc = {
+        "version": 1,
+        "site": "fixture",
+        "vertical_profile": "profile-services",
+        "genotype": {
+            "layout-archetype": "split-media",
+            "page-macro-structure": "promise-proof-how-act",
+            "density-tier": "regular", "image-led-ratio": "balanced",
+            "type-contrast": "medium", "display-face": "sans",
+            "radius-personality": "soft",
+            "surface-rhythm": "one-contrast-moment",
+            "cta-restraint": "single-primary", "cta-rank": "hero",
+            "disclosure-tier": "open", "nav-pattern": "bar-cta",
+            "motion-tier": "subtle", "proof-type": "logos",
+            "media-treatment": "photo", "columns": "3",
+            "heading-form": "claim", "whitespace-band": "medium",
+            "gallery-mode": "grid", "form-presence": "inline",
+        },
+        "knobs": KNOBS,
+        "modes": {"light": LIGHT, "dark": DARK},
+        "extracted": {"accent": "#0055AA"},
+        "rhythm": [
+            {"section": "nav", "surface": "base", "density": "compact"},
+            {"section": "hero", "surface": "base", "density": "spacious"},
+            {"section": "macro", "surface": "muted", "density": "regular"},
+            {"section": "end-act", "surface": "inverse",
+             "density": "spacious"},
+            {"section": "footer", "surface": "base", "density": "compact"},
+        ],
+        "variants": [
+            {"id": "v1", "vector": "best-predicted", "baseline": True,
+             "deltas": {}, "sheet_pass": {"light": True, "dark": True},
+             "pass": True, "score": 84, "wildcard_breaks": []},
+            {"id": "v2", "vector": "typography-led",
+             "deltas": {"type.ratio": 1.3625, "type.display_weight": 800},
+             "sheet_pass": {"light": True, "dark": True},
+             "pass": True, "score": 81, "wildcard_breaks": []},
+            {"id": "v3", "vector": "wildcard",
+             "deltas": {"radius.personality": "p4", "motion.level": "playful"},
+             "sheet_pass": {"light": True, "dark": True},
+             "pass": True, "score": 78,
+             "wildcard_breaks": ["S.1"]},
+        ],
+        "vector_targets": {
+            "ease_of_use": 0.6, "clarity": 0.7, "layout": 0.5,
+            "typography": 0.6, "colour": 0.5, "rhythm": 0.5,
+            "imagery": 0.4, "trust": 0.7, "conversion": 0.8,
+            "seo": 0.6, "mobile": 0.7, "speed": 0.8, "a11y": 0.7,
+        },
+        "provenance": {
+            "type.ratio": {"tag": "snapped",
+                           "patterns": ["pattern-hero-split"], "n": 24},
+            "type.base": {"tag": "snapped",
+                          "patterns": ["pattern-hero-split"], "n": 24},
+            "space.section_py": {"tag": "snapped",
+                                 "patterns": ["pattern-cards-n"], "n": 18},
+            "grid.gutter": {"tag": "snapped",
+                            "patterns": ["pattern-nav-bar"], "n": 21},
+            **{k: {"tag": "chosen", "reason": "fixture baseline"}
+               for k in KNOBS
+               if k not in ("type.ratio", "type.base",
+                            "space.section_py", "grid.gutter")},
+        },
+    }
+    body = {k: v for k, v in doc.items() if k != "hash"}
+    doc["hash"] = hashlib.sha256(
+        json.dumps(body, sort_keys=True).encode()).hexdigest()[:16]
+    return doc
+
+
 BASE = {
+    'DNA.json': json.dumps(dna_doc(), indent=1) + '\n',
     'DESIGN-PLAN.md': PLAN,
     'cards/index.html': WIREFRAME,
     'STUB.md': STUB,
@@ -741,6 +856,8 @@ BASE = {
     'site/src/components/sections/Footer.astro': SECTIONS['Footer.astro'],
     'preview/home.html': PAGE_HTML,
     'shots/home-1280.png': b'PNG',
+    'shots/home-light-1280.png': b'PNG',
+    'shots/home-dark-1280.png': b'PNG',
     'shots/home-768.png': b'PNG',
     'shots/home-360.png': b'PNG',
     'shots/vs-wireframe.png': b'PNG',
@@ -774,7 +891,7 @@ MUT = {
  'check_spacing_scale': mut(('REPL','DESIGN-PLAN.md','16, 24, 32','16, 20, 32')),
  'check_breakpoints': mut(('REPL','DESIGN-PLAN.md','640, 768','640, 999')),
  'check_content_width': mut(('REPL','DESIGN-PLAN.md','content_width: 72rem','content_width: 95rem')),
- 'check_contrast': mut(('REPL','DESIGN-PLAN.md','#221F1B','#8A8A8A')),
+ 'check_contrast': mut(('REPL','TOKENS.json','"ink": "#221F1B"','"ink": "#8A8A8A"')),
  'check_type_system': mut(('REPL','DESIGN-PLAN.md','body: "Inter"','body: "SerifX"'),('APPEND','DESIGN-PLAN.md','\n  extra: {fonts: {c: "Third"}}')),
  'check_system_enums': mut(('REPL','DESIGN-PLAN.md','family: lucide','family: wingdings')),
  'check_tailwind_derivation': mut(('REPL','TOKENS.json','#0055AA','#ABCDEF')),
@@ -830,6 +947,15 @@ MUT = {
     '<h2 class="text-fluid-0">What is testing?</h2>',
     '<h4 class="text-fluid-0">What is testing?</h4>')),
  'check_section_contracts': mut(('DEL','sections/01-hero.contract.json')),
+ 'check_dna': mut(('REPL','DNA.json','"type.ratio": 1.25','"type.ratio": 9.9')),
+ 'check_dna_fresh': mut(('REPL','site/src/components/sections/Hero.astro',
+    'dna_hash: ','dna_hash: deadbeef')),
+ 'check_dark_mode': mut(('REPL','site/tailwind.config.js',
+    "darkMode: 'class',","")),
+ 'check_dark_toggle': mut(('REPL','preview/home.html',
+    'data-theme-toggle','data-nope')),
+ 'check_variants': mut(('REPL','DNA.json','"id": "v3"','"id": "v9"')),
+ 'check_review_modes': mut(('DEL','shots/home-dark-1280.png')),
  'check_section_shell': mut(('REPL','site/src/components/sections/Hero.astro',
     'class="grid gap-stack md:grid-cols-2"','class="py-24 grid gap-stack md:grid-cols-2"')),
  'check_section_allowed': mut(('REPL','site/src/components/sections/Macro.astro',
@@ -874,12 +1000,24 @@ def main():
     sys.path.insert(0, HERE)
     import gate
     base_dir = os.path.join(FX, '_base')
+    # builders echo the DNA hash they built against (DM.2)
+    h = gate.dna_hash(gate.Ctx(base_dir))
+    for name in list(SECTIONS):
+        rel = f'site/src/components/sections/{name}'
+        body = BASE[rel].replace('---\nexemplar:', f'---\ndna_hash: {h}\nexemplar:', 1)
+        BASE[rel] = body
+        with open(os.path.join(base_dir, rel), 'w', encoding='utf-8') as fh:
+            fh.write(body)
     gate.cmd_contracts(base_dir)
     gate.cmd_section(base_dir, None)
     p, txt, _ = gate.assemble_page(gate.Ctx(base_dir))
     with open(p, 'w', encoding='utf-8') as fh:
         fh.write(txt)
-    for rel in ('sections', 'site/src/pages/home.astro'):
+    vp, vtxt, _ = gate.assemble_variants(gate.Ctx(base_dir))
+    with open(vp, 'w', encoding='utf-8') as fh:
+        fh.write(vtxt)
+    for rel in ('sections', 'site/src/pages/home.astro',
+                'site/src/pages/variants.astro'):
         full = os.path.join(base_dir, rel)
         if os.path.isdir(full):
             for fn in sorted(os.listdir(full)):

@@ -36,7 +36,7 @@ site:
       roles:
         bg: {value: "#FDFCFA"}
         surface: {value: "#F1EFEC"}
-        ink: {value: "#8A8A8A"}
+        ink: {value: "#221F1B"}
         ink_muted: {value: "#6F665D"}
         accent: {value: "#0055AA"}
         accent_foreground: {value: "#FFFFFF"}
