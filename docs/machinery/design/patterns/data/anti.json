@@ -57,5 +57,34 @@
   "ps_edges": [],
   "ps_priority": [],
   "page_fragmentation": []
- }
+ },
+ "features": [
+  {
+   "feature": "s_block_pace",
+   "direction": "low",
+   "cut": 0.4,
+   "mobbin": 0.072,
+   "negative": 0.791,
+   "lift": 9.74,
+   "penalty": 0.25
+  },
+  {
+   "feature": "s_cta_presence",
+   "direction": "low",
+   "cut": 0.5,
+   "mobbin": 0.106,
+   "negative": 0.854,
+   "lift": 7.45,
+   "penalty": 0.25
+  },
+  {
+   "feature": "s_row_regularity",
+   "direction": "high",
+   "cut": 0.95,
+   "mobbin": 0.206,
+   "negative": 0.831,
+   "lift": 3.9,
+   "penalty": 0.25
+  }
+ ]
 }

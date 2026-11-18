@@ -70,6 +70,11 @@ DEFAULT_WEIGHTS = {
     'media_context_binding': 0.08,
     'footer_is_boilerplate': 0.06,
     'priority_order': 0.06,
+    's_block_pace': 0.10,
+    's_cta_presence': 0.10,
+    's_row_regularity': 0.06,
+    's_prose_mass': 0.04,
+    'anti': 0.08,
 }
 
 # ordered: specific before generic; matched against the section's own
@@ -487,12 +492,9 @@ def score_file(path, site_type, page_type, weights, bank, anti):
             geno, derived = geno_of(r)
             fit, reasons, pid = pattern_fit(r, geno, bank, anti)
             fits.append(fit)
-            anti_val = 1.0
-            for gene in ANTI_GENES:
-                for row in (anti.get('anti', {}) or {}).get(gene, []):
-                    if geno.get(gene) == row['allele'] and row['negative'] > 0.25:
-                        anti_val -= (row['negative'] - row['mobbin']) * 0.6
-            comp = section_features(fit, ps, mm, anti_val)
+            comp = section_features(fit, ps, mm, 1.0)
+            comp.update(section_shape(r))
+            comp['anti'], anti_hits = anti_score(comp, anti)
             sc = 100 * sum(weights.get(k, 0.0) * comp[k] for k in comp)
             sec_out.append({
                 'label': r['label'] or r['section_type'],
@@ -503,7 +505,7 @@ def score_file(path, site_type, page_type, weights, bank, anti):
                 'components': {k: round(v, 3) for k, v in comp.items()},
                 'reasons': reasons + ([f'{r["section_type"]} classified '
                                        f'from DOM'] if r['section_type']
-                                      == 'other' else []),
+                                      == 'other' else []) + anti_hits,
             })
         # page score: hero-weighted mean
         wt = [2.0 if s['section_type'] == 'hero' else 1.0 for s in sec_out]
@@ -532,6 +534,31 @@ def score_file(path, site_type, page_type, weights, bank, anti):
 
 
 # --------------------------------------------------------------- validation
+def anti_score(feats, anti):
+    """1.0 minus the measured anti-pattern penalties.
+
+    `data/anti.json` -> `features` holds rows that were only written when
+    the negative corpus actually differed (lift >= 1.8, negative rate
+    >= 0.33). Each hit subtracts its measured penalty; the result is a
+    feature in its own right, not a hidden multiplier, so the model can
+    weigh it.
+    """
+    pen = 0.0
+    hits = []
+    for row in (anti.get('features') or []):
+        v = feats.get(row['feature'])
+        if v is None:
+            continue
+        generic = (v >= row['cut']) if row['direction'] == 'high' \
+            else (v < row['cut'])
+        if generic:
+            pen += row['penalty']
+            hits.append(f"{row['feature']} {'>=' if row['direction'] == 'high' else '<'} "
+                        f"{row['cut']} ({row['negative']:.0%} of negatives vs "
+                        f"{row['mobbin']:.0%} of curated)")
+    return max(0.0, min(1.0, 1.0 - pen)), hits
+
+
 def section_features(fit, ps, mm, anti_val):
     """The single feature vector used by both `score` and `validate`."""
     ps = ps or {}
@@ -574,12 +601,9 @@ def build_dataset(seed=7):
             ps = r.get('ps') or {}
             mm = 1.0 - min(1.0, abs((ps.get('main_content_share', 0.8)) - 0.8)
                            / 0.35)
-            anti_val = 1.0
-            for gene in ANTI_GENES:
-                for row in (anti.get('anti', {}) or {}).get(gene, []):
-                    if g.get(gene) == row['allele'] and row['negative'] > 0.25:
-                        anti_val -= (row['negative'] - row['mobbin']) * 0.6
-            feats = section_features(fit, ps, mm, anti_val)
+            feats = section_features(fit, ps, mm, 1.0)
+            feats.update(section_shape(r))
+            feats['anti'], _ = anti_score(feats, anti)
             rows.append({
                 'domain': r.get('site_name') or r.get('mobbin_id'),
                 'label': label,
@@ -718,6 +742,29 @@ def build_bank_from(rows, min_n=10, threshold=0.60):
             bank.setdefault((key[0], '*', '*'), []).append(pat)
             bank.setdefault(('*', '*', '*'), []).append(pat)
     return bank
+
+
+def section_shape(rec):
+    """Section-level shape features.
+
+    The PS.* checks are page checks and do not transfer to a section crop
+    (see patterns/VALIDATION.md). These are measured on the crop itself,
+    from the stored block list, and are what a section actually shows:
+    how many blocks it stacks, whether one of them is an action, how
+    evenly the blocks are sized, and how much prose it carries.
+    """
+    bl = rec.get('blocks') or []
+    main = [b for b in bl if b.get('role') == 'main']
+    areas = [b['area'] for b in main] or [1.0]
+    mean = sum(areas) / len(areas)
+    sd = (sum((a - mean) ** 2 for a in areas) / len(areas)) ** 0.5
+    return {
+        's_block_pace': min(1.0, len(bl) / 5.0),
+        's_cta_presence': 1.0 if any(b.get('has_cta') for b in bl) else 0.0,
+        's_row_regularity': max(0.0, 1.0 - (sd / mean if mean else 0.0)),
+        's_prose_mass': min(1.0, sum(b['area'] * b.get('prose_mass', 0.0)
+                                     for b in bl)),
+    }
 
 
 def cross_fit(rows, anti, folds=4):

@@ -30,6 +30,7 @@ import math
 import os
 import re
 import sys
+import time
 import urllib.request
 from collections import Counter
 
@@ -179,18 +180,51 @@ def _unit(v):
     return [x / n for x in v]
 
 
-def embed(texts, model=EMB_MODEL, kind='document', timeout=90):
-    """nomic-embed-text via /api/embed (batch). Prefixes per the nomic
-    convention: search_document: for corpus, search_query: for requests."""
+EMB_BATCH = 16          # ollama truncates silently above this
+EMB_TIMEOUT = 300       # cold load measured at ~34 s; warm batches ~13 s
+EMB_KEEP_ALIVE = '2h'   # keep the model resident between commands
+
+
+def embed(texts, model=EMB_MODEL, kind='document', timeout=EMB_TIMEOUT,
+          batch=EMB_BATCH, retries=3):
+    """nomic-embed-text via /api/embed, batched.
+
+    Ollama returns *fewer* vectors than inputs when a batch is too large
+    (32 inputs -> 16 vectors), so every chunk is length-checked. The
+    model is pinned with keep_alive and retried with exponential backoff;
+    a failure raises rather than degrading to another backend, because a
+    silent switch makes the index's `backend` field a lie.
+    """
     pref = 'search_document: ' if kind == 'document' else 'search_query: '
-    body = json.dumps({'model': model,
-                       'input': [pref + t for t in texts]}).encode()
-    req = urllib.request.Request(f'{OLLAMA}/api/embed', data=body,
-                                 headers={'Content-Type':
-                                          'application/json'})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        out = json.loads(r.read())
-    return [_unit(v) for v in out['embeddings']]
+    out = []
+    for i in range(0, len(texts), batch):
+        chunk = [pref + t for t in texts[i:i + batch]]
+        payload = json.dumps({'model': model, 'input': chunk,
+                              'keep_alive': EMB_KEEP_ALIVE}).encode()
+        last = None
+        for attempt in range(retries):
+            try:
+                req = urllib.request.Request(
+                    f'{OLLAMA}/api/embed', data=payload,
+                    headers={'Content-Type': 'application/json'})
+                with urllib.request.urlopen(req, timeout=timeout) as r:
+                    d = json.loads(r.read())
+                vecs = d.get('embeddings') or []
+                if len(vecs) != len(chunk):
+                    raise RuntimeError(
+                        f'embed returned {len(vecs)} vectors for '
+                        f'{len(chunk)} inputs')
+                out.extend(_unit(v) for v in vecs)
+                break
+            except Exception as e:  # noqa: BLE001 - retried, then raised
+                last = e
+                if attempt == retries - 1:
+                    raise SystemExit(
+                        f'{OLLAMA} embed failed after {retries} attempts: '
+                        f'{type(e).__name__}: {e}. The embedder is required '
+                        f'for --backend {model}; start ollama and retry.')
+                time.sleep(2 ** attempt)
+    return out
 
 
 # ---------------------------------------------------------------- tf-idf
@@ -240,12 +274,20 @@ def cmd_index(args):
     texts = [pattern_text(p) for p in pats]
     backend = 'tfidf'
     vectors = None
-    if args.backend != 'tfidf' and ollama_up():
-        try:
+    want = args.backend
+    if want in ('auto', 'nomic', 'ollama'):
+        if not ollama_up():
+            if want == 'auto':
+                print(f'{OLLAMA} unreachable — indexing with tfidf; the '
+                      f'index will say so in meta.json', file=sys.stderr)
+            else:
+                raise SystemExit(f'{OLLAMA} unreachable: --backend {want} '
+                                 f'requires the daemon. Start ollama and '
+                                 f'retry; refusing to index with a different '
+                                 f'backend under a nomic label.')
+        else:
             vectors = embed(texts)
-            backend = f'ollama:{EMB_MODEL}'
-        except Exception as e:
-            print(f'ollama embedding failed ({e}); falling back', file=sys.stderr)
+            backend = f'nomic:{EMB_MODEL}'
     idf, tfvecs = build_tfidf(texts)
     json.dump(idf, open(os.path.join(INDEX, 'tfidf_idf.json'), 'w'))
     json.dump({'backend': 'tfidf', 'vectors': tfvecs},
@@ -362,19 +404,11 @@ def cmd_search(args):
         backend = 'genome'
     else:
         backend = idx['backend']
-        if backend.startswith('ollama'):
-            try:
-                qv = embed([args.query], kind='query', timeout=45)[0]
-                scores = [(i, dense_dot(qv, idx['vectors'][i]))
-                          for i in keep]
-            except Exception as e:
-                print(f'embedder unavailable ({type(e).__name__}); '
-                      f'using tf-idf for this query', file=sys.stderr)
-                idf = json.load(open(os.path.join(INDEX, 'tfidf_idf.json')))
-                qv = tfidf_query(args.query, idf)
-                scores = [(i, sparse_dot(qv, idx['vectors'][i]))
-                          for i in keep]
-                backend = 'tfidf(fallback)' 
+        if backend.startswith(('nomic', 'ollama')):
+            # no silent fallback: if the index was built with the embedder,
+            # a query it cannot answer must fail, not silently change ranker
+            qv = embed([args.query], kind='query')[0]
+            scores = [(i, dense_dot(qv, idx['vectors'][i])) for i in keep]
         else:
             idf = json.load(open(os.path.join(INDEX, 'tfidf_idf.json')))
             qv = tfidf_query(args.query, idf)
@@ -449,7 +483,7 @@ def main():
     sub = ap.add_subparsers(dest='cmd', required=True)
     i = sub.add_parser('index')
     i.add_argument('--backend', default='auto',
-                   choices=['auto', 'ollama', 'tfidf'])
+                   choices=['auto', 'nomic', 'ollama', 'tfidf'])
     s = sub.add_parser('search')
     s.add_argument('query')
     s.add_argument('--site-type')

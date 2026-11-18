@@ -20,6 +20,7 @@ Output:
 """
 import json
 import os
+import sys
 import statistics
 from collections import Counter, defaultdict
 
@@ -278,10 +279,13 @@ def build():
         sigs[k] = sorted([r for r in rows if r['lift'] >= 1.6],
                          key=lambda r: -r['lift'])[:4]
 
+    feats = section_feature_anti(mob, neg)
+
     with open(os.path.join(DATA, 'anti.json'), 'w') as f:
         json.dump({'source': 'measured attribute lift, negatives vs mobbin',
                    'n_mobbin': len(mob_g), 'n_negative': len(neg_g),
-                   'anti': anti, 'over_represented': sigs}, f, indent=1)
+                   'anti': anti, 'over_represented': sigs,
+                   'features': feats}, f, indent=1)
 
     # ---- cells -> patterns ------------------------------------------
     cells = defaultdict(list)
@@ -435,6 +439,43 @@ COMP_TO_CATALOG = {
     'proof-band': 'proof-band', 'map-finder': 'map-finder',
     'app-band': 'app-band',
 }
+
+
+# Continuous section features and the direction in which a value is
+# *generic*. A row is only written when the two corpora actually differ:
+# the negative rate must be at least 1.8x the mobbin rate and cover at
+# least a third of the negative corpus. No threshold is invented.
+ANTI_FEATURES = [
+    ('s_row_regularity', 'high', [0.80, 0.85, 0.90, 0.95]),
+    ('s_cta_presence', 'low', [0.50]),
+    ('s_block_pace', 'low', [0.20, 0.40, 0.60]),
+    ('s_prose_mass', 'high', [0.40, 0.60, 0.80]),
+]
+
+
+def section_feature_anti(mob_g, neg_g):
+    sys.path.insert(0, os.path.join(ROOT, 'tools', 'design-gate'))
+    from score import section_shape
+    rows = []
+    for feature, direction, cuts in ANTI_FEATURES:
+        best = None
+        for cut in cuts:
+            def rate(recs):
+                vals = [section_shape(r)[feature] for r in recs]
+                hit = [v for v in vals if (v >= cut if direction == 'high'
+                                           else v < cut)]
+                return len(hit) / max(1, len(vals))
+            pm, pn = rate(mob_g), rate(neg_g)
+            lift = (pn + 0.01) / (pm + 0.01)
+            if pn >= 0.33 and lift >= 1.8 and (best is None
+                                               or lift > best['lift']):
+                best = {'feature': feature, 'direction': direction,
+                        'cut': cut, 'mobbin': round(pm, 3),
+                        'negative': round(pn, 3), 'lift': round(lift, 2),
+                        'penalty': round(min(0.25, (pn - pm) * 0.5), 3)}
+        if best:
+            rows.append(best)
+    return sorted(rows, key=lambda r: -r['lift'])
 
 
 def write_pattern(path, pid, site, page, section, modal, genes, prev, n,
