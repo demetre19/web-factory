@@ -190,8 +190,8 @@ export default {
 
 KNOBS = {
     "type.ratio": 1.25, "type.base": 16, "type.display_weight": 700,
-    "type.tracking_display": -0.02, "space.density_scale": 1.0,
-    "space.section_py": {"compact": 48, "regular": 72, "spacious": 112},
+    "type.tracking_display": -0.02, "space.density_scale": 0,
+    "space.section_py": {"compact": 48, "regular": 64, "spacious": 96},
     "grid.gutter": 24, "radius.personality": "p3",
     "color.surface_contrast": 0.05, "color.accent_usage": "cta+motif",
     "color.neutral_tint": 0.03, "elevation.level": 1,
@@ -1046,7 +1046,8 @@ def main():
     with open(vp, 'w', encoding='utf-8') as fh:
         fh.write(vtxt)
     for rel in ('sections', 'site/src/pages/home.astro',
-                'site/src/pages/variants.astro'):
+                'site/src/pages/variants.astro',
+                'site/src/styles/variants.css'):
         full = os.path.join(base_dir, rel)
         if os.path.isdir(full):
             for fn in sorted(os.listdir(full)):

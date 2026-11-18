@@ -33,6 +33,7 @@ import math
 import os
 import random
 import re
+import struct
 import sys
 import zlib
 from collections import Counter
@@ -534,6 +535,53 @@ def score_file(path, site_type, page_type, weights, bank, anti):
 
 
 # --------------------------------------------------------------- validation
+IMG_DIR = os.path.join(DATA, 'image_vectors')
+_IMG = {}
+
+
+def image_index():
+    """Load the committed CLIP vectors (float16, stdlib only)."""
+    if _IMG:
+        return _IMG
+    idx_p = os.path.join(IMG_DIR, 'index.json')
+    means_p = os.path.join(IMG_DIR, 'pattern_means.json')
+    if not (os.path.exists(idx_p) and os.path.exists(means_p)):
+        return None
+    meta = json.load(open(idx_p))
+    means = json.load(open(means_p))['means']
+    with open(os.path.join(IMG_DIR, 'vectors.bin'), 'rb') as f:
+        blob = f.read()
+    _IMG.update({'meta': meta, 'blob': blob, 'means': means})
+    return _IMG
+
+
+def image_fit(rec):
+    """Best cosine between this crop and any curated pattern's mean look.
+
+    Section crops have a picture; the picture is what a visitor sees
+    first. This asks the cheap question the text index cannot: does this
+    crop resemble a look that already appears across curated evidence?
+    None when the crop has no vector (a live page has no screenshot).
+    """
+    ix = image_index()
+    if not ix:
+        return None
+    key = rec.get('image_key') or ''
+    row = ix['meta']['keys'].get(key)
+    if row is None:
+        return None
+    dim = ix['meta']['dim']
+    vec = struct.unpack_from(f'<{dim}e', ix['blob'], row * dim * 2)
+    nv = math.sqrt(sum(v * v for v in vec)) or 1.0
+    best = 0.0
+    for m in ix['means'].values():
+        nm = math.sqrt(sum(v * v for v in m)) or 1.0
+        c = sum(a * b for a, b in zip(vec, m)) / (nv * nm)
+        if c > best:
+            best = c
+    return round(best, 4)
+
+
 def anti_score(feats, anti):
     """1.0 minus the measured anti-pattern penalties.
 
@@ -604,6 +652,11 @@ def build_dataset(seed=7):
             feats = section_features(fit, ps, mm, 1.0)
             feats.update(section_shape(r))
             feats['anti'], _ = anti_score(feats, anti)
+            r['image_key'] = os.path.relpath(
+                r['image'], DATA).replace(os.sep, '/')
+            v = image_fit(r)
+            if v is not None:
+                feats['img_fit'] = v
             rows.append({
                 'domain': r.get('site_name') or r.get('mobbin_id'),
                 'label': label,
@@ -789,6 +842,41 @@ def cross_fit(rows, anti, folds=4):
 
 
 def cmd_validate(args):
+    """One split, or `--seeds N` for the stability band.
+
+    A single held-out number is a coin flip; the study quotes the mean and
+    spread over eight independent domain splits, so the command can
+    produce them.
+    """
+    n = getattr(args, 'seeds', None)
+    if not n:
+        return _validate_once(args)
+    aucs, p10s = [], []
+    for seed in range(1, n + 1):
+        sub = argparse.Namespace(**vars(args))
+        sub.seeds, sub.seed, sub.quiet = None, seed, True
+        r = _validate_once(sub)
+        aucs.append(r['auc'])
+        p10s.append(r['precision_at_10pct'])
+        print(f'  seed {seed}: AUC {r["auc"]:.4f}  p@10% '
+              f'{r["precision_at_10pct"]:.3f}', file=sys.stderr)
+    mean = sum(aucs) / len(aucs)
+    sd = (sum((a - mean) ** 2 for a in aucs) / len(aucs)) ** 0.5
+    out = {'seeds': n, 'aucs': aucs, 'auc_mean': round(mean, 4),
+           'auc_sd': round(sd, 4), 'auc_min': round(min(aucs), 4),
+           'auc_max': round(max(aucs), 4),
+           'precision_at_10pct_mean': round(sum(p10s) / len(p10s), 4)}
+    name = 'seeds_image.json' if getattr(args, 'image', False) \
+        else 'seeds.json'
+    out['feature_set'] = ('14 + img_fit' if getattr(args, 'image', False)
+                          else '14')
+    json.dump(out, open(os.path.join(DATA, 'validation', name), 'w'),
+              indent=1)
+    print(json.dumps(out, indent=1))
+    return out
+
+
+def _validate_once(args):
     rows = build_dataset(args.seed)
     if not rows:
         raise SystemExit('no annotations to validate')
@@ -814,6 +902,14 @@ def cmd_validate(args):
                                 section_known=known)
         r['features']['pattern_fit'] = fit
     keys = list(DEFAULT_WEIGHTS)
+    if getattr(args, 'image', False):
+        missing = sum(1 for r in rows if 'img_fit' not in r['features'])
+        if missing:
+            raise SystemExit(f'--image needs a vector for every crop; '
+                             f'{missing} of {len(rows)} have none. Run '
+                             f'`uv run embed_images.py build` in '
+                             f'docs/machinery/design/patterns/tools.')
+        keys.append('img_fit')
     Xtr = [[r['features'][k] for k in keys] for r in train]
     ytr = [r['label'] for r in train]
     Xte = [[r['features'][k] for k in keys] for r in test]
@@ -882,7 +978,8 @@ def cmd_validate(args):
               open(os.path.join(DATA, 'validation',
                                 'fitted-weights.json'), 'w'), indent=1)
     result['fitted_weights'] = fitted
-    print(json.dumps(result, indent=1))
+    if not getattr(args, 'quiet', False):
+        print(json.dumps(result, indent=1))
     return result
 
 
@@ -979,6 +1076,10 @@ def main():
     s.add_argument('--weights', help='optional weights JSON (default: the '
                                      'semantic prior in DEFAULT_WEIGHTS)')
     v = sub.add_parser('validate')
+    v.add_argument('--seeds', type=int, default=None,
+                   help='run seeds 1..N and report mean/sd/min AUC')
+    v.add_argument('--image', action='store_true',
+                   help='add the CLIP image-fit feature (needs vectors)')
     v.add_argument('--holdout', type=float, default=0.25)
     v.add_argument('--seed', type=int, default=7)
     lb = sub.add_parser('label')

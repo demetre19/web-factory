@@ -388,6 +388,52 @@ def filters(meta, args):
     return keep
 
 
+# Hybrid ranking. Two independent descriptions of a pattern are
+# available: what it says (nomic text embedding) and what it looks like
+# (CLIP mean of its evidence crops). When both are present the score is
+#   W_TEXT * cos(query, pattern text) + W_IMAGE * cos(query, pattern image)
+# and the weights renormalise over whichever layers exist, so a machine
+# without the vision model degrades to text-only rather than to noise.
+# `--weights` overrides, e.g. --weights text=0.8,image=0.2.
+W_TEXT = 0.55
+W_IMAGE = 0.30
+VISION_SCRIPT = os.path.join(ROOT, 'docs', 'machinery', 'design', 'patterns',
+                             'tools', 'embed_images.py')
+MEANS = os.path.join(ROOT, 'docs', 'machinery', 'design', 'patterns', 'data',
+                     'image_vectors', 'pattern_means.json')
+
+
+def parse_weights(spec):
+    w = {}
+    for part in spec.split(','):
+        k, v = part.split('=')
+        w[k.strip()] = float(v)
+    return w
+
+
+def pattern_image_means():
+    if not os.path.exists(MEANS):
+        raise SystemExit(f'{MEANS} is missing: build it with '
+                         f'`uv run embed_images.py means` in '
+                         f'docs/machinery/design/patterns/tools.')
+    d = json.load(open(MEANS))
+    return d['means'], d['model']
+
+
+def clip_query(q):
+    """Text -> CLIP image-space vector, via the vision script (torch)."""
+    import subprocess
+    if not os.path.exists(VISION_SCRIPT):
+        raise SystemExit(f'{VISION_SCRIPT} missing: cannot embed the query '
+                         f'for --vision.')
+    r = subprocess.run(['uv', 'run', '--quiet', VISION_SCRIPT, 'query', q],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        raise SystemExit('vision query failed (no silent fallback):\n'
+                         + (r.stderr or r.stdout)[-800:])
+    return json.loads(r.stdout.strip().splitlines()[-1])
+
+
 def cmd_search(args):
     meta, idx = load_index()
     keep = filters(meta, args)
@@ -395,6 +441,9 @@ def cmd_search(args):
         print(json.dumps({'query': args.query, 'results': [],
                           'note': 'no pattern matches the filters'}))
         return
+    weights = {'text': W_TEXT, 'image': W_IMAGE}
+    if getattr(args, 'weights', None):
+        weights.update(parse_weights(args.weights))
     if args.genotype:
         # genome-space: query is a JSON genotype
         q = json.loads(args.query)
@@ -413,6 +462,21 @@ def cmd_search(args):
             idf = json.load(open(os.path.join(INDEX, 'tfidf_idf.json')))
             qv = tfidf_query(args.query, idf)
             scores = [(i, sparse_dot(qv, idx['vectors'][i])) for i in keep]
+    if getattr(args, 'vision', False) and not args.genotype:
+        means, vmodel = pattern_image_means()
+        qv = clip_query(args.query)
+        missing = sum(1 for i, _ in scores
+                      if meta['patterns'][i]['id'] not in means)
+        if missing:
+            print(f'# note: {missing} patterns have no image vector',
+                  file=sys.stderr)
+        tot = (weights['text'] + weights['image']) or 1.0
+        wt, wi = weights['text'] / tot, weights['image'] / tot
+        scores = [(i, wt * sc + wi * dense_dot(
+            qv, means.get(meta['patterns'][i]['id'], [0.0])))
+                  for i, sc in scores]
+        backend = f"{backend}+{vmodel}" 
+
     # intent boost: a request that names the section/site should not be
     # out-ranked by a pattern that merely shares words. Weights:
     # text cosine 1.0, section match 0.35, site match 0.25.
@@ -495,6 +559,10 @@ def main():
                    help='filters are already hard; kept for CLI symmetry')
     s.add_argument('--genotype', action='store_true',
                    help='query is a JSON genotype; rank in genome space')
+    s.add_argument('--vision', action='store_true',
+                   help='add CLIP image cosine (needs image_vectors/)')
+    s.add_argument('--weights', default=None,
+                   help='text=0.55,image=0.30 override')
     s.add_argument('--no-boost', action='store_true')
     s.add_argument('--json', action='store_true',
                    help='machine-readable results (default: one line each)')

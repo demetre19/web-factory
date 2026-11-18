@@ -74,14 +74,14 @@ closed set.
 | P.11 | Icon discipline | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
 | P.12 | Speed budget | invariant | script | `check_speed_budget` | JS>50KB, img without dims/AVIF-WebP/lazy|fetchpriority, remote font host, @font-face without swap, render-blocking third-party script (Lighthouse is not a gate) | w7 |
 | P.13 | Mobile budget | invariant | script | `check_mobile_budget` | mobile-first, ≥16px body, burger nav, no h-scroll at 360 | w7 |
-| P.14 | Mobbin evidence | structural | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition | w5 |
+| P.14 | Mobbin evidence | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition | w5 |
 | P.15 | SPEC verbatim | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |
 | P.2 | Shared source | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
-| P.3 | Wireframe contract tags | structural | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w5 |
-| P.4 | Wireframe lock | structural | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w5 |
+| P.3 | Wireframe contract tags | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w5 |
+| P.4 | Wireframe lock | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w5 |
 | P.5 | Tailwind theme | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w3 |
 | P.6 | Component catalogue | structural | script | `check_components_exist` | composition→component; tile instantiates all | w6 |
-| P.7 | Page assembly | structural | script | `check_page_data_attrs` | page sections data-* == plan rows | w7 |
+| P.7 | Page assembly | invariant | script | `check_page_data_attrs` | page sections data-* == plan rows | w7 |
 | P.8 | Gate mechanics | invariant | operator | `approve` | gate pass + recorded approval per wave | w* |
 | P.9 | Checklist evidence | invariant | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w* |
 | PS.1 | One role, one heading per block | invariant | script | `check_segment_roles` | section w/o data-sec or >1 h1/h2 per block | w7 |
@@ -108,7 +108,7 @@ closed set.
 | S.8 | Shape QA | stylistic | reviewer | `one-personality` | one personality throughout | w8 |
 | SB.1 | Contract per plan row | structural | script | `check_section_contracts` | one complete contract per plan row, equal to the row | w5 |
 | SB.2 | The shell owns rhythm | invariant | script | `check_section_shell` | zero outer layout declarations in section components | w6 |
-| SB.3 | One builder per section, one gate per section | structural | script | `check_section_gates` | every section gate.json pass=true; classes ⊆ contract | w6 |
+| SB.3 | One builder per section, one gate per section | invariant | script | `check_section_gates` | every section gate.json pass=true; classes ⊆ contract | w6 |
 | SB.4 | The glue is mechanical | invariant | script | `check_assembly` | page source == assemble.py output, marker current | w7 |
 | SB.5 | Gold exemplars, adapted not invented | structural | script | `check_exemplars` | every used composition has an exemplar; every component names one | w6 |
 | SB.6 | Page gates only after section gates | structural | script | `check_scorecard` | scorecard sections ≥90% | w8 |
@@ -135,7 +135,7 @@ closed set.
 | V.8 | Media QA | stylistic | reviewer | `media-qa` | <picture>, ratios, scrims, tiers | w8 |
 | VG.1 | One page, 3–5 variants, mechanical build | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w2 |
 | VG.2 | A variant is a vector, not a mood | invariant | script | `check_variants` | page variant without its own passing system sheet | w2 |
-| VG.3 | Only passing variants appear | structural | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w2 |
+| VG.3 | Only passing variants appear | invariant | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w2 |
 | VG.4 | The switcher is sticky and complete | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w2 |
 | VG.5 | The wildcard is present when burst > 0 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
 | VG.6 | Each tile states its case | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
@@ -150,4 +150,4 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w3 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
-140 rules — script 96, reviewer 43, operator 1; invariant 34, structural 35, stylistic 71.
+140 rules — script 96, reviewer 43, operator 1; invariant 40, structural 29, stylistic 71.

@@ -2259,9 +2259,9 @@ def _knob_ok(knob, value, knobs):
         return False, f'"{knob}" not in knobs.json'
     kind = spec.get('kind', 'number')
     if kind == 'enum':
-        if str(value) not in [str(x) for x in spec.get('allowed') or []]:
-            return False, (f'"{knob}" {value!r} not in '
-                           f'{spec.get("allowed")}')
+        allowed = spec.get('values') or spec.get('allowed') or []
+        if str(value) not in [str(x) for x in allowed]:
+            return False, f'"{knob}" {value!r} not in {allowed}'
         return True, ''
     if kind == 'map':
         if not isinstance(value, dict):
@@ -2271,7 +2271,14 @@ def _knob_ok(knob, value, knobs):
         for tier, v in value.items():
             if tier not in per:
                 return False, f'"{knob}" unknown tier "{tier}"'
-            lo, hi = per[tier]
+            allowed = per[tier]
+            if isinstance(allowed, list):
+                # closed scale (G.1): the value must be a member
+                if v not in allowed:
+                    return False, (f'"{knob}.{tier}" {v} not on the '
+                                   f'closed scale {allowed}')
+                continue
+            lo, hi = allowed
             try:
                 vv = float(v)
             except (TypeError, ValueError):
@@ -2780,7 +2787,12 @@ def _variants(ctx):
 
 
 def check_variants(ctx):
-    """VG.1–VG.6 + LAW.DNA conditions 4 and 5."""
+    """VG.1–VG.6 + LAW.DNA 4/5.
+
+    Pass is computed from the records (B F-08). At W2 the picker is the
+    SYSTEM SHEET only — the page pane joins at W8, when sections exist
+    (A F04). Each variant must apply its knob vector as CSS vars
+    (A F39)."""
     f = []
     path = os.path.join(ctx.site, 'src', 'pages', 'variants.astro')
     if not os.path.isfile(path):
@@ -2796,88 +2808,168 @@ def check_variants(ctx):
     css = ctx.read('site/src/styles/global.css') or ''
     if 'sticky' not in txt + css:
         f.append('VG.4 switcher is not sticky')
-    css = ctx.read('site/src/styles/global.css') or ''
     if not any(t in txt + css for t in ('@container', 'cqw', 'container-type')):
         f.append('VG.4 frames not container-query driven — 1:1 viewports, '
                  'not a scaled desktop')
-    for pane in ('system', 'page'):
-        if f'data-pane="{pane}"' not in txt:
-            f.append(f'VG.1 no data-pane="{pane}" — every variant shows its '
-                     'system sheet AND its page (sheet first)')
-    entries = _variants(ctx)
-    if not entries:
+    if 'data-pane="system"' not in txt:
+        f.append('VG.1 no data-pane="system" — every variant shows its '
+                 'system sheet first')
+    if _wave_ge(ctx, 'w8'):
+        if 'data-pane="page"' not in txt:
+            f.append('VG.1 no data-pane="page" — the final picker shows '
+                     'sheet AND page')
+    elif 'data-pane="page"' in txt:
+        f.append('VG.1 the picker renders a page pane before W8 — the look '
+                 'picker is system-sheet-only; pages join after assembly')
+    computed = _variant_entries(ctx)
+    if not computed:
         return f + ['VG.3 no variant records — DNA.json variants missing']
-    knobs = knob_set()
-    m = dna_map(ctx) or {}
-    dh = dna_hash_of(m) if m else ''
-    base = m.get('knobs') or {}
-    passing, wild = set(), []
-    for e in entries:
-        vid = e.get('id')
-        if not e.get('pass'):
+    passing = set()
+    for vid, (e, fl) in computed.items():
+        if fl:
             f.append(f'VG.3 variant {vid} fails a gate — remove it from the '
                      'picker, never show it greyed')
+            for m in fl[:3]:
+                f.append(f'VG.3 variant {vid}: {m}')
         else:
-            passing.add(str(vid))
-        if e.get('vector') not in VARIANT_VECTORS:
-            f.append(f'VG.2 variant {vid}: vector "{e.get("vector")}" not in '
-                     f'{sorted(VARIANT_VECTORS)}')
-        if e.get('vector') == 'wildcard':
-            wild.append(e)
-        sheet = e.get('sheet_pass') or {}
-        for mode in ('light', 'dark'):
-            if sheet.get(mode) is not True:
-                f.append(f'VG.1 variant {vid}: system sheet not gated in '
-                         f'{mode} mode — sheet first, both modes '
-                         '(condition 5)')
-        if dh and e.get('dna_hash') and e['dna_hash'] != dh:
-            f.append(f'DM.2 variant {vid}: dna_hash {e["dna_hash"]} != {dh}')
-        f.extend(_deltas_ok(base, e.get('deltas') or {}, knobs,
-                            e.get('vector') == 'wildcard'))
-        if not (e.get('deltas') or {}) and not e.get('baseline'):
-            f.append(f'VG.2 variant {vid}: no deltas — a variant is a knob '
-                     'vector, not a mood (mark the baseline one baseline: '
-                     'true)')
-        if e.get('score') is None:
-            f.append(f'VG.6 variant {vid}: no predicted score on the tile')
+            passing.add(vid)
     for sid in shown:
         if sid not in passing:
             f.append(f'VG.3 rendered variant "{sid}" is not a passing '
                      'variant')
+    # A F39 — the emitted CSS must APPLY each variant's knob vector
+    vcss = ctx.read('site/src/styles/variants.css') or ''
+    if not vcss:
+        f.append('VG.2 src/styles/variants.css missing — variants must '
+                 'apply their knob vectors')
+    blocks = dict(re.findall(
+        r'\[data-variant-scope="([^"]+)"\]\{([^}]*)\}', vcss))
+    knobs = knob_set()
+    for vid in shown:
+        if vid not in blocks:
+            f.append(f'VG.2 variant {vid}: no knob CSS vars — the variant '
+                     'labels a vector without applying it')
+            continue
+        got = dict(p.split(':', 1) for p in blocks[vid].split(';')
+                   if ':' in p)
+        e = (computed.get(vid) or ({}, []))[0]
+        for k, v in (e.get('deltas') or {}).items():
+            tok = str((knobs.get(k) or {}).get('token') or k).replace('.', '-')
+            if isinstance(v, dict):
+                for tier, x in v.items():
+                    if got.get(f'--{tok}-{tier}') != str(x):
+                        f.append(f'VG.2 variant {vid}: {k}.{tier}={x} not '
+                                 f'applied (--{tok}-{tier})')
+            elif got.get(f'--{tok}') != str(v):
+                f.append(f'VG.2 variant {vid}: {k}={v} not applied '
+                         f'(--{tok})')
+    if len(shown) >= 2:
+        sigs = {tuple(sorted(
+            tuple(p.split(':', 1)) for p in blocks[v].split(';')
+            if ':' in p)) for v in shown if v in blocks}
+        if len(sigs) < 2:
+            f.append('VG.2 every variant renders identical computed knobs — '
+                     'variants must differ')
     burst = 0
     mm = re.search(r'^burst:\s*(\d)', ctx.plan_text, re.M)
     if mm:
         burst = int(mm.group(1))
+    wild = [e for e, _ in computed.values()
+            if e.get('vector') == 'wildcard']
     if burst > 0 and len(wild) != 1:
         f.append(f'VG.5 burst={burst} needs exactly one wildcard variant, '
                  f'found {len(wild)}')
     if burst == 0 and wild:
         f.append('VG.5 burst=0 but a variant claims the wildcard')
-    for w in wild:
-        if not w.get('wildcard_breaks'):
-            f.append('VG.5 wildcard variant carries no declared breaks '
-                     '(B.4 record required)')
     return f
 
 
-def assemble_variants(ctx):
-    """VG.1 — deterministic picker: system sheet + page per knob vector."""
-    entries = [e for e in _variants(ctx) if e.get('pass')][:5]
-    contracts = build_contracts(ctx)
+def _variant_fails(ctx, e):
+    """VG.3 — a variant's pass is COMPUTED here, never read from the
+    designer's record (B F-08)."""
+    f = []
+    m = dna_map(ctx) or {}
+    knobs = knob_set()
+    base = m.get('knobs') or {}
+    vid = e.get('id')
+    if e.get('vector') not in VARIANT_VECTORS:
+        f.append(f'VG.2 variant {vid}: vector "{e.get("vector")}" not in '
+                 f'{sorted(VARIANT_VECTORS)}')
+    f += _deltas_ok(base, e.get('deltas') or {}, knobs,
+                    e.get('vector') == 'wildcard')
+    if not (e.get('deltas') or {}) and not e.get('baseline'):
+        f.append(f'VG.2 variant {vid}: no deltas — a variant is a knob '
+                 'vector, not a mood (mark the baseline one baseline: true)')
+    if not isinstance(e.get('score'), (int, float)):
+        f.append(f'VG.6 variant {vid}: no predicted score on the tile')
+    # B F-31 — a wildcard mutates style only; structural knobs never move
+    if e.get('vector') == 'wildcard':
+        for k in (e.get('deltas') or {}):
+            tier = (knobs.get(k) or {}).get('tier')
+            if tier in ('structural', 'invariant'):
+                f.append(f'VG.5 wildcard delta on {tier} knob "{k}" — a '
+                         'wildcard may move stylistic knobs only')
+        for k in e.get('mutates') or []:
+            g = genome_genes().get(k)
+            if g is None:
+                f.append(f'VG.5 wildcard mutates unknown gene "{k}"')
+        if not e.get('wildcard_breaks'):
+            f.append('VG.5 wildcard variant carries no declared breaks '
+                     '(B.4 record required)')
+    # both modes ship (C.5): the sheet's role pairs must clear the floors
+    for mode, roles in (m.get('modes') or {}).items():
+        ink, bg = role_hex(roles, 'ink'), role_hex(roles, 'bg')
+        if ink and bg and (contrast(ink, bg) or 0) < 7:
+            f.append(f'VG.1 variant {vid}: [{mode}] ink:bg below 7:1')
+    return f
+
+
+def _variant_entries(ctx):
+    """{id: (record, failures)} for every declared variant."""
+    return {str(e.get('id')): (e, _variant_fails(ctx, e))
+            for e in _variants(ctx)}
+
+
+def _knob_vars(kn, base, knobs):
+    """CSS custom-property overrides for one variant's knob vector."""
+    out = {}
+    for k in sorted((kn or {})):
+        spec = knobs.get(k) or {}
+        tok = str(spec.get('token') or k).replace('.', '-')
+        v = kn[k]
+        if isinstance(v, dict):
+            for tier, x in sorted(v.items()):
+                out[f'--{tok}-{tier}'] = str(x)
+        else:
+            out[f'--{tok}'] = str(v)
+    return out
+
+
+def assemble_variants(ctx, page_pane=None):
+    """VG.1 — deterministic picker: system sheet per knob vector; the page
+    pane joins at W8 only (W2 cannot depend on W5 contracts)."""
+    if page_pane is None:
+        page_pane = _wave_ge(ctx, 'w8')
+    computed = _variant_entries(ctx)
+    entries = [e for vid, (e, fails) in computed.items() if not fails][:5]
     m = dna_map(ctx) or {}
     base = m.get('knobs') or {}
     modes = m.get('modes') or {}
-    imports = ["import Section from '../components/Section.astro';"]
-    seen = set()
-    for c in contracts:
-        n = camel(c['section'])
-        if n in seen:
-            continue
-        seen.add(n)
-        imports.append(f"import {n} from "
-                       f"'../components/sections/{n}.astro';")
-    h = hashlib.sha256(json.dumps([entries, base], sort_keys=True)
-                       .encode()).hexdigest()[:12]
+    knobs = knob_set()
+    imports, contracts = [], []
+    if page_pane:
+        contracts = build_contracts(ctx)
+        imports.append("import Section from '../components/Section.astro';")
+        seen = set()
+        for c in contracts:
+            n = camel(c['section'])
+            if n in seen:
+                continue
+            seen.add(n)
+            imports.append(f"import {n} from "
+                           f"'../components/sections/{n}.astro';")
+    h = hashlib.sha256(json.dumps([entries, base, page_pane],
+                                  sort_keys=True).encode()).hexdigest()[:12]
 
     def sheet(kn):
         rows = []
@@ -2911,37 +3003,51 @@ def assemble_variants(ctx):
                 f'<p class="sheet-knobs" data-knobs="{kn_txt}">'
                 f'{kn_txt or "baseline — no knob diff"}</p>')
 
-    tiles = []
+    tiles, style = [], []
     for e in entries:
         vid = e['id']
         deltas = e.get('deltas') or {}
-        page = '\n'.join(
-            f'        <Section sec="{c["section"]}" '
-            f'comp="{c["composition"]}" wf-ref="{c["wf_ref"]}" '
-            f'ratio="{c["media_ratio"]}" disclosure="{c["disclosure"]}" '
-            f'surface="{c["surface"]}" density="{c["density"]}">\n'
-            f'          <{camel(c["section"])} />\n        </Section>'
-            for c in contracts)
         breaks = ', '.join(e.get('wildcard_breaks') or []) or 'none'
         diff = ', '.join(f'{k} {base.get(k)}→{v}'
                          for k, v in sorted(deltas.items())) or 'baseline'
+        # A F39 — the variant must APPLY its vector, not just label it
+        vs = {**_knob_vars(base, base, knobs), **_knob_vars(deltas, base,
+                                                           knobs)}
+        style.append('[data-variant-scope="%s"]{%s}' % (
+            vid, ';'.join(f'{k}:{v}' for k, v in sorted(vs.items()))))
+        page = ''
+        if page_pane:
+            page = ('\n      <div data-pane="page" class="variant-stage" '
+                    f'data-variant-scope="{vid}">\n' + '\n'.join(
+                        f'        <Section sec="{c["section"]}" '
+                        f'comp="{c["composition"]}" wf-ref="{c["wf_ref"]}" '
+                        f'ratio="{c["media_ratio"]}" '
+                        f'disclosure="{c["disclosure"]}" '
+                        f'surface="{c["surface"]}" '
+                        f'density="{c["density"]}">\n'
+                        f'          <{camel(c["section"])} />\n'
+                        '        </Section>' for c in contracts) +
+                    '\n      </div>')
         tiles.append(
             f'  <article class="variant-frame" data-variant="{vid}" '
             f'data-vector="{e.get("vector")}" data-score="{e.get("score")}" '
-            f'data-breaks="{breaks}" data-dna="{e.get("dna_hash", "")}" '
+            f'data-breaks="{breaks}" '
+            f'data-look="{dna_slices(m).get("core", "")}" '
             f'data-knobs="{diff}">\n'
             f'    <header class="variant-label">{vid} · {e.get("vector")} · '
             f'score {e.get("score")} · {diff} · breaks: {breaks}</header>\n'
-            f'    <nav class="variant-tabs"><button data-tab="system">System'
-            f'</button><button data-tab="page">Page</button></nav>\n'
-            f'    <div class="variant-panes">\n'
+            '    <nav class="variant-tabs"><button data-tab="system">System'
+            '</button>'
+            + ('' if not page_pane else
+               '<button data-tab="page">Page</button>') +
+            '</nav>\n'
+            '    <div class="variant-panes">\n'
             f'      <div data-pane="system" class="variant-stage" '
-            f'data-variant-scope="{vid}">{sheet(deltas)}</div>\n'
-            f'      <div data-pane="page" class="variant-stage" '
-            f'data-variant-scope="{vid}">\n{page}\n      </div>\n'
-            f'    </div>\n  </article>')
+            f'data-variant-scope="{vid}">{sheet(deltas)}</div>{page}\n'
+            '    </div>\n  </article>')
     txt = f'''---
 // assembled: {h} — generated by assemble.py --variants; never edit
+import '../styles/variants.css';
 {chr(10).join(imports)}
 ---
 <html lang="en" data-theme="light">
@@ -2976,6 +3082,12 @@ def assemble_variants(ctx):
 </body>
 </html>
 '''
+    css_dir = os.path.join(ctx.site, 'src', 'styles')
+    os.makedirs(css_dir, exist_ok=True)
+    with open(os.path.join(css_dir, 'variants.css'), 'w',
+              encoding='utf-8') as fh:
+        fh.write(f'/* assembled: {h} — per-variant knob vectors */\n'
+                 + '\n'.join(style) + '\n')
     return os.path.join(ctx.site, 'src', 'pages', 'variants.astro'), txt, h
 
 
@@ -3328,18 +3440,12 @@ def run_wave(ctx):
     return _apply_declared_breaks(ctx, fails)
 
 def _apply_declared_breaks(ctx, fails):
-    """B.5 — a declared break of a structural rule is skipped, not failed.
+    """B.4 — a declared break covers ONLY the section it names.
     Invariant and undeclared violations stay failures."""
-    skipped = skipped_rules(ctx)
-    if not skipped:
+    scopes = skipped_rules(ctx)
+    if not scopes:
         return fails
-    kept = []
-    for msg in fails:
-        rid = _rule_of(msg)
-        if rid in skipped:
-            continue
-        kept.append(msg)
-    return kept
+    return [m for m in fails if not _break_covers(scopes, m)]
 
 def load_gates(ctx):
     if os.path.isfile(ctx.gates_path):
@@ -3457,7 +3563,7 @@ def cmd_coverage():
 def cli_selftest():
     gate_self = sys.modules[__name__]
     """The look-up CLIs must answer for every rule the gates enforce."""
-    import subprocess
+    import shutil, subprocess, tempfile
     rp = os.path.join(HERE, 'rules.py')
     enf = json.load(open(ENFORCEMENT))['rules']
     f = []
@@ -3494,6 +3600,58 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # A F04 / F39 / B F-08 — the W2 picker is sheet-only, its pass is
+    # computed from the records, and each variant applies its vector.
+    b2 = Ctx(os.path.join(HERE, 'fixtures', '_base'))
+    b2.wave = 'w2'
+    msgs = check_variants(b2)
+    if not any('page pane before W8' in m for m in msgs):
+        f.append('check_variants accepts a W2 picker with a page pane '
+                 '(W2 would depend on W5 contracts)')
+    if any('no knob CSS vars' in m for m in msgs):
+        f.append('base fixture picker does not apply its knob vectors')
+    # a designer-written pass:true cannot rescue an invalid variant
+    tmpv = tempfile.mkdtemp()
+    try:
+        pv = os.path.join(tmpv, 'p')
+        shutil.copytree(os.path.join(HERE, 'fixtures', '_base'), pv,
+                        symlinks=True)
+        d = json.load(open(os.path.join(pv, 'DNA.json')))
+        for v in d['variants']:
+            if v['id'] == 'v2':
+                v['deltas'] = {'type.ratio': 9.9}
+                v['pass'] = True
+        d['hashes'] = dna_slices(d)
+        with open(os.path.join(pv, 'DNA.json'), 'w') as fh:
+            json.dump(d, fh)
+        msgs = check_variants(Ctx(pv))
+        if not any('v2' in m and 'VG.3' in m for m in msgs):
+            f.append('check_variants trusts the designer pass flag instead '
+                     'of computing it')
+    finally:
+        shutil.rmtree(tmpv, ignore_errors=True)
+    # B F-04 — the operator invariants can never be broken by declaration
+    base = Ctx(os.path.join(HERE, 'fixtures', '_base'))
+    base.wave = 'w5'
+    for rid in ('P.3', 'P.4', 'P.7', 'P.14', 'SB.3', 'VG.3'):
+        if (_enforcement_rules().get(rid) or {}).get('tier') != 'invariant':
+            f.append(f'{rid} is breakable — the wireframe lock, Mobbin, '
+                     'per-section gates and all-pass picker are invariants')
+            continue
+        pl = dict(base.plan or {})
+        pl['decisions'] = [{'rule_id': rid, 'where': 'hero',
+                            'what': 'x', 'why': 'x',
+                            'compensating': 'x'}]
+        saved = base._plan
+        base._plan = pl
+        try:
+            msgs = check_declared_breaks(base)
+        finally:
+            base._plan = saved
+        if not any(rid in m and 'invariant' in m for m in msgs):
+            f.append(f'a declared break of invariant {rid} is not rejected')
+        if skipped_rules(base):
+            pass
     # D.4 must be satisfiable for the whole closed composition set
     comps = catalog_compositions()
     if not comps:
@@ -4028,14 +4186,32 @@ def check_declared_breaks(ctx):
     return f
 
 def skipped_rules(ctx):
-    """Rule IDs skipped for the chosen option (declared structural breaks)."""
+    """{rule_id: {sections}} declared structural breaks (B.4).
+
+    A break is scoped to the section it names — it never switches a rule
+    off site-wide (B F-30)."""
     rules = _enforcement_rules()
-    out = set()
+    out = {}
     for b in declared_breaks(ctx.plan or {}):
         rid = str(b.get('rule_id') or b.get('rule') or '')
         if rules.get(rid, {}).get('tier') == 'structural':
-            out.add(rid)
+            where = str(b.get('where') or '').strip()
+            out.setdefault(rid, set()).add(where)
     return out
+
+
+def _break_covers(scopes, msg):
+    """True when a declared break covers this failure message."""
+    rid = _rule_of(msg)
+    if not rid or rid not in scopes:
+        return False
+    low = msg.lower()
+    for where in scopes[rid]:
+        if not where:
+            return True
+        if where.lower() in low or where.lower().replace('-', ' ') in low:
+            return True
+    return False
 
 def check_style_review(ctx):
     """B.5 — a chosen wildcard is scored on the STYLE rubric."""
@@ -4083,15 +4259,19 @@ def check_novelty(ctx):
         return [f'B.6 genome distance {dist} > bound {bound}']
     return []
 
-def check_wildcard(ctx, waves=('w2', 'w5')):
-    """B.* aggregate — the burst gate. Runs inside W2/W5 and as
-    `gate.py wildcard`: declared breaks are the ONLY tolerated
-    violations; everything else must be at 100%."""
+def check_wildcard(ctx, waves=None):
+    """B.* aggregate — the burst gate. Inside a wave it sweeps THAT wave
+    only (a W2 gate must not demand W5 artefacts); `gate.py wildcard`
+    sweeps the whole burst surface. Declared breaks are the ONLY
+    tolerated violations."""
+    if waves is None:
+        w = getattr(ctx, 'wave', None)
+        waves = (w,) if w in WAVE_SEQ else ('w2', 'w5')
     f = []
     f += check_tiers(ctx)
     f += check_burst(ctx)
     f += check_declared_breaks(ctx)
-    skipped = skipped_rules(ctx)
+    scopes = skipped_rules(ctx)
     seen = set()
     for wv in waves:
         for chk in WAVE_CHECKS[wv]:
@@ -4102,8 +4282,7 @@ def check_wildcard(ctx, waves=('w2', 'w5')):
             except Exception as e:
                 msgs = [f'{chk.__name__} errored: {e}']
             for msg in msgs:
-                rid = _rule_of(msg)
-                if rid and rid in skipped:
+                if _break_covers(scopes, msg):
                     continue
                 if msg in seen:
                     continue

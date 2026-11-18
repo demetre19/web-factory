@@ -1,6 +1,6 @@
 # DNA map — the single source of coherence
 
-`look: 3e8ae9d1082950e6` · `structure: 489acd9bfe7c3402` · `variants: c86333f74e06d509` · version `1` · site `fixture` · vertical `profile-services`
+`look: 167320800c58052e` · `structure: 489acd9bfe7c3402` · `variants: c86333f74e06d509` · version `1` · site `fixture` · vertical `profile-services`
 
 Every wave, section, variant and review reads this file first. Nothing defines a design value that is not traceable here (LAW.DNA).
 
@@ -39,8 +39,8 @@ Every wave, section, variant and review reads this file first. Nothing defines a
 | `image.treatment` | natural | `image.treatment` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
 | `motion.level` | subtle | `motion.level` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
 | `radius.personality` | p3 | `radius.personality` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
-| `space.density_scale` | 1.0 | `space.density_scale` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
-| `space.section_py` | {"compact": 48, "regular": 72, "spacious": 112} | `space.section_py` | structural | {'tag': 'snapped', 'patterns': ['pattern-cards-n'], 'n': 18} |
+| `space.density_scale` | 0 | `space.density_step` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
+| `space.section_py` | {"compact": 48, "regular": 64, "spacious": 96} | `space.section_py` | structural | {'tag': 'snapped', 'patterns': ['pattern-cards-n'], 'n': 18} |
 | `type.base` | 16 | `type.base_px` | stylistic | {'tag': 'snapped', 'patterns': ['pattern-hero-split'], 'n': 24} |
 | `type.display_weight` | 700 | `type.display_weight` | stylistic | {'tag': 'chosen', 'reason': 'fixture baseline'} |
 | `type.ratio` | 1.25 | `type.ratio` | stylistic | {'tag': 'snapped', 'patterns': ['pattern-hero-split'], 'n': 24} |
