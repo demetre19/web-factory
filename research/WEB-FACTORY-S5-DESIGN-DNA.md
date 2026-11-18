@@ -389,6 +389,11 @@ following are refuse-at-self-lint CSS/copy classes (AUDIT-S5A F9's
 "the exemplar violates the gate it models" lesson applied to the
 slop catalog):
 
+- **Emoji / symbol-font pictograms** — no emoji, `★✓✗›→` glyphs, or
+  icon-font characters anywhere in markup or copy. Icons are inline
+  SVG only (currentColor, token-sized, `aria-hidden` unless it IS the
+  label with `aria-label`); rating stars, checks, arrows all ship as
+  SVG paths.
 - **Gradient text** (`background-clip: text` + gradient fill).
 - **Glassmorphism-by-default** — decorative `backdrop-filter` blur
   cards; allowed only where the design names the purpose.

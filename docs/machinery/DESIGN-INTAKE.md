@@ -9,6 +9,10 @@ chooses what feeds the distill, never how the build runs.
 
 ## Constants (non-negotiable, every path)
 
+- **No emoji, ever** — icons are inline SVG (currentColor,
+  token-sized, aria-hidden). Stars, checks, arrows ship as paths;
+  emoji/symbol glyphs are a design ban (S5 anti-pattern lint).
+
 - **Astro** — the only build target; `target: react`/`html` refuses.
 - **Tailwind** — `@layer components` classes, one owner per class.
 - **Fluid everything** — utopia-style `clamp()` scales for type *and*

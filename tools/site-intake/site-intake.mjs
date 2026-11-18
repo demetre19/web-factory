@@ -228,15 +228,16 @@ function variantPage(name, char, tok, hero, accent) {
 </style></head><body>
 <header class="wrap hdr"><div class="logo">${esc(name)}</div><nav class="nav" aria-label="main"><a href="#">Services</a><a href="#">About</a><a href="#">Reviews</a><a href="#">Contact</a></nav></header>
 <section class="wrap hero"><h1>${esc(hero)}</h1><p>The team that shows up, does it right, and backs it with a real guarantee.</p><div style="display:flex;gap:var(--sxs)"><a class="btn" href="#">Get a free quote</a><a class="btn ghost" href="#">Call now</a></div></section>
-<div class="wrap strip">★★★★★ Trusted locally · Licensed & insured · Same-week scheduling</div>
+<div class="wrap strip"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg> Trusted locally · Licensed &amp; insured · Same-week scheduling</div>
 <main class="wrap"><section class="cards">
 <div class="card"><h3>Core service</h3><p>The thing you're known for — described in the customer's words, not trade jargon.</p></div>
 <div class="card"><h3>Repairs & fixes</h3><p>The urgent reason most visitors arrive. Fast answer, clear next step.</p></div>
 <div class="card"><h3>Maintenance</h3><p>The recurring-revenue offer that turns one job into a relationship.</p></div>
 </section></main>
-<footer class="wrap ftr"><div>${esc(name)} · Your City · (${'555) 010-0100'}</div><div>© 2026 · Terms · Privacy</div></footer>
+<footer class="wrap ftr"><div>${esc(name)} · Your City · (555) 010-0100</div><div>© 2026 · Terms · Privacy</div></footer>
 </body></html>`;
 }
+
 
 const VARIANTS = [
   { id: 'a', char: 'trusted-local', palette: { bg: '#F7F5F0', surface: '#FFFFFF', text: '#1F2933', muted: '#52606D', accent: '#1D6F5C' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.5rem', accent_bg: 'linear-gradient(180deg,#F7F5F0,#ECE7DC)', hero: 'Straight answers, tidy work, done when we said', air: 1 },
@@ -267,8 +268,8 @@ async function cmdVariants(outDir, briefPath, flags = {}) {
       console.log(`  ${file}  (${role}/${v.char})`);
     }
   }
-  writeManifest(dirname(outDir) === outDir ? outDir : join(outDir, '..'), rows);
-  console.log(`\n${rows.length} variants in ${outDir} — open each, pick one, then mark its role 'variant' in refs/MANIFEST.md.`);
+  if (flags.manifest) writeManifest(flags.manifest, rows);
+  console.log(`\n${rows.length} variants in ${outDir} — open each, pick one; register the pick in site/design/refs/MANIFEST.md as role 'variant'.`);
 }
 
 /* ---------- main ---------- */
@@ -291,8 +292,8 @@ if (cmd === 'crawl' || cmd === 'capture') {
         const html = await fetchText(u);
         rows.push(saveCapture(html, outDir, role, u, i + 1));
         pages.push({ url: u, html });
-        console.log(`  ✓ ${u}`);
-      } catch (e) { console.log(`  ✗ ${u} — ${e.message}`); }
+        console.log(`  ok ${u}`);
+      } catch (e) { console.log(`  FAIL ${u} — ${e.message}`); }
     }
     const facts = extractFacts(pages);
     const cssVars = pages[0] ? await extractCssVars(url, pages[0].html) : {};
@@ -309,7 +310,14 @@ if (cmd === 'crawl' || cmd === 'capture') {
   }
   if (cmd === 'crawl') writeManifest(outDir, rows);
 } else if (cmd === 'variants') {
-  await cmdVariants(join(outDir, 'refs'), flags.brief, flags);
+  // Designs are proposals, NOT evidence captures — they live outside git
+  // at ~/Documents/DEV-WORK/design-proposals/<site>/. --site names the
+  // slug (default 'site'); --out overrides the directory entirely.
+  // To register a picked design in refs/, edit MANIFEST.md by hand or
+  // copy the file in — proposals never auto-enter the contract surface.
+  const propDir = flags.out ?? join(process.env.HOME, 'Documents/DEV-WORK/design-proposals', flags.site ?? 'site');
+  mkdirSync(propDir, { recursive: true });
+  await cmdVariants(propDir, flags.brief, flags);
 } else {
   console.log(`site-intake — commands: crawl | capture | variants   (see docs/machinery/DESIGN-INTAKE.md)`);
 }
