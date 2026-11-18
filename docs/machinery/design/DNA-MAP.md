@@ -18,15 +18,26 @@ no design value may exist that does not trace to it.
 
 | Wave | DNA map state | What happens |
 |---|---|---|
-| W0 scaffold | — | Astro + Tailwind project exists; DNA map file created empty |
-| W1 brand DNA + audit + Mobbin | **draft** | Extracted assets (accent, fonts, imagery, tone) + inferred vertical profile + candidate genotype written, each value provenance-tagged |
-| W2 look | **baseline chosen** | Look options = distinct knob vectors from the draft; operator pick → baseline knobs |
+| W0 scaffold | — | Astro + Tailwind project exists. No DNA map yet |
+| W1 discovery | — (inputs only) | Operator likes/dislikes of the current site; comparison sites; example/reference sites; Mobbin refs; audit + keep-list. Extract INVARIANTS: accent colour, logo, brand fonts (when present), photography, tone. **No DNA map is written during discovery** |
+| W1 exit → DNA v0 | **created (starting point)** | Built only from discovery outputs + the PATTERN LIBRARY + VECTORS: invariants bind verbatim (`extracted`); likes/dislikes become constraints; the vertical DNA profile is pulled from `dna/<vertical>` (genome statistics); genotype + baseline knobs = nearest proven genotypes from `patterns.py search` (genome + text + image similarity), each cited by pattern ID; vector targets (ease of use, clarity, layout, typography, colour, rhythm, imagery, trust, conversion, SEO, mobile, speed, a11y) set from the current-site rating gaps + vertical norms. Gate: every invariant present, every field provenance-tagged, every genotype/knob value cites ≥1 pattern ID or a logged reason |
+| W2 look | **baseline chosen** | Look options = distinct knob vectors derived from DNA v0 (invariants fixed across all options); operator pick → baseline knobs |
 | W3 design system | **locked v1** | Baseline renders as the system sheet (light + dark); sheet passes gates → map locked, hash issued |
 | W4 content | read | Content inventory checked against the locked map (nothing in content may require an off-map value) |
 | W5 structure | read + rhythm plan | Page rhythm (surfaces, densities, contrast moment, motif) written INTO the map; wireframe lock |
 | W6 components | read | Components bind only to map tokens/knobs |
 | W7 page | read | Sections carry the map hash; mechanical glue |
 | W8 review + variants | read + deltas | Variants = baseline + knob deltas; each variant renders its own system sheet first, then the page |
+
+**Pattern-derived numbers.** At DNA v0 every sizing knob is seeded from the
+pattern library's measured statistics for the vertical, not guessed:
+type scale (`type.ratio`, `type.base`, display size, heading weight,
+tracking), gaps (`grid.gutter`, in-section gap vs section gap),
+section padding per density tier (`space.section_py`), container width,
+radius, image-led ratio, CTA count. Baseline = the median of the nearest
+proven genotypes; allowed range = their interquartile range, clipped to
+the SOP rule bounds (T.6, G.1, R.2…). Each seeded value records its
+source pattern IDs + sample size in `provenance`.
 
 Any edit to a locked map bumps its version → hash changes → every
 downstream artifact is stale → `run.py` rebuilds from the earliest wave the
@@ -50,7 +61,10 @@ edit touches.
     "elevation.level": 1, "motion.level": "subtle", "image.treatment": "natural"
   },
   "modes": { "light": { "<role>": "<token>" }, "dark": { "<role>": "<token>" } },
-  "extracted": { "accent": "#00B488", "accent_deep": "#166F64" },
+  "invariants": { "accent": "#00B488", "accent_deep": "#166F64", "logo": "<asset path>", "fonts": ["<brand font if extracted>"] },
+  "constraints": { "likes": ["credentials block", "4-step booking"], "dislikes": ["wall of text", "weak hero voice"], "references": ["<comparison/example site URLs>"] },
+  "patterns": ["<pattern IDs the genotype/knobs were derived from>"],
+  "vector_targets": { "ease_of_use": 8, "clarity": 9, "layout": 8, "typography": 9, "colour": 8, "rhythm": 8, "imagery": 8, "trust": 9, "conversion": 9, "seo": 9, "mobile": 9, "speed": 9, "a11y": 9 },
   "rhythm": [ { "section": "hero", "surface": "base", "density": "spacious" } ],
   "variants": [ { "id": "v2", "vector": "typography-led", "deltas": { "type.ratio": 1.333 } } ],
   "provenance": { "<field>": "extracted|snapped|inferred|chosen" }
@@ -71,3 +85,16 @@ FAIL if:
 5. A variant page exists without its own passing system sheet.
 6. A section deviates from the map's rhythm plan.
 7. Light or dark mode missing for any role.
+
+## Knob table (machine form of the ranges above)
+
+`knobs.json` — closed set, one row per knob: `token`, `kind`
+(`number|enum|map`), `range`/`allowed`/`per`, `step`, `tier` (B.1) and
+the rule IDs it serves. `gate.dna` reads ranges from it; `DNA.json`
+carries the chosen value per knob; a variant is `baseline + deltas`
+(DM.4, VG.2). It is the machine rendering of the GENOME/TOKENS knob
+ranges this law references — the law owns the intent, the table owns the
+arithmetic.
+
+See also: `rules/DM.md` (DM.1–DM.6), `rules/VG.md` (the picker),
+`knobs.json`, `dna/GENOME.md`.
