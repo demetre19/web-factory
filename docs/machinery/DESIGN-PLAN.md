@@ -214,6 +214,10 @@ the coordinator hopes was honored:
 - [ ] layout & proximity QA ∈ `PRIMITIVES.md` §L.13 (heading binds
   forward, card padding 15–25px, section gaps 60–100px, S-M-L scale
   present, icons labelled, touch ≥44px, 960 containment, ≤1 frame-break)
+- [ ] colour QA ∈ `PRIMITIVES.md` §C.7 (role-token binding, chromatic
+  neutrals 2–6%S, ink ≥7:1, accent derived by harmony formula,
+  accent_fg by luminance, ≤10% accent area, dark surfaces tinted
+  charcoal not black)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator
