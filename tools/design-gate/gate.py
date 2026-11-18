@@ -2470,8 +2470,6 @@ def render_dna_md(m):
                      f'{spec.get("tier", "")} | {prov.get(k, "—")} |')
     lines += ['', '## Rhythm plan', '', '| Section | Surface | Density |',
               '|---|---|---|']
-    if not _wave_ge(ctx, 'w5'):
-        return f
     rhythm = m.get('rhythm') or []
     if isinstance(rhythm, dict):
         rhythm = [{'section': k, **(v or {})} for k, v in rhythm.items()]
@@ -3239,6 +3237,29 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # gate.py dna must validate and render on a copy of the base fixture
+    import shutil, tempfile
+    tmp = tempfile.mkdtemp()
+    try:
+        shutil.copytree(os.path.join(HERE, 'fixtures', '_base'),
+                        os.path.join(tmp, 'p'), symlinks=True)
+        r = subprocess.run([sys.executable, os.path.join(HERE, 'gate.py'),
+                            'dna', os.path.join(tmp, 'p')],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            f.append(f'gate.py dna exits {r.returncode}: '
+                     f'{r.stdout.strip().splitlines()[:2]}')
+        md = os.path.join(tmp, 'p', 'DNA.md')
+        if not os.path.isfile(md):
+            f.append('gate.py dna renders no DNA.md')
+        else:
+            txt = open(md, encoding='utf-8').read()
+            for want in ('hash:', '## Genotype', '## System knobs',
+                         '## Modes (both ship', '## Variants'):
+                if want not in txt:
+                    f.append(f'DNA.md missing section "{want}"')
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
     return f
 
 
