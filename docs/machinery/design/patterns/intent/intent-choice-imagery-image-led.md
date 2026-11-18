@@ -5,7 +5,7 @@ schema: choice=imagery, allele=image-led
 links:
   index: intent-index
   derives_from: [patterns-index, intent-index]
-  used_in: [w1, w2]
+  used_in: [w1, w3, w4]
 ---
 
 # intent-choice: imagery = image-led

@@ -4,7 +4,7 @@ type: intent-attribute
 links:
   index: intent-index
   derives_from: [intent-index]
-  used_in: [w1, w2]
+  used_in: [w1, w3, w4]
 ---
 
 # intent-attribute: value

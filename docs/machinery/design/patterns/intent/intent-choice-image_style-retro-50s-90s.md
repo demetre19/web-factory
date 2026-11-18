@@ -5,7 +5,7 @@ schema: choice=image_style, allele=retro (50s-90s)
 links:
   index: intent-index
   derives_from: [patterns-index, intent-index]
-  used_in: [w1, w2]
+  used_in: [w1, w3, w4]
 ---
 
 # intent-choice: image_style = retro (50s-90s)

@@ -394,7 +394,7 @@ def cmd_graph(args):
                   f'schema: choice={dim}, allele={allele}\n'
                   'links:\n  index: intent-index\n'
                   '  derives_from: [patterns-index, intent-index]\n'
-                  '  used_in: [w1, w2]\n---\n\n')
+                  '  used_in: [w1, w3, w4]\n---\n\n')
             open(os.path.join(INTENT_DIR, nid + '.md'), 'w').write(
                 fm + '\n'.join(body))
     for at in sorted(attr_choices):
@@ -417,13 +417,13 @@ def cmd_graph(args):
                  'picks the opposite must declare the deviation.', '']
         fm = ('---\nid: ' + nid + '\ntype: intent-attribute\n'
               'links:\n  index: intent-index\n'
-              '  derives_from: [intent-index]\n  used_in: [w1, w2]\n---\n\n')
+              '  derives_from: [intent-index]\n  used_in: [w1, w3, w4]\n---\n\n')
         open(os.path.join(INTENT_DIR, nid + '.md'), 'w').write(
             fm + '\n'.join(body))
     idx = ['---', 'id: intent-index', 'type: index', 'links:',
            '  index: patterns-index',
            '  contains: [' + ', '.join(sorted(attr_nodes + choice_nodes)) + ']',
-           '  derives_from: [patterns-index]', '  used_in: [w1, w2]', '---', '',
+           '  derives_from: [patterns-index]', '  used_in: [w1, w3, w4]', '---', '',
            '# INTENT INDEX — what a site is trying to be, measured', '',
            f'{d["n_sites"]} valid captures. Two node families:', '',
            '- `intent-attribute-*` — a brand attribute claimed in the copy, '
