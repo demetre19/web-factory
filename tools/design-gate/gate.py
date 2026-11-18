@@ -1053,8 +1053,35 @@ def check_speed_budget(ctx):
     # above (JS weight, image dims/format/hints, fonts, third parties).
     return f
 
+def dist_csss(ctx):
+    """[(path, css)] every stylesheet under dist/ and preview/."""
+    out = []
+    for root in (os.path.join(ctx.site, 'dist'),
+                 os.path.join(ctx.dir, 'preview')):
+        if not os.path.isdir(root):
+            continue
+        for dp, _, fns in os.walk(root):
+            for fn in sorted(fns):
+                if fn.endswith('.css'):
+                    p = os.path.join(dp, fn)
+                    out.append((p, open(p, encoding='utf-8',
+                                        errors='replace').read()))
+    return out
+
+
 def check_mobile_budget(ctx):
     f = []
+    # linked stylesheets carry the real rules (B F-26)
+    for p, txt in dist_csss(ctx):
+        name = os.path.basename(p)
+        for m in re.finditer(r'width:\s*(\d{3,})px', txt):
+            if int(m.group(1)) > 360:
+                f.append(f'P.13 {name}: fixed width {m.group(1)}px '
+                         '>360 — horizontal scroll risk at 360')
+                break
+        m = re.search(r'body\s*\{[^}]*font-size:\s*(\d+)px', txt)
+        if m and int(m.group(1)) < 16:
+            f.append(f'P.13 {name}: body {m.group(1)}px < 16px')
     for p, txt in ctx.page_htmls():
         name = os.path.basename(p)
         # fixed widths >360px → h-scroll risk at 360
@@ -1384,13 +1411,18 @@ def _layout_cards(ctx):
     txt = open(wfp, encoding='utf-8', errors='replace').read()
     cards = {}
     for m in re.finditer(
-            r'<(?:div|article)[^>]*(?:id|data-layout)="(d\w+)"[^>]*>(.*?)'
-            r'(?=<(?:div|article)[^>]*(?:id|data-layout)="d\w+"|\Z)',
+            r'<(?:div|article)[^>]*(?:id|data-layout)="([\w-]+)"[^>]*>'
+            r'(.*?)'
+            r'(?=<(?:div|article)[^>]*(?:id|data-layout)="[\w-]+"|\Z)',
             txt, re.S):
         secs = re.findall(
             r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
             r'data-comp="([^"]+)"[^>]*data-ratio="([^"]+)"[^>]*'
             r'data-disclosure="([^"]+)"', m.group(2))
+        if not secs:
+            continue  # non-option articles are not layout cards
+        if m.group(1) in cards:
+            continue  # id + data-layout on one element counted once
         cards[m.group(1)] = [
             {'sec': a, 'comp': b, 'ratio': c, 'disc': d}
             for a, b, c, d in secs]
@@ -1457,7 +1489,7 @@ def assemble_layouts(ctx):
                         f'data-comp="{comp}" '
                         f'data-ratio="{c["media_ratio"]}" '
                         f'data-disclosure="{c["disclosure"]}"></section>')
-        blocks.append(f'  <article class="card" id="{lid}" '
+        blocks.append(f'  <article class="card" id="d{i + 1}" '
                       f'data-layout="{lid}">\n'
                       f'    <h2>Layout {lid}</h2>\n'
                       + '\n'.join(secs) + '\n  </article>')
@@ -2033,7 +2065,7 @@ def check_viewport(ctx):
 
 def check_tap_size(ctx):
     f = []
-    for p, txt in ctx.page_htmls():
+    for p, txt in ctx.page_htmls() + dist_csss(ctx):
         # best-effort: interactive selectors with declared height < 44
         for m in re.finditer(
                 r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
@@ -4003,7 +4035,14 @@ def input_hashes_for(ctx, wave):
 
 
 def approval_state(ctx, wave):
-    """('ok'|'missing'|'stale'|'unsigned') for wave's operator approval."""
+    """('ok'|'missing'|'stale'|'unsigned') for wave's operator approval.
+    'w*' means EVERY approvable wave is signed and current."""
+    if wave == 'w*':
+        states = [approval_state(ctx, w) for w in sorted(APPROVABLE)]
+        if all(st == 'ok' for st in states):
+            return 'ok'
+        return 'missing' if 'missing' in states else \
+            ('stale' if 'stale' in states else 'unsigned')
     key = op_key()
     rec = (read_approvals(ctx) or {}).get(wave)
     if not rec:
@@ -4462,7 +4501,10 @@ def cmd_selftest():
         d = os.path.join(fx, name)
         if not os.path.isdir(d) or name not in checks:
             continue
+        subs = ('pass',) if name == 'check_tiers' else ('pass', 'fail')
         for want, sub in ((0, 'pass'), (1, 'fail')):
+            if sub not in subs:
+                continue
             pd = os.path.join(d, sub)
             if not os.path.isdir(pd):
                 fails.append(f'{name}: fixtures/{sub}/ missing')
@@ -4477,15 +4519,9 @@ def cmd_selftest():
                 fails.append(f'{name}/fail fixture NOT caught')
     fails += cli_selftest()
     tested = [n for n in checks if os.path.isdir(os.path.join(fx, n))]
-    missing = set(checks) - set(tested) - {'check_audit_artifacts',
-            'check_astro_build', 'check_review_completeness',
-            'check_tailwind_derivation', 'check_tile_is_system',
-            'check_components_exist', 'check_spec_verbatim',
-            'check_class_subset', 'check_no_stray_styles',
-            'check_page_data_attrs', 'check_heading_verbatim',
-            'check_tap_size', 'check_scaffold', 'check_design_mode',
-            'check_intent', 'check_checklist', 'check_mobbin_auth',
-            'check_novelty', 'check_scorecard', 'check_tiers'}
+    missing = set(checks) - set(tested) - {
+            'check_astro_build',     # needs a real astro toolchain
+            'check_mobbin_auth'}     # needs ~/.mobbin-oauth outside fixtures
     for n in sorted(missing):
         fails.append(f'no fixtures for {n}')
     if fails:
@@ -5269,9 +5305,9 @@ def compute_scorecard(ctx, waves=('w3', 'w5', 'w6', 'w7')):
             scores[rid] = review.get(rid, 0.0)
         elif mode == 'operator':
             wv = e.get('wave', '')
-            scores[rid] = 1.0 if any(
-                g.get('approved') for g in gates.values()) or \
-                gates.get(wv, {}).get('approved') else 0.0
+            # evidence = the signed operator record for THAT wave,
+            # re-verified against current inputs (B F-32)
+            scores[rid] = 1.0 if approval_state(ctx, wv) == 'ok' else 0.0
     sections = {}
     for rid, sc in scores.items():
         sec = 'PS' if rid.startswith('PS.') else rid.split('.')[0]

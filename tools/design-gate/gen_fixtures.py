@@ -976,6 +976,8 @@ MUT = {
      ('APPEND','site/dist/home/index.html',
       '<a class="cta">Act</a><style>@media(max-width:768px)'
       '{.cta{padding:8px}}</style>')),
+ 'check_scorecard': mut(
+     ('DEL','REVIEW.json')),
  'check_measurable': mut(
      ('APPEND','site/dist/home/index.html',
       '<style>p{text-align:justify}.x{transition-duration:600ms}'
@@ -1175,6 +1177,18 @@ def main():
                 src = os.path.relpath(
                     os.path.join(FX, '_base', rel), os.path.dirname(dst))
                 os.symlink(src, dst)
+        # approvals are keyed by abspath: sign every pass dir so the
+        # operator rules and the scorecard see a real signed record
+        ctx_p = gate.Ctx(pd)
+        for wv in sorted(gate.APPROVABLE):
+            gate.write_approval(ctx_p, wv)
+    # check_tiers pass fixture (global rule → pass only, no fail dir)
+    pd = os.path.join(FX, 'check_tiers', 'pass')
+    os.makedirs(pd, exist_ok=True)
+    for rel in ('DESIGN-PLAN.md', 'DNA.json'):
+        src = os.path.relpath(os.path.join(FX, '_base', rel), pd)
+        if not os.path.lexists(os.path.join(pd, rel)):
+            os.symlink(src, os.path.join(pd, rel))
     # check_genotype/pass: a real 9-row page (nav, hero, cards, logo-wall,
     # faq, sequence, faq, form, footer) so D.4's catalog->archetype map is
     # exercised end to end, not just on the 5-row base page.
