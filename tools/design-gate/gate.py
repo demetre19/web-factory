@@ -1977,10 +1977,10 @@ def assemble_page(ctx):
     """SB.4 — deterministic page source from plan order."""
     contracts = build_contracts(ctx)
     path, slug = page_path(ctx)
-    imports = ["import Section from '../../components/Section.astro';"]
+    imports = ["import Section from '../components/Section.astro';"]
     for c in contracts:
         imports.append(f"import {camel(c['section'])} from "
-                       f"'../../components/sections/{camel(c['section'])}.astro';")
+                       f"'../components/sections/{camel(c['section'])}.astro';")
     h = hashlib.sha256(json.dumps(contracts, sort_keys=True)
                        .encode()).hexdigest()[:12]
     body = []
@@ -2722,7 +2722,7 @@ def assemble_variants(ctx):
     m = dna_map(ctx) or {}
     base = m.get('knobs') or {}
     modes = m.get('modes') or {}
-    imports = ["import Section from '../../components/Section.astro';"]
+    imports = ["import Section from '../components/Section.astro';"]
     seen = set()
     for c in contracts:
         n = camel(c['section'])
@@ -2730,7 +2730,7 @@ def assemble_variants(ctx):
             continue
         seen.add(n)
         imports.append(f"import {n} from "
-                       f"'../../components/sections/{n}.astro';")
+                       f"'../components/sections/{n}.astro';")
     h = hashlib.sha256(json.dumps([entries, base], sort_keys=True)
                        .encode()).hexdigest()[:12]
 
@@ -3194,6 +3194,7 @@ def cmd_coverage():
     return 0
 
 def cli_selftest():
+    gate_self = sys.modules[__name__]
     """The look-up CLIs must answer for every rule the gates enforce."""
     import subprocess
     rp = os.path.join(HERE, 'rules.py')
@@ -3268,6 +3269,15 @@ def cli_selftest():
         if r.returncode != 0:
             f.append(f'gate.py dna exits {r.returncode}: '
                      f'{r.stdout.strip().splitlines()[:2]}')
+        # every emitted import must resolve from src/pages/
+        for gen in ('assemble_page', 'assemble_variants'):
+            path, txt, _ = getattr(gate_self, gen)(Ctx(os.path.join(tmp, 'p')))
+            base = os.path.dirname(path)
+            for imp in re.findall(r"^import .* from '([^']+)';", txt, re.M):
+                if not os.path.isfile(os.path.normpath(
+                        os.path.join(base, imp))):
+                    f.append(f'{gen} emits a broken import {imp} '
+                             '(resolved from src/pages/)')
         md = os.path.join(tmp, 'p', 'DNA.md')
         if not os.path.isfile(md):
             f.append('gate.py dna renders no DNA.md')
