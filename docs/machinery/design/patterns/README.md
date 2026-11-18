@@ -38,11 +38,21 @@ python3 tools/design-gate/score.py score path/to/cards/index.html \
 python3 tools/design-gate/test_design_gate.py
 ```
 
-Search is hybrid: text cosine over the pattern body plus **intent
-boosting** — a query naming a section adds 0.35 to patterns in that
-section, naming a site type adds 0.25. Weights are stated in
-`patterns.py` and are deliberately simple so a surprising rank is
+Search is hybrid over two independent descriptions of a pattern:
+**what it says** (nomic text embedding, 768d) and **what it looks like**
+(CLIP ViT-B/32, 512d, mean of the pattern's evidence crops). Weights are
+`W_TEXT = 0.55`, `W_IMAGE = 0.30`; they renormalise over whichever
+layers exist, so a machine without the vision model degrades to
+text-only rather than to noise. On top sits **intent boosting** — a
+query naming a section adds 0.35 to patterns in that section, naming a
+site type adds 0.25. `--weights text=0.8,image=0.2` overrides; the
+numbers live at the top of `patterns.py` so a surprising rank is
 explainable.
+
+```bash
+python3 tools/design-gate/patterns.py search "gold jewellery on black velvet"          # text
+python3 tools/design-gate/patterns.py search "gold jewellery on black velvet" --vision # + CLIP
+```
 
 ## Build it
 
@@ -114,22 +124,80 @@ against the corpus median; a burst that exceeds the bound is refused, so
 "different" never silently becomes "unproven". Vertical profiles live in
 `docs/machinery/design/dna/<vertical>.{md,json}`.
 
-## Embedding backend — status
+## Capture validity — the gate before everything
 
-The operator-facing embedder is `nomic-embed-text` at
-`http://localhost:11434/api/embed` with `search_document:` /
-`search_query:` prefixes, and it is wired:
-`patterns.py index --backend ollama` and `patterns.py search` both use
-it when the daemon answers. **It is not the active backend today**: the
-local daemon took ~69 s for two texts and timed out at 120 s during
-indexing under multi-agent load, so the index on disk is TF-IDF
-(`index/meta.json` → `"backend": "tfidf"`). Switching is one command
-when the daemon is healthy; no code change.
+A screenshot of a Cloudflare challenge, a 404, a parked domain or a
+blank render is not a design. Counted as evidence it corrupts every
+number downstream, so `patterns/tools/capture_ok.py` decides, from
+evidence, whether a capture is a page at all:
 
-There is **no image embedder installed**. For visual similarity the
-proposal is `nomic-embed-vision` (same daemon) or `open_clip` ViT-B/32
-(~350 MB, CPU-friendly); neither is installed, because installing a
-model is the operator's call, not the pipeline's.
+```bash
+cd docs/machinery/design/patterns/tools
+uv run --quiet capture_ok.py probe     # HTTP evidence -> meta.probe
+uv run --quiet capture_ok.py verdict   # -> capture_status + quarantine.json
+uv run --quiet capture_ok.py report    # counts by status/source
+```
+
+| status | evidence |
+|---|---|
+| `blocked` | challenge/WAF text in the page ("Just a moment", "Performing security verification", "Checking your browser", access denied, vendor markers) |
+| `error` | HTTP ≥ 400, no response, 404/500/error page text |
+| `parked` | domain-for-sale / parking service / placeholder text |
+| `blank` | every tile flat (luminance std < 2), or a flat first tile with content below |
+| `ok` | none of the above |
+
+Two measurement decisions worth stating, because both were wrong first
+time: the blank test is **luminance variance, not ink** (a black-on-black
+luxury page has no "ink" but plenty of variance), and **trailing flat
+tiles are a short page, not a failure** — the capture window is 6000 px
+tall, so a 2-viewport page ends in white. `content_tiles` records the
+real extent.
+
+The gate is wired as a hard step in `capture_web.py` and
+`capture_negatives.py` (a capture is recorded with its verdict before
+anyone can use it), `split_negatives.py` and `annotate_det.py` skip
+non-ok sites, and `tools/design-gate/corpus_filter.py` is the single
+reader every consumer uses — patterns, genome statistics, embeddings,
+search index, scorer training and VALIDATION all drop the same rows.
+`data/quarantine.json` lists the excluded sites with their reasons.
+
+**Corpus effect: 55 of 218 captures (25%) were not pages** — 47 of 174
+web (27%) and 8 of 44 negatives (18%), plus 55 empty white bands that
+`split_negatives.py` had cut out of short pages and counted as negative
+sections. See VALIDATION.md §2 for what that did to the numbers.
+
+## Embedding backends — what is live
+
+| Layer | Model | Dim | Where | Committed artefact |
+|---|---|---|---|---|
+| text | `nomic-embed-text` (ollama, `localhost:11434`) | 768 | `index/vectors.json` | yes |
+| image | `open_clip` ViT-B/32 `laion2b_s34b_b79k` | 512 | `data/image_vectors/` | vectors yes, crops no |
+| genome | 20 genes, one-hot | 99 | `data/genome.json` | yes |
+
+`index/meta.json` records `"backend": "nomic:nomic-embed-text"` — the
+field is read by `search` and never guessed. Both embedders **fail
+loudly**: if the ollama daemon is down, `index --backend nomic` and
+`search` exit with the reason instead of silently ranking by something
+else, because a silent fallback makes the `backend` field a lie.
+
+Text embedding batches 16 inputs per `/api/embed` call (ollama truncates
+larger batches without saying so), asks the daemon to `keep_alive` for
+2 h, retries three times with exponential backoff and gives up after
+300 s. Rebuild: `python3 tools/design-gate/patterns.py index --backend nomic`
+(88 patterns, ~50 s).
+
+Image vectors cover all 3 888 crops (2 700 Mobbin screens, 492 contrast
+bands, 696 reference-site tiles) in 4.0 MB of float16 — the crops
+themselves stay gitignored. Rebuild:
+
+```bash
+cd docs/machinery/design/patterns/tools
+uv run --quiet embed_images.py build    # 106 s on MPS
+uv run --quiet embed_images.py means    # 88 pattern means
+```
+
+ViT-B/32 is 151 M params / ~600 MB, small enough to install without
+asking. Anything larger is an operator decision.
 
 ## Honest limits
 
@@ -137,8 +205,10 @@ model is the operator's call, not the pipeline's.
   from a vision model — intent is assumed, composition is measured.
 - The contrast corpus is small (44 sites) and skewed to local-service
   templates.
-- The anti-pattern layer ships empty: no pixel feature separated the two
-  corpora. The gate's structural checks carry that load instead.
+- The anti-pattern layer holds three measured rows, not a taxonomy: a
+  section with <0.4 block pace, no call to action, or near-perfect row
+  regularity is 3.9-9.7x more common in the contrast corpus. Anything
+  weaker was left out rather than invented.
 - `pattern_fit` is a structural distance, not a quality judgement. It
   says "this looks like work from the curated corpus", nothing about
   whether the copy is any good.

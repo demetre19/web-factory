@@ -17,6 +17,8 @@ import re
 import subprocess
 import sys
 
+import capture_ok
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
 OUT = os.path.join(DATA, 'web')
@@ -71,12 +73,21 @@ def main():
                 t.save(os.path.join(d, name))
                 tiles.append(name)
             os.remove(raw)
-            json.dump({'url': url, 'domain': url.split('//')[-1].split('/')[0],
-                       'site_type': st, 'page_type': pt, 'source': src,
-                       'width': w, 'height': h, 'tiles': tiles}, open(mp, 'w'),
-                      indent=1)
+            meta = {'url': url,
+                    'domain': url.split('//')[-1].split('/')[0],
+                    'site_type': st, 'page_type': pt, 'source': src,
+                    'width': w, 'height': h, 'tiles': tiles}
+            # hard gate: a capture that is a challenge page, an error or a
+            # blank render is recorded as such and never counts as evidence
+            meta['probe'] = capture_ok.probe(url)
+            status, reason = capture_ok.decide(meta, d)
+            meta['capture_status'] = status
+            meta['capture_reason'] = reason
+            meta['schema_version'] = '1.0'
+            json.dump(meta, open(mp, 'w'), indent=1)
             ok += 1
-            print(f'{slug}: {w}x{h} {len(tiles)} tiles', flush=True)
+            print(f'{slug}: {w}x{h} {len(tiles)} tiles [{status}'
+                  f'{": " + reason if reason else ""}]', flush=True)
         except Exception as e:
             fail += 1
             print(f'{slug}: FAILED {type(e).__name__}', flush=True)

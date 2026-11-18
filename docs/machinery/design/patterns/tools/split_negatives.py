@@ -38,6 +38,10 @@ def main():
         if not os.path.isfile(mp):
             continue
         meta = json.load(open(mp))
+        if meta.get('capture_status', 'ok') != 'ok':
+            print(f'skip {slug}: {meta.get("capture_status")} '
+                  f'{meta.get("capture_reason","")}')
+            continue
         dst = os.path.join(OUT, slug)
         os.makedirs(dst, exist_ok=True)
         secs = []

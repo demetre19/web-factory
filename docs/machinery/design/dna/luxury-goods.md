@@ -2,15 +2,15 @@
 id: profile-luxury-goods
 type: profile
 site_type: luxury-goods
-n: 1800
+n: 2070
 links:
   derives_from: [patterns-index]
-  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence]
+  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style]
 ---
 
 # DNA — luxury-goods
 
-Distribution over alleles for 1800 annotated screens (source: Mobbin + web supplement).
+Distribution over alleles for 2070 annotated screens (source: Mobbin + web supplement).
 
 | Gene | Dominant allele | Share | Runner-up |
 |---|---|---|---|
@@ -34,6 +34,9 @@ Distribution over alleles for 1800 annotated screens (source: Mobbin + web suppl
 | `whitespace-band` | `airy` | 66% | medium |
 | `gallery-mode` | `single-hero` | 100% | — |
 | `form-presence` | `none` | 100% | — |
+| `mood-energy` | `balanced` | 63% | energetic |
+| `mood-register` | `luxury` | 62% | approachable |
+| `image-style` | `editorial` | 70% | minimal |
 
 ## Profile centroid
 

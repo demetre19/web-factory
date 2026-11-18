@@ -1,0 +1,140 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "https://web-factory.local/schemas/web-meta.json",
+ "title": "web capture meta — client site, reference, comparison and corpus captures",
+ "description": "One meta.json per analysed site/page. Single source of truth: W1 discovery writes it for client and reference sites, patterns/tools/capture_*.py writes it for the pattern corpus, and gate.py w1 validates it. capture_status is written by capture_ok.py (HTTP probe + pixel variance) and a non-ok capture may never be annotated, classified, embedded, indexed or counted as evidence.",
+ "type": "object",
+ "additionalProperties": true,
+ "required": [
+  "url",
+  "domain",
+  "site_type",
+  "page_type",
+  "source",
+  "width",
+  "height",
+  "tiles",
+  "capture_status",
+  "schema_version"
+ ],
+ "properties": {
+  "url": {"type": "string", "pattern": "^https?://"},
+  "domain": {"type": "string", "minLength": 1},
+  "site_type": {"type": "string", "minLength": 1,
+                "description": "one of patterns/TAXONOMY.md §2 (26 verticals)"},
+  "page_type": {"type": "string", "minLength": 1},
+  "source": {"type": "string",
+             "enum": ["client", "reference", "comparison", "curated", "negative", "discovery"]},
+  "width": {"type": "integer", "minimum": 320},
+  "height": {"type": "integer", "minimum": 320,
+             "description": "capture window height, not the page's true height; content_tiles is the real extent"},
+  "tiles": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+  "content_tiles": {"type": "integer", "minimum": 0,
+                    "description": "leading tiles that are not flat — a short page is valid, its trailing tiles are padding"},
+  "capture_status": {
+   "type": "string",
+   "enum": ["ok", "blocked", "error", "blank", "parked"],
+   "description": "ok is the only value that may enter classification, DNA, the pattern corpus, embeddings, the search index or training"
+  },
+  "capture_reason": {"type": "string",
+                     "description": "machine code + the evidence it rests on, e.g. blocked:cloudflare_just_a_moment (title='Just a moment...')"},
+  "probe": {
+   "type": "object",
+   "description": "the HTTP evidence capture_status rests on",
+   "properties": {
+    "status": {"type": "integer"},
+    "final_url": {"type": "string"},
+    "title": {"type": "string"},
+    "text_sample": {"type": "string"},
+    "bytes": {"type": "integer"},
+    "seconds": {"type": "number"},
+    "error": {"type": "string"},
+    "fetched_at": {"type": "string"}
+   }
+  },
+  "images": {
+   "type": "array",
+   "description": "one entry per image on the page (CLASSIFY.md output, media blocks only — a whole section screenshot is not an image)",
+   "items": {"$ref": "#/definitions/image"}
+  },
+  "ui_analysis": {"$ref": "#/definitions/ui_analysis"},
+  "set_summary": {"$ref": "#/definitions/set_summary"},
+  "schema_version": {"type": "string"},
+  "classified_at": {"type": "string"},
+  "classifier_model": {"type": "string"}
+ },
+ "definitions": {
+  "valued": {
+   "type": "object",
+   "required": ["value", "confidence"],
+   "properties": {
+    "value": {"type": "string", "minLength": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence": {"type": "string"}
+   }
+  },
+  "image": {
+   "type": "object",
+   "required": ["file", "tile", "bbox", "medium", "subject_class", "role_on_page", "confidence"],
+   "properties": {
+    "file": {"type": "string", "description": "tile file the crop lives in"},
+    "tile": {"type": "string"},
+    "bbox": {"type": "array", "minItems": 4, "maxItems": 4,
+             "items": {"type": "number"}, "description": "[x0,y0,x1,y1] in page px"},
+    "medium": {"$ref": "#/definitions/valued"},
+    "subject": {"type": "string"},
+    "subject_class": {"$ref": "#/definitions/valued"},
+    "role_on_page": {"$ref": "#/definitions/valued"},
+    "technical": {"type": "object"},
+    "graphic": {"type": "object"},
+    "composition": {"type": "object"},
+    "emotion_axes": {
+     "type": "object",
+     "description": "CLASSIFY.md §5, integers -2..+2",
+     "additionalProperties": {"type": "number", "minimum": -2, "maximum": 2}
+    },
+    "emotion_tags": {"type": "array", "items": {"type": "string"}, "maxItems": 3},
+    "style": {"type": "object"},
+    "intent": {"type": "object"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1,
+                   "description": "min of the closed-set confidences"},
+    "evidence": {"type": "string"},
+    "classifier_model": {"type": "string"},
+    "classified_at": {"type": "string"}
+   }
+  },
+  "ui_analysis": {
+   "type": "object",
+   "description": "UI-ANALYSIS.md output, provenance extracted|inferred",
+   "properties": {
+    "summary_title": {"type": "string"},
+    "nav": {"type": "string"},
+    "layout": {"type": "object"},
+    "sections": {"type": "array", "items": {"type": "object"}},
+    "controls": {"type": "array", "items": {"type": "object"}},
+    "palette": {"type": "object",
+                "description": "role -> hex (bg, surface, ink, ink_muted, accent, accent_fg, border)"},
+    "grid": {"type": "object"},
+    "typography": {"type": "object"},
+    "imagery_icons": {"type": "object"},
+    "design_extraction": {"type": "object"},
+    "provenance": {"type": "string", "enum": ["extracted", "inferred"]}
+   }
+  },
+  "set_summary": {
+   "type": "object",
+   "required": ["dominant_medium", "emotion_axes", "emotion_tags", "style", "consistency"],
+   "properties": {
+    "dominant_medium": {"type": "string"},
+    "emotion_axes": {"type": "object",
+                     "additionalProperties": {"type": "number"}},
+    "emotion_tags": {"type": "array", "items": {"type": "string"}},
+    "style": {"type": "string"},
+    "consistency": {"type": "number", "minimum": 0, "maximum": 1},
+    "outliers": {"type": "array", "items": {"type": "string"}},
+    "n_images": {"type": "integer"},
+    "provenance": {"type": "string", "enum": ["inferred", "confirmed"]}
+   }
+  }
+ }
+}

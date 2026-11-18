@@ -1,59 +1,61 @@
 {
- "n_total": 3192,
- "n_train": 2431,
- "n_test": 761,
+ "n_total": 3050,
+ "n_train": 2333,
+ "n_test": 717,
  "n_pos": 2700,
- "n_neg": 492,
- "auc": 0.9324,
+ "n_neg": 350,
+ "auc": 0.9218,
  "precision_at_10pct": 1.0,
  "weights_learned": {
-  "pattern_fit": 0.133,
-  "ps": -0.1875,
-  "macro_micro": -0.0124,
-  "block_role_uniqueness": 0.2257,
-  "boilerplate_at_edges": 0.1287,
-  "main_content_share": -0.2416,
-  "media_context_binding": -0.3776,
-  "footer_is_boilerplate": -0.9343,
-  "priority_order": 0.074,
-  "s_block_pace": 0.7341,
-  "s_cta_presence": 1.4325,
-  "s_row_regularity": -0.3046,
-  "s_prose_mass": 0.3407,
-  "anti": 0.9897
+  "pattern_fit": 0.1129,
+  "ps": -0.1887,
+  "macro_micro": 0.081,
+  "block_role_uniqueness": 0.1429,
+  "boilerplate_at_edges": 0.0346,
+  "main_content_share": -0.1172,
+  "media_context_binding": -0.3413,
+  "footer_is_boilerplate": -0.9379,
+  "priority_order": 0.087,
+  "s_block_pace": 0.6691,
+  "s_cta_presence": 1.2973,
+  "s_row_regularity": -0.345,
+  "s_prose_mass": 0.1999,
+  "anti": 0.9332,
+  "img_fit": 0.785
  },
- "bias": 0.5445,
+ "bias": 0.3873,
  "correlations": {
-  "pattern_fit": 0.245,
-  "ps": -0.464,
-  "macro_micro": -0.056,
+  "pattern_fit": 0.186,
+  "ps": -0.383,
+  "macro_micro": -0.057,
   "block_role_uniqueness": 0.0,
-  "boilerplate_at_edges": -0.05,
-  "main_content_share": -0.374,
-  "media_context_binding": -0.036,
-  "footer_is_boilerplate": -0.469,
-  "priority_order": -0.032,
-  "s_block_pace": 0.566,
-  "s_cta_presence": 0.651,
-  "s_row_regularity": -0.422,
-  "s_prose_mass": 0.129,
-  "anti": 0.662
+  "boilerplate_at_edges": -0.038,
+  "main_content_share": -0.306,
+  "media_context_binding": 0.001,
+  "footer_is_boilerplate": -0.407,
+  "priority_order": -0.019,
+  "s_block_pace": 0.499,
+  "s_cta_presence": 0.588,
+  "s_row_regularity": -0.359,
+  "s_prose_mass": 0.074,
+  "anti": 0.597,
+  "img_fit": 0.513
  },
  "prevalence": {
   "pattern_fit": {
-   "mobbin": 0.267,
-   "negative": 0.244,
-   "diff": 0.023
+   "mobbin": 0.238,
+   "negative": 0.221,
+   "diff": 0.016
   },
   "ps": {
    "mobbin": 0.742,
-   "negative": 0.908,
-   "diff": -0.166
+   "negative": 0.891,
+   "diff": -0.149
   },
   "macro_micro": {
    "mobbin": 0.417,
-   "negative": 0.468,
-   "diff": -0.051
+   "negative": 0.476,
+   "diff": -0.059
   },
   "block_role_uniqueness": {
    "mobbin": 1.0,
@@ -62,57 +64,62 @@
   },
   "boilerplate_at_edges": {
    "mobbin": 0.973,
-   "negative": 0.994,
-   "diff": -0.021
+   "negative": 0.991,
+   "diff": -0.019
   },
   "main_content_share": {
    "mobbin": 0.607,
-   "negative": 0.886,
-   "diff": -0.279
+   "negative": 0.862,
+   "diff": -0.255
   },
   "media_context_binding": {
    "mobbin": 0.61,
-   "negative": 0.659,
-   "diff": -0.049
+   "negative": 0.609,
+   "diff": 0.001
   },
   "footer_is_boilerplate": {
    "mobbin": 0.287,
-   "negative": 0.919,
-   "diff": -0.631
+   "negative": 0.9,
+   "diff": -0.613
   },
   "priority_order": {
    "mobbin": 0.977,
-   "negative": 0.99,
-   "diff": -0.013
+   "negative": 0.986,
+   "diff": -0.009
   },
   "s_block_pace": {
    "mobbin": 0.822,
-   "negative": 0.318,
-   "diff": 0.504
+   "negative": 0.34,
+   "diff": 0.482
   },
   "s_cta_presence": {
    "mobbin": 0.894,
-   "negative": 0.146,
-   "diff": 0.748
+   "negative": 0.171,
+   "diff": 0.723
   },
   "s_row_regularity": {
    "mobbin": 0.382,
-   "negative": 0.874,
-   "diff": -0.492
+   "negative": 0.849,
+   "diff": -0.467
   },
   "s_prose_mass": {
    "mobbin": 0.17,
-   "negative": 0.112,
-   "diff": 0.058
+   "negative": 0.133,
+   "diff": 0.038
   },
   "anti": {
    "mobbin": 0.904,
-   "negative": 0.381,
-   "diff": 0.523
+   "negative": 0.406,
+   "diff": 0.498
+  },
+  "img_fit": {
+   "mobbin": 0.704,
+   "negative": 0.532,
+   "diff": 0.172
   }
  },
  "score_distribution": {
-  "positive_mean": 3.008,
-  "negative_mean": 0.139
+  "positive_mean": 2.961,
+  "negative_mean": 0.398
  }
 }

@@ -2,15 +2,15 @@
 id: profile-architecture
 type: profile
 site_type: architecture
-n: 1800
+n: 2070
 links:
   derives_from: [patterns-index]
-  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence]
+  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style]
 ---
 
 # DNA — architecture
 
-Distribution over alleles for 1800 annotated screens (source: Mobbin + web supplement).
+Distribution over alleles for 2070 annotated screens (source: Mobbin + web supplement).
 
 | Gene | Dominant allele | Share | Runner-up |
 |---|---|---|---|
@@ -34,6 +34,9 @@ Distribution over alleles for 1800 annotated screens (source: Mobbin + web suppl
 | `whitespace-band` | `airy` | 72% | medium |
 | `gallery-mode` | `single-hero` | 67% | grid |
 | `form-presence` | `none` | 100% | — |
+| `mood-energy` | `balanced` | 68% | energetic |
+| `mood-register` | `premium` | 69% | everyday |
+| `image-style` | `editorial` | 71% | minimal |
 
 ## Profile centroid
 

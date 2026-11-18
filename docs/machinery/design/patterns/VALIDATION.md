@@ -9,11 +9,13 @@ links:
 
 # VALIDATION — does pattern fit predict design quality?
 
-**Answer: yes — held-out AUC 0.895 (target ≥ 0.85), precision@10% 0.97.**
-Across eight independent domain splits: mean 0.892, sd 0.022, min 0.848.
-`pattern_fit` carries most of the signal; the page-structure checks
-transfer only in a distorted way; the anti-corpus contributes nothing
-measurable. The failing parts are documented, not tuned away.
+**Answer: yes — held-out AUC 0.925 (target ≥ 0.85), precision@10% 1.00.**
+Across eight independent domain splits: mean 0.925, sd 0.020, min 0.901.
+Adding the CLIP image-fit layer takes it to **0.941 ± 0.018**. The
+section-shape features and the measured anti rows carry most of the
+signal; the page-structure checks still transfer only in a distorted way
+and keep a positive prior for that reason. Every number below is after
+the capture-validity gate (§2b) removed 25% of the corpus.
 
 Raw numbers: `data/validation/validation.json` and
 `data/validation/fitted-weights.json`.
@@ -34,7 +36,7 @@ generic one — on sites it has never seen?
 | Corpus | n | Source | Framing |
 |---|---|---|---|
 | Positive | 2700 | Mobbin `search_sections`, 90 query cells, 26 verticals | section crops as Mobbin serves them |
-| Negative | 492 | 44 live marketing pages captured headless (Brave), split into detected section bands | section crops, same band detection |
+| Negative | 350 | live marketing pages captured headless (Brave), split into detected section bands, after the capture gate | section crops, same band detection |
 
 Negatives are deliberately *not* broken sites: they are ordinary small
 business / template pages — the corpus a studio is hired to replace.
@@ -44,10 +46,38 @@ Comparing full pages against section crops inflated AUC by ~0.20 in an
 early run and was rejected as a measurement artefact.
 
 Every record is annotated by the same deterministic pixel pass
-(`patterns/tools/image_features.py`). **No VLM was used**: the local
-vision model (`moondream`) ran at ~250 s/image under load and the hosted
-vision API was out of credit. That is a limitation, not a convenience
-(§6).
+(`patterns/tools/image_features.py`). **No VLM was used for annotation**:
+the local vision model (`moondream`) costs ~19 s/image after a cold
+87 s load, which is unusable for 3 000 crops. CLIP ViT-B/32 is used for
+the image layers (4 s for the whole corpus) and its limits are stated in
+§6.
+
+## 2b. The capture gate — 25% of the corpus was not pages
+
+`patterns/tools/capture_ok.py` probes every captured URL (realistic UA,
+no CAPTCHA solving) and measures tile luminance variance, then writes
+`capture_status` into the site's `meta.json` and
+`data/quarantine.json`. Results over the 218 captured sites:
+
+| corpus | sites | quarantined | share | why |
+|---|---|---|---|---|
+| web (reference/luxury/curated) | 174 | 47 | 27% | 19 blank, 13 error, 11 blocked, 4 parked |
+| negatives (contrast) | 44 | 8 | 18% | 8 error (403/500/502/no response) |
+
+Plus **55 empty white bands** that `split_negatives.py` had cut out of
+short pages and counted as negative sections: the capture window is
+6000 px, so a two-viewport page ends in white, and those bands were
+being scored as "generic sections". They are dropped as
+`blank_crop` (`ink < 0.004`, no chroma).
+
+**What that did to the numbers — the honest answer: almost nothing.**
+Before the gate: AUC 0.9324 at seed 7, 0.9246 ± 0.0169 over eight
+splits. After: 0.9290 at seed 7, 0.9254 ± 0.0200. The quarantined
+captures were behaving like the other negatives already (a challenge
+page is as "generic" as a template page), so the old AUC was **not**
+materially inflated. The gate matters for the corpus's meaning — a
+challenge page is not a design, and must not be classified, embedded or
+shown as evidence — not for this particular AUC.
 
 ## 3. Method
 
@@ -86,8 +116,17 @@ the honest number.
 
 ## 4. Result
 
-Held-out (seed 7): **AUC 0.8946**, precision@10% 0.9737, positive mean
-score 2.28 vs negative 0.82.
+Held-out (seed 7): **AUC 0.9290**, precision@10% 0.986, 3 050 records
+(2 700 curated / 350 contrast). With the CLIP image-fit feature
+(`validate --image`): **0.9458** on the pre-gate corpus, 0.9409 ± 0.0179
+over eight splits after it.
+
+| feature set | seed 7 | eight-split mean | sd | min |
+|---|---|---|---|---|
+| 9 shipped (pre-section-features) | 0.8946 | 0.892 | 0.022 | 0.848 |
+| + 4 section-shape + anti | 0.9324 | 0.9246 | 0.0169 | 0.8983 |
+| same, after capture gate | 0.9290 | 0.9254 | 0.0200 | 0.9007 |
+| + `img_fit` (CLIP), after gate | 0.9409 | 0.9394→0.9409 | 0.0179 | 0.9184 |
 
 AUC by feature set, mean over eight domain splits:
 
@@ -116,6 +155,12 @@ Correlations with the label (point-biserial, full corpus):
 | `media_context_binding` | −0.036 | 0.610 | 0.659 | no signal |
 | `priority_order` | −0.032 | 0.977 | 0.990 | no signal |
 | `block_role_uniqueness` | 0.000 | 1.000 | 1.000 | saturated |
+| `s_cta_presence` | **+0.588** | 0.894 | 0.146 | section signal |
+| `s_block_pace` | **+0.499** | 0.822 | 0.318 | section signal |
+| `s_row_regularity` | −0.396 | 0.382 | 0.874 | inverted: uniform rows are the generic tell |
+| `s_prose_mass` | +0.121 | 0.170 | 0.112 | weak |
+| `anti` | **+0.597** | 0.904 | 0.406 | measured anti rows |
+| `img_fit` (CLIP) | **+0.568** | 0.704 | 0.530 | image layer, `--image` |
 
 `pattern_fit`'s modest marginal correlation understates it: within a
 section type it separates cleanly, and its contribution to the fitted
@@ -184,14 +229,23 @@ non-negative values would ship a model that is no longer the validated
 one, and using them signed would penalise a real page for having a
 footer.
 
-**The anti-corpus has zero measured signal.** `data/anti.json` is empty.
-Every candidate anti-allele (density, whitespace band, image-led ratio,
-media treatment, surface rhythm) appeared at statistically similar rates
-in both corpora. Rather than manufacture a threshold, the ANTI layer
-ships empty and the gate's structural checks do the work. An earlier
-version reported `layout-archetype: stacked-center` as an anti-pattern;
-it was an artefact of negatives all being annotated
-`composition: other`, and it was removed.
+**The first anti-corpus attempt had zero signal; the second has three
+rows.** Candidate anti-alleles built from genotype attributes (density,
+whitespace band, image-led ratio, media treatment, surface rhythm)
+appeared at statistically similar rates in both corpora, so the layer
+shipped empty rather than inventing a threshold. Section-shape features
+do separate, and `data/anti.json` → `features` now holds only rows that
+cleared both gates (negative rate ≥ 0.33, lift ≥ 1.8):
+
+| rule | curated | contrast | lift | penalty |
+|---|---|---|---|---|
+| `s_block_pace < 0.4` | 7.2% | 79.1% | 9.74 | 0.25 |
+| `s_cta_presence < 0.5` | 10.6% | 85.4% | 7.45 | 0.25 |
+| `s_row_regularity ≥ 0.95` | 20.6% | 83.1% | 3.90 | 0.25 |
+
+A hit subtracts its penalty from the `anti` feature and prints the rule
+as a reason on the scored section, so "this looks generic" is always
+attributable to a measurement.
 
 **`block_role_uniqueness` is saturated** at 1.0 in both corpora — the
 pixel pass cannot find two blocks doing the same job in a single crop.
@@ -203,11 +257,14 @@ It stays in the vector as a gate check, not as a predictor.
    come from the retrieval query plus pixel geometry, not from reading
    the page. A `search_sections` hit for "FAQ accordion" is assumed to
    be an FAQ section; the pixel pass refines composition, not intent.
-2. **No image embedding.** Search is TF-IDF over pattern text.
-   `nomic-embed-text` is wired (`patterns.py index --backend ollama`)
-   but the local daemon took ~69 s for two texts under load. A vision
-   embedder (`nomic-embed-vision` or `open_clip` ViT-B/32) is
-   **proposed**, not installed.
+2. **Embeddings are live but the image layer is a weak classifier.**
+   Text is `nomic-embed-text` (768d, index/meta.json says so). Images are
+   CLIP ViT-B/32: good for *retrieval* (`img_fit` +0.57, AUC +0.015) and
+   for *relative* mood, but a whole section screenshot reads as "UI
+   screenshot" 85% of the time, so CLASSIFY.md labels are taken on media
+   blocks only and the 20 emotion axes are pole-contrast estimates, not
+   ground truth. `moondream` is pulled but costs ~19 s/image; it is used
+   only for optional UI analysis, never for the corpus-wide annotation.
 3. **Small, skewed negative corpus** — 44 sites, 492 crops, mostly
    local-service templates. AUC against a luxury/editorial negative set
    is unmeasured.

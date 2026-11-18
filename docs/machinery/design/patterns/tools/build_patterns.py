@@ -157,6 +157,14 @@ TONE = {
 
 
 def load(name):
+    """Annotations, minus every capture that failed validity.
+
+    `capture_ok` marks blocked / error / blank / parked captures; a
+    challenge page counted as a section would inflate every prevalence
+    and poison the anti rows.
+    """
+    sys.path.insert(0, os.path.join(ROOT, 'tools', 'design-gate'))
+    from corpus_filter import filter_records
     p = os.path.join(DATA, name)
     out = []
     with open(p) as f:
@@ -165,7 +173,11 @@ def load(name):
             if 'error' in r:
                 continue
             out.append(r)
-    return out
+    kept, dropped = filter_records(out)
+    if any(dropped.values()):
+        print(f'{name}: kept {len(kept)}/{len(out)} '
+              f'(dropped {dropped})')
+    return kept
 
 
 def genotypes():

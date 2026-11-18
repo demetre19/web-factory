@@ -306,6 +306,8 @@ def collect(mode):
         if not os.path.isfile(mp):
             continue
         m = json.load(open(mp))
+        if m.get('capture_status', 'ok') != 'ok':
+            continue
         items = m.get('sections') or [
             {'file': t, 'role': 'main'} for t in m.get('tiles', [])]
         for i, it in enumerate(items):

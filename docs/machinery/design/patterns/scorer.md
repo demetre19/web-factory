@@ -26,7 +26,7 @@ python3 tools/design-gate/score.py label --option d2 --score 81 \
 python3 tools/design-gate/score.py fit               # refit from >=20 labels
 python3 tools/design-gate/score.py novelty --profile services \
     --genotype '{"layout-archetype": "split-media", ...}'
-python3 tools/design-gate/score.py validate [--seed 7] [--holdout 0.25]
+python3 tools/design-gate/score.py validate [--seed 7] [--holdout 0.25]     [--seeds 8] [--image]
 python3 tools/design-gate/test_design_gate.py        # CLI end-to-end checks
 ```
 
@@ -36,7 +36,10 @@ pattern match, and the reasons behind the number. `validate` rebuilds
 the pattern bank from the training domains only, cross-fits the training
 rows out-of-fold, scores the held-out domains, and writes
 `patterns/data/validation/validation.json`,
-`fitted-weights.json` and a score-distribution PNG.
+`fitted-weights.json` and a score-distribution PNG. `--seeds 8` repeats
+it over eight independent domain splits and writes `seeds.json`
+(`seeds_image.json` with `--image`) with mean/sd/min, because one split
+is a coin flip.
 
 `label` + `fit` are the human-in-the-loop path: a designer records
 "option d2 was the one we shipped, at score 81"; after 20 labels, `fit`
@@ -59,6 +62,15 @@ Each section is annotated with the same pixel pass the corpus used
 | `footer_is_boilerplate` | 0.06 | the footer reads as chrome |
 | `priority_order` | 0.06 | the first block is the page's promise |
 | `macro_micro` | 0.06 | page density against the band the corpus prefers |
+| `s_block_pace` | 0.10 | how many blocks the crop stacks (curated 0.82 vs generic 0.32) |
+| `s_cta_presence` | 0.10 | one block is an action (curated 0.89 vs generic 0.15) |
+| `s_row_regularity` | 0.06 | even block sizing — *high* is the generic tell (0.87 vs 0.38) |
+| `s_prose_mass` | 0.04 | prose weight in the crop |
+| `anti` | 0.08 | 1.0 minus the measured anti-pattern penalties (`data/anti.json` → `features`) |
+
+The last five exist because the six `PS.*` checks are *page* checks and
+do not transfer to a section crop (VALIDATION.md §5). They are measured
+on the crop itself from its block list.
 
 These are the shipped weights. `validate` records the *fitted*
 coefficients in `patterns/data/validation/fitted-weights.json` as
@@ -71,13 +83,15 @@ exactly, and refuses anything else with a message instead of a
 
 ## How good is it
 
-Held-out AUC **0.895** (target 0.85), precision@10% **0.97**, mean over
-eight domain splits 0.892 ± 0.022 — the numbers, the failing features,
+Held-out AUC **0.932** (target 0.85), precision@10% **1.00**; mean over
+eight domain splits **0.925 ± 0.017**. Adding the CLIP image-fit layer
+takes the same split to **0.946** and the eight-seed mean to
+**0.939 ± 0.016** (`validate --image`). Numbers, the failing features
 and the limitations are in `patterns/VALIDATION.md`. The short version:
-`pattern_fit` carries most of the model; the page-structure checks
-transfer only in a distorted way across the two corpora; the anti-corpus
-contributes nothing measurable and is documented as such rather than
-tuned into a fake signal.
+the section-shape features and the measured anti layer carry most of
+the model; `pattern_fit` adds a smaller, independent contribution; the
+page-structure checks still transfer only in a distorted way across the
+two corpora and keep their positive prior for that reason.
 
 ## Boundaries
 

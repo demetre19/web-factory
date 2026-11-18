@@ -10,7 +10,7 @@ links:
 # GENOME — the closed set of design genes and alleles
 
 Every website is a **genotype**: one allele per gene. The gene set is
-finite and small on purpose (20 genes). A gene is a *dimension of
+finite and small on purpose (23 genes). A gene is a *dimension of
 design decision*; an allele is a *value in its closed set*. Freehand
 values are refused exactly as freehand hex or spacing values are (P.8).
 
@@ -185,18 +185,45 @@ Whether the section carries an input form: none, an inline
 single-field capture, or a full `form-panel` (the only place a form
 lives on a money page).
 
+## gene: mood-energy
+
+alleles: [still, calm, balanced, lively, energetic]
+rules: V.2, I.3 (imagery carries the mood the copy claims)
+How much energy the page's **pictures** carry, measured on the media
+blocks with CLIP pole contrast (`calm_energetic`, −2 … +2) and cut at the
+corpus quintiles, so `calm` means "calmer than 60% of measured media"
+rather than a hand-picked number. A page with no picture takes its
+vertical's prior and is marked `derived`.
+
+## gene: mood-register
+
+alleles: [everyday, approachable, premium, luxury, ultra]
+rules: V.2, M.4 (register must match the audience, not the ego)
+Where the imagery sits on `accessible_luxurious` (−2 … +2), quintile
+cut. A cleaning service and a jeweller can both be "polished"; this gene
+says which one the pictures promise.
+
+## gene: image-style
+
+alleles: [minimal, editorial, luxury, bold-graphic, playful, technical]
+rules: V.1, V.3
+The CLIP style label (CLASSIFY.md §7, 30 values) collapsed to six
+families (`genome.STYLE_FAMILY`, one mapping used by both the genome and
+search). It is the only stylistic gene measured from the pictures
+rather than from layout geometry.
+
 ---
 
 ## Genotype vector
 
-A genotype is the ordered tuple of alleles in the order above (20
+A genotype is the ordered tuple of alleles in the order above (23
 values). `tools/design-gate/genome.py` encodes it as a one-hot vector
-(Σ allele cardinalities = **99 dims**) for cosine/Hamming search; the
+(Σ allele cardinalities = **115 dims**) for cosine/Hamming search; the
 same vector is written into each pattern file's `genotype:` block and
 each `dna/<vertical>.json` profile.
 
-The space is finite by construction: 20 genes, 99 alleles, so at most
-99 distinct dimensions and 2^99 label sets — but only 99·20 one-hot
+The space is finite by construction: 23 genes, 115 alleles, so at most
+115 distinct dimensions and 2^115 label sets — but only 115·23 one-hot
 positions can ever be set. No design can be expressed outside it, which
 is the point: a freehand value is refused, not extrapolated.
 

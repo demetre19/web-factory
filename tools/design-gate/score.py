@@ -631,6 +631,7 @@ PS_THRESHOLDS = {'block_role_uniqueness': 1.0, 'boilerplate_at_edges': 1.0,
 def build_dataset(seed=7):
     """Positives = Mobbin annotations; negatives = contrast corpus tiles."""
     from genome import genotype, vector
+    from corpus_filter import filter_records
     meta, bank = pattern_bank()
     anti = load_json(os.path.join(DATA, 'anti.json'), {})
     rows = []
@@ -639,10 +640,17 @@ def build_dataset(seed=7):
         p = os.path.join(DATA, name)
         if not os.path.exists(p):
             continue
+        recs = []
         for line in open(p):
             r = json.loads(line)
             if 'error' in r:
                 continue
+            recs.append(r)
+        recs, dropped = filter_records(recs)
+        if any(dropped.values()):
+            print(f'{name}: kept {len(recs)} (dropped {dropped})',
+                  file=sys.stderr)
+        for r in recs:
             g, _ = genotype(r)
             known = r.get('section_type') not in (None, 'other')
             fit, _, pid = pattern_fit(r, g, bank, anti, section_known=known)

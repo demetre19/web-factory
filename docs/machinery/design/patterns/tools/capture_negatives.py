@@ -12,6 +12,8 @@ import re
 import subprocess
 import sys
 
+import capture_ok
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
 NEG = os.path.join(DATA, 'negatives')
@@ -72,11 +74,17 @@ def main():
                            check=True, capture_output=True, timeout=90)
             tiles, w, h = tile(raw, outdir)
             os.remove(raw)
-            json.dump({'url': url, 'domain': dom, 'site_type': st,
-                       'page_type': pt, 'width': w, 'height': h,
-                       'tiles': tiles, 'source': 'negative'},
-                      open(meta_p, 'w'), indent=1)
-            print(f'{slug}: {w}x{h} -> {len(tiles)} tiles', flush=True)
+            meta = {'url': url, 'domain': dom, 'site_type': st,
+                    'page_type': pt, 'width': w, 'height': h,
+                    'tiles': tiles, 'source': 'negative'}
+            meta['probe'] = capture_ok.probe(url)
+            status, reason = capture_ok.decide(meta, outdir)
+            meta['capture_status'] = status
+            meta['capture_reason'] = reason
+            meta['schema_version'] = '1.0'
+            json.dump(meta, open(meta_p, 'w'), indent=1)
+            print(f'{slug}: {w}x{h} -> {len(tiles)} tiles [{status}]',
+                  flush=True)
         except Exception as e:
             print(f'{slug}: FAILED {e}', flush=True)
 

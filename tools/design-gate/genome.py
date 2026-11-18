@@ -66,6 +66,15 @@ GENES = [
     ('gallery-mode', ['single-hero', 'grid', 'lightbox', 'carousel',
                       'before-after']),
     ('form-presence', ['none', 'inline', 'panel']),
+    # Expressive genes. Measured on the page's media blocks with CLIP
+    # (patterns/tools/embed_media.py), because mood lives in the pictures,
+    # not in the layout: a whole-section screenshot reads as "UI
+    # screenshot" to any vision model.
+    ('mood-energy', ['still', 'calm', 'balanced', 'lively', 'energetic']),
+    ('mood-register', ['everyday', 'approachable', 'premium', 'luxury',
+                       'ultra']),
+    ('image-style', ['minimal', 'editorial', 'luxury', 'bold-graphic',
+                     'playful', 'technical']),
 ]
 GENE_NAMES = [g for g, _ in GENES]
 ALLELES = dict(GENES)
@@ -142,6 +151,98 @@ def band(x, cuts):
         if x < c:
             return i
     return len(cuts)
+
+
+# CLIP style labels (CLASSIFY.md §7, 30 values) -> six families. One
+# mapping, used by the genome and by search, so "editorial" means the same
+# thing in both.
+STYLE_FAMILY = {
+    'minimal': 'minimal', 'Scandinavian': 'minimal',
+    'Japanese/wabi-sabi': 'minimal', 'Swiss/international': 'minimal',
+    'flat design': 'minimal',
+    'editorial': 'editorial', 'documentary': 'editorial',
+    'lifestyle': 'editorial', 'vintage print': 'editorial',
+    'retro (50s-90s)': 'editorial', 'Y2K': 'editorial',
+    'art deco': 'editorial', 'Bauhaus': 'editorial',
+    'luxury/fashion': 'luxury',
+    'maximal': 'bold-graphic', 'brutalist': 'bold-graphic',
+    'grunge': 'bold-graphic', 'cyberpunk/neon': 'bold-graphic',
+    'street': 'bold-graphic',
+    'cartoon': 'playful', 'anime/manga': 'playful',
+    "children's book": 'playful', 'corporate-Memphis': 'playful',
+    'Memphis': 'playful', 'claymorphism/3D soft': 'playful',
+    'scientific/technical': 'technical', 'isometric tech': 'technical',
+    'line art': 'technical', 'corporate': 'technical',
+}
+
+# Priors used only when a record has no media measurement (no picture, or
+# a crop with no media block). Marked `derived` like every other fallback.
+REGISTER_PRIOR = {
+    'luxury-goods': 'luxury', 'jewellery': 'luxury', 'fashion': 'luxury',
+    'architecture': 'premium', 'hospitality': 'premium',
+    'saas': 'premium', 'technology': 'premium', 'finance': 'premium',
+    'legal': 'premium', 'automotive': 'premium',
+    'nonprofit': 'approachable', 'community': 'approachable',
+    'healthcare': 'approachable', 'education': 'approachable',
+    'government': 'approachable', 'services': 'approachable',
+}
+
+_MEDIA = {}
+
+
+def media_labels():
+    """record image path -> CLIP media labels (embed_media.py output)."""
+    if _MEDIA:
+        return _MEDIA
+    p = os.path.join(DATA, 'image_vectors', 'media_labels.json')
+    try:
+        _MEDIA.update(json.load(open(p))['labels'])
+    except (OSError, ValueError, KeyError):
+        pass
+    return _MEDIA
+
+
+def _rel(image):
+    d = os.path.join(DATA, '').replace(os.sep, '/')
+    return image.replace(os.sep, '/').split(d, 1)[-1]
+
+
+_EDGES = {}
+
+
+def mood_edges():
+    """Quintile edges of the measured axes, so each allele means
+    "calmer/lossier than N% of the corpus" instead of a hand-picked cut."""
+    if _EDGES:
+        return _EDGES
+    labs = media_labels().values()
+    for axis in ('calm_energetic', 'accessible_luxurious'):
+        vals = sorted(L['emotion_axes'][axis] for L in labs
+                      if L.get('emotion_axes', {}).get(axis) is not None)
+        if len(vals) < 50:
+            continue
+        _EDGES[axis] = [vals[int(len(vals) * q)] for q in (0.2, 0.4, 0.6, 0.8)]
+    return _EDGES
+
+
+def mood_alleles(rec):
+    """(mood-energy, mood-register, image-style, derived?) for a record."""
+    lab = media_labels().get(_rel(rec.get('image') or ''))
+    if lab:
+        e = lab['emotion_axes'].get('calm_energetic')
+        r = lab['emotion_axes'].get('accessible_luxurious')
+        st = STYLE_FAMILY.get(lab.get('style') or '')
+        if e is not None and r is not None and st:
+            edges = mood_edges()
+            ee = edges.get('calm_energetic', [-1.0, -0.3, 0.3, 1.0])
+            re_ = edges.get('accessible_luxurious', [-1.0, -0.3, 0.3, 1.0])
+            energy = ALLELES['mood-energy'][
+                sum(1 for x in ee if e >= x)]
+            reg = ALLELES['mood-register'][
+                sum(1 for x in re_ if r >= x)]
+            return energy, reg, st, False
+    return ('balanced', REGISTER_PRIOR.get(rec.get('site_type'), 'premium'),
+            'editorial', True)
 
 
 def genotype(rec, density_cuts=(0.12, 0.24)):
@@ -239,6 +340,9 @@ def genotype(rec, density_cuts=(0.12, 0.24)):
     rhythm = ('dark-dominant' if surface == 'inverse'
               else 'one-contrast-moment')
     macro = PAGE_MACRO.get(rec.get('page_type'), 'promise-detail-act')
+    m_energy, m_register, m_style, m_derived = mood_alleles(rec)
+    if m_derived:
+        derived += ['mood-energy', 'mood-register', 'image-style']
 
     return {
         'layout-archetype': arch,
@@ -263,6 +367,9 @@ def genotype(rec, density_cuts=(0.12, 0.24)):
         'whitespace-band': wsb,
         'gallery-mode': gallery,
         'form-presence': form,
+        'mood-energy': m_energy,
+        'mood-register': m_register,
+        'image-style': m_style,
     }, derived
 
 
@@ -284,6 +391,8 @@ def cosine(a, b):
 
 
 def load(mode='mobbin'):
+    """Annotations minus failed captures (see capture_ok.py)."""
+    from corpus_filter import filter_records
     p = os.path.join(DATA, 'annotations.jsonl' if mode == 'mobbin'
                      else 'annotations_negatives.jsonl')
     out = []
@@ -293,7 +402,10 @@ def load(mode='mobbin'):
             if 'error' in r:
                 continue
             out.append(r)
-    return out
+    kept, dropped = filter_records(out)
+    if any(dropped.values()):
+        print(f'{mode}: kept {len(kept)}/{len(out)} (dropped {dropped})')
+    return kept
 
 
 def density_cuts(recs):
