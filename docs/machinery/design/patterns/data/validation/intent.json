@@ -1,0 +1,45 @@
+{
+ "structural only": {
+  "auc_mean": 0.618,
+  "min": 0.5162,
+  "max": 0.6765,
+  "n_features": 13
+ },
+ "intent only": {
+  "auc_mean": 0.5351,
+  "min": 0.3235,
+  "max": 0.6723,
+  "n_features": 8
+ },
+ "structural + intent": {
+  "auc_mean": 0.6161,
+  "min": 0.5,
+  "max": 0.7311,
+  "n_features": 21
+ },
+ "correlations": {
+  "ps": 0.144,
+  "macro_micro": 0.209,
+  "block_role_uniqueness": 0.0,
+  "boilerplate_at_edges": 0.143,
+  "main_content_share": 0.29,
+  "media_context_binding": -0.008,
+  "footer_is_boilerplate": -0.067,
+  "priority_order": 0.09,
+  "s_block_pace": -0.034,
+  "s_cta_presence": -0.032,
+  "s_row_regularity": -0.016,
+  "s_prose_mass": 0.082,
+  "anti": 0.0,
+  "n_attributes": 0.107,
+  "n_audience": 0.051,
+  "n_cta_vocab": 0.031,
+  "text_len": 0.098,
+  "choice_consistency": -0.059,
+  "image_consistency": -0.2,
+  "n_images": -0.096,
+  "n_sections": -0.179
+ },
+ "n": 124,
+ "note": "Mobbin vs negatives cannot test this: Mobbin screens carry no copy, so no attribute or audience is measurable. The web corpus has both classes."
+}

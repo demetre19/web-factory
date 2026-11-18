@@ -3,7 +3,7 @@ id: patterns-index
 type: index
 links:
   index: design-index
-  contains: [patterns-taxonomy]
+  contains: [patterns-taxonomy, intent-index]
 ---
 
 # PATTERNS INDEX — the mined composition library

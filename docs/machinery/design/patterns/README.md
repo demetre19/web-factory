@@ -199,6 +199,47 @@ uv run --quiet embed_images.py means    # 88 pattern means
 ViT-B/32 is 151 M params / ~600 MB, small enough to install without
 asking. Anything larger is an operator decision.
 
+## Intent layer — what a site is trying to be, measured
+
+`patterns/tools/intent.py` reads each valid capture's copy and pictures
+and records what they claim and what they do:
+
+```bash
+python3 intent.py text     # visible copy -> meta.page_text (threaded)
+python3 intent.py extract  # attributes/audience/CTAs -> meta.intent + choices
+python3 intent.py model    # P(choice | vertical, attribute, audience)
+python3 intent.py graph    # knowledge-graph nodes -> patterns/intent/
+```
+
+17 brand attributes and 13 audiences are found by a **closed cue
+lexicon** — every hit keeps the matched sentence as evidence, so an
+attribute is a quotation, not an impression. Choices are the measured
+alleles (surface, accent, page length, imagery, medium, image style,
+energy, register). The conditional model labels each choice
+conventional / deliberate deviation against its vertical.
+
+53 knowledge-graph nodes under `patterns/intent/` (17
+`intent-attribute-*`, 36 `intent-choice-*`, reachable via
+`patterns-index -> intent-index`) carry the P(choice | vertical) and
+P(choice | attribute) tables, so W1/W2 can cite a node and get the
+numbers.
+
+**What it is not: a quality predictor.** On the 124 valid captures
+(80 reference vs 44 template), intent features alone score AUC 0.535 —
+no better than chance — and add nothing over structural (0.616 vs
+0.618). See `data/validation/intent.json`. The layer is a contract for
+W1/W2 ("the brief claims luxury; the variant picked everyday") — the
+quality scoring stays structural + image, as validated. Mobbin screens
+carry no copy, so Mobbin-vs-negatives intent validation is not
+measurable; that is stated, not hidden.
+
+`patterns/tools/annotate_web.py` fills the rest of the capture meta:
+`images[]` per media block (CLIP zero-shot over CLASSIFY.md closed sets;
+values below a 0.02 margin floor are emitted `other:ambiguous` with the
+margin as evidence — CLIP cannot label arbitrary crops reliably and the
+record says so), `ui_analysis` (provenance: extracted — palette from the
+page border, grid and sections from the pixel pass), `set_summary`.
+
 ## Honest limits
 
 - Section types come from the retrieval query plus pixel geometry, not
