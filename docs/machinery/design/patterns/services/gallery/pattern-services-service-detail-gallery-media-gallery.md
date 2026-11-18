@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/1f98ac0c-8660-4b68-bbfc-0956d3be3e56?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [C.1, C.6, L.1, L.10, L.5, W.2, W.3]
 enforced_by: [check_contrast, check_emphasis, check_rhythm, check_section_enums, check_wireframe_lock, check_wireframe_tags]
+consumes: [gene-layout-archetype, gene-surface-rhythm, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
   layout-archetype: carousel-track

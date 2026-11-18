@@ -478,9 +478,14 @@ def checklist_blank_fails(ctx, wave):
 
 def check_checklist(ctx):
     """P.9 — the wave's evidence table is present and every cell filled."""
-    if ctx.wave not in WAVE_CHECKS:
+    wave = ctx.wave
+    if wave == 'selftest':            # fixtures declare their own wave
+        marker = os.path.join(ctx.dir, '.wave')
+        if os.path.isfile(marker):
+            wave = open(marker).read().strip()
+    if wave not in WAVE_CHECKS:
         return []
-    return [f'P.9 {x}' for x in checklist_blank_fails(ctx, ctx.wave)]
+    return [f'P.9 {x}' for x in checklist_blank_fails(ctx, wave)]
 
 # ---------------------------------------------------------------- WCAG
 
@@ -3237,6 +3242,21 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # checks that read global files are unit-tested through their helpers
+    if _tier_fails({'T.1': {'tier': 'invariant'}}):
+        f.append('check_tiers rejects a valid tier')
+    for bad in ({}, {'tier': 'nope'}, {'tier': None}):
+        if not _tier_fails({'X.9': bad}):
+            f.append(f'check_tiers accepts tier {bad!r}')
+    vec = {v: 90.0 for v in (load_score_vectors().get('vectors') or {})
+           if v != 'overall'}
+    if _scorecard_fails({'sections': {'T': 95}, 'vectors': vec}):
+        f.append('check_scorecard rejects a clean card')
+    if not _scorecard_fails({'sections': {'T': 80}, 'vectors': vec}):
+        f.append('check_scorecard accepts a section below 90')
+    if not _scorecard_fails({'sections': {'T': 95},
+                             'vectors': dict(vec, colour=None)}):
+        f.append('check_scorecard accepts a non-numeric vector')
     # gate.py dna must validate and render on a copy of the base fixture
     import shutil, tempfile
     tmp = tempfile.mkdtemp()
@@ -3541,17 +3561,16 @@ def declared_breaks(plan):
             out.append(d)
     return out
 
-def check_tiers(ctx):
-    """B.1 — every rule in enforcement.json has exactly one valid tier."""
-    rules = _enforcement_rules()
+def _tier_fails(rules):
     if not rules:
         return ['B.1 enforcement.json unreadable — no tiers to check']
-    f = []
-    for rid, e in rules.items():
-        t = e.get('tier')
-        if t not in TIERS:
-            f.append(f'B.1 rule {rid} has no valid tier ({t!r})')
-    return f
+    return [f'B.1 rule {rid} has no valid tier ({e.get("tier")!r})'
+            for rid, e in rules.items() if e.get('tier') not in TIERS]
+
+
+def check_tiers(ctx):
+    """B.1 — every rule in enforcement.json has exactly one valid tier."""
+    return _tier_fails(_enforcement_rules())
 
 def check_burst(ctx):
     """B.2/B.3 — toggle in range; exactly one wildcard when on."""
@@ -3885,8 +3904,7 @@ def score_vectors(scores):
         weights[vid] = v['weight']
     return out, weights
 
-def check_scorecard(ctx):
-    card = compute_scorecard(ctx)
+def _scorecard_fails(card):
     f = [f'scorecard section {s} = {v} < 90'
          for s, v in card.get('sections', {}).items() if v < 90]
     spec = set(load_score_vectors().get('vectors') or {}) - {'overall'}
@@ -3902,6 +3920,10 @@ def check_scorecard(ctx):
     if card.get('unscored'):
         f.append(f'unscored rules: {card["unscored"][:5]}')
     return f
+
+
+def check_scorecard(ctx):
+    return _scorecard_fails(compute_scorecard(ctx))
 
 def cmd_score(a):
     ctx = Ctx(a.pipeline_dir, a)

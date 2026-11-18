@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/6f561885-29c7-4ac0-9957-d3e5b675845d?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [V.1, V.3, W.2, W.3, W.5]
 enforced_by: [check_emphasis, check_section_enums, check_segment_media, check_speech_acts, check_wireframe_tags]
+consumes: [gene-image-led-ratio, gene-cta-restraint, gene-proof-type]
 used_in: [w4, w5]
 genotype:
   image-led-ratio: text-led

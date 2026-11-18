@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/4f0797f0-57e5-442a-b3be-36bb071bd4a7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [C.1, C.6, G.3, L.7, V.1, V.3]
 enforced_by: [check_contrast, check_rhythm, check_section_enums, check_segment_media, check_spacing_scale]
+consumes: [gene-image-led-ratio, gene-density-tier, gene-surface-rhythm]
 used_in: [w4, w5]
 genotype:
   density-tier: spacious

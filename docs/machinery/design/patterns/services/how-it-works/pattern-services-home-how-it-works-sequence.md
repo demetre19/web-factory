@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/7a30e42a-0869-4d59-ab60-8bee593c984d?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [C.1, C.6, L.1, L.10, L.5, V.1, V.3]
 enforced_by: [check_contrast, check_rhythm, check_section_enums, check_segment_media, check_wireframe_lock]
+consumes: [gene-layout-archetype, gene-image-led-ratio, gene-surface-rhythm]
 used_in: [w4, w5]
 genotype:
   layout-archetype: sequence-steps

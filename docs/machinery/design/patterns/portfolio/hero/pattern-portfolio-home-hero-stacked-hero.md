@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/0e035b6e-f0ab-416e-9ade-af96d4542658?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [E.2, W.2, W.3, W.5, W.6]
 enforced_by: [check_emphasis, check_section_enums, check_speech_acts, check_wireframe_tags]
+consumes: [gene-cta-restraint, gene-proof-type, gene-disclosure-tier]
 used_in: [w4, w5]
 genotype:
   cta-restraint: single-primary

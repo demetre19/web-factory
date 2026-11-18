@@ -459,6 +459,7 @@ def write_pattern(path, pid, site, page, section, modal, genes, prev, n,
         lines.append(f'  - {u}')
     lines.append(f'implies_rules: [{", ".join(implies)}]')
     lines.append(f'enforced_by: [{", ".join(checks)}]')
+    lines.append(f'consumes: [{", ".join("gene-" + g for g in genes)}]')
     lines.append('used_in: [w4, w5]')
     lines.append('genotype:')
     for g in ['layout-archetype', 'page-macro-structure', 'density-tier',

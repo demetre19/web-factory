@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/816e816c-912a-4fa9-9673-00d7200ec4c3?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [E.2, G.3, L.7, W.5, W.6]
 enforced_by: [check_rhythm, check_section_enums, check_spacing_scale, check_speech_acts]
+consumes: [gene-density-tier, gene-proof-type, gene-disclosure-tier]
 used_in: [w4, w5]
 genotype:
   density-tier: compact

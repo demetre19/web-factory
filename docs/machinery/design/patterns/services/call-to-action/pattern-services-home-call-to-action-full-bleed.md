@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/4d6c6c50-ebc6-4765-8847-faf418e7690c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [L.1, L.10, L.5, V.1, V.3, W.2, W.3]
 enforced_by: [check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags]
+consumes: [gene-layout-archetype, gene-image-led-ratio, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
   layout-archetype: full-bleed-media

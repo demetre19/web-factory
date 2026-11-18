@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/d9d85e6f-7e40-44d2-8001-d63f33a80913?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [C.1, C.6, L.1, L.10, L.5, W.2, W.3]
 enforced_by: [check_contrast, check_emphasis, check_rhythm, check_section_enums, check_wireframe_lock, check_wireframe_tags]
+consumes: [gene-layout-archetype, gene-surface-rhythm, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
   layout-archetype: editorial-single

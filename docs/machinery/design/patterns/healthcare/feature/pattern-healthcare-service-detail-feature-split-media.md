@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/b4ca3993-218b-41c9-a773-1ac0690d9c50?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [C.1, C.6, E.2, W.5, W.6]
 enforced_by: [check_contrast, check_rhythm, check_section_enums, check_speech_acts]
+consumes: [gene-surface-rhythm, gene-proof-type, gene-disclosure-tier]
 used_in: [w4, w5]
 genotype:
   surface-rhythm: one-contrast-moment

@@ -21,6 +21,7 @@ evidence:
   - https://mobbin.com/sites/sections/58de7e34-acd9-44d5-a479-4ad6bc4a9237?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [G.3, L.1, L.10, L.5, L.7, V.1, V.3]
 enforced_by: [check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock]
+consumes: [gene-layout-archetype, gene-image-led-ratio, gene-density-tier]
 used_in: [w4, w5]
 genotype:
   layout-archetype: horizontal-band
