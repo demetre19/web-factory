@@ -159,6 +159,40 @@ Checked at DESIGN-PLAN §5 (plan time) and build self-lint:
 - [ ] Smart quotes in authored copy; no straight primes
 - [ ] Hero subhead = 50–60% of headline size
 - [ ] Text-over-image has 40–60% tint buffer
+- [ ] No severing full-bleed *content* bars (surfaces may bleed; boxes inset ≥10–15%)
+- [ ] Editorial chunking — no monolithic paragraph blocks; subheads/lists/quotes present
+
+### T.9 Reading paths — directional flow
+
+Hierarchy isn't just size — it's *where the eye goes next*. Western
+readers scan top-left → right → down. Arrange blocks so the primary
+read lands upper-left (or the declared axis), the secondary read sits
+in the scan path, and the tertiary read fills the detail zone. This is
+why `split-media` puts text left/media right by default: the headline
+hits first, the image rewards the scan.
+
+### T.10 Inset containers vs. severing bars
+
+**Full-bleed *content boxes* that stretch edge-to-edge and sever the
+page are a defect** — they trap whitespace and chop the canvas into
+dead blocks. Inset cards/panels so negative space flows *around*
+them.
+
+This is **not** the same rule as the `inverse`/`brand` surface: a
+*surface* may bleed (it's the contrast moment, G.3/L.3); a *content
+box* inside it must still inset ≥10–15%. The distinction: surface =
+the field, box = the container on the field.
+
+### T.11 DOs / DONTs matrix — the refusal table
+
+| Area | DO | DON'T |
+|---|---|---|
+| Alignment | flush-left/rag-right; one axis; hanging punctuation | centered body; justify; random axes |
+| Contrast | 2×/4×/6× scale; skip a weight; 3 read tiers | minor size bumps; adjacent weights; uniform weight |
+| Typefaces | ≤2 families; contrasting classifications; T.4 list | same-class pairings; fad/display fonts; >2 families |
+| Letterforms | native proportions; optical kerning; tight display tracking | stretch/compress; straight primes; over-tracked body |
+| Spacing | evenly-uneven rag; no widows/orphans; single space | deep rags; stranded words; double spaces |
+| Web composition | inset containers; de-monolith chunks; edge breathing room | severing full-bleed bars; monolithic paragraphs; corner-jam |
 
 ---
 
