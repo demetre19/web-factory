@@ -86,10 +86,14 @@ not a default.
 ## Fill order
 
 1. `site:` prose decisions (§1–4) — written first, from brief + audit.
-2. Refs inventory pass — read captures/manifest, list candidate tokens.
-3. `system:` numbers (§5) — filled *after* the refs pass (F9). On
-   refs modes, extracted evidence overrides plan defaults; every
-   override is logged in `decisions[]`.
+2. Refs/guideline extraction pass — read captures/manifest/guideline
+   site; list candidate tokens with provenance tags (§Guideline
+   prefill). Design guideline → `system:` fields; content guideline →
+   `rhetoric`/`copy` fields only.
+3. `system:` numbers (§5) — filled *after* the extraction pass (F9).
+   `extracted`/`snapped` values override plan defaults; `inferred`
+   fields stay open until operator-confirmed; every override is
+   logged in `decisions[]`.
 4. `pages:` map — per route, its own intent/idea/rhetoric/sections.
 5. **ASCII draft + critique** — render the money page's `sections[]`
    as ASCII boxes (one per row, annotated with
@@ -114,7 +118,51 @@ not a default.
    component each `composition` instantiates; build self-lints every
    rendered section's classes against its SPEC row's enums (F7).
 
+## Guideline prefill — extraction with a confidence model
+
+When the operator supplies a guideline site (URL or capture — for
+design *or* content), the refs pass (step 2) is not a read-through;
+it is an extraction pass that pre-fills this file. Rule: **prefill
+everything that is certain, flag everything that is inferred, never
+guess silently.**
+
+**Provenance tags** — every `system:`/`direction:` field records how
+its value arrived:
+
+| Tag | Meaning | Certainty |
+|---|---|---|
+| `extracted` | Computed CSS value read verbatim (font stack, hex, px measure) | high — binds directly |
+| `snapped` | Measured value mapped to the nearest closed-set member | high — the delta is logged in `decisions[]` (`because: guideline measured X, snapped to Y`) |
+| `inferred` | Judgment call from visual evidence (direction axes, treatment, personality) | medium — listed for operator ratification, never silent |
+| `chosen` | No evidence — a free selection from the closed set | the plan's default state |
+
+**Design-guideline extraction map** (observed → field):
+
+| Observe on the guideline | Lands in | Snap rule |
+|---|---|---|
+| computed `font-family` stacks | `system.type.fonts` | member of T.4 directory, else nearest approved substitute — logged |
+| computed font-size ramp (h1…body) | `system.type` ratio/ranks | infer the modular ratio; snap to `clamp()` endpoints |
+| dominant hexes (bg, text, CTA) | `system.color.roles` | snap to C.1 role map; accent verified against C.4 harmony |
+| computed `border-radius` on cards/buttons | `direction.shape` → `system` radius tokens | snap to S.2 token row; the personality is `inferred` |
+| measured spacing rhythm | `system.space` usage | snap to G.1 members; a non-member rhythm is a `decisions[]` entry |
+| animation timing/easing (computed `transition`) | `direction.motion` | `inferred` — pick the M.1 personality it resembles |
+| imagery treatment (desat, duotone, B&W) | `system.media.treatment` | `inferred` pick from V.2 |
+| icon set identity | `system.icons.family` | extracted if identifiable (Lucide/Feather glyphs), else `chosen` |
+
+**Content-guideline extraction map** (copy → field): the guideline
+page's argument maps section-by-section onto `rhetoric[]`
+speech-acts; its CTA labels pre-fill `system.copy.cta_person`; its
+tone pre-fills the W.1 context picks. Content guidelines never
+touch `direction` or `system` numbers.
+
+**Gate:** fields tagged `extracted`/`snapped` are ratified when the
+plan is reviewed — the tag is the audit trail. `inferred` fields are
+listed in `decisions[]` as *open* until the operator confirms; a
+plan with an unconfirmed `inferred` axis is incomplete at L0.
+
 ```yaml
+# Every system value carries a provenance tag: extracted | snapped | inferred | chosen.
+# Extracted/snapped = ratified by review; inferred = listed in decisions[] until confirmed.
 site:
   slug: <slug>
   date: <YYYY-MM-DD>
