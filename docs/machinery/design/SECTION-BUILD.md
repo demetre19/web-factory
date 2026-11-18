@@ -10,7 +10,7 @@ links:
 # SECTION-BUILD — section-unit build and mechanical glue
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** This
-file is the architecture W5–W8 run on. Rules: `rules/SB.md`
+file is the architecture W3–W8 runs on. Rules: `rules/SB.md`
 (SB.1–SB.6). Exemplars: `templates/sections/`.
 
 ## 1. Why (the failure this replaces)
@@ -27,7 +27,7 @@ sections that each passed their own gate.
 ## 2. The chain
 
 ```
-DESIGN-PLAN row                      (W5, operator-locked wireframe)
+DESIGN-PLAN row                      (W3, operator-locked layout)
   ↓ gate.py contracts                SB.1 — sections/<nn>-<sec>.contract.json
 contract + card + tokens + exemplar  (W6 — one builder per section)
   ↓ gate.py section --sec <name>     SB.3 — sections/<nn>-<sec>.gate.json
