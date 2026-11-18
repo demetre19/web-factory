@@ -14,6 +14,8 @@ is `src/pages/<slug>.astro` assembled ONLY from W6 components —
 catalogue order, no new styles. Preview = `dist/` build output. (P.1,
 P.7)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 Run the glue — never write the page:

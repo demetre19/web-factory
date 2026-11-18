@@ -14,6 +14,8 @@ direction option renders as an Astro tile inside `site/`
 (`src/pages/look-<n>.astro`) using the W0 config + layer — no
 standalone HTML, no second style source. (P.1, P.2)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 1. Produce **≥2 direction options**, each a complete **genotype

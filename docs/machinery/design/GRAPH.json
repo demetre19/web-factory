@@ -25,6 +25,11 @@
    "type": "taxonomy",
    "file": "patterns/TAXONOMY.md"
   },
+  "patterns-validation": {
+   "id": "patterns-validation",
+   "type": "study",
+   "file": "patterns/VALIDATION.md"
+  },
   "scorer-patterns": {
    "id": "scorer-patterns",
    "type": "scorer",
@@ -1451,6 +1456,10 @@
    "id": "accent-harmony",
    "type": "rubric"
   },
+  "check_dark_mode": {
+   "id": "check_dark_mode",
+   "type": "check"
+  },
   "derivation-order": {
    "id": "derivation-order",
    "type": "rubric"
@@ -1461,6 +1470,22 @@
   },
   "check_genotype_distinct": {
    "id": "check_genotype_distinct",
+   "type": "check"
+  },
+  "check_dna": {
+   "id": "check_dna",
+   "type": "check"
+  },
+  "check_dna_fresh": {
+   "id": "check_dna_fresh",
+   "type": "check"
+  },
+  "check_variants": {
+   "id": "check_variants",
+   "type": "check"
+  },
+  "check_rhythm": {
+   "id": "check_rhythm",
    "type": "check"
   },
   "check_vector_map": {
@@ -1521,10 +1546,6 @@
   },
   "check_content_width": {
    "id": "check_content_width",
-   "type": "check"
-  },
-  "check_rhythm": {
-   "id": "check_rhythm",
    "type": "check"
   },
   "edge-insets": {
@@ -1829,22 +1850,6 @@
   },
   "check_wildcard": {
    "id": "check_wildcard",
-   "type": "check"
-  },
-  "check_dark_mode": {
-   "id": "check_dark_mode",
-   "type": "check"
-  },
-  "check_variants": {
-   "id": "check_variants",
-   "type": "check"
-  },
-  "check_dna": {
-   "id": "check_dna",
-   "type": "check"
-  },
-  "check_dna_fresh": {
-   "id": "check_dna_fresh",
    "type": "check"
   },
   "card-w3": {
@@ -2318,6 +2323,16 @@
    "id": "primitives",
    "type": "doc",
    "file": "../PRIMITIVES.md"
+  },
+  "artifact-tokens": {
+   "id": "artifact-tokens",
+   "type": "artifact",
+   "label": "pipeline/TOKENS.json"
+  },
+  "artifact-gate-checks": {
+   "id": "artifact-gate-checks",
+   "type": "artifact",
+   "label": "GATES.json check names"
   }
  },
  "edges": [
@@ -2448,6 +2463,16 @@
   },
   {
    "from": "design-index",
+   "to": "LAW.DNA",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
+   "to": "knobs",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
    "to": "rules-T",
    "type": "rules"
   },
@@ -2528,6 +2553,16 @@
   },
   {
    "from": "design-index",
+   "to": "rules-DM",
+   "type": "rules"
+  },
+  {
+   "from": "design-index",
+   "to": "rules-VG",
+   "type": "rules"
+  },
+  {
+   "from": "design-index",
    "to": "section-build",
    "type": "contains_also"
   },
@@ -2553,82 +2588,82 @@
   },
   {
    "from": "LAW.DNA",
-   "to": "gate.dna",
+   "to": "check_dna",
    "type": "enforced_by"
   },
   {
    "from": "LAW.DNA",
-   "to": "W1",
+   "to": "w1",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W2",
+   "to": "w2",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W3",
+   "to": "w3",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W4",
+   "to": "w4",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W5",
+   "to": "w5",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W6",
+   "to": "w6",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W7",
+   "to": "w7",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "W8",
+   "to": "w8",
    "type": "used_in"
   },
   {
    "from": "LAW.DNA",
-   "to": "GENOME",
+   "to": "design-genome",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "TOKENS",
+   "to": "artifact-tokens",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "rules/C",
+   "to": "rules-C",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "rules/T",
+   "to": "rules-T",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "rules/G",
+   "to": "rules-G",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "rules/S",
+   "to": "rules-S",
    "type": "depends_on"
   },
   {
    "from": "LAW.DNA",
-   "to": "rules/M",
+   "to": "rules-M",
    "type": "depends_on"
   },
   {
@@ -2652,6 +2687,31 @@
    "type": "defines"
   },
   {
+   "from": "patterns-validation",
+   "to": "patterns-index",
+   "type": "index"
+  },
+  {
+   "from": "patterns-validation",
+   "to": "patterns-index",
+   "type": "derives_from"
+  },
+  {
+   "from": "patterns-validation",
+   "to": "scorer-patterns",
+   "type": "derives_from"
+  },
+  {
+   "from": "patterns-validation",
+   "to": "w2",
+   "type": "used_in"
+  },
+  {
+   "from": "patterns-validation",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
    "from": "scorer-patterns",
    "to": "design-index",
    "type": "index"
@@ -2673,7 +2733,7 @@
   },
   {
    "from": "scorer-patterns",
-   "to": "gate-checks",
+   "to": "artifact-gate-checks",
    "type": "consumes"
   },
   {
@@ -10683,12 +10743,12 @@
   },
   {
    "from": "rules-DM",
-   "to": "dna-map",
+   "to": "LAW.DNA",
    "type": "see_also"
   },
   {
    "from": "rules-DM",
-   "to": "design-knobs",
+   "to": "knobs",
    "type": "see_also"
   },
   {
@@ -14697,7 +14757,7 @@
    "type": "enforces_at"
   },
   {
-   "from": "check_contrast",
+   "from": "check_dark_mode",
    "to": "C.5",
    "type": "enforces"
   },
@@ -14764,6 +14824,66 @@
   {
    "from": "w5",
    "to": "D.4",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_dna",
+   "to": "DM.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "DM.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_dna_fresh",
+   "to": "DM.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "DM.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_dna",
+   "to": "DM.3",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "DM.3",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "DM.4",
+   "type": "enforces"
+  },
+  {
+   "from": "w8",
+   "to": "DM.4",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_rhythm",
+   "to": "DM.5",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "DM.5",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_dna_fresh",
+   "to": "DM.6",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "DM.6",
    "type": "enforces_at"
   },
   {
@@ -15762,6 +15882,66 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_variants",
+   "to": "VG.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w2",
+   "to": "VG.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "VG.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w2",
+   "to": "VG.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "VG.3",
+   "type": "enforces"
+  },
+  {
+   "from": "w2",
+   "to": "VG.3",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "VG.4",
+   "type": "enforces"
+  },
+  {
+   "from": "w2",
+   "to": "VG.4",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "VG.5",
+   "type": "enforces"
+  },
+  {
+   "from": "w8",
+   "to": "VG.5",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_variants",
+   "to": "VG.6",
+   "type": "enforces"
+  },
+  {
+   "from": "w8",
+   "to": "VG.6",
+   "type": "enforces_at"
+  },
+  {
    "from": "W.1",
    "to": "tone-errors",
    "type": "scored_by"
@@ -15913,12 +16093,12 @@
   },
   {
    "from": "card-w2",
-   "to": "M.1",
+   "to": "C.2",
    "type": "loads"
   },
   {
    "from": "card-w2",
-   "to": "C.2",
+   "to": "T.3",
    "type": "loads"
   },
   {
@@ -15933,12 +16113,12 @@
   },
   {
    "from": "card-w2",
-   "to": "V.3",
+   "to": "M.1",
    "type": "loads"
   },
   {
    "from": "card-w2",
-   "to": "T.3",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -16013,12 +16193,7 @@
   },
   {
    "from": "card-w3",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.11",
+   "to": "R.2",
    "type": "loads"
   },
   {
@@ -16028,7 +16203,7 @@
   },
   {
    "from": "card-w3",
-   "to": "M.2",
+   "to": "V.2",
    "type": "loads"
   },
   {
@@ -16038,42 +16213,7 @@
   },
   {
    "from": "card-w3",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.8",
+   "to": "T.4",
    "type": "loads"
   },
   {
@@ -16088,37 +16228,12 @@
   },
   {
    "from": "card-w3",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "R.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
    "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "M.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "G.2",
+   "to": "L.11",
    "type": "loads"
   },
   {
@@ -16128,17 +16243,12 @@
   },
   {
    "from": "card-w3",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
    "to": "S.1",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "C.5",
+   "to": "C.1",
    "type": "loads"
   },
   {
@@ -16148,12 +16258,42 @@
   },
   {
    "from": "card-w3",
-   "to": "V.2",
+   "to": "W.8",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "G.3",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "M.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "G.1",
    "type": "loads"
   },
   {
@@ -16163,7 +16303,47 @@
   },
   {
    "from": "card-w3",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "I.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "I.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "R.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "G.3",
    "type": "loads"
   },
   {
@@ -16268,7 +16448,7 @@
   },
   {
    "from": "card-w4",
-   "to": "E.1",
+   "to": "W.8",
    "type": "loads"
   },
   {
@@ -16278,12 +16458,22 @@
   },
   {
    "from": "card-w4",
-   "to": "W.6",
+   "to": "E.1",
    "type": "loads"
   },
   {
    "from": "card-w4",
    "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "W.6",
    "type": "loads"
   },
   {
@@ -16294,16 +16484,6 @@
   {
    "from": "card-w4",
    "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "E.2",
    "type": "loads"
   },
   {
@@ -16338,47 +16518,7 @@
   },
   {
    "from": "card-w7",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.6",
    "type": "loads"
   },
   {
@@ -16388,7 +16528,12 @@
   },
   {
    "from": "card-w7",
-   "to": "M.6",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -16398,12 +16543,47 @@
   },
   {
    "from": "card-w7",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w7",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "R.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -16588,6 +16768,16 @@
   },
   {
    "from": "card-w5",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
    "to": "E.1",
    "type": "loads"
   },
@@ -16598,17 +16788,7 @@
   },
   {
    "from": "card-w5",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "R.3",
+   "to": "E.2",
    "type": "loads"
   },
   {
@@ -16618,12 +16798,12 @@
   },
   {
    "from": "card-w5",
-   "to": "L.7",
+   "to": "W.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "E.2",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -16728,47 +16908,12 @@
   },
   {
    "from": "card-w1",
-   "to": "C.7",
+   "to": "R.2",
    "type": "loads"
   },
   {
    "from": "card-w1",
-   "to": "L.13",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "V.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "E.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "R.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "I.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "M.8",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -16783,7 +16928,52 @@
   },
   {
    "from": "card-w1",
-   "to": "V.6",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "I.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "R.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "E.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "L.13",
    "type": "loads"
   },
   {
@@ -16793,7 +16983,12 @@
   },
   {
    "from": "card-w1",
-   "to": "PS.1",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "V.8",
    "type": "loads"
   },
   {
@@ -16853,22 +17048,7 @@
   },
   {
    "from": "card-w6",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.2",
+   "to": "V.4",
    "type": "loads"
   },
   {
@@ -16878,32 +17058,7 @@
   },
   {
    "from": "card-w6",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.2",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -16913,17 +17068,57 @@
   },
   {
    "from": "card-w6",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
    "to": "M.6",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "V.4",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "I.1",
    "type": "loads"
   },
   {
    "from": "card-w6",
    "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -17008,77 +17203,7 @@
   },
   {
    "from": "card-w8",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.6",
+   "to": "G.4",
    "type": "loads"
   },
   {
@@ -17088,47 +17213,7 @@
   },
   {
    "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
+   "to": "M.8",
    "type": "loads"
   },
   {
@@ -17138,27 +17223,12 @@
   },
   {
    "from": "card-w8",
-   "to": "V.4",
+   "to": "W.3",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "L.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.1",
+   "to": "S.7",
    "type": "loads"
   },
   {
@@ -17168,72 +17238,7 @@
   },
   {
    "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.3",
    "type": "loads"
   },
   {
@@ -17243,7 +17248,122 @@
   },
   {
    "from": "card-w8",
+   "to": "I.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.4",
    "type": "loads"
   },
   {
@@ -17253,17 +17373,92 @@
   },
   {
    "from": "card-w8",
+   "to": "V.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "V.0",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "W.3",
+   "to": "M.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.5",
+   "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
    "type": "loads"
   },
   {
@@ -17699,6 +17894,11 @@
   {
    "from": "design-index",
    "to": "patterns-index",
+   "type": "patterns"
+  },
+  {
+   "from": "patterns-index",
+   "to": "patterns-validation",
    "type": "patterns"
   },
   {
@@ -18165,6 +18365,16 @@
    "from": "patterns-index",
    "to": "pattern-media-home-hero-stacked-hero",
    "type": "patterns"
+  },
+  {
+   "from": "design-index",
+   "to": "artifact-tokens",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
+   "to": "artifact-gate-checks",
+   "type": "contains"
   }
  ]
 }

@@ -13,6 +13,8 @@ links:
 adds no markup; it fixes the words every later Astro section renders
 verbatim. (P.1)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 1. Read the copy contract (`STUB.md`) — `## Heading vector` table

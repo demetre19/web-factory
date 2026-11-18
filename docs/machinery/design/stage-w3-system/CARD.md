@@ -13,6 +13,8 @@ links:
 system is `TOKENS.json` compiled into `tailwind.config` + `global.css`,
 rendered on `src/pages/system.astro` — never standalone HTML. (P.1)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 Fill `DESIGN-PLAN.md` `system:` — every number bound, every value a

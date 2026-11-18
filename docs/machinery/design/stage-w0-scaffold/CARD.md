@@ -13,6 +13,8 @@ links:
 artifact from W3 on is a file inside ONE Astro project scaffolded here
 from `templates/astro/`. (P.1)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 1. `cp -R templates/astro <pipeline-dir>/site/` — never `npm create`,

@@ -13,6 +13,8 @@ links:
 locked rows are the contract the Astro page must render; the wireframe
 card itself stays plain HTML (P.1, P.3).
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 Copy the operator-picked card's sections into

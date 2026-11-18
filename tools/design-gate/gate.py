@@ -3919,6 +3919,27 @@ def build_graph():
                     and nid != 'patterns-index' \
                     and n.get('type') != 'taxonomy':
                 edges.append(('patterns-index', nid, 'patterns'))
+    # ---- pipeline-level artefacts the LAW doc names, and aliases for the
+    # short names documents use (W1, GENOME, TOKENS, rules/C, dna-map).
+    for aid, label in (('artifact-tokens', 'pipeline/TOKENS.json'),
+                       ('artifact-gate-checks', 'GATES.json check names')):
+        nodes.setdefault(aid, {'id': aid, 'type': 'artifact',
+                               'label': label})
+        edges.append(('design-index', aid, 'contains'))
+    gen = next((n for n, v in nodes.items() if v.get('type') == 'genome'),
+               None)
+    alias = {'dna-map': 'LAW.DNA', 'design-knobs': 'knobs',
+             'gate.dna': 'check_dna', 'GENOME': gen,
+             'TOKENS': 'artifact-tokens',
+             'gate-checks': 'artifact-gate-checks'}
+    for i, (src, tg, et) in enumerate(edges):
+        if tg in alias and alias[tg]:
+            tg = alias[tg]
+        elif re.fullmatch(r'rules/[A-Z]{1,2}', tg):
+            tg = 'rules-' + tg.split('/')[1]
+        elif re.fullmatch(r'W[0-8]', tg):
+            tg = 'w' + tg[1]
+        edges[i] = (src, tg, et)
     return nodes, edges
 
 def cmd_graph():

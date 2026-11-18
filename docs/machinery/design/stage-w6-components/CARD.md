@@ -14,6 +14,8 @@ composition in the locked wireframe becomes exactly one
 `src/components/<name>.astro`, styled ONLY by the shared config +
 `@layer components` classes. (P.1, P.2, P.6)
 
+**Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
+
 ## Job
 
 One builder per **section**, not per composition. Each builder gets

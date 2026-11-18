@@ -19,13 +19,19 @@ closed set.
 | C.2 | Temperature | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w2 |
 | C.3 | Neutral construction | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w3 |
 | C.4 | Accent | stylistic | reviewer | `accent-harmony` | accent by harmony or extracted, logged | w8 |
-| C.5 | Dark surfaces | stylistic | script | `check_contrast` | inverse/dark ≠ #000 — tinted charcoal | w3 |
+| C.5 | LIGHT + DARK on every design | invariant | script | `check_dark_mode` | either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode | w3 |
 | C.6 | The derivation workflow (fill order for `system.color`) | stylistic | reviewer | `derivation-order` | fill order followed, provenance tags | w8 |
 | C.7 | Colour QA | invariant | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w3 |
 | D.1 | One allele per gene | structural | script | `check_genotype` | gene missing / allele not in gene set | w1 |
 | D.2 | The vertical profile is named and covers the genotype | structural | script | `check_genotype` | profile absent or uses_genes incomplete | w1 |
 | D.3 | Direction options are distinct genotypes | structural | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w2 |
 | D.4 | Compositions are layout-archetype alleles | structural | script | `check_genotype` | composition not in layout-archetype alleles | w5 |
+| DM.1 | The map is complete and total | invariant | script | `check_dna` | map missing/incomplete, knob outside its range, or seeded value with no pattern id + n | w1 |
+| DM.2 | Every artifact traces to the map | invariant | script | `check_dna_fresh` | artifact built against a hash that is not the current map hash | w3 |
+| DM.3 | No untraceable values | invariant | script | `check_dna` | design value not traceable to a token, knob or allele in the map | w3 |
+| DM.4 | Variants derive from the baseline | structural | script | `check_variants` | variant not derived from the baseline (undeclared knob delta) | w8 |
+| DM.5 | The rhythm plan is binding | structural | script | `check_rhythm` | a section's surface/density deviates from the map's rhythm plan | w7 |
+| DM.6 | A changed map invalidates everything downstream | invariant | script | `check_dna_fresh` | map changed but downstream artifacts were not rebuilt | w3 |
 | E.1 | The heading vector is the section list | invariant | script | `check_vector_map` | STUB headings 1:1 in order, verbatim | w5 |
 | E.2 | Two heading classes | structural | script | `check_section_enums` | heading_class query|claim; macro open | w5 |
 | E.3 | SEO invariants (lint) | structural | script | `check_seo_lint` | one h1; no skipped heading ranks | w7 |
@@ -127,6 +133,12 @@ closed set.
 | V.6 | Authenticity hierarchy | stylistic | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w3 |
 | V.7 | Responsive art direction | stylistic | reviewer | `art-direction` | responsive crops per ratio | w8 |
 | V.8 | Media QA | stylistic | reviewer | `media-qa` | <picture>, ratios, scrims, tiers | w8 |
+| VG.1 | One page, 3–5 variants, mechanical build | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w2 |
+| VG.2 | A variant is a vector, not a mood | invariant | script | `check_variants` | page variant without its own passing system sheet | w2 |
+| VG.3 | Only passing variants appear | structural | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w2 |
+| VG.4 | The switcher is sticky and complete | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w2 |
+| VG.5 | The wildcard is present when burst > 0 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
+| VG.6 | Each tile states its case | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
 | W.1 | Voice is constant; tone is a context selection | stylistic | reviewer | `tone-errors` | voice constant, tone contextual | w8 |
 | W.10 | Writing QA | stylistic | reviewer | `writing-qa` | W QA sweep | w8 |
 | W.2 | CTAs | structural | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w3 |
@@ -138,4 +150,4 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w3 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
-128 rules — script 84, reviewer 43, operator 1; invariant 26, structural 31, stylistic 71.
+140 rules — script 96, reviewer 43, operator 1; invariant 34, structural 35, stylistic 71.

@@ -3,11 +3,18 @@ id: card-w8
 type: card
 wave: w8
 links:
-  uses: [rules-T, rules-C, rules-L, rules-S, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-SB, section-build]
-  enforced_by: [check_review_completeness, check_scorecard]
+  uses: [dna-map, rules-DM, rules-VG, rules-T, rules-C, rules-L, rules-S, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-SB, section-build]
+  enforced_by: [check_review_completeness, check_review_modes, check_scorecard, check_variants, check_dna]
 ---
 
 # W8 — Independent review (screenshots + rubric → REVIEW.json)
+
+**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** The
+reviewer reads Astro output; it never re-draws the design. (P.1)
+
+**Read DNA map. Every decision traces to it.** Review scores every
+finding against the locked map (`DNA.json` + `DNA.md`); a page that
+drifts from it fails regardless of how it looks (`gate.py dna`).
 
 A reviewer model — **different model than the designer** — scores the
 built page against the stage CARDs. Evidence: rendered screenshots at
