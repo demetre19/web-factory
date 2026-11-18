@@ -169,14 +169,91 @@ accent, accent_foreground, semantic{ok,warn,err}}` with declared
 contrast pairs (ink ≥7:1, muted ≥4.5:1) and accent budget "CTA +
 motif only". Awaiting operator's colour SOP to fill the rest.
 
-## L. Layout — rules pending (operator to supply)
+## L. Layout — how the screen divides into boxes
 
-Anchors already fixed: 12-col → 2 → 1 collapse; one primary axis;
-content width + measure bounds; section compositions ∈
-SECTION-CATALOG §2. Awaiting operator's layout SOP.
+Source: operator SOP §1–2 (layout/alignment + negative space),
+compounded with §T.2 rules 1/5/8 and §T.7 grid.
 
-## G. Gutters — rules pending (operator to supply)
+### L.1 Alignment — the axis is the law
 
-Anchors already fixed: 4px base unit, scale
-`{4,8,12,16,24,32,48,64,96,128}`, group-gap ≥ 2× section-gap, density
-tiers `compact|regular|spacious`. Awaiting operator's gutter SOP.
+- **Flush-left, rag-right** on all body/multi-line text (same as T.2
+  rule 1 — stated here because it's a *layout* rule, not just a text
+  rule). Never `text-align: justify`; centered only for single-line
+  display or legal fine print.
+- **One primary axis per section.** All text blocks anchor to a shared
+  vertical grid line; horizontal elements snap to a shared
+  cap-height or baseline. The `align:` field in DESIGN-PLAN's section
+  rows names it (`col-1-edge` | `center-axis` | `measure-start`).
+- A second axis is allowed only as the *counter-axis* — the edge the
+  eye returns to after the contrast moment (e.g. hero text on the
+  left rail, media bleeding to the right edge). Two competing primary
+  axes is the "scattered layout" defect.
+
+### L.2 Gutter boundaries — stop or break, never graze
+
+When a box crosses a central fold/gutter, either **stop cleanly before
+it** or **break decisively past it**. Timid alignment sitting *on* a
+gutter boundary is a defect — it reads as an accident, not a decision.
+The web form: a `split-media` section's text column and media column
+either respect the grid line or the media bleeds past it full-bleed —
+never a media column that ends 20px short.
+
+### L.3 Edges and corners — never jam
+
+Content insets ≥10–15% from the viewport edge. Text never touches a
+section edge without a padding token. The only legal edge contact is a
+*deliberate* bleed (full-bleed image, full-bleed surface) — the rule
+that makes `inverse`/`brand` surfaces legal.
+
+### L.4 Negative space — assigned, not leftover
+
+- Generous whitespace is the signal; it's `density: spacious` spent
+  deliberately, not "empty room where content ran out."
+- **Trapped whitespace is a defect** — a dead pocket locked inside a
+  rule, a card border, or between mismatched box edges. If whitespace
+  can't escape to an edge, it wasn't designed, it got stuck.
+
+### L.5 The responsive collapse
+
+12-col desktop → 2-col tablet → 1-col mobile. A box that can't
+describe its mobile stack order isn't a layout, it's a desktop
+screenshot. `split-media` stacks media-under-text unless the plan
+declares otherwise; `cards-n` collapses n→2→1 on the same grid.
+
+## G. Gutters — the spacing primitives
+
+Source: operator SOP §2 (gutters/margins/negative space) + §4
+(proximity/rules/containers) + existing token v2 density tiers.
+
+### G.1 The closed set
+
+One unit: **4px**. One scale:
+`{4, 8, 12, 16, 24, 32, 48, 64, 96, 128}`. Every padding, gap, and
+inset is a member — never `13px`, never `space-between` without a
+declared step. This is what `system.space.scale` in DESIGN-PLAN
+serializes.
+
+### G.2 The proximity law
+
+Between-group gap ≥ **2×** within-group gap — Gestalt as arithmetic.
+Related blocks sit close; new sections are separated by expanding the
+gap, not by adding borders. `system.space.group_gap_vs_section_gap:
+"≥2×"` is the plan-time commitment.
+
+### G.3 Density is a named tier
+
+`compact | regular | spacious` — three named py-tokens per surface,
+not a vibe. `spacious` is *spent* at promise + act + ≤1 interior
+section (the two rests); `regular` is the default; `compact` is for
+proof bands and chrome. Uniform `regular` everywhere is the
+"undecided rhythm" defect.
+
+### G.4 Rules and containers as gutter devices
+
+- **Hairline rule** (1–2px): binds related blocks (headline+subhead)
+  or separates disparate ones — the motif device.
+- **Container inset**: card/panel content sits ≥10–15% in from the
+  panel edge; a card with edge-to-edge text is a defect.
+- **Section gap**: the largest gap on the page is always *between*
+  sections; a gap inside a section that exceeds the section gap is
+  trapped whitespace (L.4).

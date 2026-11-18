@@ -41,6 +41,42 @@ sources (hipages/handy/roto + Care.com/Fresha). Alternating
 
 Screens used (Mobbin links): [Care.com](https://mobbin.com/screens/a73098e7-095d-4032-a1f9-399f9c1c4385), [Fresha](https://mobbin.com/screens/bcc23c71-0c10-4b0d-b749-d8df6f0e846c), [HelloFresh](https://mobbin.com/screens/e3b04ddc-ad74-4696-971a-964f6edb7df0), [Airtasker](https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1), [Pinterest](https://mobbin.com/screens/452a867d-d2a9-425a-94f5-aa3d6d112916), [Upwork](https://mobbin.com/screens/c2182353-18b6-48fc-bc9f-dc282e826b72).
 
+## Primitives correlation — do the *rules* hold, not just the compositions?
+
+Second Mobbin pass (2026-11-19): the same 7 screens re-read against
+`PRIMITIVES.md` §L/§G layout+gutter rules (not the composition catalog).
+Verdict: **high correlation, two refinements.**
+
+| Rule | Care.com | Fresha | HelloFresh | Pinterest | Airtasker | Upwork | Webflow |
+|---|---|---|---|---|---|---|---|
+| Body flush-left | ✅ hero text left | ✅ | ✅ body left | ✅ hero left | ✅ all left | ✅ | n/a |
+| Centered = display-only | ✅ | ✅ centered search (display) | ✅ centered 2-line display head | ⚠️ centered band head (borderline) | ✅ | ✅ | ✅ single-line display |
+| One primary axis | ✅ left rail | ✅ center axis | ✅ left rail | ✅ left rail | ✅ paired rails (media L, text R) | ✅ left rail | ✅ center axis |
+| Stop-or-break gutters | ✅ card breaks image gutter decisively | ✅ | ✅ | ✅ stacked images overlap | ✅ $500 card breaks gutter | ✅ | n/a |
+| No edge-jam | ✅ all inset | ✅ | ⚠️ marquee strip bleeds (deliberate) | ✅ | ✅ | ✅ | ✅ |
+| No trapped whitespace | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+
+**Zero violations** of flush-left-body, one-axis, edge-jam,
+trapped-whitespace, gutter-boundary. Two screens show a *display*-context
+centering the strict rule already allows.
+
+**Refinements the evidence adds:**
+
+1. Centered display headings are *more* common than the SOP's strict
+   wording suggests — HelloFresh, Fresha, Pinterest all use them on
+   short display lines. The rule stays "no centered body," but the
+   PRIMITIVES wording already scoped it correctly ("single-line
+   display or legal"). Pinterest's `Bring your favourite ideas to
+   life` centered band-head is the borderline case: it works because
+   it's short and isolated on `muted` — the rule's intent (no
+   multi-line centered paragraphs) holds.
+2. Deliberate edge-bleed exists (HelloFresh's marquee strip) — already
+   covered by "the only legal edge contact is a deliberate bleed."
+
+Correlation answer: **yes** — the primitive rules match what curated
+good design actually does. The catalog + primitives are a real
+predictor, not a taste opinion.
+
 ## What verified TRUE
 
 | Catalog claim | Evidence |
