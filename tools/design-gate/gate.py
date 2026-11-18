@@ -709,26 +709,6 @@ def check_icon_discipline(ctx):
                          f'{swt.group(1)} ∉ I.2 {1.5,2,2.5,3}')
     return f
 
-def check_mobbin_refs(ctx):
-    f = []
-    t = ctx.read('MOBBIN-REFS.md')
-    if t is None:
-        return ['P.14 MOBBIN-REFS.md missing — consult Mobbin '
-                '(search_screens/search_sections) before direction '
-                'cards; if the token is expired, re-auth per W1 entry '
-                'check and record it — never silently skip']
-    if not re.search(r'https?://|mobbin\.com/|screen[-_ ]?id', t, re.I):
-        f.append('P.14 MOBBIN-REFS.md has no screen IDs/URLs')
-    if ctx.wave == 'w5':
-        comps = {str(r.get('composition')) for _, r in ctx.rows()
-                 if r.get('composition')}
-        low = t.lower()
-        for c in sorted(comps):
-            if c not in low:
-                f.append(f'P.14 no Mobbin reference cited for '
-                         f'composition "{c}"')
-    return f
-
 META_SCHEMA = os.path.join(REPO, 'docs', 'machinery', 'design', 'patterns',
                           'data', 'web', 'meta.schema.json')
 IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
@@ -876,7 +856,7 @@ def check_image_discovery(ctx):
 
 def check_mobbin_refs(ctx):
     """P.14 — Mobbin references are consulted BEFORE direction (W1,
-    general style per page type) and cited per composition at W5."""
+    general style per page type) and cited per composition at W3."""
     t = ctx.read('MOBBIN-REFS.md')
     if t is None:
         return ['P.14 MOBBIN-REFS.md missing — consult Mobbin '
@@ -907,14 +887,14 @@ def check_mobbin_refs(ctx):
             if n < 3:
                 f.append(f'P.14 W1: {n} Mobbin reference(s) for page type '
                          f'"{pt}" — ≥3 general-style refs before direction')
-    if ctx.wave == 'w5':
+    if ctx.wave == 'w3':
         comps = {str(r.get('composition')) for _, r in ctx.rows()
                  if r.get('composition')}
         low = t.lower()
         for c in sorted(comps):
             n = sum(1 for r in parsed if c.lower() in ' '.join(r).lower())
             if n < 3:
-                f.append(f'P.14 W5: {n} Mobbin reference(s) for '
+                f.append(f'P.14 W3: {n} Mobbin reference(s) for '
                          f'composition "{c}" — ≥3 with screen IDs')
     return f
 
@@ -933,11 +913,19 @@ def check_content_inventory(ctx):
         f.append('W2: STUB has no Heading vector table — content '
                  'inventory incomplete')
         return f
+    ZONES = {'macro', 'micro', 'end', 'chrome', 'nav'}
     for v in vec:
         if re.search(r'lorem|TBD|TODO|\[\.\.\.\]|placeholder',
                      v['heading'], re.I):
             f.append(f'W2: vector heading is a placeholder: '
                      f'"{v["heading"][:40]}"')
+        if v.get('zone') not in ZONES:
+            f.append(f'W2: vector zone "{v.get("zone")}" ∉ '
+                     f'{sorted(ZONES)}')
+        if not v.get('fs'):
+            f.append(f'W2: heading "{v["heading"][:40]}" has no first '
+                     'sentence — every vector row carries its body '
+                     'block opening (content dictates layout)')
     plan = ctx.plan or {}
     site = plan.get('site') or {}
     copyf = ((site.get('system') or {}).get('copy')
@@ -3614,6 +3602,10 @@ def _variant_fails(ctx, e):
             g = genome_genes().get(k)
             if g is None:
                 f.append(f'VG.5 wildcard mutates unknown gene "{k}"')
+            elif k in STRUCTURE_GENES:
+                f.append(f'VG.5 wildcard mutates structural gene "{k}" '
+                         '— the W3 structure lock is out of bounds; '
+                         'mutates ⊆ stylistic genes')
         if not e.get('wildcard_breaks'):
             f.append('VG.5 wildcard variant carries no declared breaks '
                      '(B.4 record required)')

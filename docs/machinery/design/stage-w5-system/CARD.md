@@ -11,7 +11,8 @@ links:
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** The
 system is `TOKENS.json` compiled into `tailwind.config` + `global.css`,
-rendered on `src/pages/system.astro` — never standalone HTML. (P.1)
+rendered on `preview/system.html` — self-contained preview HTML
+(P.1); the Astro `src/pages/system.astro` tile joins at W6.
 
 **Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
 
@@ -59,7 +60,7 @@ python3 tools/design-gate/run.py w5 <pipeline-dir>
 ```
 Checks: enums + non-empty fields; spacing ⊆ G.1; breakpoints ⊆ R.1;
 WCAG ratios computed from `system.color.roles` hexes; TOKENS.json +
-config + global.css + system.astro exist; config derived from tokens;
+config + global.css + preview/system.html exist; config derived from tokens;
 tile instantiates surfaces/densities/ranks; `astro build` exits 0.
 Operator approves the rendered tile (`--approve`).
 
