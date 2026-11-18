@@ -200,6 +200,9 @@ the coordinator hopes was honored:
   families, no same-class pairing, measure 52–65ch, body ≥16px,
   display tracking negative, `text-wrap` set, hero subhead 50–60%,
   image-overlay tint 40–60%)
+- [ ] layout & proximity QA ∈ `PRIMITIVES.md` §L.13 (heading binds
+  forward, card padding 15–25px, section gaps 60–100px, S-M-L scale
+  present, icons labelled, touch ≥44px, 960 containment, ≤1 frame-break)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator

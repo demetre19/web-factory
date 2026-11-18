@@ -77,6 +77,31 @@ Correlation answer: **yes** — the primitive rules match what curated
 good design actually does. The catalog + primitives are a real
 predictor, not a taste opinion.
 
+## Proximity & layout SOP correlation — third Mobbin pass
+
+Same 7 screens re-scored against the new L.6–L.13 rules (Gestalt
+grouping, S-M-L scale, frame-break, atomic anatomy, 960 containment):
+
+| Rule | Verdict across screens |
+|---|---|
+| Label↔input proximity | Care.com zip field + Search button bound tight in card — confirms |
+| Heading binds forward | All screens — headings visually attach to their block, not the previous section |
+| S-M-L scale rhythm | **5/7 confirmed** — hero Large + cards Medium + badges Small on Care.com/HelloFresh/Airtasker/Pinterest/Upwork. Fresha + Webflow run near-uniform boxes (weaker S-M-L, still pass by CTA contrast) |
+| Break-the-frame | **Confirmed where present** — Care.com zip card, Airtasker `$500` card overlap their container edges. Not universal: 4/7 keep boxes inside (depth is optional, not required) |
+| Asymmetry desktop | **6/7** — every split-media/hero screen composes off-axis (media one side, text other). Fresha is centered-symmetric (its whole page is center-axis — a deliberate system, not a lapse) |
+| 960 containment | All — content holds center column; only hero media/surfaces bleed |
+| Sequential anatomy | Matches catalog §3 — hero → proof → detail → objection → act; the anatomy IS the rhetoric |
+
+**Verdict: high correlation again.** The proximity+layout rules
+describe what curated design does — with two honest caveats:
+
+1. S-M-L is *strong tendency*, not absolute law (2/7 near-flat).
+2. Frame-break is *optional enhancement*, not required (3/7 use it).
+
+That's consistent with the machinery: S-M-L is a rule (flat
+clustering = defect), frame-break is the *sanctioned* violation
+(≤1 declared break, not required ≥1).
+
 ## What verified TRUE
 
 | Catalog claim | Evidence |

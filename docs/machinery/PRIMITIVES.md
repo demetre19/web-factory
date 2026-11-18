@@ -169,6 +169,7 @@ accent, accent_foreground, semantic{ok,warn,err}}` with declared
 contrast pairs (ink ≥7:1, muted ≥4.5:1) and accent budget "CTA +
 motif only". Awaiting operator's colour SOP to fill the rest.
 
+
 ## L. Layout — how the screen divides into boxes
 
 Source: operator SOP §1–2 (layout/alignment + negative space),
@@ -219,6 +220,106 @@ that makes `inverse`/`brand` surfaces legal.
 describe its mobile stack order isn't a layout, it's a desktop
 screenshot. `split-media` stacks media-under-text unless the plan
 declares otherwise; `cards-n` collapses n→2→1 on the same grid.
+
+### L.6 Gestalt grouping — proximity as semantics
+
+Source: operator proximity SOP §2–4. Space is meaning — elements
+close together read as a group; wide gaps read as unrelated.
+
+| Pair | Rule |
+|---|---|
+| Label ↔ input | label sits significantly closer to its input than to adjacent fields |
+| Heading ↔ body | heading's bottom margin < its top margin (binds to the paragraph it introduces, not the previous section) |
+| Image ↔ text | paired in a tight block — closure makes them one concept, never a paragraph floating apart from its image |
+| Grouped atoms | 5–10px inside a pair; 15–25px inside a card; 60–100px between major sections (proximity scale) |
+
+**Containerization:** when proximity alone can't segregate, use a
+container — card (15–25px internal padding, border/shadow), section
+divider (60–100px or hairline), or nested sub-panel. This is what
+`surface: muted` containers and `cards-n` compositions are *for*.
+
+### L.7 Small-Medium-Large — the scale rhythm
+
+Every section uses deliberate scale variation — Large anchor, Medium
+blocks, Small accents. Uniform boxes in a rigid grid = "flat
+clustering" defect (the generic look). On a money page: hero is the
+Large, cards/feature blocks are Medium, badges/metadata are Small.
+This is the layout-layer equivalent of T.1's 3-tier read order.
+
+### L.8 Breaking the frame — deliberate depth
+
+Flat 2-D grids read as templated. Introduce depth deliberately:
+- **Break the frame** — a focal graphic (price card, product shot,
+  badge) overlaps its container edge or extends past the grid bound.
+  Verified: Care.com's zip card, Airtasker's `$500` card both do this.
+- **Soft shadows** — curved drop shadows under cards/panels for
+  physical lift. Subtle, never hard-edge.
+- This is the *sanctioned violation* — the motif's `break:` field
+  names where the frame breaks. Random overlap is a defect; one
+  declared break is design.
+
+### L.9 Asymmetry desktop, symmetry mobile
+
+Desktop composes asymmetrically — open whitespace on one side,
+dense content on the other (editorial). Mobile is centered symmetry —
+narrow viewport can't carry asymmetry. This is why `split-media`
+stacks media-under-text on mobile but is off-axis on desktop.
+
+### L.10 Atomic architecture — the file structure
+
+Source: operator layout SOP §2 (Brad Frost). Components are built
+bottom-up from atoms:
+
+- **Atoms** — color tokens, type ranks, buttons, labels, inputs
+  (PRIMITIVES §T/§C/§G outputs).
+- **Molecules** — functional units: search bar, form field pair,
+  card, testimonial (COMPONENTS.md entries).
+- **Organisms** — sections: header, hero, footer, a composed block
+  (SECTION-CATALOG §2 compositions).
+- **Templates** — page skeletons: `pages.<slug>` in DESIGN-PLAN.
+- **Pages** — the SPEC + rendered route.
+
+Workflow is non-linear: explore compositions first, then standardize
+the recurring molecules into the component library. A token change
+cascades because molecules reference tokens, never literals.
+
+### L.11 The 960 containment rule
+
+Critical content (headline, body, CTA, nav) lives inside a **960px
+container** (or `system.grid.content_width` equivalent). Backgrounds,
+hero media, surfaces bleed full-viewport. On 1920px+ displays content
+never scatters to the edges — the surface bleeds, the content holds.
+
+### L.12 Sequential anatomy — the page's tiers
+
+The reference order (verified CATALOG-VERIFICATION §1):
+
+1. **Hero** — headline + subhead + CTA + visual anchor (the 50ms
+   first impression).
+2. **Proof** — logo quilt / stat band directly below.
+3. **Detail** — feature grid / curated work (S-M-L scale).
+4. **Objection** — case-study/editorial blocks (de-monolith copy).
+5. **Conversion** — high-contrast act section.
+6. **Footer** — secondary nav + contact + capture form.
+
+This maps to `promise → proof → tension/how → objection → act` in
+the catalog — the rhetoric *is* the anatomy.
+
+### L.13 Layout & proximity QA — mechanical checklist
+
+From operator proximity SOP §6 + layout SOP §5. Checked at plan and
+build self-lint:
+
+- [ ] Form labels sit closer to their input than to adjacent fields
+- [ ] Heading bottom margin < its top margin (binds forward)
+- [ ] Card internal padding 15–25px; consistent border/shadow
+- [ ] Section gaps 60–100px (spacious tier) between major organisms
+- [ ] S-M-L scale variation present (no flat clustering)
+- [ ] Icons paired with text labels (system icons exempt)
+- [ ] Touch targets ≥44px on mobile
+- [ ] Primary CTA + value prop visible above the fold (50ms check)
+- [ ] Content inside 960px container; only surfaces/media bleed
+- [ ] One declared frame-break max (motif.break); no random overlap
 
 ## G. Gutters — the spacing primitives
 
