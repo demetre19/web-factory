@@ -12,9 +12,34 @@ checked against `docs/machinery/SECTION-CATALOG.md` rules.
 |---|---|
 | hipages | photo-hero(promise+act: search bar) → icon-grid(detail) → 3-steps(how) → **orange band(brand CTA)** → trust-badges(proof) → app-band(detail) → article-band → city-links(detail) → **orange footer(brand)** |
 | taskrabbit | green-hero(promise, photo right) → services-icon-grid(detail) → projects-carousel(detail) → reviews(proof) → **dark-blue band(inverse, same-day help)** → city-areas(detail) → **dark footer(inverse)** |
+
 | handy | split-hero(promise+form) → price-stat(proof) → why-choose-cards(detail) → steps(how) → reviews(proof) → app/CTA(act) → footer(base) |
 | urbancompany | mostly one light surface — hero-carousel(promise) → category icon-grid(detail) → product rows(detail) → "book from phone" app section(detail) → footer(inverse) |
 | rotorooter | hero(promise+act: call+zip form) → **purple services carousel(inverse)** → pros-checklist+photos(detail) → FAQ-videos(objection) → app-band(detail) → reviews(proof) → careers-CTA(act) → footer(dark) |
+
+## Mobbin round (paid plan active, 2026-11-18)
+
+`search_screens` on "home services cleaning company landing page" +
+"cleaning company website pricing testimonials", platform=web. 7
+screens read (Care.com, Fresha, Pinterest, Airtasker, HelloFresh,
+Upwork, Webflow). Mobbin screens are single-viewport crops, not full
+pages — they verify *compositions*, not full surface sequences.
+
+| Screen | What it confirms |
+|---|---|
+| Care.com | `hero-act-merge` verbatim — zip/search form *in* the hero, headline left |
+| Fresha | `hero-act-merge` again — centered search bar in hero on gradient surface; `stacked-hero` variant |
+| HelloFresh | `brand` surface hero (green) + `stat-band` proof directly below — brand ≤1, proof-band adjacent |
+| Airtasker | `split-media` for `detail`/`how` — alternating alignment (media L / text R, then mirror), one soft CTA per block |
+| Pinterest | `split-media` hero + `muted` second band — fold-boundary contrast rule holds |
+| Upwork | `detail` page pattern — editorial list + card sidebar (pricing/scheduling zone) |
+
+Mobbin round verdict: `hero-act-merge` now confirmed by 4 independent
+sources (hipages/handy/roto + Care.com/Fresha). Alternating
+`split-media` for detail blocks confirmed. `brand` surface used once
+(hero) not scattered. No counter-example found to any catalog rule.
+
+Screens used (Mobbin links): [Care.com](https://mobbin.com/screens/a73098e7-095d-4032-a1f9-399f9c1c4385), [Fresha](https://mobbin.com/screens/bcc23c71-0c10-4b0d-b749-d8df6f0e846c), [HelloFresh](https://mobbin.com/screens/e3b04ddc-ad74-4696-971a-964f6edb7df0), [Airtasker](https://mobbin.com/screens/8ca27875-5683-4bfd-a389-77956dc032c1), [Pinterest](https://mobbin.com/screens/452a867d-d2a9-425a-94f5-aa3d6d112916), [Upwork](https://mobbin.com/screens/c2182353-18b6-48fc-bc9f-dc282e826b72).
 
 ## What verified TRUE
 
