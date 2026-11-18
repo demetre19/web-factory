@@ -1,0 +1,319 @@
+<!--
+  SYSTEM TILE TEMPLATE — the L3 gate exemplar (DESIGN-PLAN.md step 6)
+  =====================================================================
+  Worked example: Whistle Clean · end-of-lease · Warm (P3). Every
+  site copies this file to `site/design-dna/preview/system.html` and
+  rebinds the token block — never regenerate the structure.
+
+  An L3 tile MUST show, in one self-contained file:
+  - TOKENS verbatim — the `:root` block is a verbatim copy of
+    TOKENS.json; every value below binds a `system.*` token, zero
+    hardcoded px/hex in rules (token-bound, enforced at review).
+  - C.1 colour roles — full swatch row: bg, surface, surface_elevated,
+    border, ink, ink_muted, accent, accent_deep, accent_light,
+    accent_fg, inverse, inverse_ink, ok, warn, err — each labelled
+    with hex + contrast ratio. The colour system section is
+    MANDATORY: every agent downstream reads roles from it.
+  - Every type rank — display → caption, incl. the query-rank H1.
+  - Every surface × density — surface/elevated/tinted/inverse at
+    compact/balanced/spacious, with real copy.
+  - Buttons, fields, cards, badge, fold — primary + secondary button,
+    text/select/textarea fields, card + tinted card, disclosure.
+
+  DOX branch: copy the packet's `designs/design-system.html` instead.
+  This is where colour/fonts/radius/spacing-as-feel are judged —
+  Phase B wireframes stay greyscale (templates/wireframe-cards/).
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>System tile — Whistle Clean · end-of-lease · Warm (P3) · worked example</title>
+<!-- L3 gate: every surface × density × type rank × buttons/fields/cards.
+     Every value below binds a TOKENS.json token — zero hardcoded px/hex in rules. -->
+<style>
+/* ============ TOKENS (verbatim from TOKENS.json) ============ */
+:root{
+  /* type */
+  --font-display:'Nunito Sans',ui-rounded,'Avenir Next','Segoe UI',system-ui,sans-serif;
+  --font-body:'Nunito Sans',ui-rounded,'Avenir Next','Segoe UI',system-ui,sans-serif;
+  --step--2:clamp(0.69rem,0.63rem + 0.29vw,0.80rem);
+  --step--1:clamp(0.83rem,0.76rem + 0.37vw,1.00rem);
+  --step-0:clamp(1.00rem,0.91rem + 0.45vw,1.25rem);
+  --step\+1:clamp(1.20rem,1.09rem + 0.55vw,1.56rem);
+  --step\+2:clamp(1.44rem,1.31rem + 0.66vw,1.95rem);
+  --step\+3:clamp(1.73rem,1.57rem + 0.79vw,2.44rem);
+  --step\+4:clamp(2.07rem,1.89rem + 0.93vw,3.05rem);
+  --step\+5:clamp(2.49rem,2.26rem + 1.13vw,3.81rem);
+  /* space (G.1) */
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;
+  --space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;--space-10:128px;
+  --py-compact:clamp(24px,3vw,32px);
+  --py-regular:clamp(32px,5vw,64px);
+  --py-spacious:clamp(48px,8vw,96px);
+  --edge:clamp(16px,3.3vw,48px);
+  --gutter:clamp(16px,2.2vw,32px);
+  --content-w:72rem; --measure:62ch;
+  /* color */
+  --bg:#F8F8F7; --surface:#E5E3E1; --surface-elev:#FDFCFC; --border:#D0CDC8;
+  --ink:#26221D; --ink-muted:#6B6357;
+  --accent:#00B488; --accent-deep:#166F64; --accent-light:#55BDB0;
+  --accent-fg:#26221D; --accent-hover:#00996B;
+  --inverse:#1A2322; --inverse-surface:#242E2C;
+  --inverse-ink:#F1F0EE; --inverse-ink-muted:#AEB7B5;
+  --ok:#2A6F4D; --warn:#9B4D08; --err:#A7241B;
+  /* shape P3 */
+  --r-sm:4px; --r-md:8px; --r-lg:12px; --r-xl:16px; --r-full:9999px;
+  --bw-rest:1px; --bw-focus:2px;
+  --sh-none:none;
+  --sh-xs:0 1px 2px rgba(38,34,29,.07);
+  --sh-md:0 8px 16px rgba(38,34,29,.08);
+  --sh-lg:0 16px 32px rgba(38,34,29,.10);
+  /* motion subtle */
+  --dur-micro:200ms; --dur-std:300ms; --dur-struct:500ms;
+  --ease-in:cubic-bezier(0,0,.2,1); --ease-out:cubic-bezier(.4,0,1,1); --ease-both:cubic-bezier(.4,0,.2,1);
+}
+/* ============ base ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{font-size:16px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);
+  font-size:var(--step-0);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);text-wrap:balance}
+p{max-width:var(--measure);text-wrap:pretty}
+a{color:var(--accent-deep);text-decoration-thickness:1px;text-underline-offset:3px}
+img{max-width:100%;display:block}
+button,input,textarea{font:inherit;color:inherit}
+svg.icon{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* ============ ranks ============ */
+.r-display{font-size:var(--step\+4);font-weight:800;letter-spacing:-0.02em;line-height:1.08}
+.r-h1-query{font-size:var(--step--1);font-weight:600;letter-spacing:0.12em;line-height:1.3;
+  text-transform:uppercase;color:var(--ink-muted)}
+.r-h2{font-size:var(--step\+1);font-weight:700;line-height:1.25}
+.r-h2.query{color:var(--ink-muted)}
+.r-lead{font-size:var(--step\+1);font-weight:400;line-height:1.5}
+.r-body{font-size:var(--step-0);font-weight:400}
+.r-small{font-size:var(--step--1);font-weight:500}
+.r-caption{font-size:var(--step--2);font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--ink-muted)}
+/* ============ atoms ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
+  min-height:48px;padding:var(--space-3) var(--space-5);
+  background:var(--accent);color:var(--accent-fg);
+  border:var(--bw-rest) solid var(--accent);border-radius:var(--r-md);
+  font-family:var(--font-display);font-size:var(--step--1);font-weight:700;
+  letter-spacing:0.02em;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:transform var(--dur-micro) var(--ease-both),background var(--dur-micro) var(--ease-both)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:var(--accent-hover);border-color:var(--accent-hover);transform:translateY(-1px)}
+}
+.btn:active{transform:scale(.98);transition-duration:100ms}
+.btn:focus-visible,.field:focus-within,a:focus-visible,details summary:focus-visible{
+  outline:var(--bw-focus) solid var(--accent);outline-offset:2px}
+.btn.secondary{background:transparent;color:var(--ink);border-color:var(--border)}
+@media (hover:hover) and (pointer:fine){.btn.secondary:hover{border-color:var(--ink);background:var(--surface-elev);transform:none}}
+.link{font-size:var(--step--1);font-weight:700;color:var(--accent-deep)}
+.field{display:grid;gap:var(--space-2)}
+.field>span{font-size:var(--step--1);font-weight:700;color:var(--ink)}
+.field input,.field textarea,.field select{
+  min-height:48px;padding:var(--space-3) var(--space-4);
+  background:var(--surface-elev);border:var(--bw-rest) solid var(--border);
+  border-radius:var(--r-md)}
+.field textarea{min-height:calc(var(--space-9) + var(--space-4))}
+.field input::placeholder,.field textarea::placeholder{color:var(--ink-muted)}
+.field .help{font-size:var(--step--2);color:var(--ink-muted)}
+.card{background:var(--surface-elev);border:var(--bw-rest) solid var(--border);
+  border-radius:var(--r-lg);padding:var(--space-5);box-shadow:var(--sh-xs)}
+.card.tinted{background:var(--surface);border-color:transparent;box-shadow:var(--sh-none)}
+.badge{display:inline-flex;align-items:center;gap:var(--space-1);
+  padding:var(--space-1) var(--space-3);border-radius:var(--r-sm);
+  font-size:var(--step--2);font-weight:700;letter-spacing:0.04em}
+.fold{background:var(--surface-elev);border:var(--bw-rest) solid var(--border);
+  border-radius:var(--r-lg)}
+details.fold>summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);
+  min-height:56px;padding:var(--space-4) var(--space-5);cursor:pointer;list-style:none;
+  font-size:var(--step-0);font-weight:700;color:var(--ink)}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary .chev{transition:transform var(--dur-std) var(--ease-both)}
+details.fold[open]>summary .chev{transform:rotate(135deg)}
+details.fold>.body{padding:0 var(--space-5) var(--space-5);color:var(--ink)}
+details.fold>.body>*+*{margin-top:var(--space-3)}
+/* ============ tile chrome ============ */
+.tile-head{padding:var(--space-6) var(--edge);border-bottom:var(--bw-rest) solid var(--border);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-4)}
+.tile-head h1{font-size:var(--step\+1);font-weight:800}
+.tile-head .sub{color:var(--ink-muted);font-size:var(--step--1)}
+.tblock{padding:var(--space-7) var(--edge);max-width:var(--content-w);margin:0 auto}
+.tblock+.tblock{padding-top:0}
+.tlabel{font-size:var(--step--2);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:var(--space-5);
+  padding-bottom:var(--space-2);border-bottom:var(--bw-rest) solid var(--border)}
+.swatch-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:var(--space-4)}
+.swatch{border:var(--bw-rest) solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.swatch>i{display:block;height:64px}
+.swatch>b{display:block;padding:var(--space-3) var(--space-3) var(--space-1);
+  font-size:var(--step--2);font-weight:700}
+.swatch>span{display:block;padding:0 var(--space-3) var(--space-3);
+  font-size:var(--step--2);color:var(--ink-muted)}
+/* surface × density matrix */
+.surf{border-radius:var(--r-lg);padding-left:var(--space-5);padding-right:var(--space-5);
+  outline:var(--bw-rest) solid var(--border)}
+.surf.base{background:var(--bg)}
+.surf.muted{background:var(--surface)}
+.surf.elev{background:var(--surface-elev)}
+.surf.inverse{background:var(--inverse);color:var(--inverse-ink);outline:none}
+.surf.inverse .r-caption,.surf.inverse .q{color:var(--inverse-ink-muted)}
+.d-compact{padding-top:var(--py-compact);padding-bottom:var(--py-compact)}
+.d-regular{padding-top:var(--py-regular);padding-bottom:var(--py-regular)}
+.d-spacious{padding-top:var(--py-spacious);padding-bottom:var(--py-spacious)}
+.matrix{display:grid;gap:var(--space-5)}
+.rank-row{display:grid;gap:var(--space-2);padding:var(--space-4) 0;
+  border-bottom:var(--bw-rest) solid var(--border)}
+.rank-row:last-child{border-bottom:0}
+.rank-row .meta{font-size:var(--step--2);color:var(--ink-muted)}
+.btnrow{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center}
+.cardrow{display:grid;gap:var(--gutter)}
+@media(min-width:640px){.cardrow{grid-template-columns:1fr 1fr}}
+.stepsim{display:grid;gap:var(--space-3)}
+.gsbar{display:flex;height:28px;border-radius:var(--r-sm);overflow:hidden;border:var(--bw-rest) solid var(--border)}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:150ms !important;transition-property:opacity !important}
+}
+</style>
+</head>
+<body>
+
+<header class="tile-head">
+  <h1>Whistle Clean · end-of-lease — system tile</h1>
+  <span class="sub">Design 2 · Warm &amp; Approachable · P3 · subtle motion · one family (Nunito Sans → system fallback)</span>
+</header>
+
+<!-- ============ colour roles ============ -->
+<section class="tblock">
+  <div class="tlabel">Colour roles — warm-tinted neutrals, extracted brand accent</div>
+  <div class="swatch-row">
+    <div class="swatch"><i style="background:var(--bg)"></i><b>bg</b><span>#F8F8F7 · hsl(40,6,97)</span></div>
+    <div class="swatch"><i style="background:var(--surface)"></i><b>surface</b><span>#E5E3E1 · hsl(38,6,89)</span></div>
+    <div class="swatch"><i style="background:var(--surface-elev)"></i><b>surface_elevated</b><span>#FDFCFC · hsl(40,5,99)</span></div>
+    <div class="swatch"><i style="background:var(--border)"></i><b>border</b><span>#D0CDC8 · hsl(38,8,80)</span></div>
+    <div class="swatch"><i style="background:var(--ink)"></i><b>ink</b><span>#26221D · 14.9:1 on bg</span></div>
+    <div class="swatch"><i style="background:var(--ink-muted)"></i><b>ink_muted</b><span>#6B6357 · 5.6:1 on bg</span></div>
+    <div class="swatch"><i style="background:var(--accent)"></i><b>accent</b><span>#00B488 · extracted</span></div>
+    <div class="swatch"><i style="background:var(--accent-deep)"></i><b>accent_deep</b><span>#166F64 · 5.7:1 on bg</span></div>
+    <div class="swatch"><i style="background:var(--accent-light)"></i><b>accent_light</b><span>#55BDB0 · inverse only</span></div>
+    <div class="swatch"><i style="background:var(--accent-fg);outline:1px solid var(--border);outline-offset:-1px"></i><b>accent_fg</b><span>#26221D · 5.9:1 on accent</span></div>
+    <div class="swatch"><i style="background:var(--inverse)"></i><b>inverse</b><span>#1A2322 · C.5 charcoal</span></div>
+    <div class="swatch"><i style="background:var(--inverse-ink)"></i><b>inverse_ink</b><span>#F1F0EE · 14.1:1</span></div>
+    <div class="swatch"><i style="background:var(--ok)"></i><b>ok</b><span>#2A6F4D · 5.7:1</span></div>
+    <div class="swatch"><i style="background:var(--warn)"></i><b>warn</b><span>#9B4D08 · 5.7:1</span></div>
+    <div class="swatch"><i style="background:var(--err)"></i><b>err</b><span>#A7241B · 6.8:1</span></div>
+  </div>
+</section>
+
+<!-- ============ grayscale proof ============ -->
+<section class="tblock">
+  <div class="tlabel">Grayscale proof — five distinct value steps (C.6 audit)</div>
+  <div class="gsbar">
+    <i style="flex:1;filter:grayscale(1);background:var(--bg)"></i>
+    <i style="flex:1;filter:grayscale(1);background:var(--surface)"></i>
+    <i style="flex:1;filter:grayscale(1);background:var(--ink-muted)"></i>
+    <i style="flex:1;filter:grayscale(1);background:var(--accent)"></i>
+    <i style="flex:1;filter:grayscale(1);background:var(--ink)"></i>
+  </div>
+</section>
+
+<!-- ============ type ranks ============ -->
+<section class="tblock">
+  <div class="tlabel">Type ranks — utopia 16@320·1.2 → 20@1440·1.25</div>
+  <div class="rank-row"><span class="meta">display · step +4 · w800 · −0.02em</span><span class="r-display">Leave it spotless. Keep your bond.</span></div>
+  <div class="rank-row"><span class="meta">h1 · step −1 · w600 · +0.12em · query class (canonical entity label)</span><span class="r-h1-query">End of Lease Cleaning Melbourne</span></div>
+  <div class="rank-row"><span class="meta">h2 · step +1 · w700 — claim use</span><span class="r-h2">Request your vacate audit</span></div>
+  <div class="rank-row"><span class="meta">h2 · step +1 · w700 · ink-muted — query-readable macro</span><span class="r-h2 query">What is vacate cleaning?</span></div>
+  <div class="rank-row"><span class="meta">lead · step +1 · w400 — 55% of claim (T.7)</span><span class="r-lead">End-of-lease cleaning on a scheduled program – commercial vacate and make-good cleaning to lease-exit standard.</span></div>
+  <div class="rank-row"><span class="meta">body · step 0 · w400 · measure 62ch</span><span class="r-body">Vacate cleaning is the full-building reset a lease needs at exit – floors, walls, internal glass, kitchens and amenities returned to hand-over condition.</span></div>
+  <div class="rank-row"><span class="meta">small · step −1 · w500</span><span class="r-small">Fold labels, nav links, supporting metadata.</span></div>
+  <div class="rank-row"><span class="meta">caption · step −2 · w700 · +0.08em</span><span class="r-caption">Step 02 · Compliance</span></div>
+</section>
+
+<!-- ============ surface × density matrix ============ -->
+<section class="tblock">
+  <div class="tlabel">Surfaces × density — compact / regular / spacious</div>
+  <div class="matrix">
+    <div class="surf base d-compact"><span class="r-caption">base · compact</span><p class="r-body">chrome and proof rows — nav, cert strip.</p></div>
+    <div class="surf base d-regular"><span class="r-caption">base · regular</span><p class="r-body">default canvas — split-media blocks, step sequence.</p></div>
+    <div class="surf base d-spacious"><span class="r-caption">base · spacious</span><p class="r-body">hero rest — promise + first act.</p></div>
+    <div class="surf muted d-regular"><span class="r-caption">muted · regular</span><p class="r-body">macro band — six query cards on the warm tint.</p></div>
+    <div class="surf muted d-compact"><span class="r-caption">muted · compact</span><p class="r-body">micro band — folded rows, heavy disclosure.</p></div>
+    <div class="surf elev d-compact"><span class="r-caption">surface_elevated · compact</span><p class="r-body">fold rows + form panel — the card layer.</p></div>
+    <div class="surf inverse d-spacious"><span class="r-caption q">inverse · spacious</span><p class="r-body" style="color:var(--inverse-ink)">the one contrast moment — end act with the form panel.</p></div>
+  </div>
+</section>
+
+<!-- ============ buttons + links ============ -->
+<section class="tblock">
+  <div class="tlabel">Buttons &amp; links — radius-md, accent = CTA fill only</div>
+  <div class="btnrow">
+    <a class="btn" href="#">Request a quote</a>
+    <a class="btn secondary" href="#">Call (03) 7003 2223</a>
+    <a class="link" href="#">Request a quote →</a>
+    <span class="badge" style="background:var(--surface);color:var(--ink-muted)">Step 02</span>
+    <span class="badge" style="background:var(--ok);color:var(--surface-elev)">Insured</span>
+    <span class="badge" style="background:var(--warn);color:var(--surface-elev)">Audit due</span>
+    <span class="badge" style="background:var(--err);color:var(--surface-elev)">Failed</span>
+  </div>
+</section>
+
+<!-- ============ fields ============ -->
+<section class="tblock">
+  <div class="tlabel">Form fields — labels top, why-we-ask helper, 48px targets</div>
+  <div class="cardrow">
+    <div class="field"><span>Name</span><input type="text" placeholder="e.g., Alex Rivera"></div>
+    <div class="field"><span>Phone</span><input type="tel" placeholder="e.g., 0400 000 000"><i class="help">We only call to arrange the site audit.</i></div>
+    <div class="field"><span>Site address</span><input type="text" placeholder="e.g., 12 Smith St, Collingwood"></div>
+    <div class="field"><span>Message</span><textarea placeholder="e.g., 3 floors, lease ends Mar 30"></textarea></div>
+  </div>
+</section>
+
+<!-- ============ cards + folds ============ -->
+<section class="tblock">
+  <div class="tlabel">Cards &amp; disclosure — radius-lg, hybrid separation</div>
+  <div class="cardrow">
+    <div class="card">
+      <span class="r-caption">Macro card · surface_elevated</span>
+      <h3 class="r-h2 query" style="margin-top:var(--space-2)">Who books a vacate clean?</h3>
+      <p class="r-body" style="margin-top:var(--space-3)">Tenants, property managers and facilities teams book the vacate clean – the party whose bond or make-good clause sits on the line.</p>
+    </div>
+    <div class="card tinted">
+      <span class="r-caption">Step card · surface</span>
+      <h3 class="r-small" style="margin-top:var(--space-2);font-weight:700">Fill out the contact form</h3>
+      <p class="r-small" style="margin-top:var(--space-2);color:var(--ink-muted)">Step 01 of 04</p>
+    </div>
+  </div>
+  <div style="margin-top:var(--gutter)" class="stepsim">
+    <details class="fold">
+      <summary><span>Full vacate scope — 8 zones</span><svg class="icon chev" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+      <div class="body"><p>Eight folded zones render here as lists.</p></div>
+    </details>
+    <details class="fold" open>
+      <summary><span>What keeps a vacate clean make-good compliant?</span><svg class="icon chev" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary>
+      <div class="body"><p>Make-good clause compliance needs a documented procedure, photographed results and a sign-off the property manager can file.</p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ icon + media spec ============ -->
+<section class="tblock">
+  <div class="tlabel">Icons &amp; media — lucide outline · regular stroke · natural T1</div>
+  <div class="btnrow">
+    <svg class="icon" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <svg class="icon" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    <svg class="icon" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    <svg class="icon" style="width:48px;height:48px" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="M18 16.5v15l13-7.5z" fill="currentColor" stroke="none"/></svg>
+    <svg class="icon" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3.4a2 2 0 0 1-.5 1.8l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 1.8-.5l3.4.5a2 2 0 0 1 1.7 2z"/></svg>
+    <span class="r-small" style="color:var(--ink-muted)">hamburger · close · plus→x (135°) · play 48 · phone — currentColor, 2px round joins</span>
+  </div>
+</section>
+
+</body>
+</html>

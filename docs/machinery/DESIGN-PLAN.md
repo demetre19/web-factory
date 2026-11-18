@@ -117,7 +117,9 @@ not a default.
 6. `preview/system.html` next — every surface × every density × every
    type rank × buttons/fields/cards — then page previews (F6).
    DOX branch: copy packet `designs/design-system.html` to
-   `preview/system.html` rather than regenerating. This is the L3
+   `preview/system.html` rather than regenerating. Template/exemplar:
+   `templates/system-tile/` — the colour system section is mandatory:
+   every agent downstream reads roles from it. This is the L3
    gate — the *system* is verified on a tile before any page exists.
 7. L4+ downstream — `PAGES/<slug>/SPEC.md` copies its section rows
    verbatim from `pages.<slug>.sections`; `COMPONENTS.md` names the

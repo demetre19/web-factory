@@ -63,8 +63,8 @@ rules.
   `COMPONENTS.md`, `ROUTE-MANIFEST.json`, `PAGES/<slug>/SPEC.md`,
   `DESIGN-DNA.md`, `preview/system.html` (style tile — every surface ×
   every density × every type rank × buttons/fields/cards,
-  token-sourced, self-contained; DOX branch copies packet
-  `designs/design-system.html`), `dox/` (verified packet members,
+  token-sourced, self-contained; exemplar: `templates/system-tile/`;
+  DOX branch copies packet `designs/design-system.html`), `dox/` (verified packet members,
   flattened; absent on refs-only sites).
 - Build: `sites/<slug>/` — normal Astro project (`astro.config.mjs`,
   `src/pages/`, `src/layouts/`, `src/components/`, `src/styles/`,

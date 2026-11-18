@@ -37,8 +37,10 @@ worked example (Whistle Clean — End of Lease Cleaning Melbourne).
 X-box media (21:9 · 3:4 · 4:3 · 16:9 + icon), video (play circle +
 duration chip + caption bar), copy bars, real headings, outlined CTA,
 folds, logo/cert strip (equal grid cells), stat blocks, inverse panel,
-form (outlined ≥44px fields, noun labels, faint placeholder bars),
-burger + drawer (nav collapse below tablet). All grey, G.1 spacing.
+form (outlined ≥44px fields, noun labels, faint placeholder bars,
+select/radio/checkbox controls), ghost secondary CTA, burger + drawer
+(nav collapse below tablet). Section `.tag` labels name breakpoint
+behavior ("cards 3-up ≥900 · 1-up mobile"). All grey, G.1 spacing.
 
 Self-check before opening: every `.xbox`/`.video` must have non-zero
 height at 1280, 768 and 360 (height = width ÷ declared ratio). A

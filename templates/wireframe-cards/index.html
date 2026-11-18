@@ -19,7 +19,8 @@
     .xbox + .a219/.a34/.a43/.a169/.xicon
                                      media box with diagonal X
     .bars > i  + .bars.deep          copy bars; deep = on grey panel
-    .btn / .btn.sm                   outlined CTA, real short label
+    .btn / .btn.sm / .btn.ghost      outlined CTA, real short label;
+                                     ghost = secondary CTA rank
     .fold + .fold-label              closed disclosure row (auto ▸)
     .cert                            landscape cert/logo slot, one
                                      size, .certs = equal grid cells
@@ -27,13 +28,18 @@
     .panel                           mid-grey filled panel (inverse)
     .endact + .phone                 dark band / phone bar
     .logo .links .nav                outlined logo box, muted links
-    .sec .tag                        section + tiny annotation caps
+    .sec .tag                        section + collapse annotation —
+                                     name breakpoint behavior:
+                                     "cards 3-up ≥900 · 1-up mobile"
     .qa-list .qa / .steps .step      macro Q&A rows, process steps
     .burger + .drawer                nav collapse below tablet —
                                      links hide, burger toggles
                                      outlined drawer (one row always)
     .wform .fld .ph .help            form: outlined ≥44px fields, noun
                                      labels, faint placeholder/help bars
+    .fld.sel + .opts/.opt/.opt.ck/.opt.on
+                                     form controls: select (▾ box),
+                                     radio/checkbox rows, .on pip
     .video .play .dur .vcap          video: 16:9 X-box + play circle +
                                      duration chip + caption bar
     .h1q .claim .h2                  type ranks (see below)
@@ -142,6 +148,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
      padding:12px 24px;font:600 .8rem/1 system-ui;letter-spacing:.08em;
      text-transform:uppercase;color:var(--ink)}
 .btn.sm{padding:8px 16px;font-size:.72rem}
+.btn.ghost{border-color:var(--line);color:var(--mut)}      /* secondary CTA rank */
 
 /* ================= shared structures ================= */
 .nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:16px var(--px);
@@ -188,6 +195,13 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
 .fld>div.area{min-height:96px;align-items:flex-start;padding-top:12px}
 .ph{display:block;height:8px;border-radius:4px;background:var(--bar);width:55%}
 .help{display:block;height:8px;border-radius:4px;background:var(--bar);width:64%}
+.opts{display:flex;gap:16px;flex-wrap:wrap}
+.opt{display:flex;align-items:center;gap:8px;font:500 .8rem/1 system-ui;color:var(--ink)}
+.opt>i{display:block;width:16px;height:16px;border:1.5px solid var(--line);border-radius:50%;flex:none}
+.opt.ck>i{border-radius:var(--r)}                          /* checkbox = square */
+.opt.on>i{background:var(--bar2)}                          /* filled pip = checked */
+.fld>div.sel{justify-content:space-between}
+.fld>div.sel::after{content:"▾";color:var(--mut);flex:none}
 .end-grid{display:grid;gap:32px}
 .end-form{background:var(--paper);border:1.5px solid var(--line);border-radius:var(--r);padding:24px}
 .endact .tag{color:#c8c8c8}
@@ -301,12 +315,12 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     <div class="bars" style="max-width:520px;margin-bottom:24px">
       <i style="width:96%"></i><i style="width:72%"></i>
     </div>
-    <div class="btn">Request a quote</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap"><div class="btn">Request a quote</div><div class="btn ghost">See scope</div></div>
     <div class="xbox a219 hero-media"></div>
   </section>
 
   <section class="sec">
-    <div class="tag">Macro Q&amp;A — top-rule rows</div>
+    <div class="tag">Macro Q&amp;A — top-rule rows · 2-col ≥900 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
         <div class="bars"><i style="width:98%"></i><i style="width:84%"></i><i style="width:56%"></i></div></div>
@@ -339,7 +353,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
   </section>
 
   <section class="sec">
-    <div class="tag">Process — inline</div>
+    <div class="tag">Process — inline · row ≥900 · stacked mobile</div>
     <div class="steps">
       <div class="step"><div class="xbox xicon"></div><span class="st-label">Fill out form</span></div>
       <div class="step"><div class="xbox xicon"></div><span class="st-label">10-min discovery call</span></div>
@@ -405,7 +419,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
   </section>
 
   <section class="sec">
-    <div class="tag">Macro Q&amp;A — 3-up cards</div>
+    <div class="tag">Macro Q&amp;A — cards 3-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
         <div class="bars"><i style="width:98%"></i><i style="width:84%"></i><i style="width:56%"></i></div></div>
@@ -442,7 +456,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
   </section>
 
   <section class="sec">
-    <div class="tag">Process — cards</div>
+    <div class="tag">Process — cards 4-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="steps">
       <div class="step"><div class="xbox xicon"></div><span class="st-label">Fill out form</span></div>
       <div class="step"><div class="xbox xicon"></div><span class="st-label">10-min discovery call</span></div>
@@ -513,7 +527,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
   </section>
 
   <section class="sec">
-    <div class="tag">Macro Q&amp;A — table rows</div>
+    <div class="tag">Macro Q&amp;A — table rows · split ≥900 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
         <div class="bars"><i style="width:98%"></i><i style="width:84%"></i><i style="width:56%"></i></div></div>
@@ -546,7 +560,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
   </section>
 
   <section class="sec">
-    <div class="tag">Process — numbered</div>
+    <div class="tag">Process — numbered 4-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="steps">
       <div class="step"><span class="n">01</span><span class="st-label">Fill out form</span></div>
       <div class="step"><span class="n">02</span><span class="st-label">10-min discovery call</span></div>
@@ -579,8 +593,14 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
           <div class="fld"><span>Email</span><div><i class="ph" style="width:58%"></i></div></div>
           <div class="fld"><span>Phone</span><div><i class="ph" style="width:40%"></i></div></div>
           <div class="fld"><span>Site address</span><div><i class="ph" style="width:52%"></i></div></div>
-          <div class="fld full"><span>Floor area</span><div><i class="ph" style="width:30%"></i></div><i class="help"></i></div>
+          <div class="fld sel"><span>Property type</span><div class="sel"><i class="ph" style="width:38%"></i></div></div>
+          <div class="fld"><span>Floor area</span><div><i class="ph" style="width:30%"></i></div><i class="help"></i></div>
           <div class="fld full"><span>Message</span><div class="area"><i class="ph" style="width:60%"></i></div></div>
+          <div class="fld full"><span>Clean type</span><div class="opts">
+            <div class="opt on"><i></i>Full bond clean</div>
+            <div class="opt"><i></i>Partial scope</div>
+          </div></div>
+          <div class="opt ck on full"><i></i>I consent to being contacted about this quote</div>
           <div class="full"><div class="btn">Request a quote</div></div>
         </div>
       </div>
