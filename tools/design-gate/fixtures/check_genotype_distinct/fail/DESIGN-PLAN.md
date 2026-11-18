@@ -11,10 +11,10 @@ site:
   intent: {who: tenants, one_action: book, worst_case: lost bond}
   direction:
     temperature: warm
-    density: balanced
+    density: regular
     finish: flat
     type_contrast: single-family-weight-contrast
-    shape: p3-friendly
+    shape: p3
     motion: subtle
     refused: the generic default
   system:

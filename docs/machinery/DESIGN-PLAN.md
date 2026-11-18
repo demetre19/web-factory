@@ -193,10 +193,10 @@ site:
   # ---- direction — forced pick per axis ----
   direction:
     temperature:   warm | cool | neutral
-    density:       sparse | balanced | dense
+    density:       compact | regular | spacious
     finish:        flat | textured | glossy | raw
     type_contrast: serif-display/sans-text | mono-accents | single-family-weight-contrast
-    shape:         p1-sharp | p2-subtle | p3-friendly | p4-playful    # rules/S.md §S.1
+    shape:         p1 | p2 | p3 | p4                              # rules/S.md §S.1
     motion:        subtle | elegant | professional | playful          # rules/M.md §M.1
     refused:       <the generic default this direction replaces, named>
 
@@ -337,7 +337,7 @@ pages:
 
 # ---- W4 look options — each a distinct genotype vector (D.3) ----
 options:
-  - {name: d1, wildcard: false, temperature: warm, shape: p3-friendly}
+  - {name: d1, wildcard: false, temperature: warm, shape: p3}
   - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}
   - {name: d3, wildcard: true,  temperature: warm, shape: p4-playful,
      mutates: [radius-personality, motion-tier]}      # the one wildcard

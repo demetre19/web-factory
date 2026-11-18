@@ -51,10 +51,10 @@ site:
   intent: {who: tenants, one_action: book, worst_case: lost bond}
   direction:
     temperature: warm
-    density: balanced
+    density: regular
     finish: flat
     type_contrast: single-family-weight-contrast
-    shape: p3-friendly
+    shape: p3
     motion: subtle
     refused: the generic default
   system:
@@ -93,7 +93,7 @@ dna:
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3-friendly}
   - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}
-  - {name: d3, wildcard: true, temperature: warm, shape: p4-playful, mutates: [radius-personality, motion-tier]}
+  - {name: d3, wildcard: true, temperature: warm, shape: p4, mutates: [radius-personality, motion-tier]}
 decisions:
   - {rule_id: L.3, what: hero runs edge-to-edge, why: one memorable fold, where: hero, compensating: inner measure kept at 62ch}
 pages:
@@ -1038,7 +1038,7 @@ MUT = {
  'check_genotype_distinct': mut(('REPL','DESIGN-PLAN.md',
     'temperature: cool, shape: p2-subtle','temperature: warm, shape: p3-friendly'),
     ('REPL','DESIGN-PLAN.md',
-     'temperature: warm, shape: p4-playful, mutates: [radius-personality, motion-tier]',
+     'temperature: warm, shape: p4, mutates: [radius-personality, motion-tier]',
      'temperature: warm, shape: p3-friendly')),
  'check_content_inventory': mut(('DEL','STUB.md')),
  'check_neutral_tint': mut(('REPL','DESIGN-PLAN.md',

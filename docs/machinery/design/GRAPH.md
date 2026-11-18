@@ -1,49 +1,36 @@
 # GRAPH — design machinery knowledge graph
 
 ## B.1 (rule)
-- → P.8 [see_also]
 - ← rules-B [contains]
 - ← check_tiers [enforces]
 - ← w1 [enforces_at]
 
 ## B.2 (rule)
-- → D.1 [see_also]
-- → D.3 [see_also]
 - ← rules-B [contains]
 - ← check_burst [enforces]
-- ← w2 [enforces_at]
+- ← w3 [enforces_at]
 
 ## B.3 (rule)
-- → C.2 [see_also]
-- → S.1 [see_also]
-- → M.1 [see_also]
 - ← rules-B [contains]
 - ← check_burst [enforces]
-- ← w2 [enforces_at]
+- ← w3 [enforces_at]
 
 ## B.4 (rule)
-- → P.4 [see_also]
-- → L.7 [see_also]
 - ← rules-B [contains]
 - ← check_declared_breaks [enforces]
-- ← w2 [enforces_at]
+- ← w3 [enforces_at]
 
 ## B.5 (rule)
-- → P.9 [see_also]
-- → W.10 [see_also]
 - ← rules-B [contains]
 - ← check_style_review [enforces]
 - ← w8 [enforces_at]
 
 ## B.6 (rule)
-- → patterns-index [see_also]
 - ← rules-B [contains]
 - ← check_novelty [enforces]
 - ← w8 [enforces_at]
 
 ## C.1 (rule)
-- → S.7 [see_also]
-- → V.4 [see_also]
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
 - ← pattern-government-home-hero-stacked-hero [implies_rules]
@@ -83,28 +70,22 @@
 - ← pattern-services-service-detail-pricing-cards-n [implies_rules]
 - ← pattern-media-blog-content-editorial [implies_rules]
 - ← rules-C [contains]
-- ← P.5 [see_also]
-- ← L.7 [see_also]
-- ← T.1 [see_also]
 - ← check_contrast [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## C.2 (rule)
-- ← B.3 [see_also]
 - ← rules-C [contains]
-- ← T.4 [see_also]
-- ← D.3 [see_also]
 - ← check_direction_axes [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
 ## C.3 (rule)
 - ← rules-C [contains]
 - ← check_neutral_tint [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w8 [loads]
 
@@ -118,7 +99,7 @@
 ## C.5 (rule)
 - ← rules-C [contains]
 - ← check_dark_mode [enforces]
-- ← w3 [enforces_at]
+- ← w4 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
@@ -167,44 +148,31 @@
 - ← card-w8 [loads]
 
 ## C.7 (rule)
-- → R.6 [see_also]
 - ← rules-C [contains]
 - ← check_contrast [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## D.1 (rule)
-- → P.8 [see_also]
-- → P.9 [see_also]
-- → section-catalog [see_also]
-- ← B.2 [see_also]
 - ← rules-DNA [contains]
 - ← check_genotype [enforces]
 - ← w1 [enforces_at]
 
 ## D.2 (rule)
-- → P.14 [see_also]
-- → T.4 [see_also]
 - ← rules-DNA [contains]
 - ← check_genotype [enforces]
 - ← w1 [enforces_at]
 
 ## D.3 (rule)
-- → C.2 [see_also]
-- → S.1 [see_also]
-- → M.1 [see_also]
-- ← B.2 [see_also]
 - ← rules-DNA [contains]
 - ← check_genotype_distinct [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 
 ## D.4 (rule)
-- → P.3 [see_also]
-- → P.4 [see_also]
 - ← rules-DNA [contains]
 - ← check_genotype [enforces]
-- ← w5 [enforces_at]
+- ← w1 [enforces_at]
 
 ## DM.1 (rule)
 - ← rules-DM [contains]
@@ -214,12 +182,12 @@
 ## DM.2 (rule)
 - ← rules-DM [contains]
 - ← check_dna_fresh [enforces]
-- ← w3 [enforces_at]
+- ← w1 [enforces_at]
 
 ## DM.3 (rule)
 - ← rules-DM [contains]
 - ← check_dna [enforces]
-- ← w3 [enforces_at]
+- ← w1 [enforces_at]
 
 ## DM.4 (rule)
 - ← rules-DM [contains]
@@ -229,27 +197,23 @@
 ## DM.5 (rule)
 - ← rules-DM [contains]
 - ← check_rhythm [enforces]
-- ← w7 [enforces_at]
+- ← w3 [enforces_at]
 
 ## DM.6 (rule)
 - ← rules-DM [contains]
 - ← check_dna_fresh [enforces]
-- ← w3 [enforces_at]
+- ← w1 [enforces_at]
 
 ## E.1 (rule)
-- → P.4 [see_also]
-- ← PS.3 [see_also]
-- ← L.12 [see_also]
 - ← rules-E [contains]
 - ← check_vector_map [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w1 [loads]
 - ← card-w2 [loads]
 - ← card-w3 [loads]
 
 ## E.2 (rule)
-- → W.4 [see_also]
 - ← pattern-hospitality-home-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-home-hero-full-bleed [implies_rules]
@@ -263,10 +227,9 @@
 - ← pattern-events-home-hero-stacked-hero [implies_rules]
 - ← pattern-community-home-hero-stacked-hero [implies_rules]
 - ← pattern-services-service-detail-hero-stacked-hero [implies_rules]
-- ← W.2 [see_also]
 - ← rules-E [contains]
 - ← check_section_enums [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 - ← card-w2 [loads]
@@ -287,24 +250,20 @@
 - ← card-w1 [loads]
 
 ## G.1 (rule)
-- → R.2 [see_also]
 - ← rules-G [contains]
-- ← P.5 [see_also]
-- ← S.4 [see_also]
 - ← check_spacing_scale [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## G.2 (rule)
 - ← rules-G [contains]
 - ← check_proximity [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## G.3 (rule)
-- → L.7 [see_also]
 - ← pattern-hospitality-home-hero-full-bleed [implies_rules]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
@@ -322,9 +281,8 @@
 - ← pattern-services-service-detail-testimonials-quote-grid [implies_rules]
 - ← pattern-services-service-detail-faq-faq [implies_rules]
 - ← rules-G [contains]
-- ← L.7 [see_also]
 - ← check_section_enums [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
@@ -335,11 +293,9 @@
 - ← card-w8 [loads]
 
 ## I.1 (rule)
-- → P.11 [see_also]
-- ← P.11 [see_also]
 - ← rules-I [contains]
 - ← check_system_enums [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 
@@ -350,7 +306,6 @@
 - ← card-w5 [loads]
 
 ## I.3 (rule)
-- → R.6 [see_also]
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
@@ -377,7 +332,7 @@
 ## I.7 (rule)
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
-- ← w7 [enforces_at]
+- ← w6 [enforces_at]
 - ← card-w8 [loads]
 
 ## I.8 (rule)
@@ -447,7 +402,7 @@
 - ← pattern-media-home-hero-stacked-hero [implies_rules]
 - ← rules-L [contains]
 - ← check_schema_fields [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w3 [loads]
 
 ## L.10 (rule)
@@ -510,36 +465,30 @@
 - ← pattern-services-home-call-to-action-full-bleed [implies_rules]
 - ← pattern-media-blog-content-editorial [implies_rules]
 - ← pattern-media-home-hero-stacked-hero [implies_rules]
-- ← P.1 [see_also]
 - ← rules-L [contains]
 - ← check_scaffold [enforces]
 - ← w0 [enforces_at]
 
 ## L.11 (rule)
-- → T.6 [see_also]
-- → R.2 [see_also]
 - ← rules-L [contains]
-- ← T.6 [see_also]
 - ← check_content_width [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 
 ## L.12 (rule)
-- → E.1 [see_also]
-- ← PS.2 [see_also]
 - ← rules-L [contains]
 - ← check_rhythm [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## L.13 (rule)
 - ← rules-L [contains]
 - ← check_rhythm [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## L.2 (rule)
 - ← rules-L [contains]
 - ← check_rhythm [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## L.3 (rule)
 - ← rules-L [contains]
@@ -625,8 +574,6 @@
 - ← card-w8 [loads]
 
 ## L.7 (rule)
-- → G.3 [see_also]
-- → C.1 [see_also]
 - ← pattern-hospitality-home-hero-full-bleed [implies_rules]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
@@ -643,19 +590,16 @@
 - ← pattern-saas-pricing-pricing-cards-n [implies_rules]
 - ← pattern-services-service-detail-testimonials-quote-grid [implies_rules]
 - ← pattern-services-service-detail-faq-faq [implies_rules]
-- ← B.4 [see_also]
-- ← G.3 [see_also]
 - ← rules-L [contains]
-- ← T.1 [see_also]
 - ← check_rhythm [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w3 [loads]
 
 ## L.8 (rule)
 - ← rules-L [contains]
 - ← check_motif [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## L.9 (rule)
 - → asymmetry-desktop [scored_by]
@@ -685,16 +629,13 @@
 - ← rules-DM [see_also]
 
 ## M.1 (rule)
-- ← B.3 [see_also]
 - ← rules-M [contains]
-- ← D.3 [see_also]
 - ← check_direction_axes [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
 ## M.2 (rule)
-- → P.12 [see_also]
 - ← rules-M [contains]
 - ← check_measurable [enforces]
 - ← w7 [enforces_at]
@@ -721,17 +662,15 @@
 - ← card-w8 [loads]
 
 ## M.6 (rule)
-- → R.1 [see_also]
 - ← rules-M [contains]
 - ← check_reduced_motion [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
 
 ## M.7 (rule)
-- ← P.12 [see_also]
 - ← rules-M [contains]
 - ← check_speed_budget [enforces]
 - ← w7 [enforces_at]
@@ -743,7 +682,6 @@
 - ← card-w8 [loads]
 
 ## P.1 (rule)
-- → L.10 [see_also]
 - ← rules-P [contains]
 - ← check_scaffold [enforces]
 - ← w0 [enforces_at]
@@ -751,35 +689,27 @@
 ## P.10 (rule)
 - ← rules-P [contains]
 - ← check_no_emoji [enforces]
-- ← w6 [enforces_at]
+- ← w5 [enforces_at]
 
 ## P.11 (rule)
-- → I.1 [see_also]
 - ← rules-P [contains]
-- ← I.1 [see_also]
-- ← R.6 [see_also]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
 
 ## P.12 (rule)
-- → M.7 [see_also]
 - ← rules-P [contains]
-- ← M.2 [see_also]
-- ← V.6 [see_also]
 - ← check_speed_budget [enforces]
 - ← w7 [enforces_at]
 
 ## P.13 (rule)
 - ← rules-P [contains]
-- ← R.1 [see_also]
 - ← check_mobile_budget [enforces]
 - ← w7 [enforces_at]
 
 ## P.14 (rule)
 - ← rules-P [contains]
-- ← D.2 [see_also]
 - ← check_mobbin_refs [enforces]
-- ← w5 [enforces_at]
+- ← w1 [enforces_at]
 
 ## P.15 (rule)
 - ← rules-P [contains]
@@ -792,60 +722,39 @@
 - ← w6 [enforces_at]
 
 ## P.3 (rule)
-- → P.4 [see_also]
-- → V.3 [see_also]
-- ← PS.1 [see_also]
 - ← rules-P [contains]
-- ← V.3 [see_also]
-- ← W.4 [see_also]
-- ← D.4 [see_also]
 - ← check_wireframe_tags [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## P.4 (rule)
-- ← B.4 [see_also]
 - ← rules-P [contains]
-- ← P.3 [see_also]
-- ← R.3 [see_also]
-- ← D.4 [see_also]
-- ← E.1 [see_also]
 - ← check_wireframe_lock [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## P.5 (rule)
-- → S.2 [see_also]
-- → G.1 [see_also]
-- → C.1 [see_also]
 - ← rules-P [contains]
-- ← S.2 [see_also]
 - ← check_tailwind_derivation [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 
 ## P.6 (rule)
 - ← rules-P [contains]
 - ← check_tile_is_system [enforces]
-- ← w6 [enforces_at]
+- ← w5 [enforces_at]
 
 ## P.7 (rule)
-- ← PS.1 [see_also]
 - ← rules-P [contains]
 - ← check_page_data_attrs [enforces]
 - ← w7 [enforces_at]
 
 ## P.8 (rule)
-- ← B.1 [see_also]
 - ← rules-P [contains]
-- ← D.1 [see_also]
 
 ## P.9 (rule)
-- ← B.5 [see_also]
 - ← rules-P [contains]
-- ← D.1 [see_also]
 - ← check_checklist [enforces]
+- ← w0 [enforces_at]
 
 ## PS.1 (rule)
-- → P.3 [see_also]
-- → P.7 [see_also]
 - ← rules-PS [contains]
 - ← check_segment_roles [enforces]
 - ← w7 [enforces_at]
@@ -853,14 +762,11 @@
 - ← card-w1 [loads]
 
 ## PS.2 (rule)
-- → L.12 [see_also]
 - ← rules-PS [contains]
 - ← check_segment_region [enforces]
 - ← w7 [enforces_at]
 
 ## PS.3 (rule)
-- → E.1 [see_also]
-- → W.8 [see_also]
 - ← rules-PS [contains]
 - ← check_segment_share [enforces]
 - ← w7 [enforces_at]
@@ -876,48 +782,40 @@
 - ← w7 [enforces_at]
 
 ## PS.6 (rule)
-- → R.5 [see_also]
 - ← rules-PS [contains]
 - ← check_segment_priority [enforces]
 - ← w7 [enforces_at]
 - ← card-w7 [loads]
 
 ## R.1 (rule)
-- → P.13 [see_also]
-- ← M.6 [see_also]
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 
 ## R.2 (rule)
-- ← G.1 [see_also]
-- ← L.11 [see_also]
 - ← rules-R [contains]
 - ← check_spacing_scale [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 
 ## R.3 (rule)
-- → P.4 [see_also]
 - ← rules-R [contains]
 - ← check_schema_fields [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 - ← card-w3 [loads]
 
 ## R.4 (rule)
-- ← T.6 [see_also]
 - ← rules-R [contains]
 - ← check_copy_density [enforces]
 - ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## R.5 (rule)
-- ← PS.6 [see_also]
 - ← rules-R [contains]
 - ← check_measurable [enforces]
 - ← w7 [enforces_at]
@@ -926,9 +824,6 @@
 - ← card-w8 [loads]
 
 ## R.6 (rule)
-- → P.11 [see_also]
-- ← C.7 [see_also]
-- ← I.3 [see_also]
 - ← rules-R [contains]
 - ← check_tap_size [enforces]
 - ← w7 [enforces_at]
@@ -944,23 +839,19 @@
 ## R.8 (rule)
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 
 ## S.1 (rule)
-- ← B.3 [see_also]
 - ← rules-S [contains]
-- ← D.3 [see_also]
 - ← check_direction_axes [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
 ## S.2 (rule)
-- → P.5 [see_also]
-- ← P.5 [see_also]
 - ← rules-S [contains]
 - ← check_tailwind_derivation [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
 
@@ -971,7 +862,6 @@
 - ← card-w8 [loads]
 
 ## S.4 (rule)
-- → G.1 [see_also]
 - ← rules-S [contains]
 - ← check_measurable [enforces]
 - ← w7 [enforces_at]
@@ -981,7 +871,7 @@
 ## S.5 (rule)
 - ← rules-S [contains]
 - ← check_border_widths [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w8 [loads]
 
@@ -993,7 +883,6 @@
 
 ## S.7 (rule)
 - → elevation-radius [scored_by]
-- ← C.1 [see_also]
 - ← rules-S [contains]
 - ← w8 [enforces_at]
 - ← card-w5 [loads]
@@ -1008,7 +897,7 @@
 ## SB.1 (rule)
 - ← rules-SB [contains]
 - ← check_section_contracts [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 
 ## SB.2 (rule)
 - ← rules-SB [contains]
@@ -1042,8 +931,6 @@
 - ← card-w8 [loads]
 
 ## T.1 (rule)
-- → C.1 [see_also]
-- → L.7 [see_also]
 - ← rules-T [contains]
 - ← check_measurable [enforces]
 - ← w7 [enforces_at]
@@ -1064,21 +951,19 @@
 ## T.2 (rule)
 - ← rules-T [contains]
 - ← check_type_system [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 
 ## T.3 (rule)
 - ← rules-T [contains]
 - ← check_type_system [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w4 [loads]
 
 ## T.4 (rule)
-- → C.2 [see_also]
 - ← rules-T [contains]
-- ← D.2 [see_also]
 - ← check_type_system [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 
 ## T.5 (rule)
@@ -1088,12 +973,9 @@
 - ← card-w8 [loads]
 
 ## T.6 (rule)
-- → R.4 [see_also]
-- → L.11 [see_also]
-- ← L.11 [see_also]
 - ← rules-T [contains]
 - ← check_type_system [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 
 ## T.7 (rule)
@@ -1105,7 +987,7 @@
 ## T.8 (rule)
 - ← rules-T [contains]
 - ← check_type_system [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w1 [loads]
 
 ## T.9 (rule)
@@ -1168,11 +1050,10 @@
 ## V.2 (rule)
 - ← rules-V [contains]
 - ← check_system_enums [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 
 ## V.3 (rule)
-- → P.3 [see_also]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
 - ← pattern-ecommerce-checkout-form-form-panel [implies_rules]
 - ← pattern-ecommerce-product-cross-sell-cards-n [implies_rules]
@@ -1212,16 +1093,14 @@
 - ← pattern-services-home-feature-editorial [implies_rules]
 - ← pattern-services-home-call-to-action-full-bleed [implies_rules]
 - ← pattern-services-service-detail-pricing-cards-n [implies_rules]
-- ← P.3 [see_also]
 - ← rules-V [contains]
 - ← check_section_enums [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w6 [loads]
 - ← card-w3 [loads]
 
 ## V.4 (rule)
-- ← C.1 [see_also]
 - ← rules-V [contains]
 - ← check_measurable [enforces]
 - ← w7 [enforces_at]
@@ -1235,10 +1114,9 @@
 - ← card-w8 [loads]
 
 ## V.6 (rule)
-- → P.12 [see_also]
 - ← rules-V [contains]
 - ← check_system_enums [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 - ← card-w1 [loads]
@@ -1259,22 +1137,22 @@
 ## VG.1 (rule)
 - ← rules-VG [contains]
 - ← check_variants [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 
 ## VG.2 (rule)
 - ← rules-VG [contains]
 - ← check_variants [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 
 ## VG.3 (rule)
 - ← rules-VG [contains]
 - ← check_variants [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 
 ## VG.4 (rule)
 - ← rules-VG [contains]
 - ← check_variants [enforces]
-- ← w2 [enforces_at]
+- ← w4 [enforces_at]
 
 ## VG.5 (rule)
 - ← rules-VG [contains]
@@ -1295,14 +1173,12 @@
 
 ## W.10 (rule)
 - → writing-qa [scored_by]
-- ← B.5 [see_also]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
 - ← card-w2 [loads]
 - ← card-w8 [loads]
 
 ## W.2 (rule)
-- → E.2 [see_also]
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
 - ← pattern-government-home-hero-stacked-hero [implies_rules]
 - ← pattern-ecommerce-category-filters-sort-text-index [implies_rules]
@@ -1364,7 +1240,7 @@
 - ← pattern-media-home-hero-stacked-hero [implies_rules]
 - ← rules-W [contains]
 - ← check_system_enums [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w2 [loads]
 - ← card-w6 [loads]
@@ -1436,11 +1312,9 @@
 - ← card-w8 [loads]
 
 ## W.4 (rule)
-- → P.3 [see_also]
 - ← rules-W [contains]
-- ← E.2 [see_also]
 - ← check_section_enums [enforces]
-- ← w5 [enforces_at]
+- ← w3 [enforces_at]
 - ← card-w6 [loads]
 - ← card-w3 [loads]
 
@@ -1519,10 +1393,9 @@
 - ← card-w8 [loads]
 
 ## W.8 (rule)
-- ← PS.3 [see_also]
 - ← rules-W [contains]
 - ← check_system_enums [enforces]
-- ← w3 [enforces_at]
+- ← w5 [enforces_at]
 - ← card-w5 [loads]
 - ← card-w2 [loads]
 
@@ -1556,166 +1429,166 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → V.6 [loads]
 - → E.4 [loads]
-- → PS.1 [loads]
 - → E.1 [loads]
+- → V.6 [loads]
 - → T.8 [loads]
+- → PS.1 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
-- → W.8 [loads]
-- → W.6 [loads]
+- → E.1 [loads]
 - → E.2 [loads]
+- → W.7 [loads]
 - → W.1 [loads]
+- → W.6 [loads]
+- → W.8 [loads]
 - → W.10 [loads]
 - → W.2 [loads]
-- → E.1 [loads]
-- → W.7 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → V.3 [loads]
-- → E.2 [loads]
-- → L.7 [loads]
-- → R.3 [loads]
-- → L.1 [loads]
-- → W.2 [loads]
-- → W.4 [loads]
 - → E.1 [loads]
+- → V.3 [loads]
+- → L.7 [loads]
+- → L.1 [loads]
+- → E.2 [loads]
+- → W.4 [loads]
+- → W.2 [loads]
+- → R.3 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
+- → C.2 [loads]
 - → M.1 [loads]
-- → S.1 [loads]
 - → C.5 [loads]
+- → S.1 [loads]
 - → T.3 [loads]
 - → G.3 [loads]
-- → C.2 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → I.3 [loads]
-- → W.8 [loads]
-- → C.7 [loads]
-- → C.3 [loads]
-- → I.1 [loads]
-- → M.2 [loads]
-- → T.4 [loads]
-- → C.1 [loads]
 - → G.2 [loads]
+- → I.1 [loads]
+- → C.3 [loads]
+- → G.1 [loads]
+- → I.3 [loads]
+- → R.2 [loads]
+- → S.5 [loads]
+- → V.2 [loads]
+- → C.5 [loads]
+- → M.2 [loads]
+- → C.4 [loads]
 - → G.3 [loads]
 - → T.6 [loads]
-- → S.5 [loads]
 - → M.1 [loads]
-- → G.1 [loads]
-- → S.2 [loads]
-- → E.2 [loads]
+- → R.1 [loads]
+- → M.6 [loads]
 - → V.6 [loads]
 - → S.7 [loads]
-- → S.1 [loads]
-- → C.4 [loads]
-- → R.2 [loads]
-- → R.3 [loads]
-- → M.6 [loads]
+- → C.7 [loads]
 - → T.3 [loads]
-- → V.2 [loads]
-- → R.1 [loads]
-- → L.11 [loads]
-- → I.2 [loads]
-- → W.2 [loads]
-- → C.5 [loads]
+- → S.2 [loads]
+- → R.3 [loads]
 - → C.2 [loads]
+- → I.2 [loads]
+- → L.11 [loads]
+- → E.2 [loads]
+- → S.1 [loads]
+- → C.1 [loads]
+- → W.8 [loads]
+- → T.4 [loads]
+- → W.2 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → I.3 [loads]
-- → V.3 [loads]
-- → R.5 [loads]
-- → G.1 [loads]
-- → S.2 [loads]
-- → S.4 [loads]
 - → I.1 [loads]
-- → M.2 [loads]
-- → C.1 [loads]
-- → R.6 [loads]
-- → R.3 [loads]
+- → G.1 [loads]
+- → V.3 [loads]
 - → M.6 [loads]
-- → W.2 [loads]
-- → W.4 [loads]
+- → R.6 [loads]
 - → V.4 [loads]
+- → M.2 [loads]
+- → W.2 [loads]
+- → S.4 [loads]
+- → W.4 [loads]
+- → C.1 [loads]
+- → S.2 [loads]
+- → I.3 [loads]
+- → R.5 [loads]
+- → R.3 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → V.3 [loads]
-- → R.5 [loads]
-- → E.2 [loads]
-- → V.6 [loads]
 - → PS.6 [loads]
-- → L.7 [loads]
+- → E.1 [loads]
 - → E.3 [loads]
+- → R.1 [loads]
+- → V.3 [loads]
 - → R.6 [loads]
-- → R.3 [loads]
 - → M.6 [loads]
 - → PS.1 [loads]
+- → L.7 [loads]
+- → E.2 [loads]
+- → V.6 [loads]
 - → W.7 [loads]
-- → E.1 [loads]
-- → R.1 [loads]
+- → R.5 [loads]
+- → R.3 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → C.7 [loads]
-- → C.3 [loads]
-- → M.5 [loads]
-- → W.1 [loads]
-- → R.4 [loads]
-- → W.9 [loads]
-- → M.2 [loads]
 - → G.2 [loads]
-- → M.3 [loads]
-- → V.4 [loads]
-- → M.8 [loads]
-- → S.5 [loads]
-- → L.4 [loads]
-- → V.6 [loads]
-- → E.2 [loads]
-- → T.10 [loads]
-- → L.6 [loads]
-- → S.3 [loads]
-- → S.7 [loads]
-- → E.3 [loads]
-- → S.8 [loads]
-- → I.4 [loads]
-- → C.4 [loads]
-- → I.6 [loads]
-- → R.5 [loads]
-- → W.6 [loads]
-- → T.5 [loads]
-- → C.6 [loads]
-- → R.7 [loads]
+- → L.3 [loads]
 - → M.4 [loads]
-- → T.0 [loads]
-- → G.4 [loads]
+- → T.10 [loads]
+- → I.6 [loads]
 - → V.5 [loads]
-- → M.6 [loads]
-- → T.11 [loads]
+- → M.5 [loads]
+- → R.4 [loads]
+- → V.4 [loads]
+- → S.3 [loads]
+- → C.3 [loads]
+- → T.0 [loads]
+- → W.1 [loads]
+- → W.6 [loads]
+- → L.9 [loads]
 - → T.7 [loads]
-- → W.10 [loads]
 - → L.5 [loads]
 - → V.0 [loads]
-- → V.7 [loads]
-- → T.1 [loads]
-- → T.9 [loads]
-- → S.4 [loads]
+- → R.7 [loads]
+- → E.3 [loads]
+- → L.4 [loads]
 - → V.8 [loads]
-- → L.3 [loads]
-- → S.6 [loads]
-- → V.1 [loads]
-- → W.5 [loads]
-- → L.9 [loads]
-- → I.7 [loads]
-- → W.7 [loads]
+- → V.7 [loads]
+- → M.8 [loads]
+- → S.5 [loads]
+- → M.2 [loads]
 - → W.3 [loads]
+- → S.4 [loads]
+- → C.4 [loads]
+- → T.11 [loads]
+- → T.1 [loads]
+- → I.4 [loads]
+- → M.6 [loads]
+- → W.9 [loads]
+- → V.1 [loads]
+- → V.6 [loads]
+- → W.5 [loads]
+- → S.8 [loads]
+- → S.7 [loads]
+- → C.7 [loads]
+- → G.4 [loads]
+- → W.10 [loads]
+- → I.7 [loads]
+- → M.3 [loads]
+- → L.6 [loads]
+- → T.9 [loads]
+- → E.2 [loads]
+- → W.7 [loads]
+- → T.5 [loads]
+- → S.6 [loads]
+- → C.6 [loads]
+- → R.5 [loads]
 - ← w8 [has_card]
 
 ## check_assembly (check)
@@ -6751,7 +6624,6 @@
 - ← profile-education [derives_from]
 - ← profile-events [derives_from]
 - ← profile-saas [derives_from]
-- ← B.6 [see_also]
 - ← design-index [patterns]
 
 ## patterns-index-meta (doc)
@@ -7984,7 +7856,6 @@
 - ← pattern-services-service-detail-pricing-cards-n [composition]
 - ← pattern-media-blog-content-editorial [composition]
 - ← pattern-media-home-hero-stacked-hero [composition]
-- ← D.1 [see_also]
 - ← design-index [contains]
 
 ## section-catalog#app-band (composition)
@@ -8084,6 +7955,7 @@
 ## w0 (wave)
 - → L.10 [enforces_at]
 - → P.1 [enforces_at]
+- → P.9 [enforces_at]
 - → card-w0 [has_card]
 - → checklist-w0 [has_checklist]
 - → check_scaffold [gated_by]
@@ -8100,7 +7972,12 @@
 - → B.1 [enforces_at]
 - → D.1 [enforces_at]
 - → D.2 [enforces_at]
+- → D.4 [enforces_at]
 - → DM.1 [enforces_at]
+- → DM.2 [enforces_at]
+- → DM.3 [enforces_at]
+- → DM.6 [enforces_at]
+- → P.14 [enforces_at]
 - → card-w1 [has_card]
 - → checklist-w1 [has_checklist]
 - → check_mobbin_auth [gated_by]
@@ -8175,17 +8052,6 @@
 - ← design-index [sequences]
 
 ## w2 (wave)
-- → B.2 [enforces_at]
-- → B.3 [enforces_at]
-- → B.4 [enforces_at]
-- → C.2 [enforces_at]
-- → D.3 [enforces_at]
-- → M.1 [enforces_at]
-- → S.1 [enforces_at]
-- → VG.1 [enforces_at]
-- → VG.2 [enforces_at]
-- → VG.3 [enforces_at]
-- → VG.4 [enforces_at]
 - → card-w2 [has_card]
 - → checklist-w2 [has_checklist]
 - → check_content_inventory [gated_by]
@@ -8204,33 +8070,25 @@
 - ← design-index [sequences]
 
 ## w3 (wave)
-- → C.1 [enforces_at]
-- → C.3 [enforces_at]
-- → C.5 [enforces_at]
-- → C.7 [enforces_at]
-- → DM.2 [enforces_at]
-- → DM.3 [enforces_at]
-- → DM.6 [enforces_at]
-- → G.1 [enforces_at]
-- → G.2 [enforces_at]
-- → I.1 [enforces_at]
-- → L.11 [enforces_at]
-- → M.6 [enforces_at]
-- → P.5 [enforces_at]
-- → R.1 [enforces_at]
-- → R.2 [enforces_at]
-- → R.8 [enforces_at]
-- → S.2 [enforces_at]
-- → S.5 [enforces_at]
-- → T.2 [enforces_at]
-- → T.3 [enforces_at]
-- → T.4 [enforces_at]
-- → T.6 [enforces_at]
-- → T.8 [enforces_at]
-- → V.2 [enforces_at]
-- → V.6 [enforces_at]
-- → W.2 [enforces_at]
-- → W.8 [enforces_at]
+- → B.2 [enforces_at]
+- → B.3 [enforces_at]
+- → B.4 [enforces_at]
+- → DM.5 [enforces_at]
+- → E.1 [enforces_at]
+- → E.2 [enforces_at]
+- → G.3 [enforces_at]
+- → L.1 [enforces_at]
+- → L.12 [enforces_at]
+- → L.13 [enforces_at]
+- → L.2 [enforces_at]
+- → L.7 [enforces_at]
+- → L.8 [enforces_at]
+- → P.3 [enforces_at]
+- → P.4 [enforces_at]
+- → R.3 [enforces_at]
+- → SB.1 [enforces_at]
+- → V.3 [enforces_at]
+- → W.4 [enforces_at]
 - → card-w3 [has_card]
 - → checklist-w3 [has_checklist]
 - → check_wireframe_tags [gated_by]
@@ -8325,6 +8183,15 @@
 - ← design-index [sequences]
 
 ## w4 (wave)
+- → C.2 [enforces_at]
+- → C.5 [enforces_at]
+- → D.3 [enforces_at]
+- → M.1 [enforces_at]
+- → S.1 [enforces_at]
+- → VG.1 [enforces_at]
+- → VG.2 [enforces_at]
+- → VG.3 [enforces_at]
+- → VG.4 [enforces_at]
 - → card-w4 [has_card]
 - → checklist-w4 [has_checklist]
 - → check_direction_axes [gated_by]
@@ -8574,23 +8441,31 @@
 - ← design-index [sequences]
 
 ## w5 (wave)
-- → D.4 [enforces_at]
-- → E.1 [enforces_at]
-- → E.2 [enforces_at]
-- → G.3 [enforces_at]
-- → L.1 [enforces_at]
-- → L.12 [enforces_at]
-- → L.13 [enforces_at]
-- → L.2 [enforces_at]
-- → L.7 [enforces_at]
-- → L.8 [enforces_at]
-- → P.14 [enforces_at]
-- → P.3 [enforces_at]
-- → P.4 [enforces_at]
-- → R.3 [enforces_at]
-- → SB.1 [enforces_at]
-- → V.3 [enforces_at]
-- → W.4 [enforces_at]
+- → C.1 [enforces_at]
+- → C.3 [enforces_at]
+- → C.7 [enforces_at]
+- → G.1 [enforces_at]
+- → G.2 [enforces_at]
+- → I.1 [enforces_at]
+- → L.11 [enforces_at]
+- → M.6 [enforces_at]
+- → P.10 [enforces_at]
+- → P.5 [enforces_at]
+- → P.6 [enforces_at]
+- → R.1 [enforces_at]
+- → R.2 [enforces_at]
+- → R.8 [enforces_at]
+- → S.2 [enforces_at]
+- → S.5 [enforces_at]
+- → T.2 [enforces_at]
+- → T.3 [enforces_at]
+- → T.4 [enforces_at]
+- → T.6 [enforces_at]
+- → T.8 [enforces_at]
+- → V.2 [enforces_at]
+- → V.6 [enforces_at]
+- → W.2 [enforces_at]
+- → W.8 [enforces_at]
 - → card-w5 [has_card]
 - → checklist-w5 [has_checklist]
 - → check_system_enums [gated_by]
@@ -8806,11 +8681,10 @@
 - → I.2 [enforces_at]
 - → I.3 [enforces_at]
 - → I.5 [enforces_at]
+- → I.7 [enforces_at]
 - → I.8 [enforces_at]
-- → P.10 [enforces_at]
 - → P.11 [enforces_at]
 - → P.2 [enforces_at]
-- → P.6 [enforces_at]
 - → SB.2 [enforces_at]
 - → SB.3 [enforces_at]
 - → SB.5 [enforces_at]
@@ -8840,10 +8714,8 @@
 - ← design-index [sequences]
 
 ## w7 (wave)
-- → DM.5 [enforces_at]
 - → E.3 [enforces_at]
 - → E.4 [enforces_at]
-- → I.7 [enforces_at]
 - → L.3 [enforces_at]
 - → M.2 [enforces_at]
 - → M.7 [enforces_at]

@@ -70,12 +70,12 @@ DESIGN_MODES = {'variants', 'refs-inspiration', 'inspo-text',
                 'audit-remodel', 'refs-existing', 'dox'}
 AXES = {
     'temperature': {'warm', 'cool', 'neutral'},
-    'density': {'sparse', 'balanced', 'dense'},
+    'density': {'compact', 'regular', 'spacious'},
     'finish': {'flat', 'textured', 'glossy', 'raw'},
     'type_contrast': {'serif-display/sans-text', 'mono-accents',
                       'single-family-weight-contrast'},
-    'shape': {'p1-sharp', 'p2-subtle', 'p3-friendly', 'p4-playful'},
-    'motion': {'subtle', 'elegant', 'professional', 'playful'},
+    'shape': {'p1', 'p2', 'p3', 'p4'},
+    'motion': {'none', 'subtle', 'elegant', 'professional', 'playful'},
 }
 RATIOS = {'none', '21:9', '16:9', '4:3', '3:4', '1:1', '9:16', '3:2', '2:3'}
 
@@ -3049,7 +3049,7 @@ def check_dna(ctx):
                 'coherence (gate.py dna)']
     required = ['version', 'site', 'vertical_profile', 'genotype',
                 'knobs', 'provenance', 'vector_targets', 'invariants']
-    if _wave_ge(ctx, 'w2'):
+    if _wave_ge(ctx, 'w4'):
         required += ['modes', 'variants']
     if _wave_ge(ctx, 'w5'):
         required.append('rhythm')

@@ -61,7 +61,7 @@ closed set.
 | L.7 | Small-Medium-Large | structural | script | `check_rhythm` | ≥1 density step; no >2 same comp; adjacent comp+density differ | w3 |
 | L.8 | Breaking the frame | stylistic | script | `check_motif` | exactly one motif.break section | w3 |
 | L.9 | Asymmetry desktop, symmetry mobile | stylistic | reviewer | `asymmetry-desktop` | asym desktop / sym mobile | w8 |
-| M.1 | The four personalities | stylistic | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w4 |
+| M.1 | The personalities | stylistic | script | `check_direction_axes` | motion ∉ {none,subtle,elegant,professional,playful} | w4 |
 | M.2 | Duration & easing tokens | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
 | M.3 | Element-class rules | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
 | M.4 | One focal animation | stylistic | reviewer | `motion-personality` | one focal animation | w8 |

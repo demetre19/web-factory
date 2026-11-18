@@ -24,7 +24,7 @@ Motion is spent like accent colour (C.1 isolation): one focal moment
 per viewport, everything else inert. A page that animates everything
 animates nothing.
 
-### M.1 The four personalities — closed set
+### M.1 The personalities — closed set
 
 The brief's `motion_personality` field picks exactly one; it serializes
 to `direction.motion` in DESIGN-PLAN. Static brochure sites default to
@@ -158,7 +158,7 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 
 | Rule | Tier | Mode | Check / rubric | FAILs when | Wave |
 |---|---|---|---|---|---|
-| M.1 | stylistic | script | `check_direction_axes` | motion ∈ {subtle,elegant,professional,playful} | w4 |
+| M.1 | stylistic | script | `check_direction_axes` | motion ∈ {none,subtle,elegant,professional,playful} | w4 |
 | M.2 | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
 | M.3 | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
 | M.4 | stylistic | reviewer | `motion-personality` | one focal animation | w8 |
