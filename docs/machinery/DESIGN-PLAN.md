@@ -96,8 +96,10 @@ not a default.
    logged in `decisions[]`.
 4. `pages:` map — per route, its own intent/idea/rhetoric/sections.
 5. **ASCII draft + critique** — render the money page's `sections[]`
-   as ASCII boxes (one per row, annotated with
-   `speech_act`/`surface`/`density`/`composition`), then run the
+   as ASCII boxes — the **full page skeleton**, ~40–80 lines, one
+   labeled box per row, annotated with
+   `speech_act`/`surface`/`density`/`composition`, contrast moment
+   and S-M-L rhythm marked — then run the
    rubric reviewer against the sketch *before* rendering. ASCII is
    the cheap draft surface the critique loop works on: adjacency
    violations, flat clustering, a missing contrast moment, a wrong

@@ -38,8 +38,13 @@ this is on the table.
 **Phase B — direction cards (the only choice).** The agent presents
 **three cards**, never settings. Each card is a coherent bundle:
 a one-line name, all six `direction` axes, the `refused` it
-replaces, and an ASCII hero sketch (layout + density + rhythm —
-the thing ASCII can show; type/colour live in the axis row). Cards
+replaces, and an ASCII sketch — the **full money-page skeleton**,
+every planned section as a labeled box, ~40–80 lines, annotated
+`surface`/`density`/`composition`, contrast moment and S-M-L rhythm
+visible, same canvas width across all three cards so they're
+comparable at a glance. (Type/colour can't show in ASCII — that's
+what the axis row is for; layout, density, and rhythm can, and
+that's what the operator is choosing between.) Cards
 must differ on ≥3 axes — same direction in different wrappers is
 fraudulent variety. The operator picks one or remixes
 ("A's axes, B's hero") — that single answer fills `direction:`.
