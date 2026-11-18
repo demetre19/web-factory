@@ -282,6 +282,11 @@ pages:
         align: <named edge>               # e.g. col-1-edge | center-axis | measure-start
         stack: text-first                   # mobile order: text-first default; visual-first needs declared product-UI hook (R.3)
         collapse: 2-col≥1024 | stacked      # per-composition collapse step, must match R.3 table
+        # ---- vector pages only (copy-contract STUB) — PRIMITIVES §E ----
+        heading: <exact vector heading — verbatim, never rewritten>
+        fs: <mandated first sentence — the copy contract, renders verbatim>
+        zone: macro | micro | end
+        heading_class: query | claim    # E.2: query=small/muted/label; claim=full rank
       - {…one row per section, in rhetoric order…}
   # …one entry per route/SPEC…
 
@@ -359,6 +364,12 @@ the coordinator hopes was honored:
   placeholder example-only, tooltip ≤15w, empty-state triad, links
   front-loaded, ≤grade-8, active voice, digits, no string
   concatenation / text-in-graphics / idioms)
+- [ ] vector pages: every `sections[]` row maps 1:1 to the STUB's
+  heading-vector, order preserved; `heading`/`fs`/`zone`/`heading_class`
+  present; no invented section, none dropped (PRIMITIVES §E.1)
+- [ ] SEO QA ∈ `PRIMITIVES.md` §E.4 (H1 `query` small on detail
+  pages, macro readable/micro minimised, no invented `claim`,
+  ≤1 link/section, title≡H1 entity)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator
