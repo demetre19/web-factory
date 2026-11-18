@@ -5710,11 +5710,38 @@ def cmd_consistency():
             if (lo, hi) not in {(52, 65), (45, 75)}:
                 fails.append(f'{base}: measure {lo}–{hi}ch — canon is '
                              'T.6 prose 52–65ch / shells ≤75ch')
-        for m in re.finditer(r'§?\b([TCLGSIVMRWE]{1,2}|PS)\.(\d+)\b', t):
+        for m in re.finditer(
+                r'§?\b([A-Z]{1,2}|PS|VG|SB|DM)\.(\d+)\b', t):
             rid = f'{m.group(1)}.{m.group(2)}'
+            # W<n> is a wave, not a rule; E<n> shadow scale, L<n>
+            # inside code samples etc. — only real prefixes count
+            if m.group(1) not in {
+                    i.rsplit('.', 1)[0] for i in ids}:
+                continue
             if rid not in ids:
                 fails.append(f'{base}: references nonexistent rule '
                              f'{rid}')
+    # stale-reference ban list (B F-10/F-16): old level names, old stage
+    # dirs, and the pre-preview artifact paths must never come back
+    BANNED = {
+        'L0': r'\bL0\b', 'L1': r'\bL1\b',
+        'L2': r'\bL2\b(?!\s*[\d.])',
+        'L3': r'\bL3\b', 'L4': r'\bL4\b', 'L5': r'\bL5\b',
+        'old stage dir': r'stage-w2-look|stage-w3-system|'
+                         r'stage-w4-content|stage-w5-wireframe',
+        'bare system.html': r'(?<![`\w/])system\.html(?!`)',
+        'PRIMITIVES section ref': r'PRIMITIVES\s*§',
+        'preview-as-astro': r'preview[^\n]{0,30}\.astro'
+    }
+    for p, t in texts.items():
+        base = os.path.basename(p)
+        if base == 'GRAPH.md':
+            continue
+        for label, rx in BANNED.items():
+            for m in re.finditer(rx, t):
+                fails.append(f'{base}: stale ref ({label}): '
+                             f'{m.group(0)[:60]!r}')
+                break
     ddir = os.path.join(design, 'design')
     dirs = {d.split('-')[1] for d in os.listdir(ddir)
             if d.startswith('stage-')}
