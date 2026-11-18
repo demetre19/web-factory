@@ -57,13 +57,19 @@ PS_KEYS = ['block_role_uniqueness', 'boilerplate_at_edges',
 
 # Weights are fitted on held-out domains by `validate`; these are the
 # prior/fallback used by `score` when no fitted weights file exists.
-# Chosen by the feature-set experiment in patterns/VALIDATION.md.
+# Feature set chosen by the leave-domain-out experiment recorded in
+# patterns/VALIDATION.md (mean AUC 0.872 over 8 splits): the pattern-bank
+# fit plus every page-structure sub-feature, individually.
 DEFAULT_WEIGHTS = {
     'pattern_fit': 0.34,
-    'ps': 0.22,
-    'macro_micro': 0.16,
-    'rule_pass': 0.14,
-    'anti': 0.14,
+    'ps': 0.12,
+    'macro_micro': 0.06,
+    'block_role_uniqueness': 0.09,
+    'boilerplate_at_edges': 0.09,
+    'main_content_share': 0.10,
+    'media_context_binding': 0.08,
+    'footer_is_boilerplate': 0.06,
+    'priority_order': 0.06,
 }
 
 # ordered: specific before generic; matched against the section's own
@@ -195,11 +201,15 @@ def classify(sec):
     explicit = (sec.attrs.get('data-sec') or '').strip().lower()
     if explicit and explicit not in ('', 'sec'):
         return explicit
-    for blob in ((sec.label or '').lower(),
-                 ' '.join(sec.classes).lower()):
+    label = (sec.label or '').lower()
+    # the label's head ("Hero — split-media 3:4" -> "hero") is the job;
+    # the tail describes composition and must not decide the section type.
+    head = re.split(r'\u2014|\u2013|\s-\s|\|', label)[0].strip()
+    for blob in (head, label, ' '.join(sec.classes).lower()):
         for name, keys in SECTION_WORDS:
             for k in keys:
-                if k in blob:
+                if re.search(r'(?<![a-z])' + re.escape(k) + r'(?![a-z])',
+                             blob):
                     return name
     if sec.nav:
         return 'headers'
@@ -395,28 +405,44 @@ def geno_of(rec):
 
 
 def cos_dense(a, b):
-    return sum(x * y for x, y in zip(a, b))
+    """True cosine. The genotype is one-hot per gene, so an unnormalised
+    dot product counts shared genes and saturates at 1.0 once two
+    signatures overlap in three or more — which made every fit clip to
+    the ceiling and destroyed the ranking."""
+    dot = sum(x * y for x, y in zip(a, b))
+    na = math.sqrt(sum(x * x for x in a))
+    nb = math.sqrt(sum(x * x for x in b))
+    if not na or not nb:
+        return 0.0
+    return dot / (na * nb)
 
 
 def pattern_fit(rec, geno, bank, anti, section_known=True):
     from genome import vector
     best = None
-    keys = [(rec['site_type'], rec['page_type'], rec['section_type']),
-            (rec['site_type'], '*', rec['section_type']),
-            ('*', rec['page_type'], rec['section_type']),
-            (rec['site_type'], rec['page_type'], '*'),
-            ('*', '*', rec['section_type'])]
-    if not section_known:
-        # contrast tiles carry no section label: compare against every
-        # pattern of the same site type (identical genotype maths)
-        keys = [(rec['site_type'], '*', '*'), ('*', '*', '*')]
-    for key in keys:
+    site, page, sec = rec['site_type'], rec['page_type'], rec['section_type']
+    if section_known:
+        # specificity ladder: a match against the exact cell is the
+        # strongest evidence; a match that only the global bucket can
+        # supply is weak. Without this discount a corpus that carries no
+        # section label (negatives) scores *higher* than one that does,
+        # because it may match any of the 80+ mined signatures.
+        keys = [((site, page, sec), 1.00),
+                ((site, '*', sec), 0.95),
+                (('*', page, sec), 0.95),
+                ((site, page, '*'), 0.90),
+                ((site, '*', '*'), 0.85),
+                (('*', '*', sec), 0.85),
+                (('*', '*', '*'), 0.75)]
+    else:
+        keys = [((site, '*', '*'), 0.85), (('*', '*', '*'), 0.75)]
+    for key, spec in keys:
         for p in bank.get(key, []):
             sim = cos_dense(vector(geno), vector(p['genotype']))
-            w = max(0.05, p['prevalence'])
+            w = max(0.05, p['prevalence']) * spec
             val = sim * w
             if best is None or val > best[0]:
-                best = (val, p['id'], sim, p['prevalence'])
+                best = (val, p['id'], sim, p['prevalence'], spec)
     if best is None:
         return 0.35, [], None  # no proven pattern: neutral-low
     reasons = []
@@ -461,11 +487,13 @@ def score_file(path, site_type, page_type, weights, bank, anti):
             geno, derived = geno_of(r)
             fit, reasons, pid = pattern_fit(r, geno, bank, anti)
             fits.append(fit)
-            rule_ok = 1.0 if r['section_type'] != 'other' else 0.0
-            comp = {'pattern_fit': fit, 'ps': ps_val, 'macro_micro': mm,
-                    'rule_pass': rule_ok,
-                    'anti': max(0.0, 1.0 - 0.0)}
-            sc = 100 * sum(weights[k] * comp[k] for k in weights)
+            anti_val = 1.0
+            for gene in ANTI_GENES:
+                for row in (anti.get('anti', {}) or {}).get(gene, []):
+                    if geno.get(gene) == row['allele'] and row['negative'] > 0.25:
+                        anti_val -= (row['negative'] - row['mobbin']) * 0.6
+            comp = section_features(fit, ps, mm, anti_val)
+            sc = 100 * sum(weights.get(k, 0.0) * comp[k] for k in comp)
             sec_out.append({
                 'label': r['label'] or r['section_type'],
                 'section_type': r['section_type'],
@@ -504,6 +532,27 @@ def score_file(path, site_type, page_type, weights, bank, anti):
 
 
 # --------------------------------------------------------------- validation
+def section_features(fit, ps, mm, anti_val):
+    """The single feature vector used by both `score` and `validate`."""
+    ps = ps or {}
+    feats = {
+        'pattern_fit': fit,
+        'ps': (sum(ps.values()) / len(ps)) if ps else 0.5,
+        'macro_micro': mm,
+        'rule_pass': (sum(1 for k, t in PS_THRESHOLDS.items()
+                          if ps.get(k, 0.0) >= t) / len(PS_THRESHOLDS))
+        if ps else 0.5,
+        'anti': max(0.0, min(1.0, anti_val)),
+    }
+    for k in PS_KEYS:
+        feats[k] = ps.get(k, 0.5)
+    return feats
+
+
+PS_THRESHOLDS = {'block_role_uniqueness': 1.0, 'boilerplate_at_edges': 1.0,
+                 'main_content_share': 0.8, 'media_context_binding': 1.0,
+                 'footer_is_boilerplate': 1.0, 'priority_order': 1.0}
+
 def build_dataset(seed=7):
     """Positives = Mobbin annotations; negatives = contrast corpus tiles."""
     from genome import genotype, vector
@@ -523,30 +572,14 @@ def build_dataset(seed=7):
             known = r.get('section_type') not in (None, 'other')
             fit, _, pid = pattern_fit(r, g, bank, anti, section_known=known)
             ps = r.get('ps') or {}
-            ps_val = (sum(ps.values()) / len(ps)) if ps else 0.5
             mm = 1.0 - min(1.0, abs((ps.get('main_content_share', 0.8)) - 0.8)
                            / 0.35)
-            # rule_pass = share of PS thresholds met (identical definition
-            # for both corpora; never uses section labels)
-            thr = {'block_role_uniqueness': 1.0, 'boilerplate_at_edges': 1.0,
-                   'main_content_share': 0.8, 'media_context_binding': 1.0,
-                   'footer_is_boilerplate': 1.0, 'priority_order': 1.0}
-            rule = (sum(1 for k, t in thr.items()
-                        if ps.get(k, 0.0) >= t) / len(thr)) if ps else 0.5
             anti_val = 1.0
             for gene in ANTI_GENES:
                 for row in (anti.get('anti', {}) or {}).get(gene, []):
                     if g.get(gene) == row['allele'] and row['negative'] > 0.25:
                         anti_val -= (row['negative'] - row['mobbin']) * 0.6
-            feats = {
-                'pattern_fit': fit,
-                'ps': ps_val,
-                'macro_micro': mm,
-                'rule_pass': rule,
-                'anti': max(0.0, min(1.0, anti_val)),
-            }
-            for k in PS_KEYS:
-                feats[k] = ps.get(k, 0.5)
+            feats = section_features(fit, ps, mm, anti_val)
             rows.append({
                 'domain': r.get('site_name') or r.get('mobbin_id'),
                 'label': label,
@@ -687,6 +720,27 @@ def build_bank_from(rows, min_n=10, threshold=0.60):
     return bank
 
 
+def cross_fit(rows, anti, folds=4):
+    """Out-of-fold pattern_fit for training rows.
+
+    Rows are grouped by domain so a site never informs its own bank fold.
+    """
+    doms = sorted({r['domain'] for r in rows if r['domain']})
+    random.Random(11).shuffle(doms)
+    buckets = [set(doms[i::folds]) for i in range(folds)]
+    for b in buckets:
+        held = [r for r in rows if r['domain'] in b]
+        rest = [r for r in rows if r['domain'] not in b]
+        if not held or not rest:
+            continue
+        bank = build_bank_from(rest)
+        for r in held:
+            known = r['section_type'] not in (None, 'other')
+            fit, _, _ = pattern_fit(r, r['genotype'], bank, anti,
+                                    section_known=known)
+            r['features']['pattern_fit'] = fit
+
+
 def cmd_validate(args):
     rows = build_dataset(args.seed)
     if not rows:
@@ -699,10 +753,14 @@ def cmd_validate(args):
     train = [r for r in rows if r['domain'] in train_d]
     test = [r for r in rows if r['domain'] not in train_d]
     anti = load_json(os.path.join(DATA, 'anti.json'), {})
-    # rebuild the pattern bank from TRAIN domains only, then recompute
-    # every test row's pattern_fit against it (no self-inclusion)
+    # Rebuild the pattern bank from TRAIN domains only. Test rows are
+    # scored against it (no self-inclusion); train rows are scored
+    # out-of-fold inside train, so the coefficients are fitted on the
+    # same distribution the test rows are measured on. Without the
+    # inner folds the train fits are computed against their own cell and
+    # run ~3x higher than test fits, which distorts every coefficient.
     train_bank = build_bank_from(train)
-    from genome import genotype
+    cross_fit(train, anti, folds=4)
     for r in test:
         known = r['section_type'] not in (None, 'other')
         fit, _, _ = pattern_fit(r, r['genotype'], train_bank, anti,
@@ -763,26 +821,53 @@ def cmd_validate(args):
     }
     json.dump(result, open(os.path.join(DATA, 'validation',
                                         'validation.json'), 'w'), indent=1)
-    # store learned weights as the default scorer weights
-    if args.write_weights and a >= 0.85:
-        norm = {k: round(max(0.0, v) / sum(max(0.0, x) for x in w), 3)
-                for k, v in zip(keys, w)}
-        json.dump(norm, open(WEIGHTS, 'w'), indent=1)
-        result['weights_written'] = norm
+    # The fitted coefficients are evidence about the corpus, not the
+    # scorer's operating point: several are negative because the two
+    # corpora are framed differently (section crops vs full pages), and
+    # clipping them would ship a model that is no longer the validated
+    # one. They are recorded next to the study and never loaded by
+    # `score`, which uses the semantic prior in DEFAULT_WEIGHTS.
+    l1 = sum(abs(x) for x in w) or 1.0
+    fitted = {k: round(v, 4) for k, v in zip(keys, w)}
+    json.dump({'auc': round(a, 4), 'coefficients': fitted,
+               'normalised_abs': {k: round(abs(v) / l1, 3)
+                                  for k, v in zip(keys, w)}},
+              open(os.path.join(DATA, 'validation',
+                                'fitted-weights.json'), 'w'), indent=1)
+    result['fitted_weights'] = fitted
     print(json.dumps(result, indent=1))
     return result
 
 
 # --------------------------------------------------------------- commands
-def load_weights():
-    return load_json(WEIGHTS, DEFAULT_WEIGHTS)
+def load_weights(path=None):
+    """Scorer weights. Default = the semantic prior.
+
+    An explicit file is accepted (so an operator can experiment) but its
+    keys must be producible by `section_features`; a stale file used to
+    KeyError inside `score_file`.
+    """
+    if not path:
+        return dict(DEFAULT_WEIGHTS)
+    weights = load_json(path, None)
+    if not isinstance(weights, dict):
+        raise SystemExit(f'{path}: not a weights object')
+    known = set(DEFAULT_WEIGHTS)
+    unknown = set(weights) - known
+    missing = known - set(weights)
+    if unknown or missing:
+        raise SystemExit(
+            f'{path}: keys not produced by the scorer. '
+            f'unknown: {sorted(unknown)}; missing: {sorted(missing)}; '
+            f'known: {sorted(known)}')
+    return weights
 
 
 def cmd_score(args):
     meta, bank = pattern_bank()
     anti = load_json(os.path.join(DATA, 'anti.json'), {})
     res = score_file(args.file, args.site_type, args.page_type,
-                     load_weights(), bank, anti)
+                     load_weights(args.weights), bank, anti)
     if args.json:
         print(json.dumps(res, indent=1))
         return
@@ -844,10 +929,11 @@ def main():
     s.add_argument('--site-type', required=True)
     s.add_argument('--page-type', required=True)
     s.add_argument('--json', action='store_true')
+    s.add_argument('--weights', help='optional weights JSON (default: the '
+                                     'semantic prior in DEFAULT_WEIGHTS)')
     v = sub.add_parser('validate')
     v.add_argument('--holdout', type=float, default=0.25)
     v.add_argument('--seed', type=int, default=7)
-    v.add_argument('--write-weights', action='store_true', default=True)
     lb = sub.add_parser('label')
     lb.add_argument('--option', required=True)
     lb.add_argument('--score', type=float, required=True)

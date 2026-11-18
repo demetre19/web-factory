@@ -1,0 +1,15 @@
+# Captured corpora (632 MB of PNG/WebP crops) stay out of git.
+# Regenerate with:
+#   patterns/tools/mine.py fetch
+#   patterns/tools/capture_negatives.py
+#   patterns/tools/split_negatives.py
+#   patterns/tools/annotate_det.py mobbin|negatives
+data/screens/
+data/negatives/
+data/negatives_sections/
+data/web/
+data/annotations.jsonl
+data/annotations_negatives.jsonl
+
+# Derived artefacts ARE committed: data/pattern-index.json, data/genome.json,
+# data/genotypes.jsonl, data/anti.json, data/validation/.

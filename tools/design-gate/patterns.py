@@ -406,11 +406,17 @@ def cmd_search(args):
             'evidence': p['evidence'][:3],
             'path': p['path'],
         })
-    print(json.dumps({'query': args.query, 'backend': backend,
-                      'filters': {'site_type': args.site_type,
-                                  'page_type': args.page_type,
-                                  'section': args.section},
-                      'results': results}, indent=1))
+    if getattr(args, 'json', False):
+        print(json.dumps({'query': args.query, 'backend': backend,
+                          'filters': {'site_type': args.site_type,
+                                      'page_type': args.page_type,
+                                      'section': args.section},
+                          'results': results}, indent=1))
+        return
+    print(f'# {args.query}  [{backend}]')
+    for r in results:
+        print(f"{r['score']:.3f}  {r['id']}  ({r['section_type']}/"
+              f"{r['composition']}, prev={r['prevalence']:.2f}, n={r['n']})")
 
 
 def genome_vector(geno):
@@ -456,6 +462,8 @@ def main():
     s.add_argument('--genotype', action='store_true',
                    help='query is a JSON genotype; rank in genome space')
     s.add_argument('--no-boost', action='store_true')
+    s.add_argument('--json', action='store_true',
+                   help='machine-readable results (default: one line each)')
     sh = sub.add_parser('show')
     sh.add_argument('pattern_id')
     lk = sub.add_parser('lookup')

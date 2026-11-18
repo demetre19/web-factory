@@ -45,6 +45,12 @@ query|claim · `zone` macro|micro|end|chrome.
   `layout-archetype` gene; the chosen card renders that genotype — a
   card/genotype conflict re-picks the row, never the genotype.
 - **Mobbin (P.14):** each composition cites its `MOBBIN-REFS.md` row.
+- **Pattern evidence (P.3/P.4):** every row's composition is selected by
+  searching the mined library — `python3 tools/design-gate/patterns.py
+  search "<site type> <page type> <section job>"` — and each chosen row
+  cites ≥1 `pattern-…` id whose `section_type` matches the row. A
+  composition with no pattern row has no evidence and cannot be chosen;
+  choosing one anyway is a logged decision with a reason, never silence.
 - **≥1 contrast moment per page:** exactly one `inverse`/`brand`
   interior surface (§4: inverse ≤2 + footer, brand ≤1); motif.break
   usually lives here.
