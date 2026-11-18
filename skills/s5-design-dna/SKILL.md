@@ -35,6 +35,18 @@ rules.
   `npm create`. Locked deps, deterministic install, no unaudited
   lifecycle scripts.
 
+- `agent-skills` (UX-Engine, `~/.agents/skills/`) — refs-branch
+  extraction lens, additive. `refs/MANIFEST.md` roles steer it:
+  `baseline` → identity, `inspiration` → character, `variant` →
+  verbatim `site-intake-tokens@1` token block. On routes derived from
+  captures, apply `visual-character` to extract character/token
+  evidence and `ux-auditor` to name hierarchy/state gaps the distill
+  corrects rather than replicates (audit-remodel mode writes
+  `site/design/audit.md` as its correction list); findings record in
+  `DESIGN-DNA.md`. Never overrides DOX authority or the
+  both-sources rule. Intake front end: `tools/site-intake/` +
+  `docs/machinery/DESIGN-INTAKE.md`.
+
 ## Write set
 
 - Distill: `site/design-dna/` — `TOKENS.json`, `CLASS-SYSTEM.md`,
