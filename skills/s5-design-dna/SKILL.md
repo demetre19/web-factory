@@ -37,7 +37,8 @@ rules.
 
 - `agent-skills` (UX-Engine, `~/.agents/skills/`) — refs-branch
   extraction lens, additive. `refs/MANIFEST.md` roles steer it:
-  `baseline` → identity, `inspiration` → character, `variant` →
+  `baseline` → identity, `inspiration` → character, `inspo-text` →
+  copy/sections only (visual ignored), `variant` →
   verbatim `site-intake-tokens@1` token block. On routes derived from
   captures, apply `visual-character` to extract character/token
   evidence and `ux-auditor` to name hierarchy/state gaps the distill

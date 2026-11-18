@@ -72,7 +72,7 @@ source-dependent branches.
 | `site/site-brief.md` | NEW-WEBSITE intake | YES — entity facts, CTA destinations |
 | `site/design/*.zip` | Website Build DOX export | ≥1 design source required |
 | `site/design/refs/` | operator-captured HTML + screenshots, site-intake variants, inspiration captures | ≥1 design source required |
-| `site/design/refs/MANIFEST.md` | site-intake / operator | OPTIONAL — capture roles: `baseline` (extract identity), `inspiration` (extract character), `variant` (picked direction, token block verbatim) |
+| `site/design/refs/MANIFEST.md` | site-intake / operator | OPTIONAL — capture roles: `baseline` (extract identity), `inspiration` (extract character), `inspo-text` (extract copy/sections only — visual ignored), `variant` (picked direction, token block verbatim) |
 | `site/design/audit.md` | ux-auditor pass on baseline captures | audit-remodel mode only — "correct, don't replicate" instruction set |
 | `templates/astro/` | vendored starter, factory repo | YES — every site scaffolds from it |
 | `site/company-description.md` | S2 stage output | YES when an `/about/` route exists — footer blurb + about body + JSON-LD `description` all render it |
@@ -534,6 +534,8 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
    section skeletons. `refs/MANIFEST.md` roles steer extraction:
    `baseline` rows yield identity (logo, NAP, palette, layout regions);
    `inspiration` rows yield character only (never the business facts);
+   `inspo-text` rows yield copy/sections only — text extracted as
+   evidence, the captured visual never informs tokens or layout;
    a `variant` row carries an embedded `<script id="tokens">` block
    already shaped as `site-intake-tokens@1` clamp() pairs — extract it
    verbatim into `TOKENS.json` instead of deriving. When

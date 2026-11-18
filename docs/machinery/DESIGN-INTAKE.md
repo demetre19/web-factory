@@ -44,6 +44,8 @@ it picks the row below.
 |---|---|---|---|---|
 | `variants` | 1 — greenfield, no inspo | generated variant pick (`role: variant`) | full S0 Q&A | — |
 | `refs-inspiration` | 2 & 3 — site exists or not, inspo given | inspiration captures (`role: inspiration`); existing-site captures kept as `baseline` evidence | crawl draft when site exists, else full S0 Q&A | inspo URL list |
+| `inspo-text` + `variants` | client gives a draft whose copy is right but visual is throwaway | draft capture (`role: inspo-text` — copy/sections only) + generated variant for the real design | crawl draft when site exists, else full S0 Q&A | vercel/Figma/etc draft URL |
+
 | `audit-remodel` | 4 — existing site, UX improvements | existing-site captures (`role: baseline`) + `site/design/audit.md` corrections | crawl draft | ux-auditor pass |
 | `refs-existing` | 2-lite — rebuild same look | existing-site captures (`role: baseline`), no audit | crawl draft | — |
 | `dox` | operator drops a DOX packet | packet is authority (existing contract) | per S0 | `site/design/*.zip` |
@@ -81,17 +83,28 @@ node site-intake.mjs crawl https://oldsite.com --out site/design \
 node site-intake.mjs capture https://inspo.example.com --out site/design \
     --role inspiration
 
-# Scenario 1: generate three contract-shaped directions
+# Scenario 1: generate contract-shaped directions (flags: --roles
+#   designer[,designer-alt]  --char <chars>  --accent <hex>  --air <n>)
 node site-intake.mjs variants --out site/design/refs \
     --brief site/site-brief.md
-#   writes variant-{a,b,c}.html (Tailwind-classed, clamp() token block
-#   embedded as <script type="application/json" id="tokens">),
-#   operator picks → MANIFEST marks it role: variant
+#   writes variant-<id>-<char>.html per role (Tailwind-classed, clamp()
+#   token block embedded as <script id="tokens">), operator picks →
+#   MANIFEST marks it role: variant
 ```
 
 The distill lane treats a `variant` row exactly like a reviewed capture:
 its embedded token block is contract-shaped `clamp()` pairs, so
 extraction is verbatim, not derived.
+
+## Design roles
+
+`pi/designer` is the default — it owns the design lanes (distill
+`design-dna-<site>`, build `web-build-<site>`); never a model literal
+in the spec, the role binds in `~/.omp/agent/config.yml` modelRoles.
+`pi/designer-alt` is opt-in per run for more variety: pass
+`--roles designer,designer-alt` to `site-intake variants` for a
+second variant set (same brief, different mind — a real A/B pick),
+or assign it the ux-auditor counter-review in `audit-remodel`.
 
 ## Invariants
 

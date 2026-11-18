@@ -56,21 +56,36 @@ function saveCapture(html, outDir, role, url, seq) {
 
 function writeManifest(outDir, rows) {
   const p = join(outDir, 'refs', 'MANIFEST.md');
-  const existing = existsSync(p) ? readFileSync(p, 'utf8').split('\n').slice(0, 2) :
-    ['# refs/MANIFEST.md', '', '| file | role | source_url | captured_at |', '|---|---|---|---|'];
-  const lines = Array.isArray(existing) ? existing.slice(4).filter(l => l.startsWith('|')) : [];
-  for (const r of rows) lines.push(`| ${r.file} | ${r.role} | ${r.source_url} | ${r.captured_at} |`);
-  writeFileSync(p, [existing[0], '', '| file | role | source_url | captured_at |', '|---|---|---|---|', ...lines, ''].join('\n'));
+  const lines = existsSync(p)
+    ? readFileSync(p, 'utf8').split('\n').filter(l => l.startsWith('|') && !l.includes('---') && !l.includes('| file |'))
+    : [];
+  for (const r of rows) {
+    const row = `| ${r.file} | ${r.role} | ${r.source_url} | ${r.captured_at} |`;
+    const i = lines.findIndex(l => l.split('|')[1].trim() === r.file);
+    if (i >= 0) lines[i] = row; else lines.push(row);
+  }
+  writeFileSync(p, ['# refs/MANIFEST.md', '', '| file | role | source_url | captured_at |', '|---|---|---|---|', ...lines, ''].join('\n'));
 }
 
 /* ---------- crawl ---------- */
 
+const JUNK = /\/(feed|comments|wp-json|wp-admin|wp-login|tag|author|search)(\/|$)|xmlrpc\.php|\.(xml|jpg|jpeg|png|gif|pdf|css|js|ico|svg|webp|woff2?)(\?|$)|[?&](oembed|embed)=/i;
+
+
+
 async function discoverUrls(base, max) {
-  const urls = new Set([base]);
+  const urls = new Set();
+  const baseU = new URL(base); baseU.pathname = baseU.pathname.replace(/\/+$/, '') || '/';
+  const origin = baseU.origin; const baseHref = baseU.href;
+  urls.add(baseHref);
+  const ok = (u) => {
+    u.pathname = u.pathname.replace(/\/+$/, '') || '/';
+    return u.origin === origin && !JUNK.test(u.pathname + u.search);
+  };
   try {
     const sm = await fetchText(new URL('/sitemap.xml', base).href, 8000);
     for (const m of sm.matchAll(/<loc>([^<]+)<\/loc>/g)) {
-      try { const u = new URL(m[1]); if (u.origin === new URL(base).origin && !u.pathname.match(/\.(xml|jpg|png|pdf)$/i)) urls.add(u.href); } catch {}
+      try { const u = new URL(m[1]); if (ok(u)) urls.add(u.href); } catch {}
       if (urls.size >= max) break;
     }
   } catch {}
@@ -78,10 +93,7 @@ async function discoverUrls(base, max) {
     try {
       const html = await fetchText(base);
       for (const m of html.matchAll(/href="([^"#]+)"/g)) {
-        try {
-          const u = new URL(m[1], base);
-          if (u.origin === new URL(base).origin && !u.pathname.match(/\.(jpg|png|pdf|xml|css|js|ico|svg|webp)$/i)) urls.add(u.href);
-        } catch {}
+        try { const u = new URL(m[1], base); if (ok(u)) urls.add(u.href); } catch {}
         if (urls.size >= max) break;
       }
     } catch {}
@@ -92,7 +104,7 @@ async function discoverUrls(base, max) {
 /* ---------- fact extraction ---------- */
 
 function extractFacts(pages) {
-  const f = { phones: new Set(), emails: new Set(), socials: new Set(), titles: [], h1: {}, jsonld: [], cssVars: {} };
+  const f = { phones: new Set(), emails: new Set(), socials: new Set(), titles: [], h1: {}, jsonld: [] };
   for (const { url, html } of pages) {
     f.titles.push({ url, title: html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim() ?? '' });
     const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
@@ -171,8 +183,8 @@ function clamp(minPx, maxPx, minVw = 320, maxVw = 1440) {
   return `clamp(${(minPx / 16).toFixed(4)}rem, ${(yInt / 16).toFixed(4)}rem + ${(slope * 100).toFixed(3)}vw, ${(maxPx / 16).toFixed(4)}rem)`;
 }
 
-function tokenBlock(char, palette, family, radius) {
-  const step = (a, b) => clamp(a, b);
+function tokenBlock(char, palette, family, radius, air = 1) {
+  const step = (a, b) => clamp(Math.round(a * air), Math.round(b * air));
   return {
     formatVersion: 'site-intake-tokens@1',
     character: char,
@@ -227,27 +239,36 @@ function variantPage(name, char, tok, hero, accent) {
 }
 
 const VARIANTS = [
-  { id: 'a', char: 'trusted-local', palette: { bg: '#F7F5F0', surface: '#FFFFFF', text: '#1F2933', muted: '#52606D', accent: '#1D6F5C' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.5rem', accent_bg: 'linear-gradient(180deg,#F7F5F0,#ECE7DC)', hero: 'Straight answers, tidy work, done when we said' },
-  { id: 'b', char: 'bold-direct-response', palette: { bg: '#0F1720', surface: '#1A2530', text: '#F3F6F8', muted: '#9BAAB8', accent: '#F59E0B' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.25rem', accent_bg: 'linear-gradient(135deg,#0F1720 60%,#1A2530)', hero: 'Get it fixed this week — or the callout is free' },
-  { id: 'c', char: 'editorial-premium', palette: { bg: '#FBFAF7', surface: '#FFFFFF', text: '#171512', muted: '#6E6A61', accent: '#8C6A3F' }, family: 'Georgia, "Times New Roman", serif', radius: '0', accent_bg: '#FBFAF7', hero: 'Craft done properly, for people who notice' },
+  { id: 'a', char: 'trusted-local', palette: { bg: '#F7F5F0', surface: '#FFFFFF', text: '#1F2933', muted: '#52606D', accent: '#1D6F5C' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.5rem', accent_bg: 'linear-gradient(180deg,#F7F5F0,#ECE7DC)', hero: 'Straight answers, tidy work, done when we said', air: 1 },
+  { id: 'b', char: 'bold-direct-response', palette: { bg: '#0F1720', surface: '#1A2530', text: '#F3F6F8', muted: '#9BAAB8', accent: '#F59E0B' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.25rem', accent_bg: 'linear-gradient(135deg,#0F1720 60%,#1A2530)', hero: 'Get it fixed this week — or the callout is free', air: 1 },
+  { id: 'c', char: 'editorial-premium', palette: { bg: '#FBFAF7', surface: '#FFFFFF', text: '#171512', muted: '#6E6A61', accent: '#8C6A3F' }, family: 'Georgia, "Times New Roman", serif', radius: '0', accent_bg: '#FBFAF7', hero: 'Craft done properly, for people who notice', air: 1.15 },
+  { id: 'd', char: 'zen-corporate', palette: { bg: '#FDFDFB', surface: '#FFFFFF', text: '#23272B', muted: '#7A8288', accent: '#FFC10A' }, family: 'ui-sans-serif, system-ui, sans-serif', radius: '0.75rem', accent_bg: '#FDFDFB', hero: 'Immaculate workplaces, quietly maintained', air: 1.5 },
 ];
 
-async function cmdVariants(outDir, briefPath) {
+async function cmdVariants(outDir, briefPath, flags = {}) {
   let name = 'Business Name';
   if (briefPath && existsSync(briefPath)) {
     const m = readFileSync(briefPath, 'utf8').match(/name:\s*([^\n#]+)/);
     if (m) name = m[1].replace(/\[.*?\]/g, '').replace(/TODO:.*/,'').trim() || name;
   }
+  const roles = String(flags.roles ?? 'designer').split(',').map(r => r.trim()).filter(Boolean);
+  const accentOverride = flags.accent;                    // keep brand accent across variants
+  const only = flags.char ? String(flags.char).split(',') : null;  // restrict to named characters
+  const air = Number(flags.air ?? 1);                     // whitespace multiplier, space+type scale
   const rows = [];
-  for (const v of VARIANTS) {
-    const tok = tokenBlock(v.char, v.palette, v.family, v.radius);
-    const file = `variant-${v.id}-${v.char}.html`;
-    writeFileSync(join(outDir, file), variantPage(name, v.char, tok, v.hero, v.accent_bg));
-    rows.push({ file, role: 'variant-candidate', source_url: `generated:${v.char}`, captured_at: new Date().toISOString() });
-    console.log(`  ${file}  (${v.char})`);
+  for (const role of roles) {
+    for (const v of VARIANTS) {
+      if (only && !only.includes(v.char)) continue;
+      const palette = { ...v.palette, ...(accentOverride ? { accent: accentOverride } : {}) };
+      const tok = tokenBlock(v.char, palette, v.family, v.radius, v.air * air);
+      const file = roles.length > 1 ? `variant-${role}-${v.id}-${v.char}.html` : `variant-${v.id}-${v.char}.html`;
+      writeFileSync(join(outDir, file), variantPage(name, v.char, tok, v.hero, v.accent_bg));
+      rows.push({ file, role: 'variant-candidate', source_url: `generated:${role}/${v.char}`, captured_at: new Date().toISOString() });
+      console.log(`  ${file}  (${role}/${v.char})`);
+    }
   }
   writeManifest(dirname(outDir) === outDir ? outDir : join(outDir, '..'), rows);
-  console.log(`\n3 variants in ${outDir} — open each, pick one, then mark it: re-run capture --pick <file> or edit refs/MANIFEST.md role to 'variant'.`);
+  console.log(`\n${rows.length} variants in ${outDir} — open each, pick one, then mark its role 'variant' in refs/MANIFEST.md.`);
 }
 
 /* ---------- main ---------- */
@@ -288,7 +309,7 @@ if (cmd === 'crawl' || cmd === 'capture') {
   }
   if (cmd === 'crawl') writeManifest(outDir, rows);
 } else if (cmd === 'variants') {
-  await cmdVariants(join(outDir, 'refs'), flags.brief);
+  await cmdVariants(join(outDir, 'refs'), flags.brief, flags);
 } else {
   console.log(`site-intake — commands: crawl | capture | variants   (see docs/machinery/DESIGN-INTAKE.md)`);
 }
