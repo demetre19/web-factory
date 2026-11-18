@@ -52,6 +52,28 @@ def main():
             print(f'run {wave} REFUSED: {prev} inputs changed since '
                   f'its pass — re-gate {prev} first: {stale[:4]}')
             return 1
+        # DM.6 — a changed DNA map invalidates every wave that ran
+        # against the old hash. Rebuild from the earliest such wave.
+        h = G.dna_hash(ctx)
+        restart = None
+        for w in ORDER[:ORDER.index(wave)]:
+            rec = (g.get(w) or {}).get('dna')
+            if rec and h and rec != h:
+                restart = w
+                break
+        if restart:
+            for w in ORDER[ORDER.index(restart):]:
+                if w in g:
+                    g[w].update({
+                        'pass': False, 'approved': False,
+                        'failures': [f'DNA map changed — rebuild from '
+                                     f'{restart}']})
+            with open(gp, 'w') as fh:
+                json.dump(g, fh, indent=2, sort_keys=True)
+            print(f'run {wave} REFUSED: DNA map changed since {restart} '
+                  f'was gated — every downstream wave is stale; re-run '
+                  f'from {restart} (GATES.json reset from {restart} on)')
+            return 1
     r = subprocess.run([sys.executable,
                         os.path.join(HERE, 'gate.py')] + sys.argv[1:])
     return r.returncode

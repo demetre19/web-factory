@@ -107,42 +107,89 @@ def node_lookup(q):
     return False
 
 
+def _sort_key(rid):
+    fam, num = rid.split('.', 1)
+    return (fam, int(num) if num.isdigit() else 0)
+
+
 def main(argv):
-    args = [a for a in argv if not a.startswith('--')]
+    as_json = '--json' in argv
     depth = 0
     if '--depth' in argv:
         i = argv.index('--depth')
         depth = int(argv[i + 1]) if i + 1 < len(argv) else 1
-        args = [a for a in args if a != str(depth)]
+    args = []
+    skip = False
+    for a in argv:
+        if skip:
+            skip = False
+            continue
+        if a == '--depth':
+            skip = True
+            continue
+        if a.startswith('--'):
+            continue
+        args.append(a)
+    rules = load_rules()
+    enf = enforcement()
+    flags = [a for a in argv if a.startswith('--')]
+
+    if '--checks' in flags:
+        wc = wave_checks()
+        if as_json:
+            print(json.dumps(wc, indent=1))
+            return 0
+        for w in sorted(wc):
+            print(f'{w} — {len(wc[w])} gate checks')
+            for c in wc[w]:
+                print(f'  {c}')
+        return 0
+
+    if '--list' in flags:
+        rows = []
+        for rid in sorted(rules, key=_sort_key):
+            e = enf['rules'].get(rid, {})
+            rows.append({'id': rid, 'title': rules[rid]['title'],
+                         'tier': e.get('tier'), 'mode': e.get('mode'),
+                         'check': e.get('check') or e.get('item')
+                         or e.get('approval'), 'wave': e.get('wave'),
+                         'file': rules[rid]['file']})
+        if as_json:
+            print(json.dumps(rows, indent=1))
+            return 0
+        for r in rows:
+            print(f'{r["id"]:7} {str(r["tier"]):10} {str(r["mode"]):9} '
+                  f'{r["title"]}')
+        return 0
+
     if not args or args[0] in ('-h', '--help'):
         print(__doc__)
         return 0
     q = args[0]
-    rules = load_rules()
-    enf = enforcement()
-
-    if q == '--list':
-        for rid in sorted(rules, key=lambda r: (r.split('.')[0],
-                                               int(r.split('.')[1]))):
-            e = enf['rules'].get(rid, {})
-            print(f'{rid:7} {e.get("tier", "?"):10} '
-                  f'{e.get("mode", "?"):9} {rules[rid]["title"]}')
-        return 0
 
     if re.match(r'^(?:[A-Z]{1,2}|PS)\.\d+$', q):
         if q not in rules:
             print(f'no rule {q}')
             return 1
+        if as_json:
+            e = enf['rules'].get(q, {})
+            print(json.dumps({'id': q, **rules[q], 'enforcement': e},
+                             indent=1))
+            return 0
         show_rule(q, rules, enf, depth)
         return 0
 
     if re.match(r'^w[0-8]$', q):
         wc = wave_checks()
+        used = sorted({rid for rid, e in enf['rules'].items()
+                       if e.get('wave') == q}, key=_sort_key)
+        if as_json:
+            print(json.dumps({'wave': q, 'checks': wc.get(q, []),
+                              'rules': used}, indent=1))
+            return 0
         print(f'{q} — gate checks ({len(wc.get(q, []))}):')
         for c in wc.get(q, []):
             print(f'  {c}')
-        used = sorted({rid for rid, e in enf['rules'].items()
-                       if e.get('wave') == q})
         print(f'\n{q} — rules gated here ({len(used)}):')
         for rid in used:
             print(f'  {rid:7} {rules.get(rid, {}).get("title", "")}')
@@ -163,6 +210,10 @@ def main(argv):
     if not hits:
         print(f'no rule or node matches "{q}"')
         return 1
+    if as_json:
+        print(json.dumps([{'id': rid, 'score': sc, 'title': t}
+                          for sc, rid, t in hits], indent=1))
+        return 0
     print(f'{len(hits)} match(es) for "{q}":')
     for _, rid, title in hits[:20]:
         e = enf['rules'].get(rid, {})
@@ -171,4 +222,7 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]))
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except BrokenPipeError:          # piped into head/less
+        os._exit(0)

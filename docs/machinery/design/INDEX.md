@@ -3,7 +3,7 @@ id: design-index
 type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
-  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs]
+  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors]
   rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG]
   contains_also: [section-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
@@ -102,6 +102,7 @@ earlier gate is green and `SCORECARD.json` has no section below 90.
 | `enforcement.json` | Machine form of the same table + `checks` map (structural check → rule IDs) |
 | `DNA-MAP.md` | **LAW.DNA** — the map's shape, where it slots into the waves, and its seven FAIL conditions |
 | `knobs.json` | The 14 system knobs: kind, allowed range/step, tier, bound rules — variants are vectors over these |
+| `SCORE-VECTORS.md` / `score-vectors.json` | The 13 scorecard vectors + overall: weighted rule families + measuring checks; `DNA.vector_targets` uses these ids |
 | `dna/GENOME.md` | 20 genes, closed allele sets, rule bindings (`## gene: <slug>` + `alleles: […]`) |
 | `dna/<vertical>.md` | Vertical profile: `id: profile-<vertical>`, `links: {uses_genes: […], derives_from: [patterns-index]}` |
 | `patterns/INDEX.md` | Mined composition library: pattern nodes with prevalence + evidence |

@@ -53,7 +53,7 @@ is the design-DNA loss this file exists to prevent.
 | Wave | Artifact | What it decides | Gate that opens the next wave |
 |---|---|---|---|
 | **W0** scaffold | `site/` from `templates/astro/` | The one Astro + Tailwind project | `gate.py w0` — scaffold, pins, build exits 0 |
-| **W1** DNA + audit | this file's `site:` + `dna:`; `audit.md`; `MOBBIN-REFS.md` | Intent, the six direction axes, the vertical DNA profile + genotype | `gate.py w1` — Mobbin, intent, audit, genotype total |
+| **W1** DNA + audit | this file's `site:`; `audit.md`; `MOBBIN-REFS.md`; **`DNA.json` v0 at exit** | Intent, the six direction axes, the map (profile + genotype + seeded knobs + vector targets) | `gate.py w1` + `gate.py dna` — Mobbin, intent, audit, genotype total, map complete and provenance-tagged |
 | **W2** look & feel | `options:` — ≥2 direction tiles as distinct genotype vectors | The aesthetic, chosen by the operator | `gate.py w2` — axes ∈ enums, ≥2 distinct genotypes, burst declared |
 | **W3** system | `system:` → `TOKENS.json` → `tailwind.config` + `global.css` + `system.astro` | Every number bound, rendered on the tile | `gate.py w3` — enums, spacing, breakpoints, contrast, config derived, build 0 |
 | **W4** content | STUB → content inventory | Copy contract: heading vector + `fs` + body blocks | `gate.py w4` — inventory complete, verbatim headings |
@@ -258,9 +258,15 @@ site:
       cta_person: first | second                  # first = "Get my quote"; second = "Manage your account" — one per flow
       reading_level: ≤grade-8                     # fixed; listed to forbid drifting
 
-  # ---- DNA — the vertical profile and this site's genotype (D.1–D.4) ----
+  # ---- DNA — the map owns this; the plan mirrors it (D.1–D.4, DM.1) ----
+  # The single source of coherence is <pipeline>/DNA.json (+ rendered
+  # DNA.md, `gate.py dna`), created at W1 EXIT. This block is a mirror
+  # for reading the plan alone; on disagreement the map wins and the
+  # gate fails (DM.3).
   dna:
-    profile: profile-<vertical>            # dna/<vertical>.md, inferred at W1
+    map: DNA.json                          # LAW.DNA — hash carried by every artifact
+    version: 0                             # 0 at W1 exit, 1 locked at W3 exit
+    profile: profile-<vertical>            # dna/<vertical>.md (genome statistics)
     genotype:                              # one allele per gene, closed sets only
       layout-archetype: <allele>           # genes: dna/GENOME.md (20 genes)
       page-macro-structure: <allele>
@@ -268,6 +274,17 @@ site:
       # … every gene filled; a blank gene = refuse (D.1)
     wildcard: [<gene>, <gene>]             # ≤1 wildcard option (B.3), stylistic genes only
     novelty: 0.00                          # NOVELTY.json distance, ≤ bound (B.6)
+    knobs:                                 # knobs.json — the closed set variants move
+      type.ratio: 0.00                     # seeded at W1 exit as the median of the
+      # … every knob, inside its declared range; each seeded value's
+      # provenance records the source pattern ids + n (DM.1)
+    vector_targets: {}                     # 13 quality targets from rating gaps + vertical norms
+
+  # ---- variants — knob vectors, never new sections (VG.1–VG.6) ----
+  variants:                                # rendered as src/pages/variants.astro
+    count: 3                               # 3 default, 5 max
+    sheet_first: true                      # every variant renders its own system sheet before its page
+    burst_wildcard: 1                      # ≥1 wildcard variant whenever burst > 0 (VG.5)
 
   # ---- burstiness — how far this direction may bend the rules (B.1–B.5) ----
   burst: 0                                 # 0 | 1 | 2 | 3 — declared, never discovered

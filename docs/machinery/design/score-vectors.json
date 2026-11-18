@@ -1,0 +1,191 @@
+{
+ "version": 1,
+ "note": "Scorecard vectors: each is a weighted aggregate of rule families + the checks that measure them. DNA vector_targets use the same ids. Adopted from SiteRater RATING.md (2026-11-19).",
+ "weights_note": "weights normalised to 1.0; overall = weighted mean of vectors",
+ "vectors": {
+  "ease_of_use": {
+   "weight": 0.0727,
+   "families": [
+    "R.6",
+    "W.7",
+    "W.2",
+    "I.4"
+   ],
+   "checks": [
+    "check_tap_size",
+    "check_nav",
+    "check_components_exist"
+   ],
+   "measure": "tap targets, nav link count, form presence, duplicate nav, sticky chrome"
+  },
+  "clarity": {
+   "weight": 0.0909,
+   "families": [
+    "W",
+    "E.2"
+   ],
+   "checks": [
+    "check_copy_fields",
+    "check_copy_density",
+    "check_vector_map"
+   ],
+   "measure": "5-s elements present, h1+subhead reading level, heading grammar"
+  },
+  "layout": {
+   "weight": 0.0727,
+   "families": [
+    "L",
+    "PS"
+   ],
+   "checks": [
+    "check_axes",
+    "check_gutters",
+    "check_content_width",
+    "check_segment_share",
+    "check_segment_priority",
+    "check_segment_boilerplate",
+    "check_assembly"
+   ],
+   "measure": "container width vs viewport, dead regions, chrome position, PS.1-PS.6"
+  },
+  "typography": {
+   "weight": 0.0909,
+   "families": [
+    "T",
+    "I"
+   ],
+   "checks": [
+    "check_type_system",
+    "check_font_directory",
+    "check_scale",
+    "check_icon_family"
+   ],
+   "measure": "font stack, size ramp, body >=16px and lh >=1.5, heading misuse"
+  },
+  "colour": {
+   "weight": 0.0727,
+   "families": [
+    "C"
+   ],
+   "checks": [
+    "check_roles",
+    "check_contrast",
+    "check_dark_mode"
+   ],
+   "measure": "role map, pairwise contrast both modes, accent area"
+  },
+  "rhythm": {
+   "weight": 0.0727,
+   "families": [
+    "G",
+    "L.4",
+    "L.7"
+   ],
+   "checks": [
+    "check_spacing_scale",
+    "check_density",
+    "check_rhythm"
+   ],
+   "measure": "inter-section gap distribution, density-tier variance, trapped whitespace"
+  },
+  "imagery": {
+   "weight": 0.0455,
+   "families": [
+    "V"
+   ],
+   "checks": [
+    "check_media_matrix",
+    "check_ratios",
+    "check_alt"
+   ],
+   "measure": "img count/alt/srcset/lazy/dims, icon family, oversized images"
+  },
+  "trust": {
+   "weight": 0.0909,
+   "families": [
+    "V.6",
+    "W.5"
+   ],
+   "checks": [
+    "check_proof",
+    "check_keep_list"
+   ],
+   "measure": "logo wall, testimonials, LocalBusiness schema, review badges"
+  },
+  "conversion": {
+   "weight": 0.1091,
+   "families": [
+    "R.5",
+    "W.2"
+   ],
+   "checks": [
+    "check_cta_rank",
+    "check_fold",
+    "check_cta_cadence"
+   ],
+   "measure": "CTA cadence <=2 viewports, above-fold elements, terminal CTA, competing primaries"
+  },
+  "seo": {
+   "weight": 0.0727,
+   "families": [
+    "E"
+   ],
+   "checks": [
+    "check_heading_vector",
+    "check_heading_classes",
+    "check_heading_verbatim",
+    "check_link_farm"
+   ],
+   "measure": "title length/repeat, h1 count, heading vector order, link-farm density"
+  },
+  "mobile": {
+   "weight": 0.0909,
+   "families": [
+    "R",
+    "P.13"
+   ],
+   "checks": [
+    "check_breakpoints",
+    "check_collapse",
+    "check_overflow",
+    "check_page_height"
+   ],
+   "measure": "hscroll at 360/768, tap targets, collapse, doc-height budget"
+  },
+  "speed": {
+   "weight": 0.0727,
+   "families": [
+    "P.12",
+    "V.7"
+   ],
+   "checks": [
+    "check_speed_budget",
+    "check_media_delivery"
+   ],
+   "measure": "LH perf, LCP/CLS/TBT, transfer by type, render-blocking"
+  },
+  "a11y": {
+   "weight": 0.0455,
+   "families": [
+    "C.7",
+    "I.4",
+    "R.6",
+    "E.1"
+   ],
+   "checks": [
+    "check_alt",
+    "check_landmarks",
+    "check_tap_size",
+    "check_link_name",
+    "check_focus"
+   ],
+   "measure": "axe-core, alt coverage, landmarks, link names, focus-visible"
+  },
+  "overall": {
+   "weight": null,
+   "families": [],
+   "checks": [],
+   "measure": "weighted mean of every vector above"
+  }
+ }
+}

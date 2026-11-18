@@ -23,6 +23,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
 import argparse, hashlib, html.parser, json, os, re, shutil, \
     subprocess, sys
+SCORE_VECTORS = os.path.join(
+    REPO, 'docs', 'machinery', 'design', 'score-vectors.json')
 ENFORCEMENT = os.path.join(REPO, 'docs', 'machinery', 'design', 'enforcement.json')
 DESIGN_DIR = os.path.join(REPO, 'docs', 'machinery', 'design')
 RULES_DIR = os.path.join(DESIGN_DIR, 'rules')
@@ -2231,16 +2233,40 @@ def _deltas_ok(base, deltas, knobs, wildcard):
     return f
 
 
+WAVE_SEQ = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
+
+
+def _wave_ge(ctx, w):
+    """True when the gate is running at wave w or later (None = full)."""
+    wave = getattr(ctx, 'wave', None)
+    if wave in (None, 'selftest', 'score', 'dna'):
+        return True
+    if wave not in WAVE_SEQ:
+        return True
+    return WAVE_SEQ.index(wave) >= WAVE_SEQ.index(w)
+
+
 def check_dna(ctx):
-    """Conditions 1, 3, 6, 7 (+ completeness and knob ranges)."""
+    """Conditions 1, 3, 6, 7 (+ completeness and knob ranges).
+
+    Wave-scoped: W0 has no map (DNA-MAP.md); rhythm is a W5 artifact and
+    variants start at W2, so those parts are only required from then on.
+    """
     f = []
+    wave = getattr(ctx, 'wave', None)
+    if wave == 'w0':
+        return f
     m = dna_map(ctx)
     if m is None:
         return ['DM.1 DNA.json missing — the map is the single source of '
                 'coherence (gate.py dna)']
-    for field in ('version', 'site', 'vertical_profile', 'genotype',
-                  'knobs', 'modes', 'rhythm', 'variants', 'provenance',
-                  'vector_targets'):
+    required = ['version', 'site', 'vertical_profile', 'genotype',
+                'knobs', 'modes', 'provenance', 'vector_targets']
+    if _wave_ge(ctx, 'w2'):
+        required.append('variants')
+    if _wave_ge(ctx, 'w5'):
+        required.append('rhythm')
+    for field in required:
         if m.get(field) in (None, '', [], {}):
             f.append(f'DM.1 DNA.json: "{field}" missing or empty')
     if m.get('hash') != dna_hash_of(m):
@@ -2257,6 +2283,21 @@ def check_dna(ctx):
         if genes and g not in genes:
             f.append(f'DM.3 genotype gene "{g}" is not in GENOME — '
                      'untraceable')
+    spec = set(load_score_vectors().get('vectors') or {}) - {'overall'}
+    vt = m.get('vector_targets') or {}
+    if spec:
+        miss = sorted(spec - set(vt))
+        extra = sorted(set(vt) - spec)
+        if miss:
+            f.append(f'DM.1 vector_targets missing {len(miss)} scorecard '
+                     f'vector(s): {miss[:4]} (score-vectors.json)')
+        if extra:
+            f.append(f'DM.1 vector_targets names unknown vector(s): '
+                     f'{extra[:4]}')
+        for k, v in vt.items():
+            if not isinstance(v, (int, float)) or not 0 <= v <= 1:
+                f.append(f'DM.1 vector_targets.{k} = {v!r} — expected '
+                         '0.0-1.0')
     ver = m.get('version')
     wave = getattr(ctx, 'wave', None)
     if wave not in ('w0', 'w1', 'selftest', None) and \
@@ -2305,6 +2346,8 @@ def check_dna(ctx):
         for role in MODE_ROLES:
             if role not in roles:
                 f.append(f'C.5 modes.{mode}.{role} missing (condition 7)')
+    if not _wave_ge(ctx, 'w5'):
+        return f
     rhythm = m.get('rhythm') or []
     if isinstance(rhythm, dict):
         rhythm = [{'section': k, 'surface': (v or {}).get('surface'),
@@ -2365,6 +2408,8 @@ def check_dna(ctx):
 def check_dna_fresh(ctx):
     """Condition 2 — artifacts and recorded gates carry the current hash."""
     f = []
+    if getattr(ctx, 'wave', None) == 'w0':
+        return f
     h = dna_hash(ctx)
     if not h:
         return ['DM.1 DNA.json missing']
@@ -2394,10 +2439,12 @@ def check_dna_fresh(ctx):
             g = json.load(open(ctx.gates_path))
         except Exception:
             g = {}
-        rec = g.get('dna')
-        if rec and rec != h:
-            f.append(f'DM.6 GATES.json recorded dna {rec} != {h} — a changed '
-                     'map invalidates every downstream wave (run.py)')
+        for w, e in sorted(g.items()):
+            rec = (e or {}).get('dna')
+            if rec and rec != h:
+                f.append(f'DM.6 GATES.json {w} recorded dna {rec} != {h} — '
+                         'a changed map invalidates every downstream wave '
+                         '(run.py rebuilds from that wave)')
     return f
 
 
@@ -2423,6 +2470,8 @@ def render_dna_md(m):
                      f'{spec.get("tier", "")} | {prov.get(k, "—")} |')
     lines += ['', '## Rhythm plan', '', '| Section | Surface | Density |',
               '|---|---|---|']
+    if not _wave_ge(ctx, 'w5'):
+        return f
     rhythm = m.get('rhythm') or []
     if isinstance(rhythm, dict):
         rhythm = [{'section': k, **(v or {})} for k, v in rhythm.items()]
@@ -3052,6 +3101,7 @@ def write_gate(ctx, fails, approve):
         'pass': not fails,
         'failures': fails,
         'inputs_sha256': input_hashes(ctx),
+        'dna': dna_hash(ctx) or None,
         'ts': __import__('datetime').datetime.now().isoformat(
             timespec='seconds'),
     })
@@ -3150,6 +3200,48 @@ def cmd_coverage():
           f'reviewer={stats["reviewer"]} operator={stats["operator"]}')
     return 0
 
+def cli_selftest():
+    """The look-up CLIs must answer for every rule the gates enforce."""
+    import subprocess
+    rp = os.path.join(HERE, 'rules.py')
+    enf = json.load(open(ENFORCEMENT))['rules']
+    f = []
+
+    def run(*a):
+        return subprocess.run([sys.executable, rp] + list(a),
+                              capture_output=True, text=True)
+
+    r = run('--list')
+    if r.returncode != 0:
+        f.append(f'rules.py --list exits {r.returncode}: '
+                 f'{r.stderr.strip().splitlines()[-1:] or ""}')
+    else:
+        ids = {ln.split()[0] for ln in r.stdout.splitlines() if ln.strip()}
+        miss = sorted(set(enf) - ids)
+        if miss:
+            f.append(f'rules.py --list omits {len(miss)} enforced rule(s): '
+                     f'{miss[:4]}')
+    r = run('--list', '--json')
+    try:
+        rows = json.loads(r.stdout or '[]')
+        if len(rows) != len(enf):
+            f.append(f'rules.py --list --json returns {len(rows)} rows for '
+                     f'{len(enf)} rules')
+    except Exception as e:
+        f.append(f'rules.py --list --json is not JSON: {e}')
+    for q in ('T.6', 'C.5', 'DM.1', 'w5'):
+        r = run(q)
+        if r.returncode != 0 or not r.stdout.strip():
+            f.append(f'rules.py {q} exits {r.returncode} with no output')
+    r = run('--checks')
+    if r.returncode != 0 or 'check_' not in r.stdout:
+        f.append('rules.py --checks prints no gate checks')
+    r = run('no-such-rule-xyz')
+    if r.returncode == 0:
+        f.append('rules.py accepts a query that matches nothing')
+    return f
+
+
 def cmd_selftest():
     fx = os.path.join(HERE, 'fixtures')
     checks = {c.__name__: c for lst in WAVE_CHECKS.values()
@@ -3172,6 +3264,7 @@ def cmd_selftest():
                 fails.append(f'{name}/pass fixture failed: {got[:2]}')
             if want == 1 and not got:
                 fails.append(f'{name}/fail fixture NOT caught')
+    fails += cli_selftest()
     tested = [n for n in checks if os.path.isdir(os.path.join(fx, n))]
     missing = set(checks) - set(tested) - {'check_audit_artifacts',
             'check_astro_build', 'check_review_completeness',
@@ -3723,15 +3816,68 @@ def compute_scorecard(ctx, waves=('w3', 'w5', 'w6', 'w7')):
                          sorted(scores.items())},
             'broken_by_intent': broken,
             'unscored': [r for r in enf if r not in scores]}
-    card['overall'] = round(sum(card['sections'].values()) /
-                            len(card['sections']), 1) \
-        if card['sections'] else 0
+    vectors, vw = score_vectors(scores)
+    if vectors:
+        card['vectors'] = vectors
+        card['overall'] = round(sum(vectors[k] * vw[k] for k in vectors) /
+                                sum(vw.values()), 1)
+    else:
+        card['overall'] = round(sum(card['sections'].values()) /
+                                len(card['sections']), 1) \
+            if card['sections'] else 0
     return card
+
+
+def load_score_vectors():
+    try:
+        return json.load(open(SCORE_VECTORS))
+    except Exception:
+        return {}
+
+
+def vector_rule_ids(families):
+    """Rule IDs a vector aggregates: prefix match ('L' -> L.1-L.13)."""
+    ids = set()
+    try:
+        enf = json.load(open(ENFORCEMENT))['rules']
+    except Exception:
+        return ids
+    for rid in enf:
+        for fam in families:
+            if rid == fam or rid.startswith(fam + '.'):
+                ids.add(rid)
+    return ids
+
+
+def score_vectors(scores):
+    """Each vector = weighted mean of its rule families' scores (0-100)."""
+    spec = load_score_vectors().get('vectors') or {}
+    out, weights = {}, {}
+    for vid, v in spec.items():
+        if not v.get('weight'):
+            continue
+        ids = vector_rule_ids(v.get('families') or [])
+        vals = [scores[r] for r in ids if r in scores]
+        if not vals:
+            continue
+        out[vid] = round(100 * sum(vals) / len(vals), 1)
+        weights[vid] = v['weight']
+    return out, weights
 
 def check_scorecard(ctx):
     card = compute_scorecard(ctx)
     f = [f'scorecard section {s} = {v} < 90'
          for s, v in card.get('sections', {}).items() if v < 90]
+    spec = set(load_score_vectors().get('vectors') or {}) - {'overall'}
+    got = card.get('vectors') or {}
+    if spec:
+        miss = sorted(spec - set(got))
+        if miss:
+            f.append(f'scorecard missing {len(miss)} vector(s): {miss[:4]} '
+                     '(score-vectors.json)')
+        for k, v in got.items():
+            if not isinstance(v, (int, float)) or not 0 <= v <= 100:
+                f.append(f'scorecard vector {k} = {v!r} — expected 0-100')
     if card.get('unscored'):
         f.append(f'unscored rules: {card["unscored"][:5]}')
     return f
@@ -3743,13 +3889,20 @@ def cmd_score(a):
     outp = os.path.join(ctx.dir, 'SCORECARD.json')
     json.dump(card, open(outp, 'w'), indent=2)
     md = ['# SCORECARD', f'overall: {card.get("overall", 0)}', '']
+    if card.get('vectors'):
+        md += ['## Vectors (rule-family aggregates)', '',
+               '| Vector | /100 |', '|---|---|']
+        for k, v in card['vectors'].items():
+            md.append(f'| {k} | {v} |')
+        md.append('')
+    md += ['## Rule families', '']
     for k, v in card.get('sections', {}).items():
         md.append(f'- {k}: {v}')
     if card.get('broken_by_intent'):
         md += ['', '## Broken by intent (declared structural breaks)',
                ''] + [f'- {r}' for r in card['broken_by_intent']]
     open(os.path.join(ctx.dir, 'SCORECARD.md'), 'w').write('\n'.join(md))
-    for k, v in card.get('sections', {}).items():
+    for k, v in (card.get('vectors') or {}).items():
         print(f'  {k}: {v}')
     print(f'  overall: {card.get("overall", 0)}')
     return 1 if any(v < 90 for v in card.get('sections', {}).values()) else 0
