@@ -20,6 +20,49 @@ chooses what feeds the distill, never how the build runs.
   ships as tokens in `TOKENS.json` fluid pairs, never per-element
   improvisation.
 
+## The guided direction loop — analyze, propose, ratify
+
+How the operator conversation runs on any path that ends in
+`site-intake variants` *or* a redesign request ("redesign
+<url>'s home page"). Analysis first; questions only for gaps;
+the operator never configures settings — they pick a direction.
+
+**Phase A — analyze (zero questions).** From the site and/or brief,
+extraction pass (DESIGN-PLAN §Guideline prefill) fills:
+who / one_action / worst_case from the copy; the `rhetoric` sequence
+from the page's argument; `extracted` tokens (fonts, hexes) where
+computable; `inferred` direction axes and asset inventory
+(first-party photos/logos = T1 keep-list). Nothing is asked before
+this is on the table.
+
+**Phase B — direction cards (the only choice).** The agent presents
+**three cards**, never settings. Each card is a coherent bundle:
+a one-line name, all six `direction` axes, the `refused` it
+replaces, and an ASCII hero sketch (layout + density + rhythm —
+the thing ASCII can show; type/colour live in the axis row). Cards
+must differ on ≥3 axes — same direction in different wrappers is
+fraudulent variety. The operator picks one or remixes
+("A's axes, B's hero") — that single answer fills `direction:`.
+
+**Phase C — confirm the open fields.** Whatever Phase A left
+`inferred`, the cards' pick usually resolves; remaining gaps get
+asked in one batch: audience nuance, CTA person, media availability
+on unproven pages. Optionally: "any sites whose *feel* you want?" —
+feeds the extraction pass to sharpen `snapped`/`inferred` picks;
+skipped means they stay inferred, never blocking.
+
+**Rules of the loop:**
+
+- Never ask a question the site or brief can answer. The question
+  budget is ~3–5, spent on gaps only.
+- Never present axis-by-axis settings ("warm or cool? serif or
+  sans?") — that outsources design reasoning to the operator.
+  Choices are always *directions*: coherent, named, comparable.
+- Cards carry the `refused` — the operator sees what each direction
+  is *not*, which is half the information.
+- The picked card lands in `DESIGN-PLAN.md` `direction:` + the
+  keep-list in `media.assets`; the remix lands in `decisions[]`.
+
 ## The decision tree
 
 ```text
