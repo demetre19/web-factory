@@ -96,21 +96,32 @@ fraudulent variety. The operator picks one or remixes
 ("A's axes, B's hero") — that single answer fills `direction:`.
 
 The three cards ship as ONE file:
-`design-proposals/<site>/cards/index.html` — the lo-fi artifact one
-level above ASCII. A sticky segmented switch
+`design-proposals/<site>/<page>/cards/index.html` — greyscale
+WIREFRAMES (Balsamiq idiom), one level above ASCII, never a styled
+mock. A sticky segmented switch
 (`Design 1 · Design 2 · Design 3`, labelled with the card names)
 sits fixed at the top of the page; pressing it swaps the rendered
-design instantly — same page, no navigation, no scrolling back.
-Each design is a complete lo-fi render of the full money page:
-real `clamp()` type ranks, real font stacks (T.4 substitutes),
-real colour roles and radius personality *derived provisionally
-from the card's axes*, extracted copy where it exists, media as
-tinted aspect-ratio blocks. Sections carry small annotation labels
-(composition/surface/density/stack). Self-contained, one file.
-Provisional means stamped: a card's tokens are *derived*, never
-ratified — the pick snaps them into `system:` and the L3 tile
-verifies. ASCII stays inline for the chat glance; the HTML is the
-persistent artifact.
+wireframe instantly — same page, no navigation, no scrolling back.
+Each design is a complete wireframe of the full money page: media as
+outlined boxes with a diagonal X, body copy as rounded grey bars,
+buttons as outlined rects with real short labels, disclosure folds as
+outlined `▸` rows kept closed, logos and cert marks as small
+outlined squares. Headings are real text — the **per-direction type
+scale is the only real design value on a card**: correct ranks
+(`clamp()` in `cqi` units), the H1 query-small on a detail page, the
+claim at display rank, macro H2s readable, fold labels smaller still.
+Everything else is deliberately undecided: no brand colour, no real
+fonts beyond a neutral sans, no icons, no decorative detail — fonts,
+colour roles, radius and spacing-as-feel are judged at L3
+`system.html`, not here. Wireframes render at true scale: Desktop
+frame 1280px, Tablet 768, Mobile 360, each 1:1 (stage scrolls; never
+zoom/shrink to fit). Real section heights at their density tokens,
+real type sizes from the direction's scale, real media aspect ratios.
+A thumbnail or miniature wireframe is a defect — it hides the spacing
+and hierarchy the operator is judging. Half-styled cards fail twice —
+they invite critique of undecided detail and bury the one decision
+that matters: structure plus type hierarchy. ASCII stays inline for
+the chat glance; the HTML file is the persistent artifact.
 
 The same sticky bar carries a second segmented switch — **viewport:
 Desktop · Tablet · Mobile** (1280 / 768 / 360). Choosing one shrinks
@@ -123,28 +134,28 @@ only for features a container can't express (`prefers-reduced-motion`,
 `hover:hover`, print).
 
 Cards are built **mobile-first** (R.1 `min-width` only): the default
-viewport styles are the 360 layout, `min-width` queries expand to
-desktop — so narrowing the browser to 360px is itself the collapse
-demo. Every `split-media`/grid section in a card must implement its
+styles are the 360 layout, `min-width` container queries expand to
+desktop — the Mobile 360 frame shows exactly the rules that apply at
+360. Every `split-media`/grid section in a card must implement its
 R.3 collapse and `stack: text-first` order for real, not describe it.
 
-**Neutral placeholders rule:** in every lo-fi artifact (cards,
-wireframes, ASCII), anything that is *not* a colour-system decision
-renders in neutral grey — image/media placeholders, icon slots,
-logo blocks. Coloured placeholders are banned: they lead the eye,
-imply a treatment that isn't decided, and compete with the real
-accent. The only colour on a card is the C.1 role map (bg, surface,
-ink, accent, inverse) + a single grey ramp for placeholders.
+**Neutral placeholders rule:** every lo-fi artifact (cards,
+wireframes, ASCII) renders in neutral grey on a single grey ramp —
+image/media placeholders, icon slots, logo blocks, copy bars, and on
+cards the entire surface including the CTA. Coloured placeholders are
+banned: they lead the eye, imply a treatment that isn't decided, and
+compete with an accent that isn't chosen yet. The C.1 role map (bg,
+surface, ink, accent, inverse) first appears at L3 `system.html`,
+never on a card.
 
 **Real-assets rule:** when the operator supplies a site (redesign)
-or content, the *extracted* artifacts bind the cards directly —
-the site's accent colour is a brand constant, not a direction
-choice (all three cards carry it verbatim; only neutrals, type,
-shape, density differ); provided copy fills the sections, never
-invented placeholder headlines. Content dictates layout: section
-selection fits the extracted content inventory — a direction never
-demands copy that doesn't exist, and copy is never rewritten to
-flatter a layout.
+or content, the *extracted* artifacts bind the cards — the site's
+accent colour is a brand constant, not a direction choice (recorded
+in the keep-list; it binds the L3 render, not the greyscale card);
+extracted headings and CTA labels fill the card's real text, never
+invented. Content dictates layout: section selection fits the
+extracted content inventory — a direction never demands copy that
+doesn't exist, and copy is never rewritten to flatter a layout.
 
 **Phase C — confirm the open fields.** Whatever Phase A left
 `inferred`, the cards' pick usually resolves; remaining gaps get
