@@ -120,8 +120,12 @@ real type sizes from the direction's scale, real media aspect ratios.
 A thumbnail or miniature wireframe is a defect — it hides the spacing
 and hierarchy the operator is judging. Half-styled cards fail twice —
 they invite critique of undecided detail and bury the one decision
-that matters: structure plus type hierarchy. ASCII stays inline for
-the chat glance; the HTML file is the persistent artifact.
+that matters: structure plus type hierarchy. **This is the
+operator-approved fidelity level for Phase B:** ASCII stays inline
+for the chat glance only, half-styled HTML is banned at Phase B, and
+the wireframe file is the persistent artifact. Template:
+`templates/wireframe-cards/` — every card set is instantiated from
+it; never hand-rolled.
 
 The same sticky bar carries a second segmented switch — **viewport:
 Desktop · Tablet · Mobile** (1280 / 768 / 360). Choosing one shrinks
