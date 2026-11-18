@@ -248,7 +248,7 @@ site:
       accent_usage: cta_and_motif_only
 
     icons:                                        # rules/I.md — closed selections
-      family: lucide | heroicons | phosphor | feather | custom
+      family: lucide                     # closed set {lucide} — one library
       style: outline | solid | duotone | hand-drawn | 3d-hero-only
       stroke_class: light | regular | bold        # 1.5 | 2.0 | 2.5–3.0px
     media:                                        # rules/V.md

@@ -19,14 +19,14 @@ loads at spawn): `skills/s<N>-<name>/SKILL.md`.
 
 | Stage | Spec | Lane(s) | Reads | Emits |
 |---|---|---|---|---|
-| S0 Discovery | prd-herdr `research/DISCOVERY-RESEARCH-web-factory.md`; intake fields defined by `WEB-FACTORY-S1-SITEMAP.md` §Step 0 + PRD §5.1 | operator Q&A (boss-driven) | operator answers, Maps/GBP category lookups | `site/site-brief.md` |
+| S0 Discovery | prd-herdr `research/DISCOVERY-RESEARCH-web-factory.md`; intake fields defined by `WEB-FACTORY-S1-SITEMAP.md` §Step 0 + PRD §5.1 | operator Q&A (boss-driven) | operator answers, Maps/GBP category lookups | `site/site-brief.md` — incl. `social_profiles`, `review_source`, `## About source` |
 | S1 Sitemap | prd-herdr `research/WEB-FACTORY-S1-SITEMAP.md` | one lane | `site-brief.md`, SERP (mandatory), GSC/Cora/entities/embeddings (degradable tiers) | `sites/<slug>/sitemap.md` (route-table authority) + `sites/<slug>/brief.json` (intake record — spec-declared, written by the S1 lane at run time) |
-| S2 Tone+plan | `research/WEB-FACTORY-S2-TONE-PLAN.md` | one lane | `site/sitemap.md`, `site/site-brief.md` | `site/tone-profile.md`, `site/content-plan.md` (+ `## Writer batches`) |
-| S3 Writing | `research/WEB-FACTORY-S3-WRITING.md` | one `pi/WRITER`-bound lane per batch (`web-writer-<site>-b<N>`, ≤6 rows, money first) | `site/content-plan.md`, `site/tone-profile.md`, `site/site-brief.md` | `site/content/<slug>.md` — one file per plan row, one commit per page |
+| S2 Tone+plan | `research/WEB-FACTORY-S2-TONE-PLAN.md` | one lane | `site/sitemap.md`, `site/site-brief.md` | `site/tone-profile.md`, `site/customer-profile.md` (personas + `PP-<n>` pain points + CRO bank + fold quad), `site/content-plan.md` (+ `## Writer batches`; columns `media`, `faq`, `og_image`, `pain_point`), `site/company-description.md` |
+| S3 Writing | `research/WEB-FACTORY-S3-WRITING.md` | one `pi/WRITER`-bound lane per batch (`web-writer-<site>-b<N>`, ≤6 rows, money first) | `site/content-plan.md`, `site/tone-profile.md`, `site/site-brief.md`, `site/company-description.md`, `site/customer-profile.md` | `site/content/<slug>.md` — one file per plan row, one commit per page; `pain_point`/`faq`/`og_image`/`images` frontmatter, featured-snippet answer blocks, FAQ `<details>` contract, Rule-of-One + AIDA + fold quad, `/about/` embeds the description verbatim |
 | S4 Interlink+cleanup | `research/WEB-FACTORY-S4-INTERLINK.md` | two lanes, strictly ordered: `web-link-graph-<site>` then `web-interlink-<site>` | `site/content/`, `site/content-plan.md`, `site/tone-profile.md` | `site/link-graph.md`, injected `site/content/*.md`, `site/content-final/`, `site/cleanup-report.md` |
-| S5 Design→Astro | `research/WEB-FACTORY-S5-DESIGN-DNA.md` | two lanes, strictly ordered: `design-dna-<site>` then `web-build-<site>` | `site/content-final/`, `site/sitemap.md`, `site/site-brief.md`, `site/design/` (DOX ZIP) or `site/design/refs/`, `templates/astro/` | `site/design-dna/` (distill), `sites/<slug>/` Astro project (build, `astro build` exit 0) |
-| S6 Integrations | `research/WEB-FACTORY-S6-INTEGRATIONS.md` | one lane `web-integrations-<site>` | `sites/<slug>/`, `site/site-brief.md`, `site/sitemap.md`, operator env (presence only) | `site/integrations.json`, `public/form.php`, `.htaccess`/nginx snippet + `public/_headers`, `.env.sample`, `site/INTEGRATIONS.md` |
-| S7 Gate+deploy | `research/WEB-FACTORY-S7-GATE-DEPLOY.md` | one lane `web-deploy-<site>` (tweak loop inside it) | `sites/<slug>/`, `site/sitemap.md`, `site/site-brief.md` `## Deploy`, `site/design-dna/ROUTE-MANIFEST.json` | `dist/` (never committed), `site/seo-gate-report.md`, `site/deploy-report.md` + `## Seal`, live site |
+| S5 Design→Astro | `research/WEB-FACTORY-S5-DESIGN-DNA.md` | two lanes, strictly ordered: `design-dna-<site>` then `web-build-<site>` | `site/content-final/`, `site/sitemap.md`, `site/site-brief.md`, `site/company-description.md`, `site/customer-profile.md`, `site/design/` (DOX ZIP) or `site/design/refs/`, `templates/astro/` | `site/design-dna/` (distill), `sites/<slug>/` Astro project (build, `astro build` exit 0) — shell contract: JSON-LD entity graph, full OG + `og-image.png`, footer (description + social + site map + NAP), `astro:assets` WebP/AVIF images, vanilla-script islands, a11y + responsive floors, mobile menu + `MobileCTA` action bar, `.seo-h*` heading classes, hero module (fold quad), designed 404 |
+| S6 Integrations | `research/WEB-FACTORY-S6-INTEGRATIONS.md` | one lane `web-integrations-<site>` | `sites/<slug>/`, `site/site-brief.md`, `site/sitemap.md`, operator env (presence only) | `site/integrations.json` (5 capabilities incl. `cache_policy`), `public/form.php`, `.htaccess`/nginx snippet + `public/_headers`, `.env.sample`, `site/INTEGRATIONS.md` |
+| S7 Gate+deploy | `research/WEB-FACTORY-S7-GATE-DEPLOY.md` | one lane `web-deploy-<site>` (tweak loop inside it) | `sites/<slug>/`, `site/sitemap.md`, `site/site-brief.md` `## Deploy`, `site/design-dna/ROUTE-MANIFEST.json` | `dist/` (never committed), `site/seo-gate-report.md` (23 checks), `site/deploy-report.md` + `## Seal`, live site |
 
 ## How `NEW-WEBSITE` lands
 
@@ -44,7 +44,12 @@ loads at spawn): `skills/s<N>-<name>/SKILL.md`.
    the category closest to what the business actually does (these
    categories own one money route each — S1's category→route contract).
    The Q&A also collects entity facts, geography, competitor names,
-   reference copy, contact destinations (`contact_email`,
+   reference copy, `social_profiles` (URLs — render in the footer +
+   `/about/`, `sameAs` in JSON-LD), `review_source` (GBP URL or pasted
+   testimonials — gates `AggregateRating`/`Review` JSON-LD; never
+   fabricated), `## About source` (the business's own home/about copy
+   — the `[SOURCE]` for `company-description.md`), contact destinations
+   (`contact_email`,
    `contact_phone`, `notify_phone`), and the `## Deploy` target
    (`host_alias`, `user`, `docroot`, `url`). Output: `site/site-brief.md`
    — every fact downstream stages bind lives here; a fact the brief
@@ -135,7 +140,10 @@ to committed source.
 | DOX packet `target` ≠ `astro` or checksum mismatch | S5 mint | refuse at mint — re-export from Design-library; never retarget downstream |
 | `integrations.json` row already `live` | S6 mint | refuse — re-wiring is a repair lane keyed on the same registry, not a re-mint |
 | `astro build` non-zero | S7 step 3 | refuse; a red build goes back to the owning upstream stage as a defect — S7 never edits source to force a pass |
-| SEO gate fail (13-check) | S7 step 4 | deploy does not run; findings row into `seo-gate-report.md`; fix lands via the tweak loop or upstream re-mint |
+| SEO gate fail (23-check) | S7 step 4 | deploy does not run; findings row into `seo-gate-report.md`; fix lands via the tweak loop or upstream re-mint |
+| Built-surface UX defect (mobile or general) — check 9/15/16/17/22/23 finding: broken tap targets, drawer trap, iOS input zoom, zoom-kill viewport, `100vh` breakage, hover-only content, clipped popover, reveal-gated blank section, heading text overflow, missing `scroll-padding-top`, placeholder/low contrast, design-ban violation | S7 step 4 | deploy refuses; the finding rows into `seo-gate-report.md` and the fix routes to its owner — shell/component defect → S5 build lane re-mint, copy defect → upstream content stage (never an S7 source edit) |
+| Mobile defect caught by operator thumb-test, not the gate (menu drawer covers last link behind home bar, action bar occludes footer on a short page, sticky header hides in-page anchors) | S7 operator loop / HTTP smoke | same fix loop — the gate battery is the *floor*, not the ceiling; a defect the check didn't catch gets named as a matrix row addition, not silently patched |
+| Post-deploy UX finding (real-device testing, analytics, operator feedback) | after the seal | repair lane on the owning stage (shell → S5 re-mint + re-gate, content → S3 row re-mint through S4); live sites fix through the same gate, never by editing `dist/` or the deployed release |
 | Smoke fail after symlink flip | S7 step 7 | `ln -sfn` rollback to the previous release in the same step, then refuse — the host never sits on a broken `current` |
 | Missing `## Deploy` section | S7 mint precondition | `prd_step ask` for the section; the lane never guesses a host |
 | Tweak list grows into structure (new routes, replanned copy) | S7 operator loop | escalated back to the owning stage — S7 is a ~10% calibration loop, not a second writing stage |
@@ -149,3 +157,4 @@ to committed source.
 | OI-5 | F10 plan digest (S2 emit, S3 record, S4 compare) |
 | OI-7 | `tools/sitemap_lint.py` + `seo-gate` mechanical checkers — lints are prose checklists self-executed by lanes until the tools land |
 | OI-8 | S1's two vendored deterministic modules under `lib/` |
+| OI-9 | Vendored `templates/astro/` conformance to the expanded shell contract — `SocialLinks.astro`, `JsonLd.astro`, `MobileCTA.astro` action bar, `src/pages/404.astro`, `.seo-h*` heading classes, footer regions (description + social + grouped sitemap + NAP), skip link, OG `og-image.png` template, `_headers` cache matrix fix |

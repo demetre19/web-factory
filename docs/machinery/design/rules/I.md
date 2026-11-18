@@ -65,11 +65,10 @@ personality is a defect.
 
 ### I.3 Size — the closed set and the line-height rule
 
-Closed size set **{12, 16, 20, 24, 32, 48}** — no others:
+Closed size set **{16, 20, 24, 32, 48}** — no others:
 
 | Size | Role |
 |---|---|
-| 12 | micro-dots, inline status marks |
 | 16 | dense UI, table rows |
 | 20 | default UI |
 | 24 | nav, buttons |
@@ -189,7 +188,7 @@ build self-lint:
 - [ ] Style matches brand attribute per the I.1 matrix
 - [ ] No mixed variants — outline+solid adjacent only as an
   active-state toggle (I.1)
-- [ ] Every icon size ∈ {12, 16, 20, 24, 32, 48} (I.3)
+- [ ] Every icon size ∈ {16, 20, 24, 32, 48} (I.3)
 - [ ] Uniform stroke — one stroke class per context, = size × 0.0833
   (I.2)
 - [ ] Icon↔text gap ∈ {4, 8, 12, 16} (I.4)

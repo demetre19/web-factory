@@ -28,8 +28,9 @@ FAIL, not a default.
 ```json
 {
   "schema": "design-dna-map/v1",
+  "version": 0,
   "site": "<slug>",
-  "profile": "profile-<vertical>",
+  "vertical_profile": "profile-<vertical>   # from dna/<vertical>",
   "genotype": { "<gene>": "<allele>", "…": "every gene in dna/GENOME.md" },
   "knobs": { "<knob id from knobs.json>": "<value in range>", "…": "all" },
   "tokens": { "type.ratio": "var(--type-ratio)", "…": "knob → CSS token" },
@@ -39,10 +40,21 @@ FAIL, not a default.
               "motif": "<device>", "motif_break": "<section>" },
   "modes": { "light": {"bg": "#…", "…": "every C.5 role"},
              "dark":  {"bg": "#…", "…": "every C.5 role"} },
+  "modes_required": ["light", "dark"],
+  "vector_targets": { "<vector>": 0 },
+  "invariants": { "…": "verbatim extracted values, provenance: extracted" },
+  "constraints": { "…": "dislikes, refuses — provenance: stated" },
+  "provenance": { "<field>": "extracted|inferred|chosen|patterns" },
+  "hashes": { "core": "<12hex>", "structure": "<12hex>",
+              "variants": "<12hex>" },
   "burst": 0,
   "wildcard": []
 }
 ```
+
+`vector_targets` values are 0–10 whole points. `hashes` is recomputed
+by the gate: **core** = everything minus the four structure genes;
+**structure** = the structure genotype + rhythm + pages (see DNA-MAP).
 
 **Enforcement** — script `check_dna` in every wave (and
 `gate.py dna <dir>`). Threshold: every field present; every genotype
@@ -51,11 +63,13 @@ its range on its step.
 
 ### DM.2 Every artifact traces to the map
 
-The map is hashed (`dna_hash`, first 12 hex of the canonical JSON). A
-section contract embeds `dna_hash` and the DNA fields that bind it; a
-section component echoes the same hash in its frontmatter
-(`dna_hash: <hash>`); a variant record carries `dna_hash` plus its knob
-diff against the map's baseline.
+The map is hashed as three slices (`hashes.{core, structure,
+variants}`, first 12 hex of each canonical slice). A section contract
+embeds `dna_hash` (core) plus `structure_hash`; a section component
+echoes both in its frontmatter (`dna_hash:`, `structure_hash:`); a
+variant record carries `dna_hash` plus its knob diff against the
+map's baseline. W3 locks the structure slice, W4 the core, W5 issues
+map v1.
 
 **Enforcement** — script `check_dna`. Threshold: every
 `sections/*.contract.json` and every `components/sections/*.astro` hash

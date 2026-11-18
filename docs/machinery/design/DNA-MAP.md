@@ -50,12 +50,12 @@ edit touches.
   "version": 1,
   "hash": "<sha256 of canonical JSON minus this field>",
   "site": "whistleclean",
-  "vertical_profile": "services/local-service",
+  "vertical_profile": "profile-services/local-service",
   "genotype": { "<gene>": "<allele>" },
   "knobs": {
     "type.ratio": 1.25, "type.base": 17, "type.display_weight": 700,
     "type.tracking_display": -0.02, "space.density_scale": 1.0,
-    "space.section_py": { "compact": 48, "regular": 72, "spacious": 112 },
+    "space.section_py": { "compact": 48, "regular": 64, "spacious": 96 },
     "grid.gutter": 24, "radius.personality": "p3", "color.surface_contrast": 0.06,
     "color.accent_usage": "cta+motif", "color.neutral_tint": 0.06,
     "elevation.level": 1, "motion.level": "subtle", "image.treatment": "natural"
