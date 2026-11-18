@@ -37,6 +37,52 @@ category/surface/density), with `pages.<slug>.sections[]` rows adding
 the `speech_act`/`composition` assignment the packet lacks. Written
 after flatten, not before SPECs.
 
+## The cascade — top-down, gated at every level
+
+Design is produced in six levels. Each level *consumes the level
+above as a closed set* — a level may select, it may never invent.
+Each level has a gate: the gate's mechanical checklist must pass
+before the next level starts. A level that reaches past its inputs
+(a page inventing a color, a component setting its own spacing) is
+the design-DNA loss this file exists to prevent.
+
+| Level | Artifact | What it decides | Gate that opens the next level |
+|---|---|---|---|
+| **L0** | `DESIGN-PLAN.md` `site:` + `direction:` | The overall aesthetic — intent, the six direction axes, `refused` | Every axis filled + `refused` named |
+| **L1** | `DESIGN-PLAN.md` `system:` | Every number bound — type scale/ranks/fonts, space scale, color roles, icons, media, copy, grid — *all fluid, all tokenized* | Every `system.*` field non-empty; every value ∈ `PRIMITIVES.md` |
+| **L2** | `pages.<slug>` rows + ASCII sketch | The page's argument as *boxes*: `rhetoric` order → `sections[]` (act / category / surface / density / composition / emphasis / align) | Rhetoric complete; compositions ∈ catalog §2; ASCII critique passes |
+| **L3** | `preview/system.html` | The system rendered: every surface × density × rank × buttons/fields/cards — feel verified before page pixels | Renders; every element binds a `system.*` token, zero hardcoded px/hex |
+| **L4** | `PAGES/<slug>/SPEC.md` | The built section map — plan rows verbatim, components named | SPEC `sections[]` == plan rows (verbatim diff) |
+| **L5** | `COMPONENTS.md` + build | Micro-interactions + element rules — applied uniformly from `direction.motion`, never selected per-page | §Enforcement checklist, all sections |
+
+**Order note:** L2 (boxes) precedes L3 (tile) deliberately — the
+argument is verified cheaply *before* the system spends a pixel.
+`pages:` rows are authored at L2, but their surface/density values
+only become *real* at L3, when the tile renders them.
+
+**The gates are mechanical, not review.** L0–L1 pass when fields are
+filled with closed-set values; L2 is the ASCII critique; L3 is the
+render check; L4 is the verbatim diff; L5 runs §Enforcement. L3 is
+the only render gate — it exists so typography/colour/radius/spacing
+get verified on a *system tile* before any page is drawn, not on a
+finished mockup where fixing them is expensive.
+
+**All-fluid rule** (the "automatic CSS" level): `system.type` is a
+`clamp()` scale (Utopia), `system.space` is the G.1 set applied
+everywhere, `system.color` is the C.1 6-role map, `system.grid`
+`edge_padding`/`breakpoints`/`stack_order` is R.2's closed ramp.
+Nothing downstream of L1 chooses a number — it binds a token. A
+literal `px`/`hex`/`rem` in page or component code that isn't a
+token reference is a refuse, same class as a literal hex outside
+TOKENS.
+
+**The index** (where each agent reads): L0 `direction` → L1
+`system.*` → L2 `sections[].surface/.density/.composition` → L5
+rules. An agent at any level has *exactly one* upstream artifact to
+consult; it never reaches two levels up, never sideways. If a field
+it needs isn't filled above, the correct move is `prd_step` back,
+not a default.
+
 ## Fill order
 
 1. `site:` prose decisions (§1–4) — written first, from brief + audit.
@@ -56,10 +102,17 @@ after flatten, not before SPECs.
    cannot answer typography, colour, or feel (that's
    `preview/system.html`). Not a committed artifact; the sketch lives
    in the lane's working notes, the fixes land in `decisions[]`.
+   This is the L2 gate — the page argument is verified as *boxes*
+   before a single pixel is spent.
 6. `preview/system.html` next — every surface × every density × every
    type rank × buttons/fields/cards — then page previews (F6).
    DOX branch: copy packet `designs/design-system.html` to
-   `preview/system.html` rather than regenerating.
+   `preview/system.html` rather than regenerating. This is the L3
+   gate — the *system* is verified on a tile before any page exists.
+7. L4+ downstream — `PAGES/<slug>/SPEC.md` copies its section rows
+   verbatim from `pages.<slug>.sections`; `COMPONENTS.md` names the
+   component each `composition` instantiates; build self-lints every
+   rendered section's classes against its SPEC row's enums (F7).
 
 ```yaml
 site:
