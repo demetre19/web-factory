@@ -54,23 +54,46 @@ must differ on ≥3 axes — same direction in different wrappers is
 fraudulent variety. The operator picks one or remixes
 ("A's axes, B's hero") — that single answer fills `direction:`.
 
-Each card also renders as `design-proposals/<site>/cards/<name>.html`
-— the lo-fi artifact one level above ASCII. Real `clamp()` type
-ranks, real font stacks (T.4 substitutes), real colour roles and
-radius personality *derived provisionally from the card's axes*,
-extracted copy where it exists, media as tinted aspect-ratio blocks.
-Sections carry small annotation labels (composition/surface/density).
-Self-contained, one file per card + an `index.html` linking all
-three. Provisional means stamped: a card's tokens are *derived*,
-never ratified — the pick snaps them into `system:` and the L3 tile
+The three cards ship as ONE file:
+`design-proposals/<site>/cards/index.html` — the lo-fi artifact one
+level above ASCII. A sticky segmented switch
+(`Design 1 · Design 2 · Design 3`, labelled with the card names)
+sits fixed at the top of the page; pressing it swaps the rendered
+design instantly — same page, no navigation, no scrolling back.
+Each design is a complete lo-fi render of the full money page:
+real `clamp()` type ranks, real font stacks (T.4 substitutes),
+real colour roles and radius personality *derived provisionally
+from the card's axes*, extracted copy where it exists, media as
+tinted aspect-ratio blocks. Sections carry small annotation labels
+(composition/surface/density/stack). Self-contained, one file.
+Provisional means stamped: a card's tokens are *derived*, never
+ratified — the pick snaps them into `system:` and the L3 tile
 verifies. ASCII stays inline for the chat glance; the HTML is the
 persistent artifact.
+
+The same sticky bar carries a second segmented switch — **viewport:
+Desktop · Tablet · Mobile** (1280 / 768 / 360). Choosing one shrinks
+the render frame to that width and the design re-flows live. Because
+the frame isn't the browser viewport, cards use **`@container`
+queries** (the frame is `container-type: inline-size`), never
+`@media` for the collapse — the 360 render inside the frame is the
+real mobile layout, not a zoomed-out desktop. `@media` remains legal
+only for features a container can't express (`prefers-reduced-motion`,
+`hover:hover`, print).
 
 Cards are built **mobile-first** (R.1 `min-width` only): the default
 viewport styles are the 360 layout, `min-width` queries expand to
 desktop — so narrowing the browser to 360px is itself the collapse
 demo. Every `split-media`/grid section in a card must implement its
 R.3 collapse and `stack: text-first` order for real, not describe it.
+
+**Neutral placeholders rule:** in every lo-fi artifact (cards,
+wireframes, ASCII), anything that is *not* a colour-system decision
+renders in neutral grey — image/media placeholders, icon slots,
+logo blocks. Coloured placeholders are banned: they lead the eye,
+imply a treatment that isn't decided, and compete with the real
+accent. The only colour on a card is the C.1 role map (bg, surface,
+ink, accent, inverse) + a single grey ramp for placeholders.
 
 **Phase C — confirm the open fields.** Whatever Phase A left
 `inferred`, the cards' pick usually resolves; remaining gaps get
