@@ -96,11 +96,15 @@ not a default.
    logged in `decisions[]`.
 4. `pages:` map — per route, its own intent/idea/rhetoric/sections.
 5. **ASCII draft + critique** — render the money page's `sections[]`
-   as ASCII boxes — the **full page skeleton**, ~40–80 lines, one
-   labeled box per row, annotated with
-   `speech_act`/`surface`/`density`/`composition`, contrast moment
-   and S-M-L rhythm marked — then run the
-   rubric reviewer against the sketch *before* rendering. ASCII is
+   as ASCII boxes — the **full page skeleton on two canvases**,
+   ~40–80 lines each: 1440px *and* 360px side by side, one labeled
+   box per row, annotated with
+   `speech_act`/`surface`/`density`/`composition`/`stack`, contrast
+   moment and S-M-L rhythm marked. The 360 canvas verifies the
+   mobile skeleton: every `split-media`/grid row collapsed per
+   R.3, `stack: text-first` order actually rendered (headline
+   before media), above-fold five elements present at 360×640 — then
+   run the
    the cheap draft surface the critique loop works on: adjacency
    violations, flat clustering, a missing contrast moment, a wrong
    composition pick all get caught and fixed in the `sections[]` rows
@@ -276,6 +280,8 @@ pages:
         composition: split-media          # ∈ SECTION-CATALOG §2 ONLY
         emphasis: headline                # the ONE focus
         align: <named edge>               # e.g. col-1-edge | center-axis | measure-start
+        stack: text-first                   # mobile order: text-first default; visual-first needs declared product-UI hook (R.3)
+        collapse: 2-col≥1024 | stacked      # per-composition collapse step, must match R.3 table
       - {…one row per section, in rhetoric order…}
   # …one entry per route/SPEC…
 

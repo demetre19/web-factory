@@ -20,6 +20,11 @@ chooses what feeds the distill, never how the build runs.
   ships as tokens in `TOKENS.json` fluid pairs, never per-element
   improvisation.
 
+- **Previews open themselves** — every HTML artifact offered to the
+  operator (direction cards, `preview/system.html`, page previews)
+  is opened in the operator's default browser automatically the
+  moment it exists. Never handed over as a link or a path to click.
+
 ## The guided direction loop — analyze, propose, ratify
 
 How the operator conversation runs on any path that ends in
@@ -48,6 +53,24 @@ that's what the operator is choosing between.) Cards
 must differ on ≥3 axes — same direction in different wrappers is
 fraudulent variety. The operator picks one or remixes
 ("A's axes, B's hero") — that single answer fills `direction:`.
+
+Each card also renders as `design-proposals/<site>/cards/<name>.html`
+— the lo-fi artifact one level above ASCII. Real `clamp()` type
+ranks, real font stacks (T.4 substitutes), real colour roles and
+radius personality *derived provisionally from the card's axes*,
+extracted copy where it exists, media as tinted aspect-ratio blocks.
+Sections carry small annotation labels (composition/surface/density).
+Self-contained, one file per card + an `index.html` linking all
+three. Provisional means stamped: a card's tokens are *derived*,
+never ratified — the pick snaps them into `system:` and the L3 tile
+verifies. ASCII stays inline for the chat glance; the HTML is the
+persistent artifact.
+
+Cards are built **mobile-first** (R.1 `min-width` only): the default
+viewport styles are the 360 layout, `min-width` queries expand to
+desktop — so narrowing the browser to 360px is itself the collapse
+demo. Every `split-media`/grid section in a card must implement its
+R.3 collapse and `stack: text-first` order for real, not describe it.
 
 **Phase C — confirm the open fields.** Whatever Phase A left
 `inferred`, the cards' pick usually resolves; remaining gaps get
