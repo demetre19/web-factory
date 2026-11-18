@@ -9,12 +9,30 @@ chooses what feeds the distill, never how the build runs.
 
 ## Constants (non-negotiable, every path)
 
+- **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Every
+  artifact from W3 on is an Astro page/component in one project; no
+  hand-rolled HTML after W2 (P.1).
+- **One unit, one gate** — a page is assembled from sections; each
+  section has a contract, a builder and its own gate (SB.1–SB.4,
+  `design/SECTION-BUILD.md`).
 - **No emoji, ever** — icons are inline SVG (currentColor,
   token-sized, aria-hidden). Stars, checks, arrows ship as paths;
-  emoji/symbol glyphs are a design ban (S5 anti-pattern lint).
+  emoji/symbol glyphs are a design ban (P.10).
 
 - **Astro** — the only build target; `target: react`/`html` refuses.
-- **Tailwind** — `@layer components` classes, one owner per class.
+- **Tailwind** — `@layer components` classes, one owner per class (P.2).
+- **Lucide-only icons** — inline SVG, `currentColor`, sizes ∈
+  {16,20,24,32,48}, stroke ∈ {1.5,2,2.5,3} (P.11).
+- **Speed budget** — JS ≤ ~50 KB, mobile perf ≥ 90, LCP ≤ 2.5 s,
+  CLS ≤ 0.1 (P.12).
+- **Mobile budget** — 360 render, no horizontal scroll, targets ≥44 px
+  (P.13).
+- **Mobbin refs** — every composition cites a real captured reference
+  (P.14).
+- **SPEC verbatim** — the STUB's headings and `fs` render verbatim;
+  design never rewrites copy (P.15).
+- **Burst is declared** — `burst: 0–3` in the plan, one wildcard
+  option max, invariant rules never broken (B.1–B.5).
 - **Fluid everything** — utopia-style `clamp()` scales for type *and*
   space, viewport-anchored to the 320–1440px responsive floor. Fluidity
   ships as tokens in `TOKENS.json` fluid pairs, never per-element
@@ -40,7 +58,7 @@ not a blank brief — the agent must diagnose it, not just reuse it.
 
 **Step 1 — defect table.** The live page is audited against (a) the
 STUB's heading vector (missing macro answers, wrong H1 form, vector
-drift) and (b) `PRIMITIVES.md` mechanical rules (density rhythm,
+drift) and (b) `design/rules/` mechanical rules (density rhythm,
 contrast moment, disclosure, banned patterns). Output: a table of
 named defects with evidence — never vibes.
 

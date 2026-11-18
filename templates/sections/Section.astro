@@ -1,0 +1,40 @@
+---
+/**
+ * Section.astro — the page shell. The ONLY component that sets outer
+ * rhythm: band padding, background, content max-width and gutters.
+ * Section components render inside it and never set their own outer
+ * layout (SB.2).
+ *
+ * assemble.py emits one <Section> per plan row, with the row's surface,
+ * density, wireframe ref and data-* contract. Surface/density are
+ * attribute scopes in the shared layer, so a section restyles by
+ * changing one attribute — never by adding bg-*/py-* classes.
+ */
+interface Props {
+  sec: string;
+  comp: string;
+  'wf-ref'?: string;
+  ratio?: string;
+  disclosure?: string;
+  surface?: 'base' | 'muted' | 'inverse' | 'brand' | 'media';
+  density?: 'compact' | 'regular' | 'spacious';
+}
+const {
+  sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
+  surface = 'base', density = 'regular',
+} = Astro.props;
+---
+<section
+  class="sec-band"
+  data-sec={sec}
+  data-comp={comp}
+  data-ratio={ratio}
+  data-disclosure={disclosure}
+  data-surface={surface}
+  data-density={density}
+  data-wf-ref={wfRef}
+>
+  <div class="sec-inner">
+    <slot />
+  </div>
+</section>

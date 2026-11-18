@@ -1,0 +1,31 @@
+---
+/**
+ * capture-form — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+}
+const {
+  heading = 'Section heading', fs = 'The first sentence a reader needs.',
+  body = '', cta, items = [], image,
+} = Astro.props;
+---
+
+<div class="mx-auto max-w-prose text-center">
+  <h2 class="text-fluid-2">{heading}</h2>
+  <p class="mt-stack text-fluid-0">{fs}</p>
+  <form class="mt-stack flex flex-wrap justify-center gap-fluid-s" novalidate>
+    <label class="sr-only" for="capture-email">Email</label>
+    <input id="capture-email" class="rounded-card border border-muted p-fluid-s text-fluid-0"
+           type="email" name="email" placeholder="you@example.com" autocomplete="email" />
+    <button class="wf-cta-button" type="submit">{cta?.label ?? 'Notify me'}</button>
+  </form>
+</div>

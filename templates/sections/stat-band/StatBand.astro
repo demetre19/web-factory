@@ -1,0 +1,32 @@
+---
+/**
+ * stat-band — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+}
+const {
+  heading = 'Section heading', fs = 'The first sentence a reader needs.',
+  body = '', cta, items = [], image,
+} = Astro.props;
+---
+
+<div>
+  <h2 class="text-fluid-1">{heading}</h2>
+  <dl class="mt-stack grid grid-cols-2 gap-stack md:grid-cols-4">
+    {items.map((it) => (
+      <div>
+        <dd class="text-fluid-4 font-bold">{it.value}</dd>
+        <dt class="mt-fluid-s text-fluid--1">{it.label}</dt>
+      </div>
+    ))}
+  </dl>
+</div>

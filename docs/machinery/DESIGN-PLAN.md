@@ -7,11 +7,16 @@ the plan, it does not exist — same contract the Design-library uses
 for its Package A ("the designer has no conversation history; the
 plan has to live in files").
 
-Two layers under this file: `docs/machinery/PRIMITIVES.md` (the closed
+Two layers under this file: `docs/machinery/design/rules/` (the closed
 sets — typography rules, typeface directory, measure/leading bounds,
 anti-stretch, hero/subhead ratios) and `docs/machinery/SECTION-CATALOG.md`
 (the section compositions the primitives assemble into). The plan
 picks *from* them; it never invents values outside them.
+
+Every rule ID is gated: `docs/machinery/design/enforcement.json` maps
+it to a script, a reviewer rubric item or an operator approval, and
+`gate.py coverage` fails if any ID is unenforced. Section mechanics:
+`docs/machinery/design/SECTION-BUILD.md`.
 
 Schema source: `research/DESIGN-FORETHOUGHT.md` §6 + the
 surface/density vocabulary the Design-library already ships
@@ -37,51 +42,51 @@ category/surface/density), with `pages.<slug>.sections[]` rows adding
 the `speech_act`/`composition` assignment the packet lacks. Written
 after flatten, not before SPECs.
 
-## The cascade — top-down, gated at every level
+## The cascade — nine waves, gated at every step
 
-Design is produced in six levels. Each level *consumes the level
-above as a closed set* — a level may select, it may never invent.
-Each level has a gate: the gate's mechanical checklist must pass
-before the next level starts. A level that reaches past its inputs
-(a page inventing a color, a component setting its own spacing) is
-the design-DNA loss this file exists to prevent.
+Design is produced in the waves the machinery gates (`design/INDEX.md`,
+`gate.py w0..w8`). Each wave *consumes the wave above as a closed set*
+— a wave may select, it may never invent. A wave that reaches past its
+inputs (a page inventing a colour, a component setting its own spacing)
+is the design-DNA loss this file exists to prevent.
 
-| Level | Artifact | What it decides | Gate that opens the next level |
+| Wave | Artifact | What it decides | Gate that opens the next wave |
 |---|---|---|---|
-| **L0** | `DESIGN-PLAN.md` `site:` + `direction:` | The overall aesthetic — intent, the six direction axes, `refused` | Every axis filled + `refused` named |
-| **L1** | `DESIGN-PLAN.md` `system:` | Every number bound — type scale/ranks/fonts, space scale, color roles, icons, media, copy, grid — *all fluid, all tokenized* | Every `system.*` field non-empty; every value ∈ `PRIMITIVES.md` |
-| **L2** | `pages.<slug>` rows + ASCII sketch | The page's argument as *boxes*: `rhetoric` order → `sections[]` (act / category / surface / density / composition / emphasis / align) | Rhetoric complete; compositions ∈ catalog §2; ASCII critique passes |
-| **L3** | `preview/system.html` | The system rendered: every surface × density × rank × buttons/fields/cards — feel verified before page pixels | Renders; every element binds a `system.*` token, zero hardcoded px/hex |
-| **L4** | `PAGES/<slug>/SPEC.md` | The built section map — plan rows verbatim, components named | SPEC `sections[]` == plan rows (verbatim diff) |
-| **L5** | `COMPONENTS.md` + build | Micro-interactions + element rules — applied uniformly from `direction.motion`, never selected per-page | §Enforcement checklist, all sections |
+| **W0** scaffold | `site/` from `templates/astro/` | The one Astro + Tailwind project | `gate.py w0` — scaffold, pins, build exits 0 |
+| **W1** DNA + audit | this file's `site:` + `dna:`; `audit.md`; `MOBBIN-REFS.md` | Intent, the six direction axes, the vertical DNA profile + genotype | `gate.py w1` — Mobbin, intent, audit, genotype total |
+| **W2** look & feel | `options:` — ≥2 direction tiles as distinct genotype vectors | The aesthetic, chosen by the operator | `gate.py w2` — axes ∈ enums, ≥2 distinct genotypes, burst declared |
+| **W3** system | `system:` → `TOKENS.json` → `tailwind.config` + `global.css` + `system.astro` | Every number bound, rendered on the tile | `gate.py w3` — enums, spacing, breakpoints, contrast, config derived, build 0 |
+| **W4** content | STUB → content inventory | Copy contract: heading vector + `fs` + body blocks | `gate.py w4` — inventory complete, verbatim headings |
+| **W5** structure | `pages.<slug>.sections[]` 1:1 from the picked card (`wf_ref`) + `sections/*.contract.json` | The argument as boxes; the wireframe lock | `gate.py w5` — data-* 1:1, rhythm/motif, vector, genotype, contracts |
+| **W6** components | `src/components/sections/<Sec>.astro` per section + `src/components/*.astro` + tile | Each section built and gated alone | `gate.py w6` — shell, allowed classes, section gates, exemplars, build 0 |
+| **W7** page | `assemble.py` → `src/pages/<slug>.astro`; `dist/` | The page, assembled mechanically from plan order | `gate.py w7` — assembly, data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6 |
+| **W8** review | independent `REVIEW.json` + screenshots 1280/768/360; `SCORECARD.json` | The verdict, by a different model | `gate.py w8` — review complete, every section ≥ 90, style rubric |
 
-**Order note:** L2 (boxes) precedes L3 (tile) deliberately — the
-argument is verified cheaply *before* the system spends a pixel.
-`pages:` rows are authored at L2, but their surface/density values
-only become *real* at L3, when the tile renders them.
+**Order note:** W5 (boxes) precedes W6/W7 deliberately — the argument
+is verified cheaply *before* the system spends a pixel, and each
+section is built and gated in isolation (`SECTION-BUILD.md`). The page
+file is generated (`assemble.py`), never written by a model.
 
-**The gates are mechanical, not review.** L0–L1 pass when fields are
-filled with closed-set values; L2 is the ASCII critique; L3 is the
-render check; L4 is the verbatim diff; L5 runs §Enforcement. L3 is
-the only render gate — it exists so typography/colour/radius/spacing
-get verified on a *system tile* before any page is drawn, not on a
-finished mockup where fixing them is expensive.
+**The gates are mechanical, not review.** W0 is the build; W1–W5 are
+field/enum/arithmetic checks; W6 is the per-section gate; W7 is the
+assembly + rendered-page checks; W8 is the independent rubric. The
+designer model never writes `GATES.json` or `REVIEW.json` — QA is
+never self-graded.
 
 **All-fluid rule** (the "automatic CSS" level): `system.type` is a
 `clamp()` scale (Utopia), `system.space` is the G.1 set applied
 everywhere, `system.color` is the C.1 6-role map, `system.grid`
 `edge_padding`/`breakpoints`/`stack_order` is R.2's closed ramp.
-Nothing downstream of L1 chooses a number — it binds a token. A
-literal `px`/`hex`/`rem` in page or component code that isn't a
-token reference is a refuse, same class as a literal hex outside
-TOKENS.
+Nothing downstream of W3 chooses a number — it binds a token. A
+literal `px`/`hex`/`rem` in page or component code that isn't a token
+reference is a refuse, same class as a literal hex outside TOKENS.
 
-**The index** (where each agent reads): L0 `direction` → L1
-`system.*` → L2 `sections[].surface/.density/.composition` → L5
-rules. An agent at any level has *exactly one* upstream artifact to
-consult; it never reaches two levels up, never sideways. If a field
-it needs isn't filled above, the correct move is `prd_step` back,
-not a default.
+**The index** (where each agent reads): W1 `direction` + `dna` → W3
+`system.*` → W5 `sections[].surface/.density/.composition` + the
+section's `contract.json` → W6 the rules its CARD names. An agent at
+any wave has *exactly one* upstream artifact to consult; it never
+reaches two waves up, never sideways. If a field it needs isn't filled
+above, the correct move is `prd_step` back, not a default.
 
 ## Fill order
 
@@ -112,8 +117,9 @@ not a default.
    cannot answer typography, colour, or feel (that's
    `preview/system.html`). Not a committed artifact; the sketch lives
    in the lane's working notes, the fixes land in `decisions[]`.
-   This is the L2 gate — the page argument is verified as *boxes*
-   before a single pixel is spent.
+   This is the W5 gate — the page argument is verified as *boxes*
+   before a single pixel is spent; the rows then become the section
+   contracts (`gate.py contracts`).
 6. `preview/system.html` next — every surface × every density × every
    type rank × buttons/fields/cards — then page previews (F6).
    DOX branch: copy packet `designs/design-system.html` to
@@ -121,10 +127,11 @@ not a default.
    `templates/system-tile/` — the colour system section is mandatory:
    every agent downstream reads roles from it. This is the L3
    gate — the *system* is verified on a tile before any page exists.
-7. L4+ downstream — `PAGES/<slug>/SPEC.md` copies its section rows
-   verbatim from `pages.<slug>.sections`; `COMPONENTS.md` names the
-   component each `composition` instantiates; build self-lints every
-   rendered section's classes against its SPEC row's enums (F7).
+7. W6/W7 downstream — one builder per section returns
+   `src/components/sections/<Sec>.astro` (contract + card + exemplar
+   only); `COMPONENTS.md` names the component each `composition`
+   instantiates; `assemble.py` writes `src/pages/<slug>.astro` from
+   plan order (SB.4). No model writes the page or its glue.
 
 ## Guideline prefill — extraction with a confidence model
 
@@ -189,8 +196,8 @@ site:
     density:       sparse | balanced | dense
     finish:        flat | textured | glossy | raw
     type_contrast: serif-display/sans-text | mono-accents | single-family-weight-contrast
-    shape:         p1-sharp | p2-subtle | p3-friendly | p4-playful    # PRIMITIVES §S.1
-    motion:        subtle | elegant | professional | playful          # PRIMITIVES §M.1
+    shape:         p1-sharp | p2-subtle | p3-friendly | p4-playful    # rules/S.md §S.1
+    motion:        subtle | elegant | professional | playful          # rules/M.md §M.1
     refused:       <the generic default this direction replaces, named>
 
   # ---- system numbers — closed set, every value a token ----
@@ -240,16 +247,33 @@ site:
       heading_vs_body: size
       accent_usage: cta_and_motif_only
 
-    icons:                                        # PRIMITIVES §I — closed selections
+    icons:                                        # rules/I.md — closed selections
       family: lucide | heroicons | phosphor | feather | custom
       style: outline | solid | duotone | hand-drawn | 3d-hero-only
       stroke_class: light | regular | bold        # 1.5 | 2.0 | 2.5–3.0px
-    media:                                        # PRIMITIVES §V
+    media:                                        # rules/V.md
       treatment: natural | bw | duotone | cinematic       # ≥80% of imagery
       authenticity: t1-first-party | t2-editorial | t3-ai | t4-illustrated
-    copy:                                         # PRIMITIVES §W — closed selections
+    copy:                                         # rules/W.md — closed selections
       cta_person: first | second                  # first = "Get my quote"; second = "Manage your account" — one per flow
       reading_level: ≤grade-8                     # fixed; listed to forbid drifting
+
+  # ---- DNA — the vertical profile and this site's genotype (D.1–D.4) ----
+  dna:
+    profile: profile-<vertical>            # dna/<vertical>.md, inferred at W1
+    genotype:                              # one allele per gene, closed sets only
+      layout-archetype: <allele>           # genes: dna/GENOME.md (20 genes)
+      page-macro-structure: <allele>
+      density-tier: <allele>
+      # … every gene filled; a blank gene = refuse (D.1)
+    wildcard: [<gene>, <gene>]             # ≤1 wildcard option (B.3), stylistic genes only
+    novelty: 0.00                          # NOVELTY.json distance, ≤ bound (B.6)
+
+  # ---- burstiness — how far this direction may bend the rules (B.1–B.5) ----
+  burst: 0                                 # 0 | 1 | 2 | 3 — declared, never discovered
+  # 1 = mutate 1–2 stylistic genes to allowed tail alleles
+  # 2 = +1 declared structural break
+  # 3 = +up to 2 declared breaks; invariant genes never break
 
   # ---- motif — recurrence + exactly one break ----
   motif:
@@ -284,7 +308,8 @@ pages:
         align: <named edge>               # e.g. col-1-edge | center-axis | measure-start
         stack: text-first                   # mobile order: text-first default; visual-first needs declared product-UI hook (R.3)
         collapse: 2-col≥1024 | stacked      # per-composition collapse step, must match R.3 table
-        # ---- vector pages only (copy-contract STUB) — PRIMITIVES §E ----
+        wf_ref: "<cards/index.html#d1:hero>"   # the picked card's block — 1:1, P.4
+        # ---- vector pages only (copy-contract STUB) — rules/E.md ----
         heading: <exact vector heading — verbatim, never rewritten>
         fs: <mandated first sentence — the copy contract, renders verbatim>
         zone: macro | micro | end
@@ -293,9 +318,19 @@ pages:
       - {…one row per section, in rhetoric order…}
   # …one entry per route/SPEC…
 
+# ---- W2 direction options — each a distinct genotype vector (D.3) ----
+options:
+  - {name: d1, wildcard: false, temperature: warm, shape: p3-friendly}
+  - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}
+  - {name: d3, wildcard: true,  temperature: warm, shape: p4-playful,
+     mutates: [radius-personality, motion-tier]}      # the one wildcard
+
 # ---- decision log — append-only ----
 decisions:
   - {chose: <x>, over: <y>, because: <one line>}
+  # declared rule break (B.4) — only when burst ≥ 2:
+  - {rule_id: G.1, what: <the break>, why: <intent>, where: <section>,
+     compensating: <the move that keeps the page coherent>}
 ```
 
 ## Hard rules
@@ -326,6 +361,14 @@ decisions:
    <class>`); `COMPONENTS.md` MUST name which component each
    `composition` instantiates. Build self-lint checks every rendered
    section's classes match its SPEC row's enums (F7).
+9. Section unit: every `sections[]` row becomes one
+   `sections/<nn>-<sec>.contract.json` (`gate.py contracts`), is built
+   by one builder and passes `gate.py section --sec <name>` before the
+   page exists. `src/pages/<slug>.astro` is written by
+   `assemble.py` — a hand-edited page fails W7 (SB.1–SB.4).
+10. Burst is declared, never discovered: `burst:` in the plan, a break
+   only inside `decisions[]` with all five fields, invariant genes
+   never broken, everything not declared at 100% (B.1–B.5).
 
 ## Enforcement (F13)
 
@@ -340,37 +383,37 @@ the coordinator hopes was honored:
 - [ ] `idea` ≤ 25 words per page entry
 - [ ] SPEC `sections[]` == `pages.<slug>.sections[]` (verbatim diff, refs branch)
 - [ ] `preview/system.html` exists
-- [ ] typography QA ∈ `PRIMITIVES.md` §T.8 (fonts ∈ directory, ≤2
+- [ ] typography QA ∈ `rules/T.md` §T.8 (fonts ∈ directory, ≤2
   families, no same-class pairing, measure 52–65ch, body ≥16px,
   display tracking negative, `text-wrap` set, hero subhead 50–60%,
   image-overlay tint 40–60%)
-- [ ] layout & proximity QA ∈ `PRIMITIVES.md` §L.13 (heading binds
+- [ ] layout & proximity QA ∈ `rules/L.md` §L.13 (heading binds
   forward, card padding 15–25px, section gaps 60–100px, S-M-L scale
   present, icons labelled, touch ≥44px, 960 containment, ≤1 frame-break)
-- [ ] colour QA ∈ `PRIMITIVES.md` §C.7 (role-token binding, chromatic
+- [ ] colour QA ∈ `rules/C.md` §C.7 (role-token binding, chromatic
   neutrals 2–6%S, ink ≥7:1, accent derived by harmony formula,
   accent_fg by luminance, ≤10% accent area, dark surfaces tinted
   charcoal not black)
-- [ ] shape QA ∈ `PRIMITIVES.md` §S.8 (one personality, token radii
+- [ ] shape QA ∈ `rules/S.md` §S.8 (one personality, token radii
   only, concentric nesting, borders {0,1,2}, elevation↔radius paired)
-- [ ] icon QA ∈ `PRIMITIVES.md` §I.8 (single family, closed sizes,
+- [ ] icon QA ∈ `rules/I.md` §I.8 (single family, closed sizes,
   uniform stroke, labelled where required, zero emoji)
-- [ ] media QA ∈ `PRIMITIVES.md` §V.8 (one treatment ≥80%, closed
+- [ ] media QA ∈ `rules/V.md` §V.8 (one treatment ≥80%, closed
   aspect ratios, scrim/contrast floors, authenticity tier, <picture>)
-- [ ] motion QA ∈ `PRIMITIVES.md` §M.8 (token durations, no linear
+- [ ] motion QA ∈ `rules/M.md` §M.8 (token durations, no linear
   spatial, one focal animation, ≤80px+fade, reduced-motion fallback)
-- [ ] responsive QA ∈ `PRIMITIVES.md` §R.8 (closed breakpoints,
+- [ ] responsive QA ∈ `rules/R.md` §R.8 (closed breakpoints,
   min-width only, 1440 ceiling, collapse steps exact, copy budgets,
   ≥44px targets +8px buffer, hover gated by pointer media query)
-- [ ] writing QA ∈ `PRIMITIVES.md` §W.10 (verb-first 2–4-word CTAs,
+- [ ] writing QA ∈ `rules/W.md` §W.10 (verb-first 2–4-word CTAs,
   zero banned CTA/error phrases, sentence-case stand-alone headings,
   placeholder example-only, tooltip ≤15w, empty-state triad, links
   front-loaded, ≤grade-8, active voice, digits, no string
   concatenation / text-in-graphics / idioms)
 - [ ] vector pages: every `sections[]` row maps 1:1 to the STUB's
   heading-vector, order preserved; `heading`/`fs`/`zone`/`heading_class`
-  present; no invented section, none dropped (PRIMITIVES §E.1)
-- [ ] SEO QA ∈ `PRIMITIVES.md` §E.4 (H1 `query` small on detail
+  present; no invented section, none dropped (rules/E.md §E.1)
+- [ ] SEO QA ∈ `rules/E.md` §E.4 (H1 `query` small on detail
   pages, macro readable/micro minimised, no invented `claim`,
   ≤1 link/section, title≡H1 entity)
 

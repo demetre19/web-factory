@@ -20,6 +20,16 @@ Two lanes, strictly ordered — never concurrent:
 one-decision architecture (precedence order), distill layout, build
 rules.
 
+**Design machinery (read before any design decision):**
+`docs/machinery/design/INDEX.md` — the nine waves (W0 scaffold → W1 DNA
++ audit → W2 look & feel → W3 system → W4 content → W5 structure → W6
+components → W7 page → W8 review), the stage cards, the rulebooks
+(`design/rules/`, IDs T/C/L/G/S/I/V/M/R/W/E/P/PS/DNA/B/SB) and the gate
+commands. First move in any wave: `python3 tools/design-gate/rules.py
+<ID|keyword|wN>` — look the rule up, don't re-read the book.
+`docs/machinery/design/SECTION-BUILD.md` — a page is assembled from
+gated sections, never written in one pass.
+
 ## Upstream contract consumed verbatim
 
 - `site/content-final/*.md` — one file per plan row, final copy.
@@ -101,8 +111,22 @@ rules.
   top-to-bottom per `docs/machinery/DESIGN-PLAN.md` AND passes its
   §"Enforcement" mechanical checklist (pages map, composition ∈
   catalog, category ∈ vendored slugs, adjacency, surface/density
-  SPEC↔plan verbatim) plus the `PRIMITIVES.md` §S/I/V/M/R/W/E QA gates
+  SPEC↔plan verbatim) plus the rule QA gates in `design/rules/`
   (shape, icons, media, motion, responsive, writing, SEO headings).
+- **Every wave exits 0 before the next starts:**
+  `python3 tools/design-gate/gate.py <w0..w8> <pipeline-dir>`; the
+  designer never writes `GATES.json`/`REVIEW.json` (QA is not
+  self-graded) and never approves its own wave.
+- **Sections are built and gated one at a time:** `gate.py contracts`
+  (SB.1) → `gate.py section --sec <name>` per section (SB.3) →
+  `assemble.py` writes the page (SB.4) → `gate.py w7`/`w8`.
+- **W8 is an independent reviewer** (different model), scoring
+  `REVIEW.json` at 1280/768/360 against the W8 rubric; `gate.py score`
+  writes `SCORECARD.json` and no section may score below 90.
+- **Burst is declared, never discovered:** `burst: 0–3` in the plan,
+  one wildcard option maximum, invariant rules never broken, every
+  declared break carries `rule_id/what/why/where/compensating` (B.*);
+  `gate.py wildcard <dir>` audits it.
 
 - `sites/<slug>/` exists; `astro build` exits 0; `dist/` holds exactly
   one HTML file per `ROUTE-MANIFEST.json` route.

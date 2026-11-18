@@ -27,6 +27,13 @@
     .stat > .num + .cap              grey-block stat + label
     .panel                           mid-grey filled panel (inverse)
     .endact + .phone                 dark band / phone bar
+  CONTRACT TAGS (P.3, required on every <nav>/<section> in a card):
+    data-sec        section slug (matches the plan row `name`)
+    data-comp       composition ∈ SECTION-CATALOG §2 / nav-bar / footer-bar
+    data-ratio      media ratio ∈ V.3 (none | 21:9 | 16:9 | 4:3 | 3:4 …)
+    data-disclosure open | collapsed | tabbed
+  The W5 wireframe-lock gate diffs these attributes 1:1 against the
+  plan rows; an untagged section cannot be locked or gated.
     .logo .links .nav                outlined logo box, muted links
     .sec .tag                        section + collapse annotation —
                                      name breakpoint behavior:
@@ -298,7 +305,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
 <!-- ============================ DESIGN 1 · MINIMALIST ============================ -->
 <div class="card on" id="d1">
 
-  <nav class="nav">
+  <nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="nav-r">
       <div class="links"><span>Services</span><span>Industries</span><span>Contact</span></div>
@@ -308,7 +315,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     <div class="drawer"><span>Services</span><span>Industries</span><span>Contact</span><div class="btn sm" style="align-self:flex-start;margin-top:4px">Get a quote</div></div>
   </nav>
 
-  <section class="sec hero">
+  <section class="sec hero" data-sec="hero" data-comp="stacked-hero" data-ratio="21:9" data-disclosure="open">
     <div class="tag">Hero — stack + 21:9 media</div>
     <h1 class="h1q">End of Lease Cleaning Melbourne</h1>
     <p class="claim">The vacate clean that hands your tenancy back, inspection-ready.</p>
@@ -319,7 +326,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     <div class="xbox a219 hero-media"></div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="macro-qa" data-comp="comparison" data-ratio="none" data-disclosure="open">
     <div class="tag">Macro Q&amp;A — top-rule rows · 2-col ≥900 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
@@ -337,14 +344,14 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="proof" data-comp="logo-wall" data-ratio="none" data-disclosure="open">
     <div class="tag">Proof — cert marks</div>
     <div class="certs">
       <div class="cert">ISO</div><div class="cert">Police</div><div class="cert">Work<br>Safe</div><div class="cert">LHA</div><div class="cert">AAMI</div>
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="scope-fold" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Scope — heavy fold</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">Full scope — 8 zones</span></div>
@@ -352,7 +359,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="process" data-comp="sequence" data-ratio="none" data-disclosure="open">
     <div class="tag">Process — inline · row ≥900 · stacked mobile</div>
     <div class="steps">
       <div class="step"><div class="xbox xicon"></div><span class="st-label">Fill out form</span></div>
@@ -362,7 +369,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="micro-qa" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Micro Q&amp;A — closed folds</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">What keeps a vacate clean make-good compliant?</span></div>
@@ -372,14 +379,14 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec endact">
+  <section class="sec endact" data-sec="end-act" data-comp="full-bleed" data-ratio="none" data-disclosure="open">
     <div class="tag">End act</div>
     <p class="claim">Request your vacate audit.</p>
     <div class="btn">Request a quote</div>
     <div class="phone"></div>
   </section>
 
-  <section class="sec foot">
+  <section class="sec foot" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="foot-cols">
       <div class="fcol bars"><i style="width:70%"></i><i style="width:55%"></i><i style="width:62%"></i><i style="width:40%"></i></div>
@@ -393,7 +400,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
 <!-- ============================ DESIGN 2 · WARM ============================ -->
 <div class="card" id="d2">
 
-  <nav class="nav">
+  <nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="nav-r">
       <div class="links"><span>Services</span><span>Industries</span><span>Contact</span></div>
@@ -403,7 +410,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     <div class="drawer"><span>Services</span><span>Industries</span><span>Contact</span><div class="btn sm" style="align-self:flex-start;margin-top:4px">Get a quote</div></div>
   </nav>
 
-  <section class="sec hero">
+  <section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="3:4" data-disclosure="open">
     <div class="tag">Hero — split-media 3:4</div>
     <div class="hero-grid">
       <div>
@@ -418,7 +425,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="macro-qa" data-comp="cards-n" data-ratio="none" data-disclosure="open">
     <div class="tag">Macro Q&amp;A — cards 3-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
@@ -436,7 +443,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="proof" data-comp="logo-wall" data-ratio="16:9" data-disclosure="open">
     <div class="tag">Proof — cert marks + video</div>
     <div class="certs">
       <div class="cert">ISO</div><div class="cert">Police</div><div class="cert">Work<br>Safe</div><div class="cert">LHA</div><div class="cert">AAMI</div>
@@ -447,7 +454,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="scope-fold" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Scope — heavy fold</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">Full scope — 8 zones</span></div>
@@ -455,7 +462,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="process" data-comp="sequence" data-ratio="none" data-disclosure="open">
     <div class="tag">Process — cards 4-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="steps">
       <div class="step"><div class="xbox xicon"></div><span class="st-label">Fill out form</span></div>
@@ -465,7 +472,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="micro-qa" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Micro Q&amp;A — closed folds</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">What keeps a vacate clean make-good compliant?</span></div>
@@ -475,14 +482,14 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec endact">
+  <section class="sec endact" data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open">
     <div class="tag">End act</div>
     <p class="claim">Request your vacate audit.</p>
     <div class="btn">Request a quote</div>
     <div class="phone"></div>
   </section>
 
-  <section class="sec foot">
+  <section class="sec foot" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="foot-cols">
       <div class="fcol bars"><i style="width:70%"></i><i style="width:55%"></i><i style="width:62%"></i><i style="width:40%"></i></div>
@@ -496,7 +503,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
 <!-- ============================ DESIGN 3 · CORPORATE ============================ -->
 <div class="card" id="d3">
 
-  <nav class="nav">
+  <nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="nav-r">
       <div class="links"><span>Services</span><span>Industries</span><span>Contact</span></div>
@@ -506,7 +513,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     <div class="drawer"><span>Services</span><span>Industries</span><span>Contact</span><div class="btn sm" style="align-self:flex-start;margin-top:4px">Get a quote</div></div>
   </nav>
 
-  <section class="sec hero">
+  <section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="4:3" data-disclosure="open">
     <div class="tag">Hero — panel 50/50 + stat band</div>
     <div class="hero-grid">
       <div class="panel">
@@ -526,7 +533,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="macro-qa" data-comp="comparison" data-ratio="none" data-disclosure="open">
     <div class="tag">Macro Q&amp;A — table rows · split ≥900 · 1-up mobile</div>
     <div class="qa-list">
       <div class="qa"><h2 class="h2">What is vacate cleaning?</h2>
@@ -544,14 +551,14 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="proof" data-comp="logo-wall" data-ratio="none" data-disclosure="open">
     <div class="tag">Proof — cert marks</div>
     <div class="certs">
       <div class="cert">ISO</div><div class="cert">Police</div><div class="cert">Work<br>Safe</div><div class="cert">LHA</div><div class="cert">AAMI</div>
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="scope-fold" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Scope — heavy fold</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">Full scope — 8 zones</span></div>
@@ -559,7 +566,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="process" data-comp="sequence" data-ratio="none" data-disclosure="open">
     <div class="tag">Process — numbered 4-up ≥900 · 2-up ≥600 · 1-up mobile</div>
     <div class="steps">
       <div class="step"><span class="n">01</span><span class="st-label">Fill out form</span></div>
@@ -569,7 +576,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec" data-sec="micro-qa" data-comp="faq" data-ratio="none" data-disclosure="collapsed">
     <div class="tag">Micro Q&amp;A — closed folds</div>
     <div class="folds">
       <div class="fold"><span class="fold-label">What keeps a vacate clean make-good compliant?</span></div>
@@ -579,7 +586,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec endact">
+  <section class="sec endact" data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open">
     <div class="tag">End act — claim + quote form</div>
     <div class="end-grid">
       <div>
@@ -607,7 +614,7 @@ body{background:#141414;font-family:system-ui,-apple-system,"Segoe UI",sans-seri
     </div>
   </section>
 
-  <section class="sec foot">
+  <section class="sec foot" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open">
     <div class="logo">LOGO</div>
     <div class="foot-cols">
       <div class="fcol bars"><i style="width:70%"></i><i style="width:55%"></i><i style="width:62%"></i><i style="width:40%"></i></div>
