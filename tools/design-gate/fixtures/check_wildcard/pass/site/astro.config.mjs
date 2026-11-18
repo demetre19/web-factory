@@ -1,0 +1,1 @@
+../../../_base/site/astro.config.mjs
