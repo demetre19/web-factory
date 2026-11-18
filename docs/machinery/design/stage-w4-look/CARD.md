@@ -28,9 +28,12 @@ is the single source of coherence (`gate.py dna`).
    plus `refused`, the generic default this direction replaces.
    `direction:` axes are derived from the knob vector, never free text.
 3. `assemble.py --variants` writes `preview/variants.html` — the
-   **system sheet only** at W4: tokens + atoms speculated from the knob
-   vector (VG.4 sticky Variant/Viewport/Mode switcher, 1:1 container
-   frames, both modes). The page pane joins at W8 when sections exist.
+   **picked layout's page rendered in each look direction**: full
+   responsive page mockups with the real copy and every value from the
+   DNA knobs (`data-pane="page"`), plus the implicit system sheet
+   (`data-pane="system"`, generated and gated but never the choosing
+   surface). VG.4 sticky Variant/Viewport/Mode switcher, 1:1 container
+   frames, both modes, no horizontal overflow at 375/768/1280.
 4. Every variant applies its deltas as `[data-variant-scope]` CSS vars
    — two variants must render different computed values (VG.2).
    Failing variants are removed, never greyed (VG.3).
