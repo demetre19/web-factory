@@ -3,7 +3,7 @@ id: scorer-patterns
 type: scorer
 links:
   index: design-index
-  used_in: [w2, w5]
+  used_in: [w3, w8]
   consumes: [patterns-index, gate-checks]
   derives_from: [patterns-index]
 ---

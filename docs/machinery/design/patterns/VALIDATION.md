@@ -4,7 +4,7 @@ type: study
 links:
   index: patterns-index
   derives_from: [patterns-index, scorer-patterns]
-  used_in: [w2, w5]
+  used_in: [w3, w8]
 ---
 
 # VALIDATION — does pattern fit predict design quality?
