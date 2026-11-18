@@ -1,13 +1,13 @@
 ---
-id: card-w2
+id: card-w4
 type: card
-wave: w2
+wave: w4
 links:
   uses: [rules-C, rules-G, rules-S, rules-M, rules-T, rules-R, rules-V, rules-P, rules-DNA, rules-VG]
-  enforced_by: [check_direction_axes, check_variants, check_dark_mode, check_wildcard, check_genotype_distinct, check_dna, check_dna_fresh]
+  enforced_by: [check_direction_axes, check_genotype, check_genotype_distinct, check_burst, check_declared_breaks, check_wildcard, check_dark_mode, check_variants, check_checklist, check_dna, check_dna_fresh]
 ---
 
-# W2 — Look & feel variants (HTML picker → operator pick)
+# W4 — Look & feel variants (HTML picker → operator pick)
 
 **GOLDEN RULE: ASTRO is for the final product (W6–W8); previews are
 self-contained HTML.** The look picker is `preview/variants.html` —
@@ -28,7 +28,7 @@ is the single source of coherence (`gate.py dna`).
    plus `refused`, the generic default this direction replaces.
    `direction:` axes are derived from the knob vector, never free text.
 3. `assemble.py --variants` writes `preview/variants.html` — the
-   **system sheet only** at W2: tokens + atoms speculated from the knob
+   **system sheet only** at W4: tokens + atoms speculated from the knob
    vector (VG.4 sticky Variant/Viewport/Mode switcher, 1:1 container
    frames, both modes). The page pane joins at W8 when sections exist.
 4. Every variant applies its deltas as `[data-variant-scope]` CSS vars

@@ -4,7 +4,7 @@ type: card
 wave: w7
 links:
   uses: [rules-R, rules-E, rules-W, rules-V, rules-M, rules-P, rules-PS, rules-SB, section-build]
-  enforced_by: [check_assembly, check_spec_verbatim, check_page_data_attrs, check_heading_verbatim, check_class_subset, check_no_stray_styles, check_no_emoji, check_icon_discipline, check_speed_budget, check_mobile_budget, check_viewport, check_tap_size, check_rhythm_render, check_segment_roles, check_segment_region, check_segment_share, check_segment_media, check_segment_footer, check_segment_priority, check_astro_build]
+  enforced_by: [check_assembly, check_spec_verbatim, check_page_data_attrs, check_heading_verbatim, check_class_subset, check_no_stray_styles, check_no_emoji, check_icon_discipline, check_speed_budget, check_mobile_budget, check_viewport, check_tap_size, check_tile_page_parity, check_rhythm_render, check_copy_density, check_seo_lint, check_mobile_cta, check_measurable, check_dark_mode, check_dark_toggle, check_astro_build, check_segment_roles, check_segment_region, check_segment_share, check_segment_media, check_segment_footer, check_segment_priority, check_checklist, check_dna, check_dna_fresh]
 ---
 
 # W7 — Page assembly (components → page → dist)

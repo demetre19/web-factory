@@ -1,13 +1,13 @@
 ---
-id: checklist-w3
+id: checklist-w5
 type: checklist
-wave: w3
+wave: w5
 links:
   index: design-index
-  card: card-w3
+  card: card-w5
 ---
 
-# W3 checklist — system evidence
+# W5 checklist — system evidence
 
 Copy into `<pipeline-dir>/CHECKLIST/w3.md`. Blank cell = fail (P.9).
 

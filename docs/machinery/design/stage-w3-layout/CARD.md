@@ -1,13 +1,13 @@
 ---
-id: card-w5
+id: card-w3
 type: card
-wave: w5
+wave: w3
 links:
   uses: [rules-L, rules-R, rules-E, rules-V, rules-W, rules-P, rules-DNA, rules-PS, rules-SB, section-build]
-  enforced_by: [check_wireframe_tags, check_mobbin_refs, check_wireframe_lock, check_section_enums, check_speech_acts, check_emphasis, check_motif, check_rhythm, check_vector_map, check_schema_fields, check_genotype, check_section_contracts]
+  enforced_by: [check_wireframe_tags, check_mobbin_refs, check_wireframe_lock, check_section_enums, check_speech_acts, check_emphasis, check_motif, check_rhythm, check_vector_map, check_schema_fields, check_genotype, check_burst, check_declared_breaks, check_wildcard, check_section_contracts, check_layout_distinct, check_checklist, check_dna, check_dna_fresh]
 ---
 
-# W5 — Page structure (chosen card → plan rows + ASCII)
+# W3 — Page structure (chosen card → plan rows + ASCII)
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable** — the
 locked rows are the contract the Astro page must render; the wireframe

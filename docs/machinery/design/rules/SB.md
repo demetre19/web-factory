@@ -32,7 +32,7 @@ token utilities), `rules`, `patterns`, `exemplar`.
 
 **Enforcement** — script `check_section_contracts` @ w5. Threshold: one
 contract per plan row, and every field above present and equal to the
-plan row it came from. A missing or drifting contract blocks W5.
+plan row it came from. A missing or drifting contract blocks W3.
 
 ### SB.2 The shell owns rhythm
 
@@ -101,7 +101,7 @@ component names it (`exemplar: <composition>` in frontmatter).
 
 ### SB.6 Page gates only after section gates
 
-W8 runs page-level rhythm, PS segmentation, scorecard, speed, mobile
+W7–W8 run page-level rhythm, PS segmentation, scorecard, speed, mobile
 and the full-page reviewer rubric. A page-level failure names its
 section (or the plan row); the fix re-runs that unit and the glue —
 never the whole page.

@@ -4,7 +4,7 @@ type: card
 wave: w8
 links:
   uses: [dna-map, rules-DM, rules-VG, rules-T, rules-C, rules-L, rules-S, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-SB, section-build]
-  enforced_by: [check_review_completeness, check_review_modes, check_scorecard, check_variants, check_dna]
+  enforced_by: [check_review_completeness, check_scorecard, check_style_review, check_novelty, check_review_modes, check_variants, check_checklist, check_dna, check_dna_fresh]
 ---
 
 # W8 — Independent review (screenshots + rubric → REVIEW.json)

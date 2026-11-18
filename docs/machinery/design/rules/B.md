@@ -36,7 +36,7 @@ FAIL: a rule with no tier, or an unknown tier value.
 ### B.2 One burst toggle, closed range
 
 The plan carries `burst: 0 | 1 | 2 | 3` (default 0 = off). Range is
-closed; an out-of-range or missing value at W2 fails.
+closed; an out-of-range or missing value at W4 fails.
 
 | `burst` | Licence |
 |---|---|
@@ -47,8 +47,8 @@ closed; an out-of-range or missing value at W2 fails.
 
 ### B.3 Exactly one wildcard option
 
-At W2 (look & feel) and W5 (page structure) one — and only one — of
-the 2–3 options is labelled `wildcard: true`. It carries the same
+At W3 (layout round) and W4 (look round) one — and only one — of the
+options is labelled `wildcard: true`. It carries the same
 genotype vector shape as the others plus `mutates:` naming the genes
 it moved. The operator sees it labelled **WILDCARD** with its breaks
 listed; it is never presented as the safe default. FAIL: zero or two

@@ -4,7 +4,7 @@ type: card
 wave: w6
 links:
   uses: [rules-S, rules-I, rules-V, rules-R, rules-W, rules-M, rules-P, rules-SB, section-build]
-  enforced_by: [check_components_exist, check_tile_is_system, check_class_subset, check_no_stray_styles, check_no_emoji, check_icon_discipline, check_section_shell, check_section_allowed, check_section_gates, check_exemplars, check_astro_build]
+  enforced_by: [check_components_exist, check_tile_is_system, check_class_subset, check_no_stray_styles, check_no_emoji, check_icon_discipline, check_section_shell, check_section_allowed, check_section_gates, check_exemplars, check_astro_build, check_checklist, check_dna, check_dna_fresh]
 ---
 
 # W6 — Components (compositions → Astro components + layer)

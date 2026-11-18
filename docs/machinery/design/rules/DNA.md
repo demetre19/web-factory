@@ -42,16 +42,16 @@ gene absent from `uses_genes`.
 
 ### D.3 Direction options are distinct genotypes
 
-W2 presents ≥2 look/feel options and each option is a complete
+W4 presents 3 look/feel options and each option is a complete
 genotype vector drawn from the profile's alleles. Two options that
-differ in no gene are one option. FAIL: fewer than two distinct
-genotype vectors recorded in the W2 options block.
+differ in no gene are one option. FAIL: fewer than three distinct
+genotype vectors recorded in the W4 options block.
 
 ### D.4 Compositions are layout-archetype alleles
 
 Every `pages.<slug>.sections[].composition` is an allele of the
 `layout-archetype` gene (or is composed only from compositions that
-are). The wireframe card chosen at W5 is a *rendering* of the
+are). The layout card chosen at W3 is a *rendering* of the
 genotype, not a substitute for it: when the card and the genotype
 disagree, the genotype wins and the card row is re-picked. FAIL: a
 composition outside the gene's allele set, or a section whose
@@ -63,7 +63,7 @@ composition outside the gene's allele set, or a section whose
 |---|---|---|---|---|
 | D.1 | script | `check_genotype` | gene missing / allele ∉ gene set / unknown key | w1 |
 | D.2 | script | `check_genotype` | profile absent or `uses_genes` incomplete | w1 |
-| D.3 | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w2 |
+| D.3 | script | `check_genotype_distinct` | <3 distinct genotype vectors in W4 options | w4 |
 | D.4 | script | `check_genotype` | composition ∉ `layout-archetype` alleles | w5 |
 
 ## Links

@@ -10,8 +10,8 @@ chooses what feeds the distill, never how the build runs.
 ## Constants (non-negotiable, every path)
 
 - **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Every
-  artifact from W3 on is an Astro page/component in one project; no
-  hand-rolled HTML after W2 (P.1).
+  artifact from W6 on is an Astro page/component in one project; every
+  preview before W6 is self-contained HTML under `preview/` (P.1).
 - **One unit, one gate** — a page is assembled from sections; each
   section has a contract, a builder and its own gate (SB.1–SB.4,
   `design/SECTION-BUILD.md`).
@@ -143,8 +143,8 @@ scale is the only real design value on a card**: correct ranks
 claim at display rank, macro H2s readable, fold labels smaller still.
 Everything else is deliberately undecided: no brand colour, no real
 fonts beyond a neutral sans, no icons, no decorative detail — fonts,
-colour roles, radius and spacing-as-feel are judged at L3
-`system.html`, not here. Wireframes render at true scale: Desktop
+colour roles, radius and spacing-as-feel are judged at W5
+`preview/system.html`, not here. Wireframes render at true scale: Desktop
 frame 1280px, Tablet 768, Mobile 360, each 1:1 (stage scrolls; never
 zoom/shrink to fit). Real section heights at their density tokens,
 real type sizes from the direction's scale, real media aspect ratios.
@@ -180,13 +180,14 @@ image/media placeholders, icon slots, logo blocks, copy bars, and on
 cards the entire surface including the CTA. Coloured placeholders are
 banned: they lead the eye, imply a treatment that isn't decided, and
 compete with an accent that isn't chosen yet. The C.1 role map (bg,
-surface, ink, accent, inverse) first appears at L3 `system.html`,
+surface, ink, accent, inverse) first appears at W5
+`preview/system.html`,
 never on a card.
 
 **Real-assets rule:** when the operator supplies a site (redesign)
 or content, the *extracted* artifacts bind the cards — the site's
 accent colour is a brand constant, not a direction choice (recorded
-in the keep-list; it binds the L3 render, not the greyscale card);
+in the keep-list; it binds the W5 render, not the greyscale card);
 extracted headings and CTA labels fill the card's real text, never
 invented. Content dictates layout: section selection fits the
 extracted content inventory — a direction never demands copy that

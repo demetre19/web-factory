@@ -16,17 +16,18 @@ that make a stage real. Every rule here is checkable — the
 
 ### P.1 Golden rule — Astro + Tailwind, from scaffold to ship
 
-ASTRO is the goal; TAILWIND is non-negotiable. Every design artifact
-from W3 on lives inside ONE Astro + Tailwind project per
-site/proposal, instantiated from `templates/astro/` at W0 —
-`tailwind.config` generated from `TOKENS.json`, `src/styles/global.css`
-with `@tailwind` + `@layer components`, components as `.astro` files in
+ASTRO is for the FINAL PRODUCT only (W6–W8); TAILWIND is
+non-negotiable there. One Astro + Tailwind project per site/proposal is
+instantiated from `templates/astro/` at W0 — `tailwind.config`
+generated from `TOKENS.json`, `src/styles/global.css` with `@tailwind`
++ `@layer components`, components as `.astro` files in
 `src/components/` (one per composition), the system tile as
 `src/pages/system.astro`, each page as `src/pages/<slug>.astro`
-assembled ONLY from those components. Previews are `astro build`
-output (`dist/`) opened in the browser — never standalone hand-rolled
-HTML. The only plain-HTML artifact in the pipeline is the W2 wireframe
-card set, which predates the system by design.
+assembled ONLY from those components. EVERY choosing/preview artifact
+BEFORE W6 — the W3 layout picker, the W4 look picker, the W5 system
+sheet — is a self-contained HTML file under `preview/` (Tailwind Play
+CDN or inline compiled CSS, CSS vars per scope, light/dark toggle,
+viewport switch); never standalone `.astro` previews.
 
 ### P.2 Shared source — one stylesheet, never two
 
@@ -42,8 +43,8 @@ source of style truth:
 - `src/components/*.astro` — markup bound to config tokens and layer
   classes only.
 
-Both `src/pages/system.astro` (W3 tile) and `src/pages/<slug>.astro`
-(W6 page) consume these files. A `<style>` block inside a page or
+Both `src/pages/system.astro` (W5/W6 tile) and
+`src/pages/<slug>.astro` (W6+ page) consume these files. A `<style>` block inside a page or
 component beyond the shared layer is a defect; a class on the page
 that is neither a layer-defined component class nor a config-derived
 Tailwind utility is a defect.
@@ -69,13 +70,13 @@ own wireframe.
 
 ### P.4 Wireframe lock — the chosen card is the section authority
 
-Once the operator picks a wireframe card (W2 approval), its sections
+Once the operator picks a layout card (W3 approval), its sections
 copy into `pages.<slug>.sections[]` **1:1** — order, composition,
 media ratio, disclosure, stack. Every plan row carries `wf_ref`
 (`<cards-file>#<design-id>:<data-sec>`). A plan row with no matching
 wireframe section is an invention; a wireframe section with no plan
 row is a drop. Deviation is legal only as a logged `decisions[]`
-entry that names the wireframe section it replaces. The W4 gate is the
+entry that names the wireframe section it replaces. The W3 gate is the
 mechanical diff; "the model decided a different layout" is exactly the
 failure this rule exists to make impossible.
 
@@ -98,14 +99,14 @@ token (`min-h-tap`), never `min-h-[44px]` sprinkled inline.
 ### P.6 Component catalogue — the tile is the inventory
 
 Every distinct composition in the locked wireframe is built once as
-`src/components/<name>.astro` (W5). `src/pages/system.astro` MUST
+`src/components/<name>.astro` (W6). `src/pages/system.astro` MUST
 instantiate every component — the tile is the catalogue the page
 orders from. A page using a component absent from the tile, or a tile
 missing a component the page uses, fails W6.
 
 ### P.7 Page assembly — order from the catalogue only
 
-`src/pages/<slug>.astro` assembles W5 components in plan-row order.
+`src/pages/<slug>.astro` assembles W6 components in plan-row order.
 No new styles, no inline utility invention, no structural markup the
 components don't already own. Chrome (nav/footer) is components too.
 Every rendered `<section>` carries the plan row's `data-*` values.
@@ -173,7 +174,7 @@ real-world layouts per section type. Record screen IDs/URLs + why in
 `MOBBIN-REFS.md`; every composition used in the plan cites ≥1 Mobbin
 reference. Unavailable tool blocks the wave — never a silent skip.
 
-### P.15 SPEC verbatim — L4 is a diff, not a rewrite
+### P.15 SPEC verbatim — W7 is a diff, not a rewrite
 
 `PAGES/<slug>/SPEC.md` `sections[]` copy `pages.<slug>.sections[]`
 verbatim; the gate is the verbatim diff. A SPEC that contradicts the

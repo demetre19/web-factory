@@ -1,13 +1,13 @@
 ---
-id: card-w3
+id: card-w5
 type: card
-wave: w3
+wave: w5
 links:
   uses: [rules-T, rules-C, rules-G, rules-S, rules-I, rules-V, rules-M, rules-W, rules-R, rules-P]
-  enforced_by: [check_system_enums, check_spacing_scale, check_breakpoints, check_content_width, check_contrast, check_type_system, check_tailwind_derivation, check_tile_is_system, check_no_emoji, check_astro_build]
+  enforced_by: [check_system_enums, check_spacing_scale, check_breakpoints, check_content_width, check_contrast, check_type_system, check_tailwind_derivation, check_tile_is_system, check_no_emoji, check_neutral_tint, check_proximity, check_border_widths, check_reduced_motion, check_dark_mode, check_dark_toggle, check_checklist, check_dna, check_dna_fresh]
 ---
 
-# W3 — Design system (tokens → Tailwind → style tile)
+# W5 — Design system (tokens → Tailwind → style tile)
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** The
 system is `TOKENS.json` compiled into `tailwind.config` + `global.css`,

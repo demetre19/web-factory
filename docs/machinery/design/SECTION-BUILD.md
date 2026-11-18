@@ -4,7 +4,7 @@ type: spec
 links:
   index: design-index
   uses: [rules-SB, rules-P, rules-G, rules-V, rules-PS, design-genome]
-  used_in: [w5, w6, w7, w8]
+  used_in: [w3, w6, w7, w8]
 ---
 
 # SECTION-BUILD — section-unit build and mechanical glue
@@ -175,5 +175,5 @@ Read: `UNCLUTTER-NEW/CLAUDE-DEV/Design library` —
 - `rules/P.md` P.3/P.4/P.7 — wireframe lock, plan rows, data-* contract.
 - `rules/PS.md` — segmentation of each block.
 - `dna/GENOME.md` — `layout-archetype` is the composition gene.
-- `stage-w5-wireframe/`, `stage-w6-components/`, `stage-w7-page/`,
+- `stage-w3-layout/`, `stage-w6-components/`, `stage-w7-page/`,
   `stage-w8-review/` — the cards that run this.

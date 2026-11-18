@@ -1,13 +1,13 @@
 ---
-id: checklist-w4
+id: checklist-w2
 type: checklist
-wave: w4
+wave: w2
 links:
   index: design-index
-  card: card-w4
+  card: card-w2
 ---
 
-# W4 checklist — content evidence
+# W2 checklist — content evidence
 
 Copy into `<pipeline-dir>/CHECKLIST/w4.md`. Blank cell = fail (P.9).
 

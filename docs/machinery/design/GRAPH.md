@@ -88,7 +88,7 @@
 - ← T.1 [see_also]
 - ← check_contrast [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## C.2 (rule)
@@ -98,28 +98,29 @@
 - ← D.3 [see_also]
 - ← check_direction_axes [enforces]
 - ← w2 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## C.3 (rule)
 - ← rules-C [contains]
 - ← check_neutral_tint [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## C.4 (rule)
 - → accent-harmony [scored_by]
 - ← rules-C [contains]
 - ← w8 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## C.5 (rule)
 - ← rules-C [contains]
 - ← check_dark_mode [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## C.6 (rule)
 - → derivation-order [scored_by]
@@ -170,8 +171,7 @@
 - ← rules-C [contains]
 - ← check_contrast [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w1 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## D.1 (rule)
@@ -243,10 +243,10 @@
 - ← rules-E [contains]
 - ← check_vector_map [enforces]
 - ← w5 [enforces_at]
-- ← card-w4 [loads]
 - ← card-w7 [loads]
-- ← card-w5 [loads]
 - ← card-w1 [loads]
+- ← card-w2 [loads]
+- ← card-w3 [loads]
 
 ## E.2 (rule)
 - → W.4 [see_also]
@@ -267,11 +267,11 @@
 - ← rules-E [contains]
 - ← check_section_enums [enforces]
 - ← w5 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w4 [loads]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
+- ← card-w2 [loads]
 - ← card-w8 [loads]
+- ← card-w3 [loads]
 
 ## E.3 (rule)
 - ← rules-E [contains]
@@ -293,16 +293,14 @@
 - ← S.4 [see_also]
 - ← check_spacing_scale [enforces]
 - ← w3 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
-- ← card-w1 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## G.2 (rule)
 - ← rules-G [contains]
 - ← check_proximity [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## G.3 (rule)
@@ -327,8 +325,8 @@
 - ← L.7 [see_also]
 - ← check_section_enums [enforces]
 - ← w5 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## G.4 (rule)
 - → gutter-devices [scored_by]
@@ -342,21 +340,21 @@
 - ← rules-I [contains]
 - ← check_system_enums [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## I.2 (rule)
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 
 ## I.3 (rule)
 - → R.6 [see_also]
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## I.4 (rule)
@@ -377,16 +375,15 @@
 - ← card-w8 [loads]
 
 ## I.7 (rule)
-- → icon-states [scored_by]
 - ← rules-I [contains]
-- ← w8 [enforces_at]
+- ← check_icon_discipline [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## I.8 (rule)
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
-- ← card-w1 [loads]
 
 ## L.1 (rule)
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
@@ -451,7 +448,7 @@
 - ← rules-L [contains]
 - ← check_schema_fields [enforces]
 - ← w5 [enforces_at]
-- ← card-w5 [loads]
+- ← card-w3 [loads]
 
 ## L.10 (rule)
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
@@ -525,7 +522,7 @@
 - ← T.6 [see_also]
 - ← check_content_width [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 
 ## L.12 (rule)
 - → E.1 [see_also]
@@ -538,7 +535,6 @@
 - ← rules-L [contains]
 - ← check_rhythm [enforces]
 - ← w5 [enforces_at]
-- ← card-w1 [loads]
 
 ## L.2 (rule)
 - ← rules-L [contains]
@@ -546,9 +542,9 @@
 - ← w5 [enforces_at]
 
 ## L.3 (rule)
-- → edge-insets [scored_by]
 - ← rules-L [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## L.4 (rule)
@@ -654,7 +650,7 @@
 - ← check_rhythm [enforces]
 - ← w5 [enforces_at]
 - ← card-w7 [loads]
-- ← card-w5 [loads]
+- ← card-w3 [loads]
 
 ## L.8 (rule)
 - ← rules-L [contains]
@@ -694,15 +690,15 @@
 - ← D.3 [see_also]
 - ← check_direction_axes [enforces]
 - ← w2 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## M.2 (rule)
 - → P.12 [see_also]
-- → motion-tokens [scored_by]
 - ← rules-M [contains]
-- ← w8 [enforces_at]
-- ← card-w3 [loads]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
 
@@ -729,8 +725,8 @@
 - ← rules-M [contains]
 - ← check_reduced_motion [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
 - ← card-w7 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
 
@@ -741,10 +737,9 @@
 - ← w7 [enforces_at]
 
 ## M.8 (rule)
-- → motion-personality [scored_by]
 - ← rules-M [contains]
-- ← w8 [enforces_at]
-- ← card-w1 [loads]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## P.1 (rule)
@@ -828,7 +823,7 @@
 
 ## P.6 (rule)
 - ← rules-P [contains]
-- ← check_components_exist [enforces]
+- ← check_tile_is_system [enforces]
 - ← w6 [enforces_at]
 
 ## P.7 (rule)
@@ -886,7 +881,6 @@
 - ← check_segment_priority [enforces]
 - ← w7 [enforces_at]
 - ← card-w7 [loads]
-- ← card-w1 [loads]
 
 ## R.1 (rule)
 - → P.13 [see_also]
@@ -894,8 +888,8 @@
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
 - ← card-w7 [loads]
+- ← card-w5 [loads]
 
 ## R.2 (rule)
 - ← G.1 [see_also]
@@ -903,18 +897,17 @@
 - ← rules-R [contains]
 - ← check_spacing_scale [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w1 [loads]
+- ← card-w5 [loads]
 
 ## R.3 (rule)
 - → P.4 [see_also]
 - ← rules-R [contains]
 - ← check_schema_fields [enforces]
 - ← w5 [enforces_at]
-- ← card-w3 [loads]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
 - ← card-w6 [loads]
+- ← card-w3 [loads]
 
 ## R.4 (rule)
 - ← T.6 [see_also]
@@ -924,10 +917,10 @@
 - ← card-w8 [loads]
 
 ## R.5 (rule)
-- → above-fold-360 [scored_by]
 - ← PS.6 [see_also]
 - ← rules-R [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
@@ -952,7 +945,6 @@
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
 - ← w3 [enforces_at]
-- ← card-w1 [loads]
 
 ## S.1 (rule)
 - ← B.3 [see_also]
@@ -960,8 +952,8 @@
 - ← D.3 [see_also]
 - ← check_direction_axes [enforces]
 - ← w2 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## S.2 (rule)
 - → P.5 [see_also]
@@ -969,20 +961,20 @@
 - ← rules-S [contains]
 - ← check_tailwind_derivation [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w6 [loads]
 
 ## S.3 (rule)
-- → component-radius [scored_by]
 - ← rules-S [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## S.4 (rule)
 - → G.1 [see_also]
-- → concentric-radius [scored_by]
 - ← rules-S [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
 
@@ -990,7 +982,7 @@
 - ← rules-S [contains]
 - ← check_border_widths [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## S.6 (rule)
@@ -1004,14 +996,13 @@
 - ← C.1 [see_also]
 - ← rules-S [contains]
 - ← w8 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 - ← card-w8 [loads]
 
 ## S.8 (rule)
 - → one-personality [scored_by]
 - ← rules-S [contains]
 - ← w8 [enforces_at]
-- ← card-w1 [loads]
 - ← card-w8 [loads]
 
 ## SB.1 (rule)
@@ -1053,9 +1044,9 @@
 ## T.1 (rule)
 - → C.1 [see_also]
 - → L.7 [see_also]
-- → three-tier-read-order [scored_by]
 - ← rules-T [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## T.10 (rule)
@@ -1065,9 +1056,9 @@
 - ← card-w8 [loads]
 
 ## T.11 (rule)
-- → type-refusals [scored_by]
 - ← rules-T [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## T.2 (rule)
@@ -1079,8 +1070,8 @@
 - ← rules-T [contains]
 - ← check_type_system [enforces]
 - ← w3 [enforces_at]
-- ← card-w2 [loads]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
+- ← card-w4 [loads]
 
 ## T.4 (rule)
 - → C.2 [see_also]
@@ -1088,7 +1079,7 @@
 - ← D.2 [see_also]
 - ← check_type_system [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 
 ## T.5 (rule)
 - → composition-inset [scored_by]
@@ -1103,13 +1094,12 @@
 - ← rules-T [contains]
 - ← check_type_system [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w1 [loads]
+- ← card-w5 [loads]
 
 ## T.7 (rule)
-- → section-type-application [scored_by]
 - ← rules-T [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## T.8 (rule)
@@ -1179,7 +1169,7 @@
 - ← rules-V [contains]
 - ← check_system_enums [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
+- ← card-w5 [loads]
 
 ## V.3 (rule)
 - → P.3 [see_also]
@@ -1226,16 +1216,15 @@
 - ← rules-V [contains]
 - ← check_section_enums [enforces]
 - ← w5 [enforces_at]
-- ← card-w2 [loads]
 - ← card-w7 [loads]
-- ← card-w5 [loads]
 - ← card-w6 [loads]
+- ← card-w3 [loads]
 
 ## V.4 (rule)
-- → scrim-contrast [scored_by]
 - ← C.1 [see_also]
 - ← rules-V [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w6 [loads]
 - ← card-w8 [loads]
 
@@ -1250,8 +1239,8 @@
 - ← rules-V [contains]
 - ← check_system_enums [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
 - ← card-w7 [loads]
+- ← card-w5 [loads]
 - ← card-w1 [loads]
 - ← card-w8 [loads]
 
@@ -1262,10 +1251,9 @@
 - ← card-w8 [loads]
 
 ## V.8 (rule)
-- → media-qa [scored_by]
 - ← rules-V [contains]
-- ← w8 [enforces_at]
-- ← card-w1 [loads]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## VG.1 (rule)
@@ -1302,7 +1290,7 @@
 - → tone-errors [scored_by]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
-- ← card-w4 [loads]
+- ← card-w2 [loads]
 - ← card-w8 [loads]
 
 ## W.10 (rule)
@@ -1310,8 +1298,7 @@
 - ← B.5 [see_also]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
-- ← card-w4 [loads]
-- ← card-w1 [loads]
+- ← card-w2 [loads]
 - ← card-w8 [loads]
 
 ## W.2 (rule)
@@ -1378,13 +1365,12 @@
 - ← rules-W [contains]
 - ← check_system_enums [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w4 [loads]
 - ← card-w5 [loads]
+- ← card-w2 [loads]
 - ← card-w6 [loads]
+- ← card-w3 [loads]
 
 ## W.3 (rule)
-- → heading-labels [scored_by]
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
 - ← pattern-government-home-hero-stacked-hero [implies_rules]
 - ← pattern-ecommerce-category-filters-sort-text-index [implies_rules]
@@ -1445,7 +1431,8 @@
 - ← pattern-media-blog-content-editorial [implies_rules]
 - ← pattern-media-home-hero-stacked-hero [implies_rules]
 - ← rules-W [contains]
-- ← w8 [enforces_at]
+- ← check_measurable [enforces]
+- ← w7 [enforces_at]
 - ← card-w8 [loads]
 
 ## W.4 (rule)
@@ -1454,8 +1441,8 @@
 - ← E.2 [see_also]
 - ← check_section_enums [enforces]
 - ← w5 [enforces_at]
-- ← card-w5 [loads]
 - ← card-w6 [loads]
+- ← card-w3 [loads]
 
 ## W.5 (rule)
 - → tone-errors [scored_by]
@@ -1520,15 +1507,15 @@
 - ← pattern-services-service-detail-hero-stacked-hero [implies_rules]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
-- ← card-w4 [loads]
+- ← card-w2 [loads]
 - ← card-w8 [loads]
 
 ## W.7 (rule)
 - → link-scent [scored_by]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
-- ← card-w4 [loads]
 - ← card-w7 [loads]
+- ← card-w2 [loads]
 - ← card-w8 [loads]
 
 ## W.8 (rule)
@@ -1536,17 +1523,14 @@
 - ← rules-W [contains]
 - ← check_system_enums [enforces]
 - ← w3 [enforces_at]
-- ← card-w3 [loads]
-- ← card-w4 [loads]
+- ← card-w5 [loads]
+- ← card-w2 [loads]
 
 ## W.9 (rule)
 - → i18n-copy [scored_by]
 - ← rules-W [contains]
 - ← w8 [enforces_at]
 - ← card-w8 [loads]
-
-## above-fold-360 (rubric)
-- ← R.5 [scored_by]
 
 ## accent-harmony (rubric)
 - ← C.4 [scored_by]
@@ -1572,179 +1556,166 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → E.1 [loads]
-- → E.4 [loads]
-- → W.10 [loads]
-- → G.1 [loads]
-- → C.7 [loads]
-- → M.8 [loads]
-- → L.13 [loads]
-- → PS.1 [loads]
-- → PS.6 [loads]
-- → V.6 [loads]
-- → I.8 [loads]
-- → V.8 [loads]
-- → R.8 [loads]
-- → T.6 [loads]
-- → S.8 [loads]
-- → R.2 [loads]
 - → T.8 [loads]
+- → V.6 [loads]
+- → E.4 [loads]
+- → PS.1 [loads]
+- → E.1 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
-- → G.1 [loads]
-- → C.2 [loads]
-- → S.1 [loads]
-- → G.3 [loads]
-- → V.3 [loads]
-- → T.3 [loads]
-- → M.1 [loads]
+- → W.8 [loads]
+- → W.7 [loads]
+- → E.2 [loads]
+- → W.10 [loads]
+- → E.1 [loads]
+- → W.2 [loads]
+- → W.6 [loads]
+- → W.1 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → C.2 [loads]
-- → C.7 [loads]
-- → S.1 [loads]
-- → G.3 [loads]
-- → V.6 [loads]
-- → I.3 [loads]
-- → C.5 [loads]
-- → G.1 [loads]
-- → M.6 [loads]
-- → S.7 [loads]
-- → I.1 [loads]
-- → S.2 [loads]
-- → W.8 [loads]
-- → S.5 [loads]
+- → V.3 [loads]
+- → L.1 [loads]
 - → R.3 [loads]
-- → G.2 [loads]
-- → I.2 [loads]
-- → V.2 [loads]
-- → M.1 [loads]
-- → L.11 [loads]
-- → R.1 [loads]
-- → M.2 [loads]
-- → R.2 [loads]
-- → C.4 [loads]
-- → C.3 [loads]
-- → T.4 [loads]
 - → E.2 [loads]
-- → C.1 [loads]
+- → L.7 [loads]
+- → W.4 [loads]
+- → E.1 [loads]
 - → W.2 [loads]
-- → T.6 [loads]
-- → T.3 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
-- → E.1 [loads]
-- → W.10 [loads]
-- → W.6 [loads]
-- → W.8 [loads]
-- → E.2 [loads]
-- → W.7 [loads]
-- → W.2 [loads]
-- → W.1 [loads]
+- → C.2 [loads]
+- → T.3 [loads]
+- → S.1 [loads]
+- → C.5 [loads]
+- → M.1 [loads]
+- → G.3 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → E.1 [loads]
-- → L.7 [loads]
-- → W.4 [loads]
-- → L.1 [loads]
-- → E.2 [loads]
-- → V.3 [loads]
+- → T.4 [loads]
 - → R.3 [loads]
+- → C.5 [loads]
+- → S.5 [loads]
+- → S.7 [loads]
+- → T.3 [loads]
+- → C.2 [loads]
+- → C.1 [loads]
+- → S.1 [loads]
+- → S.2 [loads]
+- → E.2 [loads]
+- → I.2 [loads]
 - → W.2 [loads]
+- → I.1 [loads]
+- → C.4 [loads]
+- → G.2 [loads]
+- → G.1 [loads]
+- → M.6 [loads]
+- → R.2 [loads]
+- → R.1 [loads]
+- → V.6 [loads]
+- → C.3 [loads]
+- → V.2 [loads]
+- → T.6 [loads]
+- → W.8 [loads]
+- → M.2 [loads]
+- → I.3 [loads]
+- → L.11 [loads]
+- → C.7 [loads]
+- → M.1 [loads]
+- → G.3 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → G.1 [loads]
-- → M.6 [loads]
-- → W.4 [loads]
-- → R.5 [loads]
-- → I.1 [loads]
-- → S.2 [loads]
-- → V.4 [loads]
-- → W.2 [loads]
-- → M.2 [loads]
-- → C.1 [loads]
-- → R.6 [loads]
-- → R.3 [loads]
-- → I.3 [loads]
 - → V.3 [loads]
+- → V.4 [loads]
+- → G.1 [loads]
+- → C.1 [loads]
+- → R.3 [loads]
+- → S.2 [loads]
+- → R.6 [loads]
+- → I.3 [loads]
+- → W.4 [loads]
+- → W.2 [loads]
+- → M.6 [loads]
+- → I.1 [loads]
+- → M.2 [loads]
+- → R.5 [loads]
 - → S.4 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → E.1 [loads]
+- → V.3 [loads]
+- → V.6 [loads]
 - → R.3 [loads]
+- → E.3 [loads]
+- → PS.6 [loads]
+- → W.7 [loads]
+- → E.2 [loads]
+- → R.1 [loads]
+- → R.6 [loads]
+- → PS.1 [loads]
+- → E.1 [loads]
 - → L.7 [loads]
 - → M.6 [loads]
 - → R.5 [loads]
-- → R.1 [loads]
-- → E.3 [loads]
-- → PS.1 [loads]
-- → PS.6 [loads]
-- → E.2 [loads]
-- → W.7 [loads]
-- → R.6 [loads]
-- → V.3 [loads]
-- → V.6 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → W.5 [loads]
-- → S.3 [loads]
-- → G.4 [loads]
-- → I.4 [loads]
 - → V.4 [loads]
-- → C.7 [loads]
-- → I.6 [loads]
-- → T.1 [loads]
-- → S.6 [loads]
-- → M.8 [loads]
-- → V.6 [loads]
-- → M.4 [loads]
-- → M.6 [loads]
-- → T.7 [loads]
-- → S.7 [loads]
-- → V.1 [loads]
-- → L.5 [loads]
-- → T.5 [loads]
-- → M.3 [loads]
-- → R.4 [loads]
-- → S.5 [loads]
-- → G.2 [loads]
 - → I.7 [loads]
-- → V.7 [loads]
-- → T.11 [loads]
-- → W.10 [loads]
-- → W.9 [loads]
-- → V.5 [loads]
-- → W.6 [loads]
-- → E.3 [loads]
-- → W.3 [loads]
-- → M.2 [loads]
-- → S.8 [loads]
-- → C.4 [loads]
-- → T.0 [loads]
-- → M.5 [loads]
-- → R.7 [loads]
-- → C.6 [loads]
-- → W.1 [loads]
-- → R.5 [loads]
-- → C.3 [loads]
-- → L.4 [loads]
-- → T.10 [loads]
-- → L.9 [loads]
-- → T.9 [loads]
-- → S.4 [loads]
-- → V.0 [loads]
-- → L.6 [loads]
-- → V.8 [loads]
-- → L.3 [loads]
 - → W.7 [loads]
+- → M.4 [loads]
+- → S.5 [loads]
+- → S.7 [loads]
+- → W.9 [loads]
+- → V.8 [loads]
+- → L.9 [loads]
+- → V.0 [loads]
+- → T.11 [loads]
+- → T.0 [loads]
+- → R.7 [loads]
+- → T.10 [loads]
+- → C.6 [loads]
+- → S.6 [loads]
+- → L.5 [loads]
+- → W.5 [loads]
+- → M.8 [loads]
 - → E.2 [loads]
+- → I.6 [loads]
+- → M.3 [loads]
+- → W.6 [loads]
+- → W.1 [loads]
+- → L.6 [loads]
+- → V.7 [loads]
+- → C.4 [loads]
+- → S.4 [loads]
+- → T.7 [loads]
+- → G.2 [loads]
+- → R.5 [loads]
+- → L.3 [loads]
+- → I.4 [loads]
+- → T.9 [loads]
+- → L.4 [loads]
+- → G.4 [loads]
+- → V.5 [loads]
+- → T.5 [loads]
+- → S.8 [loads]
+- → V.6 [loads]
+- → M.5 [loads]
+- → C.3 [loads]
+- → S.3 [loads]
+- → R.4 [loads]
+- → V.1 [loads]
+- → E.3 [loads]
+- → T.1 [loads]
+- → M.2 [loads]
+- → W.3 [loads]
+- → W.10 [loads]
+- → M.6 [loads]
+- → C.7 [loads]
 - ← w8 [has_card]
 
 ## check_assembly (check)
@@ -1752,9 +1723,7 @@
 - ← w7 [gated_by]
 
 ## check_astro_build (check)
-- ← w3 [gated_by]
 - ← w7 [gated_by]
-- ← w0 [gated_by]
 - ← w6 [gated_by]
 
 ## check_audit_artifacts (check)
@@ -1762,45 +1731,44 @@
 
 ## check_border_widths (check)
 - → S.5 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_breakpoints (check)
 - → R.1 [enforces]
 - → R.8 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_burst (check)
 - → B.2 [enforces]
 - → B.3 [enforces]
-- ← w2 [gated_by]
-- ← w5 [gated_by]
+- ← w4 [gated_by]
+- ← w3 [gated_by]
 
 ## check_checklist (check)
 - → P.9 [enforces]
-- ← w2 [gated_by]
-- ← w3 [gated_by]
-- ← w4 [gated_by]
 - ← w7 [gated_by]
-- ← w0 [gated_by]
 - ← w5 [gated_by]
+- ← w0 [gated_by]
+- ← w4 [gated_by]
 - ← w1 [gated_by]
+- ← w2 [gated_by]
 - ← w6 [gated_by]
 - ← w8 [gated_by]
+- ← w3 [gated_by]
 
 ## check_class_subset (check)
 - ← w7 [gated_by]
 - ← w6 [gated_by]
 
 ## check_components_exist (check)
-- → P.6 [enforces]
 - ← w6 [gated_by]
 
 ## check_content_inventory (check)
-- ← w4 [gated_by]
+- ← w2 [gated_by]
 
 ## check_content_width (check)
 - → L.11 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_contrast (check)
 - → C.1 [enforces]
@@ -1843,7 +1811,7 @@
 - ← pattern-services-service-detail-hero-stacked-hero [enforced_by]
 - ← pattern-services-service-detail-pricing-cards-n [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_copy_density (check)
 - → R.4 [enforces]
@@ -1851,17 +1819,18 @@
 
 ## check_dark_mode (check)
 - → C.5 [enforces]
-- ← w2 [gated_by]
-- ← w3 [gated_by]
 - ← w7 [gated_by]
+- ← w5 [gated_by]
+- ← w4 [gated_by]
 
 ## check_dark_toggle (check)
 - ← w7 [gated_by]
+- ← w5 [gated_by]
 
 ## check_declared_breaks (check)
 - → B.4 [enforces]
-- ← w2 [gated_by]
-- ← w5 [gated_by]
+- ← w4 [gated_by]
+- ← w3 [gated_by]
 
 ## check_design_mode (check)
 - ← w1 [gated_by]
@@ -1870,35 +1839,35 @@
 - → C.2 [enforces]
 - → M.1 [enforces]
 - → S.1 [enforces]
-- ← w2 [gated_by]
+- ← w4 [gated_by]
 
 ## check_dna (check)
 - → DM.1 [enforces]
 - → DM.3 [enforces]
 - ← score-vectors [enforced_by]
 - ← LAW.DNA [enforced_by]
-- ← w2 [gated_by]
-- ← w3 [gated_by]
-- ← w4 [gated_by]
 - ← w7 [gated_by]
-- ← w0 [gated_by]
 - ← w5 [gated_by]
+- ← w0 [gated_by]
+- ← w4 [gated_by]
 - ← w1 [gated_by]
+- ← w2 [gated_by]
 - ← w6 [gated_by]
 - ← w8 [gated_by]
+- ← w3 [gated_by]
 
 ## check_dna_fresh (check)
 - → DM.2 [enforces]
 - → DM.6 [enforces]
-- ← w2 [gated_by]
-- ← w3 [gated_by]
-- ← w4 [gated_by]
 - ← w7 [gated_by]
-- ← w0 [gated_by]
 - ← w5 [gated_by]
+- ← w0 [gated_by]
+- ← w4 [gated_by]
 - ← w1 [gated_by]
+- ← w2 [gated_by]
 - ← w6 [gated_by]
 - ← w8 [gated_by]
+- ← w3 [gated_by]
 
 ## check_emphasis (check)
 - ← pattern-hospitality-service-detail-content-editorial [enforced_by]
@@ -1960,7 +1929,7 @@
 - ← pattern-services-service-detail-pricing-cards-n [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_exemplars (check)
 - → SB.5 [enforces]
@@ -1970,13 +1939,13 @@
 - → D.1 [enforces]
 - → D.2 [enforces]
 - → D.4 [enforces]
-- ← w2 [gated_by]
-- ← w5 [gated_by]
+- ← w4 [gated_by]
 - ← w1 [gated_by]
+- ← w3 [gated_by]
 
 ## check_genotype_distinct (check)
 - → D.3 [enforces]
-- ← w2 [gated_by]
+- ← w4 [gated_by]
 
 ## check_heading_verbatim (check)
 - → E.4 [enforces]
@@ -1986,37 +1955,63 @@
 - → I.2 [enforces]
 - → I.3 [enforces]
 - → I.5 [enforces]
+- → I.7 [enforces]
 - → I.8 [enforces]
 - → P.11 [enforces]
 - ← w7 [gated_by]
 - ← w6 [gated_by]
 
+## check_image_discovery (check)
+- ← w1 [gated_by]
+
 ## check_intent (check)
 - ← w1 [gated_by]
+
+## check_layout_distinct (check)
+- ← w3 [gated_by]
+
+## check_measurable (check)
+- → L.3 [enforces]
+- → M.2 [enforces]
+- → M.8 [enforces]
+- → R.5 [enforces]
+- → S.3 [enforces]
+- → S.4 [enforces]
+- → T.1 [enforces]
+- → T.11 [enforces]
+- → T.7 [enforces]
+- → V.4 [enforces]
+- → V.8 [enforces]
+- → W.3 [enforces]
+- ← w7 [gated_by]
 
 ## check_mobbin_auth (check)
 - ← w1 [gated_by]
 
 ## check_mobbin_refs (check)
 - → P.14 [enforces]
-- ← w5 [gated_by]
+- ← w1 [gated_by]
+- ← w3 [gated_by]
 
 ## check_mobile_budget (check)
 - → P.13 [enforces]
 - ← w7 [gated_by]
 
+## check_mobile_cta (check)
+- ← w7 [gated_by]
+
 ## check_motif (check)
 - → L.8 [enforces]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_neutral_tint (check)
 - → C.3 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_no_emoji (check)
 - → P.10 [enforces]
-- ← w3 [gated_by]
 - ← w7 [gated_by]
+- ← w5 [gated_by]
 - ← w6 [gated_by]
 
 ## check_no_stray_styles (check)
@@ -2034,11 +2029,11 @@
 
 ## check_proximity (check)
 - → G.2 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_reduced_motion (check)
 - → M.6 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_review_completeness (check)
 - ← w8 [gated_by]
@@ -2104,7 +2099,7 @@
 - ← pattern-services-service-detail-hero-stacked-hero [enforced_by]
 - ← pattern-services-service-detail-pricing-cards-n [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_rhythm_render (check)
 - ← w7 [gated_by]
@@ -2117,7 +2112,7 @@
 ## check_schema_fields (check)
 - → L.1 [enforces]
 - → R.3 [enforces]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_scorecard (check)
 - → SB.6 [enforces]
@@ -2129,7 +2124,7 @@
 
 ## check_section_contracts (check)
 - → SB.1 [enforces]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_section_enums (check)
 - → E.2 [enforces]
@@ -2216,7 +2211,7 @@
 - ← pattern-services-service-detail-pricing-cards-n [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_section_gates (check)
 - → SB.3 [enforces]
@@ -2312,7 +2307,7 @@
 - ← pattern-saas-pricing-pricing-cards-n [enforced_by]
 - ← pattern-services-service-detail-testimonials-quote-grid [enforced_by]
 - ← pattern-services-service-detail-faq-faq [enforced_by]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_spec_verbatim (check)
 - → P.15 [enforces]
@@ -2359,7 +2354,7 @@
 - ← pattern-services-home-hero-stacked-hero [enforced_by]
 - ← pattern-services-service-detail-hero-stacked-hero [enforced_by]
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_speed_budget (check)
 - → M.7 [enforces]
@@ -2376,12 +2371,12 @@
 - → V.6 [enforces]
 - → W.2 [enforces]
 - → W.8 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_tailwind_derivation (check)
 - → P.5 [enforces]
 - → S.2 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_tap_size (check)
 - → R.6 [enforces]
@@ -2392,8 +2387,12 @@
 - ← w1 [gated_by]
 
 ## check_tile_is_system (check)
-- ← w3 [gated_by]
+- → P.6 [enforces]
+- ← w5 [gated_by]
 - ← w6 [gated_by]
+
+## check_tile_page_parity (check)
+- ← w7 [gated_by]
 
 ## check_type_system (check)
 - → T.2 [enforces]
@@ -2401,7 +2400,7 @@
 - → T.4 [enforces]
 - → T.6 [enforces]
 - → T.8 [enforces]
-- ← w3 [gated_by]
+- ← w5 [gated_by]
 
 ## check_variants (check)
 - → DM.4 [enforces]
@@ -2411,19 +2410,19 @@
 - → VG.4 [enforces]
 - → VG.5 [enforces]
 - → VG.6 [enforces]
-- ← w2 [gated_by]
+- ← w4 [gated_by]
 - ← w8 [gated_by]
 
 ## check_vector_map (check)
 - → E.1 [enforces]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_viewport (check)
 - ← w7 [gated_by]
 
 ## check_wildcard (check)
-- ← w2 [gated_by]
-- ← w5 [gated_by]
+- ← w4 [gated_by]
+- ← w3 [gated_by]
 
 ## check_wireframe_lock (check)
 - → P.4 [enforces]
@@ -2486,7 +2485,7 @@
 - ← pattern-services-home-call-to-action-full-bleed [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## check_wireframe_tags (check)
 - → P.3 [enforces]
@@ -2549,7 +2548,7 @@
 - ← pattern-services-service-detail-pricing-cards-n [enforced_by]
 - ← pattern-media-blog-content-editorial [enforced_by]
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
-- ← w5 [gated_by]
+- ← w3 [gated_by]
 
 ## checklist-w0 (checklist)
 - ← w0 [has_checklist]
@@ -2581,15 +2580,9 @@
 ## collapse-integrity (rubric)
 - ← L.5 [scored_by]
 
-## component-radius (rubric)
-- ← S.3 [scored_by]
-
 ## composition-inset (rubric)
 - ← T.10 [scored_by]
 - ← T.5 [scored_by]
-
-## concentric-radius (rubric)
-- ← S.4 [scored_by]
 
 ## derivation-order (rubric)
 - ← C.6 [scored_by]
@@ -2605,8 +2598,11 @@
 - → gene-gallery-mode [contains]
 - → gene-heading-form [contains]
 - → gene-image-led-ratio [contains]
+- → gene-image-style [contains]
 - → gene-layout-archetype [contains]
 - → gene-media-treatment [contains]
+- → gene-mood-energy [contains]
+- → gene-mood-register [contains]
 - → gene-motion-tier [contains]
 - → gene-nav-pattern [contains]
 - → gene-page-macro-structure [contains]
@@ -2734,9 +2730,6 @@
 - ← rules-SB [index]
 - ← rules-DNA [index]
 - ← rules-DM [index]
-
-## edge-insets (rubric)
-- ← L.3 [scored_by]
 
 ## elevation-radius (rubric)
 - ← S.7 [scored_by]
@@ -3166,6 +3159,35 @@
 - ← profile-saas [uses_genes]
 - ← design-genome [contains]
 
+## gene-image-style (gene)
+- ← profile-marketplace [uses_genes]
+- ← profile-architecture [uses_genes]
+- ← profile-fashion [uses_genes]
+- ← profile-community [uses_genes]
+- ← profile-ecommerce [uses_genes]
+- ← profile-portfolio [uses_genes]
+- ← profile-technology [uses_genes]
+- ← profile-automotive [uses_genes]
+- ← profile-real-estate [uses_genes]
+- ← profile-healthcare [uses_genes]
+- ← profile-hospitality [uses_genes]
+- ← profile-government [uses_genes]
+- ← profile-agency-portfolio [uses_genes]
+- ← profile-finance [uses_genes]
+- ← profile-homes [uses_genes]
+- ← profile-luxury-goods [uses_genes]
+- ← profile-legal [uses_genes]
+- ← profile-nonprofit [uses_genes]
+- ← profile-recruitment [uses_genes]
+- ← profile-media [uses_genes]
+- ← profile-services [uses_genes]
+- ← profile-jewellery [uses_genes]
+- ← profile-personal-brand [uses_genes]
+- ← profile-education [uses_genes]
+- ← profile-events [uses_genes]
+- ← profile-saas [uses_genes]
+- ← design-genome [contains]
+
 ## gene-layout-archetype (gene)
 - ← pattern-hospitality-service-detail-content-editorial [consumes]
 - ← pattern-ecommerce-category-filters-sort-text-index [consumes]
@@ -3255,6 +3277,64 @@
 - ← design-genome [contains]
 
 ## gene-media-treatment (gene)
+- ← profile-marketplace [uses_genes]
+- ← profile-architecture [uses_genes]
+- ← profile-fashion [uses_genes]
+- ← profile-community [uses_genes]
+- ← profile-ecommerce [uses_genes]
+- ← profile-portfolio [uses_genes]
+- ← profile-technology [uses_genes]
+- ← profile-automotive [uses_genes]
+- ← profile-real-estate [uses_genes]
+- ← profile-healthcare [uses_genes]
+- ← profile-hospitality [uses_genes]
+- ← profile-government [uses_genes]
+- ← profile-agency-portfolio [uses_genes]
+- ← profile-finance [uses_genes]
+- ← profile-homes [uses_genes]
+- ← profile-luxury-goods [uses_genes]
+- ← profile-legal [uses_genes]
+- ← profile-nonprofit [uses_genes]
+- ← profile-recruitment [uses_genes]
+- ← profile-media [uses_genes]
+- ← profile-services [uses_genes]
+- ← profile-jewellery [uses_genes]
+- ← profile-personal-brand [uses_genes]
+- ← profile-education [uses_genes]
+- ← profile-events [uses_genes]
+- ← profile-saas [uses_genes]
+- ← design-genome [contains]
+
+## gene-mood-energy (gene)
+- ← profile-marketplace [uses_genes]
+- ← profile-architecture [uses_genes]
+- ← profile-fashion [uses_genes]
+- ← profile-community [uses_genes]
+- ← profile-ecommerce [uses_genes]
+- ← profile-portfolio [uses_genes]
+- ← profile-technology [uses_genes]
+- ← profile-automotive [uses_genes]
+- ← profile-real-estate [uses_genes]
+- ← profile-healthcare [uses_genes]
+- ← profile-hospitality [uses_genes]
+- ← profile-government [uses_genes]
+- ← profile-agency-portfolio [uses_genes]
+- ← profile-finance [uses_genes]
+- ← profile-homes [uses_genes]
+- ← profile-luxury-goods [uses_genes]
+- ← profile-legal [uses_genes]
+- ← profile-nonprofit [uses_genes]
+- ← profile-recruitment [uses_genes]
+- ← profile-media [uses_genes]
+- ← profile-services [uses_genes]
+- ← profile-jewellery [uses_genes]
+- ← profile-personal-brand [uses_genes]
+- ← profile-education [uses_genes]
+- ← profile-events [uses_genes]
+- ← profile-saas [uses_genes]
+- ← design-genome [contains]
+
+## gene-mood-register (gene)
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -3596,20 +3676,695 @@
 ## gutter-devices (rubric)
 - ← G.4 [scored_by]
 
-## heading-labels (rubric)
-- ← W.3 [scored_by]
-
 ## i18n-copy (rubric)
 - ← W.9 [scored_by]
 
 ## icon-literal (rubric)
 - ← I.6 [scored_by]
 
-## icon-states (rubric)
-- ← I.7 [scored_by]
-
 ## icon-text-pairing (rubric)
 - ← I.4 [scored_by]
+
+## intent-attribute-calm (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-care (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-community (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-confidence (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-craft (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-exclusivity (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-expertise (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-fun (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-heritage (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-innovation (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-luxury (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-reliability (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-romance (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-security (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-speed (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-sustainability (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-attribute-value (intent-attribute)
+- → intent-index [index]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-accent-cool (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-accent-neutral (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-accent-warm (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-energy-balanced (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-energy-calm (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-energy-energetic (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-art-deco (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-corporate (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-editorial (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-japanese-wabi-sabi (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-lifestyle (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-luxury-fashion (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-memphis (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-other-ambiguous (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-retro-50s-90s (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-image_style-swiss-international (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-imagery-balanced (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-imagery-image-led (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-imagery-text-led (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-collage (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-flat-colour-design (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-infographic-chart (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-other-ambiguous (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-pattern-texture (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-photograph (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-typography-only (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-medium-vector-graphic (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-page_length-long (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-page_length-medium (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-page_length-short (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-register-everyday (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-register-luxury (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-register-premium (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-surface-dark (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-surface-light (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-choice-surface-mid (intent-choice)
+- → intent-index [index]
+- → patterns-index [derives_from]
+- → intent-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← intent-index [contains]
+- ← patterns-index [patterns]
+
+## intent-index (index)
+- → patterns-index [index]
+- → intent-attribute-calm [contains]
+- → intent-attribute-care [contains]
+- → intent-attribute-community [contains]
+- → intent-attribute-confidence [contains]
+- → intent-attribute-craft [contains]
+- → intent-attribute-exclusivity [contains]
+- → intent-attribute-expertise [contains]
+- → intent-attribute-fun [contains]
+- → intent-attribute-heritage [contains]
+- → intent-attribute-innovation [contains]
+- → intent-attribute-luxury [contains]
+- → intent-attribute-reliability [contains]
+- → intent-attribute-romance [contains]
+- → intent-attribute-security [contains]
+- → intent-attribute-speed [contains]
+- → intent-attribute-sustainability [contains]
+- → intent-attribute-value [contains]
+- → intent-choice-accent-cool [contains]
+- → intent-choice-accent-neutral [contains]
+- → intent-choice-accent-warm [contains]
+- → intent-choice-energy-balanced [contains]
+- → intent-choice-energy-calm [contains]
+- → intent-choice-energy-energetic [contains]
+- → intent-choice-image_style-art-deco [contains]
+- → intent-choice-image_style-corporate [contains]
+- → intent-choice-image_style-editorial [contains]
+- → intent-choice-image_style-japanese-wabi-sabi [contains]
+- → intent-choice-image_style-lifestyle [contains]
+- → intent-choice-image_style-luxury-fashion [contains]
+- → intent-choice-image_style-memphis [contains]
+- → intent-choice-image_style-other-ambiguous [contains]
+- → intent-choice-image_style-retro-50s-90s [contains]
+- → intent-choice-image_style-swiss-international [contains]
+- → intent-choice-imagery-balanced [contains]
+- → intent-choice-imagery-image-led [contains]
+- → intent-choice-imagery-text-led [contains]
+- → intent-choice-medium-collage [contains]
+- → intent-choice-medium-flat-colour-design [contains]
+- → intent-choice-medium-infographic-chart [contains]
+- → intent-choice-medium-other-ambiguous [contains]
+- → intent-choice-medium-pattern-texture [contains]
+- → intent-choice-medium-photograph [contains]
+- → intent-choice-medium-typography-only [contains]
+- → intent-choice-medium-vector-graphic [contains]
+- → intent-choice-page_length-long [contains]
+- → intent-choice-page_length-medium [contains]
+- → intent-choice-page_length-short [contains]
+- → intent-choice-register-everyday [contains]
+- → intent-choice-register-luxury [contains]
+- → intent-choice-register-premium [contains]
+- → intent-choice-surface-dark [contains]
+- → intent-choice-surface-light [contains]
+- → intent-choice-surface-mid [contains]
+- → patterns-index [derives_from]
+- → w1 [used_in]
+- → w3 [used_in]
+- → w4 [used_in]
+- ← patterns-index [contains]
+- ← intent-attribute-craft [index]
+- ← intent-attribute-craft [derives_from]
+- ← intent-attribute-exclusivity [index]
+- ← intent-attribute-exclusivity [derives_from]
+- ← intent-choice-image_style-other-ambiguous [index]
+- ← intent-choice-image_style-other-ambiguous [derives_from]
+- ← intent-attribute-innovation [index]
+- ← intent-attribute-innovation [derives_from]
+- ← intent-attribute-expertise [index]
+- ← intent-attribute-expertise [derives_from]
+- ← intent-choice-image_style-art-deco [index]
+- ← intent-choice-image_style-art-deco [derives_from]
+- ← intent-attribute-luxury [index]
+- ← intent-attribute-luxury [derives_from]
+- ← intent-choice-register-luxury [index]
+- ← intent-choice-register-luxury [derives_from]
+- ← intent-choice-medium-flat-colour-design [index]
+- ← intent-choice-medium-flat-colour-design [derives_from]
+- ← intent-choice-surface-mid [index]
+- ← intent-choice-surface-mid [derives_from]
+- ← intent-attribute-community [index]
+- ← intent-attribute-community [derives_from]
+- ← intent-attribute-reliability [index]
+- ← intent-attribute-reliability [derives_from]
+- ← intent-choice-register-premium [index]
+- ← intent-choice-register-premium [derives_from]
+- ← intent-choice-energy-balanced [index]
+- ← intent-choice-energy-balanced [derives_from]
+- ← intent-choice-medium-photograph [index]
+- ← intent-choice-medium-photograph [derives_from]
+- ← intent-attribute-heritage [index]
+- ← intent-attribute-heritage [derives_from]
+- ← intent-choice-imagery-text-led [index]
+- ← intent-choice-imagery-text-led [derives_from]
+- ← intent-choice-page_length-long [index]
+- ← intent-choice-page_length-long [derives_from]
+- ← intent-choice-image_style-corporate [index]
+- ← intent-choice-image_style-corporate [derives_from]
+- ← intent-attribute-fun [index]
+- ← intent-attribute-fun [derives_from]
+- ← intent-choice-image_style-luxury-fashion [index]
+- ← intent-choice-image_style-luxury-fashion [derives_from]
+- ← intent-attribute-speed [index]
+- ← intent-attribute-speed [derives_from]
+- ← intent-choice-surface-light [index]
+- ← intent-choice-surface-light [derives_from]
+- ← intent-choice-imagery-balanced [index]
+- ← intent-choice-imagery-balanced [derives_from]
+- ← intent-choice-image_style-swiss-international [index]
+- ← intent-choice-image_style-swiss-international [derives_from]
+- ← intent-choice-energy-energetic [index]
+- ← intent-choice-energy-energetic [derives_from]
+- ← intent-choice-register-everyday [index]
+- ← intent-choice-register-everyday [derives_from]
+- ← intent-choice-energy-calm [index]
+- ← intent-choice-energy-calm [derives_from]
+- ← intent-choice-accent-warm [index]
+- ← intent-choice-accent-warm [derives_from]
+- ← intent-choice-image_style-lifestyle [index]
+- ← intent-choice-image_style-lifestyle [derives_from]
+- ← intent-attribute-care [index]
+- ← intent-attribute-care [derives_from]
+- ← intent-attribute-sustainability [index]
+- ← intent-attribute-sustainability [derives_from]
+- ← intent-choice-accent-neutral [index]
+- ← intent-choice-accent-neutral [derives_from]
+- ← intent-choice-image_style-japanese-wabi-sabi [index]
+- ← intent-choice-image_style-japanese-wabi-sabi [derives_from]
+- ← intent-choice-surface-dark [index]
+- ← intent-choice-surface-dark [derives_from]
+- ← intent-choice-page_length-medium [index]
+- ← intent-choice-page_length-medium [derives_from]
+- ← intent-choice-image_style-retro-50s-90s [index]
+- ← intent-choice-image_style-retro-50s-90s [derives_from]
+- ← intent-choice-page_length-short [index]
+- ← intent-choice-page_length-short [derives_from]
+- ← intent-attribute-security [index]
+- ← intent-attribute-security [derives_from]
+- ← intent-choice-image_style-editorial [index]
+- ← intent-choice-image_style-editorial [derives_from]
+- ← intent-choice-medium-infographic-chart [index]
+- ← intent-choice-medium-infographic-chart [derives_from]
+- ← intent-choice-medium-collage [index]
+- ← intent-choice-medium-collage [derives_from]
+- ← intent-choice-medium-typography-only [index]
+- ← intent-choice-medium-typography-only [derives_from]
+- ← intent-choice-image_style-memphis [index]
+- ← intent-choice-image_style-memphis [derives_from]
+- ← intent-choice-medium-vector-graphic [index]
+- ← intent-choice-medium-vector-graphic [derives_from]
+- ← intent-attribute-romance [index]
+- ← intent-attribute-romance [derives_from]
+- ← intent-choice-medium-other-ambiguous [index]
+- ← intent-choice-medium-other-ambiguous [derives_from]
+- ← intent-choice-imagery-image-led [index]
+- ← intent-choice-imagery-image-led [derives_from]
+- ← intent-attribute-calm [index]
+- ← intent-attribute-calm [derives_from]
+- ← intent-choice-medium-pattern-texture [index]
+- ← intent-choice-medium-pattern-texture [derives_from]
+- ← intent-attribute-value [index]
+- ← intent-attribute-value [derives_from]
+- ← intent-choice-accent-cool [index]
+- ← intent-choice-accent-cool [derives_from]
+- ← intent-attribute-confidence [index]
+- ← intent-attribute-confidence [derives_from]
+- ← patterns-index [patterns]
 
 ## knobs (doc)
 - ← design-index [contains]
@@ -3621,9 +4376,6 @@
 ## media-matrix (rubric)
 - ← V.1 [scored_by]
 
-## media-qa (rubric)
-- ← V.8 [scored_by]
-
 ## media-words-first (rubric)
 - ← V.0 [scored_by]
 
@@ -3632,10 +4384,6 @@
 
 ## motion-personality (rubric)
 - ← M.4 [scored_by]
-- ← M.8 [scored_by]
-
-## motion-tokens (rubric)
-- ← M.2 [scored_by]
 
 ## negative-space-gestalt (rubric)
 - ← L.4 [scored_by]
@@ -5695,6 +6443,7 @@
 ## patterns-index (index)
 - → design-index [index]
 - → patterns-taxonomy [contains]
+- → intent-index [contains]
 - → patterns-validation [patterns]
 - → scorer-patterns [patterns]
 - → patterns/README [patterns]
@@ -5747,6 +6496,60 @@
 - → pattern-architecture-project-index-work-grid-cards-n [patterns]
 - → pattern-architecture-home-hero-stacked-hero [patterns]
 - → pattern-architecture-project-case-study-case-study-editorial [patterns]
+- → intent-attribute-craft [patterns]
+- → intent-attribute-exclusivity [patterns]
+- → intent-choice-image_style-other-ambiguous [patterns]
+- → intent-attribute-innovation [patterns]
+- → intent-attribute-expertise [patterns]
+- → intent-choice-image_style-art-deco [patterns]
+- → intent-attribute-luxury [patterns]
+- → intent-choice-register-luxury [patterns]
+- → intent-choice-medium-flat-colour-design [patterns]
+- → intent-choice-surface-mid [patterns]
+- → intent-attribute-community [patterns]
+- → intent-attribute-reliability [patterns]
+- → intent-choice-register-premium [patterns]
+- → intent-choice-energy-balanced [patterns]
+- → intent-choice-medium-photograph [patterns]
+- → intent-attribute-heritage [patterns]
+- → intent-choice-imagery-text-led [patterns]
+- → intent-choice-page_length-long [patterns]
+- → intent-choice-image_style-corporate [patterns]
+- → intent-attribute-fun [patterns]
+- → intent-choice-image_style-luxury-fashion [patterns]
+- → intent-attribute-speed [patterns]
+- → intent-choice-surface-light [patterns]
+- → intent-choice-imagery-balanced [patterns]
+- → intent-choice-image_style-swiss-international [patterns]
+- → intent-choice-energy-energetic [patterns]
+- → intent-choice-register-everyday [patterns]
+- → intent-choice-energy-calm [patterns]
+- → intent-choice-accent-warm [patterns]
+- → intent-choice-image_style-lifestyle [patterns]
+- → intent-attribute-care [patterns]
+- → intent-attribute-sustainability [patterns]
+- → intent-choice-accent-neutral [patterns]
+- → intent-choice-image_style-japanese-wabi-sabi [patterns]
+- → intent-choice-surface-dark [patterns]
+- → intent-choice-page_length-medium [patterns]
+- → intent-choice-image_style-retro-50s-90s [patterns]
+- → intent-index [patterns]
+- → intent-choice-page_length-short [patterns]
+- → intent-attribute-security [patterns]
+- → intent-choice-image_style-editorial [patterns]
+- → intent-choice-medium-infographic-chart [patterns]
+- → intent-choice-medium-collage [patterns]
+- → intent-choice-medium-typography-only [patterns]
+- → intent-choice-image_style-memphis [patterns]
+- → intent-choice-medium-vector-graphic [patterns]
+- → intent-attribute-romance [patterns]
+- → intent-choice-medium-other-ambiguous [patterns]
+- → intent-choice-imagery-image-led [patterns]
+- → intent-attribute-calm [patterns]
+- → intent-choice-medium-pattern-texture [patterns]
+- → intent-attribute-value [patterns]
+- → intent-choice-accent-cool [patterns]
+- → intent-attribute-confidence [patterns]
 - → pattern-portfolio-work-index-work-grid-cards-n [patterns]
 - → pattern-portfolio-contact-contact-form-panel [patterns]
 - → pattern-portfolio-about-content-editorial [patterns]
@@ -5845,6 +6648,44 @@
 - ← pattern-architecture-project-index-work-grid-cards-n [index]
 - ← pattern-architecture-home-hero-stacked-hero [index]
 - ← pattern-architecture-project-case-study-case-study-editorial [index]
+- ← intent-choice-image_style-other-ambiguous [derives_from]
+- ← intent-choice-image_style-art-deco [derives_from]
+- ← intent-choice-register-luxury [derives_from]
+- ← intent-choice-medium-flat-colour-design [derives_from]
+- ← intent-choice-surface-mid [derives_from]
+- ← intent-choice-register-premium [derives_from]
+- ← intent-choice-energy-balanced [derives_from]
+- ← intent-choice-medium-photograph [derives_from]
+- ← intent-choice-imagery-text-led [derives_from]
+- ← intent-choice-page_length-long [derives_from]
+- ← intent-choice-image_style-corporate [derives_from]
+- ← intent-choice-image_style-luxury-fashion [derives_from]
+- ← intent-choice-surface-light [derives_from]
+- ← intent-choice-imagery-balanced [derives_from]
+- ← intent-choice-image_style-swiss-international [derives_from]
+- ← intent-choice-energy-energetic [derives_from]
+- ← intent-choice-register-everyday [derives_from]
+- ← intent-choice-energy-calm [derives_from]
+- ← intent-choice-accent-warm [derives_from]
+- ← intent-choice-image_style-lifestyle [derives_from]
+- ← intent-choice-accent-neutral [derives_from]
+- ← intent-choice-image_style-japanese-wabi-sabi [derives_from]
+- ← intent-choice-surface-dark [derives_from]
+- ← intent-choice-page_length-medium [derives_from]
+- ← intent-choice-image_style-retro-50s-90s [derives_from]
+- ← intent-index [index]
+- ← intent-index [derives_from]
+- ← intent-choice-page_length-short [derives_from]
+- ← intent-choice-image_style-editorial [derives_from]
+- ← intent-choice-medium-infographic-chart [derives_from]
+- ← intent-choice-medium-collage [derives_from]
+- ← intent-choice-medium-typography-only [derives_from]
+- ← intent-choice-image_style-memphis [derives_from]
+- ← intent-choice-medium-vector-graphic [derives_from]
+- ← intent-choice-medium-other-ambiguous [derives_from]
+- ← intent-choice-imagery-image-led [derives_from]
+- ← intent-choice-medium-pattern-texture [derives_from]
+- ← intent-choice-accent-cool [derives_from]
 - ← pattern-portfolio-work-index-work-grid-cards-n [index]
 - ← pattern-portfolio-contact-contact-form-panel [index]
 - ← pattern-portfolio-about-content-editorial [index]
@@ -5936,8 +6777,8 @@
 - → patterns-index [index]
 - → patterns-index [derives_from]
 - → scorer-patterns [derives_from]
-- → w2 [used_in]
-- → w5 [used_in]
+- → w3 [used_in]
+- → w8 [used_in]
 - ← patterns-index [patterns]
 
 ## patterns/README (doc)
@@ -5970,6 +6811,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-architecture (profile)
@@ -5994,6 +6838,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-automotive (profile)
@@ -6018,6 +6865,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-community (profile)
@@ -6042,6 +6892,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-ecommerce (profile)
@@ -6066,6 +6919,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-education (profile)
@@ -6090,6 +6946,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-events (profile)
@@ -6114,6 +6973,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-fashion (profile)
@@ -6138,6 +7000,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-finance (profile)
@@ -6162,6 +7027,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-government (profile)
@@ -6186,6 +7054,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-healthcare (profile)
@@ -6210,6 +7081,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-homes (profile)
@@ -6234,6 +7108,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-hospitality (profile)
@@ -6258,6 +7135,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-jewellery (profile)
@@ -6282,6 +7162,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-legal (profile)
@@ -6306,6 +7189,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-luxury-goods (profile)
@@ -6330,6 +7216,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-marketplace (profile)
@@ -6354,6 +7243,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-media (profile)
@@ -6378,6 +7270,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-nonprofit (profile)
@@ -6402,6 +7297,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-personal-brand (profile)
@@ -6426,6 +7324,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-portfolio (profile)
@@ -6450,6 +7351,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-real-estate (profile)
@@ -6474,6 +7378,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-recruitment (profile)
@@ -6498,6 +7405,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-saas (profile)
@@ -6522,6 +7432,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-services (profile)
@@ -6546,6 +7459,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-technology (profile)
@@ -6570,6 +7486,9 @@
 - → gene-whitespace-band [uses_genes]
 - → gene-gallery-mode [uses_genes]
 - → gene-form-presence [uses_genes]
+- → gene-mood-energy [uses_genes]
+- → gene-mood-register [uses_genes]
+- → gene-image-style [uses_genes]
 - ← design-genome [profiles]
 
 ## reading-path (rubric)
@@ -6927,16 +7846,13 @@
 
 ## scorer-patterns (scorer)
 - → design-index [index]
-- → w2 [used_in]
-- → w5 [used_in]
+- → w3 [used_in]
+- → w8 [used_in]
 - → patterns-index [consumes]
 - → artifact-gate-checks [consumes]
 - → patterns-index [derives_from]
 - ← patterns-validation [derives_from]
 - ← patterns-index [patterns]
-
-## scrim-contrast (rubric)
-- ← V.4 [scored_by]
 
 ## section-build (spec)
 - → design-index [index]
@@ -6946,7 +7862,7 @@
 - → rules-V [uses]
 - → rules-PS [uses]
 - → design-genome [uses]
-- → w5 [used_in]
+- → w3 [used_in]
 - → w6 [used_in]
 - → w7 [used_in]
 - → w8 [used_in]
@@ -7140,9 +8056,6 @@
 ## section-catalog#text-index (composition)
 - ← section-catalog [contains]
 
-## section-type-application (rubric)
-- ← T.7 [scored_by]
-
 ## shape-permissions (rubric)
 - ← S.6 [scored_by]
 
@@ -7161,15 +8074,9 @@
 - ← design-index [templates]
 - ← design-index [templates]
 
-## three-tier-read-order (rubric)
-- ← T.1 [scored_by]
-
 ## tone-errors (rubric)
 - ← W.1 [scored_by]
 - ← W.5 [scored_by]
-
-## type-refusals (rubric)
-- ← T.11 [scored_by]
 
 ## type-restraint (rubric)
 - ← T.0 [scored_by]
@@ -7180,7 +8087,6 @@
 - → card-w0 [has_card]
 - → checklist-w0 [has_checklist]
 - → check_scaffold [gated_by]
-- → check_astro_build [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
@@ -7203,11 +8109,67 @@
 - → check_genotype [gated_by]
 - → check_tiers [gated_by]
 - → check_audit_artifacts [gated_by]
+- → check_mobbin_refs [gated_by]
+- → check_image_discovery [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
 - ← design-index [sequences]
 - ← LAW.DNA [used_in]
+- ← intent-attribute-craft [used_in]
+- ← intent-attribute-exclusivity [used_in]
+- ← intent-choice-image_style-other-ambiguous [used_in]
+- ← intent-attribute-innovation [used_in]
+- ← intent-attribute-expertise [used_in]
+- ← intent-choice-image_style-art-deco [used_in]
+- ← intent-attribute-luxury [used_in]
+- ← intent-choice-register-luxury [used_in]
+- ← intent-choice-medium-flat-colour-design [used_in]
+- ← intent-choice-surface-mid [used_in]
+- ← intent-attribute-community [used_in]
+- ← intent-attribute-reliability [used_in]
+- ← intent-choice-register-premium [used_in]
+- ← intent-choice-energy-balanced [used_in]
+- ← intent-choice-medium-photograph [used_in]
+- ← intent-attribute-heritage [used_in]
+- ← intent-choice-imagery-text-led [used_in]
+- ← intent-choice-page_length-long [used_in]
+- ← intent-choice-image_style-corporate [used_in]
+- ← intent-attribute-fun [used_in]
+- ← intent-choice-image_style-luxury-fashion [used_in]
+- ← intent-attribute-speed [used_in]
+- ← intent-choice-surface-light [used_in]
+- ← intent-choice-imagery-balanced [used_in]
+- ← intent-choice-image_style-swiss-international [used_in]
+- ← intent-choice-energy-energetic [used_in]
+- ← intent-choice-register-everyday [used_in]
+- ← intent-choice-energy-calm [used_in]
+- ← intent-choice-accent-warm [used_in]
+- ← intent-choice-image_style-lifestyle [used_in]
+- ← intent-attribute-care [used_in]
+- ← intent-attribute-sustainability [used_in]
+- ← intent-choice-accent-neutral [used_in]
+- ← intent-choice-image_style-japanese-wabi-sabi [used_in]
+- ← intent-choice-surface-dark [used_in]
+- ← intent-choice-page_length-medium [used_in]
+- ← intent-choice-image_style-retro-50s-90s [used_in]
+- ← intent-index [used_in]
+- ← intent-choice-page_length-short [used_in]
+- ← intent-attribute-security [used_in]
+- ← intent-choice-image_style-editorial [used_in]
+- ← intent-choice-medium-infographic-chart [used_in]
+- ← intent-choice-medium-collage [used_in]
+- ← intent-choice-medium-typography-only [used_in]
+- ← intent-choice-image_style-memphis [used_in]
+- ← intent-choice-medium-vector-graphic [used_in]
+- ← intent-attribute-romance [used_in]
+- ← intent-choice-medium-other-ambiguous [used_in]
+- ← intent-choice-imagery-image-led [used_in]
+- ← intent-attribute-calm [used_in]
+- ← intent-choice-medium-pattern-texture [used_in]
+- ← intent-attribute-value [used_in]
+- ← intent-choice-accent-cool [used_in]
+- ← intent-attribute-confidence [used_in]
 - ← rules-DNA [used_in]
 - ← rules-DM [used_in]
 - ← design-index [sequences]
@@ -7226,21 +8188,12 @@
 - → VG.4 [enforces_at]
 - → card-w2 [has_card]
 - → checklist-w2 [has_checklist]
-- → check_direction_axes [gated_by]
-- → check_genotype [gated_by]
-- → check_genotype_distinct [gated_by]
-- → check_burst [gated_by]
-- → check_declared_breaks [gated_by]
-- → check_wildcard [gated_by]
-- → check_dark_mode [gated_by]
-- → check_variants [gated_by]
+- → check_content_inventory [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
 - ← design-index [sequences]
 - ← LAW.DNA [used_in]
-- ← patterns-validation [used_in]
-- ← scorer-patterns [used_in]
 - ← rules-B [used_in]
 - ← rules-C [used_in]
 - ← rules-M [used_in]
@@ -7280,26 +8233,84 @@
 - → W.8 [enforces_at]
 - → card-w3 [has_card]
 - → checklist-w3 [has_checklist]
-- → check_system_enums [gated_by]
-- → check_spacing_scale [gated_by]
-- → check_breakpoints [gated_by]
-- → check_content_width [gated_by]
-- → check_contrast [gated_by]
-- → check_type_system [gated_by]
-- → check_tailwind_derivation [gated_by]
-- → check_tile_is_system [gated_by]
-- → check_no_emoji [gated_by]
-- → check_neutral_tint [gated_by]
-- → check_proximity [gated_by]
-- → check_border_widths [gated_by]
-- → check_reduced_motion [gated_by]
-- → check_dark_mode [gated_by]
-- → check_astro_build [gated_by]
+- → check_wireframe_tags [gated_by]
+- → check_mobbin_refs [gated_by]
+- → check_wireframe_lock [gated_by]
+- → check_section_enums [gated_by]
+- → check_speech_acts [gated_by]
+- → check_emphasis [gated_by]
+- → check_motif [gated_by]
+- → check_rhythm [gated_by]
+- → check_vector_map [gated_by]
+- → check_schema_fields [gated_by]
+- → check_genotype [gated_by]
+- → check_burst [gated_by]
+- → check_declared_breaks [gated_by]
+- → check_wildcard [gated_by]
+- → check_section_contracts [gated_by]
+- → check_layout_distinct [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
+- ← section-build [used_in]
 - ← design-index [sequences]
 - ← LAW.DNA [used_in]
+- ← patterns-validation [used_in]
+- ← scorer-patterns [used_in]
+- ← intent-attribute-craft [used_in]
+- ← intent-attribute-exclusivity [used_in]
+- ← intent-choice-image_style-other-ambiguous [used_in]
+- ← intent-attribute-innovation [used_in]
+- ← intent-attribute-expertise [used_in]
+- ← intent-choice-image_style-art-deco [used_in]
+- ← intent-attribute-luxury [used_in]
+- ← intent-choice-register-luxury [used_in]
+- ← intent-choice-medium-flat-colour-design [used_in]
+- ← intent-choice-surface-mid [used_in]
+- ← intent-attribute-community [used_in]
+- ← intent-attribute-reliability [used_in]
+- ← intent-choice-register-premium [used_in]
+- ← intent-choice-energy-balanced [used_in]
+- ← intent-choice-medium-photograph [used_in]
+- ← intent-attribute-heritage [used_in]
+- ← intent-choice-imagery-text-led [used_in]
+- ← intent-choice-page_length-long [used_in]
+- ← intent-choice-image_style-corporate [used_in]
+- ← intent-attribute-fun [used_in]
+- ← intent-choice-image_style-luxury-fashion [used_in]
+- ← intent-attribute-speed [used_in]
+- ← intent-choice-surface-light [used_in]
+- ← intent-choice-imagery-balanced [used_in]
+- ← intent-choice-image_style-swiss-international [used_in]
+- ← intent-choice-energy-energetic [used_in]
+- ← intent-choice-register-everyday [used_in]
+- ← intent-choice-energy-calm [used_in]
+- ← intent-choice-accent-warm [used_in]
+- ← intent-choice-image_style-lifestyle [used_in]
+- ← intent-attribute-care [used_in]
+- ← intent-attribute-sustainability [used_in]
+- ← intent-choice-accent-neutral [used_in]
+- ← intent-choice-image_style-japanese-wabi-sabi [used_in]
+- ← intent-choice-surface-dark [used_in]
+- ← intent-choice-page_length-medium [used_in]
+- ← intent-choice-image_style-retro-50s-90s [used_in]
+- ← intent-index [used_in]
+- ← intent-choice-page_length-short [used_in]
+- ← intent-attribute-security [used_in]
+- ← intent-choice-image_style-editorial [used_in]
+- ← intent-choice-medium-infographic-chart [used_in]
+- ← intent-choice-medium-collage [used_in]
+- ← intent-choice-medium-typography-only [used_in]
+- ← intent-choice-image_style-memphis [used_in]
+- ← intent-choice-medium-vector-graphic [used_in]
+- ← intent-attribute-romance [used_in]
+- ← intent-choice-medium-other-ambiguous [used_in]
+- ← intent-choice-imagery-image-led [used_in]
+- ← intent-attribute-calm [used_in]
+- ← intent-choice-medium-pattern-texture [used_in]
+- ← intent-attribute-value [used_in]
+- ← intent-choice-accent-cool [used_in]
+- ← intent-attribute-confidence [used_in]
 - ← rules-G [used_in]
 - ← rules-C [used_in]
 - ← rules-P [used_in]
@@ -7316,7 +8327,14 @@
 ## w4 (wave)
 - → card-w4 [has_card]
 - → checklist-w4 [has_checklist]
-- → check_content_inventory [gated_by]
+- → check_direction_axes [gated_by]
+- → check_genotype [gated_by]
+- → check_genotype_distinct [gated_by]
+- → check_burst [gated_by]
+- → check_declared_breaks [gated_by]
+- → check_wildcard [gated_by]
+- → check_dark_mode [gated_by]
+- → check_variants [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
@@ -7420,6 +8438,60 @@
 - ← pattern-architecture-home-hero-stacked-hero [used_in]
 - ← pattern-architecture-project-case-study-case-study-editorial [used_in]
 - ← pattern-architecture-project-case-study-case-study-editorial [used_in]
+- ← intent-attribute-craft [used_in]
+- ← intent-attribute-exclusivity [used_in]
+- ← intent-choice-image_style-other-ambiguous [used_in]
+- ← intent-attribute-innovation [used_in]
+- ← intent-attribute-expertise [used_in]
+- ← intent-choice-image_style-art-deco [used_in]
+- ← intent-attribute-luxury [used_in]
+- ← intent-choice-register-luxury [used_in]
+- ← intent-choice-medium-flat-colour-design [used_in]
+- ← intent-choice-surface-mid [used_in]
+- ← intent-attribute-community [used_in]
+- ← intent-attribute-reliability [used_in]
+- ← intent-choice-register-premium [used_in]
+- ← intent-choice-energy-balanced [used_in]
+- ← intent-choice-medium-photograph [used_in]
+- ← intent-attribute-heritage [used_in]
+- ← intent-choice-imagery-text-led [used_in]
+- ← intent-choice-page_length-long [used_in]
+- ← intent-choice-image_style-corporate [used_in]
+- ← intent-attribute-fun [used_in]
+- ← intent-choice-image_style-luxury-fashion [used_in]
+- ← intent-attribute-speed [used_in]
+- ← intent-choice-surface-light [used_in]
+- ← intent-choice-imagery-balanced [used_in]
+- ← intent-choice-image_style-swiss-international [used_in]
+- ← intent-choice-energy-energetic [used_in]
+- ← intent-choice-register-everyday [used_in]
+- ← intent-choice-energy-calm [used_in]
+- ← intent-choice-accent-warm [used_in]
+- ← intent-choice-image_style-lifestyle [used_in]
+- ← intent-attribute-care [used_in]
+- ← intent-attribute-sustainability [used_in]
+- ← intent-choice-accent-neutral [used_in]
+- ← intent-choice-image_style-japanese-wabi-sabi [used_in]
+- ← intent-choice-surface-dark [used_in]
+- ← intent-choice-page_length-medium [used_in]
+- ← intent-choice-image_style-retro-50s-90s [used_in]
+- ← intent-index [used_in]
+- ← intent-choice-page_length-short [used_in]
+- ← intent-attribute-security [used_in]
+- ← intent-choice-image_style-editorial [used_in]
+- ← intent-choice-medium-infographic-chart [used_in]
+- ← intent-choice-medium-collage [used_in]
+- ← intent-choice-medium-typography-only [used_in]
+- ← intent-choice-image_style-memphis [used_in]
+- ← intent-choice-medium-vector-graphic [used_in]
+- ← intent-attribute-romance [used_in]
+- ← intent-choice-medium-other-ambiguous [used_in]
+- ← intent-choice-imagery-image-led [used_in]
+- ← intent-attribute-calm [used_in]
+- ← intent-choice-medium-pattern-texture [used_in]
+- ← intent-attribute-value [used_in]
+- ← intent-choice-accent-cool [used_in]
+- ← intent-attribute-confidence [used_in]
 - ← pattern-portfolio-work-index-work-grid-cards-n [used_in]
 - ← pattern-portfolio-work-index-work-grid-cards-n [used_in]
 - ← pattern-portfolio-contact-contact-form-panel [used_in]
@@ -7521,29 +8593,26 @@
 - → W.4 [enforces_at]
 - → card-w5 [has_card]
 - → checklist-w5 [has_checklist]
-- → check_wireframe_tags [gated_by]
-- → check_mobbin_refs [gated_by]
-- → check_wireframe_lock [gated_by]
-- → check_section_enums [gated_by]
-- → check_speech_acts [gated_by]
-- → check_emphasis [gated_by]
-- → check_motif [gated_by]
-- → check_rhythm [gated_by]
-- → check_vector_map [gated_by]
-- → check_schema_fields [gated_by]
-- → check_genotype [gated_by]
-- → check_burst [gated_by]
-- → check_declared_breaks [gated_by]
-- → check_wildcard [gated_by]
-- → check_section_contracts [gated_by]
+- → check_system_enums [gated_by]
+- → check_spacing_scale [gated_by]
+- → check_breakpoints [gated_by]
+- → check_content_width [gated_by]
+- → check_contrast [gated_by]
+- → check_type_system [gated_by]
+- → check_tailwind_derivation [gated_by]
+- → check_tile_is_system [gated_by]
+- → check_no_emoji [gated_by]
+- → check_neutral_tint [gated_by]
+- → check_proximity [gated_by]
+- → check_border_widths [gated_by]
+- → check_reduced_motion [gated_by]
+- → check_dark_mode [gated_by]
+- → check_dark_toggle [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
-- ← section-build [used_in]
 - ← design-index [sequences]
 - ← LAW.DNA [used_in]
-- ← patterns-validation [used_in]
-- ← scorer-patterns [used_in]
 - ← pattern-hospitality-service-detail-content-editorial [used_in]
 - ← pattern-hospitality-service-detail-content-editorial [used_in]
 - ← pattern-hospitality-home-hero-full-bleed [used_in]
@@ -7774,7 +8843,11 @@
 - → DM.5 [enforces_at]
 - → E.3 [enforces_at]
 - → E.4 [enforces_at]
+- → I.7 [enforces_at]
+- → L.3 [enforces_at]
+- → M.2 [enforces_at]
 - → M.7 [enforces_at]
+- → M.8 [enforces_at]
 - → P.12 [enforces_at]
 - → P.13 [enforces_at]
 - → P.15 [enforces_at]
@@ -7786,8 +8859,17 @@
 - → PS.5 [enforces_at]
 - → PS.6 [enforces_at]
 - → R.4 [enforces_at]
+- → R.5 [enforces_at]
 - → R.6 [enforces_at]
+- → S.3 [enforces_at]
+- → S.4 [enforces_at]
 - → SB.4 [enforces_at]
+- → T.1 [enforces_at]
+- → T.11 [enforces_at]
+- → T.7 [enforces_at]
+- → V.4 [enforces_at]
+- → V.8 [enforces_at]
+- → W.3 [enforces_at]
 - → card-w7 [has_card]
 - → checklist-w7 [has_checklist]
 - → check_assembly [gated_by]
@@ -7802,9 +8884,12 @@
 - → check_mobile_budget [gated_by]
 - → check_viewport [gated_by]
 - → check_tap_size [gated_by]
+- → check_tile_page_parity [gated_by]
 - → check_rhythm_render [gated_by]
 - → check_copy_density [gated_by]
 - → check_seo_lint [gated_by]
+- → check_mobile_cta [gated_by]
+- → check_measurable [gated_by]
 - → check_dark_mode [gated_by]
 - → check_dark_toggle [gated_by]
 - → check_astro_build [gated_by]
@@ -7838,43 +8923,30 @@
 - → G.4 [enforces_at]
 - → I.4 [enforces_at]
 - → I.6 [enforces_at]
-- → I.7 [enforces_at]
-- → L.3 [enforces_at]
 - → L.4 [enforces_at]
 - → L.5 [enforces_at]
 - → L.6 [enforces_at]
 - → L.9 [enforces_at]
-- → M.2 [enforces_at]
 - → M.3 [enforces_at]
 - → M.4 [enforces_at]
 - → M.5 [enforces_at]
-- → M.8 [enforces_at]
-- → R.5 [enforces_at]
 - → R.7 [enforces_at]
-- → S.3 [enforces_at]
-- → S.4 [enforces_at]
 - → S.6 [enforces_at]
 - → S.7 [enforces_at]
 - → S.8 [enforces_at]
 - → SB.6 [enforces_at]
 - → T.0 [enforces_at]
-- → T.1 [enforces_at]
 - → T.10 [enforces_at]
-- → T.11 [enforces_at]
 - → T.5 [enforces_at]
-- → T.7 [enforces_at]
 - → T.9 [enforces_at]
 - → V.0 [enforces_at]
 - → V.1 [enforces_at]
-- → V.4 [enforces_at]
 - → V.5 [enforces_at]
 - → V.7 [enforces_at]
-- → V.8 [enforces_at]
 - → VG.5 [enforces_at]
 - → VG.6 [enforces_at]
 - → W.1 [enforces_at]
 - → W.10 [enforces_at]
-- → W.3 [enforces_at]
 - → W.5 [enforces_at]
 - → W.6 [enforces_at]
 - → W.7 [enforces_at]
@@ -7894,6 +8966,8 @@
 - ← section-build [used_in]
 - ← design-index [sequences]
 - ← LAW.DNA [used_in]
+- ← patterns-validation [used_in]
+- ← scorer-patterns [used_in]
 - ← rules-B [used_in]
 - ← rules-G [used_in]
 - ← rules-C [used_in]

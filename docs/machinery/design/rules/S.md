@@ -133,11 +133,11 @@ elevation, sharp geometry gets none:
 
 | Level | Shadow token | Blur | Paired radius |
 |---|---|---|---|
-| L0 | `shadow-none` | 0 | any |
-| L1 | `shadow-xs` | 2–4px | `radius-md` |
-| L2 | `shadow-md` | 8–12px | `radius-lg` |
-| L3 | `shadow-lg` | 16–24px | `radius-xl` |
-| L4 | `shadow-xl` | 32–48px | `radius-xl` / `radius-full` |
+| E0 | `shadow-none` | 0 | any |
+| E1 | `shadow-xs` | 2–4px | `radius-md` |
+| E2 | `shadow-md` | 8–12px | `radius-lg` |
+| E3 | `shadow-lg` | 16–24px | `radius-xl` |
+| E4 | `shadow-xl` | 32–48px | `radius-xl` / `radius-full` |
 
 A deep shadow on a sharp corner is a defect — the same rule as L.8's
 "soft shadows, subtle never hard-edge," stated from the shape side.

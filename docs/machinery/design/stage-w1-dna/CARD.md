@@ -4,7 +4,7 @@ type: card
 wave: w1
 links:
   uses: [rules-P, rules-DNA, rules-DM, rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, dna-map, image-brief]
-  enforced_by: [check_mobbin_auth, check_design_mode, check_intent, check_audit_artifacts, check_genotype, check_mobbin_refs, check_image_discovery, check_dna, check_dna_fresh]
+  enforced_by: [check_mobbin_auth, check_design_mode, check_intent, check_genotype, check_tiers, check_audit_artifacts, check_mobbin_refs, check_image_discovery, check_checklist, check_dna, check_dna_fresh]
 ---
 
 # W1 — DNA + audit (intake, evidence, vertical profile)

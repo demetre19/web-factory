@@ -1,15 +1,15 @@
 ---
-id: card-w4
+id: card-w2
 type: card
-wave: w4
+wave: w2
 links:
   uses: [rules-E, rules-W, rules-R, rules-P]
-  enforced_by: [check_content_inventory]
+  enforced_by: [check_content_inventory, check_checklist, check_dna, check_dna_fresh]
 ---
 
-# W4 — Content in (STUB → inventory → copy contract)
+# W2 — Content in (STUB → inventory → copy contract)
 
-**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable** — W4
+**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable** — W2
 adds no markup; it fixes the words every later Astro section renders
 verbatim. (P.1)
 

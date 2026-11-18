@@ -54,15 +54,15 @@ is the design-DNA loss this file exists to prevent.
 |---|---|---|---|
 | **W0** scaffold | `site/` from `templates/astro/` | The one Astro + Tailwind project | `gate.py w0` — scaffold, pins, build exits 0 |
 | **W1** DNA + audit | this file's `site:`; `audit.md`; `MOBBIN-REFS.md`; **`DNA.json` v0 at exit** | Intent, the six direction axes, the map (profile + genotype + seeded knobs + vector targets) | `gate.py w1` + `gate.py dna` — Mobbin, intent, audit, genotype total, map complete and provenance-tagged |
-| **W2** look & feel | `options:` — ≥2 direction tiles as distinct genotype vectors | The aesthetic, chosen by the operator | `gate.py w2` — axes ∈ enums, ≥2 distinct genotypes, burst declared |
-| **W3** system | `system:` → `TOKENS.json` → `tailwind.config` + `global.css` + `system.astro` | Every number bound, rendered on the tile | `gate.py w3` — enums, spacing, breakpoints, contrast, config derived, build 0 |
-| **W4** content | STUB → content inventory | Copy contract: heading vector + `fs` + body blocks | `gate.py w4` — inventory complete, verbatim headings |
-| **W5** structure | `pages.<slug>.sections[]` 1:1 from the picked card (`wf_ref`) + `sections/*.contract.json` | The argument as boxes; the wireframe lock | `gate.py w5` — data-* 1:1, rhythm/motif, vector, genotype, contracts |
+| **W2** content | STUB → content inventory | Copy contract: heading vector + `fs` + body blocks | `gate.py w2` — inventory complete, verbatim headings |
+| **W3** layout round | `options:` — ≥5 layout cards on real copy; `pages.<slug>.sections[]` 1:1 from the picked card (`wf_ref`) + `sections/*.contract.json` | The argument as boxes; the layout lock | `gate.py w3` — ≥5 options, ≥30% pairwise distance, data-* 1:1, rhythm/motif, vector, genotype, contracts |
+| **W4** look round | `options:` — 3 visual directions as distinct genotype vectors on the picked layout | The aesthetic, chosen by the operator | `gate.py w4` — axes ∈ enums, ≥2 distinct genotypes, burst declared |
+| **W5** system | `system:` → `TOKENS.json` → `tailwind.config` + `global.css` + `preview/system.html` | Every number bound, rendered on the tile | `gate.py w5` — enums, spacing, breakpoints, contrast, config derived |
 | **W6** components | `src/components/sections/<Sec>.astro` per section + `src/components/*.astro` + tile | Each section built and gated alone | `gate.py w6` — shell, allowed classes, section gates, exemplars, build 0 |
 | **W7** page | `assemble.py` → `src/pages/<slug>.astro`; `dist/` | The page, assembled mechanically from plan order | `gate.py w7` — assembly, data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6 |
 | **W8** review | independent `REVIEW.json` + screenshots 1280/768/360; `SCORECARD.json` | The verdict, by a different model | `gate.py w8` — review complete, every section ≥ 90, style rubric |
 
-**Order note:** W5 (boxes) precedes W6/W7 deliberately — the argument
+**Order note:** W3 (boxes) precedes W4–W7 deliberately — the argument
 is verified cheaply *before* the system spends a pixel, and each
 section is built and gated in isolation (`SECTION-BUILD.md`). The page
 file is generated (`assemble.py`), never written by a model.
@@ -77,13 +77,13 @@ never self-graded.
 `clamp()` scale (Utopia), `system.space` is the G.1 set applied
 everywhere, `system.color` is the C.1 6-role map, `system.grid`
 `edge_padding`/`breakpoints`/`stack_order` is R.2's closed ramp.
-Nothing downstream of W3 chooses a number — it binds a token. A
+Nothing downstream of W5 chooses a number — it binds a token. A
 literal `px`/`hex`/`rem` in page or component code that isn't a token
 reference is a refuse, same class as a literal hex outside TOKENS.
 
 **The index** (where each agent reads): W1 `direction` + `dna` → W3
-`system.*` → W5 `sections[].surface/.density/.composition` + the
-section's `contract.json` → W6 the rules its CARD names. An agent at
+`sections[].surface/.density/.composition` + the section's
+`contract.json` → W5 `system.*` → W6 the rules its CARD names. An agent at
 any wave has *exactly one* upstream artifact to consult; it never
 reaches two waves up, never sideways. If a field it needs isn't filled
 above, the correct move is `prd_step` back, not a default.
@@ -117,7 +117,7 @@ above, the correct move is `prd_step` back, not a default.
    cannot answer typography, colour, or feel (that's
    `preview/system.html`). Not a committed artifact; the sketch lives
    in the lane's working notes, the fixes land in `decisions[]`.
-   This is the W5 gate — the page argument is verified as *boxes*
+   This is the W3 gate — the page argument is verified as *boxes*
    before a single pixel is spent; the rows then become the section
    contracts (`gate.py contracts`).
 6. `preview/system.html` next — every surface × every density × every
@@ -125,7 +125,7 @@ above, the correct move is `prd_step` back, not a default.
    DOX branch: copy packet `designs/design-system.html` to
    `preview/system.html` rather than regenerating. Template/exemplar:
    `templates/system-tile/` — the colour system section is mandatory:
-   every agent downstream reads roles from it. This is the L3
+   every agent downstream reads roles from it. This is the W5
    gate — the *system* is verified on a tile before any page exists.
 7. W6/W7 downstream — one builder per section returns
    `src/components/sections/<Sec>.astro` (contract + card + exemplar
@@ -173,7 +173,7 @@ touch `direction` or `system` numbers.
 **Gate:** fields tagged `extracted`/`snapped` are ratified when the
 plan is reviewed — the tag is the audit trail. `inferred` fields are
 listed in `decisions[]` as *open* until the operator confirms; a
-plan with an unconfirmed `inferred` axis is incomplete at L0.
+plan with an unconfirmed `inferred` axis is incomplete at W1 exit.
 
 ```yaml
 # Every system value carries a provenance tag: extracted | snapped | inferred | chosen.
@@ -265,7 +265,7 @@ site:
   # gate fails (DM.3).
   dna:
     map: DNA.json                          # LAW.DNA — hash carried by every artifact
-    version: 0                             # 0 at W1 exit, 1 locked at W3 exit
+    version: 0                             # 0 at W1 exit, 1 locked at W5 exit
     profile: profile-<vertical>            # dna/<vertical>.md (genome statistics)
     genotype:                              # one allele per gene, closed sets only
       layout-archetype: <allele>           # genes: dna/GENOME.md (20 genes)
@@ -335,7 +335,7 @@ pages:
       - {…one row per section, in rhetoric order…}
   # …one entry per route/SPEC…
 
-# ---- W2 direction options — each a distinct genotype vector (D.3) ----
+# ---- W4 look options — each a distinct genotype vector (D.3) ----
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3-friendly}
   - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}

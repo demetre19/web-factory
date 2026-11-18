@@ -22,7 +22,7 @@ rules.
 
 **Design machinery (read before any design decision):**
 `docs/machinery/design/INDEX.md` — the nine waves (W0 scaffold → W1 DNA
-+ audit → W2 look & feel → W3 system → W4 content → W5 structure → W6
++ audit → W2 content → W3 layout round → W4 look round → W5 system → W6
 components → W7 page → W8 review), the stage cards, the rulebooks
 (`design/rules/`, IDs T/C/L/G/S/I/V/M/R/W/E/P/PS/DNA/B/SB) and the gate
 commands. First move in any wave: `python3 tools/design-gate/rules.py

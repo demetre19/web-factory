@@ -4,7 +4,7 @@ type: card
 wave: w0
 links:
   uses: [rules-P]
-  enforced_by: [check_scaffold, check_astro_build]
+  enforced_by: [check_scaffold, check_checklist, check_dna, check_dna_fresh]
 ---
 
 # W0 — Project scaffold (Astro + Tailwind, once)

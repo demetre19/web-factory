@@ -21,10 +21,10 @@ no design value may exist that does not trace to it.
 | W0 scaffold | — | Astro + Tailwind project exists. No DNA map yet |
 | W1 discovery | — (inputs only) | Operator likes/dislikes of the current site; comparison sites; example/reference sites; Mobbin refs; audit + keep-list. Extract INVARIANTS: accent colour, logo, brand fonts (when present), photography, tone. **No DNA map is written during discovery** |
 | W1 exit → DNA v0 | **created (starting point)** | Built only from discovery outputs + the PATTERN LIBRARY + VECTORS: invariants bind verbatim (`extracted`); likes/dislikes become constraints; the vertical DNA profile is pulled from `dna/<vertical>` (genome statistics); genotype + baseline knobs = nearest proven genotypes from `patterns.py search` (genome + text + image similarity), each cited by pattern ID; vector targets (ease of use, clarity, layout, typography, colour, rhythm, imagery, trust, conversion, SEO, mobile, speed, a11y) set from the current-site rating gaps + vertical norms. Gate: every invariant present, every field provenance-tagged, every genotype/knob value cites ≥1 pattern ID or a logged reason |
-| W2 look | **baseline chosen** | Look options = distinct knob vectors derived from DNA v0 (invariants fixed across all options); operator pick → baseline knobs |
-| W3 design system | **locked v1** | Baseline renders as the system sheet (light + dark); sheet passes gates → map locked, hash issued |
-| W4 content | read | Content inventory checked against the locked map (nothing in content may require an off-map value) |
-| W5 structure | read + rhythm plan | Page rhythm (surfaces, densities, contrast moment, motif) written INTO the map; wireframe lock |
+| W2 content | read | Content inventory checked against the locked map (nothing in content may require an off-map value) |
+| W3 layout round | read + rhythm plan | Page rhythm (surfaces, densities, contrast moment, motif) written INTO the map; ≥5 layout options; layout pick locks page structure (`structure_hash`) |
+| W4 look round | **baseline chosen** | Look options = distinct knob vectors derived from DNA v0 (invariants fixed across all options); operator pick → baseline knobs |
+| W5 design system | **locked v1** | Baseline renders as the system sheet (light + dark); sheet passes gates → map locked, hash issued |
 | W6 components | read | Components bind only to map tokens/knobs |
 | W7 page | read | Sections carry the map hash; mechanical glue |
 | W8 review + variants | read + deltas | Variants = baseline + knob deltas; each variant renders its own system sheet first, then the page |
@@ -78,10 +78,10 @@ components, which is why gluing stays coherent.
 ## Enforcement (`gate.dna`, runs inside every wave gate)
 
 FAIL if:
-1. DNA map missing, incomplete, or not locked by W3 exit.
+1. DNA map missing, incomplete, or not locked by W5 exit.
 2. Any artifact's recorded DNA hash ≠ current map hash.
 3. Any token, knob, allele or colour used that is not in the map.
-4. A variant's knobs are not `baseline + declared deltas`, or a delta is out of range (wildcard may exceed stylistic knobs only, per BX rules).
+4. A variant's knobs are not `baseline + declared deltas`, or a delta is out of range (wildcard may exceed stylistic knobs only, per rules/B.md).
 5. A variant page exists without its own passing system sheet.
 6. A section deviates from the map's rhythm plan.
 7. Light or dark mode missing for any role.

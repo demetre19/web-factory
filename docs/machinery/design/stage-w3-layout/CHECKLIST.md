@@ -1,13 +1,13 @@
 ---
-id: checklist-w5
+id: checklist-w3
 type: checklist
-wave: w5
+wave: w3
 links:
   index: design-index
-  card: card-w5
+  card: card-w3
 ---
 
-# W5 checklist — page-structure evidence
+# W3 checklist — page-structure evidence
 
 Copy into `<pipeline-dir>/CHECKLIST/w5.md`. Evidence = section slug,
 row number, or `decisions[]` entry. Blank = fail (P.9).

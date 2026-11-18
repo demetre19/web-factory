@@ -1155,7 +1155,7 @@ def check_wireframe_tags(ctx):
                  '(every design covers the same sections)')
     did = ctx.design_id()
     if did and sec_sets and did not in sec_sets:
-        f.append(f'W2: --design {did} not a card in the wireframe '
+        f.append(f'W3: --design {did} not a card in the wireframe '
                  f'(have {sorted(sec_sets)})')
     return f
 
@@ -1365,7 +1365,7 @@ def check_tile_is_system(ctx):
     if tile is None:
         tile = ctx.read('site/src/pages/system.astro')
     if tile is None:
-        return ['P.1 system sheet missing — preview/system.html (W3) or '
+        return ['P.1 system sheet missing — preview/system.html (W5) or '
                 'src/pages/system.astro (W6+)']
     comp_names = {os.path.splitext(c)[0] for c in ctx.components()} - {'Section'}
     if is_html:
@@ -2849,7 +2849,8 @@ def dna_map(ctx):
 
 # ---- split hashes (F05)
 #
-# One map, three locks: the site LOOK locks at W3, page STRUCTURE at W5,
+# One map, three locks: page STRUCTURE locks at W3, the site LOOK at W4,
+# the system at W5,
 # variant deltas at W8. Each lock hashes only its own slice, so a legal
 # addition in a later wave cannot void an earlier operator approval.
 STRUCTURE_GENES = ('layout-archetype', 'page-macro-structure',
@@ -2888,7 +2889,7 @@ def dna_hashes(m):
 
 
 def dna_hash_of(m):
-    """The LOOK hash — what every artifact built before W5 binds to."""
+    """The LOOK hash — what every artifact built before W3 binds to."""
     return dna_slices(m).get('core', '') if m else ''
 
 
@@ -2994,7 +2995,7 @@ def check_dna(ctx):
     """Conditions 1, 3, 6, 7 (+ completeness and knob ranges).
 
     Wave-scoped: W0 has no map (DNA-MAP.md); rhythm is a W5 artifact and
-    variants start at W2, so those parts are only required from then on.
+    variants start at W4, so those parts are only required from then on.
     """
     f = []
     wave = getattr(ctx, 'wave', None)
@@ -3692,7 +3693,10 @@ def assemble_variants(ctx, page_pane=True):
     for e in entries:
         vid = e['id']
         deltas = e.get('deltas') or {}
-        breaks = ', '.join(e.get('wildcard_breaks') or []) or 'none'
+        breaks = ', '.join(
+            (f"{b.get('gene')}: {b.get('from')}→{b.get('to')}"
+             if isinstance(b, dict) else str(b))
+            for b in (e.get('wildcard_breaks') or [])) or 'none'
         diff = ', '.join(f'{k} {base.get(k)}→{v}'
                          for k, v in sorted(deltas.items())) or 'baseline'
         vs = {**_knob_vars(base, base, knobs), **_knob_vars(deltas, base,

@@ -106,7 +106,7 @@ Source: operator layout SOP §2 (Brad Frost). Components are built
 bottom-up from atoms:
 
 - **Atoms** — color tokens, type ranks, buttons, labels, inputs
-  (PRIMITIVES §T/§C/§G outputs).
+  (rules/T.md, rules/C.md, rules/G.md outputs).
 - **Molecules** — functional units: search bar, form field pair,
   card, testimonial (COMPONENTS.md entries).
 - **Organisms** — sections: header, hero, footer, a composed block
