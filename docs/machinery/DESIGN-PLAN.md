@@ -45,7 +45,18 @@ after flatten, not before SPECs.
    refs modes, extracted evidence overrides plan defaults; every
    override is logged in `decisions[]`.
 4. `pages:` map — per route, its own intent/idea/rhetoric/sections.
-5. `preview/system.html` next — every surface × every density × every
+5. **ASCII draft + critique** — render the money page's `sections[]`
+   as ASCII boxes (one per row, annotated with
+   `speech_act`/`surface`/`density`/`composition`), then run the
+   rubric reviewer against the sketch *before* rendering. ASCII is
+   the cheap draft surface the critique loop works on: adjacency
+   violations, flat clustering, a missing contrast moment, a wrong
+   composition pick all get caught and fixed in the `sections[]` rows
+   before any HTML exists. It answers "are the boxes right" — it
+   cannot answer typography, colour, or feel (that's
+   `preview/system.html`). Not a committed artifact; the sketch lives
+   in the lane's working notes, the fixes land in `decisions[]`.
+6. `preview/system.html` next — every surface × every density × every
    type rank × buttons/fields/cards — then page previews (F6).
    DOX branch: copy packet `designs/design-system.html` to
    `preview/system.html` rather than regenerating.
