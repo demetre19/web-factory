@@ -105,8 +105,14 @@ wireframe instantly — same page, no navigation, no scrolling back.
 Each design is a complete wireframe of the full money page: media as
 outlined boxes with a diagonal X, body copy as rounded grey bars,
 buttons as outlined rects with real short labels, disclosure folds as
-outlined `▸` rows kept closed, logos and cert marks as small
-outlined squares. Headings are real text — the **per-direction type
+outlined `▸` rows kept closed, logos and cert marks as outlined
+slots. Logo/cert strips distribute evenly across the content width
+(space-between or equal grid cells), landscape slots of one size —
+a left-clustered logo row is a defect. Primitives available: X-box
+media, video, copy bars, real headings, outlined CTA, folds, logo
+strip, stat blocks, inverse panel, form. Nav collapses to a burger
+below tablet — one row always. Headings are real text —
+the **per-direction type
 scale is the only real design value on a card**: correct ranks
 (`clamp()` in `cqi` units), the H1 query-small on a detail page, the
 claim at display rank, macro H2s readable, fold labels smaller still.

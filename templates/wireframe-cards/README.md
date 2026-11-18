@@ -31,3 +31,12 @@ Every card set is instantiated from this template, never hand-rolled.
 The primitives, per-design variables and rules are documented in the
 HTML comment header of `index.html`. The shipped three cards are the
 worked example (Whistle Clean — End of Lease Cleaning Melbourne).
+
+## Primitives
+
+X-box media (21:9 · 3:4 · 4:3 · 16:9 + icon), video (play circle +
+duration chip + caption bar), copy bars, real headings, outlined CTA,
+folds, logo/cert strip (equal grid cells), stat blocks, inverse panel,
+form (outlined ≥44px fields, noun labels, faint placeholder bars),
+burger + drawer (nav collapse below tablet). All grey, G.1 spacing.
+
