@@ -65,6 +65,9 @@ section built as a `split-hero` is a defect).
 | `badge-center` | single centered badge/statement | `proof`, `objection` | Guarantees, certifications. |
 | `media-gallery` | grid of images, no text blocks | `detail` | For before/after, portfolio. |
 | `form-panel` | form + supporting copy, two zones | `act` (contact) | The only place a form lives. |
+| `app-band` | text + phone mockup | `detail` | Real sites: 3/5 carry one. |
+| `hero-act-merge` | promise + embedded search/form/zip input | `promise`+`act` | Service sites: the hero IS the first action. |
+| `link-grid` | city/area/category link grid | `detail` | Service-area pages + marketplaces (hipages, taskrabbit). |
 
 **Banned as composition rows:** icon+heading+text card grids *used as
 a substitute for a real composition*; "eyebrow + h2 + 3-col card"
@@ -74,37 +77,34 @@ repeated on consecutive sections; any layout that is just
 ## 3. Page-type canonical sequences
 
 `page_class` (from `sitemap.md` / content `type`) picks the sequence.
-A sequence is a checklist, not a cage — a section may be omitted, but
-never invented outside the catalog.
-
-### `money` (service / product / quote)
-`promise → proof → tension → how → detail* → objection → act`
-- hero = `promise`; proof-band immediate; at least one `how` and one
-  `objection`; ends on `act` (full-bleed) or `form-panel` on contact.
-
-### `article` (blog / guide)
-`promise → tension → detail* → objection? → act`
-- editorial-first; proof optional; act may be a soft CTA, not the
-  full-bleed money CTA.
-
-### `ancillary` (about / areas / utility)
-`promise → detail* → act`
-- shorter; proof optional; act is the contact route.
-
+A sequence is a *reference skeleton*, not a required order — verified
+real pages interleave `detail`/`proof`/`objection` differently
+(`research/CATALOG-VERIFICATION.md`). Hard invariants: promise first,
+act first-and-last, exactly one contrast moment. Reordering the middle
+is allowed only by editing `DESIGN-PLAN.md` and logging why.
 ## 4. Adjacency and repetition rules (the rhythm rule)
 
-- Adjacent sections MAY NOT share the same `(surface, density,
-  composition)` triple.
-- No more than 2 `cards-n` sections per page; never adjacent.
-- `inverse` surfaces ≤ 2 per page + footer; `brand` ≤ 1 per page.
+Verified against 5 real service-business pages
+(`research/CATALOG-VERIFICATION.md`); corrected once already.
+
+- Adjacent sections MAY NOT share the same `composition`. Surface
+  alternation is the *recommendation*, not a hard rule — real good
+  pages often hold one light surface for most of the page (Urban
+  Company runs ~80% on one base) and spend ONE contrast moment, not a
+  checkerboard. The checkable rule is composition variety + the
+  contrast moment + the fold boundary, not forced alternation.
+- `inverse` surfaces ≤ 2 per page + footer; `brand` ≤ 1 per page —
+  verified: every observed page has exactly one contrast moment.
 - `spacious` density is spent at `promise` and `act` — the two rests —
   plus at most one interior section. Uniform `regular` everywhere is the
   "undecided rhythm" defect.
 - The first interior section after the hero is always a different
-  surface than the hero (contrast at the fold boundary).
+  surface than the hero (contrast at the fold boundary) — verified
+  across all 5 captures.
 - `media` surface only under a real image overlay (background image or
   video); never as a tint.
-
+- `act` appears TWICE on a money page: once merged into the hero
+  (search/form/CTA), once late-page. Verified across all 5 captures.
 ## 5. What the distill lane writes instead of a grid
 
 Old (freehand):
