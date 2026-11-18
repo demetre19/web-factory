@@ -7,6 +7,12 @@ the plan, it does not exist — same contract the Design-library uses
 for its Package A ("the designer has no conversation history; the
 plan has to live in files").
 
+Two layers under this file: `docs/machinery/PRIMITIVES.md` (the closed
+sets — typography rules, typeface directory, measure/leading bounds,
+anti-stretch, hero/subhead ratios) and `docs/machinery/SECTION-CATALOG.md`
+(the section compositions the primitives assemble into). The plan
+picks *from* them; it never invents values outside them.
+
 Schema source: `research/DESIGN-FORETHOUGHT.md` §6 + the
 surface/density vocabulary the Design-library already ships
 (`01-CONTRACTS.md` §1.2) + `SECTION-CATALOG.md` (vendored here, not
@@ -190,6 +196,10 @@ the coordinator hopes was honored:
 - [ ] `idea` ≤ 25 words per page entry
 - [ ] SPEC `sections[]` == `pages.<slug>.sections[]` (verbatim diff, refs branch)
 - [ ] `preview/system.html` exists
+- [ ] typography QA ∈ `PRIMITIVES.md` §T.8 (fonts ∈ directory, ≤2
+  families, no same-class pairing, measure 52–65ch, body ≥16px,
+  display tracking negative, `text-wrap` set, hero subhead 50–60%,
+  image-overlay tint 40–60%)
 
 "Complete top-to-bottom" stays judgment; the list above is mechanical.
 If a `tools/` lint exists it runs these; otherwise the coordinator
