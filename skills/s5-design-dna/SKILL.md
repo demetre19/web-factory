@@ -59,8 +59,11 @@ rules.
 - Distill: `site/design-dna/` — `DESIGN-PLAN.md` (written first, the
   forethought artifact), `TOKENS.json`, `CLASS-SYSTEM.md`,
   `COMPONENTS.md`, `ROUTE-MANIFEST.json`, `PAGES/<slug>/SPEC.md`,
-  `DESIGN-DNA.md`, `dox/` (verified packet members, flattened; absent
-  on refs-only sites).
+  `DESIGN-DNA.md`, `preview/system.html` (style tile — every surface ×
+  every density × every type rank × buttons/fields/cards,
+  token-sourced, self-contained; DOX branch copies packet
+  `designs/design-system.html`), `dox/` (verified packet members,
+  flattened; absent on refs-only sites).
 - Build: `sites/<slug>/` — normal Astro project (`astro.config.mjs`,
   `src/pages/`, `src/layouts/`, `src/components/`, `src/styles/`,
   `public/`). `dist/` is `.gitignore`d.
@@ -91,10 +94,13 @@ rules.
 ## Acceptance / done criteria
 
 - `site/design-dna/` carries `DESIGN-PLAN.md`, `TOKENS.json`,
-  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md` — all
-  non-empty. `DESIGN-PLAN.md` is complete top-to-bottom per
-  `docs/machinery/DESIGN-PLAN.md`; every SPEC section's `composition`
-  resolves to `docs/machinery/SECTION-CATALOG.md`.
+  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md`,
+  `preview/system.html` — all non-empty. `DESIGN-PLAN.md` is complete
+  top-to-bottom per `docs/machinery/DESIGN-PLAN.md` AND passes its
+  §"Enforcement" mechanical checklist (pages map, composition ∈
+  catalog, category ∈ vendored slugs, adjacency, surface/density
+  budgets, speech_act membership, idea ≤25 words, refs-branch
+  SPEC↔plan verbatim).
 
 - `sites/<slug>/` exists; `astro build` exits 0; `dist/` holds exactly
   one HTML file per `ROUTE-MANIFEST.json` route.

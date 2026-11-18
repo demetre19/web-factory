@@ -1,103 +1,149 @@
 # DESIGN-PLAN.md — the artifact that exists before any page is drawn
 
-Required distill output at `site/design-dna/DESIGN-PLAN.md`. Written
-**before** `PAGES/*/SPEC.md`, before `TOKENS.json` is finalized, before
-any preview HTML. If it isn't in the plan, it does not exist — same
-contract the Design-library uses for its Package A ("the designer has
-no conversation history; the plan has to live in files").
+Required distill output at `site/design-dna/DESIGN-PLAN.md`. On the
+refs branch it is written **before** `PAGES/*/SPEC.md`, before
+`TOKENS.json` is finalized, before any preview HTML. If it isn't in
+the plan, it does not exist — same contract the Design-library uses
+for its Package A ("the designer has no conversation history; the
+plan has to live in files").
 
-Schema source: `research/DESIGN-FORETHOUGHT.md` §6 (the designer-process
-research) + the surface/density vocabulary the Design-library already
-ships (`01-CONTRACTS.md` §1.2).
+Schema source: `research/DESIGN-FORETHOUGHT.md` §6 + the
+surface/density vocabulary the Design-library already ships
+(`01-CONTRACTS.md` §1.2) + `SECTION-CATALOG.md` (vendored here, not
+re-derived).
+
+**Authority order** (F16): this file is the single authority for
+intent, direction, system numbers, and per-section plan rows.
+`INTENT-BRIEF.md`, `CHARACTER.md`, `DESIGN.md` are *inputs* the plan
+consolidates (or views generated from it) — on conflict, the plan
+wins and the stale doc is updated, not argued with.
+
+**Cardinality** (F3): one file per site. `site:` block is shared;
+`pages:` is a map — one entry per route/SPEC. A page entry holds its
+own `intent`/`idea`/`rhetoric`/`sections`.
+
+**DOX branch** (F1): on `design_mode: dox` the packet's SPECs are
+authority — they are copied verbatim and are *exempt* from the
+row-copy acceptance. DESIGN-PLAN on this branch is a *derivation
+record*: `site:` + `direction`/`system` filled from the packet's
+`SYSTEM/*` + `design-manifest.json` sections[] (which already carry
+category/surface/density), with `pages.<slug>.sections[]` rows adding
+the `speech_act`/`composition` assignment the packet lacks. Written
+after flatten, not before SPECs.
 
 ## Fill order
 
-Top to bottom. Prose decisions first (§1–4), numbers second (§5),
-composition third (§6–7). A model that fills §7 before §4 is doing it
-backwards — that is the exact "starting at step 6–7" failure.
+1. `site:` prose decisions (§1–4) — written first, from brief + audit.
+2. Refs inventory pass — read captures/manifest, list candidate tokens.
+3. `system:` numbers (§5) — filled *after* the refs pass (F9). On
+   refs modes, extracted evidence overrides plan defaults; every
+   override is logged in `decisions[]`.
+4. `pages:` map — per route, its own intent/idea/rhetoric/sections.
+5. `preview/system.html` next — every surface × every density × every
+   type rank × buttons/fields/cards — then page previews (F6).
+   DOX branch: copy packet `designs/design-system.html` to
+   `preview/system.html` rather than regenerating.
 
 ```yaml
-meta:
-  site: <slug>
+site:
+  slug: <slug>
   date: <YYYY-MM-DD>
-  design_mode: <intake scenario>          # variants | refs-* | audit-remodel | dox
+  design_mode: <intake scenario>   # variants | inspo-text | refs-* | audit-remodel | dox
   sources: [site-brief.md, refs/MANIFEST.md, design/audit.md?]
 
-# ---- 1. Intent ----
-intent:
-  who: <one noun phrase — the reader, not "users">
-  one_action: <the single verb this page exists to cause>
-  worst_case: <what failure looks like>
+  # ---- shared intent (site-level defaults; pages may sharpen) ----
+  intent:
+    who: <one noun phrase — the reader, not "users">
+    one_action: <the single verb this site exists to cause>
+    worst_case: <what failure looks like>
 
-# ---- 2. One idea ----
-idea: <one sentence ≤25 words the page argues>
-tension:
-  what_is: <reader's current pain>
-  what_could_be: <promised state>
+  # ---- direction — forced pick per axis ----
+  direction:
+    temperature:   warm | cool | neutral
+    density:       sparse | balanced | dense
+    finish:        flat | textured | glossy | raw
+    type_contrast: serif-display/sans-text | mono-accents | single-family-weight-contrast
+    refused:       <the generic default this direction replaces, named>
 
-# ---- 3. Rhetoric sequence ----
-rhetoric:
-  - {act: promise,   question: "what do I get"}
-  - {act: proof,     question: "why believe you"}
-  - {act: tension,   question: "what's wrong now"}
-  - {act: how,       question: "how does it work"}
-  - {act: objection, question: "but what about X"}
-  - {act: act,       question: "what do I do now"}
-# Order MAY change only by editing this block + a decisions[] row why.
+  # ---- system numbers — closed set, every value a token ----
+  system:
+    type:
+      ratio_min: <e.g. 1.2>   ratio_max: <e.g. 1.333>
+      endpoints: {min: {px: 320, base: 16, ratio: 1.2},
+                  max: {px: 1440, base: 20, ratio: 1.333}}  # Utopia → clamp() steps
+      ranks:
+        display: {step: +5, weight: 700, tracking: -0.02, space_above: 0}
+        h1:      {step: +4, weight: 700, tracking: -0.02, space_above: <token>}
+        h2:      {step: +3, weight: 600, tracking: -0.01, space_above: <token>}
+        lead:    {step: +1, weight: 400, tracking: 0,      space_above: <token>}
+        body:    {step: 0,  weight: 400, tracking: 0,      space_above: <token>}
+        small:   {step: -1, weight: 400, tracking: 0.01,   space_above: <token>}
+        caption: {step: -2, weight: 500, tracking: 0.08,   space_above: 0}
+        # subset allowed; tuple per rank — not a name list
+      fonts: {display: <stack>, body: <stack>}               # ≤2 families
+    space:
+      unit: 4px
+      scale: [4, 8, 12, 16, 24, 32, 48, 64, 96, 128]
+      section_densities:
+        compact:  {py: <space token, e.g. space-4>}
+        regular:  {py: <space token, e.g. space-6>}
+        spacious: {py: <space token, e.g. space-9>}
+      group_gap_vs_section_gap: "≥2×"        # proximity as arithmetic
+    grid:
+      measure: <e.g. 62ch>                  # binds prose rank (≤65ch); shells may run ≤75ch
+      content_width: <e.g. 72rem>
+      gutter: <token>
+    color:
+      temperature: <matches §direction>
+      roles:
+        bg:                {value: <token>, why: <one line>, contrasts_with: [ink ≥7:1]}
+        surface:           {value: <token>, why: <one line>, contrasts_with: [ink ≥7:1]}
+        ink:               {value: <token>, why: <one line>, contrasts_with: [bg ≥7:1, surface ≥7:1]}
+        ink_muted:         {value: <token>, why: <one line>, contrasts_with: [bg ≥4.5:1]}
+        accent:            {value: <token>, why: <one line>, contrasts_with: [accent_fg ≥4.5:1]}
+        accent_foreground: {value: <token>, why: <one line>}
+        semantic:          {ok: <token>, warn: <token>, err: <token>}
+      accent_budget: "primary CTA + motif only — checked at review as 'no third accent surface'"
+      proportions: {dominant: 60, secondary: 30, accent: 10}
+    contrast_axes:                            # ONE axis per pair
+      heading_vs_body: size
+      accent_usage: cta_and_motif_only
 
-# ---- 4. Direction — forced pick per axis ----
-direction:
-  temperature:   warm | cool | neutral
-  density:       sparse | balanced | dense
-  finish:        flat | textured | glossy | raw
-  type_contrast: <named position, e.g. "serif display / sans body">
-  refused:       <the generic default this direction replaces, named>
+  # ---- motif — recurrence + exactly one break ----
+  motif:
+    device: <e.g. "hairline rule + step numerals">
+    recurs_at: […]
+    break: {where: <section>, how: <what's different>}
 
-# ---- 5. System numbers — closed set, every value a token ----
-system:
-  type:
-    ratio_min: <e.g. 1.2>   ratio_max: <e.g. 1.333>
-    endpoints: {min: 320, max: 1440}      # → clamp() steps
-    ranks: [display, h1, h2, lead, body, small, caption]   # subset allowed
-    fonts: {display: <stack>, body: <stack>}                # ≤2 families
-  space:
-    unit: 4px
-    scale: [4, 8, 12, 16, 24, 32, 48, 64, 96, 128]
-    section_densities: {compact: <token>, regular: <token>, spacious: <token>}
-    group_gap_vs_section_gap: "≥2×"        # proximity as arithmetic
-  grid:
-    measure: <e.g. 62ch>                   # Bringhurst 45–75ch first
-    content_width: <e.g. 72rem>
-    gutter: <token>
-  color:
-    temperature: <matches §4>
-    roles: {bg, surface, ink, ink_muted, accent, accent_foreground,
-            semantic: {ok, warn, err}}
-    accent_budget: "≤10% of pixels; primary CTA + motif only"
-    proportions: {dominant: 60, secondary: 30, accent: 10}
-  contrast_axes:                            # ONE axis per pair
-    heading_vs_body: size
-    accent_usage: cta_and_motif_only
+# ---- per-route plans — one entry per PAGES/<slug>/SPEC.md ----
+pages:
+  home:
+    page_class: money                      # money | article | ancillary | utility(hero-less)
+    intent: {who: <if it differs from site>, one_action: <page's verb>}
+    idea: <one sentence ≤25 words the page argues>
+    tension: {what_is: <pain>, what_could_be: <promised state>}
+    rhetoric:
+      - {speech_act: promise,   question: "what do I get"}       # argumentative
+      - {speech_act: proof,     question: "why believe you"}
+      - {speech_act: tension,   question: "what's wrong now"}
+      - {speech_act: how,       question: "how does it work"}
+      - {speech_act: objection, question: "but what about X"}
+      - {speech_act: act,       question: "what do I do now"}    # appears twice on money pages
+      - {speech_act: detail,    question: "show me more"}        # structural, exempt from ordering
+      - {speech_act: chrome,    question: "site structure"}      # structural, exempt from ordering
+    sections:
+      - name: hero
+        speech_act: [promise, act]        # list allowed (hero-act-merge); ≤2
+        category: hero                    # ∈ vendored slug list, SECTION-CATALOG §1
+        surface: inverse                  # base|muted|inverse|brand|media
+        density: spacious                 # compact|regular|spacious
+        composition: split-media          # ∈ SECTION-CATALOG §2 ONLY
+        emphasis: headline                # the ONE focus
+        align: <named edge>               # e.g. col-1-edge | center-axis | measure-start
+      - {…one row per section, in rhetoric order…}
+  # …one entry per route/SPEC…
 
-# ---- 6. Motif — recurrence + exactly one break ----
-motif:
-  device: <e.g. "hairline rule + step numerals">
-  recurs_at: […]
-  break: {where: <section>, how: <what's different>}
-
-# ---- 7. Surface music — per section, THE plan ----
-sections:
-  - name: hero
-    speech_act: promise                   # ∈ catalog §1
-    category: hero                        # ∈ 52 category labels
-    surface: inverse                      # base|muted|inverse|brand|media
-    density: spacious                     # compact|regular|spacious
-    composition: split-media              # ∈ catalog §2 ONLY
-    emphasis: headline                    # the ONE focus
-    align: <named edge>
-  - {…one row per section, in rhetoric order…}
-
-# ---- 8. Decision log — append-only ----
+# ---- decision log — append-only ----
 decisions:
   - {chose: <x>, over: <y>, because: <one line>}
 ```
@@ -106,18 +152,53 @@ decisions:
 
 1. `composition` ∈ `SECTION-CATALOG.md` §2 only. Anything else is a
    refuse, same as a literal hex outside TOKENS.
-2. Adjacent sections never share the same `(surface, density,
-   composition)` triple — that's the rhythm rule, enforced in
-   `DESIGN-DNA.md`'s review artifact.
+2. Rhythm rules = `SECTION-CATALOG.md` §4, verbatim — this file
+   references them, never restates them (F2: they live there so a
+   correction can't fork the two docs).
 3. `inverse` ≤ 2/page + footer; `brand` ≤ 1/page; `spacious` spent at
    `promise` + `act` + ≤1 interior.
-4. `idea` ≤ 25 words; every section's `speech_act` ∈ the rhetoric
-   sequence; a section with no act is deleted, not "kept for balance".
+4. `idea` ≤ 25 words; every section's `speech_act` ∈ the 8-act enum
+   (argumentative acts must also appear in `rhetoric`; `detail` and
+   `chrome` are structural and exempt from ordering but still typed).
+   A section with no act is deleted, not "kept for balance".
 5. A blank field = plan rejected. The plan is the unit of review —
    not the screenshot.
-6. `PAGES/*/SPEC.md` copies its section rows from this file verbatim;
-   a SPEC that contradicts the plan is a refuse, not an improvisation.
-7. `preview/system.html` is produced next — every surface × every
-   density × every type rank × buttons/fields/cards — and only then
-   page previews. (Style tile before mockup — Samantha Warren / the
-   Design-library's `design-system.html` rule.)
+6. `PAGES/*/SPEC.md` copies its section rows from `pages.<slug>.sections`
+   verbatim on the refs branch; a SPEC that contradicts the plan is a
+   refuse, not an improvisation. DOX branch exempt — see header.
+7. `preview/system.html` is produced after this file — every surface ×
+   every density × every type rank × buttons/fields/cards, values bound
+   to TOKENS.json, self-contained — and only then page previews.
+   (Style tile before mockup — Samantha Warren / the Design-library's
+   `design-system.html` rule.)
+8. Build seam: `CLASS-SYSTEM.md` MUST carry rows keyed by
+   surface/density (`surface.inverse → <class>`, `density.spacious →
+   <class>`); `COMPONENTS.md` MUST name which component each
+   `composition` instantiates. Build self-lint checks every rendered
+   section's classes match its SPEC row's enums (F7).
+
+## Enforcement (F13)
+
+The checkable rules above are mechanical acceptance items, not prose
+the coordinator hopes was honored:
+
+- [ ] every `PAGES/*/SPEC.md` exists as a `pages.<slug>` entry
+- [ ] every `composition` ∈ catalog §2; every `category` ∈ vendored slugs
+- [ ] adjacent `sections[].composition` never equal, per page
+- [ ] `inverse` count ≤2 + footer; `brand` ≤1; `spacious` ≤3 per page
+- [ ] every argumentative `speech_act` ∈ the page's `rhetoric`
+- [ ] `idea` ≤ 25 words per page entry
+- [ ] SPEC `sections[]` == `pages.<slug>.sections[]` (verbatim diff, refs branch)
+- [ ] `preview/system.html` exists
+
+"Complete top-to-bottom" stays judgment; the list above is mechanical.
+If a `tools/` lint exists it runs these; otherwise the coordinator
+walks this checklist before `prd_step done`.
+
+## Migration (F14)
+
+Pre-change packets (whistleclean 8 SPECs, lavisha 1 SPEC) predate the
+plan. Rule: a re-minted distill lane on a pre-change site MUST backfill
+`DESIGN-PLAN.md` and convert SPEC section rows to the enum format;
+packets not re-minted are grandfathered until their next design touch.
+Cutoff: any `design-dna/` touched after 2026-11-18 is new-format.

@@ -539,26 +539,30 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
    value — `path == route` per D10). A DOX route with no sitemap row is *not*
    silently added — flag it in `DESIGN-DNA.md` and hold that route
    out of the build (route count is S1's authority). A sitemap row
-   with no design source gets flagged for the fallback visual system
-   (step 5) — never skipped.
+  with no design source gets flagged for the fallback visual system
+  (step 6) — never skipped.
 4. **Flatten DOX authority.** Copy the packet's `SYSTEM/*`,
    `ROUTE-MANIFEST.json`, `PAGES/*` and `EVIDENCE/*` into
    `design-dna/` as above. `PAGES/<node>/CONTENT.md` is DOX-internal
    draft content — the real copy is `content-final/`; the distill
    lane copies the spec and acceptance files, not draft prose.
-5. **Write `DESIGN-PLAN.md` first** (schema:
+5. **Write `DESIGN-PLAN.md`** (schema:
    `docs/machinery/DESIGN-PLAN.md`) — before `PAGES/*/SPEC.md`, before
-   `TOKENS.json` is finalized. Fill top-to-bottom: intent, the ≤25-word
-   idea, the rhetoric sequence, the forced direction pick, the closed
-   system numbers, the motif, then the per-section surface music
+   `TOKENS.json` is finalized. Fill order: `site:` prose first (intent,
+   the ≤25-word idea, the rhetoric sequence, the forced direction
+   pick), then a refs-inventory pass (read captures/manifest, list
+   candidate tokens), then `system:` numbers, then the `pages:` map —
+   one entry per route/SPEC with per-section surface music
    (`speech_act`/`category`/`surface`/`density`/`composition` rows from
    `docs/machinery/SECTION-CATALOG.md`). A blank field is a rejected
-   plan. DOX-branch packets that already carry an equivalent system
-   still get a plan — the DOX's evidence fills the fields, and any
-   deviation from the packet is flagged. Then produce
-   `preview/system.html` — every surface × every density × every type
-   rank × buttons/fields/cards — before any page preview (style tile
-   before mockup).
+   plan. On the DOX branch the plan is a *derivation record* over the
+   flattened packet (`design-manifest.json` sections[] + `SYSTEM/*`),
+   adding the `speech_act`/`composition` assignment the packet lacks —
+   packet SPECs stay verbatim and are exempt from the row-copy
+   acceptance. Then produce `preview/system.html` — every surface ×
+   every density × every type rank × buttons/fields/cards — before any
+   page preview (style tile before mockup). DOX branch: copy packet
+   `designs/design-system.html` to `preview/system.html`.
 6. **Derive from refs** (routes without DOX coverage, or the whole
    site on refs-only): read captured HTML as *text evidence* —
    extract tokens (computed colors, type scale, spacing rhythm,
@@ -696,11 +700,17 @@ pairs, Escape-dismiss, focus return. These are gates, not habits.
 The S5 done-criteria the coordinator checks before minting S6:
 
 - `site/design-dna/` carries `DESIGN-PLAN.md`, `TOKENS.json`,
-  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md` — all
-  non-empty. `DESIGN-PLAN.md` is complete top-to-bottom; every
-  `PAGES/*/SPEC.md` section row copies `speech_act`/`category`/
-  `surface`/`density`/`composition` from it, and every `composition`
-  value resolves to `docs/machinery/SECTION-CATALOG.md`.
+  `CLASS-SYSTEM.md`, `ROUTE-MANIFEST.json`, `DESIGN-DNA.md`,
+  `preview/system.html` — all non-empty. `DESIGN-PLAN.md` is complete
+  top-to-bottom (judgment) AND passes the mechanical checks in
+  `docs/machinery/DESIGN-PLAN.md` §"Enforcement": every
+  `PAGES/*/SPEC.md` exists as a `pages.<slug>` entry; every
+  `composition` ∈ catalog §2; every `category` ∈ the vendored slug
+  list; adjacent `sections[].composition` never equal per page;
+  `inverse` ≤2 + footer; `brand` ≤1; `spacious` ≤3 per page; every
+  argumentative `speech_act` ∈ the page's `rhetoric`; `idea` ≤ 25
+  words. Refs-branch SPEC `sections[]` == `pages.<slug>.sections[]`
+  verbatim; DOX-branch SPECs exempt (packet format).
 - `sites/<slug>/` exists, `astro build` exits 0, and `dist/` holds
   exactly one HTML file per `ROUTE-MANIFEST.json` route.
 - Every `content-final` file is bound to exactly one route (count
@@ -732,6 +742,12 @@ proves this document; the checks above are S5's done-criteria.
   `design-dna/` unchanged (route checksum equality); a re-minted
   build lane rebuilds `sites/<slug>/` wholesale — site output is
   disposable, the packet is the state.
+- **Migration.** Pre-change packets (whistleclean, lavisha) predate
+  DESIGN-PLAN: a re-minted distill lane on a pre-change site MUST
+  backfill `DESIGN-PLAN.md` and convert SPEC section rows to the enum
+  format; packets not re-minted are grandfathered until their next
+  design touch. Cutoff: any `design-dna/` touched after 2026-11-18 is
+  new-format.
 - **Failure modes worth naming:**
   - *DOX target mismatch* — `target: react`/`html` packet → refuse at
     mint, never retarget downstream.

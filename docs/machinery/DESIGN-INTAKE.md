@@ -110,6 +110,7 @@ and per-section `speech_act`/`category`/`surface`/`density`/`composition`
 selected from `docs/machinery/SECTION-CATALOG.md`. A variant pick is the
 *direction input* to that plan; the plan is still written fresh every
 run so no two sites ship the same surface music.
+
 ## Design roles
 
 `pi/designer` is the default — it owns the design lanes (distill
