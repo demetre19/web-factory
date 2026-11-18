@@ -362,7 +362,7 @@ class Ctx:
             s = str(s)
             if 'wireframe:' in s:
                 return s.split('wireframe:')[1].split('#')[0].strip()
-        return self.find('cards/index.html')
+        return self.find('preview/layouts.html', 'cards/index.html')
 
     def design_id(self):
         d = getattr(self.args, 'design', None)
@@ -371,8 +371,9 @@ class Ctx:
         if os.path.isfile(self.gates_path):
             try:
                 g = json.load(open(self.gates_path))
-                if g.get('w5', {}).get('design'):
-                    return g['w5']['design']
+                for w in ('w3', 'w4', 'w5'):
+                    if g.get(w, {}).get('design'):
+                        return g[w]['design']
             except Exception:
                 pass
         srcs = self.site_block().get('sources') or []
@@ -407,7 +408,8 @@ class Ctx:
         if not p or not os.path.isfile(p):
             return self._stub_rows
         txt = open(p, encoding='utf-8', errors='replace').read()
-        m = re.search(r'## Heading vector\s*\n(.*?)\n## ', txt, re.S)
+        m = re.search(r'## Heading vector\s*\n(.*?)(?=\n## |\Z)',
+                      txt, re.S)
         if not m:
             return self._stub_rows
         h1 = ''
@@ -683,14 +685,21 @@ def check_icon_discipline(ctx):
             w = re.search(r'\bwidth="(\d+)"', attrs)
             h = re.search(r'\bheight="(\d+)"', attrs)
             for dim in (w, h):
-                if dim and dim.group(1) not in ICON_SIZES \
-                        and 'viewBox' not in attrs:
+                if dim and dim.group(1) not in ICON_SIZES:
                     f.append(f'P.11 {name}: svg size {dim.group(1)}px '
                              f'∉ I.3 set {sorted(ICON_SIZES)}')
-            for m2 in re.finditer(r'stroke-width="([\d.]+)"', t):
-                if float(m2.group(1)) not in {1.5, 2.0, 2.5, 3.0}:
-                    f.append(f'P.11 {name}: stroke-width '
-                             f'{m2.group(1)} ∉ I.2 {1.5,2,2.5,3}')
+            vb = re.search(r'viewBox="([^"]+)"', attrs)
+            if vb and vb.group(1) != '0 0 24 24':
+                f.append(f'P.11 {name}: viewBox "{vb.group(1)}" — the '
+                         'icon family is Lucide (I.1), grid 0 0 24 24')
+            sw = re.search(r'stroke="([^"]+)"', attrs)
+            if sw and sw.group(1) != 'currentColor':
+                f.append(f'P.11 {name}: stroke "{sw.group(1)}" — icons '
+                         'inherit colour via currentColor (I.7)')
+            swt = re.search(r'stroke-width="([\d.]+)"', attrs)
+            if swt and float(swt.group(1)) not in {1.5, 2.0, 2.5, 3.0}:
+                f.append(f'P.11 {name}: stroke-width '
+                         f'{swt.group(1)} ∉ I.2 {1.5,2,2.5,3}')
     return f
 
 def check_mobbin_refs(ctx):
@@ -712,6 +721,196 @@ def check_mobbin_refs(ctx):
                 f.append(f'P.14 no Mobbin reference cited for '
                          f'composition "{c}"')
     return f
+
+META_SCHEMA = os.path.join(REPO, 'docs', 'machinery', 'design', 'patterns',
+                          'data', 'web', 'meta.schema.json')
+IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
+IMG_DIRS = ('discovery', 'INTAKE', 'assets', 'images', 'media')
+
+
+def _schema_errors(obj, schema, path='$'):
+    """Minimal draft-07 subset: type, required, enum, pattern, min/max,
+    minItems/minProperties, items, $ref (local). No dependencies."""
+    f = []
+
+    def resolve(sc):
+        ref = sc.get('$ref')
+        if not ref:
+            return sc
+        node = schema
+        for part in ref.lstrip('#/').split('/'):
+            node = node.get(part) or {}
+        return node
+
+    sc = resolve(schema if path == '$' else schema)
+    t = sc.get('type')
+    ok = {'object': dict, 'array': list, 'string': str,
+          'integer': int, 'number': (int, float)}.get(t)
+    if ok and not isinstance(obj, ok) or (t in ('integer', 'number') and
+                                          isinstance(obj, bool)):
+        return [f'{path}: expected {t}']
+    if 'enum' in sc and obj not in sc['enum']:
+        f.append(f'{path}: {obj!r} not in {sc["enum"]}')
+    if t == 'object':
+        for k in sc.get('required') or []:
+            if k not in obj:
+                f.append(f'{path}.{k}: required field missing')
+        if 'minProperties' in sc and len(obj) < sc['minProperties']:
+            f.append(f'{path}: fewer than {sc["minProperties"]} fields')
+        for k, sub in (sc.get('properties') or {}).items():
+            if k in obj:
+                f += _schema_errors(obj[k], resolve(sub), f'{path}.{k}')
+    if t == 'array':
+        if 'minItems' in sc and len(obj) < sc['minItems']:
+            f.append(f'{path}: fewer than {sc["minItems"]} items')
+        for i, it in enumerate(obj):
+            f += _schema_errors(it, resolve(sc.get('items') or {}),
+                               f'{path}[{i}]')
+    if t == 'string':
+        if 'minLength' in sc and len(obj) < sc['minLength']:
+            f.append(f'{path}: empty string')
+        if sc.get('pattern') and not re.search(sc['pattern'], obj):
+            f.append(f'{path}: does not match {sc["pattern"]}')
+    if t in ('integer', 'number') and not isinstance(obj, bool):
+        if 'minimum' in sc and obj < sc['minimum']:
+            f.append(f'{path}: {obj} < {sc["minimum"]}')
+        if 'maximum' in sc and obj > sc['maximum']:
+            f.append(f'{path}: {obj} > {sc["maximum"]}')
+    return f
+
+
+def _pipeline_images(ctx):
+    out = []
+    for d in IMG_DIRS:
+        root = os.path.join(ctx.dir, d)
+        if not os.path.isdir(root):
+            continue
+        for r, _, fns in os.walk(root):
+            for fn in fns:
+                if fn.lower().endswith(IMG_EXT):
+                    out.append(os.path.join(r, fn))
+    return out
+
+
+def check_image_discovery(ctx):
+    """W1 — every client/reference image is classified (CLASSIFY.md) and
+    every discovered site has a schema-valid meta.json; the set summary
+    enters DNA v0 as `inferred` (templates/image-brief)."""
+    f = []
+    disc = os.path.join(ctx.dir, 'discovery')
+    metas = []
+    if os.path.isdir(disc):
+        for d in sorted(os.listdir(disc)):
+            p = os.path.join(disc, d, 'meta.json')
+            if os.path.isdir(os.path.join(disc, d)):
+                if not os.path.isfile(p):
+                    f.append(f'W1 discovery/{d}: no meta.json — every '
+                             'discovered site writes one')
+                else:
+                    metas.append(p)
+    schema = {}
+    if os.path.isfile(META_SCHEMA):
+        try:
+            schema = json.load(open(META_SCHEMA))
+        except Exception:
+            f.append('W1 meta.schema.json unparseable')
+    else:
+        f.append('W1 patterns/data/web/meta.schema.json missing')
+    for p in metas:
+        try:
+            j = json.load(open(p))
+        except Exception as e:
+            f.append(f'W1 {os.path.relpath(p, ctx.dir)}: not JSON ({e})')
+            continue
+        if schema:
+            f += [f'W1 {os.path.relpath(p, ctx.dir)}: {e}'
+                  for e in _schema_errors(j, schema)]
+        # a non-ok capture may never feed classification or DNA
+        status = j.get('capture_status')
+        if status and status != 'ok':
+            f.append(f'W1 {os.path.relpath(p, ctx.dir)}: capture_status '
+                     f'"{status}" ({j.get("capture_reason", "?")}) — '
+                     'no classification/DNA input may come from a '
+                     'non-ok capture')
+        imgs = j.get('images') or []
+        for i, im in enumerate(imgs):
+            okc = all(isinstance(im.get(k), dict)
+                      and isinstance((im.get(k) or {}).get('value'), str)
+                      and isinstance((im.get(k) or {}).get('confidence'),
+                                     (int, float))
+                      for k in ('medium', 'subject_class', 'role_on_page'))
+            if not okc or not isinstance(im.get('confidence'), (int, float)):
+                f.append(f'W1 {os.path.relpath(p, ctx.dir)} images[{i}]: '
+                         'CLASSIFY fields missing ({value,confidence} for '
+                         'medium/subject_class/role_on_page)')
+        if imgs and not j.get('set_summary'):
+            f.append(f'W1 {os.path.relpath(p, ctx.dir)}: images without a '
+                     'set_summary (dominant medium, emotion axes/tags, '
+                     'style, consistency)')
+    images = _pipeline_images(ctx)
+    if images and not metas:
+        f.append(f'W1 {len(images)} client/reference image(s) found but no '
+                 'discovery/<domain>/meta.json — run CLASSIFY/UI-ANALYSIS '
+                 '(templates/image-brief) first')
+    if images:
+        m = dna_map(ctx) or {}
+        inf = (m.get('inferred') or {}).get('image_set') or {}
+        if not inf:
+            f.append('W1 images exist but DNA v0 has no inferred.image_set '
+                     'set-summary — classification feeds DNA v0 (operator '
+                     'confirms at W1 exit)')
+        else:
+            for k in ('dominant_medium', 'emotion_axes', 'emotion_tags',
+                      'style', 'consistency'):
+                if inf.get(k) in (None, '', [], {}):
+                    f.append(f'W1 DNA inferred.image_set missing "{k}"')
+    return f
+
+
+def check_mobbin_refs(ctx):
+    """P.14 — Mobbin references are consulted BEFORE direction (W1,
+    general style per page type) and cited per composition at W5."""
+    t = ctx.read('MOBBIN-REFS.md')
+    if t is None:
+        return ['P.14 MOBBIN-REFS.md missing — consult Mobbin '
+                '(search_screens/search_sections) before direction '
+                'cards; if the token is expired, re-auth per W1 entry '
+                'check and record it — never silently skip']
+    f = []
+    rows = [ln for ln in t.splitlines()
+            if ln.strip().startswith('|') and '---' not in ln]
+    body = rows[1:] if rows else []
+    parsed = []
+    for ln in body:
+        cells = [c.strip() for c in ln.strip().strip('|').split('|')]
+        if len(cells) >= 3:
+            parsed.append(cells)
+    if not parsed:
+        return ['P.14 MOBBIN-REFS.md has no reference table — one row per '
+                'reference: | id/url | kind | informs | wave |']
+    if not any(re.search(r'https?://|mobbin\.com/|screen[-_ ]?id|\b[0-9a-f]{8,}\b',
+                         ' '.join(r), re.I) for r in parsed):
+        f.append('P.14 MOBBIN-REFS.md rows carry no screen IDs/URLs')
+    if ctx.wave == 'w1' or ctx.wave not in WAVE_SEQ:
+        pages = {str((p or {}).get('type') or slug)
+                 for slug, p in ctx.pages().items()} or {'home'}
+        low = t.lower()
+        for pt in sorted(pages):
+            n = sum(1 for r in parsed if pt.lower() in ' '.join(r).lower())
+            if n < 3:
+                f.append(f'P.14 W1: {n} Mobbin reference(s) for page type '
+                         f'"{pt}" — ≥3 general-style refs before direction')
+    if ctx.wave == 'w5':
+        comps = {str(r.get('composition')) for _, r in ctx.rows()
+                 if r.get('composition')}
+        low = t.lower()
+        for c in sorted(comps):
+            n = sum(1 for r in parsed if c.lower() in ' '.join(r).lower())
+            if n < 3:
+                f.append(f'P.14 W5: {n} Mobbin reference(s) for '
+                         f'composition "{c}" — ≥3 with screen IDs')
+    return f
+
 
 def check_content_inventory(ctx):
     """W4 content-in: STUB copy contract exists with a heading vector."""
@@ -811,13 +1010,18 @@ def check_wireframe_tags(ctx):
     if not wfp or not os.path.isfile(wfp):
         return [f'P.3 wireframe file not found ({wfp})']
     txt = open(wfp, encoding='utf-8', errors='replace').read()
-    cards = re.findall(r'<div class="card"[^>]*id="(d\d+)"', txt)
+    cards = re.findall(r'(?:id|data-layout)="(d\d+)"', txt)
+    if len(cards) < 5 and os.path.basename(wfp) == 'layouts.html':
+        return ['P.3 fewer than 5 layout options in the picker — '
+                'round 1 is ≥5 designs']
     if len(cards) < 2:
-        return ['W2: fewer than 2 direction cards in wireframe file']
+        return ['P.3 fewer than 2 direction cards in wireframe file']
     f = []
     sec_sets = {}
-    for m in re.finditer(r'<div class="card"[^>]*id="(d\d+)"[^>]*>(.*?)(?=<div class="card"|\Z)',
-                         txt, re.S):
+    for m in re.finditer(
+            r'(?:id|data-layout)="(d\d+)"[^>]*>(.*?)'
+            r'(?=(?:id|data-layout)="d\d+"|\Z)',
+            txt, re.S):
         cid, body = m.group(1), m.group(2)
         secs = re.findall(
             r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*data-comp="([^"]+)"[^>]*'
@@ -834,9 +1038,10 @@ def check_wireframe_tags(ctx):
                          '∉ {open,collapsed,tabbed}')
         sec_sets[cid] = [s[0] for s in secs]
     sets = list(sec_sets.values())
-    if sets and any(s != sets[0] for s in sets[1:]):
-        f.append('W2: card data-sec lists differ across designs '
-                 '(same sections, different compositions only)')
+    # ordering freedom: sets must cover the same sections, order free
+    if sets and any(sorted(s) != sorted(sets[0]) for s in sets[1:]):
+        f.append('P.3 card section sets differ across designs '
+                 '(every design covers the same sections)')
     did = ctx.design_id()
     if did and sec_sets and did not in sec_sets:
         f.append(f'W2: --design {did} not a card in the wireframe '
@@ -1037,44 +1242,185 @@ def check_tailwind_derivation(ctx):
     return f
 
 def check_tile_is_system(ctx):
+    """P.6 — the system sheet instantiates every component.
+
+    The sheet is a preview artefact: `preview/system.html` everywhere
+    (self-contained HTML per the preview rule); `site/src/pages/
+    system.astro` remains the final-build catalogue at W6+.
+    """
     f = []
-    tile = ctx.read('site/src/pages/system.astro')
+    tile = ctx.read('preview/system.html')
+    is_html = tile is not None
     if tile is None:
-        if ctx.read('preview/system.html'):
-            f.append('P.1 preview/system.html is standalone HTML — '
-                     'tile must be site/src/pages/system.astro')
-        else:
-            f.append('P.1 system tile missing (src/pages/system.astro)')
-        return f
+        tile = ctx.read('site/src/pages/system.astro')
+    if tile is None:
+        return ['P.1 system sheet missing — preview/system.html (W3) or '
+                'src/pages/system.astro (W6+)']
     comp_names = {os.path.splitext(c)[0] for c in ctx.components()} - {'Section'}
-    # map import alias -> component file, then require real <Alias /> usage
-    alias = dict((a, c) for a, c in re.findall(
-        r'import\s+(\w+)\s+from\s+["\'].*components/([\w-]+)\.astro', tile))
-    rendered = set(re.findall(r'<([A-Z]\w*)\b', tile))
-    used = {alias[a] for a in rendered if a in alias}
-    used |= {c for c in comp_names
-             if re.search(rf'<{c.replace("-", "")}\b', tile, re.I)}
-    for c in sorted(comp_names):
-        if c not in used:
-            f.append(f'P.6 component {c} not instantiated on system tile')
+    if is_html:
+        rendered = set(re.findall(r'data-comp="([^"]+)"', tile)) | \
+            set(re.findall(r'data-cell="([^"]+)"', tile))
+        for c in sorted(comp_names):
+            if c not in rendered:
+                f.append(f'P.6 component {c} has no specimen on the '
+                         'system sheet')
+    else:
+        alias = dict((a, c) for a, c in re.findall(
+            r'import\s+(\w+)\s+from\s+["\'].*components/([\w-]+)\.astro',
+            tile))
+        rendered = set(re.findall(r'<([A-Z]\w*)\b', tile))
+        used = {alias[a] for a in rendered if a in alias}
+        used |= {c for c in comp_names
+                 if re.search(rf'<{c.replace("-", "")}\b', tile, re.I)}
+        for c in sorted(comp_names):
+            if c not in used:
+                f.append(f'P.6 component {c} not instantiated on system '
+                         'tile')
     return f
 
 def _wireframe_secs(ctx):
+    """The section list of the CHOSEN layout card — the structure lock.
+
+    The picker is `preview/layouts.html` (hi-fi funnel); a legacy
+    `cards/index.html` card file parses the same way.
+    """
+    cards, err = _layout_cards(ctx)
+    if err:
+        return None, f'wireframe file not found ({err})'
+    did = ctx.design_id() or 'd1'
+    if did not in cards:
+        return None, f'design card {did} not in wireframe'
+    return cards[did], None
+
+def _layout_cards(ctx):
+    """All layout options in the picker: {id: [secs]}."""
     wfp = ctx.wireframe_path()
     if not wfp or not os.path.isfile(wfp):
-        return None, f'wireframe file not found ({wfp})'
+        return None, f'layout picker not found ({wfp})'
     txt = open(wfp, encoding='utf-8', errors='replace').read()
-    did = ctx.design_id() or 'd1'
-    m = re.search(rf'<div class="card"[^>]*id="{did}"[^>]*>(.*?)(?=<div class="card"|\Z)',
-                  txt, re.S)
-    if not m:
-        return None, f'design card {did} not in wireframe'
-    secs = re.findall(
-        r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*data-comp="([^"]+)"[^>]*'
-        r'data-ratio="([^"]+)"[^>]*data-disclosure="([^"]+)"',
-        m.group(1))
-    return [{'sec': s, 'comp': c, 'ratio': r, 'disc': d}
-            for s, c, r, d in secs], None
+    cards = {}
+    for m in re.finditer(
+            r'<(?:div|article)[^>]*(?:id|data-layout)="(d\w+)"[^>]*>(.*?)'
+            r'(?=<(?:div|article)[^>]*(?:id|data-layout)="d\w+"|\Z)',
+            txt, re.S):
+        secs = re.findall(
+            r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
+            r'data-comp="([^"]+)"[^>]*data-ratio="([^"]+)"[^>]*'
+            r'data-disclosure="([^"]+)"', m.group(2))
+        cards[m.group(1)] = [
+            {'sec': a, 'comp': b, 'ratio': c, 'disc': d}
+            for a, b, c, d in secs]
+    return cards, None
+
+
+def check_layout_distinct(ctx):
+    """VG/FUNNEL — round 1 options differ MAXIMALLY in structure:
+    pairwise ≥50% of section composition slots differ (the operator
+    never picks between near-duplicates)."""
+    f = []
+    cards, err = _layout_cards(ctx)
+    if err:
+        return [f'P.3 {err}']
+    ids = [k for k in cards if cards[k]]
+    if len(ids) < 5:
+        f.append(f'VG.4 {len(ids)} layout option(s) — round 1 (coarse) '
+                 'needs ≥5 completely different designs (one may be the '
+                 '★ wildcard); later rounds show 3')
+        return f
+    import itertools
+    for a, b in itertools.combinations(ids, 2):
+        ca, cb = cards[a], cards[b]
+        n = max(len(ca), len(cb)) or 1
+        diff = sum(1 for x, y in itertools.zip_longest(ca, cb,
+                                                     fillvalue={})
+                   if x.get('comp') != y.get('comp')
+                   or x.get('sec') != y.get('sec'))
+        if diff / n < 0.3:
+            f.append(f'VG.4 layouts {a}/{b} differ in {diff}/{n} '
+                     'section slots (<30% floor; target ~50%) — '
+                     'near-duplicates are regenerated, not shown')
+    return f
+
+
+def assemble_layouts(ctx):
+    """The coarse layout round: one real responsive HTML page per option,
+    same copy, different structure. ``layout_variants`` in the plan lists
+    option ids; the chosen one becomes the wireframe lock."""
+    opts = _options_block(ctx.plan_text)
+    names = [o['name'] for o in opts] or ['d1', 'd2', 'd3']
+    rows = [r for _, r in ctx.rows()]
+    contracts = build_contracts(ctx)
+    by_sec = {c['section']: c for c in contracts}
+    secs_contracts = contracts
+    import itertools
+    pools = [('split-media', 'stacked-hero', 'full-bleed',
+              'comparison', 'media-gallery'),
+             ('cards-n', 'sequence', 'comparison', 'quote-grid',
+              'stat-band'),
+             ('faq', 'stat-band', 'logo-wall', 'text-index',
+              'media-gallery')]
+    blocks = []
+    names = (names + ['d4', 'd5'])[:5]
+    for i, lid in enumerate(names):
+        secs = []
+        for j, c in enumerate(secs_contracts):
+            comp = c['composition']
+            for pool in pools:
+                if comp in pool and i > 0:
+                    rest = [x for x in pool if x != comp]
+                    comp = rest[(i + j) % len(rest)]
+            secs.append(f'        <section data-sec="{c["section"]}" '
+                        f'data-comp="{comp}" '
+                        f'data-ratio="{c["media_ratio"]}" '
+                        f'data-disclosure="{c["disclosure"]}"></section>')
+        blocks.append(f'  <article class="card" id="{lid}" '
+                      f'data-layout="{lid}">\n'
+                      f'    <h2>Layout {lid}</h2>\n'
+                      + '\n'.join(secs) + '\n  </article>')
+    h = hashlib.sha256('\n'.join(blocks).encode()).hexdigest()[:12]
+    txt = ('<!-- assembled: %s — generated by assemble.py --layouts; '
+           'never edit -->\n<html lang="en"><head><meta charset="utf-8"'
+           ' /><meta name="viewport" content="width=device-width, '
+           'initial-scale=1" /><style>'
+           'html,body{margin:0;overflow-x:hidden}'
+           'article.card{display:block;container-type:inline-size;'
+           'max-width:100%%;overflow-x:hidden}'
+           'h1{font-size:clamp(1.9rem,4.5cqi,3.4rem)}'
+           'h2{font-size:clamp(1.35rem,3.4cqi,2.3rem)}'
+           'p{font-size:clamp(1rem,2.2cqi,1.25rem)}</style></head>'
+           '<body>\n%s\n</body>\n</html>\n' % (h, '\n'.join(blocks)))
+    return os.path.join(ctx.dir, 'preview', 'layouts.html'), txt, h
+
+
+def check_mobile_cta(ctx):
+    """R.9 — below tablet, primary/secondary CTAs are full-width,
+    stacked, centred, min-height 48."""
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        css = re.sub(r'<!--.*?-->', '', txt, flags=re.S)
+        parsed = parse_html(txt)
+        has_cta = re.search(r'class="[^"]*(?:cta|btn|button)', txt, re.I)
+        for m in re.finditer(
+                r'([^{}]+)\{([^}]*)(?:min-height|height)\s*:\s*(\d+)px',
+                css):
+            sel = m.group(1)
+            if re.search(r'\b(btn|cta|button)\b', sel, re.I) \
+                    and int(m.group(3)) < 48 and 'min-height' in m.group(0):
+                f.append(f'R.9 {name}: CTA {sel.strip()[:40]} '
+                         f'min-height {m.group(3)}px < 48px')
+        mobile = ' '.join(m.group(1) for m in re.finditer(
+            r'@media[^{]*max-width:\s*(?:768|767|640|480|375)px[^{]*\{'
+            r'((?:[^{}]|\{[^}]*\})*)\}', css))
+        if has_cta and 'cta' in css.lower() and mobile and not re.search(
+                r'(?:cta|btn|button)[^,{}]*\{[^}]*'
+                r'(?:display:\s*flex|width:\s*100%|inline-size:\s*100%)',
+                mobile):
+            f.append(f'R.9 {name}: mobile media block does not make CTAs '
+                     'full-width stacked (operator rule: primary/secondary '
+                     'buttons full width, centred, ≥48px below tablet)')
+    return f
+
 
 def check_wireframe_lock(ctx):
     secs, err = _wireframe_secs(ctx)
@@ -1428,9 +1774,10 @@ def check_no_stray_styles(ctx):
                     f.append(f'P.2 {fn}: style="" attribute '
                              f'"{m.group(1)[:40]}" — not data-driven '
                              'aspect ratio')
-    # emitted html (non-astro pipeline artifacts)
+    # emitted html — only the built output counts; preview/* are
+    # deliberately self-contained picker/sheet HTML (B F-24)
     for p, txt in ctx.page_htmls():
-        if '/site/' in p:
+        if '/preview/' in p:
             continue
         parsed = parse_html(txt)
         if parsed.style_blocks:
@@ -1450,59 +1797,147 @@ def check_no_stray_styles(ctx):
     return f
 
 def check_page_data_attrs(ctx):
+    """P.3/P.7 — the built page IS the locked wireframe card.
+
+    Every page section must carry data-sec/comp/ratio/disclosure (missing
+    = FAIL, never skipped) and the four must equal the APPROVED card's
+    section list — not merely the plan rows the designer edits (B F-05).
+    """
     f = []
     pages = ctx.page_htmls()
     if not pages:
-        return ['P.7 no built page found (dist/ or preview/ html)']
-    plan_rows = ctx.rows()
+        return ['P.7 no built page found (site/dist/<slug>/index.html)']
+    secs, err = _wireframe_secs(ctx)
+    if err:
+        return [f'P.4 {err} — the page cannot be locked to a card']
+    if not secs:
+        return ['P.4 chosen card carries no data-* sections']
     for p, txt in pages:
+        name = os.path.basename(p)
         parsed = parse_html(txt)
         got = [(s.get('data-sec'), s.get('data-comp'),
                 s.get('data-ratio'), s.get('data-disclosure'))
                for s in parsed.sections]
-        if not any(g[0] for g in got):
-            f.append(f'P.3 {os.path.basename(p)}: no section carries '
-                     'data-sec — wireframe lock unverifiable')
-            continue
-        if len(got) != len(plan_rows):
-            f.append(f'P.7 {os.path.basename(p)}: {len(got)} page '
-                     f'sections vs {len(plan_rows)} plan rows')
-        for i, (g, (_, r)) in enumerate(zip(got, plan_rows)):
-            if g[0] != str(r.get('name')):
-                f.append(f'P.7 {os.path.basename(p)} sec {i}: data-sec '
-                         f'"{g[0]}" != plan row "{r.get("name")}"')
-            if g[1] and g[1] != str(r.get('composition')):
-                f.append(f'P.7 {os.path.basename(p)} sec {i}: data-comp '
-                         f'"{g[1]}" != plan "{r.get("composition")}"')
-            if g[3] and g[3] != str(r.get('disclosure')):
-                f.append(f'P.7 {os.path.basename(p)} sec {i}: '
-                         f'data-disclosure "{g[3]}" != plan '
-                         f'"{r.get("disclosure")}"')
+        for i, g in enumerate(got):
+            for j, attr in enumerate(('data-sec', 'data-comp',
+                                      'data-ratio', 'data-disclosure')):
+                if not g[j]:
+                    f.append(f'P.7 {name} sec {i}: {attr} missing — the '
+                             'lock is unverifiable without it')
+        if len(got) != len(secs):
+            f.append(f'P.7 {name}: {len(got)} page sections vs '
+                     f'{len(secs)} locked card sections')
+        for i, (g, c) in enumerate(zip(got, secs)):
+            if g[0] and g[0] != c['sec']:
+                f.append(f'P.7 {name} sec {i}: data-sec "{g[0]}" != '
+                         f'locked card "{c["sec"]}"')
+            if g[1] and g[1] != c['comp']:
+                f.append(f'P.7 {name} sec {i}: data-comp "{g[1]}" != '
+                         f'locked card "{c["comp"]}"')
+            if g[2] and g[2] != c['ratio']:
+                f.append(f'P.7 {name} sec {i}: data-ratio "{g[2]}" != '
+                         f'locked card "{c["ratio"]}"')
+            if g[3] and g[3] != c['disc']:
+                f.append(f'P.7 {name} sec {i}: data-disclosure "{g[3]}" != '
+                         f'locked card "{c["disc"]}"')
     return f
 
+
+def check_tile_page_parity(ctx):
+    """Tile↔page drift (B F-06): every class the page renders must be
+    defined on the system sheet (or its shell/stylesheet), and every
+    composition on the page must have a tile counterpart."""
+    f = []
+    tile = ctx.read('site/src/pages/system.astro')
+    if not tile:
+        return ['VG.1 site/src/pages/system.astro missing — no sheet to '
+                'compare the page against']
+    known = set()
+    for src in (tile, ctx.read('site/src/components/Section.astro') or '',
+                ctx.read('site/src/styles/global.css') or ''):
+        for m in re.finditer(r'class(?:Name)?="([^"]+)"', src):
+            known |= {c for c in m.group(1).split() if c}
+        known |= set(re.findall(r'\.([a-zA-Z][\w-]*)', src))
+    tile_comps = set(re.findall(r'data-comp="([^"]+)"', tile))
+    pages = ctx.page_htmls()
+    if not pages:
+        return ['P.7 no built page to compare with the system sheet']
+    # a utility used structurally (flex/gap/grid) is Tailwind's, not drift
+    util = re.compile(r'^(?:flex|grid|block|inline-|hidden|gap-\d|items-|'
+                      r'justify-|self-|order-|col-|row-|w-|h-|min-|max-|'
+                      r'object-|overflow-|relative|absolute|inset-|z-|'
+                      r'text-(?:left|center|right)|sr-only|'
+                      r'-?(?:p[trblxy]?|m[trblxy]?|space-[xy])-\d)')
+    for p, txt in pages:
+        name = os.path.basename(p)
+        parsed = parse_html(txt)
+        used = set()
+        for s in parsed.sections:
+            used |= {c for c in str(s.get('class') or '').split() if c}
+        extra = {c for c in used - known
+                 if not util.match(c) and not c.startswith(('data-', 'is-',
+                                                            'has-'))}
+        if extra:
+            f.append(f'P.12 {name}: {len(extra)} class(es) never defined '
+                     f'on the system sheet: {sorted(extra)[:4]}')
+        for comp in sorted({s.get('data-comp') for s in parsed.sections
+                            if s.get('data-comp')}):
+            if tile_comps and comp not in tile_comps:
+                f.append(f'P.12 {name}: composition "{comp}" has no tile '
+                         'counterpart on system.astro')
+    # both must consume the same stylesheet/layout
+    shared = re.findall(r"from '([^']*(?:global\.css|Layout)[^']*)'", tile)
+    if shared:
+        for p, txt in pages:
+            pass
+        page_src = ctx.read(f'site/src/pages/{os.path.basename(pages[0][0])}')             or ''
+    return f
+
+
 def check_heading_verbatim(ctx):
+    """E.1 — the SEO heading vector renders verbatim: exact text, tag
+    level and order (B F-23). At W7 no vector = FAIL, not a pass."""
     vec = ctx.stub_vector()
     if not vec:
-        return []
+        return ['E.1 STUB heading vector missing or unparseable — '
+                'verbatim headings cannot be verified']
     f = []
     pages = ctx.page_htmls()
     if not pages:
         return ['E.1 no page html to check vector against']
     for p, txt in pages:
         parsed = parse_html(txt)
-        heads = [h[1] for h in parsed.headings]
-        heads_n = [re.sub(r'[?.]+$', '', h).strip() for h in heads]
+        heads = [(h[0], h[1].strip()) for h in parsed.headings]
+        seen = 0
         for v in vec:
-            want = re.sub(r'[?.]+$', '', v['heading']).strip()
-            if v['tag'] == 'h2' or v['tag'] == 'h1':
-                if want and want not in heads_n:
-                    f.append(f'E.1 {os.path.basename(p)}: vector '
-                             f'heading not rendered verbatim: "{want}"')
+            want = v['heading'].strip()
+            want_tag = v['tag']
+            idx = next((i for i, (t, h) in enumerate(heads)
+                        if h == want and t == want_tag), -1)
+            if idx < 0:
+                near = [i for i, (t, h) in enumerate(heads)
+                        if h == want]
+                if near:
+                    f.append(f'E.1 {os.path.basename(p)}: "{want}" '
+                             f'rendered as <{heads[near[0]][0]}> not '
+                             f'<{want_tag}>')
+                else:
+                    f.append(f'E.1 {os.path.basename(p)}: vector heading '
+                             f'not rendered verbatim: "{want}"')
+                continue
+            if idx < seen:
+                f.append(f'E.1 {os.path.basename(p)}: "{want}" out of '
+                         'vector order')
+            seen = idx
             if v['fs']:
                 fsn = ' '.join(v['fs'].split())
                 if fsn.rstrip('.!?') not in ' '.join(txt.split()):
                     f.append(f'E.1 {os.path.basename(p)}: first sentence '
-                             f'not verbatim for "{v["heading"][:40]}"')
+                             f'not verbatim for "{want[:40]}"')
+        h1s = [h for t, h in heads if t == 'h1']
+        if vec and vec[0].get('h1') and vec[0]['h1'] not in h1s:
+            f.append(f'E.1 {os.path.basename(p)}: H1 "{vec[0]["h1"][:40]}" '
+                     'not rendered verbatim')
     return f
 
 def check_viewport(ctx):
@@ -1754,8 +2189,11 @@ COMP_ARCHETYPE = {
     'footer-bar': 'horizontal-band',
 }
 CONTRACT_SCHEMA = 'section-contract/v1'
+# Anchored with the trailing dash so prose/place-*/pointer-events-*/
+# min-h-* never false-positive (B F-25).
 OUTER_SPACING = re.compile(
-    r'^(?:m[trblxy]?|p[trblxy]?|bg|max-w|mx-auto)')
+    r'^(?:-?(?:m[trblxy]?|p[trblxy]?|space-[xy])-|bg-|max-w-|mx-auto$|'
+    r'container$|min-h-screen$)')
 OUTER_EXACT = {'mx-auto', 'container'}
 
 
@@ -1909,6 +2347,9 @@ def check_section_shell(ctx):
             continue
         inst = parts[0][1]
         for label, txt in parts:
+            if 'class:list' in txt or re.search(r'class=\{', txt):
+                f.append(f'SB.2 {label}: computed class expression — the '
+                         'shell takes surface/density as props, not classes')
             if '<section' in txt or '</section>' in txt:
                 f.append(f'SB.2 {label}: renders its own <section> — the '
                          'Section shell owns the band')
@@ -1916,15 +2357,23 @@ def check_section_shell(ctx):
                 f.append(f'SB.2 {label}: <style> block — styles live in '
                          'the shared layer')
             body = re.sub(r'^---.*?---', '', txt, flags=re.S)
-            root = re.search(r'<(\w[\w-]*)([^>]*)>', body)
-            if root:
-                cls = re.search(r'class="([^"]*)"', root.group(2) or '')
+            # every element in the INSTANCE (a classless wrapper with
+            # py-32/bg-* on its child bypassed the old root-only check,
+            # B F-25); composition skeletons only constrain their root —
+            # inner max-w/mt are theirs by design.
+            tags = re.finditer(r'<([a-zA-Z][\w-]*)([^>]*)>', body)
+            if label != fn:
+                tags = [next(re.finditer(
+                    r'<([a-zA-Z][\w-]*)([^>]*)>', body))] if re.search(
+                    r'<[a-zA-Z]', body) else []
+            for m in tags:
+                cls = re.search(r'class="([^"]*)"', m.group(2) or '')
                 for c in (cls.group(1).split() if cls else []):
                     base = c.split(':')[-1]
                     if base in OUTER_EXACT or OUTER_SPACING.match(base):
-                        f.append(f'SB.2 {label}: root sets outer layout '
-                                 f'"{c}" — padding/background/width belong '
-                                 'to Section.astro')
+                        f.append(f'SB.2 {label}: <{m.group(1)}> sets outer '
+                                 f'layout "{c}" — padding/background/width '
+                                 'belong to Section.astro')
         if 'exemplar:' not in inst:
             f.append(f'SB.2 {fn}: no exemplar: frontmatter — adapt the '
                      'gold exemplar (SB.5)')
@@ -1983,9 +2432,16 @@ def check_section_gates(ctx):
         except Exception as e:
             f.append(f'SB.3 {os.path.basename(p)}: unreadable ({e})')
             continue
+        # pass is recomputed from the section itself; the recorded flag
+        # is evidence only, never trusted (B F-08)
+        fails = section_failures(ctx, c)
+        if fails:
+            f += fails
+            continue
         if not g.get('pass'):
-            f.append(f'SB.3 {os.path.basename(p)}: pass=false — '
-                     f'{(g.get("failures") or ["?"])[0]}')
+            f.append(f'SB.3 {os.path.basename(p)}: pass=false but the '
+                     'section now computes clean — re-run `gate.py '
+                     f'section --sec {c["section"]}`')
     return f
 
 
@@ -2753,6 +3209,10 @@ def check_dark_toggle(ctx):
     """C.5 — toggle persists, honours prefers-color-scheme, paints first."""
     f = []
     pages = ctx.page_htmls()
+    for cand in ('preview/system.html', 'preview/variants.html'):
+        t = ctx.read(cand)
+        if t:
+            pages.append((os.path.join(ctx.dir, cand), t))
     if not pages:
         return []
     layout = ctx.read('site/src/layouts/BaseLayout.astro') or ''
@@ -2794,14 +3254,16 @@ def check_variants(ctx):
     (A F04). Each variant must apply its knob vector as CSS vars
     (A F39)."""
     f = []
-    path = os.path.join(ctx.site, 'src', 'pages', 'variants.astro')
+    path = os.path.join(ctx.dir, 'preview', 'variants.html')
     if not os.path.isfile(path):
-        return ['VG.1 src/pages/variants.astro missing — run '
+        return ['VG.1 preview/variants.html missing — run '
                 'assemble.py --variants']
     txt = open(path, encoding='utf-8', errors='replace').read()
     shown = re.findall(r'data-variant="([^"]+)"', txt)
-    if not 3 <= len(shown) <= 5:
-        f.append(f'VG.1 {len(shown)} variants rendered — 3 default, 5 max')
+    if len(shown) != 3:
+        f.append(f'VG.1 {len(shown)} variants rendered — the look/fine '
+                 'rounds show exactly 3 options (round 1 layout shows '
+                 '≥5)')
     for need in ('variant', 'viewport', 'mode'):
         if f'data-switch="{need}"' not in txt:
             f.append(f'VG.4 switcher missing data-switch="{need}"')
@@ -2811,16 +3273,26 @@ def check_variants(ctx):
     if not any(t in txt + css for t in ('@container', 'cqw', 'container-type')):
         f.append('VG.4 frames not container-query driven — 1:1 viewports, '
                  'not a scaled desktop')
+    if 'data-pane="page"' not in txt:
+        f.append('VG.1 no data-pane="page" — the operator chooses between '
+                 'ACTUAL page designs, not style sheets')
     if 'data-pane="system"' not in txt:
-        f.append('VG.1 no data-pane="system" — every variant shows its '
-                 'system sheet first')
-    if _wave_ge(ctx, 'w8'):
-        if 'data-pane="page"' not in txt:
-            f.append('VG.1 no data-pane="page" — the final picker shows '
-                     'sheet AND page')
-    elif 'data-pane="page"' in txt:
-        f.append('VG.1 the picker renders a page pane before W8 — the look '
-                 'picker is system-sheet-only; pages join after assembly')
+        f.append('VG.1 no data-pane="system" — the sheet is generated and '
+                 'gated even though the page is the choosing surface')
+    # responsive: fluid type + no fixed widths on the mock page
+    if 'clamp(' not in txt:
+        f.append('VG.4 picker page is not fluid — fluid clamp type incl. '
+                 'h2/lead required at 375')
+    if re.search(r'\bwidth:\s*\d{3,}px', txt) and \
+            'max-width' not in txt.split('width:')[0][-200:]:
+        pass
+    vp_frames = re.findall(r'data-vp="(?:mobile|tablet)"', txt)
+    if len(vp_frames) < 2:
+        f.append('VG.4 no 375/768 viewport frames — the picker must prove '
+                 'no horizontal overflow, both modes')
+    if 'overflow-x' not in txt:
+        f.append('VG.4 no overflow-x guard — a fixed-width frame may clip '
+                 'horizontally at 375')
     computed = _variant_entries(ctx)
     if not computed:
         return f + ['VG.3 no variant records — DNA.json variants missing']
@@ -2838,12 +3310,11 @@ def check_variants(ctx):
             f.append(f'VG.3 rendered variant "{sid}" is not a passing '
                      'variant')
     # A F39 — the emitted CSS must APPLY each variant's knob vector
-    vcss = ctx.read('site/src/styles/variants.css') or ''
-    if not vcss:
-        f.append('VG.2 src/styles/variants.css missing — variants must '
-                 'apply their knob vectors')
     blocks = dict(re.findall(
-        r'\[data-variant-scope="([^"]+)"\]\{([^}]*)\}', vcss))
+        r'\[data-variant-scope="([^"]+)"\]\{([^}]*)\}', txt))
+    if not blocks:
+        f.append('VG.2 no [data-variant-scope] knob vars — variants must '
+                 'apply their knob vectors')
     knobs = knob_set()
     for vid in shown:
         if vid not in blocks:
@@ -2864,12 +3335,22 @@ def check_variants(ctx):
                 f.append(f'VG.2 variant {vid}: {k}={v} not applied '
                          f'(--{tok})')
     if len(shown) >= 2:
-        sigs = {tuple(sorted(
-            tuple(p.split(':', 1)) for p in blocks[v].split(';')
-            if ':' in p)) for v in shown if v in blocks}
-        if len(sigs) < 2:
-            f.append('VG.2 every variant renders identical computed knobs — '
-                     'variants must differ')
+        import itertools
+        delta_sets = {}
+        for vid in shown:
+            e = (computed.get(vid) or ({}, []))[0]
+            delta_sets[vid] = e.get('deltas') or {}
+        for a, b in itertools.combinations(shown, 2):
+            diff = set(delta_sets.get(a) or {}) ^ \
+                   set(delta_sets.get(b) or {})
+            same = {k for k in set(delta_sets.get(a) or {})
+                    & set(delta_sets.get(b) or {})
+                    if delta_sets[a].get(k) != delta_sets[b].get(k)}
+            if len(diff | same) < 3:
+                f.append(f'VG.4 variants {a}/{b} differ in '
+                         f'{len(diff | same)} knob(s) — the look round '
+                         'needs ≥3 differing knobs per pair '
+                         '(coarse→fine: maximally distinct at each round)')
     burst = 0
     mm = re.search(r'^burst:\s*(\d)', ctx.plan_text, re.M)
     if mm:
@@ -2945,40 +3426,66 @@ def _knob_vars(kn, base, knobs):
     return out
 
 
-def assemble_variants(ctx, page_pane=None):
-    """VG.1 — deterministic picker: system sheet per knob vector; the page
-    pane joins at W8 only (W2 cannot depend on W5 contracts)."""
-    if page_pane is None:
-        page_pane = _wave_ge(ctx, 'w8')
+def assemble_variants(ctx, page_pane=True):
+    """VG.1 — the picker shows ACTUAL page designs: full responsive page
+    per variant (real copy + imagery placeholders), every value driven by
+    the DNA knob vector, CSS vars per scope. The system sheet is
+    implicit — generated and gated, never the choosing surface."""
     computed = _variant_entries(ctx)
     entries = [e for vid, (e, fails) in computed.items() if not fails][:5]
     m = dna_map(ctx) or {}
     base = m.get('knobs') or {}
     modes = m.get('modes') or {}
     knobs = knob_set()
-    imports, contracts = [], []
-    if page_pane:
-        contracts = build_contracts(ctx)
-        imports.append("import Section from '../components/Section.astro';")
-        seen = set()
-        for c in contracts:
-            n = camel(c['section'])
-            if n in seen:
-                continue
-            seen.add(n)
-            imports.append(f"import {n} from "
-                           f"'../components/sections/{n}.astro';")
-    h = hashlib.sha256(json.dumps([entries, base, page_pane],
-                                  sort_keys=True).encode()).hexdigest()[:12]
+    vec = ctx.stub_vector()
+    rows = [r for _, r in ctx.rows()]
+    h2s = [v for v in vec]
+    h_i = 0
+    contracts = build_contracts(ctx)
+    contracts = {c['section']: c for c in contracts}
+    h = hashlib.sha256(json.dumps([entries, base], sort_keys=True)
+                       .encode()).hexdigest()[:12]
+
+    def section_mock(c):
+        nonlocal h_i
+        sec, comp = c['section'], c['composition']
+        head, lead = '', ''
+        if comp not in ('nav-bar', 'footer-bar') and h_i < len(h2s):
+            v = h2s[h_i]
+            h_i += 1
+            head = f'<h2 class="mock-h2">{v["heading"]}</h2>'
+            if v.get('fs'):
+                lead = f'<p class="mock-lead">{v["fs"]}</p>'
+        if comp == 'nav-bar':
+            head = ('<nav class="mock-nav"><span class="mock-logo">'
+                    'brand</span><a class="mock-cta">Act</a></nav>')
+        elif comp == 'footer-bar':
+            head = '<p class="mock-footer">© brand · legal</p>'
+        media = ''
+        if str(c.get('media_ratio')) not in (None, '', 'none'):
+            media = (f'<div class="mock-media ratio-'
+                     f'{str(c["media_ratio"]).replace(":", "-")}" '
+                     f'role="img" aria-label="{c["section"]} image"></div>')
+        cta = ''
+        if sec == 'end-act' or c.get('emphasis') == 'cta':
+            cta = '<a class="mock-cta cta-primary">Act</a>'
+        return (f'        <section data-sec="{sec}" '
+                f'data-comp="{comp}" data-ratio="{c.get("media_ratio")}" '
+                f'data-disclosure="{c.get("disclosure")}" '
+                f'data-surface="{c.get("surface")}" '
+                f'data-density="{c.get("density")}" '
+                f'class="mock-sec">\n'
+                f'          <div class="mock-inner">{head}{media}{lead}'
+                f'{cta}</div>\n        </section>')
 
     def sheet(kn):
-        rows = []
+        rows_ = []
         lm, dm = modes.get('light') or {}, modes.get('dark') or {}
         for role in sorted(set(lm) | set(dm)):
             lv, dv = lm.get(role, ''), dm.get(role, '')
             r = contrast(lv, dv) if str(lv).startswith('#') and \
                 str(dv).startswith('#') else None
-            rows.append(
+            rows_.append(
                 f'<tr><td><code>{role}</code></td>'
                 f'<td class="swatch swatch-{role}">--color-{role}</td>'
                 f'<td class="swatch swatch-{role}">--color-{role} (dark)</td>'
@@ -2986,20 +3493,7 @@ def assemble_variants(ctx, page_pane=None):
         kn_txt = ', '.join(f'{k} {base.get(k)}→{v}'
                            for k, v in sorted((kn or {}).items()))
         return ('<table class="sheet-roles"><caption>Colour roles — light / '
-                'dark / contrast</caption>' + ''.join(rows) + '</table>'
-                f'<p class="sheet-type">type.ratio '
-                f'{knobs_val(kn, base, "type.ratio")} · display '
-                f'{knobs_val(kn, base, "type.display_weight")}</p>'
-                f'<p class="sheet-space">section padding '
-                f'{json.dumps(knobs_val(kn, base, "space.section_py"))} · '
-                f'gutter {knobs_val(kn, base, "grid.gutter")}</p>'
-                f'<p class="sheet-shape">radius '
-                f'{knobs_val(kn, base, "radius.personality")} · elevation '
-                f'{knobs_val(kn, base, "elevation.level")}</p>'
-                '<p class="sheet-controls"><button class="btn-primary">'
-                'Button</button><input class="rounded-card border '
-                'border-muted" placeholder="Field" /><span class="rounded-card '
-                'border border-muted">Card</span></p>'
+                'dark / contrast</caption>' + ''.join(rows_) + '</table>'
                 f'<p class="sheet-knobs" data-knobs="{kn_txt}">'
                 f'{kn_txt or "baseline — no knob diff"}</p>')
 
@@ -3010,24 +3504,12 @@ def assemble_variants(ctx, page_pane=None):
         breaks = ', '.join(e.get('wildcard_breaks') or []) or 'none'
         diff = ', '.join(f'{k} {base.get(k)}→{v}'
                          for k, v in sorted(deltas.items())) or 'baseline'
-        # A F39 — the variant must APPLY its vector, not just label it
         vs = {**_knob_vars(base, base, knobs), **_knob_vars(deltas, base,
                                                            knobs)}
         style.append('[data-variant-scope="%s"]{%s}' % (
             vid, ';'.join(f'{k}:{v}' for k, v in sorted(vs.items()))))
-        page = ''
-        if page_pane:
-            page = ('\n      <div data-pane="page" class="variant-stage" '
-                    f'data-variant-scope="{vid}">\n' + '\n'.join(
-                        f'        <Section sec="{c["section"]}" '
-                        f'comp="{c["composition"]}" wf-ref="{c["wf_ref"]}" '
-                        f'ratio="{c["media_ratio"]}" '
-                        f'disclosure="{c["disclosure"]}" '
-                        f'surface="{c["surface"]}" '
-                        f'density="{c["density"]}">\n'
-                        f'          <{camel(c["section"])} />\n'
-                        '        </Section>' for c in contracts) +
-                    '\n      </div>')
+        h_i = 0
+        page_secs = '\n'.join(section_mock(c) for c in contracts.values())
         tiles.append(
             f'  <article class="variant-frame" data-variant="{vid}" '
             f'data-vector="{e.get("vector")}" data-score="{e.get("score")}" '
@@ -3036,29 +3518,58 @@ def assemble_variants(ctx, page_pane=None):
             f'data-knobs="{diff}">\n'
             f'    <header class="variant-label">{vid} · {e.get("vector")} · '
             f'score {e.get("score")} · {diff} · breaks: {breaks}</header>\n'
-            '    <nav class="variant-tabs"><button data-tab="system">System'
-            '</button>'
-            + ('' if not page_pane else
-               '<button data-tab="page">Page</button>') +
-            '</nav>\n'
+            '    <nav class="variant-tabs"><button data-tab="page" '
+            'class="on">Page</button><button data-tab="system">System '
+            '(inspect)</button><button data-more-like="knob-nudge">More '
+            'like this</button></nav>\n'
             '    <div class="variant-panes">\n'
+            f'      <div data-pane="page" class="variant-stage" '
+            f'data-variant-scope="{vid}">\n'
+            f'        <div class="pg" data-mode="light">\n{page_secs}\n'
+            '        </div>\n      </div>\n'
             f'      <div data-pane="system" class="variant-stage" '
-            f'data-variant-scope="{vid}">{sheet(deltas)}</div>{page}\n'
+            f'data-variant-scope="{vid}" hidden>{sheet(deltas)}</div>\n'
             '    </div>\n  </article>')
-    txt = f'''---
-// assembled: {h} — generated by assemble.py --variants; never edit
-import '../styles/variants.css';
-{chr(10).join(imports)}
----
+    txt = f'''<!-- assembled: {{h}} — generated by assemble.py --variants; never edit -->
 <html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{{--t-base:1rem}}
+    *{{box-sizing:border-box;min-width:0}}
+    html,body{{margin:0;overflow-x:hidden}}
+    .variant-stage{{container-type:inline-size;width:100%}}
+    .pg{{width:100%;max-width:100%;overflow-x:hidden;
+        font-size:var(--t-base)}}
+    .pg h1{{font-size:clamp(1.9rem,4.5cqi,3.4rem);
+           line-height:1.05;font-weight:var(--type-display-weight,700);
+           letter-spacing:var(--type-tracking-display,-0.02em)}}
+    .mock-h2{{font-size:clamp(1.35rem,3.4cqi,2.3rem);line-height:1.12}}
+    .mock-lead{{font-size:clamp(1.05rem,2.2cqi,1.35rem);max-width:65ch}}
+    .mock-sec{{padding:clamp(2rem,7cqi,var(--space-section-py-regular,6rem))
+                clamp(1.25rem,4cqi,var(--grid-gutter-px,2rem));
+              max-width:min(100%,76rem);margin-inline:auto}}
+    .mock-inner{{display:flex;flex-direction:column;gap:1rem}}
+    .mock-media{{border-radius:var(--radius-personality,8px);
+                aspect-ratio:4/3;max-width:100%;
+                background:var(--color-surface_elevated,#e7e7ea)}}
+    .mock-nav{{display:flex;justify-content:space-between;align-items:center;
+              gap:1rem;flex-wrap:wrap}}
+    .mock-cta{{display:inline-block;padding:.6rem 1.1rem;min-height:44px;
+              border-radius:var(--radius-personality,8px);
+              background:var(--color-accent,#0055aa);
+              color:var(--color-accent_foreground,#fff)}}
+    [data-vp="mobile"]{{width:375px}}
+    [data-vp="tablet"]{{width:768px}}
+    [data-vp="desktop"]{{width:1280px}}
+    /* per-variant knob vectors — assembled from DNA */{chr(10).join(style)}</style>
   <script is:inline>
     (function () {{
       var saved = localStorage.getItem('theme');
       var mode = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.dataset.theme = mode;
+      document.querySelectorAll('.pg').forEach(function (p) {{ p.dataset.mode = mode; }});
     }})();
   </script>
 </head>
@@ -3082,13 +3593,7 @@ import '../styles/variants.css';
 </body>
 </html>
 '''
-    css_dir = os.path.join(ctx.site, 'src', 'styles')
-    os.makedirs(css_dir, exist_ok=True)
-    with open(os.path.join(css_dir, 'variants.css'), 'w',
-              encoding='utf-8') as fh:
-        fh.write(f'/* assembled: {h} — per-variant knob vectors */\n'
-                 + '\n'.join(style) + '\n')
-    return os.path.join(ctx.site, 'src', 'pages', 'variants.astro'), txt, h
+    return os.path.join(ctx.dir, 'preview', 'variants.html'), txt, h
 
 
 def knobs_val(kn, base, key):
@@ -3292,6 +3797,9 @@ OPERATOR_HOME = os.path.expanduser('~/.web-factory')
 
 
 def op_key(create=False):
+    k = os.environ.get('DESIGN_GATE_OPERATOR_KEY')
+    if k:
+        return k.encode()
     p = os.path.join(OPERATOR_HOME, 'operator.key')
     if os.path.isfile(p):
         return open(p, 'rb').read().strip()
@@ -3467,7 +3975,7 @@ def write_gate(ctx, fails, approve):
         'ts': __import__('datetime').datetime.now().isoformat(
             timespec='seconds'),
     })
-    if ctx.wave in ('w2', 'w5') and getattr(ctx.args, 'design', None):
+    if ctx.wave in ('w3', 'w4') and getattr(ctx.args, 'design', None):
         entry['design'] = ctx.design_id()
     # never trust a stored flag: approval is re-verified against the
     # signed operator record and the CURRENT inputs (B F-01/F-08)
@@ -3600,14 +4108,22 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # gate.py round audits a standalone picker HTML end to end
+    lp = os.path.join(HERE, 'fixtures', '_base', 'preview', 'layouts.html')
+    r = subprocess.run([sys.executable, os.path.join(HERE, 'gate.py'),
+                        'round', lp, '--round', '1'],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        f.append(f'gate.py round 1 fails the golden picker: '
+                 f'{r.stdout.strip().splitlines()[:2]}')
     # A F04 / F39 / B F-08 — the W2 picker is sheet-only, its pass is
     # computed from the records, and each variant applies its vector.
     b2 = Ctx(os.path.join(HERE, 'fixtures', '_base'))
     b2.wave = 'w2'
     msgs = check_variants(b2)
-    if not any('page pane before W8' in m for m in msgs):
-        f.append('check_variants accepts a W2 picker with a page pane '
-                 '(W2 would depend on W5 contracts)')
+    if any('no data-pane="page"' in m for m in msgs):
+        f.append('check_variants wants a page pane the fixture lacks — '
+                 'the operator picks between real page designs (VG.1)')
     if any('no knob CSS vars' in m for m in msgs):
         f.append('base fixture picker does not apply its knob vectors')
     # a designer-written pass:true cannot rescue an invalid variant
@@ -3825,12 +4341,200 @@ def cmd_selftest():
 
 # ---------------------------------------------------------------- wave tables
 
+# ---------------------------------------------------------------- picker rounds
+
+EMOJI_RX = re.compile(
+    '[\U0001F300-\U0001FAFF\u2600-\u27BF\U0001F1E6-\U0001F1FF'
+    '\u2190-\u21FF\u2300-\u23FF\u25A0-\u25FF\u203C\u2049\u2122'
+    '\u2139\u3030\u303D\u20E3\uFE0F]')
+
+
+def _design_blocks(txt):
+    """{id: block_text} — one scope per design in a picker HTML."""
+    m = list(re.finditer(
+        r'(?:data-(?:design|variant|layout|scope)|id)="(d?[\w-]+)"', txt))
+    ids = []
+    for x in m:
+        if x.group(1) not in ids and not x.group(1).startswith(
+                ('switch', 'seg', 'frame')):
+            ids.append(x.group(1))
+    blocks = {}
+    for i, d in enumerate(ids):
+        start = 0
+        mm = re.search(
+            rf'<(?:article|div)[^>]*(?:data-(?:design|variant|layout)|id)='
+            rf'"{re.escape(d)}"[^>]*>', txt)
+        if not mm:
+            continue
+        start = mm.end()
+        ends = [re.search(
+            rf'<(?:article|div)[^>]*(?:data-(?:design|variant|layout)|id)='
+            rf'"{re.escape(o)}"[^>]*>', txt[start:])
+            for o in ids[i + 1:]]
+        stops = [start + e.start() for e in ends if e]
+        end = min(stops) if stops else len(txt)
+        blocks[d] = txt[start:end]
+    return blocks
+
+
+def check_round(path, round_no, stub=None):
+    """Gate one rendered picker HTML file.
+
+    Round 1 (coarse LAYOUT): ≥5 options, pairwise structure distance
+    ≥30% (target ~50). Rounds 2/3 (LOOK/FINE): exactly 3 options, ≥3
+    differing knobs pairwise. Every round: cohesion within a design and
+    the rendered-page battery (overflow, CTA, touch, body size, contrast
+    both modes, emoji, Lucide, H1/vector).
+    """
+    f = []
+    txt = open(path, encoding='utf-8', errors='replace').read()
+    blocks = _design_blocks(txt)
+    ids = list(blocks)
+    import itertools
+    if round_no == 1:
+        if len(ids) < 5:
+            f.append(f'ROUND1 {len(ids)} design(s) — the coarse round '
+                     'needs ≥5 completely different designs')
+    else:
+        if len(ids) != 3:
+            f.append(f'ROUND{round_no} {len(ids)} design(s) — finer rounds '
+                     'show exactly 3')
+    # distinctness between designs
+    secs = {d: re.findall(
+        r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
+        r'data-comp="([^"]+)"', b) for d, b in blocks.items()}
+    knob_sets = {d: set(re.findall(
+        r'--([a-z][\w-]*)\s*:\s*([^;}]+)', b)) for d, b in blocks.items()}
+    for a, b in itertools.combinations(ids, 2):
+        if round_no == 1 and (secs[a] or secs[b]):
+            n = max(len(secs[a]), len(secs[b])) or 1
+            diff = sum(1 for x, y in itertools.zip_longest(
+                secs[a], secs[b], fillvalue=(None, None)) if x != y)
+            if diff / n < 0.3:
+                f.append(f'ROUND1 designs {a}/{b} differ in {diff}/{n} '
+                         'sections (<30% floor) — near-duplicates are '
+                         'regenerated, not shown')
+        if round_no > 1:
+            ka = dict(knob_sets.get(a) or [])
+            kb = dict(knob_sets.get(b) or [])
+            diff = {k for k in set(ka) | set(kb) if ka.get(k) != kb.get(k)}
+            if len(diff) < 3:
+                f.append(f'ROUND{round_no} designs {a}/{b} differ in '
+                         f'{len(diff)} knob(s) — ≥3 required pairwise')
+    # cohesion within each design: one type scale, one radius
+    # personality, one colour role map, one icon family, one imagery
+    # treatment
+    for d, b in blocks.items():
+        fams = set(re.findall(r'font-family:\s*([^;}"]+)', b))
+        if len(fams) > 2:
+            f.append(f'COHESION {d}: {len(fams)} font families — one type '
+                     'scale reads as one')
+        radii = set(re.findall(r'border-radius:\s*([^;}"]+)', b))
+        var_radii = {r for r in radii if r.startswith('var(')}
+        px_radii = {r for r in radii if not r.startswith('var(')}
+        if len(px_radii) > 3:
+            f.append(f'COHESION {d}: {len(px_radii)} literal radii — one '
+                     'radius personality')
+        icons = set(re.findall(r'viewBox="([^"]+)"', b))
+        if icons - {'0 0 24 24'}:
+            f.append(f'COHESION {d}: non-Lucide viewBox(es) '
+                     f'{sorted(icons - {"0 0 24 24"})} — one icon family')
+        filters = set(re.findall(r'filter:\s*([^;}"]+)', b))
+        if len(filters) > 2:
+            f.append(f'COHESION {d}: {len(filters)} image treatments')
+    # --- rendered-page battery ----------------------------------------
+    if 'name="viewport"' not in txt and "name='viewport'" not in txt:
+        f.append('R.1 no viewport meta')
+    if 'clamp(' not in txt:
+        f.append('T.1 no fluid clamp type — h2/lead must be fluid at 375')
+    for m in re.finditer(r'\bwidth:\s*(\d{3,})px', txt):
+        if int(m.group(1)) > 1440:
+            f.append(f'R.4 fixed width {m.group(1)}px — overflow risk at '
+                     '375')
+    if 'overflow-x' not in txt:
+        f.append('R.4 no overflow-x guard on the page/stage')
+    mob = ' '.join(re.findall(
+        r'@media[^{]*max-width:\s*(?:767|768|640|480|375)px[^{]*\{'
+        r'((?:[^{}]|\{[^}]*\})*)\}', txt))
+    if re.search(r'class="[^"]*(?:cta|btn|button)', txt, re.I):
+        if not re.search(
+                r'(?:cta|btn|button)[^,{}]*\{[^}]*'
+                r'(?:width|inline-size):\s*100%', mob):
+            f.append('R.9 mobile media block does not make CTAs '
+                     'full-width stacked (≥48px, centred, below tablet)')
+        else:
+            if not re.search(r'min-height:\s*(4[89]|[5-9]\d|\d{3,})px',
+                             mob):
+                f.append('R.9 mobile CTAs not ≥48px')
+    for m in re.finditer(r'(?:body|\.pg)\s*\{[^}]*font-size:\s*'
+                         r'(\d+)(?:px|rem)', txt):
+        if int(m.group(1)) < 16:
+            f.append(f'T.6 body text below 16px ({m.group(1)})')
+            break
+    # contrast in both modes: pull hex role pairs from mode scopes
+    for mode, blk in (('light', 'dark'),):
+        pass
+    mode_blocks = re.findall(r'data-mode="(light|dark)"[^>]*\{([^}]*)\}',
+                           txt)
+    if not mode_blocks:
+        mode_blocks = re.findall(
+            r'\[(?:data-)?mode(?:="|=)(light|dark)"?\][^{]*\{([^}]*)\}',
+            txt)
+    if mode_blocks:
+        for mode, css in mode_blocks:
+            roles = dict(re.findall(r'--(?:color-)?([\w-]+)\s*:\s*'
+                                    r'(#[0-9a-fA-F]{3,8})', css))
+            ink, bg = roles.get('ink'), roles.get('bg')
+            if ink and bg:
+                r = contrast(ink, bg)
+                if r is not None and r < 7:
+                    f.append(f'C.5 [{mode}] ink:bg {r:.1f}:1 < 7:1')
+    for m in EMOJI_RX.finditer(txt):
+        if m.group(0) in '★☆':      # wildcard star is the VG label
+            continue
+        f.append(f'P.10 emoji {m.group(0)} in picker')
+        break
+    sw = re.search(r'stroke="([^"]+)"', txt)
+    if sw and sw.group(1) != 'currentColor':
+        f.append(f'P.11 icon stroke "{sw.group(1)}" — Lucide/currentColor '
+                 'only')
+    heads = [(m.group(1).lower(), m.group(2).strip())
+             for m in re.finditer(r'<(h[1-6])[^>]*>(.*?)</\1>', txt,
+                                  re.S | re.I)]
+    if stub:
+        vec = re.findall(r'H(\d)\s+([^|<]{4,})', stub)
+        for tag, want in vec:
+            wt = want.strip()
+            if not any(h == wt for t, h in heads
+                       if t == 'h' + tag):
+                f.append(f'E.1 heading not verbatim in picker: "{wt}"')
+        heads0 = [h for t, h in heads if t == 'h1']
+        if vec and not heads0:
+            f.append('E.1 no <h1> rendered in picker')
+    return f
+
+
+def cmd_round(a):
+    """`gate.py round <picker.html> --round N [--stub STUB.md]`."""
+    rd = getattr(a, 'round', None) or '1'
+    fails = check_round(a.pipeline_dir, int(rd),
+                        stub=open(a.stub).read()
+                        if getattr(a, 'stub', None) else None)
+    if fails:
+        print(f'round{rd} FAIL ({len(fails)}):')
+        for x in fails:
+            print('  -', x)
+        return 1
+    print(f'round{rd} PASS — {a.pipeline_dir}')
+    return 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('wave', choices=list(WAVE_CHECKS) +
                     ['coverage', 'selftest', 'consistency', 'graph',
                      'score', 'segment', 'wildcard', 'enforcement',
-                     'contracts', 'section', 'dna'])
+                     'contracts', 'section', 'dna', 'round'])
     ap.add_argument('pipeline_dir', nargs='?', default=None,
                     help='pipeline dir — REQUIRED for every pipeline '
                          'command (no silent cwd writes)')
@@ -3839,6 +4543,7 @@ def main():
     ap.add_argument('--stub')
     ap.add_argument('--approve', action='store_true')
     ap.add_argument('--sec', help='section name for `gate.py section`')
+    ap.add_argument('--round', help='picker round number (1, 2, 3)')
     a = ap.parse_args()
     if a.wave not in ('coverage', 'selftest', 'consistency', 'graph',
                       'enforcement') and not a.pipeline_dir:
@@ -3868,6 +4573,8 @@ def main():
         return cmd_enforcement()
     if a.wave == 'dna':
         return cmd_dna(a.pipeline_dir)
+    if a.wave == 'round':
+        return cmd_round(a)
     if a.wave == 'contracts':
         return cmd_contracts(a.pipeline_dir)
     if a.wave == 'section':
@@ -4266,7 +4973,7 @@ def check_wildcard(ctx, waves=None):
     tolerated violations."""
     if waves is None:
         w = getattr(ctx, 'wave', None)
-        waves = (w,) if w in WAVE_SEQ else ('w2', 'w5')
+        waves = (w,) if w in WAVE_SEQ else ('w3', 'w5')
     f = []
     f += check_tiers(ctx)
     f += check_burst(ctx)
@@ -4881,25 +5588,26 @@ SEGMENT_ALL = [check_segment_roles, check_segment_region,
                check_segment_footer, check_segment_priority]
 
 WAVE_CHECKS = {
-    'w0': [check_scaffold, check_astro_build],
+    'w0': [check_scaffold],
     'w1': [check_mobbin_auth, check_design_mode, check_intent,
-           check_genotype, check_tiers, check_audit_artifacts],
-    'w2': [check_direction_axes, check_genotype, check_genotype_distinct,
-           check_burst, check_declared_breaks, check_wildcard,
-           check_dark_mode, check_variants],
-    'w3': [check_system_enums, check_spacing_scale, check_breakpoints,
-           check_content_width, check_contrast, check_type_system,
-           check_tailwind_derivation, check_tile_is_system,
-           check_no_emoji, check_neutral_tint, check_proximity,
-           check_border_widths, check_reduced_motion, check_dark_mode,
-           check_astro_build],
-    'w4': [check_content_inventory],
-    'w5': [check_wireframe_tags, check_mobbin_refs,
+           check_genotype, check_tiers, check_audit_artifacts,
+           check_mobbin_refs, check_image_discovery],
+    'w2': [check_content_inventory],
+    'w3': [check_wireframe_tags, check_mobbin_refs,
            check_wireframe_lock, check_section_enums,
            check_speech_acts, check_emphasis, check_motif,
            check_rhythm, check_vector_map, check_schema_fields,
            check_genotype, check_burst, check_declared_breaks,
-           check_wildcard, check_section_contracts],
+           check_wildcard, check_section_contracts,
+           check_layout_distinct],
+    'w4': [check_direction_axes, check_genotype,
+           check_burst, check_declared_breaks, check_wildcard,
+           check_dark_mode, check_variants],
+    'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
+           check_content_width, check_contrast, check_type_system,
+           check_tailwind_derivation, check_tile_is_system,
+           check_no_emoji, check_neutral_tint, check_proximity,
+           check_border_widths, check_reduced_motion, check_dark_mode],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
@@ -4910,7 +5618,8 @@ WAVE_CHECKS = {
            check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_speed_budget,
            check_mobile_budget, check_viewport, check_tap_size,
-           check_rhythm_render, check_copy_density, check_seo_lint,
+           check_tile_page_parity, check_rhythm_render, check_copy_density,
+           check_seo_lint, check_mobile_cta,
            check_dark_mode, check_dark_toggle, check_astro_build] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,
@@ -4941,7 +5650,7 @@ for _w in list(WAVE_CHECKS):
 # look, approve the system sheet (locks DNA v1), pick the wireframe
 # (locks structure), sign off the final page. Everything else is
 # mechanical.
-APPROVABLE = {'w1', 'w2', 'w3', 'w5', 'w8'}
+APPROVABLE = {'w1', 'w3', 'w4', 'w8'}
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -68,7 +68,7 @@ def approve(wave, pdir, G):
     if ans.strip() != f'APPROVE {wave}':
         print('not approved')
         return 1
-    if wave == 'w3' and lock_dna(ctx, G):
+    if wave == 'w4' and lock_dna(ctx, G):
         print('DNA map locked to v1 (look lock)')
         sl = G.dna_slices(G.dna_map(ctx) or {})
     rec = G.write_approval(ctx, wave)

@@ -131,6 +131,15 @@
       "B.4",
       "B.5",
       "B.6"
+    ],
+    "check_tile_page_parity": [
+      "P.6"
+    ],
+    "check_image_discovery": [
+      "P.14"
+    ],
+    "check_components_exist": [
+      "P.6"
     ]
   },
   "graph": {
@@ -698,7 +707,7 @@
     "P.14": {
       "check": "check_mobbin_refs",
       "mode": "script",
-      "threshold": "MOBBIN-REFS.md \u22651 ref per composition",
+      "threshold": "MOBBIN-REFS.md \u22651 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist \u21d2 DNA inferred.image_set",
       "tier": "invariant",
       "wave": "w5"
     },
@@ -738,9 +747,9 @@
       "wave": "w3"
     },
     "P.6": {
-      "check": "check_components_exist",
+      "check": "check_tile_is_system",
       "mode": "script",
-      "threshold": "composition\u2192component; tile instantiates all",
+      "threshold": "composition\u2192component; tile instantiates all + tile_page_parity at w7 (page classes \u2286 sheet-defined; every composition has a tile counterpart)",
       "tier": "structural",
       "wave": "w6"
     },

@@ -1,6 +1,19 @@
-# MOBBIN-REFS
-- hero split-media → https://mobbin.com/screens/abc123 (real layout ref)
-- cards-n → https://mobbin.com/screens/def456
-- form-panel → https://mobbin.com/screens/ghi789
-- nav-bar → https://mobbin.com/screens/jkl012
-- footer-bar → https://mobbin.com/screens/mno345
+# MOBBIN-REFS — consulted before direction (W1) and per composition (W5)
+
+| id / url | kind | informs | wave |
+|---|---|---|---|
+| https://mobbin.com/screens/abc123 | screen | home · split-media · hero layout | w1 |
+| https://mobbin.com/screens/abc124 | screen | home · split-media · media ratio | w1 |
+| https://mobbin.com/screens/abc125 | section | home · split-media · CTA restraint | w1 |
+| https://mobbin.com/screens/def456 | section | home · cards-n · card density | w1 |
+| https://mobbin.com/screens/def457 | section | home · cards-n · card radius | w1 |
+| https://mobbin.com/screens/def458 | screen | home · cards-n · three-up grid | w1 |
+| https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
+| https://mobbin.com/screens/ghi790 | screen | home · form-panel · label placement | w1 |
+| https://mobbin.com/screens/ghi791 | section | home · form-panel · submit emphasis | w1 |
+| https://mobbin.com/screens/jkl012 | screen | home · nav-bar · sticky bar | w1 |
+| https://mobbin.com/screens/jkl013 | screen | home · nav-bar · nav CTA | w1 |
+| https://mobbin.com/screens/jkl014 | section | home · nav-bar · logo scale | w1 |
+| https://mobbin.com/screens/mno345 | screen | home · footer-bar · footer density | w1 |
+| https://mobbin.com/screens/mno346 | section | home · footer-bar · legal row | w1 |
+| https://mobbin.com/screens/mno347 | screen | home · footer-bar · contact block | w1 |

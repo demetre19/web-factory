@@ -12,11 +12,14 @@ links:
 
 # DESIGN MACHINERY — stage map + rulebook index
 
-**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Every
-design artifact from W3 on is an Astro page/component in ONE project
-scaffolded from `templates/astro/` at W0, themed by `tailwind.config`
-generated from `TOKENS.json`. No standalone hand-rolled HTML after W2.
-(P.1)
+**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Astro is
+for the **final product only** — the W6–W8 build + `dist/`. Every
+**preview / choosing** artefact — the W2 look picker, the W3 system
+sheet, the variant picker, the W5 wireframe cards — is quick
+self-contained HTML under `preview/` (compiled CSS from
+`tailwind.config` + TOKENS/DNA knobs, CSS vars per variant, Light/Dark
+toggle, viewport switch). Components/tokens stay the single source the
+final Astro build consumes. (P.1)
 
 **Read DNA map. Every decision traces to it.** `<pipeline>/DNA.json` +
 rendered `DNA.md` is the single source of coherence — vertical profile,
@@ -56,15 +59,15 @@ operator approves; `gate.py <wave> <dir> --approve` records it in
 
 | Wave | Stage dir | Produces | Rule files | Gate |
 |---|---|---|---|---|
-| **W0 scaffold** | `stage-w0-scaffold/` | `site/` Astro + Tailwind project from `templates/astro/`; `astro build` exits 0 | P | `gate.py w0` — scaffold, pins, build 0 |
+| **W0 scaffold** | `stage-w0-scaffold/` | `site/` Astro + Tailwind project from `templates/astro/` (provisioned early; first built at W6) | P | `gate.py w0` — scaffold, pins, shared layer |
 | **W1 DNA + audit** | `stage-w1-dna/` | Mobbin refs, `DESIGN-PLAN.md` `site:`+`intent:`, Phase-0 `audit.md`, **`DNA.json` v0 at exit** (invariants + constraints + pattern-library median/IQR seeding + vector targets) | P D E V T C L G S I M R W DM | `gate.py w1` — Mobbin auth+refs, design_mode, intent, audit, genotype, DNA v0 |
 | **W2 look & feel** | `stage-w2-look/` | 3 (max 5) options as Astro tiles = distinct **knob vectors** derived from DNA v0, each with a light+dark system sheet; operator picks the baseline | C G S M T R V P D DM VG | `gate.py w2` — axes ∈ enums, refused, ≥2 distinct vectors, modes, picker, `--design` |
-| **W3 system** | `stage-w3-system/` | `TOKENS.json` (both modes + knob values) → `tailwind.config` + `global.css` + `src/pages/system.astro` with a Light/Dark toggle; **map locked to v1** | T C G S I V M W R P DM | `gate.py w3` — enums, spacing/breakpoints, contrast both modes, toggle, config derived, build 0 |
+| **W3 system** | `stage-w3-system/` | `TOKENS.json` (both modes + knob values) → `tailwind.config` + `global.css` + `preview/system.html` primitives sheet with a Light/Dark toggle; **map locked to v1** | T C G S I V M W R P DM | `gate.py w3` — enums, spacing/breakpoints, contrast both modes, toggle, config derived |
 | **W4 content** | `stage-w4-content/` | STUB → content inventory: heading vector + body blocks + copy fields | E W R P | `gate.py w4` — inventory complete, verbatim headings, copy fields |
 | **W5 page structure** | `stage-w5-wireframe/` | `sections[]` 1:1 from the picked card (`wf_ref`), ASCII critique, wireframe lock | L R E V W P D PS | `gate.py w5` — data-* 1:1, rhythm/motif/emphasis, vector 1:1, genotype alleles |
 | **W6 components** | `stage-w6-components/` | `src/components/*.astro` + `@layer components` + tile catalogue | S I V R W M P | `gate.py w6` — every composition a component, classes ⊆ layer, no emoji, build 0 |
 | **W7 page** | `stage-w7-page/` | `src/pages/<slug>.astro` from components; `dist/`; `PAGES/<slug>/SPEC.md` | R E W V M P PS | `gate.py w7` — data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6, rhythm |
-| **W8 review** | `stage-w8-review/` | Independent `REVIEW.json` + screenshots 1280/768/360 **in both modes**; `SCORECARD.json`; `variants.astro` deltas | all CARDs (rubric) | `gate.py w8` — review complete in both modes, reviewer ≠ designer, every section ≥ 90, variants all-pass |
+| **W8 review** | `stage-w8-review/` | Independent `REVIEW.json` + screenshots 1280/768/360 **in both modes**; `SCORECARD.json`; `preview/variants.html` deltas | all CARDs (rubric) | `gate.py w8` — review complete in both modes, reviewer ≠ designer, every section ≥ 90, variants all-pass |
 
 **Operator approval points (P.8):** after W0, W2 (option pick), W3
 (tile), W4 (inventory), W5 (locked rows), W6 (components), W7 (built
@@ -114,7 +117,7 @@ earlier gate is green and `SCORECARD.json` has no section below 90.
 | `../DESIGN-INTAKE.md` | Intake constants (golden rule, absolute rules) |
 | `templates/astro/` | The one project every artifact lives in |
 | `templates/wireframe-cards/` | Plain-HTML wireframe cards with the P.3 `data-*` contract |
-| `templates/system-tile/` | The system-tile reference (rendered as `src/pages/system.astro`) |
+| `templates/system-tile/` | The system-tile reference (rendered as `preview/system.html`) |
 | `templates/sections/` | `Section.astro` shell + one gold exemplar per composition (`exemplars.py` regenerates) |
 | `SECTION-BUILD.md` | Section-unit build architecture + Design Library study (node `section-build`) |
 

@@ -67,7 +67,7 @@ site:
 burst: 2
 dna:
   profile: profile-services
-  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline}
+  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal}
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3-friendly}
   - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}
@@ -347,12 +347,25 @@ form-panel → form-panel.astro
 footer-bar → footer-bar.astro
 '''
 
-MOBBIN = '''# MOBBIN-REFS
-- hero split-media → https://mobbin.com/screens/abc123 (real layout ref)
-- cards-n → https://mobbin.com/screens/def456
-- form-panel → https://mobbin.com/screens/ghi789
-- nav-bar → https://mobbin.com/screens/jkl012
-- footer-bar → https://mobbin.com/screens/mno345
+MOBBIN = '''# MOBBIN-REFS — consulted before direction (W1) and per composition (W5)
+
+| id / url | kind | informs | wave |
+|---|---|---|---|
+| https://mobbin.com/screens/abc123 | screen | home · split-media · hero layout | w1 |
+| https://mobbin.com/screens/abc124 | screen | home · split-media · media ratio | w1 |
+| https://mobbin.com/screens/abc125 | section | home · split-media · CTA restraint | w1 |
+| https://mobbin.com/screens/def456 | section | home · cards-n · card density | w1 |
+| https://mobbin.com/screens/def457 | section | home · cards-n · card radius | w1 |
+| https://mobbin.com/screens/def458 | screen | home · cards-n · three-up grid | w1 |
+| https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
+| https://mobbin.com/screens/ghi790 | screen | home · form-panel · label placement | w1 |
+| https://mobbin.com/screens/ghi791 | section | home · form-panel · submit emphasis | w1 |
+| https://mobbin.com/screens/jkl012 | screen | home · nav-bar · sticky bar | w1 |
+| https://mobbin.com/screens/jkl013 | screen | home · nav-bar · nav CTA | w1 |
+| https://mobbin.com/screens/jkl014 | section | home · nav-bar · logo scale | w1 |
+| https://mobbin.com/screens/mno345 | screen | home · footer-bar · footer density | w1 |
+| https://mobbin.com/screens/mno346 | section | home · footer-bar · legal row | w1 |
+| https://mobbin.com/screens/mno347 | screen | home · footer-bar · contact block | w1 |
 '''
 
 REVIEW = '''{
@@ -789,6 +802,8 @@ def dna_doc():
             "media-treatment": "photo", "columns": "3",
             "heading-form": "claim", "whitespace-band": "medium",
             "gallery-mode": "grid", "form-presence": "inline",
+            "mood-energy": "calm", "mood-register": "approachable",
+            "image-style": "minimal",
         },
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},
@@ -810,11 +825,16 @@ def dna_doc():
              "deltas": {}, "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 84, "wildcard_breaks": []},
             {"id": "v2", "vector": "typography-led",
-             "deltas": {"type.ratio": 1.3625, "type.display_weight": 800},
+             "deltas": {"type.ratio": 1.3625, "type.display_weight": 800,
+                        "type.tracking_display": -0.035,
+                        "color.neutral_tint": 0.06},
              "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 81, "wildcard_breaks": []},
             {"id": "v3", "vector": "wildcard",
-             "deltas": {"radius.personality": "p4", "motion.level": "playful"},
+             "deltas": {"radius.personality": "p4",
+                        "motion.level": "playful",
+                        "elevation.level": 3,
+                        "image.treatment": "duotone"},
              "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 78,
              "wildcard_breaks": ["S.1"]},
@@ -877,7 +897,7 @@ BASE = {
                        '| T.1 font directory | Inter + Ionicons listed |\n',
     '.wave': 'w3',
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
-    'preview/home.html': PAGE_HTML,
+    'site/dist/home/index.html': PAGE_HTML,
     'shots/home-1280.png': b'PNG',
     'shots/home-light-1280.png': b'PNG',
     'shots/home-dark-1280.png': b'PNG',
@@ -907,10 +927,44 @@ MUT = {
  'check_design_mode': mut(('REPL','DESIGN-PLAN.md','design_mode: variants','design_mode: bogus')),
  'check_intent': mut(('REPL','DESIGN-PLAN.md','who: tenants','who: ""')),
  'check_audit_artifacts': mut(('REPL','DESIGN-PLAN.md','design_mode: variants','design_mode: audit-remodel'),('DEL','audit.md')),
- 'check_mobbin_refs': mut(('DEL','MOBBIN-REFS.md')),
+ 'check_mobbin_refs': mut(('DEL','MOBBIN-REFS.md'),
+                          ('SET','MOBBIN-REFS.md',
+                           '# MOBBIN-REFS\n- https://mobbin.com/screens/x\n')),
+ 'check_image_discovery': mut(
+     ('SET','discovery/ref.example/meta.json', json.dumps({
+         'url': 'https://ref.example', 'domain': 'ref.example',
+         'site_type': 'saas', 'page_type': 'home', 'source': 'reference',
+         'schema_version': 'web-meta/1', 'width': 1440, 'height': 4800,
+         'tiles': ['tile-00.png'],
+         'capture_status': 'blocked',
+         'capture_reason': "blocked:cloudflare_just_a_moment "
+                           "(title='Just a moment...')",
+         'probe': {'status': 403, 'title': 'Just a moment...',
+                   'final_url': 'https://ref.example/',
+                   'text_sample': 'Verify you are human',
+                   'fetched_at': '2026-11-19'},
+         'images': [{'file': 'hero.jpg',
+                     'medium': {'value': 'photograph', 'confidence': 0.9,
+                                'evidence': 'rgb histogram'},
+                     'subject_class': {'value': 'people',
+                                       'confidence': 0.8},
+                     'role_on_page': {'value': 'hero', 'confidence': 0.9},
+                     'confidence': 0.8, 'evidence': 'fixture'}]},
+         indent=1)),
+     ('SET','discovery/ref.example/hero.jpg', '\x89PNG\r\n')),
+ 'check_layout_distinct': mut(
+     ('REPL','preview/layouts.html',
+      'data-comp="sequence"', 'data-comp="cards-n"'))
+ , 'check_mobile_cta': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<a class="cta">Act</a><style>@media(max-width:768px)'
+      '{.cta{padding:8px}}</style>')),
+ 'check_tile_page_parity': mut(
+     ('REPL','site/dist/home/index.html','class="sec-band py-24"',
+      'class="sec-band py-24 drift-class"')),
  'check_direction_axes': mut(('REPL','DESIGN-PLAN.md','temperature: warm','temperature: hot')),
- 'check_wireframe_tags': mut(('SET','cards/index.html',
-    WIREFRAME.replace('data-ratio','x1').replace('data-comp','x2'))),
+ 'check_wireframe_tags': mut(('REPL','preview/layouts.html',
+    'data-ratio="none" data-disclosure','data-ratio="bogus" data-disclosure')),
  'check_spacing_scale': mut(('REPL','DESIGN-PLAN.md','16, 24, 32','16, 20, 32')),
  'check_breakpoints': mut(('REPL','DESIGN-PLAN.md','640, 768','640, 999')),
  'check_content_width': mut(('REPL','DESIGN-PLAN.md','content_width: 72rem','content_width: 95rem')),
@@ -929,16 +983,16 @@ MUT = {
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
  'check_components_exist': mut(('DEL','site/src/components/split-media.astro')),
  'check_tile_is_system': mut(('REPL','site/src/pages/system.astro','<SplitMedia />','')),
- 'check_class_subset': mut(('REPL','preview/home.html','class="sec-band"','class="bogus-class"')),
- 'check_no_stray_styles': mut(('REPL','preview/home.html','</head>','<style>a{color:#123456}</style></head>')),
- 'check_page_data_attrs': mut(('REPL','preview/home.html','data-sec="hero"','data-x="hero"')),
- 'check_heading_verbatim': mut(('REPL','preview/home.html','What is testing?','Something else?')),
- 'check_viewport': mut(('REPL','preview/home.html','<meta name="viewport" content="width=device-width, initial-scale=1">','')),
- 'check_tap_size': mut(('APPEND','preview/home.html','<style>a.x{min-height:20px}</style>')),
- 'check_speed_budget': mut(('REPL','preview/home.html','src="hero.webp"','src="hero.jpg"'),('APPEND','preview/home.html','<script src="https://tracker.example.com/x.js"></script>')),
- 'check_mobile_budget': mut(('APPEND','preview/home.html','<style>.w{width:1200px}</style>')),
- 'check_no_emoji': mut(('APPEND','preview/home.html','<p>Done \U0001F389</p>')),
- 'check_icon_discipline': mut(('REPL','preview/home.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
+ 'check_class_subset': mut(('REPL','site/dist/home/index.html','class="sec-band"','class="bogus-class"')),
+ 'check_no_stray_styles': mut(('REPL','site/dist/home/index.html','</head>','<style>a{color:#123456}</style></head>')),
+ 'check_page_data_attrs': mut(('REPL','site/dist/home/index.html','data-sec="hero"','data-x="hero"')),
+ 'check_heading_verbatim': mut(('REPL','site/dist/home/index.html','What is testing?','Something else?')),
+ 'check_viewport': mut(('REPL','site/dist/home/index.html','<meta name="viewport" content="width=device-width, initial-scale=1">','')),
+ 'check_tap_size': mut(('APPEND','site/dist/home/index.html','<style>a.x{min-height:20px}</style>')),
+ 'check_speed_budget': mut(('REPL','site/dist/home/index.html','src="hero.webp"','src="hero.jpg"'),('APPEND','site/dist/home/index.html','<script src="https://tracker.example.com/x.js"></script>')),
+ 'check_mobile_budget': mut(('APPEND','site/dist/home/index.html','<style>.w{width:1200px}</style>')),
+ 'check_no_emoji': mut(('APPEND','site/dist/home/index.html','<p>Done \U0001F389</p>')),
+ 'check_icon_discipline': mut(('REPL','site/dist/home/index.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
  'check_review_completeness': mut(('REPL','REVIEW.json','"opus-4"','"swe-2"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
  'check_burst': mut(('REPL','DESIGN-PLAN.md',
@@ -963,10 +1017,10 @@ MUT = {
     'border-top: 1px solid var(--c-line);','border-top: 3px solid var(--c-line);')),
  'check_reduced_motion': mut(('REPL','site/src/styles/global.css',
     '@media (prefers-reduced-motion: reduce)','@media (min-width: 9999px)')),
- 'check_copy_density': mut(('REPL','preview/home.html',
+ 'check_copy_density': mut(('REPL','site/dist/home/index.html',
     '<p class="text-fluid-0">Book now</p>',
     '<p class="text-fluid-0">' + 'long copy sentence ' * 20 + '</p>')),
- 'check_seo_lint': mut(('REPL','preview/home.html',
+ 'check_seo_lint': mut(('REPL','site/dist/home/index.html',
     '<h2 class="text-fluid-0">What is testing?</h2>',
     '<h4 class="text-fluid-0">What is testing?</h4>')),
  'check_section_contracts': mut(('DEL','sections/01-hero.contract.json')),
@@ -975,7 +1029,7 @@ MUT = {
     'dna_hash: ','dna_hash: deadbeef')),
  'check_dark_mode': mut(('REPL','site/tailwind.config.js',
     "darkMode: 'class',","")),
- 'check_dark_toggle': mut(('REPL','preview/home.html',
+ 'check_dark_toggle': mut(('REPL','site/dist/home/index.html',
     'data-theme-toggle','data-nope')),
  'check_variants': mut(('REPL','DNA.json','"id": "v3"','"id": "v9"')),
  'check_review_modes': mut(('DEL','shots/home-dark-1280.png')),
@@ -989,21 +1043,21 @@ MUT = {
     'exemplar: nav-bar','exemplar: bogus')),
  'check_assembly': mut(('REPL','site/src/pages/home.astro',
     '<Hero />','<Hero2 />')),
- 'check_rhythm_render': mut(('REPL','preview/home.html','sec-band inverse','sec-band')),
+ 'check_rhythm_render': mut(('REPL','site/dist/home/index.html','sec-band inverse','sec-band')),
  'check_style_review': mut(('SET','GATES.json','{"w5": {"design": "d3"}}'),
     ('REPL','REVIEW.json','"style": [','"style_off": [')),
- 'check_segment_roles': mut(('REPL','preview/home.html',
+ 'check_segment_roles': mut(('REPL','site/dist/home/index.html',
     'data-sec="macro"','data-x="macro"')),
- 'check_segment_region': mut(('REPL','preview/home.html',
+ 'check_segment_region': mut(('REPL','site/dist/home/index.html',
     '<section data-sec="macro"','<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>\n<section data-sec="macro"')),
- 'check_segment_share': mut(('REPL','preview/home.html',
+ 'check_segment_share': mut(('REPL','site/dist/home/index.html',
     '<p>Fixture Co, 1 Test St</p>',
     '<p>Fixture Co, 1 Test St</p>' + '<p>footer boilerplate</p>' * 20)),
- 'check_segment_media': mut(('REPL','preview/home.html',
+ 'check_segment_media': mut(('REPL','site/dist/home/index.html',
     ' alt="hero"','')),
- 'check_segment_footer': mut(('REPL','preview/home.html',
+ 'check_segment_footer': mut(('REPL','site/dist/home/index.html',
     '<p>Fixture Co, 1 Test St</p>','<h1>Fixture Co</h1>')),
- 'check_segment_priority': mut(('REPL','preview/home.html',
+ 'check_segment_priority': mut(('REPL','site/dist/home/index.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
  'check_checklist': mut(('SET','CHECKLIST/w3.md',
     '| Rule | Evidence |\n|---|---|\n| T.1 font directory | |\n')),
@@ -1043,11 +1097,15 @@ def main():
     with open(p, 'w', encoding='utf-8') as fh:
         fh.write(txt)
     vp, vtxt, _ = gate.assemble_variants(gate.Ctx(base_dir))
+    os.makedirs(os.path.dirname(vp), exist_ok=True)
     with open(vp, 'w', encoding='utf-8') as fh:
         fh.write(vtxt)
+    lp, ltxt, _ = gate.assemble_layouts(gate.Ctx(base_dir))
+    os.makedirs(os.path.dirname(lp), exist_ok=True)
+    with open(lp, 'w', encoding='utf-8') as fh:
+        fh.write(ltxt)
     for rel in ('sections', 'site/src/pages/home.astro',
-                'site/src/pages/variants.astro',
-                'site/src/styles/variants.css'):
+                'preview/variants.html', 'preview/layouts.html'):
         full = os.path.join(base_dir, rel)
         if os.path.isdir(full):
             for fn in sorted(os.listdir(full)):

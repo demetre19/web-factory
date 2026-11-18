@@ -15,20 +15,23 @@ side-by-side than from prose. VG is the same instrument at **hi-fi**:
 viewport and mode in place, each labelled with what it is optimising
 for and what it breaks.
 
-**GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** The
-picker is one Astro page; the variants are token scopes and composition
-alleles, not copies of a stylesheet.
+**GOLDEN RULE: ASTRO is for the final product (W6–W8); the picker is
+self-contained HTML** (`preview/variants.html`, compiled from
+TOKENS/DNA). The operator chooses between **ACTUAL page designs** —
+full responsive page mockups with real copy and imagery, every value
+driven by the DNA knob vector. Style/system sheets are *implicit*:
+generated and gated, never the choosing surface.
 
 ### VG.1 One page, 3–5 variants, mechanical build
 
-`src/pages/variants.astro` exists and renders **3 (default) to 5**
-variants of the same page. It is generated — `assemble.py --variants`
-writes it from the plan and `VARIANT-GATES.json`; a hand-written picker
-drifts from the designs it claims to show.
+`preview/variants.html` exists and renders **3 (default) to 5** full
+responsive pages — one real design per variant. It is generated —
+`assemble.py --variants` writes it from DNA + plan; a hand-written
+picker drifts from the designs it claims to show.
 
-**Enforcement** — script `check_variants` @ w2 and w8. Threshold: page
-exists, `data-variant` count ∈ [3, 5], and every rendered id appears in
-`VARIANT-GATES.json`.
+**Enforcement** — script `check_variants` @ w2 and w8. Threshold: file
+exists, `data-variant` count ∈ [3, 5], every rendered id is a computed
+pass, and `data-pane="page"` holds a full responsive page mock.
 
 ### VG.2 A variant is a vector, not a mood
 
@@ -58,7 +61,9 @@ id that is absent from it.
 
 One sticky bar: **Variant 1…N · Desktop/Tablet/Mobile · Light/Dark**.
 Frames render at 1:1 with container queries, so a tablet frame is a
-tablet layout, not a scaled desktop. Switching is instant and
+tablet layout, not a scaled desktop; the mock itself is fluid (clamp
+type incl. h2/lead, `min-width:0`, `overflow-x` guard) so nothing
+overflows at 375/768/1280 in either mode. Switching is instant and
 client-side; the chosen variant, viewport and mode persist across
 reloads.
 
