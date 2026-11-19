@@ -2153,14 +2153,19 @@ def check_token_layer(ctx):
     css = ctx.read('site/src/styles/global.css') or ''
     if not css:
         return f
-    need = [(':root {', 'primitive block'),
-            (':root {', 'semantic layer'),
-            ('.dark {', 'dark overrides')]
-    for needle, name in need:
-        if needle not in css:
-            f.append(f'TK.1 global.css lacks {name} ({needle}) — '
-                     'the token layer emits :root primitives → '
-                     ':root semantics → .dark overrides')
+    # Structural, not textual: an @theme at-rule carries the right
+    # declarations but the v3 build drops it, so the block must be a
+    # real :root rule.
+    blocks = re.findall(r':root\s*\{(.*?)\}', css, re.S)
+    if not any('--primitive-neutral-bg' in b for b in blocks):
+        f.append('TK.1 global.css has no :root primitive block — '
+                 '@theme is a Tailwind-v4 at-rule the v3 build drops, '
+                 'so every var() resolves empty')
+    if not any(re.search(r'--(bg|text|border|action)-\w+\s*:', b)
+               for b in blocks):
+        f.append('TK.1 global.css has no :root semantic layer')
+    if '.dark {' not in css:
+        f.append('TK.1 global.css has no .dark overrides')
     # TK.2 semantic parity — every semantic var in :root must have
     # a .dark override (missing override = half a token layer)
     # two :root blocks (primitives + semantics) — scan them all
