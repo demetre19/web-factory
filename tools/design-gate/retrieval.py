@@ -59,6 +59,11 @@ _WANT_SIG = {
     'image-led': {'image'},
 }
 
+# themeability floor — fraction of color-ish classes that must
+# resolve through semantic tokens for vars to reach the payload.
+# hyperui ≈ 0.0 (hardcoded slate/indigo), flowbite ≈ 0.7.
+_MIN_THEMEABLE = 0.35
+
 # recipe dir → the section family the topology indexes know.
 # Brixies dirs are literal (cta-sections); HTML kits map onto the
 # topology_id vocabulary.
@@ -196,6 +201,11 @@ class Bank:
                 if f and f != 'index.json':
                     self.topo_src[f] = r
         self._topo_map = gate._recipe_topo_map()
+        # row_attrs sidecar: scale / element_sig / themeable,
+        # computed once by enrich_bank.py — read, never re-derived.
+        attrs_p = os.path.join(VECTORS, 'row_attrs.json')
+        self.attrs = json.load(open(attrs_p)) \
+            if os.path.exists(attrs_p) else {}
 
     def matrix(self):
         """float32 vectors, lazily decoded from vectors.bin.
@@ -233,10 +243,23 @@ class Bank:
         return {}
 
     def sig_for(self, row):
-        """Element-class signature for a bank row — from the banked
-        recipe's elements[] via the gate's own parser."""
-        return set(gate._recipe_element_sig(row.get('recipe_id')
-                                            or ''))
+        """Element-class signature — banked recipe elements[] first,
+        else the precomputed markup sig from row_attrs."""
+        sig = set(gate._recipe_element_sig(row.get('recipe_id')
+                                           or ''))
+        if sig:
+            return sig
+        return set(self.attrs.get(
+            row.get('render_path', ''), {}).get(
+                'element_sig', ()))
+
+    def scale_for(self, row):
+        return self.attrs.get(
+            row.get('render_path', ''), {}).get('scale', 'component')
+
+    def themeable_for(self, row):
+        return self.attrs.get(
+            row.get('render_path', ''), {}).get('themeable', 1.0)
 
     def exact(self, dna):
         """Free join: a bank row already rendered this DNA's six
@@ -251,16 +274,25 @@ class Bank:
     def filter_rows(self, spec):
         """Constraint filter — metadata only, no model. Keeps rows
         whose recipe family matches, element sig covers want_sig,
-        and topology allows the sampled layout gene."""
-        topo_ok = set(_FAMILY_TOPO.get(spec['family'], ()))
+        topology allows the layout, scale is a real section (not a
+        page or a bare widget), and the payload is themeable enough
+        for vars to reach."""
         want = set(spec['want_sig'])
         fam = spec['family']
+        min_theme = spec.get('min_themeable',
+                             _MIN_THEMEABLE)
         out = []
         for k in self.order:
             r = self.rows[k]
             rid = r.get('recipe_id') or ''
             rfam = recipe_family(rid)
             if fam and rfam and rfam != fam:
+                continue
+            # section-scale only — pages pull whole marketing
+            # shells; components are widget-scale
+            if self.scale_for(r) != 'section':
+                continue
+            if self.themeable_for(r) < min_theme:
                 continue
             if want and not (self.sig_for(r) & want or
                              self.sig_for(r) >= want):
