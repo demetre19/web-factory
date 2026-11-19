@@ -67,7 +67,7 @@ wave starts only when the previous wave's gate passed for the current
 input hashes AND the operator approved its artifact (`run.py`
 enforces). A wave ends when `gate.py <wave>` exits 0 **and** the
 operator approves **in chat**; the orchestrator records it with
-`run.py approve <wave> <dir> --evidence "<operator chat text>"` — a
+`run.py nonce <wave> <dir>` mints a one-time nonce → `run.py approve <wave> <dir> --nonce N` records it — a
 signed approval record keyed by input + DNA hashes. A designer agent
 can never approve its own work (P.8). Recorded in
 `GATES.json`. The designer model never writes `GATES.json` /

@@ -2272,6 +2272,32 @@ def check_breathing(ctx):
     return f
 
 
+def check_receipts(ctx):
+    """P.17 — nothing outside the pipeline: an artifact that exists on
+    disk must be bound in GATES.json.artifacts to its passing wave."""
+    if not _wave_ge(ctx, 'w3'):
+        return []
+    g = load_gates(ctx)
+    arts = g.get('artifacts') or {}
+    f = []
+    upto = WAVE_SEQ.index(ctx.wave) + 1 if ctx.wave in WAVE_SEQ         else len(WAVE_SEQ)
+    for wv in WAVE_SEQ[:upto]:
+        for rel in ARTIFACTS.get(wv, []):
+            fp = os.path.join(ctx.dir, rel)
+            if not os.path.isfile(fp):
+                continue
+            rec = arts.get(rel)
+            if not rec:
+                f.append(f'P.17 {rel} exists without a gate receipt — '
+                         'the orchestrator must never show an '
+                         'unreceipted artifact')
+                continue
+            sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest()
+            if sha != rec.get('sha256'):
+                f.append(f'P.17 {rel} changed since its receipt')
+    return f
+
+
 def check_mobile_cta(ctx):
     """R.9 — below tablet, primary/secondary CTAs are full-width,
     stacked, centred, min-height 48."""
@@ -4802,13 +4828,11 @@ def check_seo_lint(ctx):
 # slices} with a key that only that command creates. Gates re-verify the
 # signature against the CURRENT inputs; a changed input voids the approval.
 
-OPERATOR_HOME = os.path.expanduser('~/.web-factory')
+OPERATOR_HOME = os.environ.get(
+    'WEB_FACTORY_OPERATOR_HOME', os.path.expanduser('~/.web-factory'))
 
 
 def op_key(create=False):
-    k = os.environ.get('DESIGN_GATE_OPERATOR_KEY')
-    if k:
-        return k.encode()
     p = os.path.join(OPERATOR_HOME, 'operator.key')
     if os.path.isfile(p):
         return open(p, 'rb').read().strip()
@@ -4878,10 +4902,10 @@ def approval_state(ctx, wave):
         return 'missing'
     if not key or rec.get('sig') != _sig(rec, key):
         return 'unsigned'
-    # the record must prove provenance: an interactive confirm, or the
-    # operator's chat words relayed by the orchestrator (P.8)
-    if not rec.get('evidence') and rec.get('by') != 'operator-tty':
-        return 'no-evidence'
+    # provenance: an interactive TTY confirm or a consumed service
+    # nonce — a record the designer minted itself is unverifiable (P.8)
+    if rec.get('by') != 'operator-tty' and not rec.get('nonce'):
+        return 'no-provenance'
     sl = dna_slices(dna_map(ctx) or {})
     if rec.get('inputs') != _h(input_hashes_for(ctx, wave)):
         return 'stale'
@@ -4891,7 +4915,8 @@ def approval_state(ctx, wave):
     return 'ok'
 
 
-def write_approval(ctx, wave, by='operator', evidence=None):
+def write_approval(ctx, wave, by='operator-service', design=None,
+                   nonce=None, chat=None, evidence=None):
     key = op_key(create=True)
     sl = dna_slices(dna_map(ctx) or {})
     rec = {'wave': wave,
@@ -4900,6 +4925,12 @@ def write_approval(ctx, wave, by='operator', evidence=None):
            'by': by,
            'ts': __import__('datetime').datetime.now().isoformat(
                timespec='seconds')}
+    if design:
+        rec['design'] = str(design)[:40]
+    if nonce:
+        rec['nonce'] = nonce
+    if chat:
+        rec['chat'] = str(chat)[:300]
     if evidence:
         rec['evidence'] = str(evidence)[:300]
     rec['sig'] = _sig(rec, key)
@@ -5216,10 +5247,19 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
-    # run.py approve end-to-end: the evidence path must record a real
-    # signed approval without a TTY (P0 regression — Ctx had no wave)
+    # run.py approve end-to-end: the nonce path records a real signed
+    # approval without a TTY, inside a temp operator home (P0 —
+    # Ctx.wave crash; F-01 — never the real ~/.web-factory)
     tmpd = tempfile.mkdtemp()
     try:
+        home = os.path.join(tmpd, 'op-home')
+        os.makedirs(os.path.join(home, '.web-factory'))
+        with open(os.path.join(home, '.web-factory', 'operator.key'),
+                  'w') as fh:
+            fh.write('fixture-key')
+        os.environ['WEB_FACTORY_OPERATOR_HOME'] = \
+            os.path.join(home, '.web-factory')
+        gate_self.OPERATOR_HOME = os.environ['WEB_FACTORY_OPERATOR_HOME']
         pd_ = os.path.join(tmpd, 'p')
         fxd = os.path.join(HERE, 'fixtures')
         shutil.copytree(os.path.join(fxd, '_base'), pd_, symlinks=True)
@@ -5235,18 +5275,35 @@ def cli_selftest():
             [sys.executable, os.path.join(HERE, 'run.py'), 'approve',
              'w1', pd_], capture_output=True, text=True, env=env)
         if 'REFUSED' not in r.stdout + r.stderr:
-            f.append('run.py approve without TTY/evidence did not refuse')
+            f.append('run.py approve without TTY/nonce did not refuse')
+        if '--evidence' in (r.stdout + r.stderr) or r.returncode == 0:
+            f.append('run.py approve still accepts a free-text path')
         r = subprocess.run(
-            [sys.executable, os.path.join(HERE, 'run.py'), 'approve',
-             'w1', pd_, '--evidence', 'operator approved w1 in chat'],
-            capture_output=True, text=True, env=env)
-        if r.returncode != 0:
-            f.append('run.py approve --evidence failed: '
-                     f'{(r.stdout + r.stderr).strip().splitlines()[-2:]}')
+            [sys.executable, os.path.join(HERE, 'run.py'), 'nonce',
+             'w1', pd_], capture_output=True, text=True, env=env)
+        nonce = r.stdout.strip()
+        if r.returncode != 0 or len(nonce) != 32:
+            f.append(f'run.py nonce failed: {r.stdout + r.stderr}')
         else:
-            st = approval_state(Ctx(pd_), 'w1')
-            if st != 'ok':
-                f.append(f'signed approval not verifiable: {st}')
+            r = subprocess.run(
+                [sys.executable, os.path.join(HERE, 'run.py'),
+                 'approve', 'w1', pd_, '--nonce', nonce],
+                capture_output=True, text=True, env=env)
+            if r.returncode != 0:
+                f.append('run.py approve --nonce failed: '
+                         f'{(r.stdout + r.stderr).strip()[-200:]}')
+            else:
+                st = approval_state(Ctx(pd_), 'w1')
+                if st != 'ok':
+                    f.append(f'signed approval not verifiable: {st}')
+                # nonce replay must refuse
+                r2 = subprocess.run(
+                    [sys.executable, os.path.join(HERE, 'run.py'),
+                     'approve', 'w1', pd_, '--nonce', nonce],
+                    capture_output=True, text=True, env=env)
+                if r2.returncode == 0:
+                    f.append('nonce replay accepted — nonces are '
+                             'single-use')
     finally:
         shutil.rmtree(tmpd, ignore_errors=True)
     # gate.py round audits a standalone picker HTML end to end
@@ -5383,6 +5440,8 @@ def cli_selftest():
             json.dump({'w0': {'pass': True, 'dna': None},
                        'w1': {'pass': True, 'approved': True,
                               'inputs_sha256': input_hashes(c1)}}, fh)
+        os.environ['WEB_FACTORY_OPERATOR_HOME'] = \
+            os.path.join(home, '.web-factory')
         env = dict(os.environ, HOME=home)
         rp = os.path.join(HERE, 'run.py')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
@@ -5394,7 +5453,7 @@ def cli_selftest():
         if g.get('w2', {}).get('pass'):
             f.append('run.py gated w2 without its ancestors being clean')
         # signed approval → w2 runs, then a changed DNA core stops it
-        gate_self.write_approval(c1, 'w1', evidence='selftest')
+        gate_self.write_approval(c1, 'w1', nonce='selftest-nonce')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
                            capture_output=True, text=True, env=env)
         if 'approval' in r.stdout and 'REFUSED' in r.stdout:
@@ -5435,7 +5494,12 @@ def cli_selftest():
 
 
 def cmd_selftest():
-    os.environ.setdefault('DESIGN_GATE_OPERATOR_KEY', 'fixture-key')
+    import tempfile as _tf
+    _home = os.path.join(_tf.mkdtemp(), '.web-factory')
+    os.makedirs(_home, exist_ok=True)
+    with open(os.path.join(_home, 'operator.key'), 'w') as fh:
+        fh.write('fixture-key')
+    globals()['OPERATOR_HOME'] = _home
     fx = os.path.join(HERE, 'fixtures')
     checks = {c.__name__: c for lst in WAVE_CHECKS.values()
               for c in lst}
@@ -6822,7 +6886,8 @@ WAVE_CHECKS = {
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
-           check_canon_trace, check_auto_grid, check_surface_rhythm,
+           check_canon_trace, check_receipts, check_auto_grid,
+           check_surface_rhythm,
            check_dead_columns, check_intent_sections, check_hero_fold,
            check_canon_padding, check_breathing,
            check_primary_cta, check_interaction_states, check_forms,

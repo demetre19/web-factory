@@ -171,7 +171,7 @@ closed set.
 | S.9 | Form states | structural | script | `check_forms` | field without label / required marker / state container | w7 |
 | V.9 | Dark-mode media handling | stylistic | script | `check_dark_media` | undimmed media in dark mode | w7 |
 | PS.11 | One idea, one section | invariant | script | `check_intent_sections` | rows share a section across intents / h2 count > section units / missing data-intent | w3 |
-| P.17 | Nothing outside the pipeline | invariant | operator | `receipt` | artifact without a bound all-pass receipt in GATES.json — gate.py receipt <file> | w* |
+| P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
 | L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
 
-164 rules — script 132, reviewer 30, operator 2; invariant 48, structural 42, stylistic 74.
+164 rules — script 133, reviewer 30, operator 1; invariant 48, structural 42, stylistic 74.

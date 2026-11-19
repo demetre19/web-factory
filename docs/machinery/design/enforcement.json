@@ -227,6 +227,9 @@
   ],
   "check_breathing": [
    "L.17"
+  ],
+  "check_receipts": [
+   "P.17"
   ]
  },
  "graph": {
@@ -1473,12 +1476,11 @@
    "wave": "w3"
   },
   "P.17": {
-   "check": null,
-   "approval": "receipt",
-   "mode": "operator",
-   "threshold": "artifact without a bound all-pass receipt in GATES.json \u2014 gate.py receipt <file>",
+   "check": "check_receipts",
+   "mode": "script",
+   "threshold": "artifact without a bound all-pass receipt in GATES.json",
    "tier": "invariant",
-   "wave": "w*"
+   "wave": "w7"
   },
   "L.17": {
    "check": "check_breathing",

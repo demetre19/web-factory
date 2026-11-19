@@ -62,7 +62,7 @@ Checks: enums + non-empty fields; spacing ⊆ G.1; breakpoints ⊆ R.1;
 WCAG ratios computed from `system.color.roles` hexes; TOKENS.json +
 config + global.css + preview/system.html exist; config derived from tokens;
 tile instantiates surfaces/densities/ranks; `astro build` exits 0.
-Operator approves the rendered sheet in chat → `run.py approve w5 <dir> --evidence "…"`.
+Operator approves the rendered sheet in chat → `run.py nonce w5 <dir>` → `run.py approve w5 <dir> --nonce N`.
 
 - LAW.REF (REF.1): system choices cite canon; spacing is a G.1 step or an ACSS tier name — never invented px.
 

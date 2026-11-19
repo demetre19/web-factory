@@ -56,7 +56,7 @@ python3 tools/design-gate/run.py w4 <pipeline-dir> --design <variant>
 
 Checks: variants.html present (HTML picker), exactly 3 knob vectors, deltas
 applied + within bounds, sheet in both modes, only passing variants
-rendered. Then the operator approves in chat → `run.py approve w4 <dir> --evidence "…"` (locks DNA v1).
+rendered. Then the operator approves in chat or clicks Approve → `run.py nonce w4 <dir>` → `run.py approve w4 <dir> --nonce N` (locks DNA v1).
 
 - LAW.REF (REF.1): every look-knob choice traces to a canon ref; the W4 picker passes `gate.py round` (scores, visual review, refs) before the operator sees it.
 

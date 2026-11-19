@@ -2,15 +2,18 @@
 """run.py — design-gate orchestrator + operator approval.
 
   python3 run.py <wave> <pipeline-dir> [gate.py options]
-  python3 run.py approve <wave> <pipeline-dir> [--evidence "<operator chat text>"]
+  python3 run.py approve <wave> <pipeline-dir> [--nonce N] [--design D]
+  python3 run.py nonce <wave> <pipeline-dir>
   python3 run.py sign-review <pipeline-dir>
 
 A wave runs only when EVERY earlier wave passed, every approvable one is
 operator-approved for the CURRENT inputs, and no recorded input changed
-(ORDER / DM.6). `approve` needs an interactive terminal and HMAC-signs
-{wave, input hash, DNA slices} with ~/.web-factory/operator.key — the
-designer's pipeline dir cannot produce an approval (P.8). Approving w3
-locks DNA v1.
+(ORDER / DM.6). Approvals are minted by approve_service.py — a one-time
+nonce per render (picker "Approve" button POSTs; `run.py nonce` mints
+one for a chat approval) — or by an interactive TTY confirm. Records are
+HMAC-signed {wave, inputs, DNA slices, nonce} under
+~/.web-factory/operator.key; the designer cannot produce one (P.8).
+Approving w3/w4 locks DNA v1.
 """
 import json, os, subprocess, sys
 
@@ -34,15 +37,14 @@ def lock_dna(ctx, G):
     return True
 
 
-def approve(wave, pdir, G, evidence=None):
+def approve(wave, pdir, G, nonce=None, design=None, chat=None):
     """Record an operator approval.
 
     Two legal channels (P.8 — a designer agent can use NEITHER):
     - interactive: a real TTY confirm (by=operator-tty), or
-    - orchestrated: --evidence "<operator chat text>" — the operator
-      approves in chat; the orchestrator relays their words. The quote
-      is signed into the record, so a designer that fabricates one
-      leaves a tamper-evident forgery trail.
+    - service: --nonce <one-time nonce> minted by approve_service.py —
+      the picker's Approve button or the orchestrator recording an
+      operator's chat approval (`run.py nonce` first).
     """
     if wave not in ORDER:
         print(f'run.py approve: unknown wave {wave}')
@@ -53,12 +55,17 @@ def approve(wave, pdir, G, evidence=None):
               'mechanical')
         return 2
     tty = sys.stdin.isatty()
-    if not tty and not evidence:
+    if not tty and not nonce:
         print('run.py approve REFUSED: no interactive terminal and no '
-              '--evidence. The designer cannot approve its own work '
-              '(P.8); the orchestrator relays the operators chat '
-              'approval as --evidence "…".')
+              '--nonce. Mint one: python3 run.py nonce <wave> <dir> '
+              '(orchestrator / picker service only).')
         return 1
+    import approve_service as S
+    if nonce:
+        code, txt = S.record_approval(wave, pdir, nonce=nonce,
+                                      design=design, chat=chat)
+        print(txt)
+        return code
     ctx = G.Ctx(pdir)
     ctx.wave = wave
     fails = G.ancestry_fails(ctx) if wave != 'w0' else []
@@ -77,7 +84,7 @@ def approve(wave, pdir, G, evidence=None):
     print(f'inputs    {G._h(G.input_hashes_for(ctx, wave))}')
     print(f'dna       look {sl.get("core")} · structure '
           f'{sl.get("structure")}')
-    if tty and not evidence:
+    if tty:
         ans = input(f'type "APPROVE {wave}" to record operator '
                     'approval: ')
         if ans.strip() != f'APPROVE {wave}':
@@ -85,11 +92,8 @@ def approve(wave, pdir, G, evidence=None):
             return 1
     if wave == 'w4' and lock_dna(ctx, G):
         print('DNA map locked to v1 (look lock)')
-        sl = G.dna_slices(G.dna_map(ctx) or {})
-    by = 'operator-tty' if (tty and not evidence) else 'operator'
-    rec = G.write_approval(ctx, wave, by=by, evidence=evidence)
-    print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}'
-          + (f' · evidence "{str(evidence)[:60]}"' if evidence else ''))
+    rec = G.write_approval(ctx, wave, by='operator-tty', design=design)
+    print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}')
     return 0
 
 
@@ -126,11 +130,23 @@ def main():
     if len(a) >= 3 and a[0] == 'approve':
         sys.path.insert(0, HERE)
         import gate as G
-        ev = None
-        if '--evidence' in a:
-            i = a.index('--evidence')
-            ev = a[i + 1] if i + 1 < len(a) else ''
-        return approve(a[1], a[2], G, evidence=ev)
+        kw = {}
+        for flag, key in (('--nonce', 'nonce'), ('--design', 'design'),
+                          ('--chat', 'chat')):
+            if flag in a:
+                i = a.index(flag)
+                kw[key] = a[i + 1] if i + 1 < len(a) else ''
+        return approve(a[1], a[2], G, **kw)
+    if len(a) >= 3 and a[0] == 'nonce':
+        sys.path.insert(0, HERE)
+        import gate as G  # noqa: F401
+        import approve_service as S
+        nonce, rec = S.issue_nonce(a[2], a[1])
+        if not nonce:
+            print(f'nonce REFUSED: {rec}')
+            return 1
+        print(nonce)
+        return 0
     if len(a) >= 2 and a[0] == 'sign-review':
         sys.path.insert(0, HERE)
         import gate as G

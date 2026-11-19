@@ -9,7 +9,7 @@ Layout: fixtures/_base/ is the shared good pipeline. Each fail/ dir is
 _base with one seeded violation; each pass/ dir symlinks to _base
 unless the check needs extra files (OVERRIDES).
 """
-import hashlib, hmac, json, os, shutil, sys
+import hashlib, hmac, json, os, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
@@ -953,6 +953,7 @@ BASE = {
     '.wave': 'w3',
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
     'site/dist/home/index.html': PAGE_HTML,
+    'GATES.json': json.dumps({'artifacts': {}}),
     'WILDCARD-HISTORY.json':
         '[{"round":1,"genes":["color.accent_usage","image.treatment"],'
         '"seed":117}]',
@@ -1120,6 +1121,7 @@ MUT = {
       'data-x="definition"')),
  'check_breathing': mut(('REPL','site/dist/home/index.html',
      'class="card-grid py-24"','class="card-grid py-4"')),
+ 'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_dead_columns': mut(('REPL','site/dist/home/index.html',
      '<img src="hero.webp"','<div></div><img src="hero.webp"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
@@ -1248,8 +1250,29 @@ def main():
         elif os.path.isfile(full):
             BASE[rel] = open(full, encoding='utf-8').read()
 
-    # bind the review artifact to the build it graded (P.8)
-    os.environ.setdefault('DESIGN_GATE_OPERATOR_KEY', 'fixture-key')
+    # seed artifact receipts bound to their waves (P.17)
+    _g = json.loads(BASE.get('GATES.json', '{"artifacts":{}}'))
+    _g.setdefault('artifacts', {})
+    _g.setdefault('w3', {'pass': True})
+    _g.setdefault('w4', {'pass': True})
+    for rel in ('preview/layouts.html', 'preview/variants.html'):
+        if rel in BASE:
+            _g['artifacts'][rel] = {
+                'wave': 'w3' if 'layouts' in rel else 'w4',
+                'sha256': hashlib.sha256(
+                    BASE[rel].encode()).hexdigest(),
+                'gate_pass': True}
+    BASE['GATES.json'] = json.dumps(_g, indent=1)
+    with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
+        fh.write(BASE['GATES.json'])
+    # bind the review artifact to the build it graded (P.8) — inside a
+    # temp operator home, never the real ~/.web-factory
+    tmp_home = tempfile.mkdtemp()
+    os.makedirs(os.path.join(tmp_home, '.web-factory'))
+    with open(os.path.join(tmp_home, '.web-factory', 'operator.key'),
+              'w') as fh:
+        fh.write('fixture-key')
+    gate.OPERATOR_HOME = os.path.join(tmp_home, '.web-factory')
     ctx_b = gate.Ctx(base_dir)
     ctx_b.wave = 'w7'
     rv = json.loads(BASE['REVIEW.json'])
@@ -1262,6 +1285,16 @@ def main():
     BASE['REVIEW.json'] = json.dumps(rv, indent=1)
     with open(os.path.join(base_dir, 'REVIEW.json'), 'w') as fh:
         fh.write(BASE['REVIEW.json'])
+    _g = json.loads(BASE['GATES.json'])
+    _g.setdefault('w8', {'pass': True})
+    _g['artifacts']['REVIEW.json'] = {
+        'wave': 'w8',
+        'sha256': hashlib.sha256(
+            BASE['REVIEW.json'].encode()).hexdigest(),
+        'gate_pass': True}
+    BASE['GATES.json'] = json.dumps(_g, indent=1)
+    with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
+        fh.write(BASE['GATES.json'])
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)

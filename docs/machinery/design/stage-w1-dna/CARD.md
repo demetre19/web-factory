@@ -58,7 +58,7 @@ python3 tools/design-gate/run.py w1 <pipeline-dir> --stub <stub.md>
 W1 fails when images exist without classification, a meta.json misses
 `capture_status: ok`, MOBBIN-REFS rows <3/page-type, genotype/profile
 invalid, or the discovery is not operator-approved
-(operator approves in chat → `run.py approve w1 <dir> --evidence "…"`).
+(operator approves in chat or clicks Approve → `run.py nonce w1 <dir>` → `run.py approve w1 <dir> --nonce N`).
 
 - LAW.REF (REF.1): query the full canon set — Mobbin MCP + `patterns.py` over the bank + operator-suggested sites — record every retrieved ref in `MOBBIN-REFS.md`; operator sites are banked and ranked above Mobbin; ACSS-BASELINE.md supplies DNA v0 spacing/type defaults (canon overrides it where they conflict).
 
