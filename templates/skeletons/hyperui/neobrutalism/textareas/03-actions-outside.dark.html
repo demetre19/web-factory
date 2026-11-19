@@ -1,0 +1,35 @@
+<!--
+  HyperUI · Textareas · "Actions outside (dark)" (neobrutalism)
+  Source: https://hyperui.dev/components/neobrutalism/textareas#component-3
+  Repo:   github.com/markmead/hyperui · public/examples/neobrutalism/textareas/3-dark.html
+  License: MIT (c) Mark Mead — attribution required; see LICENSE note in metadata JSON
+  SKELETON TIER: structure only. Replace EVERY visual value
+  (colour, spacing, type, radius, shadow) with DNA/ACSS tokens.
+-->
+<div>
+  <label for="Notes" class="text-black dark:text-white">
+    <span class="text-sm font-semibold"> Notes </span>
+
+    <textarea
+      id="Notes"
+      class="mt-0.5 w-full resize-none border-2 border-black bg-white shadow-[4px_4px_0_0] shadow-black focus:ring-2 focus:ring-yellow-300 sm:text-sm dark:border-white dark:bg-gray-900 dark:shadow-white dark:focus:ring-yellow-600"
+      rows="4"
+    ></textarea>
+  </label>
+
+  <div class="mt-3 flex items-center justify-end gap-3">
+    <button
+      type="button"
+      class="border-2 px-3 py-1.5 text-sm font-semibold text-black shadow-[2px_2px_0_0] shadow-black hover:bg-yellow-200 focus:ring-2 focus:ring-yellow-300 focus:outline-hidden dark:text-white dark:shadow-white dark:hover:bg-yellow-700 dark:focus:ring-yellow-600"
+    >
+      Clear
+    </button>
+
+    <button
+      type="button"
+      class="border-2 bg-yellow-200 px-3 py-1.5 text-sm font-semibold text-black shadow-[2px_2px_0_0] shadow-black hover:bg-yellow-400 focus:bg-yellow-200 focus:ring-2 focus:ring-yellow-300 focus:outline-hidden dark:bg-yellow-700 dark:text-white dark:shadow-white dark:hover:bg-yellow-500 dark:focus:bg-yellow-700 dark:focus:ring-yellow-600"
+    >
+      Save
+    </button>
+  </div>
+</div>

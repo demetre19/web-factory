@@ -1,0 +1,38 @@
+<!--
+  HyperUI · Inputs · "Base with icon" (application)
+  Source: https://hyperui.dev/components/application/inputs#component-2
+  Repo:   github.com/markmead/hyperui · public/examples/application/inputs/2.html
+  License: MIT (c) Mark Mead — attribution required; see LICENSE note in metadata JSON
+  SKELETON TIER: structure only. Replace EVERY visual value
+  (colour, spacing, type, radius, shadow) with DNA/ACSS tokens.
+-->
+<label for="Email">
+  <span class="text-sm font-medium text-gray-700"> Email </span>
+
+  <div class="relative">
+    <input
+      type="email"
+      autocomplete="email"
+      id="Email"
+      class="mt-0.5 w-full rounded border-gray-300 pe-8 shadow-sm sm:text-sm"
+    />
+
+    <span class="absolute inset-y-0 end-0 grid w-8 place-content-center text-gray-700">
+      <svg
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-4"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"
+        />
+      </svg>
+    </span>
+  </div>
+</label>
