@@ -2762,6 +2762,13 @@ def check_section_enums(ctx):
         mr = str(r.get('media_ratio') or 'none')
         if mr not in RATIOS:
             f.append(f'{n}: media_ratio "{mr}" ∉ V.3 set')
+        hc = str(r.get('heading_class') or '')
+        if hc and hc not in {'query', 'claim'}:
+            f.append(f'{n}: heading_class "{hc}" ∉ query|claim (E.2)')
+        if str(r.get('zone') or '') == 'macro' \
+                and di not in ('', 'open'):
+            f.append(f'{n}: macro-zone row disclosure "{di}" — '
+                     'macro headings stay open (E.2)')
     return f
 
 def check_speech_acts(ctx):
