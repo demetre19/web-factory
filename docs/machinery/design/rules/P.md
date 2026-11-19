@@ -119,8 +119,12 @@ failures[], sha256 of inputs}`. `run.py` refuses to run wave N unless
 GATES.json shows wave N-1 `pass` for the CURRENT input hashes AND
 `approved: true`. Approval is the operator's recorded act
 (the operator approves in chat or clicks Approve — `run.py nonce`
-mints the one-time nonce, `run.py approve <wave> <dir> --nonce N`
-records it; `gate.py --approve` exits 2);
+mints the one-time, service-signed, 30-minute nonce — the
+approve_service registry is the only issuer and each nonce is
+single-use — `run.py approve <wave> <dir> --nonce N` records it;
+`gate.py --approve` exits 2). **W4 is THE lock point**: its approval
+runs only through the nonce channel and locks the DNA map to v1 —
+there is no other place a lock happens.
 unapproved artifacts block the next wave. The designer model NEVER
 runs its own gates or writes `GATES.json`/`REVIEW.json` — self-graded
 QA is the defect this machinery replaces. Reviewer output is
