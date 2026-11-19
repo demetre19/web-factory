@@ -6,7 +6,7 @@
  "source": "siteinspire (curated index)",
  "approved": true,
  "note": "siteinspire #13164; designer: 2 years ago; tags: Design & Art Direction, Minimal website design, Portfolio website inspiration",
- "capture_engine": "ingest_good/band-fallback",
+ "capture_engine": "ingest_good/band-fallback+reseg",
  "schema_version": "1.0",
  "width": 1440,
  "height": 2562,
@@ -45,12 +45,10 @@
     "width": 1440,
     "height": 2255
    },
-   "section_type": "content",
-   "confidence": 0.55,
+   "section_type": "other",
+   "confidence": 0.4,
    "heading": null,
-   "locator": "div",
-   "explicit_hint": null,
-   "summary": "",
+   "bandFallback": true,
    "features": {
     "ink_density": 0.66,
     "whitespace_share": 0.34,
@@ -105,9 +103,7 @@
      "chroma": 111.5,
      "media_side": "both"
     }
-   ],
-   "representative_styles": null,
-   "overlays_suppressed": []
+   ]
   },
   {
    "index": 1,
@@ -306,12 +302,10 @@
      "width": 1440,
      "height": 2255
     },
-    "section_type": "content",
-    "confidence": 0.55,
+    "section_type": "other",
+    "confidence": 0.4,
     "heading": null,
-    "locator": "div",
-    "explicit_hint": null,
-    "summary": "",
+    "bandFallback": true,
     "features": {
      "ink_density": 0.66,
      "whitespace_share": 0.34,
@@ -366,9 +360,7 @@
       "chroma": 111.5,
       "media_side": "both"
      }
-    ],
-    "representative_styles": null,
-    "overlays_suppressed": []
+    ]
    },
    {
     "index": 1,
@@ -582,8 +574,8 @@
   "seconds": 1.44,
   "fetched_at": "2026-11-19T09:35:38Z"
  },
- "capture_status": "ok",
- "capture_reason": "",
+ "capture_status": "stretched",
+ "capture_reason": "section >0.6 page after reseg",
  "captured_at": "2026-11-19T09:35:38Z",
  "structure": [
   "content",

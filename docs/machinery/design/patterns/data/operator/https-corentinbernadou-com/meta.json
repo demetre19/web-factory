@@ -6,7 +6,7 @@
  "source": "siteinspire (curated index)",
  "approved": true,
  "note": "siteinspire #13459; designer: 6 months ago; tags: Big Type, Unusual Layout, Animation & Moving Image, Web & App Development, Web & Interactive Design, Personal, Portfolio, Minimal website design, Portfolio website inspiration",
- "capture_engine": "ingest_good/band-fallback",
+ "capture_engine": "ingest_good/band-fallback+reseg",
  "schema_version": "1.0",
  "width": 1440,
  "height": 3057,
@@ -45,12 +45,10 @@
     "width": 1440,
     "height": 3057
    },
-   "section_type": "content",
-   "confidence": 0.55,
+   "section_type": "other",
+   "confidence": 0.4,
    "heading": null,
-   "locator": "div",
-   "explicit_hint": null,
-   "summary": "",
+   "bandFallback": true,
    "features": {
     "ink_density": 0.075,
     "whitespace_share": 0.925,
@@ -86,9 +84,7 @@
      "chroma": 30.0,
      "media_side": "none"
     }
-   ],
-   "representative_styles": null,
-   "overlays_suppressed": []
+   ]
   }
  ],
  "ui_analysis": {
@@ -103,12 +99,10 @@
      "width": 1440,
      "height": 3057
     },
-    "section_type": "content",
-    "confidence": 0.55,
+    "section_type": "other",
+    "confidence": 0.4,
     "heading": null,
-    "locator": "div",
-    "explicit_hint": null,
-    "summary": "",
+    "bandFallback": true,
     "features": {
      "ink_density": 0.075,
      "whitespace_share": 0.925,
@@ -144,9 +138,7 @@
       "chroma": 30.0,
       "media_side": "none"
      }
-    ],
-    "representative_styles": null,
-    "overlays_suppressed": []
+    ]
    }
   ],
   "viewports": {
@@ -176,8 +168,8 @@
   "seconds": 1.54,
   "fetched_at": "2026-11-19T06:09:23Z"
  },
- "capture_status": "ok",
- "capture_reason": "",
+ "capture_status": "stretched",
+ "capture_reason": "section >0.6 page after reseg",
  "captured_at": "2026-11-19T06:09:23Z",
  "site_type_v2": "agency-portfolio",
  "site_type_suggested": "agency-portfolio",

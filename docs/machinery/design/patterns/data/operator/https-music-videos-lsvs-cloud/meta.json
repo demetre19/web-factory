@@ -6,7 +6,7 @@
  "source": "siteinspire (curated index)",
  "approved": true,
  "note": "siteinspire #13412; designer: The Studio of Sergey Lisovskiy; tags: Big Type, Typographic, Entertainment, Music, Personal, Videos, Minimal website design, Portfolio website inspiration",
- "capture_engine": "ingest_good/band-fallback",
+ "capture_engine": "ingest_good/band-fallback+reseg",
  "schema_version": "1.0",
  "width": 1440,
  "height": 6914,
@@ -175,12 +175,10 @@
     "width": 1440,
     "height": 6534
    },
-   "section_type": "content",
-   "confidence": 0.55,
+   "section_type": "other",
+   "confidence": 0.4,
    "heading": null,
-   "locator": "div",
-   "explicit_hint": null,
-   "summary": "",
+   "bandFallback": true,
    "features": {
     "ink_density": 0.229,
     "whitespace_share": 0.771,
@@ -216,9 +214,7 @@
      "chroma": 3.7,
      "media_side": "none"
     }
-   ],
-   "representative_styles": null,
-   "overlays_suppressed": []
+   ]
   },
   {
    "index": 3,
@@ -414,12 +410,10 @@
      "width": 1440,
      "height": 6534
     },
-    "section_type": "content",
-    "confidence": 0.55,
+    "section_type": "other",
+    "confidence": 0.4,
     "heading": null,
-    "locator": "div",
-    "explicit_hint": null,
-    "summary": "",
+    "bandFallback": true,
     "features": {
      "ink_density": 0.229,
      "whitespace_share": 0.771,
@@ -455,9 +449,7 @@
       "chroma": 3.7,
       "media_side": "none"
      }
-    ],
-    "representative_styles": null,
-    "overlays_suppressed": []
+    ]
    },
    {
     "index": 3,
@@ -541,8 +533,8 @@
   "seconds": 0.41,
   "fetched_at": "2026-11-19T06:56:37Z"
  },
- "capture_status": "ok",
- "capture_reason": "",
+ "capture_status": "stretched",
+ "capture_reason": "section >0.6 page after reseg",
  "captured_at": "2026-11-19T06:56:37Z",
  "structure": [
   "content",

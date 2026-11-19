@@ -23,7 +23,7 @@ UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
 OUT = os.path.join(ROOT, 'templates', 'skeletons', 'brixies')
-RATE = 8.0  # ~450/hr, rides just under the measured ~434 ceiling
+RATE = 12.5  # 300/hr cap = 12s/req; 12.5s rides at ~288/hr with margin
 
 
 
@@ -53,9 +53,15 @@ def get(path, params=None, tries=30):
             if e.code == 401:
                 raise KeyRevoked(url)
             if e.code == 429 or e.code >= 500:
-                # rolling-hour cap: 180s x 30 = up to 90min, outlasts the window
-                wait = 180 if e.code == 429 else 4 * (a + 1)
-                print(f'  HTTP {e.code}, retry {a + 1}/{tries} in {wait}s',
+                # 429 is an account window, not a fault: keep riding it
+                # (cap is longer than a single hour). Cap retries only on
+                # 5xx; 429 re-arms the counter so the run is unbounded.
+                if e.code == 429:
+                    wait = 240
+                    tries += 1  # re-arm: never give up on a window
+                else:
+                    wait = 4 * (a + 1)
+                print(f'  HTTP {e.code}, retry {a + 1} in {wait}s',
                       flush=True)
                 time.sleep(wait)
                 continue
