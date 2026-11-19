@@ -180,7 +180,8 @@
    "J.6"
   ],
   "check_picker_ux": [
-   "VG.7"
+   "VG.7",
+   "VG.9"
   ],
   "check_prebuild_receipt": [
    "J.3"
@@ -249,6 +250,10 @@
   "check_speech_acts": [
    "L.12"
   ],
+  "check_sop_constants": [
+   "SC.1",
+   "SC.2"
+  ],
   "check_sticky_offset": [
    "R.11"
   ],
@@ -257,6 +262,12 @@
   ],
   "check_surface_rhythm": [
    "L.14"
+  ],
+  "check_three_layers": [
+   "TL.1",
+   "TL.2",
+   "TL.3",
+   "TL.4"
   ],
   "check_tiers": [
    "B.1"
@@ -1677,6 +1688,13 @@
    "tier": "invariant",
    "wave": "w1"
   },
+  "VG.9": {
+   "check": "check_picker_ux",
+   "mode": "script",
+   "threshold": "chrome rule binding accent, selected state filling instead of outlining, or a modal without arrow-key cycling / spacebar toggle",
+   "tier": "invariant",
+   "wave": "w1"
+  },
   "W.1": {
    "item": "tone-errors",
    "mode": "reviewer",
@@ -1914,6 +1932,48 @@
    "threshold": "vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model",
    "tier": "invariant",
    "wave": "w8"
+  },
+  "SC.1": {
+   "check": "check_sop_constants",
+   "mode": "script",
+   "threshold": "SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "SC.2": {
+   "check": "check_sop_constants",
+   "mode": "script",
+   "threshold": "recorded verdict != derived verdict from sop-adherence.json",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.1": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "data-tl-layer value outside the closed taxonomy {ornament, motif, icon}",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.2": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "rendered candidate with dna-fit outside 0–100 or below the 50 floor",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.3": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "candidate without its word-seed-chain provenance",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.4": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "layer block with ≥2 candidates using radio inputs instead of checkboxes",
+   "tier": "invariant",
+   "wave": "w5"
   }
  }
 }

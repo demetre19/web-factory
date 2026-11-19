@@ -6,6 +6,20 @@ the kit).
 
   python3 motif.py logo.svg          # → kit JSON on stdout
   from motif import extract; kit = extract('logo.svg')
+Generator contract for deconstruction ops {scale, crop, split,
+invert, tile, slice, mask, outline}: SVG clip-path is evaluated in
+the element's user space — clip rects are authored in the logo's
+native coordinates and the clip-bearing group sits INSIDE the
+transformed group (transform outer → clip middle → use inner).
+Flip the order and the clip scales with content or crops to
+nothing (blank render — the Slice-motif gotcha).
+
+# the deconstruction vocabulary — MOTIF-layer variants are the
+# mark's OWN elements redeployed through these ops; nothing
+# invented (the taxonomy contract).
+MOTIF_OPS = ('scale', 'crop', 'split', 'invert', 'tile', 'slice',
+             'mask', 'outline')
+
 
 Kit: {primary_mark, curve_family, angle, geometric_seed,
       negative_shape, aspect, stroke_angle, primitives[]}.

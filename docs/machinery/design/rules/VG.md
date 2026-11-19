@@ -118,6 +118,30 @@ gate parses them).
 options but no tab switcher/hidden-pane CSS, a non-render first
 element, or metadata text outside a collapsed `<details>` FAILs.
 
+### VG.9 Picker chrome is neutral; accent lives inside the art
+
+Selection surfaces are **neutral by law**: tabs, buttons, labels,
+borders and the pick row bind `ink`/`muted`/line tokens only —
+`var(--accent)` and literal hex on chrome classes
+(`variant-tabs`, `variant-pickrow`, `picker-opt`, `tab-bar`,
+`picker-chrome`) FAIL. Accent colour exists **only inside the
+artwork** being judged. A selected option marks itself with an
+outline or tick, never a colour fill — a bright selected button
+biases judgment of the neighbouring art.
+
+Meta — dna-fit, seed chain, rationale — renders behind a collapsed
+`<details>` (VG.7), never visible by default.
+
+Where a modal review mode exists it is keyboard-complete: `←`/`→`
+cycle all previews in the tab, **spacebar** toggles select, and the
+caption carries the tick + counter. A modal without arrow cycling or
+space toggle FAILs.
+
+**Enforcement** — script `check_picker_ux` (w1/w3/w4): a chrome rule
+binding accent/hex, a selected state filling instead of outlining,
+or a modal missing `ArrowLeft`/`ArrowRight`/`Space`/`keyCode`
+handlers FAILs.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
@@ -130,6 +154,8 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 | VG.4 | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w4 |
 | VG.5 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
 | VG.6 | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
+| VG.7 | invariant | script | `check_picker_ux` | option not a tabbed pane, render not first/alone, or metadata outside collapsed details | w1 |
+| VG.9 | invariant | script | `check_picker_ux` | chrome binding accent/hex, selected state filling instead of outlining, or modal without arrow/space keys | w1 |
 
 ## Links
 

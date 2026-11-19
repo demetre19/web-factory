@@ -49,8 +49,35 @@ def render(spec, out):
                anchor='ma')
         y += int(fb * 1.6)
     y += int(H * 0.06)
-    bw, bh = int(W * 0.16), int(H * 0.09)
     r = int(_clamp_px(v.get('--radius'), 6))
+    # J.7 element-variant — the signature element above the headline
+    el = spec.get('element', 'text')
+    ink = v.get('--ink', '#000')
+    if el != 'text':
+        ey = y - int(H * 0.14)
+        if el == 'image':
+            d.rounded_rectangle(
+                [cx - int(W * 0.22), ey - int(H * 0.12),
+                 cx + int(W * 0.22), ey + int(H * 0.12)],
+                radius=r, outline=v.get('--line', '#ccc'), width=2)
+            d.text((cx, ey), '[ hero media ]', font=ft,
+                   fill=v.get('--muted', '#888'), anchor='mm')
+        elif el == 'avatar':
+            for i, dx in enumerate((-70, 0, 70)):
+                d.ellipse([cx + dx - 26, ey - 26, cx + dx + 26,
+                           ey + 26], outline=v.get('--accent', '#333'),
+                          width=3)
+                d.ellipse([cx + dx - 8, ey - 8, cx + dx + 8, ey + 8],
+                          fill=v.get('--muted', '#999'))
+        elif el == 'icon':
+            d.line([cx - 18, ey, cx - 2, ey + 16, cx + 22, ey - 14],
+                   fill=v.get('--accent', '#333'), width=5)
+        elif el == 'logo+number':
+            d.rectangle([cx - 60, ey - 20, cx - 16, ey + 20],
+                        outline=v.get('--accent', '#333'), width=2)
+            d.text((cx + 24, ey), '01', font=ft,
+                   fill=ink, anchor='mm')
+    bw, bh = int(W * 0.16), int(H * 0.09)
     d.rounded_rectangle([cx - bw // 2, y, cx + bw // 2, y + bh],
                         radius=r, fill=v.get('--accent', '#2563eb'))
     d.text((cx, y + bh // 2), 'Get a quote', font=ft,

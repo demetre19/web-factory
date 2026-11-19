@@ -120,6 +120,14 @@ W8 artefact).
 | `rules/DM.md` | DNA map — completeness, hash propagation, no untraceable values, variants, rhythm, invalidation (DM.1–DM.6) |
 | `rules/VG.md` | Variant picker — knob vectors, sheet first, only passing shown, switcher, wildcard, tile facts (VG.1–VG.6) |
 | `rules/STYLE.md` | Style licences — declared-cluster lint waivers, integrity + DNA record (ST.1–ST.2) |
+| `rules/O.md` | Ornaments — injectable layer, parametric variants, intensity bands, motion, DNA budget, motif complexity (O.1–O.9) |
+| `rules/BM.md` | Brand motif — logo-derived decorative vocabulary, kit ops, neutral set (BM.1–BM.3) |
+| `rules/SC.md` | SOP constants — corpus-derived verdicts recompute, never drift (SC.1–SC.2) |
+| `rules/TK.md` | Token layer — Tailwind v4 shape, consumed knobs, no raw values (TK.1–TK.4) |
+| `rules/J.md` | Judgment gates — quality floor, present order, pre-build receipt, block trace, page family, VLM (J.1–J.8) |
+| `rules/A.md` | ACSS conventions — baseline mechanics (A.1–A.3) |
+| `rules/REF.md` | Canon references — every option carries canon refs (REF.1–REF.3) |
+| `rules/TL.md` | Three-layer taxonomy — closed layers, dna-fit ≥50, seed-chain provenance, multi-select (TL.1–TL.4) |
 
 ## Other machinery
 

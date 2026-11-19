@@ -205,9 +205,10 @@
    "id": "SOP-CONSTANTS-WIRING",
    "severity": "P2",
    "mutation": "rules do not consult patterns/data/sop-constants.json (PatternMiner emits verdict=confirm|tighten|relax with n)",
-   "status": "open",
+   "status": "closed",
    "fixture": "pending PatternMiner file shape",
-   "scope": "machinery"
+   "scope": "machinery",
+   "resolution": "sop-adherence.json is the final shape (PatternMiner); check_sop_constants (SC.1/SC.2) records derived verdicts confirm|tighten|relax|insufficient, n<30 insufficient"
   },
   {
    "id": "STYLE-AXES-CORPUS",

@@ -9329,6 +9329,37 @@ def _picker_ux_fails(txt, label):
                      'metadata outside a collapsed <details> '
                      '(score/refs/knobs must sit below the render, '
                      'collapsed)')
+    # VG.9 — picker chrome is NEUTRAL: accent colour lives inside the
+    # artwork only; chrome (tabs/pick rows/buttons/labels) binds
+    # ink/muted/line tokens; selected state is an outline or tick,
+    # never an accent fill that biases the art being judged.
+    chrome_rx = re.compile(
+        r'\.(?:variant-tabs|variant-pickrow|picker-opt|pick|'
+        r'tab-bar|picker-chrome)\b[^}]*}')
+    for m in chrome_rx.finditer(txt):
+        body = m.group(0)
+        if re.search(r'var\(--accent|--accent\b|#[0-9a-fA-F]{3,8}\b',
+                     body) and 'border' not in body.split(
+                'outline')[0]:
+            f.append(f'VG.9 {label}: chrome rule {body[:60]}… binds '
+                     'accent — chrome stays ink/muted, accent lives '
+                     'in the artwork')
+        if re.search(r'\.on|\.active|\[aria-selected', body) and \
+                'background' in body and 'outline' not in body:
+            f.append(f'VG.9 {label}: selected state fills with '
+                     'colour — selection is outline/tick, never a '
+                     'fill that biases the render')
+    # modal review mode — if a modal layer exists it must cycle
+    # previews + spacebar toggle (the contract from the reference
+    # impl); a modal without keyboard nav is broken chrome
+    if 'data-modal' in txt or 'class="modal' in txt:
+        if 'ArrowLeft' not in txt and 'ArrowRight' not in txt:
+            f.append(f'VG.9 {label}: modal present without ←/→ '
+                     'preview cycling')
+        if 'Space' not in txt and 'code: 32' not in txt and \
+                'keyCode' not in txt:
+            f.append(f'VG.9 {label}: modal present without '
+                     'spacebar select toggle')
     return f
 
 
@@ -9899,6 +9930,123 @@ def _enforcement_rules():
         return json.load(open(ENFORCEMENT))['rules']
     except Exception:
         return {}
+
+@_lc(maxsize=1)
+def _sop_adherence():
+    """The mined corpus verdicts (PatternMiner,
+    patterns/data/sop-adherence.json): {rule: {baseline, n_sites,
+    adherence, bent}}."""
+    p = os.path.join(PATTERNS_DIR, 'data', 'sop-adherence.json')
+    try:
+        return json.load(open(p)).get('rules') or {}
+    except Exception:
+        return {}
+
+
+def sop_verdict(rule):
+    """confirm|tighten|relax|insufficient from mined adherence —
+    n<30 keeps the current constant (insufficient evidence)."""
+    e = _sop_adherence().get(rule)
+    if not e:
+        return 'unmeasured'
+    n = e.get('n_sites') or 0
+    adh = e.get('adherence')
+    if n < 30 or adh is None:
+        return 'insufficient'
+    return 'confirm' if adh >= 0.9 else \
+        'tighten' if adh >= 0.5 else 'relax'
+
+
+def check_sop_constants(ctx):
+    """SC.1/SC.2 — rules consult the mined corpus:
+    SC.1 SOP-CONSTANTS.json exists, names the dataset + records
+        {rule: verdict} for every rule the dataset measures;
+    SC.2 each recorded verdict equals the derived verdict —
+        recorded ≠ recomputed = drift FAIL."""
+    f = []
+    data = _sop_adherence()
+    p = os.path.join(ctx.dir, 'SOP-CONSTANTS.json')
+    if not os.path.isfile(p):
+        return ['SC.1 SOP-CONSTANTS.json missing — the rules '
+                'consult patterns/data/sop-adherence.json through '
+                'a recorded verdict table (drift-proof audit)']
+    try:
+        c = json.load(open(p))
+    except Exception:
+        return ['SC.1 SOP-CONSTANTS.json unparseable']
+    if c.get('dataset') != 'sop-adherence.json':
+        f.append('SC.1 SOP-CONSTANTS.dataset must name '
+                 'sop-adherence.json — the corpus being consulted')
+    vs = c.get('verdicts')
+    if not isinstance(vs, dict) or not vs:
+        f.append('SC.1 SOP-CONSTANTS.verdicts missing — every '
+                 'measured rule records its verdict')
+        vs = {}
+    for rid in sorted(data):
+        want = sop_verdict(rid)
+        if rid not in vs:
+            f.append(f'SC.1 verdict for {rid} missing — the corpus '
+                     'measures it (n=' +
+                     str(data[rid].get('n_sites')) + ')')
+        elif vs[rid] != want:
+            f.append(f'SC.2 {rid}: recorded {vs[rid]} != derived '
+                     f'{want} — verdicts recompute from the corpus, '
+                     'never drift')
+    return f
+
+
+THREE_LAYERS = {'ornament': 'field', 'motif': 'deconstruction',
+                'icon': 'meaning'}
+
+
+def check_three_layers(ctx):
+    """TL.1–TL.4 — the three-layer ornamental selection contract:
+    TL.1 every layer block declares layer ∈
+        {ornament, motif, icon} — the taxonomy is closed;
+    TL.2 each candidate carries data-dna-fit ∈ [0,100] and rendered
+        cards are ≥50 (picker never shows a weak fit);
+    TL.3 each candidate carries data-seed-chain (word-seed chain —
+        brand→verb→essence→geometry) so candidates are provably
+        seed-branched, not one association;
+    TL.4 multi-select is checkbox semantics — a layer block with
+        ≥2 candidates must expose checkbox inputs, not radio."""
+    f = []
+    fp = ctx.find(os.path.join('preview', 'variants.html'))
+    if not fp or not os.path.isfile(fp):
+        return []
+    t = open(fp, encoding='utf-8', errors='replace').read()
+    for m in re.finditer(r'data-tl-layer="([^"]+)"', t):
+        if m.group(1) not in THREE_LAYERS:
+            f.append(f'TL.1 layer {m.group(1)} ∉ '
+                     f'{sorted(THREE_LAYERS)} — the ornamental '
+                     'taxonomy is closed')
+    for m in re.finditer(r'data-dna-fit="([\d.]+)"', t):
+        v = float(m.group(1))
+        if not 0 <= v <= 100:
+            f.append(f'TL.2 dna-fit {v} outside 0–100')
+        elif v < 50:
+            f.append(f'TL.2 candidate rendered with dna-fit {v} '
+                     '< 50 — the picker renders strong/works fits '
+                     'only')
+    # seed chains + multi-select: candidates inside layer blocks need
+    # them. A block runs from its data-tl-layer attr to the next
+    # layer block (candidates may nest — no naive </div> cut).
+    marks = list(re.finditer(r'data-tl-layer="[^"]+"', t))
+    for i, lm in enumerate(marks):
+        block = t[lm.end():marks[i + 1].start() if i + 1 <
+                  len(marks) else len(t)]
+        cands = re.findall(r'data-candidate="([^"]+)"', block)
+        chains = re.findall(r'data-seed-chain="([^"]+)"', block)
+        if cands and len(chains) < len(cands):
+            f.append('TL.3 layer block has '
+                     f'{len(cands)} candidates but '
+                     f'{len(chains)} seed chains — each candidate '
+                     'names its word-seed chain')
+        if len(cands) >= 2 and 'type="checkbox"' not in block and \
+                'type="radio"' in block:
+            f.append('TL.4 layer block uses radio inputs — '
+                     'multi-select is checkbox semantics')
+    return f
 
 def burst_level(plan):
     try:
@@ -11597,7 +11745,8 @@ WAVE_CHECKS = {
            check_no_emoji, check_neutral_tint, check_proximity,
            check_border_widths, check_reduced_motion, check_dark_mode,
            check_dark_toggle, check_canon_trace, check_trend_vocab,
-           check_style_licence, check_token_layer],
+           check_style_licence, check_token_layer,
+           check_sop_constants, check_three_layers],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_lucide, check_section_shell,

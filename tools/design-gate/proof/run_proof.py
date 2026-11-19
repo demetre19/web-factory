@@ -30,6 +30,16 @@ VENV_PY = os.path.join(os.path.dirname(os.path.dirname(
 SHOT_RENDERER = os.path.join(HERE, 'shot_render.py')
 RECIPE = 'brixies/cta-sections/cta-1.topo'
 
+# J.7 element-variant proof: same plan slot (cta), each DNA binds
+# the canon-expected element signature — recipes picked from the
+# bank by signature, genes as secondary signal.
+ELEMENT_MAP = {
+    'services': 'brixies/cta-sections/cta-41.topo',   # avatar
+    'luxury-goods': 'brixies/cta-sections/cta-21.topo',  # image
+    'finance': 'brixies/cta-sections/cta-43.topo',    # logo+number
+    'healthcare': 'brixies/cta-sections/cta-39.topo',  # icon
+    'saas': 'brixies/cta-sections/cta-1.topo'}        # text-only
+
 # five DNA profiles — knob vectors over the same set the gate
 # consumes; nothing else may drive style.
 DNAS = {
@@ -184,6 +194,34 @@ def judge(name, dna, siblings):
             'judged_by': JUDGED_BY}
 
 
+
+def _element_dom(name):
+    """J.7 element-variant render — the signature element fills the
+    card (hand-template render; the generic recipe→DOM renderer is
+    recorded machinery debt)."""
+    sig = gate._recipe_element_sig(ELEMENT_MAP[name])
+    if 'image' in sig:
+        return ('<div class="b-media"><img src="media/proof-'
+                + name + '.webp" width="800" height="600" alt="'
+                + name + ' visual" loading="lazy"></div>')
+    if 'avatar' in sig:
+        return ('<div class="b-avatar-row"><img class="b-avatar" '
+                'src="media/avatar-1.webp" width="48" height="48" '
+                'alt="client"><img class="b-avatar" '
+                'src="media/avatar-2.webp" width="48" height="48" '
+                'alt="client"><span class="b-avatars-cap">+40 '
+                'clients</span></div>')
+    if 'icon' in sig:
+        return ('<svg class="b-icon" width="32" height="32" '
+                'viewBox="0 0 24 24" stroke="currentColor" '
+                'stroke-width="2" fill="none" aria-hidden="true">'
+                '<path d="M20 6L9 17l-5-5"/></svg>')
+    if 'logo' in sig or 'number' in sig:
+        return ('<div class="b-badges"><span class="b-logo">FC</span>'
+                '<span class="b-number">01</span></div>')
+    return ''
+
+
 def build_picker(quality):
     """VG.7 tabbed picker — option panes, render first, pickrow +
     collapsed machinery details below."""
@@ -198,18 +236,22 @@ def build_picker(quality):
         style.append(f'[data-dna="{name}"]{{{vs}}}')
         h, lead = dna['copy']
         q = quality[oid]
+        rid = ELEMENT_MAP[name]
+        esig = gate._recipe_element_sig(rid)
         panes.append(
             f'<article class="picker-opt{" active" if i == 0 else ""}"'
             f' data-pane="{oid}" data-variant="{oid}"'
-            f' data-recipe="{RECIPE}" data-topology="form-centered"'
+            f' data-recipe="{rid}" data-topology="form-centered"'
             f' data-seam="whitespace" data-dna="{name}"'
             f' data-block-id="proof:{oid}" data-content="c-cta"'
+            f' data-elements="{"+".join(esig) or "text"}"'
             f' data-quality="{q["composite"]}"'
             f' data-score="{q["composite"] / 100:.2f}"'
             f' data-refs="none" data-review="judged">\n'
             '  <div class="variant-panes"><div data-pane="page" '
             'class="variant-stage"><section class="block" '
             f'data-dna="{name}"><div class="inner">'
+            + _element_dom(name) +
             f'<h2 class="b-h">{h}</h2>'
             f'<p class="b-lead">{lead}</p>'
             '<a class="b-cta">Get a quote</a>'
@@ -220,7 +262,7 @@ def build_picker(quality):
             '</button><span class="pickstat"></span></div>\n'
             f'  <details class="variant-data"><summary>Design '
             'machinery (recipe, DNA, quality)</summary>'
-            f'<code>{oid} · {RECIPE} · form-centered · composite '
+            f'<code>{oid} · {rid} · form-centered · composite '
             f'{q["composite"]} · dims '
             f'h{q["hero_clarity"]}/c{q["layout_craft"]}'
             f'/m{q["media_fit"]}/mob{q["mobile"]}'
@@ -296,7 +338,9 @@ def main():
     shot_map = {}
     for n, d in DNAS.items():
         spec = {'width': 1280, 'height': 800, 'vars': d['vars'],
-                'copy': d['copy']}
+                'copy': d['copy'],
+                'element': '+'.join(
+                    gate._recipe_element_sig(ELEMENT_MAP[n])) or 'text'}
         sp = os.path.join(SHOTS, f'{n}.json')
         pp_ = os.path.join(SHOTS, f'{n}.png')
         open(sp, 'w').write(json.dumps(spec))
@@ -350,8 +394,11 @@ def main():
     open(os.path.join(OUT, 'REVIEW.json'), 'w').write(
         json.dumps(review, indent=1))
     prebuild = {'layout_family': 'conversion', 'options': {
-        n: {'recipe_id': RECIPE, 'plan_fit': True,
-            'refs_resolve': True, 'tokens_resolve': True,
+        n: {'recipe_id': ELEMENT_MAP[n],
+            'element_variant': gate._element_variant_name(
+                gate._recipe_element_sig(ELEMENT_MAP[n])),
+            'plan_fit': True, 'refs_resolve': True,
+            'tokens_resolve': True,
             'plan_vector_dist': 0.6} for n in DNAS}}
     open(os.path.join(OUT, 'PREBUILD.json'), 'w').write(
         json.dumps(prebuild, indent=1))
@@ -375,12 +422,18 @@ def main():
     if review['rules_pass_hash'] != review['judgment_pass_hash']:
         fails.append('J.2 hash mismatch')
     bank = gate._skl_harvest_ids()
-    if RECIPE not in bank:
-        fails.append(f'J.3/J.4 {RECIPE} not in bank')
-    for oid in DNAS:
-        if f'data-recipe="{RECIPE}"' not in picker:
-            fails.append(f'J.4 {oid} recipe attr missing')
-    print(json.dumps({'picker': pp, 'recipe': RECIPE,
+    for n in DNAS:
+        rid = ELEMENT_MAP[n]
+        if rid not in bank:
+            fails.append(f'J.3/J.4 {rid} not in bank')
+        if f'data-recipe="{rid}"' not in picker:
+            fails.append(f'J.4 {n} recipe attr missing')
+        # J.7 — rendered signature == recipe signature == canon
+        want = '+'.join(gate._recipe_element_sig(rid)) or 'text'
+        if f'data-elements="{want}"' not in picker:
+            fails.append(f'J.7 {n} element signature {want} not '
+                         'rendered')
+    print(json.dumps({'picker': pp, 'recipes': ELEMENT_MAP,
                       'dnas': list(DNAS),
                       'scores': {n: quality[n]['composite']
                                  for n in DNAS},

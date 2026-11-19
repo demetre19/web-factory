@@ -1128,6 +1128,10 @@ BASE = {
         'form-panel': {'vh_iqr': [0.6, 1.4]},
         'nav-bar': {'vh_iqr': [0.2, 0.8]},
         'footer-bar': {'vh_iqr': [0.5, 1.2]}}}),
+    'SOP-CONSTANTS.json': json.dumps({
+        'dataset': 'sop-adherence.json',
+        'verdicts': {rid: gate.sop_verdict(rid)
+                     for rid in sorted(gate._sop_adherence())}}),
     **SHOTS,
 }
 
@@ -1287,6 +1291,12 @@ MUT = {
      '{"components":{}}'),
      ('REPL','site/dist/home/index.html','data-disclosure="open"',
       'data-disclosure="open" style="padding:96px 48px"')),
+ 'check_sop_constants': mut(('SET','SOP-CONSTANTS.json',
+     '{"dataset":"sop-adherence.json","verdicts":{"S.2":"relax"}}'),),
+ 'check_three_layers': mut(('APPEND','preview/variants.html',
+     '<div data-tl-layer="ornament"><div data-candidate="c1" '
+     'data-dna-fit="42"></div><div data-candidate="c2" '
+     'data-dna-fit="80"></div><input type="radio"></div>'),),
  'check_primary_cta': mut(('REPL','site/dist/home/index.html',
      '<form><label','<a class="btn-primary" href="/x">Extra</a><form><label')),
  'check_interaction_states': mut(('REPL','site/src/styles/global.css',

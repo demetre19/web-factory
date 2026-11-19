@@ -1,6 +1,27 @@
 {
- "reviewer_model": "pi-default-vlm",
+ "reviewer_model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
  "vlm_calls": 1,
+ "vlm_evidence": {
+  "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+  "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out/shots/services.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out/shots/luxury-goods.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out/shots/finance.png",
+  "image_sha256": {
+   "services.png": "8c6224b9de8d251c",
+   "luxury-goods.png": "dc74ae7afe01b6fa",
+   "finance.png": "2896340043981417"
+  },
+  "prompt_sha256": "9bc516a612aef49c",
+  "output_sha256": "8af4dfdb42f16a60",
+  "latency_s": 29.7,
+  "parsed": {
+   "hero_clarity": 50,
+   "layout_craft": 70,
+   "media_fit": 60,
+   "mobile": 80,
+   "distinctness": 65,
+   "verdict": "pass"
+  },
+  "raw": "```json\n{\n  \"hero_clarity\": 50,\n  \"layout_craft\": 70,\n  \"media_fit\": 60,\n  \"mobile\": 80,\n  \"distinctness\": 65,\n  \"verdict\": \"pass\"\n}\n```"
+ },
  "viewports": [
   1280,
   768,
@@ -8,37 +29,82 @@
  ],
  "quality": {
   "services": {
-   "hero_clarity": 100,
-   "layout_craft": 77,
-   "media_fit": 62,
-   "mobile": 83,
-   "distinctness": 62,
+   "hero_clarity": 50,
+   "layout_craft": 70,
+   "media_fit": 60,
+   "mobile": 80,
+   "distinctness": 65,
    "topology_dist": 100,
    "visual_diff": 24,
-   "composite": 80,
-   "judged_by": "pi-default-vlm"
+   "composite": 64,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 50,
+    "layout_craft": 70,
+    "media_fit": 60,
+    "mobile": 80,
+    "distinctness": 65,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 77,
+    "media_fit": 62,
+    "mobile": 83,
+    "distinctness": 62
+   }
   },
   "luxury-goods": {
-   "hero_clarity": 100,
-   "layout_craft": 77,
-   "media_fit": 62,
-   "mobile": 83,
-   "distinctness": 62,
+   "hero_clarity": 50,
+   "layout_craft": 70,
+   "media_fit": 60,
+   "mobile": 80,
+   "distinctness": 65,
    "topology_dist": 100,
    "visual_diff": 24,
-   "composite": 80,
-   "judged_by": "pi-default-vlm"
+   "composite": 64,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 50,
+    "layout_craft": 70,
+    "media_fit": 60,
+    "mobile": 80,
+    "distinctness": 65,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 77,
+    "media_fit": 62,
+    "mobile": 83,
+    "distinctness": 62
+   }
   },
   "finance": {
-   "hero_clarity": 100,
-   "layout_craft": 69,
-   "media_fit": 62,
-   "mobile": 83,
-   "distinctness": 51,
+   "hero_clarity": 50,
+   "layout_craft": 70,
+   "media_fit": 60,
+   "mobile": 80,
+   "distinctness": 65,
    "topology_dist": 77,
    "visual_diff": 24,
-   "composite": 76,
-   "judged_by": "pi-default-vlm"
+   "composite": 64,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 50,
+    "layout_craft": 70,
+    "media_fit": 60,
+    "mobile": 80,
+    "distinctness": 65,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 69,
+    "media_fit": 62,
+    "mobile": 83,
+    "distinctness": 51
+   }
   }
  },
  "quality_retries": [
@@ -61,8 +127,8 @@
   "healthcare",
   "saas"
  ],
- "rules_pass_hash": "99827e445b971a94",
- "judgment_pass_hash": "99827e445b971a94",
+ "rules_pass_hash": "08ad0dca332813ce",
+ "judgment_pass_hash": "08ad0dca332813ce",
  "blocks": [
   {
    "block_id": "proof:services",
