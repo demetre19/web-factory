@@ -1,1 +1,0 @@
-../../../_base/site/tailwind.config.js

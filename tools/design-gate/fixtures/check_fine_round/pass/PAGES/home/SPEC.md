@@ -1,1 +1,0 @@
-../../../../_base/PAGES/home/SPEC.md
