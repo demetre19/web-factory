@@ -3394,7 +3394,10 @@ def check_round_gated(ctx):
     sp = ctx.stub_path()
     if sp:
         stub = open(sp, encoding='utf-8', errors='replace').read()
-    return [f'P.18 {x}' for x in check_round(wfp, 1, stub=stub)]
+    cands = _candidate_registry(
+        os.path.join(ctx.dir, 'CANDIDATES.json'))
+    return [f'P.18 {x}' for x in check_round(
+        wfp, 1, stub=stub, candidates=cands)]
 
 
 def check_round_gated_look(ctx):
@@ -3406,7 +3409,10 @@ def check_round_gated_look(ctx):
     sp = ctx.stub_path()
     if sp:
         stub = open(sp, encoding='utf-8', errors='replace').read()
-    return [f'P.18 {x}' for x in check_round(fp, 2, stub=stub)]
+    cands = _candidate_registry(
+        os.path.join(ctx.dir, 'CANDIDATES.json'))
+    return [f'P.18 {x}' for x in check_round(
+        fp, 2, stub=stub, candidates=cands)]
 
 
 def check_fine_round(ctx):
@@ -3422,7 +3428,10 @@ def check_fine_round(ctx):
     sp = ctx.stub_path()
     if sp:
         stub = open(sp, encoding='utf-8', errors='replace').read()
-    f = [f'P.18 {x}' for x in check_round(fp, 3, stub=stub)]
+    cands = _candidate_registry(
+        os.path.join(ctx.dir, 'CANDIDATES.json'))
+    f = [f'P.18 {x}' for x in check_round(
+        fp, 3, stub=stub, candidates=cands)]
     lp = ctx.find('preview/variants.html')
     if lp:
         ft = open(fp, encoding='utf-8', errors='replace').read()
@@ -7157,7 +7166,7 @@ def _render_sig(block, scoped_css=''):
     return (comps, geo_attrs, geo, media)
 
 
-def check_round(path, round_no, stub=None):
+def check_round(path, round_no, stub=None, candidates=None):
     """Gate one rendered picker HTML file.
 
     Round 1 (coarse LAYOUT): ≥5 options, pairwise structure distance
@@ -7185,7 +7194,7 @@ def check_round(path, round_no, stub=None):
                      '(Mobbin screen id / operator site URL)')
         else:
             bad = [t for t in rm.group(1).split()
-                   if not _canon_ref_ok(t)]
+                   if not _canon_ref_ok(t, candidates=candidates)]
             if bad:
                 f.append(f'LAW.REF option {d} cites non-canon '
                          f'{bad[:3]} — Mobbin ids or operator site '
