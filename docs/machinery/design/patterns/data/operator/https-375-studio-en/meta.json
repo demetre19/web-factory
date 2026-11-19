@@ -248,7 +248,16 @@
     "body > div:nth-of-type(2)",
     "body > div:nth-of-type(7)",
     "#iubenda-cs-banner"
-   ]
+   ],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 1,
@@ -508,6 +517,31 @@
     "#masthead",
     "body > div:nth-of-type(7)",
     "#iubenda-cs-banner"
+   ],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   },
+   "exemplar": [
+    {
+     "source": "details.so",
+     "tag": "text-showcase",
+     "detail_url": "https://www.details.so/inspo/375-2d2e01",
+     "motion": null,
+     "video": "https://inspiration-library.b-cdn.net/inspo-video/big-375-1779207826893-24030.mp4"
+    },
+    {
+     "source": "details.so",
+     "tag": "hero",
+     "detail_url": "https://www.details.so/inspo/375-99ace0",
+     "motion": null,
+     "video": "https://inspiration-library.b-cdn.net/inspo-video/big-375-1779207814983-16934.mp4"
+    }
    ]
   },
   {
@@ -763,7 +797,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 3,
@@ -2028,7 +2071,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "exemplar": [
+    {
+     "source": "details.so",
+     "tag": "footer",
+     "detail_url": "https://www.details.so/inspo/375-86d471",
+     "motion": null,
+     "video": "https://inspiration-library.b-cdn.net/inspo-video/big-375-1779207898031-29327.mp4"
+    }
+   ]
   }
  ],
  "ui_analysis": {
@@ -4053,5 +4105,94 @@
  },
  "capture_status": "ok",
  "capture_reason": "",
- "captured_at": "2026-11-19T02:21:13Z"
+ "captured_at": "2026-11-19T02:21:13Z",
+ "ui_analysis_vlm": {
+  "summary_title": "A webpage with a navigation bar at the top and multiple sections below",
+  "nav": "nav pattern seen",
+  "layout": {
+   "max_content_width_px": null,
+   "sections": null
+  },
+  "colors": {
+   "bg": "#ffffff",
+   "ink": "#000000",
+   "accent": "#0000ff"
+  },
+  "typography": {
+   "display_style": "mixed"
+  },
+  "strengths": [
+   "...",
+   "...",
+   "..."
+  ],
+  "defects": [
+   "...",
+   "...",
+   "..."
+  ],
+  "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+ },
+ "collapse": {
+  "viewports": {
+   "1440": {
+    "hscroll": false,
+    "sticky_h": 115.828125,
+    "hamburger": false,
+    "n_sections": 14
+   },
+   "768": {
+    "hscroll": false,
+    "sticky_h": 113.859375,
+    "hamburger": false,
+    "n_sections": 14
+   },
+   "360": {
+    "hscroll": false,
+    "sticky_h": 113.859375,
+    "hamburger": false,
+    "n_sections": 14
+   }
+  },
+  "rc7_content_loss": 0,
+  "rc8_hscroll": {
+   "1440": false,
+   "768": false,
+   "360": false
+  },
+  "rc8_violation": false,
+  "rc13_pad_collapse": 1.0,
+  "rc17_sticky_rent": 0.135,
+  "rc6_hamburger_360": false,
+  "rc2_cols_desk": 1.0,
+  "rc2_cols_mob": 1.0,
+  "rc3_text_first_share": 1.0,
+  "bo_ladder": {
+   "prose": 0,
+   "content": 0,
+   "wide": 5,
+   "bleed": 8,
+   "crop": 0,
+   "unlicensed": 1
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 6,
+  "bo9_mobile_wide": 8
+ },
+ "breakout": {
+  "bo_ladder": {
+   "prose": 0,
+   "content": 0,
+   "wide": 5,
+   "bleed": 8,
+   "crop": 0,
+   "unlicensed": 1
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 6,
+  "bo9_mobile_wide": 8
+ },
+ "motion_traits": [
+  "portfolio"
+ ]
 }

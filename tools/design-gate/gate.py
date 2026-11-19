@@ -547,8 +547,37 @@ def check_checklist(ctx):
 
 # ---------------------------------------------------------------- WCAG
 
+def _oklch_to_rgb(L, C, H):
+    """OKLCH → (r,g,b) linear-gamma sRGB 0–1. Clamps into gamut; the
+    gate measures intent, so an out-of-gamut token audits its closest
+    displayable colour."""
+    import math
+    a = C * math.cos(math.radians(H))
+    b = C * math.sin(math.radians(H))
+    l = L + 0.3963377774 * a + 0.2158037573 * b
+    m = L - 0.1055613458 * a - 0.0638541728 * b
+    s = L - 0.0894841775 * a - 1.2914855480 * b
+    l, m, s = l ** 3, m ** 3, s ** 3
+    r = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+    g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+    bb = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+    return (max(0.0, min(1.0, r)), max(0.0, min(1.0, g)),
+            max(0.0, min(1.0, bb)))
+
+
 def _rgb(hexv):
-    h = hexv.strip().lstrip('#')
+    """'#rrggbb' OR 'oklch(L C H)' → sRGB 0–1 triple. ACSS 4 emits
+    oklch() shade values; a palette authored in oklch must NOT slip
+    past the contrast gate (hex-only _rgb was a silent bypass)."""
+    v = (hexv or '').strip().lower()
+    mo = re.match(r'oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)', v)
+    if mo:
+        L = float(mo.group(1))
+        if '%' in mo.group(0).split(' ')[0] or L > 1.0:
+            L /= 100.0
+        return _oklch_to_rgb(L, float(mo.group(2)),
+                             float(mo.group(3)))
+    h = v.lstrip('#')
     if len(h) == 3:
         h = ''.join(c * 2 for c in h)
     if len(h) != 6:
@@ -558,7 +587,34 @@ def _rgb(hexv):
     except ValueError:
         return None
 
+
+def _oklch_lch(hexv):
+    """(L, C, H) for any colour _rgb parses — one colour space for
+    every tint/lightness audit (HSL-S and WCAG-Y disagreed, see
+    research/COLOUR-RULES §4)."""
+    import math
+    rgb = _rgb(hexv)
+    if rgb is None:
+        return None
+    def lin(c):
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = lin(rgb[0]), lin(rgb[1]), lin(rgb[2])
+    l = (0.4122214708 * r + 0.5363325363 * g +
+         0.0514459929 * b) ** (1 / 3)
+    m = (0.2119034982 * r + 0.6806995451 * g +
+         0.1073969566 * b) ** (1 / 3)
+    s = (0.0883024619 * r + 0.2817188376 * g +
+         0.6299787005 * b) ** (1 / 3)
+    L = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s
+    a = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s
+    bb = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+    return (L, math.hypot(a, bb),
+            math.degrees(math.atan2(bb, a)) % 360)
+
+
 def _lum(rgb):
+    # WCAG 2.x sRGB linearization — ONE breakpoint (0.03928). The two
+    # gate copies disagreed on 0.04045 vs 0.03928; consolidated.
     def f(c):
         return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
     r, g, b = rgb
@@ -577,8 +633,10 @@ def role_hex(roles, name):
     r = (roles or {}).get(name)
     if isinstance(r, dict):
         v = r.get('value', '')
-        return v if isinstance(v, str) and v.startswith('#') else None
-    if isinstance(r, str) and r.startswith('#'):
+        return v if isinstance(v, str) and (
+            v.startswith('#') or v.startswith('oklch')) else None
+    if isinstance(r, str) and (r.startswith('#') or
+                               r.startswith('oklch')):
         return r
     return None
 
@@ -2938,17 +2996,44 @@ def check_skeleton(ctx):
 
 
 def check_motion_js_budget(ctx):
-    """M.14 — animation-related JS ≤4KB and no animation library
-    (gsap/anime/lottie) unless the plan licenses it."""
+    """M.14 — tamdoma-way is the default: pure CSS + CSS-animated SVG
+    + minimal vanilla JS triggers (≤4KB). GSAP is the ONLY licensable
+    animation library, and only with an explicit DESIGN-PLAN licence
+    carrying a written impossibility justification AND the DNA
+    motion.engine knob set to 'gsap'. Lenis/scroll-inertia is NOT a
+    sanctioned exception — smooth scrolling is CSS scroll-behavior /
+    rAF fallback or a justified GSAP."""
     if not _wave_ge(ctx, 'w7'):
         return []
     f = []
     site = ctx.site_block()
-    lic = site.get('licensed_libraries') or ctx.plan.get(
+    lic_raw = site.get('licensed_libraries') or ctx.plan.get(
         'licensed_libraries') or []
-    lic = {str(x).lower() for x in
-           (lic if isinstance(lic, list) else [lic])}
-    LIBS = {'gsap', 'anime', 'lottie', 'framer-motion', 'three'}
+    lic_raw = lic_raw if isinstance(lic_raw, list) else [lic_raw]
+    # a licence is an OBJECT: {name, justification} — a bare string
+    # has no impossibility case
+    lic = {}
+    for x in lic_raw:
+        if isinstance(x, dict):
+            lic[str(x.get('name') or '').lower()] = x
+    engine = str(((dna_map(ctx) or {}).get('knobs') or {})
+                 .get('motion.engine')
+                 or site.get('motion_engine') or 'css').lower()
+    LIBS = {'gsap', 'anime', 'lottie', 'framer-motion', 'three',
+            'lenis', 'scrollmagic', 'velocity', 'popmotion',
+            'scrollsmoother'}
+    # a licence for anything but gsap is itself a defect
+    for name, licd in lic.items():
+        if name != 'gsap':
+            f.append(f'M.14 licence for "{name}" — GSAP is the ONLY '
+                     'licensable animation library')
+        elif not str(licd.get('justification') or '').strip():
+            f.append('M.14 gsap licence lacks a written impossibility '
+                     'justification — "why CSS cannot do this" is '
+                     'required text')
+    if engine == 'gsap' and 'gsap' not in lic:
+        f.append('M.14 motion.engine=gsap without a plan licence — '
+                 'engine and licence move together')
     anim_mark = re.compile(
         r'animate\(|requestAnimationFrame|IntersectionObserver|'
         r'gsap\.|anime\(|lottie|scroll-timeline', re.I)
@@ -2961,11 +3046,16 @@ def check_motion_js_budget(ctx):
             t = open(p, encoding='utf-8', errors='replace').read()
             low = fn.lower() + t[:400].lower()
             lib = next((l for l in LIBS if l in low), None)
-            if lib and lib not in lic:
-                f.append(f'M.14 {fn}: animation library "{lib}" '
-                         'without a DESIGN-PLAN license — animation '
-                         'libraries are defects unless explicitly '
-                         'licensed')
+            if lib and lib != 'gsap':
+                f.append(f'M.14 {fn}: animation library "{lib}" — '
+                         'banned outright; only GSAP is licensable '
+                         '(CSS scroll-behavior/rAF covers scroll '
+                         'inertia)')
+            elif lib == 'gsap' and (
+                    'gsap' not in lic or engine != 'gsap'):
+                f.append(f'M.14 {fn}: gsap without licence + '
+                         'motion.engine=gsap — a library is a defect '
+                         'unless explicitly licensed and isolated')
             if anim_mark.search(t) and os.path.getsize(p) > 4096:
                 f.append(f'M.14 {fn}: '
                          f'{os.path.getsize(p)}B animation-related JS '
@@ -3909,6 +3999,34 @@ def check_acss_conventions(ctx):
                              dcss):
                 f.append('A.1 built CSS: body lacks '
                          'text-wrap: pretty (token-bound)')
+        # width ladder — inner blocks land on --width-* rungs
+        # (the breakout ladder); .width--<rung> classes not on the
+        # ladder are literal widths in disguise
+        RUNGS = {'10', '20', '30', '40', '50', '60', '70', '80', '90',
+                 'full', 'auto', 'fit', 'max', 'min'}
+        for m in re.finditer(r'width--(\w+)', dcss +
+                             ''.join(t for _, t in ctx.page_htmls())):
+            if m.group(1) not in RUNGS:
+                f.append(f'A.1 width--{m.group(1)} — off the '
+                         '--width-* ladder rungs '
+                         '(10…90, full, auto, fit, max, min)')
+        # btn padding ratio binds the knob (ACSS baseline 2:1
+        # block:inline) — literal em padding that drifts from the
+        # declared ratio is a knob violation, not style
+        kn = (dna_map(ctx) or {}).get('knobs') or {}
+        try:
+            want = float(kn.get('btn.padding_ratio', 2.0))
+        except (TypeError, ValueError):
+            want = 2.0
+        for m in re.finditer(
+                r'(?:\.btn|button)[^{]*\{[^}]*padding:\s*'
+                r'([\d.]+)em\s+([\d.]+)em', dcss):
+            blk, inl = float(m.group(1)), float(m.group(2))
+            if blk > 0 and abs(inl / blk - want) > 0.51:
+                f.append(f'A.1 button padding {blk}em/{inl}em '
+                         f'(ratio {inl / blk:.1f}) vs '
+                         f'btn.padding_ratio {want} — pad with the '
+                         'knob ratio, ACSS baseline is 0.75/1.5em')
     for p, txt in ctx.page_htmls() if _wave_ge(ctx, 'w7') else []:
         name = os.path.basename(p)
         for m in re.finditer(
@@ -5965,11 +6083,21 @@ def cmd_dna(pipeline):
 # VG.1–VG.6 — the hi-fi picker: system sheet first, then the page; each
 # tile is a knob vector = DNA baseline + declared deltas.
 
-DARK_MAX_L = 20.0
+DARK_MAX_L = 0.24     # OKLCH L — C.5 spec is HSL L 7–10%; a WCAG-Y
+                      # cap of 20% was ~15× more permissive than the
+                      # spec (research/COLOUR-RULES §4 #2)
+
+
+def _color_str(v):
+    v = v.get('value') if isinstance(v, dict) else v
+    return v if isinstance(v, str) and (
+        v.startswith('#') or v.startswith('oklch')) else None
 
 
 def _modes(ctx):
-    """{mode: {role: hex}} from TOKENS.json color.modes (plan fallback)."""
+    """{mode: {role: colour}} from TOKENS.json color.modes (plan
+    fallback). Accepts hex AND oklch() — hex-only filters let an
+    oklch palette bypass every colour check."""
     out = {}
     raw = ctx.read('TOKENS.json')
     if raw:
@@ -5982,42 +6110,34 @@ def _modes(ctx):
             roles = (block or {}).get('roles') or block or {}
             got = {}
             for k, v in roles.items():
-                v = v.get('value') if isinstance(v, dict) else v
-                if isinstance(v, str) and v.startswith('#'):
-                    got[k] = v
+                cv = _color_str(v)
+                if cv:
+                    got[k] = cv
             out[mode] = got
     if not out:
         dm = (dna_map(ctx) or {}).get('modes') or {}
         for mode, roles in dm.items():
             got = {}
             for k, v in (roles or {}).items():
-                v = v.get('value') if isinstance(v, dict) else v
-                if isinstance(v, str) and v.startswith('#'):
-                    got[k] = v
+                cv = _color_str(v)
+                if cv:
+                    got[k] = cv
             if got:
                 out[mode] = got
     if not out:
         roles = (_system(ctx).get('color') or {}).get('roles') or {}
         light = {}
         for k, v in roles.items():
-            v = v.get('value') if isinstance(v, dict) else v
-            if isinstance(v, str) and v.startswith('#'):
-                light[k] = v
+            cv = _color_str(v)
+            if cv:
+                light[k] = cv
         out['light'] = light
     return out
 
 
 def _luminance(h):
-    h = h.strip().lstrip('#')
-    if len(h) == 3:
-        h = ''.join(c * 2 for c in h)
-    try:
-        ch = [int(h[i:i + 2], 16) / 255 for i in (0, 2, 4)]
-    except (ValueError, IndexError):
-        return None
-    ch = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
-          for c in ch]
-    return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2]
+    rgb = _rgb(h)
+    return None if rgb is None else _lum(rgb)
 
 
 def check_dark_mode(ctx):
@@ -6041,10 +6161,11 @@ def check_dark_mode(ctx):
         if bg.lower() in ('#000', '#000000'):
             f.append('C.5 dark bg is pure black — tinted charcoal required')
         else:
-            l = _luminance(bg) if bg.startswith('#') else None
-            if l is not None and l * 100 > DARK_MAX_L:
-                f.append(f'C.5 dark bg luminance {l * 100:.0f}% > '
-                         f'{DARK_MAX_L:.0f}% — not a dark surface')
+            lch = _oklch_lch(bg)
+            if lch is not None and lch[0] > DARK_MAX_L:
+                f.append(f'C.5 dark bg OKLCH L {lch[0]:.2f} > '
+                         f'{DARK_MAX_L} (HSL-L 7–10% ≈ OKLCH ≤0.24) '
+                         '— not a dark surface')
     if not _wave_ge(ctx, 'w3'):
         return f                       # W2 options declare modes only
     cfg = ctx.read('site/tailwind.config.js', 'site/tailwind.config.mjs',
@@ -6365,8 +6486,8 @@ def assemble_variants(ctx, page_pane=True):
         lm, dm = modes.get('light') or {}, modes.get('dark') or {}
         for role in sorted(set(lm) | set(dm)):
             lv, dv = lm.get(role, ''), dm.get(role, '')
-            r = contrast(lv, dv) if str(lv).startswith('#') and \
-                str(dv).startswith('#') else None
+            r = contrast(lv, dv) if _rgb(str(lv)) is not None and \
+                _rgb(str(dv)) is not None else None
             rows_.append(
                 f'<tr><td><code>{role}</code></td>'
                 f'<td class="swatch swatch-{role}">--color-{role}</td>'
@@ -6528,29 +6649,23 @@ def _hex_to_hsl(h):
     return None, s * 100, l * 100
 
 
-def _chroma_delta(h):
-    """max-min channel delta (0–255) — 'is this neutral tinted at all?'."""
-    h = h.strip().lstrip('#')
-    if len(h) == 3:
-        h = ''.join(c * 2 for c in h)
-    if len(h) != 6:
-        return None
-    try:
-        ch = [int(h[i:i + 2], 16) for i in (0, 2, 4)]
-    except ValueError:
-        return None
-    return max(ch) - min(ch)
-
-
 def check_neutral_tint(ctx):
-    """C.3 — neutrals carry the brand hue (chroma 1–8), never dead grey."""
+    """C.3 — neutrals carry the brand hue, never dead grey. Metric is
+    OKLCH C: the spec's HSL-S% bands and the old RGB channel-delta
+    bands disagreed (a compliant delta could violate the S band and
+    vice versa — COLOUR-RULES §4 #3); OKLCH C is the single tint
+    metric. A #888888-class grey (C=0) fails; tinted charcoal
+    (C≈0.003+) passes."""
     f = []
     roles = (_system(ctx).get('color') or {}).get('roles') or {}
     if not roles:
         return ['C.3 plan has no system.color.roles']
-    bands = {'bg': (1, 8), 'surface': (1, 8), 'surface_elevated': (2, 10),
-             'border': (2, 12), 'ink_muted': (2, 24), 'ink': (2, 24),
-             'inverse': (2, 24)}
+    # (floor, cap) OKLCH C — caps keep neutrals from reading as
+    # colour fields; floors keep them from reading as dead grey
+    bands = {'bg': (0.0015, 0.030), 'surface': (0.0015, 0.035),
+             'surface_elevated': (0.002, 0.040), 'border': (0.002, 0.045),
+             'ink_muted': (0.002, 0.060), 'ink': (0.002, 0.050),
+             'inverse': (0.002, 0.040)}
     for name, (lo, hi) in bands.items():
         role = roles.get(name)
         if not role:
@@ -6560,15 +6675,16 @@ def check_neutral_tint(ctx):
             f.append(f'C.3 {name}: {val} — pure black/white is not a '
                      'neutral; tint it (10–15% ink, 98–99% paper)')
             continue
-        d = _chroma_delta(val)
-        if d is None:
+        lch = _oklch_lch(val)
+        if lch is None:
             continue
-        if d < lo:
-            f.append(f'C.3 {name}: chroma delta {d} — dead grey; tint with '
-                     f'the brand hue (delta {lo}–{hi})')
-        elif d > hi:
-            f.append(f'C.3 {name}: chroma delta {d} > {hi} — over-saturated '
-                     'neutral')
+        c = lch[1]
+        if c < lo:
+            f.append(f'C.3 {name}: OKLCH C {c:.3f} — dead grey; tint '
+                     f'with the brand hue (C {lo}–{hi})')
+        elif c > hi:
+            f.append(f'C.3 {name}: OKLCH C {c:.3f} > {hi} — '
+                     'over-saturated neutral')
     return f
 
 
