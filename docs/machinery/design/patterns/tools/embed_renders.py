@@ -60,22 +60,55 @@ def sidecar(png):
     return {}
 
 
+REVIEW_CACHE = {}
+
+
+def review_for(outdir):
+    if outdir in REVIEW_CACHE:
+        return REVIEW_CACHE[outdir]
+    rp = os.path.join(REPO, 'tools/design-gate/proof', outdir,
+                      'REVIEW.json')
+    rv = {}
+    try:
+        d = json.load(open(rp))
+        for name, v in (d.get('vlm_per_option') or {}).items():
+            rv.setdefault(name, {})['verdict'] = {
+                k: v[k] for k in ('model', 'verdict') if k in v}
+            dims = v.get('output') or v.get('verdict')
+            if isinstance(dims, dict):
+                rv[name]['verdict_dims'] = dims
+        for b in d.get('blocks') or []:
+            nm = str(b.get('block_id', '')).split(':')[-1]
+            if b.get('recipe_id'):
+                rv.setdefault(nm, {})['recipe_id'] = b['recipe_id']
+        for name, dec in (d.get('declared') or {}).items():
+            rv.setdefault(name, {})['declared'] = dec
+    except Exception:
+        pass
+    REVIEW_CACHE[outdir] = rv
+    return rv
+
+
 def row_meta(png):
+    import hashlib
+    sha16 = hashlib.sha256(open(png, 'rb').read()).hexdigest()[:16]
     sc = sidecar(png)
     name = os.path.splitext(os.path.basename(png))[0]
     outdir = os.path.basename(os.path.dirname(
         os.path.dirname(png)))
     vars_ = sc.get('vars') or {}
-    import hashlib
+    rv = review_for(outdir).get(name, {})
     dna = hashlib.sha256(json.dumps(
         {k: vars_.get(k) for k in
          ('--bg', '--ink', '--accent', '--radius', '--f-display',
           '--pad-block')}, sort_keys=True).encode()).hexdigest()[:12] \
         if vars_ else None
-    recipe = '-'.join(filter(None, (sc.get('layout'), sc.get('seam'),
-                                    sc.get('ornament')))) or name
+    recipe = rv.get('recipe_id') or '-'.join(filter(
+        None, (sc.get('layout'), sc.get('seam'),
+               sc.get('ornament')))) or name
     return {
         'render_path': rel(png),
+        'sha256': sha16,
         'shot': name,
         'out_dir': outdir,
         'recipe_id': recipe,
@@ -86,7 +119,9 @@ def row_meta(png):
         'ornament': sc.get('ornament'),
         'font': sc.get('font'),
         'media_weight': sc.get('media_weight'),
-        'verdict': sc.get('verdict'),
+        'verdict': rv.get('verdict') or sc.get('verdict'),
+        'verdict_dims': rv.get('verdict_dims'),
+        'declared': rv.get('declared'),
     }
 
 
