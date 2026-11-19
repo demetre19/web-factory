@@ -25,6 +25,11 @@
    "type": "doc",
    "file": "knobs.json"
   },
+  "BASE.ACSS": {
+   "id": "BASE.ACSS",
+   "type": "baseline",
+   "file": "ACSS-BASELINE.md"
+  },
   "patterns-taxonomy": {
    "id": "patterns-taxonomy",
    "type": "taxonomy",
@@ -175,10 +180,10 @@
    "type": "pattern",
    "file": "patterns/agency-portfolio/hero/pattern-agency-portfolio-home-hero-stacked-hero.md"
   },
-  "pattern-healthcare-service-detail-feature-split-media": {
-   "id": "pattern-healthcare-service-detail-feature-split-media",
+  "pattern-healthcare-service-detail-feature-editorial": {
+   "id": "pattern-healthcare-service-detail-feature-editorial",
    "type": "pattern",
-   "file": "patterns/healthcare/feature/pattern-healthcare-service-detail-feature-split-media.md"
+   "file": "patterns/healthcare/feature/pattern-healthcare-service-detail-feature-editorial.md"
   },
   "pattern-healthcare-home-hero-full-bleed": {
    "id": "pattern-healthcare-home-hero-full-bleed",
@@ -230,11 +235,6 @@
    "type": "pattern",
    "file": "patterns/education/pricing/pattern-education-pricing-pricing-cards-n.md"
   },
-  "pattern-real-estate-listing-listing-cards-n": {
-   "id": "pattern-real-estate-listing-listing-cards-n",
-   "type": "pattern",
-   "file": "patterns/real-estate/listing/pattern-real-estate-listing-listing-cards-n.md"
-  },
   "pattern-real-estate-home-hero-stacked-hero": {
    "id": "pattern-real-estate-home-hero-stacked-hero",
    "type": "pattern",
@@ -250,10 +250,10 @@
    "type": "pattern",
    "file": "patterns/fashion/content/pattern-fashion-collection-content-editorial.md"
   },
-  "pattern-fashion-home-hero-stacked-hero": {
-   "id": "pattern-fashion-home-hero-stacked-hero",
+  "pattern-fashion-home-hero-split-media": {
+   "id": "pattern-fashion-home-hero-split-media",
    "type": "pattern",
-   "file": "patterns/fashion/hero/pattern-fashion-home-hero-stacked-hero.md"
+   "file": "patterns/fashion/hero/pattern-fashion-home-hero-split-media.md"
   },
   "pattern-jewellery-product-add-to-cart-form-panel": {
    "id": "pattern-jewellery-product-add-to-cart-form-panel",
@@ -565,11 +565,6 @@
    "type": "intent-attribute",
    "file": "patterns/intent/intent-attribute-confidence.md"
   },
-  "pattern-portfolio-work-index-work-grid-cards-n": {
-   "id": "pattern-portfolio-work-index-work-grid-cards-n",
-   "type": "pattern",
-   "file": "patterns/portfolio/work-grid/pattern-portfolio-work-index-work-grid-cards-n.md"
-  },
   "pattern-portfolio-contact-contact-form-panel": {
    "id": "pattern-portfolio-contact-contact-form-panel",
    "type": "pattern",
@@ -624,16 +619,6 @@
    "id": "pattern-luxury-goods-brand-story-content-editorial",
    "type": "pattern",
    "file": "patterns/luxury-goods/content/pattern-luxury-goods-brand-story-content-editorial.md"
-  },
-  "pattern-luxury-goods-product-add-to-cart-form-panel": {
-   "id": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "type": "pattern",
-   "file": "patterns/luxury-goods/add-to-cart/pattern-luxury-goods-product-add-to-cart-form-panel.md"
-  },
-  "pattern-luxury-goods-home-hero-stacked-hero": {
-   "id": "pattern-luxury-goods-home-hero-stacked-hero",
-   "type": "pattern",
-   "file": "patterns/luxury-goods/hero/pattern-luxury-goods-home-hero-stacked-hero.md"
   },
   "pattern-events-schedule-schedule-comparison": {
    "id": "pattern-events-schedule-schedule-comparison",
@@ -720,11 +705,6 @@
    "type": "pattern",
    "file": "patterns/services/testimonials/pattern-services-service-detail-testimonials-quote-grid.md"
   },
-  "pattern-services-home-testimonials-quote-grid": {
-   "id": "pattern-services-home-testimonials-quote-grid",
-   "type": "pattern",
-   "file": "patterns/services/testimonials/pattern-services-home-testimonials-quote-grid.md"
-  },
   "pattern-services-service-detail-faq-faq": {
    "id": "pattern-services-service-detail-faq-faq",
    "type": "pattern",
@@ -779,6 +759,11 @@
    "id": "pattern-media-home-hero-stacked-hero",
    "type": "pattern",
    "file": "patterns/media/hero/pattern-media-home-hero-stacked-hero.md"
+  },
+  "rules-REF": {
+   "id": "rules-REF",
+   "type": "rulebook",
+   "file": "rules/REF.md"
   },
   "rules-B": {
    "id": "rules-B",
@@ -999,6 +984,11 @@
    "id": "profile-saas",
    "type": "profile",
    "file": "dna/saas.md"
+  },
+  "REF.1": {
+   "id": "REF.1",
+   "type": "rule",
+   "file": "rules/REF.md"
   },
   "B.1": {
    "id": "B.1",
@@ -2040,6 +2030,10 @@
    "id": "i18n-copy",
    "type": "rubric"
   },
+  "check_canon_trace": {
+   "id": "check_canon_trace",
+   "type": "check"
+  },
   "w0": {
    "id": "w0",
    "type": "wave"
@@ -2789,6 +2783,11 @@
   },
   {
    "from": "design-index",
+   "to": "BASE.ACSS",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
    "to": "rules-T",
    "type": "rules"
   },
@@ -2875,6 +2874,11 @@
   {
    "from": "design-index",
    "to": "rules-VG",
+   "type": "rules"
+  },
+  {
+   "from": "design-index",
+   "to": "rules-REF",
    "type": "rules"
   },
   {
@@ -2980,6 +2984,46 @@
   {
    "from": "LAW.DNA",
    "to": "rules-M",
+   "type": "depends_on"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w1",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w3",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w6",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "w7",
+   "type": "used_in"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "knobs",
+   "type": "depends_on"
+  },
+  {
+   "from": "BASE.ACSS",
+   "to": "LAW.DNA",
    "type": "depends_on"
   },
   {
@@ -3709,6 +3753,16 @@
   },
   {
    "from": "pattern-ecommerce-checkout-form-form-panel",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-ecommerce-checkout-form-form-panel",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-ecommerce-checkout-form-form-panel",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -3734,17 +3788,12 @@
   },
   {
    "from": "pattern-ecommerce-checkout-form-form-panel",
-   "to": "W.2",
-   "type": "implies_rules"
+   "to": "check_contrast",
+   "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-checkout-form-form-panel",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-checkout-form-form-panel",
-   "to": "check_emphasis",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
@@ -3760,11 +3809,6 @@
   {
    "from": "pattern-ecommerce-checkout-form-form-panel",
    "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-ecommerce-checkout-form-form-panel",
-   "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
   {
@@ -3789,7 +3833,7 @@
   },
   {
    "from": "pattern-ecommerce-checkout-form-form-panel",
-   "to": "gene-cta-restraint",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -3914,16 +3958,6 @@
   },
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "C.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-product-cross-sell-cards-n",
    "to": "V.1",
    "type": "implies_rules"
   },
@@ -3944,17 +3978,12 @@
   },
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "check_contrast",
-   "type": "enforced_by"
+   "to": "W.5",
+   "type": "implies_rules"
   },
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
    "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
@@ -3965,6 +3994,11 @@
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
    "to": "check_segment_media",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-ecommerce-product-cross-sell-cards-n",
+   "to": "check_speech_acts",
    "type": "enforced_by"
   },
   {
@@ -3989,12 +4023,12 @@
   },
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "gene-surface-rhythm",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
    "from": "pattern-ecommerce-product-cross-sell-cards-n",
-   "to": "gene-cta-restraint",
+   "to": "gene-proof-type",
    "type": "consumes"
   },
   {
@@ -4234,17 +4268,12 @@
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "L.1",
+   "to": "C.1",
    "type": "implies_rules"
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "L.5",
+   "to": "C.6",
    "type": "implies_rules"
   },
   {
@@ -4264,22 +4293,22 @@
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-ecommerce-category-product-grid-cards-n",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "check_section_enums",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
    "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "check_wireframe_lock",
    "type": "enforced_by"
   },
   {
@@ -4299,7 +4328,7 @@
   },
   {
    "from": "pattern-ecommerce-category-product-grid-cards-n",
-   "to": "gene-layout-archetype",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -4334,6 +4363,16 @@
   },
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-ecommerce-home-product-grid-cards-n",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-ecommerce-home-product-grid-cards-n",
    "to": "V.1",
    "type": "implies_rules"
   },
@@ -4354,12 +4393,17 @@
   },
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
-   "to": "W.5",
-   "type": "implies_rules"
+   "to": "check_contrast",
+   "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
    "to": "check_emphasis",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-ecommerce-home-product-grid-cards-n",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
@@ -4370,11 +4414,6 @@
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
    "to": "check_segment_media",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-ecommerce-home-product-grid-cards-n",
-   "to": "check_speech_acts",
    "type": "enforced_by"
   },
   {
@@ -4399,12 +4438,12 @@
   },
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
-   "to": "gene-cta-restraint",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
    "from": "pattern-ecommerce-home-product-grid-cards-n",
-   "to": "gene-proof-type",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
@@ -4429,27 +4468,12 @@
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "C.1",
+   "to": "G.3",
    "type": "implies_rules"
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "C.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "L.5",
+   "to": "L.7",
    "type": "implies_rules"
   },
   {
@@ -4464,8 +4488,8 @@
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "check_contrast",
-   "type": "enforced_by"
+   "to": "W.5",
+   "type": "implies_rules"
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
@@ -4479,12 +4503,12 @@
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "check_section_enums",
+   "to": "check_spacing_scale",
    "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "check_wireframe_lock",
+   "to": "check_speech_acts",
    "type": "enforced_by"
   },
   {
@@ -4504,17 +4528,17 @@
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-ecommerce-search-results-product-grid-cards-n",
-   "to": "gene-surface-rhythm",
+   "to": "gene-density-tier",
    "type": "consumes"
   },
   {
    "from": "pattern-ecommerce-search-results-product-grid-cards-n",
    "to": "gene-cta-restraint",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-ecommerce-search-results-product-grid-cards-n",
+   "to": "gene-proof-type",
    "type": "consumes"
   },
   {
@@ -4719,12 +4743,7 @@
   },
   {
    "from": "pattern-ecommerce-product-reviews-quote-grid",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-product-reviews-quote-grid",
-   "to": "C.6",
+   "to": "G.3",
    "type": "implies_rules"
   },
   {
@@ -4744,6 +4763,11 @@
   },
   {
    "from": "pattern-ecommerce-product-reviews-quote-grid",
+   "to": "L.7",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-ecommerce-product-reviews-quote-grid",
    "to": "V.1",
    "type": "implies_rules"
   },
@@ -4751,11 +4775,6 @@
    "from": "pattern-ecommerce-product-reviews-quote-grid",
    "to": "V.3",
    "type": "implies_rules"
-  },
-  {
-   "from": "pattern-ecommerce-product-reviews-quote-grid",
-   "to": "check_contrast",
-   "type": "enforced_by"
   },
   {
    "from": "pattern-ecommerce-product-reviews-quote-grid",
@@ -4770,6 +4789,11 @@
   {
    "from": "pattern-ecommerce-product-reviews-quote-grid",
    "to": "check_segment_media",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-ecommerce-product-reviews-quote-grid",
+   "to": "check_spacing_scale",
    "type": "enforced_by"
   },
   {
@@ -4799,7 +4823,7 @@
   },
   {
    "from": "pattern-ecommerce-product-reviews-quote-grid",
-   "to": "gene-surface-rhythm",
+   "to": "gene-density-tier",
    "type": "consumes"
   },
   {
@@ -4824,22 +4848,22 @@
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "C.1",
+   "to": "E.2",
    "type": "implies_rules"
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "C.6",
+   "to": "L.1",
    "type": "implies_rules"
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "W.2",
+   "to": "L.10",
    "type": "implies_rules"
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "W.3",
+   "to": "L.5",
    "type": "implies_rules"
   },
   {
@@ -4849,17 +4873,12 @@
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "check_contrast",
-   "type": "enforced_by"
+   "to": "W.6",
+   "type": "implies_rules"
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "check_rhythm",
+   "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
@@ -4869,7 +4888,7 @@
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "check_wireframe_tags",
+   "to": "check_wireframe_lock",
    "type": "enforced_by"
   },
   {
@@ -4884,17 +4903,17 @@
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "gene-surface-rhythm",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-nonprofit-home-hero-full-bleed",
-   "to": "gene-cta-restraint",
+   "to": "gene-layout-archetype",
    "type": "consumes"
   },
   {
    "from": "pattern-nonprofit-home-hero-full-bleed",
    "to": "gene-proof-type",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-nonprofit-home-hero-full-bleed",
+   "to": "gene-disclosure-tier",
    "type": "consumes"
   },
   {
@@ -5623,93 +5642,93 @@
    "type": "consumes"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "patterns-index",
    "type": "index"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "section-catalog",
    "type": "composition"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "w4",
    "type": "used_in"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "w5",
    "type": "used_in"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "C.1",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "C.6",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
-   "to": "E.2",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
+   "to": "G.3",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
+   "to": "L.7",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "W.5",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
-   "to": "W.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "check_contrast",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
-   "to": "check_section_enums",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
+   "to": "check_spacing_scale",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "check_speech_acts",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "w4",
    "type": "used_in"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "w5",
    "type": "used_in"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
+   "to": "gene-density-tier",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
+   "from": "pattern-healthcare-service-detail-feature-editorial",
    "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-healthcare-service-detail-feature-split-media",
-   "to": "gene-disclosure-tier",
    "type": "consumes"
   },
   {
@@ -6034,17 +6053,22 @@
   },
   {
    "from": "pattern-homes-home-hero-stacked-hero",
+   "to": "V.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-homes-home-hero-stacked-hero",
+   "to": "V.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-homes-home-hero-stacked-hero",
    "to": "W.2",
    "type": "implies_rules"
   },
   {
    "from": "pattern-homes-home-hero-stacked-hero",
    "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-homes-home-hero-stacked-hero",
-   "to": "W.5",
    "type": "implies_rules"
   },
   {
@@ -6059,7 +6083,7 @@
   },
   {
    "from": "pattern-homes-home-hero-stacked-hero",
-   "to": "check_speech_acts",
+   "to": "check_segment_media",
    "type": "enforced_by"
   },
   {
@@ -6089,12 +6113,12 @@
   },
   {
    "from": "pattern-homes-home-hero-stacked-hero",
-   "to": "gene-cta-restraint",
+   "to": "gene-image-led-ratio",
    "type": "consumes"
   },
   {
    "from": "pattern-homes-home-hero-stacked-hero",
-   "to": "gene-proof-type",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
@@ -6309,17 +6333,12 @@
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "L.1",
+   "to": "C.1",
    "type": "implies_rules"
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "L.5",
+   "to": "C.6",
    "type": "implies_rules"
   },
   {
@@ -6339,22 +6358,22 @@
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "check_section_enums",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
    "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "check_wireframe_lock",
    "type": "enforced_by"
   },
   {
@@ -6374,7 +6393,7 @@
   },
   {
    "from": "pattern-marketplace-listing-grids-and-cards-cards-n",
-   "to": "gene-layout-archetype",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -6698,106 +6717,6 @@
    "type": "consumes"
   },
   {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "W.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-real-estate-listing-listing-cards-n",
-   "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
    "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "patterns-index",
    "type": "index"
@@ -6819,376 +6738,366 @@
   },
   {
    "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "W.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-real-estate-home-hero-stacked-hero",
-   "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "G.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "L.7",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "W.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "check_rhythm",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "check_spacing_scale",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "gene-density-tier",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-lookbook-gallery-media-gallery",
-   "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
    "to": "C.1",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-fashion-collection-content-editorial",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "C.6",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_contrast",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_rhythm",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "gene-surface-rhythm",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-collection-content-editorial",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
-   "to": "C.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "E.2",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "W.5",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "W.6",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "check_contrast",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "check_speech_acts",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "w4",
    "type": "used_in"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "w5",
    "type": "used_in"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
    "to": "gene-proof-type",
    "type": "consumes"
   },
   {
-   "from": "pattern-fashion-home-hero-stacked-hero",
+   "from": "pattern-real-estate-home-hero-stacked-hero",
+   "to": "gene-disclosure-tier",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "patterns-index",
+   "type": "index"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "section-catalog",
+   "type": "composition"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "W.2",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "W.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "W.5",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "check_emphasis",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "check_rhythm",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "check_speech_acts",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "check_wireframe_tags",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "gene-surface-rhythm",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "gene-cta-restraint",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-lookbook-gallery-media-gallery",
+   "to": "gene-proof-type",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "patterns-index",
+   "type": "index"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "section-catalog",
+   "type": "composition"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "L.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "L.10",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "L.5",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "W.2",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "W.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_emphasis",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_rhythm",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_section_enums",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_wireframe_lock",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "check_wireframe_tags",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "gene-layout-archetype",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "gene-surface-rhythm",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-collection-content-editorial",
+   "to": "gene-cta-restraint",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "patterns-index",
+   "type": "index"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "section-catalog",
+   "type": "composition"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "E.2",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "W.5",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "W.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "check_rhythm",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "check_section_enums",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "check_speech_acts",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "gene-surface-rhythm",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
+   "to": "gene-proof-type",
+   "type": "consumes"
+  },
+  {
+   "from": "pattern-fashion-home-hero-split-media",
    "to": "gene-disclosure-tier",
    "type": "consumes"
   },
@@ -7214,16 +7123,6 @@
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "C.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-jewellery-product-add-to-cart-form-panel",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -7239,6 +7138,16 @@
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
+   "to": "V.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-jewellery-product-add-to-cart-form-panel",
+   "to": "V.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-jewellery-product-add-to-cart-form-panel",
    "to": "W.2",
    "type": "implies_rules"
   },
@@ -7249,22 +7158,17 @@
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "check_contrast",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-jewellery-product-add-to-cart-form-panel",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "check_rhythm",
+   "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "check_section_enums",
+   "to": "check_segment_media",
    "type": "enforced_by"
   },
   {
@@ -7294,7 +7198,7 @@
   },
   {
    "from": "pattern-jewellery-product-add-to-cart-form-panel",
-   "to": "gene-surface-rhythm",
+   "to": "gene-image-led-ratio",
    "type": "consumes"
   },
   {
@@ -7419,37 +7323,42 @@
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "C.1",
+   "to": "L.1",
    "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "C.6",
+   "to": "L.10",
    "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "E.2",
+   "to": "L.5",
    "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "W.5",
+   "to": "V.1",
    "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "W.6",
+   "to": "V.3",
    "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "check_contrast",
-   "type": "enforced_by"
+   "to": "W.2",
+   "type": "implies_rules"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "check_rhythm",
+   "to": "W.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-jewellery-home-hero-stacked-hero",
+   "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
@@ -7459,7 +7368,17 @@
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "check_speech_acts",
+   "to": "check_segment_media",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-jewellery-home-hero-stacked-hero",
+   "to": "check_wireframe_lock",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-jewellery-home-hero-stacked-hero",
+   "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
   {
@@ -7474,17 +7393,17 @@
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "gene-surface-rhythm",
+   "to": "gene-layout-archetype",
    "type": "consumes"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "gene-proof-type",
+   "to": "gene-image-led-ratio",
    "type": "consumes"
   },
   {
    "from": "pattern-jewellery-home-hero-stacked-hero",
-   "to": "gene-disclosure-tier",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
@@ -7604,11 +7523,6 @@
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "E.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-automotive-home-hero-full-bleed",
    "to": "G.3",
    "type": "implies_rules"
   },
@@ -7619,22 +7533,27 @@
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
+   "to": "W.2",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-automotive-home-hero-full-bleed",
+   "to": "W.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-automotive-home-hero-full-bleed",
    "to": "W.5",
    "type": "implies_rules"
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "W.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "check_rhythm",
+   "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "check_section_enums",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
@@ -7645,6 +7564,11 @@
   {
    "from": "pattern-automotive-home-hero-full-bleed",
    "to": "check_speech_acts",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-automotive-home-hero-full-bleed",
+   "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
   {
@@ -7664,12 +7588,12 @@
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "gene-proof-type",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
    "from": "pattern-automotive-home-hero-full-bleed",
-   "to": "gene-disclosure-tier",
+   "to": "gene-proof-type",
    "type": "consumes"
   },
   {
@@ -9778,106 +9702,6 @@
    "type": "used_in"
   },
   {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "W.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-portfolio-work-index-work-grid-cards-n",
-   "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
    "from": "pattern-portfolio-contact-contact-form-panel",
    "to": "patterns-index",
    "type": "index"
@@ -10109,7 +9933,17 @@
   },
   {
    "from": "pattern-portfolio-home-hero-stacked-hero",
-   "to": "E.2",
+   "to": "L.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-portfolio-home-hero-stacked-hero",
+   "to": "L.10",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-portfolio-home-hero-stacked-hero",
+   "to": "L.5",
    "type": "implies_rules"
   },
   {
@@ -10129,11 +9963,6 @@
   },
   {
    "from": "pattern-portfolio-home-hero-stacked-hero",
-   "to": "W.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-home-hero-stacked-hero",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
@@ -10149,6 +9978,11 @@
   },
   {
    "from": "pattern-portfolio-home-hero-stacked-hero",
+   "to": "check_wireframe_lock",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-portfolio-home-hero-stacked-hero",
    "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
@@ -10161,6 +9995,11 @@
    "from": "pattern-portfolio-home-hero-stacked-hero",
    "to": "w5",
    "type": "used_in"
+  },
+  {
+   "from": "pattern-portfolio-home-hero-stacked-hero",
+   "to": "gene-layout-archetype",
+   "type": "consumes"
   },
   {
    "from": "pattern-portfolio-home-hero-stacked-hero",
@@ -10173,11 +10012,6 @@
    "type": "consumes"
   },
   {
-   "from": "pattern-portfolio-home-hero-stacked-hero",
-   "to": "gene-disclosure-tier",
-   "type": "consumes"
-  },
-  {
    "from": "pattern-portfolio-case-study-case-study-editorial",
    "to": "patterns-index",
    "type": "index"
@@ -10199,12 +10033,7 @@
   },
   {
    "from": "pattern-portfolio-case-study-case-study-editorial",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-case-study-case-study-editorial",
-   "to": "C.6",
+   "to": "G.3",
    "type": "implies_rules"
   },
   {
@@ -10224,6 +10053,11 @@
   },
   {
    "from": "pattern-portfolio-case-study-case-study-editorial",
+   "to": "L.7",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-portfolio-case-study-case-study-editorial",
    "to": "W.2",
    "type": "implies_rules"
   },
@@ -10231,11 +10065,6 @@
    "from": "pattern-portfolio-case-study-case-study-editorial",
    "to": "W.3",
    "type": "implies_rules"
-  },
-  {
-   "from": "pattern-portfolio-case-study-case-study-editorial",
-   "to": "check_contrast",
-   "type": "enforced_by"
   },
   {
    "from": "pattern-portfolio-case-study-case-study-editorial",
@@ -10250,6 +10079,11 @@
   {
    "from": "pattern-portfolio-case-study-case-study-editorial",
    "to": "check_section_enums",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-portfolio-case-study-case-study-editorial",
+   "to": "check_spacing_scale",
    "type": "enforced_by"
   },
   {
@@ -10279,7 +10113,7 @@
   },
   {
    "from": "pattern-portfolio-case-study-case-study-editorial",
-   "to": "gene-surface-rhythm",
+   "to": "gene-density-tier",
    "type": "consumes"
   },
   {
@@ -10608,211 +10442,6 @@
    "type": "consumes"
   },
   {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "V.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "V.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "check_segment_media",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "gene-image-led-ratio",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "W.2",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "W.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "check_emphasis",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "check_speech_acts",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "check_wireframe_tags",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "gene-cta-restraint",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-luxury-goods-home-hero-stacked-hero",
-   "to": "gene-proof-type",
-   "type": "consumes"
-  },
-  {
    "from": "pattern-events-schedule-schedule-comparison",
    "to": "patterns-index",
    "type": "index"
@@ -10834,6 +10463,16 @@
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-events-schedule-schedule-comparison",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-events-schedule-schedule-comparison",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -10849,16 +10488,6 @@
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
-   "to": "V.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-events-schedule-schedule-comparison",
-   "to": "V.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-events-schedule-schedule-comparison",
    "to": "W.2",
    "type": "implies_rules"
   },
@@ -10869,17 +10498,22 @@
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-events-schedule-schedule-comparison",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
-   "to": "check_section_enums",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
-   "to": "check_segment_media",
+   "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
@@ -10909,7 +10543,7 @@
   },
   {
    "from": "pattern-events-schedule-schedule-comparison",
-   "to": "gene-image-led-ratio",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -11509,6 +11143,16 @@
   },
   {
    "from": "pattern-legal-home-hero-stacked-hero",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-legal-home-hero-stacked-hero",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-legal-home-hero-stacked-hero",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -11534,17 +11178,12 @@
   },
   {
    "from": "pattern-legal-home-hero-stacked-hero",
-   "to": "W.2",
-   "type": "implies_rules"
+   "to": "check_contrast",
+   "type": "enforced_by"
   },
   {
    "from": "pattern-legal-home-hero-stacked-hero",
-   "to": "W.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-legal-home-hero-stacked-hero",
-   "to": "check_emphasis",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
@@ -11560,11 +11199,6 @@
   {
    "from": "pattern-legal-home-hero-stacked-hero",
    "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-legal-home-hero-stacked-hero",
-   "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
   {
@@ -11589,7 +11223,7 @@
   },
   {
    "from": "pattern-legal-home-hero-stacked-hero",
-   "to": "gene-cta-restraint",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -12449,191 +12083,86 @@
   },
   {
    "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "G.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "L.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "L.10",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "L.5",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "L.7",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "V.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "V.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "check_rhythm",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "check_section_enums",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "check_segment_media",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "check_spacing_scale",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "check_wireframe_lock",
-   "type": "enforced_by"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "gene-layout-archetype",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "gene-image-led-ratio",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-services-service-detail-testimonials-quote-grid",
-   "to": "gene-density-tier",
-   "type": "consumes"
-  },
-  {
-   "from": "pattern-services-home-testimonials-quote-grid",
-   "to": "patterns-index",
-   "type": "index"
-  },
-  {
-   "from": "pattern-services-home-testimonials-quote-grid",
-   "to": "section-catalog",
-   "type": "composition"
-  },
-  {
-   "from": "pattern-services-home-testimonials-quote-grid",
-   "to": "w4",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-services-home-testimonials-quote-grid",
-   "to": "w5",
-   "type": "used_in"
-  },
-  {
-   "from": "pattern-services-home-testimonials-quote-grid",
    "to": "C.1",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "C.6",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "L.1",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "L.10",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "L.5",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "V.1",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "V.3",
    "type": "implies_rules"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "check_contrast",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "check_segment_media",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "check_wireframe_lock",
    "type": "enforced_by"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "w4",
    "type": "used_in"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "w5",
    "type": "used_in"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "gene-layout-archetype",
    "type": "consumes"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "gene-image-led-ratio",
    "type": "consumes"
   },
   {
-   "from": "pattern-services-home-testimonials-quote-grid",
+   "from": "pattern-services-service-detail-testimonials-quote-grid",
    "to": "gene-surface-rhythm",
    "type": "consumes"
   },
@@ -12979,16 +12508,6 @@
   },
   {
    "from": "pattern-services-home-how-it-works-sequence",
-   "to": "C.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-home-how-it-works-sequence",
-   "to": "C.6",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-home-how-it-works-sequence",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -13014,12 +12533,17 @@
   },
   {
    "from": "pattern-services-home-how-it-works-sequence",
-   "to": "check_contrast",
-   "type": "enforced_by"
+   "to": "W.2",
+   "type": "implies_rules"
   },
   {
    "from": "pattern-services-home-how-it-works-sequence",
-   "to": "check_rhythm",
+   "to": "W.3",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-services-home-how-it-works-sequence",
+   "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
@@ -13035,6 +12559,11 @@
   {
    "from": "pattern-services-home-how-it-works-sequence",
    "to": "check_wireframe_lock",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-services-home-how-it-works-sequence",
+   "to": "check_wireframe_tags",
    "type": "enforced_by"
   },
   {
@@ -13059,7 +12588,7 @@
   },
   {
    "from": "pattern-services-home-how-it-works-sequence",
-   "to": "gene-surface-rhythm",
+   "to": "gene-cta-restraint",
    "type": "consumes"
   },
   {
@@ -13374,6 +12903,16 @@
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
+   "to": "C.1",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-services-home-call-to-action-full-bleed",
+   "to": "C.6",
+   "type": "implies_rules"
+  },
+  {
+   "from": "pattern-services-home-call-to-action-full-bleed",
    "to": "L.1",
    "type": "implies_rules"
   },
@@ -13389,16 +12928,6 @@
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
-   "to": "V.1",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-home-call-to-action-full-bleed",
-   "to": "V.3",
-   "type": "implies_rules"
-  },
-  {
-   "from": "pattern-services-home-call-to-action-full-bleed",
    "to": "W.2",
    "type": "implies_rules"
   },
@@ -13409,17 +12938,22 @@
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
+   "to": "check_contrast",
+   "type": "enforced_by"
+  },
+  {
+   "from": "pattern-services-home-call-to-action-full-bleed",
    "to": "check_emphasis",
    "type": "enforced_by"
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
-   "to": "check_section_enums",
+   "to": "check_rhythm",
    "type": "enforced_by"
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
-   "to": "check_segment_media",
+   "to": "check_section_enums",
    "type": "enforced_by"
   },
   {
@@ -13449,7 +12983,7 @@
   },
   {
    "from": "pattern-services-home-call-to-action-full-bleed",
-   "to": "gene-image-led-ratio",
+   "to": "gene-surface-rhythm",
    "type": "consumes"
   },
   {
@@ -13771,6 +13305,56 @@
    "from": "pattern-media-home-hero-stacked-hero",
    "to": "gene-proof-type",
    "type": "consumes"
+  },
+  {
+   "from": "rules-REF",
+   "to": "design-index",
+   "type": "index"
+  },
+  {
+   "from": "rules-REF",
+   "to": "rules-DNA",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-REF",
+   "to": "rules-G",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-REF",
+   "to": "rules-L",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-REF",
+   "to": "BASE.ACSS",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-REF",
+   "to": "w1",
+   "type": "used_in"
+  },
+  {
+   "from": "rules-REF",
+   "to": "w3",
+   "type": "used_in"
+  },
+  {
+   "from": "rules-REF",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "rules-REF",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
+   "from": "rules-REF",
+   "to": "w7",
+   "type": "used_in"
   },
   {
    "from": "rules-B",
@@ -17366,6 +16950,16 @@
    "from": "profile-saas",
    "to": "gene-image-style",
    "type": "uses_genes"
+  },
+  {
+   "from": "design-index",
+   "to": "rules-REF",
+   "type": "rules"
+  },
+  {
+   "from": "rules-REF",
+   "to": "REF.1",
+   "type": "contains"
   },
   {
    "from": "design-index",
@@ -19548,6 +19142,16 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_canon_trace",
+   "to": "REF.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "REF.1",
+   "type": "enforces_at"
+  },
+  {
    "from": "design-index",
    "to": "w0",
    "type": "sequences"
@@ -19599,27 +19203,7 @@
   },
   {
    "from": "card-w7",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.1",
    "type": "loads"
   },
   {
@@ -19629,32 +19213,7 @@
   },
   {
    "from": "card-w7",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "L.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.3",
+   "to": "PS.1",
    "type": "loads"
   },
   {
@@ -19664,7 +19223,52 @@
   },
   {
    "from": "card-w7",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "PS.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.1",
    "type": "loads"
   },
   {
@@ -19764,6 +19368,11 @@
   },
   {
    "from": "w7",
+   "to": "check_canon_trace",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
    "to": "check_dark_mode",
    "type": "gated_by"
   },
@@ -19829,92 +19438,7 @@
   },
   {
    "from": "card-w5",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
    "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.6",
    "type": "loads"
   },
   {
@@ -19924,22 +19448,7 @@
   },
   {
    "from": "card-w5",
-   "to": "T.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.1",
+   "to": "C.1",
    "type": "loads"
   },
   {
@@ -19949,17 +19458,12 @@
   },
   {
    "from": "card-w5",
-   "to": "C.4",
+   "to": "C.5",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.1",
+   "to": "M.6",
    "type": "loads"
   },
   {
@@ -19974,12 +19478,117 @@
   },
   {
    "from": "card-w5",
-   "to": "G.2",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.1",
    "type": "loads"
   },
   {
    "from": "card-w5",
    "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.1",
    "type": "loads"
   },
   {
@@ -20064,6 +19673,11 @@
   },
   {
    "from": "w5",
+   "to": "check_canon_trace",
+   "type": "gated_by"
+  },
+  {
+   "from": "w5",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20114,7 +19728,7 @@
   },
   {
    "from": "card-w4",
-   "to": "S.1",
+   "to": "C.2",
    "type": "loads"
   },
   {
@@ -20124,7 +19738,7 @@
   },
   {
    "from": "card-w4",
-   "to": "C.2",
+   "to": "S.1",
    "type": "loads"
   },
   {
@@ -20134,12 +19748,12 @@
   },
   {
    "from": "card-w4",
-   "to": "C.5",
+   "to": "T.3",
    "type": "loads"
   },
   {
    "from": "card-w4",
-   "to": "T.3",
+   "to": "C.5",
    "type": "loads"
   },
   {
@@ -20189,6 +19803,11 @@
   },
   {
    "from": "w4",
+   "to": "check_canon_trace",
+   "type": "gated_by"
+  },
+  {
+   "from": "w4",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20209,6 +19828,16 @@
   },
   {
    "from": "card-w1",
+   "to": "T.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
    "to": "PS.1",
    "type": "loads"
   },
@@ -20219,17 +19848,7 @@
   },
   {
    "from": "card-w1",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
    "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "T.8",
    "type": "loads"
   },
   {
@@ -20279,6 +19898,11 @@
   },
   {
    "from": "w1",
+   "to": "check_canon_trace",
+   "type": "gated_by"
+  },
+  {
+   "from": "w1",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20299,32 +19923,12 @@
   },
   {
    "from": "card-w2",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
    "to": "W.8",
    "type": "loads"
   },
   {
    "from": "card-w2",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "E.1",
+   "to": "W.6",
    "type": "loads"
   },
   {
@@ -20334,7 +19938,27 @@
   },
   {
    "from": "card-w2",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
    "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "E.1",
    "type": "loads"
   },
   {
@@ -20369,7 +19993,7 @@
   },
   {
    "from": "card-w6",
-   "to": "V.4",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -20379,52 +20003,7 @@
   },
   {
    "from": "card-w6",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
    "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.6",
    "type": "loads"
   },
   {
@@ -20434,12 +20013,57 @@
   },
   {
    "from": "card-w6",
-   "to": "V.3",
+   "to": "C.1",
    "type": "loads"
   },
   {
    "from": "card-w6",
    "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "I.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.4",
    "type": "loads"
   },
   {
@@ -20524,152 +20148,7 @@
   },
   {
    "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
+   "to": "T.5",
    "type": "loads"
   },
   {
@@ -20679,22 +20158,17 @@
   },
   {
    "from": "card-w8",
-   "to": "M.6",
+   "to": "I.6",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "R.5",
+   "to": "V.0",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
+   "to": "T.7",
    "type": "loads"
   },
   {
@@ -20704,27 +20178,77 @@
   },
   {
    "from": "card-w8",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "I.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.7",
+   "to": "M.6",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "I.7",
+   "to": "E.3",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.4",
+   "to": "W.1",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.8",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
    "type": "loads"
   },
   {
@@ -20734,32 +20258,22 @@
   },
   {
    "from": "card-w8",
-   "to": "T.5",
+   "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.0",
+   "to": "V.8",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "I.6",
+   "to": "L.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
+   "to": "T.9",
    "type": "loads"
   },
   {
@@ -20769,7 +20283,42 @@
   },
   {
    "from": "card-w8",
-   "to": "V.6",
+   "to": "V.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
    "type": "loads"
   },
   {
@@ -20779,7 +20328,82 @@
   },
   {
    "from": "card-w8",
-   "to": "M.3",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.3",
    "type": "loads"
   },
   {
@@ -20839,7 +20463,7 @@
   },
   {
    "from": "card-w3",
-   "to": "W.4",
+   "to": "L.1",
    "type": "loads"
   },
   {
@@ -20849,22 +20473,22 @@
   },
   {
    "from": "card-w3",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "W.2",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.7",
+   "to": "W.4",
    "type": "loads"
   },
   {
@@ -20874,7 +20498,7 @@
   },
   {
    "from": "card-w3",
-   "to": "V.3",
+   "to": "E.1",
    "type": "loads"
   },
   {
@@ -20960,6 +20584,11 @@
   {
    "from": "w3",
    "to": "check_layout_distinct",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_canon_trace",
    "type": "gated_by"
   },
   {
@@ -21519,7 +21148,7 @@
   },
   {
    "from": "patterns-index",
-   "to": "pattern-healthcare-service-detail-feature-split-media",
+   "to": "pattern-healthcare-service-detail-feature-editorial",
    "type": "patterns"
   },
   {
@@ -21574,11 +21203,6 @@
   },
   {
    "from": "patterns-index",
-   "to": "pattern-real-estate-listing-listing-cards-n",
-   "type": "patterns"
-  },
-  {
-   "from": "patterns-index",
    "to": "pattern-real-estate-home-hero-stacked-hero",
    "type": "patterns"
   },
@@ -21594,7 +21218,7 @@
   },
   {
    "from": "patterns-index",
-   "to": "pattern-fashion-home-hero-stacked-hero",
+   "to": "pattern-fashion-home-hero-split-media",
    "type": "patterns"
   },
   {
@@ -21909,11 +21533,6 @@
   },
   {
    "from": "patterns-index",
-   "to": "pattern-portfolio-work-index-work-grid-cards-n",
-   "type": "patterns"
-  },
-  {
-   "from": "patterns-index",
    "to": "pattern-portfolio-contact-contact-form-panel",
    "type": "patterns"
   },
@@ -21965,16 +21584,6 @@
   {
    "from": "patterns-index",
    "to": "pattern-luxury-goods-brand-story-content-editorial",
-   "type": "patterns"
-  },
-  {
-   "from": "patterns-index",
-   "to": "pattern-luxury-goods-product-add-to-cart-form-panel",
-   "type": "patterns"
-  },
-  {
-   "from": "patterns-index",
-   "to": "pattern-luxury-goods-home-hero-stacked-hero",
    "type": "patterns"
   },
   {
@@ -22060,11 +21669,6 @@
   {
    "from": "patterns-index",
    "to": "pattern-services-service-detail-testimonials-quote-grid",
-   "type": "patterns"
-  },
-  {
-   "from": "patterns-index",
-   "to": "pattern-services-home-testimonials-quote-grid",
    "type": "patterns"
   },
   {

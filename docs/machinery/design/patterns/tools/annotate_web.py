@@ -38,6 +38,13 @@ DATA = os.path.join(PATTERNS, 'data')
 WEB = os.path.join(DATA, 'web')
 TILE_H = 1600
 MODEL_ID = 'open_clip:ViT-B-32:laion2b_s34b_b79k'
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import cache  # noqa: E402
+import image_features as _if  # noqa: E402
+
+# a ruleset/code change invalidates exactly the entries it governs
+FEAT_V = cache.text_sha(open(_if.__file__, 'rb').read().hex())[:12]
+CLASSIFY_V = cache.text_sha(MODEL_ID + ':' + FEAT_V + ':classify1')[:12]
 
 # Roles a media block can play, from the pixel pass's own vocabulary.
 ROLE_BY_POS = [(0.0, 0.30, 'hero'), (0.30, 0.75, 'supporting'),
@@ -95,15 +102,20 @@ def palette(arr):
 
 
 def analyse_tile(path):
-    """Pixel pass + palette for one tile."""
+    """Pixel pass + palette for one tile (crop_feat cache)."""
     import numpy as np
     from PIL import Image
-    import image_features
-    feat = image_features.analyze(path)
+    key = f'{cache.file_sha(path)}:{FEAT_V}'
+    hit = cache.get('crop_feat', key)
+    if hit is not None:
+        return hit['feat'], hit['pal']
+    feat = _if.analyze(path)
     im = Image.open(path).convert('RGB')
     im.thumbnail((360, 900))
     arr = np.asarray(im, dtype=np.float32)
-    return feat, palette(arr)
+    pal = palette(arr)
+    cache.put('crop_feat', key, {'feat': feat, 'pal': pal})
+    return feat, pal
 
 
 def sections_of(feat, tile_i, page_h):
@@ -126,14 +138,26 @@ def sections_of(feat, tile_i, page_h):
             'density': 'spacious' if b.get('area', 0) > 0.5 else 'regular',
             'surface': 'inverse' if feat.get('dark_surface') else 'base',
             'y': [round(y0, 3), round(y1, 3)],
+            '_tile': f'tile-{tile_i:02d}.png',
+            '_crop': [round(b['x0'], 4), round(b['y0'], 4),
+                      round(b['x1'], 4), round(b['y1'], 4)],
         })
     return out
 
 
 def classify_blocks(paths, model, pre, tok, dev, torch, T):
-    """CLIP zero-shot over media crops -> CLASSIFY.md values."""
+    """CLIP zero-shot over media crops -> CLASSIFY.md values.
+
+    vlm_classify cache: keyed by tile bytes + crop box + classifier
+    version, so a re-run over an unchanged corpus is all hits.
+    """
     import numpy as np
     from PIL import Image
+    ck = [f'{cache.file_sha(p)}:{bbox}:{CLASSIFY_V}'
+          for p, bbox in paths]
+    hits = cache.get_many('vlm_classify', ck)
+    if all(k in hits for k in ck):
+        return [hits[k] for k in ck]
     imgs = []
     for p, bbox in paths:
         im = Image.open(p).convert('RGB')
@@ -174,6 +198,9 @@ def classify_blocks(paths, model, pre, tok, dev, torch, T):
                                     / max(1e-6, float(ps[j]) + float(ns[j]))))))
             for j, ax in enumerate(T['axis_pos'][0])}
         res[i] = row
+        # only newly-computed entries go back; cached hits stay
+        cache.put('vlm_classify', ck[i],
+                  json.loads(json.dumps(res[i], default=float)))
     return res
 
 
@@ -315,18 +342,38 @@ def annotate_site(slug, model, pre, tok, dev, torch, T, embed_media):
     return f'{len(out)} images'
 
 
+_WARM = None
+
+
+def _warm():
+    """One CLIP load per process; capture_web's operator path and the
+    batch driver share it."""
+    global _WARM
+    if _WARM is None:
+        import open_clip
+        import torch
+        import embed_media
+        dev = 'mps' if torch.backends.mps.is_available() else 'cpu'
+        model, _, pre = open_clip.create_model_and_transforms(
+            embed_media.MODEL, pretrained=embed_media.PRETRAINED)
+        model.eval().to(dev)
+        tok = open_clip.get_tokenizer(embed_media.MODEL)
+        T = build_prompts(model, tok, dev, torch, embed_media)
+        _WARM = model, pre, tok, dev, torch, T, embed_media
+    return _WARM
+
+
+def main_for(slug):
+    model, pre, tok, dev, torch, T, em = _warm()
+    return annotate_site(slug, model, pre, tok, dev, torch, T, em)
+
+
 def main():
     limit = int(sys.argv[sys.argv.index('--limit') + 1]) if '--limit' in sys.argv else None
-    import open_clip
-    import torch
-    import embed_media
-    dev = 'mps' if torch.backends.mps.is_available() else 'cpu'
-    model, _, pre = open_clip.create_model_and_transforms(
-        embed_media.MODEL, pretrained=embed_media.PRETRAINED)
-    model.eval().to(dev)
-    tok = open_clip.get_tokenizer(embed_media.MODEL)
-    T = build_prompts(model, tok, dev, torch, embed_media)
+    model, pre, tok, dev, torch, T, embed_media = _warm()
     slugs = sorted(os.listdir(WEB))
+    if '--site' in sys.argv:
+        slugs = [sys.argv[sys.argv.index('--site') + 1]]
     if limit:
         slugs = slugs[:limit]
     t0 = time.time()

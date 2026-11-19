@@ -64,7 +64,9 @@ config + global.css + preview/system.html exist; config derived from tokens;
 tile instantiates surfaces/densities/ranks; `astro build` exits 0.
 Operator approves the rendered sheet in chat → `run.py approve w5 <dir> --evidence "…"`.
 
-## Done when
+- LAW.REF (REF.1): system choices cite canon; spacing is a G.1 step or an ACSS tier name — never invented px.
+
+## Done when## Done when
 
 `GATES.json.w5.pass` for current input hashes and
 `CHECKLIST/w5.md` has no blank evidence

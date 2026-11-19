@@ -185,6 +185,11 @@ EMB_TIMEOUT = 300       # cold load measured at ~34 s; warm batches ~13 s
 EMB_KEEP_ALIVE = '2h'   # keep the model resident between commands
 
 
+sys.path.insert(0, os.path.join(ROOT, 'docs', 'machinery', 'design',
+                                'patterns', 'tools'))
+import cache  # noqa: E402
+
+
 def embed(texts, model=EMB_MODEL, kind='document', timeout=EMB_TIMEOUT,
           batch=EMB_BATCH, retries=3):
     """nomic-embed-text via /api/embed, batched.
@@ -196,9 +201,17 @@ def embed(texts, model=EMB_MODEL, kind='document', timeout=EMB_TIMEOUT,
     silent switch makes the index's `backend` field a lie.
     """
     pref = 'search_document: ' if kind == 'document' else 'search_query: '
-    out = []
-    for i in range(0, len(texts), batch):
-        chunk = [pref + t for t in texts[i:i + batch]]
+    # read-through: a text+model pair already embedded is never re-sent
+    ckind = 'nomic_query' if kind == 'query' else 'nomic_text'
+    ckeys = [f'{cache.text_sha(pref + t)}:{model}' for t in texts]
+    hits = cache.get_many(ckind, ckeys)
+    todo_i = [i for i, k in enumerate(ckeys) if k not in hits]
+    out = [hits.get(k) for k in ckeys]
+    fresh = [texts[i] for i in todo_i]
+    fkeys = [ckeys[i] for i in todo_i]
+    got = []
+    for i in range(0, len(fresh), batch):
+        chunk = [pref + t for t in fresh[i:i + batch]]
         payload = json.dumps({'model': model, 'input': chunk,
                               'keep_alive': EMB_KEEP_ALIVE}).encode()
         last = None
@@ -214,7 +227,7 @@ def embed(texts, model=EMB_MODEL, kind='document', timeout=EMB_TIMEOUT,
                     raise RuntimeError(
                         f'embed returned {len(vecs)} vectors for '
                         f'{len(chunk)} inputs')
-                out.extend(_unit(v) for v in vecs)
+                got.extend(_unit(v) for v in vecs)
                 break
             except Exception as e:  # noqa: BLE001 - retried, then raised
                 last = e
@@ -224,6 +237,13 @@ def embed(texts, model=EMB_MODEL, kind='document', timeout=EMB_TIMEOUT,
                         f'{type(e).__name__}: {e}. The embedder is required '
                         f'for --backend {model}; start ollama and retry.')
                 time.sleep(2 ** attempt)
+    pos = {}
+    for i, k in enumerate(ckeys):
+        pos.setdefault(k, []).append(i)
+    for k, v in zip(fkeys, got):
+        for i in pos[k]:
+            out[i] = v
+    cache.put_many(ckind, list(zip(fkeys, got)))
     return out
 
 
@@ -289,9 +309,25 @@ def cmd_index(args):
               open(os.path.join(INDEX, 'vectors_tfidf.json'), 'w'))
     if vectors is None:
         vectors = tfvecs
+    # LAW: operator-suggested sites are canon, ranked above Mobbin.
+    # A banked operator site lands in annotation cells; a pattern whose
+    # cell holds operator evidence outranks one built from Mobbin only.
+    op_cells = set()
+    ann = os.path.join(ROOT, 'docs', 'machinery', 'design', 'patterns',
+                       'data', 'annotations.jsonl')
+    if os.path.exists(ann):
+        for line in open(ann):
+            try:
+                r = json.loads(line)
+            except Exception:
+                continue
+            if r.get('source') == 'operator':
+                op_cells.add((r.get('site_type'), r.get('page_type'),
+                              r.get('section_type')))
     meta = {
         'backend': backend,
         'n': len(pats),
+        'operator_cells': sorted(op_cells),
         'built_from': 'docs/machinery/design/patterns/**/pattern-*.md',
         'patterns': [{k: p[k] for k in (
             'id', 'path', 'site_types', 'page_types', 'section_type',
@@ -498,6 +534,7 @@ def cmd_search(args):
     # out-ranked by a pattern that merely shares words. Weights:
     # text cosine 1.0, section match 0.35, site match 0.25.
     sec_hint, site_hint = infer_intent(args.query)
+    op_cells = {tuple(c) for c in meta.get('operator_cells') or []}
     if not args.no_boost and not args.genotype:
         boosted = []
         for i, sc in scores:
@@ -506,6 +543,11 @@ def cmd_search(args):
                 sc += 0.35
             if any(s in site_hint for s in p['site_types']):
                 sc += 0.25
+            # canon: operator evidence outranks Mobbin evidence
+            if (p['site_types'] and p['page_types']) and (
+                    p['site_types'][0], p['page_types'][0],
+                    p['section_type']) in op_cells:
+                sc += 0.30
             boosted.append((i, sc))
         scores = boosted
     scores.sort(key=lambda t: -t[1])
@@ -522,13 +564,18 @@ def cmd_search(args):
             'path': p['path'],
         })
     if getattr(args, 'json', False):
-        print(json.dumps({'query': args.query, 'backend': backend,
-                          'filters': {'site_type': args.site_type,
-                                      'page_type': args.page_type,
-                                      'section': args.section},
-                          'results': results}, indent=1))
+        print(json.dumps({
+            'query': args.query, 'backend': backend,
+            'filters': {'site_type': args.site_type,
+                        'page_type': args.page_type,
+                        'section': args.section},
+            # canon: the WHOLE bank, scored — the builder records what
+            # was used vs ignored; nothing is silently cut off
+            'candidates': [{'id': meta['patterns'][i]['id'],
+                            'score': round(s, 4)} for i, s in scores],
+            'results': results}, indent=1))
         return
-    print(f'# {args.query}  [{backend}]')
+    print(f'# {args.query}  [{backend}]  {len(scores)} candidates')
     for r in results:
         print(f"{r['score']:.3f}  {r['id']}  ({r['section_type']}/"
               f"{r['composition']}, prev={r['prevalence']:.2f}, n={r['n']})")

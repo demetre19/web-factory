@@ -149,5 +149,6 @@ closed set.
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
+| REF.1 | Every choice traces to canon | invariant | script | `check_canon_trace` | untraced choice / missing ignored list / operator site not banked | w1 |
 
-140 rules — script 109, reviewer 30, operator 1; invariant 40, structural 29, stylistic 71.
+141 rules — script 110, reviewer 30, operator 1; invariant 41, structural 29, stylistic 71.

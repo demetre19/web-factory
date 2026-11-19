@@ -93,7 +93,9 @@ python3 tools/design-gate/run.py w3 <pipeline-dir> --wireframe <cards/index.html
 Checks: `data-*` 1:1 + order + wf_ref; all gates above; enums;
 `CHECKLIST/w3.md` no blank evidence. Operator approves the layout in chat → `run.py approve w3 <dir> --evidence "…"`.
 
-## Done when
+- LAW.REF (REF.1): every plan row and picker option carries `refs`/`data-refs` tracing to canon; the picker shows score.py ranks + visual-review marks; unused high-similarity refs are logged as ignored; round 1 includes ≥1 image-bg + scrim hero option.
+
+## Done when## Done when
 
 `GATES.json.w3.approved` is true with `design` naming the locked card
 and every `check_*` in `enforced_by` green.

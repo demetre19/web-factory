@@ -58,7 +58,9 @@ Checks: variants.html present (HTML picker), exactly 3 knob vectors, deltas
 applied + within bounds, sheet in both modes, only passing variants
 rendered. Then the operator approves in chat → `run.py approve w4 <dir> --evidence "…"` (locks DNA v1).
 
-## Done when
+- LAW.REF (REF.1): every look-knob choice traces to a canon ref; the W4 picker passes `gate.py round` (scores, visual review, refs) before the operator sees it.
+
+## Done when## Done when
 
 `GATES.json.w4.approved` is true, `design` names the picked variant,
 and `CHECKLIST/w4.md` has no blank evidence (P.9).

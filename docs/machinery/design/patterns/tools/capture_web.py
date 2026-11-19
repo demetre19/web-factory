@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["pillow"]
+# dependencies = ["pillow", "numpy", "open_clip_torch", "torch"]
 # ///
 """Screenshot the curated web-supplement corpus (galleries + luxury +
 negative ecommerce) with headless Brave and tile it.
 
   uv run capture_web.py [--limit N] [--max-h 6000]
+  uv run capture_web.py --operator <url> [site_type] [page_type]
 
 Input: data/web_supplement_urls.txt  url|site_type|page_type|source
 Output: data/web/<slug>/meta.json + tile-NN.png
+
+`--operator` ingests an operator-suggested site into the canon:
+capture + validity gate + annotation + banking (`source: operator`),
+and an operator site is ranked above Mobbin evidence in search.
 """
 import json
 import os
@@ -35,8 +40,16 @@ def main():
         limit = int(sys.argv[sys.argv.index('--limit') + 1])
     if '--max-h' in sys.argv:
         max_h = int(sys.argv[sys.argv.index('--max-h') + 1])
-    rows = []
-    for line in open(URLS):
+    operator = None
+    if '--operator' in sys.argv:
+        i = sys.argv.index('--operator')
+        url = sys.argv[i + 1]
+        st = sys.argv[i + 2] if len(sys.argv) > i + 2 else 'general'
+        pt = sys.argv[i + 3] if len(sys.argv) > i + 3 else 'landing'
+        rows = [(url, st, pt, 'operator')]
+        operator = True
+    rows = rows if operator else []
+    for line in open(URLS) if not operator else []:
         line = line.strip()
         if not line or line.startswith('#'):
             continue
@@ -79,7 +92,8 @@ def main():
                     'width': w, 'height': h, 'tiles': tiles}
             # hard gate: a capture that is a challenge page, an error or a
             # blank render is recorded as such and never counts as evidence
-            meta['probe'] = capture_ok.probe(url)
+            meta['probe'] = capture_ok.probe(
+                url, use_cache=False)  # fresh evidence at ingest
             status, reason = capture_ok.decide(meta, d)
             meta['capture_status'] = status
             meta['capture_reason'] = reason
@@ -88,6 +102,27 @@ def main():
             ok += 1
             print(f'{slug}: {w}x{h} {len(tiles)} tiles [{status}'
                   f'{": " + reason if reason else ""}]', flush=True)
+            if operator and status == 'ok':
+                # canon on ingest: annotate -> bank -> embed -> genome
+                # -> patterns -> index. Derived work rides the cache, so
+                # a re-ingest only computes what is actually new.
+                import annotate_web
+                annotate_web.main_for(slug)
+                import bank
+                bank.bank_site(slug)
+                tdir = os.path.dirname(os.path.abspath(__file__))
+                gate = os.path.normpath(os.path.join(
+                    tdir, '..', '..', '..', '..', 'tools', 'design-gate'))
+                steps = [
+                    ['uv', 'run', '--quiet',
+                     os.path.join(tdir, 'embed_images.py'), 'build'],
+                    ['python3', os.path.join(gate, 'genome.py'), 'build'],
+                    ['python3', os.path.join(tdir, 'build_patterns.py')],
+                    ['python3', os.path.join(gate, 'patterns.py'),
+                     'index', '--backend', 'nomic'],
+                ]
+                for cmd in steps:
+                    subprocess.run(cmd, check=False, timeout=900)
         except Exception as e:
             fail += 1
             print(f'{slug}: FAILED {type(e).__name__}', flush=True)

@@ -2,11 +2,13 @@
 
 | id / url | kind | informs | wave |
 |---|---|---|---|
-| https://mobbin.com/screens/abc123 | screen | home · split-media · hero layout | w1 |
-| https://mobbin.com/screens/abc124 | screen | home · split-media · media ratio | w1 |
-| https://mobbin.com/screens/abc125 | section | home · split-media · CTA restraint | w1 |
-| https://mobbin.com/screens/def456 | section | home · cards-n · card density | w1 |
-| https://mobbin.com/screens/def457 | section | home · cards-n · card radius | w1 |
+| mobbin-abc123 | screen | home · split-media · hero layout | w1 |
+| mobbin-abc124 | screen | home · split-media · media ratio | w1 |
+| mobbin-abc125 | section | home · split-media · CTA restraint | w1 |
+| mobbin-def456 | section | home · cards-n · card density | w1 |
+| mobbin-def457 | section | home · cards-n · card radius | w1 |
+| https://example-operator-site.com | site | operator-suggested · whole-site feel | w1 |
+| mobbin-xyz999 | screen | home · split-media · ignored — wrong vertical | w1 |
 | https://mobbin.com/screens/def458 | screen | home · cards-n · three-up grid | w1 |
 | https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
 | https://mobbin.com/screens/ghi790 | screen | home · form-panel · label placement | w1 |

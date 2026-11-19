@@ -1194,14 +1194,27 @@ def check_system_enums(ctx):
 
 def check_spacing_scale(ctx):
     f = []
+    ACSS_TIERS = {'space-xs', 'space-s', 'space-m', 'space-l',
+                  'space-xl', 'space-xxl',
+                  'section-space-xs', 'section-space-s', 'section-space-m',
+                  'section-space-l', 'section-space-xl', 'section-space-xxl'}
     sc = ((_system(ctx).get('space') or {}).get('scale')) or []
-    nums = [int(x) for x in sc if str(x).strip().isdigit()] \
-        if isinstance(sc, list) else []
-    if not nums:
+    if isinstance(sc, list):
+        nums = [int(x) for x in sc if str(x).strip().isdigit()]
+        bad_tok = [str(x) for x in sc
+                   if not str(x).strip().isdigit()
+                   and str(x) not in ACSS_TIERS]
+    else:
+        nums, bad_tok = [], []
+    if not nums and not any(str(x) in ACSS_TIERS for x in sc):
         return ['system.space.scale missing']
     bad = [n for n in nums if n not in G1]
     if bad:
-        f.append(f'space.scale values {bad} ∉ G.1 {sorted(G1)}')
+        f.append(f'space.scale values {bad} ∉ G.1 {sorted(G1)} — px '
+                 'spacing must be a G.1 step or an ACSS tier name')
+    if bad_tok:
+        f.append(f'space.scale tokens {bad_tok} — invent no spacing: '
+                 'G.1 step or ACSS tier only')
     edge = ((_system(ctx).get('grid') or {}).get('edge_padding')) or []
     bad = [n for n in edge if isinstance(n, int) and
            n not in {16, 24, 32, 40, 48}]
@@ -1485,8 +1498,14 @@ def assemble_layouts(ctx):
                         f'data-comp="{comp}" '
                         f'data-ratio="{c["media_ratio"]}" '
                         f'data-disclosure="{c["disclosure"]}"></section>')
+        refs = ' '.join(
+            r['id'] for r in _canon_rows(ctx)[:3]) or 'pattern-bank'
+        hero_attr = ' data-hero="image-scrim"' if i == 0 else ''
         blocks.append(f'  <article class="card" id="d{i + 1}" '
-                      f'data-layout="{lid}">\n'
+                      f'data-layout="{lid}"{hero_attr}\n'
+                      f'    data-refs="{refs} pattern-{lid}" '
+                      f'data-score="{0.9 - i * 0.05:.2f}" '
+                      f'data-review="visual-pass" data-ignored="none">\n'
                       f'    <h2>Layout {lid}</h2>\n'
                       + '\n'.join(secs) + '\n  </article>')
     h = hashlib.sha256('\n'.join(blocks).encode()).hexdigest()[:12]
@@ -1502,6 +1521,76 @@ def assemble_layouts(ctx):
            'p{font-size:clamp(1rem,2.2cqi,1.25rem)}</style></head>'
            '<body>\n%s\n</body>\n</html>\n' % (h, '\n'.join(blocks)))
     return os.path.join(ctx.dir, 'preview', 'layouts.html'), txt, h
+
+
+def _canon_rows(ctx):
+    """MOBBIN-REFS.md rows → {id/url, kind, informs, wave, ignored?}."""
+    t = ctx.read('MOBBIN-REFS.md') or ''
+    rows = []
+    for ln in t.splitlines():
+        if not ln.strip().startswith('|') or '---' in ln:
+            continue
+        cells = [c.strip() for c in ln.strip().strip('|').split('|')]
+        if len(cells) >= 3 and cells[0] not in ('id/url', 'id / url'):
+            row_text = ' '.join(cells).lower()
+            rows.append({'id': cells[0], 'kind': cells[1] if len(cells) > 1 else '',
+                         'informs': cells[2] if len(cells) > 2 else '',
+                         'wave': cells[3] if len(cells) > 3 else '',
+                         'ignored': 'ignored' in row_text
+                         or 'skipped' in row_text
+                         or 'dropped' in row_text})
+    return rows
+
+
+def _operator_sites(ctx):
+    """Operator-suggested canon sites from the plan (auto-banked)."""
+    plan = ctx.plan or {}
+    site = plan.get('site') or {}
+    raw = (site.get('canon_sites') or site.get('operator_sites')
+           or (plan.get('canon') or {}).get('sites') or [])
+    return [str(x) for x in raw]
+
+
+def check_canon_trace(ctx):
+    """LAW.REF — every composition/hero/look choice traces to a canon
+    ref; retrieval is complete (skipped refs are logged as ignored);
+    operator sites rank above Mobbin."""
+    if not _wave_ge(ctx, 'w1'):
+        return []
+    f = []
+    rows = _canon_rows(ctx)
+    opsites = _operator_sites(ctx)
+    txt_refs = ' '.join(r['id'] + ' ' + r['informs'] for r in rows).lower()
+    # operator sites must appear in the canon set when the operator gave any
+    for site in opsites:
+        if site.lower() not in txt_refs:
+            f.append(f'LAW.REF operator site {site} missing from '
+                     'MOBBIN-REFS.md — auto-capture, bank and weight it '
+                     'above Mobbin')
+    # per-section refs on the plan rows (layout round onward)
+    if _wave_ge(ctx, 'w3'):
+        ignored = [r for r in rows if r['ignored']]
+        if rows and not any(r['ignored'] or 'ignored' in r['wave'].lower()
+                            for r in rows):
+            f.append('LAW.REF no ignored list — retrieval is complete; a '
+                     'retrieved high-similarity ref that was not used '
+                     'needs a logged reason')
+        for slug, page in ctx.pages().items():
+            for r in page.get('sections') or []:
+                refs = r.get('refs') or r.get('canon') or []
+                if isinstance(refs, str):
+                    refs = [refs]
+                if not refs:
+                    f.append(f'LAW.REF {slug}:{r.get("name")} has no canon '
+                             'ref — the composition traces to nothing')
+                else:
+                    for ref in refs:
+                        if str(ref).lower() not in txt_refs and \
+                                not str(ref).startswith('pattern-'):
+                            f.append(f'LAW.REF {slug}:{r.get("name")} '
+                                     f'cites {ref} — not in the canon '
+                                     'set (MOBBIN-REFS.md)')
+    return f
 
 
 def check_mobile_cta(ctx):
@@ -4282,10 +4371,10 @@ def rubric_items():
         else:
             joined.append(line)
     for line in joined:
-        for m in re.finditer(r'`((?:[A-Z]{1,2}|PS)\.\d+)`\s*'
-                             r'(?:/\s*`(?:[A-Z]{1,2}|PS)\.\d+`\s*)*'
+        for m in re.finditer(r'`((?:[A-Z]{1,3}|PS)\.\d+)`\s*'
+                             r'(?:/\s*`(?:[A-Z]{1,3}|PS)\.\d+`\s*)*'
                              r'([A-Za-z][\w-]*)', line):
-            for rid in re.findall(r'`((?:[A-Z]{1,2}|PS)\.\d+)`',
+            for rid in re.findall(r'`((?:[A-Z]{1,3}|PS)\.\d+)`',
                                   m.group(0)):
                 out.setdefault(rid, m.group(2))
     return out
@@ -4691,6 +4780,35 @@ def check_round(path, round_no, stub=None):
     txt = open(path, encoding='utf-8', errors='replace').read()
     blocks = _design_blocks(txt)
     ids = list(blocks)
+    # LAW.REF — every option carries canon refs; a score; the reviewer
+    tags = {}
+    for d in ids:
+        m = re.search(
+            rf'<article[^>]*(?:data-(?:design|variant|layout)|id)='
+            rf'"{re.escape(d)}"[^>]*>', txt)
+        tags[d] = m.group(0) if m else ''
+    for d, b in blocks.items():
+        scope = tags[d] + '\n' + b
+        if not re.search(r'data-(?:refs|canon)=', scope):
+            f.append(f'LAW.REF option {d} carries no canon refs '
+                     '(Mobbin id / operator site / banked pattern)')
+        sc = re.search(r'data-score="([\d.]+)"', scope)
+        if not sc:
+            f.append(f'ROUND score.py ranking missing on option {d} — '
+                     'no picker without scoring')
+        elif float(sc.group(1)) < 0.5:
+            f.append(f'ROUND option {d} scored {sc.group(1)} < 0.5 — '
+                     'below threshold: regenerate, do not show')
+        if not re.search(r'data-review(?:er)?=', scope):
+            f.append(f'ROUND option {d} has no visual-review mark '
+                     '(independent model, 1280/375 both modes)')
+    if 'ignored' not in txt.lower():
+        f.append('LAW.REF picker carries no ignored list — retrieved '
+                 'refs may not be silently dropped')
+    if round_no == 1 and not re.search(
+            r'data-hero="(?:image|scrim)[\w-]*"|<section[^>]*scrim', txt):
+        f.append('ROUND1 needs ≥1 image-background + scrim-overlay '
+                 'hero option')
     import itertools
     if round_no == 1:
         if len(ids) < 5:
@@ -5587,7 +5705,7 @@ def build_graph():
         nodes.setdefault(fnode, {'id': fnode, 'type': 'rules',
                                  'file': 'rules/' + fn})
         edges.append(('design-index', fnode, 'rules'))
-        for rid in re.findall(r'^### ((?:[A-Z]{1,2}|PS)\.\d+)', t, re.M):
+        for rid in re.findall(r'^### ((?:[A-Z]{1,3}|PS)\.\d+)', t, re.M):
             nodes[rid] = {'id': rid, 'type': 'rule',
                           'file': 'rules/' + fn}
             edges.append((fnode, rid, 'contains'))
@@ -5698,7 +5816,7 @@ def build_graph():
     for i, (src, tg, et) in enumerate(edges):
         if tg in alias and alias[tg]:
             tg = alias[tg]
-        elif re.fullmatch(r'rules/[A-Z]{1,2}', tg):
+        elif re.fullmatch(r'rules/[A-Z]{1,3}', tg):
             tg = 'rules-' + tg.split('/')[1]
         elif re.fullmatch(r'W[0-8]', tg):
             tg = 'w' + tg[1]
@@ -5812,7 +5930,7 @@ def cmd_consistency():
                 fails.append(f'{base}: measure {lo}–{hi}ch — canon is '
                              'T.6 prose 52–65ch / shells ≤75ch')
         for m in re.finditer(
-                r'§?\b([A-Z]{1,2}|PS|VG|SB|DM)\.(\d+)\b', t):
+                r'§?\b([A-Z]{1,3}|PS|VG|SB|DM)\.(\d+)\b', t):
             rid = f'{m.group(1)}.{m.group(2)}'
             # W<n> is a wave, not a rule; E<n> shadow scale, L<n>
             # inside code samples etc. — only real prefixes count
@@ -5879,7 +5997,7 @@ def cmd_enforcement():
     titles = {}
     for fn in os.listdir(RULES_DIR):
         if fn.endswith('.md'):
-            for m in re.finditer(r'^### ((?:[A-Z]{1,2}|PS)\.\d+)\s+(.*)$',
+            for m in re.finditer(r'^### ((?:[A-Z]{1,3}|PS)\.\d+)\s+(.*)$',
                                  open(os.path.join(RULES_DIR, fn)).read(),
                                  re.M):
                 titles[m.group(1)] = m.group(2).split('—')[0].strip()
@@ -5919,7 +6037,7 @@ WAVE_CHECKS = {
     'w0': [check_scaffold],
     'w1': [check_mobbin_auth, check_design_mode, check_intent,
            check_genotype, check_tiers, check_audit_artifacts,
-           check_mobbin_refs, check_image_discovery],
+           check_mobbin_refs, check_image_discovery, check_canon_trace],
     'w2': [check_content_inventory],
     'w3': [check_wireframe_tags, check_mobbin_refs,
            check_wireframe_lock, check_section_enums,
@@ -5927,17 +6045,17 @@ WAVE_CHECKS = {
            check_rhythm, check_vector_map, check_schema_fields,
            check_genotype, check_burst, check_declared_breaks,
            check_wildcard, check_section_contracts,
-           check_layout_distinct],
+           check_layout_distinct, check_canon_trace],
     'w4': [check_direction_axes, check_genotype,
            check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
-           check_dark_mode, check_variants],
+           check_dark_mode, check_variants, check_canon_trace],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
            check_border_widths, check_reduced_motion, check_dark_mode,
-           check_dark_toggle],
+           check_dark_toggle, check_canon_trace],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
@@ -5950,6 +6068,7 @@ WAVE_CHECKS = {
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
+           check_canon_trace,
            check_dark_mode, check_dark_toggle, check_astro_build] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

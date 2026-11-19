@@ -3,8 +3,8 @@ id: design-index
 type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
-  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors]
-  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG]
+  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS]
+  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF]
   contains_also: [section-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
   index: design-index
@@ -13,7 +13,17 @@ links:
 # DESIGN MACHINERY — stage map + rulebook index
 
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Astro is
-for the **final product only** — the W6–W8 build + `dist/`. Every
+for the **final product only** — the W6–W8 build + `dist/`.
+
+**LAW.REF (canon):** Mobbin screens + operator-suggested sites + the
+banked reference set are the highest design authority after the copy
+contract and brand invariants — every composition, hero archetype,
+section rhythm and look-knob choice traces to ≥1 canon ref recorded in
+the option's metadata; retrieval is complete (nothing silently dropped;
+a skipped high-similarity ref is logged in `ignored`); operator sites
+rank above Mobbin; canon overrides generated defaults (incl. the ACSS
+baseline) wherever they conflict — ACSS only fills what canon does not
+specify. Every
 **preview / choosing** artefact — the W3 layout picker, the W4 look
 picker, the W5 system sheet — is quick self-contained HTML under
 `preview/` (compiled CSS from `tailwind.config` + TOKENS/DNA knobs,

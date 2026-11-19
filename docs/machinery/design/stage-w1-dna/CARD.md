@@ -60,7 +60,9 @@ W1 fails when images exist without classification, a meta.json misses
 invalid, or the discovery is not operator-approved
 (operator approves in chat → `run.py approve w1 <dir> --evidence "…"`).
 
-## Done when
+- LAW.REF (REF.1): query the full canon set — Mobbin MCP + `patterns.py` over the bank + operator-suggested sites — record every retrieved ref in `MOBBIN-REFS.md`; operator sites are banked and ranked above Mobbin; ACSS-BASELINE.md supplies DNA v0 spacing/type defaults (canon overrides it where they conflict).
+
+## Done when## Done when
 
 `GATES.json.w1.pass` + operator approval (W1 is decision point 1) and
 `CHECKLIST/w1.md` has no blank evidence (P.9).

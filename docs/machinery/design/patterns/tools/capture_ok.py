@@ -83,6 +83,12 @@ PARKED_WEAK = r'^(coming soon|under construction|we are (being )?built|launching
 COOKIE = [(r'we value your privacy|we use cookies|accept (all )?cookies',
            'cookie_wall')]
 
+sys.path.insert(0, HERE)
+import cache  # noqa: E402
+
+RULESET_V = cache.text_sha(repr(
+    (BLOCKED, ERRORS, PARKED_STRONG, PARKED_WEAK)))[:12]
+
 TITLE_RE = re.compile(r'<title[^>]*>(.*?)</title>', re.S | re.I)
 TAG_RE = re.compile(r'<(script|style|noscript|svg)[^>]*>.*?</\1>', re.S | re.I)
 TEXT_RE = re.compile(r'<[^>]+>')
@@ -107,7 +113,11 @@ def visible_text(html, limit=4000):
     return txt[:limit]
 
 
-def probe(url, timeout=25):
+def probe(url, timeout=25, use_cache=True):
+    if use_cache:
+        hit = cache.get('capture', f'{cache.text_sha(url)}:probe:v1')
+        if hit is not None:
+            return hit
     req = urllib.request.Request(url, headers={
         'User-Agent': UA,
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -120,12 +130,14 @@ def probe(url, timeout=25):
             enc = r.headers.get_content_charset() or 'utf-8'
             html = raw.decode(enc, 'replace')
             m = TITLE_RE.search(html)
-            return {'status': r.status, 'final_url': r.geturl(),
-                    'title': (m.group(1).strip()[:200] if m else ''),
-                    'text_sample': visible_text(html)[:1200],
-                    'bytes': len(raw), 'seconds': round(time.time() - t0, 2),
-                    'fetched_at': time.strftime('%Y-%m-%dT%H:%M:%SZ',
-                                                time.gmtime())}
+            pr = {'status': r.status, 'final_url': r.geturl(),
+                  'title': (m.group(1).strip()[:200] if m else ''),
+                  'text_sample': visible_text(html)[:1200],
+                  'bytes': len(raw), 'seconds': round(time.time() - t0, 2),
+                  'fetched_at': time.strftime('%Y-%m-%dT%H:%M:%SZ',
+                                              time.gmtime())}
+            cache.put('capture', f'{cache.text_sha(url)}:probe:v1', pr)
+            return pr
     except urllib.error.HTTPError as e:
         body = ''
         try:
@@ -189,12 +201,34 @@ def pixel_verdict(d, probe_res=None):
     return None
 
 
+def tile_fingerprint(d):
+    """cheap content proxy: tile names+sizes. Byte hashing every tile of
+    every site costs minutes; a tile that changes size changes its hash."""
+    parts = []
+    for f in sorted(os.listdir(d)):
+        if f.startswith('tile-'):
+            parts.append(f'{f}:{os.path.getsize(os.path.join(d, f))}')
+    return cache.text_sha('|'.join(parts))[:16]
+
+
 def decide(meta, d):
     """(capture_status, reason) for one site directory.
 
     The single decision function: the batch verdict pass, the capture
     scripts and any future discovery writer all call this.
     """
+    key = (f"{cache.text_sha(meta.get('url') or d)}:"
+           f"{RULESET_V}:{tile_fingerprint(d)}")
+    hit = cache.get('capture', key + ':verdict')
+    if hit is not None:
+        return hit['status'], hit['reason']
+    v = _decide(meta, d)
+    cache.put('capture', key + ':verdict',
+              {'status': v[0], 'reason': v[1]})
+    return v
+
+
+def _decide(meta, d):
     pr = meta.get('probe') or {}
     if pr:
         v = text_verdict(pr)
@@ -217,7 +251,7 @@ def cmd_probe():
             meta = json.load(open(mp))
             if meta.get('probe') and not os.environ.get('PROBE_REFRESH'):
                 continue
-            pr = probe(meta['url'])
+            pr = probe(meta['url'], use_cache=not os.environ.get('PROBE_REFRESH'))
             meta['probe'] = pr
             json.dump(meta, open(mp, 'w'), indent=1)
             n += 1

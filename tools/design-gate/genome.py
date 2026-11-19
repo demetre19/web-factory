@@ -245,9 +245,55 @@ def mood_alleles(rec):
             'editorial', True)
 
 
-def genotype(rec, density_cuts=(0.12, 0.24)):
+def genotype(rec, density_cuts=(0.12, 0.24), use_cache=True):
     """Annotation record -> allele per gene. Unmeasured fields fall back
     to a composition prior (documented: `derived` list in output)."""
+    if use_cache:
+        hit = _geno_cache_get(rec)
+        if hit is not None:
+            return hit['genotype'], hit['derived']
+    out = _genotype(rec, density_cuts)
+    if use_cache:
+        _geno_cache_put(rec, out)
+    return out
+
+
+_GENE_V = None
+
+
+def _geno_key(rec):
+    global _GENE_V
+    if _GENE_V is None:
+        import os, sys
+        sys.path.insert(0, os.path.normpath(os.path.join(
+            __file__, '..', '..', 'docs', 'machinery', 'design',
+            'patterns', 'tools')))
+        import cache
+        _GENE_V = cache.text_sha(
+            repr(sorted((k, tuple(v)) for k, v in ALLELES.items())))[:12]
+    return f"{cache.text_sha(rec.get('image') or cache.hash_obj(rec))}:"            f"{_GENE_V}"
+
+
+def _geno_cache_get(rec):
+    import os, sys
+    sys.path.insert(0, os.path.normpath(os.path.join(
+        __file__, '..', '..', 'docs', 'machinery', 'design',
+        'patterns', 'tools')))
+    import cache
+    return cache.get('genome', _geno_key(rec))
+
+
+def _geno_cache_put(rec, out):
+    import os, sys
+    sys.path.insert(0, os.path.normpath(os.path.join(
+        __file__, '..', '..', 'docs', 'machinery', 'design',
+        'patterns', 'tools')))
+    import cache
+    cache.put('genome', _geno_key(rec),
+              {'genotype': out[0], 'derived': out[1]})
+
+
+def _genotype(rec, density_cuts=(0.12, 0.24)):
     derived = []
     comp = rec.get('composition') or 'other'
     arch = COMPOSITION_TO_ARCHETYPE.get(comp, 'stacked-center')

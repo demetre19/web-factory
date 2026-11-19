@@ -20,7 +20,7 @@ DESIGN = os.path.join(REPO, 'docs', 'machinery', 'design')
 RULES = os.path.join(DESIGN, 'rules')
 ENFORCEMENT = os.path.join(DESIGN, 'enforcement.json')
 
-RULE_RE = re.compile(r'^### ((?:[A-Z]{1,2}|PS)\.\d+)\s+(.*)$', re.M)
+RULE_RE = re.compile(r'^### ((?:[A-Z]{1,3}|PS)\.\d+)\s+(.*)$', re.M)
 
 
 def load_rules():
@@ -35,7 +35,7 @@ def load_rules():
             end = heads[i + 1].start() if i + 1 < len(heads) else len(txt)
             body = txt[m.end():end]
             body = re.split(r'^## ', body, maxsplit=1, flags=re.M)[0]
-            links = re.findall(r'^- ((?:[A-Z]{1,2}|PS)\.\d+) → (.+)$',
+            links = re.findall(r'^- ((?:[A-Z]{1,3}|PS)\.\d+) → (.+)$',
                                txt, re.M)
             see = []
             for rid, targets in links:
@@ -167,7 +167,7 @@ def main(argv):
         return 0
     q = args[0]
 
-    if re.match(r'^(?:[A-Z]{1,2}|PS)\.\d+$', q):
+    if re.match(r'^(?:[A-Z]{1,3}|PS)\.\d+$', q):
         if q not in rules:
             print(f'no rule {q}')
             return 1

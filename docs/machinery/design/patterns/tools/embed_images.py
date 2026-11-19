@@ -37,6 +37,9 @@ DATA = os.path.join(PATTERNS, 'data')
 OUT = os.path.join(DATA, 'image_vectors')
 MODEL = 'ViT-B-32'
 PRETRAINED = 'laion2b_s34b_b79k'
+sys.path.insert(0, HERE)
+import cache  # noqa: E402
+CLIP_V = f'{MODEL}:{PRETRAINED}'
 DIM = 512
 EXT = ('.png', '.jpg', '.jpeg', '.webp')
 CORPORA = ('screens', 'negatives_sections', 'web')
@@ -136,11 +139,27 @@ def cmd_build():
         rows = []
 
     todo = [p for p in walk() if rel(p) not in have]
-    print(f'{len(todo)} crops to embed with {MODEL}/{PRETRAINED} on {dev}')
+    # read-through: a crop whose bytes+model are banked reuses its vector
+    # instead of a forward pass — identical pixels never re-encode
+    sha = {}
+    ckeys = {}
+    fresh = []
+    for p in todo:
+        h = cache.file_sha(p)
+        sha[p] = h
+        ckeys[p] = f'{h}:{CLIP_V}'
+    hits = cache.get_many('clip_img', list(ckeys.values()))
+    for p, k in ckeys.items():
+        if k in hits:
+            rows.append((rel(p), cache.pack_vec(hits[k])))
+    fresh = [p for p in todo if ckeys[p] not in hits]
+    print(f'{len(todo)} crops ({len(fresh)} fresh, '
+          f'{len(todo) - len(fresh)} cached) with {MODEL}/{PRETRAINED} '
+          f'on {dev}')
     t0 = time.time()
     done = 0
-    for i in range(0, len(todo), BATCH):
-        chunk = todo[i:i + BATCH]
+    for i in range(0, len(fresh), BATCH):
+        chunk = fresh[i:i + BATCH]
         imgs = []
         for p in chunk:
             try:
@@ -154,8 +173,11 @@ def cmd_build():
             feats = model.encode_image(batch)
             feats = feats / feats.norm(dim=-1, keepdim=True)
             feats = feats.float().cpu().numpy().astype(np.float16)
+        writes = []
         for (p, _), v in zip(imgs, feats):
             rows.append((rel(p), v.tobytes()))
+            writes.append((ckeys[p], v.astype(np.float32).tolist()))
+        cache.put_many('clip_img', writes)
         done += len(imgs)
         if done % 320 < BATCH:
             print(f'  {done}/{len(todo)}  {time.time()-t0:.0f}s')
@@ -164,14 +186,24 @@ def cmd_build():
           f'in {time.time()-t0:.0f}s')
 
 
+def text_vec(model, tok, torch, dev, text):
+    key = f'{cache.text_sha(text.strip().lower())}:{CLIP_V}:q'
+    v = cache.get('clip_query', key)
+    if v is not None:
+        return v
+    with torch.no_grad():
+        f = model.encode_text(tok([text]).to(dev))
+        f = f / f.norm(dim=-1, keepdim=True)
+    v = [round(float(x), 6) for x in f[0].float().cpu()]
+    cache.put('clip_query', key, v)
+    return v
+
+
 def cmd_query(text):
     model, _, torch, dev = load_model()
     import open_clip
     tok = open_clip.get_tokenizer(MODEL)
-    with torch.no_grad():
-        f = model.encode_text(tok([text]).to(dev))
-        f = f / f.norm(dim=-1, keepdim=True)
-    print(json.dumps([round(float(x), 6) for x in f[0].float().cpu()]))
+    print(json.dumps(text_vec(model, tok, torch, dev, text)))
 
 
 PORT = 8765
@@ -193,6 +225,17 @@ def cmd_serve():
     class H(http.server.BaseHTTPRequestHandler):
         def do_GET(self):
             u = urllib.parse.urlparse(self.path)
+            if u.path == '/text':
+                # nomic warm proxy: one daemon hop, query-cached
+                text = urllib.parse.parse_qs(u.query).get('text', [''])[0]
+                v = nomic_text(text)
+                body = json.dumps(v).encode()
+                self.send_response(200 if v else 503)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Content-Length', str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+                return
             if u.path != '/embed':
                 self.send_error(404)
                 return
@@ -200,11 +243,8 @@ def cmd_serve():
             if not text.strip():
                 self.send_error(400, 'empty text')
                 return
-            with torch.no_grad():
-                f = model.encode_text(tok([text]).to(dev))
-                f = f / f.norm(dim=-1, keepdim=True)
-            body = json.dumps([round(float(x), 6)
-                               for x in f[0].float().cpu()]).encode()
+            body = json.dumps(
+                text_vec(model, tok, torch, dev, text)).encode()
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', str(len(body)))
@@ -214,9 +254,37 @@ def cmd_serve():
         def log_message(self, *a):
             pass
 
+    nomic_text('warm')  # keep_alive: the model stays resident in ollama
     srv = http.server.HTTPServer(('127.0.0.1', PORT), H)
-    print(f'clip query server on 127.0.0.1:{PORT}', file=sys.stderr)
+    print(f'query server on 127.0.0.1:{PORT} (clip + nomic)',
+          file=sys.stderr)
     srv.serve_forever()
+
+
+NOMIC = 'http://localhost:11434'
+
+
+def nomic_text(text):
+    """Query embedding via ollama, disk-cached by text+model."""
+
+    import urllib.request
+    key = f'{cache.text_sha(text.strip().lower())}:nomic-embed-text:q'
+    v = cache.get('nomic_query', key)
+    if v is not None:
+        return v
+    try:
+        req = urllib.request.Request(
+            NOMIC + '/api/embed',
+            data=json.dumps({'model': 'nomic-embed-text',
+                             'input': [f'search_query: {text}'],
+                             'keep_alive': '2h'}).encode(),
+            headers={'Content-Type': 'application/json'})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            v = json.loads(r.read())['embeddings'][0]
+        cache.put('nomic_query', key, v)
+        return v
+    except Exception:
+        return None
 
 
 def cmd_means():

@@ -2,8 +2,8 @@
 id: BASE.ACSS
 type: baseline
 links:
-  used_in: [W1, W3, W4, W5, W6, W7]
-  depends_on: [knobs.json, DNA-MAP]
+  used_in: [w1, w3, w4, w5, w6, w7]
+  depends_on: [knobs, dna-map]
 ---
 # Automatic CSS (ACSS) fluid defaults — the DNA starting point
 
