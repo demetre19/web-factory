@@ -2814,7 +2814,7 @@ SKL_RAW_VISUAL = re.compile(
     r'|h-|min-h-|max-w-|opacity-|outline-|divide-|placeholder-|accent-)')
 SKL_ID = re.compile(
     r'(?:skeleton[\w/-]*|hyperui/[\w/.-]+|shadcn/[\w/.-]+|'
-    r'templates/skeletons/[\w/.-]+)')
+    r'brixies/[\w/.-]+|templates/skeletons/[\w/.-]+)')
 # shadcn skeleton classes are CSS-var tokens by design (bg-primary →
 # var(--primary)) — component-tier indirection, not raw utilities
 SKL_TOKEN_CLASS = re.compile(
@@ -2836,10 +2836,26 @@ def _skl_harvest_ids():
                 continue
             try:
                 v = json.load(open(os.path.join(dp, fn)))
-                if v.get('id'):
-                    ids.add(str(v['id']))
             except Exception:
-                pass
+                continue
+            if isinstance(v, list):
+                v = v[0] if v else {}
+            if not isinstance(v, dict):
+                continue
+            vid = v.get('id')
+            if isinstance(vid, str) and '/' in vid:
+                ids.add(vid)
+                continue
+            # brixies files carry a numeric upstream source_id — the
+            # harvest id is brixies/<category>/<block_name>
+            rel_dir = os.path.relpath(dp, root)
+            if rel_dir == '.' or fn.endswith('.spec.json'):
+                continue    # spec sidecars aren't usable skeleton ids
+            parts = rel_dir.split(os.sep)
+            block = v.get('block_name') or os.path.splitext(fn)[0]
+            ids.add('/'.join(parts[:2] + [block])
+                    if len(parts) > 1 else
+                    '/'.join(parts + [block]))
     return ids
 
 
@@ -7684,8 +7700,8 @@ def cli_selftest():
         if _apply_declared_breaks(c, gate_self.check_border_widths(c)):
             f.append('licensed neo-brutal 4px border not waived')
         sl = gate_self.check_style_licence(c)
-        if not any('STYLE.2' in m for m in sl):
-            f.append('unrecorded licence does not trip STYLE.2')
+        if not any('ST.2' in m for m in sl):
+            f.append('unrecorded licence does not trip ST.2')
         dna_p = os.path.join(pdir, 'DNA.json')
         d = json.load(open(dna_p))
         d['style_licences'] = ['neo-brutalist']
@@ -7699,7 +7715,7 @@ def cli_selftest():
         open(os.path.join(pdir, 'DESIGN-PLAN.md'), 'w').write(plan)
         c = Ctx(pdir)
         c.wave = 'w8'
-        if not any('STYLE.1' in m for m in
+        if not any('ST.1' in m for m in
                    gate_self.check_style_licence(c)):
             f.append('unknown style cluster not rejected')
     finally:
@@ -7818,17 +7834,17 @@ REDTEAM_MUTATIONS = [
    '<section data-sec="proof3" data-comp="logo-wall" data-intent="proof" '
    'data-skeleton="hyperui/marketing/logo-clouds/1" class="py-8">'
    '<h3>x</h3></section>'),)),
- ('RT-INV-HEADERONLY', 'STUB', (
+ ('RT-INV-HEADERONLY', 'W2', (
   ('REPL', 'STUB.md',
-   '| Do you test? | Yes. |', '| TBD | TBD |'),)),
- ('RT-CAND-UNSIGNED', 'CAN', (
-  ('SET', 'CANDIDATES.json',
-   '{"source":"astro-showcase","candidates":[{"url":"https://x.example",'
-   '"status":"approved","score":0.9}]}'),)),
- ('RT-REC-UNSIGNED', 'R17', (
+   '| macro | H2 What is testing? |', '| macro | TBD |'),)),
+ ('RT-CAND-UNSIGNED', 'REVIEW.CAND', (
+  ('REPL', 'CANDIDATES.json',
+   '"decision_sig": "b3e88f097d3ebec798ab97434ab43bd8"',
+   '"decision_sig": "deadbeefdeadbeefdeadbeefdeadbeef"'),)),
+ ('RT-REC-UNSIGNED', 'P.17', (
   ('REPL', 'GATES.json',
    '"sig": "5d86d223403dbfd0e0f88e5e2449bfae"', ''),)),
- ('RT-REC-GATEPASS', 'R17', (
+ ('RT-REC-GATEPASS', 'P.17', (
   ('REPL', 'GATES.json',
    '"gate_pass": true', '"gate_pass": false'),)),
  ('RT-WILD-NOHIST', 'B.7', (('DEL', 'WILDCARD-HISTORY.json'),)),
@@ -7853,18 +7869,19 @@ REDTEAM_MUTATIONS = [
  ('RT-M14-GSAP-BARE', 'M.14', (
   ('SET', 'site/dist/_astro/an.js', 'gsap.to(".x",{y:9});'),)),
  ('RT-PS11-MULTIVEC', 'PS.11', (
-  ('REPL', 'STUB.md',
-   '| macro | H2 What is testing? | "Testing is the thing." | — |',
-   '| macro | H2 What is testing? + H2 Why us? | "Testing." | — |'),)),
+  ('REPL', 'DESIGN-PLAN.md',
+   'vector: [{heading: "What is testing?", fs: "Testing is the thing."}]',
+   'vector: [{heading: "What is testing?", fs: "Testing."},'
+   ' {heading: "Why us?", fs: "Because."}]'),)),
  ('RT-WIDTH-OFFRUNG', 'A.1', (
   ('APPEND', 'site/dist/home/index.html',
    '<div class="width--55">x</div>'),)),
- ('RT-STYLE-BOGUS', 'STYLE.', (
+ ('RT-STYLE-BOGUS', 'ST.', (
   ('REPL', 'DESIGN-PLAN.md',
    'decisions:\n  - {rule_id: L.3',
    'style_licences:\n  - {cluster: made-up-style, where: ""}\n'
    'decisions:\n  - {rule_id: L.3'),)),
- ('RT-STYLE-UNRECORDED', 'STYLE.', (
+ ('RT-STYLE-UNRECORDED', 'ST.', (
   ('REPL', 'DESIGN-PLAN.md',
    'decisions:\n  - {rule_id: L.3',
    'style_licences:\n  - {cluster: neo-brutalist, where: ""}\n'
@@ -7998,11 +8015,11 @@ def cmd_findings(_a=None):
         if r.get('status') != 'closed':
             continue
         fix = str(r.get('fixture') or '')
-        if fix.startswith('redteam:'):
-            fid = fix.split(':', 1)[1]
-            if fid not in rt:
-                bad.append(f"{r.get('id')}: unknown redteam mutation "
-                           f'{fid}')
+        if 'redteam:' in fix:
+            for fid in re.findall(r'redteam:(RT-[\w-]+)', fix):
+                if fid not in rt:
+                    bad.append(f"{r.get('id')}: unknown redteam "
+                               f'mutation {fid}')
             continue
         # file fixture: fixtures/<check>/fail must produce failures
         if fix.startswith('fixtures/'):
@@ -8851,12 +8868,12 @@ def check_style_licence(ctx):
     for lic in lics:
         cl = lic['cluster'] or '(unnamed)'
         if not lic['known']:
-            f.append(f'STYLE.1 style_licence "{cl}" names no cluster '
+            f.append(f'ST.1 style_licence "{cl}" names no cluster '
                      'in style-profiles.json — licences are enumerated '
                      'profiles, not ad-hoc waivers')
             continue
         if lic['canon_flag']:
-            f.append(f'STYLE.1 style_licence "{cl}" — this style is '
+            f.append(f'ST.1 style_licence "{cl}" — this style is '
                      'canon-flagged (generic-stock / banned signature); '
                      'no licence expresses it')
         # plan may only invoke the profile — waiving beyond it or an
@@ -8864,7 +8881,7 @@ def check_style_licence(ctx):
         inv = [r for r in lic['waives']
                if rules.get(r, {}).get('tier') == 'invariant']
         if inv:
-            f.append(f'STYLE.1 "{cl}" profile tries to waive '
+            f.append(f'ST.1 "{cl}" profile tries to waive '
                      f'invariant(s) {inv} — fix style-profiles.json, '
                      'invariants are never waived')
         # conflicts are informational warnings, surfaced as failures
@@ -8873,12 +8890,12 @@ def check_style_licence(ctx):
         # tension so the plan records it
         for c in lic['conflicts']:
             if c in lic['waives']:
-                f.append(f'STYLE.1 "{cl}" profile lists {c} as both '
+                f.append(f'ST.1 "{cl}" profile lists {c} as both '
                          'waived and conflicted — contradiction in '
                          'style-profiles.json')
         # provenance: the licence must be traceable in the rendered DNA
         if cl not in dna_txt:
-            f.append(f'STYLE.2 style_licence "{cl}" not recorded in '
+            f.append(f'ST.2 style_licence "{cl}" not recorded in '
                      'DNA.md — a licence is part of the design record, '
                      'not a plan-side note')
     return f

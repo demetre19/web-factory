@@ -1597,7 +1597,7 @@
    "tier": "structural",
    "wave": "w7",
    "check": "check_motion_js_budget",
-   "threshold": "animation JS \u22644KB and no animation library unless licensed in DESIGN-PLAN"
+   "threshold": "tamdoma-way default: pure CSS + CSS-animated SVG + minimal vanilla JS \u22644KB; GSAP is the ONLY licensable library \u2014 needs DESIGN-PLAN licence object {name:'gsap', justification:'why CSS cannot do this'} AND motion.engine=gsap; all other libraries (lenis/anime/lottie/scrollmagic/\u2026) banned outright"
   },
   "SKL.1": {
    "mode": "script",
@@ -1633,6 +1633,20 @@
    "wave": "w7",
    "check": "check_skeleton",
    "threshold": "component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect"
+  },
+  "ST.1": {
+   "check": "check_style_licence",
+   "mode": "script",
+   "threshold": "licence cluster must exist in style-profiles.json; canon_flag/invariant-waive/contradicting licence = hard fail",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "ST.2": {
+   "check": "check_style_licence",
+   "mode": "script",
+   "threshold": "every licensed cluster recorded in DNA.md/DNA.json style_licences",
+   "tier": "invariant",
+   "wave": "w5"
   }
  }
 }

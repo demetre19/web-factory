@@ -182,11 +182,13 @@ closed set.
 | M.11 | Property budget | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
 | M.12 | Loop licensing | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
 | M.13 | Reduced-motion parity | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
-| M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | animation JS ≤4KB and no animation library unless licensed in DESIGN-PLAN | w7 |
+| M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | tamdoma-way default: pure CSS + CSS-animated SVG + minimal vanilla JS ≤4KB; GSAP is the ONLY licensable library — needs DESIGN-PLAN licence object {name:'gsap', justification:'why CSS cannot do this'} AND motion.engine=gsap; all other libraries (lenis/anime/lottie/scrollmagic/…) banned outright | w7 |
 | SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
 | SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
 | REF.2 | Candidate sources | invariant | script | `check_candidate_review` | pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted | w1 |
 | REF.3 | Layered canon | invariant | script | `check_canon_trace` | look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source | w1 |
 | SKL.3 | Component-tier endorsement (component-reference sources) | stylistic | script | `check_skeleton` | component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect | w7 |
+| ST.1 |  | invariant | script | `check_style_licence` | licence cluster must exist in style-profiles.json; canon_flag/invariant-waive/contradicting licence = hard fail | w5 |
+| ST.2 |  | invariant | script | `check_style_licence` | every licensed cluster recorded in DNA.md/DNA.json style_licences | w5 |
 
-179 rules — script 148, reviewer 30, operator 1; invariant 52, structural 50, stylistic 77.
+181 rules — script 150, reviewer 30, operator 1; invariant 54, structural 50, stylistic 77.

@@ -148,7 +148,8 @@
    "rules": [
     "C.2",
     "C.3"
-   ]
+   ],
+   "unit": "luminance-difference fraction (OKLCH L between surface and bg); incommensurable with C.1 ratio floor \u2014 see COLOUR-RULES \u00a74 #4"
   },
   "color.accent_usage": {
    "token": "color.accent_usage",
@@ -189,7 +190,8 @@
    "rules": [
     "S.6",
     "S.7"
-   ]
+   ],
+   "acss_baseline": "--box-shadow-{1,2,3} rungs (0=flat); S.7 couples radius at each rung"
   },
   "motion.level": {
    "token": "motion.level",
@@ -221,7 +223,78 @@
    "rules": [
     "V.5"
    ]
+  },
+  "motion.engine": {
+   "token": "motion.engine",
+   "kind": "enum",
+   "allowed": [
+    "css",
+    "gsap"
+   ],
+   "tier": "structural",
+   "rules": [
+    "M.14"
+   ],
+   "default": "css",
+   "note": "tamdoma-way: css is the default; gsap requires a DESIGN-PLAN licence + written impossibility justification (M.14). No other library is licensable."
+  },
+  "btn.padding_ratio": {
+   "token": "btn.padding_ratio",
+   "kind": "number",
+   "range": [
+    1.0,
+    3.0
+   ],
+   "step": 0.25,
+   "default": 2.0,
+   "tier": "stylistic",
+   "rules": [
+    "A.3"
+   ],
+   "acss_baseline": "--btn-padding-block 0.75em / --btn-padding-inline 1.5em (ratio 2.0)",
+   "note": "inline/block padding ratio on buttons; component profiles bind the rendered ratio"
+  },
+  "btn.size": {
+   "token": "btn.size",
+   "kind": "enum",
+   "allowed": [
+    "xs",
+    "s",
+    "m",
+    "l",
+    "xl",
+    "xxl"
+   ],
+   "default": "m",
+   "tier": "stylistic",
+   "rules": [
+    "A.3"
+   ],
+   "acss_baseline": ".btn--{xs,s,m,l,xl,xxl} \u2192 --btn-font-size = --text-{xs\u2026xxl}"
+  },
+  "width.inner_rung": {
+   "token": "width.inner_rung",
+   "kind": "enum",
+   "allowed": [
+    "10",
+    "20",
+    "30",
+    "40",
+    "50",
+    "60",
+    "70",
+    "80",
+    "90",
+    "full"
+   ],
+   "default": "full",
+   "tier": "structural",
+   "rules": [
+    "L.11",
+    "R.8"
+   ],
+   "acss_baseline": "--width-{10..90,full} = calc(--content-width \u00d7 rung); off-rung literals fail"
   }
  },
- "acss_baseline": "ACSS-BASELINE.md \u2014 DNA v0 defaults; canon overrides where they conflict; px spacing must be a G.1 step or a named ACSS tier"
+ "acss_baseline": "ACSS-BASELINE.md + patterns/data/acss-tokens.json \u2014 430-token verbatim ladder (shade scales, btn/card/icon/divider/width/grid/chrome/focus/transition families)"
 }

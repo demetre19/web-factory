@@ -270,6 +270,8 @@ KNOBS = {
     "color.surface_contrast": 0.05, "color.accent_usage": "cta+motif",
     "color.neutral_tint": 0.03, "elevation.level": 1,
     "motion.level": "subtle", "image.treatment": "natural",
+    "motion.engine": "css", "btn.padding_ratio": 2.0, "btn.size": "m",
+    "width.inner_rung": 60,
 }
 
 LIGHT = {"bg": "#FDFCFA", "surface": "#F1EFEC", "surface_elevated": "#EBE7E1",

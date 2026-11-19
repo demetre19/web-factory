@@ -710,6 +710,11 @@
    "type": "rules",
    "file": "rules/R.md"
   },
+  "rules-STYLE": {
+   "id": "rules-STYLE",
+   "type": "rulebook",
+   "file": "rules/STYLE.md"
+  },
   "rules-S": {
    "id": "rules-S",
    "type": "rules",
@@ -1530,6 +1535,16 @@
    "type": "rule",
    "file": "rules/R.md"
   },
+  "ST.1": {
+   "id": "ST.1",
+   "type": "rule",
+   "file": "rules/STYLE.md"
+  },
+  "ST.2": {
+   "id": "ST.2",
+   "type": "rule",
+   "file": "rules/STYLE.md"
+  },
   "S.1": {
    "id": "S.1",
    "type": "rule",
@@ -2243,6 +2258,10 @@
    "id": "check_candidate_review",
    "type": "check"
   },
+  "check_style_licence": {
+   "id": "check_style_licence",
+   "type": "check"
+  },
   "w0": {
    "id": "w0",
    "type": "wave"
@@ -2453,6 +2472,11 @@
    "type": "motion-recipe",
    "file": "templates/motion/backdrop-loops/recipe.md"
   },
+  "recipe-blob-morph": {
+   "id": "recipe-blob-morph",
+   "type": "motion-recipe",
+   "file": "templates/motion/blob-morph/recipe.md"
+  },
   "recipe-blur-reveal": {
    "id": "recipe-blur-reveal",
    "type": "motion-recipe",
@@ -2462,6 +2486,11 @@
    "id": "recipe-clip-conveyor",
    "type": "motion-recipe",
    "file": "templates/motion/clip-conveyor/recipe.md"
+  },
+  "recipe-count-up": {
+   "id": "recipe-count-up",
+   "type": "motion-recipe",
+   "file": "templates/motion/count-up/recipe.md"
   },
   "recipe-dash-ticker": {
    "id": "recipe-dash-ticker",
@@ -2477,6 +2506,16 @@
    "id": "recipe-draw-icon-loop",
    "type": "motion-recipe",
    "file": "templates/motion/draw-icon-loop/recipe.md"
+  },
+  "recipe-ken-burns": {
+   "id": "recipe-ken-burns",
+   "type": "motion-recipe",
+   "file": "templates/motion/ken-burns/recipe.md"
+  },
+  "recipe-leaf-sway": {
+   "id": "recipe-leaf-sway",
+   "type": "motion-recipe",
+   "file": "templates/motion/leaf-sway/recipe.md"
   },
   "recipe-line-mask-entrance": {
    "id": "recipe-line-mask-entrance",
@@ -2513,6 +2552,11 @@
    "type": "motion-recipe",
    "file": "templates/motion/reveal-fade/recipe.md"
   },
+  "recipe-rise-words": {
+   "id": "recipe-rise-words",
+   "type": "motion-recipe",
+   "file": "templates/motion/rise-words/recipe.md"
+  },
   "recipe-scan-sweep": {
    "id": "recipe-scan-sweep",
    "type": "motion-recipe",
@@ -2523,15 +2567,40 @@
    "type": "motion-recipe",
    "file": "templates/motion/scroll-draw/recipe.md"
   },
+  "recipe-scroll-scrub": {
+   "id": "recipe-scroll-scrub",
+   "type": "motion-recipe",
+   "file": "templates/motion/scroll-scrub/recipe.md"
+  },
+  "recipe-slide-entrance": {
+   "id": "recipe-slide-entrance",
+   "type": "motion-recipe",
+   "file": "templates/motion/slide-entrance/recipe.md"
+  },
   "recipe-snap-arrange": {
    "id": "recipe-snap-arrange",
    "type": "motion-recipe",
    "file": "templates/motion/snap-arrange/recipe.md"
   },
+  "recipe-snap-carousel": {
+   "id": "recipe-snap-carousel",
+   "type": "motion-recipe",
+   "file": "templates/motion/snap-carousel/recipe.md"
+  },
   "recipe-stamp-check": {
    "id": "recipe-stamp-check",
    "type": "motion-recipe",
    "file": "templates/motion/stamp-check/recipe.md"
+  },
+  "recipe-story-vine": {
+   "id": "recipe-story-vine",
+   "type": "motion-recipe",
+   "file": "templates/motion/story-vine/recipe.md"
+  },
+  "recipe-window-clip": {
+   "id": "recipe-window-clip",
+   "type": "motion-recipe",
+   "file": "templates/motion/window-clip/recipe.md"
   },
   "recipe-word-cycler": {
    "id": "recipe-word-cycler",
@@ -2542,6 +2611,11 @@
    "id": "recipe-write-lines",
    "type": "motion-recipe",
    "file": "templates/motion/write-lines/recipe.md"
+  },
+  "skeleton-brixies": {
+   "id": "skeleton-brixies",
+   "type": "skeleton-source",
+   "file": "templates/skeletons/brixies"
   },
   "skeleton-hyperui": {
    "id": "skeleton-hyperui",
@@ -13545,6 +13619,31 @@
    "type": "used_in"
   },
   {
+   "from": "rules-STYLE",
+   "to": "design-index",
+   "type": "index"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "rules-S",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "rules-DM",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "section-catalog",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "w5",
+   "type": "used_in"
+  },
+  {
    "from": "rules-S",
    "to": "w2",
    "type": "used_in"
@@ -17826,6 +17925,21 @@
   },
   {
    "from": "design-index",
+   "to": "rules-STYLE",
+   "type": "rules"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "ST.1",
+   "type": "contains"
+  },
+  {
+   "from": "rules-STYLE",
+   "to": "ST.2",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
    "to": "rules-S",
    "type": "rules"
   },
@@ -19890,6 +20004,26 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_style_licence",
+   "to": "ST.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w5",
+   "to": "ST.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_style_licence",
+   "to": "ST.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w5",
+   "to": "ST.2",
+   "type": "enforces_at"
+  },
+  {
    "from": "design-index",
    "to": "w0",
    "type": "sequences"
@@ -19941,17 +20075,7 @@
   },
   {
    "from": "card-w7",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.6",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -19961,32 +20085,7 @@
   },
   {
    "from": "card-w7",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.3",
    "type": "loads"
   },
   {
@@ -20001,12 +20100,47 @@
   },
   {
    "from": "card-w7",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "W.7",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "V.3",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -20072,6 +20206,16 @@
   {
    "from": "w7",
    "to": "check_skeleton",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
+   "to": "check_acss_conventions",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
+   "to": "check_content_width",
    "type": "gated_by"
   },
   {
@@ -20306,117 +20450,7 @@
   },
   {
    "from": "card-w5",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
    "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.7",
    "type": "loads"
   },
   {
@@ -20426,12 +20460,12 @@
   },
   {
    "from": "card-w5",
-   "to": "R.2",
+   "to": "W.8",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "T.6",
+   "to": "G.2",
    "type": "loads"
   },
   {
@@ -20441,7 +20475,117 @@
   },
   {
    "from": "card-w5",
-   "to": "S.7",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.1",
    "type": "loads"
   },
   {
@@ -20451,7 +20595,7 @@
   },
   {
    "from": "card-w5",
-   "to": "L.11",
+   "to": "S.7",
    "type": "loads"
   },
   {
@@ -20546,6 +20690,11 @@
   },
   {
    "from": "w5",
+   "to": "check_style_licence",
+   "type": "gated_by"
+  },
+  {
+   "from": "w5",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20596,22 +20745,12 @@
   },
   {
    "from": "card-w4",
-   "to": "M.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "T.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
    "to": "S.1",
    "type": "loads"
   },
   {
    "from": "card-w4",
-   "to": "G.3",
+   "to": "T.3",
    "type": "loads"
   },
   {
@@ -20622,6 +20761,16 @@
   {
    "from": "card-w4",
    "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "M.1",
    "type": "loads"
   },
   {
@@ -20676,6 +20825,11 @@
   },
   {
    "from": "w4",
+   "to": "check_receipts",
+   "type": "gated_by"
+  },
+  {
+   "from": "w4",
    "to": "check_intent_deviation",
    "type": "gated_by"
   },
@@ -20716,7 +20870,7 @@
   },
   {
    "from": "card-w1",
-   "to": "T.8",
+   "to": "E.4",
    "type": "loads"
   },
   {
@@ -20726,17 +20880,17 @@
   },
   {
    "from": "card-w1",
-   "to": "E.4",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "T.8",
    "type": "loads"
   },
   {
    "from": "card-w1",
    "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "PS.1",
    "type": "loads"
   },
   {
@@ -20821,22 +20975,7 @@
   },
   {
    "from": "card-w2",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
    "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "E.2",
    "type": "loads"
   },
   {
@@ -20846,12 +20985,27 @@
   },
   {
    "from": "card-w2",
-   "to": "W.7",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "E.1",
    "type": "loads"
   },
   {
    "from": "card-w2",
    "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.7",
    "type": "loads"
   },
   {
@@ -20891,22 +21045,7 @@
   },
   {
    "from": "card-w6",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.6",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -20916,12 +21055,7 @@
   },
   {
    "from": "card-w6",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "I.3",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -20931,12 +21065,17 @@
   },
   {
    "from": "card-w6",
-   "to": "M.6",
+   "to": "W.2",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "G.1",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -20946,22 +21085,37 @@
   },
   {
    "from": "card-w6",
-   "to": "C.1",
+   "to": "I.3",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "M.2",
+   "to": "S.2",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "V.3",
+   "to": "M.6",
    "type": "loads"
   },
   {
    "from": "card-w6",
    "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "C.1",
    "type": "loads"
   },
   {
@@ -21011,6 +21165,11 @@
   },
   {
    "from": "w6",
+   "to": "check_content_width",
+   "type": "gated_by"
+  },
+  {
+   "from": "w6",
    "to": "check_section_allowed",
    "type": "gated_by"
   },
@@ -21051,137 +21210,7 @@
   },
   {
    "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.7",
+   "to": "L.6",
    "type": "loads"
   },
   {
@@ -21191,77 +21220,27 @@
   },
   {
    "from": "card-w8",
-   "to": "V.1",
+   "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.0",
+   "to": "G.2",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.10",
+   "to": "M.5",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "C.4",
+   "to": "M.3",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.7",
+   "to": "V.0",
    "type": "loads"
   },
   {
@@ -21271,27 +21250,37 @@
   },
   {
    "from": "card-w8",
-   "to": "V.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "T.1",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.5",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.7",
    "type": "loads"
   },
   {
@@ -21301,12 +21290,182 @@
   },
   {
    "from": "card-w8",
-   "to": "L.4",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.5",
    "type": "loads"
   },
   {
    "from": "card-w8",
    "to": "L.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.9",
    "type": "loads"
   },
   {
@@ -21366,12 +21525,7 @@
   },
   {
    "from": "card-w3",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.2",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -21381,22 +21535,27 @@
   },
   {
    "from": "card-w3",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
    "to": "L.7",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "V.3",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "R.3",
    "type": "loads"
   },
   {
    "from": "card-w3",
    "to": "L.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "E.1",
    "type": "loads"
   },
   {
@@ -21417,6 +21576,11 @@
   {
    "from": "w3",
    "to": "check_mobbin_refs",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_content_inventory",
    "type": "gated_by"
   },
   {
@@ -21506,6 +21670,11 @@
   },
   {
    "from": "w3",
+   "to": "check_receipts",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
    "to": "check_round_gated",
    "type": "gated_by"
   },
@@ -21546,6 +21715,16 @@
   },
   {
    "from": "design-index",
+   "to": "recipe-blob-morph",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-blob-morph",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
    "to": "recipe-blur-reveal",
    "type": "templates"
   },
@@ -21561,6 +21740,16 @@
   },
   {
    "from": "recipe-clip-conveyor",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-count-up",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-count-up",
    "to": "motion-taxonomy",
    "type": "consumes"
   },
@@ -21591,6 +21780,26 @@
   },
   {
    "from": "recipe-draw-icon-loop",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-ken-burns",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-ken-burns",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-leaf-sway",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-leaf-sway",
    "to": "motion-taxonomy",
    "type": "consumes"
   },
@@ -21666,6 +21875,16 @@
   },
   {
    "from": "design-index",
+   "to": "recipe-rise-words",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-rise-words",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
    "to": "recipe-scan-sweep",
    "type": "templates"
   },
@@ -21686,6 +21905,26 @@
   },
   {
    "from": "design-index",
+   "to": "recipe-scroll-scrub",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-scroll-scrub",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-slide-entrance",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-slide-entrance",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
    "to": "recipe-snap-arrange",
    "type": "templates"
   },
@@ -21696,11 +21935,41 @@
   },
   {
    "from": "design-index",
+   "to": "recipe-snap-carousel",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-snap-carousel",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
    "to": "recipe-stamp-check",
    "type": "templates"
   },
   {
    "from": "recipe-stamp-check",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-story-vine",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-story-vine",
+   "to": "motion-taxonomy",
+   "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "recipe-window-clip",
+   "type": "templates"
+  },
+  {
+   "from": "recipe-window-clip",
    "to": "motion-taxonomy",
    "type": "consumes"
   },
@@ -21723,6 +21992,16 @@
    "from": "recipe-write-lines",
    "to": "motion-taxonomy",
    "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "skeleton-brixies",
+   "type": "templates"
+  },
+  {
+   "from": "section-catalog",
+   "to": "skeleton-brixies",
+   "type": "see_also"
   },
   {
    "from": "design-index",

@@ -21,6 +21,11 @@ a11y attributes, responsive grid/flex shapes — and nothing else.
   composition, never decides it.
 - Skeleton provenance is recorded as `data-skeleton="<harvest id>"` on
   the rendered section or `skeleton:` on the plan row.
+- Sources: `skeleton-hyperui` (MIT harvest), `skeleton-shadcn`
+  (component-reference tier, SKL.3), `skeleton-brixies` (brixies.co
+  harvest — structure-only; harvest id
+  `brixies/<category>/<block_name>`, e.g.
+  `brixies/accordions/accordion-1`).
 
 ### SKL.1 Structure-only adoption — no raw visual utilities
 

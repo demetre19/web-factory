@@ -1131,6 +1131,16 @@
 - ← check_skeleton [enforces]
 - ← w7 [enforces_at]
 
+## ST.1 (rule)
+- ← rules-STYLE [contains]
+- ← check_style_licence [enforces]
+- ← w5 [enforces_at]
+
+## ST.2 (rule)
+- ← rules-STYLE [contains]
+- ← check_style_licence [enforces]
+- ← w5 [enforces_at]
+
 ## T.0 (rule)
 - → type-restraint [scored_by]
 - ← rules-T [contains]
@@ -1623,166 +1633,166 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → T.8 [loads]
-- → E.1 [loads]
 - → E.4 [loads]
-- → V.6 [loads]
+- → E.1 [loads]
 - → PS.1 [loads]
+- → T.8 [loads]
+- → V.6 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
-- → E.1 [loads]
-- → W.2 [loads]
 - → W.10 [loads]
-- → E.2 [loads]
 - → W.8 [loads]
-- → W.7 [loads]
+- → E.2 [loads]
+- → W.2 [loads]
+- → E.1 [loads]
 - → W.6 [loads]
+- → W.7 [loads]
 - → W.1 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → E.1 [loads]
-- → W.2 [loads]
-- → E.2 [loads]
-- → R.3 [loads]
-- → L.7 [loads]
 - → V.3 [loads]
+- → E.2 [loads]
+- → L.7 [loads]
+- → W.2 [loads]
+- → R.3 [loads]
 - → L.1 [loads]
+- → E.1 [loads]
 - → W.4 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
-- → M.1 [loads]
-- → T.3 [loads]
 - → S.1 [loads]
-- → G.3 [loads]
+- → T.3 [loads]
 - → C.5 [loads]
 - → C.2 [loads]
+- → G.3 [loads]
+- → M.1 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
 - → I.1 [loads]
-- → M.6 [loads]
-- → W.8 [loads]
-- → G.1 [loads]
-- → M.1 [loads]
-- → T.4 [loads]
-- → T.3 [loads]
-- → I.3 [loads]
-- → C.1 [loads]
-- → I.2 [loads]
-- → G.2 [loads]
-- → M.2 [loads]
-- → S.1 [loads]
-- → G.3 [loads]
-- → R.1 [loads]
 - → V.6 [loads]
-- → C.4 [loads]
-- → C.3 [loads]
-- → C.5 [loads]
-- → C.2 [loads]
-- → W.2 [loads]
-- → S.5 [loads]
-- → S.2 [loads]
-- → C.7 [loads]
 - → E.2 [loads]
-- → R.2 [loads]
-- → T.6 [loads]
+- → W.8 [loads]
+- → G.2 [loads]
 - → R.3 [loads]
-- → S.7 [loads]
-- → V.2 [loads]
+- → I.3 [loads]
+- → C.4 [loads]
+- → T.3 [loads]
+- → C.2 [loads]
+- → S.2 [loads]
+- → G.1 [loads]
+- → M.2 [loads]
+- → R.2 [loads]
+- → I.2 [loads]
+- → W.2 [loads]
+- → T.4 [loads]
+- → G.3 [loads]
+- → M.6 [loads]
+- → C.1 [loads]
 - → L.11 [loads]
+- → S.1 [loads]
+- → T.6 [loads]
+- → C.5 [loads]
+- → S.5 [loads]
+- → C.3 [loads]
+- → C.7 [loads]
+- → M.1 [loads]
+- → R.1 [loads]
+- → V.2 [loads]
+- → S.7 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → S.4 [loads]
-- → W.2 [loads]
-- → S.2 [loads]
-- → R.6 [loads]
-- → I.1 [loads]
-- → R.5 [loads]
-- → I.3 [loads]
-- → V.4 [loads]
-- → M.6 [loads]
-- → G.1 [loads]
-- → R.3 [loads]
-- → C.1 [loads]
-- → M.2 [loads]
 - → V.3 [loads]
+- → I.1 [loads]
+- → M.2 [loads]
+- → V.4 [loads]
+- → W.2 [loads]
+- → R.6 [loads]
+- → R.5 [loads]
+- → R.3 [loads]
+- → I.3 [loads]
+- → S.2 [loads]
+- → M.6 [loads]
 - → W.4 [loads]
+- → G.1 [loads]
+- → S.4 [loads]
+- → C.1 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → E.1 [loads]
-- → PS.1 [loads]
-- → R.6 [loads]
+- → V.3 [loads]
 - → R.1 [loads]
-- → E.3 [loads]
-- → V.6 [loads]
 - → E.2 [loads]
-- → R.5 [loads]
-- → M.6 [loads]
-- → R.3 [loads]
 - → L.7 [loads]
 - → PS.6 [loads]
+- → E.3 [loads]
+- → R.6 [loads]
+- → R.5 [loads]
+- → R.3 [loads]
+- → M.6 [loads]
+- → E.1 [loads]
+- → PS.1 [loads]
 - → W.7 [loads]
-- → V.3 [loads]
+- → V.6 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → L.3 [loads]
-- → R.7 [loads]
-- → W.9 [loads]
-- → V.7 [loads]
-- → I.6 [loads]
-- → S.8 [loads]
-- → M.6 [loads]
-- → T.11 [loads]
-- → T.5 [loads]
-- → L.9 [loads]
-- → V.8 [loads]
-- → W.10 [loads]
-- → V.0 [loads]
-- → I.4 [loads]
-- → T.7 [loads]
-- → G.4 [loads]
-- → M.4 [loads]
-- → M.3 [loads]
-- → M.5 [loads]
-- → C.6 [loads]
-- → G.2 [loads]
-- → M.2 [loads]
-- → T.9 [loads]
-- → W.6 [loads]
-- → W.1 [loads]
-- → S.6 [loads]
-- → I.7 [loads]
-- → V.6 [loads]
-- → V.1 [loads]
-- → T.0 [loads]
-- → T.10 [loads]
-- → C.4 [loads]
-- → C.3 [loads]
-- → M.8 [loads]
 - → L.6 [loads]
-- → S.4 [loads]
-- → W.5 [loads]
-- → S.3 [loads]
-- → S.5 [loads]
-- → W.3 [loads]
-- → R.4 [loads]
-- → E.3 [loads]
-- → C.7 [loads]
-- → R.5 [loads]
-- → V.4 [loads]
+- → V.6 [loads]
 - → E.2 [loads]
-- → S.7 [loads]
+- → G.2 [loads]
+- → M.5 [loads]
+- → M.3 [loads]
+- → V.0 [loads]
+- → R.5 [loads]
 - → T.1 [loads]
-- → V.5 [loads]
+- → W.5 [loads]
+- → W.3 [loads]
+- → C.4 [loads]
+- → I.7 [loads]
+- → L.9 [loads]
+- → R.7 [loads]
 - → W.7 [loads]
-- → L.4 [loads]
+- → S.4 [loads]
+- → T.5 [loads]
+- → V.1 [loads]
+- → V.8 [loads]
+- → T.7 [loads]
+- → C.6 [loads]
+- → S.6 [loads]
+- → M.4 [loads]
+- → I.4 [loads]
+- → R.4 [loads]
+- → V.5 [loads]
 - → L.5 [loads]
+- → W.10 [loads]
+- → L.3 [loads]
+- → T.11 [loads]
+- → M.2 [loads]
+- → V.7 [loads]
+- → E.3 [loads]
+- → I.6 [loads]
+- → M.6 [loads]
+- → T.10 [loads]
+- → W.6 [loads]
+- → M.8 [loads]
+- → S.8 [loads]
+- → L.4 [loads]
+- → V.4 [loads]
+- → W.9 [loads]
+- → S.5 [loads]
+- → T.0 [loads]
+- → C.3 [loads]
+- → C.7 [loads]
+- → S.3 [loads]
+- → G.4 [loads]
+- → W.1 [loads]
+- → S.7 [loads]
+- → T.9 [loads]
 - ← w8 [has_card]
 
 ## check_accent_surfaces (check)
@@ -1791,6 +1801,7 @@
 
 ## check_acss_conventions (check)
 - → A.1 [enforces]
+- ← w7 [gated_by]
 - ← w6 [gated_by]
 
 ## check_assembly (check)
@@ -1873,10 +1884,13 @@
 
 ## check_content_inventory (check)
 - ← w2 [gated_by]
+- ← w3 [gated_by]
 
 ## check_content_width (check)
 - → L.11 [enforces]
+- ← w7 [gated_by]
 - ← w5 [gated_by]
+- ← w6 [gated_by]
 
 ## check_contrast (check)
 - → C.1 [enforces]
@@ -2203,6 +2217,8 @@
 ## check_receipts (check)
 - → P.17 [enforces]
 - ← w7 [gated_by]
+- ← w4 [gated_by]
+- ← w3 [gated_by]
 
 ## check_reduced_motion (check)
 - → M.6 [enforces]
@@ -2523,6 +2539,11 @@
 ## check_sticky_offset (check)
 - → R.11 [enforces]
 - ← w7 [gated_by]
+
+## check_style_licence (check)
+- → ST.1 [enforces]
+- → ST.2 [enforces]
+- ← w5 [gated_by]
 
 ## check_style_review (check)
 - → B.5 [enforces]
@@ -3225,6 +3246,7 @@
 - → rules-V [rules]
 - → rules-SKL [rules]
 - → rules-R [rules]
+- → rules-STYLE [rules]
 - → rules-S [rules]
 - → rules-VG [rules]
 - → rules-SB [rules]
@@ -3244,11 +3266,15 @@
 - → w8 [sequences]
 - → recipe-axis-grow [templates]
 - → recipe-backdrop-loops [templates]
+- → recipe-blob-morph [templates]
 - → recipe-blur-reveal [templates]
 - → recipe-clip-conveyor [templates]
+- → recipe-count-up [templates]
 - → recipe-dash-ticker [templates]
 - → recipe-draw-icon [templates]
 - → recipe-draw-icon-loop [templates]
+- → recipe-ken-burns [templates]
+- → recipe-leaf-sway [templates]
 - → recipe-line-mask-entrance [templates]
 - → recipe-menu-cascade [templates]
 - → recipe-module-stack [templates]
@@ -3256,12 +3282,19 @@
 - → recipe-progress-rig [templates]
 - → recipe-radar-pulse [templates]
 - → recipe-reveal-fade [templates]
+- → recipe-rise-words [templates]
 - → recipe-scan-sweep [templates]
 - → recipe-scroll-draw [templates]
+- → recipe-scroll-scrub [templates]
+- → recipe-slide-entrance [templates]
 - → recipe-snap-arrange [templates]
+- → recipe-snap-carousel [templates]
 - → recipe-stamp-check [templates]
+- → recipe-story-vine [templates]
+- → recipe-window-clip [templates]
 - → recipe-word-cycler [templates]
 - → recipe-write-lines [templates]
+- → skeleton-brixies [templates]
 - → skeleton-hyperui [templates]
 - → skeleton-shadcn [templates]
 - → template-wireframe-cards [templates]
@@ -3305,6 +3338,7 @@
 - ← rules-REF [index]
 - ← rules-B [index]
 - ← rules-SKL [index]
+- ← rules-STYLE [index]
 - ← rules-VG [index]
 - ← rules-SB [index]
 - ← rules-DNA [index]
@@ -4396,11 +4430,15 @@
 - ← motion-classifier [uses]
 - ← recipe-axis-grow [consumes]
 - ← recipe-backdrop-loops [consumes]
+- ← recipe-blob-morph [consumes]
 - ← recipe-blur-reveal [consumes]
 - ← recipe-clip-conveyor [consumes]
+- ← recipe-count-up [consumes]
 - ← recipe-dash-ticker [consumes]
 - ← recipe-draw-icon [consumes]
 - ← recipe-draw-icon-loop [consumes]
+- ← recipe-ken-burns [consumes]
+- ← recipe-leaf-sway [consumes]
 - ← recipe-line-mask-entrance [consumes]
 - ← recipe-menu-cascade [consumes]
 - ← recipe-module-stack [consumes]
@@ -4408,10 +4446,16 @@
 - ← recipe-progress-rig [consumes]
 - ← recipe-radar-pulse [consumes]
 - ← recipe-reveal-fade [consumes]
+- ← recipe-rise-words [consumes]
 - ← recipe-scan-sweep [consumes]
 - ← recipe-scroll-draw [consumes]
+- ← recipe-scroll-scrub [consumes]
+- ← recipe-slide-entrance [consumes]
 - ← recipe-snap-arrange [consumes]
+- ← recipe-snap-carousel [consumes]
 - ← recipe-stamp-check [consumes]
+- ← recipe-story-vine [consumes]
+- ← recipe-window-clip [consumes]
 - ← recipe-word-cycler [consumes]
 - ← recipe-write-lines [consumes]
 
@@ -7266,6 +7310,10 @@
 - ← design-index [contains]
 - ← design-index [templates]
 
+## recipe-blob-morph (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
 ## recipe-blur-reveal (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
@@ -7274,6 +7322,10 @@
 ## recipe-clip-conveyor (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
+- ← design-index [templates]
+
+## recipe-count-up (motion-recipe)
+- → motion-taxonomy [consumes]
 - ← design-index [templates]
 
 ## recipe-dash-ticker (motion-recipe)
@@ -7289,6 +7341,14 @@
 ## recipe-draw-icon-loop (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
+- ← design-index [templates]
+
+## recipe-ken-burns (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
+## recipe-leaf-sway (motion-recipe)
+- → motion-taxonomy [consumes]
 - ← design-index [templates]
 
 ## recipe-line-mask-entrance (motion-recipe)
@@ -7326,6 +7386,10 @@
 - ← design-index [contains]
 - ← design-index [templates]
 
+## recipe-rise-words (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
 ## recipe-scan-sweep (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
@@ -7336,14 +7400,34 @@
 - ← design-index [contains]
 - ← design-index [templates]
 
+## recipe-scroll-scrub (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
+## recipe-slide-entrance (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
 ## recipe-snap-arrange (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
 - ← design-index [templates]
 
+## recipe-snap-carousel (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
 ## recipe-stamp-check (motion-recipe)
 - → motion-taxonomy [consumes]
 - ← design-index [contains]
+- ← design-index [templates]
+
+## recipe-story-vine (motion-recipe)
+- → motion-taxonomy [consumes]
+- ← design-index [templates]
+
+## recipe-window-clip (motion-recipe)
+- → motion-taxonomy [consumes]
 - ← design-index [templates]
 
 ## recipe-word-cycler (motion-recipe)
@@ -7435,6 +7519,7 @@
 - → DM.5 [contains]
 - → DM.6 [contains]
 - ← design-index [rules]
+- ← rules-STYLE [see_also]
 - ← design-index [rules]
 
 ## rules-DNA (rules)
@@ -7686,6 +7771,7 @@
 - → S.9 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
+- ← rules-STYLE [see_also]
 - ← rules-DNA [depends_on]
 - ← design-index [rules]
 
@@ -7723,6 +7809,16 @@
 - → SKL.3 [contains]
 - → SKL.2 [contains]
 - ← skeletons-index [see_also]
+- ← design-index [rules]
+
+## rules-STYLE (rulebook)
+- → design-index [index]
+- → rules-S [see_also]
+- → rules-DM [see_also]
+- → section-catalog [see_also]
+- → w5 [used_in]
+- → ST.1 [contains]
+- → ST.2 [contains]
 - ← design-index [rules]
 
 ## rules-T (rules)
@@ -7836,6 +7932,7 @@
 - ← rules-SB [see_also]
 
 ## section-catalog (doc)
+- → skeleton-brixies [see_also]
 - → skeleton-hyperui [see_also]
 - → skeleton-shadcn [see_also]
 - → section-catalog#split-media [contains]
@@ -7966,6 +8063,7 @@
 - ← comp-proof-band [see_also]
 - ← comp-hero-act-merge [see_also]
 - ← rules-SKL [see_also]
+- ← rules-STYLE [see_also]
 - ← rules-A [see_also]
 - ← design-index [contains]
 
@@ -8043,6 +8141,10 @@
 
 ## sizing-modes (rubric)
 - ← R.7 [scored_by]
+
+## skeleton-brixies (skeleton-source)
+- ← design-index [templates]
+- ← section-catalog [see_also]
 
 ## skeleton-hyperui (skeleton-source)
 - → skeleton-hyperui-accordions [contains]
@@ -8459,6 +8561,7 @@
 - → checklist-w3 [has_checklist]
 - → check_wireframe_tags [gated_by]
 - → check_mobbin_refs [gated_by]
+- → check_content_inventory [gated_by]
 - → check_wireframe_lock [gated_by]
 - → check_section_enums [gated_by]
 - → check_speech_acts [gated_by]
@@ -8476,6 +8579,7 @@
 - → check_canon_trace [gated_by]
 - → check_intent_deviation [gated_by]
 - → check_intent_sections [gated_by]
+- → check_receipts [gated_by]
 - → check_round_gated [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
@@ -8554,6 +8658,7 @@
 - → check_dark_mode [gated_by]
 - → check_variants [gated_by]
 - → check_canon_trace [gated_by]
+- → check_receipts [gated_by]
 - → check_intent_deviation [gated_by]
 - → check_wildcard_random [gated_by]
 - → check_round_gated_look [gated_by]
@@ -8759,6 +8864,8 @@
 - → V.6 [enforces_at]
 - → W.2 [enforces_at]
 - → W.8 [enforces_at]
+- → ST.1 [enforces_at]
+- → ST.2 [enforces_at]
 - → card-w5 [has_card]
 - → checklist-w5 [has_checklist]
 - → check_system_enums [gated_by]
@@ -8778,6 +8885,7 @@
 - → check_dark_toggle [gated_by]
 - → check_canon_trace [gated_by]
 - → check_trend_vocab [gated_by]
+- → check_style_licence [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
@@ -8970,6 +9078,7 @@
 - ← rules-L [used_in]
 - ← rules-V [used_in]
 - ← rules-R [used_in]
+- ← rules-STYLE [used_in]
 - ← rules-SB [used_in]
 - ← rules-W [used_in]
 - ← rules-DNA [used_in]
@@ -9002,6 +9111,7 @@
 - → check_icon_discipline [gated_by]
 - → check_section_shell [gated_by]
 - → check_acss_conventions [gated_by]
+- → check_content_width [gated_by]
 - → check_section_allowed [gated_by]
 - → check_section_gates [gated_by]
 - → check_exemplars [gated_by]
@@ -9115,6 +9225,8 @@
 - → check_motion_recipes [gated_by]
 - → check_motion_js_budget [gated_by]
 - → check_skeleton [gated_by]
+- → check_acss_conventions [gated_by]
+- → check_content_width [gated_by]
 - → check_mobile_budget [gated_by]
 - → check_viewport [gated_by]
 - → check_tap_size [gated_by]

@@ -119,6 +119,7 @@ W8 artefact).
 | `rules/SB.md` | Section-unit build — contracts, shell, per-section gates, glue, exemplars (SB.1–SB.6) |
 | `rules/DM.md` | DNA map — completeness, hash propagation, no untraceable values, variants, rhythm, invalidation (DM.1–DM.6) |
 | `rules/VG.md` | Variant picker — knob vectors, sheet first, only passing shown, switcher, wildcard, tile facts (VG.1–VG.6) |
+| `rules/STYLE.md` | Style licences — declared-cluster lint waivers, integrity + DNA record (ST.1–ST.2) |
 
 ## Other machinery
 
