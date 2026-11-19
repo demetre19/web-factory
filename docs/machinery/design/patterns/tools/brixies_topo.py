@@ -194,19 +194,57 @@ def convert(payload):
     return vec
 
 
+def spec_card(payload, vec):
+    """<name>.spec.json companion: the browsable card next to the
+    topology vector."""
+    j = payload.get('json') or payload
+    content = j.get('content') or []
+    els = sorted({e.get('label') for e in content
+                  if e.get('label')})
+    return {
+        'id': payload.get('id'),
+        'title': payload.get('title'),
+        'type': payload.get('type'),
+        'framework': payload.get('framework'),
+        'category': payload.get('category'),
+        'topology': {
+            'topology_id': vec['topology_id'],
+            'nesting_depth': vec['nesting_depth'],
+            'direction_ratio': vec['direction_ratio'],
+            'seam_style': vec['seam_style'],
+            'column_schedule': vec['column_schedule'],
+        },
+        'elements': els,
+        'acss': {'tokens': vec['acss_tokens'],
+                 'bends': vec['acss_bends'],
+                 'on_baseline': vec['on_baseline']},
+        'labels': vec['semantic_labels'],
+    }
+
+
 def main():
     args = sys.argv[1:]
     if '--dir' in args:
         d = args[args.index('--dir') + 1]
         out = []
-        for fn in sorted(os.listdir(d)):
-            if not fn.endswith('.json'):
-                continue
-            try:
-                out.append(convert(json.load(open(
-                    os.path.join(d, fn)))))
-            except Exception as e:
-                print(f'{fn}: {e}', file=sys.stderr)
+        for root, _, files in os.walk(d):
+            for fn in sorted(files):
+                if not fn.endswith('.json') or \
+                        fn.endswith('.spec.json'):
+                    continue
+                try:
+                    pl = json.load(open(os.path.join(root, fn)))
+                    v = convert(pl)
+                    v['file'] = os.path.relpath(
+                        os.path.join(root, fn), d)
+                    out.append(v)
+                    # refresh the spec card alongside the payload
+                    card = spec_card(pl, v)
+                    sp = os.path.join(root, fn.replace(
+                        '.json', '.topo.json'))
+                    json.dump(card, open(sp, 'w'), indent=1)
+                except Exception as e:
+                    print(f'{fn}: {e}', file=sys.stderr)
         idx = os.path.join(d, '..', 'topology-sources-index.json')
         json.dump(out, open(idx, 'w'), indent=1)
         print(f'{len(out)} payloads -> {idx}')
