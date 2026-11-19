@@ -1179,6 +1179,10 @@ MUT = {
  'check_card_contract': mut(('REPL','site/dist/home/index.html',
      '<h2 class="text-fluid-0">What is testing?</h2>',
      '<a class="card" href="/x"><h2 class="text-fluid-0">What is testing?</h2></a>')),
+ 'check_trend_vocab': mut(('REPL','DNA.json',
+     '"variants": [',
+     '"trend": [{"trend": "retro-max", "confidence": 0.9, '
+     '"evidence": "x"}], "variants": [')),
  'check_component_profile': mut(('REPL','site/dist/home/index.html',
      'data-comp="cards-n"','data-comp="bogus-comp"')),
  'check_dead_columns': mut(('REPL','site/dist/home/index.html',

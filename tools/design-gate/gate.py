@@ -1910,6 +1910,36 @@ def _canon_ref_ok(ref, endorsed=None):
         return True
     if r.startswith(('http://', 'https://')):
         return True
+    # operator-direct captures live as dir slugs under data/operator/;
+    # endorsed-source file slugs (eleken-*, semrush-*, details-so,
+    # siteinspire-*) and any id recorded in operator_sites.json count
+    # as canon ids
+    op_root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator')
+    if r.startswith('https-'):
+        if os.path.isdir(os.path.join(op_root, r)):
+            return True
+        r2 = r[6:].replace('-', '.')
+        for e in (_endorsed_sites() if endorsed is None else
+                  endorsed):
+            if r2 == e.split('/')[0] or r2 in e:
+                return True
+        return False
+    src_root = os.path.join(op_root, '_sources')
+    if os.path.isdir(src_root) and any(
+            fn[:-5] == r for fn in os.listdir(src_root)
+            if fn.endswith('.json')):
+        return True
+    ops = os.path.join(DESIGN_DIR, 'patterns', 'data',
+                       'operator_sites.json')
+    if os.path.isfile(ops):
+        try:
+            for row in json.load(open(ops)):
+                if str(row) == r or (isinstance(row, dict)
+                                     and str(row.get('id') or
+                                         row.get('slug') or '') == r):
+                    return True
+        except Exception:
+            pass
     if endorsed is None:
         if _ENDORSED is None:
             _ENDORSED = _endorsed_sites()
@@ -2909,6 +2939,51 @@ def check_card_contract(ctx):
                 f.append(f'A.2 {name}: whole card wrapped in <a> — '
                          'link the heading + ::before inset:0 hit '
                          'area on position:relative')
+    return f
+
+
+def check_trend_vocab(ctx):
+    """DM/DNA — `trend` fields validate against the closed
+    patterns/data/trends.json vocab + year (PatternMiner's TREND
+    schema: label list + dated flag; trend_year must match)."""
+    tj = os.path.join(DESIGN_DIR, 'patterns', 'data', 'trends.json')
+    if not os.path.isfile(tj):
+        return []
+    try:
+        spec = json.load(open(tj))
+    except Exception:
+        return []
+    vocab = set((spec.get('trends') or {}).keys()) | {'dated', 'none'}
+    year = spec.get('year')
+    f = []
+    for holder, obj in (('DNA.json', dna_map(ctx) or {}),
+                        ('plan', ctx.plan or {})):
+        for k, obj2 in ((k, obj.get(k)) for k in
+                        ('dna', 'site', 'design') if obj.get(k)):
+            if isinstance(obj2, dict):
+                for kk in ('trend', 'trend_year'):
+                    if kk in obj2:
+                        obj = {**obj, kk: obj2[kk]}
+        tr = obj.get('trend')
+        if tr:
+            vals = tr if isinstance(tr, list) else [tr]
+            for v in vals:
+                lab = (v.get('trend') if isinstance(v, dict)
+                       else str(v)).lower()
+                if lab not in vocab:
+                    f.append(f'{holder}: trend "{lab}" ∉ '
+                             f'trends.json {sorted(vocab)[:4]}… '
+                             '(closed multi-label vocab)')
+                if isinstance(v, dict):
+                    for req in ('confidence', 'evidence'):
+                        if v.get(req) in (None, ''):
+                            f.append(f'{holder}: trend {lab} missing '
+                                     f'"{req}"')
+        ty = obj.get('trend_year')
+        if ty and year and int(ty) != int(year):
+            f.append(f'{holder}: trend_year {ty} ≠ trends.json year '
+                     f'{year} — trends are stamped to their corpus '
+                     'year')
     return f
 
 
@@ -7633,7 +7708,8 @@ WAVE_CHECKS = {
     'w0': [check_scaffold],
     'w1': [check_mobbin_auth, check_design_mode, check_intent,
            check_genotype, check_tiers, check_audit_artifacts,
-           check_mobbin_refs, check_image_discovery, check_canon_trace],
+           check_mobbin_refs, check_image_discovery, check_canon_trace,
+           check_trend_vocab],
     'w2': [check_content_inventory],
     'w3': [check_wireframe_tags, check_mobbin_refs,
            check_wireframe_lock, check_section_enums,
@@ -7655,7 +7731,7 @@ WAVE_CHECKS = {
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
            check_border_widths, check_reduced_motion, check_dark_mode,
-           check_dark_toggle, check_canon_trace],
+           check_dark_toggle, check_canon_trace, check_trend_vocab],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
