@@ -50,7 +50,7 @@ edit touches.
   "version": 1,
   "hash": "<sha256 of canonical JSON minus this field>",
   "site": "whistleclean",
-  "vertical_profile": "profile-services/local-service",
+  "vertical_profile": "profile-services",
   "genotype": { "<gene>": "<allele>" },
   "knobs": {
     "type.ratio": 1.25, "type.base": 17, "type.display_weight": 700,

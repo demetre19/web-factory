@@ -27,30 +27,29 @@ FAIL, not a default.
 
 ```json
 {
-  "schema": "design-dna-map/v1",
-  "version": 0,
+  "version": 1,
   "site": "<slug>",
-  "vertical_profile": "profile-<vertical>   # from dna/<vertical>",
-  "genotype": { "<gene>": "<allele>", "…": "every gene in dna/GENOME.md" },
-  "knobs": { "<knob id from knobs.json>": "<value in range>", "…": "all" },
-  "tokens": { "type.ratio": "var(--type-ratio)", "…": "knob → CSS token" },
-  "rhythm": { "surfaces": ["base", "muted", "inverse", "…"],
-              "densities": ["compact", "regular", "spacious", "…"],
-              "contrast_moment": "<section>",
-              "motif": "<device>", "motif_break": "<section>" },
-  "modes": { "light": {"bg": "#…", "…": "every C.5 role"},
-             "dark":  {"bg": "#…", "…": "every C.5 role"} },
-  "modes_required": ["light", "dark"],
+  "vertical_profile": "profile-<vertical>",
+  "genotype": { "<gene>": "<allele>" },
+  "knobs": { "<knob id from knobs.json>": "<value in range>" },
+  "modes": { "light": {"<role>": "#…"}, "dark": {"<role>": "#…"} },
+  "rhythm": [ { "section": "<name>", "surface": "base",
+                "density": "compact" } ],
+  "variants": [ { "id": "v1", "vector": "<name>", "deltas": {},
+                  "baseline": true } ],
   "vector_targets": { "<vector>": 0 },
-  "invariants": { "…": "verbatim extracted values, provenance: extracted" },
-  "constraints": { "…": "dislikes, refuses — provenance: stated" },
-  "provenance": { "<field>": "extracted|inferred|chosen|patterns" },
+  "invariants": { "…": "verbatim extracted values" },
+  "constraints": { "…": "dislikes, refuses" },
+  "provenance": { "<field>": {"tag": "extracted|snapped|inferred|chosen"} },
   "hashes": { "core": "<12hex>", "structure": "<12hex>",
-              "variants": "<12hex>" },
-  "burst": 0,
-  "wildcard": []
+              "variants": "<12hex>" }
 }
 ```
+Fields `version`, `site`, `vertical_profile`, `genotype`, `knobs`,
+`provenance`, `vector_targets`, `invariants` are required at W1;
+`modes`+`variants` at W4; `rhythm` at W5; `constraints` when
+`design_mode` ≠ `new-build`. `hashes` is recomputed by `gate.py dna`
+on every edit — a stale hash is a FAIL, not a rebuild.
 
 `vector_targets` values are 0–10 whole points. `hashes` is recomputed
 by the gate: **core** = everything minus the four structure genes;
