@@ -50,9 +50,9 @@ closed set.
 | I.8 | Icon QA | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
 | L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
-| L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1440px | w5 |
+| L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1280px | w5 |
 | L.12 | Sequential anatomy | structural | script | `check_rhythm` | promise first, act first-and-last | w3 |
-| L.13 | Layout & proximity QA | stylistic | script | `check_rhythm` | S-M-L present; 960/1440 containment; ≤1 frame-break | w3 |
+| L.13 | Layout & proximity QA | stylistic | script | `check_rhythm` | S-M-L present; 960/1280 containment; ≤1 frame-break | w3 |
 | L.2 | Gutter boundaries | stylistic | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w3 |
 | L.3 | Edges and corners | structural | script | `check_measurable` | content never jams viewport edge | w7 |
 | L.4 | Negative space | stylistic | reviewer | `negative-space-gestalt` | space assigned, not leftover | w8 |
@@ -90,14 +90,14 @@ closed set.
 | PS.4 | Media never floats context-free | invariant | script | `check_segment_media` | img w/o alt or context text in block | w7 |
 | PS.5 | Footer is boilerplate, nothing else | invariant | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
 | PS.6 | Priority order | invariant | script | `check_segment_priority` | main after chrome / aside before main | w7 |
-| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
+| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1280,1920} or max-width only | w5 |
 | R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
 | R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
 | R.4 | Copy density budgets | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |
 | R.5 | Above-fold mandate & attention decay | structural | script | `check_measurable` | five elements at 360×640 | w7 |
 | R.6 | Touch & pointer targets | invariant | script | `check_tap_size` | targets ≥44px +8px buffer | w7 |
 | R.7 | Sizing modes | stylistic | reviewer | `sizing-modes` | fill/fixed/relative correct | w8 |
-| R.8 | Responsive QA | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1440 ceiling | w5 |
+| R.8 | Responsive QA | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1280 ceiling | w5 |
 | S.1 | The four personalities | stylistic | script | `check_direction_axes` | shape ∈ p1..p4 | w4 |
 | S.2 | The radius token scale | stylistic | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w5 |
 | S.3 | Component → token assignment | stylistic | script | `check_measurable` | component→token assignment consistent | w7 |
@@ -177,5 +177,11 @@ closed set.
 | A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w7 |
 | A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w7 |
 | A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w7 |
+| M.9 |  | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
+| M.10 |  | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
+| M.11 |  | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
+| M.12 |  | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
+| M.13 |  | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
+| M.14 |  | structural | script | `check_motion_js_budget` | animation JS ≤4KB and no animation library unless licensed in DESIGN-PLAN | w7 |
 
-168 rules — script 137, reviewer 30, operator 1; invariant 50, structural 44, stylistic 74.
+174 rules — script 143, reviewer 30, operator 1; invariant 50, structural 48, stylistic 76.

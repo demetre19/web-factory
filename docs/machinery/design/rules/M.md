@@ -135,6 +135,44 @@ fallback.
 - View transitions use **matching layer names** between the outgoing
   and incoming tree — mismatched names break the morph.
 
+### M.9 Recipe membership — every animation is registered
+
+Every `@keyframes`/`animation-name` in the built CSS maps to a recipe id
+in `templates/motion/*/recipe.md`, or is recorded as a declared
+`motion_deviation` (name + reason) on the plan. Unregistered motion is a
+defect — never improvised.
+
+### M.10 No dead keyframes
+
+Every `animation-name` resolves to a defined `@keyframes`. A dead name
+(the tamdoma `drift` class) is a defect, not a harmless leftover.
+
+### M.11 Property budget — compositor only, licensed risk
+
+Animated properties ⊆ {transform, opacity, stroke-dasharray,
+stroke-dashoffset, fill-opacity, color}. `filter`, `clip-path`, and
+layout properties animate only inside a recipe carrying
+`budget: layout-risk` (e.g. `recipe-blur-reveal`) or a declared
+deviation.
+
+### M.12 Loop licensing
+
+Continuous loops ⊆ the licensed loop set: ambient backdrops, status
+pulses, iconography loops, word cyclers (recipes with
+`loop_type: infinite|phased|palindrome`). Everything else is one-shot.
+
+### M.13 Reduced-motion parity
+
+Built CSS ships a `prefers-reduced-motion` block whenever motion ships —
+150ms crossfade, spatial movement disabled (extends M.6 to the built
+artifact).
+
+### M.14 Animation JS budget
+
+Animation-related JS ≤4KB — IntersectionObserver toggles and scroll
+progress only. Animation libraries (gsap, anime, lottie, framer-motion)
+are defects unless the DESIGN-PLAN licenses them.
+
 ### M.8 Motion QA — mechanical checklist
 
 Checked at DESIGN-PLAN review and build self-lint:
@@ -167,3 +205,9 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 | M.6 | structural | script | `check_reduced_motion` | prefers-reduced-motion block present | w5 |
 | M.7 | stylistic | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
 | M.8 | stylistic | script | `check_measurable` | QA: no linear spatial, ≤80px+fade | w7 |
+| M.9 | structural | script | `check_motion_recipes` | keyframes maps to recipe or declared deviation | w7 |
+| M.10 | structural | script | `check_motion_recipes` | animation-name resolves to defined @keyframes | w7 |
+| M.11 | stylistic | script | `check_motion_recipes` | animated props in compositor set (or layout-risk license) | w7 |
+| M.12 | stylistic | script | `check_motion_recipes` | loops ⊆ licensed loop recipes | w7 |
+| M.13 | structural | script | `check_motion_recipes` | prefers-reduced-motion ships with motion | w7 |
+| M.14 | structural | script | `check_motion_js_budget` | animation JS ≤4KB, no unlicensed library | w7 |

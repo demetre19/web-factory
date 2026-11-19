@@ -2143,22 +2143,58 @@ def check_wildcard_random(ctx):
         hist = json.loads(ctx.read('WILDCARD-HISTORY.json') or '[]')
     except Exception:
         hist = []
+    # the history is an append-only hashed chain the pipeline keeps:
+    # each entry binds {round, genes, seed} to the previous entry's hash
+    import hashlib as _hl
+    prev_h = 'genesis'
+    last_round = 0
     last_genes = set()
-    for h in hist[-1:]:
-        last_genes |= set(h.get('genes') or [])
     image_sole_prev = False
-    for h in hist[-1:]:
-        if set(h.get('genes') or []) == {'image.treatment'}:
-            image_sole_prev = True
+    for i, h in enumerate(hist):
+        genes_h = sorted(str(g) for g in (h.get('genes') or []))
+        rec = {'round': h.get('round'), 'genes': genes_h,
+               'seed': h.get('seed'), 'prev': h.get('prev')}
+        want = _hl.sha256(json.dumps(rec, sort_keys=True,
+                                     separators=(',', ':')).encode()
+                          ).hexdigest()
+        if h.get('prev') != prev_h or h.get('hash') != want:
+            f.append(f'B.7 history entry {i} breaks the hash chain '
+                     '(forged or spliced — the history is '
+                     'append-only, each entry binds the last)')
+            break
+        if not isinstance(h.get('round'), int) or \
+                h['round'] <= last_round:
+            f.append(f'B.7 history entry {i} round {h.get("round")} '
+                     'is not strictly increasing — append-only '
+                     'order violated')
+        prev_h = h['hash']
+        last_round = h['round']
+        last_genes = set(genes_h)
+        image_sole_prev = genes_h == ['image.treatment']
+    base_knobs = dna.get('knobs') or {}
     for v in dna.get('variants') or []:
         if str(v.get('vector')) != 'wildcard' \
                 and not v.get('wildcard_genes'):
             continue
-        genes = set(v.get('wildcard_genes') or
-                    (v.get('deltas') or {}).keys())
-        if v.get('wildcard_seed') in (None, ''):
-            f.append(f'B.7 wildcard {v.get("id")} has no wildcard_seed — '
-                     'the gene set must be RNG-chosen, not defaulted')
+        deltas = v.get('deltas') or {}
+        # mutated genes are COMPUTED from the actual diff vs baseline —
+        # a declared wildcard_genes list that disagrees is a lie
+        computed = {k for k, x in deltas.items()
+                    if str(base_knobs.get(k)) != str(x)}
+        declared = set(v.get('wildcard_genes') or [])
+        if not computed:
+            f.append(f'B.7 wildcard {v.get("id")} mutates nothing vs '
+                     'the baseline — a wildcard must change genes')
+        if declared and declared != computed:
+            f.append(f'B.7 wildcard {v.get("id")} declares genes '
+                     f'{sorted(declared)} but the actual delta touches '
+                     f'{sorted(computed)} — genes are computed from '
+                     'the diff, never declared')
+        genes = computed or declared
+        if v.get('wildcard_seed') in (None, '', 0, '0'):
+            f.append(f'B.7 wildcard {v.get("id")} has no valid '
+                     'wildcard_seed (0/empty banned — the gene set '
+                     'must be RNG-chosen, not defaulted)')
         if genes and last_genes and genes == last_genes:
             f.append(f'B.7 wildcard genes {sorted(genes)} repeat the '
                      'previous round — re-roll (seeded RNG over the '
@@ -2166,6 +2202,175 @@ def check_wildcard_random(ctx):
         if genes == {'image.treatment'} and image_sole_prev:
             f.append('B.7 image.treatment is the sole wildcard change '
                      'twice in a row — banned')
+    return f
+
+
+SAFE_ANIM_PROPS = {'transform', 'opacity', 'stroke-dasharray',
+                   'stroke-dashoffset', 'fill-opacity', 'color'}
+
+
+def _motion_registry():
+    """{recipe_id: {budget, loop, keyframes}} from
+    templates/motion/*/recipe.md + index.html."""
+    reg = {}
+    root = os.path.join(REPO, 'templates', 'motion')
+    if not os.path.isdir(root):
+        return reg
+    for d in sorted(os.listdir(root)):
+        rp = os.path.join(root, d, 'recipe.md')
+        if not os.path.isfile(rp):
+            continue
+        fm = _frontmatter(open(rp, encoding='utf-8',
+                               errors='replace').read())
+        rid = fm.get('id') or 'recipe-' + d
+        kf = set()
+        ih = os.path.join(root, d, 'index.html')
+        if os.path.isfile(ih):
+            kf = set(re.findall(r'@keyframes\s+([\w-]+)',
+                                open(ih, encoding='utf-8',
+                                     errors='replace').read()))
+        tax = fm.get('taxonomy') or {}
+        reg[rid] = {'budget': str(tax.get('budget') or ''),
+                    'loop': str(tax.get('loop_type') or 'none'),
+                    'keyframes': kf}
+    return reg
+
+
+def _motion_deviations(ctx):
+    """Declared bespoke animations: [{keyframes|name, reason, license?}]
+    from DESIGN-PLAN site.motion_deviations or top-level
+    `motion_deviations:`."""
+    site = ctx.site_block()
+    devs = site.get('motion_deviations') or ctx.plan.get(
+        'motion_deviations') or []
+    if isinstance(devs, dict):
+        devs = [devs]
+    return devs if isinstance(devs, list) else []
+
+
+def check_motion_recipes(ctx):
+    """M.9–M.13 — built motion is recipe-backed or declared: every
+    @keyframes/animation-name maps to a recipe (or declared deviation
+    with reason); animation-names resolve; animated props stay in the
+    compositor set unless the recipe is budget: layout-risk; infinite
+    loops stay inside licensed loop recipes; prefers-reduced-motion
+    ships whenever motion ships."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    css_all = ''.join(c for _, c in dist_csss(ctx))
+    if not css_all.strip():
+        return []
+    reg = _motion_registry()
+    key2rec = {}
+    for rid, spec in reg.items():
+        for k in spec['keyframes']:
+            key2rec[k] = rid
+    devs = _motion_deviations(ctx)
+    dev_names = set()
+    for d in devs:
+        for k in ('keyframes', 'name', 'animation'):
+            v = d.get(k) if isinstance(d, dict) else None
+            for x in (v if isinstance(v, list) else ([v] if v else [])):
+                dev_names.add(str(x))
+        if isinstance(d, dict) and not d.get('reason'):
+            f.append('M.9 motion_deviation without a reason — '
+                     'bespoke motion is declared, never silent')
+    defined = set(re.findall(r'@keyframes\s+([\w-]+)', css_all))
+    used = set()
+    for m in re.finditer(r'animation(?:-name)?\s*:\s*([^;}]+)',
+                         css_all):
+        for tok in m.group(1).split(','):
+            name = re.split(r'\s', tok.strip())[0]
+            if name and name != 'none' and not name.startswith(
+                    ('var(', 'initial', 'inherit')):
+                used.add(name)
+    for name in sorted(used | defined):
+        if name in used and name not in defined:
+            f.append(f'M.10 animation "{name}" resolves to no '
+                     '@keyframes — a dead animation name is a defect')
+            continue
+        if name not in key2rec and name not in dev_names:
+            f.append(f'M.9 keyframes "{name}" maps to no motion recipe '
+                     'and no declared motion_deviation — unregistered '
+                     'animation is a defect')
+    # budget: animated props stay compositor-safe unless the recipe
+    # carries a layout-risk license (e.g. blur-reveal)
+    risky = re.findall(
+        r'@keyframes\s+([\w-]+)[^{]*\{([^@]*)\}', css_all)
+    licensed_risky = {k for k, r in key2rec.items()
+                      if reg.get(r, {}).get('budget') == 'layout-risk'}
+    for name, body in risky:
+        if name in licensed_risky or name in dev_names:
+            continue
+        props = {m.group(2) for m in re.finditer(
+            r'(^|;|\{)\s*([a-z-]+)\s*:', body)}
+        bad = props - SAFE_ANIM_PROPS - {
+            'from', 'to', 'transform-origin', 'animation-timing-'
+            'function', 'offset', 'background-color'}
+        bad = {b for b in bad if b in
+               {'width', 'height', 'margin', 'margin-top',
+                'margin-bottom', 'margin-left', 'margin-right',
+                'top', 'left', 'right', 'bottom', 'padding',
+                'filter', 'clip-path', 'background',
+                'background-position'}}
+        if bad:
+            f.append(f'M.11 keyframes "{name}" animates '
+                     f'{sorted(bad)} — outside the compositor budget; '
+                     'needs a layout-risk licensed recipe or declared '
+                     'deviation')
+    # loops: infinite iterations only inside licensed loop recipes
+    licensed_loops = {k for k, r in key2rec.items()
+                      if reg.get(r, {}).get('loop') in
+                      ('infinite', 'phased', 'palindrome')}
+    for m in re.finditer(
+            r'animation[^;{]*?:\s*([^;}]+?)\s+infinite\b', css_all):
+        name = re.split(r'\s', m.group(1).strip().split(',')[0])[0]
+        if name and name not in licensed_loops                 and name not in dev_names:
+            f.append(f'M.12 "{name}" loops infinitely outside the '
+                     'licensed loop set (ambient/status/iconography/'
+                     'word-cycle) — one-shot or declare')
+    if (used or defined) and 'prefers-reduced-motion' not in css_all:
+        f.append('M.13 motion ships without a prefers-reduced-motion '
+                 'block — every animation needs a reduced fallback')
+    return f
+
+
+def check_motion_js_budget(ctx):
+    """M.14 — animation-related JS ≤4KB and no animation library
+    (gsap/anime/lottie) unless the plan licenses it."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    site = ctx.site_block()
+    lic = site.get('licensed_libraries') or ctx.plan.get(
+        'licensed_libraries') or []
+    lic = {str(x).lower() for x in
+           (lic if isinstance(lic, list) else [lic])}
+    LIBS = {'gsap', 'anime', 'lottie', 'framer-motion', 'three'}
+    anim_mark = re.compile(
+        r'animate\(|requestAnimationFrame|IntersectionObserver|'
+        r'gsap\.|anime\(|lottie|scroll-timeline', re.I)
+    dist = os.path.join(ctx.site, 'dist')
+    for dp, _, fns in os.walk(dist) if os.path.isdir(dist) else []:
+        for fn in fns:
+            if not fn.endswith(('.js', '.mjs')):
+                continue
+            p = os.path.join(dp, fn)
+            t = open(p, encoding='utf-8', errors='replace').read()
+            low = fn.lower() + t[:400].lower()
+            lib = next((l for l in LIBS if l in low), None)
+            if lib and lib not in lic:
+                f.append(f'M.14 {fn}: animation library "{lib}" '
+                         'without a DESIGN-PLAN license — animation '
+                         'libraries are defects unless explicitly '
+                         'licensed')
+            if anim_mark.search(t) and os.path.getsize(p) > 4096:
+                f.append(f'M.14 {fn}: '
+                         f'{os.path.getsize(p)}B animation-related JS '
+                         '> 4KB — IO toggles and scroll progress '
+                         'only; heavier motion logic is a library '
+                         'in disguise')
     return f
 
 
@@ -7425,7 +7630,7 @@ def build_graph():
     design = os.path.join(REPO, 'docs', 'machinery', 'design')
     for dp, _, fns in os.walk(design):
         rel_dp = os.path.relpath(dp, design).replace(os.sep, '/')
-        if 'patterns/data' in rel_dp or rel_dp.startswith('stage-'):
+        if 'patterns/data' in rel_dp or rel_dp.startswith('stage-')                 or '/sources' in rel_dp:
             continue
         for fn in fns:
             if rel_dp.startswith('dna') and fn.endswith('.json'):
@@ -7514,6 +7719,22 @@ def build_graph():
             edges.append((wv, chk_fn.__name__, 'gated_by'))
             nodes.setdefault(chk_fn.__name__,
                              {'id': chk_fn.__name__, 'type': 'check'})
+    motion_root = os.path.join(REPO, 'templates', 'motion')
+    if os.path.isdir(motion_root):
+        for d in sorted(os.listdir(motion_root)):
+            rp = os.path.join(motion_root, d, 'recipe.md')
+            if not os.path.isfile(rp):
+                continue
+            fm = _frontmatter(open(rp, encoding='utf-8',
+                                   errors='replace').read())
+            rid = fm.get('id') or 'recipe-' + d
+            nodes[rid] = {'id': rid, 'type': fm.get(
+                'type', 'motion-recipe'),
+                'file': f'templates/motion/{d}/recipe.md'}
+            edges.append(('design-index', rid, 'templates'))
+            edges.append((rid, 'motion-taxonomy', 'consumes'))
+            for wv in (fm.get('used_in') or []):
+                edges.append((rid, str(wv), 'used_in'))
     for tid, path in [('template-wireframe-cards',
                        'templates/wireframe-cards'),
                       ('template-system-tile', 'templates/system-tile'),
@@ -7833,6 +8054,7 @@ WAVE_CHECKS = {
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_speed_budget,
+           check_motion_recipes, check_motion_js_budget,
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,

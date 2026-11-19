@@ -957,6 +957,18 @@ def dna_doc():
     return doc
 
 
+def _wild_hist():
+    import hashlib as _h
+    e = {'round': 1,
+         'genes': ['color.accent_usage', 'image.treatment'],
+         'seed': 117, 'prev': 'genesis'}
+    rec = {'round': e['round'], 'genes': sorted(e['genes']),
+           'seed': e['seed'], 'prev': e['prev']}
+    e['hash'] = _h.sha256(json.dumps(
+        rec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    return json.dumps([e])
+
+
 BASE = {
     'DNA.json': json.dumps(dna_doc(), indent=1) + '\n',
     'DESIGN-PLAN.md': PLAN,
@@ -992,9 +1004,7 @@ BASE = {
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
     'site/dist/home/index.html': PAGE_HTML,
     'GATES.json': json.dumps({'artifacts': {}}),
-    'WILDCARD-HISTORY.json':
-        '[{"round":1,"genes":["color.accent_usage","image.treatment"],'
-        '"seed":117}]',
+    'WILDCARD-HISTORY.json': _wild_hist(),
     'CANON-PADDING.json': json.dumps({'components': {
         'split-media': {'vh_iqr': [0.8, 1.6], 'block_inline': [1.0, 2.0]},
         'cards-n': {'vh_iqr': [0.5, 1.2]},
@@ -1187,6 +1197,13 @@ MUT = {
      'var(--bogus-tracking')),
  'check_acss_conventions': mut(('APPEND','site/src/styles/global.css',
      '\n.x { color: rgba(0,0,0,.5); }')),
+ 'check_motion_recipes': mut(('APPEND',
+     'site/dist/home/style.css',
+     '@keyframes unregistered-spin { from { transform: rotate(0); '
+     'width: 10px; } to { transform: rotate(1turn); width: 20px; } } '
+     '.spin { animation: unregistered-spin 2s infinite; }')),
+ 'check_motion_js_budget': mut(('SET','site/dist/_astro/mo.js',
+     'gsap.to(".x",{y:9});' + 'x'*5000)),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',
      '<h2 class="text-fluid-0">What is testing?</h2>',
      '<a class="card" href="/x"><h2 class="text-fluid-0">What is testing?</h2></a>')),

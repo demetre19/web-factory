@@ -248,6 +248,16 @@
   ],
   "check_component_profile": [
    "A.3"
+  ],
+  "check_motion_recipes": [
+   "M.9",
+   "M.10",
+   "M.11",
+   "M.12",
+   "M.13"
+  ],
+  "check_motion_js_budget": [
+   "M.14"
   ]
  },
  "graph": {
@@ -1534,6 +1544,48 @@
    "threshold": "unclassified component type / missing profile",
    "tier": "invariant",
    "wave": "w7"
+  },
+  "M.9": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_motion_recipes",
+   "threshold": "every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason"
+  },
+  "M.10": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_motion_recipes",
+   "threshold": "every animation-name resolves to a defined @keyframes \u2014 dead names are defects"
+  },
+  "M.11": {
+   "mode": "script",
+   "tier": "stylistic",
+   "wave": "w7",
+   "check": "check_motion_recipes",
+   "threshold": "animated properties \u2286 {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk"
+  },
+  "M.12": {
+   "mode": "script",
+   "tier": "stylistic",
+   "wave": "w7",
+   "check": "check_motion_recipes",
+   "threshold": "continuous loops \u2286 licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot"
+  },
+  "M.13": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_motion_recipes",
+   "threshold": "built CSS carries prefers-reduced-motion when any animation exists"
+  },
+  "M.14": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_motion_js_budget",
+   "threshold": "animation JS \u22644KB and no animation library unless licensed in DESIGN-PLAN"
   }
  }
 }
