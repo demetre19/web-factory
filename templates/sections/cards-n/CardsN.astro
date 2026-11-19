@@ -1,34 +1,43 @@
 ---
 /**
- * cards-n — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * cards-n — gold exemplar (SB.5). One claim, then the same card
+ * repeated with a numeral, a title and one sentence. The numeral is
+ * the motif: it recurs, so it reads as a system.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
+  eyebrow?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; value?: string;
              label?: string; href?: string; quote?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
+  brand?: string;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], image, h1, brand,
 } = Astro.props;
+const sub = fs || body;
 ---
-
 <div>
-  {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
-  <p class="mt-stack max-w-prose text-fluid-0">{fs}</p>
-  <ul class="mt-fluid-l grid-auto gap-stack">
-    {items.map((it) => (
-      <li class="rounded-card border border-muted p-fluid-m">
-        <h3 class="text-fluid-1">{it.title}</h3>
-        <p class="mt-fluid-s text-fluid-0">{it.text}</p>
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+    {sub && <p class="lede">{sub}</p>}
+  </div>
+  <ul class="mt-sec grid-auto gap-fluid-m list-plain">
+    {items.map((it, i) => (
+      <li class="card">
+        <span class="num">{String(i + 1).padStart(2, '0')}</span>
+        <h3 class="t0 sub-h">{it.title}</h3>
+        <p class="t0 sub-p">{it.text}</p>
       </li>
     ))}
   </ul>
+  {cta && <div class="cta-row mt-sec">
+    <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+  </div>}
 </div>

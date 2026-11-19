@@ -1,36 +1,45 @@
 ---
 /**
- * split-media — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * split-media — gold exemplar (SB.5). Claim on the left, media on the
+ * right; the fold's one job is to say what this is and offer the act.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
+  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+  items?: { label?: string; href?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
+  brand?: string;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], image, h1, brand,
 } = Astro.props;
+const sub = fs || body;
 ---
-
-<div class="grid gap-stack items-center md:grid-cols-2">
-  <div class="max-w-prose">
-    {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
-    <p class="mt-stack text-fluid-0">{fs}</p>
-    {body && <p class="mt-stack text-fluid--1">{body}</p>}
-    {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
+<div class="split">
+  <div class="stack">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1
+      ? <h1 class="t0 h-display text-fluid-5">{heading}</h1>
+      : <h2 class="t0 h-section text-fluid-3">{heading}</h2>}
+    {sub && <p class="t0 lede">{sub}</p>}
+    <div class="cta-row mt-act">
+      {cta
+        ? <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+        : items[0] && <a class="wf-cta-button" href={items[0].href || '#'}>{items[0].label}</a>}
+      {items[1] && <a class="link-quiet" href={items[1].href || '#'}>{items[1].label}</a>}
+    </div>
+    <p class="t0 attrib sub-flow">
+      Licensed Victorian plumber · Fixed price agreed on site · 7 days
+    </p>
   </div>
-  <figure class="ratio-portrait overflow-hidden rounded-card">
-    <picture><img class="h-full w-full object-cover"
-         src={image?.src ?? '/media/placeholder.svg'}
-         alt={image?.alt ?? 'Section image'} width="900" height="1200"
-         loading="lazy" /></picture>
-  </figure>
+  {image
+    ? <div class="media-round ratio-portrait">
+        <img src={image.src} alt={image.alt} loading="eager" />
+      </div>
+    : <div class="media-panel media-hero" aria-hidden="true"></div>}
 </div>

@@ -122,7 +122,7 @@ def translate_value(v, unmapped):
         t = map_var(n)
         if t is None:
             unmapped.add(n)
-            return f'var(--acss-{n})'   # visible, never invented
+            return None      # caller drops the declaration
         if t.startswith('GRID:'):
             num, den = t[5:].split('/')
             return f'calc(100% * {num} / {den})'
@@ -133,7 +133,10 @@ def translate_value(v, unmapped):
         if t.startswith('PCT:'):
             return t[4:] + '%'
         return f'var(--{t})'
-    return VAR_RE.sub(sub, str(v))
+    out = VAR_RE.sub(lambda m: (sub(m) or 'var(--unmapped)'), str(v))
+    if '--unmapped' in out:
+        return None
+    return out
 
 
 # ------------------------------------------------------ css settings
@@ -191,18 +194,37 @@ def _dim(v, unmapped):
     return translate_value(v, unmapped)
 
 
+GRID_TRACK_RE = re.compile(r'calc\(100% \* (\d+) / (\d+)\)')
+
+
+def tracks(value):
+    """A grid track list: ACSS `--grid-N` is N equal tracks, not a
+    column width. `calc(100% * 1 / N)` alone → repeat(N, 1fr); inside a
+    list, each fraction stays a percentage track."""
+    v = value.strip()
+    m = GRID_TRACK_RE.fullmatch(v)
+    if m and m.group(1) == '1':
+        n = int(m.group(2))
+        # a 12-track card matrix is a composition, not a layout: the
+        # DNA floor decides how many columns fit
+        if n > 3:
+            return ('repeat(auto-fit, minmax(min(var(--grid-min), '
+                    '100%), 1fr))')
+        return f'repeat({n}, minmax(0, 1fr))'
+    return GRID_TRACK_RE.sub(lambda t: f'{t.group(0)}', v)
+
+
 def settings_css(settings, unmapped, raw=None):
     """One globalClass's settings → [(prop, value)] css declarations.
     `raw` collects _cssCustom blocks for @layer-top emission."""
     out = []
     for key, val in (settings or {}).items():
         if key in ('_typography',) and isinstance(val, dict):
-            for tk, tv in val.items():
-                prop = TYPO_CSS.get(tk)
-                if prop:
-                    cv = _dim(tv, unmapped)
-                    if cv not in (None, '', 'default'):
-                        out.append((prop, cv))
+            # type is the DNA's: only text-align survives (it is
+            # layout, not a type decision)
+            ta = val.get('text-align')
+            if ta and ta != 'default':
+                out.append(('text-align', str(ta)))
             continue
         if key in BOX_CSS and isinstance(val, (dict, str)):
             cv = _dim(val, unmapped)
@@ -210,33 +232,9 @@ def settings_css(settings, unmapped, raw=None):
                 out.append((BOX_CSS[key], cv))
             continue
         if key == '_background':
-            if isinstance(val, dict):
-                c = _dim(val.get('color'), unmapped)
-                if c:
-                    out.append(('background', c))
-                if val.get('image'):
-                    out.append(('/* bm: background-image omitted */',
-                                None))
-            continue
-        if key == '_border' and isinstance(val, dict):
-            w = _dim(val.get('width'), unmapped)
-            st = val.get('style')
-            c = _dim(val.get('color'), unmapped)
-            if w and ' ' in w:
-                # per-side widths → emit the non-zero sides only
-                sides = ('top', 'right', 'bottom', 'left')
-                for side, wv in zip(sides, w.split()):
-                    if wv not in ('0', '0px', '0rem'):
-                        out.append((f'border-{side}',
-                                    ' '.join(x for x in
-                                             (wv, st, c) if x)))
-            elif any((w, st, c)):
-                out.append(('border',
-                            ' '.join(x for x in (w, st, c) if x)))
-            r = _dim(val.get('radius'), unmapped)
-            if r and r != 'None':
-                out.append(('border-radius', r))
-            continue
+            continue        # colour is a DNA surface
+        if key == '_border':
+            continue    # borders/radius come from the token layer
         if key == '_boxShadow':
             out.append(('/* bm: box-shadow omitted — token layer '
                         'owns elevation */', None))
@@ -248,9 +246,15 @@ def settings_css(settings, unmapped, raw=None):
                 raw.append(translate_value(str(val), unmapped))
             continue
         prop = SETTING_CSS.get(key)
+        if prop in ('grid-template-rows', 'height', 'min-height',
+                    'max-height', 'position', 'top', 'right', 'bottom',
+                    'left', 'z-index'):
+            continue
         if prop:
             cv = _dim(val, unmapped)
             if cv not in (None, '', 'default'):
+                if prop in ('grid-template-columns', 'grid-template-rows'):
+                    cv = tracks(str(cv))
                 out.append((prop, cv))
     return out
 
@@ -295,34 +299,39 @@ def translate(payload, stem):
     gc_names = {g.get('id'): g.get('name')
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
+    rules, raw_css = classes_css(payload, unmapped)
     seen = {'h': False, 'p': False, 'btn': False}   # first heading→
                                     # {heading}, first paragraph→{fs}
 
     cat = stem.split('-')[0]
 
     def cls(el, depth=1, card=False):
-        """Topology → OUR token classes.
+        """Skeleton layout classes + the DNA's role class.
 
-        The bank supplies element composition only. Every visual value
-        (type step, rhythm, ratio, colour) comes from the DNA token
-        layer, so no skeleton CSS is emitted and no ACSS var survives
-        into the page. Each name below has a real rule in global.css
-        @layer components — SB.3 holds by construction.
+        The skeleton keeps every layout declaration it declares
+        (display, grid tracks, gaps, padding, alignment, sizing) and
+        loses every type/colour/border value to the token layer. The
+        role class adds the DNA step the skeleton may not decide:
+        text-fluid-*, card, ratio-portrait, wf-cta-button.
         """
         n = el.get('name')
+        skel = ' '.join(x for x in
+                        (gc_names.get(i) for i in _classes_of(el))
+                        if x and x in rules)
+        role = ''
         if n == 'heading':
             # the payload's own tag is the rank: an h1 is the hero
-            return ('text-fluid-4' if (el.get('settings') or {})
+            role = ('text-fluid-4' if (el.get('settings') or {})
                     .get('tag') == 'h1' else 'text-fluid-2')
-        if n in ('text-basic', 'text', 'text-link'):
-            return 'text-fluid-0'
-        if card:
-            return 'card'
-        if n == 'image':
-            return 'ratio-portrait'
-        if n == 'logo':
-            return 'logo'
-        if n in ('div', 'container', 'block'):
+        elif n in ('text-basic', 'text', 'text-link'):
+            role = 'text-fluid-0'
+        elif card:
+            role = 'card'
+        elif n == 'image':
+            role = 'ratio-portrait'
+        elif n == 'logo':
+            role = 'logo'
+        elif n in ('div', 'container', 'block'):
             kids = [els[k] for k in (el.get('children') or [])
                     if els.get(k)]
             # a grid only where the skeleton actually pairs media with
@@ -330,13 +339,13 @@ def translate(payload, stem):
             # squeezed 3-up of one-word columns
             if len(kids) >= 2 and any(k.get('name') == 'image'
                                       for k in kids):
-                return 'grid-auto gap-fluid-l'
+                role = 'grid-auto gap-fluid-l'
             # chrome reads as a bar, not a stack
             if cat == 'header' and len(kids) >= 2:
-                return 'row between'
+                role = 'row between'
             if cat == 'footer' and len(kids) >= 2:
-                return 'row between'
-        return ''
+                role = 'row between'
+        return ' '.join(x for x in (skel, role) if x)
 
     def tag_of(el):
         n = el.get('name')
@@ -507,9 +516,18 @@ def translate(payload, stem):
         body = f'  <span class="logo">{{brand}}</span>\n' + body
 
     style = ''
-    # No CSS: the bank is topology, the DNA is the style. pipeline_emit
-    # still hoists a sibling .css when one exists, so this stays empty.
     style = ''
+    if rules:
+        decl = []
+        for _name, _props in rules.items():
+            _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
+                      for p, v in _props]
+            decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')
+        decl += ['  ' + r.strip().replace('\n', '\n  ')
+                 for r in raw_css if r and r.strip()]
+        style = '\n\n'.join(decl) + '\n'
+        if '--acss-' in style:      # never ship an unresolved var
+            raise SystemExit(f'{stem}: unresolved ACSS var in emitted css')
 
     comp = camel('bm-' + stem)
     src = (f'---\n/**\n * bm-{stem} — TRANSLATED Bricksmaven skeleton.\n'

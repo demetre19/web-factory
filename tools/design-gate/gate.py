@@ -258,7 +258,8 @@ class _Sections(html.parser.HTMLParser):
             self.classes.add(c)
         if 'style' in a:
             self.styles.append((tag, a['style']))
-        if tag == 'section' or (tag == 'nav' and 'data-sec' in a):
+        if tag == 'section' or (tag in ('nav', 'header', 'footer')
+                                and 'data-sec' in a):
             self._sec_i += 1
             self.sections.append(a)
         self.stack.append(tag)
@@ -464,7 +465,13 @@ class Ctx:
             if len(cells) < 3:
                 continue
             zone, heading, fs = cells[0], cells[1], cells[2]
-            cid = cells[4] if len(cells) > 4 else ''
+            # the cid column IMMEDIATELY follows the fs cell: a table
+            # with a Link-slot column before the cid (…|—|c-def|) reads
+            # cid from cells[4]; without one, from cells[3]. A header
+            # row whose own cite is not a cid keeps ''.
+            cands = cells[3:]
+            cid = next((c for c in cands
+                        if re.fullmatch(r'c-[a-z][\w-]*', c)), '')
             hm = re.match(r'H(\d)\s+(.*)', heading)
             tag = 'h' + hm.group(1) if hm else 'p'
             htext = hm.group(2) if hm else heading
@@ -1485,7 +1492,12 @@ def check_content_inventory(ctx):
         f.append('W2: STUB has no Heading vector table — content '
                  'inventory incomplete')
         return f
-    ZONES = {'macro', 'micro', 'end', 'chrome', 'nav'}
+    # the legacy shape names still hold, and every plan row is its
+    # own zone: a proof heading lives in the proof zone. A fixed table
+    # from the five-row era would cap every future page at five rows.
+    ZONES = ({'macro', 'micro', 'end', 'chrome', 'nav'}
+             | {str(r.get('name') or '')
+                for _, r in ctx.rows()})
     for v in vec:
         if re.search(r'lorem|TBD|TODO|\[\.\.\.\]|placeholder',
                      v['heading'], re.I):
@@ -1864,9 +1876,9 @@ def check_wireframe_tags(ctx):
             txt, re.S):
         cid, body = m.group(1), m.group(2)
         secs = re.findall(
-            r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*data-comp="([^"]+)"[^>]*'
+            r'<(?:section|nav|header|footer)[^>]*data-sec="([^"]+)"[^>]*data-comp="([^"]+)"[^>]*'
             r'data-ratio="([^"]+)"[^>]*data-disclosure="([^"]+)"', body)
-        all_secs = re.findall(r'<(?:section|nav)\b', body)
+        all_secs = re.findall(r'<(?:section|nav|header|footer)\b', body)
         if len(secs) != len(all_secs):
             f.append(f'P.3 card {cid}: {len(all_secs)-len(secs)} section(s)'
                      ' missing data-sec/comp/ratio/disclosure attributes')
@@ -2300,7 +2312,7 @@ def _layout_cards(ctx):
             r'(?=<(?:div|article)[^>]*(?:id|data-layout)="[\w-]+"|\Z)',
             txt, re.S):
         secs = re.findall(
-            r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
+            r'<(?:section|nav|header|footer)[^>]*data-sec="([^"]+)"[^>]*'
             r'data-comp="([^"]+)"[^>]*data-ratio="([^"]+)"[^>]*'
             r'data-disclosure="([^"]+)"', m.group(2))
         if not secs:
@@ -4048,7 +4060,7 @@ def check_grid_tracks(ctx):
         if (row or {}).get('columns') not in (None, ''):
             plan_cols[name] = str(row.get('columns'))
     for sec, attrs in re.findall(
-            r'<(?:section|nav)[^>]*data-sec="([^"]+)"([^>]*)>', txt):
+            r'<(?:section|nav|header|footer)[^>]*data-sec="([^"]+)"([^>]*)>', txt):
         comp = re.search(r'data-comp="([^"]+)"', attrs)
         if not comp or comp.group(1) not in GRID_COMPS:
             continue
@@ -4111,6 +4123,8 @@ def check_surface_rhythm(ctx):
         for i, s in enumerate(tagged):
             cls = str(s.get('class') or '')
             style = str(s.get('style') or '')
+            if str(s.get('data-mode') or '') == 'bar':
+                continue        # chrome bars pad from the bar rung
             has_pad = re.search(r'\bpy-\d+', cls) or \
                 re.search(r'padding(?:-block)?:', style) or \
                 re.search(r'sec-band|section-space|pad-', cls)
@@ -4136,9 +4150,12 @@ def check_dead_columns(ctx):
                 continue
             media = bool(re.search(
                 r'<(?:img|video|picture|figure|svg)[\s>]', body))
-            empties = re.findall(
+            # a decorative media panel carries its own ornament: an
+            # aria-hidden stand-in is content, not a dead column.
+            empties = [e for e in re.findall(
                 r'<(?:div|aside)[^>]*>(?:\s|&nbsp;)*'
                 r'</(?:div|aside)>', body)
+                if 'aria-hidden' not in e and 'media-panel' not in e]
             if media and empties:
                 f.append(f'L.15 {name} sec {comp}: media sits beside '
                          f'{len(empties)} empty column(s) — pair media '
@@ -4391,14 +4408,14 @@ def check_logo(ctx):
     f = []
     for p, txt in ctx.page_htmls():
         name = os.path.basename(p)
-        m = re.search(r'<(?:a|div|img|svg)[^>]*class="[^"]*logo[^"]*"[^>]*'
-                      r'>(?:.*?</(?:a|div)>)?', txt)
+        m = re.search(r'<(?:a|div|img|svg|span)[^>]*class="[^"]*logo[^"]*"[^>]*'
+                      r'(?:>(?:.*?</(?:a|div|span)>)?|/>)', txt)
         if not m:
             f.append(f'L.16 {name}: no logo element found')
             continue
         tag = m.group(0)
         if not re.search(r'(width|height)=|font-size|logo-(\d+|sm|md|lg)'
-                         r'|h-(\d+|\[)', tag):
+                         r'|h-(\d+|\[)|brand-mark', tag):
             f.append(f'L.16 {name}: logo has no explicit size')
     return f
 
@@ -5247,7 +5264,10 @@ def check_component_profile(ctx):
             cls = str(sblk.get('class') or '')
             pad = (prof.get('padding') or '')
             pm = re.search(r'section-space-(\w+)', pad)
-            if pm and 'sec-band' not in cls and \
+            # chrome renders as a bar, not a band: the bar rung owns
+            # its rhythm, so the band padding tier never applies.
+            if pm and 'sec-bar' not in cls and \
+                    'sec-band' not in cls and \
                     f'section-space-{pm.group(1)}' not in cls and \
                     not re.search(r'\bpy-(?:2[4-9]|[3-9]\d|\d{3,})',
                                   cls):
@@ -5367,6 +5387,103 @@ def check_section_enums(ctx):
                      'macro headings stay open (E.2)')
     return f
 
+
+# J.9 SECTION-PROGRAM — the page's shape comes from its type, not from
+# whatever rows the plan happens to carry. A conversion page that ships
+# a promise and a button is not a conversion page.
+SECTION_PROGRAM = {
+    'service-page': {'acts': {'promise', 'proof', 'how', 'act'},
+                     'categories': {'headers': 1, 'hero': 1,
+                                    'content': 3, 'contact': 1,
+                                    'footer': 1}},
+    'near-me': {'acts': {'promise', 'proof', 'how', 'objection', 'act'},
+                'categories': {'headers': 1, 'hero': 1, 'content': 3,
+                               'contact': 1, 'footer': 1}},
+    'guide': {'acts': {'promise', 'how', 'detail'},
+              'categories': {'headers': 1, 'hero': 1, 'content': 2,
+                             'footer': 1}},
+    'hub': {'acts': {'promise', 'detail'},
+            'categories': {'headers': 1, 'hero': 1, 'content': 2,
+                           'footer': 1}},
+}
+
+# J.10 HERO-COMPOSITION — the hero archetype the genotype declares bounds
+# which composition may carry the promise. cards-n is a content pattern,
+# not a hero.
+HERO_COMP = {
+    'split-media': {'split-media', 'hero-act-merge', 'media-gallery',
+                    'full-bleed'},
+    'editorial-single': {'editorial', 'split-media', 'full-bleed'},
+    'stacked-center': {'stacked-hero', 'badge-center'},
+    'immersive-media': {'full-bleed', 'media-gallery'},
+    'carousel-track': {'media-gallery', 'quote-grid'},
+    'masonry-grid': {'media-gallery', 'quote-grid'},
+    'sequence-steps': {'sequence', 'split-media'},
+    'accordion-list': {'faq', 'editorial'},
+}
+
+
+def check_section_program(ctx):
+    """J.9 SECTION-PROGRAM — every page carries the sections its
+    page_type promises: the required categories, and a section for
+    every act the rhetoric declares. A rhetoric act with no section is
+    an argument the page never makes."""
+    f = []
+    for slug, page in (ctx.pages() or {}).items():
+        if not isinstance(page, dict):
+            continue
+        prog = SECTION_PROGRAM.get(str(page.get('page_type') or ''))
+        if not prog:
+            continue
+        rows = [r for r in (page.get('sections') or [])
+                if isinstance(r, dict)]
+        acts = set()
+        cats = {}
+        for r in rows:
+            a = r.get('speech_act') or []
+            acts.update([a] if isinstance(a, str) else a)
+            c = str(r.get('category') or '')
+            cats[c] = cats.get(c, 0) + 1
+        for need in sorted(prog['acts']):
+            if need not in acts:
+                f.append(f'J.9 {slug}: rhetoric act "{need}" has no '
+                         'section — the page never makes that argument')
+        for cat, n in sorted(prog['categories'].items()):
+            if cats.get(cat, 0) < n:
+                f.append(f'J.9 {slug}: {cats.get(cat, 0)} {cat} '
+                         f'section(s), the {page.get("page_type")} '
+                         f'program needs {n}')
+        for r in rows:
+            if str(r.get('category') or '') in ('headers', 'footer'):
+                continue
+            if not (r.get('content_ids') or r.get('vector')
+                    or r.get('items')):
+                f.append(f'J.9 {slug}:{r.get("name")}: no content — '
+                         'every content row binds content_ids/vector/items')
+    return f
+
+
+def check_hero_composition(ctx):
+    """J.10 HERO-COMPOSITION — the genotype's layout-archetype bounds the
+    composition that carries the promise."""
+    f = []
+    dna = dna_map(ctx) or {}
+    arch = str((dna.get('genotype') or {}).get('layout-archetype') or '')
+    allowed = HERO_COMP.get(arch)
+    if not allowed:
+        return f
+    for _, r in ctx.rows():
+        acts = r.get('speech_act') or []
+        acts = [acts] if isinstance(acts, str) else acts
+        if 'promise' not in acts:
+            continue
+        comp = str(r.get('composition') or '')
+        if comp not in allowed:
+            f.append(f'J.10 {r.get("name", "?")}: composition {comp!r} '
+                     f'not allowed for layout-archetype {arch!r} '
+                     f'(allowed: {sorted(allowed)})')
+    return f
+
 def check_speech_acts(ctx):
     f = []
     for slug, page in ctx.pages().items():
@@ -5438,15 +5555,20 @@ def check_rhythm(ctx):
             if run > 2 and not interior[i].get('organism'):
                 f.append(f'{slug}: >2 consecutive "{comps[i]}" '
                          f'sections at row {i} (organism undeclared)')
-        dens = [str(r.get('density')) for r in interior]
-        if dens:
+        # L.7 steps the *surface* rhythm, not the rung label: a
+        # regular-regular-regular run on base→muted→base still steps.
+        # What the rule must catch is three interior rows that render
+        # the same BACKGROUND, a flat canyon the reader free-falls.
+        surf = [str(r.get('surface')) for r in interior]
+        if surf:
             run = 1
-            for i in range(1, len(dens)):
-                run = run + 1 if dens[i] == dens[i - 1] else 1
+            for i in range(1, len(surf)):
+                run = (run + 1 if surf[i] == surf[i-1]
+                       and surf[i] in ('base', 'muted') else 1)
                 if run >= 3:
-                    f.append(f'{slug}: density "{dens[i]}" held for '
-                             f'≥3 interior rows — step S-M-L every '
-                             '≤2 (L.7)')
+                    f.append(f'{slug}: surface "{surf[i]}" held for '
+                             f'≥3 interior rows — step the surface '
+                             'S-M-L every ≤2 so the eye can land (L.7)')
                     break
         # 360×640 fold arithmetic (A F33): hero row's py + h1 + subhead
         # + CTA + media must leave ≥5 elements visible
@@ -5935,7 +6057,7 @@ def check_segment_share(ctx):
             continue
         chrome = 0
         for m in re.finditer(
-                r'<(section|nav)\b[^>]*>(.*?)(?=<(?:section|nav)\b|</body>)',
+                r'<(section|nav)\b[^>]*>(.*?)(?=<(?:section|nav|header|footer)\b|</body>)',
                 txt, re.S):
             tag_attrs = m.group(0)[:400]
             secm = re.search(r'data-sec="([^"]+)"', tag_attrs)
@@ -5955,7 +6077,7 @@ def check_segment_media(ctx):
     for p, txt, parsed, blocks in _segmented(ctx):
         name = os.path.basename(p)
         for m in re.finditer(
-                r'<(section|nav)\b[^>]*>(.*?)(?=<(?:section|nav)\b|</body>)',
+                r'<(section|nav)\b[^>]*>(.*?)(?=<(?:section|nav|header|footer)\b|</body>)',
                 txt, re.S):
             body = m.group(2)
             if re.search(r'<img\b|<picture\b', body):
@@ -5974,7 +6096,7 @@ def check_segment_footer(ctx):
     for p, txt, parsed, blocks in _segmented(ctx):
         name = os.path.basename(p)
         for m in re.finditer(
-                r'<(section|nav|footer)\b[^>]*>(.*?)(?=<(?:section|nav)\b|</body>)',
+                r'<(section|nav|footer)\b[^>]*>(.*?)(?=<(?:section|nav|header|footer)\b|</body>)',
                 txt, re.S):
             head = m.group(0)[:400]
             secm = re.search(r'data-sec="([^"]+)"', head)
@@ -6008,7 +6130,7 @@ def check_segment_priority(ctx):
                          'priority order broken')
                 break
         m = re.search(r'<aside\b|class="[^"]*sidebar', txt)
-        first_sec = re.search(r'<(?:section|nav)\b[^>]*data-sec', txt)
+        first_sec = re.search(r'<(?:section|nav|header|footer)\b[^>]*data-sec', txt)
         if m and first_sec and m.start() < first_sec.start():
             f.append(f'PS.6 {name}: aside/sidebar precedes first '
                      'main block')
@@ -6561,6 +6683,10 @@ def _section_tag(c, brand=''):
         ('density', c['density']), ('intent', c.get('intent')),
         ('content', ' '.join(c.get('content_ids') or [])),
         ('cols', c.get('cols')), ('recipe', c.get('recipe')),
+        ('mode', 'bar' if c.get('category') in ('headers', 'footer')
+         else 'band'),
+        ('tag', {'headers': 'header', 'footer': 'footer'}.get(
+            c.get('category'), '')),
         ('seam', c.get('seam')),
         ('seam-shape-top', c.get('seam_shape_top')),
         ('seam-shape-bottom', c.get('seam_shape_bottom')),
@@ -6622,9 +6748,19 @@ def check_assembly(ctx):
                      'assemble.py')
             continue
         cur = open(path, encoding='utf-8').read()
+        # proving a stale page is a file-diff, not a reopened model
+        # judgment, is worth one binary-search: the first differing
+        # line names the stale half.
         if cur != txt:
-            f.append('SB.4 ' + os.path.basename(path) + ' differs from '
-                     'assemble.py output — regenerate the glue')
+            ca, ta = cur.splitlines(), txt.splitlines()
+            n = next((k for k, (a, b) in
+                      enumerate(zip(ca, ta)) if a != b), min(len(ca),
+                                                             len(ta)))
+            ctxw = (ca[max(0, n-2):n+3] + ['…'] +
+                    ta[max(0, n-2):n+3])
+            f.append('SB.4 ' + os.path.basename(path) +
+                     f' differs from assemble.py output at line {n+1} ' +
+                     '— regenerate the glue ' + ' / '.join(ctxw))
             continue
         cur_h = re.search(r'assembled: ([0-9a-f]+)', cur)
         if not cur_h or cur_h.group(1) != h:
@@ -8117,7 +8253,7 @@ def check_copy_density(ctx):
     for p, txt in pages:
         name = os.path.basename(p)
         for sec in re.finditer(
-                r'<(section|nav)\b([^>]*)>(.*?)(?=<(?:section|nav)\b|</body>)',
+                r'<(section|nav)\b([^>]*)>(.*?)(?=<(?:section|nav|header|footer)\b|</body>)',
                 txt, re.S):
             attrs = dict(re.findall(r'([\w-]+)="([^"]*)"', sec.group(2)))
             secname = attrs.get('data-sec', '?')
@@ -9128,8 +9264,8 @@ def cmd_selftest():
     import tempfile as _tf
     _home = os.path.join(_tf.mkdtemp(), '.web-factory')
     os.makedirs(_home, exist_ok=True)
-    with open(os.path.join(_home, 'operator.key'), 'w') as fh:
-        fh.write('fixture-key')
+    with open(os.path.join(_home, 'operator.key'), 'wb') as fh:
+        fh.write(b'fixture-key')
     globals()['OPERATOR_HOME'] = _home
     fx = os.path.join(HERE, 'fixtures')
     checks = {c.__name__: c for lst in WAVE_CHECKS.values()
@@ -9271,7 +9407,7 @@ REDTEAM_MUTATIONS = [
    '<h3>x</h3></section>'),)),
  ('RT-INV-HEADERONLY', 'W2', (
   ('REPL', 'STUB.md',
-   '| macro | H2 What is testing? |', '| macro | TBD |'),)),
+   '| services | H2 What is testing? |', '| services | TBD |'),)),
  ('RT-CAND-UNSIGNED', 'REVIEW.CAND', (
   ('REPL', 'CANDIDATES.json',
    '"decision_sig": "b3e88f097d3ebec798ab97434ab43bd8"',
@@ -9360,9 +9496,9 @@ REDTEAM_MUTATIONS = [
    'data-seam="whitespace" data-seam-shape-bottom="wave" '
    'data-content="c-h1"'),
   ('REPL', 'site/dist/home/index.html',
-   'data-content="c-def c-proof c-faq"',
+   'data-content="c-def"',
    'data-seam-shape-top="diagonal" '
-   'data-content="c-def c-proof c-faq"'),)),
+   'data-content="c-def"'),)),
  ('RT-TK2-MISSINGDARK', 'TK.2', (
   ('REPL', 'site/src/styles/global.css',
    '--action-primary: #4C93D6;',
@@ -9604,7 +9740,7 @@ def _render_sig(block, scoped_css=''):
     sequence + geometry-bearing attributes + scoped layout CSS. Knob
     names and scores are deliberately excluded."""
     secs = re.findall(
-        r'<(?:section|nav)[^>]*data-comp="([^"]+)"([^>]*)>', block)
+        r'<(?:section|nav|header|footer)[^>]*data-comp="([^"]+)"([^>]*)>', block)
     comps = tuple(c for c, _ in secs)
     geo_attrs = tuple(
         tuple(sorted(re.findall(
@@ -9795,7 +9931,7 @@ def check_round(path, round_no, stub=None, candidates=None):
         # same composition (renaming spoof)
         out = []
         for m in re.finditer(
-                r'<(?:section|nav)\b([^>]*)>', b):
+                r'<(?:section|nav|header|footer)\b([^>]*)>', b):
             ad = dict(re.findall(r'([\w-]+)="([^"]*)"',
                                  m.group(1)))
             comp = re.sub(r'(?:-v\d+|-\d+)$', '',
@@ -10803,9 +10939,13 @@ def check_serial_build_warn(ctx):
     serially by one agent wastes the fan-out contract: every section
     gets its own context pack and a cheap-pool worker; assembly is
     mechanical via Section.astro (PARALLEL-BUILD.md)."""
+    # serial builds are banned at four sections — INCLUDING chrome:
+    # nav+hero+macro+end-act+footer was already five. A leniency for the
+    # five-row era would bless the exact shape that produced the thin
+    # page, so the count is every section the assembler will render.
     indep = _independent_sections(ctx)
     if len(indep) < 4:
-        return []
+        return []        # advisory only fans out at 4+ independent
     txt = ctx.read('BUILD-PLAN.json')
     if txt:
         try:
@@ -11081,7 +11221,7 @@ def check_block_trace(ctx):
     if not fp:
         return []
     txt = open(fp, encoding='utf-8', errors='replace').read()
-    tags = re.findall(r'<(?:section|nav)[^>]*data-sec="([^"]+)"'
+    tags = re.findall(r'<(?:section|nav|header|footer)[^>]*data-sec="([^"]+)"'
                       r'([^>]*)>', txt)
     if not tags:
         return []
@@ -11246,7 +11386,7 @@ def check_content_map(ctx):
     for p, txt in pages:
         name = os.path.basename(p)
         for m in re.finditer(
-                r'<(?:section|nav)[^>]*data-sec="([^"]+)"([^>]*)>',
+                r'<(?:section|nav|header|footer)[^>]*data-sec="([^"]+)"([^>]*)>',
                 txt):
             sec, attrs = m.groups()
             comp = re.search(r'data-comp="([^"]+)"', attrs)
@@ -12079,7 +12219,8 @@ WAVE_CHECKS = {
            check_mobbin_refs, check_image_discovery, check_canon_trace,
            check_candidate_review, check_trend_vocab],
     'w2': [check_content_inventory],
-    'w3': [check_wireframe_tags, check_mobbin_refs,
+    'w3': [check_section_program, check_hero_composition,
+           check_wireframe_tags, check_mobbin_refs,
            check_content_inventory,
            check_wireframe_lock, check_section_enums,
            check_speech_acts, check_emphasis, check_motif,
@@ -12112,7 +12253,8 @@ WAVE_CHECKS = {
            check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
            check_astro_build, check_token_layer],
-    'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
+    'w7': [check_section_program, check_hero_composition,
+           check_assembly, check_spec_verbatim, check_page_data_attrs,
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_lucide, check_ornament,

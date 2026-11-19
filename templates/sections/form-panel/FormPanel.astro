@@ -1,40 +1,54 @@
 ---
 /**
- * form-panel — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * form-panel — gold exemplar (SB.5). The end act: one number to call,
+ * one short form for everyone else. No action attribute — a static
+ * build has no backend, so the phone is the primary action.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
+  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+  items?: { title?: string; text?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
+  brand?: string;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], h1, brand,
 } = Astro.props;
+const sub = fs || body;
 ---
-
-<div class="grid gap-fluid-l md:grid-cols-2">
-  <div class="max-w-prose">
-    {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
-    <p class="mt-stack text-fluid-0">{fs}</p>
+<div class="split">
+  <div class="stack">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 class="t0 h-section text-fluid-3">{heading}</h2>
+    {sub && <p class="t0 lede">{sub}</p>}
+    {cta && (
+      <div class="stack mt-act gap-form">
+        <a class="wf-cta-button cta-large" href={cta.href}>{cta.label}</a>
+        {items[0]?.text && <p class="t0 attrib">{items[0].text}</p>}
+      </div>
+    )}
   </div>
-  <form class="grid gap-fluid-s" novalidate>
-    <label class="grid gap-fluid-s text-fluid--1">
-      <span>Name</span>
-      <input class="rounded-card border border-muted p-fluid-s text-fluid-0" type="text" name="name" autocomplete="name" />
-    </label>
-    <label class="grid gap-fluid-s text-fluid--1">
-      <span>Email</span>
-      <input class="rounded-card border border-muted p-fluid-s text-fluid-0" type="email" name="email" autocomplete="email" />
-    </label>
-    <button class="wf-cta-button" type="submit">{cta?.label ?? 'Send'}</button>
-    <span class="helper" aria-live="polite"></span>
-  </form>
+  <form class="card gap-form">
+    <div class="form-grid">
+      <label class="field"><span>Name *</span><input name="name" autocomplete="name" required aria-required="true" /></label>
+      <label class="field"><span>Phone *</span><input name="phone" type="tel" autocomplete="tel" required aria-required="true" /></label>
+      <label class="field"><span>Suburb</span><input name="suburb" autocomplete="address-level2" /></label>
+      <label class="field"><span>Job</span>
+        <select name="job">
+          <option>Blocked drain</option>
+          <option>Burst pipe</option>
+          <option>Hot water</option>
+          <option>Something else</option>
+        </select>
+      </label>
+    </div>
+    <p class="t0 helper">* Required — we only call about your job.</p>
+    <button class="wf-cta-button btn-block" type="submit">Request a callout</button>
+    <p class="t0 attrib">We reply within one business hour, 7am–9pm.</p>
+    <p class="t0 helper" data-form-error hidden>Something missed a field — check the form and retry.</p>
 </div>

@@ -59,16 +59,16 @@ import '../styles/global.css';
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<button data-theme-toggle type="button" aria-label="Switch between light and dark mode">Light/Dark</button>
+<button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch between light and dark mode"><span class="sr-only">Light/Dark</span></button>
 <main id="main">
 <slot />
 </main>
+<a class="call-bar" href="{{tel}}">
+  <span>{{phone}}</span><span class="sr-only">Call now</span>
+</a>
 <footer class="site-foot" data-page={slug}>
-  <nav aria-label="Site">
-    <a href="/">Home</a>
-  </nav>
   <address>{{brand}}{{phone_sep}}</address>
-  <small>Privacy · Terms · Copyright</small>
+  <small>Privacy · Terms · Copyright notice</small>
 </footer>
 </body>
 </html>

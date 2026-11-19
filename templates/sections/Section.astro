@@ -26,22 +26,26 @@ interface Props {
   'seam-shape-top'?: string;
   'seam-shape-bottom'?: string;
   skeleton?: string;
+  tag?: string;
 }
 const {
   sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
   surface = 'base', density = 'regular', intent, content, cols,
+  mode = 'band', tag = '',
   recipe, seam, 'seam-shape-top': seamTop,
   'seam-shape-bottom': seamBottom, skeleton,
 } = Astro.props;
+const Tag = tag || 'section';
 ---
-<section
-  class={`sec-band surface-${surface} density-${density}`}
+<Tag
+  class={`${mode === 'bar' ? 'sec-bar' : 'sec-band'} surface-${surface} density-${density}`}
   data-sec={sec}
   data-comp={comp}
   data-ratio={ratio}
   data-disclosure={disclosure}
   data-surface={surface}
   data-density={density}
+  data-mode={mode}
   data-wf-ref={wfRef}
   {...(intent ? { 'data-intent': intent } : {})}
   {...(content ? { 'data-content': content } : {})}
@@ -55,4 +59,4 @@ const {
   <div class="sec-inner">
     <slot />
   </div>
-</section>
+</Tag>

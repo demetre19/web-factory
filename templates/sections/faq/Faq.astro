@@ -1,32 +1,36 @@
 ---
 /**
- * faq — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * faq — gold exemplar (SB.5). Native details/summary: no JS, keyboard
+ * and screen-reader correct, and the first answer can stay open.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
+  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+  items?: { title?: string; text?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
+  brand?: string;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], h1, brand,
 } = Astro.props;
+const sub = fs || body;
 ---
-
-<div class="max-w-prose">
-  {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
-  <div class="mt-stack grid gap-fluid-s">
-    {items.map((it) => (
-      <details class="border-b border-muted pb-fluid-s">
-        <summary class="cursor-pointer text-fluid-0 font-semibold">{it.title}</summary>
-        <p class="mt-fluid-s text-fluid-0">{it.text}</p>
+<div>
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 class="text-fluid-3">{heading}</h2>
+    {sub && <p class="lede">{sub}</p>}
+  </div>
+  <div class="mt-sec">
+    {items.map((it, i) => (
+      <details class="faq-item" open={i === 0}>
+        <summary class="faq-q">{it.title}</summary>
+        <p class="t0 faq-a">{it.text}</p>
       </details>
     ))}
   </div>

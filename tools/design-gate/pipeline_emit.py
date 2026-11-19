@@ -167,15 +167,25 @@ def _instance(ctx, contract, row):
     comp = contract['composition']
     camel = gate.camel(comp)
     c = contract['content'] or {}
+    # the plan's vector IS the copy: a stub paragraph may describe the
+    # section, but the claim a reader sees is the one the row declares
+    vec = (row.get('vector') or [{}])
+    vec = vec[0] if isinstance(vec, list) and vec else {}
     props = []
     h1_text = c.get('h1_text')
-    for k in ('heading', 'fs', 'body'):
-        v = h1_text if (k == 'heading' and h1_text) else c.get(k)
+    for k in ('heading', 'fs', 'body', 'eyebrow'):
+        if k == 'heading':
+            v = vec.get('heading') or h1_text or c.get('heading')
+        elif k == 'fs':
+            v = vec.get('fs') or c.get('fs')
+        else:
+            v = c.get(k)
         if v:
             props.append(f'{k}={json.dumps(str(v))}')
     # F1 fix — cta rides the contract (stub inventory couriered at
     # build_contracts); items/image still come from the plan row.
     for k, src in (('cta', c.get('cta') or row.get('cta')),
+                   ('eyebrow', row.get('eyebrow')),
                    ('items', row.get('items')),
                    ('image', row.get('image'))):
         if src:
@@ -188,8 +198,19 @@ def _instance(ctx, contract, row):
     if site.get('brand'):
         props.append('brand=' + json.dumps(str(site['brand']),
                                           ensure_ascii=False))
-    body = (f'<{camel} ' + ' '.join(props) + ' />'
-            if props else f'<{camel} />')
+    _sa = (row.get('speech_act') or [])
+    _sa = _sa if isinstance(_sa, list) else [str(_sa or '')]
+    # the instance contract with the assembler is spelled out in
+    # the render call itself — the page's data-flow, reading order,
+    # and fold estimate must not live in anyone's memory
+    asm_note = ('<!-- section contract: ' +
+                ' '.join(['composition=' + comp,
+                           'section=' + str(row.get('name') or ''),
+                           'surface=' + str(row.get('surface') or ''),
+                           'density=' + str(row.get('density') or ''),
+                           'speech_act=' + '+'.join(_sa)]) + ' -->')
+    body = (asm_note + '\n<' + camel + ' ' + ' '.join(props) + ' />'
+            if props else asm_note + '\n<' + camel + ' />')
     txt = ('---\n'
            '// contract echoes (frontmatter is JS; the gate reads\n'
            '// dna_hash:/structure_hash:/exemplar: via regex):\n'
@@ -291,9 +312,15 @@ def main(argv):
     stub = ctx.read('STUB.md') or ''
     m = re.search(r'\|\s*phone\s*\|\s*([^|]+)\|', stub)
     phone = (m.group(1).strip() if m else '')
+    tel = re.sub(r'[^0-9+]', '', phone)
+    if tel and not tel.startswith('+'):
+        tel = '+61' + tel.lstrip('0')
     shell = (shell.replace('{{brand}}', str(site.get('brand') or ''))
                   .replace('{{phone_sep}}',
-                           (' · ' + phone) if phone else ''))
+                           (' · ' + phone) if phone else '')
+                  .replace('{{phone}}',
+                           ('Call ' + phone) if phone else 'Call us')
+                  .replace('{{tel}}', 'tel:' + tel))
     _w(os.path.join(ctx.site, 'src', 'layouts', 'BaseLayout.astro'), shell)
     print('  Section.astro + BaseLayout.astro')
 
@@ -319,6 +346,14 @@ def main(argv):
             fh.write('\n@layer components {\n'
                      + '\n'.join(bank_css) + '\n}\n')
         print(f'  bank css: {len(bank_css)} skeleton(s) → global.css')
+    # a section that left the plan leaves no component behind: a stale
+    # instance still imports a composition the page no longer renders,
+    # and the next SB.3/SB.5 pass reads the orphan, not the page.
+    sdir = os.path.join(ctx.site, 'src', 'components', 'sections')
+    keep = {gate.camel(str(c['section'])) + '.astro' for c in contracts}
+    for fn in sorted(os.listdir(sdir)) if os.path.isdir(sdir) else []:
+        if fn.endswith('.astro') and fn not in keep:
+            os.remove(os.path.join(sdir, fn))
     for c in contracts:
         _instance(ctx, c, by_name.get(str(c['section'])) or {})
     print(f'  {len(comps)} components + {len(contracts)} instances')
@@ -329,6 +364,23 @@ def main(argv):
        '# COMPONENTS\n' + ''.join(
            f'{c} → {c}.astro\n' for c in comps))
     print('  system.astro + COMPONENTS.md')
+
+    # P.20 — BUILD-PLAN declares the fan-out lanes: every independent
+    # (non-chrome) section gets its own cheap-pool lane, the
+    # orchestrator stays on coordinated, coherence on coherence.
+    indep = [str(r.get('name')) for _, r in rows
+             if 'chrome' not in (r.get('speech_act') or [])
+             and str(r.get('composition') or '')
+             not in ('nav-bar', 'footer-bar')]
+    lanes = ([{'id': f'sec-{n}', 'kind': 'section', 'section': n,
+               'model_lane': 'cheap'} for n in indep] +
+             [{'id': 'orchestrate', 'kind': 'orchestrator',
+               'model_lane': 'coordinated'},
+              {'id': 'coherence', 'kind': 'coherence',
+               'model_lane': 'coherence'}])
+    _w(os.path.join(ctx.dir, 'BUILD-PLAN.json'),
+       json.dumps({'lanes': lanes}, indent=1))
+    print(f'  BUILD-PLAN.json ({len(indep)} section lanes)')
 
     # B1–B3 — the gate produces; the emitter only invokes it
     rc = 0

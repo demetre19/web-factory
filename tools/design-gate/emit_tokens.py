@@ -25,6 +25,29 @@ import re
 import sys
 
 # TOKENS color role → semantic css var name (the contract surface)
+
+def _lum(hexs):
+    """sRGB relative luminance — picks the ink that can sit on a band."""
+    h = str(hexs).lstrip('#')
+    if len(h) == 3:
+        h = ''.join(c * 2 for c in h)
+    try:
+        r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    except (ValueError, IndexError):
+        return 0.5
+    f = lambda c: c / 12.92 if c <= .03928 else ((c + .055) / 1.055) ** 2.4
+    return .2126 * f(r) + .7152 * f(g) + .0722 * f(b)
+
+
+def inverse_ink(band, light, dark):
+    """--bg-inverse's band needs the ink that contrasts with it, not a
+    hardcoded white. A white band in dark mode is a flash, not a
+    surface: the DNA decides, this only pairs the ink."""
+    band = str(band or '#0E1416')
+    # a light band takes the light palette's ink; a dark band takes the
+    # dark palette's (which is itself a light ink)
+    return light['ink'] if _lum(band) > .35 else dark['ink']
+
 ROLE_SEMANTIC = {
     'bg': 'bg-canvas',
     'surface': 'bg-surface',
@@ -193,7 +216,7 @@ def emit(tokens):
     A('')
     # ---- 2. :root semantic layer ----------------------------------
     A(':root {')
-    A('  --text-inverse-src: #FFFFFF;')
+    A(f"  --text-inverse-src: {inverse_ink(light.get('inverse'), light, dark)};")
     for role, var in ROLE_SEMANTIC.items():
         if role in light:
             A(f'  --{var}: {light[role]};')
@@ -208,7 +231,7 @@ def emit(tokens):
             A(f'  --{var}: {dark[role]};')
         elif role in light:          # mirror — parity is the law
             A(f'  --{var}: {light[role]};')
-    A('  --text-inverse-src: #0E1416;')
+    A(f"  --text-inverse-src: {inverse_ink(dark.get('inverse'), light, dark)};")
     A('  --shadow-ink: black;')
     A('  --shadow-card: 0 1px 2px color-mix(in oklch,'
       ' var(--shadow-ink) 35%, transparent), 0 2px 8px'

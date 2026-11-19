@@ -248,6 +248,50 @@ a non-flat edge while the genotype declares `flat`, or two unlike
 non-flat shapes meeting at a boundary FAILs.
 
 
+### J.9 SECTION-PROGRAM — the page's shape comes from its type
+
+A page type is a promise about sections. `service-page` that ships a
+hero, a card grid and a button is a landing page wearing a service
+page's name: the reader never learns how the work runs, never sees a
+previous customer, and never gets an answer to the question that stops
+them booking.
+
+The program is declared in `gate.SECTION_PROGRAM`:
+
+| page_type | acts the page must argue | categories it must carry |
+|---|---|---|
+| service-page | promise, proof, how, act | headers 1, hero 1, content 3, contact 1, footer 1 |
+| near-me | promise, proof, how, objection, act | headers 1, hero 1, content 3, contact 1, footer 1 |
+| guide | promise, how, detail | headers 1, hero 1, content 2, footer 1 |
+| hub | promise, detail | headers 1, hero 1, content 2, footer 1 |
+
+Two consequences are gated: every act the page's `rhetoric` declares
+must have at least one section carrying it (an argument with no
+section is an argument the page never makes), and every non-chrome row
+must bind content (`content_ids`, `vector` or `items`) so a section
+cannot exist as an empty frame.
+
+**Enforcement** — script `check_section_program` (w3, w7): a rhetoric
+act with no section, a missing required category, or a content row with
+no content binding FAILs.
+
+### J.10 HERO-COMPOSITION — the archetype bounds the fold
+
+The genotype declares a `layout-archetype`. That gene is not a label:
+it names the shape the fold takes. A `split-media` genotype whose hero
+renders as a card grid is a different page than the one the DNA
+described, and every downstream rhythm decision (media ratio, proof
+placement, fold height) was made against the wrong shape.
+
+`gate.HERO_COMP` binds archetype → allowed compositions. Only the row
+carrying the `promise` act is judged; content sections may use any
+composition their act allows.
+
+**Enforcement** — script `check_hero_composition` (w3, w7): a
+promise-carrying row whose composition is outside its archetype's set
+FAILs.
+
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

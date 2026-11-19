@@ -1,38 +1,47 @@
 ---
 /**
- * footer-bar — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * footer-bar — gold exemplar (SB.5). Brand and one line of proof on
+ * the left, two link columns, a legal rule under both.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
-  image?: { src: string; alt: string };
+  items?: { title?: string; text?: string; label?: string;
+             href?: string }[];
+  brand?: string;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image,
+  heading = '', fs = '', body = '', cta, items = [],
+  brand = 'Brand',
 } = Astro.props;
+const sub = fs || body;
+const year = 2026;
 ---
-
-<footer class="grid gap-stack text-fluid--1 md:grid-cols-2">
-  <div>
-    <small class="text-fluid--1">{heading}</small>
-    <address class="text-fluid--1">
-      {fs !== 'The first sentence a reader needs.'
-        ? fs : 'Contact the team'}
-    </address>
-    <small class="text-fluid--1">&copy; {new Date().getFullYear()} {heading}
-      · <a class="underline" href="/privacy">Privacy</a>
-      · <a class="underline" href="/terms">Terms</a></small>
+<div class="stack gap-form">
+  <div class="foot-cols">
+    <div class="foot-col">
+      <a class="brand-mark" href="/">{brand}</a>
+      {sub && <p class="t0 sub-p measure-28">{sub}</p>}
+      {heading && <p class="t0 attrib">{heading}</p>}
+    </div>
+    <div class="foot-col">
+      <p class="foot-head">Service</p>
+      {items.slice(0, 3).map((it) => (
+        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
+      ))}
+    </div>
+    <div class="foot-col">
+      <p class="foot-head">Contact</p>
+      {cta && <a class="nav-link" href={cta.href}>{cta.label}</a>}
+      {items.slice(3).map((it) => (
+        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
+      ))}
+    </div>
   </div>
-  <ul class="flex flex-wrap gap-fluid-m">
-    {items.map((it) => (
-      <li><a class="underline" href={it.href ?? '#'}>{it.label}</a></li>
-    ))}
-  </ul>
-</footer>
+  <div class="legal">
+    <span>Copyright {year} {brand}</span>
+    <span>Licensed Victorian plumber · ABN 00 000 000 000</span>
+  </div>
+</div>

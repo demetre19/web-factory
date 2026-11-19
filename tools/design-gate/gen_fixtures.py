@@ -136,9 +136,11 @@ pages:
     rhetoric: [promise, proof, how, act]
     sections:
       - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "brixies/bottom-navigation-bar/bot-nav-1.topo", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123]}
-      - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1]}
-      - {name: macro, wf_ref: "cards/index.html#d1:macro", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def, c-proof, c-faq], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", recipe: "brixies/cta-sections/cta-1.topo", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta]}
+      - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1], vector: [{heading: "Testing Site", fs: "Testing is the thing."}]}
+      - {name: services, wf_ref: "cards/index.html#d1:services", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+      - {name: proof, wf_ref: "cards/index.html#d1:proof", recipe: "hyperui/marketing/testimonials/1", speech_act: [proof], category: content, surface: base, density: regular, composition: quote-grid, emphasis: voices, align: col-1-edge, stack: text-first, collapse: "3-col", media_ratio: none, disclosure: open, intent: proof, refs: [mobbin-def458], content_ids: [c-proof], vector: [{heading: "What clients say", fs: "Twelve thousand cleans, and counting."}]}
+      - {name: how, wf_ref: "cards/index.html#d1:how", recipe: "hyperui/application/steps/1", speech_act: [how], category: content, surface: muted, density: regular, composition: sequence, emphasis: steps, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: process, refs: [mobbin-ghi789], content_ids: [c-how], vector: [{heading: "How it works", fs: "Book, test, report — done in a day."}]}
+      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", recipe: "brixies/cta-sections/cta-1.topo", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta, c-faq]}
       - {name: footer, wf_ref: "cards/index.html#d1:footer", recipe: "hyperui/marketing/footers/1", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456]}
 ```
 '''
@@ -147,7 +149,9 @@ WIREFRAME = '''<!doctype html><html><head><meta name="viewport" content="width=d
 <div class="card" id="d1">
 <nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>
 <section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open"></section>
-<section class="sec" data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open"></section>
+<section class="sec" data-sec="services" data-comp="cards-n" data-ratio="none" data-disclosure="open"></section>
+<section class="sec" data-sec="proof" data-comp="quote-grid" data-ratio="none" data-disclosure="open"></section>
+<section class="sec" data-sec="how" data-comp="sequence" data-ratio="none" data-disclosure="open"></section>
 <section class="sec" data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open"></section>
 <section class="sec" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open"></section>
 </div>
@@ -170,7 +174,10 @@ STUB = '''# STUB — /fixture/
 
 | Zone | Heading | First sentence / FS (write this) | Link slot |
 |---|---|---|---|
-| macro | H2 What is testing? | "Testing is the thing." | — | c-def |
+| hero | H1 Testing Site | "Testing is the thing." | c-h1 |
+| services | H2 What is testing? | "Testing is the thing." | — | c-def |
+| proof | H2 What clients say | "Twelve thousand cleans, and counting." | c-proof |
+| how | H2 How it works | "Book, test, report — done in a day." | c-how |
 
 ## Content inventory
 
@@ -183,6 +190,7 @@ STUB = '''# STUB — /fixture/
 | Q | A |
 |---|---|
 | Do you test? | Yes. | c-faq |
+| How fast is a test? | Same day. | c-how |
 
 ### Media inventory
 | Section | Asset | Ratio |
@@ -256,6 +264,8 @@ MOBBIN = '''# MOBBIN-REFS — consulted before direction (W1) and per compositio
 | https://lexingtonthemes.com | site | operator-suggested · whole-site feel | w1 |
 | mobbin-xyz999 | screen | home · split-media · ignored — wrong vertical | w1 |
 | https://mobbin.com/screens/def458 | screen | home · cards-n · three-up grid | w1 |
+| mobbin-def458 | section | home · quote-grid · voice density | w1 |
+| mobbin-ghi789 | section | home · sequence · step rhythm | w1 |
 | https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
 | https://mobbin.com/screens/ghi790 | screen | home · form-panel · label placement | w1 |
 | https://mobbin.com/screens/ghi791 | section | home · form-panel · submit emphasis | w1 |
@@ -713,7 +723,12 @@ def dna_doc():
         "rhythm": [
             {"section": "nav", "surface": "base", "density": "compact"},
             {"section": "hero", "surface": "base", "density": "spacious"},
-            {"section": "macro", "surface": "muted", "density": "regular"},
+            {"section": "services", "surface": "muted",
+             "density": "regular"},
+            {"section": "proof", "surface": "base",
+             "density": "regular"},
+            {"section": "how", "surface": "muted",
+             "density": "regular"},
             {"section": "end-act", "surface": "inverse",
              "density": "spacious"},
             {"section": "footer", "surface": "base", "density": "compact"},
@@ -931,7 +946,9 @@ MUT = {
      ('SET','discovery/ref.example/hero.jpg', '\x89PNG\r\n')),
  'check_layout_distinct': mut(
      ('REPL','preview/layouts.html',
-      'data-comp="sequence"', 'data-comp="cards-n"'))
+      'data-comp="stacked-hero"','data-comp="split-media"'),
+     ('REPL','preview/layouts.html',
+      'data-comp="comparison"','data-comp="cards-n"'))
  , 'check_mobile_cta': mut(
      ('APPEND','site/dist/home/index.html',
       '<a class="cta">Act</a><style>@media(max-width:768px)'
@@ -957,8 +974,8 @@ MUT = {
  'check_type_system': mut(('REPL','DESIGN-PLAN.md','body: "Inter"','body: "SerifX"'),('APPEND','DESIGN-PLAN.md','\n  extra: {fonts: {c: "Third"}}')),
  'check_system_enums': mut(('REPL','DESIGN-PLAN.md','family: lucide','family: wingdings')),
  'check_tailwind_derivation': mut(('REPL','TOKENS.json','#0055AA','#ABCDEF')),
- 'check_token_layer': mut(('REPL','site/src/styles/global.css',
-     '@theme inline {','@theme {')),
+ 'check_token_layer': mut(('SET','site/src/components/AdLib.astro',
+    '<div style="color:#123456">x</div>')),
  'check_grid_tracks': mut(('REPL','site/dist/home/index.html',
      'data-cols="3"','data-cols="4"')),
  'check_js_cost': mut(('SET','site/dist/_astro/map.js',
@@ -985,7 +1002,9 @@ MUT = {
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
  'check_components_exist': mut(('DEL','site/src/components/split-media.astro')),
  'check_tile_is_system': mut(('REPL','site/src/pages/system.astro','<SplitMedia />','')),
- 'check_class_subset': mut(('REPL','site/dist/home/index.html','class="sec-band surface-base density-compact"','class="bogus-class"')),
+ 'check_class_subset': mut(('REPL','site/dist/home/index.html',
+    'class="sec-bar surface-base density-compact" data-sec="nav"',
+    'class="bogus-class" data-sec="nav"')),
  'check_no_stray_styles': mut(('REPL','site/dist/home/index.html','</head>','<style>a{color:#123456}</style></head>')),
  'check_page_data_attrs': mut(('REPL','site/dist/home/index.html','data-sec="hero"','data-x="hero"')),
  'check_heading_verbatim': mut(('REPL','site/dist/home/index.html','What is testing?','Something else?')),
@@ -1010,19 +1029,16 @@ MUT = {
     '"model_lane":"coordinated"}]}')),
  'check_bounded_review': mut(('REPL','REVIEW.json',
     '"pi-default-vlm"','"opus-4"')),
+ 'check_section_program': mut(('REPL','DESIGN-PLAN.md',
+    'speech_act: [proof], category: content',
+    'speech_act: [detail], category: content')),
+ 'check_hero_composition': mut(('REPL','DESIGN-PLAN.md',
+    'composition: split-media','composition: cards-n')),
  'check_vlm_evidence': mut(('REPL','REVIEW.json',
      '"vlm_evidence"','"vlm_evidence_off"'),),
- 'check_serial_build_warn': mut(('REPL','DESIGN-PLAN.md',
-    'fs: "Testing is the thing."}]}\n'
-    '      - {name: end-act',
-    'fs: "Testing is the thing."}]}\n'
-    '      - {name: proof2, wf_ref: "cards/index.html#d1:macro", '
-    'speech_act: [detail], category: content, surface: muted, '
-    'density: regular, composition: logo-wall, emphasis: answer, '
-    'align: col-1-edge, stack: text-first, collapse: "2-col", '
-    'media_ratio: none, disclosure: open, intent: proof, '
-    'refs: [mobbin-def457], vector: [{heading: "Who trusts us?", '
-    'fs: "Everyone."}]}\n      - {name: end-act')),
+ 'check_serial_build_warn': mut(('SET','BUILD-PLAN.json',
+    '{"lanes":[{"id":"orchestrate","kind":"orchestrator",'
+    '"model_lane":"coordinated"}]}')),
  'check_hero_fold': mut(('REPL','site/dist/home/index.html',
      'class="sec-band surface-base density-spacious"',
      'class="sec-band surface-base density-spacious min-h-screen"'),
@@ -1039,38 +1055,40 @@ MUT = {
      'data-dna-fit="42"></div><div data-candidate="c2" '
      'data-dna-fit="80"></div><input type="radio"></div>'),),
  'check_primary_cta': mut(('REPL','site/dist/home/index.html',
-     '<form class="grid gap-fluid-s" novalidate>',
-     '<a class="btn-primary" href="/x">Extra</a>'
-     '<a class="btn-primary" href="/y">Also</a>'
-     '<form class="grid gap-fluid-s" novalidate>')),
+     '<form class="card gap-form">',
+     '<a class="btn-primary" href="/x">One</a>'
+     '<a class="btn-primary" href="/y">Two</a>'
+     '<form class="card gap-form">')),
  'check_interaction_states': mut(('REPL','site/src/styles/global.css',
      ':focus-visible',':focus'),('REPL','site/src/styles/global.css',
      '.btn-primary:hover',''),
      ('REPLGLOB','site/dist/_astro/',':focus-visible',':focus'),
      ('REPLGLOB','site/dist/_astro/','.btn-primary:hover','')),
  'check_forms': mut(('REPL','site/dist/home/index.html',
-     '<label class="grid gap-fluid-s text-fluid--1">',
-     '<x-label class="grid gap-fluid-s text-fluid--1">')),
+     '<label class="field">','<x-label class="field">')),
  'check_heading_pattern': mut(('REPL','site/dist/home/index.html',
-     '<h2 class="text-fluid-2">What is testing?</h2>','')),
+     '<h2 class="text-fluid-3">What is testing?','')),
  'check_equal_cards': mut(('REPL','site/dist/home/index.html',
      '<svg data-motif','<div class="card"></div><div class="cardx feature"></div><svg data-motif')),
  'check_dark_media': mut(('REPL','site/src/styles/global.css',
      '.dark img { filter: brightness(.85) contrast(.92); }',''),
      ('REPLGLOB','site/dist/_astro/',
-      '.dark img{filter:brightness(.85) contrast(.92)}','')),
- 'check_logo': mut(('REPL','site/dist/home/index.html',' h-6','')),
+      '.dark img{filter:brightness(.85) contrast(.92)}',''),
+     ('APPEND','site/dist/home/index.html',
+      '<img src="/x.png" alt="a">')),
+ 'check_logo': mut(('REPL','site/dist/home/index.html',
+     'class="brand-mark logo"','class="logo"')),
  'check_accent_surfaces': mut(('REPL','site/dist/home/index.html',
      'surface-muted','surface-inverse')),
  'check_landmarks': mut(('REPL','site/dist/home/index.html',
      '<main id="main">','<div id="main">')),
  'check_sticky_offset': mut(('REPL','site/dist/home/index.html',
-     'class="sec-band surface-base density-compact"',
-     'class="sec-band surface-base density-compact sticky"')),
+     'class="sec-band surface-base density-spacious"',
+     'class="sec-band surface-base density-spacious sticky"')),
  'check_footer_structure': mut(('REPL','site/dist/home/index.html',
-     '<small class="text-fluid--1">&copy; 2026 Section heading'
-     '\n· <a class="underline" href="/privacy">Privacy</a>'
-     '\n· <a class="underline" href="/terms">Terms</a></small>','')),
+     '<div class="legal"> <span>Copyright 2026 Brand</span> '
+     '<span>Licensed Victorian plumber · ABN 00 000 000 000</span> '
+     '</div>','')),
  'check_meta': mut(('REPL','site/dist/home/index.html',
      '<meta name="description" content>','')),
  'check_intent_deviation': mut(('REPL','DESIGN-PLAN.md',
@@ -1120,9 +1138,11 @@ MUT = {
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
      'preview/variants.html')),
- 'check_round_gated': mut(('REPL','preview/layouts.html',
-     'data-sec="hero" data-comp="split-media"',
-     'data-sec="hero" data-comp="stacked-hero"')),
+ 'check_round_gated': mut(
+     ('REPL','preview/layouts.html',
+      'data-comp="stacked-hero"','data-comp="split-media"'),
+     ('REPL','preview/layouts.html',
+      'data-comp="comparison"','data-comp="cards-n"')),
  'check_round_gated_look': mut(('REPL','preview/variants.html',
      'var(--type-ratio',
      'var(--bogus-ratio'),('REPL','preview/variants.html',
@@ -1136,8 +1156,8 @@ MUT = {
      'width: 10px; } to { transform: rotate(1turn); width: 20px; } } '
      '.spin { animation: unregistered-spin 2s infinite; }')),
  'check_content_map': mut(
-     ('REPL','DESIGN-PLAN.md','content_ids: [c-cta]',
-      'content_ids: [c-cta, c-invented]')),
+     ('REPL','DESIGN-PLAN.md','content_ids: [c-cta, c-faq]',
+      'content_ids: [c-cta, c-faq, c-invented]')),
  'check_skeleton': mut(
      ('APPEND','site/dist/home/index.html',
       '<section data-sec="proof" data-comp="logo-wall" '
@@ -1153,17 +1173,16 @@ MUT = {
  'check_motion_js_budget': mut(('SET','site/dist/_astro/mo.js',
      'gsap.to(".x",{y:9});' + 'x'*5000)),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',
-     '<h2 class="text-fluid-2">What is testing?</h2>',
-     '<a class="card" href="/x"><h2 class="text-fluid-2">What is testing?</h2></a>')),
+     '<h2 class="text-fluid-3">What is testing?</h2>',
+     '<a class="card" href="/x"><h2 class="text-fluid-3">What is testing?</h2></a>')),
  'check_trend_vocab': mut(('REPL','DNA.json',
      '"variants": [',
      '"trend": [{"trend": "retro-max", "confidence": 0.9, '
      '"evidence": "x"}], "variants": [')),
  'check_component_profile': mut(('REPL','site/dist/home/index.html',
      'data-comp="cards-n"','data-comp="bogus-comp"')),
- 'check_dead_columns': mut(('REPL','site/dist/home/index.html',
-     '<img class="h-full w-full object-cover"',
-     '<div></div><img class="h-full w-full object-cover"')),
+ 'check_dead_columns': mut(('APPEND','site/dist/home/index.html',
+     '<section data-comp="split-media" data-sec="dead"><img src="/x.png" alt="a"><div></div></section>')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
  'check_burst': mut(('REPL','DESIGN-PLAN.md',
     'name: d2, wildcard: false','name: d2, wildcard: true')),
@@ -1192,8 +1211,8 @@ MUT = {
     '>Testing is the thing.</p>',
     '>' + 'long copy sentence ' * 20 + '</p>')),
  'check_seo_lint': mut(('REPL','site/dist/home/index.html',
-    '<h2 class="text-fluid-2">What is testing?</h2>',
-    '<h4 class="text-fluid-2">What is testing?</h4>')),
+    '<h2 class="text-fluid-3">What is testing?',
+    '<h4 class="text-fluid-3">What is testing?')),
  'check_section_contracts': mut(('DEL','sections/01-hero.contract.json')),
  'check_dna': mut(('REPL','DNA.json','"type.ratio": 1.25','"type.ratio": 9.9')),
  'check_dna_fresh': mut(('REPL','site/src/components/sections/Hero.astro',
@@ -1207,10 +1226,10 @@ MUT = {
      ('DEL','shots/1280-dark-home.png'),
      ('DEL','shots/768-dark-home.png'),
      ('DEL','shots/360-dark-home.png')),
- 'check_section_shell': mut(('REPL','site/src/components/split-media.astro',
-    'class="grid gap-stack items-center md:grid-cols-2"','class="py-24 grid gap-stack items-center md:grid-cols-2"')),
+ 'check_section_shell': mut(('APPEND','site/src/components/sections/Hero.astro',
+    '<style>.x{color:#111}</style>')),
  'check_section_allowed': mut(('REPL','site/src/components/cards-n.astro',
-    'text-fluid-2','text-[42px]')),
+    'text-fluid-3','text-[42px]')),
  'check_section_gates': mut(('SET','sections/01-hero.gate.json',
     '{"section": "hero", "pass": false, "failures": ["seeded"]}')),
  'check_exemplars': mut(('REPL','site/src/components/sections/Nav.astro',
@@ -1226,18 +1245,17 @@ MUT = {
     'style_licences:\n  - {cluster: made-up-style, where: ""}\n'
     'decisions:\n  - {rule_id: L.3')),
  'check_segment_roles': mut(('REPL','site/dist/home/index.html',
-    'data-sec="macro"','data-x="macro"')),
+    'data-sec="hero"','data-x="hero"')),
  'check_segment_region': mut(('REPL','site/dist/home/index.html',
-    '<section class="sec-band surface-muted density-regular" data-sec="macro"',
-    '<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>\n<section class="sec-band surface-muted density-regular" data-sec="macro"')),
- 'check_segment_share': mut(('REPL','site/dist/home/index.html',
-    'Terms</a></small>',
-    'Terms</a></small>' + '<p>footer boilerplate</p>' * 20)),
- 'check_segment_media': mut(('REPL','site/dist/home/index.html',
-    'alt="Section image"','')),
+    'data-sec="how"','data-sec="legal"')),
+ 'check_segment_share': mut(('APPEND','site/dist/home/index.html',
+    '<nav data-sec="nav">' + '<p>x</p>' * 15
+    + '</nav><footer></footer>')),
+ 'check_segment_media': mut(('APPEND','site/dist/home/index.html',
+    '<section data-sec="media-block"><img src="/x.png"></section>'
+    '<footer></footer>')),
  'check_segment_footer': mut(('REPL','site/dist/home/index.html',
-    ' Contact the team </address>',
-    ' Contact the team </address><h1>Fixture Co</h1>')),
+    '</address>','</address><h2>Fixture Co</h2>')),
  'check_segment_priority': mut(('REPL','site/dist/home/index.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
  'check_checklist': mut(('SET','CHECKLIST/w3.md',
@@ -1283,7 +1301,7 @@ def main():
     with open(hp, 'a', encoding='utf-8') as fh:
         fh.write(_ornament() + '\n')
     mp = os.path.join(base_dir, 'site/src/components/sections',
-                      'Macro.astro')
+                      'Services.astro')
     with open(mp, 'a', encoding='utf-8') as fh:
         fh.write(MOTIF_SVG + '\n')
     # The w7 dist is `astro build` output of that emitted site —
@@ -1346,6 +1364,16 @@ def main():
     _g.setdefault('w4', {'pass': True})
     _g.setdefault('w1', {'pass': True})
     _g.setdefault('w7', {'pass': True})
+    # the fixture key lives in the temp operator home: sign receipts
+    # with gate.op_key() so selftest's key verifies them (P.17).
+    import tempfile as _tf
+    _th = _tf.mkdtemp()
+    os.makedirs(os.path.join(_th, '.web-factory'))
+    with open(os.path.join(_th, '.web-factory', 'operator.key'),
+              'w') as _fh:
+        _fh.write('fixture-key')
+    _saved_home = gate.OPERATOR_HOME
+    gate.OPERATOR_HOME = os.path.join(_th, '.web-factory')
     for rel in ('preview/candidates.html', 'preview/layouts.html',
                 'preview/variants.html', 'preview/fine.html',
                 'SPEC.md', 'ASSEMBLED.md'):
@@ -1356,8 +1384,9 @@ def main():
                    'sha256': hashlib.sha256(
                        BASE[rel].encode()).hexdigest(),
                    'gate_pass': True}
-            rec['sig'] = gate._sig(rec, b'fixture-key')
+            rec['sig'] = gate._sig(rec, gate.op_key())
             _g['artifacts'][rel] = rec
+    gate.OPERATOR_HOME = _saved_home
     # frozen-input hashes — the w2 wave sealed STUB.md (P.22: an
     # input a gate consumed is frozen once that wave passed)
     _g['w2'] = {'pass': True,
@@ -1473,9 +1502,10 @@ def main():
         src = os.path.relpath(os.path.join(FX, '_base', rel), pd)
         if not os.path.lexists(os.path.join(pd, rel)):
             os.symlink(src, os.path.join(pd, rel))
-    # check_genotype/pass: a real 9-row page (nav, hero, cards, logo-wall,
-    # faq, sequence, faq, form, footer) so D.4's catalog->archetype map is
-    # exercised end to end, not just on the 5-row base page.
+    # check_genotype/pass: extra rows (logo-wall proof, faq answers,
+    # sequence how, faq objections) ahead of the end-act so D.4's
+    # catalog->archetype map is exercised end to end, not just on
+    # the 7-row base page.
     gp = os.path.join(FX, 'check_genotype', 'pass', 'DESIGN-PLAN.md')
     if os.path.lexists(gp):
         os.remove(gp)

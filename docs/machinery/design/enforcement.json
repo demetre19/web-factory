@@ -1940,7 +1940,7 @@
   "P.25": {
    "check": "check_vlm_evidence",
    "mode": "script",
-   "threshold": "a re-judged shot whose (image,prompt,model) hash was already recorded — the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third",
+   "threshold": "a re-judged shot whose (image,prompt,model) hash was already recorded \u2014 the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third",
    "tier": "structural",
    "wave": "w8"
   },
@@ -1968,7 +1968,7 @@
   "TL.2": {
    "check": "check_three_layers",
    "mode": "script",
-   "threshold": "rendered candidate with dna-fit outside 0–100 or below the 50 floor",
+   "threshold": "rendered candidate with dna-fit outside 0\u2013100 or below the 50 floor",
    "tier": "invariant",
    "wave": "w5"
   },
@@ -1982,9 +1982,23 @@
   "TL.4": {
    "check": "check_three_layers",
    "mode": "script",
-   "threshold": "candidate surface with ≥2 candidates using radio inputs instead of checkboxes",
+   "threshold": "candidate surface with \u22652 candidates using radio inputs instead of checkboxes",
    "tier": "invariant",
    "wave": "w5"
+  },
+  "J.9": {
+   "check": "check_section_program",
+   "mode": "script",
+   "threshold": "a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items",
+   "tier": "invariant",
+   "wave": "w3"
+  },
+  "J.10": {
+   "check": "check_hero_composition",
+   "mode": "script",
+   "threshold": "the composition carrying the promise is not allowed by the genotype's layout-archetype",
+   "tier": "invariant",
+   "wave": "w3"
   }
  }
 }

@@ -233,5 +233,7 @@ closed set.
 | TL.2 | Candidates are scored on DNA-FIT; the floor is 50 | invariant | script | `check_three_layers` | rendered candidate with dna-fit outside 0–100 or below the 50 floor | w5 |
 | TL.3 | Every candidate carries its seed chain | invariant | script | `check_three_layers` | candidate without its word-seed-chain provenance | w5 |
 | TL.4 | Layers multi-select; a pick is per-layer | invariant | script | `check_three_layers` | candidate surface with ≥2 candidates using radio inputs instead of checkboxes | w5 |
+| J.9 | SECTION-PROGRAM | invariant | script | `check_section_program` | a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items | w3 |
+| J.10 | HERO-COMPOSITION | invariant | script | `check_hero_composition` | the composition carrying the promise is not allowed by the genotype's layout-archetype | w3 |
 
-224 rules — script 193, reviewer 30, operator 1; invariant 86, structural 55, stylistic 83.
+226 rules — script 195, reviewer 30, operator 1; invariant 88, structural 55, stylistic 83.
