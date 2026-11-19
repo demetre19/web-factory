@@ -5,9 +5,10 @@ built bundles — which contain the whole story — were analysed
 statically. Counts below are exact, from the files in this directory.)
 **Policy note (operator, 2026-11-19):** this audit stays analysis-only —
 the GSAP/Lenis patterns were ported as native equivalents
-(`rise-words`, `scroll-scrub`; `js_dependency` none/light). Lenis is the
-one primitive CSS cannot reproduce (wheel-inertia), so smooth-scroll
-runtimes remain justification-required, not banned.
+(`rise-words`, `scroll-scrub`; `js_dependency` none/light). GSAP is the
+only licensed animation library and only with a DESIGN-PLAN licence +
+impossibility justification; Lenis/wheel-inertia is NOT a sanctioned
+exception (scroll smoothing = `scroll-behavior`/rAF, or justify GSAP).
 
 | Artifact | Size | What it carries |
 |---|---|---|

@@ -125,13 +125,15 @@ share one period, disjoint opacity windows — word cyclers).
 progress; ≤ ~2 KB) | `library` (GSAP/anime/lottie/rive/…).
 
 **Policy (operator, 2026-11-19): the tamdoma way is the default.** Pure
-CSS + CSS-animated SVG + minimal vanilla JS triggers. A `library` record
-or recipe requires written justification of what CSS cannot do — the
-only known CSS-impossible case is wheel-inertia smooth scrolling
-(Lenis-class runtimes; CSS has no scroll-velocity channel). Every
-recipe in `templates/motion/` is `none`/`light` by construction: a
-JS-technique recipe (e.g. `scroll-scrub`) must ship a native fallback —
-`rAF-loop` driver or `css-scroll-timeline` — never a library import.
+CSS + CSS-animated SVG + minimal vanilla JS triggers. **GSAP is the
+only licensed animation library, and only with an explicit
+DESIGN-PLAN licence plus a written impossibility justification** —
+what CSS/rAF cannot do and why. There is no carve-out list: Lenis-class
+wheel-inertia smooth scrolling is NOT a sanctioned exception (use
+`scroll-behavior`/rAF or justify GSAP). Every recipe in
+`templates/motion/` is `none`/`light` by construction: a JS-technique
+recipe (e.g. `scroll-scrub`) must ship a native fallback — `rAF-loop`
+driver or `css-scroll-timeline` — never a library import.
 
 ## `status`
 
