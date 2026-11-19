@@ -31,7 +31,6 @@ const {
       <div>
         <h2 class="text-fluid-2">{heading}</h2>
         <p class="text-fluid-0">{fs}</p>
-        <p class="text-fluid-0">Accent heading</p>
       </div>
       <div>
         <div>
@@ -39,9 +38,29 @@ const {
             <div>
               <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
+            <div></div>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+        <div>
+          <div>
             <div>
-              <p class="text-fluid-0">Try for free</p>
-              <p class="text-fluid-0">0</p>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <div></div>
             </div>
           </div>
           <div>
@@ -56,41 +75,10 @@ const {
           </div>
           <div>
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-            <p class="text-fluid-0">Get started in 1 minute!</p>
-          </div>
-        </div>
-        <div>
-          <div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <div>
-              <p class="text-fluid-0">Premium Plan</p>
-              <div>
-                <p class="text-fluid-0">99</p>
-                <p class="text-fluid-0">/year</p>
-              </div>
-              <p class="text-fluid-0">for unlimited site cancel anytime</p>
-            </div>
-          </div>
-          <div>
-            {(items || []).map((it) => (
-              <div>
-                <div>
-                  <span data-icon="lucide" aria-hidden="true"></span>
-                </div>
-                <p class="text-fluid-0">{it.text}</p>
-              </div>
-            ))}
-          </div>
-          <div>
-            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-            <p class="text-fluid-0">Get started in 1 minute!</p>
           </div>
         </div>
       </div>
       <div>
-        <p class="text-fluid-0">4.5</p>
         <div>
           {(items || []).map((it) => (
             <div>
@@ -98,7 +86,6 @@ const {
             </div>
           ))}
         </div>
-        <p class="text-fluid-0">Our precious customers rate us at a whooping 4.5!</p>
       </div>
     </div>
   </div>

@@ -416,6 +416,11 @@ def translate(payload, stem):
                     not seen['p'] and txt and len(txt) > 30:
                 txt = '{fs}'
                 seen['p'] = True
+            elif not ivar:
+                # the payload's own copy is wireframe label text
+                # ("TAGLINE", "Call to action") — the bank supplies
+                # structure, the plan supplies words (SB.5)
+                return ''
             href = ' href="#"' if name == 'text-link' else ''
             return f'{pad}<{tag}{cattr}{href}>{txt}</{tag}>\n'
         if name == 'icon':

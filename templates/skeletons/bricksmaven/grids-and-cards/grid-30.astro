@@ -31,7 +31,6 @@ const {
       <div>
         <h2 class="text-fluid-2">{heading}</h2>
         <p class="text-fluid-0">{fs}</p>
-        <p class="text-fluid-0">Tagline</p>
       </div>
       <div>
         {(items || []).map((it) => (
@@ -51,8 +50,6 @@ const {
           </div>
         ))}
         <div>
-          <h2 class="text-fluid-2">Are you looking for a custom quote?</h2>
-          <p class="text-fluid-0">Don't hesitate to contact us</p>
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>

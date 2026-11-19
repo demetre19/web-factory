@@ -31,12 +31,9 @@ const {
       <div>
         <h2 class="text-fluid-2">{heading}</h2>
         <p class="text-fluid-0">{fs}</p>
-        <p class="text-fluid-0">Tagline</p>
       </div>
       <div>
-        <h2 class="text-fluid-2">Order Receipt</h2>
         <div>
-          <p class="text-fluid-0">Order ID: {woo_order_id}</p>
           {(items || []).map((it) => (
             <p class="text-fluid-0">{it.text}</p>
           ))}
