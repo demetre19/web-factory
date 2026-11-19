@@ -30,6 +30,8 @@ import vlm  # noqa: E402
 import chains  # noqa: E402
 import picker  # noqa: E402
 import dna_tokens  # noqa: E402
+import retrieval  # noqa: E402
+import adapt  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out10')
@@ -37,6 +39,9 @@ SHOTS = os.path.join(OUT, 'shots')
 VENV_PY = os.path.join(os.path.dirname(os.path.dirname(
     os.path.dirname(HERE))), '.venv-vlm', 'bin', 'python')
 SHOT_RENDERER = os.path.join(HERE, 'shot_render.py')
+SHOT_HTML = os.path.join(HERE, 'shot_html.py')
+PW_PY = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(HERE))), '.venv', 'bin', 'python')
 
 S = '/System/Library/Fonts/'
 SU = S + 'Supplemental/'
@@ -365,7 +370,7 @@ def _section_type(rid):
     return fam.upper() if len(fam) <= 3 else fam.title()
 
 
-def build_picker(dnas, quality):
+def build_picker(dnas, quality, chosen=None):
     """10-vibe proof picker via the canonical render_picker
     template — 3-col grid, viewport-proportioned scaled frames,
     page-frame context, real sibling renders, neutral chrome."""
@@ -378,7 +383,9 @@ def build_picker(dnas, quality):
         sibs = _siblings(name, dna)
         items.append(picker.PickerItem(
             id=name, name=dna['vibe'], subtitle=dna['site_type'],
-            preview_html=_section_html(name, dna, scope=name),
+            preview_html=(chosen or {}).get(
+                name, {}).get('preview_html')
+            or _section_html(name, dna, scope=name),
             scope_vars=dna['vars'], scope=f'data-dna="{name}"',
             chain=sibs[0]['chain'], fit=max(50, q['composite']),
             dims={d: q[d] for d in gate.J_QUALITY_DIMS},
@@ -394,15 +401,20 @@ def build_picker(dnas, quality):
                    'data-quality': str(q['composite']),
                    'data-score': f'{q["composite"] / 100:.2f}',
                    'data-score100': str(q['composite']),
-                   'data-refs': 'none', 'data-review': 'judged'},
+                   'data-refs': 'none', 'data-review': 'judged',
+                   'data-source': (chosen or {}).get(
+                       name, {}).get('mode', 'gen')},
             selected=False,
             section_type=_section_type(rid)))
+    extra = ART_CSS + ''.join(
+        (chosen[n]['adapt_css'] if chosen and
+         n in chosen else '') for n in dnas)
     return picker.render_picker(
         items, title='10-vibe element proof',
         intro=('Ten DNAs — one card each through RULES→BUILD→JUDGE→'
                'RECHECK. Declared vibe + site type label each card; '
                'select with the checkbox, review opens the modal.'),
-        extra_css=ART_CSS)
+        extra_css=extra)
 
 
 # Rotated allele palettes for the one-retry lane — machinery-legal
@@ -506,9 +518,74 @@ def main():
             out.append(pp_)
         return out
 
+    # ---- retrieve-first: every option looks to the CLIP bank
+    # before the generate path. Retrieval walks the ranking
+    # (top-8, constraint-filtered); the first candidate that
+    # survives adapt + judge is the option's markup. Generation
+    # (_section_html + PIL spec shot) is the fallback when the
+    # ranking exhausts — never a parallel path.
+    bank = retrieval.Bank()
+    retr = {}        # name -> retrieve receipt
+    chosen = {}      # name -> {'html','css','mode','payload','row'}
+    for n, d in dnas.items():
+        r = retrieval.retrieve(d, bank=bank, k=8)
+        retr[n] = r
+        rows = r.get('ranked_rows') or []
+        cand = None
+        for rank_i, (score, row) in enumerate(rows):
+            a = adapt.adapt(d, row, scope=n,
+                            element_dom_fn=_element_dom)
+            if a['mode'] != 'gen':
+                cand = dict(a, row=row, rank=rank_i,
+                            cosine=round(score, 4))
+                break
+        if cand is None:
+            cand = {'mode': 'gen', 'payload': None,
+                    'preview_html': _section_html(n, d, scope=n),
+                    'adapt_css': '', 'row': None, 'rank': None,
+                    'cosine': None}
+        chosen[n] = cand
+        r['choice'] = {'rank': cand['rank'],
+                       'cosine': cand['cosine'],
+                       'mode': cand['mode'],
+                       'payload': cand['payload'],
+                       'recipe_id': (cand['row'] or {}).get(
+                           'recipe_id')}
+        # chosen recipe becomes the option's recipe when a bank
+        # payload supplied one — J.7/receipts bind to what rendered
+        if (cand['row'] or {}).get('recipe_id'):
+            d['retrieved_recipe'] = cand['row']['recipe_id']
+
+    def _render_html(n, d, cand):
+        out = []
+        css = cand['adapt_css'] + ART_CSS
+        for w, h, tag in ((1280, 800, ''), (375, 700, '-m')):
+            job = {'out': os.path.join(SHOTS, f'{n}{tag}.png'),
+                   'width': w, 'height': h, 'scope': n,
+                   'markup': cand['preview_html'],
+                   'css': css, 'vars': d['vars']}
+            jp = os.path.join(SHOTS, f'{n}{tag}.job.json')
+            open(jp, 'w').write(json.dumps(job))
+            env = dict(os.environ)
+            # browsers live under the REAL home — proof HOME may be
+            # a fixture dir; playwright resolves the cache env var.
+            import pwd
+            env.setdefault(
+                'PLAYWRIGHT_BROWSERS_PATH',
+                os.path.join(pwd.getpwuid(
+                    os.getuid()).pw_dir,
+                    'Library', 'Caches', 'ms-playwright'))
+            subprocess.run([PW_PY, SHOT_HTML, jp], check=True,
+                           env=env)
+            out.append(job['out'])
+        return out
+
     shot_map = {}
     for n, d in dnas.items():
-        shot_map[n] = _render(n, d)
+        if chosen[n]['mode'] in ('html', 'topo'):
+            shot_map[n] = _render_html(n, d, chosen[n])
+        else:
+            shot_map[n] = _render(n, d)
 
     # ---- J.1 judgment is REAL — one bounded VLM call per option
     # (cached by image+prompt+model hash; 3 parallel workers) -------
@@ -571,7 +648,10 @@ def main():
                         'reason': 'one-retry knob nudge'})
         dnas[n] = _retry_derive(n, dnas[n], bad,
                                 phase='post-judgment')
-        shot_map[n] = _render(n, dnas[n])
+        if chosen.get(n, {}).get('mode') in ('html', 'topo'):
+            shot_map[n] = _render_html(n, dnas[n], chosen[n])
+        else:
+            shot_map[n] = _render(n, dnas[n])
         calls[n] = _call(n)
         _apply(n)
         q = quality[n]
@@ -585,7 +665,7 @@ def main():
            calls[n].get('parsed')]
 
     # ---- BUILD -----------------------------------------------------
-    picker = build_picker(dnas, quality)
+    picker = build_picker(dnas, quality, chosen)
     pp = os.path.join(OUT, 'vibe-picker.html')
     open(pp, 'w').write(picker)
     build_sha = _sha16(picker)
@@ -814,6 +894,19 @@ def main():
                        'provenance': dnas[n]['knob_provenance']}
                    for n in dnas},
            'recipes': {n: dnas[n]['recipe'] for n in dnas},
+           'retrieved': {n: dnas[n].get('retrieved_recipe')
+                         for n in dnas},
+           'retrieval': {n: {'mode': retr[n].get('mode'),
+                             'key': retr[n].get('key'),
+                             'query': retr[n].get('query'),
+                             'latency_ms': retr[n].get(
+                                 'latency_ms'),
+                             'choice': retr[n].get(
+                                 'choice'),
+                             'candidates': len(
+                                 retr[n].get('ranked',
+                                             []))}
+                         for n in dnas},
            'scores': {n: quality[n]['composite'] for n in dnas},
            'dims': {n: {d: quality[n][d]
                         for d in gate.J_QUALITY_DIMS} for n in dnas},
