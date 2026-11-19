@@ -3097,6 +3097,14 @@ def check_receipts(ctx):
             sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest()
             if sha != rec.get('sha256'):
                 f.append(f'P.17 {rel} changed since its receipt')
+            key = op_key()
+            if key:
+                want = _sig({k: v for k, v in rec.items()
+                             if k != 'sig'}, key)
+                if rec.get('sig') != want:
+                    f.append(f'P.17 {rel} receipt unsigned or '
+                             'badly signed — receipts are bound by '
+                             'the service key, not just a hash row')
     return f
 
 
@@ -6204,7 +6212,7 @@ def _apply_declared_breaks(ctx, fails):
 
 ARTIFACTS = {
     'w3': ['preview/layouts.html'],
-    'w4': ['preview/variants.html'],
+    'w4': ['preview/variants.html', 'preview/fine.html'],
     'w5': ['preview/system.html'],
     'w7': ['SPEC.md', 'ASSEMBLED.md'],
     'w8': ['SCORECARD.json', 'REVIEW.json'],
@@ -6223,6 +6231,9 @@ def write_receipt(ctx, relpath):
     arts[relpath] = {'wave': ctx.wave, 'sha256': sha,
                      'gate_pass': bool((g.get(ctx.wave) or {})
                                        .get('pass'))}
+    key = op_key()
+    if key:
+        arts[relpath]['sig'] = _sig(arts[relpath], key)
     json.dump(g, open(ctx.gates_path, 'w'), indent=1)
 
 
@@ -6259,6 +6270,13 @@ def check_receipt(path):
         wv = rec.get('wave')
         if not (g.get(wv) or {}).get('pass'):
             fails.append(f'{rel}: bound wave {wv} has no PASS entry')
+        key = op_key()
+        if key:
+            want = _sig({k: v for k, v in rec.items() if k != 'sig'},
+                        key)
+            if rec.get('sig') != want:
+                fails.append(f'{rel}: receipt unsigned or badly '
+                             'signed — service-key bound required')
     if fails:
         for x in fails:
             print('receipt FAIL', x)

@@ -1368,13 +1368,15 @@ def main():
     _g.setdefault('artifacts', {})
     _g.setdefault('w3', {'pass': True})
     _g.setdefault('w4', {'pass': True})
-    for rel in ('preview/layouts.html', 'preview/variants.html'):
+    for rel in ('preview/layouts.html', 'preview/variants.html',
+                'preview/fine.html'):
         if rel in BASE:
-            _g['artifacts'][rel] = {
-                'wave': 'w3' if 'layouts' in rel else 'w4',
-                'sha256': hashlib.sha256(
-                    BASE[rel].encode()).hexdigest(),
-                'gate_pass': True}
+            rec = {'wave': 'w3' if 'layouts' in rel else 'w4',
+                   'sha256': hashlib.sha256(
+                       BASE[rel].encode()).hexdigest(),
+                   'gate_pass': True}
+            rec['sig'] = gate._sig(rec, b'fixture-key')
+            _g['artifacts'][rel] = rec
     BASE['GATES.json'] = json.dumps(_g, indent=1)
     with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
         fh.write(BASE['GATES.json'])
@@ -1403,11 +1405,12 @@ def main():
         fh.write(BASE['REVIEW.json'])
     _g = json.loads(BASE['GATES.json'])
     _g.setdefault('w8', {'pass': True})
-    _g['artifacts']['REVIEW.json'] = {
-        'wave': 'w8',
-        'sha256': hashlib.sha256(
-            BASE['REVIEW.json'].encode()).hexdigest(),
-        'gate_pass': True}
+    _rrec = {'wave': 'w8',
+             'sha256': hashlib.sha256(
+                 BASE['REVIEW.json'].encode()).hexdigest(),
+             'gate_pass': True}
+    _rrec['sig'] = gate._sig(_rrec, b'fixture-key')
+    _g['artifacts']['REVIEW.json'] = _rrec
     BASE['GATES.json'] = json.dumps(_g, indent=1)
     with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
         fh.write(BASE['GATES.json'])
