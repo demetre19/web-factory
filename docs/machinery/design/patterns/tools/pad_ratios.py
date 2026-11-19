@@ -470,6 +470,43 @@ def main():
            'version': PAD_V, 'n_images': len(recs),
            'n_measurements': len(rows), 'types': table}
     json.dump(res, open(OUT_JSON, 'w'), indent=1)
+    # gate contract: check_canon_padding reads components by
+    # composition slug with vh_iqr bands — map component types onto
+    # the SECTION-CATALOG compositions
+    TYPE_TO_COMP = {
+        'card': 'cards-n', 'card-grid': 'cards-n',
+        'feature-tile': 'cards-n', 'stat-block': 'stat-band',
+        'testimonial-card': 'quote-grid', 'form-panel': 'form-panel',
+        'nav-item': 'nav-bar', 'footer-column': 'footer-bar',
+        'hero-content-block': 'stacked-hero', 'section': 'editorial',
+        'list-row': 'text-index', 'table-cell': 'comparison',
+        'accordion-row': 'faq', 'tab': 'text-index',
+        'call-to-action': 'capture-form', 'banner': 'app-band',
+    }
+    comps = {}
+    for t, v in table.items():
+        comp = TYPE_TO_COMP.get(t)
+        if not comp or v.get('insufficient'):
+            continue
+        entry = comps.setdefault(comp, {'vh_iqr': v['iqr'],
+                                        'n': v['n'],
+                                        'block_inline': [0.5, 2.0]})
+        entry['n'] += 0  # first wins; per-type detail in padding-ratios
+    canon_pad = {
+        'layer': 'principles',
+        'sources': res.get('sources'),
+        'version': res.get('version'),
+        'components': comps,
+        'by_type': {t: {'vh_iqr': v.get('iqr'), 'n': v['n'],
+                        'tiers': v.get('tiers'),
+                        'verticals': v.get('verticals'),
+                        'exemplars': v.get('exemplars'),
+                        **({'insufficient': True,
+                            'guideline': v.get('guideline')}
+                           if v.get('insufficient') else {})}
+                    for t, v in table.items()}}
+    json.dump(canon_pad, open(os.path.join(
+        DATA, 'CANON-PADDING.json'), 'w'), indent=1)
     print(json.dumps({t: ({'ratio': v['median_ratio'], 'iqr': v['iqr'],
                            'n': v['n']} if not v.get('insufficient')
                           else {'insufficient': v['n'],
