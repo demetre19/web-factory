@@ -1816,6 +1816,13 @@
    "threshold": "sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal)",
    "tier": "invariant",
    "wave": "w7"
+  },
+  "I.10": {
+   "check": "check_lucide",
+   "mode": "script",
+   "threshold": "literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value",
+   "tier": "stylistic",
+   "wave": "w6"
   }
  }
 }

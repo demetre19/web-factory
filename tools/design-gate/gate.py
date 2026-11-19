@@ -814,6 +814,85 @@ def check_icon_discipline(ctx):
 
 META_SCHEMA = os.path.join(REPO, 'docs', 'machinery', 'design', 'patterns',
                           'data', 'web', 'meta.schema.json')
+# I.10 — Lucide is the only icon family, wired as lucide-astro:
+# build-time inline SVG in .astro templates, zero client JS. The
+# semantic resolver maps content icon needs to Lucide names; specs
+# and recipes reference icons by Lucide name (kebab-case) or a
+# semantic alias below.
+LUCIDE_SEMANTIC = {
+    'phone': 'phone', 'call': 'phone', 'mail': 'mail', 'email': 'mail',
+    'check': 'check', 'tick': 'check', 'star': 'star',
+    'map-pin': 'map-pin', 'location': 'map-pin', 'pin': 'map-pin',
+    'arrow-right': 'arrow-right', 'next': 'arrow-right',
+    'chevron-down': 'chevron-down', 'expand': 'chevron-down',
+    'menu': 'menu', 'burger': 'menu', 'close': 'x', 'x': 'x',
+    'clock': 'clock', 'calendar': 'calendar', 'users': 'users',
+    'shield': 'shield-check', 'shield-check': 'shield-check',
+    'award': 'award', 'sparkles': 'sparkles', 'globe': 'globe',
+    'search': 'search', 'heart': 'heart', 'zap': 'zap',
+}
+_ICON_NAME_RX = re.compile(r'^[a-z][a-z0-9-]*$')
+_BAD_ICON_NAMES = {'?', 'todo', 'placeholder', 'icon', 'none-ish',
+                   'unk', 'unknown', 'tbd', 'na', 'n/a'}
+
+
+def check_lucide(ctx):
+    """I.10 — icons are lucide-astro build-time imports only:
+    a literal <svg> in an .astro template (outside Logo*.astro —
+    the logo is bespoke artwork, P.11 owns it) is a hand-drawn icon
+    bypass; using lucide-astro without the declared dependency
+    breaks the build; data-icon values must resolve to a Lucide
+    name (semantic alias or kebab-case Lucide name — never a
+    placeholder)."""
+    f = []
+    src = os.path.join(ctx.site, 'src')
+    uses_lucide = False
+    if os.path.isdir(src):
+        for dp, _, fns in os.walk(src):
+            for fn in fns:
+                if not fn.endswith('.astro'):
+                    continue
+                p = os.path.join(dp, fn)
+                t = open(p, encoding='utf-8', errors='replace').read()
+                rel = os.path.relpath(p, ctx.dir)
+                # split frontmatter from template
+                body = t
+                m = re.match(r'^---\n(.*?\n)?---\n', t, re.S)
+                fm = m.group(1) if m else ''
+                if m:
+                    body = t[m.end():]
+                if re.search(r"from\s+['\"]lucide-astro['\"]", fm):
+                    uses_lucide = True
+                elif re.search(r'<svg\b', body) and \
+                        not fn.lower().startswith('logo'):
+                    f.append(f'I.10 {rel}: literal <svg> in template '
+                             '— icons import lucide-astro and render '
+                             'as components (build-time inline SVG); '
+                             'bespoke marks live in Logo*.astro only')
+    if uses_lucide:
+        pj = os.path.join(ctx.site, 'package.json')
+        try:
+            deps = json.load(open(pj))
+            deps = {**deps.get('dependencies', {}),
+                    **deps.get('devDependencies', {})}
+        except Exception:
+            deps = {}
+        if 'lucide-astro' not in deps:
+            f.append('I.10 site/package.json: lucide-astro imported '
+                     'but not declared as a dependency')
+    # rendered icons must resolve to a real Lucide name
+    for p, t in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(r'data-icon="([^"]*)"', t):
+            nm = m.group(1).strip()
+            if nm in _BAD_ICON_NAMES or not _ICON_NAME_RX.match(nm) \
+                    or ('--' in nm) or nm.endswith('-'):
+                f.append(f'I.10 {name}: data-icon "{nm}" does not '
+                         'resolve to a Lucide name — the resolver '
+                         'falls back to the closest alias, never a '
+                         'placeholder')
+    return f
+
 IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
 IMG_DIRS = ('discovery', 'INTAKE', 'assets', 'images', 'media')
 
@@ -11109,7 +11188,7 @@ WAVE_CHECKS = {
            check_style_licence, check_token_layer],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
-           check_icon_discipline, check_section_shell,
+           check_icon_discipline, check_lucide, check_section_shell,
            check_acss_conventions,
            check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
@@ -11117,7 +11196,7 @@ WAVE_CHECKS = {
     'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,
-           check_icon_discipline, check_speed_budget,
+           check_icon_discipline, check_lucide, check_speed_budget,
            check_motion_recipes, check_motion_js_budget,
            check_skeleton,
            check_acss_conventions,

@@ -208,6 +208,19 @@ Every interactive element carries hover, focus-visible and active
 styles (and a disabled style where applicable); focus rings come from
 tokens (I.7), never the default outline.
 
+### I.10 Lucide-astro wiring — build-time icons only
+
+The canonical icon path is `lucide-astro` (official Astro
+integration, ISC licence, build dep only — zero client JS): icons
+import as components (`import { Phone } from 'lucide-astro'`) and
+render inline SVG at build time. A literal `<svg>` in an `.astro`
+template is a hand-drawn bypass (bespoke marks live in
+`Logo*.astro` only — P.11 owns them). Specs and recipes reference
+icons by Lucide name or a semantic alias (phone → phone,
+shield → shield-check …); the resolver falls back to the closest
+Lucide alias, never a placeholder. `data-icon` values must resolve;
+`lucide-astro` must be a declared dependency when imported.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

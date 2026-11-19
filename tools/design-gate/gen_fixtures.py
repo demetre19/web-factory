@@ -414,6 +414,21 @@ for _fn, _src in SECTIONS.items():
     _fm, _body = _src.split('---', 2)[1], _src.split('---', 2)[2]
     _comp = _fm.strip().split('exemplar:')[1].strip()
     COMPONENTS[_comp] = _body.lstrip('\n')
+# I.8 — cards-n ships a real lucide-astro icon (pass arm); package.json
+# declares the dependency below.
+COMPONENTS['cards-n'] = '''---
+import { Star } from 'lucide-astro';
+---
+<div>
+  <h2 class="text-fluid-2">What is testing?</h2>
+  <p class="mt-stack text-fluid-0">Testing is the thing.</p>
+  <ul class="card-grid mt-fluid-l">
+    <li class="rounded-card border border-muted p-fluid-m">
+      <Star size={24} aria-hidden="true" /> One
+    </li>
+  </ul>
+</div>
+'''
 SECTIONS = {
     _fn: ('---\nexemplar: ' + _comp + '\nimport '
           + ''.join(w.capitalize() for w in _comp.split('-'))
@@ -1019,7 +1034,8 @@ BASE = {
     'CHECKLIST/w5.md': CHECKLIST_W5,
     'audit.md': '# audit\n## Defect table\n- E.1 missing macro H2\n'
                 '## keep-list\n- logo.svg\n',
-    'site/package.json': '{"name":"fixture","scripts":{"build":"true"}}',
+    'site/package.json': '{"name":"fixture","scripts":{"build":"true"},'
+        '"dependencies":{"lucide-astro":"^0.4.0"}}',
     'site/astro.config.mjs': 'export default {};\n',
     'site/tailwind.config.js': TAILWIND_CFG,
     'site/src/styles/global.css': _global_css(),
@@ -1192,6 +1208,8 @@ MUT = {
  'check_context_budget': mut(('APPEND','STUB.md',
     '| pad | ' + 'x' * 500_000)),
  'check_icon_discipline': mut(('REPL','site/dist/home/index.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
+ 'check_lucide': mut(('SET','site/src/components/raw-icon.astro',
+     '<svg viewBox="0 0 24 24"><path d="M0 0h24"/></svg>'),),
  'check_review_completeness': mut(('REPL','REVIEW.json','"pi-default-vlm"','"swe-2"')),
  'check_parallel_build': mut(('SET','BUILD-PLAN.json',
     '{"lanes":[{"id":"sec-macro","kind":"section",'
