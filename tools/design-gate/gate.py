@@ -10361,6 +10361,60 @@ def check_bounded_review(ctx):
         f.append('P.21 per_design must be [{design, pass, …}] rows')
     return f
 
+def check_vlm_evidence(ctx):
+    """P.24 — VLM judgment leaves a real invocation record:
+    when REVIEW.json claims vlm_calls ≥1, `vlm_evidence` must carry
+    {model, command, image_sha256, prompt_sha256, output_sha256}
+    with every referenced shot present and hash-matching —
+    a `judged_by` label without evidence is a formula wearing a
+    costume."""
+    rv_path = os.path.join(ctx.dir, 'REVIEW.json')
+    if not os.path.isfile(rv_path):
+        return []
+    try:
+        rv = json.load(open(rv_path))
+    except Exception:
+        return []
+    vc = rv.get('vlm_calls')
+    if not vc:
+        return []
+    ev = rv.get('vlm_evidence')
+    f = []
+    if not isinstance(ev, dict):
+        return ['P.24 vlm_calls>0 but no vlm_evidence record — '
+                'the judgment must be an actual invocation '
+                '(command + hashed images + hashed output), not a '
+                'label']
+    for k in ('model', 'command', 'output_sha256', 'prompt_sha256'):
+        if not ev.get(k):
+            f.append(f'P.24 vlm_evidence missing {k}')
+    imgs = ev.get('image_sha256') or {}
+    if not imgs:
+        f.append('P.24 vlm_evidence.image_sha256 empty — the call '
+                 'graded nothing')
+    for rel, sha in imgs.items():
+        cand = [os.path.join(ctx.dir, rel),
+                os.path.join(ctx.dir, 'shots', os.path.basename(rel))]
+        hit = None
+        for p in cand:
+            if os.path.isfile(p):
+                hit = p
+                break
+        if not hit:
+            f.append(f'P.24 vlm_evidence image {rel} absent — '
+                     'evidence files stay on disk')
+            continue
+        cur = hashlib.sha256(open(hit, 'rb').read()).hexdigest()[:16]
+        if cur != sha:
+            f.append(f'P.24 vlm_evidence image {rel} hash drift '
+                     f'({sha[:8]}→{cur[:8]}) — evidence is frozen')
+    if ev.get('model') and rv.get('reviewer_model') and \
+            str(ev['model']) != str(rv['reviewer_model']):
+        f.append(f'P.24 reviewer_model {rv.get("reviewer_model")} '
+                 f'!= vlm_evidence.model {ev.get("model")} — '
+                 'the recorded call IS the grader')
+    return f
+
 J_QUALITY_DIMS = ('hero_clarity', 'layout_craft', 'media_fit',
                   'mobile', 'distinctness')
 
@@ -11579,7 +11633,7 @@ WAVE_CHECKS = {
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,
            check_style_review, check_novelty, check_review_modes,
-           check_variants],
+           check_variants, check_vlm_evidence],
 }
 
 # P.19 — every wave's step runs on a budgeted context packet

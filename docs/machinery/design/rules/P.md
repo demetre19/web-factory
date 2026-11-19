@@ -272,6 +272,17 @@ stay warn-tier; here an LLM/VLM judgment (REVIEW quality, style
 review, novelty) is BLOCKING when recorded — warns are never the
 default for judgment, `--allow-warns` is a deliberate exception only.
 
+### P.24 VLM judgment leaves a real invocation record
+
+When `REVIEW.json` claims `vlm_calls ≥ 1`, the review must carry
+`vlm_evidence`: the actual call — `{model, command, image_sha256,
+prompt_sha256, output_sha256}` — with every graded shot still on
+disk and hash-matching, and `vlm_evidence.model` equal to
+`reviewer_model`. A `judged_by` label without the invocation is a
+formula wearing a costume; the recorded call IS the grader
+(`tools/design-gate/vlm.py` — default lane
+`mlx-community/Qwen2.5-VL-3B-Instruct-4bit`, local MLX).
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

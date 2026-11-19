@@ -1065,7 +1065,15 @@ BASE = {
                   'plan_fit': True, 'refs_resolve': True,
                   'tokens_resolve': True, 'plan_vector_dist': 0.4}
         for i in range(1, 4)}}}, indent=1),
-    'REVIEW.json': REVIEW,
+    'REVIEW.json': REVIEW.replace('"vlm_calls": 1,',
+        '"vlm_calls": 1,\n"vlm_evidence": {'
+        '"model": "pi-default-vlm", "command": '
+        '"mlx_vlm.generate --model pi-default-vlm", '
+        '"image_sha256": {"shots/1280-light-home.png": "'
+        + hashlib.sha256(
+            SHOTS['shots/1280-light-home.png']).hexdigest()[:16]
+        + '"}, "prompt_sha256": "fixtureprompt", '
+        '"output_sha256": "fixtureout"},'),
     'NOVELTY.json': '{"distance": 0.21, "bound": 0.35}',
     'CHECKLIST/w2.md': CHECKLIST_W2,
     'CHECKLIST/w5.md': CHECKLIST_W5,
@@ -1258,6 +1266,8 @@ MUT = {
     '"model_lane":"coordinated"}]}')),
  'check_bounded_review': mut(('REPL','REVIEW.json',
     '"pi-default-vlm"','"opus-4"')),
+ 'check_vlm_evidence': mut(('REPL','REVIEW.json',
+     '"vlm_evidence"','"vlm_evidence_off"'),),
  'check_serial_build_warn': mut(('REPL','DESIGN-PLAN.md',
     'fs: "Testing is the thing."}]}\n'
     '      - {name: end-act',

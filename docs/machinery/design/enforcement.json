@@ -1907,6 +1907,13 @@
    "threshold": "data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements \u2014 illustration, not motif",
    "tier": "invariant",
    "wave": "w7"
+  },
+  "P.24": {
+   "check": "check_vlm_evidence",
+   "mode": "script",
+   "threshold": "vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model",
+   "tier": "invariant",
+   "wave": "w8"
   }
  }
 }
