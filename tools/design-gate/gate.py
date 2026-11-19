@@ -2113,9 +2113,14 @@ def check_intent_deviation(ctx):
                          '— needs declared_deviation {choice, chosen, '
                          'expected, reason}')
             continue
-        if dev and isinstance(dev, dict) and not dev.get('expected'):
-            f.append(f'D.5 {ch} declared_deviation lacks "expected" '
-                     '(record the model top-2)')
+        if dev and isinstance(dev, dict):
+            if not dev.get('expected'):
+                f.append(f'D.5 {ch} declared_deviation lacks "expected" '
+                         '(record the model top-2)')
+            if not str(dev.get('reason') or '').strip():
+                f.append(f'D.5 {ch} declared_deviation lacks a reason '
+                         '— a deviation without a recorded reason is '
+                         'undeclared')
         if ch in ('imagery', 'image_style', 'mood_register') and dev \
                 and not dev.get('copy_cite'):
             f.append(f'D.5 {ch} deviation needs copy_cite — the sentence '
@@ -2190,6 +2195,22 @@ def check_auto_grid(ctx):
             f.append(f'G.5 {name}: "{sel.strip()}" scrolls horizontally '
                      '— rails are banned unless declared full-bleed '
                      '(edge-to-edge)')
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-comp="(cards[^"]*|logo[^"]*|'
+                r'proof[^"]*|gallery[^"]*)"[^>]*>(.*?)</section>',
+                txt, re.S):
+            comp, body = m.group(1), m.group(2)
+            tag = m.group(0)[:400]
+            rail = re.search(
+                r'overflow-x:\s*(?:auto|scroll)|\bsnap-x\b|'
+                r'\bscroll-snap|flex\s+overflow-x|white-space:\s*'
+                r'nowrap[^}]*overflow', tag + body[:800], re.S)
+            if rail and 'full-bleed' not in tag + body[:800]:
+                f.append(f'G.5 {name} sec {comp}: a sideways card rail '
+                         'on desktop — wrap into an auto-fit grid or '
+                         'declare full-bleed')
     return f
 
 
@@ -2216,11 +2237,11 @@ def check_surface_rhythm(ctx):
         tagged = [s for s in blocks if s.get('data-sec')]
         surfaces = [_surface_of(s) for s in tagged]
         for i in range(1, len(surfaces)):
-            if surfaces[i] == surfaces[i - 1] and \
-                    surfaces[i] != 'default':
+            if surfaces[i] == surfaces[i - 1]:
                 f.append(f'L.14 {name}: sections {i}/{i + 1} share '
                          f'surface "{surfaces[i]}" — alternate '
-                         'white → light grey/tint → white')
+                         'white → light grey/tint → white (adjacent '
+                         'white sections FAIL too)')
         for i, s in enumerate(tagged):
             cls = str(s.get('class') or '')
             style = str(s.get('style') or '')
@@ -2287,6 +2308,11 @@ def check_hero_fold(ctx):
                      '(1280x720, 1440x800, 375x667)')
         cls = re.search(r'class="([^"]*)"', tag)
         cls = cls.group(1) if cls else ''
+        if re.search(r'\bmin-h-screen\b', cls) or re.search(
+                r'min-height:\s*100(?:d|s)?vh', tag):
+            f.append(f'R.10 {name}: hero is min-h-screen/100vh — the '
+                     'hero sizes to content + section-space padding, '
+                     'never pins a viewport of dead air above the CTA')
         py = re.search(r'\bpy-(\d+)', cls)
         if py and int(py.group(1)) * 4 > 80:
             f.append(f'R.10 {name}: hero top padding py-{py.group(1)} '

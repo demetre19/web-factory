@@ -94,7 +94,7 @@ site:
 burst: 2
 dna:
   profile: profile-services
-  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal}
+  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal, trend: none}
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3}
   - {name: d2, wildcard: false, temperature: cool, shape: p2}
@@ -893,7 +893,7 @@ def dna_doc():
             "heading-form": "claim", "whitespace-band": "medium",
             "gallery-mode": "grid", "form-presence": "inline",
             "mood-energy": "calm", "mood-register": "approachable",
-            "image-style": "minimal",
+            "image-style": "minimal", "trend": "none",
         },
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},
@@ -1115,6 +1115,8 @@ MUT = {
  'check_icon_discipline': mut(('REPL','site/dist/home/index.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
  'check_review_completeness': mut(('REPL','REVIEW.json','"opus-4"','"swe-2"')),
  'check_hero_fold': mut(('REPL','site/dist/home/index.html',
+     'class="sec-band py-16"',
+     'class="sec-band py-16 min-h-screen"'),('REPL','site/dist/home/index.html',
      '<a class="btn-primary" href="/book">Book now</a>','')),
  'check_canon_padding': mut(('SET','CANON-PADDING.json',
      '{"components":{}}'),
@@ -1152,7 +1154,10 @@ MUT = {
      '"wildcard_seed": 424242','"wildcard_seed": null')),
  'check_auto_grid': mut(('REPL','site/src/styles/global.css',
      '.card-grid { display: grid; gap: var(--space-4); }',
-     '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }')),
+     '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }'),
+     ('REPL','site/dist/home/index.html',
+      'class="card-grid py-24"',
+      'class="card-grid py-24 snap-x overflow-x-auto"')),
  'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
      'class="card-grid py-24"','class="sec-band"')),
  'check_intent_sections': mut(
