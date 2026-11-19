@@ -15,6 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
 sys.path.insert(0, HERE)
 import gate  # noqa: E402  (hash helpers for the fixture DNA)
+import emit_global  # noqa: E402  (canonical emit producers — no drift)
 import ornament  # noqa: E402  (O.1 — ornaments render generate() output)
 
 
@@ -214,77 +215,12 @@ sections:
 ```
 '''
 
-GLOBAL_CSS_TAIL = '''
-h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
+# The component layer is a canonical emit_global producer — the
+# fixture consumes the same recipe the pipeline does (no drift).
+GLOBAL_CSS_TAIL = emit_global.GLOBAL_CSS_TAIL
 
-:root {
-  --text-wrap-heading: balance;
-  --text-wrap-body: pretty;
-  --flow-spacing: var(--space-4);
-}
-.flow > * + * { margin-block-start: var(--flow-spacing); }
-h1, h2 { text-wrap: var(--text-wrap-heading); }
-p { text-wrap: var(--text-wrap-body); }
-img { object-fit: cover; }
-input { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
-  --c-ink: #111111;
-  --c-paper: #ffffff;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 150ms !important;
-    transition: opacity 150ms linear !important;
-    transform: none !important;
-  }
-}
-
-.dark {
-  --c-ink: #EDEBE7;
-  --c-paper: #14181A;
-}
-
-@layer components {
-  .sec-band { padding-block: var(--py); }
-  .sec-inner { max-width: 72rem; margin-inline: auto; }
-  .ratio-portrait { aspect-ratio: 3 / 4; }
-  .variant-stage { container-type: inline-size; }
-  .variant-switcher { position: sticky; top: 0; }
-  .btn-primary { min-height: var(--tap); }
-  .burger { display: none; }
-  .inverse { background: var(--c-ink); color: var(--c-paper); }
-  .fold-row { border-top: 1px solid var(--c-line); }
-  .card-grid { display: grid; gap: var(--space-4); }
-  .btn-primary:hover { filter: brightness(1.08); }
-  .btn-primary:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 2px; }
-  .btn-primary:disabled { opacity: .5; }
-  .skip-link { position: absolute; left: -9999px; }
-  .skip-link:focus { left: 8px; }
-  .logo { font-weight: 700; }
-  .helper { font-size: .875rem; }
-}
-.dark img { filter: brightness(.85) contrast(.92); }
-}
-'''
-
-TAILWIND_CFG = '''/** generated from TOKENS.json — fixture */
-export default {
-  darkMode: 'class',
-  content: ['./src/**/*.{astro,html}'],
-  theme: { extend: {
-    colors: { ink: '#221f1b', paper: '#fdfcfa', accent: '#0055aa',
-      surface: '#f1efec', border: '#d8d3cc', inverse: '#1d2325',
-      darkbg: '#14181a', darksurface: '#1c2224', darkink: '#edebe7',
-      darkborder: '#2c3437', darkinverse: '#f4f2ee',
-      darkelev: '#232a2c', darkaccent: '#4c93d6', darkaccentfg: '#0e1416',
-      muted: '#6f665d', darkmuted: '#a8a49d', elev: '#ebe7e1',
-      white: '#ffffff' },
-    fontSize: { 'fluid-0': 'var(--fs-0)' },
-    borderRadius: { card: 'var(--r-card)' },
-    spacing: { tap: '44px' },
-  } },
-}
-'''
+# Bound after TOKENS below (same modes) — tailwind.config.js carries
+# every TOKENS hex verbatim (check_tailwind_derivation).
 
 KNOBS = {
     "type.ratio": 1.25, "type.base": 16, "type.display_weight": 700,
@@ -314,6 +250,8 @@ TOKENS = json.dumps({
         "roles": LIGHT,
     },
 }, indent=1)
+TAILWIND_CFG = emit_global.tailwind_config(json.loads(TOKENS))
+
 
 PAGE_HTML = '''<!doctype html><html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -902,25 +840,17 @@ CHECKLIST_W5 = '''# W5 checklist
 | PS.1 one role per row | DESIGN-PLAN.md sections[].speech_act |
 '''
 
-SECTION_ASTRO = '''---
-interface Props {
-  sec: string;
-  comp: string;
-  'wf-ref'?: string;
-  ratio?: string;
-  disclosure?: string;
-  surface?: string;
-  density?: string;
-}
-const { sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
-        surface = 'base', density = 'regular' } = Astro.props;
----
-<section class="sec-band" data-sec={sec} data-comp={comp} data-ratio={ratio}
-         data-disclosure={disclosure} data-surface={surface}
-         data-density={density} data-wf-ref={wfRef}>
-  <div class="sec-inner"><slot /></div>
-</section>
-'''
+_REPO = os.path.dirname(os.path.dirname(HERE))
+
+
+def _read_template(rel):
+    return open(os.path.join(_REPO, rel), encoding='utf-8').read()
+
+
+# The shell + layout the pipeline scaffolds verbatim — fixture uses the
+# template files, never a drifting inline copy.
+SECTION_ASTRO = _read_template('templates/sections/Section.astro')
+LAYOUT_ASTRO = _read_template('templates/layouts/BaseLayout.astro')
 
 def dna_doc():
     doc = {
@@ -1026,14 +956,9 @@ def _wild_hist():
     return json.dumps([e])
 
 def _global_css():
-    """Five-layer Tailwind-v4 token layer (emit_tokens) over the
-    fixture TOKENS + the legacy component layer — TK.1's emitted
-    shape is exactly what gate checks demand."""
-    import emit_tokens as _et
-    head = '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n'
-    emit_lines = _et.emit(json.loads(TOKENS)).split('\n')
-    body = '\n'.join(emit_lines[5:])
-    return head + '\n' + body + '\n' + GLOBAL_CSS_TAIL.lstrip('\n')
+    """Exactly emit_global.global_css — the fixture's global.css is the
+    pipeline producer's output, not a parallel recipe."""
+    return emit_global.global_css(json.loads(TOKENS))
 
 
 def _fx_sig(rec):
@@ -1094,6 +1019,7 @@ BASE = {
     'site/src/components/sections/Macro.astro': SECTIONS['Macro.astro'],
     'site/src/components/sections/EndAct.astro': SECTIONS['EndAct.astro'],
     'site/src/components/sections/Footer.astro': SECTIONS['Footer.astro'],
+    'site/src/layouts/BaseLayout.astro': LAYOUT_ASTRO,
     'CHECKLIST/w3.md': '| Rule | Evidence |\n|---|---|\n'
                        '| T.1 font directory | Inter + Ionicons listed |\n',
     '.wave': 'w3',
