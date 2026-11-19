@@ -146,9 +146,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .surface-inverse { --sec-bg: var(--bg-inverse); --sec-fg: var(--text-inverse); }
   .surface-brand { --sec-bg: var(--action-primary); --sec-fg: var(--action-primary-ink); }
   .surface-media { --sec-bg: transparent; }
-  .density-compact { --sec-pad: var(--section-space-s); }
-  .density-regular { --sec-pad: var(--section-space-m); }
-  .density-spacious { --sec-pad: var(--section-space-l); }
+  /* DENSITY-RUNGS */
   /* attribute scopes — same contract as the classes; Section.astro
      emits both so source and built page stay consistent. */
   [data-surface="muted"] { --sec-bg: var(--bg-surface); }
@@ -157,9 +155,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-surface="brand"] { --sec-bg: var(--action-primary);
                            --sec-fg: var(--action-primary-ink); }
   [data-surface="media"] { --sec-bg: transparent; }
-  [data-density="compact"] { --sec-pad: var(--section-space-s); }
-  [data-density="regular"] { --sec-pad: var(--section-space-m); }
-  [data-density="spacious"] { --sec-pad: var(--section-space-l); }
   .site-foot { border-top: 1px solid var(--c-line);
                padding-block: var(--space-m); }
 }
@@ -254,11 +249,32 @@ export default {{
 '''
 
 
+def _density_css(tokens):
+    """knobs.space.section_py names the rung each density uses — emit
+    that, else the s/m/l default the fixtures encode."""
+    py = ((tokens.get('knobs') or {})
+          .get('space.section_py')) or {}
+    rung = lambda d, f: str(py.get(d) or f'section-space-{f}')
+    rows = (('compact', rung('compact', 's')),
+            ('regular', rung('regular', 'm')),
+            ('spacious', rung('spacious', 'l')))
+    out = []
+    for name, var in rows:
+        out.append(f'  .density-{name} '
+                   f'{{ --sec-pad: var(--{var}); }}')
+    for name, var in rows:
+        out.append(f'  [data-density="{name}"] '
+                   f'{{ --sec-pad: var(--{var}); }}')
+    return '\n'.join(out)
+
+
 def global_css(tokens):
     """@tailwind headers + emit_tokens' five TK layers + the component
-    tail — exactly the recipe gen_fixtures._global_css encoded."""
+    tail (density rungs derived from knobs.space.section_py)."""
     head = ('@tailwind base;\n@tailwind components;\n'
             '@tailwind utilities;\n')
     emit_lines = emit_tokens.emit(tokens).split('\n')
     body = '\n'.join(emit_lines[5:])
-    return head + '\n' + body + '\n' + GLOBAL_CSS_TAIL.lstrip('\n')
+    tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
+        '  /* DENSITY-RUNGS */', _density_css(tokens))
+    return head + '\n' + body + '\n' + tail
