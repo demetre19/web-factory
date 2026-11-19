@@ -17,15 +17,24 @@ interface Props {
   ratio?: string;
   disclosure?: string;
   surface?: 'base' | 'muted' | 'inverse' | 'brand' | 'media';
-  density?: 'compact' | 'regular' | 'spacious';
+  intent?: string;
+  content?: string;
+  cols?: string;
+  recipe?: string;
+  seam?: string;
+  'seam-shape-top'?: string;
+  'seam-shape-bottom'?: string;
+  skeleton?: string;
 }
 const {
   sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
-  surface = 'base', density = 'regular',
+  surface = 'base', density = 'regular', intent, content, cols,
+  recipe, seam, 'seam-shape-top': seamTop,
+  'seam-shape-bottom': seamBottom, skeleton,
 } = Astro.props;
 ---
 <section
-  class="sec-band"
+  class="sec-band surface-{surface} density-{density}"
   data-sec={sec}
   data-comp={comp}
   data-ratio={ratio}
@@ -33,6 +42,14 @@ const {
   data-surface={surface}
   data-density={density}
   data-wf-ref={wfRef}
+  {...(intent ? { 'data-intent': intent } : {})}
+  {...(content ? { 'data-content': content } : {})}
+  {...(cols ? { 'data-cols': cols } : {})}
+  {...(recipe ? { 'data-recipe': recipe } : {})}
+  {...(seam ? { 'data-seam': seam } : {})}
+  {...(seamTop ? { 'data-seam-shape-top': seamTop } : {})}
+  {...(seamBottom ? { 'data-seam-shape-bottom': seamBottom } : {})}
+  {...(skeleton ? { 'data-skeleton': skeleton } : {})}
 >
   <div class="sec-inner">
     <slot />

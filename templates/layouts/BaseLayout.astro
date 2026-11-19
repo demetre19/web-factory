@@ -1,0 +1,71 @@
+---
+/**
+ * BaseLayout.astro — the document shell every assembled page renders
+ * inside. assemble_page wraps its <Section> blocks in this layout;
+ * pipeline_emit.py copies it to site/src/layouts/BaseLayout.astro.
+ *
+ * The shell owns head/meta (P.16, R.1), the light/dark toggle +
+ * paint-first theme script (C.5), skip-link and the page landmarks
+ * (PS.9). It ships no style blocks, no inline styles, no colour
+ * literals: classes bind the shared layer in global.css only.
+ */
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  lang?: string;
+  slug?: string;
+}
+const {
+  title,
+  description = '',
+  image = '/og.webp',
+  lang = 'en',
+  slug = '',
+} = Astro.props;
+---
+<!doctype html>
+<html lang={lang} dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<link rel="icon" href="/favicon.svg" />
+<script is:inline>
+(function () {
+  var s = localStorage.getItem('theme');
+  var m = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+  });
+})();
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<button data-theme-toggle type="button" aria-label="Switch between light and dark mode">Light/Dark</button>
+<main id="main">
+<slot />
+</main>
+<footer class="site-foot" data-page={slug}>
+  <nav aria-label="Site">
+    <a href="/">Home</a>
+  </nav>
+  <address>Contact the team via the contact section on this site.</address>
+  <p><small>Privacy · Terms · Copyright</small></p>
+</footer>
+</body>
+</html>
