@@ -1,0 +1,322 @@
+{
+ "id": 1870,
+ "title": "CTA Section 14",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-14",
+ "size_bytes": 4268,
+ "json": {
+  "content": [
+   {
+    "id": "wboxso",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "zmlcpz",
+     "maeoqy",
+     "kbjqwn"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xcnxhf"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "kbjqwn",
+    "name": "container",
+    "parent": "wboxso",
+    "children": [
+     "tlylzo",
+     "wqezls"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "kybdtt"
+     ]
+    }
+   },
+   {
+    "id": "tlylzo",
+    "name": "heading",
+    "parent": "kbjqwn",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ncxjqq"
+     ],
+     "text": "Lorem ipsum dolor sit amet consectetur",
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "hfyulu",
+    "name": "text",
+    "parent": "wqezls",
+    "children": [],
+    "settings": {
+     "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+     "_cssGlobalClasses": [
+      "alryzo"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "fqomxs",
+    "name": "block",
+    "parent": "wqezls",
+    "children": [
+     "wgzqay",
+     "singtk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xiilhy"
+     ]
+    },
+    "label": "Container buttons"
+   },
+   {
+    "id": "wgzqay",
+    "name": "button",
+    "parent": "fqomxs",
+    "children": [],
+    "settings": {
+     "text": "Booking now",
+     "_cssGlobalClasses": [
+      "rjkjzs",
+      "acss_import_btn--white"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Button white"
+   },
+   {
+    "id": "singtk",
+    "name": "button",
+    "parent": "fqomxs",
+    "children": [],
+    "settings": {
+     "text": "Learn more",
+     "_cssGlobalClasses": [
+      "kvcnat",
+      "acss_import_btn--white",
+      "acss_import_btn--outline"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Button outline"
+   },
+   {
+    "id": "wqezls",
+    "name": "block",
+    "parent": "kbjqwn",
+    "children": [
+     "hfyulu",
+     "fqomxs"
+    ],
+    "settings": {
+     "taxonomies": [
+      "category",
+      "post_tag"
+     ],
+     "extrasCustomQueryCode": "<style>\nh1.my-heading {\n  color: crimson;\n}\n</style>\n\n<h1 class='my-heading'>Just some custom HTML</h1>",
+     "_cssGlobalClasses": [
+      "ilmtbk"
+     ]
+    },
+    "label": "Container right"
+   },
+   {
+    "id": "zmlcpz",
+    "name": "image",
+    "parent": "wboxso",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "_cssGlobalClasses": [
+      "cqoqby"
+     ]
+    },
+    "label": "Background image"
+   },
+   {
+    "id": "maeoqy",
+    "name": "div",
+    "parent": "wboxso",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qharuo"
+     ]
+    },
+    "label": "Overlay"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.10",
+  "globalClasses": [
+   {
+    "id": "xcnxhf",
+    "name": "cta-14",
+    "settings": {
+     "_position": "relative",
+     "_isolation": "isolate"
+    }
+   },
+   {
+    "id": "kybdtt",
+    "name": "cta-14__container",
+    "settings": {
+     "_display": "grid",
+     "_gridGap": "var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-2)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+    }
+   },
+   {
+    "id": "ncxjqq",
+    "name": "cta-14__heading",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--white)",
+       "id": "acss_import_white",
+       "name": "white"
+      },
+      "font-size": "var(--text-xxl)"
+     }
+    }
+   },
+   {
+    "id": "alryzo",
+    "name": "cta-14__description",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--white-trans-80)"
+      }
+     },
+     "_width": "768",
+     "_widthMax": "100%"
+    }
+   },
+   {
+    "id": "xiilhy",
+    "name": "cta-14__btn-container",
+    "settings": {
+     "_columnGap": "var(--space-s)",
+     "_rowGap": "var(--space-s)",
+     "_direction:mobile_landscape": "column",
+     "_alignItems:mobile_landscape": "stretch",
+     "_justifyContent": "flex-start",
+     "_direction": "row",
+     "_alignItems": "stretch"
+    }
+   },
+   {
+    "id": "rjkjzs",
+    "name": "cta-14__btn--white",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-m)"
+     },
+     "_padding:mobile_landscape": {
+      "bottom": "var(--space-s)",
+      "top": "var(--space-s)"
+     },
+     "_background:hover": {
+      "color": {
+       "raw": "var(--white-trans-90)"
+      }
+     }
+    }
+   },
+   {
+    "id": "acss_import_btn--white",
+    "name": "btn--white",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "kvcnat",
+    "name": "cta-14__btn-outline",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-m)"
+     },
+     "_padding:mobile_landscape": {
+      "bottom": "var(--space-s)",
+      "top": "var(--space-s)"
+     }
+    }
+   },
+   {
+    "id": "acss_import_btn--outline",
+    "name": "btn--outline",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "ilmtbk",
+    "name": "cta-14__container-right",
+    "settings": {
+     "_rowGap": "var(--content-gap)"
+    }
+   },
+   {
+    "id": "cqoqby",
+    "name": "cta-14__img-bg",
+    "settings": {
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1",
+     "_objectFit": "cover",
+     "_objectPosition": "50%"
+    }
+   },
+   {
+    "id": "qharuo",
+    "name": "cta-14__overlay",
+    "settings": {
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1",
+     "_background": {
+      "color": {
+       "raw": "var(--black-trans-50)"
+      }
+     }
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 4280
+}

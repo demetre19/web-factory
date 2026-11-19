@@ -1,0 +1,243 @@
+{
+ "id": 6763,
+ "title": "Banner Section 7",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "banner-7",
+ "size_bytes": 3204,
+ "json": {
+  "content": [
+   {
+    "id": "gknovh",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "lovrdr",
+     "otpbkg"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "fxmwjn"
+     ],
+     "tag": "div"
+    },
+    "label": "Banner"
+   },
+   {
+    "id": "lovrdr",
+    "name": "container",
+    "parent": "gknovh",
+    "children": [
+     "wcmdue",
+     "ncywvx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "aojnqi"
+     ]
+    }
+   },
+   {
+    "id": "wcmdue",
+    "name": "block",
+    "parent": "lovrdr",
+    "children": [
+     "zyjaed"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jfgqce"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "unercn",
+    "name": "icon",
+    "parent": "ncywvx",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-xmark"
+     },
+     "_cssGlobalClasses": [
+      "hqkkdc"
+     ]
+    },
+    "label": "Icon close",
+    "themeStyles": []
+   },
+   {
+    "id": "ncywvx",
+    "name": "block",
+    "parent": "lovrdr",
+    "children": [
+     "unercn"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "srspjz"
+     ],
+     "tag": "custom",
+     "customTag": "button"
+    },
+    "label": "Icon close wrapper"
+   },
+   {
+    "id": "zyjaed",
+    "name": "text",
+    "parent": "wcmdue",
+    "children": [],
+    "settings": {
+     "text": "<p>Lorem ipsum dolor sit amet, <a href=\"#\">consectetur</a> adipiscing elit.</p>",
+     "_cssGlobalClasses": [
+      "tkfgdy"
+     ]
+    },
+    "label": "Info"
+   },
+   {
+    "id": "otpbkg",
+    "name": "code",
+    "parent": "gknovh",
+    "children": [],
+    "settings": {
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Info\". --*/ \n\n.banner-7__info{\n  a{\n    color: var(--neutral);\n    text-decoration: underline;\n    font-weight: 700;\n  }\n}",
+     "executeCode": true,
+     "noRoot": true
+    },
+    "label": "CSS Style"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.10.3",
+  "globalClasses": [
+   {
+    "id": "fxmwjn",
+    "name": "banner-7",
+    "settings": {
+     "_padding": {
+      "top": "var(--space-m)",
+      "right": "var(--space-m)",
+      "bottom": "var(--space-m)",
+      "left": "var(--space-m)"
+     },
+     "_background": {
+      "color": {
+       "raw": "transparent"
+      }
+     }
+    }
+   },
+   {
+    "id": "aojnqi",
+    "name": "banner-7__description",
+    "settings": {
+     "_direction": "row",
+     "_flexWrap": "nowrap",
+     "_columnGap": "var(--content-gap)",
+     "_padding": {
+      "bottom": "var(--space-xs)",
+      "top": "var(--space-xs)",
+      "left": "var(--space-s)",
+      "right": "var(--space-s)"
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_border": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_alignItems": "center",
+     "_justifyContent": "flex-start",
+     "_alignItems:mobile_portrait": "flex-start",
+     "_padding:mobile_portrait": {
+      "bottom": "var(--space-s)",
+      "top": "var(--space-s)"
+     }
+    }
+   },
+   {
+    "id": "jfgqce",
+    "name": "banner-7__container-info",
+    "settings": {
+     "_columnGap": "var(--content-gap)",
+     "_rowGap": "var(--content-gap)",
+     "_direction": "row",
+     "_flexWrap": "nowrap",
+     "_alignItems": "center",
+     "_justifyContent": "center",
+     "_direction:mobile_portrait": "column",
+     "_alignItems:mobile_portrait": "flex-start",
+     "_justifyContent:mobile_portrait": "flex-start"
+    }
+   },
+   {
+    "id": "hqkkdc",
+    "name": "banner-7__icon-close",
+    "settings": {
+     "iconColor": {
+      "raw": "var(--neutral)"
+     },
+     "_flexShrink": "0",
+     "iconSize": "2.4rem"
+    }
+   },
+   {
+    "id": "srspjz",
+    "name": "banner-7__icon-close-wrapper",
+    "settings": {
+     "_width": "fit-content",
+     "_background": {
+      "color": {
+       "raw": "transparent"
+      }
+     },
+     "_interactions": [
+      {
+       "id": "abgtdj",
+       "trigger": "click",
+       "action": "startAnimation",
+       "animationType": "fadeOutUp",
+       "target": "custom",
+       "targetSelector": ".banner-7"
+      }
+     ]
+    }
+   },
+   {
+    "id": "tkfgdy",
+    "name": "banner-7__info",
+    "settings": {
+     "_typography": {
+      "text-align": "center"
+     },
+     "_typography:mobile_portrait": {
+      "text-align": "left"
+     }
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 3210
+}

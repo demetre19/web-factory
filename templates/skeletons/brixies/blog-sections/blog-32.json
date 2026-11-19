@@ -1,0 +1,772 @@
+{
+ "id": 11850,
+ "title": "Blog Section 32",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "blog-32",
+ "size_bytes": 11540,
+ "json": {
+  "content": [
+   {
+    "id": "mzgjwe",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "wjcdaj"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rpyqpi"
+     ]
+    },
+    "label": "Blog"
+   },
+   {
+    "id": "wjcdaj",
+    "name": "container",
+    "parent": "mzgjwe",
+    "children": [
+     "nmwbzz",
+     "yfsqai"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "gefwkk"
+     ]
+    }
+   },
+   {
+    "id": "nmwbzz",
+    "name": "block",
+    "parent": "wjcdaj",
+    "children": [
+     "rlclge",
+     "xskagz",
+     "yamryb"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "uufpzr"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "rlclge",
+    "name": "text-basic",
+    "parent": "nmwbzz",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "yalsfe"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "xskagz",
+    "name": "heading",
+    "parent": "nmwbzz",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "bqfmdx"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "yamryb",
+    "name": "text-basic",
+    "parent": "nmwbzz",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "amkiib"
+     ],
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    },
+    "label": "Description"
+   },
+   {
+    "id": "yfsqai",
+    "name": "block",
+    "parent": "wjcdaj",
+    "children": [
+     "llwiqu",
+     "iaguma",
+     "lfxsbi"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wzwvel"
+     ],
+     "tag": "ul"
+    },
+    "label": "Grid"
+   },
+   {
+    "id": "llwiqu",
+    "name": "block",
+    "parent": "yfsqai",
+    "children": [
+     "kmjtmy"
+    ],
+    "settings": {
+     "tag": "li",
+     "query": {
+      "posts_per_page": "6"
+     },
+     "_cssGlobalClasses": [
+      "wwefnj"
+     ]
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "kmjtmy",
+    "name": "block",
+    "parent": "llwiqu",
+    "children": [
+     "kakpfx",
+     "pxiygz",
+     "zfnfdp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nwppkj"
+     ]
+    },
+    "label": "Card"
+   },
+   {
+    "id": "kakpfx",
+    "name": "block",
+    "parent": "kmjtmy",
+    "children": [
+     "meseha"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "wstejd"
+     ]
+    },
+    "label": "Taxonomy list"
+   },
+   {
+    "id": "pxiygz",
+    "name": "block",
+    "parent": "kmjtmy",
+    "children": [
+     "rlxgwr"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "spujre"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "rlxgwr",
+    "name": "heading",
+    "parent": "pxiygz",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit",
+     "_cssGlobalClasses": [
+      "zhgmzr"
+     ]
+    }
+   },
+   {
+    "id": "zfnfdp",
+    "name": "image",
+    "parent": "kmjtmy",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pglpid"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "gopybu",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "noRoot": true,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Card\". --*/\n\n.card-blog-32__wrapper{\n  &:first-child{\n    grid-column: 1 / 3;\n    grid-row: 1 / 3;\n\n    @media (max-width: 767px) {\n      grid-column: auto;\n      grid-row: auto;\n    }\n  }\n\n  /* Card inverted border styles */\n  .card-blog-32{\n    /* Update these variables with the background color and border radius variables you are using. */\n    --radius-value: var(--radius-m);\n    --color-background: var(--white);\n\n\n    /* Taxonomy list styles */\n    .card-blog-32__taxonomy-list{\n      &:before{\n        content: '';\n        width: calc(2 * var(--radius-value));\n        height: calc(2 * var(--radius-value));\n        background-color: transparent;\n        position: absolute;\n        top: 0;\n        left: 0;\n        display: flex;\n        transform: translateX(-100%);\n        border-radius: 50%;\n        box-shadow: var(--radius-value) calc(-1 * var(--radius-value)) var(--color-background);\n      }\n\n      &:after{\n        content: '';\n        width: calc(2 * var(--radius-value));\n        height: calc(2 * var(--radius-value));\n        background-color: transparent;\n        position: absolute;\n        right: 0;\n        bottom: 0;\n        display: flex;\n        transform: translateY(100%);\n        border-radius: 50%;\n        box-shadow: var(--radius-value) calc(-1 * var(--radius-value)) var(--color-background);\n      }\n    }\n\n    /* Heading wrapper styles */\n    .card-blog-32__container-info{  \n      &:before{\n        content: '';\n        width: calc(2 * var(--radius-value));\n        height: calc(2 * var(--radius-value));\n        background-color: transparent;\n        position: absolute;\n        top: 0;\n        left: 0;\n        display: flex;\n        transform: translateY(-100%);\n        border-radius: 50%;\n        box-shadow: calc(-1 * var(--radius-value)) var(--radius-value) var(--color-background);\n      }\n\n      &:after{\n        content: '';\n        width: calc(2 * var(--radius-value));\n        height: calc(2 * var(--radius-value));\n        background-color: transparent;\n        position: absolute;\n        right: 0;\n        bottom: 0;\n        display: flex;\n        transform: translateX(100%);\n        border-radius: 50%;\n        box-shadow: calc(-1 * var(--radius-value)) var(--radius-value) var(--color-background);\n      }\n    }\n  }  \n}"
+    },
+    "label": "CSS Styles"
+   },
+   {
+    "id": "meseha",
+    "name": "div",
+    "parent": "kakpfx",
+    "children": [
+     "zsnkwi"
+    ],
+    "settings": {
+     "query": {
+      "objectType": "term",
+      "taxonomy": [
+       "category"
+      ],
+      "number": "1"
+     },
+     "_cssGlobalClasses": [
+      "rvpdkz"
+     ],
+     "tag": "li"
+    },
+    "label": "Taxonomy"
+   },
+   {
+    "id": "zsnkwi",
+    "name": "text-basic",
+    "parent": "meseha",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "hxdujc"
+     ],
+     "text": "Category 1",
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Info"
+   },
+   {
+    "id": "lfxsbi",
+    "name": "block",
+    "parent": "yfsqai",
+    "children": [
+     "iduvdk"
+    ],
+    "settings": {
+     "tag": "li",
+     "query": {
+      "posts_per_page": "6"
+     },
+     "_cssGlobalClasses": [
+      "wwefnj"
+     ]
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "iduvdk",
+    "name": "block",
+    "parent": "lfxsbi",
+    "children": [
+     "okkltn",
+     "jatezh",
+     "tjsnqx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nwppkj"
+     ]
+    },
+    "label": "Card"
+   },
+   {
+    "id": "okkltn",
+    "name": "block",
+    "parent": "iduvdk",
+    "children": [
+     "rnqaps"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "wstejd"
+     ]
+    },
+    "label": "Taxonomy list"
+   },
+   {
+    "id": "rnqaps",
+    "name": "div",
+    "parent": "okkltn",
+    "children": [
+     "tdqccn"
+    ],
+    "settings": {
+     "query": {
+      "objectType": "term",
+      "taxonomy": [
+       "category"
+      ],
+      "number": "1"
+     },
+     "_cssGlobalClasses": [
+      "rvpdkz"
+     ],
+     "tag": "li"
+    },
+    "label": "Taxonomy"
+   },
+   {
+    "id": "tdqccn",
+    "name": "text-basic",
+    "parent": "rnqaps",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "hxdujc"
+     ],
+     "text": "Category 1",
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Info"
+   },
+   {
+    "id": "jatezh",
+    "name": "block",
+    "parent": "iduvdk",
+    "children": [
+     "ngvqle"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "spujre"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "ngvqle",
+    "name": "heading",
+    "parent": "jatezh",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit",
+     "_cssGlobalClasses": [
+      "zhgmzr"
+     ]
+    }
+   },
+   {
+    "id": "tjsnqx",
+    "name": "image",
+    "parent": "iduvdk",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pglpid"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "iaguma",
+    "name": "block",
+    "parent": "yfsqai",
+    "children": [
+     "lxiiqe"
+    ],
+    "settings": {
+     "tag": "li",
+     "query": {
+      "posts_per_page": "6"
+     },
+     "_cssGlobalClasses": [
+      "wwefnj"
+     ]
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "lxiiqe",
+    "name": "block",
+    "parent": "iaguma",
+    "children": [
+     "yvzkvm",
+     "ixfpza",
+     "yynics"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nwppkj"
+     ]
+    },
+    "label": "Card"
+   },
+   {
+    "id": "yvzkvm",
+    "name": "block",
+    "parent": "lxiiqe",
+    "children": [
+     "hxqxep"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "wstejd"
+     ]
+    },
+    "label": "Taxonomy list"
+   },
+   {
+    "id": "hxqxep",
+    "name": "div",
+    "parent": "yvzkvm",
+    "children": [
+     "avpefx"
+    ],
+    "settings": {
+     "query": {
+      "objectType": "term",
+      "taxonomy": [
+       "category"
+      ],
+      "number": "1"
+     },
+     "_cssGlobalClasses": [
+      "rvpdkz"
+     ],
+     "tag": "li"
+    },
+    "label": "Taxonomy"
+   },
+   {
+    "id": "avpefx",
+    "name": "text-basic",
+    "parent": "hxqxep",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "hxdujc"
+     ],
+     "text": "Category 1",
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Info"
+   },
+   {
+    "id": "ixfpza",
+    "name": "block",
+    "parent": "lxiiqe",
+    "children": [
+     "twxkfg"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "spujre"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "twxkfg",
+    "name": "heading",
+    "parent": "ixfpza",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit",
+     "_cssGlobalClasses": [
+      "zhgmzr"
+     ]
+    }
+   },
+   {
+    "id": "yynics",
+    "name": "image",
+    "parent": "lxiiqe",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pglpid"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": []
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.12.4",
+  "globalClasses": [
+   {
+    "id": "rpyqpi",
+    "name": "blog-32",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "gefwkk",
+    "name": "blog-32__container",
+    "settings": {
+     "_rowGap": "var(--container-gap)",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "uufpzr",
+    "name": "blog-32__container-info",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "center",
+     "_justifyContent": "flex-start",
+     "_width": "var(--width-xl)",
+     "_rowGap": "var(--space-xs)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "yalsfe",
+    "name": "blog-32__tagline",
+    "settings": {
+     "_typography": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600",
+      "text-align": "center"
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "bqfmdx",
+    "name": "blog-32__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "amkiib",
+    "name": "blog-32__description",
+    "settings": {
+     "_width": "var(--width-m)",
+     "_typography": {
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "wzwvel",
+    "name": "blog-32__grid",
+    "settings": {
+     "_display": "grid",
+     "_gridGap": "var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-3)",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)",
+     "_alignItemsGrid": "stretch",
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_gridTemplateRows": "var(--grid-1)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "wwefnj",
+    "name": "card-blog-32__wrapper",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "nwppkj",
+    "name": "card-blog-32",
+    "settings": {
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_position": "relative",
+     "_isolation": "isolate",
+     "_aspectRatio": "3 / 4",
+     "_justifyContent": "space-between",
+     "_alignItems": "flex-start",
+     "_overflow": "hidden"
+    },
+    "modified": 1739118246,
+    "user_id": 2,
+    "_exists": false
+   },
+   {
+    "id": "wstejd",
+    "name": "card-blog-32__taxonomy-list",
+    "settings": {
+     "_padding": {
+      "bottom": "calc(var(--space-xs) / 2)",
+      "top": "calc(var(--space-xs) / 2)",
+      "left": "var(--space-xs)",
+      "right": "var(--space-xs)"
+     },
+     "_border": {
+      "radius": {
+       "left": "var(--radius-m)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_typography": {
+      "font-size": "var(--text-s)",
+      "font-weight": "600",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_width": "auto",
+     "_margin": {
+      "top": "0",
+      "bottom": "0",
+      "left": "auto"
+     },
+     "_position": "relative",
+     "_isolation": "isolate",
+     "_direction": "row",
+     "_flexWrap": "wrap",
+     "_columnGap": "var(--space-s)",
+     "_widthMax": "85%"
+    },
+    "_exists": false
+   },
+   {
+    "id": "spujre",
+    "name": "card-blog-32__container-info",
+    "settings": {
+     "_alignItems": "flex-start",
+     "_rowGap": "var(--space-xs)",
+     "_padding": {
+      "top": "var(--space-s)",
+      "right": "var(--space-s)",
+      "bottom": "var(--space-s)",
+      "left": "var(--space-s)"
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_border": {
+      "radius": {
+       "right": "var(--radius-m)"
+      }
+     },
+     "_width": "auto",
+     "_direction": "column",
+     "_position": "relative",
+     "_isolation": "isolate",
+     "_widthMax": "85%"
+    },
+    "_exists": false
+   },
+   {
+    "id": "zhgmzr",
+    "name": "card-blog-32__heading",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "pglpid",
+    "name": "card-blog-32__img",
+    "settings": {
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "rvpdkz",
+    "name": "card-blog-32__taxonomy",
+    "settings": {
+     "_display": "flex"
+    },
+    "_exists": false
+   },
+   {
+    "id": "hxdujc",
+    "name": "card-blog-32__taxonomy-info",
+    "settings": {
+     "_typography": {
+      "font-weight": "600"
+     }
+    },
+    "_exists": false
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 11578
+}

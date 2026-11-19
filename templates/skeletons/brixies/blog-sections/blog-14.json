@@ -1,0 +1,419 @@
+{
+ "id": 3745,
+ "title": "Blog Section 14",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "blog-14",
+ "size_bytes": 5566,
+ "json": {
+  "content": [
+   {
+    "id": "zqomds",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "pchxde"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "cpzaex"
+     ]
+    },
+    "label": "Blog"
+   },
+   {
+    "id": "pchxde",
+    "name": "container",
+    "parent": "zqomds",
+    "children": [
+     "yhhatw",
+     "beyomh"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "bjalbl"
+     ]
+    }
+   },
+   {
+    "id": "yhhatw",
+    "name": "block",
+    "parent": "pchxde",
+    "children": [
+     "vrhrsu",
+     "bhnbua",
+     "cmdfie"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "mloxqv"
+     ]
+    },
+    "label": "Head container"
+   },
+   {
+    "id": "vrhrsu",
+    "name": "text-basic",
+    "parent": "yhhatw",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fuueda"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "bhnbua",
+    "name": "heading",
+    "parent": "yhhatw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "xfsgfp"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "cmdfie",
+    "name": "text-basic",
+    "parent": "yhhatw",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "dladjt"
+     ],
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    },
+    "label": "Description"
+   },
+   {
+    "id": "nhnhwf",
+    "name": "block",
+    "parent": "beyomh",
+    "children": [
+     "pmbxyk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xixxwg"
+     ],
+     "tag": "li",
+     "hasLoop": true,
+     "query": {
+      "posts_per_page": "4"
+     }
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "pmbxyk",
+    "name": "block",
+    "parent": "nhnhwf",
+    "children": [
+     "ycaiau",
+     "rppakk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qirerk"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "3"
+     }
+    },
+    "label": "Card blog"
+   },
+   {
+    "id": "ycaiau",
+    "name": "image",
+    "parent": "pmbxyk",
+    "children": [],
+    "settings": {
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9-1024x577.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9-1024x577.png"
+     },
+     "_cssGlobalClasses": [
+      "auxeae"
+     ],
+     "tag": "figure"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "wzfmbg",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "signature": "8ec167b8da5081bad61632a4b136f67a",
+     "user_id": 2,
+     "time": 1722633118,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Card blog\". --*/\n\n/* Styles applied to the first card */\n.card-blog-14__wrapper:first-child{\n  grid-column: 1 / 2;\n  grid-row: 1 / -4;\n\n  .card-blog-14{\n    flex-direction: column;\n\n    .card-blog-14__img{\n      aspect-ratio: 16 / 9;\n      width: 100%;\n    }\n  }\n\n  /* Mobile landscape styles */\n  @media(max-width: 767px){\n    grid-column: auto;\n    grid-row: auto;\n  }\n}"
+    },
+    "label": "CSS Style"
+   },
+   {
+    "id": "jcjyhu",
+    "name": "post-excerpt",
+    "parent": "rppakk",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "exfogz"
+     ],
+     "length": "16"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "irvmkv",
+    "name": "post-title",
+    "parent": "rppakk",
+    "children": [],
+    "settings": {
+     "tag": "h3",
+     "_cssGlobalClasses": [
+      "cukimn",
+      "acss_import_clickable-parent"
+     ],
+     "linkToPost": true
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "beyomh",
+    "name": "block",
+    "parent": "pchxde",
+    "children": [
+     "nhnhwf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "obupxy"
+     ],
+     "tag": "ul"
+    },
+    "label": "Grid"
+   },
+   {
+    "id": "kelqsh",
+    "name": "text-basic",
+    "parent": "rppakk",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "text": "{post_date}",
+     "_cssGlobalClasses": [
+      "gbrnmh"
+     ]
+    },
+    "label": "Post date"
+   },
+   {
+    "id": "rppakk",
+    "name": "block",
+    "parent": "pmbxyk",
+    "children": [
+     "kelqsh",
+     "irvmkv",
+     "jcjyhu"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "zlpyad"
+     ]
+    },
+    "label": "Container info"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.11",
+  "globalClasses": [
+   {
+    "id": "cpzaex",
+    "name": "blog-14",
+    "settings": {
+     "_background": {
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      }
+     }
+    }
+   },
+   {
+    "id": "bjalbl",
+    "name": "blog-14__container",
+    "settings": {
+     "_alignItems": "center",
+     "_rowGap": "var(--space-xl)"
+    }
+   },
+   {
+    "id": "mloxqv",
+    "name": "blog-14__head-container",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "center",
+     "_justifyContent": "flex-start",
+     "_width": "var(--width-xl)",
+     "_rowGap": "var(--space-xs)"
+    }
+   },
+   {
+    "id": "fuueda",
+    "name": "blog-14__tagline",
+    "settings": {
+     "_typography": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600",
+      "text-align": "center"
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    }
+   },
+   {
+    "id": "xfsgfp",
+    "name": "blog-14__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     }
+    }
+   },
+   {
+    "id": "dladjt",
+    "name": "blog-14__description",
+    "settings": {
+     "_width": "var(--width-m)",
+     "_typography": {
+      "text-align": "center"
+     }
+    }
+   },
+   {
+    "id": "xixxwg",
+    "name": "card-blog-14__wrapper",
+    "settings": {
+     "_position": "relative",
+     "_direction": "row",
+     "_alignItems": "stretch"
+    }
+   },
+   {
+    "id": "qirerk",
+    "name": "card-blog-14",
+    "settings": {
+     "_rowGap": "var(--space-m)",
+     "_direction": "row",
+     "_columnGap": "var(--space-m)",
+     "_direction:mobile_landscape": "column"
+    }
+   },
+   {
+    "id": "auxeae",
+    "name": "card-blog-14__img",
+    "settings": {
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_aspectRatio": "1 / 1",
+     "_width": "180",
+     "_flexShrink": "0",
+     "_flexGrow": "1",
+     "_aspectRatio:mobile_landscape": "16 / 9",
+     "_width:mobile_landscape": "100%"
+    }
+   },
+   {
+    "id": "exfogz",
+    "name": "card-blog-14__excerpt",
+    "settings": []
+   },
+   {
+    "id": "cukimn",
+    "name": "card-blog-14__title",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-l)"
+     },
+     "_margin": {
+      "top": "0"
+     }
+    }
+   },
+   {
+    "id": "acss_import_clickable-parent",
+    "name": "clickable-parent",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "obupxy",
+    "name": "blog-14__grid",
+    "settings": {
+     "_display": "grid",
+     "_gridTemplateColumns": "var(--grid-2)",
+     "_gridGap": "var(--space-m)",
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_gridGap:tablet_portrait": "var(--space-l)",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-1)"
+    }
+   },
+   {
+    "id": "gbrnmh",
+    "name": "card-blog-14__date",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-s)",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600"
+     }
+    }
+   },
+   {
+    "id": "zlpyad",
+    "name": "card-blog-14__container-info",
+    "settings": {
+     "_rowGap": "var(--space-xs)"
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 5586
+}

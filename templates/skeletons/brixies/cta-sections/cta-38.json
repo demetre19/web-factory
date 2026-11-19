@@ -1,0 +1,416 @@
+{
+ "id": 11000,
+ "title": "CTA Section 38",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-38",
+ "size_bytes": 6072,
+ "json": {
+  "content": [
+   {
+    "id": "iezqtn",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "kvoutl"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jhdukv"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "kvoutl",
+    "name": "container",
+    "parent": "iezqtn",
+    "children": [
+     "dwyijv",
+     "amwiji",
+     "ogrerl"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rihatg"
+     ]
+    }
+   },
+   {
+    "id": "dwyijv",
+    "name": "block",
+    "parent": "kvoutl",
+    "children": [
+     "xjrllk",
+     "uvtrvk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dduzfd"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "xjrllk",
+    "name": "block",
+    "parent": "dwyijv",
+    "children": [
+     "qzpmpa",
+     "gqdykw",
+     "mlgmfz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "eennlg"
+     ]
+    },
+    "label": "Inner container info"
+   },
+   {
+    "id": "qzpmpa",
+    "name": "text-basic",
+    "parent": "xjrllk",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ucmrtu"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "gqdykw",
+    "name": "heading",
+    "parent": "xjrllk",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "nbraiz"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "mlgmfz",
+    "name": "text-basic",
+    "parent": "xjrllk",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "xqtlcm"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "uvtrvk",
+    "name": "block",
+    "parent": "dwyijv",
+    "children": [
+     "ckdefn",
+     "lgykxs"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "gjiwzl"
+     ]
+    },
+    "label": "Container button"
+   },
+   {
+    "id": "ckdefn",
+    "name": "button",
+    "parent": "uvtrvk",
+    "children": [],
+    "settings": {
+     "text": "Contact now",
+     "_cssGlobalClasses": [
+      "idoytd",
+      "acss_import_btn--black"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    }
+   },
+   {
+    "id": "lgykxs",
+    "name": "button",
+    "parent": "uvtrvk",
+    "children": [],
+    "settings": {
+     "text": "See more",
+     "_cssGlobalClasses": [
+      "swhuyg",
+      "acss_import_btn--outline",
+      "acss_import_btn--black"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Button outline"
+   },
+   {
+    "id": "amwiji",
+    "name": "image",
+    "parent": "kvoutl",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ygdtkw",
+      "umoexr"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2024/06/Placeholder-image-1x1-c.png",
+      "external": true,
+      "filename": "Placeholder-image-1x1-c.png"
+     }
+    },
+    "label": "Image left"
+   },
+   {
+    "id": "ogrerl",
+    "name": "image",
+    "parent": "kvoutl",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ygdtkw",
+      "fcasct"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2024/06/Placeholder-image-1x1-c.png",
+      "external": true,
+      "filename": "Placeholder-image-1x1-c.png"
+     }
+    },
+    "label": "Image right"
+   },
+   {
+    "id": "qfinmp",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Container\". --*/\n\n.cta-38__container{\n  /* Hover and Focus links styles */\n  &:hover, &:focus-within{\n    \n    /* Styles to move the layout and make a larger scale, you can change the \u201c1.1\u201d value of scale to make it bigger or smaller. */\n    .cta-38__img--left{\n      transform:\n        scale(1.1) translateX(-50%) translateY(50%);\n      left: var(--space-l);\n      bottom: var(--space-l);\n    }\n    \n    .cta-38__img--right{\n      transform:\n        scale(1.1) translateX(50%) translateY(50%);\n      right: var(--space-l);\n      bottom: var(--space-l);\n    }\n  }\n}"
+    },
+    "label": "CSS Styles"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.12.3",
+  "globalClasses": [
+   {
+    "id": "jhdukv",
+    "name": "cta-38",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "rihatg",
+    "name": "cta-38__container",
+    "settings": {
+     "_position": "relative",
+     "_overflow": "hidden",
+     "_isolation": "isolate",
+     "_direction": "column",
+     "_rowGap": "var(--space-xl)",
+     "_alignItems": "center",
+     "_padding": {
+      "top": "var(--space-xxl)",
+      "right": "var(--space-xl)",
+      "bottom": "var(--space-xxl)",
+      "left": "var(--space-xl)"
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     },
+     "_padding:mobile_portrait": {
+      "right": "var(--space-m)",
+      "bottom": "var(--section-space-xxl)",
+      "left": "var(--space-m)"
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--neutral-ultra-light)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "dduzfd",
+    "name": "cta-38__container-info",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "center",
+     "_rowGap": "var(--space-l)",
+     "_widthMax": "var(--width-l)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "eennlg",
+    "name": "cta-38__inner-container-info",
+    "settings": {
+     "_alignItems": "center",
+     "_rowGap": "var(--space-xs)",
+     "_margin:mobile_portrait": {
+      "top": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ucmrtu",
+    "name": "cta-38__tagline",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600",
+      "text-align": "center"
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "nbraiz",
+    "name": "cta-38__heading",
+    "settings": {
+     "_typography": {
+      "text-align": "center",
+      "font-size": "var(--text-xxl)"
+     }
+    },
+    "modified": 1719197874,
+    "user_id": 2,
+    "_exists": false
+   },
+   {
+    "id": "xqtlcm",
+    "name": "cta-38__description",
+    "settings": {
+     "_typography": {
+      "text-align": "center"
+     },
+     "_width": "var(--width-m)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "gjiwzl",
+    "name": "cta-38__container-btn",
+    "settings": {
+     "_width": "auto",
+     "_direction": "row",
+     "_flexWrap": "nowrap",
+     "_columnGap": "var(--space-s)",
+     "_alignItems": "stretch",
+     "_direction:mobile_portrait": "column",
+     "_rowGap": "var(--space-s)",
+     "_width:mobile_portrait": "100%"
+    },
+    "_exists": false
+   },
+   {
+    "id": "idoytd",
+    "name": "cta-38__btn",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "acss_import_btn--black",
+    "name": "btn--black",
+    "settings": [],
+    "category": "acss",
+    "_categoryData": {
+     "id": "acss",
+     "name": "Automatic.css"
+    }
+   },
+   {
+    "id": "swhuyg",
+    "name": "cta-38__btn-outline",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "acss_import_btn--outline",
+    "name": "btn--outline",
+    "settings": [],
+    "category": "acss",
+    "_categoryData": {
+     "id": "acss",
+     "name": "Automatic.css"
+    }
+   },
+   {
+    "id": "ygdtkw",
+    "name": "cta-38__img",
+    "settings": {
+     "_aspectRatio": "1",
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_width": "355",
+     "_position": "absolute",
+     "_zIndex": "-1",
+     "_bottom": "var(--space-s)",
+     "_cssTransition": "all .5s cubic-bezier(.47,1.64,.41,.8)",
+     "_width:tablet_portrait": "300",
+     "_width:mobile_landscape": "150"
+    }
+   },
+   {
+    "id": "umoexr",
+    "name": "cta-38__img--left",
+    "settings": {
+     "_transform": {
+      "translateX": "-50%",
+      "translateY": "50%"
+     },
+     "_left": "var(--space-s)"
+    }
+   },
+   {
+    "id": "fcasct",
+    "name": "cta-38__img--right",
+    "settings": {
+     "_right": "var(--space-s)",
+     "_transform": {
+      "translateX": "50%",
+      "translateY": "50%"
+     }
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 6100
+}

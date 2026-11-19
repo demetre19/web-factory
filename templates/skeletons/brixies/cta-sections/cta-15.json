@@ -1,0 +1,234 @@
+{
+ "id": 1872,
+ "title": "CTA Section 15",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-15",
+ "size_bytes": 2909,
+ "json": {
+  "content": [
+   {
+    "id": "knwhzw",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "tzeuzy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wszzce"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "tzeuzy",
+    "name": "container",
+    "parent": "knwhzw",
+    "children": [
+     "bsudgs",
+     "wtftok"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "cuanrq"
+     ]
+    }
+   },
+   {
+    "id": "chujft",
+    "name": "heading",
+    "parent": "bsudgs",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "zclkvf"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "svgrmu",
+    "name": "text",
+    "parent": "bsudgs",
+    "children": [],
+    "settings": {
+     "text": "<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco</p>",
+     "_cssGlobalClasses": [
+      "jqyyde"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "wtftok",
+    "name": "block",
+    "parent": "tzeuzy",
+    "children": [
+     "vbydna",
+     "wqutao"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yhphzl"
+     ]
+    },
+    "label": "Button container"
+   },
+   {
+    "id": "vbydna",
+    "name": "button",
+    "parent": "wtftok",
+    "children": [],
+    "settings": {
+     "text": "Booking now",
+     "_cssGlobalClasses": [
+      "avsjpm",
+      "acss_import_btn--primary"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#",
+      "ariaLabel": "Booking now"
+     }
+    },
+    "label": "Button primary"
+   },
+   {
+    "id": "wqutao",
+    "name": "button",
+    "parent": "wtftok",
+    "children": [],
+    "settings": {
+     "text": "Learn more",
+     "_cssGlobalClasses": [
+      "hpatyg",
+      "acss_import_btn--black",
+      "acss_import_btn--outline"
+     ],
+     "link": {
+      "type": "external",
+      "ariaLabel": "Learn more",
+      "url": "#"
+     }
+    },
+    "label": "Button outline"
+   },
+   {
+    "id": "bsudgs",
+    "name": "block",
+    "parent": "tzeuzy",
+    "children": [
+     "chujft",
+     "svgrmu"
+    ],
+    "settings": {
+     "taxonomies": [
+      "category",
+      "post_tag"
+     ],
+     "extrasCustomQueryCode": "<style>\nh1.my-heading {\n  color: crimson;\n}\n</style>\n\n<h1 class='my-heading'>Just some custom HTML</h1>",
+     "_cssGlobalClasses": [
+      "gniljz"
+     ]
+    },
+    "label": "Container info"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.10",
+  "globalClasses": [
+   {
+    "id": "wszzce",
+    "name": "cta-15",
+    "settings": []
+   },
+   {
+    "id": "cuanrq",
+    "name": "cta-15__container",
+    "settings": {
+     "_direction": "row",
+     "_rowGap": "var(--content-gap)",
+     "_flexWrap:tablet_portrait": "wrap",
+     "_columnGap": "var(--content-gap)"
+    }
+   },
+   {
+    "id": "zclkvf",
+    "name": "cta-15__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)"
+     }
+    }
+   },
+   {
+    "id": "jqyyde",
+    "name": "cta-15__description",
+    "settings": {
+     "_width": "var(--width-m)"
+    }
+   },
+   {
+    "id": "yhphzl",
+    "name": "cta-15__btn-container",
+    "settings": {
+     "_direction": "row",
+     "_columnGap": "var(--space-s)",
+     "_direction:mobile_landscape": "row",
+     "_rowGap:mobile_landscape": "var(--space-s)",
+     "_flexShrink": "0",
+     "_width": "auto",
+     "_alignItems": "stretch",
+     "_alignItems:mobile_landscape": "stretch"
+    }
+   },
+   {
+    "id": "avsjpm",
+    "name": "cta-15__btn-primary",
+    "settings": []
+   },
+   {
+    "id": "acss_import_btn--primary",
+    "name": "btn--primary",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "hpatyg",
+    "name": "cta-15__btn-outline",
+    "settings": []
+   },
+   {
+    "id": "acss_import_btn--black",
+    "name": "btn--black",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "acss_import_btn--outline",
+    "name": "btn--outline",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "gniljz",
+    "name": "cta-15__info-container",
+    "settings": {
+     "_flexGrow": "1",
+     "_rowGap": "var(--space-s)"
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 2914
+}

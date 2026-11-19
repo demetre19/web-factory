@@ -1,0 +1,587 @@
+{
+ "id": 18289,
+ "title": "CTA Section 49",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-49",
+ "size_bytes": 8262,
+ "json": {
+  "content": [
+   {
+    "id": "trayct",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "njwaqu"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "vhmjca"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "njwaqu",
+    "name": "container",
+    "parent": "trayct",
+    "children": [
+     "iawkyn",
+     "uurqpj",
+     "jpurab"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "uuydjd"
+     ],
+     "tag": "div"
+    }
+   },
+   {
+    "id": "iawkyn",
+    "name": "block",
+    "parent": "njwaqu",
+    "children": [
+     "vrsmim"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "zxgtad"
+     ],
+     "tag": "div"
+    },
+    "label": "Image wrapper"
+   },
+   {
+    "id": "sbjgta",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "noRoot": true,
+     "executeCode": true,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"CTA\" (Section). --*/\n\n.cta-49{\n  /* Image wrapper styles */\n  .cta-49__img-wrapper{\n\n    /* First image */\n    &:first-of-type{\n      grid-column: span 2;\n\n      /* Tablet styles */\n      @media (max-width: 991px) {\n        order: 30;\n      }\n\n      /* Mobile landscape styles */\n      @media (max-width: 767px) {\n        grid-column: auto;\n      }\n    }\n  }\n\n  /* Social proof styles */\n  .card-cta-49__social-proof {\n    /* Styles applied to all elements except the first one */\n    .card-cta-49__avatar-wrapper:not(:first-child) {\n      margin-left: -1rem;\n    }\n  }\n}"
+    },
+    "label": "CSS Styles",
+    "themeStyles": []
+   },
+   {
+    "id": "vrsmim",
+    "name": "image",
+    "parent": "iawkyn",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "eojxjl"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "jpurab",
+    "name": "block",
+    "parent": "njwaqu",
+    "children": [
+     "mswpov"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "zxgtad"
+     ],
+     "tag": "div"
+    },
+    "label": "Image wrapper"
+   },
+   {
+    "id": "mswpov",
+    "name": "image",
+    "parent": "jpurab",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "eojxjl"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "uurqpj",
+    "name": "block",
+    "parent": "njwaqu",
+    "children": [
+     "igyfyk",
+     "viyvzi",
+     "smvguo",
+     "ecbghs"
+    ],
+    "settings": {
+     "tag": "article",
+     "_cssGlobalClasses": [
+      "rvdbux"
+     ]
+    },
+    "label": "Card"
+   },
+   {
+    "id": "igyfyk",
+    "name": "block",
+    "parent": "uurqpj",
+    "children": [
+     "fagevf",
+     "zsdesj"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jddukq"
+     ]
+    },
+    "label": "Social proof"
+   },
+   {
+    "id": "fagevf",
+    "name": "block",
+    "parent": "igyfyk",
+    "children": [
+     "xbxzdi",
+     "zyjmkq",
+     "pxccnh",
+     "rcwciq"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "vqyktq"
+     ]
+    },
+    "label": "Container avatar"
+   },
+   {
+    "id": "xbxzdi",
+    "name": "div",
+    "parent": "fagevf",
+    "children": [
+     "kygoga"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qdnpvn"
+     ],
+     "tag": "li"
+    },
+    "label": "Avatar wrapper"
+   },
+   {
+    "id": "kygoga",
+    "name": "image",
+    "parent": "xbxzdi",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "jvowjs"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1-1024x1024.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1-1024x1024.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "zyjmkq",
+    "name": "div",
+    "parent": "fagevf",
+    "children": [
+     "dxzxfg"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qdnpvn"
+     ],
+     "tag": "li"
+    },
+    "label": "Avatar wrapper"
+   },
+   {
+    "id": "dxzxfg",
+    "name": "image",
+    "parent": "zyjmkq",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "jvowjs"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1-1024x1024.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1-1024x1024.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "rcwciq",
+    "name": "div",
+    "parent": "fagevf",
+    "children": [
+     "aaaael"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "qdnpvn"
+     ]
+    },
+    "label": "Avatar wrapper"
+   },
+   {
+    "id": "aaaael",
+    "name": "image",
+    "parent": "rcwciq",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "jvowjs"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1-1024x1024.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1-1024x1024.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "zsdesj",
+    "name": "text-basic",
+    "parent": "igyfyk",
+    "children": [],
+    "settings": {
+     "text": "We have 1000+<br>\nsatisfied users",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "pbxfzc"
+     ]
+    },
+    "label": "Info"
+   },
+   {
+    "id": "pxccnh",
+    "name": "div",
+    "parent": "fagevf",
+    "children": [
+     "kknlia"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qdnpvn"
+     ],
+     "tag": "li"
+    },
+    "label": "Avatar wrapper"
+   },
+   {
+    "id": "kknlia",
+    "name": "image",
+    "parent": "pxccnh",
+    "children": [],
+    "settings": {
+     "tag": "figure",
+     "_cssGlobalClasses": [
+      "jvowjs"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1-1024x1024.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1-1024x1024.png"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "viyvzi",
+    "name": "divider",
+    "parent": "uurqpj",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ikagls"
+     ]
+    }
+   },
+   {
+    "id": "smvguo",
+    "name": "heading",
+    "parent": "uurqpj",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+     "tag": "h2",
+     "_cssGlobalClasses": [
+      "geasqz"
+     ]
+    }
+   },
+   {
+    "id": "ecbghs",
+    "name": "button",
+    "parent": "uurqpj",
+    "children": [],
+    "settings": {
+     "text": "Contact now",
+     "_cssGlobalClasses": [
+      "acss_import_btn--black",
+      "lnwrif"
+     ]
+    }
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "2.1.4",
+  "globalClasses": [
+   {
+    "id": "vhmjca",
+    "name": "cta-49",
+    "settings": {
+     "_overflow": "hidden"
+    },
+    "_exists": false
+   },
+   {
+    "id": "uuydjd",
+    "name": "cta-49__container",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "top": "var(--space-xs)",
+      "bottom": "var(--space-xs)"
+     },
+     "_display": "grid",
+     "_gridGap": "var(--space-xs)",
+     "_gridTemplateColumns": "var(--grid-4)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-l)",
+       "right": "var(--radius-l)",
+       "bottom": "var(--radius-l)",
+       "left": "var(--radius-l)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--neutral-ultra-light)"
+      }
+     },
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "zxgtad",
+    "name": "cta-49__img-wrapper",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "eojxjl",
+    "name": "cta-49__img",
+    "settings": {
+     "_aspectRatio": "16 / 9",
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     },
+     "_height": "100%",
+     "_aspectRatio:mobile_portrait": "1"
+    },
+    "_exists": false
+   },
+   {
+    "id": "rvdbux",
+    "name": "card-cta-49",
+    "settings": {
+     "_background": {
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      }
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     },
+     "_padding": {
+      "bottom": "var(--space-m)",
+      "top": "var(--space-m)",
+      "right": "var(--space-m)",
+      "left": "var(--space-m)"
+     },
+     "_display": "flex",
+     "_direction": "column",
+     "_flexWrap": "nowrap",
+     "_justifyContent": "flex-start",
+     "_alignItems": "flex-start",
+     "_columnGap": "var(--content-gap)",
+     "_rowGap": "var(--content-gap)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "jddukq",
+    "name": "card-cta-49__social-proof",
+    "settings": {
+     "_direction": "column",
+     "_flexWrap": "nowrap",
+     "_alignItems": "flex-start",
+     "_rowGap": "var(--space-xs)",
+     "_justifyContent": "flex-start",
+     "_alignSelf": "flex-start"
+    },
+    "_exists": false
+   },
+   {
+    "id": "vqyktq",
+    "name": "card-cta-49__container-avatar",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_direction": "row",
+     "_width": "max-content"
+    },
+    "_exists": false
+   },
+   {
+    "id": "qdnpvn",
+    "name": "card-cta-49__avatar-wrapper",
+    "settings": {
+     "_display": "flex"
+    },
+    "_exists": false
+   },
+   {
+    "id": "jvowjs",
+    "name": "card-cta-49__avatar",
+    "settings": {
+     "_aspectRatio": "1 / 1",
+     "_width": "45",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-50)",
+       "right": "var(--radius-50)",
+       "bottom": "var(--radius-50)",
+       "left": "var(--radius-50)"
+      },
+      "width": {
+       "top": "3",
+       "right": "3",
+       "bottom": "3",
+       "left": "3"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_overflow": "hidden",
+     "_objectFit": "cover",
+     "_objectPosition": "50%"
+    },
+    "_exists": false
+   },
+   {
+    "id": "pbxfzc",
+    "name": "card-cta-49__social-proof-info",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-s)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ikagls",
+    "name": "card-cta-49__divider",
+    "settings": {
+     "width": "100%",
+     "color": {
+      "raw": "var(--black-trans-20)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "geasqz",
+    "name": "card-cta-49__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-l)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "acss_import_btn--black",
+    "name": "btn--black",
+    "settings": [],
+    "category": "acss",
+    "_categoryData": {
+     "id": "acss",
+     "name": "Automatic.css"
+    }
+   },
+   {
+    "id": "lnwrif",
+    "name": "card-cta-49__btn",
+    "settings": {
+     "_width:mobile_portrait": "100%"
+    },
+    "_exists": false
+   }
+  ]
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 8322
+}

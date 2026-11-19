@@ -1,0 +1,253 @@
+{
+ "id": 3858,
+ "title": "CTA Section 19",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-19",
+ "size_bytes": 3317,
+ "json": {
+  "content": [
+   {
+    "id": "dzwaon",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "nxelbq"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "datpfu"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "nxelbq",
+    "name": "container",
+    "parent": "dzwaon",
+    "children": [
+     "gtlgbs",
+     "demnqu",
+     "caftax",
+     "ykpbll"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "lvvdtz"
+     ]
+    }
+   },
+   {
+    "id": "ytozsw",
+    "name": "heading",
+    "parent": "caftax",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "cphpfw"
+     ],
+     "text": "Lorem ipsum<br>dolor sit amet<br>eiusmod tempor<br>",
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "rslvlc",
+    "name": "text",
+    "parent": "caftax",
+    "children": [],
+    "settings": {
+     "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
+     "_cssGlobalClasses": [
+      "khqqrk"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "gtlgbs",
+    "name": "image",
+    "parent": "nxelbq",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nyzqvq"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "tag": "figure"
+    },
+    "label": "Background image",
+    "themeStyles": []
+   },
+   {
+    "id": "demnqu",
+    "name": "div",
+    "parent": "nxelbq",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ttqxjf"
+     ]
+    },
+    "label": "Overlay"
+   },
+   {
+    "id": "caftax",
+    "name": "block",
+    "parent": "nxelbq",
+    "children": [
+     "ytozsw",
+     "rslvlc"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "muizwl"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "ykpbll",
+    "name": "button",
+    "parent": "nxelbq",
+    "children": [],
+    "settings": {
+     "text": "Contact",
+     "style": "light",
+     "_cssGlobalClasses": [
+      "vtiyyg"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    }
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.9.6.1",
+  "globalClasses": [
+   {
+    "id": "datpfu",
+    "name": "cta-19",
+    "settings": {
+     "_isolation": "isolate"
+    }
+   },
+   {
+    "id": "lvvdtz",
+    "name": "cta-19__container",
+    "settings": {
+     "_rowGap": "var(--space-m)",
+     "_position": "relative",
+     "_overflow": "hidden",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-l)",
+       "right": "var(--radius-l)",
+       "bottom": "var(--radius-l)",
+       "left": "var(--radius-l)"
+      }
+     },
+     "_padding": {
+      "top": "var(--space-xl)",
+      "right": "var(--space-xl)",
+      "bottom": "var(--space-xl)",
+      "left": "var(--space-xl)"
+     },
+     "_direction": "row",
+     "_alignItems": "flex-end",
+     "_justifyContent": "space-between",
+     "_flexWrap": "nowrap",
+     "_columnGap": "var(--space-l)",
+     "_direction:mobile_landscape": "column",
+     "_alignItems:mobile_landscape": "flex-start",
+     "_rowGap:mobile_landscape": "var(--space-xl)"
+    }
+   },
+   {
+    "id": "cphpfw",
+    "name": "cta-19__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "clamp(2.6rem, 1.2132rem + 2.9014vw, 5.6rem)",
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      }
+     }
+    }
+   },
+   {
+    "id": "khqqrk",
+    "name": "cta-19__description",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--white-trans-80)"
+      }
+     }
+    }
+   },
+   {
+    "id": "nyzqvq",
+    "name": "cta-19__img",
+    "settings": {
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1"
+    }
+   },
+   {
+    "id": "ttqxjf",
+    "name": "cta-19__overlay",
+    "settings": {
+     "_background": {
+      "color": {
+       "raw": "var(--black-trans-50)"
+      }
+     },
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1"
+    }
+   },
+   {
+    "id": "muizwl",
+    "name": "cta-19__container-info",
+    "settings": {
+     "_rowGap": "var(--space-m)",
+     "_widthMax": "var(--width-l)"
+    }
+   },
+   {
+    "id": "vtiyyg",
+    "name": "cta-19__btn",
+    "settings": {
+     "_flexShrink": "0"
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 3327
+}

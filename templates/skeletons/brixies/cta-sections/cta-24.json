@@ -1,0 +1,510 @@
+{
+ "id": 4769,
+ "title": "CTA Section 24",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-24",
+ "size_bytes": 7441,
+ "json": {
+  "content": [
+   {
+    "id": "sfzuqh",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "reqsir",
+     "kqpkpm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "kmpdku"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "reqsir",
+    "name": "container",
+    "parent": "sfzuqh",
+    "children": [
+     "yjwnry",
+     "zglhbb",
+     "xpvmov",
+     "astnxw",
+     "yzwjtf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rdvoaj"
+     ]
+    }
+   },
+   {
+    "id": "kqpkpm",
+    "name": "code",
+    "parent": "sfzuqh",
+    "children": [],
+    "settings": {
+     "code": "<style>\n  /* -- The root styles must go in the element of the structure with the name \"Form newsletter\". --*/ \n  .cta-24__form{\n    /* Important style for the terms and conditions field to be after the button. */\n    & .form-group:has(.cta-24__form-terms){\n    \torder:3;\n    }\n    \n    /* Styles terms and conditions */\n    & .cta-24__form-terms{\n      margin-top: var(--space-xs);\n    \tfont-size: var(--text-xs);\n      color: var(--neutral-trans-80);\n      \n      /* Styles anchor link terms and conditions */\n      & a{\n      \tcolor:var(--neutral);\n        font-weight: 600;\n      }\n    }\n  }\n</style>\n",
+     "executeCode": true,
+     "signature": "0de44d0a359384a72a85ce346f3bb861",
+     "user_id": 2,
+     "time": 1715230028
+    },
+    "label": "Styles CSS",
+    "themeStyles": []
+   },
+   {
+    "id": "yzwjtf",
+    "name": "form",
+    "parent": "reqsir",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "vitrog"
+     ],
+     "fields": [
+      {
+       "type": "email",
+       "label": "Email",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "d2f0f3",
+       "width": "calc(67% - var(--space-xs)/2)",
+       "width:mobile_landscape": "100"
+      },
+      {
+       "type": "html",
+       "label": "Terms and conditions",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "czopyh",
+       "width": "100",
+       "html": "<p class=\"cta-24__form-terms\">By clicking Register, you acknowledge that you have read and accepted our <a href=\"3\">Terms and Conditions</a>.</p>"
+      }
+     ],
+     "actions": [
+      "email"
+     ],
+     "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+     "emailSubject": "Contact form request",
+     "emailTo": "admin_email",
+     "fromName": "acss.brixies.co",
+     "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+     "htmlEmail": true,
+     "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+     "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+     "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+     "submitButtonText": "Register"
+    },
+    "label": "Form newsletter",
+    "themeStyles": []
+   },
+   {
+    "id": "zglhbb",
+    "name": "heading",
+    "parent": "reqsir",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet&nbsp;",
+     "_cssGlobalClasses": [
+      "fpegcj"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "xpvmov",
+    "name": "text",
+    "parent": "reqsir",
+    "children": [],
+    "settings": {
+     "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+     "_cssGlobalClasses": [
+      "kxdrqd"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "yjwnry",
+    "name": "text-basic",
+    "parent": "reqsir",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "vncjsa"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "astnxw",
+    "name": "block",
+    "parent": "reqsir",
+    "children": [
+     "nxndqy",
+     "vzutea",
+     "gnsqqp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wosxul"
+     ],
+     "tag": "ul"
+    },
+    "label": "Feature list"
+   },
+   {
+    "id": "nxndqy",
+    "name": "block",
+    "parent": "astnxw",
+    "children": [
+     "beefzi",
+     "woujnm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wcyfyb"
+     ],
+     "tag": "li"
+    },
+    "label": "Feature element"
+   },
+   {
+    "id": "beefzi",
+    "name": "icon",
+    "parent": "nxndqy",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jaavsl"
+     ]
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "woujnm",
+    "name": "text-basic",
+    "parent": "nxndqy",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "klkrhh"
+     ]
+    },
+    "label": "Info"
+   },
+   {
+    "id": "gnsqqp",
+    "name": "block",
+    "parent": "astnxw",
+    "children": [
+     "bchkdb",
+     "pmhizr"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wcyfyb"
+     ],
+     "tag": "li"
+    },
+    "label": "Feature element"
+   },
+   {
+    "id": "bchkdb",
+    "name": "icon",
+    "parent": "gnsqqp",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jaavsl"
+     ]
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "pmhizr",
+    "name": "text-basic",
+    "parent": "gnsqqp",
+    "children": [],
+    "settings": {
+     "text": "Tempor incididunt",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "klkrhh"
+     ]
+    },
+    "label": "Info"
+   },
+   {
+    "id": "vzutea",
+    "name": "block",
+    "parent": "astnxw",
+    "children": [
+     "ngoema",
+     "judflw"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wcyfyb"
+     ],
+     "tag": "li"
+    },
+    "label": "Feature element"
+   },
+   {
+    "id": "ngoema",
+    "name": "icon",
+    "parent": "vzutea",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jaavsl"
+     ]
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "judflw",
+    "name": "text-basic",
+    "parent": "vzutea",
+    "children": [],
+    "settings": {
+     "text": "Consectetur adipscing",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "klkrhh"
+     ]
+    },
+    "label": "Info"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.9.7.1",
+  "globalClasses": [
+   {
+    "id": "kmpdku",
+    "name": "cta-24",
+    "settings": {
+     "_background": {
+      "position": "center center",
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      }
+     }
+    }
+   },
+   {
+    "id": "rdvoaj",
+    "name": "cta-24__container",
+    "settings": {
+     "_rowGap": "var(--space-m)",
+     "_alignItems": "center",
+     "_width": "var(--width-xl)"
+    }
+   },
+   {
+    "id": "vitrog",
+    "name": "cta-24__form",
+    "settings": {
+     "submitButtonBackgroundColor": {
+      "id": "acss_import_neutral",
+      "name": "neutral",
+      "raw": "var(--neutral)"
+     },
+     "submitButtonTypography": {
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      },
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonWidth": "calc(33% - var(--space-xs)/2)",
+     "horizontalAlignFields": "space-between",
+     "fieldBorder": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      },
+      "radius": {
+       "right": "0",
+       "top": "0",
+       "bottom": "0",
+       "left": "0"
+      }
+     },
+     "fieldBorder:focus": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "fieldPadding": {
+      "top": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "bottom": "var(--space-xs)",
+      "left": "var(--space-xs)"
+     },
+     "placeholderTypography": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      }
+     },
+     "fieldTypography": {
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonBorder": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "submitButtonWidth:mobile_landscape": "100",
+     "fieldMargin": {
+      "bottom": "0"
+     },
+     "fieldMargin:mobile_landscape": {
+      "bottom": "var(--space-xs)"
+     },
+     "_width": "var(--width-m)",
+     "_width:mobile_landscape": "100%",
+     "_widthMax": "100%"
+    }
+   },
+   {
+    "id": "fpegcj",
+    "name": "cta-24__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "text-align": "center"
+     },
+     "_margin": {
+      "top": "0"
+     }
+    }
+   },
+   {
+    "id": "kxdrqd",
+    "name": "cta-24__description",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral-trans-80)"
+      },
+      "text-align": "center"
+     },
+     "_width": "var(--width-m)"
+    }
+   },
+   {
+    "id": "vncjsa",
+    "name": "cta-24__tagline",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600"
+     }
+    }
+   },
+   {
+    "id": "wosxul",
+    "name": "cta-24__feature-list",
+    "settings": {
+     "_direction": "row",
+     "_flexWrap": "wrap",
+     "_alignItems": "center",
+     "_justifyContent": "center",
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_columnGap": "var(--space-l)",
+     "_rowGap": "var(--space-m)"
+    }
+   },
+   {
+    "id": "wcyfyb",
+    "name": "cta-24__feature-element",
+    "settings": {
+     "_flexWrap": "nowrap",
+     "_direction": "row",
+     "_columnGap": "var(--space-xs)",
+     "_width": "auto",
+     "_alignItems": "center"
+    }
+   },
+   {
+    "id": "jaavsl",
+    "name": "cta-24__feature-icon",
+    "settings": {
+     "iconSize": "var(--text-l)",
+     "iconColor": {
+      "raw": "var(--neutral)"
+     }
+    }
+   },
+   {
+    "id": "klkrhh",
+    "name": "cta-24__feature-info",
+    "settings": {
+     "_typography": {
+      "font-weight": "600",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     }
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 7457
+}

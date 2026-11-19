@@ -1,0 +1,732 @@
+{
+ "id": 13492,
+ "title": "Blog Section 33",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "blog-33",
+ "size_bytes": 9643,
+ "json": {
+  "content": [
+   {
+    "id": "prkdii",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "pqdoqk",
+     "mizokz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "snzarc"
+     ]
+    },
+    "label": "Blog"
+   },
+   {
+    "id": "pqdoqk",
+    "name": "container",
+    "parent": "prkdii",
+    "children": [
+     "bygska",
+     "qiuybm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qntoqe"
+     ]
+    }
+   },
+   {
+    "id": "bygska",
+    "name": "block",
+    "parent": "pqdoqk",
+    "children": [
+     "navlep",
+     "pbxbzx",
+     "ovinkp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yvhrlq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "navlep",
+    "name": "text-basic",
+    "parent": "bygska",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "jpglod"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "pbxbzx",
+    "name": "heading",
+    "parent": "bygska",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "zncnkq"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "ovinkp",
+    "name": "text-basic",
+    "parent": "bygska",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "dlyism"
+     ],
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    },
+    "label": "Description"
+   },
+   {
+    "id": "qiuybm",
+    "name": "block",
+    "parent": "pqdoqk",
+    "children": [
+     "jgeaan"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ojibdj"
+     ],
+     "tag": "ul"
+    },
+    "label": "Grid"
+   },
+   {
+    "id": "jgeaan",
+    "name": "block",
+    "parent": "qiuybm",
+    "children": [
+     "znowks"
+    ],
+    "settings": {
+     "tag": "li",
+     "query": {
+      "posts_per_page": "7"
+     },
+     "_cssGlobalClasses": [
+      "xgmqgp"
+     ],
+     "hasLoop": true
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "znowks",
+    "name": "block",
+    "parent": "jgeaan",
+    "children": [
+     "mlvsma",
+     "tbaxrx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ahlgfm"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "mlvsma",
+    "name": "block",
+    "parent": "znowks",
+    "children": [
+     "bswzxy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dabvlr"
+     ]
+    },
+    "label": "Image wrapper"
+   },
+   {
+    "id": "bswzxy",
+    "name": "image",
+    "parent": "mlvsma",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rbjlsn"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Img-placeholder-16-9.png",
+      "external": true,
+      "filename": "Img-placeholder-16-9.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "tbaxrx",
+    "name": "block",
+    "parent": "znowks",
+    "children": [
+     "xdpjaw",
+     "kjmupe"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "zcxmos"
+     ]
+    },
+    "label": "Container"
+   },
+   {
+    "id": "xdpjaw",
+    "name": "block",
+    "parent": "tbaxrx",
+    "children": [
+     "lxyypq",
+     "kpdppn",
+     "asnxka"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xabegp"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "lxyypq",
+    "name": "block",
+    "parent": "xdpjaw",
+    "children": [
+     "kknjic"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "negynm"
+     ]
+    },
+    "label": "Taxonomy list"
+   },
+   {
+    "id": "kknjic",
+    "name": "div",
+    "parent": "lxyypq",
+    "children": [
+     "gohxtp"
+    ],
+    "settings": {
+     "query": {
+      "objectType": "term",
+      "taxonomy": [
+       "category"
+      ],
+      "number": "1"
+     },
+     "_cssGlobalClasses": [
+      "jcqyfp"
+     ],
+     "tag": "li"
+    },
+    "label": "Taxonomy"
+   },
+   {
+    "id": "gohxtp",
+    "name": "text-basic",
+    "parent": "kknjic",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ohxhxa"
+     ],
+     "text": "Category 1",
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Info"
+   },
+   {
+    "id": "kpdppn",
+    "name": "heading",
+    "parent": "xdpjaw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit",
+     "_cssGlobalClasses": [
+      "sjghdy"
+     ]
+    }
+   },
+   {
+    "id": "asnxka",
+    "name": "text-basic",
+    "parent": "xdpjaw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "itnpvu"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "kjmupe",
+    "name": "block",
+    "parent": "tbaxrx",
+    "children": [
+     "iiewnm",
+     "qxclkp",
+     "gqhuuv"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xwwxpc"
+     ]
+    },
+    "label": "Author container"
+   },
+   {
+    "id": "iiewnm",
+    "name": "image",
+    "parent": "kjmupe",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jhiytv"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1.png"
+     }
+    },
+    "label": "Avatar",
+    "themeStyles": []
+   },
+   {
+    "id": "qxclkp",
+    "name": "block",
+    "parent": "kjmupe",
+    "children": [
+     "sooqbx",
+     "aazqrz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "vftpoe"
+     ]
+    },
+    "label": "Inner container"
+   },
+   {
+    "id": "sooqbx",
+    "name": "text-basic",
+    "parent": "qxclkp",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "unswgr"
+     ],
+     "text": "Smith Benites"
+    },
+    "label": "Name"
+   },
+   {
+    "id": "aazqrz",
+    "name": "post-reading-time",
+    "parent": "qxclkp",
+    "children": [],
+    "settings": {
+     "suffix": " minutes",
+     "_cssGlobalClasses": [
+      "nhrieo"
+     ]
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "gqhuuv",
+    "name": "icon",
+    "parent": "kjmupe",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-arrow-right"
+     },
+     "_cssGlobalClasses": [
+      "ttlxsy"
+     ],
+     "_attributes": [
+      {
+       "id": "fqsyus",
+       "name": "aria-hidden",
+       "value": "true"
+      }
+     ]
+    }
+   },
+   {
+    "id": "mizokz",
+    "name": "code",
+    "parent": "prkdii",
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "noRoot": true,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Card\". --*/\n\n.card-blog-33__wrapper{\n  &:first-child{\n    grid-column: 1 / -1;\n\n    .card-blog-33{\n      flex-direction: row;\n      gap: var(--grid-gap);\n      align-items: center;\n    }\n\n    .card-blog-33__container{\n      height: auto;\n    }\n\n    .card-blog-33__icon{\n      display: none;\n    }\n\n    @media (max-width: 767px) {\n      grid-column: auto;\n      grid-row: auto;\n\n      .card-blog-33{\n        flex-direction: column;\n      }\n    }\n  }\n}"
+    },
+    "label": "CSS Styles",
+    "themeStyles": []
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.12.4",
+  "globalClasses": [
+   {
+    "id": "snzarc",
+    "name": "blog-33",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "qntoqe",
+    "name": "blog-33__container",
+    "settings": {
+     "_rowGap": "var(--container-gap)",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "yvhrlq",
+    "name": "blog-33__container-info",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "center",
+     "_justifyContent": "flex-start",
+     "_width": "var(--width-xl)",
+     "_rowGap": "var(--space-xs)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "jpglod",
+    "name": "blog-33__tagline",
+    "settings": {
+     "_typography": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600",
+      "text-align": "center"
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "zncnkq",
+    "name": "blog-33__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "dlyism",
+    "name": "blog-33__description",
+    "settings": {
+     "_width": "var(--width-m)",
+     "_typography": {
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ojibdj",
+    "name": "blog-33__grid",
+    "settings": {
+     "_display": "grid",
+     "_gridGap": "var(--container-gap) var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-3)",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)",
+     "_alignItemsGrid": "stretch",
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_gridTemplateRows": "var(--grid-1)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+    },
+    "_exists": false,
+    "modified": 1750883766,
+    "user_id": 2
+   },
+   {
+    "id": "xgmqgp",
+    "name": "card-blog-33__wrapper",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "ahlgfm",
+    "name": "card-blog-33",
+    "settings": {
+     "_rowGap": "var(--content-gap)",
+     "_height": "100%",
+     "_flexWrap": "nowrap"
+    },
+    "modified": 1750797485,
+    "user_id": 2,
+    "_exists": false
+   },
+   {
+    "id": "dabvlr",
+    "name": "card-blog-33__img-wrapper",
+    "settings": {
+     "_alignItems": "flex-start",
+     "_justifyContent": "flex-start"
+    },
+    "_exists": false
+   },
+   {
+    "id": "rbjlsn",
+    "name": "card-blog-33__img",
+    "settings": {
+     "_objectFit": "cover",
+     "_objectPosition": "50%",
+     "_aspectRatio": "16 / 9",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-l)",
+       "right": "var(--radius-l)",
+       "bottom": "var(--radius-l)",
+       "left": "var(--radius-l)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "zcxmos",
+    "name": "card-blog-33__container",
+    "settings": {
+     "_rowGap": "var(--content-gap)",
+     "_height": "100%"
+    },
+    "_exists": false,
+    "modified": 1750797485,
+    "user_id": 2
+   },
+   {
+    "id": "xabegp",
+    "name": "card-blog-33__container-info",
+    "settings": {
+     "_alignItems": "flex-start",
+     "_rowGap": "var(--space-xs)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "negynm",
+    "name": "card-blog-33__taxonomy-list",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "right": "0",
+      "left": "0"
+     },
+     "_columnGap": "var(--space-xs)",
+     "_rowGap": "var(--space-xs)",
+     "_flexWrap": "wrap",
+     "_direction": "row"
+    },
+    "_exists": false
+   },
+   {
+    "id": "jcqyfp",
+    "name": "card-blog-33__taxonomy",
+    "settings": {
+     "_display": "flex"
+    },
+    "_exists": false
+   },
+   {
+    "id": "ohxhxa",
+    "name": "card-blog-33__taxonomy-info",
+    "settings": {
+     "_padding": {
+      "bottom": "calc(var(--space-xs) / 2)",
+      "top": "calc(var(--space-xs) / 2)",
+      "left": "calc(var(--space-s) / 2)",
+      "right": "calc(var(--space-s) / 2)"
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-s)",
+       "right": "var(--radius-s)",
+       "bottom": "var(--radius-s)",
+       "left": "var(--radius-s)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--black-trans-10)"
+      }
+     },
+     "_typography": {
+      "font-size": "var(--text-s)",
+      "font-weight": "500",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "sjghdy",
+    "name": "card-blog-33__heading",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "itnpvu",
+    "name": "card-blog-33__description",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "xwwxpc",
+    "name": "card-blog-33__author-container",
+    "settings": {
+     "_direction": "row",
+     "_alignItems": "center",
+     "_columnGap": "var(--space-xs)",
+     "_flexWrap": "nowrap",
+     "_margin": {
+      "top": "auto"
+     }
+    },
+    "_exists": false,
+    "modified": 1750797485,
+    "user_id": 2
+   },
+   {
+    "id": "jhiytv",
+    "name": "card-blog-33__avatar",
+    "settings": {
+     "_width": "4.5rem",
+     "_aspectRatio": "1",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-50)",
+       "right": "var(--radius-50)",
+       "bottom": "var(--radius-50)",
+       "left": "var(--radius-50)"
+      }
+     },
+     "_flexShrink": "0"
+    },
+    "_exists": false
+   },
+   {
+    "id": "vftpoe",
+    "name": "card-blog-33__author-inner-container",
+    "settings": {
+     "_direction": "column",
+     "_typography": {
+      "font-size": "var(--text-s)"
+     },
+     "_flexWrap": "nowrap",
+     "_rowGap": "0"
+    },
+    "_exists": false
+   },
+   {
+    "id": "unswgr",
+    "name": "card-blog-33__name",
+    "settings": {
+     "_typography": {
+      "font-weight": "600",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "nhrieo",
+    "name": "card-blog-33__reading-time",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral-trans-60)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ttlxsy",
+    "name": "card-blog-33__icon",
+    "settings": {
+     "iconSize": "var(--text-l)",
+     "iconColor": {
+      "raw": "var(--neutral)"
+     },
+     "_transform": {
+      "rotateZ": "-45deg"
+     }
+    },
+    "_exists": false
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 9667
+}

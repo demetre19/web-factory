@@ -1,0 +1,603 @@
+{
+ "id": 22244,
+ "title": "Banner Section 12",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "banner-12",
+ "size_bytes": 8935,
+ "json": {
+  "content": [
+   {
+    "id": "prareg",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "zkzuua"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pggogz"
+     ]
+    },
+    "label": "Banner"
+   },
+   {
+    "id": "zkzuua",
+    "name": "container",
+    "parent": "prareg",
+    "children": [
+     "xxuqig",
+     "zeqwyr"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "mkpfpw"
+     ]
+    }
+   },
+   {
+    "id": "iayuyv",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "fnqqog"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "dqjmfu",
+    "name": "block",
+    "parent": "xxuqig",
+    "children": [
+     "iayuyv",
+     "sdfpqw",
+     "ctfvhj",
+     "lywiox",
+     "tqtura",
+     "ktugkm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tbqzjk"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "ldghlb",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "signature": "d2de3d49b61f99628199c84ff9abe938",
+     "user_id": 2,
+     "time": 1720984090,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Banner\" (Section). -- */\n\n.banner-12 {\n  /* Controls the rotation angle of each row. */\n  --banner-12-angle: 9deg;\n\n  /* Controls the horizontal distance traveled while scrolling. */\n  --banner-12-scroll-distance: 20rem;\n\n  /* Controls when the scroll animation starts and ends. */\n  --banner-12-animation-start: 0%;\n  --banner-12-animation-end: 100%;\n\n  position: relative;\n\n  view-timeline-name: --banner-12-timeline;\n  view-timeline-axis: block;\n\n  .banner-12__item-list-wrapper {\n    overflow: hidden;\n\n    /* Odd rows: left to right. */\n    &:nth-child(odd) {\n      --banner-12-scroll-from: calc(\n        var(--banner-12-scroll-distance) * -1\n      );\n\n      --banner-12-scroll-to: var(--banner-12-scroll-distance);\n\n      transform:\n        rotateZ(calc(-1 * var(--banner-12-angle)))\n        translateY(-50%);\n    }\n\n    /* Even rows: right to left. */\n    &:nth-child(even) {\n      --banner-12-scroll-from: var(--banner-12-scroll-distance);\n\n      --banner-12-scroll-to: calc(\n        var(--banner-12-scroll-distance) * -1\n      );\n\n      transform:\n        rotateZ(var(--banner-12-angle))\n        translateY(-50%);\n    }\n  }\n\n  .banner-12__item-list {\n    width: max-content;\n    min-width: max-content;\n\n    transform: translateX(\n      var(--banner-12-scroll-from)\n    );\n  }\n}\n\n\n/* Applies the animation only in supported browsers. */\n@supports (animation-timeline: view()) {\n  .banner-12 {\n    .banner-12__item-list {\n      animation:\n        banner-12-horizontal-scroll\n        1ms\n        linear\n        both;\n\n      animation-timeline: --banner-12-timeline;\n\n      animation-range:\n        cover var(--banner-12-animation-start)\n        cover var(--banner-12-animation-end);\n\n      will-change: transform;\n    }\n  }\n}\n\n\n/* Moves each row between its configured horizontal positions. */\n@keyframes banner-12-horizontal-scroll {\n  from {\n    transform: translateX(\n      var(--banner-12-scroll-from)\n    );\n  }\n\n  to {\n    transform: translateX(\n      var(--banner-12-scroll-to)\n    );\n  }\n}\n\n\n/* Disables the animation for users who prefer reduced motion. */\n@media (prefers-reduced-motion: reduce) {\n  .banner-12 {\n    .banner-12__item-list {\n      animation: none;\n      transform: none;\n    }\n  }\n}"
+    },
+    "label": "Styles CSS",
+    "themeStyles": []
+   },
+   {
+    "id": "fnqqog",
+    "name": "text-basic",
+    "parent": "iayuyv",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "ktugkm",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "trmuky"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "trmuky",
+    "name": "text-basic",
+    "parent": "ktugkm",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "tqtura",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "teeygk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "teeygk",
+    "name": "text-basic",
+    "parent": "tqtura",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "lywiox",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "ekjmya"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "ekjmya",
+    "name": "text-basic",
+    "parent": "lywiox",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "ctfvhj",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "ldlfdo"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "ldlfdo",
+    "name": "text-basic",
+    "parent": "ctfvhj",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "sdfpqw",
+    "name": "div",
+    "parent": "dqjmfu",
+    "children": [
+     "vdjjwv"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "vdjjwv",
+    "name": "text-basic",
+    "parent": "sdfpqw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "xxuqig",
+    "name": "block",
+    "parent": "zkzuua",
+    "children": [
+     "dqjmfu"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tsregg"
+     ]
+    },
+    "label": "Item list wrapper"
+   },
+   {
+    "id": "zeqwyr",
+    "name": "block",
+    "parent": "zkzuua",
+    "children": [
+     "tkmmen"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tsregg"
+     ]
+    },
+    "label": "Item list wrapper"
+   },
+   {
+    "id": "tkmmen",
+    "name": "block",
+    "parent": "zeqwyr",
+    "children": [
+     "vgqgmw",
+     "rhwwcj",
+     "fechrm",
+     "nsmvam",
+     "mvxrmo",
+     "knhiyp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tbqzjk"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "vgqgmw",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "yrjwdy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "yrjwdy",
+    "name": "text-basic",
+    "parent": "vgqgmw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "rhwwcj",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "yjvtse"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "yjvtse",
+    "name": "text-basic",
+    "parent": "rhwwcj",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "fechrm",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "lmhjxz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "lmhjxz",
+    "name": "text-basic",
+    "parent": "fechrm",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "nsmvam",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "vyjtln"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "vyjtln",
+    "name": "text-basic",
+    "parent": "nsmvam",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "mvxrmo",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "vrjypx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "vrjypx",
+    "name": "text-basic",
+    "parent": "mvxrmo",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "knhiyp",
+    "name": "div",
+    "parent": "tkmmen",
+    "children": [
+     "fhwtlb"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "wqndmq"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "fhwtlb",
+    "name": "text-basic",
+    "parent": "knhiyp",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "oygimh"
+     ]
+    },
+    "label": "Item"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "2.3.10",
+  "globalClasses": [
+   {
+    "id": "pggogz",
+    "name": "banner-12",
+    "settings": {
+     "_overflow": "hidden",
+     "_padding": {
+      "left": "0",
+      "right": "0"
+     }
+    },
+    "modified": 1725491204,
+    "user_id": 3,
+    "_exists": false
+   },
+   {
+    "id": "mkpfpw",
+    "name": "banner-12__container",
+    "settings": {
+     "_position": "relative",
+     "_width": "100%",
+     "_aspectRatio": "3 / 1"
+    },
+    "_exists": false
+   },
+   {
+    "id": "wqndmq",
+    "name": "banner-12__item-wrapper",
+    "settings": {
+     "_margin": {
+      "right": "var(--space-xl)",
+      "left": "var(--space-xl)"
+     },
+     "_width": "fit-content",
+     "_margin:mobile_landscape": {
+      "right": "var(--space-l)"
+     },
+     "_display": "block"
+    },
+    "_exists": false
+   },
+   {
+    "id": "tbqzjk",
+    "name": "banner-12__item-list",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0"
+     },
+     "_padding": {
+      "left": "0",
+      "right": "0"
+     },
+     "_display": "flex",
+     "_cssCustom": ".banner-12__item-list{\n\twhite-space: nowrap;\n}",
+     "_width": "max-content",
+     "_widthMax": "max-content",
+     "_flexShrink": "0",
+     "_direction": "row",
+     "_flexWrap": "nowrap",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "oygimh",
+    "name": "banner-12__item",
+    "settings": {
+     "_width": "100%",
+     "_typography": {
+      "font-size": "var(--text-xl)",
+      "font-weight": "700",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     }
+    },
+    "modified": 1725417498,
+    "user_id": 2,
+    "_exists": false
+   },
+   {
+    "id": "tsregg",
+    "name": "banner-12__item-list-wrapper",
+    "settings": {
+     "_display": "flex",
+     "_flexWrap": "nowrap",
+     "_flexShrink": "0",
+     "_direction": "row",
+     "_padding": {
+      "bottom": "var(--space-m)",
+      "top": "var(--space-m)"
+     },
+     "_border": {
+      "width": {
+       "bottom": "1",
+       "top": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_widthMax": "unset",
+     "_width": "110vw",
+     "_position": "absolute",
+     "_top": "50%",
+     "_left": "-6vw",
+     "_typography": {
+      "white-space": "nowrap"
+     }
+    },
+    "_exists": false
+   }
+  ]
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 8956
+}

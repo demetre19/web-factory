@@ -1,0 +1,387 @@
+{
+ "id": 8244,
+ "title": "CTA Section 35",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-35",
+ "size_bytes": 4757,
+ "json": {
+  "content": [
+   {
+    "id": "aaguzm",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "zsveri"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jjdiqj"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "zsveri",
+    "name": "container",
+    "parent": "aaguzm",
+    "children": [
+     "lhcedy",
+     "ojbmac"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pjhxxn"
+     ]
+    }
+   },
+   {
+    "id": "lhcedy",
+    "name": "block",
+    "parent": "zsveri",
+    "children": [
+     "xetvts",
+     "usqtno"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pvkssw"
+     ]
+    },
+    "label": "Container heading"
+   },
+   {
+    "id": "xetvts",
+    "name": "block",
+    "parent": "lhcedy",
+    "children": [
+     "mllngq",
+     "esfhbc"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qzdvyh"
+     ]
+    },
+    "label": "Inner container heading"
+   },
+   {
+    "id": "mllngq",
+    "name": "counter",
+    "parent": "xetvts",
+    "children": [],
+    "settings": {
+     "countTo": "500",
+     "_cssGlobalClasses": [
+      "jolvjj"
+     ],
+     "suffix": "+"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "esfhbc",
+    "name": "heading",
+    "parent": "xetvts",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet",
+     "tag": "h2",
+     "_cssGlobalClasses": [
+      "zmaftn"
+     ]
+    }
+   },
+   {
+    "id": "usqtno",
+    "name": "block",
+    "parent": "lhcedy",
+    "children": [
+     "xegnhb",
+     "tyrpki"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "liukyl"
+     ]
+    },
+    "label": "Rating container"
+   },
+   {
+    "id": "xegnhb",
+    "name": "rating",
+    "parent": "usqtno",
+    "children": [],
+    "settings": {
+     "rating": "4.5",
+     "_cssGlobalClasses": [
+      "mraniq"
+     ],
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-star"
+     }
+    }
+   },
+   {
+    "id": "tyrpki",
+    "name": "text-basic",
+    "parent": "usqtno",
+    "children": [],
+    "settings": {
+     "text": "4.5 (100)",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "chzeeh"
+     ]
+    },
+    "label": "Info"
+   },
+   {
+    "id": "ojbmac",
+    "name": "block",
+    "parent": "zsveri",
+    "children": [
+     "ztjbnp",
+     "vltdxz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "kpvxwi"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "ztjbnp",
+    "name": "text-basic",
+    "parent": "ojbmac",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "tmsxqb"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "vltdxz",
+    "name": "div",
+    "parent": "ojbmac",
+    "children": [
+     "fceojb",
+     "habyri"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "aaauge"
+     ]
+    },
+    "label": "Container buttons"
+   },
+   {
+    "id": "fceojb",
+    "name": "button",
+    "parent": "vltdxz",
+    "children": [],
+    "settings": {
+     "text": "Contact now",
+     "_cssGlobalClasses": [
+      "ajhilp",
+      "acss_import_btn--black"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#"
+     }
+    },
+    "label": "Button primary"
+   },
+   {
+    "id": "habyri",
+    "name": "button",
+    "parent": "vltdxz",
+    "children": [],
+    "settings": {
+     "text": "See more",
+     "_cssGlobalClasses": [
+      "ntiwou",
+      "acss_import_btn--black",
+      "acss_import_btn--outline"
+     ],
+     "link": {
+      "type": "external",
+      "url": "#",
+      "ariaLabel": "See more"
+     }
+    },
+    "label": "Button outline"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.11",
+  "globalClasses": [
+   {
+    "id": "jjdiqj",
+    "name": "cta-35",
+    "settings": []
+   },
+   {
+    "id": "pjhxxn",
+    "name": "cta-35__container",
+    "settings": {
+     "_display": "grid",
+     "_gridGap": "var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-2)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+    }
+   },
+   {
+    "id": "pvkssw",
+    "name": "cta-35__container-heading",
+    "settings": {
+     "_direction": "column",
+     "_rowGap": "var(--content-gap)"
+    }
+   },
+   {
+    "id": "qzdvyh",
+    "name": "cta-35__inner-container-heading",
+    "settings": {
+     "_rowGap": "var(--space-xs)"
+    }
+   },
+   {
+    "id": "jolvjj",
+    "name": "cta-35__counter",
+    "settings": {
+     "countTypography": {
+      "font-size": "6.4rem",
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "line-height": "1.2",
+      "font-weight": "700"
+     },
+     "suffixTypography": {
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "font-size": "6.4rem",
+      "line-height": "1.2",
+      "font-weight": "700"
+     },
+     "prefixTypography": {
+      "font-size": "6.4rem",
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "line-height": "1.2",
+      "font-weight": "700"
+     }
+    }
+   },
+   {
+    "id": "zmaftn",
+    "name": "cta-35__heading",
+    "settings": []
+   },
+   {
+    "id": "liukyl",
+    "name": "cta-35__rating-container",
+    "settings": {
+     "_direction": "row",
+     "_columnGap": "var(--space-xs)",
+     "_alignItems": "center",
+     "_justifyContent": "flex-start"
+    }
+   },
+   {
+    "id": "mraniq",
+    "name": "cta-35__rating",
+    "settings": {
+     "iconColorFull": {
+      "raw": "var(--neutral)"
+     },
+     "iconColorEmpty": {
+      "raw": "var(--neutral-trans-20)"
+     }
+    }
+   },
+   {
+    "id": "chzeeh",
+    "name": "cta-35__rating-info",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "700"
+     }
+    }
+   },
+   {
+    "id": "kpvxwi",
+    "name": "cta-35__container-info",
+    "settings": {
+     "_rowGap": "var(--content-gap)",
+     "_alignItems:mobile_portrait": "stretch"
+    }
+   },
+   {
+    "id": "tmsxqb",
+    "name": "cta-35__description",
+    "settings": []
+   },
+   {
+    "id": "aaauge",
+    "name": "cta-35__container-btn",
+    "settings": {
+     "_display": "flex",
+     "_direction": "row",
+     "_columnGap": "var(--content-gap)",
+     "_rowGap": "var(--content-gap)",
+     "_direction:mobile_portrait": "column",
+     "_alignItems": "stretch"
+    }
+   },
+   {
+    "id": "ajhilp",
+    "name": "cta-35__btn",
+    "settings": {
+     "iconTypography": {
+      "font-size": "var(--text-s)"
+     }
+    }
+   },
+   {
+    "id": "acss_import_btn--black",
+    "name": "btn--black",
+    "settings": [],
+    "category": "acss"
+   },
+   {
+    "id": "ntiwou",
+    "name": "cta-35__btn-outline",
+    "settings": []
+   },
+   {
+    "id": "acss_import_btn--outline",
+    "name": "btn--outline",
+    "settings": [],
+    "category": "acss"
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 4759
+}

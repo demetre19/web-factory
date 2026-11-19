@@ -1,0 +1,331 @@
+{
+ "id": 7391,
+ "title": "CTA Section 34",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-34",
+ "size_bytes": 5556,
+ "json": {
+  "content": [
+   {
+    "id": "zafach",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "grnymh",
+     "sveebm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xdhuad"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "grnymh",
+    "name": "container",
+    "parent": "zafach",
+    "children": [
+     "hnipro",
+     "ounzjy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ojksfu"
+     ]
+    }
+   },
+   {
+    "id": "ounzjy",
+    "name": "block",
+    "parent": "grnymh",
+    "children": [
+     "iidvyh",
+     "tcntvi",
+     "rtpuma"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ardahv"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "iidvyh",
+    "name": "heading",
+    "parent": "ounzjy",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet",
+     "_cssGlobalClasses": [
+      "cruszg"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "tcntvi",
+    "name": "text",
+    "parent": "ounzjy",
+    "children": [],
+    "settings": {
+     "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+     "_cssGlobalClasses": [
+      "hkqprd"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "oussmf",
+    "name": "image",
+    "parent": "hnipro",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "uyadpd"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/10/Placeholder-imagen-1-1.png",
+      "external": true,
+      "filename": "Placeholder-imagen-1-1.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "rtpuma",
+    "name": "form",
+    "parent": "ounzjy",
+    "children": [],
+    "settings": {
+     "fields": [
+      {
+       "type": "email",
+       "label": "Email",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "d2f0f3",
+       "width": "calc(67% - var(--space-xs)/2)",
+       "width:mobile_landscape": "100"
+      },
+      {
+       "type": "html",
+       "label": "Terms and conditions",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "czopyh",
+       "width": "100",
+       "html": "<p class=\"cta-34__form-terms\">By clicking Register, you acknowledge that you have read and accepted our <a href=\"#\">Terms and Conditions</a>.</p>"
+      }
+     ],
+     "actions": [
+      "email"
+     ],
+     "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+     "emailSubject": "Contact form request",
+     "emailTo": "admin_email",
+     "fromName": "acss.brixies.co",
+     "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+     "htmlEmail": true,
+     "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+     "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+     "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+     "_cssGlobalClasses": [
+      "tchvwr"
+     ],
+     "submitButtonText": "Register"
+    },
+    "label": "Form newsletter"
+   },
+   {
+    "id": "sveebm",
+    "name": "code",
+    "parent": "zafach",
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "signature": "cec755cb62cec20d0dcfce97e8e796a5",
+     "user_id": 2,
+     "time": 1720984090,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Form newsletter\". --*/ \n\n.cta-34__form{\n  /* Important style for the terms and conditions field to be after the button. */\n  & .form-group:has(.cta-34__form-terms){\n    order:3;\n  }\n\n  /* Styles terms and conditions */\n  & .cta-34__form-terms{\n    margin-top: var(--space-xs);\n    font-size: var(--text-xs);\n\n    /* Styles anchor link terms and conditions */\n    & a{\n      color:var(--neutral);\n      font-weight: 600;\n    }\n  }\n}"
+    },
+    "label": "Styles CSS"
+   },
+   {
+    "id": "hnipro",
+    "name": "block",
+    "parent": "grnymh",
+    "children": [
+     "oussmf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rowwjc"
+     ]
+    },
+    "label": "Image wrapper"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.10.3",
+  "globalClasses": [
+   {
+    "id": "xdhuad",
+    "name": "cta-34",
+    "settings": []
+   },
+   {
+    "id": "ojksfu",
+    "name": "cta-34__container",
+    "settings": {
+     "_direction:tablet_portrait": "column",
+     "_display": "grid",
+     "_gridTemplateColumns": "var(--grid-1-2)",
+     "_alignItemsGrid": "stretch",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+     "_gridGap": "var(--container-gap) var(--grid-gap)",
+     "_gridTemplateRows": "var(--grid-1)"
+    },
+    "modified": 1721786643,
+    "user_id": 2
+   },
+   {
+    "id": "ardahv",
+    "name": "cta-34__info-container",
+    "settings": {
+     "_rowGap": "var(--content-gap)",
+     "_width:tablet_portrait": "100%",
+     "_alignSelf": "center"
+    },
+    "modified": 1721786643,
+    "user_id": 2
+   },
+   {
+    "id": "cruszg",
+    "name": "cta-34__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)"
+     }
+    }
+   },
+   {
+    "id": "hkqprd",
+    "name": "cta-34__description",
+    "settings": {
+     "_widthMax": "var(--width-m)"
+    }
+   },
+   {
+    "id": "uyadpd",
+    "name": "cta-34__img",
+    "settings": {
+     "_objectFit": "cover",
+     "_width:tablet_portrait": "100%",
+     "_overflow": "hidden",
+     "_width": "100%",
+     "_height": "100%",
+     "_aspectRatio": "1",
+     "_objectPosition": "50%"
+    }
+   },
+   {
+    "id": "tchvwr",
+    "name": "cta-34__form",
+    "settings": {
+     "submitButtonBackgroundColor": {
+      "id": "acss_import_neutral",
+      "name": "neutral",
+      "raw": "var(--neutral)"
+     },
+     "submitButtonTypography": {
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      },
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonWidth": "calc(33% - var(--space-xs)/2)",
+     "horizontalAlignFields": "space-between",
+     "fieldBorder": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      },
+      "radius": {
+       "right": "0",
+       "top": "0",
+       "bottom": "0",
+       "left": "0"
+      }
+     },
+     "fieldBorder:focus": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "fieldPadding": {
+      "top": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "bottom": "var(--space-xs)",
+      "left": "var(--space-xs)"
+     },
+     "placeholderTypography": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      }
+     },
+     "fieldTypography": {
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonBorder": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "submitButtonWidth:mobile_landscape": "100",
+     "fieldMargin": {
+      "bottom": "0"
+     },
+     "fieldMargin:mobile_landscape": {
+      "bottom": "var(--space-xs)"
+     },
+     "_width": "var(--width-m)",
+     "_widthMax": "100%",
+     "_width:mobile_landscape": "100%"
+    }
+   },
+   {
+    "id": "rowwjc",
+    "name": "cta-34__img-wrapper",
+    "settings": []
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 5578
+}

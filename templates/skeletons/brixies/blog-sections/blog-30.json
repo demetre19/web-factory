@@ -1,0 +1,540 @@
+{
+ "id": 5516,
+ "title": "Blog Section 30",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "blog-30",
+ "size_bytes": 6539,
+ "json": {
+  "content": [
+   {
+    "id": "ogmhss",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "csqenv",
+     "gshntm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "cnoqoc"
+     ]
+    },
+    "label": "Blog"
+   },
+   {
+    "id": "gshntm",
+    "name": "code",
+    "parent": "ogmhss",
+    "children": [],
+    "settings": {
+     "code": "<style>\n  /* -- The root styles must go in the element of the structure with the name \"Card\". --*/\n  \n  /* Styles applied to the first card */\n  .card-blog-30__wrapper:not(:last-child){\n    .card-blog-30{\n    \tborder-bottom: 1px solid var(--neutral-trans-20);\n    }\n  }\n</style>\n",
+     "executeCode": true,
+     "signature": "f84f5f5b37ec7028c616b6a5d3a7c3a1",
+     "user_id": 2,
+     "time": 1718760237
+    },
+    "label": "CSS Style",
+    "themeStyles": []
+   },
+   {
+    "id": "csqenv",
+    "name": "container",
+    "parent": "ogmhss",
+    "children": [
+     "tsejmo",
+     "zpgszv",
+     "xosuuc"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "uqdmdz"
+     ]
+    }
+   },
+   {
+    "id": "zpgszv",
+    "name": "filter-radio",
+    "parent": "csqenv",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "vvyuxx"
+     ],
+     "filterQueryId": "wsbecm",
+     "filterSource": "taxonomy",
+     "filterTaxonomy": "category",
+     "displayMode": "button",
+     "filterHideCount": true,
+     "filterLabelAll": "View all",
+     "filterHideEmpty": true
+    },
+    "label": "Filter",
+    "themeStyles": []
+   },
+   {
+    "id": "xosuuc",
+    "name": "block",
+    "parent": "csqenv",
+    "children": [
+     "wsbecm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yremcy"
+     ],
+     "tag": "ul"
+    },
+    "label": "List"
+   },
+   {
+    "id": "wsbecm",
+    "name": "block",
+    "parent": "xosuuc",
+    "children": [
+     "isatvy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ivdvco"
+     ],
+     "tag": "li",
+     "query": {
+      "posts_per_page": "6"
+     },
+     "hasLoop": true
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "isatvy",
+    "name": "block",
+    "parent": "wsbecm",
+    "children": [
+     "hmbdan",
+     "smcedf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "qkrmdz"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "3"
+     }
+    },
+    "label": "Card"
+   },
+   {
+    "id": "xzhhde",
+    "name": "text-basic",
+    "parent": "hmbdan",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "aeijss"
+     ],
+     "text": "{post_date:d M Y}"
+    },
+    "label": "Post date"
+   },
+   {
+    "id": "qmrngk",
+    "name": "post-title",
+    "parent": "smcedf",
+    "children": [],
+    "settings": {
+     "tag": "h3",
+     "_cssGlobalClasses": [
+      "wizjbe"
+     ],
+     "linkToPost": true
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "xbdafl",
+    "name": "post-excerpt",
+    "parent": "smcedf",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rfhiiz"
+     ],
+     "length": "16"
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "tsejmo",
+    "name": "block",
+    "parent": "csqenv",
+    "children": [
+     "satuxk",
+     "lkgwoh",
+     "cxizow"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "rroqqe"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "satuxk",
+    "name": "text-basic",
+    "parent": "tsejmo",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "sfqqje"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "lkgwoh",
+    "name": "heading",
+    "parent": "tsejmo",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "_cssGlobalClasses": [
+      "josvrh"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "cxizow",
+    "name": "text-basic",
+    "parent": "tsejmo",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "iwsrab"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "hmbdan",
+    "name": "block",
+    "parent": "isatvy",
+    "children": [
+     "nwsmcn",
+     "xzhhde"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "szzaau"
+     ]
+    },
+    "label": "Metadata"
+   },
+   {
+    "id": "smcedf",
+    "name": "block",
+    "parent": "isatvy",
+    "children": [
+     "qmrngk",
+     "xbdafl",
+     "mxegtd"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "fgljzs"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "mxegtd",
+    "name": "button",
+    "parent": "smcedf",
+    "children": [],
+    "settings": {
+     "text": "Learn more",
+     "link": {
+      "type": "external",
+      "url": "#"
+     },
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-arrow-right"
+     },
+     "_cssGlobalClasses": [
+      "wlkdsr"
+     ]
+    }
+   },
+   {
+    "id": "nwsmcn",
+    "name": "div",
+    "parent": "hmbdan",
+    "children": [
+     "tukhfu"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jjvxxz"
+     ],
+     "hasLoop": true,
+     "query": {
+      "objectType": "term",
+      "taxonomy": [
+       "category"
+      ],
+      "number": "1",
+      "current_post_term": true
+     }
+    },
+    "label": "Taxonomy"
+   },
+   {
+    "id": "tukhfu",
+    "name": "text-basic",
+    "parent": "nwsmcn",
+    "children": [],
+    "settings": {
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "llfwch"
+     ],
+     "text": "{term_name}"
+    },
+    "label": "Tax info"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.9.9",
+  "globalClasses": [
+   {
+    "id": "cnoqoc",
+    "name": "blog-30",
+    "settings": {
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     }
+    }
+   },
+   {
+    "id": "uqdmdz",
+    "name": "blog-30__container",
+    "settings": {
+     "_rowGap": "var(--space-xl)"
+    }
+   },
+   {
+    "id": "vvyuxx",
+    "name": "blog-30__filter",
+    "settings": {
+     "buttonActiveBackgroundColor": {
+      "raw": "var(--neutral)"
+     },
+     "buttonTypography": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-size": "var(--text-s)"
+     },
+     "buttonBorder": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "buttonActiveTypography": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_gap": "var(--space-xs)",
+     "_flexDirection": "row",
+     "_justifyContent:mobile_landscape": "flex-start",
+     "_justifyContent": "flex-start",
+     "_alignItems": "flex-start"
+    }
+   },
+   {
+    "id": "yremcy",
+    "name": "blog-30__list",
+    "settings": {
+     "_display": "flex",
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_padding": {
+      "left": "0"
+     },
+     "_direction": "column"
+    }
+   },
+   {
+    "id": "ivdvco",
+    "name": "card-blog-30__wrapper",
+    "settings": {
+     "_position": "relative",
+     "_direction": "row",
+     "_alignItems": "stretch"
+    }
+   },
+   {
+    "id": "qkrmdz",
+    "name": "card-blog-30",
+    "settings": {
+     "_direction:mobile_landscape": "column",
+     "_display": "grid",
+     "_gridGap": "var(--space-m)",
+     "_gridTemplateColumns": "var(--grid-1-3)",
+     "_padding": {
+      "bottom": "var(--space-m)",
+      "top": "var(--space-m)"
+     },
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-1)"
+    }
+   },
+   {
+    "id": "aeijss",
+    "name": "card-blog-30__date",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-s)",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "400"
+     }
+    }
+   },
+   {
+    "id": "wizjbe",
+    "name": "card-blog-30__title",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-l)"
+     },
+     "_margin": {
+      "top": "0"
+     }
+    }
+   },
+   {
+    "id": "rfhiiz",
+    "name": "card-blog-30__excerpt",
+    "settings": []
+   },
+   {
+    "id": "rroqqe",
+    "name": "blog-30__container-info",
+    "settings": {
+     "_rowGap": "var(--space-xs)"
+    }
+   },
+   {
+    "id": "sfqqje",
+    "name": "blog-30__tagline",
+    "settings": {
+     "_margin": {
+      "bottom": "0"
+     },
+     "_typography": {
+      "font-weight": "600",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     }
+    }
+   },
+   {
+    "id": "josvrh",
+    "name": "blog-30__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)"
+     }
+    }
+   },
+   {
+    "id": "iwsrab",
+    "name": "blog-30__description",
+    "settings": {
+     "_width": "var(--width-m)"
+    }
+   },
+   {
+    "id": "szzaau",
+    "name": "card-blog-30__meta",
+    "settings": {
+     "_direction": "column",
+     "_rowGap": "var(--space-xs)"
+    }
+   },
+   {
+    "id": "fgljzs",
+    "name": "card-blog-30__container-info",
+    "settings": {
+     "_direction": "column",
+     "_rowGap": "var(--space-xs)"
+    }
+   },
+   {
+    "id": "wlkdsr",
+    "name": "card-blog-30__btn",
+    "settings": {
+     "_padding": {
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0"
+     }
+    }
+   },
+   {
+    "id": "jjvxxz",
+    "name": "card-blog-30__tax",
+    "settings": []
+   },
+   {
+    "id": "llfwch",
+    "name": "card-blog-30__tax-info",
+    "settings": {
+     "_typography": {
+      "color": {
+       "raw": "var(--neutral)"
+      },
+      "font-weight": "600"
+     }
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 6546
+}

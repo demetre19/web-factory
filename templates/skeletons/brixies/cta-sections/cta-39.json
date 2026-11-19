@@ -1,0 +1,360 @@
+{
+ "id": 11485,
+ "title": "CTA Section 39",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "cta-39",
+ "size_bytes": 5837,
+ "json": {
+  "content": [
+   {
+    "id": "gzydrb",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "elxrfh",
+     "gdnsyq"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ffiupn"
+     ]
+    },
+    "label": "CTA"
+   },
+   {
+    "id": "elxrfh",
+    "name": "container",
+    "parent": "gzydrb",
+    "children": [
+     "lyfhgx",
+     "vuoujl"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "zflxlm"
+     ]
+    }
+   },
+   {
+    "id": "lyfhgx",
+    "name": "block",
+    "parent": "elxrfh",
+    "children": [
+     "kpoybt",
+     "zekdjr"
+    ],
+    "settings": {
+     "taxonomies": [
+      "category",
+      "post_tag"
+     ],
+     "extrasCustomQueryCode": "<style>\nh1.my-heading {\n  color: crimson;\n}\n</style>\n\n<h1 class='my-heading'>Just some custom HTML</h1>",
+     "_cssGlobalClasses": [
+      "tpgdmd"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "kpoybt",
+    "name": "div",
+    "parent": "lyfhgx",
+    "children": [
+     "mcvltz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "uwrfhw"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "mcvltz",
+    "name": "icon",
+    "parent": "kpoybt",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ulcirq"
+     ],
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     }
+    },
+    "themeStyles": []
+   },
+   {
+    "id": "zekdjr",
+    "name": "heading",
+    "parent": "lyfhgx",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet consectetur adipiscing",
+     "_cssGlobalClasses": [
+      "qpafui"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "vuoujl",
+    "name": "block",
+    "parent": "elxrfh",
+    "children": [
+     "buqhwi"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yrixfx"
+     ]
+    },
+    "label": "Form wrapper"
+   },
+   {
+    "id": "buqhwi",
+    "name": "form",
+    "parent": "vuoujl",
+    "children": [],
+    "settings": {
+     "fields": [
+      {
+       "type": "email",
+       "label": "Email",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "d2f0f3",
+       "width": "calc(67% - var(--space-xs)/2)",
+       "width:mobile_landscape": "100"
+      },
+      {
+       "type": "html",
+       "label": "Terms and conditions",
+       "placeholder": "Your Email",
+       "required": true,
+       "id": "czopyh",
+       "width": "100",
+       "html": "<p class=\"cta-39__form-terms\">By clicking Register, you acknowledge that you have read and accepted our <a href=\"3\">Terms and Conditions</a>.</p>"
+      }
+     ],
+     "actions": [
+      "email"
+     ],
+     "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+     "emailSubject": "Contact form request",
+     "emailTo": "admin_email",
+     "fromName": "acss.brixies.co",
+     "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+     "htmlEmail": true,
+     "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+     "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+     "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+     "_cssGlobalClasses": [
+      "vggqpz"
+     ],
+     "submitButtonText": "Register"
+    },
+    "label": "Form newsletter",
+    "themeStyles": []
+   },
+   {
+    "id": "gdnsyq",
+    "name": "code",
+    "parent": "gzydrb",
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "signature": "16d397facf34e8f834fdfba92c5e978c",
+     "user_id": 2,
+     "time": 1722633118,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Form newsletter\". --*/ \n\n.cta-39__form{\n  /* Important style for the terms and conditions field to be after the button. */\n  & .form-group:has(.cta-39__form-terms){\n    order:3;\n  }\n\n  /* Styles terms and conditions */\n  & .cta-39__form-terms{\n    margin-top: var(--space-xs);\n    font-size: var(--text-xs);\n    color: var(--neutral-trans-80);\n\n    /* Styles anchor link terms and conditions */\n    & a{\n      color:var(--neutral);\n      font-weight: 600;\n    }\n  }\n}"
+    },
+    "label": "Styles CSS",
+    "themeStyles": []
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.12.3",
+  "globalClasses": [
+   {
+    "id": "ffiupn",
+    "name": "cta-39",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "zflxlm",
+    "name": "cta-39__container",
+    "settings": {
+     "_display": "grid",
+     "_gridGap": "var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-2)",
+     "_gridTemplateRows": "var(--grid-1)",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-1)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "tpgdmd",
+    "name": "cta-39__container-info",
+    "settings": {
+     "_rowGap": "var(--space-s)",
+     "_direction": "row",
+     "_columnGap": "var(--content-gap)",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "uwrfhw",
+    "name": "cta-39__icon-wrapper",
+    "settings": {
+     "_display": "flex",
+     "_justifyContent": "center",
+     "_alignItems": "center",
+     "_flexShrink": "0",
+     "_padding": {
+      "top": "var(--space-s)",
+      "right": "var(--space-s)",
+      "bottom": "var(--space-s)",
+      "left": "var(--space-s)"
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--black-trans-10)"
+      }
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ulcirq",
+    "name": "cta-39__icon",
+    "settings": {
+     "iconSize": "2.4rem",
+     "iconColor": {
+      "raw": "var(--neutral)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "qpafui",
+    "name": "cta-39__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "yrixfx",
+    "name": "cta-39__form-wrapper",
+    "settings": {
+     "_justifyContent": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "vggqpz",
+    "name": "cta-39__form",
+    "settings": {
+     "submitButtonBackgroundColor": {
+      "id": "acss_import_neutral",
+      "name": "neutral",
+      "raw": "var(--neutral)"
+     },
+     "submitButtonTypography": {
+      "color": {
+       "id": "acss_import_white",
+       "name": "white",
+       "raw": "var(--white)"
+      },
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonWidth": "calc(33% - var(--space-xs)/2)",
+     "horizontalAlignFields": "space-between",
+     "fieldBorder": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      },
+      "radius": {
+       "right": "0",
+       "top": "0",
+       "bottom": "0",
+       "left": "0"
+      }
+     },
+     "fieldBorder:focus": {
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "fieldPadding": {
+      "top": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "bottom": "var(--space-xs)",
+      "left": "var(--space-xs)"
+     },
+     "placeholderTypography": {
+      "color": {
+       "raw": "var(--neutral-trans-20)"
+      }
+     },
+     "fieldTypography": {
+      "font-size": "var(--text-m)",
+      "line-height": "150%"
+     },
+     "submitButtonBorder": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "id": "acss_import_neutral",
+       "name": "neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "submitButtonWidth:mobile_landscape": "100",
+     "fieldMargin": {
+      "bottom": "0"
+     },
+     "fieldMargin:mobile_landscape": {
+      "bottom": "var(--space-xs)"
+     },
+     "_width:mobile_landscape": "100%",
+     "_widthMax": "100%",
+     "_flexShrink": "0"
+    },
+    "_exists": false
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 5853
+}

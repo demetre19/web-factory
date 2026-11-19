@@ -1,0 +1,987 @@
+{
+ "id": 6706,
+ "title": "Banner Section 3",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "banner-3",
+ "size_bytes": 12067,
+ "json": {
+  "content": [
+   {
+    "id": "vddmii",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "ghqwkk",
+     "bcnept"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "onjure"
+     ]
+    },
+    "label": "Banner"
+   },
+   {
+    "id": "ghqwkk",
+    "name": "container",
+    "parent": "vddmii",
+    "children": [
+     "gvaxxd",
+     "lbpixu"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "stgadi"
+     ]
+    }
+   },
+   {
+    "id": "istpjz",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "spzgur"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "otznfj",
+    "name": "block",
+    "parent": "gvaxxd",
+    "children": [
+     "istpjz",
+     "nwgwkv",
+     "gvgpjd",
+     "umzyjw",
+     "syehfx",
+     "mqnuml"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tblmjs"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "bcnept",
+    "name": "code",
+    "parent": "vddmii",
+    "children": [],
+    "settings": {
+     "executeCode": true,
+     "signature": "d2de3d49b61f99628199c84ff9abe938",
+     "user_id": 2,
+     "time": 1720984090,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Item list wrapper\". --*/  \n.banner-3__item-list-wrapper{\n  /* Here you can change the animation time (35s), the more time you add, the slower the animation will be. */\n  --banner-3-angle: 9deg;\n  --banner-3-duration: 35s;\n\n  /* Styles for even list containers */\n  &:nth-child(even){\n    transform: rotateZ(var(--banner-3-angle)) translateY(-50%);\n    \n    /* These styles apply only when the document has RTL text direction */\n    &:dir(rtl) {\n      flex-direction: row;\n    }\n    \n    .banner-3__item-list {\n      animation: horizontal-scroll-rtl var(--banner-3-duration) linear infinite;\n    }\n  }\n\n  /* Styles for odd list containers */\n  &:nth-child(odd){\n    transform: rotateZ(calc(-1 * var(--banner-3-angle))) translateY(-50%);\n\n    flex-direction: row-reverse;\n    \n    /* These styles apply only when the document has RTL text direction */\n    &:dir(rtl) {\n      flex-direction: row;\n    }\n\n    .banner-3__item-list {\n      animation: horizontal-scroll-ltr var(--banner-3-duration) linear infinite;\n    }\n  }\n}\n\n/* Animation from right to left */\n@keyframes horizontal-scroll-rtl {\n  from {\n    transform: translateX(0);\n  }\n\n  to {\n    transform: translateX(-100%);\n  }\n}\n\n/* Animation from left to right */\n@keyframes horizontal-scroll-ltr {\n  from {\n    transform: translateX(0);\n  }\n\n  to {\n    transform: translateX(100%);\n  }\n}"
+    },
+    "label": "Styles CSS",
+    "themeStyles": []
+   },
+   {
+    "id": "spzgur",
+    "name": "text-basic",
+    "parent": "istpjz",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "mqnuml",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "lvzipi"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "lvzipi",
+    "name": "text-basic",
+    "parent": "mqnuml",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "syehfx",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "vpqlsx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "vpqlsx",
+    "name": "text-basic",
+    "parent": "syehfx",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "umzyjw",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "svault"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "svault",
+    "name": "text-basic",
+    "parent": "umzyjw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "gvgpjd",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "boowau"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "boowau",
+    "name": "text-basic",
+    "parent": "gvgpjd",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "nwgwkv",
+    "name": "div",
+    "parent": "otznfj",
+    "children": [
+     "cqvxxk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "cqvxxk",
+    "name": "text-basic",
+    "parent": "nwgwkv",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "zqjwgx",
+    "name": "block",
+    "parent": "gvaxxd",
+    "children": [
+     "zzhgph",
+     "osdisb",
+     "srlven",
+     "hajtau",
+     "lszmhw",
+     "gbmpza"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tblmjs"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list (duplicated)"
+   },
+   {
+    "id": "zzhgph",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "grpwcv"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "grpwcv",
+    "name": "text-basic",
+    "parent": "zzhgph",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "osdisb",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "jrfgjn"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "jrfgjn",
+    "name": "text-basic",
+    "parent": "osdisb",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "srlven",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "nswbgj"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "nswbgj",
+    "name": "text-basic",
+    "parent": "srlven",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "hajtau",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "hoemwg"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "hoemwg",
+    "name": "text-basic",
+    "parent": "hajtau",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "lszmhw",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "yxoghh"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "yxoghh",
+    "name": "text-basic",
+    "parent": "lszmhw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "gbmpza",
+    "name": "div",
+    "parent": "zqjwgx",
+    "children": [
+     "avefwi"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "avefwi",
+    "name": "text-basic",
+    "parent": "gbmpza",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "gvaxxd",
+    "name": "block",
+    "parent": "ghqwkk",
+    "children": [
+     "otznfj",
+     "zqjwgx"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "atwjst"
+     ]
+    },
+    "label": "Item list wrapper"
+   },
+   {
+    "id": "lbpixu",
+    "name": "block",
+    "parent": "ghqwkk",
+    "children": [
+     "tcleqn",
+     "byiizd"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "atwjst"
+     ]
+    },
+    "label": "Item list wrapper"
+   },
+   {
+    "id": "tcleqn",
+    "name": "block",
+    "parent": "lbpixu",
+    "children": [
+     "qywnqn",
+     "subjag",
+     "cbdxar",
+     "ayfqtj",
+     "kvdork",
+     "wmdcfw"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tblmjs"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "qywnqn",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "lmfjsr"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "lmfjsr",
+    "name": "text-basic",
+    "parent": "qywnqn",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "subjag",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "sxxhjl"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "sxxhjl",
+    "name": "text-basic",
+    "parent": "subjag",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "cbdxar",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "mpobnf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "mpobnf",
+    "name": "text-basic",
+    "parent": "cbdxar",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "ayfqtj",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "aouvij"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "aouvij",
+    "name": "text-basic",
+    "parent": "ayfqtj",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "kvdork",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "zaragz"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "zaragz",
+    "name": "text-basic",
+    "parent": "kvdork",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "wmdcfw",
+    "name": "div",
+    "parent": "tcleqn",
+    "children": [
+     "slkxai"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "slkxai",
+    "name": "text-basic",
+    "parent": "wmdcfw",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "byiizd",
+    "name": "block",
+    "parent": "lbpixu",
+    "children": [
+     "amndmm",
+     "exermz",
+     "klglpu",
+     "cauoar",
+     "fekife",
+     "jsslke"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tblmjs"
+     ],
+     "tag": "ul"
+    },
+    "label": "Item list (duplicated)"
+   },
+   {
+    "id": "amndmm",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "bselwk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "bselwk",
+    "name": "text-basic",
+    "parent": "amndmm",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "exermz",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "gjtlbf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "gjtlbf",
+    "name": "text-basic",
+    "parent": "exermz",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "klglpu",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "paxyax"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "paxyax",
+    "name": "text-basic",
+    "parent": "klglpu",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "cauoar",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "kbbhjw"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "kbbhjw",
+    "name": "text-basic",
+    "parent": "cauoar",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "fekife",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "siijfk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "siijfk",
+    "name": "text-basic",
+    "parent": "fekife",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "jsslke",
+    "name": "div",
+    "parent": "byiizd",
+    "children": [
+     "amntwt"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "jaruar"
+     ],
+     "tag": "li"
+    },
+    "label": "Item wrapper"
+   },
+   {
+    "id": "amntwt",
+    "name": "text-basic",
+    "parent": "jsslke",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "fkbznh"
+     ]
+    },
+    "label": "Item"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.10.3",
+  "globalClasses": [
+   {
+    "id": "onjure",
+    "name": "banner-3",
+    "settings": {
+     "_overflow": "hidden",
+     "_padding": {
+      "left": "0",
+      "right": "0"
+     }
+    },
+    "modified": 1725491204,
+    "user_id": 3
+   },
+   {
+    "id": "stgadi",
+    "name": "banner-3__container",
+    "settings": {
+     "_position": "relative",
+     "_width": "100%",
+     "_aspectRatio": "3 / 1"
+    }
+   },
+   {
+    "id": "jaruar",
+    "name": "banner-3__item-wrapper",
+    "settings": {
+     "_margin": {
+      "right": "var(--space-xl)",
+      "left": "var(--space-xl)"
+     },
+     "_width": "fit-content",
+     "_margin:mobile_landscape": {
+      "right": "var(--space-l)"
+     },
+     "_display": "block"
+    }
+   },
+   {
+    "id": "tblmjs",
+    "name": "banner-3__item-list",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0"
+     },
+     "_padding": {
+      "left": "0",
+      "right": "0"
+     },
+     "_display": "flex",
+     "_cssCustom": ".banner-3__item-list{\n\twhite-space: nowrap;\n}",
+     "_width": "max-content",
+     "_widthMax": "max-content",
+     "_flexShrink": "0",
+     "_direction": "row",
+     "_flexWrap": "nowrap",
+     "_alignItems": "center"
+    }
+   },
+   {
+    "id": "fkbznh",
+    "name": "banner-3__item",
+    "settings": {
+     "_width": "100%",
+     "_typography": {
+      "font-size": "var(--text-xl)",
+      "font-weight": "700",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     }
+    },
+    "modified": 1725417498,
+    "user_id": 2
+   },
+   {
+    "id": "atwjst",
+    "name": "banner-3__item-list-wrapper",
+    "settings": {
+     "_display": "flex",
+     "_cssCustom": ".banner-3__item-list-wrapper{\n\twhite-space: nowrap;\n}",
+     "_flexWrap": "nowrap",
+     "_flexShrink": "0",
+     "_direction": "row",
+     "_padding": {
+      "bottom": "var(--space-m)",
+      "top": "var(--space-m)"
+     },
+     "_border": {
+      "width": {
+       "bottom": "1",
+       "top": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     },
+     "_widthMax": "unset",
+     "_width": "110vw",
+     "_position": "absolute",
+     "_top": "50%",
+     "_left": "-6vw"
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 12086
+}
