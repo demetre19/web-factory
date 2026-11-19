@@ -2,7 +2,7 @@
 id: profile-technology
 type: profile
 site_type: technology
-n: 3450
+n: 2928
 links:
   derives_from: [patterns-index]
   uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style, gene-trend]
@@ -10,33 +10,34 @@ links:
 
 # DNA — technology
 
-Distribution over alleles for 3450 annotated screens (source: Mobbin + web supplement).
+Distribution over alleles for 2928 annotated screens (source: Mobbin + web supplement).
 
 | Gene | Dominant allele | Share | Runner-up |
 |---|---|---|---|
-| `layout-archetype` | `editorial-single` | 36% | horizontal-band |
+| `layout-archetype` | `editorial-single` | 39% | horizontal-band |
 | `page-macro-structure` | `promise-proof-how-act` | 100% | — |
-| `density-tier` | `spacious` | 51% | regular |
-| `image-led-ratio` | `text-led` | 72% | balanced |
-| `type-contrast` | `high` | 53% | medium |
+| `density-tier` | `spacious` | 52% | compact |
+| `image-led-ratio` | `text-led` | 81% | balanced |
+| `type-contrast` | `high` | 57% | medium |
 | `display-face` | `sans` | 100% | — |
 | `radius-personality` | `soft` | 100% | — |
-| `surface-rhythm` | `one-contrast-moment` | 65% | dark-dominant |
-| `cta-restraint` | `single-primary` | 89% | dual |
+| `surface-rhythm` | `one-contrast-moment` | 63% | dark-dominant |
+| `cta-restraint` | `single-primary` | 95% | dual |
 | `cta-rank` | `none` | 100% | — |
 | `disclosure-tier` | `open` | 100% | — |
 | `nav-pattern` | `bar` | 100% | — |
 | `motion-tier` | `subtle` | 100% | — |
-| `proof-type` | `none` | 80% | logos |
-| `media-treatment` | `none` | 64% | photo |
+| `proof-type` | `none` | 77% | logos |
+| `media-treatment` | `none` | 72% | photo |
 | `columns` | `2` | 30% | 4 |
 | `heading-form` | `claim` | 100% | — |
-| `whitespace-band` | `airy` | 86% | medium |
+| `whitespace-band` | `airy` | 93% | medium |
 | `gallery-mode` | `single-hero` | 100% | — |
 | `form-presence` | `none` | 100% | — |
-| `mood-energy` | `balanced` | 69% | calm |
-| `mood-register` | `premium` | 68% | luxury |
-| `image-style` | `editorial` | 67% | minimal |
+| `mood-energy` | `balanced` | 76% | lively |
+| `mood-register` | `premium` | 75% | luxury |
+| `image-style` | `editorial` | 75% | technical |
+| `trend` | `none` | 62% | snug-simple |
 
 ## Profile centroid
 

@@ -2,7 +2,7 @@
 id: profile-fashion
 type: profile
 site_type: fashion
-n: 2070
+n: 1152
 links:
   derives_from: [patterns-index]
   uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style, gene-trend]
@@ -10,33 +10,34 @@ links:
 
 # DNA — fashion
 
-Distribution over alleles for 2070 annotated screens (source: Mobbin + web supplement).
+Distribution over alleles for 1152 annotated screens (source: Mobbin + web supplement).
 
 | Gene | Dominant allele | Share | Runner-up |
 |---|---|---|---|
-| `layout-archetype` | `editorial-single` | 33% | masonry-grid |
-| `page-macro-structure` | `catalog-first` | 33% | promise-proof-how-act |
-| `density-tier` | `compact` | 56% | regular |
-| `image-led-ratio` | `text-led` | 47% | image-led |
-| `type-contrast` | `high` | 50% | medium |
+| `layout-archetype` | `editorial-single` | 40% | stacked-center |
+| `page-macro-structure` | `promise-proof-how-act` | 42% | catalog-first |
+| `density-tier` | `compact` | 44% | regular |
+| `image-led-ratio` | `text-led` | 67% | image-led |
+| `type-contrast` | `high` | 69% | medium |
 | `display-face` | `serif` | 100% | — |
 | `radius-personality` | `soft` | 100% | — |
-| `surface-rhythm` | `one-contrast-moment` | 79% | dark-dominant |
-| `cta-restraint` | `single-primary` | 91% | dual |
+| `surface-rhythm` | `one-contrast-moment` | 71% | dark-dominant |
+| `cta-restraint` | `single-primary` | 85% | multi |
 | `cta-rank` | `none` | 100% | — |
-| `disclosure-tier` | `open` | 67% | carousel |
+| `disclosure-tier` | `open` | 81% | carousel |
 | `nav-pattern` | `bar` | 100% | — |
-| `motion-tier` | `subtle` | 90% | cinematic |
+| `motion-tier` | `subtle` | 100% | — |
 | `proof-type` | `none` | 100% | — |
-| `media-treatment` | `photo` | 54% | none |
-| `columns` | `1` | 49% | 2 |
+| `media-treatment` | `none` | 65% | photo |
+| `columns` | `1` | 38% | 3 |
 | `heading-form` | `claim` | 100% | — |
-| `whitespace-band` | `airy` | 47% | medium |
-| `gallery-mode` | `single-hero` | 67% | grid |
+| `whitespace-band` | `airy` | 71% | medium |
+| `gallery-mode` | `single-hero` | 81% | grid |
 | `form-presence` | `none` | 100% | — |
-| `mood-energy` | `balanced` | 51% | energetic |
-| `mood-register` | `luxury` | 54% | approachable |
-| `image-style` | `editorial` | 69% | luxury |
+| `mood-energy` | `balanced` | 71% | energetic |
+| `mood-register` | `luxury` | 77% | premium |
+| `image-style` | `editorial` | 77% | minimal |
+| `trend` | `none` | 62% | frosted-touch |
 
 ## Profile centroid
 

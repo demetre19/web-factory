@@ -435,7 +435,8 @@ def write_pattern(path, pid, site, page, section, modal, genes, prev, n,
               'radius-personality', 'surface-rhythm', 'cta-restraint',
               'cta-rank', 'disclosure-tier', 'nav-pattern', 'motion-tier',
               'proof-type', 'media-treatment', 'columns', 'heading-form',
-              'whitespace-band', 'gallery-mode', 'form-presence']:
+              'whitespace-band', 'gallery-mode', 'form-presence',
+              'trend']:
         if g in modal:
             lines.append(f'  {g}: {modal[g]}')
     lines += ['links:', '  index: patterns-index',
