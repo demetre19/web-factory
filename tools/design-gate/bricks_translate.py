@@ -295,10 +295,12 @@ def translate(payload, stem):
     gc_names = {g.get('id'): g.get('name')
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
-    seen = {'h': False, 'p': False}   # first heading→{heading},
-                                    # first paragraph→{fs}
+    seen = {'h': False, 'p': False, 'btn': False}   # first heading→
+                                    # {heading}, first paragraph→{fs}
 
-    def cls(el, depth=1):
+    cat = stem.split('-')[0]
+
+    def cls(el, depth=1, card=False):
         """Topology → OUR token classes.
 
         The bank supplies element composition only. Every visual value
@@ -314,6 +316,8 @@ def translate(payload, stem):
                     .get('tag') == 'h1' else 'text-fluid-2')
         if n in ('text-basic', 'text', 'text-link'):
             return 'text-fluid-0'
+        if card:
+            return 'card'
         if n == 'image':
             return 'ratio-portrait'
         if n == 'logo':
@@ -327,6 +331,11 @@ def translate(payload, stem):
             if len(kids) >= 2 and any(k.get('name') == 'image'
                                       for k in kids):
                 return 'grid-auto gap-fluid-l'
+            # chrome reads as a bar, not a stack
+            if cat == 'header' and len(kids) >= 2:
+                return 'row between'
+            if cat == 'footer' and len(kids) >= 2:
+                return 'row between'
         return ''
 
     def tag_of(el):
@@ -348,7 +357,7 @@ def translate(payload, stem):
     def sig(el):
         return (el.get('name'), tuple(sorted(_classes_of(el))))
 
-    def render(el_id, depth, ivar=None):
+    def render(el_id, depth, ivar=None, card=False):
         el = els.get(el_id)
         if not el:
             return ''
@@ -356,6 +365,30 @@ def translate(payload, stem):
         name = el.get('name')
         s = el.get('settings') or {}
         children = el.get('children') or []
+
+        # A real card list alternates heading/text/heading/text — not
+        # three identical siblings. Detect a repeating cycle of 2–4
+        # elements repeated ≥3 times and render it as items.map with
+        # one card per cycle.
+        _kids = [els[c] for c in children if els.get(c)]
+        if len(_kids) >= 6 and name in ('div', 'container', 'block') \
+                and not ivar:
+            _sig = lambda x: (x.get('name'),
+                              tuple(sorted((x.get('settings') or {})
+                                           .get('_cssGlobalClasses') or [])))
+            _sigs = [_sig(k) for k in _kids]
+            # all-identical children are a run, not a cycle
+            for _k in ((2, 3, 4) if len(set(_sigs)) > 1 else ()):
+                if len(_sigs) >= 3 * _k and all(
+                        _sigs[i] == _sigs[i % _k]
+                        for i in range(len(_sigs))):
+                    _body = ''.join(render(children[i], depth + 3, 'it')
+                                    for i in range(_k))
+                    return (f'{pad}<div class="grid-auto gap-fluid-m">\n'
+                            f'{pad}  {{items.map((it) => (\n'
+                            f'{pad}    <div class="card">\n{_body}'
+                            f'{pad}    </div>\n'
+                            f'{pad}  ))}}\n{pad}</div>\n')
 
         # group runs of ≥3 identically-signed siblings into items.map
         seq, i = [], 0
@@ -380,9 +413,16 @@ def translate(payload, stem):
                     f'{pad}</div>\n')
 
         tag = tag_of(el)
-        c = cls(el, depth)
+        c = cls(el, depth, card)
         cattr = f' class="{c}"' if c else ''
         if name == 'button':
+            # PS.7 — one primary CTA per section; A.2 — a card is a
+            # heading link, never a button
+            if ivar:
+                return ''
+            if seen.get('btn'):
+                return ''
+            seen['btn'] = True
             style_ = str(s.get('style') or '')
             cattr = ' class="wf-cta-button"'
             txt = re.sub(r'<[^>]+>', '', str(s.get('text') or ''))
@@ -401,7 +441,12 @@ def translate(payload, stem):
                     'src="/media/placeholder.svg" '
                     f'alt="{alt}" loading="lazy" width="900" '
                     'height="600" /></figure>\n')
-        if name in ('heading', 'text-basic', 'text', 'text-link'):
+        if name == 'text-link' and ivar:
+            return (f'{pad}<a{cattr} href={{{ivar}.href}}>'
+                    f'{{{ivar}.label}}</a>\n')
+        if name == 'text-link' and not ivar:
+            return ''
+        if name in ('heading', 'text-basic', 'text'):
             raw = re.sub(r'</?(?:div|br|p)[^>]*>', ' ',
                          str(s.get('text') or s.get('content') or ''))
             txt = re.sub(r'\s+', ' ',
@@ -410,12 +455,14 @@ def translate(payload, stem):
                 txt = (f'{{{ivar}.title}}' if name == 'heading'
                        else f'{{{ivar}.text}}')
             elif name == 'heading' and not seen['h'] and txt:
-                txt = '{heading}'
                 seen['h'] = True
+                return (f'{pad}{{heading && <{tag}{cattr}>'
+                        f'{{heading}}</{tag}>}}\n')
             elif name in ('text-basic', 'text') and \
                     not seen['p'] and txt and len(txt) > 30:
-                txt = '{fs}'
                 seen['p'] = True
+                return (f'{pad}{{fs && <{tag}{cattr}>'
+                        f'{{fs}}</{tag}>}}\n')
             elif not ivar:
                 # the payload's own copy is wireframe label text
                 # ("TAGLINE", "Call to action") — the bank supplies
@@ -430,14 +477,20 @@ def translate(payload, stem):
             return f'{pad}<hr{cattr} />\n'
         inner = ''
         for run, count in seq:
-            if count >= 3:
+            if count >= 3 or (cat in ('header', 'footer')
+                              and count >= 2):
                 # nested repeats iterate the parent's row: it.items
                 coll, var = (f'({ivar}.items || [])',
                              ivar + '2') if ivar else ('items', 'it')
-                inner += (f'{pad}  {{({coll} || []).map(({var}) => (\n'
-                          + ''.join(render(r, depth + 2, var)
+                _wrap = ('row gap-fluid-m' if cat in ('header', 'footer')
+                         else 'grid-auto gap-fluid-m')
+                inner += (f'{pad}  <div class="{_wrap}">\n'
+                          f'{pad}    {{({coll} || []).map(({var}) => (\n'
+                          + ''.join(render(r, depth + 3, var,
+                                           card=cat not in ('header',
+                                                            'footer'))
                                     for r in run[:1])
-                          + f'{pad}  ))}}\n')
+                          + f'{pad}    ))}}\n{pad}  </div>\n')
             else:
                 inner += ''.join(render(r, depth + 1, ivar)
                                  for r in run)
@@ -450,6 +503,8 @@ def translate(payload, stem):
     roots = [e['id'] for e in payload.get('content') or []
              if not e.get('parent')]
     body = ''.join(render(r, 1) for r in roots)
+    if cat == 'header' and 'class="logo"' not in body:
+        body = f'  <span class="logo">{{brand}}</span>\n' + body
 
     style = ''
     # No CSS: the bank is topology, the DNA is the style. pipeline_emit
@@ -475,8 +530,8 @@ def translate(payload, stem):
            '}\n'
            'const {\n'
            "  brand = 'Brand',\n"
-           "  heading = 'Section heading',\n"
-           "  fs = 'The first sentence a reader needs.',\n"
+           "  heading = '',\n"
+           "  fs = '',\n"
            "  cta = { label: '', href: '#' },\n"
            '  items = [],\n'
            '} = Astro.props;\n'

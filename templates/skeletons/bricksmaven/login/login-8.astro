@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -34,7 +34,7 @@ const {
       <div>
         <div>
           <div>
-            <h1 class="text-fluid-4">{heading}</h1>
+            {heading && <h1 class="text-fluid-4">{heading}</h1>}
             <form novalidate>
             </form>
             <div>

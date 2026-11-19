@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -29,7 +29,7 @@ const {
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
       <div>
-        <h1 class="text-fluid-4">{heading}</h1>
+        {heading && <h1 class="text-fluid-4">{heading}</h1>}
         <div></div>
       </div>
       <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -40,7 +40,7 @@ const {
       </div>
       <div>
         <div>
-          <p class="text-fluid-0">{fs}</p>
+          {fs && <p class="text-fluid-0">{fs}</p>}
           <div>
             <div></div>
           </div>
@@ -53,12 +53,14 @@ const {
         <div>
           <div>
             <div>
-              {(items || []).map((it) => (
-                <div class="grid-auto gap-fluid-l">
-                  <div></div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                </div>
-              ))}
+              <div class="grid-auto gap-fluid-m">
+                {(items || []).map((it) => (
+                  <div class="card">
+                    <div></div>
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -89,21 +91,22 @@ const {
     <div>
       <div>
         <div>
-          {(items || []).map((it) => (
-            <div class="grid-auto gap-fluid-l">
-              <div>
+          <div class="grid-auto gap-fluid-m">
+            {(items || []).map((it) => (
+              <div class="card">
                 <div>
-                  <h2 class="text-fluid-2">{it.title}</h2>
-                  <p class="text-fluid-0">{it.text}</p>
+                  <div>
+                    <h2 class="text-fluid-2">{it.title}</h2>
+                    <p class="text-fluid-0">{it.text}</p>
+                  </div>
+                  <div>
+                    <p class="text-fluid-0">{it.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
-                </div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

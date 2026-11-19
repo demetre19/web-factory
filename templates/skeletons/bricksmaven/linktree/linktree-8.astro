@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -36,21 +36,25 @@ const {
           </div>
         </div>
         <div>
-          {(items || []).map((it) => (
-            <div>
-              <span data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
+          <div class="grid-auto gap-fluid-m">
+            {(items || []).map((it) => (
+              <div class="card">
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div>
         <div>
           <div>
-            {(items || []).map((it) => (
-              <div>
-                <a class="text-fluid-0" href="#">{it.text}</a>
-              </div>
-            ))}
+            <div class="grid-auto gap-fluid-m">
+              {(items || []).map((it) => (
+                <div class="card">
+                  <a class="text-fluid-0" href={it.href}>{it.label}</a>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

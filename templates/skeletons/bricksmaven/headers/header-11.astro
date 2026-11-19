@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -27,34 +27,45 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="row between">
       <div>
         <span class="logo">{brand}</span>
       </div>
       <div>
         <div>
-          <div>
-            <div>
-              <div></div>
+          <div class="row between">
+            <div class="row gap-fluid-m">
+              {(items || []).map((it) => (
+                <div>
+                  <div class="row between">
+                    <div class="row gap-fluid-m">
+                      {((it.items || []) || []).map((it2) => (
+                        <a class="text-fluid-0" href={it2.href}>{it2.label}</a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <div></div>
+            <div class="row gap-fluid-m">
+              {(items || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.label}</a>
+              ))}
             </div>
-            {(items || []).map((it) => (
-              <a class="text-fluid-0" href="#">{it.text}</a>
-            ))}
             <div></div>
           </div>
           <div></div>
         </div>
       </div>
       <div>
-        <div>
-          {(items || []).map((it) => (
-            <div>
-              <span data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
+        <div class="row between">
+          <div class="row gap-fluid-m">
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

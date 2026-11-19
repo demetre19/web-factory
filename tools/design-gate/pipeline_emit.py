@@ -284,8 +284,17 @@ def main(argv):
     # S2/S4 — shell + document layout (template files, verbatim)
     _w(os.path.join(ctx.site, 'src', 'components', 'Section.astro'),
        _read(os.path.join(TEMPLATES, 'sections', 'Section.astro')))
-    _w(os.path.join(ctx.site, 'src', 'layouts', 'BaseLayout.astro'),
-       _read(os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro')))
+    shell = _read(os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro'))
+    # the shell's address is the site's own contact fact, never lorem:
+    # brand from the plan, phone from the STUB's contact table
+    site = ctx.site_block() or {}
+    stub = ctx.read('STUB.md') or ''
+    m = re.search(r'\|\s*phone\s*\|\s*([^|]+)\|', stub)
+    phone = (m.group(1).strip() if m else '')
+    shell = (shell.replace('{{brand}}', str(site.get('brand') or ''))
+                  .replace('{{phone_sep}}',
+                           (' · ' + phone) if phone else ''))
+    _w(os.path.join(ctx.site, 'src', 'layouts', 'BaseLayout.astro'), shell)
     print('  Section.astro + BaseLayout.astro')
 
     # P6/W6 — component skeleton + instance per contract. A plan row

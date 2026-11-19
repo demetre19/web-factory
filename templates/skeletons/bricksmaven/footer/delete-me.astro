@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -30,8 +30,8 @@ const {
     <div class="sec-inner">
       <div>
         <div>
-          <h2 class="text-fluid-2">{heading}</h2>
-          <p class="text-fluid-0">{fs}</p>
+          {heading && <h2 class="text-fluid-2">{heading}</h2>}
+          {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
         <div>
@@ -43,18 +43,22 @@ const {
   <div class="sec-inner">
     <div>
       <div>
-        {(items || []).map((it) => (
-          <div>
-            <h3 class="text-fluid-2">{it.title}</h3>
-            <div>
-              {((it.items || []) || []).map((it2) => (
-                <div>
-                  <a class="text-fluid-0" href="#">{it2.text}</a>
+        <div class="grid-auto gap-fluid-m">
+          {(items || []).map((it) => (
+            <div class="card">
+              <h3 class="text-fluid-2">{it.title}</h3>
+              <div>
+                <div class="grid-auto gap-fluid-m">
+                  {((it.items || []) || []).map((it2) => (
+                    <div class="card">
+                      <a class="text-fluid-0" href={it2.href}>{it2.label}</a>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
     <div>
@@ -66,11 +70,13 @@ const {
       </div>
       <div>
         <div>
-          {(items || []).map((it) => (
-            <div>
-              <a class="text-fluid-0" href="#">{it.text}</a>
-            </div>
-          ))}
+          <div class="grid-auto gap-fluid-m">
+            {(items || []).map((it) => (
+              <div class="card">
+                <a class="text-fluid-0" href={it.href}>{it.label}</a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

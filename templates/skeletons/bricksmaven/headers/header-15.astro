@@ -18,22 +18,23 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
 ---
 
 <div>
+  <span class="logo">{brand}</span>
   <div class="sec-inner">
-    <div>
+    <div class="row between">
       <div>
         <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
+      <div class="row between">
         <div></div>
-        <div>
+        <div class="row between">
           <div></div>
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>

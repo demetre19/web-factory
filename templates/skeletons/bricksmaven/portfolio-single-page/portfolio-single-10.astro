@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -29,15 +29,17 @@ const {
   <div class="sec-inner">
     <div>
       <div>
-        <h1 class="text-fluid-4">{heading}</h1>
-        <p class="text-fluid-0">{fs}</p>
+        {heading && <h1 class="text-fluid-4">{heading}</h1>}
+        {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
       <div>
-        {(items || []).map((it) => (
-          <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+        <div class="grid-auto gap-fluid-m">
+          {(items || []).map((it) => (
+            <div class="card">
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
     <div>
@@ -83,17 +85,19 @@ const {
     </div>
     <div>
       <div>
-        {(items || []).map((it) => (
-          <div>
-            <div>
-              <h2 class="text-fluid-2">{it.title}</h2>
-              <a class="text-fluid-0" href="#">{it.text}</a>
+        <div class="grid-auto gap-fluid-m">
+          {(items || []).map((it) => (
+            <div class="card">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <a class="text-fluid-0" href={it.href}>{it.label}</a>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>

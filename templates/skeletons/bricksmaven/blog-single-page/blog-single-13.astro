@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -58,19 +58,21 @@ const {
         <div>
           <div>
             <div>
-              <h3 class="text-fluid-2">{heading}</h3>
-              <p class="text-fluid-0">{fs}</p>
+              {heading && <h3 class="text-fluid-2">{heading}</h3>}
+              {fs && <p class="text-fluid-0">{fs}</p>}
               <form novalidate>
               </form>
             </div>
           </div>
           <div>
             <div>
-              {(items || []).map((it) => (
-                <div>
-                  <span data-icon="lucide" aria-hidden="true"></span>
-                </div>
-              ))}
+              <div class="grid-auto gap-fluid-m">
+                {(items || []).map((it) => (
+                  <div class="card">
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

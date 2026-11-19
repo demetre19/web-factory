@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -32,48 +32,54 @@ const {
     </div>
     <div>
       <div>
-        <div>
-          {(items || []).map((it) => (
-            <div>
-              <a class="text-fluid-0" href="#">{it.text}</a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-    <div>
-      {(items || []).map((it) => (
-        <div>
-          <h2 class="text-fluid-2">{it.title}</h2>
-          <div>
-            <a class="text-fluid-0" href="#">{it.text}</a>
-            <a class="text-fluid-0" href="#">{it.text}</a>
-          </div>
-          <p class="text-fluid-0">{it.text}</p>
-        </div>
-      ))}
-    </div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <span class="logo">{brand}</span>
-          </div>
-          <div>
-            <p class="text-fluid-0">{fs}</p>
-          </div>
-        </div>
-        <div>
-          <div>
+        <div class="row between">
+          <div class="row gap-fluid-m">
             {(items || []).map((it) => (
               <div>
-                <a class="text-fluid-0" href="#">{it.text}</a>
+                <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div>
+    </div>
+    <div class="row between">
+      <div class="row gap-fluid-m">
+        {(items || []).map((it) => (
+          <div class="row between">
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <div class="row between">
+              <a class="text-fluid-0" href={it.href}>{it.label}</a>
+              <a class="text-fluid-0" href={it.href}>{it.label}</a>
+            </div>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="row between">
+      <div class="row between">
+        <div class="row between">
+          <div>
+            <span class="logo">{brand}</span>
+          </div>
+          <div>
+            {fs && <p class="text-fluid-0">{fs}</p>}
+          </div>
+        </div>
+        <div>
+          <div class="row between">
+            <div class="row gap-fluid-m">
+              {(items || []).map((it) => (
+                <div>
+                  <a class="text-fluid-0" href={it.href}>{it.label}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row between">
         <div></div>
       </div>
     </div>

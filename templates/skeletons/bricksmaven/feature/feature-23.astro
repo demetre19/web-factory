@@ -18,8 +18,8 @@ interface Props {
 }
 const {
   brand = 'Brand',
-  heading = 'Section heading',
-  fs = 'The first sentence a reader needs.',
+  heading = '',
+  fs = '',
   cta = { label: '', href: '#' },
   items = [],
 } = Astro.props;
@@ -29,8 +29,8 @@ const {
   <div class="sec-inner">
     <div>
       <div>
-        <h2 class="text-fluid-2">{heading}</h2>
-        <p class="text-fluid-0">{fs}</p>
+        {heading && <h2 class="text-fluid-2">{heading}</h2>}
+        {fs && <p class="text-fluid-0">{fs}</p>}
         <span data-icon="lucide" aria-hidden="true"></span>
         <div>
           <div>

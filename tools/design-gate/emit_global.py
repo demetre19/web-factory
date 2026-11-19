@@ -146,6 +146,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .grid-auto { display: grid;
       grid-template-columns:
         repeat(auto-fit, minmax(min(var(--grid-min),100%),1fr)); }
+  /* layout primitives — ACSS's row/stack/card vocabulary, bound to
+     the rungs so every composition spaces from the same scale */
+  .row { display: flex; flex-wrap: wrap; align-items: center;
+         gap: var(--space-m); }
+  .between { justify-content: space-between; }
+  .stack { display: flex; flex-direction: column; gap: var(--space-s); }
+  .card { background: var(--bg-surface); border: 1px solid var(--border-default);
+          border-radius: var(--r-card); padding: var(--space-m); }
   .ratio-portrait { aspect-ratio: 3 / 4; }
   /* a ratio box owns its media: the placeholder svg's intrinsic size
      must never decide the layout */

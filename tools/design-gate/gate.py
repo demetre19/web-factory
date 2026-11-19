@@ -6634,7 +6634,7 @@ def check_assembly(ctx):
         else:
             for c in build_contracts(ctx):
                 if c['page'] == slug and \
-                        f'<{camel(c["section"])} />' not in cur:
+                        f'<{camel(c["section"])}' not in cur:
                     f.append(f'SB.4 section component '
                              f'{camel(c["section"])} not rendered in '
                              'plan order')
