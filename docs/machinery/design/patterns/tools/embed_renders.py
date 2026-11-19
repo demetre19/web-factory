@@ -122,9 +122,9 @@ def row_meta(png):
          ('--bg', '--ink', '--accent', '--radius', '--f-display',
           '--pad-block')}, sort_keys=True).encode()).hexdigest()[:12] \
         if vars_ else None
-    # kit = grandparent dir under bank_shots (e.g. 'preline')
-    kit = os.path.basename(os.path.dirname(os.path.dirname(png))) \
-        if 'bank_shots' in png else None
+    parts = png.split(os.sep)
+    kit = parts[parts.index('bank_shots') + 1] \
+        if 'bank_shots' in parts else None
     recipe = rv.get('recipe_id') or kit + '/' + name if kit else \
         ('-'.join(filter(
             None, (sc.get('layout'), sc.get('seam'),
@@ -192,9 +192,14 @@ def cmd_build():
     if batch:
         done += flush(model, torch, dev, batch, rows, order)
     mat = []
-    for k in order:
-        mat.append(rows[k]['vec'])
-    import numpy as np
+    # rows indexed before this run carry no in-memory vec — theirs
+    # already live in vectors.bin, aligned to meta['order']
+    prior = meta.get('order') or []
+    if prior and os.path.exists(VBIN):
+        mat.extend(np.fromfile(VBIN, dtype=np.float16)
+                   .reshape(len(prior), EI.DIM))
+    for k in order[len(prior):]:
+        mat.append(np.array(rows[k]['vec'], dtype=np.float16))
     arr = np.array(mat, dtype=np.float16)
     with open(VBIN, 'wb') as f:
         arr.tofile(f)
