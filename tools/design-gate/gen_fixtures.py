@@ -1461,17 +1461,16 @@ def main():
     os.makedirs(os.path.dirname(cp), exist_ok=True)
     with open(cp, 'w', encoding='utf-8') as fh:
         fh.write(ctxt_)
-    ftxt = vtxt.replace('variants-page', 'fine-page').replace(
-        'data-variant=', 'data-design=')
-    # the fine round is a knob-nudge on the look winner — nudge real
-    # consumed knobs so it is not a verbatim re-serve
-    ftxt = ftxt.replace('--radius-personality:p3',
-                        '--radius-personality:p4').replace(
-        '--type-base_px:16', '--type-base-px:17')
-    ftxt = ftxt.replace('<!-- assembled:', '<!-- fine round (knob '
-                        'nudges) — assembled:')
-    with open(os.path.join(base_dir, 'preview', 'fine.html'),
-              'w', encoding='utf-8') as fh:
+    # fine.html comes from the real producer (P.18): assemble_fine emits
+    # three ±1-step stylistic nudges of the w4-approved pick. Seed the
+    # approval first — same sequence a real pipeline takes.
+    bctx = gate.Ctx(base_dir)
+    pick_id = next((vid for vid, (e, f_) in
+                    gate._variant_entries(bctx).items() if not f_), None)
+    gate.write_approval(bctx, 'w4', design=pick_id,
+                        evidence='fixture pick')
+    fp2, ftxt, _ = gate.assemble_fine(bctx)
+    with open(fp2, 'w', encoding='utf-8') as fh:
         fh.write(ftxt)
     for rel in ('sections', 'site/src/pages/home.astro',
                 'preview/variants.html', 'preview/layouts.html',
@@ -1538,6 +1537,12 @@ def main():
                   'distinctness': 65, 'topology_dist': 0.4,
                   'visual_diff': 68, 'composite': 70 + i,
                   'judged_by': 'pi-default-vlm'}
+        for i in range(1, 4)}, **{
+        f'fv{i}': {'hero_clarity': 76, 'layout_craft': 71,
+                   'media_fit': 72, 'mobile': 75,
+                   'distinctness': 66, 'topology_dist': 0.4,
+                   'visual_diff': 67, 'composite': 71 + i,
+                   'judged_by': 'pi-default-vlm'}
         for i in range(1, 4)}}
     rv['blocks'] = [{
         'block_id': f'home:{sec}',
@@ -1594,8 +1599,13 @@ def main():
         # approvals are keyed by abspath: sign every pass dir so the
         # operator rules and the scorecard see a real signed record
         ctx_p = gate.Ctx(pd)
+        pick_id = next((vid for vid, (e, f_) in
+                        gate._variant_entries(ctx_p).items()
+                        if not f_), None)
         for wv in sorted(gate.APPROVABLE):
-            gate.write_approval(ctx_p, wv, evidence='fixture approval')
+            gate.write_approval(
+                ctx_p, wv, design=pick_id if wv == 'w4' else None,
+                evidence='fixture approval')
     # SPEC.md is generated, never hand-written (A F27)
     for slug in gate.Ctx(base_dir).pages():
         sp = os.path.join(base_dir, 'PAGES', slug, 'SPEC.md')
