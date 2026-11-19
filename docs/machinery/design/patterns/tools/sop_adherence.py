@@ -195,12 +195,17 @@ def cluster(pts, names, dims, k=None):
     out = {}
     NAMER = {
         ('T.1', '+'): 'display-led',
+        ('T.1', '-'): 'quiet-type',
         ('L.4', '+'): 'airy/editorial',
         ('L.4', '-'): 'dense',
-        ('R.1', '+'): 'wide-bleed',
+        ('R.1', '+'): 'contained',
+        ('R.1', '-'): 'wide-bleed',
         ('T.6', '+'): 'long-measure',
+        ('T.6', '-'): 'short-measure',
         ('S.2', '+'): 'freeform-radius',
+        ('S.2', '-'): 'sharp-edge',
         ('V.4', '+'): 'mid-zone-contrast',
+        ('V.4', '-'): 'high-contrast',
     }
     for j in range(k):
         idx = np.where(lab == j)[0]
@@ -220,8 +225,25 @@ def cluster(pts, names, dims, k=None):
             num = float(np.dot(v, cent))
             den = (np.linalg.norm(v) * np.linalg.norm(cent)) or 1
             coh[names[i]] = round(num / den, 3)
+        # operator-meaningful label from the bend signature
+        cv = {d: float(v) for d, v in zip(dims, cent)}
+        if cname == 'baseline-disciplined':
+            label = 'baseline'
+        elif cv.get('T.1', 0) > 3 and cv.get('R.1', 0) < -0.8:
+            label = 'artsy-editorial'     # huge display + full-bleed
+        elif cv.get('T.1', 0) > 1.5:
+            label = 'expressive-display'
+        elif cv.get('T.1', 0) < -0.8:
+            label = 'quiet-saas'
+        elif cv.get('R.1', 0) < -2.0 and cv.get('T.1', 0) < 0:
+            label = 'bleed-minimal'
+        elif cv.get('R.1', 0) < -2.0:
+            label = 'bleed-led'
+        else:
+            label = cname
         out[cname] = {
             'name': cname,
+            'label': label,
             'centroid': {d: round(float(v), 3)
                          for d, v in zip(dims, cent)},
             'members': [names[i] for i in idx],
@@ -354,7 +376,8 @@ def main():
     # style-space.json + style-profiles.json (knob directions)
     json.dump(res['style_space'], open(os.path.join(
         DATA, 'style-space.json'), 'w'), indent=1)
-    profs = {name: {'centroid': c['centroid'], 'n': c['n'],
+    profs = {name: {'label': c.get('label'), 'name': name,
+                    'centroid': c['centroid'], 'n': c['n'],
                     'knob_direction': {
                         d: ('increase' if v > 0 else 'decrease')
                         for d, v in c['centroid'].items()

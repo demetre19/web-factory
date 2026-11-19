@@ -1,24 +1,52 @@
 {
- "schema": "style-profiles/v1",
- "doc": "Named-style deviation signatures (research/STYLE-VOCAB.md §2). A DESIGN-PLAN `style_licence` names a cluster here; `waives` enumerates the ONLY canon rules that licence relaxes — per-rule, never blanket, never a tier:invariant rule. `conflicts` flags canon the style collides with but may NEVER waive (it stays a hard failure); `canon_flag: true` means the style is banned as canon-negative regardless of licence.",
- "clusters": {
-  "minimal": {"waives": [], "signature": "chroma_max 25; whitespace >= 0.7; thin display"},
-  "brutalist": {"waives": ["L.17"], "signature": "radius 0; 1-2px asymmetric borders; dense <0.25 whitespace; flat high-contrast"},
-  "neo-brutalist": {"waives": ["S.5", "S.7", "S.2", "T.1"], "signature": "2-4px+ black borders; hard offset zero-blur shadows; square corners; oversized display +1..+4 dev; saturated primaries"},
-  "maximalist": {"waives": ["T.1", "T.5", "L.17"], "signature": "palette_size 8+; chroma variance up; many sizes/faces; tight <0.25; collage texture"},
-  "editorial": {"waives": ["T.1"], "signature": "flush-left ragged-right; asymmetric grid; near-monochrome + one accent; display-led +4.3 dev"},
-  "glassmorphism": {"waives": ["S.7"], "signature": "backdrop-filter blur + translucent + pastel; 12-24px radius; thin light border"},
-  "neumorphism": {"waives": ["S.7", "S.5", "S.2"], "conflicts": ["C.1"], "signature": "paired light+dark soft shadows; monochrome same-surface; radius large-soft; element-vs-bg deltaL <0.1 — contrast floor is NEVER waived"},
-  "claymorphism": {"waives": ["S.2", "S.7"], "signature": ">=16-24px pill; outer soft + inner light shadows; pastel"},
-  "skeuomorphic": {"waives": ["S.7"], "signature": "realistic drop+inset shadows; bevel/inset edges; texture/noise"},
-  "flat": {"waives": [], "signature": "shadow count ~0; solid saturated blocks; zero gradient"},
-  "corporate-Memphis": {"waives": [], "canon_flag": true, "signature": "flat vector illustration — banned as generic-stock tier (SOP-IMAGERY §6)"},
-  "bento": {"waives": ["S.2"], "signature": "uniform soft-large radius; one accent tile per grid; dense tiles, uniform tight gaps"},
-  "retro-Y2K": {"waives": ["C.4", "S.5"], "signature": "candy multi-color gradients chroma_var >=800; multi-borders; metallic/bevel; condensed/mono display"},
-  "luxury": {"waives": [], "signature": "serif display; type-contrast high; airy >0.45; subtle Elegant motion; dark/neutral field one accent"},
-  "playful": {"waives": ["S.2", "T.1"], "signature": "pill >=20 + 9999; blobs/arches; saturated multi-hue; elastic overshoot motion"},
-  "techy": {"waives": [], "signature": "sharp P1 radius; 1px hairlines; mono display; dark field + neon accent"},
-  "organic": {"waives": ["S.2"], "signature": "organic blobs (P4); earthy low-chroma warm; grain/texture; gentle ease-both"},
-  "dark-noir": {"waives": [], "signature": "mean luminance <0.2 field; thin display + bright accent; cinematic/B&W media"}
+ "display-led+wide-bleed": {
+  "centroid": {
+   "S.2": 0.206,
+   "T.1": 10.041,
+   "T.6": 0.0,
+   "R.1": -1.174,
+   "L.4": 0.0,
+   "V.4": 0.0
+  },
+  "n": 36,
+  "knob_direction": {
+   "T.1": "increase",
+   "R.1": "decrease"
+  },
+  "label": "artsy-editorial",
+  "name": "display-led+wide-bleed"
+ },
+ "quiet-type": {
+  "centroid": {
+   "S.2": 0.167,
+   "T.1": -1.26,
+   "T.6": 0.0,
+   "R.1": -0.012,
+   "L.4": 0.0,
+   "V.4": 0.0
+  },
+  "n": 299,
+  "knob_direction": {
+   "T.1": "decrease"
+  },
+  "label": "quiet-saas",
+  "name": "quiet-type"
+ },
+ "wide-bleed+quiet-type": {
+  "centroid": {
+   "S.2": 0.196,
+   "T.1": -0.389,
+   "T.6": 0.0,
+   "R.1": -3.19,
+   "L.4": 0.0,
+   "V.4": 0.0
+  },
+  "n": 227,
+  "knob_direction": {
+   "T.1": "decrease",
+   "R.1": "decrease"
+  },
+  "label": "bleed-minimal",
+  "name": "wide-bleed+quiet-type"
  }
 }
