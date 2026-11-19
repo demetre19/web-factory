@@ -1243,8 +1243,9 @@ def check_content_width(ctx):
     if not m:
         return ['grid.content_width missing/unparseable']
     px = float(m.group(1)) * (16 if m.group(2) == 'rem' else 1)
-    if px > 1440:
-        return [f'content_width {cw} > L.11 1440px ceiling']
+    if px > 1280:
+        return [f'content_width {cw} > ACSS 1280px/80rem ceiling '
+                '(prose 60ch; DIFFERS resolved in ACSS favour)']
     return []
 
 def check_contrast(ctx):
@@ -2327,6 +2328,98 @@ def check_fine_round(ctx):
         return ['P.18 preview/fine.html missing — the fine knob-nudge '
                 'round is produced after the look round, never skipped']
     return [f'P.18 {x}' for x in check_round(fp, 3)]
+
+
+def check_acss_conventions(ctx):
+    """A.1 — ACSS mechanical conventions: no rgba() literals
+    (color-mix only); no min-height sections (except declared hero
+    comps); smart-spacing sibling selector only for flow; icon-only
+    controls must carry an accessible name; external links carry
+    rel=noopener + cue; cards wrap in <a> never."""
+    if not _wave_ge(ctx, 'w6'):
+        return []
+    f = []
+    css_files = []
+    src = os.path.join(ctx.site, 'src')
+    for dp, _, fns in os.walk(src) if os.path.isdir(src) else []:
+        for fn in fns:
+            if fn.endswith('.css'):
+                css_files.append(os.path.join(dp, fn))
+    for p in css_files:
+        css = open(p, encoding='utf-8', errors='replace').read()
+        name = os.path.basename(p)
+        for m in re.finditer(r'rgba\s*\(', css):
+            f.append(f'A.1 {name}: rgba() literal — transparency via '
+                     'color-mix(in oklch, role X%, transparent) only')
+        for m in re.finditer(
+                r'([\w.#\[\]-]+)[^{}]*\{[^}]*min-height:\s*\d+'
+                r'(px|rem|vh)[^}]*\}', css):
+            sel = m.group(1)
+            if not re.search(r'hero|bleed|fold', sel):
+                f.append(f'A.1 {name}: "{sel.strip()[:40]}" sets '
+                         'min-height — section whitespace comes from '
+                         '--section-space-* only')
+    for p, txt in ctx.page_htmls() if _wave_ge(ctx, 'w7') else []:
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<(?:a|button)[^>]*class="[^"]*(?:icon|logo)[^"]*"[^>]*>',
+                txt):
+            tag = m.group(0)
+            tail = txt[m.end():m.end() + 80]
+            if 'aria-label' not in tag and 'title=' not in tag \
+                    and not re.search(r'^\s*\w', tail):
+                f.append(f'A.1 {name}: icon-only control without an '
+                         'accessible name (.sr-only or aria-label)')
+        for m in re.finditer(
+                r'<a[^>]*target="_blank"[^>]*>', txt):
+            if 'rel=' not in m.group(0):
+                f.append(f'A.1 {name}: target=_blank without '
+                         'rel="noopener" — external links announce '
+                         'themselves (visual + SR cue)')
+    return f
+
+
+def check_card_contract(ctx):
+    """A.2 — card contract: a clickable card is a heading link +
+    pseudo inset hit-area, never <a> around the whole card; override
+    by --card-* tokens, never literals; multiple links ban pseudo."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<a[^>]*class="[^"]*card[^"]*"[^>]*>(.*?)</a>',
+                txt, re.S):
+            if re.search(r'<(?:h[1-6]|p|div)[\s>]', m.group(1)):
+                f.append(f'A.2 {name}: whole card wrapped in <a> — '
+                         'link the heading + ::before inset:0 hit '
+                         'area on position:relative')
+    return f
+
+
+def check_component_profile(ctx):
+    """A.3 — every rendered component instance is classified to a
+    profile (docs/machinery/design/components/<data-comp>.md); unknown
+    type = FAIL."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    pdir = os.path.join(DESIGN_DIR, 'components')
+    known = {os.path.splitext(fn)[0] for fn in os.listdir(pdir)
+             if fn.endswith('.md')} if os.path.isdir(pdir) else set()
+    f = []
+    for p, txt, parsed, blocks in _segmented(ctx):
+        name = os.path.basename(p)
+        for sblk in blocks:
+            comp = str(sblk.get('data-comp') or '')
+            if comp and comp not in known:
+                f.append(f'A.3 {name}: data-comp "{comp}" has no '
+                         'component profile — every type carries its '
+                         'own rule profile (components/<type>.md)')
+            if not comp:
+                f.append(f'A.3 {name}: unclassified section — '
+                         'data-comp required')
+    return f
 
 
 def check_mobile_cta(ctx):
@@ -6977,6 +7070,7 @@ WAVE_CHECKS = {
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
+           check_acss_conventions,
            check_section_allowed, check_section_gates, check_exemplars,
            check_astro_build],
     'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
@@ -6989,7 +7083,8 @@ WAVE_CHECKS = {
            check_canon_trace, check_receipts, check_auto_grid,
            check_surface_rhythm,
            check_dead_columns, check_intent_sections, check_hero_fold,
-           check_canon_padding, check_breathing,
+           check_canon_padding, check_breathing, check_card_contract,
+           check_component_profile,
            check_primary_cta, check_interaction_states, check_forms,
            check_heading_pattern, check_equal_cards, check_dark_media,
            check_logo, check_accent_surfaces, check_landmarks,

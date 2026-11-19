@@ -4,7 +4,7 @@ type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
   contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS]
-  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF]
+  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF, rules-A]
   contains_also: [section-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
   index: design-index

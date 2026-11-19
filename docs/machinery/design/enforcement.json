@@ -239,6 +239,15 @@
   ],
   "check_fine_round": [
    "P.18"
+  ],
+  "check_acss_conventions": [
+   "A.1"
+  ],
+  "check_card_contract": [
+   "A.2"
+  ],
+  "check_component_profile": [
+   "A.3"
   ]
  },
  "graph": {
@@ -1504,6 +1513,27 @@
    "threshold": "picker fails gate.py round \u2014 real options, scored, refs, visual review, distinct",
    "tier": "invariant",
    "wave": "w3"
+  },
+  "A.1": {
+   "check": "check_acss_conventions",
+   "mode": "script",
+   "threshold": "rgba()/min-height/unnamed control/unsafe external link",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "A.2": {
+   "check": "check_card_contract",
+   "mode": "script",
+   "threshold": "whole-card <a> wrap / literal card overrides",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "A.3": {
+   "check": "check_component_profile",
+   "mode": "script",
+   "threshold": "unclassified component type / missing profile",
+   "tier": "invariant",
+   "wave": "w7"
   }
  }
 }

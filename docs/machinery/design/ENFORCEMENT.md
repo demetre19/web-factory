@@ -174,5 +174,8 @@ closed set.
 | P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
 | L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
 | P.18 | The pick funnel is real and gated | invariant | script | `check_round_gated` | picker fails gate.py round — real options, scored, refs, visual review, distinct | w3 |
+| A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w7 |
+| A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w7 |
+| A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w7 |
 
-165 rules — script 134, reviewer 30, operator 1; invariant 49, structural 42, stylistic 74.
+168 rules — script 137, reviewer 30, operator 1; invariant 50, structural 44, stylistic 74.
