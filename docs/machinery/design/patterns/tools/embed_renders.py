@@ -34,7 +34,8 @@ import embed_images as EI  # noqa: E402
 
 SHOT_GLOBS = ['tools/design-gate/proof/out*/shots',
               'tools/design-gate/proof/out*/views',
-              'tools/design-gate/proof/out*/thumbs']
+              'tools/design-gate/proof/out*/thumbs',
+              'docs/machinery/design/patterns/data/bank_shots']
 
 
 def rel(p):
@@ -45,9 +46,10 @@ def shots():
     import glob as g
     for pat in SHOT_GLOBS:
         for d in sorted(g.glob(os.path.join(REPO, pat))):
-            for f in sorted(os.listdir(d)):
-                if f.lower().endswith(EI.EXT):
-                    yield os.path.join(d, f)
+            for dirpath, _, files in os.walk(d):
+                for f in sorted(files):
+                    if f.lower().endswith(EI.EXT):
+                        yield os.path.join(dirpath, f)
 
 
 def sidecar(png):
@@ -120,14 +122,19 @@ def row_meta(png):
          ('--bg', '--ink', '--accent', '--radius', '--f-display',
           '--pad-block')}, sort_keys=True).encode()).hexdigest()[:12] \
         if vars_ else None
-    recipe = rv.get('recipe_id') or '-'.join(filter(
-        None, (sc.get('layout'), sc.get('seam'),
-               sc.get('ornament')))) or name
+    # kit = grandparent dir under bank_shots (e.g. 'preline')
+    kit = os.path.basename(os.path.dirname(os.path.dirname(png))) \
+        if 'bank_shots' in png else None
+    recipe = rv.get('recipe_id') or kit + '/' + name if kit else \
+        ('-'.join(filter(
+            None, (sc.get('layout'), sc.get('seam'),
+                   sc.get('ornament')))) or name)
     return {
         'render_path': rel(png),
         'sha256': sha16,
         'shot': name,
         'out_dir': outdir,
+        'kit': kit,
         'recipe_id': recipe,
         'dna_id': dna,
         'viewport': [sc.get('width'), sc.get('height')],
