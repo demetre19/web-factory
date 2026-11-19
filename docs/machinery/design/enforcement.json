@@ -163,7 +163,8 @@
    "R.5"
   ],
   "check_canon_trace": [
-   "REF.1"
+   "REF.1",
+   "REF.3"
   ],
   "check_wildcard_random": [
    "B.7"
@@ -265,6 +266,9 @@
   ],
   "check_trend_vocab": [
    "DM.1"
+  ],
+  "check_candidate_review": [
+   "REF.2"
   ]
  },
  "graph": {
@@ -1607,6 +1611,20 @@
    "wave": "w7",
    "check": "check_skeleton",
    "threshold": "skeleton ids never appear as canon refs"
+  },
+  "REF.2": {
+   "mode": "script",
+   "tier": "invariant",
+   "wave": "w1",
+   "check": "check_candidate_review",
+   "threshold": "pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted"
+  },
+  "REF.3": {
+   "mode": "script",
+   "tier": "invariant",
+   "wave": "w1",
+   "check": "check_canon_trace",
+   "threshold": "look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source"
   }
  }
 }

@@ -17,6 +17,22 @@ Canon positives, in ranking order:
    best-website-design-examples)
 3. **Mobbin screens/sections**
 
+A **candidate tier** (first source: astro-showcase) sits below canon:
+sites scanned and scored but never citable until the operator promotes
+them in the pipeline's `preview/candidates.html` picker (receipt-bound;
+decisions POST to the approval service). Approved → endorsed tier;
+rejected → excluded, usable only as scorer contrast.
+
+**Two layers.** Every source declares `contributes: [principles] |
+[principles, look]`:
+- **Principles** (structure/measurement — spacing, padding ratios,
+  type-scale, hierarchy, rhythm, CTA cadence, grid, content width, a11y,
+  collapse): canon + skeleton sources + pending candidates all feed it.
+- **Look** (visual identity — palette, imagery, type pairing, mood,
+  trend, visual-similarity retrieval): canon + *approved* candidates
+  only; `canon_trace` rejects principle-only sources on look-level
+  rows.
+
 The web corpus, the negatives/anti layer, and banked site captures are
 removed from canon (operator ruling). Canon is the highest design
 authority after the copy contract and brand invariants. Canon overrides generated defaults — including the ACSS
@@ -43,3 +59,25 @@ reason — refs are never silently dropped.
 
 Operator-suggested sites are auto-captured and banked, then weighted
 above Mobbin in retrieval ranking.
+
+### REF.2 Candidate sources — operator promotion only
+
+Scanned-and-scored sources (first: astro-showcase) are **candidates**:
+they may feed the principles layer (statistics, ratios, profiles) but
+are never canon for look choices until promoted. Pending candidates
+render in `preview/candidates.html` (screenshot + score +
+approve/reject controls POSTing to the approval service;
+receipt-bound). `approved` joins the endorsed tier; `rejected` is
+excluded from canon — usable only as scorer contrast. Citing a pending
+or rejected candidate for a look-level choice FAILs.
+
+### REF.3 Layered canon — principles vs look
+
+Sources declare `contributes: [principles] | [principles, look]`. A
+MOBBIN-REFS row whose `informs` targets the look layer (palette,
+imagery treatment, type pairing, mood, style/trend, visual feel) must
+cite a look source: operator sites, endorsed lists, Mobbin, or an
+approved candidate. Principle-level rows (spacing, ratios, hierarchy,
+rhythm, cadence, grid, width, a11y, collapse) may cite any
+principle-contributing source — canon, pending candidates, skeleton
+sources — because solid design principles exist regardless of taste.

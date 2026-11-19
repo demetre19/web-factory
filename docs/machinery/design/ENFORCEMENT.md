@@ -185,5 +185,7 @@ closed set.
 | M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | animation JS ≤4KB and no animation library unless licensed in DESIGN-PLAN | w7 |
 | SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
 | SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
+| REF.2 | Candidate sources | invariant | script | `check_candidate_review` | pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted | w1 |
+| REF.3 | Layered canon | invariant | script | `check_canon_trace` | look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source | w1 |
 
-176 rules — script 145, reviewer 30, operator 1; invariant 50, structural 50, stylistic 76.
+178 rules — script 147, reviewer 30, operator 1; invariant 52, structural 50, stylistic 76.

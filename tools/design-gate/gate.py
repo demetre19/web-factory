@@ -906,7 +906,10 @@ def check_mobbin_refs(ctx):
                 'reference: | id/url | kind | informs | wave |']
     for r in parsed:
         rid = r[0]
-        if not _canon_ref_ok(rid):
+        if not _canon_ref_ok(
+                rid, candidates=_candidate_registry(
+                    os.path.join(ctx.dir, 'CANDIDATES.json'))
+                or _candidate_registry()):
             f.append(f'P.14 {rid}: not a canonical ref — Mobbin '
                      'screen/section ids or operator site URLs only '
                      '(web corpus and negatives removed from canon)')
@@ -1830,6 +1833,56 @@ def _endorsed_sites():
 
 _ENDORSED = None
 _ENDORSED_EXEMPLARS = None
+_CANDIDATES = None
+
+
+def _candidate_registry(path=None):
+    """{domain: status} — the candidate tier: sites scanned + scored by
+    a source list (first: astro-showcase) but NOT canon until the
+    operator promotes them through the review picker. Statuses:
+    pending | approved | rejected. Global registry lives in
+    patterns/data/operator/candidates.json; a pipeline may carry its
+    own CANDIDATES.json."""
+    global _CANDIDATES
+    if path is None and _CANDIDATES is not None:
+        return _CANDIDATES
+    reg = {}
+    for p in ([os.path.join(DESIGN_DIR, 'patterns', 'data',
+                           'operator', 'candidates.json')]
+              if path is None else [path]):
+        if not p or not os.path.isfile(p):
+            continue
+        try:
+            rows = json.load(open(p))
+        except Exception:
+            continue
+        for c in (rows if isinstance(rows, list) else
+                  rows.get('candidates') or []):
+            if not isinstance(c, dict):
+                continue
+            u = str(c.get('url') or c.get('site') or
+                    c.get('id') or '').lower().rstrip('/')
+            if u:
+                reg[u] = str(c.get('status') or 'pending')
+                m = re.match(r'https?://([^/]+)', u)
+                if m:
+                    reg.setdefault(m.group(1),
+                                   str(c.get('status') or 'pending'))
+    if path is None:
+        _CANDIDATES = reg
+    return reg
+
+
+def _candidate_status(ref, candidates=None):
+    """'pending'|'approved'|'rejected'|None for a ref token."""
+    reg = _candidate_registry() if candidates is None else candidates
+    r = str(ref).strip().lower().rstrip('/')
+    m = re.match(r'https?://([^/]+)', r)
+    host = m.group(1) if m else r
+    for u, st in reg.items():
+        if r == u or host == u or u.endswith('://' + host):
+            return st
+    return None
 
 
 def _endorsed_exemplars():
@@ -1902,7 +1955,63 @@ def _exemplar_comps(lab):
     return EXEMPLAR_COMP.get(lab.lower(), {lab.lower()})
 
 
-def _canon_ref_ok(ref, endorsed=None):
+# LOOK layer = visual identity (palette, imagery treatment, type
+# pairing, mood/style/trend, visual-similarity retrieval). PRINCIPLES
+# layer = structure/measurement (spacing, padding ratios, type scale,
+# hierarchy, rhythm, CTA cadence, grid, content width, a11y, collapse).
+# Sources carry contributes: [principles] | [principles, look]:
+#   operator / endorsed / Mobbin / approved candidates → both;
+#   pending candidates + skeleton sources → principles only;
+#   rejected candidates → neither (contrast corpus only).
+LOOK_INFORMS = re.compile(
+    r'palette|colou?r|imagery|image-led|photo|type (?:pairing|face)|'
+    r'font|mood|style|trend|look|aesthetic|feel|visual|brand '
+    r'(?:voice|identity)|surface (?:tint|contrast)|accent')
+
+
+def _source_tier(ref, candidates=None):
+    """('operator'|'endorsed'|'mobbin'|'candidate'|'skeleton'|'other',
+    contributes_list)."""
+    r = str(ref).strip().lower()
+    st = _candidate_status(r, candidates)
+    if st:
+        return ('candidate',
+                ['principles', 'look'] if st == 'approved' else
+                ([] if st == 'rejected' else ['principles']))
+    if SKL_ID.search(r):
+        return 'skeleton', ['principles']
+    if r.startswith('mobbin') or 'mobbin.com' in r:
+        return 'mobbin', ['principles', 'look']
+    src_root = os.path.join(DESIGN_DIR, 'patterns', 'data',
+                            'operator', '_sources')
+    if os.path.isdir(src_root) and any(
+            fn[:-5] == r for fn in os.listdir(src_root)
+            if fn.endswith('.json')):
+        return 'endorsed', ['principles', 'look']
+    if r.startswith(('http://', 'https://', 'https-', 'http-')):
+        return 'operator', ['principles', 'look']
+    return 'other', []
+
+
+def _principle_ref_ok(ref, candidates=None):
+    """A ref valid for principle-level citations (statistics,
+    profiles, ratios): canon sources plus any principle-contributing
+    source (pending candidates, skeleton ids). Negatives/web-corpus
+    stay banned."""
+    r = str(ref).strip().lower()
+    if not r or r == 'none':
+        return False
+    if any(b in r for b in CANON_BAN):
+        return False
+    if 'negative' in r or r.startswith(('pattern-', 'web-')):
+        return False
+    if _canon_ref_ok(r, candidates=candidates):
+        return True
+    tier, contrib = _source_tier(r, candidates)
+    return 'principles' in contrib
+
+
+def _canon_ref_ok(ref, endorsed=None, candidates=None):
     """A canonical ref is (tier 1) an operator-supplied site URL,
     (tier 2) a site recorded in an operator-endorsed list
     (patterns/data/operator/_sources/), (tier 3) a Mobbin screen or
@@ -1919,6 +2028,11 @@ def _canon_ref_ok(ref, endorsed=None):
                                         'https-', 'http-')):
         return False
     if r.startswith('mobbin') or 'mobbin.com' in r:
+        return True
+    cst = _candidate_status(r, candidates)
+    if cst in ('pending', 'rejected'):
+        return False
+    if cst == 'approved':
         return True
     if r.startswith(('http://', 'https://')):
         return True
@@ -1976,12 +2090,21 @@ def _canon_rows(ctx):
         if len(cells) >= 3 and cells[0] not in ('id/url', 'id / url'):
             row_text = ' '.join(cells).lower()
             rid = cells[0]
-            ok = _canon_ref_ok(rid) \
-                and not re.search(r'\b(web|negative)s?\b',
-                                  (cells[1] or '').lower())
+            informs = cells[2] if len(cells) > 2 else ''
+            cands = _candidate_registry(
+                os.path.join(ctx.dir, 'CANDIDATES.json')) \
+                or _candidate_registry()
+            look = bool(LOOK_INFORMS.search(informs))
+            if look:
+                ok = _canon_ref_ok(rid, candidates=cands)
+            else:
+                ok = _principle_ref_ok(rid, candidates=cands)
+            ok = ok and not re.search(r'\b(web|negative)s?\b',
+                                      (cells[1] or '').lower())
             rows.append({'id': rid,
                          'kind': cells[1] if len(cells) > 1 else '',
-                         'informs': cells[2] if len(cells) > 2 else '',
+                         'informs': informs,
+                         'layer': 'look' if look else 'principles',
                          'wave': cells[3] if len(cells) > 3 else '',
                          'ok': ok,
                          'ignored': 'ignored' in row_text
@@ -2010,9 +2133,16 @@ def check_canon_trace(ctx):
     opsites = _operator_sites(ctx)
     for r in rows:
         if not r['ok']:
-            f.append(f"LAW.REF {r['id']}: not a canonical ref — canon "
-                     'is Mobbin screens + operator sites only; the web '
-                     'corpus / negatives / banked sites are removed')
+            if r.get('layer') == 'look':
+                f.append(f"LAW.REF {r['id']}: not a canonical LOOK ref "
+                         '— the look layer cites operator sites, '
+                         'endorsed lists or Mobbin only; candidates '
+                         'feed it only after operator promotion')
+            else:
+                f.append(f"LAW.REF {r['id']}: not a valid principle "
+                         'ref — principles may cite canon, pending '
+                         'candidates and skeleton sources; the web '
+                         'corpus / negatives stay banned')
     txt_refs = ' '.join(r['id'] + ' ' + r['informs'] for r in rows
                         if r['ok']).lower()
     # operator sites must appear in the canon set when the operator gave any
@@ -2053,7 +2183,12 @@ def check_canon_trace(ctx):
                                  'endorsed tier, exemplars rank '
                                  'highest')
                     for ref in refs:
-                        if not _canon_ref_ok(ref):
+                        if not _canon_ref_ok(
+                                ref,
+                                candidates=_candidate_registry(
+                                    os.path.join(
+                                        ctx.dir, 'CANDIDATES.json'))
+                                or _candidate_registry()):
                             f.append(f'LAW.REF {slug}:{r.get("name")} '
                                      f'cites {ref} — not a canonical '
                                      'ref (Mobbin id / operator site '
@@ -2381,6 +2516,93 @@ def _skl_harvest_ids():
             except Exception:
                 pass
     return ids
+
+
+def check_candidate_review(ctx):
+    """REF.2 — candidate sources are reviewed by the operator through
+    a pipeline-produced picker before they may feed the LOOK layer:
+    preview/candidates.html renders every pending candidate with its
+    screenshot, score and approve/reject controls (POSTs to the
+    approval service); the picker is receipt-bound. Decisions are
+    recorded in CANDIDATES.json — approved joins the endorsed tier,
+    rejected is excluded (contrast corpus only)."""
+    f = []
+    reg = _candidate_registry(
+        os.path.join(ctx.dir, 'CANDIDATES.json'))
+    if not reg:
+        return []
+    pending = [u for u, st in reg.items()
+               if st == 'pending' and '://' in u]
+    fp = ctx.find('preview/candidates.html')
+    if pending and not fp:
+        f.append('REVIEW.CAND {n} candidate site(s) pending but no '
+                 'preview/candidates.html — the operator reviews '
+                 'candidates in a receipt-bound picker before they '
+                 'touch the look layer'.format(n=len(pending)))
+        return f
+    if fp:
+        txt = open(fp, encoding='utf-8', errors='replace').read()
+        for u in pending:
+            if u not in txt:
+                f.append(f'REVIEW.CAND candidate {u} missing from the '
+                         'review picker — every pending site renders '
+                         'with screenshot + score + decision controls')
+        if 'data-score=' not in txt:
+            f.append('REVIEW.CAND picker carries no scores')
+        if not re.search(r'data-(?:decision|action)|/promote|'
+                         r'approve.*reject|reject.*approve',
+                         txt, re.S):
+            f.append('REVIEW.CAND picker has no approve/reject '
+                     'controls — decisions POST to the approval '
+                     'service, never a designer file')
+    return f
+
+
+def assemble_candidates(ctx):
+    """Emit preview/candidates.html — the candidate review picker:
+    one card per pending site with screenshot, source score and
+    approve/reject buttons posting to the approval service."""
+    cp = os.path.join(ctx.dir, 'CANDIDATES.json')
+    rows = []
+    if os.path.isfile(cp):
+        try:
+            data = json.load(open(cp))
+            rows = data if isinstance(data, list) else \
+                data.get('candidates') or []
+        except Exception:
+            rows = []
+    cards = []
+    for c in rows:
+        if not isinstance(c, dict):
+            continue
+        u = str(c.get('url') or c.get('site') or c.get('id') or '')
+        st = str(c.get('status') or 'pending')
+        sc = c.get('score')
+        shot = str(c.get('shot') or c.get('screenshot') or
+                     (u.replace('://', '-').replace('/', '-') + '.webp'))
+        cards.append(
+            f'  <article data-candidate="{u}" data-status="{st}" '
+            f'data-score="{sc}">\n'
+            f'    <img src="{shot}" alt="{u} screenshot" '
+            f'loading="lazy" data-dark="dim">\n'
+            f'    <h2>{u}</h2><p>score {sc} · {st}</p>\n'
+            f'    <form method="POST" action="/promote" '
+            f'data-decision="promote">\n'
+            f'      <input type="hidden" name="site" value="{u}">\n'
+            '      <button name="decision" value="approved">Approve '
+            '</button>\n'
+            '      <button name="decision" value="rejected">Reject '
+            '</button>\n'
+            '    </form>\n  </article>')
+    h = hashlib.sha256(
+        json.dumps(rows, sort_keys=True).encode()).hexdigest()[:12]
+    txt = ('<!-- assembled: {h} — candidate review picker; never '
+           'edit -->\n<html><head><meta name="viewport" '
+           'content="width=device-width">\n<title>Candidate sources'
+           '</title></head>\n<body>\n<h1>Candidate sources — '
+           'promote to endorsed or reject</h1>\n' +
+           '\n'.join(cards) + '\n</body></html>').format(h=h)
+    return os.path.join(ctx.dir, 'preview', 'candidates.html'), txt, h
 
 
 def check_skeleton(ctx):
@@ -6323,6 +6545,7 @@ def _apply_declared_breaks(ctx, fails):
 
 
 ARTIFACTS = {
+    'w1': ['preview/candidates.html'],
     'w3': ['preview/layouts.html'],
     'w4': ['preview/variants.html', 'preview/fine.html'],
     'w5': ['preview/system.html'],
@@ -8293,7 +8516,7 @@ WAVE_CHECKS = {
     'w1': [check_mobbin_auth, check_design_mode, check_intent,
            check_genotype, check_tiers, check_audit_artifacts,
            check_mobbin_refs, check_image_discovery, check_canon_trace,
-           check_trend_vocab],
+           check_candidate_review, check_trend_vocab],
     'w2': [check_content_inventory],
     'w3': [check_wireframe_tags, check_mobbin_refs,
            check_wireframe_lock, check_section_enums,

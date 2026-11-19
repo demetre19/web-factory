@@ -1005,6 +1005,27 @@ BASE = {
     'site/dist/home/index.html': PAGE_HTML,
     'GATES.json': json.dumps({'artifacts': {}}),
     'WILDCARD-HISTORY.json': _wild_hist(),
+    'CANDIDATES.json': json.dumps({'source': 'astro-showcase',
+        'candidates': [
+            {'url': 'https://pending-candidate.example.com',
+             'status': 'pending', 'score': 0.71,
+             'shot': 'shots/pending.webp'},
+            {'url': 'https://approved-candidate.example.com',
+             'status': 'approved', 'score': 0.88},
+            {'url': 'https://rejected-candidate.example.com',
+             'status': 'rejected', 'score': 0.42}]}),
+    'preview/candidates.html': '<html><head><meta name="viewport" '
+        'content="width=device-width"></head><body>'
+        '<h1>Candidate sources</h1>'
+        '<article data-candidate="https://pending-candidate.example.com"'
+        ' data-status="pending" data-score="0.71">'
+        '<img src="shots/pending.webp" alt="x">'
+        '<form method="POST" action="/promote" data-decision="promote">'
+        '<input type="hidden" name="site" '
+        'value="https://pending-candidate.example.com">'
+        '<button name="decision" value="approved">Approve</button>'
+        '<button name="decision" value="rejected">Reject</button>'
+        '</form></article></body></html>',
     'CANON-PADDING.json': json.dumps({'components': {
         'split-media': {'vh_iqr': [0.8, 1.6], 'block_inline': [1.0, 2.0]},
         'cards-n': {'vh_iqr': [0.5, 1.2]},
@@ -1185,6 +1206,7 @@ MUT = {
  'check_breathing': mut(
      ('REPL','site/dist/home/index.html',
       'class="card-grid py-24"','class="card-grid py-24 md:py-2"')),
+ 'check_candidate_review': mut(('DEL','preview/candidates.html')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
      'preview/variants.html')),
@@ -1369,10 +1391,12 @@ def main():
     _g.setdefault('artifacts', {})
     _g.setdefault('w3', {'pass': True})
     _g.setdefault('w4', {'pass': True})
-    for rel in ('preview/layouts.html', 'preview/variants.html',
-                'preview/fine.html'):
+    _g.setdefault('w1', {'pass': True})
+    for rel in ('preview/candidates.html', 'preview/layouts.html',
+                'preview/variants.html', 'preview/fine.html'):
         if rel in BASE:
-            rec = {'wave': 'w3' if 'layouts' in rel else 'w4',
+            rec = {'wave': 'w1' if 'candidates' in rel else
+                   'w3' if 'layouts' in rel else 'w4',
                    'sha256': hashlib.sha256(
                        BASE[rel].encode()).hexdigest(),
                    'gate_pass': True}
