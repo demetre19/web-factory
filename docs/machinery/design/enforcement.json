@@ -1760,6 +1760,34 @@
    "threshold": "rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes",
    "tier": "invariant",
    "wave": "w7"
+  },
+  "TK.1": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "missing @theme/:root/.dark/@theme inline/@custom-variant layer",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TK.2": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "semantic var in :root without a .dark override",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TK.3": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "raw hex in a component colour property, or a component referencing a --primitive-* var",
+   "tier": "invariant",
+   "wave": "w6"
+  },
+  "TK.4": {
+   "check": "check_contrast",
+   "mode": "script",
+   "threshold": "contrast verified on semantic role pairs in both light and dark modes",
+   "tier": "invariant",
+   "wave": "w5"
   }
  }
 }

@@ -201,5 +201,11 @@ closed set.
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
+| J.7 | ELEMENT-VARIANT | invariant | script | `check_prebuild_receipt` | element_variant missing, declared != bank elements signature, class outside the vertical's canon media set, text-only under a media-led canon, or text-only under a declared image-led genotype | w4 |
+| J.8 | SEAM-SHAPE | invariant | script | `check_block_trace` | rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes | w7 |
+| TK.1 | The five layers exist, in order | invariant | script | `check_token_layer` | missing @theme/:root/.dark/@theme inline/@custom-variant layer | w5 |
+| TK.2 | Semantic parity | invariant | script | `check_token_layer` | semantic var in :root without a .dark override | w5 |
+| TK.3 | Components bind semantics, never values | invariant | script | `check_token_layer` | raw hex in a component colour property, or a component referencing a --primitive-* var | w6 |
+| TK.4 | Contrast rides the semantic pairs in both modes | invariant | script | `check_contrast` | contrast verified on semantic role pairs in both light and dark modes | w5 |
 
-192 rules — script 161, reviewer 30, operator 1; invariant 64, structural 51, stylistic 77.
+198 rules — script 167, reviewer 30, operator 1; invariant 70, structural 51, stylistic 77.

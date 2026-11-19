@@ -1692,6 +1692,77 @@ def check_tailwind_derivation(ctx):
         f.append('TOKENS.json missing')
     return f
 
+def check_token_layer(ctx):
+    """TK — the Tailwind-v4 token layer. global.css emits five
+    layers: @theme primitives → :root semantics → .dark overrides
+    → @theme inline semantic→utility map → @custom-variant dark.
+    TK.1 layer shape; TK.2 every semantic var exists in BOTH light
+    and dark; TK.3 components bind semantic vars — a raw hex or a
+    primitive var in a component is ad-libbed colour."""
+    f = []
+    css = ctx.read('site/src/styles/global.css') or ''
+    if not css:
+        return f
+    need = [('@theme {', 'primitive block'),
+            (':root {', 'semantic layer'),
+            ('.dark {', 'dark overrides'),
+            ('@theme inline {', 'semantic→utility map'),
+            ('@custom-variant dark', 'dark variant')]
+    for needle, name in need:
+        if needle not in css:
+            f.append(f'TK.1 global.css lacks {name} ({needle}) — '
+                     'the token layer emits @theme primitives → '
+                     ':root semantics → .dark → @theme inline → '
+                     '@custom-variant')
+    # TK.2 semantic parity — every semantic var in :root must have
+    # a .dark override (missing override = half a token layer)
+    root_m = re.search(r':root\s*\{(.*?)\}', css, re.S)
+    dark_m = re.search(r'\.dark\s*\{(.*?)\}', css, re.S)
+    if root_m and dark_m:
+        root_sem = set(re.findall(
+            r'--(bg-\w+|text-\w+|border-\w+|action-\w+|shadow-\w+)'
+            r'\s*:', root_m.group(1)))
+        dark_sem = set(re.findall(
+            r'--(bg-\w+|text-\w+|border-\w+|action-\w+|shadow-\w+)'
+            r'\s*:', dark_m.group(1)))
+        for v in sorted(root_sem - dark_sem):
+            f.append(f'TK.2 semantic --{v} has no .dark override — '
+                     'every semantic token exists in both modes')
+    # TK.3 components bind semantic vars only — raw hex or a
+    # --primitive-* in a component source is an end run
+    for dp in ('site/src/components', 'site/src/pages',
+               'site/dist'):
+        root = os.path.join(ctx.dir, dp)
+        if not os.path.isdir(root):
+            continue
+        for dpth, _, fns in os.walk(root):
+            for fn in fns:
+                if not fn.endswith(('.astro', '.html', '.jsx',
+                                    '.tsx', '.vue', '.svelte')):
+                    continue
+                fp = os.path.join(dpth, fn)
+                try:
+                    t = open(fp, encoding='utf-8',
+                             errors='replace').read()
+                except Exception:
+                    continue
+                rel = os.path.relpath(fp, ctx.dir)
+                for m in re.finditer(
+                        r'(?:color|background|border|fill|stroke)'
+                        r'[^;{}"\']*?#(?:[0-9a-fA-F]{3,8})\b', t):
+                    f.append(f'TK.3 {rel}: literal hex in a colour '
+                             'property — components bind semantic '
+                             'tokens (var(--bg-*)/(--text-*)/'
+                             '(--action-*)/(--border-*)), never '
+                             'raw values')
+                    break
+                if '--primitive-' in t:
+                    f.append(f'TK.3 {rel}: component references a '
+                             'primitive token — primitives feed the '
+                             'semantic layer; components consume '
+                             'semantics only')
+    return f
+
 def check_tile_is_system(ctx):
     """P.6 — the system sheet instantiates every component.
 
@@ -8300,6 +8371,13 @@ REDTEAM_MUTATIONS = [
    'data-content="c-def c-proof c-faq"',
    'data-seam-shape-top="diagonal" '
    'data-content="c-def c-proof c-faq"'),)),
+ ('RT-TK2-MISSINGDARK', 'TK.2', (
+  ('REPL', 'site/src/styles/global.css',
+   '--action-primary: #4C93D6;',
+   '/* --action-primary missing in dark */'),)),
+ ('RT-TK3-HEX', 'TK.3', (
+  ('APPEND', 'site/src/components/sections/Hero.astro',
+   '<div style="color: #123456">x</div>'),)),
 ]
 
 
@@ -10801,14 +10879,14 @@ WAVE_CHECKS = {
            check_no_emoji, check_neutral_tint, check_proximity,
            check_border_widths, check_reduced_motion, check_dark_mode,
            check_dark_toggle, check_canon_trace, check_trend_vocab,
-           check_style_licence],
+           check_style_licence, check_token_layer],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
            check_acss_conventions,
            check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
-           check_astro_build],
+           check_astro_build, check_token_layer],
     'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,

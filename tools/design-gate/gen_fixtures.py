@@ -188,10 +188,7 @@ sections:
 ```
 '''
 
-GLOBAL_CSS = '''@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+GLOBAL_CSS_TAIL = '''
 h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
 
 :root {
@@ -976,6 +973,17 @@ def _wild_hist():
         rec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     return json.dumps([e])
 
+def _global_css():
+    """Five-layer Tailwind-v4 token layer (emit_tokens) over the
+    fixture TOKENS + the legacy component layer — TK.1's emitted
+    shape is exactly what gate checks demand."""
+    import emit_tokens as _et
+    head = '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n'
+    emit_lines = _et.emit(json.loads(TOKENS)).split('\n')
+    body = '\n'.join(emit_lines[5:])
+    return head + '\n' + body + '\n' + GLOBAL_CSS_TAIL.lstrip('\n')
+
+
 def _fx_sig(rec):
     """Fixture decision signature — same HMAC the service writes."""
     return gate._sig(rec, b'fixture-key')
@@ -1014,7 +1022,7 @@ BASE = {
     'site/package.json': '{"name":"fixture","scripts":{"build":"true"}}',
     'site/astro.config.mjs': 'export default {};\n',
     'site/tailwind.config.js': TAILWIND_CFG,
-    'site/src/styles/global.css': GLOBAL_CSS,
+    'site/src/styles/global.css': _global_css(),
     'site/src/pages/system.astro': SYSTEM_ASTRO,
     'site/src/pages/index.astro': '',
     **{f'site/src/components/{k}.astro': v
@@ -1144,6 +1152,8 @@ MUT = {
  'check_type_system': mut(('REPL','DESIGN-PLAN.md','body: "Inter"','body: "SerifX"'),('APPEND','DESIGN-PLAN.md','\n  extra: {fonts: {c: "Third"}}')),
  'check_system_enums': mut(('REPL','DESIGN-PLAN.md','family: lucide','family: wingdings')),
  'check_tailwind_derivation': mut(('REPL','TOKENS.json','#0055AA','#ABCDEF')),
+ 'check_token_layer': mut(('REPL','site/src/styles/global.css',
+     '@theme inline {','@theme {')),
  'check_wireframe_lock': mut(('REPL','DESIGN-PLAN.md','wf_ref: "cards/index.html#d1:hero"','wf_ref: "cards/index.html#d9:nope"'),('REPL','DESIGN-PLAN.md','name: hero','name: hero-x')),
  'check_section_enums': mut(('REPL','DESIGN-PLAN.md','composition: cards-n','composition: bogus-grid')),
  'check_speech_acts': mut(('REPL','DESIGN-PLAN.md','rhetoric: [promise, proof, how, act]','rhetoric: [proof, how]')),

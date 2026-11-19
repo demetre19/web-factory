@@ -430,6 +430,16 @@
 - ← check_page_family [enforces]
 - ← w3 [enforces_at]
 
+## J.7 (rule)
+- ← rules-J [contains]
+- ← check_prebuild_receipt [enforces]
+- ← w4 [enforces_at]
+
+## J.8 (rule)
+- ← rules-J [contains]
+- ← check_block_trace [enforces]
+- ← w7 [enforces_at]
+
 ## L.1 (rule)
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
 - ← pattern-hospitality-home-hero-stacked-hero [implies_rules]
@@ -1263,6 +1273,26 @@
 - ← w8 [enforces_at]
 - ← card-w8 [loads]
 
+## TK.1 (rule)
+- ← rules-TK [contains]
+- ← check_token_layer [enforces]
+- ← w5 [enforces_at]
+
+## TK.2 (rule)
+- ← rules-TK [contains]
+- ← check_token_layer [enforces]
+- ← w5 [enforces_at]
+
+## TK.3 (rule)
+- ← rules-TK [contains]
+- ← check_token_layer [enforces]
+- ← w6 [enforces_at]
+
+## TK.4 (rule)
+- ← rules-TK [contains]
+- ← check_contrast [enforces]
+- ← w5 [enforces_at]
+
 ## V.0 (rule)
 - → media-words-first [scored_by]
 - ← rules-V [contains]
@@ -1688,167 +1718,167 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → E.1 [loads]
 - → E.4 [loads]
+- → V.6 [loads]
 - → T.8 [loads]
 - → PS.1 [loads]
-- → V.6 [loads]
+- → E.1 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
-- → W.2 [loads]
 - → W.7 [loads]
-- → E.1 [loads]
-- → W.8 [loads]
-- → W.10 [loads]
 - → E.2 [loads]
+- → W.10 [loads]
 - → W.6 [loads]
+- → W.8 [loads]
 - → W.1 [loads]
+- → W.2 [loads]
+- → E.1 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → W.2 [loads]
-- → E.1 [loads]
 - → L.7 [loads]
-- → L.1 [loads]
-- → R.3 [loads]
 - → E.2 [loads]
 - → V.3 [loads]
 - → W.4 [loads]
+- → R.3 [loads]
+- → L.1 [loads]
+- → W.2 [loads]
+- → E.1 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
 - → C.5 [loads]
 - → M.1 [loads]
 - → G.3 [loads]
+- → T.3 [loads]
 - → S.1 [loads]
 - → C.2 [loads]
-- → T.3 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → V.2 [loads]
+- → I.3 [loads]
 - → M.1 [loads]
-- → C.4 [loads]
-- → S.7 [loads]
-- → C.2 [loads]
-- → T.6 [loads]
+- → E.2 [loads]
+- → M.2 [loads]
+- → V.6 [loads]
 - → T.4 [loads]
-- → C.5 [loads]
-- → I.1 [loads]
-- → W.2 [loads]
-- → C.3 [loads]
 - → W.8 [loads]
-- → T.3 [loads]
-- → S.2 [loads]
-- → G.2 [loads]
+- → R.1 [loads]
+- → W.2 [loads]
 - → R.2 [loads]
 - → M.6 [loads]
-- → C.1 [loads]
-- → S.5 [loads]
-- → G.3 [loads]
-- → R.3 [loads]
-- → E.2 [loads]
-- → L.11 [loads]
-- → M.2 [loads]
-- → C.7 [loads]
-- → I.2 [loads]
-- → S.1 [loads]
+- → C.3 [loads]
+- → T.6 [loads]
 - → G.1 [loads]
-- → R.1 [loads]
-- → V.6 [loads]
-- → I.3 [loads]
+- → C.7 [loads]
+- → G.2 [loads]
+- → S.7 [loads]
+- → C.5 [loads]
+- → I.1 [loads]
+- → I.2 [loads]
+- → T.3 [loads]
+- → S.5 [loads]
+- → L.11 [loads]
+- → R.3 [loads]
+- → V.2 [loads]
+- → C.1 [loads]
+- → C.4 [loads]
+- → G.3 [loads]
+- → C.2 [loads]
+- → S.1 [loads]
+- → S.2 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → I.1 [loads]
-- → V.4 [loads]
-- → W.2 [loads]
-- → R.5 [loads]
+- → I.3 [loads]
 - → M.6 [loads]
 - → C.1 [loads]
-- → R.3 [loads]
-- → G.1 [loads]
-- → R.6 [loads]
+- → I.1 [loads]
 - → M.2 [loads]
-- → S.4 [loads]
+- → G.1 [loads]
 - → V.3 [loads]
-- → S.2 [loads]
-- → I.3 [loads]
+- → V.4 [loads]
+- → R.6 [loads]
+- → R.5 [loads]
 - → W.4 [loads]
+- → S.4 [loads]
+- → R.3 [loads]
+- → S.2 [loads]
+- → W.2 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → E.3 [loads]
-- → R.5 [loads]
-- → E.1 [loads]
 - → M.6 [loads]
-- → L.7 [loads]
-- → R.3 [loads]
-- → PS.6 [loads]
-- → E.2 [loads]
-- → R.1 [loads]
-- → R.6 [loads]
 - → W.7 [loads]
-- → V.3 [loads]
-- → PS.1 [loads]
+- → L.7 [loads]
+- → E.2 [loads]
+- → PS.6 [loads]
 - → V.6 [loads]
+- → V.3 [loads]
+- → R.6 [loads]
+- → R.5 [loads]
+- → PS.1 [loads]
+- → R.1 [loads]
+- → R.3 [loads]
+- → E.1 [loads]
+- → E.3 [loads]
 - ← parallel-build [see_also]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → V.4 [loads]
-- → T.0 [loads]
+- → M.8 [loads]
 - → C.6 [loads]
-- → L.9 [loads]
-- → C.4 [loads]
-- → S.7 [loads]
-- → V.8 [loads]
-- → V.5 [loads]
-- → R.7 [loads]
-- → W.6 [loads]
-- → T.11 [loads]
-- → C.3 [loads]
-- → W.5 [loads]
-- → T.5 [loads]
-- → S.6 [loads]
-- → G.4 [loads]
-- → R.4 [loads]
-- → W.3 [loads]
-- → S.4 [loads]
-- → V.1 [loads]
-- → G.2 [loads]
-- → I.7 [loads]
-- → S.8 [loads]
-- → R.5 [loads]
-- → M.6 [loads]
-- → L.6 [loads]
-- → S.5 [loads]
-- → S.3 [loads]
 - → M.4 [loads]
 - → T.10 [loads]
-- → L.4 [loads]
+- → E.2 [loads]
 - → W.10 [loads]
 - → M.2 [loads]
-- → E.2 [loads]
-- → M.8 [loads]
-- → V.7 [loads]
-- → W.9 [loads]
-- → T.9 [loads]
-- → T.1 [loads]
-- → L.5 [loads]
-- → I.6 [loads]
-- → M.5 [loads]
-- → M.3 [loads]
-- → L.3 [loads]
-- → W.1 [loads]
-- → E.3 [loads]
-- → C.7 [loads]
-- → I.4 [loads]
-- → V.0 [loads]
-- → W.7 [loads]
-- → T.7 [loads]
+- → S.6 [loads]
 - → V.6 [loads]
+- → L.5 [loads]
+- → T.1 [loads]
+- → I.7 [loads]
+- → W.1 [loads]
+- → R.4 [loads]
+- → M.6 [loads]
+- → C.3 [loads]
+- → G.4 [loads]
+- → W.6 [loads]
+- → T.11 [loads]
+- → S.3 [loads]
+- → C.7 [loads]
+- → G.2 [loads]
+- → L.4 [loads]
+- → S.7 [loads]
+- → V.7 [loads]
+- → E.3 [loads]
+- → M.3 [loads]
+- → I.4 [loads]
+- → T.9 [loads]
+- → V.5 [loads]
+- → W.9 [loads]
+- → S.5 [loads]
+- → L.6 [loads]
+- → V.0 [loads]
+- → W.3 [loads]
+- → M.5 [loads]
+- → I.6 [loads]
+- → T.7 [loads]
+- → R.7 [loads]
+- → W.7 [loads]
+- → C.4 [loads]
+- → T.5 [loads]
+- → L.9 [loads]
+- → S.8 [loads]
+- → V.8 [loads]
+- → W.5 [loads]
+- → V.1 [loads]
+- → T.0 [loads]
+- → L.3 [loads]
+- → S.4 [loads]
+- → V.4 [loads]
+- → R.5 [loads]
 - ← w8 [has_card]
 
 ## check_accent_surfaces (check)
@@ -1877,6 +1907,7 @@
 
 ## check_block_trace (check)
 - → J.4 [enforces]
+- → J.8 [enforces]
 - ← w7 [gated_by]
 
 ## check_border_widths (check)
@@ -1976,6 +2007,7 @@
 ## check_contrast (check)
 - → C.1 [enforces]
 - → C.7 [enforces]
+- → TK.4 [enforces]
 - ← pattern-hospitality-service-detail-content-editorial [enforced_by]
 - ← pattern-ecommerce-checkout-form-form-panel [enforced_by]
 - ← pattern-ecommerce-product-gallery-media-gallery [enforced_by]
@@ -2304,6 +2336,7 @@
 
 ## check_prebuild_receipt (check)
 - → J.3 [enforces]
+- → J.7 [enforces]
 - ← w4 [gated_by]
 
 ## check_present_order (check)
@@ -2692,6 +2725,13 @@
 
 ## check_tile_page_parity (check)
 - ← w7 [gated_by]
+
+## check_token_layer (check)
+- → TK.1 [enforces]
+- → TK.2 [enforces]
+- → TK.3 [enforces]
+- ← w5 [gated_by]
+- ← w6 [gated_by]
 
 ## check_trend_vocab (check)
 - ← w5 [gated_by]
@@ -3217,6 +3257,7 @@
 - → gene-page-macro-structure [contains]
 - → gene-proof-type [contains]
 - → gene-radius-personality [contains]
+- → gene-seam-shape [contains]
 - → gene-surface-rhythm [contains]
 - → gene-trend [contains]
 - → gene-type-contrast [contains]
@@ -3341,6 +3382,7 @@
 - → rules-A [rules]
 - → rules-STYLE [rules]
 - → rules-J [rules]
+- → rules-TK [rules]
 - → section-build [contains_also]
 - → parallel-build [contains_also]
 - → template-astro [templates]
@@ -3352,6 +3394,7 @@
 - → rules-PS [rules]
 - → rules-G [rules]
 - → rules-C [rules]
+- → rules-TK [rules]
 - → rules-P [rules]
 - → rules-L [rules]
 - → rules-T [rules]
@@ -3410,6 +3453,7 @@
 - → recipe-word-cycler [templates]
 - → recipe-write-lines [templates]
 - → skeleton-brixies [templates]
+- → skeleton-flowbite [templates]
 - → skeleton-hyperui [templates]
 - → skeleton-shadcn [templates]
 - → template-wireframe-cards [templates]
@@ -3453,6 +3497,7 @@
 - ← comp-hero-act-merge [index]
 - ← rules-REF [index]
 - ← rules-B [index]
+- ← rules-TK [index]
 - ← rules-J [index]
 - ← rules-SKL [index]
 - ← rules-STYLE [index]
@@ -4228,6 +4273,35 @@
 - ← design-genome [contains]
 
 ## gene-radius-personality (gene)
+- ← profile-marketplace [uses_genes]
+- ← profile-architecture [uses_genes]
+- ← profile-fashion [uses_genes]
+- ← profile-community [uses_genes]
+- ← profile-ecommerce [uses_genes]
+- ← profile-portfolio [uses_genes]
+- ← profile-technology [uses_genes]
+- ← profile-automotive [uses_genes]
+- ← profile-real-estate [uses_genes]
+- ← profile-healthcare [uses_genes]
+- ← profile-hospitality [uses_genes]
+- ← profile-government [uses_genes]
+- ← profile-agency-portfolio [uses_genes]
+- ← profile-finance [uses_genes]
+- ← profile-homes [uses_genes]
+- ← profile-luxury-goods [uses_genes]
+- ← profile-legal [uses_genes]
+- ← profile-nonprofit [uses_genes]
+- ← profile-recruitment [uses_genes]
+- ← profile-media [uses_genes]
+- ← profile-services [uses_genes]
+- ← profile-jewellery [uses_genes]
+- ← profile-personal-brand [uses_genes]
+- ← profile-education [uses_genes]
+- ← profile-events [uses_genes]
+- ← profile-saas [uses_genes]
+- ← design-genome [contains]
+
+## gene-seam-shape (gene)
 - ← profile-marketplace [uses_genes]
 - ← profile-architecture [uses_genes]
 - ← profile-fashion [uses_genes]
@@ -6722,6 +6796,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-architecture (profile)
@@ -6750,6 +6825,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-automotive (profile)
@@ -6778,6 +6854,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-community (profile)
@@ -6806,6 +6883,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-ecommerce (profile)
@@ -6834,6 +6912,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-education (profile)
@@ -6862,6 +6941,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-events (profile)
@@ -6890,6 +6970,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-fashion (profile)
@@ -6918,6 +6999,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-finance (profile)
@@ -6946,6 +7028,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-government (profile)
@@ -6974,6 +7057,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-healthcare (profile)
@@ -7002,6 +7086,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-homes (profile)
@@ -7030,6 +7115,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-hospitality (profile)
@@ -7058,6 +7144,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-jewellery (profile)
@@ -7086,6 +7173,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-legal (profile)
@@ -7114,6 +7202,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-luxury-goods (profile)
@@ -7142,6 +7231,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-marketplace (profile)
@@ -7170,6 +7260,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-media (profile)
@@ -7198,6 +7289,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-nonprofit (profile)
@@ -7226,6 +7318,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-personal-brand (profile)
@@ -7254,6 +7347,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-portfolio (profile)
@@ -7282,6 +7376,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-real-estate (profile)
@@ -7310,6 +7405,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-recruitment (profile)
@@ -7338,6 +7434,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-saas (profile)
@@ -7366,6 +7463,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-services (profile)
@@ -7394,6 +7492,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## profile-technology (profile)
@@ -7422,6 +7521,7 @@
 - → gene-mood-register [uses_genes]
 - → gene-image-style [uses_genes]
 - → gene-trend [uses_genes]
+- → gene-seam-shape [uses_genes]
 - ← design-genome [profiles]
 
 ## reading-path (rubric)
@@ -7617,6 +7717,7 @@
 - → C.8 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
+- ← rules-TK [see_also]
 - ← rules-VG [see_also]
 - ← rules-DNA [depends_on]
 - ← rules-DM [see_also]
@@ -7647,6 +7748,7 @@
 - → DM.5 [contains]
 - → DM.6 [contains]
 - ← design-index [rules]
+- ← rules-TK [see_also]
 - ← rules-STYLE [see_also]
 - ← design-index [rules]
 
@@ -7735,6 +7837,8 @@
 - → J.4 [contains]
 - → J.5 [contains]
 - → J.6 [contains]
+- → J.7 [contains]
+- → J.8 [contains]
 - ← design-index [rules]
 - ← design-index [rules]
 
@@ -7991,7 +8095,22 @@
 - → T.11 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
+- ← rules-TK [see_also]
 - ← rules-DNA [depends_on]
+- ← design-index [rules]
+
+## rules-TK (rulebook)
+- → design-index [index]
+- → rules-C [see_also]
+- → rules-T [see_also]
+- → rules-DM [see_also]
+- → w5 [used_in]
+- → w6 [used_in]
+- → TK.1 [contains]
+- → TK.2 [contains]
+- → TK.3 [contains]
+- → TK.4 [contains]
+- ← design-index [rules]
 - ← design-index [rules]
 
 ## rules-V (rules)
@@ -8088,6 +8207,7 @@
 
 ## section-catalog (doc)
 - → skeleton-brixies [see_also]
+- → skeleton-flowbite [see_also]
 - → skeleton-hyperui [see_also]
 - → skeleton-shadcn [see_also]
 - → section-catalog#split-media [contains]
@@ -8298,6 +8418,10 @@
 - ← R.7 [scored_by]
 
 ## skeleton-brixies (skeleton-source)
+- ← design-index [templates]
+- ← section-catalog [see_also]
+
+## skeleton-flowbite (skeleton-source)
 - ← design-index [templates]
 - ← section-catalog [see_also]
 
@@ -8817,6 +8941,7 @@
 - → VG.2 [enforces_at]
 - → VG.3 [enforces_at]
 - → VG.4 [enforces_at]
+- → J.7 [enforces_at]
 - → card-w4 [has_card]
 - → checklist-w4 [has_checklist]
 - → check_direction_axes [gated_by]
@@ -9042,6 +9167,9 @@
 - → V.6 [enforces_at]
 - → W.2 [enforces_at]
 - → W.8 [enforces_at]
+- → TK.1 [enforces_at]
+- → TK.2 [enforces_at]
+- → TK.4 [enforces_at]
 - → card-w5 [has_card]
 - → checklist-w5 [has_checklist]
 - → check_system_enums [gated_by]
@@ -9062,6 +9190,7 @@
 - → check_canon_trace [gated_by]
 - → check_trend_vocab [gated_by]
 - → check_style_licence [gated_by]
+- → check_token_layer [gated_by]
 - → check_context_budget [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
@@ -9251,6 +9380,7 @@
 - ← rules-REF [used_in]
 - ← rules-B [used_in]
 - ← rules-G [used_in]
+- ← rules-TK [used_in]
 - ← rules-P [used_in]
 - ← rules-L [used_in]
 - ← rules-V [used_in]
@@ -9278,6 +9408,7 @@
 - → SB.2 [enforces_at]
 - → SB.3 [enforces_at]
 - → SB.5 [enforces_at]
+- → TK.3 [enforces_at]
 - → card-w6 [has_card]
 - → checklist-w6 [has_checklist]
 - → check_components_exist [gated_by]
@@ -9293,6 +9424,7 @@
 - → check_section_gates [gated_by]
 - → check_exemplars [gated_by]
 - → check_astro_build [gated_by]
+- → check_token_layer [gated_by]
 - → check_context_budget [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
@@ -9324,6 +9456,7 @@
 - ← comp-footer-bar [used_in]
 - ← comp-proof-band [used_in]
 - ← comp-hero-act-merge [used_in]
+- ← rules-TK [used_in]
 - ← rules-P [used_in]
 - ← rules-I [used_in]
 - ← rules-SB [used_in]
@@ -9393,6 +9526,7 @@
 - → V.8 [enforces_at]
 - → V.9 [enforces_at]
 - → W.3 [enforces_at]
+- → J.8 [enforces_at]
 - → card-w7 [has_card]
 - → checklist-w7 [has_checklist]
 - → check_assembly [gated_by]
