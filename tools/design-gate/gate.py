@@ -3045,11 +3045,18 @@ def check_breathing(ctx):
             cls = re.search(r'class="([^"]*)"', attrs)
             cls = cls.group(1) if cls else ''
             if sec != 'hero':
-                pm = re.search(r'\bpy-(\d+)', cls)
-                if not pm or int(pm.group(1)) * 4 < 96:
+                pm = re.search(r'(?<![:\w-])py-(\d+)(?![\w-])', cls)
+                ov = [int(x) for x in re.findall(
+                    r'(?:sm|md|lg|xl|2xl):py-(\d+)', cls)]
+                # a breakpoint override that drops below the base tier
+                # smuggles cramped padding past the base-class check
+                tiers = ([int(pm.group(1))] if pm else []) + ov
+                if not tiers or min(tiers) * 4 < 96:
                     f.append(f'L.17 {name} sec {sec}: block padding '
-                             '< section-space-m (~96px) — cramped '
-                             'sections get no air')
+                             '< section-space-m (~96px) at some '
+                             'breakpoint — cramped sections get no '
+                             'air (overrides never go below the '
+                             'tier)')
             inner_gaps = [int(g) for g in re.findall(
                 r'\b(?:gap|space-y|mb|mt)-(\d+)', body)]
             has_head_body = re.search(r'<h[12]\b', body) and \
@@ -3058,10 +3065,16 @@ def check_breathing(ctx):
                     max(inner_gaps) * 4 < 32:
                 f.append(f'L.17 {name} sec {sec}: header→body gap '
                          '< space-l (~32px) — the group reads jammed')
-            if 'card-grid' in cls or re.search(r'grid\b', cls):
+            if 'card-grid' in cls or re.search(r'\bgrid\b', cls):
                 gm = re.search(r'\bgap-(\d+)', cls) or re.search(
                     r'\bgap-(\d+)', body)
-                if gm and int(gm.group(1)) * 4 < 24:
+                has_gap = bool(gm) or 'card-grid' in cls or \
+                    bool(re.search(
+                        r'\b(?:gap|space-[xy])-[\w.]+', cls + ' ' + body))
+                if not has_gap:
+                    f.append(f'L.17 {name} sec {sec}: a grid without '
+                             'a gap — children abut with zero air')
+                elif gm and int(gm.group(1)) * 4 < 24:
                     f.append(f'L.17 {name} sec {sec}: grid gap '
                              '< space-m (~24px)')
             spec = specs.get(re.search(

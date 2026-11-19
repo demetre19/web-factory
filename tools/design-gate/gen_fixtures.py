@@ -1182,8 +1182,9 @@ MUT = {
      ('REPL','DESIGN-PLAN.md','intent: cta,','intent: cost, group: g1,'),
      ('REPL','site/dist/home/index.html','data-intent="definition"',
       'data-x="definition"')),
- 'check_breathing': mut(('REPL','site/dist/home/index.html',
-     'class="card-grid py-24"','class="card-grid py-4"')),
+ 'check_breathing': mut(
+     ('REPL','site/dist/home/index.html',
+      'class="card-grid py-24"','class="card-grid py-24 md:py-2"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
      'preview/variants.html')),
