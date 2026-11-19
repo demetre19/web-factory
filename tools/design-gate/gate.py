@@ -1013,6 +1013,93 @@ def check_measurable(ctx):
                 f.append(f'W.3 {name}: title case heading "{h[:40]}" — '
                          'sentence case only')
                 break
+        # T.7 — hero subhead ≤60% of display size (class-based check:
+        # the subhead never takes a text-fluid rank within 1 step of
+        # the display's rank)
+        for m in re.finditer(
+                r'<section[^>]*data-intent="hero"[^>]*>(.*?)</section>',
+                t, re.S):
+            body = m.group(1)
+            hm = re.search(r'<h1[^>]*text-fluid-(\d+)', body)
+            if hm:
+                top = int(hm.group(1))
+                sm = re.findall(r'<p[^>]*text-fluid-(\d+)', body)
+                if sm and min(int(x) for x in sm) <= max(0, top - 1):
+                    f.append(f'T.7 {name}: hero subhead at '
+                             f'text-fluid-{min(sm)} — within one rank '
+                             'of display; the subhead reads 50–60% of '
+                             'the H1')
+        # V.4 — a text block sitting on media needs a scrim
+        for m in re.finditer(
+                r'<section[^>]*data-comp="(?:full-bleed|split-media)"'
+                r'[^>]*>(.*?)</section>', t, re.S):
+            body = m.group(1)
+            if re.search(r'<img\b', body) and \
+                    re.search(r'<h[12][^>]*style="[^"]*position:\s*'
+                              r'absolute', body) and \
+                    'scrim' not in body and 'dim' not in body and \
+                    'overlay' not in body and \
+                    'mix-blend' not in body:
+                f.append(f'V.4 {name}: text-on-image without a scrim '
+                         '— dim/scrim overlay required for contrast '
+                         'floors')
+        # V.8 — raster imagery renders through <picture> (except logos/
+        # icons/avatars) so ratios + tiers are served
+        for m in re.finditer(
+                r'<section[^>]*data-comp="([^"]+)"[^>]*>(.*?)</section>',
+                t, re.S):
+            comp, body = m.group(1), m.group(2)
+            if comp in ('nav-bar', 'footer-bar', 'logo-wall',
+                        'quote-grid'):
+                continue
+            if '<img' in body and '<picture' not in body and \
+                    'srcset' not in body:
+                f.append(f'V.8 {name} {comp}: <img> without '
+                         '<picture>/srcset — media serves ratio tiers '
+                         '(V.3 ratios + responsive sizes)')
+        # R.5 — five elements at 360x640: the hero offers ≤5 distinct
+        # interactive/attention elements before the first scroll
+        for m in re.finditer(
+                r'<section[^>]*data-intent="hero"[^>]*>(.*?)</section>',
+                t, re.S):
+            n_el = len(re.findall(
+                r'<(?:a|button|input|select|textarea|h1|img|video)\b',
+                m.group(1)))
+            if n_el > 5:
+                f.append(f'R.5 {name}: hero shows {n_el} attention/'
+                         'interactive elements at fold — five max at '
+                         '360x640')
+        # L.3 — content never jams the viewport edge: a full-bleed
+        # section with text but no inset class is a defect
+        for m in re.finditer(
+                r'<section[^>]*data-comp="full-bleed"[^>]*'
+                r'class="([^"]*)"[^>]*>(.*?)</section>', t, re.S):
+            cls, body = m.group(1), m.group(2)
+            if re.search(r'<(?:h[12]|p)\b', body) and not re.search(
+                    r'p[xytl]?-|px-|padding|inset|container|content-',
+                    cls + body[:200]):
+                f.append(f'L.3 {name}: full-bleed text without edge '
+                         'insets — content never jams the viewport '
+                         'edge')
+    # S.3/S.4 — radius: components take one radius-token column; a
+    # nested card radius < its parent by the padding step, never larger
+    for p_, t in srcs:
+        name = os.path.basename(p_)
+        for m in re.finditer(
+                r'\.(\w*card\w*)[^,{]*\{[^}]*border-radius:\s*'
+                r'(\d+)(px|rem)[^}]*\}', t):
+            for m2 in re.finditer(
+                    r'\.(?:\w*card\w*)\s+\.(\w*card\w*)[^,{]*\{'
+                    r'[^}]*border-radius:\s*(\d+)(px|rem)', t):
+                p_r = float(m.group(2)) * (16 if m.group(3) == 'rem'
+                                           else 1)
+                c_r = float(m2.group(2)) * (16 if m2.group(3) == 'rem'
+                                            else 1)
+                if c_r >= p_r and p_r > 0:
+                    f.append(f'S.4 {name}: nested .{m2.group(1)} '
+                             f'radius {c_r}px >= parent {p_r}px — a '
+                             'child radius is parent minus the '
+                             'padding step')
     return f
 
 def check_speed_budget(ctx):
