@@ -2815,12 +2815,40 @@ def check_round_gated_look(ctx):
 
 def check_fine_round(ctx):
     """P.18 — the knob-nudge fine round comes AFTER the look round:
-    preview/fine.html exists and passes gate.py round (round 3)."""
+    preview/fine.html exists and passes gate.py round (round 3), and it
+    is not a verbatim re-serve of the look round — the fine round nudges
+    knobs on the LOOK winner, so rendered structure must evolve."""
     fp = ctx.find('preview/fine.html')
     if not fp:
         return ['P.18 preview/fine.html missing — the fine knob-nudge '
                 'round is produced after the look round, never skipped']
-    return [f'P.18 {x}' for x in check_round(fp, 3)]
+    f = [f'P.18 {x}' for x in check_round(fp, 3)]
+    lp = ctx.find('preview/variants.html')
+    if lp:
+        ft = open(fp, encoding='utf-8', errors='replace').read()
+        lt = open(lp, encoding='utf-8', errors='replace').read()
+        f_scoped = dict(re.findall(
+            r'\[(?:data-(?:variant|design)-scope)="([^"]+)"\]'
+            r'\{([^}]*)\}', ft))
+        l_scoped = dict(re.findall(
+            r'\[(?:data-(?:variant|design)-scope)="([^"]+)"\]'
+            r'\{([^}]*)\}', lt))
+        f_blocks = _design_blocks(ft)
+        l_blocks = _design_blocks(lt)
+        shared = [d for d in f_blocks if d in l_blocks]
+        if shared and len(shared) == len(f_blocks):
+            verbatim = all(
+                (f_scoped.get(d, '').strip() ==
+                 l_scoped.get(d, '').strip()) if
+                (f_scoped.get(d) or l_scoped.get(d)) else
+                _render_sig(f_blocks[d]) == _render_sig(l_blocks[d])
+                for d in shared)
+            if verbatim:
+                f.append('P.18 fine round re-serves the look round '
+                         'verbatim — a knob-nudge round must change '
+                         'at least one rendered knob vs the look '
+                         'round')
+    return f
 
 
 def check_acss_conventions(ctx):
@@ -5153,7 +5181,8 @@ def check_variants(ctx):
                    if ':' in p)
         e = (computed.get(vid) or ({}, []))[0]
         for k, v in (e.get('deltas') or {}).items():
-            tok = str((knobs.get(k) or {}).get('token') or k).replace('.', '-')
+            tok = str((knobs.get(k) or {}).get('token') or k).replace(
+                '.', '-').replace('_', '-')
             if isinstance(v, dict):
                 for tier, x in v.items():
                     if got.get(f'--{tok}-{tier}') != str(x):
@@ -5258,7 +5287,8 @@ def _knob_vars(kn, base, knobs):
     out = {}
     for k in sorted((kn or {})):
         spec = knobs.get(k) or {}
-        tok = str(spec.get('token') or k).replace('.', '-')
+        tok = str(spec.get('token') or k).replace('.', '-').replace(
+            '_', '-')
         v = kn[k]
         if isinstance(v, dict):
             for tier, x in sorted(v.items()):
@@ -5395,7 +5425,9 @@ def assemble_variants(ctx, page_pane=True):
     html,body{{margin:0;overflow-x:hidden}}
     .variant-stage{{container-type:inline-size;width:100%}}
     .pg{{width:100%;max-width:100%;overflow-x:hidden;
-        font-size:var(--t-base)}}
+        font-size:var(--t-base);
+        --_r:var(--type-ratio,1.25);
+        --_t:var(--color-neutral-tint,0)}}
     .pg h1{{font-size:clamp(1.9rem,4.5cqi,3.4rem);
            line-height:1.05;font-weight:var(--type-display-weight,700);
            letter-spacing:var(--type-tracking-display,-0.02em)}}
@@ -5404,16 +5436,21 @@ def assemble_variants(ctx, page_pane=True):
     .mock-sec{{padding:clamp(2rem,7cqi,var(--space-section-py-regular,6rem))
                 clamp(1.25rem,4cqi,var(--grid-gutter-px,2rem));
               max-width:min(100%,76rem);margin-inline:auto}}
-    .mock-inner{{display:flex;flex-direction:column;gap:1rem}}
+    .mock-inner{{display:flex;flex-direction:column;
+                gap:var(--space-density-step,1rem)}}
     .mock-media{{border-radius:var(--radius-personality,8px);
                 aspect-ratio:4/3;max-width:100%;
-                background:var(--color-surface_elevated,#e7e7ea)}}
+                background:var(--color-surface_elevated,#e7e7ea);
+                box-shadow:0 calc(var(--elevation-level,1)*2px)
+                    calc(var(--elevation-level,1)*8px) rgb(0 0 0/12%);
+                filter:var(--image-treatment,none)}}
     .mock-nav{{display:flex;justify-content:space-between;align-items:center;
               gap:1rem;flex-wrap:wrap}}
     .mock-cta{{display:inline-block;padding:.6rem 1.1rem;min-height:44px;
               border-radius:var(--radius-personality,8px);
               background:var(--color-accent,#0055aa);
-              color:var(--color-accent_foreground,#fff)}}
+              color:var(--color-accent_foreground,#fff);
+              transition:all var(--motion-level,.15s)}}
     [data-vp="mobile"]{{width:375px}}
     @media (max-width: 768px) {{
       .mock-cta,.cta,.btn,.button{{width:100%;min-height:48px;
@@ -6421,6 +6458,27 @@ def _design_blocks(txt):
     return blocks
 
 
+def _render_sig(block, scoped_css=''):
+    """A rendered-structure signature: the section composition
+    sequence + geometry-bearing attributes + scoped layout CSS. Knob
+    names and scores are deliberately excluded."""
+    secs = re.findall(
+        r'<(?:section|nav)[^>]*data-comp="([^"]+)"([^>]*)>', block)
+    comps = tuple(c for c, _ in secs)
+    geo_attrs = tuple(
+        tuple(sorted(re.findall(
+            r'data-(?:ratio|density|surface|disclosure|stack|align|'
+            r'collapse)="([^"]+)"', a)))
+        for _, a in secs)
+    geo = tuple(sorted(set(re.findall(
+        r'(?:aspect-ratio|display|flex-direction|grid-template(?:-\w+)?'
+        r'|columns?|min-height|order|place-items|text-align)\s*:\s*'
+        r'([^;}]+)', block + scoped_css))))
+    media = tuple(sorted(set(re.findall(
+        r'<(img|video|picture|figure|svg|iframe|canvas)\b', block))))
+    return (comps, geo_attrs, geo, media)
+
+
 def check_round(path, round_no, stub=None):
     """Gate one rendered picker HTML file.
 
@@ -6509,9 +6567,16 @@ def check_round(path, round_no, stub=None):
             ka = dict(knob_sets.get(a) or [])
             kb = dict(knob_sets.get(b) or [])
             diff = {k for k in set(ka) | set(kb) if ka.get(k) != kb.get(k)}
-            if len(diff) < 3:
+            consumed = {k for k in diff
+                        if re.search(r'var\(--' + re.escape(k) +
+                                     r'\b', txt)}
+            dead = diff - consumed
+            if len(consumed) < 3:
                 f.append(f'ROUND{round_no} designs {a}/{b} differ in '
-                         f'{len(diff)} knob(s) — ≥3 required pairwise')
+                         f'{len(consumed)} consumed knob(s) '
+                         f'({len(dead)} declared but unreferenced '
+                         'vars) — ≥3 rendered differences required; '
+                         'dummy CSS vars do not count')
     # cohesion within each design: one type scale, one radius
     # personality, one colour role map, one icon family, one imagery
     # treatment

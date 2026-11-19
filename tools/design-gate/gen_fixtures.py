@@ -1017,6 +1017,8 @@ def mut(*ops):
                 files[op[1]] = op[2]
             elif kind == 'REPL':
                 files[op[1]] = files[op[1]].replace(op[2], op[3])
+            elif kind == 'COPY':
+                files[op[1]] = files[op[2]]
         return files
     return f
 
@@ -1173,12 +1175,16 @@ MUT = {
  'check_breathing': mut(('REPL','site/dist/home/index.html',
      'class="card-grid py-24"','class="card-grid py-4"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
- 'check_fine_round': mut(('DEL','preview/fine.html')),
+ 'check_fine_round': mut(('COPY','preview/fine.html',
+     'preview/variants.html')),
  'check_round_gated': mut(('REPL','preview/layouts.html',
      'data-sec="hero" data-comp="split-media"',
      'data-sec="hero" data-comp="stacked-hero"')),
  'check_round_gated_look': mut(('REPL','preview/variants.html',
-     'data-refs=','data-xrefs=')),
+     'var(--type-ratio',
+     'var(--bogus-ratio'),('REPL','preview/variants.html',
+     'var(--type-tracking-display',
+     'var(--bogus-tracking')),
  'check_acss_conventions': mut(('APPEND','site/src/styles/global.css',
      '\n.x { color: rgba(0,0,0,.5); }')),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',
@@ -1309,6 +1315,11 @@ def main():
         fh.write(ltxt)
     ftxt = vtxt.replace('variants-page', 'fine-page').replace(
         'data-variant=', 'data-design=')
+    # the fine round is a knob-nudge on the look winner — nudge real
+    # consumed knobs so it is not a verbatim re-serve
+    ftxt = ftxt.replace('--radius-personality:p3',
+                        '--radius-personality:p4').replace(
+        '--type-base_px:16', '--type-base-px:17')
     ftxt = ftxt.replace('<!-- assembled:', '<!-- fine round (knob '
                         'nudges) — assembled:')
     with open(os.path.join(base_dir, 'preview', 'fine.html'),
