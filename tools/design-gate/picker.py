@@ -255,9 +255,9 @@ e.stopPropagation()})}
 var btn=c.querySelector(".pk-open");
 if(btn){btn.addEventListener("click",function(){
 cur=cards.indexOf(c);varIdx=0;open()})}
-c.querySelectorAll(".pk-sib").forEach(function(s){
+c.querySelectorAll(".pk-sib").forEach(function(s,si){
 s.addEventListener("click",function(){
-cur=cards.indexOf(c);open()})});
+cur=cards.indexOf(c);varIdx=si+1;open()})});
 c.addEventListener("click",function(e){
 if(e.target.closest("details,.pk-sel,.pk-open,.pk-sib"))return;
 cur=cards.indexOf(c);varIdx=0;open()})});

@@ -99,14 +99,14 @@ def inject_copy(markup, dna):
 
     def _p(m):
         hit[1] = True
-        return m.group(0).replace(m.group(2), _html.escape(lead))
+        return m.group(0).replace(m.group(1), _html.escape(lead))
     markup = _P_RX.sub(_p, markup, count=1)
 
     def _c(m):
-        if _TAG.search(m.group(2)):
+        if _TAG.search(m.group(1)):
             return m.group(0)      # icon-only button — leave it
         hit[2] = True
-        return m.group(0).replace(m.group(2), _html.escape(cta))
+        return m.group(0).replace(m.group(1), _html.escape(cta))
     markup = _CTA_RX.sub(_c, markup, count=1)
 
     if not all(hit):
