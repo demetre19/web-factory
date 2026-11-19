@@ -356,6 +356,124 @@ def text_vector(text):
 
 
 # -------------------------------------------------------------- retrieve
+
+# ------------------------------------------------------ section bank
+# The REAL bank: 10k classified section crops — each a real site
+# section with a topology_id, style_tags, vibe. Retrieval returns a
+# structure variant (topology_id) + the crop as visual evidence;
+# section_emit binds vars onto that topology. First-class primitive.
+SECTION_VECTORS = os.path.join(DATA, 'section-bank')
+
+
+class SectionBank:
+    """docs/.../data/section-bank — crops + 512-d CLIP vectors.
+    Rows carry section_type, style_tags.style, topo.topology_id,
+    vibe.*. Retrieval = filter by section_type → CLIP rank → the
+    winning topology_id drives section_emit structure."""
+
+    def __init__(self):
+        meta_p = os.path.join(SECTION_VECTORS, 'index.json')
+        self.meta = json.load(open(meta_p)) \
+            if os.path.exists(meta_p) else {'rows': {}, 'order': []}
+        self.rows = self.meta['rows']
+        self.order = self.meta['order']
+        self._mat = None
+
+    def matrix(self):
+        if self._mat is None:
+            import struct
+            raw = open(os.path.join(SECTION_VECTORS,
+                                    'vectors.bin'), 'rb').read()
+            n = len(raw) // 2
+            half = struct.unpack(f'<{n}e', raw)
+            dim = self.meta['dim']
+            try:
+                import numpy as np
+                self._mat = np.array(half, dtype=np.float32) \
+                    .reshape(-1, dim)
+                self._np = True
+            except Exception:
+                self._mat = [half[i:i + dim] for i in
+                             range(0, n, dim)]
+                self._np = False
+        return self._mat
+
+    def filter_rows(self, section_type=None, styles=None):
+        """metadata filter — section_type + style tags only."""
+        out = []
+        want_styles = set(styles or ())
+        for k in self.order:
+            r = self.rows[k]
+            if section_type and r.get('section_type') != section_type:
+                continue
+            if want_styles:
+                st = (r.get('style_tags') or {}).get('style') or []
+                if not (set(st) & want_styles):
+                    continue
+            out.append(r)
+        return out
+
+    def rank(self, vec, rows, k=8):
+        M = self.matrix()
+        want = {r['render_path'] for r in rows}
+        ids = [i for i, kk in enumerate(self.order)
+               if kk in want]
+        if not ids:
+            return []
+        if getattr(self, '_np', False):
+            scores = M[ids] @ vec
+            order = __import__('numpy').argsort(-scores)
+        else:
+            v = [float(x) for x in vec]
+            scores = [sum(a * b for a, b in
+                          zip(M[i], v)) for i in ids]
+            order = sorted(range(len(ids)),
+                           key=lambda j: -scores[j])
+        return [(float(scores[i]),
+                 self.rows[self.order[ids[i]]])
+                for i in order[:k]]
+
+
+def retrieve_section(section_type, dna=None, styles=None, k=8,
+                     bank=None):
+    """section_type + optional DNA/style filter → ranked section
+    rows + the winning topology_id. The real retrieve-first path:
+    pick the structural variant the bank endorses for this style,
+    then emit it with the DNA's vars."""
+    t0 = time.time()
+    bank = bank or SectionBank()
+    rows = bank.filter_rows(section_type, styles)
+    if not rows:
+        return {'mode': 'empty', 'section_type': section_type,
+                'ranked': [], 'topology_id': None,
+                'latency_ms': round((time.time() - t0) * 1000, 1)}
+    # rank by the query's style words when a DNA is given
+    vec = None
+    if dna:
+        g = dna.get('genotype', {})
+        words = ' '.join(str(_WORD.get(kk, {}).get(g.get(kk), ''))
+                         for kk in RENDER_GENES).strip()
+        qt = f'a {words} {section_type} section' if words \
+            else section_type
+        vec = text_vector(qt)
+        try:
+            import numpy as np
+            vec = np.array(vec, dtype=np.float32)
+        except Exception:
+            pass
+    ranked = bank.rank(vec, rows, k=k) if vec is not None \
+        else [(0.0, r) for r in rows[:k]]
+    top = ranked[0][1] if ranked else None
+    return {'mode': 'clip' if vec is not None else 'meta',
+            'section_type': section_type,
+            'topology_id': (top.get('topo') or {}).get('topology_id')
+            if top else None,
+            'ranked': [(s, r.get('render_path'),
+                        (r.get('topo') or {}).get('topology_id'))
+                       for s, r in ranked],
+            'ranked_rows': ranked,
+            'latency_ms': round((time.time() - t0) * 1000, 1)}
+
 def retrieve(dna, bank=None, k=8, cached=True):
     """dna record → {'mode', 'key', 'ranked': [(score,row)],
     'latency_ms', 'query'}. Caller: adapt ranked[0] → judge →
