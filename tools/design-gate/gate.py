@@ -2580,6 +2580,14 @@ def check_intent_sections(ctx):
         groups = {}
         h2_units, units = 0, set()
         for slug, r in ctx.rows():
+            acts = r.get('speech_act') or []
+            if isinstance(acts, str):
+                acts = [acts]
+            # nav/footer/chrome rows are not idea-sections: they never
+            # count against the one-idea-one-section heading budget
+            if 'chrome' in acts or str(r.get('composition') or '') in \
+                    ('nav-bar', 'footer-bar'):
+                continue
             intent = str(r.get('intent') or '')
             if not intent:
                 f.append(f'PS.11 {slug}:{r.get("name")} has no intent '
@@ -2595,6 +2603,10 @@ def check_intent_sections(ctx):
                              f'{gid} mixes intents '
                              f'{groups[gid][0]}/{intent} — different '
                              'intents can never share a section')
+                if not r.get('group_reason'):
+                    f.append(f'PS.11 {slug}:{r.get("name")} group {gid} '
+                             'without a declared reason — merging is '
+                             'same-intent + declared only')
                 groups.setdefault(gid, (intent, r.get('name')))
                 units.add('g:' + str(gid))
             else:

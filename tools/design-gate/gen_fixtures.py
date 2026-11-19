@@ -1155,7 +1155,12 @@ MUT = {
      '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }')),
  'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
      'class="card-grid py-24"','class="sec-band"')),
- 'check_intent_sections': mut(('REPL','DESIGN-PLAN.md',
+ 'check_intent_sections': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<section data-sec="how" data-comp="sequence" '
+      'data-intent="process"><h2 data-intent="process">How it works'
+      '</h2><h2 data-intent="cost">What it costs</h2></section>'),
+     ('REPL','DESIGN-PLAN.md',
      'intent: definition,','intent: process, group: g1,'),
      ('REPL','DESIGN-PLAN.md','intent: cta,','intent: cost, group: g1,'),
      ('REPL','site/dist/home/index.html','data-intent="definition"',
