@@ -9412,6 +9412,200 @@ def check_bounded_review(ctx):
         f.append('P.21 per_design must be [{design, pass, …}] rows')
     return f
 
+J_QUALITY_DIMS = ('hero_clarity', 'layout_craft', 'media_fit',
+                  'mobile', 'distinctness')
+
+
+def _review_quality(rv):
+    q = rv.get('quality')
+    return q if isinstance(q, dict) else {}
+
+
+def check_quality_floor(ctx):
+    """J.1 — every option in every picker carries a judged quality
+    row: each dimension ≥50, composite ≥60, judged on the configured
+    cheap reviewer_model, at most one retry. Below-floor options get
+    fix instructions and one retry — never a second."""
+    rj = ctx.read('REVIEW.json')
+    if not rj:
+        return []          # check_review_completeness owns missing
+    try:
+        rv = json.loads(rj)
+    except Exception:
+        return []
+    f, q = [], _review_quality(rv)
+    cfg = str(rv.get('reviewer_model') or '')
+    retries = rv.get('quality_retry') or {}
+    for name in ('layouts.html', 'variants.html', 'fine.html'):
+        fp = ctx.find(os.path.join('preview', name))
+        if not fp or not os.path.isfile(fp):
+            continue
+        txt = open(fp, encoding='utf-8', errors='replace').read()
+        for oid in _design_blocks(txt):
+            row = q.get(oid)
+            if not isinstance(row, dict):
+                f.append(f'J.1 option {oid} ({name}) has no quality '
+                         'row — nothing reaches the picker unjudged')
+                continue
+            for d in J_QUALITY_DIMS:
+                v = row.get(d)
+                if not isinstance(v, (int, float)) or v < 50:
+                    f.append(f'J.1 {oid}: {d} {v} below floor 50 — '
+                             'fix instructions + one retry, not '
+                             'presentation')
+            comp = row.get('composite')
+            if not isinstance(comp, (int, float)) or comp < 60:
+                f.append(f'J.1 {oid}: composite {comp} below 60 — '
+                         'below-floor options do not present')
+            jb = str(row.get('judged_by') or '')
+            if jb != cfg:
+                f.append(f'J.1 {oid}: judged_by {jb!r} != configured '
+                         f'reviewer_model {cfg!r} — judgment runs on '
+                         'the sanctioned cheap model only')
+            if int((retries.get(oid) or 0)) > 1:
+                f.append(f'J.1 {oid}: quality_retry '
+                         f'{retries[oid]} > 1 — a below-floor '
+                         'option is dropped/replaced after one fix')
+    return f
+
+
+def check_present_order(ctx):
+    """J.2 PRESENT-ORDER — RULES → BUILD → JUDGE → RECHECK → present.
+    Every picker option needs BOTH receipts: the compliance receipt
+    (rules pass) and the quality row (judgment pass), and the
+    artifact version each gate passed must be identical — any
+    post-judgment change re-traverses the rules gate before it may
+    present."""
+    rj = ctx.read('REVIEW.json')
+    if not rj:
+        return []          # nothing to verify against yet
+    try:
+        rv = json.loads(rj)
+    except Exception:
+        return []
+    f, q = [], _review_quality(rv)
+    rh = rv.get('rules_pass_hash')
+    jh = rv.get('judgment_pass_hash')
+    if rh != jh:
+        f.append('J.2 rules_pass_hash != judgment_pass_hash — the '
+                 'artifact judgment passed is not the artifact rules '
+                 'last cleared; re-traverse the rules gate (RECHECK)')
+    for name in ('layouts.html', 'variants.html', 'fine.html'):
+        fp = ctx.find(os.path.join('preview', name))
+        if not fp or not os.path.isfile(fp):
+            continue
+        txt = open(fp, encoding='utf-8', errors='replace').read()
+        for oid in _design_blocks(txt):
+            if oid not in q:
+                f.append(f'J.2 option {oid} ({name}) presented '
+                         'without a quality receipt — RULES and '
+                         'JUDGMENT both precede presentation')
+    return f
+
+
+def check_prebuild_receipt(ctx):
+    """J.3 PRE-BUILD VALIDATION — an option may not be built without
+    a pre-build receipt: recipe resolves in the topology bank,
+    business-type fit recorded, refs + tokens resolve, and the plan
+    vector is distinct from siblings before render."""
+    pb = ctx.read('PREBUILD.json')
+    if not pb:
+        # pickers exist → build happened → receipt is mandatory
+        for name in ('layouts.html', 'variants.html', 'fine.html'):
+            if ctx.find(os.path.join('preview', name)):
+                return ['J.3 pickers exist but no PREBUILD.json — '
+                        'every option traverses pre-build validation '
+                        'before build']
+        return []
+    try:
+        rows = json.loads(pb)
+    except Exception as e:
+        return [f'J.3 PREBUILD.json unparseable: {e}']
+    opts = rows.get('options') if isinstance(rows, dict) else rows
+    if not isinstance(opts, dict):
+        return ['J.3 PREBUILD.json must be {options: {<id>: row}}']
+    bank = _skl_harvest_ids()
+    f = []
+    for oid, row in opts.items():
+        if not isinstance(row, dict):
+            f.append(f'J.3 {oid}: pre-build row is not an object')
+            continue
+        rid = str(row.get('recipe_id') or '')
+        if row.get('recipe_exception'):
+            if not str(row.get('justification') or '').strip():
+                f.append(f'J.3 {oid}: recipe exception without '
+                         'justification')
+        elif rid not in bank:
+            f.append(f'J.3 {oid}: recipe_id {rid!r} resolves to no '
+                     'topology-bank entry — the section recipe must '
+                     'exist before build')
+        for k in ('plan_fit', 'refs_resolve', 'tokens_resolve',
+                  'plan_vector_dist'):
+            if k not in row:
+                f.append(f'J.3 {oid}: pre-build row missing {k}')
+        d = row.get('plan_vector_dist')
+        if isinstance(d, (int, float)) and d < 0.3:
+            f.append(f'J.3 {oid}: plan_vector_dist {d} < 0.3 — '
+                     'sibling options must be distinct on the plan, '
+                     'not discovered different after render')
+    return f
+
+
+def check_block_trace(ctx):
+    """J.4 BLOCK-TRACE — every rendered block carries
+    {block_id, dna_knobs_used, plan_slot, recipe_id,
+    vector_deviation} on the review receipt AND data-recipe on the
+    rendered element; untraced or untraced-to-the-bank = ad-libbed."""
+    fp = None
+    for cand in ('site/dist/home/index.html',
+                 'site/src/pages/home.astro'):
+        p = ctx.find(cand)
+        if p:
+            fp = p
+            break
+    if not fp:
+        return []
+    txt = open(fp, encoding='utf-8', errors='replace').read()
+    tags = re.findall(r'<(?:section|nav)[^>]*data-sec="([^"]+)"'
+                      r'([^>]*)>', txt)
+    if not tags:
+        return []
+    f = []
+    bank = _skl_harvest_ids()
+    try:
+        rv = json.loads(ctx.read('REVIEW.json') or '{}')
+    except Exception:
+        rv = {}
+    blocks = {b.get('block_id'): b for b in (rv.get('blocks') or [])
+              if isinstance(b, dict)}
+    for sec, attrs in tags:
+        rm = re.search(r'data-recipe="([^"]+)"', attrs)
+        rid = rm.group(1) if rm else ''
+        if not rid:
+            f.append(f'J.4 block {sec}: no data-recipe — an '
+                     'untraced block is ad-libbed, sourced or not')
+            continue
+        if rid not in bank:
+            f.append(f'J.4 block {sec}: recipe {rid!r} resolves to '
+                     'no topology-bank entry')
+        bid = f'home:{sec}'
+        row = blocks.get(bid)
+        if not row:
+            f.append(f'J.4 block {sec}: no receipt row {bid} — the '
+                     'render carries no trace chain')
+            continue
+        for k in ('dna_knobs_used', 'plan_slot', 'recipe_id',
+                  'vector_deviation'):
+            if row.get(k) in (None, '', []):
+                f.append(f'J.4 block {sec}: receipt {bid} missing '
+                         f'{k}')
+        if row.get('recipe_id') != rid:
+            f.append(f'J.4 block {sec}: receipt recipe '
+                     f'{row.get("recipe_id")!r} != rendered {rid!r} '
+                     '— the receipt must name the recipe that '
+                     'actually shipped')
+    return f
+
 
 
 
@@ -10240,6 +10434,16 @@ WAVE_CHECKS['w8'].append(check_bounded_review)
 # (candidates w1, layouts w3, variants/fine w4).
 for _wv in ('w1', 'w3', 'w4'):
     WAVE_CHECKS[_wv].append(check_picker_ux)
+
+# J.* — the judgment chain: pre-build receipt (w4 pickers onward),
+# quality floor + present-order wherever pickers/review exist,
+# block trace on the assembled page.
+WAVE_CHECKS['w4'].append(check_prebuild_receipt)
+WAVE_CHECKS['w7'].append(check_quality_floor)
+WAVE_CHECKS['w7'].append(check_present_order)
+WAVE_CHECKS['w7'].append(check_block_trace)
+WAVE_CHECKS['w8'].append(check_quality_floor)
+WAVE_CHECKS['w8'].append(check_present_order)
 
 WAVE_INPUTS = {
     'w0': ['site/package.json', 'site/astro.config.mjs',

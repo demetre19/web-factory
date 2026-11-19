@@ -9,7 +9,7 @@ Layout: fixtures/_base/ is the shared good pipeline. Each fail/ dir is
 _base with one seeded violation; each pass/ dir symlinks to _base
 unless the check needs extra files (OVERRIDES).
 """
-import hashlib, hmac, json, os, shutil, subprocess, sys, tempfile
+import hashlib, hmac, json, os, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
@@ -302,28 +302,28 @@ PAGE_HTML = '''<!doctype html><html><head>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 <button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
-<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"
+<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" data-recipe="brixies/bottom-navigation-bar/bot-nav-1"
      class="flex items-center gap-4 py-4">
   <a class="logo h-6" href="/">Fixture Co</a>
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
 </nav>
 <main id="main">
-<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" class="sec-band py-16">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" data-recipe="brixies/banner-section/banner-1" class="sec-band py-16">
   <h1 class="text-fluid-0">Testing Site</h1>
   <p>Testing is the thing.</p>
   <a class="btn-primary" href="/book">Book now</a>
   <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" class="card-grid py-24">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
 </section>
-<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" class="sec-band inverse py-24">
+<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" data-recipe="brixies/cta-sections/cta-1" class="sec-band inverse py-24">
   <h2 class="text-fluid-0">Book now</h2>
   <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
 </section>
-<section data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open" class="sec-band">
+<section data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open" data-recipe="hyperui/marketing/footers/1" class="sec-band">
 </section>
 </main>
 <footer>
@@ -988,6 +988,15 @@ BASE = {
     'TOKENS.json': TOKENS,
     'COMPONENTS.md': COMPONENTS_MD,
     'MOBBIN-REFS.md': MOBBIN,
+    'PREBUILD.json': json.dumps({'options': {**{
+        f'd{i}': {'recipe_id': f'brixies/banner-section/banner-{i}',
+                  'plan_fit': True, 'refs_resolve': True,
+                  'tokens_resolve': True, 'plan_vector_dist': 0.5}
+        for i in range(1, 6)}, **{
+        f'v{i}': {'recipe_id': f'hyperui/marketing/feature-grids/{i}',
+                  'plan_fit': True, 'refs_resolve': True,
+                  'tokens_resolve': True, 'plan_vector_dist': 0.4}
+        for i in range(1, 4)}}}, indent=1),
     'REVIEW.json': REVIEW,
     'NOVELTY.json': '{"distance": 0.21, "bound": 0.35}',
     'CHECKLIST/w2.md': CHECKLIST_W2,
@@ -1239,6 +1248,18 @@ MUT = {
      ('REPL','preview/layouts.html',
       '<details class="variant-data"><summary>Design ',
       '<h2 class="variant-label">Design ')),
+ 'check_quality_floor': mut(
+     ('REPL','REVIEW.json','"hero_clarity": 73',
+      '"hero_clarity": 20')),
+ 'check_present_order': mut(
+     ('REPL','REVIEW.json','"judgment_pass_hash": "',
+      '"judgment_pass_hash": "tampered-')),
+ 'check_prebuild_receipt': mut(
+     ('DEL','PREBUILD.json')),
+ 'check_block_trace': mut(
+     ('REPL','REVIEW.json',
+      '"recipe_id": "brixies/banner-section/banner-1"',
+      '"recipe_id": "brixies/made-up/thing-9"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
      'preview/variants.html')),
@@ -1457,6 +1478,32 @@ def main():
     ctx_b.wave = 'w7'
     rv = json.loads(BASE['REVIEW.json'])
     rv['dist_sha256'] = gate._dist_sha(ctx_b)
+    # J.* — quality rows per picker option, block-trace rows per
+    # rendered block, hash equality across the rules/judgment gates
+    _pg = dict(re.findall(r'data-sec="([\w-]+)"[^>]*data-recipe='
+                          r'"([^"]+)"', PAGE_HTML))
+    rv['quality'] = {**{
+        f'd{i}': {'hero_clarity': 72 + i, 'layout_craft': 70,
+                  'media_fit': 66, 'mobile': 74,
+                  'distinctness': 68, 'topology_dist': 0.5,
+                  'visual_diff': 70, 'composite': 66 + i,
+                  'judged_by': 'pi-default-vlm'}
+        for i in range(1, 6)}, **{
+        f'v{i}': {'hero_clarity': 75, 'layout_craft': 72,
+                  'media_fit': 70, 'mobile': 76,
+                  'distinctness': 65, 'topology_dist': 0.4,
+                  'visual_diff': 68, 'composite': 70 + i,
+                  'judged_by': 'pi-default-vlm'}
+        for i in range(1, 4)}}
+    rv['blocks'] = [{
+        'block_id': f'home:{sec}',
+        'dna_knobs_used': ['radius-personality', 'type-base-px',
+                           'space-density-step'],
+        'plan_slot': sec, 'recipe_id': rid,
+        'vector_deviation': 'none'}
+        for sec, rid in _pg.items()]
+    rv['rules_pass_hash'] = rv['dist_sha256']
+    rv['judgment_pass_hash'] = rv['dist_sha256']
     sl = gate.dna_slices(gate.dna_map(ctx_b))
     canon = json.dumps({k: v for k, v in rv.items() if k != 'sig'},
                        sort_keys=True)

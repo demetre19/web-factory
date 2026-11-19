@@ -18,6 +18,9 @@
     "check_auto_grid": [
       "G.5"
     ],
+    "check_block_trace": [
+      "J.4"
+    ],
     "check_border_widths": [
       "S.5"
     ],
@@ -173,11 +176,20 @@
     "check_picker_ux": [
       "VG.7"
     ],
+    "check_prebuild_receipt": [
+      "J.3"
+    ],
+    "check_present_order": [
+      "J.2"
+    ],
     "check_primary_cta": [
       "PS.7"
     ],
     "check_proximity": [
       "G.2"
+    ],
+    "check_quality_floor": [
+      "J.1"
     ],
     "check_receipts": [
       "P.17"
@@ -722,6 +734,34 @@
       "mode": "script",
       "threshold": "interactive class without hover/focus-visible/disabled styles",
       "tier": "structural",
+      "wave": "w7"
+    },
+    "J.1": {
+      "check": "check_quality_floor",
+      "mode": "script",
+      "threshold": "option unjudged, any dimension <50, composite <60, judged_by != configured reviewer_model, or quality_retry >1",
+      "tier": "invariant",
+      "wave": "w7"
+    },
+    "J.2": {
+      "check": "check_present_order",
+      "mode": "script",
+      "threshold": "picker option without quality receipt, or rules_pass_hash != judgment_pass_hash",
+      "tier": "invariant",
+      "wave": "w7"
+    },
+    "J.3": {
+      "check": "check_prebuild_receipt",
+      "mode": "script",
+      "threshold": "pickers without PREBUILD.json; recipe_id not in topology bank; unjustified exception; missing field; plan_vector_dist <0.3",
+      "tier": "invariant",
+      "wave": "w4"
+    },
+    "J.4": {
+      "check": "check_block_trace",
+      "mode": "script",
+      "threshold": "rendered block without data-recipe, recipe not in bank, missing receipt row, empty field, or receipt/render recipe mismatch",
+      "tier": "invariant",
       "wave": "w7"
     },
     "L.1": {

@@ -58,6 +58,10 @@ closed set.
 | I.7 | Color and interactive states | stylistic | script | `check_icon_discipline` | currentColor, interactive states | w6 |
 | I.8 | Icon QA | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
 | I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
+| J.1 | Every option clears the quality floor | invariant | script | `check_quality_floor` | option unjudged, any dimension <50, composite <60, judged_by != configured reviewer_model, or quality_retry >1 | w7 |
+| J.2 | PRESENT-ORDER | invariant | script | `check_present_order` | picker option without quality receipt, or rules_pass_hash != judgment_pass_hash | w7 |
+| J.3 | PRE-BUILD VALIDATION | invariant | script | `check_prebuild_receipt` | pickers without PREBUILD.json; recipe_id not in topology bank; unjustified exception; missing field; plan_vector_dist <0.3 | w4 |
+| J.4 | BLOCK-TRACE | invariant | script | `check_block_trace` | rendered block without data-recipe, recipe not in bank, missing receipt row, empty field, or receipt/render recipe mismatch | w7 |
 | L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
 | L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1280px | w5 |
@@ -195,4 +199,4 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
-185 rules — script 154, reviewer 30, operator 1; invariant 58, structural 50, stylistic 77.
+189 rules — script 158, reviewer 30, operator 1; invariant 62, structural 50, stylistic 77.
