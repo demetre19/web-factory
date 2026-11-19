@@ -31,6 +31,8 @@ exact filters. Gene/allele vocabulary lives in `dna/GENOME.md`.
 | `technology` | developer tools, APIs, infrastructure, open source |
 | `finance` | fintech, banking, insurance |
 | `healthcare` | clinics, telehealth, medical, wellness |
+| `med-spa` | medical aesthetics / med spa: soft-luxury clinical,
+  treatment menus, before-after trust |
 | `education` | courses, e-learning, schools |
 | `hospitality` | hotels, restaurants, venues, travel |
 | `real-estate` | brokerages, property portals, listings |
@@ -40,6 +42,8 @@ exact filters. Gene/allele vocabulary lives in `dna/GENOME.md`.
 | `community` | forums, social platforms, membership communities |
 | `personal-brand` | coaches, creators, consultants |
 | `government` | government/civic services |
+| `docs` | documentation/developer-reference sites: sidebar nav, TOC,
+  code blocks, search (Cloudflare/Netlify docs and peers) |
 | `nonprofit` | charities, NGOs, advocacy |
 | `media` | publishing, news, newsletters, blogs |
 | `events` | conferences, festivals, ticketed events |
@@ -48,6 +52,12 @@ exact filters. Gene/allele vocabulary lives in `dna/GENOME.md`.
 **Priority order for mining:** services → ecommerce → portfolio →
 luxury (fashion/luxury-goods/jewellery) → architecture/homes → saas →
 technology → the rest.
+
+Operator-canon verticals currently banked or en route (keep them in the
+closed set, do not improvise new tags): ecommerce (IKEA), nonprofit
+(charity: Marie Curie), automotive (luxury: Porsche), docs (Cloudflare,
+Netlify dev docs), hospitality (travel/publishing: Lonely Planet),
+med-spa (medical aesthetics / med spa).
 
 ## 2. `page_type` — what job the page does
 
@@ -77,6 +87,9 @@ Editorial/creative: `work-grid` · `case-study` · `project-grid` ·
 `lightbox-gallery` · `lookbook-spread` · `floor-plan` · `awards` ·
 `schedule` · `donate` · `booking` · `store-locator` ·
 `configurator-panel`
+
+Docs: `sidebar-nav` · `toc` · `code-block` · `api-reference` ·
+`docs-search` · `release-notes`
 
 `speech_act` ∈ SECTION-CATALOG §1:
 `promise | proof | tension | how | objection | act | detail | chrome`.
