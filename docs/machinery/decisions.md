@@ -2,6 +2,6 @@
 
 # Decisions — the index
 
-One record per lane at land time, `docs/decisions/NNNN-<slug>.md`. The pre-L15 narrative rationale log is not part of this repo's layer.
+One record per lane at land time, `docs/decisions/NNNN-<slug>.md`. The narrative rationale log is not part of this repo's layer.
 
 - *(no records yet)*

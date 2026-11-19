@@ -1,12 +1,12 @@
-# system-tile — L3 gate exemplar
+# system-tile — W5 system-sheet exemplar
 
 `index.html` is the operator-approved `preview/system.html` from the
-Whistle Clean end-of-lease run, kept as the worked example of what an
-L3 tile must prove before any page is built.
+Whistle Clean end-of-lease run, kept as the worked example of what the
+W5 system sheet must prove before any page is built.
 
 ## When it is used
 
-- **DESIGN-PLAN.md fill-order step 6** — the L3 gate: the design
+- **DESIGN-PLAN.md fill-order step 6** — the W5 gate: the design
   *system* is verified on one tile before page pixels exist.
 - DOX branch: copy the packet's `designs/design-system.html` instead.
 
