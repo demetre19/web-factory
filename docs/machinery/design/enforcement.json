@@ -1823,6 +1823,62 @@
    "threshold": "literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value",
    "tier": "stylistic",
    "wave": "w6"
+  },
+  "O.1": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "missing seed/variant/density/bounds params or geometry != ornament.generate() output for declared params",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.2": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "layer != genotype ornament allele, or ornament rendered while allele=none",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.3": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament stroke is literal colour or stroke-width outside 0.5\u20131px",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.4": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament svg missing aria-hidden=\"true\" or data-layer=\"behind\"",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.5": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament target undeclared/missing in ornament_placements, >4 ornaments per page, or allele!=none with empty placements",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.6": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "intensity not in ghost|accent|statement|bold or rendered opacity outside the declared band",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.7": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "motion not in static|drift|rotate|dash-draw|pulse|reveal, or non-static motion without .ornament-* CSS + prefers-reduced-motion disable",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.8": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget)",
+   "tier": "structural",
+   "wave": "w7"
   }
  }
 }

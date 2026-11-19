@@ -15,6 +15,30 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
 sys.path.insert(0, HERE)
 import gate  # noqa: E402  (hash helpers for the fixture DNA)
+import ornament  # noqa: E402  (O.1 — ornaments render generate() output)
+
+
+def _ornament(seed=7, density=0.4, w=320, h=240,
+              variants='crosshair-grid+registration-marks',
+              layer='technical', target='hero.bg',
+              intensity='ghost', motion='static'):
+    """The rendered ornament layer: generate() geometry + the
+    placement-vector wrapper the gate binds (O.1–O.7)."""
+    svg = ornament.generate(seed=seed, density=density, bounds=(w, h),
+                            variants=tuple(variants.split('+')))
+    opacity = {'ghost': 0.05, 'accent': 0.12,
+               'statement': 0.25, 'bold': 0.40}[intensity]
+    return svg.replace('<svg ',
+        f'<svg data-ornament data-layer="behind" '
+        f'data-ornament-layer="{layer}" '
+        f'data-ornament-target="{target}" '
+        f'data-ornament-intensity="{intensity}" '
+        f'data-ornament-motion="{motion}" '
+        f'opacity="{opacity}" '
+        f'data-ornament-seed="{seed}" '
+        f'data-ornament-density="{density}" '
+        f'data-ornament-bounds="{w}x{h}" '
+        f'data-ornament-variant="{variants}" ', 1)
 
 
 def _png(w, h):
@@ -94,7 +118,9 @@ site:
 burst: 2
 dna:
   profile: profile-services
-  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal, trend: none, seam-shape: flat}
+  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal, trend: none, seam-shape: flat, ornament: technical}
+ornament_placements:
+  - {target: "hero.bg", layer: "technical", variant: "crosshair-grid+registration-marks", intensity: "ghost", motion: "static"}
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3}
   - {name: d2, wildcard: false, temperature: cool, shape: p2}
@@ -311,6 +337,7 @@ PAGE_HTML = '''<!doctype html><html><head>
   <p>Testing is the thing.</p>
   <a class="btn-primary" href="/book">Book now</a>
   <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
+''' + _ornament() + '''
 </section>
 <section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" data-cols="3" data-content="c-def c-proof c-faq" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
@@ -914,7 +941,12 @@ def dna_doc():
             "mood-energy": "calm", "mood-register": "approachable",
             "image-style": "minimal", "trend": "none",
             "seam-shape": "flat",
+            "ornament": "technical",
         },
+        "ornament_placements": [
+            {"target": "hero.bg", "layer": "technical",
+             "variant": "crosshair-grid+registration-marks",
+             "intensity": "ghost", "motion": "static"}],
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},
         "invariants": {"accent": "#0055AA", "logo": "wordmark",
@@ -1210,6 +1242,9 @@ MUT = {
  'check_icon_discipline': mut(('REPL','site/dist/home/index.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
  'check_lucide': mut(('SET','site/src/components/raw-icon.astro',
      '<svg viewBox="0 0 24 24"><path d="M0 0h24"/></svg>'),),
+ 'check_ornament': mut(('REPL','site/dist/home/index.html',
+     'data-ornament-variant="crosshair-grid+registration-marks"',
+     'data-ornament-variant="compass"'),),
  'check_review_completeness': mut(('REPL','REVIEW.json','"pi-default-vlm"','"swe-2"')),
  'check_parallel_build': mut(('SET','BUILD-PLAN.json',
     '{"lanes":[{"id":"sec-macro","kind":"section",'

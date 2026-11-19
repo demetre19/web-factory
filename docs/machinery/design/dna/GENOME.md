@@ -239,11 +239,33 @@ finance site without the allele is a coherence defect, not flair.
 Joins are pure clip-path/SVG-mask/skew per the motion policy — no
 library, no raster.
 
+## gene: ornament
+
+alleles: [none, logo-motif, technical, decorative]
+rules: O.1, O.2, O.3, O.4, O.5, O.6, O.7, O.8
+Whether the site carries an INJECTED ornament layer — a free-agent
+decorative layer (brand motif / technical / decorative) that can
+land at any level: site background, a section background, behind
+or over an image, inside cards, as a divider. `none` is the
+default and always a valid option; most verticals stay bare.
+`logo-motif` reuses the extracted brand mark (motif kit) as the
+decorative vocabulary; `technical` is the draftsman vocabulary
+(dashed construction lines, crosshairs, dimension ticks,
+registration marks, compass) for engineering/precision DNAs;
+`decorative` is reserved until its generator lands. The layer is
+offered at W4 as a look axis, then injected only at declared
+`ornament_placements` targets ({target, variant, intensity, motion})
+— targeted and sparse, never blanket-applied. Intensity bands
+{ghost 0.04–0.07, accent 0.10–0.15, statement 0.20–0.30,
+bold 0.35+} and motion {static|drift|rotate|dash-draw|pulse|
+reveal} are look axes; the DNA's personality genes filter which
+options are valid before the look round (O.8).
+
 ---
 
 ## Genotype vector
 
-A genotype is the ordered tuple of alleles in the order above (25
+A genotype is the ordered tuple of alleles in the order above (26
 values). `tools/design-gate/genome.py` encodes it as a one-hot vector
 (Σ allele cardinalities = **134 dims**) for cosine/Hamming search; the
 same vector is written into each pattern file's `genotype:` block and

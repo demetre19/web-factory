@@ -792,6 +792,8 @@ def check_icon_discipline(ctx):
                      'inline SVG (I.1)')
         for m in re.finditer(r'<svg\b([^>]*)>', t):
             attrs = m.group(1)
+            if 'data-ornament' in attrs:
+                continue  # O-rules own ornament geometry/strokes
             w = re.search(r'\bwidth="(\d+)"', attrs)
             h = re.search(r'\bheight="(\d+)"', attrs)
             for dim in (w, h):
@@ -892,6 +894,245 @@ def check_lucide(ctx):
                          'falls back to the closest alias, never a '
                          'placeholder')
     return f
+
+def _ornament_budget(gt, profile):
+    """O.8 — the DNA's personality genes filter the ornament option
+    set BEFORE the look round. Returns allowed {layers, intensities,
+    motions}; 'none' is always a valid option.
+
+    technical/precision → technical layer, hairline accent,
+        dash-draw ok — not decorative scatter
+    luxury → sparse outline-echo at ghost — never tile/scatter
+    clean/minimal (spacious|whitespace-led + calm|restrained)
+        → whisper-ghost only, static
+    brand-led/expressive (agency/fashion/events/media or
+        bold|expressive mood) → full palette"""
+    technical = profile in ('technology', 'saas', 'architecture',
+                            'automotive', 'engineering')
+    luxury = profile in ('luxury-goods', 'jewellery', 'fashion')
+    expressive = profile in ('agency-portfolio', 'portfolio', 'events',
+                             'media', 'personal-brand') or \
+        gt.get('mood-energy') in ('bold', 'expressive')
+    clean = gt.get('density-tier') in ('spacious', 'whitespace-led') or \
+        gt.get('mood-energy') in ('calm', 'restrained')
+    if luxury:
+        return {'layers': {'none', 'logo-motif'},
+                'intensities': {'ghost'},
+                'motions': {'static', 'reveal'}}
+    if technical:
+        return {'layers': {'none', 'technical'},
+                'intensities': {'ghost', 'accent'},
+                'motions': {'static', 'dash-draw', 'reveal'}}
+    if clean and not expressive:
+        return {'layers': {'none', 'technical', 'logo-motif'},
+                'intensities': {'ghost'},
+                'motions': {'static'}}
+    if expressive:
+        return {'layers': {'none', 'technical', 'logo-motif',
+                           'decorative'},
+                'intensities': set(ornament_intensity_names()),
+                'motions': {'static', 'drift', 'rotate', 'dash-draw',
+                            'pulse', 'reveal'}}
+    return {'layers': {'none', 'technical', 'logo-motif'},
+            'intensities': {'ghost', 'accent'},
+            'motions': {'static', 'drift', 'reveal'}}
+
+
+def ornament_intensity_names():
+    return ('ghost', 'accent', 'statement', 'bold')
+
+def check_ornament(ctx):
+    """O.1–O.7 — ornament is an INJECTABLE layer: machinery-made,
+    DNA-coherent, token-bound, decorative, targeted, intensified,
+    motion-bound:
+    O.1 every ornament svg carries seed/variant/density/bounds params
+        and its geometry equals ornament.generate() output —
+        deterministic parametric, never AI-random;
+    O.2 data-ornament-layer == genotype ornament allele (never none)
+        and layer ∈ {technical, logo-motif, decorative};
+    O.3 strokes bind tokens — currentColor/var()/none,
+        stroke-width ∈ [0.5,1];
+    O.4 aria-hidden="true" + data-layer="behind";
+    O.5 every rendered ornament's data-ornament-target matches a
+        declared ornament_placements entry — targeted injection,
+        ≤4 per page, never blanket sprinkle;
+    O.6 data-ornament-intensity ∈ {ghost,accent,statement,bold} and
+        its opacity sits inside the band;
+    O.7 data-ornament-motion ∈ closed set; non-static motion needs
+        the tamdoma ornament-* keyframes AND prefers-reduced-motion
+        disabling them in global.css."""
+    try:
+        import ornament
+    except Exception:
+        here = os.path.dirname(os.path.abspath(__file__))
+        if os.path.isfile(os.path.join(here, 'ornament.py')):
+            sys.path.insert(0, here)
+            import ornament
+        else:
+            return []
+    f = []
+    dna = dna_map(ctx) or {}
+    gt = dna.get('genotype') or {}
+    allele = gt.get('ornament', 'none')
+    profile = dna.get('profile') or ''
+    placements = dna.get('ornament_placements')
+    if placements is None and ctx.plan:
+        placements = ctx.plan.get('ornament_placements')
+    placements = placements or []
+    budget = _ornament_budget(gt, profile)
+    declared_targets = set()
+    needs_motion_css = False
+    for pl in placements:
+        if not isinstance(pl, dict):
+            continue
+        tgt = str(pl.get('target', ''))
+        if tgt:
+            declared_targets.add(tgt)
+        lay = pl.get('layer', allele)
+        if lay not in budget['layers']:
+            f.append(f'O.8 placement {tgt}: layer {lay} ∉ '
+                     f'{sorted(budget["layers"])} — the DNA '
+                     'filters ornament choices before the look '
+                     'round; ornament=none is always valid')
+        inten = pl.get('intensity', 'ghost')
+        if inten not in ornament.INTENSITY_BANDS:
+            f.append(f'O.6 placement {tgt}: intensity {inten!r} '
+                     '∉ ghost|accent|statement|bold')
+        elif inten not in budget['intensities']:
+            f.append(f'O.8 placement {tgt}: intensity {inten} '
+                     'above this DNA\'s restraint budget '
+                     f'{sorted(budget["intensities"])} — '
+                     'coherence fail')
+        mo = pl.get('motion', 'static')
+        if mo not in ornament.MOTIONS:
+            f.append(f'O.7 placement {tgt}: motion {mo!r} ∉ '
+                     f'{list(ornament.MOTIONS)}')
+        elif mo not in budget['motions']:
+            f.append(f'O.8 placement {tgt}: motion {mo} ∉ '
+                     f'{sorted(budget["motions"])} for this DNA')
+        if mo not in (None, 'static'):
+            needs_motion_css = True
+    if allele != 'none' and not placements:
+        f.append('O.5 genotype declares ornament=' + str(allele) +
+                 ' but ornament_placements is empty — the layer is '
+                 'injected at declared targets, never blanketed')
+    if needs_motion_css:
+        css = ''
+        cp = os.path.join(ctx.site, 'src/styles/global.css')
+        if os.path.isfile(cp):
+            css = open(cp, encoding='utf-8', errors='replace').read()
+        if '.ornament-' not in css:
+            f.append('O.7 ornament motion declared but no .ornament-* '
+                     'CSS in global.css — motion is a tamdoma recipe, '
+                     'not ad-hoc')
+        rm = re.search(r'prefers-reduced-motion[^}]*}', css)
+        if not rm or ('ornament' not in rm.group(0)
+                      and 'animation: none' not in rm.group(0)
+                      and 'animation:none' not in rm.group(0)):
+            f.append('O.7 ornament motion without '
+                     'prefers-reduced-motion disable — accessibility '
+                     'is not optional')
+    for p, t in ctx.page_htmls():
+        name = os.path.basename(p)
+        rendered = list(re.finditer(
+            r'<svg\b[^>]*data-ornament[^>]*>.*?</svg>', t, re.S))
+        if len(rendered) > ornament.MAX_PER_PAGE:
+            f.append(f'O.5 {name}: {len(rendered)} ornaments on one '
+                     f'page > {ornament.MAX_PER_PAGE} — ornament is '
+                     'intentional and sparse, not sprinkled')
+        for m in rendered:
+            svg = m.group(0)
+            attrs = svg[:svg.index('>')]
+            if allele in (None, '', 'none'):
+                f.append(f'O.2 {name}: ornament rendered but '
+                         'genotype ornament=none — DNA coherence')
+                continue
+            lay = re.search(r'data-ornament-layer="([^"]+)"', attrs)
+            lay = lay.group(1) if lay else None
+            if lay and lay != allele:
+                f.append(f'O.2 {name}: ornament layer {lay} != '
+                         f'genotype allele {allele}')
+            tgt = re.search(r'data-ornament-target="([^"]+)"', attrs)
+            if not tgt:
+                f.append(f'O.5 {name}: ornament missing '
+                         'data-ornament-target — injection points '
+                         'are declared')
+            elif tgt.group(1) not in declared_targets:
+                f.append(f'O.5 {name}: ornament target '
+                         f'{tgt.group(1)} not in declared '
+                         'ornament_placements — targeted '
+                         'injection, never implicit')
+            inten = re.search(r'data-ornament-intensity="([^"]+)"',
+                              attrs)
+            op = re.search(r'opacity="([\d.]+)"', attrs)
+            if inten:
+                band = ornament.INTENSITY_BANDS.get(inten.group(1))
+                if band is None:
+                    f.append(f'O.6 {name}: intensity '
+                             f'{inten.group(1)} ∉ closed band set')
+                elif op and not (band[0] - 0.005 <=
+                                 float(op.group(1)) <= band[1] + 0.005):
+                    f.append(f'O.6 {name}: opacity {op.group(1)} '
+                             f'outside {inten.group(1)} band '
+                             f'{band} — intensity is the vector, '
+                             'opacity is its number')
+            mo = re.search(r'data-ornament-motion="([^"]+)"', attrs)
+            if mo and mo.group(1) not in ornament.MOTIONS:
+                f.append(f'O.7 {name}: motion {mo.group(1)} ∉ '
+                         'static|drift|rotate|dash-draw|pulse|reveal')
+            if 'aria-hidden="true"' not in attrs:
+                f.append(f'O.4 {name}: ornament svg missing '
+                         'aria-hidden="true" — decorative layers '
+                         'are invisible to assistive tech')
+            if 'data-layer="behind"' not in attrs:
+                f.append(f'O.4 {name}: ornament svg missing '
+                         'data-layer="behind" — ornament stays under '
+                         'the content layer')
+            sw = re.search(r'stroke-width="([\d.]+)"', attrs)
+            if sw and not (0.4 <= float(sw.group(1)) <= 1.05):
+                f.append(f'O.3 {name}: ornament stroke-width '
+                         f'{sw.group(1)} outside 0.5–1px — '
+                         'construction lines are hairlines')
+            st = re.search(r'stroke="([^"]+)"', attrs)
+            if st and st.group(1) not in ('currentColor', 'none') \
+                    and not st.group(1).startswith('var('):
+                f.append(f'O.3 {name}: ornament stroke '
+                         f'"{st.group(1)}" — strokes bind '
+                         'currentColor / muted tokens')
+            seed = re.search(r'data-ornament-seed="(\d+)"', attrs)
+            dens = re.search(r'data-ornament-density="([\d.]+)"', attrs)
+            bounds = re.search(r'data-ornament-bounds="(\d+)x(\d+)"',
+                               attrs)
+            var = re.search(r'data-ornament-variant="([^"]+)"', attrs)
+            if not (seed and dens and bounds and var):
+                f.append(f'O.1 {name}: ornament missing '
+                         'seed/density/bounds/variant params — '
+                         'undocumented geometry is AI-random risk')
+                continue
+            try:
+                canon = ornament.generate(
+                    seed=int(seed.group(1)),
+                    density=float(dens.group(1)),
+                    bounds=(int(bounds.group(1)),
+                            int(bounds.group(2))),
+                    variants=tuple(var.group(1).split('+')))
+            except ValueError as e:
+                f.append(f'O.1 {name}: {e} — variant ∉ closed '
+                         'parametric vocabulary')
+                continue
+            inner = re.search(r'<svg\b[^>]*>(.*)</svg>', svg, re.S)
+            inner = inner.group(1) if inner else ''
+            inner_c = re.sub(r'\s+', ' ', inner).strip()
+            canon_inner = re.search(
+                r'<svg\b[^>]*>(.*)</svg>', canon, re.S).group(1)
+            canon_inner = re.sub(r'\s+', ' ', canon_inner).strip()
+            if inner_c != canon_inner:
+                f.append(f'O.1 {name}: ornament geometry != '
+                         f'generate(seed={seed.group(1)},…) — '
+                         'ornaments are machinery-produced, '
+                         'deterministic; hand-drawn geometry fails')
+    return f
+
 
 IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
 IMG_DIRS = ('discovery', 'INTAKE', 'assets', 'images', 'media')
@@ -11196,7 +11437,8 @@ WAVE_CHECKS = {
     'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,
-           check_icon_discipline, check_lucide, check_speed_budget,
+           check_icon_discipline, check_lucide, check_ornament,
+           check_speed_budget,
            check_motion_recipes, check_motion_js_budget,
            check_skeleton,
            check_acss_conventions,
