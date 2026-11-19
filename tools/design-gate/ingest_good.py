@@ -349,20 +349,24 @@ def ingest_url(url, note='', site_type='general', page_type='home',
         # landmark pass missing non-semantic layout, not a real
         # 2-section page. Fall back to luminance bands.
         from PIL import Image
-        im = Image.open(desk['shot'])
-        W, H = im.size
+        W = H = 0
+        try:
+            im = Image.open(desk['shot'])
+            W, H = im.size
+        except Exception as e:
+            desk['error'] = f'shot unreadable: {e}'
         few = len(desk.get('sections') or []) < 3 and H > 2400
-        if not desk.get('sections') or few:
-            desk['sections'] = []
-            edges = band_edges(im, W, H)
-        desk['sections'] = [
-            {'tag': 'div', 'id': '', 'className': '',
-             'geometry': {'left': 0, 'top': y0,
-                          'width': W, 'height': y1 - y0},
-             'bandFallback': True}
-            for y0, y1 in zip(edges, edges[1:]) if y1 - y0 >= 80]
-        if desk['sections']:
-            meta['capture_engine'] = 'ingest_good/band-fallback'
+        if W and (not desk.get('sections') or few):
+            desk['sections'] = [
+                {'tag': 'div', 'id': '', 'className': '',
+                 'geometry': {'left': 0, 'top': y0,
+                              'width': W, 'height': y1 - y0},
+                 'bandFallback': True}
+                for y0, y1 in zip(edges, edges[1:])
+                if y1 - y0 >= 80
+                for edges in [band_edges(im, W, H)]]
+            if desk['sections']:
+                meta['capture_engine'] = 'ingest_good/band-fallback'
     if 'error' in desk or not desk.get('sections'):
         meta['capture_status'], meta['capture_reason'] = 'error', \
             desk.get('error', 'no sections detected')
