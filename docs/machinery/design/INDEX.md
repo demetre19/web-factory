@@ -3,7 +3,7 @@ id: design-index
 type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
-  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS]
+  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS, comp-app-band, comp-badge-center, comp-capture-form, comp-cards-n, comp-comparison, comp-faq, comp-footer-bar, comp-form-panel, comp-full-bleed, comp-hero-act-merge, comp-link-grid, comp-logo-wall, comp-map-finder, comp-media-gallery, comp-nav-bar, comp-quote-grid, comp-sequence, comp-split-media, comp-stacked-hero, comp-stat-band, comp-text-index]
   rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF, rules-A]
   contains_also: [section-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
