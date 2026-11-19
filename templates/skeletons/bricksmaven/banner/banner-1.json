@@ -1,0 +1,320 @@
+{
+ "content": [
+  {
+   "id": "yruqfl",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "hjylsw",
+    "ekddqs"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "frbxuk"
+    ]
+   },
+   "label": "Banner 1"
+  },
+  {
+   "id": "hjylsw",
+   "name": "container",
+   "parent": "yruqfl",
+   "children": [
+    "qelhrf",
+    "ctdiop"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "tasycj"
+    ]
+   }
+  },
+  {
+   "id": "qelhrf",
+   "name": "block",
+   "parent": "hjylsw",
+   "children": [
+    "fmrjgh",
+    "faxbec"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lfzgqm"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "fmrjgh",
+   "name": "div",
+   "parent": "qelhrf",
+   "children": [
+    "zaojdn",
+    "uyqmof"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "fpbura"
+    ],
+    "_display": "flex"
+   },
+   "label": "Info"
+  },
+  {
+   "id": "zaojdn",
+   "name": "heading",
+   "parent": "fmrjgh",
+   "children": [],
+   "settings": {
+    "text": "Short headline to grab attention",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "pvxbmz"
+    ]
+   }
+  },
+  {
+   "id": "uyqmof",
+   "name": "text-basic",
+   "parent": "fmrjgh",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "dwwcsj"
+    ]
+   }
+  },
+  {
+   "id": "faxbec",
+   "name": "div",
+   "parent": "qelhrf",
+   "children": [
+    "ewpdty"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wgownt"
+    ]
+   },
+   "label": "Icon wrapper"
+  },
+  {
+   "id": "ewpdty",
+   "name": "icon",
+   "parent": "faxbec",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-world"
+    },
+    "_cssGlobalClasses": [
+     "ljvpyv"
+    ]
+   }
+  },
+  {
+   "id": "ctdiop",
+   "name": "div",
+   "parent": "hjylsw",
+   "children": [
+    "lhjvan"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eayndo"
+    ],
+    "tag": "custom",
+    "customTag": "button"
+   },
+   "label": "Close-wrapper"
+  },
+  {
+   "id": "lhjvan",
+   "name": "icon",
+   "parent": "ctdiop",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-close"
+    },
+    "_cssGlobalClasses": [
+     "ndfvku"
+    ],
+    "iconSize": "24"
+   }
+  },
+  {
+   "id": "ekddqs",
+   "name": "code",
+   "parent": "yruqfl",
+   "children": [],
+   "settings": {
+    "cssCode": ".bm-banner-1 {\n padding: 0; \n background-color: var(--white);\n border-bottom: 1px solid var(--neutral);\n box-shadow: var(--box-shadow-m);\n}\n\n.bm-banner-1__container {\n  background-color: none !important;\n  border:none !important;\n  box-shadow: none !important;\n}",
+    "_display": "none"
+   },
+   "label": "Full width banner"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "frbxuk",
+   "name": "bm-banner-1",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "raw": "transparent"
+     }
+    }
+   },
+   "modified": 1736952742,
+   "user_id": 7
+  },
+  {
+   "id": "tasycj",
+   "name": "bm-banner-1__container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "space-between",
+    "_alignItems": "center",
+    "_flexWrap": "nowrap",
+    "_cssCustom": ".bm-banner-1__container {\n  box-shadow: var(--box-shadow-m);\n  \n}",
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     }
+    },
+    "_position": "relative",
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    }
+   }
+  },
+  {
+   "id": "lfzgqm",
+   "name": "bm-banner-content",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_flexWrap": "nowrap",
+    "_width": "auto",
+    "_columnGap": "calc(var(--content-gap) / 2)",
+    "_alignItems": "center",
+    "_rowGap:mobile_portrait": "var(--content-gap)",
+    "_direction:mobile_portrait": "column",
+    "_alignItems:mobile_portrait": "flex-start"
+   }
+  },
+  {
+   "id": "fpbura",
+   "name": "bm-banner-content__info",
+   "settings": {
+    "_direction": "column",
+    "_flexWrap": "nowrap",
+    "_display": "flex"
+   }
+  },
+  {
+   "id": "pvxbmz",
+   "name": "bm-banner-content__heading",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-m)"
+    }
+   }
+  },
+  {
+   "id": "dwwcsj",
+   "name": "bm-banner-content__text",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  },
+  {
+   "id": "wgownt",
+   "name": "bm-banner-content__icon-wrapper",
+   "settings": {
+    "_display": "flex",
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "ljvpyv",
+   "name": "bm-banner-content__icon",
+   "settings": {
+    "iconSize": "24px"
+   }
+  },
+  {
+   "id": "eayndo",
+   "name": "bm-banner__close-wrapper",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)",
+      "raw": "transparent"
+     }
+    },
+    "_interactions": [
+     {
+      "id": "fgiysv",
+      "trigger": "click",
+      "action": "hide",
+      "animationType": "fadeInUp",
+      "target": "custom",
+      "targetSelector": ".bm-banner-1"
+     }
+    ],
+    "_position": "absolute",
+    "_right": "var(--space-m)",
+    "_top:mobile_portrait": "var(--space-m)"
+   },
+   "modified": 1736934796,
+   "user_id": 7
+  },
+  {
+   "id": "ndfvku",
+   "name": "bm-banner__close",
+   "settings": [],
+   "modified": 1736934796,
+   "user_id": 7
+  }
+ ],
+ "globalElements": []
+}

@@ -1,0 +1,314 @@
+{
+ "content": [
+  {
+   "id": "eyqvyb",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "bfbzep"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "jwfvzm"
+    ]
+   },
+   "label": "Checkout Page 2"
+  },
+  {
+   "id": "bfbzep",
+   "name": "container",
+   "parent": "eyqvyb",
+   "children": [
+    "xdehof",
+    "tgrhbj",
+    "dieglb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cxbdxg"
+    ]
+   }
+  },
+  {
+   "id": "xdehof",
+   "name": "container",
+   "parent": "bfbzep",
+   "children": [
+    "cuujfo",
+    "fqrafy",
+    "gtzqrs"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "boyecl"
+    ]
+   },
+   "label": "Billing Details"
+  },
+  {
+   "id": "cuujfo",
+   "name": "div",
+   "parent": "xdehof",
+   "children": [
+    "qwsnaw",
+    "fzrgll"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq",
+     "jhiwic"
+    ],
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "qwsnaw",
+   "name": "heading",
+   "parent": "cuujfo",
+   "children": [],
+   "settings": {
+    "text": "Checkout",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "fzrgll",
+   "name": "text-basic",
+   "parent": "cuujfo",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "fqrafy",
+   "name": "container",
+   "parent": "xdehof",
+   "children": [
+    "aogtch"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mngnit"
+    ]
+   },
+   "label": "Notice Container"
+  },
+  {
+   "id": "aogtch",
+   "name": "woocommerce-notice",
+   "parent": "fqrafy",
+   "children": [],
+   "settings": {
+    "previewType": "all",
+    "_cssGlobalClasses": [
+     "wonrxo"
+    ]
+   }
+  },
+  {
+   "id": "gtzqrs",
+   "name": "woocommerce-checkout-customer-details",
+   "parent": "xdehof",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "aotncd"
+    ]
+   },
+   "themeStyles": [],
+   "label": "Checkout customer details {CSS} "
+  },
+  {
+   "id": "tgrhbj",
+   "name": "container",
+   "parent": "bfbzep",
+   "children": [
+    "bpxzes"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "aptlyv"
+    ]
+   },
+   "label": "Place Order"
+  },
+  {
+   "id": "bpxzes",
+   "name": "woocommerce-checkout-order-review",
+   "parent": "tgrhbj",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wycrxj"
+    ]
+   },
+   "themeStyles": [],
+   "label": "Checkout order review {CSS} "
+  },
+  {
+   "id": "dieglb",
+   "name": "code",
+   "parent": "bfbzep",
+   "children": [],
+   "settings": {
+    "cssCode": ".woocommerce .before-cart, .woocommerce .before-checkout {\n    display: none;\n}",
+    "executeCode": true
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "jwfvzm",
+   "name": "checkout-page-2",
+   "settings": {
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+   },
+   "modified": 1722546259,
+   "user_id": 2
+  },
+  {
+   "id": "cxbdxg",
+   "name": "checkout-page-2__container",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-3-2)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+   }
+  },
+  {
+   "id": "boyecl",
+   "name": "checkout-page-2__details",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--content-gap)",
+    "_padding": {
+     "right": "var(--space-l)",
+     "bottom": "var(--space-xl)"
+    }
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "jhiwic",
+   "name": "intro--left",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    },
+    "_alignSelf": "flex-start"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "mngnit",
+   "name": "bm-woo-notice-container",
+   "settings": {
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "wonrxo",
+   "name": "bm-woo-notice",
+   "settings": []
+  },
+  {
+   "id": "aotncd",
+   "name": "checkout-page-2__customer-details",
+   "settings": {
+    "_width": "100%",
+    "_cssCustom": ".checkout-page-2__customer-details {\n\n\t\t--customer-details--primary: var(--black);\n  \t--focus-color: var(--customer-details--primary);\n  \n\n  \t/* Change accent color of checkbox and radio */\n  \tinput[type=\"checkbox\"],\n    input[type=\"radio\"] {\n      accent-color: var(--customer-details--primary);\n    }\n  \t\n  \t/* Set container of billing and shiiping fiedls to display flex */\n  \t.col2-set {\n    display: flex;\n    flex-direction: column;\n    gap: var(--content-gap);\n}\n  \n  .col-2 {\n    display: flex;\n    flex-direction: column;\n    gap: var(--content-gap);\n}\n  \n  \t/* Sets margin-bottom of h3 element */\n\t\t.woocommerce-shipping-fields > h3, .woocommerce-billing-fields > h3 {\n      margin-bottom: var(--space-m);\n    }\n  \n  #ship-to-different-address label {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    align-items: center;\n  }\n  \n  .woocommerce-shipping-fields h3 span {\n    font-size: var(--text-l) !important;\n    order: -1;\n    color: var(--customer-details--primary);\n    font-weight: 700;\n    \n  }\n  \n\n\n\n  \n}",
+    "labelTypography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "font-weight": "700"
+    }
+   },
+   "modified": 1728935985,
+   "user_id": 1
+  },
+  {
+   "id": "aptlyv",
+   "name": "checkout-page-2__order",
+   "settings": {
+    "_background": {
+     "color": {
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_padding": {
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "top": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    }
+   },
+   "modified": 1722546259,
+   "user_id": 2
+  },
+  {
+   "id": "wycrxj",
+   "name": "checkout-page-2__order-review",
+   "settings": {
+    "_width": "100%",
+    "_cssCustom": ".checkout-page-2__order-review {  \t\n  \t--order-review--primary: var(--black);\n  \t--order-review--border: var(--neutral-light);\n  \t--focus-color: var(--order-review--primary);\n  \n  \t/* Removes border around checkout element */\n  \t#order_review {\n    \tborder: 0;\n      display: flex;\n      flex-direction: column;\n      gap: var(--space-m);\n  \t}  \t\n  \n  \t#payment .payment_methods input[type=\"checkbox\"],\n  \t#payment .payment_methods input[type=\"radio\"]  {\n      \taccent-color: var(--order-review--primary);\n\n  \t}  \t\n  \n\t\t#order_review_heading {\n\t\t\t\tdisplay: none;\n\t\t}\n  \n  \n\t\t/* Shop table styling */\n\t\t.shop_table {\n     \t\ttext-align: left;\n      \tborder-spacing: 0;\n      \tborder: 0;\n  \t}\t\t\n  \n  \t/* Style shop table table cell */\n\t\t.shop_table thead th {\n        text-align: left;\n        background-color: var(--order-review--border);\n        width: 50%;\n    }\n  \n    /* Align subtotal column to the right */\n  .shop_table .cart-subtotal td, .shop_table .order-total td, .shop_table .cart_item .product-total, .shop_table .product-total {\n    \ttext-align: end;\n  }\n  \n    /* Right align the shipping methods*/\n  ul.woocommerce-shipping-methods li {\n    display: flex;\n    flex-direction: row;\n    justify-content: end;\n\t}\n  \t/* Sets padding on td and th elements */\n\t\t.shop_table td,\n  \t.shop_table th {\n    \t\tpadding: var(--space-xs);\n  \t}\n  \t\n  \t/* Sets the border-bottom of the shop table to 0 */\n  \t.shop_table tfoot {\n      \tborder-bottom: 0;\n  \t}\n\n  \t/* Sets table rows background color */\n    .shop_table tbody tr {\n      \tbackground-color: var(--white);\n    }\n\n  \t/* Sets left and bottom border of product name */\n  \t#order_review .product-name {\n\t\t\t\tborder-left: 1px solid var(--order-review--border);\n\t\t}\n  \n  \t/* Sets left and bottom border of product total */\n    #order_review .product-total {\n\t\t\t\tborder-right: 1px solid var(--order-review--border);\n\t\t\t\tfont-weight: bold;\n\t\t}\n\t\t\n  \t/* Sets bottom border of last of type cart item */\n  \t#order_review .cart_item:last-of-type td {\n      \tborder-bottom: 1px solid var(--order-review--border);\n  \t}\n\n  \t/* Sets bottom border of cart subtotal */\n\t\t.cart-subtotal th,\n  \t.cart-subtotal td {\n      \tborder-bottom: 1px solid var(--order-review--border) !important;\n  \t} \n\t\n  \t/* Styles Subtotal font weight */\n    .shop_table tfoot th {\n      \tfont-weight: normal;\n    }\n  \n  \t/* Styles Subtotal price font weight */\n    .shop_table tfoot td {\n      \tfont-weight: bold;            \n    }\t\t\t\n  \n  \t/* Styles order total font size and weight */\n    .order-total th {\n      \tfont-size: var(--text-l);\n      \tfont-weight: 500;\n    }\n  \n  \t/* Styles order total price font size */\n    .order-total .amount {\n      \tfont-size: var(--text-l);\n    }\n  \n  \t/* Styles payment content wrapper */\n    #payment ul {\n      list-style-type: none;\n      padding-inline: 0;\n\n      \n    }\n\n  \t/* Styles payment label */\n    #payment label {\n        display: inline;\n        color: var(--order-review--primary);\n        font-weight: bold;\n      \tfont-size: var(--text-m) !important;\n    }\t\t\n      \n  \t/* Styles payment Paragraph */  \n    #payment .payment_box p {\n     margin: var(--space-xs) 0;\n      padding: var(--space-xs);\n      font-size: var(--text-s);\n    }\n  \n  /* Styles woo privacy policy margin */  \n    #payment .woocommerce-privacy-policy-text p {\n      \tmargin: var(--space-xs) 0;\n      \tfont-size: var(--text-s);\n    }\n\n  \t/* Styles input checkbox */  \n    #payment .input-checkbox {\n      \taccent-color: var(--order-review--primary);\n      \tmargin-right: 0.6rem;\n    }\n          \n  \t/* Styles input checkbox span element */  \n    #payment .input-checkbox span {\n      \tmargin-left: 1rem;\n    }\n\n  \t/* Styles privacy policy link */  \n    #payment .woocommerce-privacy-policy-link {\n        color: var(--order-review--primary);\n        font-weight: 600;\n    }  \n       \n  \t/* Styles payment button */  \n    #payment button {\n      padding: var(--space-xs) var(--space-xs); \n      background-color: var(--order-review--primary);\n      color: var(--white);\n      font-weight: normal;\n      font-size: var(--text-m);\n      line-height: 1.5rem;\n      text-align: center;\n      width: 100%;\n    }\n\n}"
+   },
+   "modified": 1728937710,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

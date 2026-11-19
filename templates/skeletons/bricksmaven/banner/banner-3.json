@@ -1,0 +1,305 @@
+{
+ "content": [
+  {
+   "id": "ajavrz",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "xiwofh",
+    "thkaun"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "uteuau"
+    ]
+   },
+   "label": "Banner 3"
+  },
+  {
+   "id": "xiwofh",
+   "name": "container",
+   "parent": "ajavrz",
+   "children": [
+    "fsrioj",
+    "ofjvnd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ogccer"
+    ]
+   }
+  },
+  {
+   "id": "fsrioj",
+   "name": "block",
+   "parent": "xiwofh",
+   "children": [
+    "kmczxg"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rrtcme"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "kmczxg",
+   "name": "div",
+   "parent": "fsrioj",
+   "children": [
+    "ckfimc",
+    "drmjsm",
+    "dtdvwa"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hwkmbr"
+    ],
+    "_display": "flex"
+   },
+   "label": "Info"
+  },
+  {
+   "id": "ckfimc",
+   "name": "heading",
+   "parent": "kmczxg",
+   "children": [],
+   "settings": {
+    "text": "Short headline to grab attention",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "drfjmn"
+    ]
+   }
+  },
+  {
+   "id": "drmjsm",
+   "name": "text-basic",
+   "parent": "kmczxg",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, <a href=\"\">consectetur</a> adipiscing elit.",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "gofnyh"
+    ]
+   }
+  },
+  {
+   "id": "dtdvwa",
+   "name": "text-link",
+   "parent": "kmczxg",
+   "children": [],
+   "settings": {
+    "text": "Link",
+    "_cssGlobalClasses": [
+     "rcrdjv"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   }
+  },
+  {
+   "id": "ofjvnd",
+   "name": "div",
+   "parent": "xiwofh",
+   "children": [
+    "otjfen"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eayndo"
+    ],
+    "tag": "custom",
+    "customTag": "button",
+    "_interactions": [
+     {
+      "id": "lozyqr",
+      "trigger": "click",
+      "action": "hide",
+      "target": "custom",
+      "targetSelector": ".bm-banner-3"
+     }
+    ]
+   },
+   "label": "Close-wrapper"
+  },
+  {
+   "id": "otjfen",
+   "name": "icon",
+   "parent": "ofjvnd",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-close"
+    },
+    "_cssGlobalClasses": [
+     "ndfvku"
+    ],
+    "iconSize": "24"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "thkaun",
+   "name": "code",
+   "parent": "ajavrz",
+   "children": [],
+   "settings": {
+    "cssCode": ".bm-banner-3 {\n padding: 0; \n background-color: var(--white);\n border-bottom: 1px solid var(--neutral);\n box-shadow: var(--box-shadow-m);\n}\n\n.bm-banner-3__container {\n  background-color: none !important;\n  border:none !important;\n  box-shadow: none !important;\n}",
+    "_display": "none"
+   },
+   "themeStyles": {
+    "prettify": "github"
+   },
+   "label": "Full width banner"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "uteuau",
+   "name": "bm-banner-3",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "raw": "transparent"
+     }
+    }
+   }
+  },
+  {
+   "id": "ogccer",
+   "name": "bm-banner-3__container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "space-between",
+    "_alignItems": "center",
+    "_flexWrap": "nowrap",
+    "_cssCustom": ".bm-banner-3__container {\n  box-shadow: var(--box-shadow-m);\n  \n}",
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     }
+    },
+    "_position": "relative",
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    }
+   }
+  },
+  {
+   "id": "rrtcme",
+   "name": "bm-banner-inline-content",
+   "settings": []
+  },
+  {
+   "id": "hwkmbr",
+   "name": "bm-banner-inline-content__info",
+   "settings": {
+    "_columnGap": "calc(var(--content-gap) / 4)",
+    "_justifyContent": "flex-start",
+    "_flexWrap": "wrap",
+    "_rowGap": "calc(var(--content-gap) / 4)",
+    "_alignItems": "center"
+   },
+   "modified": 1736935320,
+   "user_id": 7
+  },
+  {
+   "id": "drfjmn",
+   "name": "bm-banner-inline-content__heading",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-m)"
+    }
+   }
+  },
+  {
+   "id": "gofnyh",
+   "name": "bm-banner-inline-content__text",
+   "settings": {
+    "_cssCustom": ".bm-banner-inline-content__text a {\n  text-decoration: underline;\n  font-weight: 700;\n}"
+   }
+  },
+  {
+   "id": "rcrdjv",
+   "name": "bm-banner-inline-content__link",
+   "settings": {
+    "_typography": {
+     "font-weight": "700",
+     "text-decoration": "underline"
+    }
+   }
+  },
+  {
+   "id": "eayndo",
+   "name": "bm-banner__close-wrapper",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)",
+      "raw": "transparent"
+     }
+    },
+    "_interactions": [
+     {
+      "id": "fgiysv",
+      "trigger": "click",
+      "action": "hide",
+      "animationType": "fadeInUp",
+      "target": "custom",
+      "targetSelector": ".bm-banner-1"
+     }
+    ],
+    "_position": "absolute",
+    "_right": "var(--space-m)",
+    "_top:mobile_portrait": "var(--space-m)"
+   },
+   "modified": 1736934796,
+   "user_id": 7
+  },
+  {
+   "id": "ndfvku",
+   "name": "bm-banner__close",
+   "settings": [],
+   "modified": 1736934796,
+   "user_id": 7
+  }
+ ],
+ "globalElements": []
+}

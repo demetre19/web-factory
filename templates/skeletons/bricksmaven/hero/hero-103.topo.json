@@ -1,0 +1,369 @@
+{
+ "label": "Hero 103",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "2.1.4",
+ "topology_id": "grid-2col-uniform",
+ "element_sig": {
+  "h": 1,
+  "p": 2,
+  "btn": 1,
+  "a": 1,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Hero 103",
+   "loop": false,
+   "classes": [
+    "nrolqt"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "yqyiwn"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "mlsxyx"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Column",
+   "loop": false,
+   "classes": [
+    "eevojd"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h1",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "bgtdwi"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": "Accent heading",
+   "loop": false,
+   "classes": [
+    "cybfcz"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Column",
+   "loop": false,
+   "classes": [
+    "eevojd"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": "Subheading",
+   "loop": false,
+   "classes": [
+    "zevfze"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "CTA",
+   "loop": false,
+   "classes": [
+    "fhimks"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "acss_import_btn--white"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "text-link",
+   "tag": "text-link",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "acss_import_link--white"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Media",
+   "loop": false,
+   "classes": [
+    "jmacpr"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "llddif"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "code",
+   "tag": "code",
+   "label": "Align Image to the right",
+   "loop": false,
+   "classes": [],
+   "depth": 1
+  }
+ ],
+ "classes": {
+  "bm-hero-103": {
+   "spacing": {},
+   "layout": {
+    "_position": "relative",
+    "_isolation": "isolate"
+   },
+   "sizing": {
+    "_overflow": "clip"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".bm-hero-103 {\n  --block-size: 80%; /* Control psuedo height */\n  --psuedo-bg-color: var(--base);\n}\n\n.bm-hero-103::before {\n  content: '';\n  position: absolute;\n  inset-block-start: 0;\n  inline-size: 100%;\n  block-size: var(--block-size);\n  background-color: var(--psuedo-bg-color);\n  z-index: -1;\n}",
+   "tokens": [
+    "base",
+    "block-size",
+    "psuedo-bg-color"
+   ]
+  },
+  "bm-hero-103__container": {
+   "spacing": {
+    "_rowGap": "var(--container-gap)"
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "container-gap"
+   ]
+  },
+  "bm-hero-103__intro": {
+   "spacing": {
+    "_gridGap": "var(--grid-gap)"
+   },
+   "layout": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-2)",
+    "_alignItemsGrid": "flex-end",
+    "_gridTemplateColumns:tablet_portrait": "var(--grid-1)"
+   },
+   "sizing": {},
+   "typography": {
+    "color": {
+     "raw": "var(--text-light)"
+    }
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "grid-1",
+    "grid-2",
+    "grid-gap",
+    "text-light"
+   ]
+  },
+  "bm-hero-103__column": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "bm-hero-103__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "calc(var(--h1) * 1.8)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "h1"
+   ]
+  },
+  "bm-accent-heading": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-103__subheading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "var(--text-l)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "text-l"
+   ]
+  },
+  "cta-combo": {
+   "spacing": {
+    "_columnGap": "calc(var(--content-gap) / 2)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap:mobile_portrait": "calc(var(--content-gap) / 2)",
+    "_alignItems:mobile_portrait": "flex-start",
+    "_direction:mobile_portrait": "column"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "btn--white": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "link--white": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-103__media": {
+   "spacing": {},
+   "layout": {
+    "_alignItems": "flex-end"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-103__image": {
+   "spacing": {},
+   "layout": {
+    "_widthMax": "calc(50vw + (var(--content-width) /  2))",
+    "_width:mobile_landscape": "calc(100% + var(--gutter))",
+    "_widthMax:mobile_landscape": "calc(100% + var(--gutter))",
+    "_margin:mobile_landscape": {
+     "left": "calc(-1 * var(--gutter)) !important"
+    },
+    "_height:mobile_landscape": "var(--width-m)"
+   },
+   "sizing": {
+    "_height": "100%",
+    "_width": "calc(50vw + (var(--content-width) /  2))",
+    "_aspectRatio": "16/9",
+    "_objectFit": "cover"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {
+    "right": "var(--radius-xxl)",
+    "bottom": "var(--radius-xxl)"
+   },
+   "custom_css": null,
+   "tokens": [
+    "content-width",
+    "gutter",
+    "radius-xxl",
+    "width-m"
+   ]
+  }
+ },
+ "tokens_all": [
+  "base",
+  "block-size",
+  "container-gap",
+  "content-gap",
+  "content-width",
+  "grid-1",
+  "grid-2",
+  "grid-gap",
+  "gutter",
+  "h1",
+  "psuedo-bg-color",
+  "radius-xxl",
+  "text-l",
+  "text-light",
+  "width-m"
+ ]
+}

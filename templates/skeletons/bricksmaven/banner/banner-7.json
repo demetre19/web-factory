@@ -1,0 +1,392 @@
+{
+ "content": [
+  {
+   "id": "qmpfrm",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "twrhwc",
+    "vxejvp"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "poaamv"
+    ]
+   },
+   "label": "Banner 7"
+  },
+  {
+   "id": "twrhwc",
+   "name": "container",
+   "parent": "qmpfrm",
+   "children": [
+    "yegtzk",
+    "jfopiq",
+    "ckvagr"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "beibns"
+    ]
+   }
+  },
+  {
+   "id": "yegtzk",
+   "name": "div",
+   "parent": "twrhwc",
+   "children": [
+    "drjfhh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bhfeyj"
+    ]
+   },
+   "label": "Countdown wrapper"
+  },
+  {
+   "id": "drjfhh",
+   "name": "countdown",
+   "parent": "yegtzk",
+   "children": [],
+   "settings": {
+    "date": "2034-01-01 12:00",
+    "fields": [
+     {
+      "format": "%D",
+      "id": "bxecfr",
+      "suffix": "Days"
+     },
+     {
+      "format": "%H",
+      "id": "wkrdns",
+      "suffix": "Hours"
+     },
+     {
+      "format": "%M",
+      "id": "ucadks",
+      "suffix": "Minutes"
+     },
+     {
+      "format": "%S",
+      "id": "rbkiwj",
+      "suffix": "Seconds"
+     }
+    ],
+    "_cssGlobalClasses": [
+     "lwigil"
+    ]
+   },
+   "themeStyles": [],
+   "label": "Countdown {CSS}"
+  },
+  {
+   "id": "jfopiq",
+   "name": "block",
+   "parent": "twrhwc",
+   "children": [
+    "lskoiz"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rrtcme"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "lskoiz",
+   "name": "div",
+   "parent": "jfopiq",
+   "children": [
+    "sjekeu",
+    "gxaewx",
+    "vxzsrj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hwkmbr"
+    ],
+    "_display": "flex"
+   },
+   "label": "Info"
+  },
+  {
+   "id": "sjekeu",
+   "name": "heading",
+   "parent": "lskoiz",
+   "children": [],
+   "settings": {
+    "text": "Short headline to grab attention",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "drfjmn"
+    ]
+   }
+  },
+  {
+   "id": "gxaewx",
+   "name": "text-basic",
+   "parent": "lskoiz",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, <a href=\"\">consectetur</a> adipiscing elit.",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "gofnyh"
+    ]
+   }
+  },
+  {
+   "id": "vxzsrj",
+   "name": "text-link",
+   "parent": "lskoiz",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rcrdjv"
+    ],
+    "text": "Link",
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "ckvagr",
+   "name": "div",
+   "parent": "twrhwc",
+   "children": [
+    "tskxxv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eayndo"
+    ],
+    "tag": "custom",
+    "customTag": "button",
+    "_interactions": [
+     {
+      "id": "lozyqr",
+      "trigger": "click",
+      "action": "hide",
+      "target": "custom",
+      "targetSelector": ".bm-banner-3"
+     }
+    ]
+   },
+   "label": "Close-wrapper"
+  },
+  {
+   "id": "tskxxv",
+   "name": "icon",
+   "parent": "ckvagr",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-close"
+    },
+    "_cssGlobalClasses": [
+     "ndfvku"
+    ],
+    "iconSize": "24"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "vxejvp",
+   "name": "code",
+   "parent": "qmpfrm",
+   "children": [],
+   "settings": {
+    "cssCode": ".bm-banner-7 {\n padding: 0; \n background-color: var(--white);\n border-bottom: 1px solid var(--neutral);\n box-shadow: var(--box-shadow-m);\n}\n\n.bm-banner-7__container {\n  background-color: none !important;\n  border:none !important;\n  box-shadow: none !important;\n}",
+    "_display": "none"
+   },
+   "themeStyles": {
+    "prettify": "github"
+   },
+   "label": "Full width banner"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "poaamv",
+   "name": "bm-banner-7",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "raw": "transparent"
+     }
+    }
+   }
+  },
+  {
+   "id": "beibns",
+   "name": "bm-banner-7__container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "flex-start",
+    "_alignItems": "center",
+    "_flexWrap": "nowrap",
+    "_cssCustom": ".bm-banner-7__container {\n  box-shadow: var(--box-shadow-m);\n  \n}",
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     }
+    },
+    "_position": "relative",
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    },
+    "_columnGap": "var(--content-gap)",
+    "_rowGap": "var(--content-gap)",
+    "_direction:tablet_portrait": "column",
+    "_alignItems:tablet_portrait": "flex-start"
+   },
+   "modified": 1737469228,
+   "user_id": 7
+  },
+  {
+   "id": "bhfeyj",
+   "name": "coming-soon__countdown-wrapper",
+   "settings": []
+  },
+  {
+   "id": "lwigil",
+   "name": "coming-soon-countdown--alt",
+   "settings": {
+    "flexDirectionFields": "row",
+    "flexDirection": "column",
+    "typography": {
+     "font-size": "var(--text-l)",
+     "font-weight": "700"
+    },
+    "typographySuffix": {
+     "font-size": "var(--text-s)",
+     "font-weight": "400"
+    },
+    "_cssCustom": ".coming-soon-countdown--alt .field {\n\tgap: calc(var(--space-xs) / 4);\n  background-color: var(--neutral);\n  padding-inline: var(--space-xs);\n  padding-block: var(--space-xs);\n  color: var(--text-light);\n  \n}\n\n.coming-soon-countdown--alt .field:not(:last-of-type) {\n\tmargin-inline-end: var(--space-xs) !important;\n}"
+   },
+   "modified": 1737469037,
+   "user_id": 7
+  },
+  {
+   "id": "rrtcme",
+   "name": "bm-banner-inline-content",
+   "settings": {
+    "_width:mobile_landscape": "var(--width-m)",
+    "_width": "auto"
+   },
+   "modified": 1737467862,
+   "user_id": 7
+  },
+  {
+   "id": "hwkmbr",
+   "name": "bm-banner-inline-content__info",
+   "settings": {
+    "_columnGap": "calc(var(--content-gap) / 4)",
+    "_justifyContent": "flex-start",
+    "_flexWrap": "wrap",
+    "_rowGap": "calc(var(--content-gap) / 4)",
+    "_alignItems": "center"
+   },
+   "modified": 1736935320,
+   "user_id": 7
+  },
+  {
+   "id": "drfjmn",
+   "name": "bm-banner-inline-content__heading",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-m)"
+    }
+   }
+  },
+  {
+   "id": "gofnyh",
+   "name": "bm-banner-inline-content__text",
+   "settings": {
+    "_cssCustom": ".bm-banner-inline-content__text a {\n  text-decoration: underline;\n  font-weight: 700;\n}"
+   }
+  },
+  {
+   "id": "rcrdjv",
+   "name": "bm-banner-inline-content__link",
+   "settings": {
+    "_typography": {
+     "font-weight": "700",
+     "text-decoration": "underline"
+    }
+   }
+  },
+  {
+   "id": "eayndo",
+   "name": "bm-banner__close-wrapper",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)",
+      "raw": "transparent"
+     }
+    },
+    "_interactions": [
+     {
+      "id": "fgiysv",
+      "trigger": "click",
+      "action": "hide",
+      "animationType": "fadeInUp",
+      "target": "custom",
+      "targetSelector": ".bm-banner-1"
+     }
+    ],
+    "_position": "absolute",
+    "_right": "var(--space-m)",
+    "_top:mobile_portrait": "var(--space-m)"
+   },
+   "modified": 1736934796,
+   "user_id": 7
+  },
+  {
+   "id": "ndfvku",
+   "name": "bm-banner__close",
+   "settings": [],
+   "modified": 1736934796,
+   "user_id": 7
+  }
+ ],
+ "globalElements": []
+}

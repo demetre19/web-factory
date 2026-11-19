@@ -1,0 +1,267 @@
+{
+ "content": [
+  {
+   "id": "jkmllz",
+   "name": "block",
+   "parent": 0,
+   "children": [
+    "ripuao",
+    "dzpxxz",
+    "yaapvz"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "atzcrk"
+    ]
+   },
+   "label": "Table of Content 2"
+  },
+  {
+   "id": "ripuao",
+   "name": "block",
+   "parent": "jkmllz",
+   "children": [
+    "dspwnj",
+    "prmqkx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mwbbuq"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "dspwnj",
+   "name": "heading",
+   "parent": "ripuao",
+   "children": [],
+   "settings": {
+    "text": "Table of contents",
+    "_cssGlobalClasses": [
+     "dvbwbj"
+    ]
+   }
+  },
+  {
+   "id": "prmqkx",
+   "name": "icon",
+   "parent": "ripuao",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "_cssGlobalClasses": [
+     "axnrau"
+    ]
+   }
+  },
+  {
+   "id": "dzpxxz",
+   "name": "block",
+   "parent": "jkmllz",
+   "children": [
+    "nnezwy"
+   ],
+   "settings": {
+    "tag": "ol",
+    "_cssGlobalClasses": [
+     "qevush"
+    ],
+    "_display": "flex"
+   },
+   "label": "TOC ol"
+  },
+  {
+   "id": "nnezwy",
+   "name": "block",
+   "parent": "dzpxxz",
+   "children": [
+    "qatdmk",
+    "ipazut"
+   ],
+   "settings": {
+    "tag": "li",
+    "_cssGlobalClasses": [
+     "wltord"
+    ]
+   },
+   "label": "TOC li"
+  },
+  {
+   "id": "qatdmk",
+   "name": "text-link",
+   "parent": "nnezwy",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "npnngi"
+    ],
+    "text": "Text link",
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   }
+  },
+  {
+   "id": "ipazut",
+   "name": "block",
+   "parent": "nnezwy",
+   "children": [
+    "xbltma"
+   ],
+   "settings": {
+    "tag": "ol",
+    "_cssGlobalClasses": [
+     "qevush"
+    ]
+   },
+   "label": "TOC ol"
+  },
+  {
+   "id": "xbltma",
+   "name": "block",
+   "parent": "ipazut",
+   "children": [
+    "ppcdva"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wltord"
+    ],
+    "tag": "li"
+   },
+   "label": "TOC li"
+  },
+  {
+   "id": "ppcdva",
+   "name": "text-link",
+   "parent": "xbltma",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bhfqxf"
+    ],
+    "text": "Text link"
+   }
+  },
+  {
+   "id": "yaapvz",
+   "name": "code",
+   "parent": "jkmllz",
+   "children": [],
+   "settings": {
+    "executeCode": true,
+    "code": "<script>\ndocument.addEventListener('DOMContentLoaded', function() {\n    const contentContainer = document.querySelector('.brxe-post-content');\n    if (!contentContainer) return;\n\n    const headings = contentContainer.querySelectorAll('h2, h3, h4, h5, h6');\n    if (!headings.length) return;\n\n    const toc = document.querySelector('.table-of-content-2 ol');\n    if (!toc) return;\n  \ttoc.style.height = '0px';\n\n    toc.innerHTML = ''; // Clear existing ToC entries\n\n    let lastLevel = 2;\n    let currentOl = toc;\n    let olStack = [toc];\n\n    headings.forEach(heading => {\n        const level = parseInt(heading.tagName.substring(1));\n        const sanitizedId = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');\n        heading.id = sanitizedId;\n\n        if (level === 2) {\n            // Reset to the top level for h2 headings\n            currentOl = toc;\n            olStack = [toc];\n        } else if (level > lastLevel) {\n            // Create new nested list for lower level headings\n            const newOl = document.createElement('ol');\n            newOl.className = 'brxe-block table-of-content-2-ol';\n          \tnewOl.style.height = '0px';\n            newOl.style.overflow = 'hidden';\n            newOl.style.transition = 'height 0.3s ease';\n            olStack[olStack.length - 1].lastElementChild.appendChild(newOl);\n            olStack.push(newOl);\n            currentOl = newOl;\n        } else if (level < lastLevel && level !== 2) {\n            // Adjust the stack for heading levels that are not h2\n            while (olStack.length > 1 && level <= parseInt(olStack[olStack.length - 2].tagName.substring(1))) {\n                olStack.pop();\n            }\n            currentOl = olStack[olStack.length - 1];\n        }\n\n        const li = document.createElement('li');\n        li.className = 'brxe-block table-of-content-2-li';\n        const a = document.createElement('a');\n        a.className = 'brxe-text-link table-of-content-2-li__link';\n        a.href = '#' + sanitizedId;\n        a.textContent = heading.textContent;\n\n        // Add accordion toggle for h2 headings\n        if (heading.tagName === 'H2') {\n            const arrowSpan = document.createElement('span');\n            arrowSpan.className = 'toc-arrow';\n            arrowSpan.innerHTML = '<i class=\"brxe-icon table-of-content-2__icon ion-ios-arrow-down\"></i>';\n            a.appendChild(arrowSpan);\n\n            arrowSpan.addEventListener('click', function(e) {\n                e.preventDefault();\n                e.stopPropagation();\n                const nextOl = this.parentNode.nextElementSibling;\n                if (nextOl && nextOl.tagName === 'OL') {\n                    slideToggle(nextOl);\n                    this.querySelector('i').classList.toggle('rotated');\n                }\n            });\n        }\n\n        li.appendChild(a);\n        currentOl.appendChild(li);\n\n        lastLevel = level;\n    });\n  \n  \n  \tconst chevron = document.querySelector('.table-of-content-2__icon');\n    if (chevron) {\n        // Add click event listener to the chevron\n        chevron.addEventListener('click', function() {\n            // Toggle the ToC visibility\n            slideToggle(toc);\n\n            // Optional: Rotate the chevron icon to indicate the state\n            this.classList.toggle('rotated');\n        });\n    }\n});\n\nfunction slideToggle(element) {\n    // If the element is currently open (height not '0px' and not ''), close it.\n    if (element.style.height !== '0px' && element.style.height !== '') {\n        // Set height to its current scrollHeight to ensure a specific value.\n        element.style.height = element.scrollHeight + 'px';\n\n        // Delay the transition to '0px' to allow the browser to recognize the starting height.\n        setTimeout(function() {\n            element.style.height = '0px';\n        }, 10); // A short delay\n    } else {\n        // If the element is closed, open it by setting height to its scrollHeight.\n        element.style.height = element.scrollHeight + 'px';\n\n        // Reset the height to 'auto' after the transition ends.\n        element.addEventListener('transitionend', function resetHeight() {\n            // Ensure we don't reset to 'auto' if the element was closed during the transition.\n            if (element.style.height !== '0px') {\n                element.style.height = 'auto';\n            }\n            element.removeEventListener('transitionend', resetHeight);\n        }, { once: true });\n    }\n}\n</script>",
+    "noRoot": true,
+    "signature": "8cccae8fda82729db78feac7da249f71",
+    "user_id": 7,
+    "time": 1713780254
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "atzcrk",
+   "name": "table-of-content-2",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "width": {
+      "left": ".1rem",
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    }
+   }
+  },
+  {
+   "id": "mwbbuq",
+   "name": "table-of-content-2__intro",
+   "settings": {
+    "_padding": {
+     "bottom": "var(--space-xs)"
+    },
+    "_border": {
+     "width": {
+      "bottom": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_direction": "row",
+    "_alignItems": "center",
+    "_justifyContent": "space-between"
+   }
+  },
+  {
+   "id": "dvbwbj",
+   "name": "table-of-content-2__heading",
+   "settings": []
+  },
+  {
+   "id": "axnrau",
+   "name": "table-of-content-2__icon",
+   "settings": {
+    "iconSize": "25",
+    "_cursor": "pointer",
+    "_cssTransition": "transform .3s ease",
+    "_cssCustom": ".table-of-content-2__icon.rotated {\n\ttransform: scaleY(-1);\n}"
+   }
+  },
+  {
+   "id": "qevush",
+   "name": "table-of-content-2-ol",
+   "settings": {
+    "_rowGap": "var(--content-gap)",
+    "_overflow": "hidden",
+    "_cssTransition": "height 0.3s ease"
+   }
+  },
+  {
+   "id": "wltord",
+   "name": "table-of-content-2-li",
+   "settings": {
+    "_cssCustom": ".table-of-content-2-li {\n\t    display: list-item;\n}"
+   }
+  },
+  {
+   "id": "npnngi",
+   "name": "table-of-content-2-li__link",
+   "settings": {
+    "_cssCustom": ".table-of-content-2-li__link {\n\tgap: 25px;\n}",
+    "_padding": {
+     "right": "25px"
+    }
+   }
+  },
+  {
+   "id": "bhfqxf",
+   "name": "table-of-content-2-li__link-l2",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

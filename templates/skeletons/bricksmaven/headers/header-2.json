@@ -1,0 +1,213 @@
+{
+ "content": [
+  {
+   "id": "jxlehe",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "htyprf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ydrlqc"
+    ]
+   },
+   "label": "Header 2"
+  },
+  {
+   "id": "htyprf",
+   "name": "container",
+   "parent": "jxlehe",
+   "children": [
+    "awbmdk",
+    "dnhacb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "efsgoo"
+    ]
+   }
+  },
+  {
+   "id": "awbmdk",
+   "name": "block",
+   "parent": "htyprf",
+   "children": [
+    "hjpipl"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hhftvh"
+    ]
+   },
+   "label": "Brand"
+  },
+  {
+   "id": "hjpipl",
+   "name": "logo",
+   "parent": "awbmdk",
+   "children": [],
+   "settings": {
+    "logoText": "{site_title}",
+    "_cssGlobalClasses": [
+     "ssatzy"
+    ],
+    "logoHeight": "100%",
+    "logoWidth": "100%",
+    "logo": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/04/logoipsum-219.svg",
+     "external": true,
+     "filename": "logoipsum-219.svg"
+    }
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "dnhacb",
+   "name": "block",
+   "parent": "htyprf",
+   "children": [
+    "kmnwci",
+    "yowufy"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rgdpde"
+    ]
+   },
+   "label": "Nav + Button"
+  },
+  {
+   "id": "kmnwci",
+   "name": "nav-menu",
+   "parent": "dnhacb",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vjqpxz"
+    ],
+    "menu": "3",
+    "menuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "subMenuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "mobileMenu": "mobile_landscape"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "yowufy",
+   "name": "text-link",
+   "parent": "dnhacb",
+   "children": [],
+   "settings": {
+    "text": "Call to action",
+    "_cssGlobalClasses": [
+     "fxtqvr",
+     "acss_import_btn--primary"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "ydrlqc",
+   "name": "header-2",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".header-2 {\n\toverflow: hidden;\n}",
+    "_padding": {
+     "top": "var(--space-xs)",
+     "bottom": "var(--space-xs)"
+    }
+   }
+  },
+  {
+   "id": "efsgoo",
+   "name": "header-2__container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "space-between",
+    "_alignItems": "center",
+    "_columnGap": "var(--content-gap)",
+    "_flexWrap": "nowrap"
+   }
+  },
+  {
+   "id": "hhftvh",
+   "name": "header-2__brand",
+   "settings": {
+    "_gridItemColumnSpan:mobile_landscape": "span 3",
+    "_gridItemColumnSpan": "span 2",
+    "_width": "auto"
+   }
+  },
+  {
+   "id": "ssatzy",
+   "name": "header-2__brand-logo",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".header-1__logo.white path {\n\tfill: var(--white);\n}"
+   }
+  },
+  {
+   "id": "rgdpde",
+   "name": "Header-2__right-column",
+   "settings": {
+    "_gridItemColumnSpan": "span 6",
+    "_display": "flex",
+    "_direction": "row",
+    "_alignItems": "center",
+    "_gridItemColumnSpan:mobile_landscape": "-1",
+    "_columnGap": "var(--content-gap)",
+    "_justifyContent": "flex-end",
+    "_direction:mobile_landscape": "row"
+   }
+  },
+  {
+   "id": "vjqpxz",
+   "name": "header-2__menu",
+   "settings": {
+    "menuTypography": {
+     "color": {
+      "raw": "var(--text-black)"
+     }
+    },
+    "subMenuBackground:hover": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order:mobile_landscape": "2"
+   }
+  },
+  {
+   "id": "fxtqvr",
+   "name": "header-2__cta",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    },
+    "_width": "auto",
+    "_widthMin": "auto"
+   }
+  }
+ ],
+ "globalElements": []
+}

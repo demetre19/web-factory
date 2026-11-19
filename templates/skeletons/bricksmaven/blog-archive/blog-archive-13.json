@@ -1,0 +1,376 @@
+{
+ "content": [
+  {
+   "id": "kdezbh",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "vwrhtv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "slwuho"
+    ]
+   },
+   "label": "Blog Archive 13"
+  },
+  {
+   "id": "vwrhtv",
+   "name": "container",
+   "parent": "kdezbh",
+   "children": [
+    "dbb89d",
+    "jornml"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "olrjhd"
+    ]
+   }
+  },
+  {
+   "id": "dbb89d",
+   "name": "div",
+   "parent": "vwrhtv",
+   "children": [
+    "cdaa99",
+    "fc33fe",
+    "5668b4"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "cdaa99",
+   "name": "heading",
+   "parent": "dbb89d",
+   "children": [],
+   "settings": {
+    "text": "Long headline to turn your visitors into customers",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "fc33fe",
+   "name": "text-basic",
+   "parent": "dbb89d",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "5668b4",
+   "name": "text-basic",
+   "parent": "dbb89d",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "jornml",
+   "name": "block",
+   "parent": "vwrhtv",
+   "children": [
+    "cmjfhm"
+   ],
+   "settings": {
+    "tag": "ul",
+    "_cssGlobalClasses": [
+     "mgrrcn",
+     "acss_import_list--none"
+    ]
+   },
+   "label": "Archive list"
+  },
+  {
+   "id": "cmjfhm",
+   "name": "block",
+   "parent": "jornml",
+   "children": [
+    "bwfwvs",
+    "vcgsyz"
+   ],
+   "settings": {
+    "tag": "li",
+    "_cssGlobalClasses": [
+     "gvqies"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "post"
+     ],
+     "posts_per_page": "9"
+    }
+   },
+   "label": "Card"
+  },
+  {
+   "id": "bwfwvs",
+   "name": "block",
+   "parent": "cmjfhm",
+   "children": [
+    "himakx",
+    "eixbhx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "idsevg"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "himakx",
+   "name": "post-title",
+   "parent": "bwfwvs",
+   "children": [],
+   "settings": {
+    "tag": "h3",
+    "_cssGlobalClasses": [
+     "bmkjni"
+    ]
+   }
+  },
+  {
+   "id": "eixbhx",
+   "name": "block",
+   "parent": "bwfwvs",
+   "children": [
+    "pkgvkx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "yanzht"
+    ]
+   },
+   "label": "CTA"
+  },
+  {
+   "id": "pkgvkx",
+   "name": "button",
+   "parent": "eixbhx",
+   "children": [],
+   "settings": {
+    "text": "Read more",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ]
+   }
+  },
+  {
+   "id": "vcgsyz",
+   "name": "image",
+   "parent": "cmjfhm",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mskhch"
+    ],
+    "image": {
+     "useDynamicData": "{featured_image}",
+     "size": "large",
+     "filename": "",
+     "id": 2936,
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2022/10/Blog-archive13-thumb-1024x576.jpg"
+    },
+    "tag": "figure"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "slwuho",
+   "name": "blog-archive-13",
+   "settings": []
+  },
+  {
+   "id": "olrjhd",
+   "name": "blog-archive-13-container",
+   "settings": {
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--space-s)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "mgrrcn",
+   "name": "blog-archive-13-archive-list",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "repeat(12, minmax(0, 1fr))",
+    "_gridTemplateColumns:mobile_landscape": "repeat(2, minmax(0, 1fr))",
+    "_gridTemplateColumns:mobile_portrait": "repeat(1, minmax(0, 1fr))"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "gvqies",
+   "name": "blog-archive-13-archive-card",
+   "settings": {
+    "_position": "relative",
+    "_gridItemColumnSpan": "span 4",
+    "_cssCustom": ".blog-archive-13-archive-card:nth-child(3n+1) {\n\theight: 25rem;\n}\n\n.blog-archive-13-archive-card:first-child {\n\tgrid-column: 1 / 7;\n  grid-row: span 2;\n  height:100%;\n}\n\n.blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {\n\tfont-size: var(--h2);\n}\n\n.blog-archive-13-archive-card:nth-child(2) {\n\tgrid-column: 7 / -1;\n  grid-row-start: 1;\n  height: 100%;\n}\n\n.blog-archive-13-archive-card:nth-child(3) {\n\tgrid-column: 7 / -1;\n  grid-row-start: 2;\n  height: 100%;\n}\n\n@media (max-width:767px) {\n\n\t.blog-archive-13-archive-card:nth-child(3n+1) {\n\theight: 100%;\n}\n\n.blog-archive-13-archive-card:first-child {\n\tgrid-column: span 1;\n  grid-row: span 1;\n  height:100%;\n}\n\n.blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {\n\tfont-size: var(--text-l);\n}\n\n.blog-archive-13-archive-card:nth-child(2) {\n\tgrid-column: span 1;\n  grid-row-start: auto;\n  height: 100%;\n}\n\n.blog-archive-13-archive-card:nth-child(3) {\n\tgrid-column: span 1;\n  grid-row-start: auto;\n  height: 100%;\n}\n\n}\n",
+    "_gridItemColumnSpan:mobile_landscape": "span 1"
+   }
+  },
+  {
+   "id": "idsevg",
+   "name": "blog-archive-13-archive-card__content",
+   "settings": {
+    "_zIndex": "1",
+    "_position": "relative",
+    "_justifyContent": "space-between",
+    "_display": "flex",
+    "_direction": "column",
+    "_height": "100%",
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    }
+   }
+  },
+  {
+   "id": "bmkjni",
+   "name": "blog-archive-13-archive-card__post-title",
+   "settings": {
+    "_typography": {
+     "color": {
+      "raw": "var(--white)"
+     },
+     "font-size": "var(--text-m)"
+    },
+    "_margin": {
+     "bottom": "var(--space-m)"
+    },
+    "_typography:mobile_landscape": {
+     "font-size": "var(--text-l)"
+    }
+   }
+  },
+  {
+   "id": "yanzht",
+   "name": "blog-archive-13-archive-card__cta-wrapper",
+   "settings": {
+    "_alignItems": "flex-end"
+   }
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    },
+    "_width": "auto",
+    "_widthMin": "auto"
+   }
+  },
+  {
+   "id": "mskhch",
+   "name": "blog-archive-13-archive-card__image",
+   "settings": {
+    "_position": "absolute",
+    "_width": "100%",
+    "_height": "100%",
+    "_objectFit": "cover",
+    "_cssCustom": ".blog-archive-13-archive-card__image {\n\taspect-ratio: 1/1;\n}",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "ynzqgm",
+       "color": {
+        "id": "acss_import_shade-trans-60",
+        "name": "shade-trans-60",
+        "raw": "var(--shade-trans-60)"
+       }
+      }
+     ]
+    },
+    "_top": "0",
+    "_right": "0",
+    "_bottom": "0",
+    "_left": "0"
+   }
+  }
+ ],
+ "globalElements": []
+}

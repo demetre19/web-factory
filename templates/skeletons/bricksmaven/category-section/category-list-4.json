@@ -1,0 +1,334 @@
+{
+ "content": [
+  {
+   "id": "smagpm",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "wgffmd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "agpwwv"
+    ]
+   },
+   "label": "Category List 4"
+  },
+  {
+   "id": "wgffmd",
+   "name": "container",
+   "parent": "smagpm",
+   "children": [
+    "4d4d7d",
+    "xzjomb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sxvrmd"
+    ]
+   }
+  },
+  {
+   "id": "4d4d7d",
+   "name": "div",
+   "parent": "wgffmd",
+   "children": [
+    "79ce38",
+    "a63a49",
+    "070cf2"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq",
+     "jhiwic"
+    ],
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "79ce38",
+   "name": "heading",
+   "parent": "4d4d7d",
+   "children": [],
+   "settings": {
+    "text": "Browse our collection",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "a63a49",
+   "name": "text-basic",
+   "parent": "4d4d7d",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "070cf2",
+   "name": "text-basic",
+   "parent": "4d4d7d",
+   "children": [],
+   "settings": {
+    "text": "Tagline",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "xzjomb",
+   "name": "block",
+   "parent": "wgffmd",
+   "children": [
+    "pxmpzz"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lmhnat",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "List"
+  },
+  {
+   "id": "pxmpzz",
+   "name": "block",
+   "parent": "xzjomb",
+   "children": [
+    "vruhwl",
+    "bcheni"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "drzpse"
+    ],
+    "query": {
+     "objectType": "term",
+     "taxonomy": [
+      "product_cat"
+     ],
+     "number": "8"
+    },
+    "hasLoop": true,
+    "tag": "li"
+   },
+   "label": "Card Loop"
+  },
+  {
+   "id": "vruhwl",
+   "name": "heading",
+   "parent": "pxmpzz",
+   "children": [],
+   "settings": {
+    "text": "{term_name}",
+    "_cssGlobalClasses": [
+     "qwotsb"
+    ],
+    "tag": "h3",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{term_url}"
+    }
+   }
+  },
+  {
+   "id": "bcheni",
+   "name": "image",
+   "parent": "pxmpzz",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "uavkdt"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{woo_product_cat_image}",
+     "size": "large"
+    },
+    "link": "url",
+    "url": {
+     "type": "external",
+     "url": "{term_url}"
+    },
+    "_objectFit": "cover"
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "agpwwv",
+   "name": "category-list-4",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "sxvrmd",
+   "name": "category-list-4__container",
+   "settings": {
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_rowGap": "var(--container-gap)"
+   },
+   "modified": 1729029701,
+   "user_id": 1
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "jhiwic",
+   "name": "intro--left",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    },
+    "_alignSelf": "flex-start"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "lmhnat",
+   "name": "category-list-4__list",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateRows:mobile_landscape": "auto",
+    "_gridTemplateColumns:mobile_portrait": "var(--grid-1)",
+    "_gridTemplateColumns": "var(--grid-4)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-2)"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "drzpse",
+   "name": "category-list-4-card",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "qwotsb",
+   "name": "category-list-4-card__heading",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_zIndex": "2",
+    "_position": "absolute",
+    "_typography": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     },
+     "text-align": "center",
+     "font-size": "var(--text-m)"
+    },
+    "_top": "50%",
+    "_padding": {
+     "left": "var(--space-m)",
+     "right": "var(--space-m)"
+    }
+   },
+   "modified": 1728990943,
+   "user_id": 1
+  },
+  {
+   "id": "uavkdt",
+   "name": "category-list-4-card__image",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_objectFit": "cover",
+    "_aspectRatio": "1/1",
+    "_width": "100%",
+    "_height": "100%",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "jkdubc",
+       "color": {
+        "id": "acss_import_neutral-trans-80",
+        "name": "neutral-trans-80",
+        "raw": "var(--neutral-trans-80)"
+       }
+      },
+      {
+       "id": "jkdubc",
+       "color": {
+        "id": "acss_import_neutral-trans-80",
+        "name": "neutral-trans-80",
+        "raw": "var(--neutral-trans-80)"
+       }
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

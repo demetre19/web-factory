@@ -1,0 +1,279 @@
+{
+ "label": "How it Works 2",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "h": 3,
+  "p": 3
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "How it Works 2",
+   "loop": false,
+   "classes": [
+    "uiwlka"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fhbpxx"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Grid",
+   "loop": false,
+   "classes": [
+    "ccgpob",
+    "acss_import_list--none"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "earmtw"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Content",
+   "loop": false,
+   "classes": [
+    "ceabbc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "heading",
+   "tag": "heading",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "lwfqal"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sdibnj"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "earmtw"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Content",
+   "loop": false,
+   "classes": [
+    "ceabbc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "heading",
+   "tag": "heading",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "lwfqal"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sdibnj"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "earmtw"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Content",
+   "loop": false,
+   "classes": [
+    "ceabbc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "heading",
+   "tag": "heading",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "lwfqal"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sdibnj"
+   ],
+   "depth": 5
+  }
+ ],
+ "classes": {
+  "hworks-2": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-2-container": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-grid-ul": {
+   "spacing": {
+    "_gridGap": "var(--space-s)"
+   },
+   "layout": {
+    "_display": "grid",
+    "_gridTemplateColumns": "repeat(3, 1fr)",
+    "_gridTemplateColumns:mobile_landscape": "1fr",
+    "_gridGap:mobile_landscape": "var(--space-l)"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".hworks-grid-ul {\n/* Define & Initialize Counter */\n\tcounter-reset: hworks-counter;\n  \n}\n\n\n.hworks-grid-ul li::before {\n  /* Increment Counter */\n  counter-increment: hworks-counter;\n  /* Display Counter */\n  content: counters(hworks-counter,\".\") \" \";\n  background-color: var(--primary-light-trans-40);\n  padding-inline:1.4rem;\n  padding-block:.4rem;\n  color:var(--primary);\n}",
+   "tokens": [
+    "primary",
+    "primary-light-trans-40",
+    "space-l",
+    "space-s"
+   ]
+  },
+  "list--none": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-card": {
+   "spacing": {
+    "_columnGap": "var(--space-s)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "row",
+    "_alignItems": "flex-start"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-s"
+   ]
+  },
+  "hworks-card__content": {
+   "spacing": {
+    "_rowGap": "var(--space-s)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "column"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-s"
+   ]
+  },
+  "hworks-card__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-card__desc": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  }
+ },
+ "tokens_all": [
+  "primary",
+  "primary-light-trans-40",
+  "space-l",
+  "space-s"
+ ]
+}

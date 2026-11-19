@@ -1,0 +1,325 @@
+{
+ "content": [
+  {
+   "id": "jjvitn",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "ygovnt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wnlybg"
+    ]
+   },
+   "label": "Category Section 7"
+  },
+  {
+   "id": "ygovnt",
+   "name": "container",
+   "parent": "jjvitn",
+   "children": [
+    "c3ae7e",
+    "ahpbzk"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "geuxzv"
+    ]
+   }
+  },
+  {
+   "id": "c3ae7e",
+   "name": "div",
+   "parent": "ygovnt",
+   "children": [
+    "3f3ab8",
+    "66a04c",
+    "d077d0"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "3f3ab8",
+   "name": "heading",
+   "parent": "c3ae7e",
+   "children": [],
+   "settings": {
+    "text": "Browse our collection",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "66a04c",
+   "name": "text-basic",
+   "parent": "c3ae7e",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "d077d0",
+   "name": "text-basic",
+   "parent": "c3ae7e",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "ahpbzk",
+   "name": "block",
+   "parent": "ygovnt",
+   "children": [
+    "grokdt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lgxpma",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "List"
+  },
+  {
+   "id": "grokdt",
+   "name": "block",
+   "parent": "ahpbzk",
+   "children": [
+    "iwupiu",
+    "ytbwcq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wukfrd"
+    ],
+    "query": {
+     "objectType": "term",
+     "taxonomy": [
+      "product_cat"
+     ]
+    },
+    "hasLoop": true,
+    "tag": "li"
+   },
+   "label": "Card Loop"
+  },
+  {
+   "id": "iwupiu",
+   "name": "block",
+   "parent": "grokdt",
+   "children": [
+    "lgitbc",
+    "khyndf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "zqpgac"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "lgitbc",
+   "name": "heading",
+   "parent": "iwupiu",
+   "children": [],
+   "settings": {
+    "text": "{term_name}",
+    "_cssGlobalClasses": [
+     "ywpbrs"
+    ],
+    "tag": "h4",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{term_url}"
+    }
+   }
+  },
+  {
+   "id": "khyndf",
+   "name": "text-basic",
+   "parent": "iwupiu",
+   "children": [],
+   "settings": {
+    "text": "{echo:get_product_count_by_category( {term_id} )}",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "usildi"
+    ]
+   },
+   "label": "Product count"
+  },
+  {
+   "id": "ytbwcq",
+   "name": "image",
+   "parent": "grokdt",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bmuinw"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{woo_product_cat_image}",
+     "size": "large"
+    },
+    "link": "url",
+    "url": {
+     "type": "external",
+     "url": "{term_url}"
+    }
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "wnlybg",
+   "name": "category-list-7",
+   "settings": []
+  },
+  {
+   "id": "geuxzv",
+   "name": "category-list-7__container",
+   "settings": {
+    "_direction": "column",
+    "_alignItems": "center",
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "lgxpma",
+   "name": "category-list-7__list",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-auto-4)"
+   },
+   "modified": 1723691151,
+   "user_id": 2
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "wukfrd",
+   "name": "category-list-7-card",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   }
+  },
+  {
+   "id": "zqpgac",
+   "name": "category-list-7-card__intro",
+   "settings": {
+    "_rowGap": "calc(var(--content-gap) / 4)"
+   }
+  },
+  {
+   "id": "ywpbrs",
+   "name": "category-list-7-card__heading",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   }
+  },
+  {
+   "id": "usildi",
+   "name": "category-list-7-card__category-count",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   },
+   "modified": 1728991946,
+   "user_id": 1
+  },
+  {
+   "id": "bmuinw",
+   "name": "category-list-7-card__image",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_order": "-1",
+    "_objectFit": "cover",
+    "_width:mobile_portrait": "100%"
+   },
+   "modified": 1728333645,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

@@ -1,0 +1,725 @@
+{
+ "content": [
+  {
+   "id": "nacqix",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "fsepgi"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ruozrk"
+    ]
+   },
+   "label": "Login-8"
+  },
+  {
+   "id": "fsepgi",
+   "name": "container",
+   "parent": "nacqix",
+   "children": [
+    "izccsm",
+    "jiegzv",
+    "xtyqnx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sfboct"
+    ]
+   }
+  },
+  {
+   "id": "izccsm",
+   "name": "div",
+   "parent": "fsepgi",
+   "children": [
+    "movyxv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mosjpk"
+    ]
+   },
+   "label": "Brand"
+  },
+  {
+   "id": "movyxv",
+   "name": "svg",
+   "parent": "izccsm",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cakqch"
+    ],
+    "file": {
+     "id": 15946,
+     "filename": "logoipsum-220.svg",
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/04/logoipsum-220.svg"
+    }
+   }
+  },
+  {
+   "id": "jiegzv",
+   "name": "block",
+   "parent": "fsepgi",
+   "children": [
+    "klffxy",
+    "pumlnx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mgdncx"
+    ]
+   },
+   "label": "Login wrapper"
+  },
+  {
+   "id": "klffxy",
+   "name": "block",
+   "parent": "jiegzv",
+   "children": [
+    "xubipq",
+    "dhqdhi"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hletho"
+    ]
+   },
+   "label": "Login"
+  },
+  {
+   "id": "xubipq",
+   "name": "block",
+   "parent": "klffxy",
+   "children": [
+    "lpsrid",
+    "vfvgdo",
+    "crapkq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wxylfm"
+    ],
+    "_conditions": [
+     [
+      {
+       "id": "gxexmh",
+       "key": "user_logged_in",
+       "compare": "==",
+       "value": "0"
+      }
+     ]
+    ]
+   },
+   "label": "Form"
+  },
+  {
+   "id": "lpsrid",
+   "name": "heading",
+   "parent": "xubipq",
+   "children": [],
+   "settings": {
+    "text": "Login",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "pancnh"
+    ]
+   }
+  },
+  {
+   "id": "vfvgdo",
+   "name": "form",
+   "parent": "xubipq",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Username or Email",
+      "placeholder": "Your Email",
+      "required": true,
+      "id": "225d8b"
+     },
+     {
+      "type": "password",
+      "label": "Password",
+      "placeholder": "Your Name",
+      "id": "zeicsm"
+     },
+     {
+      "type": "rememberme",
+      "placeholder": "Remember me",
+      "id": "vzyotp",
+      "width": "50"
+     },
+     {
+      "type": "html",
+      "placeholder": "Your Name",
+      "id": "vzphws",
+      "html": "<span><a href=\"#\">Forgot your password</a></span>",
+      "width": "50"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "successMessage": "You are logged in.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "acss.bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "msdita"
+    ],
+    "actions": [
+     "login"
+    ],
+    "showLabels": true,
+    "submitButtonText": "Log in",
+    "loginName": "225d8b",
+    "loginPassword": "zeicsm",
+    "loginRemember": "vzyotp",
+    "loginErrorMessage": "Username of password is incorrect"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "crapkq",
+   "name": "div",
+   "parent": "xubipq",
+   "children": [
+    "enlnms",
+    "ytiltm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bfyteo",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Footer"
+  },
+  {
+   "id": "enlnms",
+   "name": "div",
+   "parent": "crapkq",
+   "children": [
+    "erumxm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "erumxm",
+   "name": "text-link",
+   "parent": "enlnms",
+   "children": [],
+   "settings": {
+    "text": "Back to home",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{site_url}"
+    }
+   },
+   "label": "Back to home",
+   "themeStyles": []
+  },
+  {
+   "id": "ytiltm",
+   "name": "div",
+   "parent": "crapkq",
+   "children": [
+    "kmvxpd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "kmvxpd",
+   "name": "text-link",
+   "parent": "ytiltm",
+   "children": [],
+   "settings": {
+    "text": "Lost your password?",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   },
+   "label": "Lost your password?",
+   "themeStyles": []
+  },
+  {
+   "id": "dhqdhi",
+   "name": "block",
+   "parent": "klffxy",
+   "children": [
+    "ehkxkb",
+    "aoggio"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "buvxnz"
+    ],
+    "_conditions": [
+     [
+      {
+       "id": "astmzb",
+       "key": "user_logged_in",
+       "compare": "==",
+       "value": "1"
+      }
+     ]
+    ]
+   },
+   "label": "Logged in Heading"
+  },
+  {
+   "id": "ehkxkb",
+   "name": "heading",
+   "parent": "dhqdhi",
+   "children": [],
+   "settings": {
+    "text": "You are logged in.",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "pancnh"
+    ]
+   }
+  },
+  {
+   "id": "aoggio",
+   "name": "div",
+   "parent": "dhqdhi",
+   "children": [
+    "bcrgvn",
+    "rnscab"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bfyteo",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Footer"
+  },
+  {
+   "id": "bcrgvn",
+   "name": "div",
+   "parent": "aoggio",
+   "children": [
+    "sjyjdz"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "sjyjdz",
+   "name": "text-link",
+   "parent": "bcrgvn",
+   "children": [],
+   "settings": {
+    "text": "Back to home",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{site_url}"
+    }
+   },
+   "label": "Back to home",
+   "themeStyles": []
+  },
+  {
+   "id": "rnscab",
+   "name": "div",
+   "parent": "aoggio",
+   "children": [
+    "xcszit"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "xcszit",
+   "name": "text-link",
+   "parent": "rnscab",
+   "children": [],
+   "settings": {
+    "text": "Lost your password?",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   },
+   "label": "Lost your password?",
+   "themeStyles": []
+  },
+  {
+   "id": "pumlnx",
+   "name": "block",
+   "parent": "jiegzv",
+   "children": [
+    "sqzmfb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "kglkdv"
+    ]
+   },
+   "label": "Media"
+  },
+  {
+   "id": "sqzmfb",
+   "name": "slider-nested",
+   "parent": "pumlnx",
+   "children": [
+    "dyfxhk"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xluhow"
+    ],
+    "height": "auto",
+    "type": "fade"
+   }
+  },
+  {
+   "id": "dyfxhk",
+   "name": "block",
+   "parent": "sqzmfb",
+   "children": [
+    "sxokhx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "octmoe"
+    ]
+   },
+   "label": "Slide 1"
+  },
+  {
+   "id": "sxokhx",
+   "name": "image",
+   "parent": "dyfxhk",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bbznpa"
+    ],
+    "tag": "figure",
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    }
+   }
+  },
+  {
+   "id": "xtyqnx",
+   "name": "div",
+   "parent": "fsepgi",
+   "children": [
+    "hwxchd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "fzkfbm"
+    ]
+   },
+   "label": "Copyright"
+  },
+  {
+   "id": "hwxchd",
+   "name": "text-basic",
+   "parent": "xtyqnx",
+   "children": [],
+   "settings": {
+    "text": "{site_url} @ {current_date:Y}",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "jiowxb"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.9",
+ "globalClasses": [
+  {
+   "id": "ruozrk",
+   "name": "bm-login-8",
+   "settings": {
+    "_height": "100vh",
+    "_justifyContent": "center"
+   },
+   "modified": 1723063181,
+   "user_id": 7
+  },
+  {
+   "id": "sfboct",
+   "name": "bm-login-8__container",
+   "settings": {
+    "_rowGap": "var(--container-gap)",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "mosjpk",
+   "name": "bm-login-8__brand",
+   "settings": {
+    "_position": "relative",
+    "_zIndex": "1"
+   }
+  },
+  {
+   "id": "cakqch",
+   "name": "bm-login-8__logo",
+   "settings": []
+  },
+  {
+   "id": "mgdncx",
+   "name": "bm-login-8__login-wrapper",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-12)",
+    "_alignItemsGrid": "center"
+   }
+  },
+  {
+   "id": "hletho",
+   "name": "bm-login-8__login",
+   "settings": {
+    "_gridItemColumnSpan": "1 / 6",
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    },
+    "_gridItemRowSpan": "1",
+    "_alignItems": "center",
+    "_justifyContent": "center",
+    "_position": "relative",
+    "_zIndex": "1",
+    "_border": {
+     "width": {
+      "top": "1px",
+      "right": "1px",
+      "bottom": "1px",
+      "left": "1px"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    },
+    "_gridItemColumnSpan:tablet_portrait": "1 / 10",
+    "_gridItemColumnSpan:mobile_landscape": "1 / -1"
+   },
+   "modified": 1723063181,
+   "user_id": 7
+  },
+  {
+   "id": "wxylfm",
+   "name": "login-form-wrapper",
+   "settings": {
+    "_width:mobile_landscape": "100%",
+    "_rowGap": "var(--content-gap)"
+   },
+   "modified": 1722396720,
+   "user_id": 7
+  },
+  {
+   "id": "pancnh",
+   "name": "login-3__heading",
+   "settings": []
+  },
+  {
+   "id": "msdita",
+   "name": "login-form",
+   "settings": {
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_neutral",
+     "name": "neutral",
+     "raw": "var(--neutral)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "fieldBorder": {
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     },
+     "width": {
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem",
+      "left": ".1rem"
+     },
+     "style": "solid"
+    },
+    "fieldPadding": {
+     "top": "calc(var(--space-xs) / 2)",
+     "bottom": "calc(var(--space-xs) / 2)",
+     "left": "var(--space-xs)",
+     "right": "var(--space-xs)"
+    },
+    "_cssCustom": ".login-form .form-group ul li {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.login-form .form-group span {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: end;\n}\n\n.login-form .form-group span a, .login-form .form-group ul li label {\n\tfont-size: var(--text-s);\n}\n\n.login-form .form-group:nth-child(4) {\n    align-items: end;\n}"
+   }
+  },
+  {
+   "id": "bfyteo",
+   "name": "login-footer",
+   "settings": {
+    "_display": "flex",
+    "_flexWrap": "nowrap",
+    "_columnGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "ytvjsk",
+   "name": "login-footer__li",
+   "settings": []
+  },
+  {
+   "id": "fjrrkt",
+   "name": "login-footer__link",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  },
+  {
+   "id": "buvxnz",
+   "name": "login-1__logged-in-heading-wrapper",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "kglkdv",
+   "name": "bm-login-8__media-slider",
+   "settings": {
+    "_gridItemColumnSpan": "4 / -1",
+    "_gridItemRowSpan": "1",
+    "_transform": {
+     "translateY": "var(--space-l)"
+    },
+    "_gridItemColumnSpan:mobile_landscape": "1 / -1",
+    "_gridItemRowSpan:mobile_landscape": "2",
+    "_transform:mobile_landscape": {
+     "translateY": "0"
+    }
+   },
+   "modified": 1723063181,
+   "user_id": 7
+  },
+  {
+   "id": "xluhow",
+   "name": "bm-login-8__slider",
+   "settings": []
+  },
+  {
+   "id": "octmoe",
+   "name": "bm-login-8__slide",
+   "settings": []
+  },
+  {
+   "id": "bbznpa",
+   "name": "bm-login-8__slider-image",
+   "settings": {
+    "_objectFit": "cover",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "sglzxo",
+       "color": {
+        "id": "acss_import_neutral-trans-60",
+        "name": "neutral-trans-60",
+        "raw": "var(--neutral-trans-60)"
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "fzkfbm",
+   "name": "bm-login-8__copyright-wrapper",
+   "settings": {
+    "_position": "relative",
+    "_zIndex": "1"
+   }
+  },
+  {
+   "id": "jiowxb",
+   "name": "bm-login-8__copyright",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

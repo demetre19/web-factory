@@ -1,0 +1,267 @@
+{
+ "content": [
+  {
+   "id": "bvvkqr",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "qpsbmg"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "zcophq"
+    ]
+   },
+   "label": "Newsletter 5"
+  },
+  {
+   "id": "qpsbmg",
+   "name": "container",
+   "parent": "bvvkqr",
+   "children": [
+    "ijyiat",
+    "dnimul"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "tgblwx"
+    ]
+   }
+  },
+  {
+   "id": "ijyiat",
+   "name": "div",
+   "parent": "qpsbmg",
+   "children": [
+    "irpanp",
+    "iotqwb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dknixa"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "irpanp",
+   "name": "heading",
+   "parent": "ijyiat",
+   "children": [],
+   "settings": {
+    "text": "Join 10k+ subscribers",
+    "_cssGlobalClasses": [
+     "odgcei"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "iotqwb",
+   "name": "text-basic",
+   "parent": "ijyiat",
+   "children": [],
+   "settings": {
+    "text": "Stay in the loop with everything you need to know.",
+    "_cssGlobalClasses": [
+     "saarhj"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "dnimul",
+   "name": "div",
+   "parent": "qpsbmg",
+   "children": [
+    "vyzgre"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eqfopg"
+    ]
+   },
+   "label": "Right box"
+  },
+  {
+   "id": "vyzgre",
+   "name": "div",
+   "parent": "dnimul",
+   "children": [
+    "vpgeza",
+    "bvtjnn"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "txutju"
+    ]
+   },
+   "label": "Form wrapper"
+  },
+  {
+   "id": "vpgeza",
+   "name": "form",
+   "parent": "vyzgre",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": true,
+      "id": "3d3f90"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "actions": [
+     "email"
+    ],
+    "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "kniand"
+    ],
+    "submitButtonText": "Subscribe",
+    "submitButtonSize": "xl"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "bvtjnn",
+   "name": "text-basic",
+   "parent": "vyzgre",
+   "children": [],
+   "settings": {
+    "text": "We care about your data in our privacy policy.",
+    "_cssGlobalClasses": [
+     "xzouwt"
+    ],
+    "tag": "p"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "zcophq",
+   "name": "newsletter-5",
+   "settings": []
+  },
+  {
+   "id": "tgblwx",
+   "name": "newsletter-5-container",
+   "settings": {
+    "_gridTemplateColumns": "2fr 3fr",
+    "_display": "grid",
+    "_gridGap": "var(--container-gap)",
+    "_alignItemsGrid": "center",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-2)",
+    "_gridTemplateColumns:mobile_portrait": "var(--grid-1)"
+   }
+  },
+  {
+   "id": "dknixa",
+   "name": "newsletter-5__content",
+   "settings": {
+    "_cssCustom:tablet_portrait": ".newsletter-5__content {\njustify-self: center!important;\n}",
+    "_width:mobile_landscape": "100%",
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)",
+    "_justifyContent": "center",
+    "_alignItems": "flex-start"
+   }
+  },
+  {
+   "id": "odgcei",
+   "name": "newsletter-5__heading",
+   "settings": []
+  },
+  {
+   "id": "saarhj",
+   "name": "newsletter-5__desc",
+   "settings": []
+  },
+  {
+   "id": "eqfopg",
+   "name": "newsletter-5__right-box",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "txutju",
+   "name": "bm-form",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)"
+   }
+  },
+  {
+   "id": "kniand",
+   "name": "bm-form-widget",
+   "settings": {
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_primary",
+     "name": "primary",
+     "raw": "var(--primary)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "id": "acss_import_shade-ultra-light",
+      "name": "shade-ultra-light",
+      "raw": "var(--shade-ultra-light)"
+     }
+    },
+    "fieldBorder": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "placeholderTypography": {
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "fieldMargin": {
+     "bottom": "0"
+    },
+    "_cssCustom": ".bm-form-widget {\nflex-wrap: nowrap;\n}\n.bm-form-widget input:focus {\n\toutline-offset: 0;\n} ",
+    "fieldPadding": {
+     "left": "1.5rem",
+     "top": ".3rem",
+     "right": "1.5rem",
+     "bottom": ".3rem"
+    },
+    "_display": "flex",
+    "_gap": "var(--space-xs)",
+    "_flexDirection": "row",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "xzouwt",
+   "name": "bm-form__terms",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

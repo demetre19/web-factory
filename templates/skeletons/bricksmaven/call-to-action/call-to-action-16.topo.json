@@ -1,0 +1,217 @@
+{
+ "label": "Call to action 16",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "topology_id": "band-media",
+ "element_sig": {
+  "h": 1,
+  "p": 1,
+  "btn": 1,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Call to action 16",
+   "loop": false,
+   "classes": [
+    "zvqfyq"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mowltl"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Box",
+   "loop": false,
+   "classes": [
+    "kqiomu"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "heading",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ibruhz"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ojjyrl"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "acss_import_btn--white"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Media",
+   "loop": false,
+   "classes": [
+    "pyrjnf"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hobrhz"
+   ],
+   "depth": 3
+  }
+ ],
+ "classes": {
+  "cta-16": {
+   "spacing": {},
+   "layout": {
+    "_position": "relative"
+   },
+   "sizing": {
+    "_overflow": "hidden"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "cta-16-container": {
+   "spacing": {
+    "_gridGap": "var(--space-l)"
+   },
+   "layout": {
+    "_display": "grid",
+    "_gridTemplateColumns": "repeat(2, minmax(0, 1fr))",
+    "_gridTemplateColumns:mobile_portrait": "repeat(1, minmax(0, 1fr))"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".cta-16-container::before {\n  content:\"\";\n  background-color: var(--primary);\n  position: absolute;\n  width: 80vw;\n  height:100%;\n  clip-path: polygon(0% 0%, 100% 0, 100% 100%, 20% 100%);\n  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20% 100%);\n  top: 0;\n  right: 0;\n}\n\n@media (max-width: 478px) {\n\n  .cta-16-container::before {\n  width: 100vw;\n  height:70%;\n  clip-path: polygon(0% 0%, 100% 0, 100% 100%, 0 100%);\n  -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%););\n\n}\n  \n}",
+   "tokens": [
+    "primary",
+    "space-l"
+   ]
+  },
+  "cta-16__box": {
+   "spacing": {
+    "_rowGap": "var(--space-m)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "column",
+    "_position": "relative"
+   },
+   "sizing": {},
+   "typography": {
+    "color": {
+     "raw": "var(--white)"
+    }
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-m",
+    "white"
+   ]
+  },
+  "cta-16__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "cta-16__desc": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "btn--white": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "cta-16__media": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1",
+    "_order:mobile_portrait": "0"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "cta-16__image": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "300px",
+    "_aspectRatio": "6/4"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".cta-16__image {\n\tclip-path: polygon(0% 0, 80% 0, 100% 100%, 0 100%);\n  \t-webkit-clip-path: polygon(0% 0, 80% 0, 100% 100%, 0 100%);\n}",
+   "tokens": []
+  }
+ },
+ "tokens_all": [
+  "primary",
+  "space-l",
+  "space-m",
+  "white"
+ ]
+}

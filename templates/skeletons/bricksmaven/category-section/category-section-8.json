@@ -1,0 +1,463 @@
+{
+ "content": [
+  {
+   "id": "kyweov",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "mntjla"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xjgalm"
+    ]
+   },
+   "label": "Category Section 8"
+  },
+  {
+   "id": "mntjla",
+   "name": "container",
+   "parent": "kyweov",
+   "children": [
+    "f0466e",
+    "wsnhnb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hpydnt"
+    ]
+   }
+  },
+  {
+   "id": "f0466e",
+   "name": "div",
+   "parent": "mntjla",
+   "children": [
+    "2007e7",
+    "ede871"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq",
+     "okggpp"
+    ],
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "2007e7",
+   "name": "block",
+   "parent": "f0466e",
+   "children": [
+    "cd8cc7",
+    "1a21e1"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ekrafx"
+    ]
+   },
+   "label": "Left Column"
+  },
+  {
+   "id": "cd8cc7",
+   "name": "heading",
+   "parent": "2007e7",
+   "children": [],
+   "settings": {
+    "text": "Long headline to turn your visitors into users",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "1a21e1",
+   "name": "text-basic",
+   "parent": "2007e7",
+   "children": [],
+   "settings": {
+    "text": "Tagline",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "ede871",
+   "name": "block",
+   "parent": "f0466e",
+   "children": [
+    "373373",
+    "b86770"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "krusqg"
+    ]
+   },
+   "label": "Right Column"
+  },
+  {
+   "id": "373373",
+   "name": "text-basic",
+   "parent": "ede871",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "b86770",
+   "name": "text-link",
+   "parent": "ede871",
+   "children": [],
+   "settings": {
+    "text": "Call to action",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ]
+   },
+   "label": "Primary button"
+  },
+  {
+   "id": "wsnhnb",
+   "name": "block",
+   "parent": "mntjla",
+   "children": [
+    "qcuobs",
+    "cxgwul"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dggsrj"
+    ]
+   },
+   "label": "Category Slider"
+  },
+  {
+   "id": "qcuobs",
+   "name": "slider-nested",
+   "parent": "wsnhnb",
+   "children": [
+    "jzqpcl"
+   ],
+   "settings": {
+    "pagination": true,
+    "_cssGlobalClasses": [
+     "dclmnl"
+    ],
+    "height": "auto",
+    "type": "loop",
+    "optionsType": "custom",
+    "options": "{\"type\":\"loop\",\"perPage\":4,\"arrows\":false,\"perMove\":1,\"direction\":\"rtl\",\"gap\":24,\"focus\":\"center\",\"pagination\":false,\"breakpoints\":{\"991\":{\"perPage\":2},\"767\":{\"perPage\":1}},\"autoScroll\":{\"pauseOnHover\":false}}"
+   }
+  },
+  {
+   "id": "jzqpcl",
+   "name": "block",
+   "parent": "qcuobs",
+   "children": [
+    "ndqzsj",
+    "tvtuxy"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pdxqkd"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "term",
+     "taxonomy": [
+      "product_cat"
+     ]
+    }
+   },
+   "label": "Slide 1"
+  },
+  {
+   "id": "ndqzsj",
+   "name": "block",
+   "parent": "jzqpcl",
+   "children": [
+    "bljhjf",
+    "nqccoe"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "qxksty"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "bljhjf",
+   "name": "heading",
+   "parent": "ndqzsj",
+   "children": [],
+   "settings": {
+    "text": "{term_name}",
+    "_cssGlobalClasses": [
+     "nenzlh"
+    ],
+    "tag": "h3",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{term_url}"
+    }
+   }
+  },
+  {
+   "id": "nqccoe",
+   "name": "text-basic",
+   "parent": "ndqzsj",
+   "children": [],
+   "settings": {
+    "text": "{echo:get_product_count_by_category( {term_id} )}",
+    "_cssGlobalClasses": [
+     "phdblo"
+    ],
+    "tag": "p"
+   },
+   "label": "Product count"
+  },
+  {
+   "id": "tvtuxy",
+   "name": "block",
+   "parent": "jzqpcl",
+   "children": [
+    "iqxspr"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vhurtr"
+    ]
+   },
+   "label": "Media"
+  },
+  {
+   "id": "iqxspr",
+   "name": "image",
+   "parent": "tvtuxy",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "azmopy"
+    ],
+    "image": {
+     "useDynamicData": "{woo_product_cat_image}",
+     "size": "large"
+    },
+    "tag": "figure"
+   }
+  },
+  {
+   "id": "cxgwul",
+   "name": "code",
+   "parent": "wsnhnb",
+   "children": [],
+   "settings": {
+    "code": "<script src=\"\nhttps://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js\n\"></script>\n\n<script>\nlet timeout = '';\n\nfunction timeOutFunction() {\n  timeout = setTimeout(initAutoScroll, 300);\n}\n\nfunction initAutoScroll () {\n\tnew Splide( '.category-list-8-slider' ).mount( window.splide.Extensions );\n\n  clearTimeout(timeout);\n}\n\ntimeOutFunction();\n</script>",
+    "_cssGlobalClasses": [
+     "nzetdl"
+    ],
+    "noRoot": true,
+    "signature": "244a08d0c4b99ebebc3876fca0f04532",
+    "user_id": 1,
+    "time": 1728992949,
+    "executeCode": true
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "xjgalm",
+   "name": "category-list-8",
+   "settings": []
+  },
+  {
+   "id": "hpydnt",
+   "name": "category-list-8__container",
+   "settings": {
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "okggpp",
+   "name": "intro--split",
+   "settings": {
+    "_display": "grid",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    },
+    "_alignSelf": "flex-start",
+    "_gridTemplateColumns": "var(--grid-2)",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+   }
+  },
+  {
+   "id": "ekrafx",
+   "name": "intro__left-column",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "krusqg",
+   "name": "intro__right-column",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "dggsrj",
+   "name": "category-list-8__slider-container",
+   "settings": {
+    "_position": "relative",
+    "_cssCustom": ".category-list-8__slider-container::before {\n\tcontent:'';\n  position: absolute;\n  left:0;\n  height:100%;\n  width:25%;\n  background: linear-gradient( 90deg, var(--white), transparent);\n  z-index: 99;\n}\n\n.category-list-8__slider-container::after {\n\tcontent:'';\n  position: absolute;\n  right:0;\n  height:100%;\n  width:25%;\n  background: linear-gradient( 90deg, transparent,var(--white));\n  z-index: 99;\n}"
+   }
+  },
+  {
+   "id": "dclmnl",
+   "name": "category-list-8-slider",
+   "settings": []
+  },
+  {
+   "id": "pdxqkd",
+   "name": "category-list-8-slide",
+   "settings": {
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_display": "flex",
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "modified": 1728993482,
+   "user_id": 1
+  },
+  {
+   "id": "qxksty",
+   "name": "category-list-8-slide__intro",
+   "settings": {
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "modified": 1728993059,
+   "user_id": 1
+  },
+  {
+   "id": "nenzlh",
+   "name": "category-list-8-slide__heading",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-m)",
+     "text-align": "left"
+    },
+    "_width": "100%"
+   }
+  },
+  {
+   "id": "phdblo",
+   "name": "category-list-8-slide__product-count",
+   "settings": {
+    "_width": "100%"
+   },
+   "modified": 1728993482,
+   "user_id": 1
+  },
+  {
+   "id": "vhurtr",
+   "name": "category-list-8-slide__media",
+   "settings": {
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "azmopy",
+   "name": "category-list-8-slide__category-image",
+   "settings": {
+    "_objectFit": "cover"
+   }
+  },
+  {
+   "id": "nzetdl",
+   "name": "testimonial__slider",
+   "settings": {
+    "_cssCustom": ".testimonial__slider  .splide__track{\n\toverflow:visible;\n}",
+    "slidePadding": {
+     "top": "var(--space-xs)",
+     "right": "var(--space-xs)",
+     "bottom": "var(--space-xs)",
+     "left": "var(--space-xs)"
+    }
+   },
+   "modified": 1728916559,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

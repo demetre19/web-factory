@@ -1,0 +1,404 @@
+{
+ "content": [
+  {
+   "id": "dexbnl",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "buztfu",
+    "wqbesh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rcvwzi"
+    ]
+   },
+   "label": "Banner 6"
+  },
+  {
+   "id": "buztfu",
+   "name": "container",
+   "parent": "dexbnl",
+   "children": [
+    "gyshxx",
+    "tkitma",
+    "cyyfyv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xifysc"
+    ]
+   }
+  },
+  {
+   "id": "gyshxx",
+   "name": "block",
+   "parent": "buztfu",
+   "children": [
+    "erbadw"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rrtcme"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "erbadw",
+   "name": "div",
+   "parent": "gyshxx",
+   "children": [
+    "lxtqza",
+    "xbpxah"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hwkmbr",
+     "imdvok"
+    ],
+    "_display": "flex"
+   },
+   "label": "Info"
+  },
+  {
+   "id": "lxtqza",
+   "name": "heading",
+   "parent": "erbadw",
+   "children": [],
+   "settings": {
+    "text": "Short headline to grab attention",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "drfjmn"
+    ]
+   }
+  },
+  {
+   "id": "xbpxah",
+   "name": "text-basic",
+   "parent": "erbadw",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, <a href=\"\">consectetur</a> adipiscing elit.",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "gofnyh"
+    ]
+   }
+  },
+  {
+   "id": "tkitma",
+   "name": "div",
+   "parent": "buztfu",
+   "children": [
+    "ipahkd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "elaibp"
+    ]
+   },
+   "label": "Form wrapper"
+  },
+  {
+   "id": "ipahkd",
+   "name": "form",
+   "parent": "tkitma",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Email",
+      "placeholder": "Your Email",
+      "required": true,
+      "id": "225241"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "actions": [
+     "email"
+    ],
+    "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "acss.bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "mpfzpy"
+    ]
+   }
+  },
+  {
+   "id": "cyyfyv",
+   "name": "div",
+   "parent": "buztfu",
+   "children": [
+    "brlnob"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eayndo"
+    ],
+    "tag": "custom",
+    "customTag": "button",
+    "_interactions": [
+     {
+      "id": "lozyqr",
+      "trigger": "click",
+      "action": "hide",
+      "target": "custom",
+      "targetSelector": ".bm-banner-3"
+     }
+    ]
+   },
+   "label": "Close-wrapper"
+  },
+  {
+   "id": "brlnob",
+   "name": "icon",
+   "parent": "cyyfyv",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-close"
+    },
+    "_cssGlobalClasses": [
+     "ndfvku"
+    ],
+    "iconSize": "24"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "wqbesh",
+   "name": "code",
+   "parent": "dexbnl",
+   "children": [],
+   "settings": {
+    "cssCode": ".bm-banner-6 {\n padding: 0; \n background-color: var(--white);\n border-bottom: 1px solid var(--neutral);\n box-shadow: var(--box-shadow-m);\n}\n\n.bm-banner-6__container {\n  background-color: none !important;\n  border:none !important;\n  box-shadow: none !important;\n}",
+    "_display": "none"
+   },
+   "themeStyles": {
+    "prettify": "github"
+   },
+   "label": "Full width banner"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "rcvwzi",
+   "name": "bm-banner-6",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "raw": "transparent"
+     }
+    }
+   }
+  },
+  {
+   "id": "xifysc",
+   "name": "bm-banner-6__container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "center",
+    "_alignItems": "center",
+    "_flexWrap": "nowrap",
+    "_cssCustom": ".bm-banner-6__container {\n  box-shadow: var(--box-shadow-m);\n  \n}",
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     }
+    },
+    "_position": "relative",
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    },
+    "_direction:mobile_landscape": "column",
+    "_rowGap:mobile_landscape": "var(--content-gap)",
+    "_alignItems:mobile_landscape": "flex-start",
+    "_columnGap": "var(--content-gap)"
+   },
+   "modified": 1737468295,
+   "user_id": 7
+  },
+  {
+   "id": "rrtcme",
+   "name": "bm-banner-inline-content",
+   "settings": {
+    "_width:mobile_landscape": "var(--width-m)",
+    "_width": "auto"
+   },
+   "modified": 1737467862,
+   "user_id": 7
+  },
+  {
+   "id": "hwkmbr",
+   "name": "bm-banner-inline-content__info",
+   "settings": {
+    "_columnGap": "calc(var(--content-gap) / 4)",
+    "_justifyContent": "flex-start",
+    "_flexWrap": "wrap",
+    "_rowGap": "calc(var(--content-gap) / 4)",
+    "_alignItems": "center"
+   },
+   "modified": 1736935320,
+   "user_id": 7
+  },
+  {
+   "id": "imdvok",
+   "name": "bm-banner-inline-content__info--alt",
+   "settings": {
+    "_justifyContent:mobile_landscape": "flex-start",
+    "_direction:mobile_landscape": "column",
+    "_alignItems:mobile_landscape": "flex-start",
+    "_width:mobile_landscape": "100%",
+    "_typography:mobile_landscape": {
+     "text-align": "left"
+    }
+   },
+   "modified": 1736936556,
+   "user_id": 7
+  },
+  {
+   "id": "drfjmn",
+   "name": "bm-banner-inline-content__heading",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-m)"
+    }
+   }
+  },
+  {
+   "id": "gofnyh",
+   "name": "bm-banner-inline-content__text",
+   "settings": {
+    "_cssCustom": ".bm-banner-inline-content__text a {\n  text-decoration: underline;\n  font-weight: 700;\n}"
+   }
+  },
+  {
+   "id": "elaibp",
+   "name": "bm-banner__form-wrapper",
+   "settings": {
+    "_display": "flex",
+    "_padding": {
+     "right": "var(--space-xl)"
+    }
+   }
+  },
+  {
+   "id": "mpfzpy",
+   "name": "footer-newsletter__form",
+   "settings": {
+    "_cssCustom": ".footer-newsletter__form {\n\tflex-wrap: nowrap;\n  gap: 1rem;\n}\n.footer-newsletter__form [type=\"submit\"] {\n\theight: 100%;\n}",
+    "submitButtonWidth": "50%",
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_primary",
+     "name": "primary",
+     "raw": "var(--primary)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    },
+    "fieldMargin": {
+     "bottom": "0"
+    },
+    "placeholderTypography": {
+     "color": {
+      "raw": "var(--neutral-trans-60)"
+     }
+    },
+    "fieldBorder": {
+     "width": {
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem",
+      "left": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "raw": "var(--neutral-ultra-dark-trans-20)"
+     }
+    },
+    "fieldTypography:mobile_landscape": {
+     "text-align": "left"
+    }
+   }
+  },
+  {
+   "id": "eayndo",
+   "name": "bm-banner__close-wrapper",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)",
+      "raw": "transparent"
+     }
+    },
+    "_interactions": [
+     {
+      "id": "fgiysv",
+      "trigger": "click",
+      "action": "hide",
+      "animationType": "fadeInUp",
+      "target": "custom",
+      "targetSelector": ".bm-banner-1"
+     }
+    ],
+    "_position": "absolute",
+    "_right": "var(--space-m)",
+    "_top:mobile_portrait": "var(--space-m)"
+   },
+   "modified": 1736934796,
+   "user_id": 7
+  },
+  {
+   "id": "ndfvku",
+   "name": "bm-banner__close",
+   "settings": [],
+   "modified": 1736934796,
+   "user_id": 7
+  }
+ ],
+ "globalElements": []
+}

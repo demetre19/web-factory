@@ -1,0 +1,324 @@
+{
+ "content": [
+  {
+   "id": "fxrdml",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "iuzvrk"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lkuywl"
+    ]
+   },
+   "label": "Header 3"
+  },
+  {
+   "id": "iuzvrk",
+   "name": "container",
+   "parent": "fxrdml",
+   "children": [
+    "mzgqvp",
+    "feeqzu",
+    "bywimr"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bqeepw"
+    ]
+   }
+  },
+  {
+   "id": "mzgqvp",
+   "name": "block",
+   "parent": "iuzvrk",
+   "children": [
+    "gpqggd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mgerbs"
+    ]
+   },
+   "label": "Brand"
+  },
+  {
+   "id": "gpqggd",
+   "name": "logo",
+   "parent": "mzgqvp",
+   "children": [],
+   "settings": {
+    "logoText": "{site_title}",
+    "_cssGlobalClasses": [
+     "jumiih"
+    ],
+    "logo": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/04/logoipsum-325.svg",
+     "external": true,
+     "filename": "logoipsum-325.svg"
+    }
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "feeqzu",
+   "name": "block",
+   "parent": "iuzvrk",
+   "children": [
+    "xjhpcy"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "kqhtop"
+    ]
+   },
+   "label": "Nav"
+  },
+  {
+   "id": "xjhpcy",
+   "name": "nav-menu",
+   "parent": "feeqzu",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bxgawe"
+    ],
+    "menu": "3",
+    "menuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "subMenuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "mobileMenu": "tablet_portrait"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "bywimr",
+   "name": "block",
+   "parent": "iuzvrk",
+   "children": [
+    "scszja",
+    "vzeztn"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ejrzzg"
+    ]
+   },
+   "label": "CTA"
+  },
+  {
+   "id": "scszja",
+   "name": "text-link",
+   "parent": "bywimr",
+   "children": [],
+   "settings": {
+    "text": "Secondary CTA",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary",
+     "acss_import_btn--outline",
+     "gtwlji"
+    ]
+   }
+  },
+  {
+   "id": "vzeztn",
+   "name": "text-link",
+   "parent": "bywimr",
+   "children": [],
+   "settings": {
+    "text": "Call to action",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary",
+     "drjbiy"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "lkuywl",
+   "name": "bm-header-3",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".bm-header-3 {\n\toverflow: hidden;\n}",
+    "_padding": {
+     "top": "var(--space-xs)",
+     "bottom": "var(--space-xs)"
+    }
+   }
+  },
+  {
+   "id": "bqeepw",
+   "name": "bm-header-3__container",
+   "settings": {
+    "_display": "flex",
+    "_flexWrap": "nowrap",
+    "_direction": "row",
+    "_alignItems": "center",
+    "_columnGap": "var(--space-s)",
+    "_justifyContent:tablet_portrait": "space-between"
+   }
+  },
+  {
+   "id": "mgerbs",
+   "name": "bm-header-3__brand",
+   "settings": {
+    "_gridItemColumnSpan:mobile_landscape": "span 3",
+    "_gridItemColumnSpan": "span 1",
+    "_gridItemColumnSpan:tablet_portrait": "span 2",
+    "_width": "15%",
+    "_width:tablet_portrait": "auto"
+   }
+  },
+  {
+   "id": "jumiih",
+   "name": "bm-header-3__brand-logo",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".bm-header-3__brand-logo.white path {\n\tfill: var(--white);\n}",
+    "logoHeight": "100%",
+    "logoWidth": "100%"
+   }
+  },
+  {
+   "id": "kqhtop",
+   "name": "bm-header-3__nav-wrapper",
+   "settings": {
+    "_gridItemColumnSpan": "span 6",
+    "_gridItemColumnSpan:mobile_landscape": "8",
+    "_gridItemColumnSpan:tablet_portrait": "8",
+    "_width": "60%",
+    "_order:tablet_portrait": "3",
+    "_alignItems:tablet_portrait": "flex-end",
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent:tablet_portrait": "flex-end"
+   }
+  },
+  {
+   "id": "bxgawe",
+   "name": "bm-header-3__menu",
+   "settings": {
+    "menuTypography": {
+     "color": {
+      "raw": "var(--text-black)"
+     }
+    },
+    "subMenuBackground:hover": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "menuMargin": {
+     "left": "0",
+     "right": "3rem"
+    }
+   }
+  },
+  {
+   "id": "ejrzzg",
+   "name": "bm-header-3__cta-wrapper",
+   "settings": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "flex-end",
+    "_gridItemColumnSpan:mobile_landscape": "-1",
+    "_columnGap": "var(--space-s)",
+    "_gridItemColumnSpan": "-1",
+    "_width": "25%",
+    "_display:tablet_portrait": "none"
+   }
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    },
+    "_width": "auto",
+    "_widthMin": "auto"
+   }
+  },
+  {
+   "id": "acss_import_btn--outline",
+   "name": "btn--outline",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)"
+     }
+    },
+    "_border": {
+     "width": {
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem",
+      "left": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_typography": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    },
+    "_background:hover": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    },
+    "_typography:hover": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    },
+    "_border:hover": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    }
+   }
+  },
+  {
+   "id": "gtwlji",
+   "name": "bm-header-3__cta-secondary",
+   "settings": {
+    "_cssCustom": ".bm-header-3__cta-secondary {\n\tmargin-left: 2rem;\n}",
+    "_display:mobile_landscape": "none",
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  },
+  {
+   "id": "drjbiy",
+   "name": "bm-header-3__cta--primary",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

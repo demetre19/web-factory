@@ -1,0 +1,317 @@
+{
+ "content": [
+  {
+   "id": "ievmzv",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "cbideo"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "otiduh"
+    ]
+   },
+   "label": "Blog-archive-22"
+  },
+  {
+   "id": "cbideo",
+   "name": "container",
+   "parent": "ievmzv",
+   "children": [
+    "01b938",
+    "hbexpj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muptzu"
+    ]
+   }
+  },
+  {
+   "id": "01b938",
+   "name": "div",
+   "parent": "cbideo",
+   "children": [
+    "074a86",
+    "6dd96c",
+    "aeac52"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "074a86",
+   "name": "heading",
+   "parent": "01b938",
+   "children": [],
+   "settings": {
+    "text": "Long headline to turn your visitors into customers",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "6dd96c",
+   "name": "text-basic",
+   "parent": "01b938",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "aeac52",
+   "name": "text-basic",
+   "parent": "01b938",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "hbexpj",
+   "name": "block",
+   "parent": "cbideo",
+   "children": [
+    "ztrkdn"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "alpwky",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Archive List"
+  },
+  {
+   "id": "ztrkdn",
+   "name": "block",
+   "parent": "hbexpj",
+   "children": [
+    "derehz",
+    "yeivpm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "iqalmh"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "post"
+     ]
+    }
+   },
+   "label": "Card"
+  },
+  {
+   "id": "derehz",
+   "name": "block",
+   "parent": "ztrkdn",
+   "children": [
+    "tzgfbs"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "jmjcwn"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "tzgfbs",
+   "name": "post-title",
+   "parent": "derehz",
+   "children": [],
+   "settings": {
+    "tag": "h3",
+    "_cssGlobalClasses": [
+     "hquulk",
+     "acss_import_clickable-parent"
+    ],
+    "linkToPost": true
+   }
+  },
+  {
+   "id": "yeivpm",
+   "name": "image",
+   "parent": "ztrkdn",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "yxdluk"
+    ],
+    "image": {
+     "useDynamicData": "{featured_image}",
+     "size": "large"
+    },
+    "tag": "figure"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "otiduh",
+   "name": "blog-archive-22",
+   "settings": []
+  },
+  {
+   "id": "muptzu",
+   "name": "blog-archive-22-container",
+   "settings": {
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--space-s)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "alpwky",
+   "name": "blog-archive-22-archive-list",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-2)",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-auto-1)"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "iqalmh",
+   "name": "blog-archive-22-archive-card",
+   "settings": {
+    "_height": "40rem",
+    "_position": "relative",
+    "_cssCustom": ".blog-archive-22-archive-card:hover .blog-archive-22-archive-card__image{\n\ttransform: scale(2);\n  transition: all 3s ease 0s;\n}",
+    "_overflow": "hidden"
+   }
+  },
+  {
+   "id": "jmjcwn",
+   "name": "blog-archive-22-archive-card__content",
+   "settings": {
+    "_position": "relative",
+    "_zIndex": "1",
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "center",
+    "_justifyContent": "center",
+    "_typography": {
+     "text-align": "center",
+     "color": {
+      "raw": "var(--white)"
+     }
+    },
+    "_height": "100%",
+    "_padding": {
+     "top": "var(--space-xl)",
+     "right": "var(--space-xl)",
+     "bottom": "var(--space-xl)",
+     "left": "var(--space-xl)"
+    }
+   }
+  },
+  {
+   "id": "hquulk",
+   "name": "blog-archive-22-archive-card__post-title",
+   "settings": []
+  },
+  {
+   "id": "acss_import_clickable-parent",
+   "name": "clickable-parent",
+   "settings": []
+  },
+  {
+   "id": "yxdluk",
+   "name": "blog-archive-22-archive-card__image",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "iwowpz",
+       "color": {
+        "id": "acss_import_shade-trans-60",
+        "name": "shade-trans-60",
+        "raw": "var(--shade-trans-60)"
+       }
+      }
+     ]
+    },
+    "_position": "absolute"
+   }
+  }
+ ],
+ "globalElements": []
+}

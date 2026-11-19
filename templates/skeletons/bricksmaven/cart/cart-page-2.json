@@ -1,0 +1,567 @@
+{
+ "content": [
+  {
+   "id": "fsesgp",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "hovbhs"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gedibt"
+    ]
+   },
+   "label": "Cart Page 2"
+  },
+  {
+   "id": "hovbhs",
+   "name": "container",
+   "parent": "fsesgp",
+   "children": [
+    "liuvdc",
+    "rjmowb",
+    "yhpiqq",
+    "sarpxq",
+    "kaxwdx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "kfhbfr"
+    ]
+   }
+  },
+  {
+   "id": "liuvdc",
+   "name": "block",
+   "parent": "hovbhs",
+   "children": [
+    "xyrbur"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lracwo"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "xyrbur",
+   "name": "heading",
+   "parent": "liuvdc",
+   "children": [],
+   "settings": {
+    "text": "Cart",
+    "_cssGlobalClasses": [
+     "casknu"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "rjmowb",
+   "name": "block",
+   "parent": "hovbhs",
+   "children": [
+    "ubzyff"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mngnit"
+    ]
+   },
+   "label": "Notice Container"
+  },
+  {
+   "id": "ubzyff",
+   "name": "woocommerce-notice",
+   "parent": "rjmowb",
+   "children": [],
+   "settings": {
+    "previewType": "all",
+    "_cssGlobalClasses": [
+     "wonrxo"
+    ]
+   }
+  },
+  {
+   "id": "yhpiqq",
+   "name": "block",
+   "parent": "hovbhs",
+   "children": [
+    "wmmhxl"
+   ],
+   "settings": [],
+   "label": "Before cart"
+  },
+  {
+   "id": "wmmhxl",
+   "name": "text-basic",
+   "parent": "yhpiqq",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_before_cart}",
+    "tag": "div"
+   },
+   "label": "Before cart Dynamic Tag"
+  },
+  {
+   "id": "sarpxq",
+   "name": "block",
+   "parent": "hovbhs",
+   "children": [
+    "dskbwl",
+    "txaozx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hmhtsg"
+    ]
+   },
+   "label": "Cart Container"
+  },
+  {
+   "id": "dskbwl",
+   "name": "block",
+   "parent": "sarpxq",
+   "children": [
+    "nuvatx",
+    "yalkxf",
+    "flsiug"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mulfnl"
+    ]
+   },
+   "label": "Cart Items Container"
+  },
+  {
+   "id": "nuvatx",
+   "name": "woocommerce-cart-items",
+   "parent": "dskbwl",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gbwbly"
+    ]
+   },
+   "label": "Cart items (CSS)",
+   "themeStyles": []
+  },
+  {
+   "id": "yalkxf",
+   "name": "block",
+   "parent": "dskbwl",
+   "children": [
+    "ikkavr",
+    "ynbsoz"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sgxpgi"
+    ],
+    "_direction": "row",
+    "_columnGap": "var(--content-gap)",
+    "_rowGap": "var(--content-gap)"
+   },
+   "label": "Testimonial Card"
+  },
+  {
+   "id": "ikkavr",
+   "name": "block",
+   "parent": "yalkxf",
+   "children": [
+    "nofmnb",
+    "lndlcf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "yyechp"
+    ]
+   },
+   "label": "Client"
+  },
+  {
+   "id": "nofmnb",
+   "name": "block",
+   "parent": "ikkavr",
+   "children": [
+    "mkaxem",
+    "uregca"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vgjxpc"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "mkaxem",
+   "name": "text-basic",
+   "parent": "nofmnb",
+   "children": [],
+   "settings": {
+    "text": "John Smith",
+    "_cssGlobalClasses": [
+     "ircrgd"
+    ],
+    "customTag": "h4",
+    "tag": "p"
+   },
+   "label": "Name"
+  },
+  {
+   "id": "uregca",
+   "name": "text-basic",
+   "parent": "nofmnb",
+   "children": [],
+   "settings": {
+    "text": "Title here",
+    "_cssGlobalClasses": [
+     "olrbdq"
+    ],
+    "tag": "span"
+   },
+   "label": "Role"
+  },
+  {
+   "id": "lndlcf",
+   "name": "image",
+   "parent": "ikkavr",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mekycg"
+    ],
+    "image": {
+     "url": "https://training.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    },
+    "tag": "figure"
+   },
+   "themeStyles": [],
+   "label": "Avatar"
+  },
+  {
+   "id": "ynbsoz",
+   "name": "text-basic",
+   "parent": "yalkxf",
+   "children": [],
+   "settings": {
+    "text": "\"Here goes your text ... Select any part of your text to access the formatting toolbar.\"",
+    "_cssGlobalClasses": [
+     "lqhahl"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "flsiug",
+   "name": "container",
+   "parent": "dskbwl",
+   "children": [
+    "dianbx"
+   ],
+   "settings": [],
+   "label": "Before cart colletarals"
+  },
+  {
+   "id": "dianbx",
+   "name": "text-basic",
+   "parent": "flsiug",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_before_cart_collaterals}",
+    "tag": "div"
+   },
+   "label": "Before cart colletarals Dynamic Tag"
+  },
+  {
+   "id": "txaozx",
+   "name": "block",
+   "parent": "sarpxq",
+   "children": [
+    "sklkbd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xabewp"
+    ]
+   },
+   "label": "Cart Totals Container"
+  },
+  {
+   "id": "sklkbd",
+   "name": "woocommerce-cart-collaterals",
+   "parent": "txaozx",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vndrax"
+    ]
+   },
+   "label": "Cart totals (CSS)",
+   "themeStyles": []
+  },
+  {
+   "id": "kaxwdx",
+   "name": "container",
+   "parent": "hovbhs",
+   "children": [
+    "ugpowq"
+   ],
+   "settings": [],
+   "label": "After cart"
+  },
+  {
+   "id": "ugpowq",
+   "name": "text-basic",
+   "parent": "kaxwdx",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_after_cart}",
+    "tag": "div"
+   },
+   "label": "After cart Dynamic Tag"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "gedibt",
+   "name": "cart-page-2",
+   "settings": {
+    "_width": "100%",
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "kfhbfr",
+   "name": "cart-page-2__container",
+   "settings": [],
+   "modified": 1723582711,
+   "user_id": 2
+  },
+  {
+   "id": "lracwo",
+   "name": "cart-page-2__intro",
+   "settings": {
+    "_alignItems": "center"
+   },
+   "modified": 1728940953,
+   "user_id": 1
+  },
+  {
+   "id": "casknu",
+   "name": "cart-page-2__heading",
+   "settings": []
+  },
+  {
+   "id": "mngnit",
+   "name": "bm-woo-notice-container",
+   "settings": {
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "wonrxo",
+   "name": "bm-woo-notice",
+   "settings": []
+  },
+  {
+   "id": "hmhtsg",
+   "name": "cart-page-2__cart-container",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-2-1)"
+   }
+  },
+  {
+   "id": "mulfnl",
+   "name": "cart-page-2__card-container",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "modified": 1728337797,
+   "user_id": 1
+  },
+  {
+   "id": "gbwbly",
+   "name": "cart-page-2__cart-items",
+   "settings": {
+    "_cssCustom": ".cart-page-2__cart-items {\n\n\t\t--cart-items--primary: var(--black);\n\t\t--focus-color: var(--cart-items--primary);\n\n  \t/* Style border and inline padding to header cell */\n  \t .shop_table thead th {\n    \t\tborder-bottom: 1px solid var(--neutral-light);\n\t\t\t\tpadding: 0 var(--space-s);\n  \t}\n  \n  \t/* Add block and inline padding to data cell */\n  \t.shop_table tbody td {\n      \tpadding: var(--space-xs) var(--space-s);\n  \t}\n\n  \t/* Set quantity width */\n\t\t.shop_table .quantity {\n      \twidth: 13rem;\n  \t}\n  \n  \t/* Remove right border on the minus quantity element */\n  \t.shop_table .quantity .minus {\n      \tborder-right: 0;\n  \t}\n  \n  \t/* Remove left border on the plus quantity element */\n  \t.shop_table .quantity .plus {\n      \tborder-left: 0;\n  \t}\n  \n  \t/* Style cart items buttons */\n  \t.shop_table .button {\n      \tpadding: var(--space-xs) var(--space-m);\n      \tbackground-color: var(--cart-items--primary);\n      \tcolor: var(--white);\n  \t}\n  \n  \t/* Style cart items link color */\n  \t.shop_table a {\n      \tcolor: var(--cart-items--primary);\n  \t}    \n  \n}"
+   },
+   "modified": 1728477917,
+   "user_id": 1
+  },
+  {
+   "id": "sgxpgi",
+   "name": "cart-page-2-testimonial-card",
+   "settings": {
+    "_direction": "row",
+    "_background": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_padding": {
+     "top": "var(--space-s)",
+     "left": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)"
+    },
+    "_columnGap": "var(--content-gap)",
+    "_rowGap": "var(--content-gap)",
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-1-2)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+    "_border": {
+     "width": {
+      "top": "1",
+      "left": "1",
+      "right": "1",
+      "bottom": "1"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    }
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "yyechp",
+   "name": "cart-page-2-testimonial-card__client",
+   "settings": {
+    "_direction": "row",
+    "_columnGap": "calc(var(--content-gap) / 2)",
+    "_alignItems": "center",
+    "_direction:mobile_landscape": "row",
+    "_display:mobile_landscape": "flex"
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "vgjxpc",
+   "name": "cart-page-2-testimonial-card__content",
+   "settings": {
+    "_width": "auto",
+    "_rowGap": "calc(var(--content-gap) / 4)"
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "ircrgd",
+   "name": "cart-page-2-testimonial-card__name",
+   "settings": {
+    "_typography": {
+     "font-weight": "700"
+    }
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "olrbdq",
+   "name": "cart-page-2-testimonial-card__role",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_neutral-medium",
+      "name": "neutral-medium",
+      "raw": "var(--neutral-medium)"
+     },
+     "font-size": "var(--text-s)"
+    }
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "mekycg",
+   "name": "cart-page-2-testimonial-card__avatar",
+   "settings": {
+    "_width": "5rem",
+    "_border": {
+     "radius": {
+      "top": "var(--radius-circle)",
+      "right": "var(--radius-circle)",
+      "left": "var(--radius-circle)",
+      "bottom": "var(--radius-circle)"
+     }
+    },
+    "_height": "5rem",
+    "_objectFit": "cover",
+    "_width:tablet_portrait": "5rem",
+    "_width:mobile_landscape": "5rem",
+    "_height:mobile_landscape": "5rem",
+    "_height:tablet_portrait": "5rem",
+    "_order": "-1",
+    "_overflow": "hidden"
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "lqhahl",
+   "name": "cart-page-2-testimonial-card__text",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-l)",
+     "font-weight": "700"
+    },
+    "_width": "100%"
+   },
+   "modified": 1723641104,
+   "user_id": 1
+  },
+  {
+   "id": "xabewp",
+   "name": "cart-page-2__cart-totals-container",
+   "settings": {
+    "_direction": "row",
+    "_width:tablet_portrait": "100%",
+    "_background": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    }
+   }
+  },
+  {
+   "id": "vndrax",
+   "name": "cart-page-2__cart-totals",
+   "settings": {
+    "_cssCustom": ".cart-page-2__cart-totals {\n\n\t\t--cart-items--primary: var(--black);\n\t\t--focus-color: var(--cart-items--primary);\n\n  \t/* Remove border top & bottom and margin bottom on the table */\n  \t.cart_totals table {\n    \t\tborder-top: 0;\n      \tborder-bottom: 0;\n      \tmargin-bottom: 0;      \t\n  \t}\n  \n  \t  .cart_totals table .cart-subtotal td, .cart_totals table .shipping td, .cart_totals table .order-total td {\n    text-align: end;\n    font-size: var(--text-s);\n  }\n  \n  \t/* Style h2 heading of cart totals */\n  \t.cart_totals h2 {\n      \tborder-bottom: 1px solid var(--neutral-light);\n  \t}\n  \n  \t/* Style cart totals button */\n  \t.cart_totals .button {\n      \tbackground-color: var(--cart-items--primary);\n      \tcolor: var(--white);\n      \tfont-size: 18px;\n      \tdisplay: block;\n      \ttext-align: center;      \t\n      \tline-height: 150%;\n      \tmargin-top: var(--space-m);\n  \t}\n  \n  \t/* Style links of cart totals */\n  \t.cart_totals a {\n      \tcolor: var(--cart-items--primary);\n  \t}  \n  \n  \t/* Style shipping calculator button */\n  \t.shipping-calculator-button {\n    \t\ttext-decoration: none;\n      \tfont-weight: bold;\n  \t}\n  \n  \t/* Style th & shipping destination color */\n  \t.cart-subtotal th,\n  \t.shipping th,\n  \t.woocommerce-shipping-destination {\n    \t\tcolor: var(--neutral);\n  \t}\n  \t\n  \t  \t/* Add margin top to the calculation button */\n    .woocommerce-shipping-calculator .button {\n    margin-block-start: var(--space-xs);\n    \n  }\t\n  \n  \t /* Style add padding to the right of the th cell */\n  \t.shipping th {\t\n      padding-inline-end: var(--space-m);\n  \t}\n  \t\n  \t/* Style strong color of shipping destination */\n  \t.woocommerce-shipping-destination strong {\n    \t\tcolor: var(--black);\n  \t}  \n  \n  \t  \t/* Right align the shipping methods */\n    ul.woocommerce-shipping-methods li {\n      display: flex;\n      flex-direction: row;\n      justify-content: end;\n    }\n  \n    \t/* Right align the shipping methods */\n  \tul.woocommerce-shipping-methods input[type=radio]+label {\n    \tfont-size: 14px;\n      color: var(--neutral) !important;\n      font-weight: 700;\n\t\t}\n  \t\n  \n  \t/* Style data title subtotal */\n  \t.cart-subtotal td[data-title=Subtotal] {\n      \tfont-weight: bold;\n  \t}  \t \n  \t\n  \n  \t/* Style order total th and td font-size */\n  \t.order-total th, .order-total td {\n      \tfont-size: var(--text-l);\n      \tborder-bottom: 1px solid var(--neutral-light);\n      \tpadding-bottom: var(--space-m);      \t\n  \t}\n  \n    /* Increase the Total price font size */\n  .cart_totals table .order-total td {\n    font-size: var(--text-l);\n  }\n}",
+    "_width:tablet_portrait": "100%",
+    "_widthMax:tablet_portrait": "100%",
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    }
+   },
+   "modified": 1728478253,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

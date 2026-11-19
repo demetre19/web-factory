@@ -1,0 +1,251 @@
+{
+ "content": [
+  {
+   "id": "qwaait",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "knwmeq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vmszxx"
+    ]
+   },
+   "label": "Newsletter 6"
+  },
+  {
+   "id": "knwmeq",
+   "name": "container",
+   "parent": "qwaait",
+   "children": [
+    "krkdky"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ydtwif"
+    ]
+   }
+  },
+  {
+   "id": "krkdky",
+   "name": "div",
+   "parent": "knwmeq",
+   "children": [
+    "zjqkyy",
+    "ikkxqh",
+    "agfmhf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "nknvoo"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "zjqkyy",
+   "name": "heading",
+   "parent": "krkdky",
+   "children": [],
+   "settings": {
+    "text": "Join 10k+ subscribers",
+    "_cssGlobalClasses": [
+     "dhcrbj"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "ikkxqh",
+   "name": "text-basic",
+   "parent": "krkdky",
+   "children": [],
+   "settings": {
+    "text": "Stay in the loop with everything you need to know.",
+    "_cssGlobalClasses": [
+     "qqmjvx"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "agfmhf",
+   "name": "div",
+   "parent": "krkdky",
+   "children": [
+    "jcfppq",
+    "ckndax"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "txutju"
+    ]
+   },
+   "label": "Form wrapper"
+  },
+  {
+   "id": "jcfppq",
+   "name": "form",
+   "parent": "agfmhf",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": true,
+      "id": "3d3f90"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "actions": [
+     "email"
+    ],
+    "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "kniand"
+    ],
+    "submitButtonText": "Subscribe",
+    "submitButtonSize": "xl"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "ckndax",
+   "name": "text-basic",
+   "parent": "agfmhf",
+   "children": [],
+   "settings": {
+    "text": "We care about your data in our privacy policy.",
+    "_cssGlobalClasses": [
+     "xzouwt"
+    ],
+    "tag": "p"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "vmszxx",
+   "name": "newsletter-6",
+   "settings": []
+  },
+  {
+   "id": "ydtwif",
+   "name": "newsletter-6-container",
+   "settings": []
+  },
+  {
+   "id": "nknvoo",
+   "name": "newsletter-6__content",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "center",
+    "_width": "100%",
+    "_padding": {
+     "top": "var(--space-l)",
+     "right": "var(--space-l)",
+     "bottom": "var(--space-l)",
+     "left": "var(--space-l)"
+    },
+    "_background": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_rowGap": "var(--content-gap)",
+    "_typography": {
+     "text-align": "center"
+    }
+   }
+  },
+  {
+   "id": "dhcrbj",
+   "name": "newsletter-6__heading",
+   "settings": []
+  },
+  {
+   "id": "qqmjvx",
+   "name": "newsletter-6__text",
+   "settings": []
+  },
+  {
+   "id": "txutju",
+   "name": "bm-form",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)"
+   }
+  },
+  {
+   "id": "kniand",
+   "name": "bm-form-widget",
+   "settings": {
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_primary",
+     "name": "primary",
+     "raw": "var(--primary)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "id": "acss_import_shade-ultra-light",
+      "name": "shade-ultra-light",
+      "raw": "var(--shade-ultra-light)"
+     }
+    },
+    "fieldBorder": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "placeholderTypography": {
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "fieldMargin": {
+     "bottom": "0"
+    },
+    "_cssCustom": ".bm-form-widget {\nflex-wrap: nowrap;\n}\n.bm-form-widget input:focus {\n\toutline-offset: 0;\n} ",
+    "fieldPadding": {
+     "left": "1.5rem",
+     "top": ".3rem",
+     "right": "1.5rem",
+     "bottom": ".3rem"
+    },
+    "_display": "flex",
+    "_gap": "var(--space-xs)",
+    "_flexDirection": "row",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "xzouwt",
+   "name": "bm-form__terms",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

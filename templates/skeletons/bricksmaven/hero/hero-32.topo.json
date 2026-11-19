@@ -1,0 +1,457 @@
+{
+ "label": "Hero 32",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "topology_id": "hero-media-right",
+ "element_sig": {
+  "h": 1,
+  "p": 1,
+  "btn": 1,
+  "img": 3
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Hero 32",
+   "loop": false,
+   "classes": [
+    "cndbdu"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ofcffa"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Content",
+   "loop": false,
+   "classes": [
+    "ayjpou"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "muadbq",
+    "jhiwic"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h1",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "wnpikx"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "prgilv"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "CTA",
+   "loop": false,
+   "classes": [
+    "fhimks"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "acss_import_btn--primary"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Media",
+   "loop": false,
+   "classes": [
+    "bquqxc"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Image wrapper",
+   "loop": false,
+   "classes": [
+    "nsbulw"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fgdvod"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Image wrapper",
+   "loop": false,
+   "classes": [
+    "byinkd"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fgdvod"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": "Background image",
+   "loop": false,
+   "classes": [
+    "aiifnu"
+   ],
+   "depth": 2
+  }
+ ],
+ "classes": {
+  "hero-32": {
+   "spacing": {
+    "_padding": {
+     "top": "0",
+     "bottom": "0"
+    }
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hero-32-container": {
+   "spacing": {},
+   "layout": {
+    "_position": "relative",
+    "_display": "flex",
+    "_direction": "column",
+    "_justifyContent": "center",
+    "_height:mobile_landscape": "70vh"
+   },
+   "sizing": {
+    "_height": "80vh"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".hero-32-container::after {\n\tcontent: \"\";\n  position:absolute;\n  right:0;\n  width:20%;\n  height:100%;\n  background-color: var(--primary);\n}\n\n\n@media (max-width:767px) {\n  \n\t.hero-32-container::after {\n\tcontent: \"\";\n  position:absolute;\n  right:0;\n  bottom:0;\n  width:100%;\n  height:20%;\n  background-color: var(--primary);\n}\n\n}",
+   "tokens": [
+    "primary"
+   ]
+  },
+  "hero-32__content": {
+   "spacing": {
+    "_padding": {
+     "left": "var(--space-l)"
+    }
+   },
+   "layout": {
+    "_position": "relative",
+    "_zIndex": "99",
+    "_padding:mobile_portrait": {
+     "right": "var(--space-l)"
+    }
+   },
+   "sizing": {
+    "_width": "var(--width-m)"
+   },
+   "typography": {
+    "color": {
+     "raw": "var(--white)"
+    }
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-l",
+    "white",
+    "width-m"
+   ]
+  },
+  "intro": {
+   "spacing": {
+    "_rowGap": "var(--space-s)"
+   },
+   "layout": {
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-s"
+   ]
+  },
+  "intro--left": {
+   "spacing": {},
+   "layout": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_alignSelf": "flex-start"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "left"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__subheading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "cta-combo": {
+   "spacing": {
+    "_columnGap": "var(--space-xs)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_alignItems": "center",
+    "_direction:mobile_portrait": "column",
+    "_rowGap:mobile_portrait": "var(--content-gap)",
+    "_alignItems:mobile_portrait": "flex-start"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap",
+    "space-xs"
+   ]
+  },
+  "btn--primary": {
+   "spacing": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    }
+   },
+   "layout": {
+    "_widthMin": "auto"
+   },
+   "sizing": {
+    "_width": "auto"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hero-32__media-wrapper": {
+   "spacing": {
+    "_rowGap": "var(--space-l)"
+   },
+   "layout": {
+    "_position": "absolute",
+    "_zIndex": "1",
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "flex-end",
+    "_bottom:mobile_landscape": "0",
+    "_justifyContent:mobile_landscape": "center",
+    "_direction:mobile_landscape": "row",
+    "_flexWrap:mobile_landscape": "nowrap",
+    "_display:mobile_landscape": "none"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-l"
+   ]
+  },
+  "hero-32__image-wrapper": {
+   "spacing": {},
+   "layout": {
+    "_transform": {
+     "translateX": "-8rem"
+    },
+    "_transform:mobile_portrait": {
+     "translateX": "20%",
+     "translateY": "-2rem"
+    },
+    "_zIndex:mobile_landscape": "1",
+    "_transform:mobile_landscape": {
+     "translateX": "20%",
+     "translateY": "2rem"
+    }
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hero-32__image": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {
+    "_objectFit": "cover",
+    "_aspectRatio": "6/4",
+    "_width": "32rem"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hero-32__image-wrapper-omega": {
+   "spacing": {},
+   "layout": {
+    "_transform": {
+     "translateX": "2rem"
+    },
+    "_transform:mobile_portrait": {
+     "translateX": "-20%",
+     "translateY": "4rem"
+    },
+    "_transform:mobile_landscape": {
+     "translateY": "4rem",
+     "translateX": "-30%"
+    }
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hero-32__container-image": {
+   "spacing": {},
+   "layout": {
+    "_position": "absolute",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "wsuzdn",
+       "color": {
+        "id": "acss_import_shade-ultra-dark-trans-60",
+        "name": "shade-ultra-dark-trans-60",
+        "raw": "var(--shade-ultra-dark-trans-60)"
+       }
+      },
+      {
+       "id": "wsuzdn",
+       "color": {
+        "id": "acss_import_shade-ultra-dark-trans-60",
+        "name": "shade-ultra-dark-trans-60",
+        "raw": "var(--shade-ultra-dark-trans-60)"
+       }
+      }
+     ]
+    }
+   },
+   "sizing": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "shade-ultra-dark-trans-60"
+   ]
+  }
+ },
+ "tokens_all": [
+  "content-gap",
+  "primary",
+  "shade-ultra-dark-trans-60",
+  "space-l",
+  "space-s",
+  "space-xs",
+  "white",
+  "width-m"
+ ]
+}

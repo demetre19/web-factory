@@ -1,0 +1,345 @@
+{
+ "label": "Banner 1",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "topology_id": "list-vertical-rows",
+ "element_sig": {
+  "h": 1,
+  "p": 1,
+  "icn": 2
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Banner 1",
+   "loop": false,
+   "classes": [
+    "frbxuk"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "tasycj"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Content",
+   "loop": false,
+   "classes": [
+    "lfzgqm"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Info",
+   "loop": false,
+   "classes": [
+    "fpbura"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "pvxbmz"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "dwwcsj"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Icon wrapper",
+   "loop": false,
+   "classes": [
+    "wgownt"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "icon",
+   "tag": "icon",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ljvpyv"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Close-wrapper",
+   "loop": false,
+   "classes": [
+    "eayndo"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "icon",
+   "tag": "icon",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ndfvku"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "code",
+   "tag": "code",
+   "label": "Full width banner",
+   "loop": false,
+   "classes": [],
+   "depth": 1
+  }
+ ],
+ "classes": {
+  "bm-banner-1": {
+   "spacing": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "left": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)"
+    }
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {
+    "_background": {
+     "color": {
+      "raw": "transparent"
+     }
+    }
+   },
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-m"
+   ]
+  },
+  "bm-banner-1__container": {
+   "spacing": {
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    }
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "row",
+    "_justifyContent": "space-between",
+    "_alignItems": "center",
+    "_flexWrap": "nowrap",
+    "_border": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     },
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     }
+    },
+    "_position": "relative"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    }
+   },
+   "radius": {},
+   "custom_css": ".bm-banner-1__container {\n  box-shadow: var(--box-shadow-m);\n  \n}",
+   "tokens": [
+    "black",
+    "box-shadow-m",
+    "space-s",
+    "white"
+   ]
+  },
+  "bm-banner-content": {
+   "spacing": {
+    "_columnGap": "calc(var(--content-gap) / 2)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "row",
+    "_flexWrap": "nowrap",
+    "_alignItems": "center",
+    "_rowGap:mobile_portrait": "var(--content-gap)",
+    "_direction:mobile_portrait": "column",
+    "_alignItems:mobile_portrait": "flex-start"
+   },
+   "sizing": {
+    "_width": "auto"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "bm-banner-content__info": {
+   "spacing": {},
+   "layout": {
+    "_direction": "column",
+    "_flexWrap": "nowrap",
+    "_display": "flex"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-banner-content__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "var(--text-m)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "text-m"
+   ]
+  },
+  "bm-banner-content__text": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "var(--text-s)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "text-s"
+   ]
+  },
+  "bm-banner-content__icon-wrapper": {
+   "spacing": {},
+   "layout": {
+    "_display": "flex",
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-banner-content__icon": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-banner__close-wrapper": {
+   "spacing": {
+    "_right": "var(--space-m)"
+   },
+   "layout": {
+    "_interactions": [
+     {
+      "id": "fgiysv",
+      "trigger": "click",
+      "action": "hide",
+      "animationType": "fadeInUp",
+      "target": "custom",
+      "targetSelector": ".bm-banner-1"
+     }
+    ],
+    "_position": "absolute",
+    "_top:mobile_portrait": "var(--space-m)"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)",
+      "raw": "transparent"
+     }
+    }
+   },
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-m"
+   ]
+  },
+  "bm-banner__close": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  }
+ },
+ "tokens_all": [
+  "black",
+  "box-shadow-m",
+  "content-gap",
+  "space-m",
+  "space-s",
+  "text-m",
+  "text-s",
+  "white"
+ ]
+}

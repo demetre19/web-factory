@@ -1,0 +1,278 @@
+{
+ "content": [
+  {
+   "id": "ipqdut",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "yscnmv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lnxxqt"
+    ]
+   },
+   "label": "Header 4"
+  },
+  {
+   "id": "yscnmv",
+   "name": "container",
+   "parent": "ipqdut",
+   "children": [
+    "jghuka",
+    "fkibid",
+    "zpzlrn"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "buwsbs"
+    ]
+   }
+  },
+  {
+   "id": "jghuka",
+   "name": "block",
+   "parent": "yscnmv",
+   "children": [
+    "yrltkx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ghaqzt"
+    ]
+   },
+   "label": "Brand"
+  },
+  {
+   "id": "yrltkx",
+   "name": "logo",
+   "parent": "jghuka",
+   "children": [],
+   "settings": {
+    "logoText": "{site_title}",
+    "_cssGlobalClasses": [
+     "mpiaog"
+    ],
+    "logo": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/04/logoipsum-211.svg",
+     "external": true,
+     "filename": "logoipsum-211.svg"
+    }
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "fkibid",
+   "name": "block",
+   "parent": "yscnmv",
+   "children": [
+    "voswdm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "skakyp"
+    ]
+   },
+   "label": "Nav"
+  },
+  {
+   "id": "voswdm",
+   "name": "nav-menu",
+   "parent": "fkibid",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "axmgxy"
+    ],
+    "menu": "3",
+    "menuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "subMenuIcon": {
+     "library": "ionicons",
+     "icon": "ion-ios-arrow-down"
+    },
+    "mobileMenu": "tablet_portrait"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "zpzlrn",
+   "name": "div",
+   "parent": "yscnmv",
+   "children": [
+    "lnarft",
+    "hztnqe"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "srciex"
+    ]
+   },
+   "label": "Search and CTA"
+  },
+  {
+   "id": "lnarft",
+   "name": "search",
+   "parent": "zpzlrn",
+   "children": [],
+   "settings": {
+    "searchOverlayTitle": "Search site",
+    "_cssGlobalClasses": [
+     "mvwixu"
+    ],
+    "searchType": "overlay",
+    "icon": {
+     "library": "ionicons",
+     "icon": "ion-ios-search"
+    },
+    "buttonAriaLabel": "Search icon"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "hztnqe",
+   "name": "text-link",
+   "parent": "zpzlrn",
+   "children": [],
+   "settings": {
+    "text": "Call to action",
+    "_cssGlobalClasses": [
+     "fikgmb",
+     "acss_import_btn--primary"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "lnxxqt",
+   "name": "bm-header-4",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".header-4 {\n\toverflow: hidden;\n}",
+    "_padding": {
+     "top": "var(--space-xs)",
+     "bottom": "var(--space-xs)"
+    }
+   }
+  },
+  {
+   "id": "buwsbs",
+   "name": "bm-header-4__container",
+   "settings": {
+    "_position": "relative",
+    "_display": "flex",
+    "_direction": "row",
+    "_flexWrap": "nowrap",
+    "_justifyContent": "space-between",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "ghaqzt",
+   "name": "bm-header-4__brand",
+   "settings": {
+    "_gridItemColumnSpan:mobile_landscape": "span 3",
+    "_gridItemColumnSpan": "span 2",
+    "_width:mobile_portrait": "50%",
+    "_width": "auto"
+   }
+  },
+  {
+   "id": "mpiaog",
+   "name": "bm-header-4__brand-logo",
+   "settings": {
+    "_cssCustom:mobile_landscape": ".header-4-brand__logo.white path {\n\tfill: var(--white);\n}",
+    "logoHeight": "100%",
+    "logoWidth": "100%"
+   }
+  },
+  {
+   "id": "skakyp",
+   "name": "bm-header-4__nav-wrapper",
+   "settings": {
+    "_gridItemColumnSpan": "span 5",
+    "_gridItemColumnSpan:mobile_landscape": "8",
+    "_alignItems:mobile_landscape": "flex-end",
+    "_alignItems:tablet_portrait": "flex-end",
+    "_order:tablet_portrait": "3",
+    "_width:tablet_portrait": "5%"
+   }
+  },
+  {
+   "id": "axmgxy",
+   "name": "bm-header-4__nav",
+   "settings": {
+    "menuTypography": {
+     "color": {
+      "raw": "var(--text-black)"
+     }
+    },
+    "subMenuBackground:hover": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "menuMargin": {
+     "left": "0",
+     "right": "3rem"
+    },
+    "_cssCustom": ".bm-header-4__nav nav {\n\tposition: absolute; \n  top: 50%; \n  left: 50%; \n  transform: translateX(-50%) translateY(-50%);\n}"
+   }
+  },
+  {
+   "id": "srciex",
+   "name": "bm-header-4__right",
+   "settings": {
+    "_display": "flex",
+    "_gridItemColumnSpan": "-1",
+    "_alignItems": "center",
+    "_gridItemColumnSpan:mobile_landscape": "-1",
+    "_width": "25%",
+    "_margin": {
+     "left": "auto"
+    },
+    "_display:mobile_portrait": "none",
+    "_columnGap": "var(--content-gap)",
+    "_justifyContent": "flex-end",
+    "_width:mobile_landscape": "40%"
+   }
+  },
+  {
+   "id": "mvwixu",
+   "name": "bm-header-4__search",
+   "settings": {
+    "iconTypography": {
+     "font-size": "var(--text-xl)"
+    },
+    "iconWidth": "auto"
+   }
+  },
+  {
+   "id": "fikgmb",
+   "name": "bm-header-4__cta",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    },
+    "_width": "auto",
+    "_widthMin": "auto"
+   }
+  }
+ ],
+ "globalElements": []
+}

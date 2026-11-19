@@ -1,0 +1,288 @@
+{
+ "label": "Category List 1",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "topology_id": "grid-6col-uniform",
+ "element_sig": {
+  "h": 2,
+  "p": 2,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Category List 1",
+   "loop": false,
+   "classes": [
+    "yxfidl"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "zreewi"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "muadbq"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "heading",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "wnpikx"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "prgilv"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "span",
+   "label": "Tagline",
+   "loop": false,
+   "classes": [
+    "samysq"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "List",
+   "loop": false,
+   "classes": [
+    "akisye"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Card Loop",
+   "loop": true,
+   "classes": [
+    "rgpkqe"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "yvewea"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "lqneut"
+   ],
+   "depth": 4
+  }
+ ],
+ "classes": {
+  "category-list-1": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "category-list-1__container": {
+   "spacing": {
+    "_rowGap": "var(--container-gap)"
+   },
+   "layout": {
+    "_direction": "column",
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "container-gap"
+   ]
+  },
+  "intro": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "intro__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__subheading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__accent-heading": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {
+    "color": {
+     "id": "acss_import_black",
+     "name": "black",
+     "raw": "var(--black)"
+    }
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "black"
+   ]
+  },
+  "category-list-1__list": {
+   "spacing": {
+    "_gridGap": "var(--grid-gap)"
+   },
+   "layout": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-auto-6)",
+    "_gridTemplateColumns:tablet_portrait": "var(--grid-4)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-3)",
+    "_gridTemplateColumns:mobile_portrait": "var(--grid-2)"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "grid-2",
+    "grid-3",
+    "grid-4",
+    "grid-auto-6",
+    "grid-gap"
+   ]
+  },
+  "category-list-1-card": {
+   "spacing": {
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   },
+   "layout": {
+    "_alignItems": "flex-start"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "left"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "category-list-1-card__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "var(--text-m)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "text-m"
+   ]
+  },
+  "category-list-1-card__image": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  }
+ },
+ "tokens_all": [
+  "black",
+  "container-gap",
+  "content-gap",
+  "grid-2",
+  "grid-3",
+  "grid-4",
+  "grid-auto-6",
+  "grid-gap",
+  "text-m"
+ ]
+}

@@ -1,0 +1,263 @@
+{
+ "content": [
+  {
+   "id": "qpatvw",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "boibnt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lgyevn"
+    ]
+   },
+   "label": "Logo 12"
+  },
+  {
+   "id": "boibnt",
+   "name": "container",
+   "parent": "qpatvw",
+   "children": [
+    "cgbqjh",
+    "fjedvt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cbngym"
+    ]
+   }
+  },
+  {
+   "id": "cgbqjh",
+   "name": "div",
+   "parent": "boibnt",
+   "children": [
+    "qjmyut",
+    "hfvdeh",
+    "pqzusi"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "qjmyut",
+   "name": "heading",
+   "parent": "cgbqjh",
+   "children": [],
+   "settings": {
+    "text": "Long headline to turn your visitors into customers",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "hfvdeh",
+   "name": "text-basic",
+   "parent": "cgbqjh",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "pqzusi",
+   "name": "text-basic",
+   "parent": "cgbqjh",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "fjedvt",
+   "name": "block",
+   "parent": "boibnt",
+   "children": [
+    "qelswl"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xyparq"
+    ],
+    "_cssId": "brxe-fjedva"
+   },
+   "label": "Logo list wrapper"
+  },
+  {
+   "id": "qelswl",
+   "name": "slider-nested",
+   "parent": "fjedvt",
+   "children": [
+    "osrpmb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xttzwm"
+    ],
+    "optionsType": "default",
+    "type": "loop",
+    "height": "100%",
+    "perPage": "8",
+    "speed": "8000",
+    "autoplay": true,
+    "interval": "0",
+    "perPage:tablet_portrait": "4",
+    "perPage:mobile_portrait": "2"
+   }
+  },
+  {
+   "id": "osrpmb",
+   "name": "block",
+   "parent": "qelswl",
+   "children": [
+    "raqifo"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ixbqkw"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "attachment"
+     ],
+     "tax_query": [
+      "happyfiles_category::86"
+     ]
+    }
+   },
+   "label": "Slide 1"
+  },
+  {
+   "id": "raqifo",
+   "name": "image",
+   "parent": "osrpmb",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "jfcihg"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{post_id}",
+     "size": "large"
+    }
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "lgyevn",
+   "name": "logo-12",
+   "settings": {
+    "_overflow": "hidden"
+   }
+  },
+  {
+   "id": "cbngym",
+   "name": "logo-12__container",
+   "settings": {
+    "_rowGap": "var(--space-xl)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "xyparq",
+   "name": "logo-12__logo-list-wrapper",
+   "settings": {
+    "_overflow": "hidden",
+    "_position": "relative",
+    "_cssCustom": ".logo-12__logo-list-wrapper::before {\n\tcontent:'';\n  position: absolute;\n  left:0;\n  height:100%;\n  width:25%;\n  background: linear-gradient( 90deg, var(--white), transparent);\n  z-index: 99;\n}\n\n.logo-12__logo-list-wrapper::after {\n\tcontent:'';\n  position: absolute;\n  right:0;\n  height:100%;\n  width:25%;\n  background: linear-gradient( 90deg, transparent,var(--white));\n  z-index: 99;\n}"
+   }
+  },
+  {
+   "id": "xttzwm",
+   "name": "logo-12-list",
+   "settings": {
+    "_direction": "row",
+    "_cssCustom": ".logo-12-list  .splide__track{\n\toverflow:visible;\n}\n\n.logo-12-list .splide__list {\n  gap: calc(var(--content-gap) * 3);\n  align-items: center;\n}\n\n.logo-12-list :where(.splide__list, .splide__slide){\n  transition-timing-function: linear !important;\n}"
+   },
+   "modified": 1732315657,
+   "user_id": 7
+  },
+  {
+   "id": "ixbqkw",
+   "name": "logo-12-list-item",
+   "settings": []
+  },
+  {
+   "id": "jfcihg",
+   "name": "logo-12-list-item__brand",
+   "settings": {
+    "_objectFit": "contain",
+    "_width": "100%"
+   }
+  }
+ ],
+ "globalElements": []
+}

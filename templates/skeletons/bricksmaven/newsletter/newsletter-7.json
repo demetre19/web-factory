@@ -1,0 +1,295 @@
+{
+ "content": [
+  {
+   "id": "xmlleq",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "zcrtiu"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "aaokla"
+    ]
+   },
+   "label": "Newsletter 7"
+  },
+  {
+   "id": "zcrtiu",
+   "name": "container",
+   "parent": "xmlleq",
+   "children": [
+    "xxuutf",
+    "dgwnak"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vpqqxg"
+    ]
+   }
+  },
+  {
+   "id": "xxuutf",
+   "name": "div",
+   "parent": "zcrtiu",
+   "children": [
+    "axbpnd",
+    "alhxrd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "qgzkdw"
+    ]
+   },
+   "label": "Left box"
+  },
+  {
+   "id": "axbpnd",
+   "name": "heading",
+   "parent": "xxuutf",
+   "children": [],
+   "settings": {
+    "text": "Join 10k+ subscribers",
+    "_cssGlobalClasses": [
+     "jfevet"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "alhxrd",
+   "name": "text-basic",
+   "parent": "xxuutf",
+   "children": [],
+   "settings": {
+    "text": "Stay in the loop with everything you need to know.",
+    "_cssGlobalClasses": [
+     "amvxhh"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "dgwnak",
+   "name": "div",
+   "parent": "zcrtiu",
+   "children": [
+    "zbdkoh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "nuatsd"
+    ]
+   },
+   "label": "Right box"
+  },
+  {
+   "id": "zbdkoh",
+   "name": "div",
+   "parent": "dgwnak",
+   "children": [
+    "aanswn",
+    "qybper"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "txutju"
+    ]
+   },
+   "label": "Form wrapper"
+  },
+  {
+   "id": "aanswn",
+   "name": "form",
+   "parent": "zbdkoh",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "required": true,
+      "id": "3d3f90"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "actions": [
+     "email"
+    ],
+    "successMessage": "Message successfully sent. We will get back to you as soon as possible.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "kniand"
+    ],
+    "submitButtonText": "Subscribe",
+    "submitButtonSize": "xl"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "qybper",
+   "name": "text-basic",
+   "parent": "zbdkoh",
+   "children": [],
+   "settings": {
+    "text": "We care about your data in our privacy policy.",
+    "_cssGlobalClasses": [
+     "xzouwt"
+    ],
+    "tag": "p"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "aaokla",
+   "name": "newsletter-7",
+   "settings": []
+  },
+  {
+   "id": "vpqqxg",
+   "name": "newsletter-7-container",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "var(--grid-2)",
+    "_gridGap": "var(--grid-gap)",
+    "_alignItemsGrid": "center",
+    "_background": {
+     "color": {
+      "id": "acss_import_primary-light-trans-40",
+      "name": "primary-light-trans-40",
+      "raw": "var(--primary-light-trans-40)"
+     }
+    },
+    "_padding": {
+     "top": "var(--space-xl)",
+     "right": "var(--space-xl)",
+     "bottom": "var(--space-xl)",
+     "left": "var(--space-xl)"
+    },
+    "_position": "relative",
+    "_gridTemplateColumns:mobile_landscape": "1fr",
+    "_typography:mobile_landscape": {
+     "text-align": "center"
+    },
+    "_padding:mobile_landscape": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    }
+   }
+  },
+  {
+   "id": "qgzkdw",
+   "name": "newsletter-7__content",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "jfevet",
+   "name": "newsletter-7__heading",
+   "settings": []
+  },
+  {
+   "id": "amvxhh",
+   "name": "newsletter-7__desc",
+   "settings": []
+  },
+  {
+   "id": "nuatsd",
+   "name": "newsletter-7__right-box",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    },
+    "_background": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    },
+    "_position:mobile_landscape": "static",
+    "_width:mobile_landscape": "100%"
+   }
+  },
+  {
+   "id": "txutju",
+   "name": "bm-form",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)"
+   }
+  },
+  {
+   "id": "kniand",
+   "name": "bm-form-widget",
+   "settings": {
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_primary",
+     "name": "primary",
+     "raw": "var(--primary)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "id": "acss_import_shade-ultra-light",
+      "name": "shade-ultra-light",
+      "raw": "var(--shade-ultra-light)"
+     }
+    },
+    "fieldBorder": {
+     "style": "solid",
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "placeholderTypography": {
+     "color": {
+      "id": "acss_import_shade-trans-20",
+      "name": "shade-trans-20",
+      "raw": "var(--shade-trans-20)"
+     }
+    },
+    "fieldMargin": {
+     "bottom": "0"
+    },
+    "_cssCustom": ".bm-form-widget {\nflex-wrap: nowrap;\n}\n.bm-form-widget input:focus {\n\toutline-offset: 0;\n} ",
+    "fieldPadding": {
+     "left": "1.5rem",
+     "top": ".3rem",
+     "right": "1.5rem",
+     "bottom": ".3rem"
+    },
+    "_display": "flex",
+    "_gap": "var(--space-xs)",
+    "_flexDirection": "row",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "xzouwt",
+   "name": "bm-form__terms",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

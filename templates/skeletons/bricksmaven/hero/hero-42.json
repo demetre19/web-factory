@@ -1,0 +1,297 @@
+{
+ "content": [
+  {
+   "id": "tlehhl",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "pmpcls"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sirlol"
+    ]
+   },
+   "label": "Hero 42"
+  },
+  {
+   "id": "pmpcls",
+   "name": "container",
+   "parent": "tlehhl",
+   "children": [
+    "hfuxxn",
+    "sdtinu",
+    "zzwpbv",
+    "ehghhf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "uhnltf"
+    ]
+   }
+  },
+  {
+   "id": "hfuxxn",
+   "name": "block",
+   "parent": "pmpcls",
+   "children": [
+    "jgyvbg",
+    "rzpghe",
+    "gbjhgw",
+    "twxoob"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "fszzyj"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "jgyvbg",
+   "name": "heading",
+   "parent": "hfuxxn",
+   "children": [],
+   "settings": {
+    "text": "Get the Alpha template now",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "forory"
+    ]
+   }
+  },
+  {
+   "id": "rzpghe",
+   "name": "text-basic",
+   "parent": "hfuxxn",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "cybfcz"
+    ],
+    "tag": "span"
+   },
+   "label": "Accent Heading"
+  },
+  {
+   "id": "gbjhgw",
+   "name": "text-basic",
+   "parent": "hfuxxn",
+   "children": [],
+   "settings": {
+    "text": "Here goes your text ... Select any part of your text to access the formatting toolbar.",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "ungjxw"
+    ]
+   },
+   "label": "Text"
+  },
+  {
+   "id": "twxoob",
+   "name": "button",
+   "parent": "hfuxxn",
+   "children": [],
+   "settings": {
+    "text": "Call to Action",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ]
+   }
+  },
+  {
+   "id": "sdtinu",
+   "name": "block",
+   "parent": "pmpcls",
+   "children": [
+    "frihdc"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "tfioza"
+    ]
+   },
+   "label": "Image Left"
+  },
+  {
+   "id": "frihdc",
+   "name": "image",
+   "parent": "sdtinu",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ezakqh"
+    ],
+    "tag": "figure",
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    }
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "zzwpbv",
+   "name": "block",
+   "parent": "pmpcls",
+   "children": [
+    "wqlzzo"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lhbioj"
+    ]
+   },
+   "label": "Image right"
+  },
+  {
+   "id": "wqlzzo",
+   "name": "image",
+   "parent": "zzwpbv",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ezakqh"
+    ],
+    "tag": "figure",
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    },
+    "_height:mobile_landscape": "380"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "ehghhf",
+   "name": "code",
+   "parent": "pmpcls",
+   "children": [],
+   "settings": {
+    "cssCode": "\n/* Set Section to display grid and inline padding to 0 */\n.hero-42 {\n  display: grid;\n  grid-template-columns: var(--grid-12);\n  padding-inline: 0px;\n  overflow:hidden;\n}\n\n\n/* Set container to full width and display grid */\n.hero-42__container {\n  display:grid;\n  grid-template-columns: var(--grid-12) !important ;\n  grid-column: span 12;\n  width: 100%;\n}\n\n/* Position the content element in the middle */\n.hero-42__content {\n  grid-column: 4/ 10;\n\n}\n\n/* position the image left container to the left */\n.hero-42__image-left{\n  grid-column: 1/ 4;\n}\n\n/* position the image right container to the right */\n.hero-42__image-right {\n  grid-column: 10/ -1;\n\n}\n\n@media (max-width:767px) {\n  \n  \n  .hero-42__content {\n  grid-column: 1/ -1;\n  grid-row: 2;  \n    \n\n}\n\n.hero-42__image-left{\n  grid-column: 1/ -1;\n  grid-row: 1;\n}\n\n.hero-42__image-right {\n  grid-column: 1/ -1;\n  grid-row: 3;\n\n}\n}",
+    "_display": "none"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "sirlol",
+   "name": "hero-42",
+   "settings": {
+    "_height": "80vh",
+    "_padding": {
+     "top": "0",
+     "bottom": "0"
+    },
+    "_height:mobile_landscape": "100%",
+    "_display": "flex"
+   }
+  },
+  {
+   "id": "uhnltf",
+   "name": "hero-42__container",
+   "settings": {
+    "_height": "100%",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+    "_display": "grid",
+    "_gridTemplateColumns": "minmax(0, 4fr) minmax(0, 8fr) minmax(0, 4fr)"
+   }
+  },
+  {
+   "id": "fszzyj",
+   "name": "hero-42__content",
+   "settings": {
+    "_rowGap": "var(--content-gap)",
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "center",
+    "_typography": {
+     "text-align": "center"
+    },
+    "_height": "100%",
+    "_justifyContent": "center",
+    "_padding": {
+     "right": "var(--space-xl)",
+     "left": "var(--space-xl)",
+     "top": "var(--space-xl)",
+     "bottom": "var(--space-xl)"
+    },
+    "_background": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_gridItemColumnSpan:mobile_landscape": "span 1",
+    "_gridItemRowSpan:mobile_landscape": "2"
+   }
+  },
+  {
+   "id": "forory",
+   "name": "hero-42__heading",
+   "settings": []
+  },
+  {
+   "id": "cybfcz",
+   "name": "accent-h",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_neutral-dark",
+      "name": "neutral-dark",
+      "raw": "var(--neutral-dark)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "ungjxw",
+   "name": "hero-42__text",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "tfioza",
+   "name": "hero-42__image-left",
+   "settings": {
+    "_gridItemColumnSpan:mobile_landscape": "span 1",
+    "_order": "-1",
+    "_order:mobile_landscape": "o",
+    "_display": "flex"
+   }
+  },
+  {
+   "id": "ezakqh",
+   "name": "hero-42__image",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%",
+    "_aspectRatio:mobile_landscape": "1/1",
+    "_height:mobile_landscape": "380"
+   }
+  },
+  {
+   "id": "lhbioj",
+   "name": "hero-42__image-right",
+   "settings": {
+    "_gridItemColumnSpan:mobile_landscape": "span 1"
+   }
+  }
+ ],
+ "globalElements": []
+}

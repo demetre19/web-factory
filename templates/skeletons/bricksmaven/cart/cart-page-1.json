@@ -1,0 +1,311 @@
+{
+ "content": [
+  {
+   "id": "nljygr",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "hrnqui",
+    "hnbgkm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pqdssv"
+    ]
+   },
+   "label": "Cart Page 1"
+  },
+  {
+   "id": "hrnqui",
+   "name": "container",
+   "parent": "nljygr",
+   "children": [
+    "jjvsti",
+    "fytfve",
+    "jfslmv",
+    "ggiqau"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bwxiih"
+    ]
+   }
+  },
+  {
+   "id": "jjvsti",
+   "name": "block",
+   "parent": "hrnqui",
+   "children": [
+    "cjhxnw"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "afcgff"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "cjhxnw",
+   "name": "heading",
+   "parent": "jjvsti",
+   "children": [],
+   "settings": {
+    "text": "Cart",
+    "_cssGlobalClasses": [
+     "lnybtq"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "fytfve",
+   "name": "block",
+   "parent": "hrnqui",
+   "children": [
+    "sntqmk"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "mngnit"
+    ]
+   },
+   "label": "Notice Container"
+  },
+  {
+   "id": "sntqmk",
+   "name": "woocommerce-notice",
+   "parent": "fytfve",
+   "children": [],
+   "settings": {
+    "previewType": "all",
+    "_cssGlobalClasses": [
+     "wonrxo"
+    ]
+   }
+  },
+  {
+   "id": "jfslmv",
+   "name": "block",
+   "parent": "hrnqui",
+   "children": [
+    "lebtjn"
+   ],
+   "settings": [],
+   "label": "Before cart"
+  },
+  {
+   "id": "lebtjn",
+   "name": "text-basic",
+   "parent": "jfslmv",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_before_cart}",
+    "tag": "div"
+   },
+   "label": "Before cart Dynamic Tag"
+  },
+  {
+   "id": "ggiqau",
+   "name": "block",
+   "parent": "hrnqui",
+   "children": [
+    "tuqjdm",
+    "jrzobf"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gmrlpz"
+    ]
+   },
+   "label": "Cart Container"
+  },
+  {
+   "id": "tuqjdm",
+   "name": "block",
+   "parent": "ggiqau",
+   "children": [
+    "mjbvyw",
+    "mighut"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pgkmbp"
+    ]
+   },
+   "label": "Cart items container"
+  },
+  {
+   "id": "mjbvyw",
+   "name": "woocommerce-cart-items",
+   "parent": "tuqjdm",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vxbcpo"
+    ]
+   },
+   "label": "Cart items (CSS)",
+   "themeStyles": []
+  },
+  {
+   "id": "mighut",
+   "name": "container",
+   "parent": "tuqjdm",
+   "children": [
+    "xxnyvp"
+   ],
+   "settings": [],
+   "label": "Before cart colletarals"
+  },
+  {
+   "id": "xxnyvp",
+   "name": "text-basic",
+   "parent": "mighut",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_before_cart_collaterals}",
+    "tag": "div"
+   },
+   "label": "Before cart colletarals Dynamic Tag"
+  },
+  {
+   "id": "jrzobf",
+   "name": "block",
+   "parent": "ggiqau",
+   "children": [
+    "ftdgho"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "znigxu"
+    ]
+   },
+   "label": "Cart totals container"
+  },
+  {
+   "id": "ftdgho",
+   "name": "woocommerce-cart-collaterals",
+   "parent": "jrzobf",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "kkwrxj"
+    ]
+   },
+   "label": "Cart totals (CSS)",
+   "themeStyles": []
+  },
+  {
+   "id": "hnbgkm",
+   "name": "container",
+   "parent": "nljygr",
+   "children": [
+    "ikqxnj"
+   ],
+   "settings": [],
+   "label": "After cart"
+  },
+  {
+   "id": "ikqxnj",
+   "name": "text-basic",
+   "parent": "hnbgkm",
+   "children": [],
+   "settings": {
+    "text": "{do_action:woocommerce_after_cart}",
+    "tag": "div"
+   },
+   "label": "After cart Dynamic Tag"
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "pqdssv",
+   "name": "cart-page-1",
+   "settings": []
+  },
+  {
+   "id": "bwxiih",
+   "name": "cart-page-1__container",
+   "settings": {
+    "_gridTemplateColumns:tablet_portrait": "var(--grid-1)"
+   },
+   "modified": 1723639732,
+   "user_id": 1
+  },
+  {
+   "id": "afcgff",
+   "name": "cart-page-1__intro",
+   "settings": {
+    "_alignItems": "center",
+    "_typography": {
+     "text-align": "center"
+    }
+   }
+  },
+  {
+   "id": "lnybtq",
+   "name": "cart-page-1__heading",
+   "settings": []
+  },
+  {
+   "id": "mngnit",
+   "name": "bm-woo-notice-container",
+   "settings": {
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "wonrxo",
+   "name": "bm-woo-notice",
+   "settings": []
+  },
+  {
+   "id": "gmrlpz",
+   "name": "cart-page-1__cart-container",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-2-1)"
+   }
+  },
+  {
+   "id": "pgkmbp",
+   "name": "cart-page-1__cart-items-container",
+   "settings": []
+  },
+  {
+   "id": "vxbcpo",
+   "name": "cart-page-1__cart-items",
+   "settings": {
+    "_cssCustom": ".cart-page-1__cart-items {\n\n\t\t--cart-items--primary: var(--black);\n\t\t--focus-color: var(--cart-items--primary);\n\n  \t/* Style border and inline padding to header cell */\n  \t .shop_table thead th {\n    \t\tborder-bottom: 1px solid var(--neutral-light);\n\t\t\t\tpadding: 0 var(--space-s);\n  \t}\n  \t\n  \t/* Add block and inline padding to data cell */\n  \t.shop_table tbody td {\n      \tpadding: var(--space-xs) var(--space-s);\n  \t}\n  \n  \t\n\t\t/* Set quantity width */\n\t\t.shop_table .quantity {\n      \twidth: 13rem;\n  \t}\n  \n  \n  \t/* Remove right border on the minus quantity element */\n  \t.shop_table .quantity .minus {\n      \tborder-right: 0;\n  \t}\n  \n  \t/* Remove left border on the plus quantity element */\n  \t.shop_table .quantity .plus {\n      \tborder-left: 0;\n  \t}\n  \n  \t/* Style cart items buttons */\n  \t.shop_table .button {\n      padding: 0 var(--space-s);\t\t\n      background-color: var(--cart-items--primary);\n     \tcolor: var(--white);\n      line-height: 40px;\n  \t}\n  \n  \t/* Style cart items link color */\n  \t.shop_table a {\n      \tcolor: var(--cart-items--primary);\n  \t}    \n  \n}"
+   }
+  },
+  {
+   "id": "znigxu",
+   "name": "cart-page-1__cart-totals-container",
+   "settings": []
+  },
+  {
+   "id": "kkwrxj",
+   "name": "cart-page-1__cart-totals",
+   "settings": {
+    "_padding": {
+     "right": "var(--space-m)",
+     "left": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "top": "var(--space-xs)"
+    },
+    "_cssCustom": ".cart-page-1__cart-totals {\n\n\t\t--cart-items--primary: var(--black);\n\t\t--focus-color: var(--cart-items--primary);\n\n  \t\n    border: 1px solid var(--neutral-light);\n  \tbackground-color: var(--neutral-ultra-light);\n  \t\n  \t/* Remove border top & bottom and margin bottom on the table */\n  \t.cart_totals table {\n    \t\tborder-top: 0;\n      \tborder-bottom: 0;\n      \tmargin-bottom: 0;\n  \t}  \t\n  \n  .cart_totals table .cart-subtotal td, .cart_totals table .shipping td, .cart_totals table .order-total td {\n    text-align: end;\n    font-size: var(--text-s);\n  }\n  \n  /* Increase the Total price font size */\n  .cart_totals table .order-total td {\n    font-size: var(--text-l);\n  }\n  \n  \t/* Style Cart totals button */\n  \t.cart_totals .button {\n      padding: 0 var(--space-s);\t\n      background-color: var(--cart-items--primary);\n      \tcolor: var(--white);\n      \tfont-size: 18px;\n      \tdisplay: block;\n      \ttext-align: center;      \t\n      \tline-height: 40px;\n  \t}\n  \n  \t/* Style Cart totals links */\n  \t.cart_totals a {\n      \tcolor: var(--cart-items--primary);\n  \t}  \n  \n  \t/* Style shipping calculator button */\n  \t.shipping-calculator-button {\n    \t\ttext-decoration: none;\n      \tfont-weight: bold;\n  \t}\n  \n  \t/* Add margin top to the calculation button */\n    .woocommerce-shipping-calculator .button {\n    margin-block-start: var(--space-xs);\n    \n  }\n  \n  \t/* Style th & shipping destination color */\n  \t.cart-subtotal th,\n  \t.shipping th,\n  \t.woocommerce-shipping-destination {\t\n      color: var(--neutral);\n  \t}\n  \n  \t /* Style add padding to the right of the th cell */\n  \t.shipping th {\t\n      padding-inline-end: var(--space-m);\n  \t}\n  \n  \n  \t/* Style strong color of shipping destination */\n  \t.woocommerce-shipping-destination strong {\n    \t\tcolor: var(--black);\n  \t}  \n  \n  \t/* Right align the shipping methods */\n    ul.woocommerce-shipping-methods li {\n      display: flex;\n      flex-direction: row;\n      justify-content: end;\n    }\n  \t\n  \t/* Right align the shipping methods */\n  \tul.woocommerce-shipping-methods input[type=radio]+label {\n    \tfont-size: 14px;\n      color: var(--neutral) !important;\n      font-weight: 700;\n\t\t}\n  \n  \t/* Style data title subtotal */\n  \t.cart-subtotal td[data-title=Subtotal] {\n      \tfont-weight: bold;\n  \t}  \t \n  \t\n  \t/* Style order total th and td font-size */\n  \t.order-total th, .order-total td {\n      \tfont-size: var(--text-l);\n  \t}\n}",
+    "_width:tablet_portrait": "100%",
+    "_widthMax:tablet_portrait": "100%"
+   },
+   "modified": 1728938323,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

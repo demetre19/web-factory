@@ -1,0 +1,210 @@
+{
+ "content": [
+  {
+   "id": "gtuytw",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "ltczmh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "qysqpu"
+    ]
+   },
+   "label": "Grid 14"
+  },
+  {
+   "id": "ltczmh",
+   "name": "container",
+   "parent": "gtuytw",
+   "children": [
+    "vkcxph",
+    "tyytjm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "qfvour"
+    ]
+   }
+  },
+  {
+   "id": "vkcxph",
+   "name": "div",
+   "parent": "ltczmh",
+   "children": [
+    "ogwtmh",
+    "bercro",
+    "jqamjl"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xeerle"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "ogwtmh",
+   "name": "heading",
+   "parent": "vkcxph",
+   "children": [],
+   "settings": {
+    "text": "Long headline on two lines to turn your visitors into users",
+    "_cssGlobalClasses": [
+     "komdrw"
+    ]
+   }
+  },
+  {
+   "id": "bercro",
+   "name": "text-basic",
+   "parent": "vkcxph",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.",
+    "_cssGlobalClasses": [
+     "hsfilg"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "jqamjl",
+   "name": "button",
+   "parent": "vkcxph",
+   "children": [],
+   "settings": {
+    "text": "Call to action",
+    "_cssGlobalClasses": [
+     "lbqxuy"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   }
+  },
+  {
+   "id": "tyytjm",
+   "name": "div",
+   "parent": "ltczmh",
+   "children": [
+    "yjzdxq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "grtqyr"
+    ]
+   },
+   "label": "Media"
+  },
+  {
+   "id": "yjzdxq",
+   "name": "image",
+   "parent": "tyytjm",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "tedeax"
+    ],
+    "tag": "figure",
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    }
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "qysqpu",
+   "name": "gridcard-14",
+   "settings": []
+  },
+  {
+   "id": "qfvour",
+   "name": "gridcard-14-container",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "repeat(12, minmax(0, 1fr))",
+    "_gridGap": "var(--space-m)",
+    "_alignItemsGrid": "center",
+    "_gridGap:mobile_landscape": "0",
+    "_cssCustom:mobile_landscape": ".gridcard-14-container {\n\trow-gap: 5em !important;\n}"
+   }
+  },
+  {
+   "id": "xeerle",
+   "name": "gridcard-14-ct",
+   "settings": {
+    "_gridItemColumnSpan": "span 4",
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_rowGap": "var(--space-xs)",
+    "_gridItemColumnSpan:mobile_landscape": "span 12"
+   }
+  },
+  {
+   "id": "komdrw",
+   "name": "gridcard-14-ct__title",
+   "settings": []
+  },
+  {
+   "id": "hsfilg",
+   "name": "gridcard-14-ct__desc",
+   "settings": []
+  },
+  {
+   "id": "lbqxuy",
+   "name": "gridcard-14-ct__cta",
+   "settings": {
+    "_background": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_typography": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    }
+   }
+  },
+  {
+   "id": "grtqyr",
+   "name": "gridcard-14-media",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%",
+    "_heightMax": "35em",
+    "_position": "relative",
+    "_cssCustom": ".gridcard-14-media {\n\tgrid-column: 6/ 12;\n}\n.gridcard-14-media::before {\n\tcontent: '';\n  position: absolute;\n  top: 50%;\n  right: -10%;\n  transform: translateY(-50%);\n  height: 120%;\n  width: 15em;\n  background-color: var(--primary);\n  z-index: -1;\n}",
+    "_cssCustom:mobile_landscape": ".gridcard-14-media {\n\tgrid-column: span 11;\n}"
+   }
+  },
+  {
+   "id": "tedeax",
+   "name": "gridcard-14-media__img",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%",
+    "_heightMax": "35em",
+    "_position": "relative",
+    "_cssCustom:mobile_landscape": ".gridcard-14-media {\n\tgrid-column: span 11;\n}",
+    "_aspectRatio": "6/4"
+   }
+  }
+ ],
+ "globalElements": []
+}

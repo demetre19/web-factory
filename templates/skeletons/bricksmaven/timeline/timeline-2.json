@@ -1,0 +1,324 @@
+{
+ "content": [
+  {
+   "id": "bhmgfb",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "xcosof"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pmrueg"
+    ]
+   },
+   "label": "Timeline 2"
+  },
+  {
+   "id": "xcosof",
+   "name": "container",
+   "parent": "bhmgfb",
+   "children": [
+    "6508c4",
+    "bczrfk"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "byvxfk"
+    ]
+   }
+  },
+  {
+   "id": "6508c4",
+   "name": "div",
+   "parent": "xcosof",
+   "children": [
+    "ad05b7",
+    "891ae9"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "ad05b7",
+   "name": "text-basic",
+   "parent": "6508c4",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "891ae9",
+   "name": "text-basic",
+   "parent": "6508c4",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "bczrfk",
+   "name": "block",
+   "parent": "xcosof",
+   "children": [
+    "cb69fd",
+    "mbaelq",
+    "zllsxx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "soqyuh",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Timeline List"
+  },
+  {
+   "id": "cb69fd",
+   "name": "heading",
+   "parent": "bczrfk",
+   "children": [],
+   "settings": {
+    "text": "Long headline to turn your visitors into customers",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "mbaelq",
+   "name": "block",
+   "parent": "bczrfk",
+   "children": [
+    "uaunfv",
+    "fkqfjj",
+    "xllcaq"
+   ],
+   "settings": {
+    "tag": "li",
+    "_cssGlobalClasses": [
+     "nfysxn"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "post"
+     ]
+    }
+   },
+   "label": "Card"
+  },
+  {
+   "id": "uaunfv",
+   "name": "block",
+   "parent": "mbaelq",
+   "children": [
+    "uokucu",
+    "kjcjhd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gbhjdn"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "uokucu",
+   "name": "heading",
+   "parent": "uaunfv",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "afornv"
+    ],
+    "text": "{post_title}"
+   }
+  },
+  {
+   "id": "kjcjhd",
+   "name": "text-basic",
+   "parent": "uaunfv",
+   "children": [],
+   "settings": {
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "gkksbm"
+    ],
+    "text": "{post_excerpt}"
+   },
+   "label": "Text"
+  },
+  {
+   "id": "fkqfjj",
+   "name": "text-basic",
+   "parent": "mbaelq",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "yoptod"
+    ],
+    "tag": "custom",
+    "customTag": "time",
+    "_attributes": [
+     {
+      "id": "ngbaup",
+      "name": "datetime",
+      "value": "{post_date}"
+     }
+    ],
+    "text": "{post_date}"
+   },
+   "label": "Date"
+  },
+  {
+   "id": "xllcaq",
+   "name": "icon",
+   "parent": "mbaelq",
+   "children": [],
+   "settings": {
+    "icon": {
+     "library": "themify",
+     "icon": "ti-calendar"
+    },
+    "_cssGlobalClasses": [
+     "aufvho"
+    ]
+   }
+  },
+  {
+   "id": "zllsxx",
+   "name": "code",
+   "parent": "bczrfk",
+   "children": [],
+   "settings": {
+    "code": "<style>\n.timeline-2-list {\n\tposition: relative;\n\tpadding: var(--space-m) 0;\n}\n\n.timeline-2-list::after {\n\tcontent: '';\n\tposition: absolute;\n\twidth: 2px;\n\tbackground: var(--primary-light);\n\ttop: 0;\n\tbottom: 0;\n\tleft: 50%;\n\tmargin-left: -1px;\n}\n\n.timeline-2-card {\n\tpadding: 15px 30px;\n\tposition: relative;\n\tbackground: inherit;\n\twidth: 50%;\n}\n\n.timeline-2-card:nth-child(odd) {\n\tleft: 0;\n}\n\n.timeline-2-card:nth-child(even) {\n\tleft: 50%;\n}\n\n.timeline-2-card::after {\n\tcontent: '';\n\tposition: absolute;\n\twidth: 16px;\n\theight: 16px;\n\ttop: calc(50% - 8px);\n\tright: -8px;\n\tbackground: #fff;\n\tborder: 2px solid var(--primary);\n\tborder-radius: 16px;\n\tz-index: 1;\n}\n\n.timeline-2-card:nth-child(even)::after {\n\tleft: -8px;\n}\n\n.timeline-2-card::before {\n\tcontent: '';\n\tposition: absolute;\n\twidth: 50px;\n\theight: 2px;\n\ttop: 50%;\n  transform: translateY(-50%);\n\tright: 8px;\n\tbackground: var(--primary);\n\tz-index: 1;\n}\n\n.timeline-2-card:nth-child(even)::before {\n\tleft: 8px;\n}\n\n.timeline-2-card .timeline-2-card__date {\n\tposition: absolute;\n\tdisplay: inline-block;\n\ttop: 50%;\n  transform: translateY(-50%);\n\ttext-align: right;\n\tfont-size: 14px;\n\tfont-weight: bold;\n\tcolor: var(--primary-dark);\n\ttext-transform: uppercase;\n\tletter-spacing: 1px;\n\tz-index: 1;\n}\n\n.timeline-2-card:nth-child(odd) .timeline-2-card__date {\n\tleft: calc(100% + var(--space-m));\n}\n\n.timeline-2-card:nth-child(even) .timeline-2-card__date {\n\tright: calc(100% + var(--space-m));\n}\n\n.timeline-2-card .timeline-2-card__icon {\n\tposition: absolute;\n\tdisplay: inline-block;\n\tpadding: .8rem;\n\ttop: 50%;\n  transform: translateY(-50%); \n\tborder: 2px solid var(--primary);\n  border-radius: var(--radius-circle);\n\ttext-align: center;\n\tfont-size: 2.4rem;\n\tcolor: var(--primary);\n\tz-index: 1;\n}\n\n.timeline-2-card:nth-child(odd) .timeline-2-card__icon {\n\tright: 56px;\n}\n\n.timeline-2-card:nth-child(even) .timeline-2-card__icon {\n\tleft: 56px;\n}\n\n.timeline-2-card .timeline-2-card__content {\n\tpadding: var(--space-m) var(--space-xxl) var(--space-m) var(--space-m);\n\tbackground: var(--primary-ultra-light);\n\tposition: relative;\n\tborder-radius: 0 var(--radius-xl) var(--radius-xl) 0;\n}\n\n.timeline-2-card:nth-child(even) .timeline-2-card__content {\n\tpadding: var(--space-m) var(--space-m) var(--space-m) var(--space-xxl);\n\tborder-radius: var(--radius-xl) 0 0 var(--radius-xl);\n}\n\n.timeline-2-card .timeline-2-card__content h3 {\n\tmargin: 0 0 10px 0;\n\tfont-size: 18px;\n\tcolor: var(--primary);\n}\n\n.timeline-2-card .timeline-2-card__content p {\n\tmargin: 0;\n\tfont-size: 16px;\n\tline-height: 22px;\n}\n\n@media (max-width: 767px) {\n\t.timeline-2-list::after {\n\t\tleft: -8px;\n\t}\n\n\t.timeline-2-card {\n\t\twidth: 100%;\n\t\tpadding-left: var(--space-xs);\n\t\tpadding-right: 0px;\n\t}\n\n\t.timeline-2-card:nth-child(even) {\n\t\tleft: 0%;\n\t}\n\n\t.timeline-2-card:nth-child(odd)::after, \n\t.timeline-2-card:nth-child(even)::after {\n\t\tleft: -16px;\n\t}\n\n\t.timeline-2-card:nth-child(odd)::before,\n\t.timeline-2-card:nth-child(even)::before {\n\t\tleft: 0px;\n\t\tborder-color: transparent #006E51 transparent transparent;\n\t\twidth: 25px;\n\t}\n\n\t.timeline-2-card:nth-child(odd) .timeline-2-card__date,\n\t.timeline-2-card:nth-child(even) .timeline-2-card__date {\n\n    position:static;\n\t\tfont-size: var(--text-s);\n    padding-left:var(--space-xxl);\n\t\tpadding-top: var(--space-xs);\n    transform: translateY(0%);\n\t}\n\n\t.timeline-2-card:nth-child(odd) .timeline-2-card__icon,\n\t.timeline-2-card:nth-child(even) .timeline-2-card__icon {\n\t\tright: auto;\n\t\tleft: 25px;\n\t}\n\n\t.timeline-2-card:nth-child(odd) .timeline-2-card__content,\n\t.timeline-2-card:nth-child(even) .timeline-2-card__content {\n\t\tpadding: var(--space-m) var(--space-m) var(--space-m) var(--space-xxl);\n\t\tborder-radius: 0;\n\t}\n}\n</style>\n",
+    "executeCode": true,
+    "signature": "d58cd488dfc54e9913313f48e186c523",
+    "user_id": 7,
+    "time": 1713780421
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "pmrueg",
+   "name": "timeline-2",
+   "settings": []
+  },
+  {
+   "id": "byvxfk",
+   "name": "timeline-2-container",
+   "settings": {
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--space-s)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "soqyuh",
+   "name": "timeline-2-list",
+   "settings": []
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "nfysxn",
+   "name": "timeline-2-card",
+   "settings": []
+  },
+  {
+   "id": "gbhjdn",
+   "name": "timeline-2-card__content",
+   "settings": []
+  },
+  {
+   "id": "afornv",
+   "name": "timeline-2-card__heading",
+   "settings": []
+  },
+  {
+   "id": "gkksbm",
+   "name": "timeline-2-card__text",
+   "settings": []
+  },
+  {
+   "id": "yoptod",
+   "name": "timeline-2-card__date",
+   "settings": []
+  },
+  {
+   "id": "aufvho",
+   "name": "timeline-2-card__icon",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

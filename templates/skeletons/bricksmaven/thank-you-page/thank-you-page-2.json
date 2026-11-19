@@ -1,0 +1,127 @@
+{
+ "content": [
+  {
+   "id": "xalffs",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "xywydp"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "lieirl"
+    ]
+   },
+   "label": "Thank you Page 2"
+  },
+  {
+   "id": "xywydp",
+   "name": "container",
+   "parent": "xalffs",
+   "children": [
+    "hwujhe"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dpocgc"
+    ]
+   }
+  },
+  {
+   "id": "hwujhe",
+   "name": "woocommerce-checkout-thankyou",
+   "parent": "xywydp",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "isbgpg"
+    ]
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.12.3",
+ "globalClasses": [
+  {
+   "id": "lieirl",
+   "name": "bm-thank-you-2",
+   "settings": [],
+   "_mappedId": "lieirl",
+   "modified": 1742559421,
+   "user_id": 1
+  },
+  {
+   "id": "dpocgc",
+   "name": "bm-thank-you-2__container",
+   "settings": [],
+   "_mappedId": "dpocgc",
+   "modified": 1742559421,
+   "user_id": 1
+  },
+  {
+   "id": "isbgpg",
+   "name": "bm-thank-you-2__element",
+   "settings": {
+    "_cssCustom": "/* Thank you element  */\n.bm-thank-you-2__element {\n  display: grid;\n  grid-template-columns: var(--grid-1);\n  align-items: start;\n  gap: var(--grid-gap);\n}\n\n\n/* RESET */\n.woocommerce-checkout .shop_table td, .woocommerce-checkout .shop_table th {\n    line-height: 1;\n}\n\n\n/* Woocommerce Notice  */\n.bm-thank-you-2__element .woocommerce-notice {\n  font-size: calc(var(--text-xxl) * 1.4);\n  font-weight: 700;\n  grid-column: span 1;\n  grid-row: auto;\n  display: flex;\n  align-items: start;\n  text-align: left;\n}\n\n/* Woocommerce Order Overview  */\n.bm-thank-you-2__element ul.woocommerce-order-overview {\n  grid-column: span 1;\n  grid-template-columns: repeat(5, minmax(0, 1fr));\n  position: relative;\n  margin-block-start: var(--space-xl);\n}\n\n.bm-thank-you-2__element ul.woocommerce-order-overview::before {\n  content: 'Order overview';\n  position: absolute;\n  font-size: var(--h2);\n  \n  line-height: var(--heading-line-height);\n  font-weight: 700;\n  inset-block-start: calc(-1 * var(--space-xl));\n}\n\n/* Woocommerce Order Details  */\n.bm-thank-you-2__element .woocommerce-order-details {\n  grid-column: span 1;\n  display: flex;\n  flex-direction: column;\n  gap: var(--content-gap);\n}\n\n.bm-thank-you-2__element .woocommerce-table__product-name {\n  font-weight: 700; /* Style font-weight price name */ \n}\n\n.bm-thank-you-2__element .woocommerce-Price-amount {\n  font-weight: 400; /* Style font-weight price amount */ \n}\n\n/* Woocommerce Customer Details  */\n.bm-thank-you-2__element .woocommerce-customer-details {\n  grid-column: span 1;\n  margin-block: 0px;\n}\n\n.bm-thank-you-2__element .woocommerce-customer-details .woocommerce-column--billing-address, .bm-thank-you-2__element .woocommerce-customer-details .woocommerce-column--shipping-address {\n  display: flex;\n  flex-direction: column;\n  gap: var(--content-gap);\n  background-color: var(--neutral-ultra-light);\n  padding: var(--space-m);\n  border: 1px solid var(--neutral-light);\n}\n\n\n@media (max-width:991px) {\n  /* Thank you element  */\n  .bm-thank-you-2__element {\n    grid-template-columns: var(--grid-1);\n  }\n  \n  /* Woocommerce Notice  */\n  .bm-thank-you-2__element .woocommerce-notice {\n    grid-column: span 1;\n  }\n  \n  /* Woocommerce Order Overview  */\n  .bm-thank-you-2__element ul.woocommerce-order-overview {\n    grid-column: span 1;\n    grid-row: auto;\n    grid-template-columns: repeat(1, minmax(0, 1fr));\n  }\n  \n  /* Woocommerce Order Details  */\n  .bm-thank-you-2__element .woocommerce-order-details {\n    grid-column: span 1;\n    grid-row: auto;\n  }\n  \n  /* Woocommerce Customer Details  */\n  .bm-thank-you-2__element .woocommerce-customer-details {\n    grid-column: span 1;\n    grid-row: auto;\n  }\n\n}\n\n@media (max-width:478px) {\n    /* Woocommerce Customer Details  */\n  .bm-thank-you-2__element .woocommerce-customer-details .woocommerce-columns--addresses{\n    flex-direction: column;\n  }\n}",
+    "detailsBackgroundFooter": {
+     "id": "acss_import_neutral-ultra-light",
+     "name": "neutral-ultra-light",
+     "raw": "var(--neutral-ultra-light)"
+    },
+    "detailsBorder": {
+     "width": {
+      "top": "1",
+      "right": "1",
+      "bottom": "1",
+      "left": "1"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    },
+    "messageMargin": {
+     "bottom": "0",
+     "top": "0"
+    },
+    "overviewMargin": {
+     "bottom": "0"
+    },
+    "detailsMargin": {
+     "top": "0",
+     "bottom": "0"
+    },
+    "overviewBorderItem": {
+     "width": {
+      "bottom": "0",
+      "right": "1"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    },
+    "overviewBorderItem:tablet_portrait": {
+     "width": {
+      "bottom": "1"
+     },
+     "style": "solid"
+    },
+    "overviewBackground": {
+     "id": "acss_import_neutral-ultra-light",
+     "name": "neutral-ultra-light",
+     "raw": "var(--neutral-ultra-light)"
+    }
+   },
+   "modified": 1742559364,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

@@ -1,0 +1,254 @@
+{
+ "content": [
+  {
+   "id": "gpnxha",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "migcud"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pankhz"
+    ]
+   },
+   "label": "Header Page 1"
+  },
+  {
+   "id": "migcud",
+   "name": "container",
+   "parent": "gpnxha",
+   "children": [
+    "qfubpz",
+    "acgnzi"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "oqgfpr"
+    ]
+   }
+  },
+  {
+   "id": "qfubpz",
+   "name": "div",
+   "parent": "migcud",
+   "children": [
+    "ucfabq",
+    "aqvodh",
+    "ephmgv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ezohae"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "ucfabq",
+   "name": "heading",
+   "parent": "qfubpz",
+   "children": [],
+   "settings": {
+    "text": "Short heading here",
+    "_cssGlobalClasses": [
+     "kblvla"
+    ],
+    "tag": "h1"
+   }
+  },
+  {
+   "id": "aqvodh",
+   "name": "text-basic",
+   "parent": "qfubpz",
+   "children": [],
+   "settings": {
+    "text": "Accent Heading",
+    "_cssGlobalClasses": [
+     "cybfcz"
+    ],
+    "tag": "span"
+   },
+   "label": "Accent Heading"
+  },
+  {
+   "id": "ephmgv",
+   "name": "text-basic",
+   "parent": "qfubpz",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
+    "_cssGlobalClasses": [
+     "tsmrla"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "acgnzi",
+   "name": "div",
+   "parent": "migcud",
+   "children": [
+    "buirwt",
+    "ynbngj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sabbkr"
+    ]
+   },
+   "label": "CTA"
+  },
+  {
+   "id": "buirwt",
+   "name": "button",
+   "parent": "acgnzi",
+   "children": [],
+   "settings": {
+    "text": "I am a button",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ],
+    "tag": "a"
+   }
+  },
+  {
+   "id": "ynbngj",
+   "name": "button",
+   "parent": "acgnzi",
+   "children": [],
+   "settings": {
+    "text": "I am a button",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary",
+     "acss_import_btn--outline"
+    ],
+    "tag": "a"
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "pankhz",
+   "name": "header-page-1",
+   "settings": []
+  },
+  {
+   "id": "oqgfpr",
+   "name": "header-page-1-container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-m)"
+   }
+  },
+  {
+   "id": "ezohae",
+   "name": "header-page-1__content",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)"
+   }
+  },
+  {
+   "id": "kblvla",
+   "name": "header-page__title",
+   "settings": []
+  },
+  {
+   "id": "cybfcz",
+   "name": "accent-h",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_neutral-dark",
+      "name": "neutral-dark",
+      "raw": "var(--neutral-dark)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "tsmrla",
+   "name": "header-page__desc",
+   "settings": []
+  },
+  {
+   "id": "sabbkr",
+   "name": "header-page-btn",
+   "settings": {
+    "_display": "flex",
+    "_columnGap": "var(--space-s)"
+   }
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": {
+    "_padding": {
+     "top": "1.25rem !important",
+     "bottom": "1.25rem !important",
+     "left": "1.875rem !important",
+     "right": "1.875rem !important"
+    },
+    "_width": "auto",
+    "_widthMin": "auto"
+   }
+  },
+  {
+   "id": "acss_import_btn--outline",
+   "name": "btn--outline",
+   "settings": {
+    "_background": {
+     "color": {
+      "hex": "#000000",
+      "rgb": "rgba(0, 0, 0, 0)",
+      "hsl": "hsla(0, 0%, 0%, 0)"
+     }
+    },
+    "_border": {
+     "width": {
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem",
+      "left": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_typography": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    },
+    "_background:hover": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    },
+    "_typography:hover": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    },
+    "_border:hover": {
+     "color": {
+      "raw": "var(--primary)"
+     }
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

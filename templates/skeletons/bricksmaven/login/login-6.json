@@ -1,0 +1,646 @@
+{
+ "content": [
+  {
+   "id": "npuztl",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "jdahkr",
+    "wodffr"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dsoepx"
+    ]
+   },
+   "label": "Login 6"
+  },
+  {
+   "id": "jdahkr",
+   "name": "image",
+   "parent": "npuztl",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sakilz"
+    ],
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    },
+    "tag": "figure"
+   }
+  },
+  {
+   "id": "wodffr",
+   "name": "container",
+   "parent": "npuztl",
+   "children": [
+    "dmangs",
+    "yezjju",
+    "btllie"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "uuwaqj"
+    ]
+   }
+  },
+  {
+   "id": "dmangs",
+   "name": "div",
+   "parent": "wodffr",
+   "children": [
+    "zxwhxh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hzmhsc"
+    ]
+   },
+   "label": "Brand"
+  },
+  {
+   "id": "zxwhxh",
+   "name": "svg",
+   "parent": "dmangs",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "amsajw"
+    ],
+    "file": {
+     "id": 15946,
+     "filename": "logoipsum-220.svg",
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/04/logoipsum-220.svg"
+    }
+   }
+  },
+  {
+   "id": "yezjju",
+   "name": "block",
+   "parent": "wodffr",
+   "children": [
+    "jureil",
+    "nhitlv"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pnnsds"
+    ]
+   },
+   "label": "Login"
+  },
+  {
+   "id": "jureil",
+   "name": "block",
+   "parent": "yezjju",
+   "children": [
+    "bnikfh",
+    "zzxgmk",
+    "xsstjt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wxylfm",
+     "zgoxjd"
+    ],
+    "_conditions": [
+     [
+      {
+       "id": "gxexmh",
+       "key": "user_logged_in",
+       "compare": "==",
+       "value": "0"
+      }
+     ]
+    ]
+   },
+   "label": "Form"
+  },
+  {
+   "id": "bnikfh",
+   "name": "heading",
+   "parent": "jureil",
+   "children": [],
+   "settings": {
+    "text": "Login",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "pancnh"
+    ]
+   }
+  },
+  {
+   "id": "zzxgmk",
+   "name": "form",
+   "parent": "jureil",
+   "children": [],
+   "settings": {
+    "fields": [
+     {
+      "type": "email",
+      "label": "Username or Email",
+      "placeholder": "Your Email",
+      "required": true,
+      "id": "225d8b"
+     },
+     {
+      "type": "password",
+      "label": "Password",
+      "placeholder": "Your Name",
+      "id": "zeicsm"
+     },
+     {
+      "type": "rememberme",
+      "placeholder": "Remember me",
+      "id": "vzyotp",
+      "width": "50"
+     },
+     {
+      "type": "html",
+      "placeholder": "Your Name",
+      "id": "vzphws",
+      "html": "<span><a href=\"#\">Forgot your password</a></span>",
+      "width": "50"
+     }
+    ],
+    "submitButtonStyle": "primary",
+    "successMessage": "You are logged in.",
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "acss.bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "msdita"
+    ],
+    "actions": [
+     "login"
+    ],
+    "showLabels": true,
+    "submitButtonText": "Log in",
+    "loginName": "225d8b",
+    "loginPassword": "zeicsm",
+    "loginRemember": "vzyotp",
+    "loginErrorMessage": "Username of password is incorrect"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "xsstjt",
+   "name": "div",
+   "parent": "jureil",
+   "children": [
+    "fegcnk",
+    "fxjpnj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bfyteo",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Footer"
+  },
+  {
+   "id": "fegcnk",
+   "name": "div",
+   "parent": "xsstjt",
+   "children": [
+    "hzqsou"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "hzqsou",
+   "name": "text-link",
+   "parent": "fegcnk",
+   "children": [],
+   "settings": {
+    "text": "Back to home",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{site_url}"
+    }
+   },
+   "label": "Back to home",
+   "themeStyles": []
+  },
+  {
+   "id": "fxjpnj",
+   "name": "div",
+   "parent": "xsstjt",
+   "children": [
+    "nhfjkh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "nhfjkh",
+   "name": "text-link",
+   "parent": "fxjpnj",
+   "children": [],
+   "settings": {
+    "text": "Lost your password?",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   },
+   "label": "Lost your password?",
+   "themeStyles": []
+  },
+  {
+   "id": "nhitlv",
+   "name": "block",
+   "parent": "yezjju",
+   "children": [
+    "nruyba",
+    "jievhw"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "buvxnz"
+    ],
+    "_conditions": [
+     [
+      {
+       "id": "astmzb",
+       "key": "user_logged_in",
+       "compare": "==",
+       "value": "1"
+      }
+     ]
+    ]
+   },
+   "label": "Logged in Heading"
+  },
+  {
+   "id": "nruyba",
+   "name": "heading",
+   "parent": "nhitlv",
+   "children": [],
+   "settings": {
+    "text": "You are logged in.",
+    "tag": "h1",
+    "_cssGlobalClasses": [
+     "pancnh"
+    ]
+   }
+  },
+  {
+   "id": "jievhw",
+   "name": "div",
+   "parent": "nhitlv",
+   "children": [
+    "pnwpov",
+    "egevns"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "bfyteo",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Footer"
+  },
+  {
+   "id": "pnwpov",
+   "name": "div",
+   "parent": "jievhw",
+   "children": [
+    "juiflp"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "juiflp",
+   "name": "text-link",
+   "parent": "pnwpov",
+   "children": [],
+   "settings": {
+    "text": "Back to home",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{site_url}"
+    }
+   },
+   "label": "Back to home"
+  },
+  {
+   "id": "egevns",
+   "name": "div",
+   "parent": "jievhw",
+   "children": [
+    "yitfpc"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytvjsk"
+    ],
+    "tag": "li"
+   },
+   "label": "li"
+  },
+  {
+   "id": "yitfpc",
+   "name": "text-link",
+   "parent": "egevns",
+   "children": [],
+   "settings": {
+    "text": "Lost your password?",
+    "_cssGlobalClasses": [
+     "fjrrkt"
+    ],
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   },
+   "label": "Lost your password?"
+  },
+  {
+   "id": "btllie",
+   "name": "div",
+   "parent": "wodffr",
+   "children": [
+    "hlvtvt"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "blkwkm"
+    ]
+   },
+   "label": "Copyright"
+  },
+  {
+   "id": "hlvtvt",
+   "name": "text-basic",
+   "parent": "btllie",
+   "children": [],
+   "settings": {
+    "text": "{site_url} @ {current_date:Y}",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "lkxcac"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.9",
+ "globalClasses": [
+  {
+   "id": "dsoepx",
+   "name": "bm-login-6",
+   "settings": {
+    "_position": "relative",
+    "_cssCustom": ".bm-login-6::before {\n\tcontent: '';\n  position: absolute;\n  top: 0;\n  width: 100%;\n  height: 75%;\n  background: linear-gradient(var(--white) 15%, transparent);\n  z-index: 1;\n}",
+    "_height": "100vh",
+    "_overflow": "hidden"
+   },
+   "modified": 1723059922,
+   "user_id": 7
+  },
+  {
+   "id": "sakilz",
+   "name": "bm-login-6__image",
+   "settings": {
+    "_objectFit": "cover",
+    "_position": "absolute",
+    "_top": "0",
+    "_right": "0",
+    "_bottom": "0",
+    "_left": "0",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "pumvzj",
+       "color": {
+        "id": "acss_import_neutral-trans-60",
+        "name": "neutral-trans-60",
+        "raw": "var(--neutral-trans-60)"
+       }
+      }
+     ]
+    },
+    "_height": "100%",
+    "_width": "100%"
+   }
+  },
+  {
+   "id": "uuwaqj",
+   "name": "bm-login-6__container",
+   "settings": {
+    "_position": "relative",
+    "_zIndex": "1{\"content\":[{\"id\":\"gcrhde\",\"name\":\"block\",\"parent\":\"hdlhyp\",\"children\":[\"niccqb\",\"raeigt\"],\"settings\":{\"_cssGlobalClasses\":[\"oecxtu\"]},\"label\":\"Login\"},{\"id\":\"niccqb\",\"name\":\"block\",\"parent\":\"gcrhde\",\"children\":[\"nvvvam\",\"ndkmst\",\"wilzic\"],\"settings\":{\"_cssGlobalClasses\":[\"wxylfm\",\"zgoxjd\"],\"_conditions\":[[{\"id\":\"gxexmh\",\"key\":\"user_logged_in\",\"compare\":\"==\",\"value\":\"0\"}]]},\"label\":\"Form\"},{\"id\":\"nvvvam\",\"name\":\"heading\",\"parent\":\"niccqb\",\"children\":[],\"settings\":{\"text\":\"Login\",\"tag\":\"h1\",\"_cssGlobalClasses\":[\"pancnh\"]}},{\"id\":\"ndkmst\",\"name\":\"form\",\"parent\":\"niccqb\",\"children\":[],\"settings\":{\"fields\":[{\"type\":\"email\",\"label\":\"Username or Email\",\"placeholder\":\"Your Email\",\"required\":true,\"id\":\"225d8b\"},{\"type\":\"password\",\"label\":\"Password\",\"placeholder\":\"Your Name\",\"id\":\"zeicsm\"},{\"type\":\"rememberme\",\"placeholder\":\"Remember me\",\"id\":\"vzyotp\",\"width\":\"50\"},{\"type\":\"html\",\"placeholder\":\"Your Name\",\"id\":\"vzphws\",\"html\":\"<span><a href=\\\"#\\\">Forgot your password</a></span>\",\"width\":\"50\"}],\"submitButtonStyle\":\"primary\",\"successMessage\":\"You are logged in.\",\"emailSubject\":\"Contact form request\",\"emailTo\":\"admin_email\",\"fromName\":\"acss.bricksmaven.com\",\"emailErrorMessage\":\"Submission failed. Please reload the page and try to submit the form again.\",\"htmlEmail\":true,\"mailchimpPendingMessage\":\"Please check your email to confirm your subscription.\",\"mailchimpErrorMessage\":\"Sorry, but we could not subscribe you.\",\"sendgridErrorMessage\":\"Sorry, but we could not subscribe you.\",\"_cssGlobalClasses\":[\"msdita\"],\"actions\":[\"login\"],\"showLabels\":true,\"submitButtonText\":\"Log in\",\"loginName\":\"225d8b\",\"loginPassword\":\"zeicsm\",\"loginRemember\":\"vzyotp\",\"loginErrorMessage\":\"Username of password is incorrect\"},\"themeStyles\":[]},{\"id\":\"wilzic\",\"name\":\"div\",\"parent\":\"niccqb\",\"children\":[\"pseebh\",\"cmuaab\"],\"settings\":{\"_cssGlobalClasses\":[\"bfyteo\",\"acss_import_list--none\"],\"tag\":\"ul\"},\"label\":\"Footer\"},{\"id\":\"pseebh\",\"name\":\"div\",\"parent\":\"wilzic\",\"children\":[\"fjxszk\"],\"settings\":{\"_cssGlobalClasses\":[\"ytvjsk\"],\"tag\":\"li\"},\"label\":\"li\"},{\"id\":\"fjxszk\",\"name\":\"text-link\",\"parent\":\"pseebh\",\"children\":[],\"settings\":{\"text\":\"Back to home\",\"_cssGlobalClasses\":[\"fjrrkt\"],\"link\":{\"type\":\"meta\",\"useDynamicData\":\"{site_url}\"}},\"label\":\"Back to home\",\"themeStyles\":[]},{\"id\":\"cmuaab\",\"name\":\"div\",\"parent\":\"wilzic\",\"children\":[\"owbezy\"],\"settings\":{\"_cssGlobalClasses\":[\"ytvjsk\"],\"tag\":\"li\"},\"label\":\"li\"},{\"id\":\"owbezy\",\"name\":\"text-link\",\"parent\":\"cmuaab\",\"children\":[],\"settings\":{\"text\":\"Lost your password?\",\"_cssGlobalClasses\":[\"fjrrkt\"],\"link\":{\"type\":\"external\",\"url\":\"#\"}},\"label\":\"Lost your password?\",\"themeStyles\":[]},{\"id\":\"raeigt\",\"name\":\"block\",\"parent\":\"gcrhde\",\"children\":[\"acphby\",\"ppchla\"],\"settings\":{\"_cssGlobalClasses\":[\"buvxnz\"],\"_conditions\":[[{\"id\":\"astmzb\",\"key\":\"user_logged_in\",\"compare\":\"==\",\"value\":\"1\"}]]},\"label\":\"Logged in Heading\"},{\"id\":\"acphby\",\"name\":\"heading\",\"parent\":\"raeigt\",\"children\":[],\"settings\":{\"text\":\"You are logged in.\",\"tag\":\"h1\",\"_cssGlobalClasses\":[\"pancnh\"]}},{\"id\":\"ppchla\",\"name\":\"div\",\"parent\":\"raeigt\",\"children\":[\"groiij\",\"xavaqg\"],\"settings\":{\"_cssGlobalClasses\":[\"bfyteo\",\"acss_import_list--none\"],\"tag\":\"ul\"},\"label\":\"Footer\"},{\"id\":\"groiij\",\"name\":\"div\",\"parent\":\"ppchla\",\"children\":[\"tkchom\"],\"settings\":{\"_cssGlobalClasses\":[\"ytvjsk\"],\"tag\":\"li\"},\"label\":\"li\"},{\"id\":\"tkchom\",\"name\":\"text-link\",\"parent\":\"groiij\",\"children\":[],\"settings\":{\"text\":\"Back to home\",\"_cssGlobalClasses\":[\"fjrrkt\"],\"link\":{\"type\":\"meta\",\"useDynamicData\":\"{site_url}\"}},\"label\":\"Back to home\"},{\"id\":\"xavaqg\",\"name\":\"div\",\"parent\":\"ppchla\",\"children\":[\"mjbuwz\"],\"settings\":{\"_cssGlobalClasses\":[\"ytvjsk\"],\"tag\":\"li\"},\"label\":\"li\"},{\"id\":\"mjbuwz\",\"name\":\"text-link\",\"parent\":\"xavaqg\",\"children\":[],\"settings\":{\"text\":\"Lost your password?\",\"_cssGlobalClasses\":[\"fjrrkt\"],\"link\":{\"type\":\"external\",\"url\":\"#\"}},\"label\":\"Lost your password?\"}],\"source\":\"bricksCopiedElements\",\"sourceUrl\":\"https://acss.bricksmaven.com\",\"version\":\"1.9.9\",\"globalClasses\":[{\"id\":\"oecxtu\",\"name\":\"bm-login-5__login\",\"settings\":{\"_padding\":{\"top\":\"var(--space-m)\",\"right\":\"var(--space-m)\",\"bottom\":\"var(--space-m)\",\"left\":\"var(--space-m)\"},\"_border\":{\"width\":{\"top\":\"1px\",\"right\":\"1px\",\"bottom\":\"1px\",\"left\":\"1px\"},\"style\":\"solid\",\"color\":{\"id\":\"acss_import_neutral-light\",\"name\":\"neutral-light\",\"raw\":\"var(--neutral-light)\"}},\"_background\":{\"color\":{\"id\":\"acss_import_white\",\"name\":\"white\",\"raw\":\"var(--white)\"}}}},{\"id\":\"wxylfm\",\"name\":\"login-form-wrapper\",\"settings\":{\"_width:mobile_landscape\":\"100%\",\"_rowGap\":\"var(--content-gap)\"},\"modified\":1722396720,\"user_id\":7},{\"id\":\"zgoxjd\",\"name\":\"login-form-wrapper--alt\",\"settings\":{\"_width\":\"var(--width-m)\"}},{\"id\":\"pancnh\",\"name\":\"login-3__heading\",\"settings\":[]},{\"id\":\"msdita\",\"name\":\"login-form\",\"settings\":{\"submitButtonBackgroundColor\":{\"id\":\"acss_import_neutral\",\"name\":\"neutral\",\"raw\":\"var(--neutral)\"},\"submitButtonTypography\":{\"color\":{\"id\":\"acss_import_neutral-ultra-light\",\"name\":\"neutral-ultra-light\",\"raw\":\"var(--neutral-ultra-light)\"}},\"fieldBorder\":{\"color\":{\"id\":\"acss_import_neutral-light\",\"name\":\"neutral-light\",\"raw\":\"var(--neutral-light)\"},\"width\":{\"top\":\".1rem\",\"right\":\".1rem\",\"bottom\":\".1rem\",\"left\":\".1rem\"},\"style\":\"solid\"},\"fieldPadding\":{\"top\":\"calc(var(--space-xs) / 2)\",\"bottom\":\"calc(var(--space-xs) / 2)\",\"left\":\"var(--space-xs)\",\"right\":\"var(--space-xs)\"},\"_cssCustom\":\".login-form .form-group ul li {\\n\\tdisplay: flex;\\n  flex-direction: row;\\n  align-items: center;\\n}\\n\\n.login-form .form-group span {\\n\\tdisplay: flex;\\n  flex-direction: row;\\n  align-items: end;\\n}\\n\\n.login-form .form-group span a, .login-form .form-group ul li label {\\n\\tfont-size: var(--text-s);\\n}\\n\\n.login-form .form-group:nth-child(4) {\\n    align-items: end;\\n}\"}},{\"id\":\"bfyteo\",\"name\":\"login-footer\",\"settings\":{\"_display\":\"flex\",\"_flexWrap\":\"nowrap\",\"_columnGap\":\"var(--content-gap)\"}},{\"id\":\"acss_import_list--none\",\"name\":\"list--none\",\"settings\":[]},{\"id\":\"ytvjsk\",\"name\":\"login-footer__li\",\"settings\":[]},{\"id\":\"fjrrkt\",\"name\":\"login-footer__link\",\"settings\":{\"_typography\":{\"font-size\":\"var(--text-s)\"}}},{\"id\":\"buvxnz\",\"name\":\"login-1__logged-in-heading-wrapper\",\"settings\":{\"_rowGap\":\"var(--content-gap)\"}}],\"globalElements\":[]}",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--container-gap)",
+    "_height": "100%",
+    "_justifyContent": "space-between"
+   }
+  },
+  {
+   "id": "hzmhsc",
+   "name": "coming-soon__brand",
+   "settings": {
+    "_position": "relative",
+    "_zIndex": "1"
+   }
+  },
+  {
+   "id": "amsajw",
+   "name": "bm-login-6__logo",
+   "settings": []
+  },
+  {
+   "id": "pnnsds",
+   "name": "bm-login-6__login-wrapper",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    },
+    "_border": {
+     "width": {
+      "top": "1px",
+      "right": "1px",
+      "bottom": "1px",
+      "left": "1px"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    },
+    "_background": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    },
+    "_width": "var(--width-m)",
+    "_position": "relative",
+    "_zIndex": "1"
+   }
+  },
+  {
+   "id": "wxylfm",
+   "name": "login-form-wrapper",
+   "settings": {
+    "_width:mobile_landscape": "100%",
+    "_rowGap": "var(--content-gap)"
+   },
+   "modified": 1722396720,
+   "user_id": 7
+  },
+  {
+   "id": "zgoxjd",
+   "name": "login-form-wrapper--alt",
+   "settings": {
+    "_width": "var(--width-m)"
+   }
+  },
+  {
+   "id": "pancnh",
+   "name": "login-3__heading",
+   "settings": []
+  },
+  {
+   "id": "msdita",
+   "name": "login-form",
+   "settings": {
+    "submitButtonBackgroundColor": {
+     "id": "acss_import_neutral",
+     "name": "neutral",
+     "raw": "var(--neutral)"
+    },
+    "submitButtonTypography": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "fieldBorder": {
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     },
+     "width": {
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem",
+      "left": ".1rem"
+     },
+     "style": "solid"
+    },
+    "fieldPadding": {
+     "top": "calc(var(--space-xs) / 2)",
+     "bottom": "calc(var(--space-xs) / 2)",
+     "left": "var(--space-xs)",
+     "right": "var(--space-xs)"
+    },
+    "_cssCustom": ".login-form .form-group ul li {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.login-form .form-group span {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: end;\n}\n\n.login-form .form-group span a, .login-form .form-group ul li label {\n\tfont-size: var(--text-s);\n}\n\n.login-form .form-group:nth-child(4) {\n    align-items: end;\n}"
+   }
+  },
+  {
+   "id": "bfyteo",
+   "name": "login-footer",
+   "settings": {
+    "_display": "flex",
+    "_flexWrap": "nowrap",
+    "_columnGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "ytvjsk",
+   "name": "login-footer__li",
+   "settings": []
+  },
+  {
+   "id": "fjrrkt",
+   "name": "login-footer__link",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    }
+   }
+  },
+  {
+   "id": "buvxnz",
+   "name": "login-1__logged-in-heading-wrapper",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "blkwkm",
+   "name": "bm-login-6__copyright-wrapper",
+   "settings": []
+  },
+  {
+   "id": "lkxcac",
+   "name": "bm-login-6__copyright",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)",
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

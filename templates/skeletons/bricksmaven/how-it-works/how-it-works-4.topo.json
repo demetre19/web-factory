@@ -1,0 +1,331 @@
+{
+ "label": "How It Works 4",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "topology_id": "list-vertical-rows",
+ "element_sig": {
+  "h": 4,
+  "p": 4
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "How It Works 4",
+   "loop": false,
+   "classes": [
+    "qzflkc"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "srgort"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "iyfyls"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "heading",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "qlfcsn"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "lsunun"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Grid",
+   "loop": false,
+   "classes": [
+    "knjdfn",
+    "acss_import_list--none"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "ooamue"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hbnmlc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fnhhsu"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "ooamue"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hbnmlc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fnhhsu"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "custom",
+   "label": "Card",
+   "loop": false,
+   "classes": [
+    "ooamue"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hbnmlc"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "fnhhsu"
+   ],
+   "depth": 4
+  }
+ ],
+ "classes": {
+  "hworks-4": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-4-container": {
+   "spacing": {
+    "_rowGap": "var(--space-xxl)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-xxl"
+   ]
+  },
+  "hworks-intro": {
+   "spacing": {
+    "_rowGap": "var(--space-xs)"
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "column"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-xs"
+   ]
+  },
+  "hworks-intro__heading": {
+   "spacing": {
+    "_margin": {
+     "top": "0"
+    }
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-intro__accent-heading": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-4-grid-ul": {
+   "spacing": {
+    "_gridGap": "var(--space-xl)"
+   },
+   "layout": {
+    "_gridTemplateColumns": "repeat(3, 1fr)",
+    "_display": "grid",
+    "_alignItemsGrid": "center",
+    "_alignContentGrid": "stretch",
+    "_gridTemplateColumns:mobile_portrait": "1fr"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".hworks-4-grid-ul {\n/* Define & Initialize Counter */\n\tcounter-reset: hworks-counter;\n  \n}\n\n\n.hworks-4-grid-ul li::before {\n  /* Increment Counter */\n  counter-increment: hworks-counter;\n  /* Display Counter */\n  content: counters(hworks-counter,\".\") \" \";\n  background-color: var(--primary-light-trans-40);\n  padding-inline:3.2rem;\n  padding-block:1.8rem;\n  color:var(--primary);\n  border-radius: var(--radius-50);\n  font-size: var(--text-xl);\n}",
+   "tokens": [
+    "primary",
+    "primary-light-trans-40",
+    "radius-50",
+    "space-xl",
+    "text-xl"
+   ]
+  },
+  "list--none": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-4-card": {
+   "spacing": {
+    "_rowGap": "var(--space-s)",
+    "_padding": {
+     "top": "var(--space-m)",
+     "right": "var(--space-m)",
+     "bottom": "var(--space-m)",
+     "left": "var(--space-m)"
+    }
+   },
+   "layout": {
+    "_display": "flex",
+    "_direction": "column",
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "space-m",
+    "space-s"
+   ]
+  },
+  "hworks-4-card__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "hworks-4-card__desc": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  }
+ },
+ "tokens_all": [
+  "primary",
+  "primary-light-trans-40",
+  "radius-50",
+  "space-m",
+  "space-s",
+  "space-xl",
+  "space-xs",
+  "space-xxl",
+  "text-xl"
+ ]
+}

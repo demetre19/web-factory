@@ -1,0 +1,234 @@
+{
+ "content": [
+  {
+   "id": "jxajgq",
+   "name": "block",
+   "parent": 0,
+   "children": [
+    "wuqyti",
+    "ccwxic",
+    "eybjra"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "avgpxa"
+    ]
+   },
+   "label": "Table of Content"
+  },
+  {
+   "id": "wuqyti",
+   "name": "block",
+   "parent": "jxajgq",
+   "children": [
+    "cpdvon"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "tkmqcp"
+    ]
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "cpdvon",
+   "name": "heading",
+   "parent": "wuqyti",
+   "children": [],
+   "settings": {
+    "text": "Table of contents",
+    "_cssGlobalClasses": [
+     "vvdreb"
+    ]
+   }
+  },
+  {
+   "id": "ccwxic",
+   "name": "block",
+   "parent": "jxajgq",
+   "children": [
+    "rnmsjj"
+   ],
+   "settings": {
+    "tag": "ol",
+    "_cssGlobalClasses": [
+     "moioqm"
+    ],
+    "_display": "flex"
+   },
+   "label": "TOC ol"
+  },
+  {
+   "id": "rnmsjj",
+   "name": "block",
+   "parent": "ccwxic",
+   "children": [
+    "yflrtu",
+    "jtpcjo"
+   ],
+   "settings": {
+    "tag": "li",
+    "_cssGlobalClasses": [
+     "hhspqn"
+    ]
+   },
+   "label": "TOC li"
+  },
+  {
+   "id": "yflrtu",
+   "name": "text-link",
+   "parent": "rnmsjj",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "fuledl"
+    ],
+    "text": "Text link",
+    "link": {
+     "type": "external",
+     "url": "#"
+    }
+   }
+  },
+  {
+   "id": "jtpcjo",
+   "name": "block",
+   "parent": "rnmsjj",
+   "children": [
+    "wkbbjz"
+   ],
+   "settings": {
+    "tag": "ol",
+    "_cssGlobalClasses": [
+     "moioqm"
+    ]
+   },
+   "label": "TOC ol"
+  },
+  {
+   "id": "wkbbjz",
+   "name": "block",
+   "parent": "jtpcjo",
+   "children": [
+    "nxqlut"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hhspqn"
+    ],
+    "tag": "li"
+   },
+   "label": "TOC li"
+  },
+  {
+   "id": "nxqlut",
+   "name": "text-link",
+   "parent": "wkbbjz",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "zedrha"
+    ],
+    "text": "Text link",
+    "link": {
+     "url": "#"
+    }
+   }
+  },
+  {
+   "id": "eybjra",
+   "name": "code",
+   "parent": "jxajgq",
+   "children": [],
+   "settings": {
+    "executeCode": true,
+    "code": "<script>\ndocument.addEventListener('DOMContentLoaded', function() {\n    const contentContainer = document.querySelector('.brxe-post-content');\n    if (!contentContainer) return;\n\n    const headings = contentContainer.querySelectorAll('h2, h3, h4, h5, h6');\n    if (!headings.length) return;\n\n    const toc = document.querySelector('.table-of-content-1 ol');\n    if (!toc) return;\n\n    toc.innerHTML = ''; // Clear existing ToC entries\n\n    let lastLevel = 2;\n    let currentOl = toc;\n    let olStack = [toc];\n\n    headings.forEach(heading => {\n        const level = parseInt(heading.tagName.substring(1));\n        const sanitizedId = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');\n        heading.id = sanitizedId;\n\n        if (level === 2) {\n            // Reset to the top level for h2 headings\n            currentOl = toc;\n            olStack = [toc];\n        } else if (level > lastLevel) {\n            // Create a new nested list for lower level headings\n            const newOl = document.createElement('ol');\n            newOl.className = 'brxe-block table-of-content-1-ol';\n            olStack[olStack.length - 1].lastElementChild.appendChild(newOl);\n            olStack.push(newOl);\n            currentOl = newOl;\n        } else if (level < lastLevel && level !== 2) {\n            // Adjust the stack for heading levels that are not h2\n            while (olStack.length > 1 && level <= parseInt(olStack[olStack.length - 2].tagName.substring(1))) {\n                olStack.pop();\n            }\n            currentOl = olStack[olStack.length - 1];\n        }\n\n        const li = document.createElement('li');\n        li.className = 'brxe-block table-of-content-1-li';\n        const a = document.createElement('a');\n        a.className = 'brxe-text-link table-of-content-1-li__link';\n        a.href = '#' + sanitizedId;\n        a.textContent = heading.textContent;\n        li.appendChild(a);\n        currentOl.appendChild(li);\n\n        lastLevel = level;\n    });\n});\n</script>",
+    "noRoot": true,
+    "signature": "42acd79a3227e1e2a4c757e1b3cca647",
+    "user_id": 7,
+    "time": 1713780260
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "avgpxa",
+   "name": "table-of-content-1",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)",
+     "left": "var(--space-s)"
+    },
+    "_border": {
+     "width": {
+      "left": ".1rem",
+      "top": ".1rem",
+      "right": ".1rem",
+      "bottom": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    }
+   }
+  },
+  {
+   "id": "tkmqcp",
+   "name": "table-of-content-1__intro",
+   "settings": {
+    "_padding": {
+     "bottom": "var(--space-xs)"
+    },
+    "_border": {
+     "width": {
+      "bottom": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    }
+   }
+  },
+  {
+   "id": "vvdreb",
+   "name": "table-of-content-1__heading",
+   "settings": []
+  },
+  {
+   "id": "moioqm",
+   "name": "table-of-content-1-ol",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "hhspqn",
+   "name": "table-of-content-1-li",
+   "settings": {
+    "_cssCustom": ".table-of-content-1-li {\n\t    display: list-item;\n}"
+   }
+  },
+  {
+   "id": "fuledl",
+   "name": "table-of-content-1-li__link",
+   "settings": []
+  },
+  {
+   "id": "zedrha",
+   "name": "table-of-content-1-li__link-l2",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

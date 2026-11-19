@@ -1,0 +1,26 @@
+{
+  "schema": "topo-map@1",
+  "purpose": "bank topo.topology_id (retrieval vocab) → catalog composition (templates/sections/<comp>). Retrieval picks a topology_id; this map resolves the exemplar composition the W6 builder adapts. null = no structural match in the 23-composition catalog — the plan row's own composition wins, retrieval supplies evidence only.",
+  "map": {
+    "hero-media-right": "split-media",
+    "hero-media-left": "split-media",
+    "split-50-50": "split-media",
+    "band-media": "split-media",
+    "hero-media-bg": "full-bleed",
+    "hero-media-top": "stacked-hero",
+    "hero-no-media": "hero-act-merge",
+    "grid-2col-uniform": "cards-n",
+    "grid-3col-uniform": "cards-n",
+    "grid-4col-uniform": "cards-n",
+    "list-cards": "cards-n",
+    "list-vertical-rows": "sequence",
+    "band-rows": "sequence",
+    "band-strip": "proof-band",
+    "nav-top-bar": "nav-bar",
+    "nav-overlay": "nav-bar",
+    "form-centered": "capture-form",
+    "form-split": "form-panel",
+    "nav-sidebar": null
+  },
+  "note": "grid-*-uniform collapses to cards-n (column count is a data-cols prop on the component, not a composition). nav-sidebar has no sidebar exemplar — unmapped by design. Add ids here when new topology_ids land in the bank."
+}

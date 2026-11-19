@@ -1,0 +1,384 @@
+{
+ "content": [
+  {
+   "id": "ukgzrf",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "qjfaal"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pomehj"
+    ]
+   },
+   "label": "Blog section 1"
+  },
+  {
+   "id": "qjfaal",
+   "name": "container",
+   "parent": "ukgzrf",
+   "children": [
+    "fdpubg",
+    "htlpwy"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "umfjlh"
+    ]
+   }
+  },
+  {
+   "id": "fdpubg",
+   "name": "div",
+   "parent": "qjfaal",
+   "children": [
+    "ztznup",
+    "vcfzcd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "psocrs"
+    ]
+   },
+   "label": "Head"
+  },
+  {
+   "id": "ztznup",
+   "name": "div",
+   "parent": "fdpubg",
+   "children": [
+    "delcwc",
+    "ivgcgc"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "nzkbqr"
+    ]
+   },
+   "label": "Text"
+  },
+  {
+   "id": "delcwc",
+   "name": "heading",
+   "parent": "ztznup",
+   "children": [],
+   "settings": {
+    "text": "Blog section",
+    "_cssGlobalClasses": [
+     "qovrhh"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "ivgcgc",
+   "name": "text-basic",
+   "parent": "ztznup",
+   "children": [],
+   "settings": {
+    "text": "Sapiente fugit aspernatur quam Ipsam debitis maxime ut non",
+    "_cssGlobalClasses": [
+     "pduqiw"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "vcfzcd",
+   "name": "form",
+   "parent": "fdpubg",
+   "children": [],
+   "settings": {
+    "emailSubject": "Contact form request",
+    "emailTo": "admin_email",
+    "fromName": "acss.bricksmaven.com",
+    "emailErrorMessage": "Submission failed. Please reload the page and try to submit the form again.",
+    "htmlEmail": true,
+    "mailchimpPendingMessage": "Please check your email to confirm your subscription.",
+    "mailchimpErrorMessage": "Sorry, but we could not subscribe you.",
+    "sendgridErrorMessage": "Sorry, but we could not subscribe you.",
+    "_cssGlobalClasses": [
+     "hoindz"
+    ],
+    "fields": [
+     {
+      "type": "email",
+      "label": "Email",
+      "placeholder": "Enter your email",
+      "id": "hbwtko",
+      "width": "50"
+     }
+    ],
+    "submitButtonText": "Subscribe"
+   }
+  },
+  {
+   "id": "htlpwy",
+   "name": "div",
+   "parent": "qjfaal",
+   "children": [
+    "usdkih"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "olczsz"
+    ]
+   },
+   "label": "Body"
+  },
+  {
+   "id": "usdkih",
+   "name": "div",
+   "parent": "htlpwy",
+   "children": [
+    "wqgkma"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ttaeqx",
+     "acss_import_list--none"
+    ],
+    "tag": "ul"
+   },
+   "label": "Content"
+  },
+  {
+   "id": "wqgkma",
+   "name": "div",
+   "parent": "usdkih",
+   "children": [
+    "mfnqmv",
+    "orfxzv",
+    "jsszcv",
+    "qqpysg"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ihqctp"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "post"
+     ],
+     "posts_per_page": "4"
+    },
+    "tag": "li"
+   },
+   "label": "Card"
+  },
+  {
+   "id": "mfnqmv",
+   "name": "text-basic",
+   "parent": "wqgkma",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "acss_import_text--s",
+     "ychdfi"
+    ],
+    "text": "{post_date}",
+    "tag": "span"
+   }
+  },
+  {
+   "id": "orfxzv",
+   "name": "heading",
+   "parent": "wqgkma",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eugdar"
+    ],
+    "text": "{post_title}",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{post_url}"
+    }
+   }
+  },
+  {
+   "id": "jsszcv",
+   "name": "post-excerpt",
+   "parent": "wqgkma",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gtqssz"
+    ],
+    "length": "20"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "qqpysg",
+   "name": "button",
+   "parent": "wqgkma",
+   "children": [],
+   "settings": {
+    "text": "Read the full story",
+    "_cssGlobalClasses": [
+     "gnefxx",
+     "acss_import_pad--none"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{post_url}"
+    }
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "pomehj",
+   "name": "blog-section-1",
+   "settings": []
+  },
+  {
+   "id": "umfjlh",
+   "name": "blog-section-1-container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-m)"
+   }
+  },
+  {
+   "id": "psocrs",
+   "name": "blog-section-1-head",
+   "settings": {
+    "_gridTemplateColumns": "repeat(2, minmax(0, 1fr))",
+    "_gridGap": "var(--space-m)",
+    "_display": "grid",
+    "_padding": {
+     "bottom": "var(--space-s)"
+    },
+    "_border": {
+     "width": {
+      "bottom": ".1rem"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_shade-light",
+      "name": "shade-light",
+      "raw": "var(--shade-light)"
+     }
+    },
+    "_width": "100%",
+    "_alignItemsGrid": "center",
+    "_alignContentGrid": "center",
+    "_gridTemplateColumns:mobile_landscape": "repeat(1, minmax(0, 1fr))"
+   }
+  },
+  {
+   "id": "nzkbqr",
+   "name": "blog-section-1-heading",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xs)"
+   }
+  },
+  {
+   "id": "qovrhh",
+   "name": "blog-section-1__heading__title",
+   "settings": []
+  },
+  {
+   "id": "pduqiw",
+   "name": "blog-section-1__heading__desc",
+   "settings": []
+  },
+  {
+   "id": "hoindz",
+   "name": "blog-section-1-subs",
+   "settings": {
+    "fieldMargin": {
+     "bottom": "0"
+    },
+    "_cssCustom": ".blog-section-1-subs {\n\tgap: 1.5rem;\n}\n.blog-section-1-subs .bricks-button {\n  background-color: var(--primary);\n  color: var(--white);;\n}",
+    "submitButtonWidth": "46"
+   }
+  },
+  {
+   "id": "olczsz",
+   "name": "blog-section-1-body",
+   "settings": {
+    "_width": "100%"
+   }
+  },
+  {
+   "id": "ttaeqx",
+   "name": "blog-section-1-wrapper",
+   "settings": {
+    "_gridTemplateColumns": "repeat(2, minmax(0, 1fr))",
+    "_gridGap": "var(--space-l)",
+    "_display": "grid",
+    "_gridTemplateColumns:mobile_landscape": "repeat(1, minmax(0, 1fr))"
+   }
+  },
+  {
+   "id": "acss_import_list--none",
+   "name": "list--none",
+   "settings": []
+  },
+  {
+   "id": "ihqctp",
+   "name": "blog-section-1-card",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_justifyContent": "flex-start",
+    "_rowGap": "var(--space-s)",
+    "_alignItems": "flex-start"
+   }
+  },
+  {
+   "id": "acss_import_text--s",
+   "name": "text--s",
+   "settings": []
+  },
+  {
+   "id": "ychdfi",
+   "name": "blog-section-1-card__date",
+   "settings": []
+  },
+  {
+   "id": "eugdar",
+   "name": "blog-section-1-card__title",
+   "settings": []
+  },
+  {
+   "id": "gtqssz",
+   "name": "blog-section-1-card__excerpt",
+   "settings": []
+  },
+  {
+   "id": "gnefxx",
+   "name": "blog-section-1-card__read",
+   "settings": {
+    "_margin": {
+     "top": "auto"
+    },
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    }
+   }
+  },
+  {
+   "id": "acss_import_pad--none",
+   "name": "pad--none",
+   "settings": []
+  }
+ ],
+ "globalElements": []
+}

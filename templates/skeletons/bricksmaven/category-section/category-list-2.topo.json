@@ -1,0 +1,332 @@
+{
+ "label": "Category List 2",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "topology_id": "list-vertical-rows",
+ "element_sig": {
+  "h": 2,
+  "p": 2,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Category List 2",
+   "loop": false,
+   "classes": [
+    "ntomlk"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "dhipeo"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "muadbq"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "heading",
+   "tag": "h2",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "wnpikx"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "prgilv"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "span",
+   "label": "Tagline",
+   "loop": false,
+   "classes": [
+    "samysq"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "slider-nested",
+   "tag": "slider-nested",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "njzzij"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Card Loop",
+   "loop": true,
+   "classes": [
+    "gnwcqs"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "heading",
+   "tag": "h4",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "jmknzf"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "egtdzb"
+   ],
+   "depth": 4
+  }
+ ],
+ "classes": {
+  "category-list-2": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "category-list-2__container": {
+   "spacing": {
+    "_rowGap": "var(--container-gap)"
+   },
+   "layout": {
+    "_direction": "column",
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "container-gap"
+   ]
+  },
+  "intro": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   },
+   "sizing": {},
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "intro__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__subheading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "intro__accent-heading": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {
+    "color": {
+     "id": "acss_import_black",
+     "name": "black",
+     "raw": "var(--black)"
+    }
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "black"
+   ]
+  },
+  "category-list-2__slider": {
+   "spacing": {},
+   "layout": {
+    "arrowBackground": {
+     "id": "acss_import_neutral",
+     "name": "neutral",
+     "raw": "var(--neutral)"
+    },
+    "arrowColor": {
+     "id": "acss_import_neutral-ultra-light",
+     "name": "neutral-ultra-light",
+     "raw": "var(--neutral-ultra-light)"
+    },
+    "arrowBorder": {
+     "radius": {
+      "top": "var(--radius-circle)",
+      "left": "var(--radius-circle)",
+      "right": "var(--radius-circle)",
+      "bottom": "var(--radius-circle)"
+     }
+    },
+    "arrowSize": "16px",
+    "prevArrow": {
+     "library": "themify",
+     "icon": "ti-angle-left"
+    },
+    "nextArrow": {
+     "library": "themify",
+     "icon": "ti-angle-right"
+    },
+    "_width:mobile_landscape": "80%",
+    "_width:mobile_portrait": "76%",
+    "arrowHeight": "36",
+    "arrowWidth": "36",
+    "prevArrowTop": "35%",
+    "nextArrowTop": "35%",
+    "nextArrowRight": "calc(-1 * var(--space-l))",
+    "_padding:mobile_portrait": {
+     "bottom": "60"
+    },
+    "prevArrowLeft": "calc(-1 * var(--space-l))",
+    "prevArrowLeft:mobile_landscape": "calc(-1 * var(--space-xl))",
+    "nextArrowRight:mobile_landscape": "calc(-1 * var(--space-xl))",
+    "paginationBottom": "calc(-1 * var(--space-l))",
+    "_widthMax": "90vw"
+   },
+   "sizing": {
+    "_width": "100vw"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "neutral",
+    "neutral-ultra-light",
+    "radius-circle",
+    "space-l",
+    "space-xl"
+   ]
+  },
+  "category-list-2-card": {
+   "spacing": {
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   },
+   "layout": {
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "category-list-2-card__heading": {
+   "spacing": {
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   },
+   "layout": {
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  },
+  "category-list-2-card__image": {
+   "spacing": {
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   },
+   "layout": {
+    "_alignItems": "center",
+    "_order": "-1"
+   },
+   "sizing": {
+    "_aspectRatio": "1/1",
+    "_objectFit": "cover"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap"
+   ]
+  }
+ },
+ "tokens_all": [
+  "black",
+  "container-gap",
+  "content-gap",
+  "neutral",
+  "neutral-ultra-light",
+  "radius-circle",
+  "space-l",
+  "space-xl"
+ ]
+}

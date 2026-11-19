@@ -1,0 +1,313 @@
+{
+ "content": [
+  {
+   "id": "odzndm",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "fsyuhx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "apiefw"
+    ]
+   },
+   "label": "Category List 3"
+  },
+  {
+   "id": "fsyuhx",
+   "name": "container",
+   "parent": "odzndm",
+   "children": [
+    "9b99ed",
+    "srvbyx"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "czldzm"
+    ]
+   }
+  },
+  {
+   "id": "9b99ed",
+   "name": "div",
+   "parent": "fsyuhx",
+   "children": [
+    "f2c6e7",
+    "7f55eb",
+    "0ecc6c"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq"
+    ],
+    "_typography": {
+     "text-align": "center"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "f2c6e7",
+   "name": "heading",
+   "parent": "9b99ed",
+   "children": [],
+   "settings": {
+    "text": "Browse our collection",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ]
+   }
+  },
+  {
+   "id": "7f55eb",
+   "name": "text-basic",
+   "parent": "9b99ed",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "_padding:mobile_portrait": {
+     "left": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)",
+     "right": "clamp(3.1992rem, calc(1.355vw + 2.7656rem), 4.5rem)"
+    },
+    "tag": "p"
+   }
+  },
+  {
+   "id": "0ecc6c",
+   "name": "text-basic",
+   "parent": "9b99ed",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "_cssGlobalClasses": [
+     "samysq"
+    ],
+    "tag": "span"
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "srvbyx",
+   "name": "block",
+   "parent": "fsyuhx",
+   "children": [
+    "mrlsiq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dzzeyq"
+    ]
+   },
+   "label": "List (CSS)"
+  },
+  {
+   "id": "mrlsiq",
+   "name": "block",
+   "parent": "srvbyx",
+   "children": [
+    "tclbzw",
+    "vhadzq"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "sdenww"
+    ],
+    "query": {
+     "objectType": "term",
+     "taxonomy": [
+      "product_cat"
+     ],
+     "number": "13"
+    },
+    "hasLoop": true
+   },
+   "label": "Card Loop"
+  },
+  {
+   "id": "tclbzw",
+   "name": "heading",
+   "parent": "mrlsiq",
+   "children": [],
+   "settings": {
+    "text": "{term_name}",
+    "_cssGlobalClasses": [
+     "shehxd"
+    ],
+    "tag": "h3",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{term_url}"
+    }
+   }
+  },
+  {
+   "id": "vhadzq",
+   "name": "image",
+   "parent": "mrlsiq",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "exopdf"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{woo_product_cat_image}",
+     "size": "large"
+    },
+    "link": "url",
+    "url": {
+     "type": "external",
+     "url": "{term_url}"
+    },
+    "_width": "100%",
+    "_height": "100%",
+    "_objectFit": "cover"
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.10.3",
+ "globalClasses": [
+  {
+   "id": "apiefw",
+   "name": "category-list-3",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "czldzm",
+   "name": "category-list-3__container",
+   "settings": {
+    "_direction": "column",
+    "_alignItems": "center",
+    "_rowGap": "var(--container-gap)"
+   }
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_black",
+      "name": "black",
+      "raw": "var(--black)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "dzzeyq",
+   "name": "category-list-3__list",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-4)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-2)",
+    "_gridTemplateColumns:mobile_portrait": "var(--grid-1)"
+   },
+   "modified": 1727387492,
+   "user_id": 2
+  },
+  {
+   "id": "sdenww",
+   "name": "category-list-3-card",
+   "settings": {
+    "_alignItems": "flex-start",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_position": "relative",
+    "_cssCustom": "@media (min-width:767px) {\n   .category-list-3-card:first-child {\n\t\tgrid-column: span 2;\n  \tgrid-row: span 2;\n}\n  \n}"
+   },
+   "modified": 1723685369,
+   "user_id": 2
+  },
+  {
+   "id": "shehxd",
+   "name": "category-list-3-card__heading",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_zIndex": "2",
+    "_position": "absolute",
+    "_bottom": "var(--space-s)",
+    "_typography": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     },
+     "font-size": "var(--text-l)"
+    },
+    "_left": "var(--space-s)"
+   },
+   "modified": 1728990469,
+   "user_id": 1
+  },
+  {
+   "id": "exopdf",
+   "name": "category-list-3-card__image",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_gradient": {
+     "applyTo": "overlay",
+     "colors": [
+      {
+       "id": "qwryfo",
+       "color": {
+        "id": "acss_import_neutral-trans-60",
+        "name": "neutral-trans-60",
+        "raw": "var(--neutral-trans-60)"
+       }
+      },
+      {
+       "id": "qwryfo",
+       "color": {
+        "id": "acss_import_neutral-trans-60",
+        "name": "neutral-trans-60",
+        "raw": "var(--neutral-trans-60)"
+       }
+      }
+     ]
+    }
+   },
+   "modified": 1728658066,
+   "user_id": 1
+  }
+ ],
+ "globalElements": []
+}

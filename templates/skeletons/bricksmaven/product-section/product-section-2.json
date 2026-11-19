@@ -1,0 +1,522 @@
+{
+ "content": [
+  {
+   "id": "fmdzjj",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "marmqd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "xgljwf"
+    ]
+   },
+   "label": "Product Section 2"
+  },
+  {
+   "id": "marmqd",
+   "name": "container",
+   "parent": "fmdzjj",
+   "children": [
+    "nyyywm"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ojpqyq"
+    ]
+   }
+  },
+  {
+   "id": "nyyywm",
+   "name": "block",
+   "parent": "marmqd",
+   "children": [
+    "tfggck",
+    "ibwaxj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "nllwtd"
+    ]
+   },
+   "label": "List"
+  },
+  {
+   "id": "tfggck",
+   "name": "block",
+   "parent": "nyyywm",
+   "children": [
+    "rutbpz",
+    "nwhjpv",
+    "zwztqb"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "eswjsd"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "rutbpz",
+   "name": "heading",
+   "parent": "tfggck",
+   "children": [],
+   "settings": {
+    "text": "Featured Products",
+    "tag": "h2",
+    "_cssGlobalClasses": [
+     "dzpotb"
+    ]
+   }
+  },
+  {
+   "id": "nwhjpv",
+   "name": "text-basic",
+   "parent": "tfggck",
+   "children": [],
+   "settings": {
+    "text": "Here goes your text ... Select any part of your text to access the formatting toolbar.",
+    "_cssGlobalClasses": [
+     "gqezlj"
+    ],
+    "tag": "p"
+   },
+   "label": "Headline"
+  },
+  {
+   "id": "zwztqb",
+   "name": "button",
+   "parent": "tfggck",
+   "children": [],
+   "settings": {
+    "text": "Show all",
+    "style": "dark",
+    "link": {
+     "type": "external",
+     "url": "#"
+    },
+    "_margin": {
+     "top": "var(--space-s)"
+    },
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ]
+   }
+  },
+  {
+   "id": "ibwaxj",
+   "name": "slider-nested",
+   "parent": "nyyywm",
+   "children": [
+    "wenfbd"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "vuiibd"
+    ],
+    "perPage": "2",
+    "perMove": "1",
+    "pagination": true,
+    "gap": "var(--content-gap)",
+    "perPage:mobile_landscape": "1",
+    "perMove:mobile_landscape": "1",
+    "gap:mobile_landscape": "0",
+    "height": "auto"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "wenfbd",
+   "name": "block",
+   "parent": "ibwaxj",
+   "children": [
+    "cgcdse",
+    "cddzvt",
+    "nlueka",
+    "tdynct"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hddsrv"
+    ],
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "product"
+     ]
+    },
+    "hasLoop": true
+   },
+   "label": "Card Loop (CSS)"
+  },
+  {
+   "id": "cgcdse",
+   "name": "block",
+   "parent": "wenfbd",
+   "children": [
+    "efqsvp",
+    "yhnvcc",
+    "hwxbok"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cuzxrl"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "efqsvp",
+   "name": "heading",
+   "parent": "cgcdse",
+   "children": [],
+   "settings": {
+    "text": "{post_title}",
+    "_cssGlobalClasses": [
+     "gdbgag"
+    ],
+    "tag": "h3",
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{term_url}"
+    }
+   }
+  },
+  {
+   "id": "yhnvcc",
+   "name": "text-basic",
+   "parent": "cgcdse",
+   "children": [],
+   "settings": {
+    "text": "{post_terms_product_cat}",
+    "_cssGlobalClasses": [
+     "wswljd",
+     "acss_import_order--first"
+    ],
+    "tag": "p"
+   },
+   "label": "Category (CSS)"
+  },
+  {
+   "id": "hwxbok",
+   "name": "text-basic",
+   "parent": "cgcdse",
+   "children": [],
+   "settings": {
+    "text": "Here goes your text ... Select any part of your text to access the formatting toolbar.",
+    "_cssGlobalClasses": [
+     "faadkn"
+    ],
+    "tag": "p"
+   },
+   "label": "Description"
+  },
+  {
+   "id": "cddzvt",
+   "name": "div",
+   "parent": "wenfbd",
+   "children": [
+    "symfgn"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gganje"
+    ],
+    "_conditions": [
+     [
+      {
+       "id": "djdtmg",
+       "key": "dynamic_data",
+       "dynamic_data": "{woo_product_on_sale}",
+       "compare": "!="
+      }
+     ]
+    ]
+   },
+   "label": "Sale badge"
+  },
+  {
+   "id": "symfgn",
+   "name": "text-basic",
+   "parent": "cddzvt",
+   "children": [],
+   "settings": {
+    "text": "{woo_product_on_sale}",
+    "tag": "span",
+    "_cssGlobalClasses": [
+     "scoqcs"
+    ]
+   },
+   "label": "Sale"
+  },
+  {
+   "id": "nlueka",
+   "name": "heading",
+   "parent": "wenfbd",
+   "children": [],
+   "settings": {
+    "text": "{woo_product_price}",
+    "_cssGlobalClasses": [
+     "vhmdoc"
+    ],
+    "tag": "custom",
+    "customTag": "p"
+   },
+   "label": "Price"
+  },
+  {
+   "id": "tdynct",
+   "name": "block",
+   "parent": "wenfbd",
+   "children": [
+    "qfsode"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "gpkxmc"
+    ]
+   },
+   "label": "Media"
+  },
+  {
+   "id": "qfsode",
+   "name": "image",
+   "parent": "tdynct",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "qqyzsd"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{featured_image}",
+     "size": "large"
+    },
+    "link": "url",
+    "url": {
+     "type": "external",
+     "url": "{term_url}"
+    }
+   },
+   "themeStyles": []
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acsswoo.bricksmaven.com",
+ "version": "1.11",
+ "globalClasses": [
+  {
+   "id": "xgljwf",
+   "name": "product-list-2",
+   "settings": []
+  },
+  {
+   "id": "ojpqyq",
+   "name": "product-list-2__container",
+   "settings": []
+  },
+  {
+   "id": "nllwtd",
+   "name": "product-list-2__list",
+   "settings": {
+    "_display": "grid",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns": "var(--grid-1-2)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+    "_gridTemplateColumns:tablet_portrait": "var(--grid-1-3)",
+    "_justifyItemsGrid:mobile_landscape": "center"
+   },
+   "modified": 1728994266,
+   "user_id": 1
+  },
+  {
+   "id": "eswjsd",
+   "name": "product-list-2__content",
+   "settings": {
+    "_rowGap": "calc( var(--content-gap) / 2 )"
+   }
+  },
+  {
+   "id": "dzpotb",
+   "name": "product-list-2__heading",
+   "settings": {
+    "_width": "auto"
+   }
+  },
+  {
+   "id": "gqezlj",
+   "name": "product-list-2__headline",
+   "settings": {
+    "_width": "auto"
+   }
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "vuiibd",
+   "name": "product-list-2__slider",
+   "settings": {
+    "paginationLeft": "0",
+    "paginationBottom": "calc(-1 * var(--space-l))"
+   },
+   "modified": 1728313497,
+   "user_id": 1
+  },
+  {
+   "id": "hddsrv",
+   "name": "product-list-2-card",
+   "settings": {
+    "_padding": {
+     "top": "var(--space-s)",
+     "left": "var(--space-s)",
+     "right": "var(--space-s)",
+     "bottom": "var(--space-s)"
+    },
+    "_background": {
+     "color": {
+      "id": "acss_import_neutral-ultra-light",
+      "name": "neutral-ultra-light",
+      "raw": "var(--neutral-ultra-light)"
+     }
+    },
+    "_border": {
+     "width": {
+      "top": "1",
+      "left": "1",
+      "right": "1",
+      "bottom": "1"
+     },
+     "style": "solid",
+     "color": {
+      "id": "acss_import_neutral-light",
+      "name": "neutral-light",
+      "raw": "var(--neutral-light)"
+     }
+    },
+    "_rowGap": "var(--content-gap)",
+    "_width": "100%",
+    "_cssCustom": ".product-list-2-card {\n  \n  justify-content: space-between !important;\n  align-items: start !important;\n}",
+    "_flexWrap": "nowrap"
+   },
+   "modified": 1731472377,
+   "user_id": 1
+  },
+  {
+   "id": "cuzxrl",
+   "name": "product-list-2-card__content",
+   "settings": {
+    "_rowGap": "calc(var(--content-gap) / 2)",
+    "_height": "100%"
+   },
+   "modified": 1729887507,
+   "user_id": 1
+  },
+  {
+   "id": "gdbgag",
+   "name": "product-list-2-card__heading",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_alignSelf": "flex-start",
+    "_typography": {
+     "font-weight": "700"
+    }
+   }
+  },
+  {
+   "id": "wswljd",
+   "name": "product-list-category",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    },
+    "_cssCustom": ".product-list-category a {\n  \tcolor: var(--black);\n  \tbackground: transparent;\n}"
+   },
+   "modified": 1728308247,
+   "user_id": 1
+  },
+  {
+   "id": "acss_import_order--first",
+   "name": "order--first",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "faadkn",
+   "name": "product-list-2-card__description",
+   "settings": {
+    "_alignSelf:mobile_landscape": "flex-start"
+   }
+  },
+  {
+   "id": "gganje",
+   "name": "product-list-notice-rect__sale-badge",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-s)"
+    },
+    "_padding": {
+     "top": "calc(var(--space-xs) / 2)",
+     "right": "var(--space-s)",
+     "bottom": "calc(var(--space-xs) / 2)",
+     "left": "var(--space-s)"
+    },
+    "_background": {
+     "color": {
+      "raw": "var(--danger)"
+     }
+    },
+    "_display": "flex",
+    "_alignItems": "center"
+   }
+  },
+  {
+   "id": "scoqcs",
+   "name": "product-list-notice-rect__sale",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_white",
+      "name": "white",
+      "raw": "var(--white)"
+     }
+    }
+   }
+  },
+  {
+   "id": "vhmdoc",
+   "name": "product-list-card__price",
+   "settings": {
+    "_cssCustom": ".product-list-card__price del {\n  \tcolor: var(--neutral-semi-light);\n}\n\n.product-list-card__price ins {\n  \ttext-decoration: none;\n}\n.product-list-card__price ins .amount {\n  \ttext-decoration: none;\n  \tborder-bottom: 0;\n}"
+   },
+   "modified": 1731241955,
+   "user_id": 1
+  },
+  {
+   "id": "gpkxmc",
+   "name": "product-list-2-card__media",
+   "settings": {
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "qqyzsd",
+   "name": "product-list-2-card__image",
+   "settings": {
+    "_alignItems": "center",
+    "_rowGap": "calc( var(--content-gap) / 2 )",
+    "_aspectRatio": "9/11",
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "23rem"
+   }
+  }
+ ],
+ "globalElements": []
+}

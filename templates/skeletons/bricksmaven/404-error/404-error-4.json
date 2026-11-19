@@ -1,0 +1,255 @@
+{
+ "content": [
+  {
+   "id": "kkaosa",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "mvtxdi"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ymvrke"
+    ]
+   },
+   "label": "404 Error 4"
+  },
+  {
+   "id": "mvtxdi",
+   "name": "container",
+   "parent": "kkaosa",
+   "children": [
+    "uhtdum",
+    "hxhuhu"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "brtahz"
+    ]
+   }
+  },
+  {
+   "id": "uhtdum",
+   "name": "div",
+   "parent": "mvtxdi",
+   "children": [
+    "xqiuww",
+    "acbgil",
+    "lumrml"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "hjqxaw"
+    ]
+   },
+   "label": "Content"
+  },
+  {
+   "id": "xqiuww",
+   "name": "div",
+   "parent": "uhtdum",
+   "children": [
+    "foymjt",
+    "wcaani"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cqvvph"
+    ]
+   },
+   "label": "intro"
+  },
+  {
+   "id": "foymjt",
+   "name": "heading",
+   "parent": "xqiuww",
+   "children": [],
+   "settings": {
+    "text": "404 ERROR",
+    "_cssGlobalClasses": [
+     "spywxw"
+    ],
+    "tag": "h1"
+   }
+  },
+  {
+   "id": "wcaani",
+   "name": "text-basic",
+   "parent": "xqiuww",
+   "children": [],
+   "settings": {
+    "text": "Page not found.",
+    "_cssGlobalClasses": [
+     "olhsil"
+    ]
+   }
+  },
+  {
+   "id": "acbgil",
+   "name": "text-basic",
+   "parent": "uhtdum",
+   "children": [],
+   "settings": {
+    "text": "Sorry, the page you are looking for doesn't exist.",
+    "_cssGlobalClasses": [
+     "xbcfdg"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "lumrml",
+   "name": "button",
+   "parent": "uhtdum",
+   "children": [],
+   "settings": {
+    "text": "\u2190   Go back home",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "zczhpe"
+    ],
+    "link": {
+     "type": "meta",
+     "useDynamicData": "{echo:get_home_url}"
+    }
+   }
+  },
+  {
+   "id": "hxhuhu",
+   "name": "social-icons",
+   "parent": "mvtxdi",
+   "children": [],
+   "settings": {
+    "icons": [
+     {
+      "label": "Contact support",
+      "id": "oqxwpg",
+      "link": {
+       "type": "external"
+      }
+     },
+     {
+      "label": "Twitter",
+      "id": "hlaxvx",
+      "link": {
+       "type": "external"
+      }
+     },
+     {
+      "label": "Status",
+      "id": "qpxhwu",
+      "link": {
+       "type": "external"
+      }
+     }
+    ],
+    "_cssGlobalClasses": [
+     "tohizt"
+    ]
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "ymvrke",
+   "name": "error-4",
+   "settings": []
+  },
+  {
+   "id": "brtahz",
+   "name": "error-4-container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-xl)",
+    "_alignItems": "center",
+    "_typography": {
+     "text-align": "center"
+    }
+   }
+  },
+  {
+   "id": "hjqxaw",
+   "name": "error-4-content",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-m)"
+   }
+  },
+  {
+   "id": "cqvvph",
+   "name": "error-4-content__intro",
+   "settings": []
+  },
+  {
+   "id": "spywxw",
+   "name": "error-4-content__title",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    }
+   }
+  },
+  {
+   "id": "olhsil",
+   "name": "error-4-content__subtitle",
+   "settings": {
+    "_typography": {
+     "font-size": "var(--text-l)",
+     "font-weight": "700"
+    }
+   }
+  },
+  {
+   "id": "xbcfdg",
+   "name": "error-4-content__desc",
+   "settings": []
+  },
+  {
+   "id": "zczhpe",
+   "name": "error-4-content__btn",
+   "settings": {
+    "_padding": {
+     "left": "0",
+     "top": "0",
+     "right": "0",
+     "bottom": "0"
+    },
+    "_background": {
+     "color": {
+      "hex": "#ffffff"
+     }
+    },
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    }
+   }
+  },
+  {
+   "id": "tohizt",
+   "name": "error-4-content__list",
+   "settings": {
+    "_padding": {
+     "left": "2.4rem",
+     "top": ".6rem",
+     "right": "2.4rem",
+     "bottom": ".6rem"
+    },
+    "_cssCustom": ".error-4-content__list li a {\n\tcolor: var(--base)!important;\n}\n\n.error-4-content__list li:nth-child(2) {\n\tborder: .1rem solid var(--base-trans-20);\n  border-top: 0;\n  border-bottom: 0;\n}"
+   }
+  }
+ ],
+ "globalElements": []
+}

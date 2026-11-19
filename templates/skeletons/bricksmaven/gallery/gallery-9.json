@@ -1,0 +1,173 @@
+{
+ "content": [
+  {
+   "id": "fydnqw",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "qguxdu"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "zuizwq"
+    ]
+   },
+   "label": "Gallery 9"
+  },
+  {
+   "id": "qguxdu",
+   "name": "container",
+   "parent": "fydnqw",
+   "children": [
+    "hzponv",
+    "uqjtpj"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dpjmfz"
+    ]
+   }
+  },
+  {
+   "id": "hzponv",
+   "name": "div",
+   "parent": "qguxdu",
+   "children": [
+    "rmizcs",
+    "jrjthw"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "jjlpby"
+    ]
+   }
+  },
+  {
+   "id": "rmizcs",
+   "name": "heading",
+   "parent": "hzponv",
+   "children": [],
+   "settings": {
+    "text": "Our Gallery",
+    "_cssGlobalClasses": [
+     "cljkih"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "jrjthw",
+   "name": "text-basic",
+   "parent": "hzponv",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+    "_cssGlobalClasses": [
+     "olflam"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "uqjtpj",
+   "name": "image-gallery",
+   "parent": "qguxdu",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "rnrdcz"
+    ],
+    "items": {
+     "images": [
+      {
+       "id": 14400,
+       "full": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/zhao-yangyang-0fjfLivxV-g-unsplash.jpg",
+       "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/zhao-yangyang-0fjfLivxV-g-unsplash.jpg"
+      },
+      {
+       "id": 14399,
+       "full": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/joshua-gerosa-lmyS4weUf8g-unsplash.jpg",
+       "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/joshua-gerosa-lmyS4weUf8g-unsplash.jpg"
+      },
+      {
+       "id": 14398,
+       "full": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/mos-design-FUltw7r36HM-unsplash.jpg",
+       "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/mos-design-FUltw7r36HM-unsplash.jpg"
+      },
+      {
+       "id": 14397,
+       "full": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/uran-wang-DsLYS2Xm0PQ-unsplash.jpg",
+       "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/uran-wang-DsLYS2Xm0PQ-unsplash.jpg"
+      }
+     ],
+     "size": "full"
+    }
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "zuizwq",
+   "name": "gallery-9",
+   "settings": []
+  },
+  {
+   "id": "dpjmfz",
+   "name": "gallery-9-container",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_justifyContent": "center",
+    "_alignItems": "center",
+    "_columnGap": "var(--space-xl)",
+    "_rowGap": "var(--space-xl)",
+    "_typography": {
+     "text-align": "center"
+    }
+   }
+  },
+  {
+   "id": "jjlpby",
+   "name": "gallery-9-row",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_justifyContent": "center",
+    "_alignItems": "center",
+    "_columnGap": "var(--space-s)",
+    "_rowGap": "var(--space-s)",
+    "_width": "100%",
+    "_widthMax": "var(--width-l)"
+   }
+  },
+  {
+   "id": "cljkih",
+   "name": "gallery-9-title",
+   "settings": []
+  },
+  {
+   "id": "olflam",
+   "name": "gallery-9-desc",
+   "settings": []
+  },
+  {
+   "id": "rnrdcz",
+   "name": "gallery-9-card",
+   "settings": {
+    "_cssCustom": ".gallery-9-card {\n  display: grid !important;\n  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;\n  grid-template-rows: repeat(2, minmax(0, 1fr));\n  gap: var(--space-m)!important;\n}\n\n.gallery-9-card li {\n\twidth:100%;\n}\n\n.gallery-9-card .image {\n\twidth:100%;\n  height:40rem;\n}\n\n.gallery-9-card figure {\n\tdisplay:inline;\n}\n\n\n.gallery-9-card li:nth-child(1) {\n  grid-area: 1 / 1 / 2 / 3;\n}\n.gallery-9-card li:nth-child(2) {\n  grid-area: 1 / 3 / 2 / -1;\n}\n.gallery-9-card li:nth-child(3) {\n  grid-area: 2 / 1 / -1 / 2;\n}\n.gallery-9-card li:nth-child(4) {\n  grid-area: 2 / 2 / -1 / -1;\n}\n  \n@media (max-width:767px) {\n\t.gallery-9-card {\n  display: grid !important;\n  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;\n  grid-template-rows: auto;\n}\n  \n  .gallery-9-card li:nth-child(1), .gallery-9-card li:nth-child(2), .gallery-9-card li:nth-child(3), .gallery-9-card li:nth-child(4) {\n    grid-column: span 1;\n    grid-row: span 1;\n    \n  }\n}",
+    "_border": {
+     "radius": {
+      "top": "var(--radius-l)",
+      "right": "var(--radius-l)",
+      "bottom": "var(--radius-l)",
+      "left": "var(--radius-l)"
+     }
+    }
+   }
+  }
+ ],
+ "globalElements": []
+}

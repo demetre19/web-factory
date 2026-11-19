@@ -13,6 +13,7 @@ the caller walks the ranking to next-nearest; generation is the
 caller fallback, not a retrieve path.
 """
 import hashlib
+import functools
 import json
 import os
 import re
@@ -465,15 +466,34 @@ def retrieve_section(section_type, dna=None, styles=None, k=8,
     ranked = bank.rank(vec, rows, k=k) if vec is not None \
         else [(0.0, r) for r in rows[:k]]
     top = ranked[0][1] if ranked else None
+    topo = (top.get('topo') or {}).get('topology_id') if top else None
+    # topology_id is the retrieval vocab; the catalog composition is
+    # what the W6 builder adapts — resolve through topo-map.json so a
+    # retrieved row yields a real exemplar, not a dead id.
+    comp = _topo_map().get(topo) if topo else None
     return {'mode': 'clip' if vec is not None else 'meta',
             'section_type': section_type,
-            'topology_id': (top.get('topo') or {}).get('topology_id')
-            if top else None,
+            'topology_id': topo,
+            'composition': comp,
             'ranked': [(s, r.get('render_path'),
                         (r.get('topo') or {}).get('topology_id'))
                        for s, r in ranked],
             'ranked_rows': ranked,
             'latency_ms': round((time.time() - t0) * 1000, 1)}
+
+
+@functools.lru_cache(maxsize=1)
+def _topo_map():
+    """patterns/data/topo-map.json — bank topology_id → catalog
+    composition. {} if absent: retrieval then supplies evidence only
+    and the plan row's own composition wins."""
+    p = os.path.join(SECTION_VECTORS, '..', 'topo-map.json')
+    p = os.path.normpath(p)
+    try:
+        return (json.load(open(p)).get('map') or {}) \
+            if os.path.exists(p) else {}
+    except Exception:
+        return {}
 
 def retrieve(dna, bank=None, k=8, cached=True):
     """dna record → {'mode', 'key', 'ranked': [(score,row)],

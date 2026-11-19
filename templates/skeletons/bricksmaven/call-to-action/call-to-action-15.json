@@ -1,0 +1,191 @@
+{
+ "content": [
+  {
+   "id": "adqhjt",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "vvftna"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "dekmxz"
+    ]
+   },
+   "label": "Call to action 15"
+  },
+  {
+   "id": "vvftna",
+   "name": "container",
+   "parent": "adqhjt",
+   "children": [
+    "bcwuxw",
+    "gsxwod"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "cjlzne"
+    ]
+   }
+  },
+  {
+   "id": "bcwuxw",
+   "name": "block",
+   "parent": "vvftna",
+   "children": [
+    "hznczk",
+    "ggxoto",
+    "hmwdby"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ytmfjf"
+    ]
+   },
+   "label": "Box"
+  },
+  {
+   "id": "hznczk",
+   "name": "heading",
+   "parent": "bcwuxw",
+   "children": [],
+   "settings": {
+    "text": "Bricksmaven is the way!",
+    "_cssGlobalClasses": [
+     "qpfagk"
+    ],
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "ggxoto",
+   "name": "text-basic",
+   "parent": "bcwuxw",
+   "children": [],
+   "settings": {
+    "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    "tag": "p",
+    "_cssGlobalClasses": [
+     "xemhgx"
+    ]
+   }
+  },
+  {
+   "id": "hmwdby",
+   "name": "button",
+   "parent": "bcwuxw",
+   "children": [],
+   "settings": {
+    "text": "I am a button",
+    "style": "primary",
+    "_cssGlobalClasses": [
+     "acss_import_btn--white"
+    ]
+   }
+  },
+  {
+   "id": "gsxwod",
+   "name": "block",
+   "parent": "vvftna",
+   "children": [
+    "wouoov"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "fxabvz"
+    ]
+   },
+   "label": "Media"
+  },
+  {
+   "id": "wouoov",
+   "name": "image",
+   "parent": "gsxwod",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wtljuw"
+    ],
+    "tag": "figure",
+    "image": {
+     "url": "https://acss.bricksmaven.com/wp-content/uploads/2024/01/Placeholder-Image-large.jpg",
+     "external": true,
+     "filename": "Placeholder-Image-large.jpg"
+    }
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.9.7.1",
+ "globalClasses": [
+  {
+   "id": "dekmxz",
+   "name": "cta-15",
+   "settings": {
+    "_overflow": "hidden",
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "cjlzne",
+   "name": "cta-15-container",
+   "settings": {
+    "_display": "grid",
+    "_gridTemplateColumns": "repeat(2, minmax(0, 1fr))",
+    "_gridGap": "var(--space-l)",
+    "_cssCustom": ".cta-15-container::before {\n  content:\"\";\n  background-color: var(--primary);\n  position: absolute;\n  width: 80vw;\n  height:100%;\n  clip-path: polygon(0% 0, 100% 0, 75% 100%, 0 100%);\n  -webkit-clip-path: polygon(0% 0, 100% 0, 75% 100%, 0 100%);\n  top: 0;\n  left: 0;\n}\n\n@media (max-width: 478px) {\n\n  .cta-15-container::before {\n  width: 100vw;\n  height:70%;\n  clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%);\n  -webkit-clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%);\n\n}\n  \n}",
+    "_gridTemplateColumns:mobile_portrait": "repeat(1, minmax(0, 1fr))"
+   }
+  },
+  {
+   "id": "ytmfjf",
+   "name": "cta-15__box",
+   "settings": {
+    "_display": "flex",
+    "_direction": "column",
+    "_rowGap": "var(--space-m)",
+    "_position": "relative",
+    "_typography": {
+     "color": {
+      "raw": "var(--white)"
+     }
+    }
+   }
+  },
+  {
+   "id": "qpfagk",
+   "name": "cta-15__heading",
+   "settings": []
+  },
+  {
+   "id": "xemhgx",
+   "name": "cta-15__desc",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--white",
+   "name": "btn--white",
+   "settings": []
+  },
+  {
+   "id": "fxabvz",
+   "name": "cta-15__media",
+   "settings": {
+    "_position": "relative"
+   }
+  },
+  {
+   "id": "wtljuw",
+   "name": "cta-15__image",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "300px",
+    "_cssCustom": ".cta-15__image {\n\tclip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);\n  \t-webkit-clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);\n}",
+    "_aspectRatio": "6/4"
+   }
+  }
+ ],
+ "globalElements": []
+}

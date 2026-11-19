@@ -1,0 +1,397 @@
+{
+ "content": [
+  {
+   "id": "svggrb",
+   "name": "section",
+   "parent": 0,
+   "children": [
+    "lffevh"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ymbgzn"
+    ]
+   },
+   "label": "Gallery 17"
+  },
+  {
+   "id": "lffevh",
+   "name": "container",
+   "parent": "svggrb",
+   "children": [
+    "fcabca",
+    "mdzegr",
+    "umslpr"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ujhfpg"
+    ]
+   }
+  },
+  {
+   "id": "fcabca",
+   "name": "div",
+   "parent": "lffevh",
+   "children": [
+    "d4f25c",
+    "c39b7f"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "muadbq",
+     "okggpp"
+    ],
+    "_typography": {
+     "text-align": "left"
+    }
+   },
+   "label": "Intro"
+  },
+  {
+   "id": "d4f25c",
+   "name": "block",
+   "parent": "fcabca",
+   "children": [
+    "72636e",
+    "4846f3"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "ekrafx"
+    ]
+   },
+   "label": "Left Column"
+  },
+  {
+   "id": "72636e",
+   "name": "heading",
+   "parent": "d4f25c",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "wnpikx"
+    ],
+    "text": "Long headline to turn your visitors into users",
+    "tag": "h2"
+   }
+  },
+  {
+   "id": "4846f3",
+   "name": "text-basic",
+   "parent": "d4f25c",
+   "children": [],
+   "settings": {
+    "text": "Accent heading",
+    "tag": "span",
+    "_cssGlobalClasses": [
+     "samysq"
+    ]
+   },
+   "label": "Tagline"
+  },
+  {
+   "id": "c39b7f",
+   "name": "block",
+   "parent": "fcabca",
+   "children": [
+    "69aafb",
+    "5f7dff"
+   ],
+   "settings": {
+    "_cssGlobalClasses": [
+     "krusqg"
+    ]
+   },
+   "label": "Right Column"
+  },
+  {
+   "id": "69aafb",
+   "name": "text-basic",
+   "parent": "c39b7f",
+   "children": [],
+   "settings": {
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "_cssGlobalClasses": [
+     "prgilv"
+    ],
+    "tag": "p"
+   }
+  },
+  {
+   "id": "5f7dff",
+   "name": "text-link",
+   "parent": "c39b7f",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "acss_import_btn--primary"
+    ],
+    "text": "Call to action"
+   },
+   "label": "Primary button"
+  },
+  {
+   "id": "mdzegr",
+   "name": "slider-nested",
+   "parent": "lffevh",
+   "children": [
+    "wcxdwt"
+   ],
+   "settings": {
+    "optionsType": "default",
+    "options": "{\"type\":\"loop\",\"perPage\":3,\"arrows\":false,\"perMove\":1,\"direction\":\"rtl\",\"gap\":50,\"focus\":\"center\",\"pagination\":false,\"breakpoints\":{\"991\":{\"perPage\":2},\"767\":{\"perPage\":1}},\"autoScroll\":{\"pauseOnHover\":false}}",
+    "_cssGlobalClasses": [
+     "nzetdl"
+    ],
+    "height": "100%",
+    "perPage": "3",
+    "speed": "8000",
+    "autoplay": true,
+    "interval": "0",
+    "type": "loop",
+    "perPage:mobile_landscape": "2",
+    "perPage:mobile_portrait": "1"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "wcxdwt",
+   "name": "block",
+   "parent": "mdzegr",
+   "children": [
+    "nhilkn"
+   ],
+   "settings": {
+    "tag": "article",
+    "_cssGlobalClasses": [
+     "ulypnk"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "attachment"
+     ],
+     "tax_query": [
+      "happyfiles_category::6"
+     ]
+    }
+   },
+   "label": "Media"
+  },
+  {
+   "id": "nhilkn",
+   "name": "image",
+   "parent": "wcxdwt",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pavstr"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{post_id}",
+     "size": "large"
+    }
+   }
+  },
+  {
+   "id": "umslpr",
+   "name": "slider-nested",
+   "parent": "lffevh",
+   "children": [
+    "egtysy"
+   ],
+   "settings": {
+    "optionsType": "default",
+    "options": "{\"type\":\"loop\",\"perPage\":3,\"arrows\":false,\"perMove\":1,\"direction\":\"ltr\",\"gap\":50,\"focus\":\"center\",\"pagination\":false,\"breakpoints\":{\"991\":{\"perPage\":2},\"767\":{\"perPage\":1}},\"autoScroll\":{\"pauseOnHover\":false}}",
+    "_cssGlobalClasses": [
+     "mograh"
+    ],
+    "direction": "rtl",
+    "height": "100%",
+    "perPage": "3",
+    "speed": "8000",
+    "autoplay": true,
+    "interval": "0",
+    "type": "loop",
+    "perPage:mobile_portrait": "1",
+    "perPage:mobile_landscape": "2"
+   },
+   "themeStyles": []
+  },
+  {
+   "id": "egtysy",
+   "name": "block",
+   "parent": "umslpr",
+   "children": [
+    "gedcxh"
+   ],
+   "settings": {
+    "tag": "article",
+    "_cssGlobalClasses": [
+     "ulypnk"
+    ],
+    "hasLoop": true,
+    "query": {
+     "objectType": "post",
+     "post_type": [
+      "attachment"
+     ],
+     "tax_query": [
+      "happyfiles_category::61"
+     ]
+    }
+   },
+   "label": "Media"
+  },
+  {
+   "id": "gedcxh",
+   "name": "image",
+   "parent": "egtysy",
+   "children": [],
+   "settings": {
+    "_cssGlobalClasses": [
+     "pavstr"
+    ],
+    "tag": "figure",
+    "image": {
+     "useDynamicData": "{post_id}",
+     "size": "large"
+    }
+   }
+  }
+ ],
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "1.11.1.1",
+ "globalClasses": [
+  {
+   "id": "ymbgzn",
+   "name": "bm-gallery-17",
+   "settings": {
+    "_overflow": "hidden"
+   }
+  },
+  {
+   "id": "ujhfpg",
+   "name": "bm-gallery-17__container",
+   "settings": {
+    "_rowGap": "var(--container-gap)"
+   },
+   "modified": 1730593688,
+   "user_id": 7
+  },
+  {
+   "id": "muadbq",
+   "name": "intro",
+   "settings": {
+    "_typography": {
+     "text-align": "center"
+    },
+    "_direction": "column",
+    "_display": "flex",
+    "_alignItems": "center",
+    "_rowGap": "var(--content-gap)",
+    "_width:mobile_landscape": "100%",
+    "_alignSelf": "center"
+   }
+  },
+  {
+   "id": "okggpp",
+   "name": "intro--split",
+   "settings": {
+    "_display": "grid",
+    "_direction": "column",
+    "_alignItems": "flex-start",
+    "_typography": {
+     "text-align": "left"
+    },
+    "_alignSelf": "flex-start",
+    "_gridTemplateColumns": "var(--grid-2)",
+    "_gridGap": "var(--grid-gap)",
+    "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+   }
+  },
+  {
+   "id": "ekrafx",
+   "name": "intro__left-column",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "wnpikx",
+   "name": "intro__heading",
+   "settings": []
+  },
+  {
+   "id": "samysq",
+   "name": "intro__accent-heading",
+   "settings": {
+    "_typography": {
+     "color": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    },
+    "_order": "-1"
+   }
+  },
+  {
+   "id": "krusqg",
+   "name": "intro__right-column",
+   "settings": {
+    "_rowGap": "var(--content-gap)"
+   }
+  },
+  {
+   "id": "prgilv",
+   "name": "intro__subheading",
+   "settings": []
+  },
+  {
+   "id": "acss_import_btn--primary",
+   "name": "btn--primary",
+   "settings": [],
+   "category": "acss"
+  },
+  {
+   "id": "nzetdl",
+   "name": "bm-gallery__slider",
+   "settings": {
+    "_cssCustom": ".bm-gallery__slider  .splide__track{\n\toverflow:visible;\n}\n\n.bm-gallery__slider .splide__list {\n  gap: calc(var(--content-gap) * 3);\n  align-items: center;\n}\n\n.bm-gallery__slider :where(.splide__list, .splide__slide){\n  transition-timing-function: linear !important;\n}"
+   },
+   "modified": 1732312823,
+   "user_id": 7
+  },
+  {
+   "id": "ulypnk",
+   "name": "bm-gallery__media",
+   "settings": []
+  },
+  {
+   "id": "pavstr",
+   "name": "bm-gallery__image",
+   "settings": {
+    "_objectFit": "cover",
+    "_width": "100%",
+    "_height": "100%"
+   },
+   "modified": 1732309791,
+   "user_id": 7
+  },
+  {
+   "id": "mograh",
+   "name": "bm-gallery__slider--2",
+   "settings": {
+    "_cssCustom": ".bm-gallery__slider--2  .splide__track{\n\toverflow:visible;\n}\n\n.bm-gallery__slider--2 .splide__list {\n  gap: calc(var(--content-gap) * 3);\n  align-items: center;\n}\n\n.bm-gallery__slider--2 :where(.splide__list, .splide__slide){\n  transition-timing-function: linear !important;\n}"
+   },
+   "modified": 1732312823,
+   "user_id": 7
+  }
+ ],
+ "globalElements": []
+}

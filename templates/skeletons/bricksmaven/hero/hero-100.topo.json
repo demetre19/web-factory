@@ -1,0 +1,270 @@
+{
+ "label": "Hero 100",
+ "source": "bricksCopiedElements",
+ "sourceUrl": "https://acss.bricksmaven.com",
+ "version": "2.1.4",
+ "topology_id": "hero-media-right",
+ "element_sig": {
+  "h": 1,
+  "p": 2,
+  "btn": 1,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "section",
+   "tag": "section",
+   "label": "Hero 100",
+   "loop": false,
+   "classes": [
+    "jjvefu"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "container",
+   "tag": "container",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mfpvqg"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Intro",
+   "loop": false,
+   "classes": [
+    "hewhbo"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "heading",
+   "tag": "h1",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "axsudr"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": "Accent heading",
+   "loop": false,
+   "classes": [
+    "cybfcz"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "text-basic",
+   "tag": "p",
+   "label": "Subheading",
+   "loop": false,
+   "classes": [
+    "fltwst"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "acss_import_btn--primary"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "block",
+   "tag": "block",
+   "label": "Media {CSS}",
+   "loop": false,
+   "classes": [
+    "eqfail"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "image",
+   "tag": "figure",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "ehqdvk"
+   ],
+   "depth": 3
+  }
+ ],
+ "classes": {
+  "bm-hero-100": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-100__container": {
+   "spacing": {
+    "_rowGap": "var(--container-gap)"
+   },
+   "layout": {
+    "_alignItems": "center"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "container-gap"
+   ]
+  },
+  "bm-hero-100__intro": {
+   "spacing": {
+    "_rowGap": "var(--content-gap)"
+   },
+   "layout": {
+    "_alignItems": "center",
+    "_widthMax": "var(--width-xl)"
+   },
+   "sizing": {
+    "_width": "100%"
+   },
+   "typography": {
+    "text-align": "center"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "content-gap",
+    "width-xl"
+   ]
+  },
+  "bm-hero-100__heading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "calc(var(--h1) * 1.6)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "h1"
+   ]
+  },
+  "bm-accent-heading": {
+   "spacing": {},
+   "layout": {
+    "_order": "-1"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-100__subheading": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {
+    "font-size": "var(--text-l)"
+   },
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": [
+    "text-l"
+   ]
+  },
+  "btn--primary": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": null,
+   "tokens": []
+  },
+  "bm-hero-100__media": {
+   "spacing": {
+    "_padding": {
+     "left": "var(--gutter)",
+     "right": "var(--gutter)"
+    }
+   },
+   "layout": {
+    "_alignItems": "center",
+    "_position": "relative",
+    "_justifyContent": "flex-end"
+   },
+   "sizing": {},
+   "typography": {},
+   "colour": {},
+   "radius": {},
+   "custom_css": ".bm-hero-100__media {\n  --psuedo-width: 100%;\n  --psuedo-height: 60%;\n  --psuedo-gradient-alpha: var(--base);\n  --psuedo-gradient-beta: var(--base-semi-dark);\n  \n  --image-height: 64rem;\n}\n\n.bm-hero-100__media::before {\n  content: '';\n  position: absolute;\n  inline-size: var(--psuedo-width);\n  block-size: var(--psuedo-height);\n  inset-block-end: 0;\n  background: linear-gradient(var(--psuedo-gradient-alpha), var(--psuedo-gradient-beta));\n  border-radius: var(--radius-xxl);\n  \n} \n\n@media (max-width:767px) {\n  .bm-hero-100__media {\n  \n  --image-height: calc(50rem / 1.5);\n}\n}",
+   "tokens": [
+    "base",
+    "base-semi-dark",
+    "gutter",
+    "psuedo-gradient-alpha",
+    "psuedo-gradient-beta",
+    "psuedo-height",
+    "psuedo-width",
+    "radius-xxl"
+   ]
+  },
+  "bm-hero-100__image": {
+   "spacing": {},
+   "layout": {},
+   "sizing": {
+    "_objectFit": "cover",
+    "_height": "var(--image-height)",
+    "_width": "100%",
+    "_aspectRatio": "6/4"
+   },
+   "typography": {},
+   "colour": {},
+   "radius": {
+    "top": "var(--radius-xxl)",
+    "right": "var(--radius-xxl)"
+   },
+   "custom_css": null,
+   "tokens": [
+    "image-height",
+    "radius-xxl"
+   ]
+  }
+ },
+ "tokens_all": [
+  "base",
+  "base-semi-dark",
+  "container-gap",
+  "content-gap",
+  "gutter",
+  "h1",
+  "image-height",
+  "psuedo-gradient-alpha",
+  "psuedo-gradient-beta",
+  "psuedo-height",
+  "psuedo-width",
+  "radius-xxl",
+  "text-l",
+  "width-xl"
+ ]
+}
