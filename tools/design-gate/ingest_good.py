@@ -571,9 +571,25 @@ def ingest_image(path, note=''):
 
 
 def bank(slug):
-    """operator meta -> annotations.jsonl records (source=operator)."""
+    """operator meta -> annotations.jsonl records (source=operator).
+    Drop-by-label ALWAYS runs first: bank() is the single writer for
+    label==slug, so a slug re-captured into quarantine must lose its
+    stale ok-era rows — drop unconditionally, append only when ok."""
     d = os.path.join(OPERATOR, slug)
     meta = json.load(open(os.path.join(d, 'meta.json')))
+    out = os.path.join(DATA, 'annotations.jsonl')
+    if os.path.exists(out):
+        kept = []
+        for line in open(out):
+            try:
+                if json.loads(line).get('label') != slug:
+                    kept.append(line)
+            except Exception:
+                kept.append(line)
+        tmp = out + '.tmp'
+        with open(tmp, 'w') as f:
+            f.writelines(kept)
+        os.replace(tmp, out)
     if meta.get('capture_status') != 'ok':
         return 0
     recs = []
@@ -618,24 +634,6 @@ def bank(slug):
         })
     if not recs:
         return 0
-    out = os.path.join(DATA, 'annotations.jsonl')
-    # re-ingest contract: this slug may already have rows (stale
-    # stretched-section rows, superseded captures). bank() is the
-    # single writer for label==slug -> drop then append, never
-    # duplicate. SiteScanner's re-segment/deep-crawl manifests rely on
-    # this: slugs_to_index/resegment slugs get rebuilt, not appended.
-    if os.path.exists(out):
-        kept = []
-        for line in open(out):
-            try:
-                if json.loads(line).get('label') != slug:
-                    kept.append(line)
-            except Exception:
-                kept.append(line)
-        tmp = out + '.tmp'
-        with open(tmp, 'w') as f:
-            f.writelines(kept)
-        os.replace(tmp, out)
     with open(out, 'a') as f:
         for r in recs:
             f.write(json.dumps(r) + '\n')
