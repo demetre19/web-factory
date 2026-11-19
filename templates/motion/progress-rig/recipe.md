@@ -21,8 +21,10 @@ source: tamdoma.ai — .rig rig-p / track-fill / token (@property --p)
 
 `@property --p` registers a custom property as `<number>` so it can be
 keyframed. One `rig-p` animation interpolates `--p` 0→1; the fill reads
-`scaleX(var(--p))` and the token reads `left:calc(var(--p)*100%)` — a
-whole assembly driven by a single animated number.
+`scaleX(var(--p))` and the token rides a full-width wrapper via
+`transform:translateX(calc(var(--p)*100%))` — a whole assembly driven by
+a single animated number, zero layout per frame (animating `left`
+directly measured 60 layouts/s, MOT-06).
 
 ## Parameters
 
@@ -42,12 +44,13 @@ the CSS loop is the demo/idling state.
 
 `@supports` cannot test at-rules — detect `@property` with
 `if (!CSS.registerProperty)` (1 line) adding `.no-prop`, which swaps in
-direct `transform`/`left` keyframes. `@property` needs Chrome 85+,
-Safari 16.4+, FF 128+.
+`transform` keyframes for fill + token wrapper. `@property` needs
+Chrome 85+, Safari 16.4+, FF 128+.
 
 ## Rules
 
-- `left` on the token animates compositor-cheaply only via `calc(var(--p))`
-  inside transform-free positioning — acceptable because the token is
-  12px; the *bar* stays `scaleX`
-- reduced-motion: full bar, no animation
+- the token must move via transform on `.token-wrap` (spanning
+  `left:0;right:<token-width>` so 100% = end-of-track) — never `left`,
+  which is a layout property per frame
+- reduced-motion: `.rig{--p:1}` so the frozen frame shows the completed
+  bar + token at the end (not an inconsistent mid-frame)

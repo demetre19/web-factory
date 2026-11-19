@@ -4,12 +4,12 @@ type: motion-recipe
 taxonomy:
   trigger: scroll-linked
   technique: rAF-loop
-  property: [stroke-dashoffset, opacity, transform-translate]
+  property: [stroke-dashoffset, opacity, transform-translate, visibility]
   budget: stroke-cheap
   m_type: structural
   purpose: [scroll-progress, explanation]
   timing_class: standard
-  easing_family: ease-soft
+  easing_family: ease-out
   loop_type: none
   complexity: system
   js_dependency: light
@@ -46,5 +46,8 @@ scroll-binding is banned on utility surfaces).
   or steal the wheel
 - `visibility` transition delayed by the fade so hidden steps can't be
   tabbed to
-- reduced-motion: kill sticky + rail entirely, render steps statically
+- reduced-motion: kill sticky + rail entirely, render steps statically —
+  the JS rig must early-return on
+  `matchMedia('(prefers-reduced-motion: reduce)')` too, or it keeps
+  writing `strokeDashoffset` + step classes every rAF (MOT-07)
 - on narrow viewports, flatten to a stacked list (tamdoma: ≤840px)

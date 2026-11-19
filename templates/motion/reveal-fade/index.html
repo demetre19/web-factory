@@ -31,7 +31,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="wrap">
   <div class="spacer"><p>scroll ↓</p></div>
   <div class="card rv" style="--d:0ms"><b>Card one</b><p>Enters on its own — opacity + 28px rise, 1s ease-out.</p></div>
@@ -40,6 +40,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
   <div class="spacer"></div>
 </div>
 <script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
 // recipe JS — IO one-shot reveal; reduced-motion reveals immediately
 const io = new IntersectionObserver(es => {
   for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }

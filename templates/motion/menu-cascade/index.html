@@ -44,7 +44,7 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <nav class="nav" id="nav">
   <button class="btn" aria-expanded="false" onclick="this.closest('.nav').toggleAttribute('data-open');this.setAttribute('aria-expanded',this.closest('.nav').hasAttribute('data-open'))">
     System <span class="chev">▾</span>
@@ -58,5 +58,6 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
     <li style="--i:5"><a href="#">Content</a></li>
   </ul>
 </nav>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>

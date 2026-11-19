@@ -9,7 +9,7 @@ taxonomy:
   m_type: emotional
   purpose: [explanation]
   timing_class: loop-short
-  easing_family: ease-both
+  easing_family: ease-out
   loop_type: infinite
   complexity: composite
   js_dependency: none
@@ -39,6 +39,6 @@ entrance: run the 0→24% slice once on in-view (retime, `forwards`).
 
 ## Rules
 
-- `ease-both` — the motion happens while already on screen (M.2)
+- `--ease-soft` (easeOutCubic) — ease-out reads as a settle, not a launch
 - rotate ≤18° keeps it `professional`; bigger spins + overshoot = `playful`
 - reduced-motion: tiles at grid pose

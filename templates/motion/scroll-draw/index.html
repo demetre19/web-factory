@@ -36,14 +36,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
   .stage{position:static;height:auto;display:block}
   .rail{display:none}
   .step{position:static;opacity:1;visibility:visible;padding:24px}
-  .step .cell{transform:none;transition:none}
+  .step .cell,.step.is-prev .cell,.step.is-next .cell{transform:none;transition:none}
 }
 /* --------------------------------------------------------------------- */
 .theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;z-index:9}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="intro"><p>scroll ↓ — the line draws with you</p></div>
 <div class="track" id="track">
   <div class="stage">
@@ -55,7 +55,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
 </div>
 <div class="intro"><p>end — line fully drawn</p></div>
 <script>
-// recipe JS — rAF scroll progress → dashoffset + step quantisation
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS — rAF scroll progress → dashoffset + step quantisation.
+// Under prefers-reduced-motion the CSS static layout applies and this
+// whole rig must not run (MOT-07): bail early, no listeners, no classes.
 const track = document.getElementById('track');
 const rail = document.getElementById('rail-path');
 const steps = [...track.querySelectorAll('.step')];
@@ -76,9 +79,11 @@ function update() {
     });
   }
 }
-addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-addEventListener('resize', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
-update();
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  addEventListener('resize', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+}
 </script>
 </body>
 </html>

@@ -20,9 +20,9 @@ source: tamdoma.ai — .bd .draw / .bd.in pattern + st-draw idiom
 # draw-icon — SVG line-draw entrance
 
 Strokes "draw themselves" once when the element scrolls into view, then
-stay drawn. The canonical trick: `pathLength="1"` on every path so
-`stroke-dasharray:1` / `stroke-dashoffset` are unitless and need no path
-measurement.
+stay drawn. The canonical trick: `pathLength="1"` on every drawable
+shape so `stroke-dasharray:1` / `stroke-dashoffset` are unitless and
+need no path measurement.
 
 ## Parameters
 
@@ -42,4 +42,7 @@ moments. One-shot only — looping draws belong in `draw-icon-loop`.
 
 - transition on `stroke-dashoffset`, never a loop (`loop_type:none`)
 - fallback: reduced-motion = paths pre-drawn, no transition
+- style via `.di :is(path,circle,line,rect,ellipse,polyline)` — a
+  `path`-only selector leaves `fill:#000` on circles (the ring renders
+  as a solid disc, MOT-05)
 - IO unobserve after fire — it is an entrance, not a retrigger

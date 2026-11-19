@@ -36,7 +36,7 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div>
 <svg class="rp" viewBox="0 0 120 120" aria-hidden="true">
   <path d="M8 102 H112" stroke="var(--ink)" stroke-width="1.5" fill="none"/>
@@ -53,5 +53,6 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </svg>
 <small>rings pulse outward while signals converge — 1.8 s + 4.5 s loops</small>
 </div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>

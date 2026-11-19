@@ -5,7 +5,7 @@ taxonomy:
   trigger: in-view
   technique: css-transition
   property: [filter, transform-scale, opacity]
-  budget: layout-risk
+  budget: paint-bound
   m_type: emotional
   purpose: [entrance]
   timing_class: slow
@@ -15,15 +15,17 @@ taxonomy:
   js_dependency: light
   personality_fit: [elegant]
 source: tamdoma.ai — .focus-reveal.in img
-budget_note: animates filter:blur — outside M.7 transform/opacity budget.
-  Keep for ONE emotional moment per page, or swap for opacity+scale only.
+budget_note: animates filter:blur — paint-bound, outside the M.7
+  compositor-safe budget. Keep for ONE emotional moment per page,
+  or swap for opacity+scale only.
 ---
 
 # blur-reveal — photo "focus" reveal
 
 A photograph starts desaturated + blurred + slightly zoomed
-(`saturate(.3) blur(14px) scale(1.08)`) and pulls into focus on in-view —
-the founder/people "we're real humans" moment. 1.6 s `--ease-out`.
+(`saturate(.3) blur(14px) contrast(1)` + `scale(1.08)`) and pulls into
+focus on in-view — the founder/people "we're real humans" moment.
+1.6 s `--ease-out`.
 
 ## Parameters
 
@@ -33,10 +35,11 @@ the founder/people "we're real humans" moment. 1.6 s `--ease-out`.
 | blur | 14px → 0 | paint-cost property — flagged |
 | zoom | scale(1.08) → 1 | pairs with blur to hide edge bleed |
 
-## ⚠ Budget warning
+## Budget warning
 
-`filter` animation is a `layout-risk` under M.7 (paint-bound, not
-composited). Tamdoma ships it once, on the founder photo. Policy:
+`filter` animation is `paint-bound` under the taxonomy budget (M.7
+repaint-cost — legal on ambient/singular elements only). Tamdoma ships
+it once, on the founder photo. Policy:
 
 - allowed: exactly one `emotional` photo moment per page
 - not allowed: cards, grids, repeated imagery

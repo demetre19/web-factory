@@ -59,6 +59,7 @@
   },
   "ui_analysis": {"$ref": "#/definitions/ui_analysis"},
   "set_summary": {"$ref": "#/definitions/set_summary"},
+  "motion": {"$ref": "#/definitions/motion"},
   "schema_version": {"type": "string"},
   "classified_at": {"type": "string"},
   "classifier_model": {"type": "string"}
@@ -134,6 +135,99 @@
     "outliers": {"type": "array", "items": {"type": "string"}},
     "n_images": {"type": "integer"},
     "provenance": {"type": "string", "enum": ["inferred", "confirmed"]}
+   }
+  }
+  ,
+  "motion": {
+   "type": "object",
+   "description": "CLASSIFY-MOTION output. Enums generated from docs/machinery/design/motion/taxonomy.json (single source; regenerate when taxonomy.json changes). Requires capture_status ok upstream.",
+   "required": ["schema_version", "classified_at", "reduced_motion_emulated", "counts", "records", "summary"],
+   "properties": {
+    "schema_version": {"type": "string"},
+    "classified_at": {"type": "string"},
+    "reduced_motion_emulated": {"type": "boolean", "enum": [false],
+                                "description": "guard: the scan ran with prefers-reduced-motion:no-preference (enum not const — gate _schema_errors enforces enum)"},
+    "reduced_motion_fallback_present": {"type": "boolean"},
+    "partial": {"type": "boolean",
+                "description": "true when evidence is incomplete (cross-origin CSS, opaque JS motion)"},
+    "libs": {"type": "array",
+             "items": {"type": "string",
+                       "enum": ["none", "gsap", "anime-js", "lottie", "rive", "lenis", "scrollmagic", "other"]}},
+    "counts": {
+     "type": "object",
+     "properties": {
+      "svg": {"type": "integer", "minimum": 0},
+      "smil": {"type": "integer", "minimum": 0},
+      "canvas": {"type": "integer", "minimum": 0},
+      "keyframes_defined": {"type": "integer", "minimum": 0},
+      "keyframes_dead": {"type": "array", "items": {"type": "string"}},
+      "animated_elements": {"type": "integer", "minimum": 0}
+     }
+    },
+    "records": {"type": "array", "items": {
+   "type": "object",
+   "required": ["selector", "trigger", "technique", "budget", "timing_class", "status", "confidence"],
+   "properties": {
+    "selector": {"type": "string", "minLength": 1},
+    "context": {"type": "string"},
+    "in_svg": {"type": "boolean"},
+    "trigger": {"type": "string",
+                "enum": ["load", "in-view", "loop", "hover", "focus", "active", "scroll-linked", "click", "media", "undetermined", "none"]},
+    "technique": {"type": "string",
+                  "enum": ["css-keyframes", "css-transition", "smil", "waapi", "rAF-loop", "lottie", "rive", "gsap", "anime-js", "css-scroll-timeline", "svg-sprite-loop", "view-transition", "video-gif"]},
+    "property": {"type": "array",
+                 "items": {"type": "string",
+                           "enum": ["transform-translate", "transform-scale", "transform-rotate", "transform-skew", "opacity", "stroke-dashoffset", "stroke-dasharray", "stroke", "fill-opacity", "fill", "path-d", "clip-path", "mask", "filter", "custom-property", "border-radius", "geometry-attr", "motion-path", "color", "background", "visibility"]}},
+    "budget": {"type": "string",
+               "enum": ["compositor-safe", "stroke-cheap", "paint-bound", "layout-risk"]},
+    "m_type": {"type": "string",
+               "enum": ["conversational", "functional", "structural", "emotional"]},
+    "purpose": {"type": "array",
+                "items": {"type": "string",
+                          "enum": ["entrance", "exit", "state-change", "feedback", "loading", "progress", "attention", "explanation", "navigation", "ambient", "scroll-progress", "word-cycle"]}},
+    "timing_class": {"type": "string",
+                     "enum": ["instant", "micro", "standard", "structural", "slow", "loop-short", "loop-ambient"]},
+    "duration_ms": {"type": "number", "minimum": 0},
+    "easing_family": {"type": "string",
+                      "pattern": "^(linear|ease-out|ease-in|ease-both|overshoot|elastic|bounce|steps|custom:cubic-bezier\\(|other:)"},
+    "easing_raw": {"type": "string"},
+    "delay": {"type": "string"},
+    "iterations": {"type": "string"},
+    "loop_type": {"type": "string",
+                  "enum": ["none", "infinite", "n-times", "palindrome", "phased", "handoff"]},
+    "complexity": {"type": "string",
+                   "enum": ["atomic", "composite", "choreographed", "system"]},
+    "js_dependency": {"type": "string",
+                      "enum": ["none", "light", "library"]},
+    "status": {"type": "string", "enum": ["live", "paused", "dead"]},
+    "detail": {"type": "string", "enum": ["opaque"],
+               "description": "JS-driven motion that cannot be decompiled"},
+    "keyframes": {"type": "string"},
+    "personality_fit": {"type": "array",
+                        "items": {"type": "string",
+                                  "enum": ["none", "subtle", "elegant", "professional", "playful"]}},
+    "layout_per_s": {"type": "number", "minimum": 0,
+                     "description": "CDP Performance LayoutCount delta per second during the animation"},
+    "violations": {"type": "array",
+                   "items": {"type": "string",
+                             "enum": ["linear_on_spatial", "ambient_exempt", "layout_prop_animated", "budget_exceeded", "dead_keyframe"]},
+                   "description": "ambient_exempt is the recorded exemption for linear on infinite ambient loops, not a failure"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence": {"type": "string"}
+   }
+  }},
+    "summary": {
+     "type": "object",
+     "properties": {
+      "motion_tier": {"type": "string",
+                      "enum": ["static", "subtle", "expressive", "cinematic"]},
+      "dominant_personality": {"type": "string",
+                               "enum": ["none", "subtle", "elegant", "professional", "playful"]},
+      "focal_per_viewport_ok": {"type": "boolean"},
+      "budget_violations": {"type": "array", "items": {"type": "string"}},
+      "continuous_loops": {"type": "integer", "minimum": 0}
+     }
+    }
    }
   }
  }

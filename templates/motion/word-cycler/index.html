@@ -26,11 +26,14 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 @keyframes wc{
   0%{opacity:0;transform:translateY(10px)}
   2%,18.6%{opacity:1;transform:none}
-  19.6%,100%{opacity:0;transform:translateY(-10px)}}
-/* 5 phrases => each visible 2-18.6% of a 5*--pass timeline */
+  20.6%,100%{opacity:0;transform:translateY(-10px)}}
+/* 5 phrases, 20% slot each. The exit (18.6→20.6%) extends 0.6% past the
+   slot boundary so it overlaps the next phrase's 0→2% entry ramp — a
+   crossfade, no dead-frame gap (MOT-16). */
 @media (prefers-reduced-motion:reduce){
+  /* unroll: every phrase stays visible and in the accessibility tree */
+  .cycle{display:block}
   .cycle p{animation:none;position:static;opacity:1}
-  .cycle p~p{display:none}
 }
 /* --------------------------------------------------------------------- */
 small{display:block;margin-top:14px;color:var(--muted)}
@@ -38,7 +41,7 @@ small{display:block;margin-top:14px;color:var(--muted)}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="demo">
   <p style="font-size:1rem;color:var(--muted)">One team for everything your business needs:</p>
   <div class="cycle">
@@ -50,5 +53,6 @@ small{display:block;margin-top:14px;color:var(--muted)}
   </div>
   <small>phrases hand off every --pass — pure CSS, no JS</small>
 </div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>

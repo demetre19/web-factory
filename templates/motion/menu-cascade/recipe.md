@@ -4,7 +4,7 @@ type: motion-recipe
 taxonomy:
   trigger: active
   technique: css-keyframes
-  property: [opacity, transform-translate, transform-rotate]
+  property: [opacity, transform-translate, transform-rotate, color, background]
   budget: compositor-safe
   m_type: functional
   purpose: [navigation, state-change]
@@ -12,7 +12,7 @@ taxonomy:
   easing_family: ease-out
   loop_type: none
   complexity: composite
-  js_dependency: none
+  js_dependency: light
   personality_fit: [professional, subtle]
 source: tamdoma.ai — .sys-nav [data-open] (sys-in stagger --i*60ms+60ms)
 ---

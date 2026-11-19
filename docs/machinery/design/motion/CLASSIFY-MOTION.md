@@ -23,12 +23,15 @@ await page.emulateMediaFeatures([
   { name: 'prefers-reduced-motion', value: 'no-preference' }]);
 ```
 
-> ⚠ Tamdoma proved the hazard: with `reduce` (some headless defaults),
+> FLAG Tamdoma proved the hazard: with `reduce` (some headless defaults),
 > every computed duration reads `1e-05s` and animations look absent.
 > Always assert `matchMedia('(prefers-reduced-motion: reduce)') === false`
 > before scanning.
 
 ### Step A — global probes (one `page.evaluate`)
+
+Gate: skip this entire pipeline when `meta.json.capture_status` is not
+`"ok"` — the schema forbids classifying non-ok captures (MOT-08).
 
 ```js
 ({
@@ -75,6 +78,17 @@ For every element inside an `<svg>` use the same pass — CSS animates SVG
 internals directly. Mark each record `in_svg`, capture nearest
 `svg[viewBox]` + ancestor section context (`id`/`class`).
 
+**SMIL record pass** — one record per SMIL animation group:
+`document.querySelectorAll('animate,animateMotion,animateTransform,set')`
+found `>0` ⇒ at least one `smil` record (tamdoma hid 86 under
+computed-CSS-only scans — MOT-02). `technique:"smil"`, `property` mapped
+from `attributeName` (`cx/cy/r/width/height/x/y` → `geometry-attr` →
+budget `layout-risk`; `d` → `path-d`; SMIL `<animateMotion>` →
+`motion-path`), `duration_ms` from `dur`, `easing_family` from
+`calcMode`/`keySplines` (`linear` for paced, `other:<calcMode>`
+otherwise). Reduced-motion JS may strip SMIL from the DOM (tamdoma
+does) — always count on the `no-preference` DOM.
+
 ### Step D — trigger attribution
 
 | Signal | Trigger |
@@ -91,12 +105,18 @@ If a script can't be attributed statically, mark
 `trigger:"undetermined"` with the elements list — humans resolve during
 canon review.
 
-### Step E — frame sampling (cheap liveness check)
+### Step E — frame sampling + budget measurement
 
 Screenshot the bounding box of each candidate at `t` and `t+1.2s`;
 pixel-diff >1% confirms `status:"live"`. Also catches motion missed by
 Step C (canvas, video, animated GIF, transforms via Web Animations with
 `fill`).
+
+Also record `layout_per_s` per record: CDP `Performance.enable` → read
+`LayoutCount` before and after a ≥1 s window while the animation runs
+(`layout_per_s ≈ Δ/seconds`, 0 = compositor-clean, ~60 = per-frame
+layout — MOT-09: SVG transform + `stroke-dash*` co-running trigger this
+in Chromium even though each alone is cheap).
 
 ### Step F — dead animations
 
@@ -110,8 +130,16 @@ Fill every record with taxonomy axes (`TAXONOMY.md`/`taxonomy.json`):
 
 - `technique` from Step A/B evidence; `property` list from keyframe
   bodies + transition properties
-- `budget`: compositor-safe | stroke-cheap | layout-risk (any `filter`,
-  `clip-path`, or layout property in keyframes/transitions)
+- `budget`: compositor-safe | stroke-cheap | paint-bound | layout-risk —
+  compositor-safe = transform+opacity only; stroke-cheap adds
+  `stroke-dash*`/`fill-opacity`/`motion-path`; paint-bound = `filter`,
+  `clip-path`, `border-radius` morphs (ambient elements only);
+  layout-risk = layout properties + `geometry-attr`. Cross-check with
+  `layout_per_s` when measured.
+- `violations[]` per record: `linear_on_spatial` (linear easing on a
+  spatial move) — downgraded to `ambient_exempt` when
+  `loop_type:infinite` + `purpose:ambient` (recorded, not a failure);
+  `layout_prop_animated`, `dead_keyframe`, `budget_exceeded`.
 - `timing_class` from computed duration; `easing_family` from
   `animation-timing-function` / `transition-timing-function`
 - `loop_type`: infinite | n-times | palindrome (`direction:alternate`)
@@ -128,13 +156,13 @@ Fill every record with taxonomy axes (`TAXONOMY.md`/`taxonomy.json`):
 {
   "motion": {
     "schema_version": "0.1",
-    "scanned_at": "ISO-8601",
+    "classified_at": "ISO-8601",
     "reduced_motion_emulated": false,          // guard: must be false
     "reduced_motion_fallback_present": true,   // any @media reduce or JS branch found
     "libs": ["none" | "gsap" | "lottie" | ...],
-    "counts": {"svg": 56, "smil": 0, "canvas": 0,
-               "keyframes_defined": 26, "keyframes_dead": ["drift"],
-               "animated_elements": 26},
+    "counts": {"svg": 56, "smil": 86, "canvas": 0,
+               "keyframes_defined": 27, "keyframes_dead": ["drift"],
+               "animated_elements": 30},
     "records": [
       {
         "selector": "svg.sico-automation .box",
@@ -157,7 +185,10 @@ Fill every record with taxonomy axes (`TAXONOMY.md`/`taxonomy.json`):
         "js_dependency": "none",
         "status": "live",
         "keyframes": "belt",
+        "layout_per_s": 0,
+        "violations": ["ambient_exempt"],
         "personality_fit": ["professional"],
+        "confidence": 0.9,
         "evidence": "computed style + rule .sico-automation .box"
       }
     ],

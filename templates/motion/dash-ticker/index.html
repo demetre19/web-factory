@@ -27,7 +27,7 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div>
 <svg class="dt" viewBox="0 0 200 80" aria-hidden="true">
   <path class="base" d="M10 50h50l10-24 16 44 10-20h94"/>
@@ -35,5 +35,6 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </svg>
 <small>signal sweeps the path every 2.5 s — pure dashoffset</small>
 </div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>

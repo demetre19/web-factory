@@ -16,9 +16,9 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 .demo{text-align:center}
 svg{width:140px;height:140px}
 /* --- recipe ---------------------------------------------------------- */
-/* Every drawable path gets pathLength="1" so dasharray can be unitless.
+/* Every drawable shape gets pathLength="1" so dasharray can be unitless.
    .in (added by IO / replay) runs a dashoffset TRANSITION — not a loop. */
-.di path{fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.di :is(path,circle,line,rect,ellipse,polyline){fill:none;stroke:var(--ink);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .di .draw{stroke-dasharray:1;stroke-dashoffset:1;
   transition:stroke-dashoffset .8s var(--ease-out);
   transition-delay:calc(var(--o,0)*.15s)}
@@ -33,11 +33,11 @@ svg{width:140px;height:140px}
 /* --------------------------------------------------------------------- */
 button{margin-top:18px;padding:.5em 1.2em;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}
 small{display:block;margin-top:10px;color:var(--muted)}
-.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;margin:0;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="demo">
 <svg class="di" id="icon" viewBox="0 0 64 64" aria-hidden="true">
   <circle class="draw" pathLength="1" cx="32" cy="32" r="26" style="--o:0"/>
@@ -50,6 +50,7 @@ small{display:block;margin-top:10px;color:var(--muted)}
 <small>in-view trigger via IntersectionObserver; draw once, stay drawn</small></div>
 </div>
 <script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
 // recipe JS — ~10 lines. IO adds .in once, unobserve; replay resets.
 const el = document.getElementById('icon');
 const io = new IntersectionObserver(es => {

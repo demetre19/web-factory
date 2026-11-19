@@ -30,7 +30,6 @@ in canon data.
 | `none` | element never visibly animates (dead animation — see `status`) |
 
 ## `technique` — the rendering mechanism
-
 | Value | Detection signature |
 |---|---|
 | `css-keyframes` | `animation-name` ≠ none on element |
@@ -44,6 +43,7 @@ in canon data.
 | `anime-js` | `anime` global / `animejs` script |
 | `css-scroll-timeline` | `animation-timeline: scroll()/view()` |
 | `svg-sprite-loop` | sprite swapping / `steps()` timing |
+| `view-transition` | `::view-transition-*` / Astro ClientRouter page morphs |
 | `video-gif` | motion baked into raster media (record, don't extract) |
 
 ## `property` — what actually changes (may be multi-valued)
@@ -52,15 +52,24 @@ in canon data.
 `transform-skew`, `opacity`, `stroke-dashoffset`, `stroke-dasharray`,
 `stroke` (colour), `fill-opacity`, `fill`, `path-d` (morph),
 `clip-path`/`mask`, `filter` (blur/saturate), `custom-property`
-(`@property` interpolation), `color`/`background`, `visibility`
+(`@property` interpolation), `border-radius` (blob morph),
+`geometry-attr` (SVG geometry attribute — `cx/cy/r/width/height/x/y`,
+SMIL or CSS → `layout-risk`), `motion-path` (`animateMotion` /
+`offset-path` → `stroke-cheap`),
+`color`/`background`, `visibility`
 (technique detail, never listed alone).
 
 Budget flags derived from `property` (M.7):
 
 - `compositor-safe`: transform + opacity only.
-- `stroke-cheap`: + `stroke-dash*`, `fill-opacity` — SVG-legal, cheap.
-- `layout-risk`: `filter`, `clip-path` animation, or any layout property
-  (`width/height/top/left/margin`) → flagged defect under M.7.
+- `stroke-cheap`: + `stroke-dash*`, `fill-opacity`, `motion-path` —
+  SVG-legal, cheap. NOTE (MOT-09): co-running `stroke-dash*`
+  animations with SVG transforms forces per-frame SVG-subtree layout in
+  Chromium — measure `layout_per_s`, don't assume free.
+- `paint-bound`: `border-radius` morphs, `filter`, `clip-path` —
+  repaint-cost; legal on ambient elements only (blob washes).
+- `layout-risk`: layout properties (`width/height/top/left/margin`) and
+  `geometry-attr` — flagged defect under M.7.
 
 ## `purpose` — M-type + job (record both)
 
@@ -74,21 +83,25 @@ M types (from M.md): `conversational`, `functional`, `structural`,
 
 ## `timing_class` — maps to M.2 duration tokens
 
-| Value | Range | Notes |
+| Value | Range (ms, half-open) | Notes |
 |---|---|---|
-| `micro` | 100–300 ms | hovers, small moves |
-| `standard` | 300–400 ms | modals, expands |
-| `structural` | 500–700 ms | containers, staggered drawers |
-| `slow` | 0.7–1.6 s | reveals, milestone ≤1.5 s |
-| `loop-short` | 1.5–10 s | icon loops, cyclers |
-| `loop-ambient` | >10 s | backdrop loops (tamdoma: 14–360 s) |
+| `instant` | [0,100) | state flips, no visible tween |
+| `micro` | [100,300) | hovers, small moves |
+| `standard` | [300,400) | modals, expands |
+| `structural` | [400,700) | containers, staggered drawers |
+| `slow` | [700,1600) | reveals; milestone ≤1500 |
+| `loop-short` | [1600,10000) | icon loops, cyclers |
+| `loop-ambient` | [10000,∞) | backdrop loops (tamdoma: 14–360 s) |
 
 ## `easing_family`
 
-`linear` (banned on spatial moves — flag), `ease-out` (entry),
-`ease-in` (exit), `ease-both` (on-screen travel),
-`overshoot`/`elastic`/`bounce` (playful/milestone only), `steps`,
-`custom:<cubic-bezier>`.
+`linear` (banned on spatial **state transitions** — ambient
+`infinite`+`ambient` loops are exempt via `ambient_exempt`, see
+CLASSIFY-MOTION §violations), `ease-out` (entry), `ease-in` (exit),
+`ease-both` (on-screen travel), `overshoot`/`elastic`/`bounce`
+(playful/milestone only), `steps`, `custom:<cubic-bezier>`,
+`other:<reason>` (record + low confidence — always paired with
+`confidence` in the record).
 
 ## `loop_type`
 

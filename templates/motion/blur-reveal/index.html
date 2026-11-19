@@ -19,9 +19,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
    the one licensed exception; see recipe.md budget note. */
 .fr{max-width:420px;margin:0 auto 80px;overflow:hidden;border-radius:16px}
 .fr img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
-  filter:saturate(.3) blur(14px);transform:scale(1.08);
+  filter:saturate(.3) blur(14px) contrast(1);transform:scale(1.08);
   transition:filter 1.6s var(--ease-out),transform 1.6s var(--ease-out)}
-.fr.in img{filter:saturate(.85) contrast(1.02);transform:none}
+.fr.in img{filter:saturate(.85) blur(0) contrast(1.02);transform:none}
 @media (prefers-reduced-motion:reduce){
   .fr img{filter:none;transform:none;transition:none}
 }
@@ -30,13 +30,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="spacer"><p>scroll ↓ — one emotional photo moment</p></div>
 <figure class="fr" id="fr">
   <img alt="abstract portrait placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23c4c0b3'/%3E%3Ccircle cx='200' cy='120' r='60' fill='%2390a985'/%3E%3Crect x='140' y='190' width='120' height='90' rx='20' fill='%235e7355'/%3E%3C/svg%3E">
 </figure>
 <div class="spacer"></div>
 <script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
 const fr = document.getElementById('fr');
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) fr.classList.add('in');
 else new IntersectionObserver((es, io) => {

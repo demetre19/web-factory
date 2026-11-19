@@ -9,7 +9,7 @@ taxonomy:
   m_type: emotional
   purpose: [explanation]
   timing_class: loop-short
-  easing_family: ease-both
+  easing_family: ease-out
   loop_type: infinite
   complexity: composite
   js_dependency: none

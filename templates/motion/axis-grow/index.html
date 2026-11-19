@@ -33,7 +33,7 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div>
 <svg class="ag" viewBox="0 0 112 112" aria-hidden="true">
   <line class="rail" x1="28" y1="40" x2="86" y2="40"/>
@@ -45,5 +45,6 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </svg>
 <small>bars grow from the left edge, staggered — 6 s loop</small>
 </div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>

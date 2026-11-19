@@ -29,7 +29,7 @@ header p{color:var(--muted);max-width:70ch;margin:0}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" id="themebtn">light / dark</button>
 <header>
   <h1>Motion Recipe Catalogue</h1>
   <p>Library preview for the Web Factory design machinery — <b>not a site design</b>.
@@ -39,37 +39,59 @@ header p{color:var(--muted);max-width:70ch;margin:0}
 </header>
 <div class="grid" id="grid"></div>
 <script>
+// RECIPES is generated from each recipe.md frontmatter — regenerate
+// with docs/machinery/design/motion/gen-catalogue.py, don't hand-edit.
 const RECIPES = [
- ["draw-icon","SVG line-draw on in-view","in-view · transition · stroke-dashoffset · js:light"],
- ["draw-icon-loop","looping line-draw cycle (--pass)","loop · keyframes · phased · js:none"],
- ["pop-scan","scale-pop + gliding lens","loop · transform · fill-box · js:none"],
- ["axis-grow","staggered scaleX bars","loop · transform-scale · professional · js:none"],
- ["stamp-check","tint → draw → stamp confirm","loop · choreographed · js:none"],
- ["clip-conveyor","clip-windowed conveyor + ticker","loop · clipPath · phased · js:none"],
- ["scan-sweep","travelling scanner + pick flash","loop · waypoints · ease-both · js:none"],
- ["radar-pulse","expanding rings + converging signals","loop · scale+fade · js:none"],
- ["module-stack","staggered drop-in modules","loop · phased · backwards-fill · js:none"],
- ["snap-arrange","scatter-to-grid snap loop","loop · --sx/--sy/--sr · js:none"],
- ["write-lines","text write + stamp","loop · dasharray 32 · nth-child · js:none"],
- ["dash-ticker","pulse sweep along a path","loop · dashoffset · atomic · js:none"],
- ["word-cycler","handoff phrase rotation","loop · handoff · n×--pass · js:none"],
- ["progress-rig","@property-driven track fill","loop · custom-property · js:none"],
- ["backdrop-loops","ambient dial rotate + dash-flow","loop · ambient ≥60s · js:none"],
- ["reveal-fade","in-view fade + rise","in-view · transition · M.4 stagger · js:light"],
- ["line-mask-entrance","masked headline rise","load · mask+translate · js:light"],
- ["blur-reveal","photo focus pull","in-view · filter ⚠ layout-risk · js:light"],
- ["menu-cascade","staggered dropdown entrance","active · --i stagger · js:none"],
- ["scroll-draw","scroll-linked line + step quantisation","scroll-linked · rAF · sticky · js:light"],
+ ["axis-grow","staggered scaleX bars","loop · css-keyframes · loop-short · phased · compositor-safe · js:none"],
+ ["backdrop-loops","ambient rotate + dash-flow","loop · css-keyframes · loop-ambient · infinite · stroke-cheap · js:none"],
+ ["blur-reveal","photo \"focus\" reveal","in-view · css-transition · slow · none · paint-bound · js:light"],
+ ["clip-conveyor","windowed translate loop + dash ticker","loop · css-keyframes · loop-short · phased · stroke-cheap · js:none"],
+ ["dash-ticker","pulse line sweep","loop · css-keyframes · loop-short · infinite · stroke-cheap · js:none"],
+ ["draw-icon-loop","looping line-draw cycle","loop · css-keyframes · loop-short · phased · stroke-cheap · js:none"],
+ ["draw-icon","SVG line-draw entrance","in-view · css-transition · slow · none · stroke-cheap · js:light"],
+ ["line-mask-entrance","masked headline rise","load · css-transition · slow · none · compositor-safe · js:light"],
+ ["menu-cascade","staggered item entrance on open","active · css-keyframes · standard · none · compositor-safe · js:light"],
+ ["module-stack","staggered drop-in assembly","loop · css-keyframes · loop-short · phased · compositor-safe · js:none"],
+ ["pop-scan","scale-pop marker + gliding lens","loop · css-keyframes · loop-short · infinite · compositor-safe · js:none"],
+ ["progress-rig","@property-driven progress track","loop · css-keyframes · loop-short · infinite · compositor-safe · js:light"],
+ ["radar-pulse","expanding rings + converging signals","loop · css-keyframes · loop-short · phased · compositor-safe · js:none"],
+ ["reveal-fade","in-view fade + rise","in-view · css-transition · slow · none · compositor-safe · js:light"],
+ ["scan-sweep","travelling scanner + pick flash","loop · css-keyframes · loop-short · infinite · compositor-safe · js:none"],
+ ["scroll-draw","scroll-linked line + quantised steps","scroll-linked · rAF-loop · standard · none · stroke-cheap · js:light"],
+ ["snap-arrange","scatter-to-grid loop","loop · css-keyframes · loop-short · infinite · compositor-safe · js:none"],
+ ["stamp-check","confirm sequence (tint → draw → stamp)","loop · css-keyframes · loop-short · infinite · stroke-cheap · js:none"],
+ ["word-cycler","handoff phrase rotation","loop · css-keyframes · loop-short · handoff · compositor-safe · js:none"],
+ ["write-lines","staggered text-write + stamp","loop · css-keyframes · loop-short · infinite · stroke-cheap · js:none"],
 ];
 document.getElementById('grid').innerHTML = RECIPES.map(([id,desc,tags]) => `
   <div class="card">
     <iframe src="${id}/index.html" loading="lazy" title="${id} demo"></iframe>
     <div class="meta">
       <a href="${id}/index.html"><h2>${id}</h2></a>
-      <div class="tags">${desc.split('·').map(t=>'').join('')}${tags.split('·').map(t=>`<span class="tag${/layout-risk|filter|scroll-linked|rAF/.test(t)?' warn':''}">${t.trim()}</span>`).join('')}</div>
+      <div class="tags">${tags.split('·').map(t=>`<span class="tag${/paint-bound|layout-risk|scroll-linked|rAF-loop/.test(t)?' warn':''}">${t.trim()}</span>`).join('')}</div>
       <div class="js">${desc}</div>
     </div>
   </div>`).join('');
+// late-loading (lazy) iframes get the current theme on load too
+document.querySelectorAll('iframe').forEach(f=>f.addEventListener('load',()=>{
+  try{ f.contentWindow.postMessage({motionTheme:document.documentElement.dataset.theme}, '*'); }catch(e){}
+}));
+// theme toggle — effective scheme (OS when data-theme unset) +
+// broadcast to embedded demos so file:// iframes follow the parent.
+function applyTheme(v){
+  document.documentElement.dataset.theme = v;
+  document.querySelectorAll('iframe').forEach(f=>{
+    try{ f.contentWindow.postMessage({motionTheme:v}, '*'); }catch(e){}
+  });
+}
+function toggleTheme(){
+  const d=document.documentElement,
+        e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  applyTheme(e==='dark'?'light':'dark');
+}
+document.getElementById('themebtn').onclick=toggleTheme;
+applyTheme(document.documentElement.dataset.theme||
+  (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
 </script>
 </body>
 </html>

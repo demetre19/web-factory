@@ -7,11 +7,15 @@ animation (`animation-duration: 1e-05s`).
 
 - Site: Astro one-pager. **Zero animation JS libraries** — no GSAP,
   ScrollTrigger, Lottie, anime.js, Rive, canvas, video, or `<lottie-player>`.
-- **Zero SMIL** (`animate`/`animateTransform`/`animateMotion`) in the
-  shipped DOM — yet the inline script still removes SMIL nodes under
+- **86 SMIL elements** in the shipped DOM (71 `<animate>` +
+  15 `<animateMotion>` across 5 SVGs) — invisible to
+  `getComputedStyle`/`getAnimations()` audits; the inline script
+  *deletes* them under reduced-motion, which is why a computed-CSS
+  pass alone undercounts (corrected 2026-11-19, MOT-02).
+  See §9 for the full SMIL inventory.
   reduced-motion, i.e. templates are allowed to contain it.
-- All motion = CSS keyframes + CSS transitions, two `<script
-  type="module">` snippets (~2.1 KB total, unminified-equivalent).
+- All CSS-side motion = keyframes + transitions + two `<script
+  type="module">` snippets (~2.1 KB total). SMIL runs natively.
 - Theme: page is dark-on-parchment; tokens: `--sage-500:#90a985`,
   `--ease-out:cubic-bezier(.19,1,.22,1)`, `--ease-soft:cubic-bezier(.33,1,.68,1)`.
 
@@ -36,7 +40,7 @@ Under reduced-motion it adds `.in` to everything immediately.
 | Pattern | Mechanism | Params | Purpose |
 |---|---|---|---|
 | `.reveal` → `.in` | `opacity` + `translateY(28px)` transition | 1 s `--ease-out`, stagger `transition-delay:var(--d)` (0–160 ms) | in-view entrance, structural |
-| `.focus-reveal.in img` | `filter:saturate(.3) blur(14px)` → `saturate(.82) contrast(1.02)`, `scale(1.08)` → none | 1.6 s `--ease-out`, `--d` delay | founder-photo "focus" moment, emotional. **Note: animates `filter` — outside the M.7 transform/opacity budget** |
+| `.focus-reveal.in img` | `filter:saturate(.3) blur(14px)` → `saturate(.82) contrast(1.02)`, `scale(1.08)` → none | 1.6 s `--ease-out`, `--d` delay | founder-photo "focus" moment. **Defect found (MOT-04): the filter function lists don't match (`blur` vs `contrast` in different slots) so the filter interpolates *discretely* — it snaps ~150ms in; only `transform` actually transitions. Recipe `blur-reveal` ships the corrected matched-list version.** |
 | `#h1.lines-in .line-mask>span` | line-mask headline: `translateY(115%)` → none | 1.1 s `--ease-out`, `--d:120ms` per line | load-time hero entrance |
 | `.bd .draw` → `.bd.in .draw` | `stroke-dashoffset:1 → 0` transition, `pathLength="1"`, `stroke-dasharray:1` | 2.6 s `--ease-out`, `--late` stagger 0–0.6 s | backdrop paths "draw themselves" once when section enters |
 | `.pair.is-active > .bd-split .draw` | same draw transition, gated by active scroll-step | 2.2 s, delay .6 s | per-pair divider drawing during split scroll |
@@ -139,20 +143,58 @@ rAF-throttled scroll handler:
 
 ## Aggregate read
 
-- **13 animated SVGs** of 56; **26 defined keyframes** (`drift` used but
-  undefined — a shipped dead animation).
+Counts are derived from the sidecars — reproduce with:
+`python3 -c "import json;print(len(json.load(open('css-keyframes.json'))['keyframes']))"`
+and `grep -o '<animate\|<animateMotion' page.html | sort | uniq -c`.
+
+- **17 animated SVGs** of 56: 13 via CSS keyframes + 4 more via SMIL-only
+  (§9). **27 defined keyframes** (sidecar: 27 names; `drift` referenced
+  but undefined — a shipped dead animation).
 - Techniques in use: CSS keyframes on SVG internals (dominant), CSS
   transitions triggered by IO class-toggles, `pathLength`-normalized
   stroke drawing (loops + once), `stroke-dashoffset` marching dashes,
   clipPath-windowed translate loops, `transform-box:fill-box` scaling,
-  `@property` number interpolation, rAF scroll progress → dashoffset +
-  class quantisation.
+  `@property` number interpolation, **SMIL choreography** (`<animate>`
+  with keyTimes windows on `opacity/cx/width/fill-opacity/
+  stroke-dashoffset`, `<animateMotion>` path-following), rAF scroll
+  progress → dashoffset + class quantisation.
+- **Budget caveat (corrected)**: the SMIL `chain-svg`/`mult-svg`
+  diagrams animate `width` — a layout geometry attribute — and `cx` —
+  SVG layout geometry. "Everything animates transform/opacity/
+  stroke-dashoffset/fill-opacity" was wrong; the SMIL diagrams are
+  layout-bound on their main-thread paint path.
 - Trigger mix: `load` (h1), `in-view` (reveals, backdrops), `loop`
   (icons, backdrops, cycler, rig), `scroll-linked` (divider/pairs),
   `hover/click` (nav).
 - Personality read: **professional** (axis growth, no overshoot
   anywhere, `--ease-out/--ease-soft` only, zero elastic/bounce) with
   ambient-decoration loops kept to 1–2 per viewport and periods ≥6 s.
-- Performance: everything animates `transform`, `opacity`,
+- Performance: CSS-side, everything animates `transform`, `opacity`,
   `stroke-dashoffset`, `fill-opacity` — all cheap except
-  `.focus-reveal`'s `filter:blur(14px)` transition (paint cost, flagged).
+  `.focus-reveal`'s `filter:blur(14px)` transition (paint cost, flagged;
+  see §7 note — the filter actually *snaps* discretely because the
+  function lists don't match). SMIL diagrams animate `width`/`cx`
+  geometry — layout-bound, the site's one real perf smell.
+
+## §9 SMIL inventory (added 2026-11-19, MOT-02 correction)
+
+86 SMIL elements in 5 SVGs — all `repeatCount="indefinite"`, all
+keyTimes-window choreography on a shared period per diagram:
+
+| SVG | Context | SMIL | Attributes animated | Period |
+|---|---|---|---|---|
+| `circle-svg` | "Specialists fix their part…" (`.circle-fig`) | 2× `animateMotion` + 7× `<animate>` | `opacity` (7), orbit paths `M 548 300 A 188…` (begin 0/12s) | 24 s |
+| `chain-svg` ×2 | "A faster step doesn't make a faster business" (`.chain-sec`) | 21 + 23 `<animate>` | `opacity` (8), `cx` (8 — dots travel x=40→680 in staged hops), `width` (4 — bars grow 0→144/110px), `fill-opacity`, `stroke-dashoffset` | 10 s |
+| `mult-svg` | "Akrogon is one factory…" (`.mult-fig`) | 12× `animateMotion` + 20× `<animate>` | path-follow curves `keyPoints/keyTimes` (tokens flow out of a hub and back), `width` (6), `opacity` (12), `fill-opacity`, `stroke-dashoffset` | 12 s |
+| `circle-bg` | section backdrop | 1× `animateMotion` | orbit `dur=26s` | 26 s |
+
+Notes:
+- `chain-svg`/`mult-svg` animate **`width` and `cx`** — SVG layout
+  geometry. This is the layout-attribute animation the original study
+  wrongly said didn't exist. Flagged `layout-risk` in taxonomy; the
+  modern equivalent is `transform: scaleX` + `translateX`.
+- `animateMotion` is real **motion-path** animation (the only
+  path-following on the site) — CSS `offset-path` is the modern port.
+- These 4 SVGs were missed by the original audit because SMIL never
+  appears in `getComputedStyle` or `getAnimations()`; CLASSIFY-MOTION
+  Step C now requires an SMIL record pass.

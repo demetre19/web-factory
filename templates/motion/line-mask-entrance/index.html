@@ -32,7 +32,7 @@ button{margin-top:24px;padding:.5em 1.2em;border:1px solid var(--line);border-ra
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div>
   <h1 class="h" id="h1">
     <span class="mask"><span>Machines do the work.</span></span>
@@ -41,6 +41,7 @@ button{margin-top:24px;padding:.5em 1.2em;border:1px solid var(--line);border-ra
   <div style="text-align:center"><button id="replay">replay</button></div>
 </div>
 <script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
 // recipe JS — one class on load (rAF so transition paints), replay hook
 requestAnimationFrame(() => document.getElementById('h1').classList.add('lines-in'));
 document.getElementById('replay').onclick = () => {

@@ -26,21 +26,23 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--
 .fill{position:absolute;inset:0;background:var(--accent);border-radius:3px;
   transform-origin:0 50%;transform:scaleX(var(--p));
   animation:rig-fillfade var(--pass) linear infinite}
-.token{position:absolute;top:50%;left:calc(var(--p)*100%);width:12px;height:12px;
-  margin:-6px 0 0 -6px;border-radius:50%;background:var(--bg);
-  border:2px solid var(--accent);
+.token-wrap{position:absolute;top:50%;left:0;right:12px;height:0;
+  transform:translateX(calc(var(--p)*100%))}
+.token{position:absolute;left:0;top:0;width:12px;height:12px;margin-top:-6px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--accent);
   animation:rig-token var(--pass) linear infinite}
 @keyframes rig-fillfade{0%,90%{opacity:1}100%{opacity:0}}
 @keyframes rig-token{0%{opacity:0}3%,57%{opacity:1}62%,100%{opacity:0}}
 /* fallback when @property unsupported: JS adds .no-prop, transform keyframes take over */
 .no-prop .rig{animation:none}
 .no-prop .fill{transform:none;animation:rig-fb var(--pass) linear infinite}
-.no-prop .token{left:auto;animation:rig-tokfb var(--pass) linear infinite}
+.no-prop .token-wrap{transform:none;animation:rig-tokfb var(--pass) linear infinite}
 @keyframes rig-fb{0%{transform:scaleX(0)}60%,90%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
-@keyframes rig-tokfb{0%{left:0;opacity:0}3%,57%{opacity:1}62%,100%{left:100%;opacity:0}}
+@keyframes rig-tokfb{0%{transform:translateX(0)}60%,100%{transform:translateX(100%)}}
 @media (prefers-reduced-motion:reduce){
-  .rig,.fill,.token{animation:none!important}
-  .fill{transform:scaleX(1)}
+  .rig,.fill,.token,.token-wrap{animation:none!important}
+  .rig{--p:1}
+  .token-wrap{transform:none}
 }
 /* --------------------------------------------------------------------- */
 small{display:block;margin-top:16px;color:var(--muted)}
@@ -48,13 +50,14 @@ small{display:block;margin-top:16px;color:var(--muted)}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div class="demo">
   <p style="font:600 1.1rem/1.3 system-ui;margin:0">input <b style="color:var(--accent)">→</b> output</p>
-  <div class="rig"><span class="track"></span><span class="fill"></span><span class="token"></span></div>
+  <div class="rig"><span class="track"></span><span class="fill"></span><span class="token-wrap"><span class="token"></span></span></div>
   <small>one animated --p variable drives bar + token — 6 s loop</small>
 </div>
 <script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
 // @property detect — @supports cannot test at-rules; CSS.registerProperty
 // exists exactly when @property does. 1 line, js_dependency:light.
 if (!CSS.registerProperty) document.documentElement.classList.add('no-prop');

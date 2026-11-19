@@ -38,7 +38,7 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
 <div>
 <svg class="sw" viewBox="0 0 120 120" aria-hidden="true">
   <rect x="34" y="26" width="74" height="56" rx="4" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
@@ -51,5 +51,6 @@ small{display:block;margin-top:14px;color:var(--muted);text-align:center}
 </svg>
 <small>scanner sweeps the chart and flashes the chosen point — 9 s loop</small>
 </div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
 </body>
 </html>
