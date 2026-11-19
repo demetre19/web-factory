@@ -1788,6 +1788,20 @@
    "threshold": "contrast verified on semantic role pairs in both light and dark modes",
    "tier": "invariant",
    "wave": "w5"
+  },
+  "G.8": {
+   "check": "check_grid_tracks",
+   "mode": "script",
+   "threshold": "grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "M.15": {
+   "check": "check_js_cost",
+   "mode": "script",
+   "threshold": "interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification",
+   "tier": "invariant",
+   "wave": "w7"
   }
  }
 }

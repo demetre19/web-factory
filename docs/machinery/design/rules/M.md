@@ -189,6 +189,33 @@ Checked at DESIGN-PLAN review and build self-lint:
 - [ ] `prefers-reduced-motion` fallback present: 150ms crossfade, all
   spatial movement disabled
 
+### M.15 JS cost order — tamdoma-first, libraries as licences
+
+Every recipe in the bank carries `js_cost`:
+`css-only | minimal-js | library-required`. Selection order when
+building a section:
+
+1. **Pure CSS/SVG** — clip-path seams, transitions,
+   `:checked`/`:target`, scroll-snap, `<details>`/`<dialog>`,
+   native inputs. Always preferred.
+2. **Native HTML** — `<video>`, `<dialog>`, `<details>`,
+   `input[type=range|checkbox|date]` — interactivity at zero JS.
+3. **Minimal JS** — the 30 motion recipes, tab switchers,
+   counters — only when CSS can't express it.
+4. **Library** — only when the content type demands what nothing
+   else provides (interactive map → Leaflet; custom video controls
+   → Vidstack; interactive charts → Recharts) AND the plan carries
+   `licensed_libraries: [{name, justification}]` — the same
+   impossibility text M.14 demands for motion. Charts/maps prefer
+   static SVG/image whenever interactivity isn't essential (speed
+   budgets).
+
+A library in a render without a plan licence = FAIL. Receipt
+blocks carry `js_cost` (and `library` when the recipe is
+library-required) — the trace names what the page paid for. M.14
+still owns animation libraries; this rule owns the interactive
+class.
+
 ---
 
 ## Enforcement

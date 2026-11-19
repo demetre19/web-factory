@@ -312,7 +312,7 @@ PAGE_HTML = '''<!doctype html><html><head>
   <a class="btn-primary" href="/book">Book now</a>
   <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" data-content="c-def c-proof c-faq" class="card-grid py-24">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" data-cols="3" data-content="c-def c-proof c-faq" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
@@ -1154,6 +1154,10 @@ MUT = {
  'check_tailwind_derivation': mut(('REPL','TOKENS.json','#0055AA','#ABCDEF')),
  'check_token_layer': mut(('REPL','site/src/styles/global.css',
      '@theme inline {','@theme {')),
+ 'check_grid_tracks': mut(('REPL','site/dist/home/index.html',
+     'data-cols="3"','data-cols="4"')),
+ 'check_js_cost': mut(('SET','site/dist/_astro/map.js',
+     'import L from "leaflet"; L.map("m");')),
  'check_wireframe_lock': mut(('REPL','DESIGN-PLAN.md','wf_ref: "cards/index.html#d1:hero"','wf_ref: "cards/index.html#d9:nope"'),('REPL','DESIGN-PLAN.md','name: hero','name: hero-x')),
  'check_section_enums': mut(('REPL','DESIGN-PLAN.md','composition: cards-n','composition: bogus-grid')),
  'check_speech_acts': mut(('REPL','DESIGN-PLAN.md','rhetoric: [promise, proof, how, act]','rhetoric: [proof, how]')),

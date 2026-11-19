@@ -66,6 +66,14 @@ band, FAILs.
 Cards in one row share a single shell class/grid track; mixed shells
 in a grid = FAIL.
 
+### G.8 Track count is the `columns` allele
+
+A grid section renders the track count the genotype chose: every
+grid component (`cards-n`, feature/media/service/comparison grids)
+carries `data-cols` ∈ the `columns` allele set {1,2,3,4}, and a
+plan row declaring `columns` binds its block exactly. A card grid
+that ships 4 tracks under `columns: 3` restyled the wrong section.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

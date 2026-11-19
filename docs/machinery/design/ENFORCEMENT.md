@@ -207,5 +207,7 @@ closed set.
 | TK.2 | Semantic parity | invariant | script | `check_token_layer` | semantic var in :root without a .dark override | w5 |
 | TK.3 | Components bind semantics, never values | invariant | script | `check_token_layer` | raw hex in a component colour property, or a component referencing a --primitive-* var | w6 |
 | TK.4 | Contrast rides the semantic pairs in both modes | invariant | script | `check_contrast` | contrast verified on semantic role pairs in both light and dark modes | w5 |
+| G.8 | Track count is the `columns` allele | structural | script | `check_grid_tracks` | grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele | w7 |
+| M.15 | JS cost order | invariant | script | `check_js_cost` | interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification | w7 |
 
-198 rules — script 167, reviewer 30, operator 1; invariant 70, structural 51, stylistic 77.
+200 rules — script 169, reviewer 30, operator 1; invariant 71, structural 52, stylistic 77.

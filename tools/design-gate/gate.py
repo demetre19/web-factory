@@ -3397,6 +3397,86 @@ def check_motion_js_budget(ctx):
     return f
 
 
+# interactive (non-motion) libraries — M.14 owns animation libs;
+# these are the content-type exceptions (map/chart/video/…) that
+# may be licensed only with a written justification
+INTERACTIVE_LIBS = {
+    'leaflet', 'mapbox', 'maplibre', 'vidstack', 'plyr', 'recharts',
+    'chart.js', 'chartjs', 'd3', 'plotly', 'highcharts', 'swiper',
+    'embla', 'alpine', 'htmx', 'monaco', 'codemirror',
+}
+
+
+def check_js_cost(ctx):
+    """M.15 — tamdoma-first cost order: pure CSS/SVG > native HTML
+    elements > minimal JS > library. A library-required recipe or a
+    detected interactive lib needs a plan licence {name,
+    justification} — the same impossibility text M.14 demands for
+    motion. Receipt blocks carry js_cost from the recipe so the
+    trace names what the page paid for."""
+    f = []
+    lic_raw = ctx.site_block().get('licensed_libraries') or \
+        ctx.plan.get('licensed_libraries') or []
+    lic_raw = lic_raw if isinstance(lic_raw, list) else [lic_raw]
+    lic = {}
+    for x in lic_raw:
+        if isinstance(x, dict):
+            lic[str(x.get('name') or '').lower()] = x
+    # a licence for an interactive lib without justification is a
+    # defect even before anything renders
+    for name, licd in lic.items():
+        if name in INTERACTIVE_LIBS and not str(
+                licd.get('justification') or '').strip():
+            f.append(f'M.15 licence for "{name}" lacks a written '
+                     'justification — "why CSS/native cannot do '
+                     'this" is required text')
+    # recipe-side: a library-required/minimal-js recipe used without
+    # its cost recorded = the tier never happened
+    try:
+        rv = json.loads(ctx.read('REVIEW.json') or '{}')
+    except Exception:
+        rv = {}
+    for b in (rv.get('blocks') or []):
+        if not isinstance(b, dict):
+            continue
+        rid = str(b.get('recipe_id') or '')
+        topo = _recipe_topo_map().get(rid) or {}
+        cost = str(topo.get('js_cost') or 'css-only')
+        if cost != 'css-only':
+            if b.get('js_cost') != cost:
+                f.append(f'M.15 block {b.get("block_id")}: recipe '
+                         f'{rid} is {cost} but the receipt carries '
+                         f'js_cost={b.get("js_cost")!r} — the cost '
+                         'tier is part of the trace')
+            if cost == 'library-required':
+                libname = str(b.get('library') or '').lower()
+                if libname not in lic:
+                    f.append(f'M.15 block {b.get("block_id")}: '
+                             f'library-required recipe {rid} '
+                             f'(lib {libname or "?"}) without a '
+                             'licensed_libraries entry — a library '
+                             'is a defect until justified in the '
+                             'plan')
+    # render-side: any detected interactive lib must be licensed
+    dist = os.path.join(ctx.site, 'dist')
+    for dp, _, fns in os.walk(dist) if os.path.isdir(dist) else []:
+        for fn in fns:
+            if not fn.endswith(('.js', '.mjs', '.html')):
+                continue
+            p = os.path.join(dp, fn)
+            t = open(p, encoding='utf-8', errors='replace').read()
+            low = fn.lower() + ' ' + t.lower()
+            lib = next((x for x in INTERACTIVE_LIBS
+                        if re.search(
+                            rf'["\'\s/>]({re.escape(x)})'
+                            rf'[\'"\s/.<>-]', low)), None)
+            if lib and lib not in lic:
+                f.append(f'M.15 {fn}: interactive library "{lib}" '
+                         'without a plan licence — CSS/native first; '
+                         'a library ships only with a written '
+                         'justification in DESIGN-PLAN')
+    return f
+
 def check_auto_grid(ctx):
     """G.5 — collections use auto-fit minmax grids; no narrow scroll
     rails that are not declared full-bleed."""
@@ -3454,6 +3534,62 @@ def check_auto_grid(ctx):
                 f.append(f'G.5 {name} sec {comp}: a sideways card rail '
                          'on desktop — wrap into an auto-fit grid or '
                          'declare full-bleed')
+    return f
+
+
+# the components that render as multi-track grids — the `columns`
+# genotype allele (1–4) is the only legal track-count source
+GRID_COMPS = {'cards-n', 'feature-grid', 'gallery-grid', 'logo-wall',
+              'service-grid', 'card-grid', 'media-grid',
+              'comparison-grid'}
+
+
+def check_grid_tracks(ctx):
+    """G.8 — the `columns` genotype allele bounds the rendered grid:
+    a grid block carries data-cols ∈ the allele set; a plan row that
+    declares columns binds its block exactly. A cards-n that renders
+    4 tracks under columns:3 restyled the wrong section."""
+    f = []
+    fp = None
+    for cand in ('site/dist/home/index.html',
+                 'site/src/pages/home.astro'):
+        p = ctx.find(cand)
+        if p:
+            fp = p
+            break
+    if not fp:
+        return []
+    txt = open(fp, encoding='utf-8', errors='replace').read()
+    _, gt = _genotype(ctx.plan)
+    gene_cols = str((gt or {}).get('columns') or '')
+    alleles = {'1', '2', '3', '4'}
+    plan_cols = {}
+    for slug, row in ctx.rows():
+        name = str((row or {}).get('name') or '')
+        if (row or {}).get('columns') not in (None, ''):
+            plan_cols[name] = str(row.get('columns'))
+    for sec, attrs in re.findall(
+            r'<(?:section|nav)[^>]*data-sec="([^"]+)"([^>]*)>', txt):
+        comp = re.search(r'data-comp="([^"]+)"', attrs)
+        if not comp or comp.group(1) not in GRID_COMPS:
+            continue
+        m = re.search(r'data-cols="(\d+)"', attrs)
+        if not m:
+            f.append(f'G.8 block {sec}: grid comp '
+                     f'{comp.group(1)} carries no data-cols — the '
+                     'track count is the columns allele, declared '
+                     'not implied')
+            continue
+        cols = m.group(1)
+        if cols not in alleles:
+            f.append(f'G.8 block {sec}: data-cols={cols} outside '
+                     f'the columns allele set {sorted(alleles)}')
+            continue
+        want = plan_cols.get(sec) or gene_cols
+        if want and cols != want:
+            f.append(f'G.8 block {sec}: data-cols={cols} != '
+                     f'columns {want} — the grid restyled a track '
+                     'count the genotype did not choose')
     return f
 
 
@@ -10907,7 +11043,8 @@ WAVE_CHECKS = {
            check_heading_pattern, check_equal_cards, check_dark_media,
            check_logo, check_accent_surfaces, check_landmarks,
            check_sticky_offset, check_footer_structure, check_meta,
-           check_dark_mode, check_dark_toggle, check_astro_build] \
+           check_dark_mode, check_dark_toggle, check_astro_build,
+           check_js_cost, check_grid_tracks] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,
            check_style_review, check_novelty, check_review_modes,
