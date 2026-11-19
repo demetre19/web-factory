@@ -96,9 +96,12 @@ correct scaffold (don't fix the old lane).
   _strip_media gate fix (media-gated repeat(2) splits legit);
   P.13 min-width media-query false-positive fixed. 3 emit+builds
   green; w7 remainder = wave-order + P.9 operator checklist only.
-  OPEN: F4 fixture hand-authored components/instances/dist (the
-  deeper fixture-cheat — needs _comp_copy/_instance as fixture
-  source); F8-F10 minor.
+  F4 DONE (bacba6e2): fixture components/instances/dist now real
+  producer output — _comp_copy exemplars + _instance + real astro
+  build; ~45 MUT anchors re-targeted at emitted markup + hashed
+  _astro assets via new REPLGLOB/DELGLOB ops; check fixes: O.1
+  serializer norm, SB.2 doc-comment FP, I.10 ornament-svg exempt.
+  Redteam 31/31 caught. F8-F10 DONE (02844def).
   F7 DONE: assemble --fine = three ±1-step stylistic-knob nudges of
   the w4 pick via the SAME assemble_variants emitter (no parallel
   HTML); pairwise ≥3-knob diff patterns verified at emit; fixture
