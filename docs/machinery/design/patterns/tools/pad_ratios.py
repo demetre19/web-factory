@@ -331,7 +331,8 @@ def measure(path, rec):
         if vgap > 10 and gutter > 4:
             rows.append({'type': 'section', 'pad_v': vgap,
                          'pad_h': gutter, 'src': path})
-    cache.put('padding', key, rows)
+    cache.put('padding', key,
+              json.loads(json.dumps(rows, default=float)))
     return rows
 
 

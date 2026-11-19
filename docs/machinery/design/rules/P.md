@@ -182,8 +182,17 @@ plan is a refuse, not an improvisation.
 
 ### P.16 Head metadata is complete
 
+
 Every built page ships favicon link, meta description, and
 `og:title`/`og:description`/`og:image`.
+
+### P.17 Nothing outside the pipeline
+
+Every operator-facing artifact is produced by `run.py` for a wave and
+bound in `GATES.json.artifacts` (relpath, wave, sha256, gate pass).
+`python3 tools/design-gate/gate.py receipt <file>` validates the
+binding; a preview or picker without a receipt is banned — the
+orchestrator never opens it.
 
 ## Enforcement
 

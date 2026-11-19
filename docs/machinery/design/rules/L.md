@@ -169,6 +169,15 @@ surface.
 A media block never sits at half width beside an empty column. Splits
 pair media with content of comparable height, or go full width.
 
+### L.17 Breathing room
+
+Content sections pad ≥ `--section-space-m` (hero excepted per R.10);
+header group → body gap ≥ `--space-l`/`--container-gap`; distinct
+groups inside a section ≥ `--space-l` apart; card grids `gap` ≥
+`--space-m`; whitespace share ≥ the type's canon P25
+(`CANON-PADDING.json`); max one dense group per viewport. Dumped
+content with no separation is a FAIL.
+
 ### L.16 Logo size + clear space
 
 The logo carries an explicit size and clear space ≥ its own height —

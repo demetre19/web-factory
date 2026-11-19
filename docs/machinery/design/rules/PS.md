@@ -83,6 +83,17 @@ heading-less content sections = FAIL.
 Every page ships a skip-link, `<main>`, `<nav>` and `<footer>`
 landmarks, and a sane focus order.
 
+### PS.11 One idea, one section — intent segmentation
+
+Every H2 in the heading vector opens its own `Section` — own surface,
+own ACSS section padding, own `data-sec` + `data-intent`. The intent
+is the heading's answer type: `{definition, scope, audience, process,
+cost, duration, compliance, coverage, related, faq, proof, cta}`.
+Two headings may merge only inside a declared `group` of the same
+intent; different intents (process vs cost) can never share a
+section. Intent boundaries are visible: new section, alternating
+surface, full section padding.
+
 ### PS.10 Footer structure
 
 The footer carries secondary nav links, a contact block, and a legal

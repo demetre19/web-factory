@@ -2133,6 +2133,145 @@ def check_meta(ctx):
     return f
 
 
+SECTION_INTENTS = {
+    'definition', 'scope', 'audience', 'process', 'cost', 'duration',
+    'compliance', 'coverage', 'related', 'faq', 'proof', 'cta',
+    'hero', 'chrome'}
+
+
+def check_intent_sections(ctx):
+    """PS.11 — one idea = one section: every plan row carries a closed
+    `intent` derived from the heading's answer type; headings of
+    different intent can never share a section; merging needs a
+    declared `group` of the same intent. Rendered: every content
+    section carries data-intent and a single h2 sits first."""
+    f = []
+    if _wave_ge(ctx, 'w3'):
+        groups = {}
+        h2_units, units = 0, set()
+        for slug, r in ctx.rows():
+            intent = str(r.get('intent') or '')
+            if not intent:
+                f.append(f'PS.11 {slug}:{r.get("name")} has no intent '
+                         f'— derive it from the heading answer type '
+                         f'{sorted(SECTION_INTENTS)}')
+            elif intent not in SECTION_INTENTS:
+                f.append(f'PS.11 {slug}:{r.get("name")} intent '
+                         f'"{intent}" ∉ {sorted(SECTION_INTENTS)}')
+            gid = r.get('group')
+            if gid:
+                if gid in groups and groups[gid][0] != intent:
+                    f.append(f'PS.11 {slug}:{r.get("name")} group '
+                             f'{gid} mixes intents '
+                             f'{groups[gid][0]}/{intent} — different '
+                             'intents can never share a section')
+                groups.setdefault(gid, (intent, r.get('name')))
+                units.add('g:' + str(gid))
+            else:
+                units.add(r.get('name'))
+            vec = r.get('vector') or []
+            h2_units += len(vec)
+        if h2_units > len(units):
+            f.append(f'PS.11 {h2_units} vector headings vs '
+                     f'{len(units)} section units — every H2 opens its '
+                     'own Section unless a same-intent group is '
+                     'declared')
+    if _wave_ge(ctx, 'w7'):
+        for p, txt in ctx.page_htmls():
+            name = os.path.basename(p)
+            for m in re.finditer(
+                    r'<(section)[^>]*data-sec="([^"]*)"([^>]*)>'
+                    r'(.*?)</section>', txt, re.S):
+                sec, attrs, body = m.group(2), m.group(3), m.group(4)
+                if sec in ('nav', 'footer'):
+                    continue
+                sint = re.search(r'data-intent="([^"]+)"', attrs)
+                if not sint:
+                    f.append(f'PS.11 {name} sec {sec}: no data-intent '
+                             '— the intent must be visible in markup')
+                h2s = re.findall(r'<h([12])\b[^>]*data-intent="([^"]*)"',
+                                 body) + [
+                                 (t, sint.group(1) if sint else '')
+                                 for t in re.findall(
+                                     r'<h([12])\b(?![^>]*data-intent)',
+                                     body)]
+                if len(re.findall(r'<h2\b', body)) > 1 and \
+                        'data-group' not in attrs:
+                    ints = {i for _, i in h2s}
+                    f.append(f'PS.11 {name} sec {sec}: '
+                             f'{len(re.findall(r"<h2\\b", body))} h2s '
+                             f'(intents {sorted(ints)}) share one '
+                             'section — a merge needs a declared '
+                             'same-intent group')
+    return f
+
+
+def check_breathing(ctx):
+    """L.17 — breathing room: content sections pad ≥ section-space-m;
+    header group → body gap ≥ space-l; card grids gap ≥ space-m;
+    whitespace share ≥ the type's canon P25; ≤1 dense group per
+    viewport."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    try:
+        canon = json.loads(ctx.read('CANON-PADDING.json') or '{}')
+    except Exception:
+        canon = {}
+    specs = canon.get('components') or {}
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        dense_run = 0
+        for m in re.finditer(
+                r'<section[^>]*data-sec="([^"]*)"([^>]*)>(.*?)'
+                r'</section>', txt, re.S):
+            sec, attrs, body = m.groups()
+            if sec in ('nav', 'footer'):
+                continue
+            cls = re.search(r'class="([^"]*)"', attrs)
+            cls = cls.group(1) if cls else ''
+            if sec != 'hero':
+                pm = re.search(r'\bpy-(\d+)', cls)
+                if not pm or int(pm.group(1)) * 4 < 96:
+                    f.append(f'L.17 {name} sec {sec}: block padding '
+                             '< section-space-m (~96px) — cramped '
+                             'sections get no air')
+            inner_gaps = [int(g) for g in re.findall(
+                r'\b(?:gap|space-y|mb|mt)-(\d+)', body)]
+            has_head_body = re.search(r'<h[12]\b', body) and \
+                re.search(r'<(?:p|img|form|ul|div)\b', body)
+            if has_head_body and inner_gaps and \
+                    max(inner_gaps) * 4 < 32:
+                f.append(f'L.17 {name} sec {sec}: header→body gap '
+                         '< space-l (~32px) — the group reads jammed')
+            if 'card-grid' in cls or re.search(r'grid\b', cls):
+                gm = re.search(r'\bgap-(\d+)', cls) or re.search(
+                    r'\bgap-(\d+)', body)
+                if gm and int(gm.group(1)) * 4 < 24:
+                    f.append(f'L.17 {name} sec {sec}: grid gap '
+                             '< space-m (~24px)')
+            spec = specs.get(re.search(
+                r'data-comp="([^"]*)"', attrs).group(1)
+                if re.search(r'data-comp="([^"]*)"', attrs) else '')
+            if spec and spec.get('whitespace_p25') is not None:
+                text = len(re.sub(r'<[^>]+>', '', body))
+                total = max(len(body), 1)
+                share = 1 - text / total
+                if share < spec['whitespace_p25']:
+                    f.append(f'L.17 {name} sec {sec}: whitespace share '
+                             f'{share:.0%} < canon P25 '
+                             f"{spec['whitespace_p25']:.0%} for its "
+                             'type')
+            if 'compact' in cls:
+                dense_run += 1
+                if dense_run > 1:
+                    f.append(f'L.17 {name}: dense groups stack — max '
+                             'one dense group per viewport')
+            else:
+                dense_run = 0
+    return f
+
+
 def check_mobile_cta(ctx):
     """R.9 — below tablet, primary/secondary CTAs are full-width,
     stacked, centred, min-height 48."""
@@ -4851,6 +4990,73 @@ def _apply_declared_breaks(ctx, fails):
         return fails
     return [m for m in fails if not _break_covers(scopes, m)]
 
+
+ARTIFACTS = {
+    'w3': ['preview/layouts.html'],
+    'w4': ['preview/variants.html'],
+    'w5': ['preview/system.html'],
+    'w7': ['SPEC.md', 'ASSEMBLED.md'],
+    'w8': ['SCORECARD.json', 'REVIEW.json'],
+}
+
+
+def write_receipt(ctx, relpath):
+    """Bind an artifact to the passing wave in GATES.json — the
+    NOTHING-OUTSIDE-THE-PIPELINE receipt (P.17)."""
+    g = load_gates(ctx)
+    fp = os.path.join(ctx.dir, relpath)
+    if not os.path.isfile(fp):
+        return
+    sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest()
+    arts = g.setdefault('artifacts', {})
+    arts[relpath] = {'wave': ctx.wave, 'sha256': sha,
+                     'gate_pass': bool((g.get(ctx.wave) or {})
+                                       .get('pass'))}
+    json.dump(g, open(ctx.gates_path, 'w'), indent=1)
+
+
+def check_receipt(path):
+    """Validate an artifact's gate receipt — refuse unreceipted files."""
+    ap = os.path.abspath(path)
+    d = os.path.dirname(ap)
+    gp = None
+    probe = d
+    while probe != os.path.dirname(probe):
+        cand = os.path.join(probe, 'GATES.json')
+        if os.path.isfile(cand):
+            gp = cand
+            break
+        probe = os.path.dirname(probe)
+    if not gp:
+        print(f'receipt FAIL {path}: not inside a pipeline '
+              '(no GATES.json) — nothing outside the pipeline')
+        return 1
+    g = json.load(open(gp))
+    rel = os.path.relpath(ap, os.path.dirname(gp))
+    arts = g.get('artifacts') or {}
+    rec = arts.get(rel)
+    fails = []
+    if not rec:
+        fails.append(f'{rel}: no receipt — the orchestrator must not '
+                     'show artifacts the gate has not bound')
+    else:
+        sha = hashlib.sha256(open(ap, 'rb').read()).hexdigest() \
+            if os.path.isfile(ap) else None
+        if sha != rec.get('sha256'):
+            fails.append(f'{rel}: file changed since its receipt — '
+                         're-run the wave')
+        wv = rec.get('wave')
+        if not (g.get(wv) or {}).get('pass'):
+            fails.append(f'{rel}: bound wave {wv} has no PASS entry')
+    if fails:
+        for x in fails:
+            print('receipt FAIL', x)
+        return 1
+    print(f'receipt PASS {rel} — wave {rec["wave"]}, '
+          f'sha {rec["sha256"][:12]}')
+    return 0
+
+
 def load_gates(ctx):
     if os.path.isfile(ctx.gates_path):
         try:
@@ -4874,6 +5080,9 @@ def write_gate(ctx, fails, approve):
         'ts': __import__('datetime').datetime.now().isoformat(
             timespec='seconds'),
     })
+    for rel in ARTIFACTS.get(ctx.wave, []):
+        if not fails:
+            write_receipt(ctx, rel)
     if ctx.wave in ('w3', 'w4') and getattr(ctx.args, 'design', None):
         entry['design'] = ctx.design_id()
     # never trust a stored flag: approval is re-verified against the
@@ -5493,7 +5702,8 @@ def main():
     ap.add_argument('wave', choices=list(WAVE_CHECKS) +
                     ['coverage', 'selftest', 'consistency', 'graph',
                      'score', 'segment', 'wildcard', 'enforcement',
-                     'contracts', 'section', 'dna', 'round'])
+                     'contracts', 'section', 'dna', 'round',
+                     'receipt'])
     ap.add_argument('pipeline_dir', nargs='?', default=None,
                     help='pipeline dir — REQUIRED for every pipeline '
                          'command (no silent cwd writes)')
@@ -5534,6 +5744,8 @@ def main():
         return cmd_dna(a.pipeline_dir)
     if a.wave == 'round':
         return cmd_round(a)
+    if a.wave == 'receipt':
+        return check_receipt(a.pipeline_dir)
     if a.wave == 'contracts':
         return cmd_contracts(a.pipeline_dir)
     if a.wave == 'section':
@@ -6586,7 +6798,7 @@ WAVE_CHECKS = {
            check_genotype, check_burst, check_declared_breaks,
            check_wildcard, check_section_contracts,
            check_layout_distinct, check_canon_trace,
-           check_intent_deviation],
+           check_intent_deviation, check_intent_sections],
     'w4': [check_direction_axes, check_genotype,
            check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
@@ -6611,7 +6823,8 @@ WAVE_CHECKS = {
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
            check_canon_trace, check_auto_grid, check_surface_rhythm,
-           check_dead_columns, check_hero_fold, check_canon_padding,
+           check_dead_columns, check_intent_sections, check_hero_fold,
+           check_canon_padding, check_breathing,
            check_primary_cta, check_interaction_states, check_forms,
            check_heading_pattern, check_equal_cards, check_dark_media,
            check_logo, check_accent_surfaces, check_landmarks,

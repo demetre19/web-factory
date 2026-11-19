@@ -107,11 +107,11 @@ pages:
     idea: A fixture page that proves the gates.
     rhetoric: [promise, proof, how, act]
     sections:
-      - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, refs: [mobbin-abc123, pattern-nav-bar]}
-      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, refs: [mobbin-abc124, mobbin-abc125, pattern-split-media]}
-      - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, refs: [mobbin-def456, mobbin-def457, pattern-cards-n], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, refs: [mobbin-abc123, pattern-form-panel]}
-      - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, refs: [mobbin-def456, pattern-footer-bar]}
+      - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123, pattern-nav-bar]}
+      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125, pattern-split-media]}
+      - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457, pattern-cards-n], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123, pattern-form-panel]}
+      - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456, pattern-footer-bar]}
 ```
 '''
 
@@ -152,11 +152,11 @@ SPEC = '''# SPEC — /fixture/
 ```yaml
 page: home
 sections:
-  - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, refs: [mobbin-abc123, pattern-nav-bar]}
-  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, refs: [mobbin-abc124, mobbin-abc125, pattern-split-media]}
-  - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, refs: [mobbin-def456, mobbin-def457, pattern-cards-n], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-  - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, refs: [mobbin-abc123, pattern-form-panel]}
-  - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, refs: [mobbin-def456, pattern-footer-bar]}
+  - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123, pattern-nav-bar]}
+  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125, pattern-split-media]}
+  - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457, pattern-cards-n], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+  - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123, pattern-form-panel]}
+  - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456, pattern-footer-bar]}
 ```
 '''
 
@@ -268,18 +268,18 @@ PAGE_HTML = '''<!doctype html><html><head>
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
 </nav>
 <main id="main">
-<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" class="sec-band py-16">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" class="sec-band py-16">
   <h1 class="text-fluid-0">Testing Site</h1>
   <p>Testing is the thing.</p>
   <a class="btn-primary" href="/book">Book now</a>
   <img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim">
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" class="card-grid py-16">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="definition" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
 </section>
-<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" class="sec-band inverse">
+<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="cta" class="sec-band inverse py-24">
   <h2 class="text-fluid-0">Book now</h2>
   <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
 </section>
@@ -1112,7 +1112,14 @@ MUT = {
      '.card-grid { display: grid; gap: var(--space-4); }',
      '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }')),
  'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
-     'class="card-grid py-16"','class="sec-band"')),
+     'class="card-grid py-24"','class="sec-band"')),
+ 'check_intent_sections': mut(('REPL','DESIGN-PLAN.md',
+     'intent: definition,','intent: process, group: g1,'),
+     ('REPL','DESIGN-PLAN.md','intent: cta,','intent: cost, group: g1,'),
+     ('REPL','site/dist/home/index.html','data-intent="definition"',
+      'data-x="definition"')),
+ 'check_breathing': mut(('REPL','site/dist/home/index.html',
+     'class="card-grid py-24"','class="card-grid py-4"')),
  'check_dead_columns': mut(('REPL','site/dist/home/index.html',
      '<img src="hero.webp"','<div></div><img src="hero.webp"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),

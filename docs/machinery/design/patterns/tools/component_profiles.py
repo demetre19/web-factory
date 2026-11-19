@@ -91,10 +91,14 @@ def shadow_delta(a, box):
     L = lum(a)
     y0, y1, x0, x1 = box
     skirt = []
-    if y1 + 6 < a.shape[0]:
-        skirt.append(L[y1:y1 + 6, x0:x1].mean())
-    if x1 + 6 < a.shape[1]:
-        skirt.append(L[y0:y1, x1:x1 + 6].mean())
+    if y1 + 6 < a.shape[0] and y1 > y0 and x1 > x0:
+        v = L[y1:y1 + 6, x0:x1]
+        if v.size:
+            skirt.append(float(v.mean()))
+    if x1 + 6 < a.shape[1] and y1 > y0:
+        v = L[y0:y1, x1:x1 + 6]
+        if v.size:
+            skirt.append(float(v.mean()))
     inside = L[y0:y1, x0:x1].mean() if y1 > y0 else 128
     if not skirt:
         return 0.0
@@ -232,7 +236,8 @@ def measure(path, rec):
         if vgap > 10 and gutter > 4:
             out.append({'type': 'section', 'pad_v': vgap,
                         'pad_h': gutter, 'src': path, 'n_ctas': n_cta})
-    cache.put('component', key, out)
+    cache.put('component', key,
+              json.loads(json.dumps(out, default=float)))
     return out
 
 

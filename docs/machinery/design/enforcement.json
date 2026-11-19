@@ -221,6 +221,12 @@
   ],
   "check_dark_media": [
    "V.9"
+  ],
+  "check_intent_sections": [
+   "PS.11"
+  ],
+  "check_breathing": [
+   "L.17"
   ]
  },
  "graph": {
@@ -1457,6 +1463,28 @@
    "mode": "script",
    "threshold": "undimmed media in dark mode",
    "tier": "stylistic",
+   "wave": "w7"
+  },
+  "PS.11": {
+   "check": "check_intent_sections",
+   "mode": "script",
+   "threshold": "rows share a section across intents / h2 count > section units / missing data-intent",
+   "tier": "invariant",
+   "wave": "w3"
+  },
+  "P.17": {
+   "check": null,
+   "approval": "receipt",
+   "mode": "operator",
+   "threshold": "artifact without a bound all-pass receipt in GATES.json \u2014 gate.py receipt <file>",
+   "tier": "invariant",
+   "wave": "w*"
+  },
+  "L.17": {
+   "check": "check_breathing",
+   "mode": "script",
+   "threshold": "padding < section-space-m / header\u2192body < space-l / grid gap < space-m / whitespace < canon P25",
+   "tier": "structural",
    "wave": "w7"
   }
  }

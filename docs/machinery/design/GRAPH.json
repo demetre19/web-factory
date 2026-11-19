@@ -1070,6 +1070,11 @@
    "type": "rule",
    "file": "rules/PS.md"
   },
+  "PS.11": {
+   "id": "PS.11",
+   "type": "rule",
+   "file": "rules/PS.md"
+  },
   "PS.10": {
    "id": "PS.10",
    "type": "rule",
@@ -1230,6 +1235,11 @@
    "type": "rule",
    "file": "rules/P.md"
   },
+  "P.17": {
+   "id": "P.17",
+   "type": "rule",
+   "file": "rules/P.md"
+  },
   "L.1": {
    "id": "L.1",
    "type": "rule",
@@ -1302,6 +1312,11 @@
   },
   "L.15": {
    "id": "L.15",
+   "type": "rule",
+   "file": "rules/L.md"
+  },
+  "L.17": {
+   "id": "L.17",
    "type": "rule",
    "file": "rules/L.md"
   },
@@ -2212,6 +2227,14 @@
   },
   "check_dark_media": {
    "id": "check_dark_media",
+   "type": "check"
+  },
+  "check_intent_sections": {
+   "id": "check_intent_sections",
+   "type": "check"
+  },
+  "check_breathing": {
+   "id": "check_breathing",
    "type": "check"
   },
   "w0": {
@@ -17229,6 +17252,11 @@
   },
   {
    "from": "rules-PS",
+   "to": "PS.11",
+   "type": "contains"
+  },
+  {
+   "from": "rules-PS",
    "to": "PS.10",
    "type": "contains"
   },
@@ -17403,6 +17431,11 @@
    "type": "contains"
   },
   {
+   "from": "rules-P",
+   "to": "P.17",
+   "type": "contains"
+  },
+  {
    "from": "design-index",
    "to": "rules-L",
    "type": "rules"
@@ -17480,6 +17513,11 @@
   {
    "from": "rules-L",
    "to": "L.15",
+   "type": "contains"
+  },
+  {
+   "from": "rules-L",
+   "to": "L.17",
    "type": "contains"
   },
   {
@@ -19628,6 +19666,26 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_intent_sections",
+   "to": "PS.11",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "PS.11",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_breathing",
+   "to": "L.17",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "L.17",
+   "type": "enforces_at"
+  },
+  {
    "from": "design-index",
    "to": "w0",
    "type": "sequences"
@@ -19679,17 +19737,32 @@
   },
   {
    "from": "card-w7",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "V.3",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "R.1",
+   "to": "R.3",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "PS.6",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "M.6",
    "type": "loads"
   },
   {
@@ -19704,17 +19777,12 @@
   },
   {
    "from": "card-w7",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.6",
    "type": "loads"
   },
   {
@@ -19724,27 +19792,17 @@
   },
   {
    "from": "card-w7",
-   "to": "PS.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "R.5",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "E.2",
+   "to": "R.1",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "M.6",
+   "to": "PS.1",
    "type": "loads"
   },
   {
@@ -19864,12 +19922,22 @@
   },
   {
    "from": "w7",
+   "to": "check_intent_sections",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
    "to": "check_hero_fold",
    "type": "gated_by"
   },
   {
    "from": "w7",
    "to": "check_canon_padding",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
+   "to": "check_breathing",
    "type": "gated_by"
   },
   {
@@ -19999,12 +20067,17 @@
   },
   {
    "from": "card-w5",
-   "to": "C.3",
+   "to": "T.3",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "G.3",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.3",
    "type": "loads"
   },
   {
@@ -20014,7 +20087,17 @@
   },
   {
    "from": "card-w5",
-   "to": "W.2",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.1",
    "type": "loads"
   },
   {
@@ -20024,17 +20107,92 @@
   },
   {
    "from": "card-w5",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
    "to": "C.7",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "R.1",
+   "to": "G.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "R.3",
+   "to": "M.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.1",
    "type": "loads"
   },
   {
@@ -20049,67 +20207,7 @@
   },
   {
    "from": "card-w5",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "L.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.6",
+   "to": "G.1",
    "type": "loads"
   },
   {
@@ -20119,37 +20217,7 @@
   },
   {
    "from": "card-w5",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "M.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.3",
+   "to": "C.3",
    "type": "loads"
   },
   {
@@ -20289,17 +20357,7 @@
   },
   {
    "from": "card-w4",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "G.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "C.2",
+   "to": "T.3",
    "type": "loads"
   },
   {
@@ -20309,12 +20367,22 @@
   },
   {
    "from": "card-w4",
+   "to": "S.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
    "to": "M.1",
    "type": "loads"
   },
   {
    "from": "card-w4",
-   "to": "T.3",
+   "to": "G.3",
    "type": "loads"
   },
   {
@@ -20399,11 +20467,6 @@
   },
   {
    "from": "card-w1",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
    "to": "T.8",
    "type": "loads"
   },
@@ -20414,12 +20477,17 @@
   },
   {
    "from": "card-w1",
-   "to": "E.4",
+   "to": "V.6",
    "type": "loads"
   },
   {
    "from": "card-w1",
    "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
+   "to": "E.4",
    "type": "loads"
   },
   {
@@ -20494,17 +20562,7 @@
   },
   {
    "from": "card-w2",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.8",
+   "to": "E.2",
    "type": "loads"
   },
   {
@@ -20514,7 +20572,12 @@
   },
   {
    "from": "card-w2",
-   "to": "W.7",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -20524,7 +20587,12 @@
   },
   {
    "from": "card-w2",
-   "to": "E.2",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.8",
    "type": "loads"
   },
   {
@@ -20564,32 +20632,12 @@
   },
   {
    "from": "card-w6",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
    "to": "I.3",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "R.6",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -20604,6 +20652,11 @@
   },
   {
    "from": "card-w6",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
    "to": "S.2",
    "type": "loads"
   },
@@ -20614,17 +20667,22 @@
   },
   {
    "from": "card-w6",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
    "to": "G.1",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "R.5",
+   "to": "R.6",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "W.4",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -20634,7 +20692,17 @@
   },
   {
    "from": "card-w6",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
    "to": "I.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -20719,47 +20787,7 @@
   },
   {
    "from": "card-w8",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
+   "to": "S.5",
    "type": "loads"
   },
   {
@@ -20769,67 +20797,7 @@
   },
   {
    "from": "card-w8",
-   "to": "T.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.4",
+   "to": "S.7",
    "type": "loads"
   },
   {
@@ -20839,42 +20807,17 @@
   },
   {
    "from": "card-w8",
-   "to": "S.4",
+   "to": "V.6",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "L.9",
+   "to": "W.1",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "S.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
+   "to": "I.4",
    "type": "loads"
   },
   {
@@ -20884,37 +20827,12 @@
   },
   {
    "from": "card-w8",
-   "to": "C.4",
+   "to": "W.9",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.5",
+   "to": "L.5",
    "type": "loads"
   },
   {
@@ -20924,37 +20842,37 @@
   },
   {
    "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "V.1",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "M.3",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
    "type": "loads"
   },
   {
@@ -20964,7 +20882,12 @@
   },
   {
    "from": "card-w8",
-   "to": "R.7",
+   "to": "L.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.7",
    "type": "loads"
   },
   {
@@ -20974,7 +20897,152 @@
   },
   {
    "from": "card-w8",
-   "to": "L.6",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.10",
    "type": "loads"
   },
   {
@@ -21034,12 +21102,7 @@
   },
   {
    "from": "card-w3",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.2",
+   "to": "E.2",
    "type": "loads"
   },
   {
@@ -21049,12 +21112,22 @@
   },
   {
    "from": "card-w3",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "R.3",
    "type": "loads"
   },
   {
    "from": "card-w3",
-   "to": "L.7",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -21064,12 +21137,7 @@
   },
   {
    "from": "card-w3",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.4",
+   "to": "L.7",
    "type": "loads"
   },
   {
@@ -21165,6 +21233,11 @@
   {
    "from": "w3",
    "to": "check_intent_deviation",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_intent_sections",
    "type": "gated_by"
   },
   {

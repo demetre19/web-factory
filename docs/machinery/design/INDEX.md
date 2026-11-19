@@ -15,6 +15,12 @@ links:
 **GOLDEN RULE: ASTRO is the goal; TAILWIND is non-negotiable.** Astro is
 for the **final product only** — the W6–W8 build + `dist/`.
 
+**LAW.PIPELINE:** nothing outside the pipeline. Every operator-facing
+artifact is produced by `run.py` for a specific wave and carries a
+gate receipt in `GATES.json.artifacts` (wave, sha256, all-pass).
+`gate.py receipt <file>` validates it; the orchestrator never opens
+an unreceipted file.
+
 **LAW.REF (canon):** Mobbin screens + operator-suggested sites + the
 banked reference set are the highest design authority after the copy
 contract and brand invariants — every composition, hero archetype,

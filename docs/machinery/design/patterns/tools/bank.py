@@ -42,6 +42,12 @@ ACT_TO_SECTION = {
     'footer': 'footer',
 }
 
+# Chrome is captured in ui_analysis, not banked as pattern evidence:
+# auto-detected nav/footer/CTA strips are page furniture, not section
+# designs — counting them taught the scorer that canon looks like
+# boilerplate (banked AUC dropped to 0.47).
+SKIP_SECTIONS = {'nav', 'footer', 'call-to-action'}
+
 
 def bank_site(slug, verbose=True):
     d = os.path.join(WEB, slug)
@@ -88,12 +94,15 @@ def bank_site(slug, verbose=True):
             n_crop += 1
         feat = image_features.analyze(sp)
         act = sec.get('purpose_speech_act')
+        section_type = ACT_TO_SECTION.get(act, 'other')
+        if section_type in SKIP_SECTIONS:
+            continue
         records.append({
             'site_name': meta.get('domain') or slug,
             'image': sp,
             'site_type': meta.get('site_type') or 'general',
             'page_type': meta.get('page_type') or 'landing',
-            'section_type': ACT_TO_SECTION.get(act, 'other'),
+            'section_type': section_type,
             'speech_act': act,
             'composition': sec.get('composition'),
             'density': sec.get('density'),
