@@ -59,11 +59,32 @@ def issue_nonce(pipeline, wave):
     rec['sig'] = G._sig(rec, G.op_key(create=True))
     nonce = secrets.token_hex(16)
     os.makedirs(_nonces_dir(), exist_ok=True)
+    _prune_nonces()
     p = _nonce_file(nonce)
     with open(p, 'w') as fh:
         json.dump(rec, fh)
     os.chmod(p, 0o600)
     return nonce, rec
+
+
+def _prune_nonces():
+    """Registry hygiene: used/expired nonce files are deleted at every
+    issue so the registry never accumulates residue (F-28)."""
+    d = _nonces_dir()
+    if not os.path.isdir(d):
+        return
+    now = datetime.datetime.now()
+    for fn in os.listdir(d):
+        fp = os.path.join(d, fn)
+        try:
+            rec = json.load(open(fp))
+            exp = rec.get('expires')
+            dead = rec.get('used') or (
+                exp and now > datetime.datetime.fromisoformat(exp))
+            if dead:
+                os.remove(fp)
+        except Exception:
+            os.remove(fp)
 
 
 def consume_nonce(nonce):
@@ -118,6 +139,24 @@ def record_approval(wave, pipeline, nonce=None, design=None,
         if nrec['inputs'] != G._h(G.input_hashes_for(ctx, wave)):
             return 1, 'approve REFUSED: inputs changed since the nonce ' \
                       'was minted — re-render the picker'
+    # the picked design must be a real option in the picker's rendered
+    # output — free text can never bind (F-27)
+    if design:
+        blocks = {}
+        for cand in (ctx.find('preview/layouts.html') if wave == 'w3'
+                     else ctx.find('preview/variants.html'),
+                     ctx.find('preview/fine.html')):
+            if not cand:
+                continue
+            blocks = G._design_blocks(
+                open(cand, encoding='utf-8',
+                     errors='replace').read())
+            if design in blocks:
+                break
+        else:
+            return 1, (f'approve REFUSED: design "{design}" is not an '
+                       'option in the rendered picker — the pick '
+                       'binds to rendered output, not a name')
     fails = G.ancestry_fails(ctx) if wave != 'w0' else []
     if fails:
         return 1, 'approve REFUSED — earlier waves are not clean: ' \

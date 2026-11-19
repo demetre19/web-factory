@@ -4,6 +4,7 @@
   python3 run.py <wave> <pipeline-dir> [gate.py options]
   python3 run.py approve <wave> <pipeline-dir> [--nonce N] [--design D]
   python3 run.py nonce <wave> <pipeline-dir>
+  python3 run.py migrate-approvals <pipeline-dir>
   python3 run.py sign-review <pipeline-dir>
 
 A wave runs only when EVERY earlier wave passed, every approvable one is
@@ -130,6 +131,12 @@ def main():
                 i = a.index(flag)
                 kw[key] = a[i + 1] if i + 1 < len(a) else ''
         return approve(a[1], a[2], G, **kw)
+    if len(a) >= 3 and a[0] == 'migrate-approvals':
+        sys.path.insert(0, HERE)
+        import gate as G
+        ch, tot = G.migrate_approvals(G.Ctx(a[2]))
+        print(f'migrated {ch}/{tot} approval record(s)')
+        return 0
     if len(a) >= 3 and a[0] == 'nonce':
         sys.path.insert(0, HERE)
         import gate as G  # noqa: F401

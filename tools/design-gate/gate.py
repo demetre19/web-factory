@@ -1616,12 +1616,24 @@ def check_tile_is_system(ctx):
                  'self-contained HTML (preview/system.html); Astro '
                  'belongs to W6+')
     if is_html:
-        rendered = set(re.findall(r'data-comp="([^"]+)"', tile)) | \
-            set(re.findall(r'data-cell="([^"]+)"', tile))
+        # a specimen renders the component — a lone attribute token
+        # listing names is not a specimen (F-25)
+        rendered = set()
+        for m in re.finditer(
+                r'<(\w+)[^>]*data-comp="([^"]+)"[^>]*>(.{0,400})', tile,
+                re.S):
+            inner = m.group(3)
+            if re.search(r'<[a-zA-Z]|\S', inner.strip()):
+                rendered.add(m.group(2))
+        rendered |= set(re.findall(r'data-cell="([^"]+)"', tile))
         for c in sorted(comp_names):
             if c not in rendered:
                 f.append(f'P.6 component {c} has no specimen on the '
                          'system sheet')
+        if re.search(r'data-comp="[^"]+"', tile) and not rendered:
+            f.append('P.6 system sheet lists comp names without '
+                     'rendering specimens — a data-comp attribute list '
+                     'is not a specimen')
     else:
         alias = dict((a, c) for a, c in re.findall(
             r'import\s+(\w+)\s+from\s+["\'].*components/([\w-]+)\.astro',
@@ -3001,7 +3013,7 @@ def check_intent_sections(ctx):
                         'data-group' not in attrs:
                     ints = {i for _, i in h2s}
                     f.append(f'PS.11 {name} sec {sec}: '
-                             f'{len(re.findall(r"<h2\\b", body))} h2s '
+                             f'{len(re.findall(r"<h2\b", body))} h2s '
                              f'(intents {sorted(ints)}) share one '
                              'section — a merge needs a declared '
                              'same-intent group')
@@ -3082,29 +3094,47 @@ def check_receipts(ctx):
     g = load_gates(ctx)
     arts = g.get('artifacts') or {}
     f = []
-    upto = WAVE_SEQ.index(ctx.wave) + 1 if ctx.wave in WAVE_SEQ         else len(WAVE_SEQ)
+    upto = WAVE_SEQ.index(ctx.wave) + 1 if ctx.wave in WAVE_SEQ \
+        else len(WAVE_SEQ)
+    wanted = {}
     for wv in WAVE_SEQ[:upto]:
         for rel in ARTIFACTS.get(wv, []):
-            fp = os.path.join(ctx.dir, rel)
-            if not os.path.isfile(fp):
-                continue
-            rec = arts.get(rel)
-            if not rec:
-                f.append(f'P.17 {rel} exists without a gate receipt — '
-                         'the orchestrator must never show an '
-                         'unreceipted artifact')
-                continue
-            sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest()
-            if sha != rec.get('sha256'):
-                f.append(f'P.17 {rel} changed since its receipt')
-            key = op_key()
-            if key:
-                want = _sig({k: v for k, v in rec.items()
-                             if k != 'sig'}, key)
-                if rec.get('sig') != want:
-                    f.append(f'P.17 {rel} receipt unsigned or '
-                             'badly signed — receipts are bound by '
-                             'the service key, not just a hash row')
+            wanted[rel] = wv
+    # every preview/*.html is operator-facing — receipts cover the set,
+    # not only the named list (variants-v2 et al. bind to w4)
+    pdir = os.path.join(ctx.dir, 'preview')
+    if os.path.isdir(pdir):
+        for fn in sorted(os.listdir(pdir)):
+            if fn.endswith('.html'):
+                rel = f'preview/{fn}'
+                if rel not in wanted:
+                    wanted[rel] = 'w4' if 'variants' in fn or \
+                        'fine' in fn else 'w3'
+    for rel, wv in sorted(wanted.items()):
+        fp = os.path.join(ctx.dir, rel)
+        if not os.path.isfile(fp):
+            continue
+        rec = arts.get(rel)
+        if not rec:
+            f.append(f'P.17 {rel} exists without a gate receipt — '
+                     'the orchestrator must never show an '
+                     'unreceipted artifact')
+            continue
+        sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest()
+        if sha != rec.get('sha256'):
+            f.append(f'P.17 {rel} changed since its receipt')
+        if rec.get('wave') != wv:
+            f.append(f'P.17 {rel} receipt binds wave {rec.get("wave")}, '
+                     f'expected {wv} — receipts bind the artifact to '
+                     'the wave that produced it')
+        key = op_key()
+        if key:
+            want = _sig({k: v for k, v in rec.items() if k != 'sig'},
+                        key)
+            if rec.get('sig') != want:
+                f.append(f'P.17 {rel} receipt unsigned or badly '
+                         'signed — receipts are bound by the service '
+                         'key, not just a hash row')
     return f
 
 
@@ -3114,7 +3144,11 @@ def check_round_gated(ctx):
     wfp = ctx.wireframe_path()
     if not wfp or not os.path.isfile(wfp):
         return [f'P.18 layout picker not found ({wfp})']
-    return [f'P.18 {x}' for x in check_round(wfp, 1)]
+    stub = None
+    sp = ctx.stub_path()
+    if sp:
+        stub = open(sp, encoding='utf-8', errors='replace').read()
+    return [f'P.18 {x}' for x in check_round(wfp, 1, stub=stub)]
 
 
 def check_round_gated_look(ctx):
@@ -3122,7 +3156,11 @@ def check_round_gated_look(ctx):
     fp = ctx.find('preview/variants.html')
     if not fp:
         return ['P.18 look picker preview/variants.html not found']
-    return [f'P.18 {x}' for x in check_round(fp, 2)]
+    stub = None
+    sp = ctx.stub_path()
+    if sp:
+        stub = open(sp, encoding='utf-8', errors='replace').read()
+    return [f'P.18 {x}' for x in check_round(fp, 2, stub=stub)]
 
 
 def check_fine_round(ctx):
@@ -3134,7 +3172,11 @@ def check_fine_round(ctx):
     if not fp:
         return ['P.18 preview/fine.html missing — the fine knob-nudge '
                 'round is produced after the look round, never skipped']
-    f = [f'P.18 {x}' for x in check_round(fp, 3)]
+    stub = None
+    sp = ctx.stub_path()
+    if sp:
+        stub = open(sp, encoding='utf-8', errors='replace').read()
+    f = [f'P.18 {x}' for x in check_round(fp, 3, stub=stub)]
     lp = ctx.find('preview/variants.html')
     if lp:
         ft = open(fp, encoding='utf-8', errors='replace').read()
@@ -3223,17 +3265,26 @@ def check_acss_conventions(ctx):
     for p in css_files:
         css = open(p, encoding='utf-8', errors='replace').read()
         name = os.path.basename(p)
-        for m in re.finditer(r'rgba\s*\(', css):
-            f.append(f'A.1 {name}: rgba() literal — transparency via '
+        for m in re.finditer(
+                r'rgba\s*\(|rgb\s*\([^)]*/\s*[\d.]|'
+                r'#[0-9a-fA-F]{8}\b', css):
+            f.append(f'A.1 {name}: alpha literal '
+                     f'({m.group(0)[:28]}) — transparency via '
                      'color-mix(in oklch, role X%, transparent) only')
         for m in re.finditer(
-                r'([\w.#\[\]-]+)[^{}]*\{[^}]*min-height:\s*\d+'
-                r'(px|rem|vh)[^}]*\}', css):
+                r'([\w.#\[\]-]+)[^{}]*\{[^}]*min-height:\s*'
+                r'(\d+(px|rem|[dsl]?vh)|calc\([^}]*?vh[^}]*?\))'
+                r'[^}]*\}', css):
             sel = m.group(1)
-            if not re.search(r'hero|bleed|fold', sel):
+            if not re.search(r'hero|bleed|fold|cta|btn|touch|input|'
+                             r'button|control', sel):
                 f.append(f'A.1 {name}: "{sel.strip()[:40]}" sets '
                          'min-height — section whitespace comes from '
                          '--section-space-* only')
+        for m in re.finditer(
+                r'class="[^"]*\bmin-h-(?:screen|\[)[^"]*"', txt
+                if False else ''):
+            pass  # rendered markup scan lives in check_section_shell
     # text-wrap lands on rendered pages too: built CSS must carry the
     # token-driven rules for headings + body
     if _wave_ge(ctx, 'w7'):
@@ -5634,12 +5685,17 @@ def assemble_variants(ctx, page_pane=True):
         nonlocal h_i
         sec, comp = c['section'], c['composition']
         head, lead = '', ''
-        if comp not in ('nav-bar', 'footer-bar') and h_i < len(h2s):
-            v = h2s[h_i]
-            h_i += 1
-            head = f'<h2 class="mock-h2">{v["heading"]}</h2>'
-            if v.get('fs'):
-                lead = f'<p class="mock-lead">{v["fs"]}</p>'
+        if comp not in ('nav-bar', 'footer-bar'):
+            if sec == 'hero':
+                hh = h2s[0].get('h1') if h2s else ''
+                if hh:
+                    head = f'<h1 class="pg">{hh}</h1>'
+            elif h_i < len(h2s):
+                v = h2s[h_i]
+                h_i += 1
+                head = f'<h2 class="mock-h2">{v["heading"]}</h2>'
+                if v.get('fs'):
+                    lead = f'<p class="mock-lead">{v["fs"]}</p>'
         if comp == 'nav-bar':
             head = ('<nav class="mock-nav"><span class="mock-logo">'
                     'brand</span><a class="mock-cta">Act</a></nav>')
@@ -6086,23 +6142,46 @@ def approval_state(ctx, wave):
         else (WAVE_DNA_KIND.get(wave) or 'core',)
     cur = {k: sl.get(k) for k in kinds}
     if {k: (rec.get('dna') or {}).get(k) for k in kinds} != cur:
-        # migration path (F-05): a machinery recipe change must not void
-        # an approval of unchanged content — verify the record against
-        # the legacy recipe, then re-key it to the current slices
+        # legacy-recipe records stay valid against dna_slices_legacy —
+        # a read-only probe never rewrites operator state (F-26);
+        # `run.py migrate-approvals` re-keys them explicitly
         legacy = dna_slices_legacy(dna_map(ctx) or {})
         lcur = {k: legacy.get(k) for k in kinds}
         if {k: (rec.get('dna') or {}).get(k) for k in kinds} == lcur:
+            return 'ok'
+        return 'stale'
+    return 'ok'
+
+
+def migrate_approvals(ctx):
+    """`run.py migrate-approvals <dir>` — re-key approval records whose
+    dna slice matches the legacy recipe onto the current recipe.
+    Returns (changed, total)."""
+    key = op_key()
+    if not key:
+        return 0, 0
+    allr = read_approvals(ctx)
+    changed = 0
+    for wave, rec in allr.items():
+        kinds = ('core', 'structure') \
+            if WAVE_DNA_KIND.get(wave) == 'all' \
+            else (WAVE_DNA_KIND.get(wave) or 'core',)
+        sl = dna_slices(dna_map(ctx) or {})
+        cur = {k: sl.get(k) for k in kinds}
+        legacy = dna_slices_legacy(dna_map(ctx) or {})
+        lcur = {k: legacy.get(k) for k in kinds}
+        have = {k: (rec.get('dna') or {}).get(k) for k in kinds}
+        if have != cur and have == lcur:
             rec['dna'] = {'core': sl.get('core'),
                           'structure': sl.get('structure')}
             rec['migrated_from'] = 'dna_slices_legacy'
             rec['sig'] = _sig(rec, key)
-            allr = read_approvals(ctx)
             allr[wave] = rec
-            with open(approvals_path(ctx), 'w') as fh:
-                json.dump(allr, fh, indent=2, sort_keys=True)
-            return 'ok'
-        return 'stale'
-    return 'ok'
+            changed += 1
+    if changed:
+        with open(approvals_path(ctx), 'w') as fh:
+            json.dump(allr, fh, indent=2, sort_keys=True)
+    return changed, len(allr)
 
 
 def lock_dna_map(ctx):
@@ -6773,14 +6852,24 @@ EMOJI_RX = re.compile(
 
 
 def _design_blocks(txt):
-    """{id: block_text} — one scope per design in a picker HTML."""
+    """{id: block_text} — one scope per design in a picker HTML.
+    Keyed by data-design|data-variant|data-layout (the option key);
+    `id` is a fallback only — a real picker carries BOTH on one
+    <article> and must count once (F-11)."""
     m = list(re.finditer(
-        r'(?:data-(?:design|variant|layout|scope)|id)="(d?[\w-]+)"', txt))
+        r'data-(?:design|variant|layout)="(d?[\w-]+)"', txt))
     ids = []
     for x in m:
         if x.group(1) not in ids and not x.group(1).startswith(
                 ('switch', 'seg', 'frame')):
             ids.append(x.group(1))
+    if not ids:
+        m = list(re.finditer(r'<(?:article|div)[^>]*\bid="([\w-]+)"',
+                             txt))
+        for x in m:
+            if x.group(1) not in ids and not x.group(1).startswith(
+                    ('switch', 'seg', 'frame')):
+                ids.append(x.group(1))
     blocks = {}
     for i, d in enumerate(ids):
         start = 0
@@ -6970,8 +7059,6 @@ def check_round(path, round_no, stub=None):
             f.append(f'T.6 body text below 16px ({m.group(1)})')
             break
     # contrast in both modes: pull hex role pairs from mode scopes
-    for mode, blk in (('light', 'dark'),):
-        pass
     mode_blocks = re.findall(r'data-mode="(light|dark)"[^>]*\{([^}]*)\}',
                            txt)
     if not mode_blocks:
@@ -6999,7 +7086,9 @@ def check_round(path, round_no, stub=None):
     heads = [(m.group(1).lower(), m.group(2).strip())
              for m in re.finditer(r'<(h[1-6])[^>]*>(.*?)</\1>', txt,
                                   re.S | re.I)]
-    if stub:
+    if stub and round_no >= 2:
+        # E.1 binds RENDERED copy — the coarse layout round carries no
+        # copy by design; look/fine rounds render real headings
         vec = re.findall(r'H(\d)\s+([^|<]{4,})', stub)
         for tag, want in vec:
             wt = want.strip()

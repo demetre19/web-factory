@@ -174,9 +174,9 @@ closed set.
 | P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
 | L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
 | P.18 | The pick funnel is real and gated | invariant | script | `check_round_gated` | picker fails gate.py round — real options, scored, refs, visual review, distinct | w3 |
-| A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w7 |
-| A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w7 |
-| A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w7 |
+| A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w6 |
+| A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w6 |
+| A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w6 |
 | M.9 | Recipe membership | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
 | M.10 | No dead keyframes | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
 | M.11 | Property budget | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
