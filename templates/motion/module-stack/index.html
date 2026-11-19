@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: module-stack — staggered drop-in modules</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-out:cubic-bezier(.19,1,.22,1);--pass:8s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:150px;height:150px}
+/* --- recipe ----------------------------------------------------------
+   Modules drop into a window one by one: opacity+translateY with
+   --k*0.5s phased delays on one --pass timeline. backwards fill keeps
+   pre-delay modules hidden. */
+.ms .win{fill:none;stroke:var(--ink);stroke-width:1.5}
+.ms .bar{stroke:var(--ink);stroke-width:1.5}
+.ms .dot-r{fill:var(--accent)} .ms .dot-g{fill:var(--muted)}
+.ms .mod{fill:var(--line);stroke:var(--ink);stroke-width:1;
+  animation:ms var(--pass) var(--ease-out) infinite backwards;
+  animation-delay:calc(var(--k,0)*.5s)}
+.ms .mod.done{fill:var(--accent);fill-opacity:.5}
+@keyframes ms{0%{opacity:0;transform:translateY(-10px)}10%,80%{opacity:1;transform:none}90%,100%{opacity:0;transform:none}}
+@media (prefers-reduced-motion:reduce){.ms .mod{animation:none;opacity:1;transform:none}}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="ms" viewBox="0 0 120 120" aria-hidden="true">
+  <rect class="win" x="34" y="24" width="74" height="62" rx="4"/>
+  <path class="bar" d="M34 34h74" fill="none"/>
+  <circle class="dot-r" cx="40" cy="29" r="1.8"/><circle class="dot-g" cx="46" cy="29" r="1.8"/>
+  <rect class="mod" x="40" y="40" width="20" height="20" rx="1.5" style="--k:0"/>
+  <rect class="mod" x="64" y="40" width="20" height="20" rx="1.5" style="--k:1"/>
+  <rect class="mod" x="88" y="40" width="14" height="20" rx="1.5" style="--k:2"/>
+  <rect class="mod done" x="40" y="66" width="62" height="6" rx="1.5" style="--k:3"/>
+</svg>
+<small>modules assemble into the window, then clear — 8 s loop</small>
+</div>
+</body>
+</html>

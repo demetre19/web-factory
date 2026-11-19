@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: menu-cascade — staggered item entrance on open</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);--ease-out:cubic-bezier(.19,1,.22,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+/* --- recipe ----------------------------------------------------------
+   Panel opens on opacity+transform; items cascade with a --i-indexed
+   keyframe (fade + -10px translate). visibility closes the hit-area gap. */
+.nav{position:relative}
+.btn{padding:.55em 1.4em;border:1px solid var(--line);border-radius:8px;
+  background:transparent;color:var(--ink);font:inherit;cursor:pointer;
+  transition:border-color .2s var(--ease-soft),background .2s var(--ease-soft)}
+.btn:hover{border-color:var(--accent)}
+.btn .chev{display:inline-block;margin-left:.5em;
+  transition:transform .3s var(--ease-out)}
+.nav[data-open] .chev{transform:rotate(180deg)}
+.menu{position:absolute;top:calc(100% + 8px);left:0;min-width:180px;margin:0;padding:6px;
+  list-style:none;background:var(--bg);border:1px solid var(--line);border-radius:12px;
+  opacity:0;transform:translateY(-6px);visibility:hidden;
+  transition:opacity .25s var(--ease-soft),transform .35s var(--ease-out),visibility 0s linear .35s}
+.nav[data-open] .menu{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+.menu a{display:block;padding:8px 12px;border-radius:8px;color:var(--ink);text-decoration:none;
+  transition:background .2s var(--ease-soft)}
+.menu a:hover{background:var(--line)}
+.nav[data-open] .menu li{animation:mc-in .35s var(--ease-out) both;
+  animation-delay:calc(var(--i)*60ms + 60ms)}
+@keyframes mc-in{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .menu,.btn .chev,.menu a{transition-duration:.01ms}
+  .nav[data-open] .menu li{animation:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<nav class="nav" id="nav">
+  <button class="btn" aria-expanded="false" onclick="this.closest('.nav').toggleAttribute('data-open');this.setAttribute('aria-expanded',this.closest('.nav').hasAttribute('data-open'))">
+    System <span class="chev">▾</span>
+  </button>
+  <ul class="menu">
+    <li style="--i:0"><a href="#">Automation</a></li>
+    <li style="--i:1"><a href="#">Strategy</a></li>
+    <li style="--i:2"><a href="#">Development</a></li>
+    <li style="--i:3"><a href="#">Marketing</a></li>
+    <li style="--i:4"><a href="#">Design</a></li>
+    <li style="--i:5"><a href="#">Content</a></li>
+  </ul>
+</nav>
+</body>
+</html>

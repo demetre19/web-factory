@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: blur-reveal — photo focus pull (flagged budget)</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-out:cubic-bezier(.19,1,.22,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{min-height:75vh;display:grid;place-items:center;color:var(--muted)}
+/* --- recipe ----------------------------------------------------------
+   filter+scale pull into focus on .in. FILTER IS PAINT-BOUND — this is
+   the one licensed exception; see recipe.md budget note. */
+.fr{max-width:420px;margin:0 auto 80px;overflow:hidden;border-radius:16px}
+.fr img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;
+  filter:saturate(.3) blur(14px);transform:scale(1.08);
+  transition:filter 1.6s var(--ease-out),transform 1.6s var(--ease-out)}
+.fr.in img{filter:saturate(.85) contrast(1.02);transform:none}
+@media (prefers-reduced-motion:reduce){
+  .fr img{filter:none;transform:none;transition:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer"><p>scroll ↓ — one emotional photo moment</p></div>
+<figure class="fr" id="fr">
+  <img alt="abstract portrait placeholder" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23c4c0b3'/%3E%3Ccircle cx='200' cy='120' r='60' fill='%2390a985'/%3E%3Crect x='140' y='190' width='120' height='90' rx='20' fill='%235e7355'/%3E%3C/svg%3E">
+</figure>
+<div class="spacer"></div>
+<script>
+const fr = document.getElementById('fr');
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) fr.classList.add('in');
+else new IntersectionObserver((es, io) => {
+  for (const e of es) if (e.isIntersecting) { fr.classList.add('in'); io.disconnect(); }
+}, { threshold: .3 }).observe(fr);
+</script>
+</body>
+</html>

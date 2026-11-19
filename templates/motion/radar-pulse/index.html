@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: radar-pulse — expanding wave rings + drifting signals</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-out:cubic-bezier(.19,1,.22,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:150px;height:150px}
+/* --- recipe ----------------------------------------------------------
+   transform-box:fill-box lets a <circle> scale from its own centre.
+   Rings expand scale(1→2.6) + fade; signal dots drift in on staggered
+   loops — the classic sonar/broadcast pattern. */
+.rp .wave{fill:var(--accent);transform-box:fill-box;transform-origin:50% 50%;
+  animation:rp-wave 1.8s var(--ease-out) infinite;
+  animation-delay:calc(var(--k,0)*.6s)}
+.rp .core{fill:var(--bg);stroke:var(--ink);stroke-width:1.5}
+.rp .sig{fill:var(--accent);animation:rp-sig 4.5s ease-out infinite;
+  animation-delay:calc(var(--k,0)*-1.5s)}
+@keyframes rp-wave{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(1.6)}}
+@keyframes rp-sig{
+  0%{opacity:0;transform:none}
+  12%,80%{opacity:1}
+  100%{opacity:0;transform:translate(var(--dx,40px),var(--dy,-8px))}}
+@media (prefers-reduced-motion:reduce){.rp *{animation:none!important}}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="rp" viewBox="0 0 120 120" aria-hidden="true">
+  <path d="M8 102 H112" stroke="var(--ink)" stroke-width="1.5" fill="none"/>
+  <path d="M38 40 L86 52 M38 56 L86 52 M38 72 L86 52" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 4" fill="none"/>
+  <circle class="wave" cx="86" cy="52" r="22" style="--k:0"/>
+  <circle class="wave" cx="86" cy="52" r="22" style="--k:1"/>
+  <circle class="wave" cx="86" cy="52" r="22" style="--k:2"/>
+  <circle class="core" cx="86" cy="52" r="22"/>
+  <circle class="core" cx="86" cy="52" r="14" fill="var(--line)"/>
+  <circle class="core" cx="86" cy="52" r="6" fill="var(--accent)"/>
+  <circle class="sig" cx="38" cy="40" r="3" style="--k:0;--dx:48px;--dy:12px"/>
+  <circle class="sig" cx="38" cy="56" r="3" style="--k:1;--dx:48px;--dy:-4px"/>
+  <circle class="sig" cx="38" cy="72" r="3" style="--k:2;--dx:48px;--dy:-20px"/>
+</svg>
+<small>rings pulse outward while signals converge — 1.8 s + 4.5 s loops</small>
+</div>
+</body>
+</html>

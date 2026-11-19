@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: word-cycler — handoff phrase rotation</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);--pass:4s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.demo{text-align:center;max-width:34ch}
+/* --- recipe ----------------------------------------------------------
+   N phrases stacked in one grid cell share one n*--pass timeline.
+   Each owns a disjoint opacity window (handoff), entering translateY(+)
+   and exiting translateY(-). Delay = --pass * --k. */
+.cycle{display:grid}
+.cycle p{grid-area:1/1;margin:0;opacity:0;font:600 1.4rem/1.2 system-ui;
+  animation:wc calc(var(--pass)*5) var(--ease-soft) infinite both;
+  animation-delay:calc(var(--pass)*var(--k,0))}
+.cycle p b{color:var(--accent)}
+@keyframes wc{
+  0%{opacity:0;transform:translateY(10px)}
+  2%,18.6%{opacity:1;transform:none}
+  19.6%,100%{opacity:0;transform:translateY(-10px)}}
+/* 5 phrases => each visible 2-18.6% of a 5*--pass timeline */
+@media (prefers-reduced-motion:reduce){
+  .cycle p{animation:none;position:static;opacity:1}
+  .cycle p~p{display:none}
+}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted)}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div class="demo">
+  <p style="font-size:1rem;color:var(--muted)">One team for everything your business needs:</p>
+  <div class="cycle">
+    <p style="--k:0">a <b>strategy</b> that ships</p>
+    <p style="--k:1">a <b>site</b> that sells</p>
+    <p style="--k:2">a <b>design</b> that holds</p>
+    <p style="--k:3">a <b>system</b> that scales</p>
+    <p style="--k:4">an <b>automation</b> that works</p>
+  </div>
+  <small>phrases hand off every --pass — pure CSS, no JS</small>
+</div>
+</body>
+</html>

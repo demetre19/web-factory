@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: stamp-check — tint + drawn check + stamp</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-out:cubic-bezier(.19,1,.22,1);--pass:6s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:140px;height:140px}
+/* --- recipe ----------------------------------------------------------
+   Three-phase confirmation: box tints, check draws, stamp pops.
+   fill-opacity animates (cheap), draw uses pathLength=1. */
+.sc *{animation-duration:var(--pass);animation-iteration-count:infinite;
+  animation-timing-function:var(--ease-out);animation-fill-mode:both}
+.sc .house{fill:none;stroke:var(--ink);stroke-width:1.5;opacity:.5}
+.sc .box{fill:var(--accent);fill-opacity:0;stroke:var(--accent);stroke-width:1.5;
+  animation-name:sc-tint}
+.sc .check{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1px;
+  animation-name:sc-draw}
+.sc .stamp{transform-box:fill-box;transform-origin:50% 50%;transform:scale(0);
+  fill:var(--accent);animation-name:sc-pop;animation-delay:.3s}
+@keyframes sc-tint{0%,56%,100%{fill-opacity:0}8%,44%{fill-opacity:.18}}
+@keyframes sc-draw{0%,56%,100%{stroke-dashoffset:1px}10%,44%{stroke-dashoffset:0}}
+@keyframes sc-pop{0%,56%,100%{transform:scale(0)}16%,44%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){
+  .sc *{animation:none!important}
+  .sc .check{stroke-dashoffset:0}.sc .box{fill-opacity:.18}
+}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="sc" viewBox="0 0 112 112" aria-hidden="true">
+  <circle class="house" cx="56" cy="56" r="50"/>
+  <rect class="box" x="34" y="34" width="44" height="44" rx="10"/>
+  <path class="check" pathLength="1" d="M45 57l8 8 16-17"/>
+  <circle class="stamp" cx="82" cy="34" r="5"/>
+</svg>
+<small>box tints → check draws → stamp pops — 6 s loop</small>
+</div>
+</body>
+</html>

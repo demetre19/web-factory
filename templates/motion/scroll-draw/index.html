@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: scroll-draw — scroll-linked line + quantised steps</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.intro{min-height:70vh;display:grid;place-items:center;color:var(--muted)}
+/* --- recipe ----------------------------------------------------------
+   Tall track + sticky stage. rAF-throttled scroll writes
+   stroke-dashoffset directly (line draws with scroll); progress
+   quantised to step index toggles .is-active/.is-prev/.is-next classes. */
+.track{height:calc(3 * 55vh + 100vh);position:relative}
+.stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center}
+.rail{position:absolute;left:50%;top:0;bottom:0;width:2px}
+.rail svg{height:100%;width:2px;display:block}
+.rail path{stroke:var(--accent);stroke-width:2;stroke-dasharray:1000;stroke-dashoffset:1000}
+.step{position:absolute;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;
+  transition:opacity .55s var(--ease-soft),visibility 0s linear .55s}
+.step .cell{max-width:36ch;padding:24px;background:var(--bg);transition:transform .55s var(--ease-soft)}
+.step.is-prev .cell{transform:translateY(-36px)}
+.step.is-next .cell{transform:translateY(36px)}
+.step.is-active{opacity:1;visibility:visible;transition-delay:0s}
+.step h2{margin:0 0 8px;font-size:1.6rem}
+.step p{margin:0;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){
+  .track{height:auto}
+  .stage{position:static;height:auto;display:block}
+  .rail{display:none}
+  .step{position:static;opacity:1;visibility:visible;padding:24px}
+  .step .cell{transform:none;transition:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;z-index:9}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div class="intro"><p>scroll ↓ — the line draws with you</p></div>
+<div class="track" id="track">
+  <div class="stage">
+    <div class="rail"><svg viewBox="0 0 2 1000" preserveAspectRatio="none"><path id="rail-path" d="M1 0 V1000"/></svg></div>
+    <div class="step"><div class="cell"><h2>Old way</h2><p>Sell you a senior, hand you a junior.</p></div></div>
+    <div class="step"><div class="cell"><h2>Handoff</h2><p>Every layer of process drops context.</p></div></div>
+    <div class="step"><div class="cell"><h2>Tamdoma way</h2><p>The two people you meet stay on the problem.</p></div></div>
+  </div>
+</div>
+<div class="intro"><p>end — line fully drawn</p></div>
+<script>
+// recipe JS — rAF scroll progress → dashoffset + step quantisation
+const track = document.getElementById('track');
+const rail = document.getElementById('rail-path');
+const steps = [...track.querySelectorAll('.step')];
+const N = steps.length;
+let ticking = false, cur = -1;
+function update() {
+  ticking = false;
+  const r = track.getBoundingClientRect();
+  const span = r.height - innerHeight;
+  const p = Math.min(1, Math.max(0, -r.top / span));
+  rail.style.strokeDashoffset = String(1000 - p * 1000);
+  const i = Math.min(N - 1, Math.floor(p * N));
+  if (i !== cur) { cur = i;
+    steps.forEach((s, n) => {
+      s.classList.toggle('is-active', n === i);
+      s.classList.toggle('is-prev', n < i);
+      s.classList.toggle('is-next', n > i);
+    });
+  }
+}
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+addEventListener('resize', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+update();
+</script>
+</body>
+</html>

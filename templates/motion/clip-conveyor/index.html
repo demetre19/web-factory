@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: clip-conveyor — clip-path windowed translate loop</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-out:cubic-bezier(.19,1,.22,1);--pass:6s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:150px;height:150px}
+/* --- recipe ----------------------------------------------------------
+   Items ride a track but only exist inside a <clipPath> window — they
+   vanish at the edge instead of teleporting. Negative delays phase the
+   copies so the stream never empties. A dashed line "ticks" under it. */
+.cc .belt{fill:none;stroke:var(--ink);stroke-width:1.5}
+.cc .item{fill:var(--bg);stroke:var(--ink);stroke-width:1.2;
+  animation:cc-move 7.5s linear infinite;
+  animation-delay:calc(var(--k,0)*-2.5s)}
+.cc .item.done{fill:var(--accent)}
+.cc .tick{stroke:var(--accent);stroke-width:1.5;fill:none;stroke-linecap:round;
+  stroke-dasharray:24;animation:cc-dash 2.5s linear infinite}
+@keyframes cc-move{from{transform:translateX(-6px)}to{transform:translateX(72px)}}
+@keyframes cc-dash{from{stroke-dashoffset:48px}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.cc *{animation:none!important}}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="cc" viewBox="0 0 120 120" aria-hidden="true">
+  <defs>
+    <clipPath id="cc-win"><rect x="30" y="56" width="52" height="24"/></clipPath>
+  </defs>
+  <path class="belt" d="M8 102 H112"/>
+  <rect x="30" y="72" width="52" height="8" rx="4" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+  <path class="belt" d="M38 80v10 M74 80v10"/>
+  <g clip-path="url(#cc-win)">
+    <rect class="item" x="28" y="60" width="12" height="12" rx="2" style="--k:0"/>
+    <rect class="item" x="28" y="60" width="12" height="12" rx="2" style="--k:1"/>
+    <rect class="item" x="28" y="60" width="12" height="12" rx="2" style="--k:2"/>
+  </g>
+  <rect x="84" y="52" width="26" height="32" rx="3" fill="var(--accent)" fill-opacity=".35" stroke="var(--ink)" stroke-width="1.5"/>
+  <rect x="89" y="57" width="16" height="10" rx="1.5" fill="var(--bg)" fill-opacity=".7"/>
+  <path class="tick" d="M91 62h3l2-3 3 6 2-3h4"/>
+</svg>
+<small>items stream through a clipped window + dashing status line</small>
+</div>
+</body>
+</html>

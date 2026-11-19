@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web Factory — Motion Recipe Catalogue</title>
+<style>
+:root{--bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;--card:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985;--card:#1c1c19}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985;--card:#1c1c19}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+header{max-width:1120px;margin:0 auto;padding:48px 24px 8px}
+h1{font-size:2rem;margin:0 0 6px}
+header p{color:var(--muted);max-width:70ch;margin:0}
+.grid{max-width:1120px;margin:32px auto;padding:0 24px 64px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);display:flex;flex-direction:column}
+.card iframe{width:100%;height:190px;border:0;background:var(--bg)}
+.card .meta{padding:12px 14px 14px;border-top:1px solid var(--line)}
+.card h2{font-size:1rem;margin:0}
+.card a{color:inherit;text-decoration:none}
+.card a:hover h2{color:var(--accent)}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tag{font-size:11px;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.tag.warn{border-color:var(--accent);color:var(--accent)}
+.js{font-size:11px;color:var(--muted);margin-top:6px}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<header>
+  <h1>Motion Recipe Catalogue</h1>
+  <p>Library preview for the Web Factory design machinery — <b>not a site design</b>.
+  Each card embeds the self-contained recipe demo; click a title for the full page.
+  Taxonomy tags per <code>docs/machinery/design/motion/TAXONOMY.md</code>.
+  Patterns reverse-engineered from tamdoma.ai (see <code>sources/tamdoma-ai/</code>).</p>
+</header>
+<div class="grid" id="grid"></div>
+<script>
+const RECIPES = [
+ ["draw-icon","SVG line-draw on in-view","in-view · transition · stroke-dashoffset · js:light"],
+ ["draw-icon-loop","looping line-draw cycle (--pass)","loop · keyframes · phased · js:none"],
+ ["pop-scan","scale-pop + gliding lens","loop · transform · fill-box · js:none"],
+ ["axis-grow","staggered scaleX bars","loop · transform-scale · professional · js:none"],
+ ["stamp-check","tint → draw → stamp confirm","loop · choreographed · js:none"],
+ ["clip-conveyor","clip-windowed conveyor + ticker","loop · clipPath · phased · js:none"],
+ ["scan-sweep","travelling scanner + pick flash","loop · waypoints · ease-both · js:none"],
+ ["radar-pulse","expanding rings + converging signals","loop · scale+fade · js:none"],
+ ["module-stack","staggered drop-in modules","loop · phased · backwards-fill · js:none"],
+ ["snap-arrange","scatter-to-grid snap loop","loop · --sx/--sy/--sr · js:none"],
+ ["write-lines","text write + stamp","loop · dasharray 32 · nth-child · js:none"],
+ ["dash-ticker","pulse sweep along a path","loop · dashoffset · atomic · js:none"],
+ ["word-cycler","handoff phrase rotation","loop · handoff · n×--pass · js:none"],
+ ["progress-rig","@property-driven track fill","loop · custom-property · js:none"],
+ ["backdrop-loops","ambient dial rotate + dash-flow","loop · ambient ≥60s · js:none"],
+ ["reveal-fade","in-view fade + rise","in-view · transition · M.4 stagger · js:light"],
+ ["line-mask-entrance","masked headline rise","load · mask+translate · js:light"],
+ ["blur-reveal","photo focus pull","in-view · filter ⚠ layout-risk · js:light"],
+ ["menu-cascade","staggered dropdown entrance","active · --i stagger · js:none"],
+ ["scroll-draw","scroll-linked line + step quantisation","scroll-linked · rAF · sticky · js:light"],
+];
+document.getElementById('grid').innerHTML = RECIPES.map(([id,desc,tags]) => `
+  <div class="card">
+    <iframe src="${id}/index.html" loading="lazy" title="${id} demo"></iframe>
+    <div class="meta">
+      <a href="${id}/index.html"><h2>${id}</h2></a>
+      <div class="tags">${desc.split('·').map(t=>'').join('')}${tags.split('·').map(t=>`<span class="tag${/layout-risk|filter|scroll-linked|rAF/.test(t)?' warn':''}">${t.trim()}</span>`).join('')}</div>
+      <div class="js">${desc}</div>
+    </div>
+  </div>`).join('');
+</script>
+</body>
+</html>

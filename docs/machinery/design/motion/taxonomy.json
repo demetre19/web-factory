@@ -1,0 +1,26 @@
+{
+  "id": "motion-taxonomy",
+  "version": "0.1.0",
+  "axes": {
+    "trigger": ["load", "in-view", "loop", "hover", "focus", "active", "scroll-linked", "click", "media", "none"],
+    "technique": ["css-keyframes", "css-transition", "smil", "waapi", "rAF-loop", "lottie", "rive", "gsap", "anime-js", "css-scroll-timeline", "svg-sprite-loop", "video-gif"],
+    "property": ["transform-translate", "transform-scale", "transform-rotate", "transform-skew", "opacity", "stroke-dashoffset", "stroke-dasharray", "stroke", "fill-opacity", "fill", "path-d", "clip-path", "mask", "filter", "custom-property", "color", "background", "visibility"],
+    "budget": ["compositor-safe", "stroke-cheap", "layout-risk"],
+    "m_type": ["conversational", "functional", "structural", "emotional"],
+    "purpose": ["entrance", "exit", "state-change", "feedback", "loading", "progress", "attention", "explanation", "navigation", "ambient", "scroll-progress", "word-cycle"],
+    "timing_class": ["micro", "standard", "structural", "slow", "loop-short", "loop-ambient"],
+    "easing_family": ["linear", "ease-out", "ease-in", "ease-both", "overshoot", "elastic", "bounce", "steps", "custom"],
+    "loop_type": ["none", "infinite", "n-times", "palindrome", "phased", "handoff"],
+    "complexity": ["atomic", "composite", "choreographed", "system"],
+    "js_dependency": ["none", "light", "library"],
+    "status": ["live", "paused", "dead"],
+    "personality_fit": ["none", "subtle", "elegant", "professional", "playful"],
+    "motion_tier": ["static", "subtle", "expressive", "cinematic"]
+  },
+  "banned": {
+    "linear_on_spatial": true,
+    "layout_properties_animated": ["width", "height", "margin", "top", "left", "right", "bottom", "padding"],
+    "max_translation_px": 80,
+    "milestone_cap_ms": 1500
+  }
+}

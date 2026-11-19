@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: scan-sweep — travelling scanner + pick flash</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);--pass:9s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:150px;height:150px}
+/* --- recipe ----------------------------------------------------------
+   A scanner dot travels a zig-zag path using grouped translate
+   keyframes; a marker "pick" flashes when the sweep crosses it. Both
+   ride one --pass timeline with disjoint opacity windows. */
+.sw .chart{fill:none;stroke:var(--ink);stroke-width:2;opacity:.5}
+.sw .pt{fill:var(--bg);stroke:var(--ink);stroke-width:1.2}
+.sw .pick{fill:var(--accent);animation:sw-pick var(--pass) linear infinite}
+.sw .scan{fill:var(--accent);animation:sw-scan var(--pass) var(--ease-soft) infinite}
+.sw .scanline{stroke:var(--accent);stroke-width:1;stroke-dasharray:3 3;
+  opacity:.6;animation:sw-scan var(--pass) var(--ease-soft) infinite}
+@keyframes sw-scan{
+  0%{opacity:0;transform:translate(-34px,0)}
+  6%,18%{opacity:1;transform:translate(-34px,0)}
+  30%,40%{transform:translate(-18px,-22px)}
+  52%,90%{opacity:1;transform:none}
+  100%{opacity:0;transform:none}}
+@keyframes sw-pick{0%,54%{opacity:0}60%,90%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.sw *{animation:none!important}}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="sw" viewBox="0 0 120 120" aria-hidden="true">
+  <rect x="34" y="26" width="74" height="56" rx="4" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+  <path class="chart" d="M44 66 L60 46 L76 66 L96 40"/>
+  <circle class="pt" cx="44" cy="66" r="3"/><circle class="pt" cx="60" cy="46" r="3"/>
+  <circle class="pt" cx="76" cy="66" r="3"/><circle class="pt" cx="96" cy="40" r="3"/>
+  <circle class="pick" cx="96" cy="40" r="5"/>
+  <g class="scan"><circle cx="96" cy="40" r="4"/></g>
+  <line class="scanline" x1="96" y1="26" x2="96" y2="82"/>
+</svg>
+<small>scanner sweeps the chart and flashes the chosen point — 9 s loop</small>
+</div>
+</body>
+</html>

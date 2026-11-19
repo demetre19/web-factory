@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: dash-ticker — pulse line drawn on repeat</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:200px;height:80px}
+/* --- recipe ----------------------------------------------------------
+   A short dash segment travels along a fixed path: dasharray shorter
+   than the path + dashoffset sweep = a heartbeat/activity ticker. */
+.dt .base{fill:none;stroke:var(--line);stroke-width:1.5}
+.dt .pulse{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;
+  stroke-dasharray:24;animation:dt 2.5s linear infinite}
+@keyframes dt{from{stroke-dashoffset:48px}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.dt .pulse{animation:none;stroke-dashoffset:0}}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="dt" viewBox="0 0 200 80" aria-hidden="true">
+  <path class="base" d="M10 50h50l10-24 16 44 10-20h94"/>
+  <path class="pulse" d="M10 50h50l10-24 16 44 10-20h94"/>
+</svg>
+<small>signal sweeps the path every 2.5 s — pure dashoffset</small>
+</div>
+</body>
+</html>

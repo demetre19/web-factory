@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: write-lines — staggered text-write + stamp</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);--ease-out:cubic-bezier(.19,1,.22,1);--pass:7s;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+svg{width:150px;height:150px}
+/* --- recipe ----------------------------------------------------------
+   Fixed dasharray of 32 writes each text line left-to-right; nth-child
+   delays stagger the paragraphs; a check stamps when the draft lands. */
+.wl .page{fill:none;stroke:var(--ink);stroke-width:1.5}
+.wl .lines line{stroke:var(--ink);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:32;stroke-dashoffset:32px;
+  animation:wl-write var(--pass) var(--ease-soft) infinite}
+.wl .lines line:nth-child(2){animation-delay:.3s}
+.wl .lines line:nth-child(3){animation-delay:.6s}
+.wl .lines line:nth-child(4){animation-delay:.9s}
+.wl .lines line:nth-child(5){animation-delay:1.2s}
+.wl .check{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;
+  stroke-linejoin:round;transform-box:fill-box;transform-origin:50% 50%;
+  animation:wl-stamp var(--pass) var(--ease-out) infinite}
+@keyframes wl-write{0%{stroke-dashoffset:32px}25%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:32px}}
+@keyframes wl-stamp{0%,40%{opacity:0;transform:scale(0)}50%,85%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
+@media (prefers-reduced-motion:reduce){
+  .wl .lines line,.wl .check{animation:none}
+  .wl .lines line{stroke-dashoffset:0}.wl .check{opacity:1;transform:none}
+}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted);text-align:center}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='dark'?'light':'dark'">light / dark</button>
+<div>
+<svg class="wl" viewBox="0 0 120 120" aria-hidden="true">
+  <rect class="page" x="46" y="22" width="48" height="72" rx="3"/>
+  <g class="lines">
+    <line x1="54" y1="34" x2="86" y2="34"/>
+    <line x1="54" y1="43" x2="86" y2="43" opacity=".7"/>
+    <line x1="54" y1="52" x2="86" y2="52" opacity=".5"/>
+    <line x1="54" y1="61" x2="78" y2="61" opacity=".7"/>
+    <line x1="54" y1="70" x2="70" y2="70" opacity=".4"/>
+  </g>
+  <path class="check" d="M84 88l5 5 9-11"/>
+</svg>
+<small>paragraph lines write in, then a check stamps — 7 s loop</small>
+</div>
+</body>
+</html>
