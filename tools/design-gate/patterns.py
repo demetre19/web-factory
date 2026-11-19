@@ -277,17 +277,12 @@ def cmd_index(args):
     want = args.backend
     if want in ('auto', 'nomic', 'ollama'):
         if not ollama_up():
-            if want == 'auto':
-                print(f'{OLLAMA} unreachable — indexing with tfidf; the '
-                      f'index will say so in meta.json', file=sys.stderr)
-            else:
-                raise SystemExit(f'{OLLAMA} unreachable: --backend {want} '
-                                 f'requires the daemon. Start ollama and '
-                                 f'retry; refusing to index with a different '
-                                 f'backend under a nomic label.')
-        else:
-            vectors = embed(texts)
-            backend = f'nomic:{EMB_MODEL}'
+            raise SystemExit(f'{OLLAMA} unreachable: the pattern index '
+                             f'requires the nomic embedder. Start ollama '
+                             f'and retry — an index silently built on '
+                             f'tfidf changes every ranking.')
+        vectors = embed(texts)
+        backend = f'nomic:{EMB_MODEL}'
     idf, tfvecs = build_tfidf(texts)
     json.dump(idf, open(os.path.join(INDEX, 'tfidf_idf.json'), 'w'))
     json.dump({'backend': 'tfidf', 'vectors': tfvecs},
@@ -420,8 +415,23 @@ def pattern_image_means():
     return d['means'], d['model']
 
 
+CLIP_SERVER = 'http://127.0.0.1:8765/embed?text='
+
+
 def clip_query(q):
-    """Text -> CLIP image-space vector, via the vision script (torch)."""
+    """Text -> CLIP image-space vector.
+
+    Fast path: the warm server (`uv run embed_images.py serve`), ~10 ms.
+    Cold path: spawn the script per query, ~5 s for the torch load.
+    """
+    import urllib.parse
+    import urllib.request
+    try:
+        with urllib.request.urlopen(
+                CLIP_SERVER + urllib.parse.quote(q), timeout=5) as r:
+            return json.loads(r.read())
+    except Exception:
+        pass
     import subprocess
     if not os.path.exists(VISION_SCRIPT):
         raise SystemExit(f'{VISION_SCRIPT} missing: cannot embed the query '
@@ -465,16 +475,23 @@ def cmd_search(args):
     if getattr(args, 'vision', False) and not args.genotype:
         means, vmodel = pattern_image_means()
         qv = clip_query(args.query)
-        missing = sum(1 for i, _ in scores
-                      if meta['patterns'][i]['id'] not in means)
-        if missing:
-            print(f'# note: {missing} patterns have no image vector',
-                  file=sys.stderr)
         tot = (weights['text'] + weights['image']) or 1.0
         wt, wi = weights['text'] / tot, weights['image'] / tot
-        scores = [(i, wt * sc + wi * dense_dot(
-            qv, means.get(meta['patterns'][i]['id'], [0.0])))
-                  for i, sc in scores]
+        # A pattern with no evidence crops has no image vector; scoring
+        # it against [0.0] reads a missing measurement as a bad match and
+        # drags it down unfairly. Keep its text score instead and say so.
+        out, no_image = [], []
+        for i, sc in scores:
+            m = means.get(meta['patterns'][i]['id'])
+            if m is None:
+                no_image.append(meta['patterns'][i]['id'])
+                out.append((i, sc / wt if wt else sc))
+            else:
+                out.append((i, wt * sc + wi * dense_dot(qv, m)))
+        if no_image:
+            print('# note: no image vector, scored text-only: '
+                  + ', '.join(no_image), file=sys.stderr)
+        scores = out
         backend = f"{backend}+{vmodel}" 
 
     # intent boost: a request that names the section/site should not be

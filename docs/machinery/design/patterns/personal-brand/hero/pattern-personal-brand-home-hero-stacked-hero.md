@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
-prevalence: 0.7
-n: 30
+prevalence: 0.731
+n: 26
 evidence:
   - https://mobbin.com/sites/sections/6dcc8739-5445-4f4c-bfcd-7572ff663125?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/9ead51da-bbbe-4bc6-9b1f-38135aed7a30?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-personal-brand-home-hero-stacked-hero
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On personal-brand hero sections built for clients checking point of view, hold CTA restraint `single-primary`. This signature appears in 70% of 30 annotated screens (surface-rhythm, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On personal-brand hero sections built for clients checking point of view, hold CTA restraint `single-primary`. This signature appears in 73% of 26 annotated screens (surface-rhythm, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
 | `median_whitespace_share` | 0.609 |
-| `median_media_ratio` | 0.173 |
+| `median_media_ratio` | 0.238 |
 | `median_columns` | 2.0 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+26 annotated screens; 10 Mobbin citations in the frontmatter.

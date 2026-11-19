@@ -83,7 +83,7 @@ Checks: every plan composition ↔ one `.astro` in `src/components/`
 `class=` name ⊆ layer-defined ∪ config utilities (unknown class =
 fail); no `<style>`/hex/px in components; `system.astro` instantiates
 every component; no emoji; icons inline SVG at closed sizes/stroke;
-`astro build` exits 0. Operator approves.
+`astro build` exits 0.
 
 ## Done when
 

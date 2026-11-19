@@ -51,7 +51,7 @@ python3 tools/design-gate/run.py w2 <pipeline-dir> --stub <stub.md>
 
 Checks: STUB parses; every heading row has an inventory entry with
 body blocks; zone + heading_class bound; copy fields present; no
-placeholder strings. Then `--approve`.
+placeholder strings.
 
 ## Done when
 

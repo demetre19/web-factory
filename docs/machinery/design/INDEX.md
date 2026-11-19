@@ -50,7 +50,10 @@ IDs it names (via `rules.py`), then this file's row for the wave. A
 wave starts only when the previous wave's gate passed for the current
 input hashes AND the operator approved its artifact (`run.py`
 enforces). A wave ends when `gate.py <wave>` exits 0 **and** the
-operator approves; `gate.py <wave> <dir> --approve` records it in
+operator approves **in chat**; the orchestrator records it with
+`run.py approve <wave> <dir> --evidence "<operator chat text>"` — a
+signed approval record keyed by input + DNA hashes. A designer agent
+can never approve its own work (P.8). Recorded in
 `GATES.json`. The designer model never writes `GATES.json` /
 `REVIEW.json` — QA is never self-graded.
 

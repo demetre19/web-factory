@@ -6,8 +6,8 @@ page_types: [home]
 section_type: call-to-action
 speech_acts: [act]
 composition: full-bleed
-prevalence: 0.9
-n: 30
+prevalence: 0.897
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/9d4c1894-63c8-40ee-a561-8cc8a3c391cc?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/097c659b-3631-42e7-bb6f-69ded6f0de85?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-nonprofit-home-call-to-action-full-bleed
 
-Run one edge-to-edge media plane with a single centred statement over it. On nonprofit call-to-action sections built for donors checking impact, hold CTA restraint `single-primary`. This signature appears in 90% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Run one edge-to-edge media plane with a single centred statement over it. On nonprofit call-to-action sections built for donors checking impact, hold CTA restraint `single-primary`. This signature appears in 90% of 29 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.576 |
-| `median_media_ratio` | 0.124 |
-| `median_columns` | 2.0 |
+| `median_whitespace_share` | 0.585 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 2 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

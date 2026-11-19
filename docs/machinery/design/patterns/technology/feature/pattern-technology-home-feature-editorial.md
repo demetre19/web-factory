@@ -6,8 +6,8 @@ page_types: [home]
 section_type: feature
 speech_acts: [how]
 composition: editorial
-prevalence: 0.65
-n: 60
+prevalence: 0.654
+n: 52
 evidence:
   - https://mobbin.com/sites/sections/1ba5eee9-25f4-48a7-9eb3-48cdacddb654?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/977d5ff4-6788-4b46-84db-4a281538dba9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-technology-home-feature-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On technology feature sections built for developers checking the API surface, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 65% of 60 annotated screens (image-led-ratio, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On technology feature sections built for developers checking the API surface, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 65% of 52 annotated screens (image-led-ratio, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
@@ -47,4 +47,4 @@ Set the content as one measure-constrained prose column (≤65ch) — no cards. 
 
 ## Evidence
 
-60 annotated screens; 10 Mobbin citations in the frontmatter.
+52 annotated screens; 10 Mobbin citations in the frontmatter.

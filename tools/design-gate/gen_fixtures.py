@@ -1189,7 +1189,7 @@ def main():
         # operator rules and the scorecard see a real signed record
         ctx_p = gate.Ctx(pd)
         for wv in sorted(gate.APPROVABLE):
-            gate.write_approval(ctx_p, wv)
+            gate.write_approval(ctx_p, wv, evidence='fixture approval')
     # SPEC.md is generated, never hand-written (A F27)
     for slug in gate.Ctx(base_dir).pages():
         sp = os.path.join(base_dir, 'PAGES', slug, 'SPEC.md')

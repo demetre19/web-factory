@@ -6,8 +6,8 @@ page_types: [contact]
 section_type: contact
 speech_acts: [act]
 composition: form-panel
-prevalence: 0.667
-n: 30
+prevalence: 0.69
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/921aedd1-a3b1-4c3c-aa24-a5208212c47b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/ce206186-f0b6-45e1-862f-a1bcbcfc5c0c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-portfolio-contact-contact-form-panel
 
-Split the block into a form and its supporting copy, form on the dominant side. On portfolio contact sections built for clients scanning craft in seconds, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 67% of 30 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Split the block into a form and its supporting copy, form on the dominant side. On portfolio contact sections built for clients scanning craft in seconds, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 69% of 29 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.839 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 2.0 |
+| `median_whitespace_share` | 0.845 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 2 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

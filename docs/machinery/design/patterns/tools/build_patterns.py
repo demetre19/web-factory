@@ -173,7 +173,8 @@ def load(name):
             if 'error' in r:
                 continue
             out.append(r)
-    kept, dropped = filter_records(out)
+    kept, dropped = filter_records(out, label=(
+        0 if 'negatives' in name else 1))
     if any(dropped.values()):
         print(f'{name}: kept {len(kept)}/{len(out)} '
               f'(dropped {dropped})')

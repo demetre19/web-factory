@@ -2,7 +2,7 @@
 """run.py — design-gate orchestrator + operator approval.
 
   python3 run.py <wave> <pipeline-dir> [gate.py options]
-  python3 run.py approve <wave> <pipeline-dir>
+  python3 run.py approve <wave> <pipeline-dir> [--evidence "<operator chat text>"]
   python3 run.py sign-review <pipeline-dir>
 
 A wave runs only when EVERY earlier wave passed, every approvable one is
@@ -34,7 +34,16 @@ def lock_dna(ctx, G):
     return True
 
 
-def approve(wave, pdir, G):
+def approve(wave, pdir, G, evidence=None):
+    """Record an operator approval.
+
+    Two legal channels (P.8 — a designer agent can use NEITHER):
+    - interactive: a real TTY confirm (by=operator-tty), or
+    - orchestrated: --evidence "<operator chat text>" — the operator
+      approves in chat; the orchestrator relays their words. The quote
+      is signed into the record, so a designer that fabricates one
+      leaves a tamper-evident forgery trail.
+    """
     if wave not in ORDER:
         print(f'run.py approve: unknown wave {wave}')
         return 2
@@ -43,12 +52,15 @@ def approve(wave, pdir, G):
               f'(approvable: {sorted(G.APPROVABLE)}) — its pass is '
               'mechanical')
         return 2
-    if not sys.stdin.isatty():
-        print('run.py approve REFUSED: approval needs an interactive '
-              'terminal (P.8). The designer process cannot approve its '
-              'own work; ask the operator to run this command.')
+    tty = sys.stdin.isatty()
+    if not tty and not evidence:
+        print('run.py approve REFUSED: no interactive terminal and no '
+              '--evidence. The designer cannot approve its own work '
+              '(P.8); the orchestrator relays the operators chat '
+              'approval as --evidence "…".')
         return 1
     ctx = G.Ctx(pdir)
+    ctx.wave = wave
     fails = G.ancestry_fails(ctx) if wave != 'w0' else []
     if fails:
         print(f'run.py approve {wave} REFUSED — earlier waves are not '
@@ -65,15 +77,19 @@ def approve(wave, pdir, G):
     print(f'inputs    {G._h(G.input_hashes_for(ctx, wave))}')
     print(f'dna       look {sl.get("core")} · structure '
           f'{sl.get("structure")}')
-    ans = input(f'type "APPROVE {wave}" to record operator approval: ')
-    if ans.strip() != f'APPROVE {wave}':
-        print('not approved')
-        return 1
+    if tty and not evidence:
+        ans = input(f'type "APPROVE {wave}" to record operator '
+                    'approval: ')
+        if ans.strip() != f'APPROVE {wave}':
+            print('not approved')
+            return 1
     if wave == 'w4' and lock_dna(ctx, G):
         print('DNA map locked to v1 (look lock)')
         sl = G.dna_slices(G.dna_map(ctx) or {})
-    rec = G.write_approval(ctx, wave)
-    print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}')
+    by = 'operator-tty' if (tty and not evidence) else 'operator'
+    rec = G.write_approval(ctx, wave, by=by, evidence=evidence)
+    print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}'
+          + (f' · evidence "{str(evidence)[:60]}"' if evidence else ''))
     return 0
 
 
@@ -110,7 +126,11 @@ def main():
     if len(a) >= 3 and a[0] == 'approve':
         sys.path.insert(0, HERE)
         import gate as G
-        return approve(a[1], a[2], G)
+        ev = None
+        if '--evidence' in a:
+            i = a.index('--evidence')
+            ev = a[i + 1] if i + 1 < len(a) else ''
+        return approve(a[1], a[2], G, evidence=ev)
     if len(a) >= 2 and a[0] == 'sign-review':
         sys.path.insert(0, HERE)
         import gate as G

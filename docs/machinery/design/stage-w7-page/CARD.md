@@ -86,7 +86,7 @@ headings + fs verbatim vs STUB; page classes ⊆ layer ∪ utilities; no
 `<style>`/hex/px outside config+`:root`; components-used ⊆
 tile-components; viewport meta; 44px declared targets; SPEC verbatim;
 no emoji; icon sizes/stroke; speed + mobile budgets; PS.1–PS.6;
-rendered rhythm. Operator approves the built page.
+rendered rhythm.
 
 ## Done when
 

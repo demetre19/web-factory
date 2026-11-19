@@ -6,8 +6,8 @@ page_types: [product]
 section_type: trust-badges
 speech_acts: [proof]
 composition: badge-center
-prevalence: 0.7
-n: 30
+prevalence: 0.708
+n: 24
 evidence:
   - https://mobbin.com/sites/sections/8f1b9225-9ca2-422d-8d81-18c824da5ad7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/45f1e4d1-c686-4b34-bd62-07cba90dd057?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-ecommerce-product-trust-badges-badge-center
 
-Compress the proof into one tight horizontal band, not a full section. On ecommerce trust-badges sections built for shoppers deciding whether this product is right, hold imagery at `text-led`. This signature appears in 70% of 30 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Compress the proof into one tight horizontal band, not a full section. On ecommerce trust-badges sections built for shoppers deciding whether this product is right, hold imagery at `text-led`. This signature appears in 71% of 24 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.777 |
+| `median_whitespace_share` | 0.772 |
 | `median_media_ratio` | 0.0 |
-| `median_columns` | 3.0 |
+| `median_columns` | 3.5 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+24 annotated screens; 10 Mobbin citations in the frontmatter.

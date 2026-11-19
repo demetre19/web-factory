@@ -6,8 +6,8 @@ page_types: [collection]
 section_type: content
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.8
-n: 30
+prevalence: 0.88
+n: 25
 evidence:
   - https://mobbin.com/sites/sections/00a7b91d-fefc-496d-863e-60c8ab5a7344?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/6e82f83c-f6fb-410d-ad9c-cdd19a453bb8?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-fashion-collection-content-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On fashion content sections built for buyers reading brand codes, hold CTA restraint `single-primary`. This signature appears in 80% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On fashion content sections built for buyers reading brand codes, hold CTA restraint `single-primary`. This signature appears in 88% of 25 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.607 |
-| `median_media_ratio` | 0.033 |
-| `median_columns` | 2.0 |
+| `median_whitespace_share` | 0.691 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 2 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+25 annotated screens; 10 Mobbin citations in the frontmatter.

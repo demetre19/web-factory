@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: faq
 speech_acts: [objection]
 composition: faq
-prevalence: 0.767
-n: 30
+prevalence: 0.75
+n: 28
 evidence:
   - https://mobbin.com/sites/sections/0d5ad7b3-3a2c-441d-bd25-ecedf94b2a11?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/2ecc50d0-4f74-4e6b-be84-848204dc64d9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-services-service-detail-faq-faq
 
-Fold the questions into an accordion of real questions, first one open. On services faq sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 77% of 30 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Fold the questions into an accordion of real questions, first one open. On services faq sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 75% of 28 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
@@ -47,4 +47,4 @@ Fold the questions into an accordion of real questions, first one open. On servi
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+28 annotated screens; 10 Mobbin citations in the frontmatter.

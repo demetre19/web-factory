@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: split-media
-prevalence: 0.833
-n: 30
+prevalence: 0.828
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/3da0e92d-c14f-43a6-b0ae-c6ecc047e6b6?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/235e03b6-e847-44ca-ac7a-1ed3190a7d9c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-recruitment-home-hero-split-media
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On recruitment hero sections built for candidates scanning roles, hold disclosure `open`. This signature appears in 83% of 30 annotated screens (surface-rhythm, proof-type, disclosure-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On recruitment hero sections built for candidates scanning roles, hold disclosure `open`. This signature appears in 83% of 29 annotated screens (surface-rhythm, proof-type, disclosure-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.607 |
-| `median_media_ratio` | 0.46 |
-| `median_columns` | 1.0 |
+| `median_whitespace_share` | 0.611 |
+| `median_media_ratio` | 0.423 |
+| `median_columns` | 1 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

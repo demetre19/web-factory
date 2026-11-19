@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: full-bleed
-prevalence: 0.6
-n: 30
+prevalence: 0.607
+n: 28
 evidence:
   - https://mobbin.com/sites/sections/dcd77131-0901-4971-929e-00773c34a5f3?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/5dc7aaa8-2d70-4e8f-a1dd-675624f25142?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-healthcare-home-hero-full-bleed
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On healthcare hero sections built for patients checking safety and credentials, hold `compact` vertical rhythm, disclosure `open`. This signature appears in 60% of 30 annotated screens (density-tier, proof-type, disclosure-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On healthcare hero sections built for patients checking safety and credentials, hold `compact` vertical rhythm, disclosure `open`. This signature appears in 61% of 28 annotated screens (density-tier, proof-type, disclosure-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
@@ -47,4 +47,4 @@ Set the content as one measure-constrained prose column (≤65ch) — no cards. 
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+28 annotated screens; 10 Mobbin citations in the frontmatter.

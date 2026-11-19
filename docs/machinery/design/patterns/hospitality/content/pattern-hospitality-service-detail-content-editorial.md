@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: content
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.9
-n: 30
+prevalence: 0.962
+n: 26
 evidence:
   - https://mobbin.com/sites/sections/af185120-7104-478e-a5cb-7435e1297e93?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/385afdf1-172d-4a66-a008-01bad9e2d630?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-hospitality-service-detail-content-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On hospitality content sections built for guests checking atmosphere, hold CTA restraint `single-primary`. This signature appears in 90% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On hospitality content sections built for guests checking atmosphere, hold CTA restraint `single-primary`. This signature appears in 96% of 26 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
@@ -47,4 +47,4 @@ Set the content as one measure-constrained prose column (≤65ch) — no cards. 
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+26 annotated screens; 10 Mobbin citations in the frontmatter.

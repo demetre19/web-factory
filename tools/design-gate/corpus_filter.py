@@ -75,7 +75,51 @@ def keep(rec):
     return not is_quarantined(rec) and not is_blank_crop(rec)
 
 
-def filter_records(recs):
+def dedupe(recs):
+    """One record per image.
+
+    The same Mobbin screen can be returned by several `search_sections`
+    queries and land under different cell folders — identical pixels,
+    different labels. If it is also the same `domain`, it straddles the
+    train/test split and the score against it is leakage. Keep the first
+    occurrence, which is the cell the miner originally asked for.
+    """
+    seen = set()
+    out = []
+    for r in recs:
+        key = r.get('mobbin_id') or r.get('image')
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(r)
+    return out
+
+
+def dedupe_bands(recs):
+    """Near-identical bands cut from one page count once.
+
+    split_negatives produces strips that are visually the same (uniform
+    whitespace + boilerplate) under different names, which lets one weak
+    site dominate a fold. Two records with the same measurements on the
+    same site are the same band.
+    """
+    seen = set()
+    out = []
+    for r in recs:
+        site = r.get('site_name') or (r.get('image') or '')
+        key = (site.split('/')[-2] if '/' in site else site,
+               round(r.get('ink_density') or 0, 3),
+               round(r.get('whitespace_share') or 0, 3),
+               round(r.get('media_ratio') or 0, 3),
+               len(r.get('blocks') or []))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(r)
+    return out
+
+
+def filter_records(recs, label=1):
     out, dropped = [], {'quarantined': 0, 'blank': 0}
     for r in recs:
         if is_quarantined(r):
@@ -84,4 +128,11 @@ def filter_records(recs):
             dropped['blank'] += 1
         else:
             out.append(r)
+    n0 = len(out)
+    out = dedupe(out)
+    dropped['dupes'] = n0 - len(out)
+    if label == 0:
+        n0 = len(out)
+        out = dedupe_bands(out)
+        dropped['dup_bands'] = n0 - len(out)
     return out, dropped

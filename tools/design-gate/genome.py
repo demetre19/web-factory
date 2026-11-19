@@ -402,7 +402,8 @@ def load(mode='mobbin'):
             if 'error' in r:
                 continue
             out.append(r)
-    kept, dropped = filter_records(out)
+    kept, dropped = filter_records(out, label=(
+        0 if mode == 'negatives' else 1))
     if any(dropped.values()):
         print(f'{mode}: kept {len(kept)}/{len(out)} (dropped {dropped})')
     return kept

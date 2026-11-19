@@ -101,11 +101,6 @@ SECTION_WORDS = [
 CHROME = {'footer', 'headers'}
 MACRO = {'hero', 'testimonials', 'how-it-works', 'call-to-action',
          'logo-sections', 'trust-badges', 'pricing'}
-ANTI_GENES = ['layout-archetype', 'image-led-ratio', 'cta-restraint',
-              'heading-form', 'disclosure-tier', 'proof-type',
-              'whitespace-band', 'density-tier', 'media-treatment']
-
-
 # --------------------------------------------------------------- html model
 class Section:
     def __init__(self, attrs, classes, depth):
@@ -423,7 +418,7 @@ def cos_dense(a, b):
     return dot / (na * nb)
 
 
-def pattern_fit(rec, geno, bank, anti, section_known=True):
+def pattern_fit(rec, geno, bank, section_known=True):
     from genome import vector
     best = None
     site, page, sec = rec['site_type'], rec['page_type'], rec['section_type']
@@ -455,19 +450,12 @@ def pattern_fit(rec, geno, bank, anti, section_known=True):
     if best[2] < 0.7:
         reasons.append(f"genotype diverges from {best[1]} "
                        f"(cos={best[2]:.2f})")
-    # anti penalty: alleles common on negatives
-    pen = 0.0
-    hits = []
-    for gene in ANTI_GENES:
-        for row in (anti.get('anti', {}) or {}).get(gene, []):
-            if geno.get(gene) == row['allele'] and row['negative'] > 0.25:
-                pen += (row['negative'] - row['mobbin']) * 0.6
-                hits.append(f"{gene}={row['allele']} "
-                            f"(neg {row['negative']:.0%} vs mobbin "
-                            f"{row['mobbin']:.0%})")
-    if hits:
-        reasons.append('anti-pattern allele: ' + '; '.join(hits[:3]))
-    return max(0.0, min(1.0, best[0] - pen)), reasons, best[1]
+    # The allele-level anti rows live in anti.json for provenance only:
+    # every candidate allele appeared at similar rates in both corpora
+    # (VALIDATION.md §5), so no allele may subtract here. The anti signal
+    # that does separate the corpora is the *feature* rows, applied by
+    # anti_score to the feature vector — never to pattern_fit.
+    return max(0.0, min(1.0, best[0])), reasons, best[1]
 
 
 def score_file(path, site_type, page_type, weights, bank, anti):
@@ -491,7 +479,7 @@ def score_file(path, site_type, page_type, weights, bank, anti):
         fits = []
         for r in recs:
             geno, derived = geno_of(r)
-            fit, reasons, pid = pattern_fit(r, geno, bank, anti)
+            fit, reasons, pid = pattern_fit(r, geno, bank)
             fits.append(fit)
             comp = section_features(fit, ps, mm, 1.0)
             comp.update(section_shape(r))
@@ -555,26 +543,62 @@ def image_index():
     return _IMG
 
 
-def image_fit(rec):
-    """Best cosine between this crop and any curated pattern's mean look.
-
-    Section crops have a picture; the picture is what a visitor sees
-    first. This asks the cheap question the text index cannot: does this
-    crop resemble a look that already appears across curated evidence?
-    None when the crop has no vector (a live page has no screenshot).
-    """
+def _img_vec(key):
     ix = image_index()
     if not ix:
         return None
-    key = rec.get('image_key') or ''
     row = ix['meta']['keys'].get(key)
     if row is None:
         return None
     dim = ix['meta']['dim']
-    vec = struct.unpack_from(f'<{dim}e', ix['blob'], row * dim * 2)
+    return struct.unpack_from(f'<{dim}e', ix['blob'], row * dim * 2)
+
+
+def fold_means(train):
+    """Pattern means from TRAIN rows only.
+
+    The committed `pattern_means.json` averages every curated crop,
+    including any crop a test row would be scored against — the measured
+    +0.015 `img_fit` lift was partly that self-inclusion. Validation
+    rebuilds means from the training half exactly the way
+    `build_bank_from` rebuilds the text bank.
+    """
+    groups = {}
+    for r in train:
+        if r['label'] != 1:
+            continue
+        vec = _img_vec(r.get('image_key'))
+        if vec is None:
+            continue
+        groups.setdefault(r.get('pattern_id') or '_global', []).append(vec)
+    out = {}
+    for pid, vecs in groups.items():
+        d = len(vecs[0])
+        m = [sum(v[i] for v in vecs) / len(vecs) for i in range(d)]
+        nm = math.sqrt(sum(x * x for x in m)) or 1.0
+        out[pid] = [x / nm for x in m]
+    return out
+
+
+def image_fit(rec, means=None):
+    """Best cosine between this crop and the curated pattern means.
+
+    Section crops have a picture; the picture is what a visitor sees
+    first. This asks the cheap question the text index cannot: does this
+    crop resemble a look that already appears across curated evidence?
+    `means` overrides the committed file (validation rebuilds them per
+    fold). None when the crop has no vector (a live page has no
+    screenshot).
+    """
+    ix = image_index()
+    if not ix:
+        return None
+    vec = _img_vec(rec.get('image_key') or '')
+    if vec is None:
+        return None
     nv = math.sqrt(sum(v * v for v in vec)) or 1.0
     best = 0.0
-    for m in ix['means'].values():
+    for m in (means if means is not None else ix['means']).values():
         nm = math.sqrt(sum(v * v for v in m)) or 1.0
         c = sum(a * b for a, b in zip(vec, m)) / (nv * nm)
         if c > best:
@@ -614,9 +638,6 @@ def section_features(fit, ps, mm, anti_val):
         'pattern_fit': fit,
         'ps': (sum(ps.values()) / len(ps)) if ps else 0.5,
         'macro_micro': mm,
-        'rule_pass': (sum(1 for k, t in PS_THRESHOLDS.items()
-                          if ps.get(k, 0.0) >= t) / len(PS_THRESHOLDS))
-        if ps else 0.5,
         'anti': max(0.0, min(1.0, anti_val)),
     }
     for k in PS_KEYS:
@@ -646,14 +667,14 @@ def build_dataset(seed=7):
             if 'error' in r:
                 continue
             recs.append(r)
-        recs, dropped = filter_records(recs)
+        recs, dropped = filter_records(recs, label=label)
         if any(dropped.values()):
             print(f'{name}: kept {len(recs)} (dropped {dropped})',
                   file=sys.stderr)
         for r in recs:
             g, _ = genotype(r)
             known = r.get('section_type') not in (None, 'other')
-            fit, _, pid = pattern_fit(r, g, bank, anti, section_known=known)
+            fit, _, pid = pattern_fit(r, g, bank, section_known=known)
             ps = r.get('ps') or {}
             mm = 1.0 - min(1.0, abs((ps.get('main_content_share', 0.8)) - 0.8)
                            / 0.35)
@@ -679,6 +700,8 @@ def build_dataset(seed=7):
                 'surface': r.get('surface'),
                 'media_ratio': r.get('media_ratio'),
                 'genotype': g,
+                'pattern_id': pid,
+                'image_key': r['image_key'],
             })
     rng = random.Random(seed)
     rng.shuffle(rows)
@@ -828,7 +851,52 @@ def section_shape(rec):
     }
 
 
-def cross_fit(rows, anti, folds=4):
+# The anti rows must be cut on the data the model trains on, not the
+# corpus being scored: choosing cut thresholds by argmax-lift over the
+# full corpus leaks the held-out half into feature engineering. This is
+# the same computation build_patterns.py runs once over the corpus —
+# _validate_once runs it per fold on the training half.
+ANTI_RULES = [
+    ('s_row_regularity', 'high', [0.80, 0.85, 0.90, 0.95]),
+    ('s_cta_presence', 'low', [0.50]),
+    ('s_block_pace', 'low', [0.20, 0.40, 0.60]),
+    ('s_prose_mass', 'high', [0.40, 0.60, 0.80]),
+]
+
+
+def feature_anti_rows(pos, neg, getter):
+    """pos/neg: item lists; getter: item -> feature dict. Same gates as
+    the corpus pass: negative rate >= 0.33, lift >= 1.8."""
+    rows = []
+    for feature, direction, cuts in ANTI_RULES:
+        best = None
+        for cut in cuts:
+            def rate(items):
+                vals = [getter(r)[feature] for r in items]
+                hit = [v for v in vals if (v >= cut if direction == 'high'
+                                           else v < cut)]
+                return len(hit) / max(1, len(vals))
+            pm, pn = rate(pos), rate(neg)
+            lift = (pn + 0.01) / (pm + 0.01)
+            if pn >= 0.33 and lift >= 1.8 and (best is None
+                                               or lift > best['lift']):
+                best = {'feature': feature, 'direction': direction,
+                        'cut': cut, 'mobbin': round(pm, 3),
+                        'negative': round(pn, 3), 'lift': round(lift, 2),
+                        'penalty': round(min(0.25, (pn - pm) * 0.5), 3)}
+        if best:
+            rows.append(best)
+    return sorted(rows, key=lambda r: -r['lift'])
+
+
+def fold_anti(train):
+    pos = [r for r in train if r['label'] == 1]
+    neg = [r for r in train if r['label'] == 0]
+    return {'features': feature_anti_rows(pos, neg,
+                                          lambda r: r['features'])}
+
+
+def cross_fit(rows, folds=4):
     """Out-of-fold pattern_fit for training rows.
 
     Rows are grouped by domain so a site never informs its own bank fold.
@@ -842,11 +910,15 @@ def cross_fit(rows, anti, folds=4):
         if not held or not rest:
             continue
         bank = build_bank_from(rest)
+        means = fold_means(rest)
         for r in held:
             known = r['section_type'] not in (None, 'other')
-            fit, _, _ = pattern_fit(r, r['genotype'], bank, anti,
+            fit, _, _ = pattern_fit(r, r['genotype'], bank,
                                     section_known=known)
             r['features']['pattern_fit'] = fit
+            v = image_fit(r, means=means)
+            if v is not None:
+                r['features']['img_fit'] = v
 
 
 def cmd_validate(args):
@@ -895,7 +967,9 @@ def _validate_once(args):
     train_d = set(domains[:cut])
     train = [r for r in rows if r['domain'] in train_d]
     test = [r for r in rows if r['domain'] not in train_d]
-    anti = load_json(os.path.join(DATA, 'anti.json'), {})
+    # anti cuts are fit on TRAIN only — argmax-lift over the full corpus
+    # leaked the held-out half into feature engineering (ADV review F2).
+    anti = fold_anti(train)
     # Rebuild the pattern bank from TRAIN domains only. Test rows are
     # scored against it (no self-inclusion); train rows are scored
     # out-of-fold inside train, so the coefficients are fitted on the
@@ -903,12 +977,20 @@ def _validate_once(args):
     # inner folds the train fits are computed against their own cell and
     # run ~3x higher than test fits, which distorts every coefficient.
     train_bank = build_bank_from(train)
-    cross_fit(train, anti, folds=4)
+    cross_fit(train, folds=4)
     for r in test:
         known = r['section_type'] not in (None, 'other')
-        fit, _, _ = pattern_fit(r, r['genotype'], train_bank, anti,
+        fit, _, _ = pattern_fit(r, r['genotype'], train_bank,
                                 section_known=known)
         r['features']['pattern_fit'] = fit
+    # fold-fit anti + means for every row (test rows now see no crop
+    # from their own side; train rows were recomputed inside cross_fit)
+    means = fold_means(train)
+    for r in rows:
+        r['features']['anti'], _ = anti_score(r['features'], anti)
+        v = image_fit(r, means=means)
+        if v is not None:
+            r['features']['img_fit'] = v
     keys = list(DEFAULT_WEIGHTS)
     if getattr(args, 'image', False):
         missing = sum(1 for r in rows if 'img_fit' not in r['features'])

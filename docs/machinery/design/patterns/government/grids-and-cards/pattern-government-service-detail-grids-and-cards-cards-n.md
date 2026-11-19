@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: grids-and-cards
 speech_acts: [detail]
 composition: cards-n
-prevalence: 0.633
-n: 30
+prevalence: 0.655
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/49df0d35-ba50-4c6a-9b13-ed63edabf668?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/80ce640b-eb1b-4e86-8131-7789528a0f5b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-government-service-detail-grids-and-cards-cards-n
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On government grids-and-cards sections built for citizens finding a service, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 63% of 30 annotated screens (image-led-ratio, density-tier, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On government grids-and-cards sections built for citizens finding a service, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 66% of 29 annotated screens (image-led-ratio, density-tier, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.811 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 3.0 |
+| `median_whitespace_share` | 0.812 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

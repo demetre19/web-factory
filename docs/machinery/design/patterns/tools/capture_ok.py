@@ -69,12 +69,17 @@ ERRORS = [
     (r'site not found|no such host|dns (error|failure)', 'dns'),
     (r'something went wrong|error occurred', 'error_page'),
 ]
-PARKED = [
+# Strong parked signals: only a registrar/parking service writes these.
+PARKED_STRONG = [
     (r'domain (is|may be) for sale', 'domain_for_sale'),
     (r'buy this domain|this domain is parked', 'parked_domain'),
-    (r'godaddy.*parked|sedo\.com', 'parking_service'),
-    (r'coming soon|under construction|site is (being )?built', 'placeholder'),
+    (r'godaddy.*parked|sedo\.com|afternic|hugedomains', 'parking_service'),
+    (r'expired domain', 'expired'),
 ]
+# Weak signals need a tiny page AND the phrase in the *title* — a real
+# marketing page says "36 projects under construction" all the time.
+PARKED_WEAK = r'^(coming soon|under construction|we are (being )?built|launching soon|parking page)$'
+
 COOKIE = [(r'we value your privacy|we use cookies|accept (all )?cookies',
            'cookie_wall')]
 
@@ -146,9 +151,12 @@ def text_verdict(pr):
     for pat, code in ERRORS:
         if re.search(pat, hay):
             return 'error', code
-    for pat, code in PARKED:
+    for pat, code in PARKED_STRONG:
         if re.search(pat, hay):
             return 'parked', code
+    title = (pr.get('title') or '').strip().lower()
+    if re.match(PARKED_WEAK, title) and len(hay) < 350:
+        return 'parked', 'placeholder_title'
     return None
 
 

@@ -47,6 +47,24 @@ def rel(p):
     return os.path.relpath(p, DATA).replace(os.sep, '/')
 
 
+def filtered_record_images():
+    """Annotation images that may count as evidence (corpus_filter)."""
+    import sys
+    sys.path.insert(0, os.path.normpath(os.path.join(
+        PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
+    from corpus_filter import keep
+    ok = set()
+    for fn in ('annotations.jsonl', 'annotations_negatives.jsonl'):
+        p = os.path.join(DATA, fn)
+        if not os.path.exists(p):
+            continue
+        for line in open(p):
+            r = json.loads(line)
+            if 'error' not in r and keep(r):
+                ok.add(rel(r['image']))
+    return ok
+
+
 def walk():
     for corpus in CORPORA:
         root = os.path.join(DATA, corpus)
@@ -156,16 +174,65 @@ def cmd_query(text):
     print(json.dumps([round(float(x), 6) for x in f[0].float().cpu()]))
 
 
+PORT = 8765
+
+
+def cmd_serve():
+    """Warm CLIP server: `GET /embed?text=...` -> JSON vector.
+
+    `uv run` pays the torch+model load once per `query` call (~5 s);
+    search calls the server instead and gets ~10 ms answers. Run it:
+        uv run --quiet embed_images.py serve
+    """
+    import http.server
+    import urllib.parse
+    model, _, torch, dev = load_model()
+    import open_clip
+    tok = open_clip.get_tokenizer(MODEL)
+
+    class H(http.server.BaseHTTPRequestHandler):
+        def do_GET(self):
+            u = urllib.parse.urlparse(self.path)
+            if u.path != '/embed':
+                self.send_error(404)
+                return
+            text = urllib.parse.parse_qs(u.query).get('text', [''])[0]
+            if not text.strip():
+                self.send_error(400, 'empty text')
+                return
+            with torch.no_grad():
+                f = model.encode_text(tok([text]).to(dev))
+                f = f / f.norm(dim=-1, keepdim=True)
+            body = json.dumps([round(float(x), 6)
+                               for x in f[0].float().cpu()]).encode()
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def log_message(self, *a):
+            pass
+
+    srv = http.server.HTTPServer(('127.0.0.1', PORT), H)
+    print(f'clip query server on 127.0.0.1:{PORT}', file=sys.stderr)
+    srv.serve_forever()
+
+
 def cmd_means():
     """Mean image vector per pattern, from its evidence screens."""
     import numpy as np
     meta, arr = read_vectors()
     pidx = json.load(open(os.path.join(DATA, 'pattern-index.json')))
+    import sys
+    sys.path.insert(0, os.path.normpath(os.path.join(
+        PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
+    from corpus_filter import keep
     cells = {}
     with open(os.path.join(DATA, 'annotations.jsonl')) as f:
         for line in f:
             r = json.loads(line)
-            if 'error' in r:
+            if 'error' in r or not keep(r):
                 continue
             cell = (r['site_type'], r['page_type'], r['section_type'])
             cells.setdefault(cell, []).append(rel(r['image']))
@@ -199,6 +266,8 @@ if __name__ == '__main__':
         cmd_build()
     elif cmd == 'query':
         cmd_query(' '.join(sys.argv[2:]))
+    elif cmd == 'serve':
+        cmd_serve()
     elif cmd == 'means':
         cmd_means()
     else:

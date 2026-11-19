@@ -6,8 +6,8 @@ page_types: [cart]
 section_type: mini-cart
 speech_acts: [detail]
 composition: form-panel
-prevalence: 0.833
-n: 30
+prevalence: 0.828
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/199ad6b7-94e1-4b9d-9021-4080a5167dd6?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/427c09c6-7619-4f27-849c-9a309bdaeced?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-ecommerce-cart-mini-cart-form-panel
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On ecommerce mini-cart sections built for shoppers deciding whether this product is right, hold CTA restraint `single-primary`. This signature appears in 83% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On ecommerce mini-cart sections built for shoppers deciding whether this product is right, hold CTA restraint `single-primary`. This signature appears in 83% of 29 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.726 |
-| `median_media_ratio` | 0.15 |
-| `median_columns` | 2.5 |
+| `median_whitespace_share` | 0.727 |
+| `median_media_ratio` | 0.301 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

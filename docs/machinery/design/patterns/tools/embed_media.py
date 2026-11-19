@@ -185,13 +185,17 @@ def rel(p):
 
 
 def records():
+    import sys
+    sys.path.insert(0, os.path.normpath(os.path.join(
+        PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
+    from corpus_filter import keep
     for fn in ('annotations.jsonl', 'annotations_negatives.jsonl'):
         p = os.path.join(DATA, fn)
         if not os.path.exists(p):
             continue
         for line in open(p):
             r = json.loads(line)
-            if 'error' in r:
+            if 'error' in r or not keep(r):
                 continue
             yield r
 

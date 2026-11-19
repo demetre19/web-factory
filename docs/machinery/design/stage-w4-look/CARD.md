@@ -56,7 +56,7 @@ python3 tools/design-gate/run.py w4 <pipeline-dir> --design <variant>
 
 Checks: variants.html present (HTML picker), exactly 3 knob vectors, deltas
 applied + within bounds, sheet in both modes, only passing variants
-rendered. Then the operator approves (`run.py approve w4` — locks DNA v1).
+rendered. Then the operator approves in chat → `run.py approve w4 <dir> --evidence "…"` (locks DNA v1).
 
 ## Done when
 

@@ -6,26 +6,26 @@ page_types: [product]
 section_type: add-to-cart
 speech_acts: [act]
 composition: form-panel
-prevalence: 0.733
-n: 30
+prevalence: 0.615
+n: 13
 evidence:
-  - https://mobbin.com/sites/sections/a5c384c1-a04c-4c45-b077-25f5f5d646d9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/152dd779-b896-4cca-9992-79b6b6400f06?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/710c23c3-efd9-4a9b-a1f3-cbdc9543c6a1?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/1f6bce6f-d8a7-4d4e-8ed8-6d9c1e2624cb?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/79ffdba1-7d86-4521-a22a-f65994c02c93?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/01b34e93-b604-4c50-ac12-333b6c84ae2f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/720fa829-c805-4cef-9ca7-b38ff75ccb5b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/86bbe8da-3c5d-402e-98ff-9cfed10b771b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/a4b37f7f-e860-44df-b5d0-2df12b02a540?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/7f44fecc-1d71-407a-81e9-9d5d8aa10512?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/ff43a6aa-be59-4fc6-a10e-fef4c3cc7bfd?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/2e4ac269-3371-4af8-9206-461ce6ae00e9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/ef57d6d9-24d2-49f4-b140-e07ad349c98c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/2373ac41-c821-4273-8fae-667dab7e3fe5?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/a285bae6-a618-4c98-a95a-d27272eec13b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/146941b6-b7d2-45f4-85e7-abda384930a1?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/eaf936c9-ea1f-493a-81d3-1dee50315a4b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-implies_rules: [C.1, C.6, L.1, L.10, L.5, W.2, W.3]
-enforced_by: [check_contrast, check_emphasis, check_rhythm, check_section_enums, check_wireframe_lock, check_wireframe_tags]
-consumes: [gene-layout-archetype, gene-surface-rhythm, gene-cta-restraint]
+implies_rules: [L.1, L.10, L.5, V.1, V.3, W.2, W.3]
+enforced_by: [check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags]
+consumes: [gene-layout-archetype, gene-image-led-ratio, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
   layout-archetype: stacked-center
-  surface-rhythm: one-contrast-moment
+  image-led-ratio: text-led
   cta-restraint: single-primary
 links:
   index: patterns-index
@@ -35,16 +35,16 @@ links:
 
 # pattern-jewellery-product-add-to-cart-form-panel
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On jewellery add-to-cart sections built for buyers reading craft and provenance, hold CTA restraint `single-primary`. This signature appears in 73% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On jewellery add-to-cart sections built for buyers reading craft and provenance, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 62% of 13 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.712 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 2.0 |
+| `median_whitespace_share` | 0.755 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 2 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+13 annotated screens; 10 Mobbin citations in the frontmatter.

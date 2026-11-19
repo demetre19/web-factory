@@ -91,7 +91,7 @@ query|claim · `zone` macro|micro|end|chrome.
 python3 tools/design-gate/run.py w3 <pipeline-dir> --wireframe <cards/index.html> --design <id> --stub <stub.md>
 ```
 Checks: `data-*` 1:1 + order + wf_ref; all gates above; enums;
-`CHECKLIST/w3.md` no blank evidence. Operator approves locked rows.
+`CHECKLIST/w3.md` no blank evidence. Operator approves the layout in chat → `run.py approve w3 <dir> --evidence "…"`.
 
 ## Done when
 

@@ -6,27 +6,27 @@ page_types: [search-results]
 section_type: product-grid
 speech_acts: [detail]
 composition: cards-n
-prevalence: 0.6
-n: 30
+prevalence: 0.615
+n: 13
 evidence:
-  - https://mobbin.com/sites/sections/663b377d-7e4e-4515-ba06-2cc80fe557cc?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/21c4afa1-221a-4626-ad57-4f4f756fed6c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/2c42876f-e42f-49dc-ba18-b6acc4bdf204?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/727cda9d-155d-4d38-aedd-e330633e95f7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/791c6c1a-758c-4c97-aaa0-b90bfdaa1eb0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/18f7bbce-63f4-449c-9fd3-d3bcc1693a8f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/0bc7c20d-aec0-43b0-8104-20c3ba2cc371?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/8708a2c6-be9c-4413-89da-014259be404e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/07cd4f69-a389-4ad5-b64c-ff53f8193212?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/c39270b0-f69d-4ab5-9991-b3669ee6ded0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/da619de2-60ed-4251-b81e-1914a5f2c7c0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/151e0888-a1ff-4e13-8901-294af81fa94b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/ca08c563-e78d-4eec-9b62-faf7dc7c952e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-implies_rules: [C.1, C.6, L.1, L.10, L.5, W.2, W.3]
-enforced_by: [check_contrast, check_emphasis, check_rhythm, check_section_enums, check_wireframe_lock, check_wireframe_tags]
-consumes: [gene-layout-archetype, gene-surface-rhythm, gene-cta-restraint]
+  - https://mobbin.com/sites/sections/9c4d05e3-7ce2-4f2f-b5ac-bf417bcc2e7e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/601e9bbf-c47f-4fee-8384-28ad5a58bc88?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/84e5f6f6-bc86-489d-a542-16f0d8fc0d89?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/1a506d10-b4df-4b86-aea4-ccfd45d58161?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/7882a603-f260-4a98-aa08-e5ce49f8ee6a?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/5c922356-78fb-4ae4-bbf1-263be4df8934?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+implies_rules: [G.3, L.7, W.2, W.3, W.5]
+enforced_by: [check_emphasis, check_rhythm, check_spacing_scale, check_speech_acts, check_wireframe_tags]
+consumes: [gene-density-tier, gene-cta-restraint, gene-proof-type]
 used_in: [w4, w5]
 genotype:
-  layout-archetype: card-grid-4
-  surface-rhythm: one-contrast-moment
+  density-tier: regular
   cta-restraint: single-primary
+  proof-type: none
 links:
   index: patterns-index
   composition: section-catalog#cards-n
@@ -35,16 +35,16 @@ links:
 
 # pattern-ecommerce-search-results-product-grid-cards-n
 
-Lay the content as a four-up card row. On ecommerce product-grid sections built for shoppers deciding whether this product is right, hold CTA restraint `single-primary`. This signature appears in 60% of 30 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On ecommerce product-grid sections built for shoppers deciding whether this product is right, hold `regular` vertical rhythm, CTA restraint `single-primary`. This signature appears in 62% of 13 annotated screens (density-tier, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.662 |
-| `median_media_ratio` | 0.288 |
-| `median_columns` | 4.0 |
+| `median_whitespace_share` | 0.641 |
+| `median_media_ratio` | 0.262 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+13 annotated screens; 10 Mobbin citations in the frontmatter.

@@ -4110,6 +4110,10 @@ def approval_state(ctx, wave):
         return 'missing'
     if not key or rec.get('sig') != _sig(rec, key):
         return 'unsigned'
+    # the record must prove provenance: an interactive confirm, or the
+    # operator's chat words relayed by the orchestrator (P.8)
+    if not rec.get('evidence') and rec.get('by') != 'operator-tty':
+        return 'no-evidence'
     sl = dna_slices(dna_map(ctx) or {})
     if rec.get('inputs') != _h(input_hashes_for(ctx, wave)):
         return 'stale'
@@ -4119,7 +4123,7 @@ def approval_state(ctx, wave):
     return 'ok'
 
 
-def write_approval(ctx, wave, by='operator'):
+def write_approval(ctx, wave, by='operator', evidence=None):
     key = op_key(create=True)
     sl = dna_slices(dna_map(ctx) or {})
     rec = {'wave': wave,
@@ -4128,6 +4132,8 @@ def write_approval(ctx, wave, by='operator'):
            'by': by,
            'ts': __import__('datetime').datetime.now().isoformat(
                timespec='seconds')}
+    if evidence:
+        rec['evidence'] = str(evidence)[:300]
     rec['sig'] = _sig(rec, key)
     p = approvals_path(ctx)
     os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -4372,6 +4378,39 @@ def cli_selftest():
     r = run('no-such-rule-xyz')
     if r.returncode == 0:
         f.append('rules.py accepts a query that matches nothing')
+    # run.py approve end-to-end: the evidence path must record a real
+    # signed approval without a TTY (P0 regression — Ctx had no wave)
+    tmpd = tempfile.mkdtemp()
+    try:
+        pd_ = os.path.join(tmpd, 'p')
+        fxd = os.path.join(HERE, 'fixtures')
+        shutil.copytree(os.path.join(fxd, '_base'), pd_, symlinks=True)
+        gp = os.path.join(pd_, 'GATES.json')
+        ctx_t = Ctx(pd_)
+        gates = {'w0': {'pass': True,
+                        'inputs_sha256': input_hashes_for(ctx_t, 'w0')},
+                 'w1': {'pass': True,
+                        'inputs_sha256': input_hashes_for(ctx_t, 'w1')}}
+        json.dump(gates, open(gp, 'w'))
+        env = dict(os.environ)
+        r = subprocess.run(
+            [sys.executable, os.path.join(HERE, 'run.py'), 'approve',
+             'w1', pd_], capture_output=True, text=True, env=env)
+        if 'REFUSED' not in r.stdout + r.stderr:
+            f.append('run.py approve without TTY/evidence did not refuse')
+        r = subprocess.run(
+            [sys.executable, os.path.join(HERE, 'run.py'), 'approve',
+             'w1', pd_, '--evidence', 'operator approved w1 in chat'],
+            capture_output=True, text=True, env=env)
+        if r.returncode != 0:
+            f.append('run.py approve --evidence failed: '
+                     f'{(r.stdout + r.stderr).strip().splitlines()[-2:]}')
+        else:
+            st = approval_state(Ctx(pd_), 'w1')
+            if st != 'ok':
+                f.append(f'signed approval not verifiable: {st}')
+    finally:
+        shutil.rmtree(tmpd, ignore_errors=True)
     # gate.py round audits a standalone picker HTML end to end
     lp = os.path.join(HERE, 'fixtures', '_base', 'preview', 'layouts.html')
     r = subprocess.run([sys.executable, os.path.join(HERE, 'gate.py'),
@@ -4517,7 +4556,7 @@ def cli_selftest():
         if g.get('w2', {}).get('pass'):
             f.append('run.py gated w2 without its ancestors being clean')
         # signed approval → w2 runs, then a changed DNA core stops it
-        gate_self.write_approval(c1, 'w1')
+        gate_self.write_approval(c1, 'w1', evidence='selftest')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
                            capture_output=True, text=True, env=env)
         if 'approval' in r.stdout and 'REFUSED' in r.stdout:

@@ -58,7 +58,7 @@ python3 tools/design-gate/run.py w1 <pipeline-dir> --stub <stub.md>
 W1 fails when images exist without classification, a meta.json misses
 `capture_status: ok`, MOBBIN-REFS rows <3/page-type, genotype/profile
 invalid, or the discovery is not operator-approved
-(`run.py approve w1`).
+(operator approves in chat → `run.py approve w1 <dir> --evidence "…"`).
 
 ## Done when
 

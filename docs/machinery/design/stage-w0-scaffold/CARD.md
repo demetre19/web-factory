@@ -48,7 +48,7 @@ python3 tools/design-gate/gate.py w0 <pipeline-dir>
 Checks: `site/package.json` + `astro.config.mjs` +
 `src/styles/global.css` exist with the template's pins; `astro build`
 exits 0; Tailwind directive present. Then
-`gate.py w0 <pipeline-dir> --approve`.
+`run.py approve w0 <dir> --evidence "<operator chat approval>"` — the operator approves in chat; the orchestrator records it.
 
 ## Done when
 
