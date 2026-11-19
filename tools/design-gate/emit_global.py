@@ -202,11 +202,12 @@ def tokens_json(dna):
     knobs; roles from the map's modes (dna_tokens derive when absent)."""
     knobs = dict(dna.get('knobs') or {})
     modes = dna.get('modes') or {}
-    if not modes.get('light') or not modes.get('dark') or not knobs:
+    if not modes.get('light') or not modes.get('dark'):
         rec = _derive_tokens(dna)
-        if not knobs:
-            knobs = dict(rec.get('knobs') or {})
         modes = rec.get('modes') or modes
+    if not knobs:
+        rec = _derive_tokens(dna)
+        knobs = dict(rec.get('knobs') or {})
     def _roles(mode):
         m = modes.get(mode) or {}
         return dict(m.get('roles') or m)  # tolerate {light:{roles}} shape
@@ -232,8 +233,12 @@ def _derive_tokens(dna):
         'profile-', '').split('/')[0] or 'services'
     if not geno:
         return {'knobs': {}, 'modes': {}}
+    if not accent:
+        raise SystemExit(
+            'emit_global.tokens_json: invariants.accent missing — '
+            'the token layer never invents a hex (F10)')
     return dna_tokens.from_genotype(
-        geno, vertical, {'accent': accent or '#0055AA'})
+        geno, vertical, {'accent': accent})
 
 
 def tailwind_config(tokens):

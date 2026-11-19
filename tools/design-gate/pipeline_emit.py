@@ -167,7 +167,8 @@ def _system(ctx, comps):
     imps = '\n'.join(
         f"import {gate.camel(c)} from '../components/{c}.astro';"
         for c in comps)
-    tags = ''.join(f'<{gate.camel(c)} />' for c in comps)
+    tags = ''.join(f'<div data-comp="{c}"><{gate.camel(c)} /></div>'
+                   for c in comps)
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
        "import '../styles/global.css';\n"
