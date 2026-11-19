@@ -7994,6 +7994,8 @@ def build_graph():
                         v = json.load(open(os.path.join(dp, fn)))
                     except Exception:
                         continue
+                    if not isinstance(v, dict):
+                        continue
                     comp = v.get('wf_composition')
                     if v.get('family') and comp:
                         fam.setdefault(v['family'], set()).add(comp)
