@@ -24,7 +24,11 @@ from brixies_topo import NAME_MAP  # noqa: E402
 TYPE_MAP = dict(NAME_MAP)
 
 CLS = re.compile(r'class="([^"]*)"')
-TAG = re.compile(r'<([a-zA-Z][a-zA-Z0-9]*)')
+# class strings inside JSX: className="..", className={`..`}, cn("..")
+TSX_CLS = re.compile(
+    "className\\s*=\\s*[{\\s]*[\"'\\x60]([^\"'\\x60{}]+)"
+    "|\\bcn\\(\\s*[\"'\\x60]([^\"'\\x60]+)")
+TAG = re.compile(r'</?([a-zA-Z][a-zA-Z0-9]*)')
 GRID_COLS = re.compile(
     r'(?:^| )(?:(\w+):)?grid-cols-(\d+|none|subgrid)')
 FLEX_DIR = re.compile(r'(?:^| )(?:(\w+):)?flex-(col|row|col-reverse|'
@@ -39,26 +43,39 @@ RESP = re.compile(r'(?:^| )(sm|md|lg|xl|2xl):')
 
 
 def dom_depth(html):
-    """max tag nesting depth (cheap parse — tags only)."""
+    """max element nesting depth (self-contained tag scanner)."""
+    VOID = {'meta', 'link', 'br', 'hr', 'img', 'input', 'path',
+            'circle', 'line', 'rect', 'use', 'stop', 'source',
+            'area', 'base', 'col', 'embed', 'track', 'wbr'}
     depth = mx = 0
     for m in TAG.finditer(html):
-        tag = m.group(1).lower()
-        ctx = html[max(0, m.start() - 2):m.start()]
-        if tag in ('meta', 'link', 'br', 'hr', 'img', 'input', 'path',
-                   'svg', 'circle', 'line', 'rect', 'use'):
+        if html[m.start() + 1] == '/':
+            depth = max(0, depth - 1)
             continue
-        if ctx.endswith('</'):
-            depth = max(0, depth - 1)
-        elif not html[m.end() - 2:m.end()].endswith('/'):
-            depth += 1
-            mx = max(mx, depth)
-        else:
-            depth = max(0, depth - 1)
+        tag = m.group(1).lower()
+        close = html.find('>', m.end())
+        if close == -1:
+            continue
+        if html[close - 1] == '/' or tag in VOID:
+            continue
+        depth += 1
+        mx = max(mx, depth)
     return mx
 
 
 def convert_html(path, kit=None):
-    html = open(path, encoding='utf-8', errors='replace').read()
+    src = open(path, encoding='utf-8', errors='replace').read()
+    html = src
+    if path.endswith('.tsx') or path.endswith('.jsx'):
+        # class strings live in JSX className / cn() calls
+        import itertools
+        parts = []
+        for m in TSX_CLS.finditer(src):
+            parts += [g for g in m.groups() if g]
+        cls_src = ' '.join(parts).replace("'", '').replace(
+            '`', '').replace('"', '')
+        html = ' '.join(f'class="{c}"' for c in cls_src.split('  '))
+        html = f'class="{cls_src}"'
     rel = os.path.basename(path)
     kit = kit or ''
     slug = os.path.splitext(rel)[0]
@@ -103,7 +120,7 @@ def convert_html(path, kit=None):
         'kit': kit,
         'title': slug,
         'topology_id': rid,
-        'nesting_depth': dom_depth(html),
+        'nesting_depth': dom_depth(src),
         'direction_ratio': round(rows / tot, 2) if tot else 0.0,
         'column_schedule': sched,
         'seam_style': seam,
@@ -127,8 +144,8 @@ def main():
         out = []
         for root, _, files in os.walk(d):
             for fn in sorted(files):
-                if fn.endswith(('.html', '.htm')) and not \
-                        fn.startswith('_'):
+                if fn.endswith(('.html', '.htm', '.tsx')) and not \
+                        fn.startswith('_') and '.spec.' not in fn:
                     try:
                         out.append(convert_html(
                             os.path.join(root, fn),
