@@ -51,8 +51,9 @@ def theme_sheet(vibe, scope='[data-vibe]'):
   --radius-xl:{c['radius']};
   --font-sans:{c['font_body']};
   --font-display:{c['font_display']};
-}}
-{scope}.band{{
+  --section-py:{c['section_py']};
+  --gap:{c['gap']};
+  --space-container:{c['container']};
   background:{c['surface']};
   color:{c['fg']};
   font-family:{c['font_body']};
@@ -62,10 +63,16 @@ def theme_sheet(vibe, scope='[data-vibe]'):
   font-family:{c['font_display']}!important;
   color:{c['heading']}!important;
 }}
-/* primary CTA: accent bg + its own foreground */
-{scope} a.bg-brand,{scope} button.bg-brand{{
+/* accent surfaces: bg-brand carries its own foreground so light
+   accents stay readable — covers CTAs, on-brand hero panels */
+{scope} a.bg-brand,{scope} button.bg-brand,{scope} .bg-brand{{
   background:{c['accent']}!important;color:{c['accent_fg']}!important;
 }}
+/* on-brand text: white body copy inside accent panels picks up
+   accent_fg too — h/p/a inside a .bg-brand element */
+{scope} .bg-brand h1,{scope} .bg-brand h2,{scope} .bg-brand h3,
+{scope} .bg-brand h4,{scope} .bg-brand h5,{scope} .bg-brand p,
+{scope} .bg-brand a{{color:{c['accent_fg']}!important}}
 /* muted surfaces */
 {scope} .bg-neutral-primary-soft{{background:{c['soft']}!important}}
 """
@@ -77,49 +84,65 @@ VIBES = {
         heading='#f5f2ea', accent='#d6ff3f', accent_fg='#0e0d0b',
         border='#33302a', radius='0rem',
         font_display='"Space Grotesk","Courier New",monospace',
-        font_body='"Space Grotesk",system-ui,sans-serif'),
+        font_body='"Space Grotesk",system-ui,sans-serif',
+        section_py='clamp(3rem,8vw,4.5rem)', gap='1.25rem',
+        container='40rem'),
     'editorial': dict(
         surface='#f7f3ec', soft='#efe9df', fg='#3a352c',
         heading='#211d17', accent='#b5621f', accent_fg='#fdfaf4',
         border='#d9d2c4', radius='0.75rem',
         font_display='Georgia,"Times New Roman",serif',
-        font_body='system-ui,sans-serif'),
+        font_body='system-ui,sans-serif',
+        section_py='clamp(4rem,9vw,6rem)', gap='2rem',
+        container='42rem'),
     'luxury': dict(
         surface='#faf8f5', soft='#f2ede6', fg='#4a443a',
         heading='#2a2620', accent='#8a7a52', accent_fg='#faf8f5',
         border='#e2dbd0', radius='0.35rem',
         font_display='"Didot","Bodoni MT","Playfair Display",serif',
-        font_body='"Avenir Next",system-ui,sans-serif'),
+        font_body='"Avenir Next",system-ui,sans-serif',
+        section_py='clamp(5rem,12vw,8rem)', gap='2.5rem',
+        container='38rem'),
     'neon-dark': dict(
         surface='#0d0f1a', soft='#161a2e', fg='#c8cfe8',
         heading='#eef1ff', accent='#6a5cff', accent_fg='#ffffff',
         border='#2a2f4a', radius='1rem',
         font_display='"Inter",system-ui,sans-serif',
-        font_body='"Inter",system-ui,sans-serif'),
+        font_body='"Inter",system-ui,sans-serif',
+        section_py='clamp(4rem,10vw,6rem)', gap='1.5rem',
+        container='48rem'),
     'corporate': dict(
         surface='#ffffff', soft='#f1f5f9', fg='#334155',
         heading='#0f172a', accent='#2563eb', accent_fg='#ffffff',
         border='#e2e8f0', radius='0.375rem',
         font_display='system-ui,sans-serif',
-        font_body='system-ui,sans-serif'),
+        font_body='system-ui,sans-serif',
+        section_py='clamp(3.5rem,8vw,5rem)', gap='1.5rem',
+        container='72rem'),
     'pastel': dict(
         surface='#fdf6f0', soft='#fae8de', fg='#6b5d54',
         heading='#4a3f36', accent='#e88a9c', accent_fg='#ffffff',
         border='#f0d9cf', radius='1.25rem',
         font_display='"Quicksand",system-ui,sans-serif',
-        font_body='"Quicksand",system-ui,sans-serif'),
+        font_body='"Quicksand",system-ui,sans-serif',
+        section_py='clamp(4rem,9vw,6rem)', gap='2rem',
+        container='46rem'),
     'forest': dict(
         surface='#10201a', soft='#18312a', fg='#bcd3c7',
         heading='#eef7f0', accent='#3fa66b', accent_fg='#0e1a14',
         border='#2a4439', radius='0.5rem',
         font_display='"Georgia",serif',
-        font_body='system-ui,sans-serif'),
+        font_body='system-ui,sans-serif',
+        section_py='clamp(4.5rem,10vw,6.5rem)', gap='2rem',
+        container='44rem'),
     'cyber': dict(
         surface='#000000', soft='#0d0d0d', fg='#b8ff4d',
         heading='#e6ff9e', accent='#39ff14', accent_fg='#000000',
         border='#1f3a00', radius='0rem',
         font_display='"Courier New",monospace',
-        font_body='"Courier New",monospace'),
+        font_body='"Courier New",monospace',
+        section_py='clamp(3rem,7vw,4rem)', gap='1rem',
+        container='40rem'),
 }
 
 if __name__ == '__main__':

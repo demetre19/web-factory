@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""preview_sections.py — the ONE preview surface. Drives the real
-pipeline end to end into picker.py's canonical chrome:
+"""preview_sections.py — the ONE preview surface. Per-vibe FULL
+PAGES (separate files, separate stylesheets — no scoped collisions)
+plus a picker index linking out.
 
-  DNA -> retrieve_section(section_type) -> topology_id
-      -> section_emit.emit(topology_id, dna)
-      -> theme_sheet(vibe)   -> PickerItem(preview_html)
-      -> render_picker -> preview/picker.html
+For each vibe: retrieve each section's topology from the section
+bank -> emit the sequence -> bind the vibe's theme_sheet -> write
+preview/pages/<vibe>.html (a standalone page with TW4 + kit CSS).
 
-No ad-hoc pages. Every section preview goes through this file so
-the machinery + the display stay in sync.
+The picker (preview/sections.html) is machinery output too — one
+card per vibe, frame shows the page scaled; click opens the page.
+
+  python3 preview_sections.py [vibe ...]
 """
 import os
 import sys
@@ -25,62 +27,93 @@ import picker             # noqa: E402
 from theme_vibes import theme_sheet, VIBES  # noqa: E402
 
 OUT = os.path.join(HERE, 'preview')
+PAGES = os.path.join(OUT, 'pages')
 
-# The TW4 + Flowbite shell every semantic section needs to render
-# its classes — same kit the render harness uses.
 TW4 = ('<script src="https://cdn.jsdelivr.net/npm/'
        '@tailwindcss/browser@4"></script>'
        '<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/'
        'dist/flowbite.min.css" rel="stylesheet">')
 
-
-def preview_for(section_type, dna, vibe_name):
-    """retrieve -> emit -> bind. Returns (picker_preview_html,
-    topology_id, clip_score). The markup shown in the card IS the
-    emitted section framed in the page shell."""
-    out = retrieval.retrieve_section(
-        section_type, dna=dna, k=6)
-    topo = out.get('topology_id')
-    score = out['ranked'][0][0] if out.get('ranked') else 0
-    markup = section_emit.emit(topo or section_type, dna)
-    vibe = VIBES.get(vibe_name, VIBES['corporate'])
-    # page-framed: the emitted section inside its theme scope;
-    # TW4 lives in the item so it loads wherever the card lands.
-    scoped = (TW4 +
-        '<style>' + theme_sheet(
-        vibe, f'[data-vibe={vibe_name}]') + '</style>'
-        f'<div data-vibe={vibe_name} class="pk-sec">'
-        + markup + '</div>')
-    return scoped, topo, score
+SEQUENCE = ['nav', 'hero', 'feature-grid', 'pricing',
+            'call-to-action', 'footer']
 
 
-def build(section_types=None, vibes=None, dna=None):
-    section_types = section_types or ['hero', 'call-to-action',
-                                      'feature-grid', 'pricing']
-    vibes = vibes or list(VIBES)
+def page_for(vibe_name, dna, bank=None, vibe_idx=0):
+    """deterministic structure assignment: each vibe gets a
+    distinct topology per section_type (rotated by vibe index +
+    section position) so pages differ STRUCTURALLY, not just in
+    skin. Emit -> theme -> write standalone page."""
+    v = VIBES[vibe_name]
+    body = []
+    meta = {}
+    for pos, st in enumerate(SEQUENCE):
+        options = section_emit.topologies(st)
+        topo = options[(vibe_idx + pos) % len(options)]
+        body.append(section_emit.emit(topo, dna,
+                                      {'cta': dna['cta']}))
+        meta[st] = topo
+    css = theme_sheet(v, 'body')
+    html = (
+        '<!doctype html><html><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width">'
+        + TW4 +
+        '<style>' + css + '</style>'
+        '<title>' + vibe_name + '</title></head>'
+        '<body style="background:' + v['surface'] + '">'
+        + '\n'.join(body) +
+        '</body></html>')
+    os.makedirs(PAGES, exist_ok=True)
+    path = os.path.join(PAGES, vibe_name + '.html')
+    open(path, 'w').write(html)
+    return path, meta
+
+
+def build(vibes=None, dna=None):
+    vibes = vibes or sorted(VIBES)
     dna = dna or {'copy': ('From first call to keys',
                            'Four to six months, one team.'),
                   'cta': 'Download the guide', 'vertical': 'saas'}
+    bank = retrieval.SectionBank()
     items = []
-    for st in section_types:
-        for v in vibes:
-            html, topo, score = preview_for(st, dna, v)
-            items.append(picker.PickerItem(
-                id=f'{st}-{v}', name=v,
-                subtitle=f'{st} · {topo or st}',
-                preview_html=html,
-                scope_vars={}, scope=f'data-vibe={v}',
-                section_type=st, score=round(score, 3),
-                dims={'topology': topo or 'default'}))
+    for vi, v in enumerate(vibes):
+        path, meta = page_for(v, dna, bank, vibe_idx=vi)
+        rel = os.path.relpath(path, OUT)
+        # picker card: swatches + the topologies this vibe drew
+        topos = ' · '.join(f'{st}:{meta[st]}' for st in SEQUENCE)
+        tile = (
+            f'<a href="{rel}" target="_blank" class="pv-link">'
+            '<div class="pv-swatches">'
+            + ''.join(
+                f'<span style="flex:1;background:{c}"></span>'
+                for c in (VIBES[v]['surface'], VIBES[v]['soft'],
+                          VIBES[v]['accent'], VIBES[v]['heading']))
+            + '</div>'
+            f'<div class="pv-name">{v}</div>'
+            f'<div class="pv-topos">{topos or "canonical structures"}'
+            '</div></a>')
+        items.append(picker.PickerItem(
+            id=v, name=v, subtitle='open full page →',
+            preview_html=tile, scope_vars={},
+            section_type='page',
+            dims={'file': rel}))
     os.makedirs(OUT, exist_ok=True)
-    path = os.path.join(OUT, 'sections.html')
-    open(path, 'w').write(picker.render_picker(
-        items, title='Sections — retrieve · emit · bind',
-        intro='each card = retrieved topology × vibe vars',
-        extra_css='.pk-sec{padding:0}'))
-    return path
+    idx = os.path.join(OUT, 'sections.html')
+    open(idx, 'w').write(picker.render_picker(
+        items, title='Vibes — one page each',
+        intro='each card opens a standalone themed page',
+        extra_css=(
+            '.pv-link{display:block;text-decoration:none;'
+            'background:#0e0e0e;min-height:180px;display:flex;'
+            'flex-direction:column;justify-content:flex-end}'
+            '.pv-swatches{display:flex;height:110px}'
+            '.pv-name{padding:12px 16px 4px;color:#eee;font:600 '
+            '15px system-ui;text-transform:capitalize}'
+            '.pv-topos{padding:0 16px 14px;color:#888;font:11px '
+            'monospace}')))
+    return idx
 
 
 if __name__ == '__main__':
-    p = build()
+    sel = sys.argv[1:] or None
+    p = build(sel)
     print('wrote', p)
