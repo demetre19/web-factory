@@ -123,9 +123,11 @@ def cmd_build():
     model, preprocess, torch, dev = EI.load_model()
     os.makedirs(OUT, exist_ok=True)
     meta = load_index()
+    existing = meta.setdefault('rows', {})
     bank = rows()
     bank_order = list(meta.get('order') or [])  # vectors.bin-aligned
-    stale = [rp for rp in existing if rp not in bank]
+    bank_paths = {row['render_path'] for row in bank.values()}
+    stale = [rp for rp in existing if rp not in bank_paths]
     for rp in stale:
         del existing[rp]
     if stale:
