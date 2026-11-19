@@ -85,6 +85,21 @@ def review_for(outdir):
                 rv.setdefault(nm, {})['recipe_id'] = b['recipe_id']
         for name, dec in (d.get('declared') or {}).items():
             rv.setdefault(name, {})['declared'] = dec
+        # GatedMachinery's quality[opt].vlm_parsed is the same dims
+        # object — use as fallback + cross-check for stale harvests
+        for name, q in (d.get('quality') or {}).items():
+            if not isinstance(q, dict):
+                continue
+            parsed = q.get('vlm_parsed')
+            if not isinstance(parsed, dict):
+                continue
+            cur = rv.setdefault(name, {})
+            if 'verdict_dims' not in cur:
+                cur['verdict_dims'] = parsed
+                cur['verdict'] = {'model': q.get('vlm_model'),
+                                  'verdict': parsed.get('verdict')}
+            elif cur['verdict_dims'] != parsed:
+                cur['harvest_mismatch'] = True
     except Exception:
         pass
     REVIEW_CACHE[outdir] = rv
