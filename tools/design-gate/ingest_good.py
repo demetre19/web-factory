@@ -343,15 +343,18 @@ def ingest_url(url, note='', site_type='general', page_type='home',
             page.close()
         br.close()
     desk = results.get('desktop', {})
-    if 'error' not in desk and not desk.get('sections') and \
-            desk.get('shot'):
-        # immersive / video-hero pages often expose no landmark DOM;
-        # fall back to luminance bands on the real screenshot rather
-        # than discarding an operator-canon site.
+    if 'error' not in desk and desk.get('shot'):
+        # immersive / video-hero pages often expose no landmark DOM; a
+        # >2400px page with <3 detected sections is almost always the
+        # landmark pass missing non-semantic layout, not a real
+        # 2-section page. Fall back to luminance bands.
         from PIL import Image
         im = Image.open(desk['shot'])
         W, H = im.size
-        edges = band_edges(im, W, H)
+        few = len(desk.get('sections') or []) < 3 and H > 2400
+        if not desk.get('sections') or few:
+            desk['sections'] = []
+            edges = band_edges(im, W, H)
         desk['sections'] = [
             {'tag': 'div', 'id': '', 'className': '',
              'geometry': {'left': 0, 'top': y0,
