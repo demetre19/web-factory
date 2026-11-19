@@ -94,7 +94,7 @@ site:
 burst: 2
 dna:
   profile: profile-services
-  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal, trend: none}
+  genotype: {layout-archetype: split-media, page-macro-structure: promise-proof-how-act, density-tier: regular, image-led-ratio: balanced, type-contrast: medium, display-face: sans, radius-personality: soft, surface-rhythm: one-contrast-moment, cta-restraint: single-primary, cta-rank: hero, disclosure-tier: open, nav-pattern: bar-cta, motion-tier: subtle, proof-type: logos, media-treatment: photo, columns: "3", heading-form: claim, whitespace-band: medium, gallery-mode: grid, form-presence: inline, mood-energy: calm, mood-register: approachable, image-style: minimal, trend: none, seam-shape: flat}
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3}
   - {name: d2, wildcard: false, temperature: cool, shape: p2}
@@ -901,6 +901,7 @@ def dna_doc():
             "gallery-mode": "grid", "form-presence": "inline",
             "mood-energy": "calm", "mood-register": "approachable",
             "image-style": "minimal", "trend": "none",
+            "seam-shape": "flat",
         },
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},

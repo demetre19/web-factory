@@ -5,7 +5,7 @@ site_type: saas
 n: 5736
 links:
   derives_from: [patterns-index]
-  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style, gene-trend]
+  uses_genes: [gene-layout-archetype, gene-page-macro-structure, gene-density-tier, gene-image-led-ratio, gene-type-contrast, gene-display-face, gene-radius-personality, gene-surface-rhythm, gene-cta-restraint, gene-cta-rank, gene-disclosure-tier, gene-nav-pattern, gene-motion-tier, gene-proof-type, gene-media-treatment, gene-columns, gene-heading-form, gene-whitespace-band, gene-gallery-mode, gene-form-presence, gene-mood-energy, gene-mood-register, gene-image-style, gene-trend, gene-seam-shape]
 ---
 
 # DNA — saas

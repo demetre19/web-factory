@@ -8285,6 +8285,21 @@ REDTEAM_MUTATIONS = [
    '"element_variant": "text"', '"element_variant": "chart"'),
   ('REPL', 'DESIGN-PLAN.md',
    'image-led-ratio: balanced', 'image-led-ratio: image-led'),)),
+ ('RT-J8-UNDECLARED', 'J.8', (
+  ('REPL', 'site/dist/home/index.html',
+   'data-seam="tonal"',
+   'data-seam="tonal" data-seam-shape-top="wave"'),)),
+ ('RT-J8-MISMATCH', 'J.8', (
+  ('REPL', 'DESIGN-PLAN.md',
+   'seam-shape: flat', 'seam-shape: wave'),
+  ('REPL', 'site/dist/home/index.html',
+   'data-seam="whitespace" data-content="c-h1"',
+   'data-seam="whitespace" data-seam-shape-bottom="wave" '
+   'data-content="c-h1"'),
+  ('REPL', 'site/dist/home/index.html',
+   'data-content="c-def c-proof c-faq"',
+   'data-seam-shape-top="diagonal" '
+   'data-content="c-def c-proof c-faq"'),)),
 ]
 
 
@@ -9807,6 +9822,23 @@ def check_block_trace(ctx):
                     f.append(f'J.4 block {sec}: data-seam '
                              f'{sm.group(1)} != recipe seam '
                              f'{want_seam}')
+            # J.8 SEAM-SHAPE — the recipe's edge shapes bind the
+            # rendered block; absent topo shapes mean flat.
+            for edge in ('top', 'bottom'):
+                want = topo.get(f'seam_shape_{edge}')
+                if not want:
+                    continue
+                am = re.search(
+                    rf'data-seam-shape-{edge}="([^"]+)"', attrs)
+                if not am:
+                    f.append(f'J.8 block {sec}: recipe {rid} declares '
+                             f'{edge} seam-shape {want} but the '
+                             'render carries no data-seam-shape-'
+                             f'{edge}')
+                elif am.group(1) != want:
+                    f.append(f'J.8 block {sec}: data-seam-shape-'
+                             f'{edge} {am.group(1)} != recipe '
+                             f'{want}')
         bid = f'home:{sec}'
         row = blocks.get(bid)
         if not row:
@@ -9823,6 +9855,37 @@ def check_block_trace(ctx):
                      f'{row.get("recipe_id")!r} != rendered {rid!r} '
                      '— the receipt must name the recipe that '
                      'actually shipped')
+
+    # J.8 SEAM-SHAPE — shaped edges are a declared personality choice,
+    # and adjacent edges must compose: A.bottom meets B.top, so the
+    # pair is compatible when both are the same shape or either is
+    # flat (a shaped edge may dissolve into a flat face; two unlike
+    # shapes meeting is a glue defect).
+    shapes = {}
+    for sec, attrs in tags:
+        for edge in ('top', 'bottom'):
+            m = re.search(rf'data-seam-shape-{edge}="([^"]+)"', attrs)
+            shapes.setdefault(sec, {})[edge] = (
+                m.group(1) if m else 'flat')
+    _, gtd = _genotype(ctx.plan)
+    declared = str((gtd or {}).get('seam-shape') or 'flat')
+    flat_default = {'flat', 'none', ''}
+    for sec, sh in shapes.items():
+        for edge, s in sh.items():
+            if s not in flat_default and s != declared:
+                f.append(f'J.8 block {sec}: seam-shape-{edge} '
+                         f'{s!r} rendered but the genotype declares '
+                         f'seam-shape={declared!r} — a shaped seam '
+                         'without the allele is a coherence defect')
+    seq = [sec for sec, _ in tags]
+    for a, b in zip(seq, seq[1:]):
+        sa = shapes.get(a, {}).get('bottom', 'flat')
+        sb = shapes.get(b, {}).get('top', 'flat')
+        if sa not in flat_default and sb not in flat_default \
+                and sa != sb:
+            f.append(f'J.8 glue {a}→{b}: seam-shape {sa!r} meets '
+                     f'{sb!r} — shaped edges must match or dissolve '
+                     'into a flat face')
     return f
 
 

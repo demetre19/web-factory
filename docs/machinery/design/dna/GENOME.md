@@ -226,18 +226,31 @@ old-web markers that mimic Y2K revival without the whitespace.
 `genome.py mutate --trend <label>` biases marker genes into a
 coordinated trend move.
 
+## gene: seam-shape
+
+alleles: [flat, diagonal, angled-clip, curve, wave, zigzag, skewed-block, torn-edge, slant-into-media]
+rules: J.8, L.11
+The shape of the boundary between adjacent sections — the axis
+separate from seam STYLE (hairline/tonal/whitespace, which is colour
+behaviour). `flat` is the default and most verticals stay flat;
+shaped seams are a personality choice (playful/bold DNAs). A shaped
+allele declares the page may carry that edge shape — a diagonal in a
+finance site without the allele is a coherence defect, not flair.
+Joins are pure clip-path/SVG-mask/skew per the motion policy — no
+library, no raster.
+
 ---
 
 ## Genotype vector
 
-A genotype is the ordered tuple of alleles in the order above (24
+A genotype is the ordered tuple of alleles in the order above (25
 values). `tools/design-gate/genome.py` encodes it as a one-hot vector
-(Σ allele cardinalities = **125 dims**) for cosine/Hamming search; the
+(Σ allele cardinalities = **134 dims**) for cosine/Hamming search; the
 same vector is written into each pattern file's `genotype:` block and
 each `dna/<vertical>.json` profile.
 
-The space is finite by construction: 24 genes, 125 alleles, so at most
-125 distinct dimensions and 2^125 label sets — but only 125·24 one-hot
+The space is finite by construction: 25 genes, 134 alleles, so at most
+134 distinct dimensions and 2^134 label sets — but only 134·25 one-hot
 positions can ever be set. No design can be expressed outside it, which
 is the point: a freehand value is refused, not extrapolated.
 

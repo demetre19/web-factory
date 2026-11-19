@@ -220,6 +220,34 @@ Pre-build rules, per option (`PREBUILD.json` row):
 vertical canon, text-only under a media-led canon, or text-only
 under a declared image-led genotype FAILs.
 
+### J.8 SEAM-SHAPE — the edge's shape is a declared personality
+
+Seam STYLE (hairline/tonal/whitespace, J.4 glue) governs colour;
+seam SHAPE is a second, independent vector — the geometry of the
+boundary: `flat`, `diagonal`, `angled-clip`, `curve`, `wave`,
+`zigzag`, `skewed-block`, `torn-edge`, `slant-into-media`. Joins are
+pure clip-path/SVG-mask/skew per the motion policy — no library, no
+raster.
+
+- The `seam-shape` DNA gene declares the page's edge personality;
+  `flat` is the default and most verticals stay flat — shaped seams
+  are a canon-plausibility call per vertical (playful/bold DNAs may
+  declare them), never a free choice: a diagonal in a finance site
+  is a coherence defect, not flair.
+- Bank recipes carry `topology.seam_shape_top` /
+  `seam_shape_bottom` (entry/exit edge shapes); the rendered block
+  echoes them as `data-seam-shape-top`/`data-seam-shape-bottom`.
+- Adjacent edges compose: A.bottom meets B.top — the pair is
+  compatible when the shapes match or either is flat (a shaped edge
+  may dissolve into a flat face; two unlike shapes meeting is a
+  glue defect).
+
+**Enforcement** — script `check_block_trace` (w7): a rendered
+`data-seam-shape-*` that contradicts the recipe's declared edge,
+a non-flat edge while the genotype declares `flat`, or two unlike
+non-flat shapes meeting at a boundary FAILs.
+
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
