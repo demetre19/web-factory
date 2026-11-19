@@ -4705,6 +4705,14 @@ def check_receipts(ctx):
                     wanted[rel] = 'w4' if 'variants' in fn or \
                         'fine' in fn else 'w3'
     for rel, wv in sorted(wanted.items()):
+        if wv == ctx.wave:
+            # this wave's own artifacts are in transit — receipts bind
+            # on THIS wave's pass, after the checks run. A stale or
+            # wrong receipt still fails (sha/wave/gate_pass below);
+            # only a not-yet-written receipt is exempt.
+            rec = arts.get(rel)
+            if not rec:
+                continue
         fp = os.path.join(ctx.dir, rel)
         if not os.path.isfile(fp):
             continue
