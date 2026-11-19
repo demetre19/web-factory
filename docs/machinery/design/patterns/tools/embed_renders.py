@@ -72,11 +72,13 @@ def review_for(outdir):
     try:
         d = json.load(open(rp))
         for name, v in (d.get('vlm_per_option') or {}).items():
+            parsed = v.get('parsed')
             rv.setdefault(name, {})['verdict'] = {
-                k: v[k] for k in ('model', 'verdict') if k in v}
-            dims = v.get('output') or v.get('verdict')
-            if isinstance(dims, dict):
-                rv[name]['verdict_dims'] = dims
+                'model': v.get('model'),
+                'verdict': parsed.get('verdict') if isinstance(
+                    parsed, dict) else None}
+            if isinstance(parsed, dict):
+                rv[name]['verdict_dims'] = parsed
         for b in d.get('blocks') or []:
             nm = str(b.get('block_id', '')).split(':')[-1]
             if b.get('recipe_id'):
