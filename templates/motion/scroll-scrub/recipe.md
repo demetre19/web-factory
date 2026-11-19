@@ -15,8 +15,9 @@ taxonomy:
   js_dependency: light
   personality_fit: [professional, elegant]
 source: astromaxsp.lexdemos.com — BaseLayout.js [data-ink]/[data-lift] +
-  Studio.js [data-marquee] (GSAP ScrollTrigger scrubs; ported to CSS
-  scroll-timeline + rAF fallback)
+  Studio.js [data-marquee] (site used GSAP ScrollTrigger scrubs; this
+  recipe ships the native equivalent — CSS scroll-timeline + rAF —
+  per the no-library policy; GSAP is NOT required)
 ---
 
 # scroll-scrub — ink words + parallax + horizontal track

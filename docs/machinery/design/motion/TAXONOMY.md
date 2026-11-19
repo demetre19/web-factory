@@ -124,6 +124,15 @@ share one period, disjoint opacity windows — word cyclers).
 `none` (pure CSS/SMIL) | `light` (one small script — IO toggle, scroll
 progress; ≤ ~2 KB) | `library` (GSAP/anime/lottie/rive/…).
 
+**Policy (operator, 2026-11-19): the tamdoma way is the default.** Pure
+CSS + CSS-animated SVG + minimal vanilla JS triggers. A `library` record
+or recipe requires written justification of what CSS cannot do — the
+only known CSS-impossible case is wheel-inertia smooth scrolling
+(Lenis-class runtimes; CSS has no scroll-velocity channel). Every
+recipe in `templates/motion/` is `none`/`light` by construction: a
+JS-technique recipe (e.g. `scroll-scrub`) must ship a native fallback —
+`rAF-loop` driver or `css-scroll-timeline` — never a library import.
+
 ## `status`
 
 `live` | `paused` (`animation-play-state`) | `dead` (animation-name set

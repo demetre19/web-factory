@@ -3,6 +3,11 @@
 Captured 2026-11-19 (static fetches; a JS kernel was unavailable so the
 built bundles — which contain the whole story — were analysed
 statically. Counts below are exact, from the files in this directory.)
+**Policy note (operator, 2026-11-19):** this audit stays analysis-only —
+the GSAP/Lenis patterns were ported as native equivalents
+(`rise-words`, `scroll-scrub`; `js_dependency` none/light). Lenis is the
+one primitive CSS cannot reproduce (wheel-inertia), so smooth-scroll
+runtimes remain justification-required, not banned.
 
 | Artifact | Size | What it carries |
 |---|---|---|

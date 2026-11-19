@@ -20,6 +20,13 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
   opacity crossfade; loops freeze on a representative frame
 - no animation libraries; JS only where the trigger needs it
   (IntersectionObserver / scroll progress — `js_dependency:light`)
+  **Policy (operator, 2026-11-19) — no animation libraries.** tamdoma
+  way = default: pure CSS + CSS-animated SVG + minimal vanilla JS
+  triggers. A `library` dependency requires written justification of
+  what CSS cannot do; wheel-inertia smooth scrolling (Lenis-class) is
+  the only known CSS-impossible case. When a recipe ports a pattern a
+  library site used, it ships the native equivalent (e.g.
+  `scroll-scrub` = `view()` scroll-timeline + rAF fallback, not GSAP).
 - durations/easing pick from M.2 tokens; personality tag guides which
   sites may ship them
 - one focal animation per viewport (M.4) — recipes compose, they don't
