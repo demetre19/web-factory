@@ -230,6 +230,15 @@
   ],
   "check_receipts": [
    "P.17"
+  ],
+  "check_round_gated": [
+   "P.18"
+  ],
+  "check_round_gated_look": [
+   "P.18"
+  ],
+  "check_fine_round": [
+   "P.18"
   ]
  },
  "graph": {
@@ -1488,6 +1497,13 @@
    "threshold": "padding < section-space-m / header\u2192body < space-l / grid gap < space-m / whitespace < canon P25",
    "tier": "structural",
    "wave": "w7"
+  },
+  "P.18": {
+   "check": "check_round_gated",
+   "mode": "script",
+   "threshold": "picker fails gate.py round \u2014 real options, scored, refs, visual review, distinct",
+   "tier": "invariant",
+   "wave": "w3"
   }
  }
 }

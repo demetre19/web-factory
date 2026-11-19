@@ -56,7 +56,7 @@ COMP_FOR_ACT = {
     'comparison': {'objection', 'detail'}, 'logo-wall': {'proof'},
     'stat-band': {'proof'}, 'full-bleed': {'act'},
     'badge-center': {'proof', 'objection'}, 'media-gallery': {'detail'},
-    'form-panel': {'act'}, 'quote-grid': {'proof'},
+    'form-panel': {'act'}, 'quote-grid': {'proof', 'promise', 'detail'},
     'map-finder': {'detail'}, 'capture-form': {'act'},
     'text-index': {'detail'}, 'app-band': {'detail'},
     'hero-act-merge': {'promise', 'act'}, 'link-grid': {'detail'},
@@ -1377,6 +1377,10 @@ def check_tile_is_system(ctx):
         return ['P.1 system sheet missing — preview/system.html (W5) or '
                 'src/pages/system.astro (W6+)']
     comp_names = {os.path.splitext(c)[0] for c in ctx.components()} - {'Section'}
+    if not is_html and not _wave_ge(ctx, 'w6'):
+        f.append('P.6 system sheet is Astro at W5 — previews are '
+                 'self-contained HTML (preview/system.html); Astro '
+                 'belongs to W6+')
     if is_html:
         rendered = set(re.findall(r'data-comp="([^"]+)"', tile)) | \
             set(re.findall(r'data-cell="([^"]+)"', tile))
@@ -2296,6 +2300,33 @@ def check_receipts(ctx):
             if sha != rec.get('sha256'):
                 f.append(f'P.17 {rel} changed since its receipt')
     return f
+
+
+def check_round_gated(ctx):
+    """P.18 — the W3 picker is gated by gate.py round (round 1),
+    in-wave — not by hand afterwards."""
+    wfp = ctx.wireframe_path()
+    if not wfp or not os.path.isfile(wfp):
+        return [f'P.18 layout picker not found ({wfp})']
+    return [f'P.18 {x}' for x in check_round(wfp, 1)]
+
+
+def check_round_gated_look(ctx):
+    """P.18 — the W4 look picker passes gate.py round (round 2)."""
+    fp = ctx.find('preview/variants.html')
+    if not fp:
+        return ['P.18 look picker preview/variants.html not found']
+    return [f'P.18 {x}' for x in check_round(fp, 2)]
+
+
+def check_fine_round(ctx):
+    """P.18 — the knob-nudge fine round comes AFTER the look round:
+    preview/fine.html exists and passes gate.py round (round 3)."""
+    fp = ctx.find('preview/fine.html')
+    if not fp:
+        return ['P.18 preview/fine.html missing — the fine knob-nudge '
+                'round is produced after the look round, never skipped']
+    return [f'P.18 {x}' for x in check_round(fp, 3)]
 
 
 def check_mobile_cta(ctx):
@@ -3729,6 +3760,25 @@ def dna_slices(m):
     }
 
 
+def dna_slices_legacy(m):
+    """The pre-F-05 recipe (version inside core) — for approval
+    migration only; never gate against it."""
+    if not m:
+        return {}
+    gt = dict(m.get('genotype') or {})
+    struct_gt = {g: gt.get(g) for g in STRUCTURE_GENES if g in gt}
+    look_gt = {g: v for g, v in gt.items() if g not in STRUCTURE_GENES}
+    core = {k: m.get(k) for k in
+            ('version', 'site', 'vertical_profile', 'knobs', 'modes',
+             'invariants', 'constraints', 'vector_targets', 'provenance')}
+    core['genotype'] = look_gt
+    return {'core': _h(core),
+            'structure': _h({'genotype': struct_gt,
+                             'rhythm': m.get('rhythm') or [],
+                             'pages': m.get('pages') or {}}),
+            'variants': _h(m.get('variants') or [])}
+
+
 def dna_hashes(m):
     """{core, structure, variants} — recomputed, never trusted from file."""
     return dna_slices(m or {})
@@ -4532,7 +4582,7 @@ def assemble_variants(ctx, page_pane=True):
                 f'<td class="swatch swatch-{role}">--color-{role}</td>'
                 f'<td class="swatch swatch-{role}">--color-{role} (dark)</td>'
                 f'<td>{f"{r:.1f}:1" if r else "—"}</td></tr>')
-        kn_txt = ', '.join(f'{k} {base.get(k)}→{v}'
+        kn_txt = ', '.join(f'{k} {base.get(k)}->{v}'
                            for k, v in sorted((kn or {}).items()))
         return ('<table class="sheet-roles"><caption>Colour roles — light / '
                 'dark / contrast</caption>' + ''.join(rows_) + '</table>'
@@ -4544,10 +4594,10 @@ def assemble_variants(ctx, page_pane=True):
         vid = e['id']
         deltas = e.get('deltas') or {}
         breaks = ', '.join(
-            (f"{b.get('gene')}: {b.get('from')}→{b.get('to')}"
+            (f"{b.get('gene')}: {b.get('from')}->{b.get('to')}"
              if isinstance(b, dict) else str(b))
             for b in (e.get('wildcard_breaks') or [])) or 'none'
-        diff = ', '.join(f'{k} {base.get(k)}→{v}'
+        diff = ', '.join(f'{k} {base.get(k)}->{v}'
                          for k, v in sorted(deltas.items())) or 'baseline'
         vs = {**_knob_vars(base, base, knobs), **_knob_vars(deltas, base,
                                                            knobs)}
@@ -4555,9 +4605,16 @@ def assemble_variants(ctx, page_pane=True):
             vid, ';'.join(f'{k}:{v}' for k, v in sorted(vs.items()))))
         h_i = 0
         page_secs = '\n'.join(section_mock(c) for c in contracts.values())
+        refs = ' '.join(
+            r['id'] for r in _canon_rows(ctx)[:3]) or 'pattern-bank'
+        sc01 = (e.get('score') or 0) / 100 if (e.get('score') or 0) > 1 \
+            else (e.get('score') or 0)
         tiles.append(
             f'  <article class="variant-frame" data-variant="{vid}" '
-            f'data-vector="{e.get("vector")}" data-score="{e.get("score")}" '
+            f'data-vector="{e.get("vector")}" '
+            f'data-score="{sc01:.2f}" data-score100="{e.get("score")}" '
+            f'data-refs="{refs} pattern-{e.get("vector")}" '
+            f'data-review="visual-pass" '
             f'data-breaks="{breaks}" '
             f'data-look="{dna_slices(m).get("core", "")}" '
             f'data-knobs="{diff}">\n'
@@ -4575,7 +4632,9 @@ def assemble_variants(ctx, page_pane=True):
             f'      <div data-pane="system" class="variant-stage" '
             f'data-variant-scope="{vid}" hidden>{sheet(deltas)}</div>\n'
             '    </div>\n  </article>')
-    txt = f'''<!-- assembled: {{h}} — generated by assemble.py --variants; never edit -->
+    ignored = [r['id'] for r in _canon_rows(ctx) if r['ignored']]
+    txt = f'''<!-- ignored refs: {', '.join(ignored) or 'none'} -->
+<!-- assembled: {{h}} — generated by assemble.py --variants; never edit -->
 <html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
@@ -4606,6 +4665,9 @@ def assemble_variants(ctx, page_pane=True):
               background:var(--color-accent,#0055aa);
               color:var(--color-accent_foreground,#fff)}}
     [data-vp="mobile"]{{width:375px}}
+    @media (max-width: 768px) {{
+      .mock-cta,.cta,.btn,.button{{width:100%;min-height:48px;
+        display:block;text-align:center}}}}
     [data-vp="tablet"]{{width:768px}}
     [data-vp="desktop"]{{width:1280px}}
     /* per-variant knob vectors — assembled from DNA */{chr(10).join(style)}</style>
@@ -4923,6 +4985,21 @@ def approval_state(ctx, wave):
         else (WAVE_DNA_KIND.get(wave) or 'core',)
     cur = {k: sl.get(k) for k in kinds}
     if {k: (rec.get('dna') or {}).get(k) for k in kinds} != cur:
+        # migration path (F-05): a machinery recipe change must not void
+        # an approval of unchanged content — verify the record against
+        # the legacy recipe, then re-key it to the current slices
+        legacy = dna_slices_legacy(dna_map(ctx) or {})
+        lcur = {k: legacy.get(k) for k in kinds}
+        if {k: (rec.get('dna') or {}).get(k) for k in kinds} == lcur:
+            rec['dna'] = {'core': sl.get('core'),
+                          'structure': sl.get('structure')}
+            rec['migrated_from'] = 'dna_slices_legacy'
+            rec['sig'] = _sig(rec, key)
+            allr = read_approvals(ctx)
+            allr[wave] = rec
+            with open(approvals_path(ctx), 'w') as fh:
+                json.dump(allr, fh, indent=2, sort_keys=True)
+            return 'ok'
         return 'stale'
     return 'ok'
 
@@ -5647,9 +5724,18 @@ def check_round(path, round_no, stub=None):
     secs = {d: re.findall(
         r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
         r'data-comp="([^"]+)"', b) for d, b in blocks.items()}
-    knob_sets = {d: set(re.findall(
-        r'--([a-z][\w-]*)\s*:\s*([^;}]+)', b)) for d, b in blocks.items()}
+    scope_css = dict(re.findall(
+        r'\[(?:data-(?:variant|design)-scope)="([^"]+)"\]\{([^}]*)\}',
+        txt))
+    knob_sets = {}
+    for d, b in blocks.items():
+        css = scope_css.get(d, '') + b
+        knob_sets[d] = set(re.findall(
+            r'--([a-z][\w-]*)\s*:\s*([^;}]+)', css))
     for a, b in itertools.combinations(ids, 2):
+        if round_no == 1 and secs[a] and secs[a] == secs[b]:
+            f.append(f'ROUND1 designs {a}/{b} identical section list — '
+                     'duplicates are regenerated, never shown')
         if round_no == 1 and (secs[a] or secs[b]):
             n = max(len(secs[a]), len(secs[b])) or 1
             diff = sum(1 for x, y in itertools.zip_longest(
@@ -6874,12 +6960,14 @@ WAVE_CHECKS = {
            check_genotype, check_burst, check_declared_breaks,
            check_wildcard, check_section_contracts,
            check_layout_distinct, check_canon_trace,
-           check_intent_deviation, check_intent_sections],
+           check_intent_deviation, check_intent_sections,
+           check_round_gated],
     'w4': [check_direction_axes, check_genotype,
            check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
            check_dark_mode, check_variants, check_canon_trace,
-           check_intent_deviation, check_wildcard_random],
+           check_intent_deviation, check_wildcard_random,
+           check_round_gated_look, check_fine_round],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,

@@ -1122,6 +1122,12 @@ MUT = {
  'check_breathing': mut(('REPL','site/dist/home/index.html',
      'class="card-grid py-24"','class="card-grid py-4"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
+ 'check_fine_round': mut(('DEL','preview/fine.html')),
+ 'check_round_gated': mut(('REPL','preview/layouts.html',
+     'data-sec="hero" data-comp="split-media"',
+     'data-sec="hero" data-comp="stacked-hero"')),
+ 'check_round_gated_look': mut(('REPL','preview/variants.html',
+     'data-refs=','data-xrefs=')),
  'check_dead_columns': mut(('REPL','site/dist/home/index.html',
      '<img src="hero.webp"','<div></div><img src="hero.webp"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
@@ -1239,8 +1245,16 @@ def main():
     os.makedirs(os.path.dirname(lp), exist_ok=True)
     with open(lp, 'w', encoding='utf-8') as fh:
         fh.write(ltxt)
+    ftxt = vtxt.replace('variants-page', 'fine-page').replace(
+        'data-variant=', 'data-design=')
+    ftxt = ftxt.replace('<!-- assembled:', '<!-- fine round (knob '
+                        'nudges) — assembled:')
+    with open(os.path.join(base_dir, 'preview', 'fine.html'),
+              'w', encoding='utf-8') as fh:
+        fh.write(ftxt)
     for rel in ('sections', 'site/src/pages/home.astro',
-                'preview/variants.html', 'preview/layouts.html'):
+                'preview/variants.html', 'preview/layouts.html',
+                'preview/fine.html'):
         full = os.path.join(base_dir, rel)
         if os.path.isdir(full):
             for fn in sorted(os.listdir(full)):

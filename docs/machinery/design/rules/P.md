@@ -186,6 +186,15 @@ plan is a refuse, not an improvisation.
 Every built page ships favicon link, meta description, and
 `og:title`/`og:description`/`og:image`.
 
+### P.18 The pick funnel is real and gated
+
+W3 renders ≥5 real full-page designs (copy + styling, ≥30% pairwise
+structure distance) and `gate.py round` gates the picker in-wave —
+identical layouts FAIL, every option lockable (allowed sets match
+what the picker emits). W4's look round is exactly 3 knob-distinct
+directions, gated as round 2; the fine knob-nudge round
+(`preview/fine.html`, round 3) is produced after it, never skipped.
+
 ### P.17 Nothing outside the pipeline
 
 Every operator-facing artifact is produced by `run.py` for a wave and

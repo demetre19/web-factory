@@ -173,5 +173,6 @@ closed set.
 | PS.11 | One idea, one section | invariant | script | `check_intent_sections` | rows share a section across intents / h2 count > section units / missing data-intent | w3 |
 | P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
 | L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
+| P.18 | The pick funnel is real and gated | invariant | script | `check_round_gated` | picker fails gate.py round — real options, scored, refs, visual review, distinct | w3 |
 
-164 rules — script 133, reviewer 30, operator 1; invariant 48, structural 42, stylistic 74.
+165 rules — script 134, reviewer 30, operator 1; invariant 49, structural 42, stylistic 74.
