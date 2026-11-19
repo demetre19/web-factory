@@ -1429,16 +1429,57 @@ def check_breakpoints(ctx):
                  'min-width only')
     return f
 
+def _rem_base(ctx):
+    """10 for ACSS 62.5% html roots, else 16."""
+    g = ctx.read('site/src/styles/global.css') or ''
+    if re.search(r'html\s*\{[^}]*font-size:\s*62\.5%', g):
+        return 10.0
+    return 16.0
+
+
 def check_content_width(ctx):
+    """L.11/R.8 — content width binds the ACSS band: >=1200 and <=1280
+    CSS px, on the plan AND on the built CSS (--content-width / the
+    content container's max-width). ACSS rem base = 10px (62.5%)."""
     cw = str((_system(ctx).get('grid') or {}).get('content_width') or '')
     m = re.match(r'([\d.]+)\s*(rem|px)', cw)
     if not m:
         return ['grid.content_width missing/unparseable']
-    px = float(m.group(1)) * (16 if m.group(2) == 'rem' else 1)
+    base = _rem_base(ctx)
+    px = float(m.group(1)) * (base if m.group(2) == 'rem' else 1)
     if px > 1280:
-        return [f'content_width {cw} > ACSS 1280px/80rem ceiling '
-                '(prose 60ch; DIFFERS resolved in ACSS favour)']
-    return []
+        return [f'content_width {cw} > ACSS 1280px ceiling '
+                f'({base}px rem base)']
+    f = []
+    if px < 1200:
+        f.append(f'content_width {cw} < 1200px floor — the ACSS '
+                 'band is 1200–1280 (prose column stays 60ch)')
+    if not _wave_ge(ctx, 'w6'):
+        return f
+    # rendered: the content container's declared width must sit in the
+    # same band — a max-width token or literal outside it FAILS
+    for p_, css in dist_csss(ctx):
+        name = os.path.basename(p_)
+        for m2 in re.finditer(
+                r'--content-width[^:]*:\s*([\d.]+)\s*(rem|px)', css):
+            v = float(m2.group(1)) * (base if m2.group(2) == 'rem'
+                                      else 1)
+            if v < 1200 or v > 1280:
+                f.append(f'L.11 {name}: --content-width '
+                         f'{m2.group(0)[:30]} = {v:.0f}px — outside '
+                         'the 1200–1280 band')
+        for m2 in re.finditer(
+                r'(?:sec-inner|content-wrap|prose)\s*\{[^}]*'
+                r'max-width:\s*([\d.]+)\s*(rem|px)', css):
+            v = float(m2.group(1)) * (base if m2.group(2) == 'rem'
+                                      else 1)
+            if 'prose' in m2.group(0):
+                continue  # prose width is a ch measure, not the band
+            if v > 1280:
+                f.append(f'L.11 {name}: content container '
+                         f'max-width {v:.0f}px > 1280 — no wide '
+                         'rails outside the content band')
+    return f
 
 def check_contrast(ctx):
     """C.1/C.7/C.5 — contrast floors, computed in EVERY mode."""
@@ -2785,6 +2826,21 @@ def check_acss_conventions(ctx):
                 f.append(f'A.1 {name}: "{sel.strip()[:40]}" sets '
                          'min-height — section whitespace comes from '
                          '--section-space-* only')
+    # text-wrap lands on rendered pages too: built CSS must carry the
+    # token-driven rules for headings + body
+    if _wave_ge(ctx, 'w7'):
+        dcss = ''.join(c for _, c in dist_csss(ctx))
+        if dcss:
+            if not re.search(r'h[1-6][^{]*\{[^}]*text-wrap:\s*'
+                             r'(?:balance|var\(--text-wrap-heading\))',
+                             dcss):
+                f.append('A.1 built CSS: headings lack '
+                         'text-wrap: balance (token-bound)')
+            if not re.search(r'(?:^|[,{\s])p\s*\{[^}]*text-wrap:\s*'
+                             r'(?:pretty|var\(--text-wrap-body\))',
+                             dcss):
+                f.append('A.1 built CSS: body lacks '
+                         'text-wrap: pretty (token-bound)')
     for p, txt in ctx.page_htmls() if _wave_ge(ctx, 'w7') else []:
         name = os.path.basename(p)
         for m in re.finditer(

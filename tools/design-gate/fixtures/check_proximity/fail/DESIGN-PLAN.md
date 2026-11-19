@@ -33,7 +33,7 @@ site:
       group_gap_vs_section_gap: "≥1.2×"
     grid:
       measure: 62ch
-      content_width: 72rem
+      content_width: 80rem
       edge_padding: [16, 24, 32, 40, 48]
       breakpoints: [360, 640, 768, 1024, 1280, 1440, 1920]
       stack_order: text-first

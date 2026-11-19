@@ -73,7 +73,7 @@ site:
       group_gap_vs_section_gap: "≥2×"
     grid:
       measure: 62ch
-      content_width: 72rem
+      content_width: 80rem
       edge_padding: [16, 24, 32, 40, 48]
       breakpoints: [360, 640, 768, 1024, 1280, 1440, 1920]
       stack_order: text-first
@@ -264,9 +264,9 @@ export default {
 
 KNOBS = {
     "type.ratio": 1.25, "type.base": 16, "type.display_weight": 700,
-    "type.tracking_display": -0.02, "space.density_scale": 0,
-    "space.section_py": {"compact": 48, "regular": 64, "spacious": 96},
-    "grid.gutter": 24, "radius.personality": "p3",
+    "type.tracking_display": -0.02, "space.density_scale": "space-m",
+    "space.section_py": {"compact": "section-space-s", "regular": "section-space-m", "spacious": "section-space-l"},
+    "grid.gutter": "space-m", "radius.personality": "p3",
     "color.surface_contrast": 0.05, "color.accent_usage": "cta+motif",
     "color.neutral_tint": 0.03, "elevation.level": 1,
     "motion.level": "subtle", "image.treatment": "natural",
@@ -1079,7 +1079,7 @@ MUT = {
     'data-ratio="none" data-disclosure','data-ratio="bogus" data-disclosure')),
  'check_spacing_scale': mut(('REPL','DESIGN-PLAN.md','16, 24, 32','16, 20, 32')),
  'check_breakpoints': mut(('REPL','DESIGN-PLAN.md','640, 768','640, 999')),
- 'check_content_width': mut(('REPL','DESIGN-PLAN.md','content_width: 72rem','content_width: 95rem')),
+ 'check_content_width': mut(('REPL','DESIGN-PLAN.md','content_width: 80rem','content_width: 95rem')),
  'check_contrast': mut(('REPL','TOKENS.json','"ink": "#221F1B"','"ink": "#8A8A8A"')),
  'check_type_system': mut(('REPL','DESIGN-PLAN.md','body: "Inter"','body: "SerifX"'),('APPEND','DESIGN-PLAN.md','\n  extra: {fonts: {c: "Third"}}')),
  'check_system_enums': mut(('REPL','DESIGN-PLAN.md','family: lucide','family: wingdings')),

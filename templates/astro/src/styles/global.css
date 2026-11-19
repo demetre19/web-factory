@@ -25,10 +25,37 @@
   --lh-4: 1.2;
   --lh-5: 1.15;
 
-  /* Fluid spacing rhythm (320→1240). */
-  --sp-fluid-s: clamp(0.5rem, 0.3261rem + 0.8696vi, 1rem);
-  --sp-fluid-m: clamp(1rem, 0.6522rem + 1.7391vi, 2rem);
-  --sp-fluid-l: clamp(2rem, 1.3043rem + 3.4783vi, 4rem);
+  /* ACSS baseline tokens — the spacing/width primitives every
+     check gates on. 16px rem base; ACSS's 10px convention is
+     expressed via _rem_base() in the gate, not by changing html
+     font-size (it would rescale the --fs-* scale). */
+  --space-xs: clamp(0.5rem, 0.4rem + 0.5vi, 1rem);
+  --space-s: clamp(0.75rem, 0.55rem + 1vi, 1.5rem);
+  --space-m: clamp(1rem, 0.65rem + 1.75vi, 2rem);
+  --space-l: clamp(1.5rem, 1rem + 2.5vi, 3rem);
+  --space-xl: clamp(2rem, 1.3rem + 3.5vi, 4rem);
+  --space-xxl: clamp(3rem, 2rem + 5vi, 6rem);
+  --section-space-xs: clamp(2rem, 1.5rem + 2.5vi, 4rem);
+  --section-space-s: clamp(3rem, 2rem + 5vi, 5rem);   /* ~80px max */
+  --section-space-m: clamp(4rem, 2.5rem + 7.5vi, 6rem);/* ~96px */
+  --section-space-l: clamp(6rem, 4rem + 10vi, 8rem);  /* ~128px */
+  --section-space-xl: clamp(8rem, 5rem + 15vi, 10rem);
+  --section-space-xxl: clamp(10rem, 6rem + 20vi, 12rem);
+  --gutter: var(--space-m);                            /* ONE fluid token */
+  --content-width: 80rem;                              /* 1280px @16px */
+  --content-width-safe: min(var(--content-width),
+                            calc(100% - var(--gutter) * 2));
+  --measure: 60ch;                                     /* prose column */
+  --text-wrap-heading: balance;
+  --text-wrap-body: pretty;
+  --flow-spacing: var(--space-m);
+  --container-gap: var(--space-l);
+  --grid-gap: var(--space-m);
+
+  /* Legacy fluid spacing aliases (kept — the scale above is canon). */
+  --sp-fluid-s: var(--space-s);
+  --sp-fluid-m: var(--space-m);
+  --sp-fluid-l: var(--space-xl);
 
   /* Starter default palette — TOKENS.json replaces these. */
   --c-ink: #1a1d21;
@@ -62,13 +89,14 @@
     font-size: max(16px, var(--fs-0));
   }
 
-  p, li, td, blockquote { text-wrap: pretty; }
-  p, li { max-width: 75ch; }
+  p, li, td, blockquote { text-wrap: var(--text-wrap-body); }
+  p, li { max-width: var(--measure); }
+  .flow > * + * { margin-block-start: var(--flow-spacing); }
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: var(--lh-3);
-    text-wrap: balance;
+    text-wrap: var(--text-wrap-heading);
   }
 
   h1 { font-size: var(--fs-5); line-height: var(--lh-5); }
@@ -94,8 +122,9 @@
 
   /* <main> bottom padding reserves space for the MobileCTA action
      bar so it never covers the footer or last card (S5 contract). */
-  @media (max-width: 767.98px) {
-    main { padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
+  main { padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
+  @media (min-width: 768px) {
+    main { padding-bottom: 0; }
   }
 
   /* prefers-reduced-motion guard — every keyframe rides this gate. */
@@ -113,17 +142,17 @@
      each here (or a dedicated file under src/styles/components/). */
   .wf-container {
     width: 100%;
-    max-width: 72rem;
+    max-width: var(--content-width-safe);
     margin-inline: auto;
-    padding-inline: var(--sp-fluid-s);
+    padding-inline: var(--gutter);
   }
 
 
   /* Section shell (SB.2) — Section.astro is the only owner of outer
      rhythm. data-surface / data-density set the values; sections never
-     carry their own bg-*/py-* outer classes. */
+     carry their own bg- or py- outer classes. */
   .sec-band {
-    padding-block: var(--sec-pad, var(--sp-fluid-l));
+    padding-block: var(--sec-pad, var(--section-space-m));
     background: var(--sec-bg, var(--c-paper));
     color: var(--sec-fg, var(--c-ink));
   }
@@ -131,9 +160,9 @@
   .ratio-phone { aspect-ratio: 9 / 19; }
   .sec-inner {
     width: 100%;
-    max-width: 72rem;
+    max-width: var(--content-width-safe);
     margin-inline: auto;
-    padding-inline: var(--sp-fluid-s);
+    padding-inline: var(--gutter);
   }
   [data-surface="muted"] {
     --sec-bg: color-mix(in oklab, var(--c-ink) 5%, var(--c-paper));
@@ -149,10 +178,8 @@
   [data-surface="media"] {
     --sec-bg: transparent;
   }
-  [data-density="compact"] { --sec-pad: var(--sp-fluid-m); }
-  [data-density="spacious"] {
-    --sec-pad: calc(var(--sp-fluid-l) * 1.5);
-  }
+  [data-density="compact"] { --sec-pad: var(--section-space-s); }
+  [data-density="spacious"] { --sec-pad: var(--section-space-l); }
 
   .wf-cta-button {
     display: inline-block;
@@ -170,8 +197,8 @@
    shell contract). UNLAYERED on purpose: Tailwind tree-shakes custom
    rules inside @layer blocks against markup usage, and a class a
    built page hasn't used yet must still ship — unlayered rules always
-   emit, and unlayered > layered means .seo-h* always beats the base
-   h1–h4 sizes. .seo-h{N} renders a heading at a SMALLER fluid step
+   emit, and unlayered > layered means .seo-hN always beats the base
+   h1-h4 sizes. A .seo-hN rule renders a heading at a SMALLER fluid step
    than its rank's default; .display is the oversized non-heading
    marketing line — never put it on a heading element. CLASS-SYSTEM.md
    owns adjustments. */

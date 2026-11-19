@@ -61,9 +61,9 @@
    "token": "space.density_step",
    "kind": "enum",
    "values": [
-    -1,
-    0,
-    1
+    "space-s",
+    "space-m",
+    "space-l"
    ],
    "tier": "stylistic",
    "rules": [
@@ -71,9 +71,9 @@
     "G.3"
    ],
    "acss": {
-    "-1": "space-s",
-    "0": "space-m",
-    "1": "space-l"
+    "space-s": "space-s",
+    "space-m": "space-m",
+    "space-l": "space-l"
    }
   },
   "space.section_py": {
@@ -81,17 +81,15 @@
    "kind": "map",
    "per": {
     "compact": [
-     32,
-     48,
-     64
+     "section-space-xs",
+     "section-space-s"
     ],
     "regular": [
-     64,
-     96
+     "section-space-m"
     ],
     "spacious": [
-     96,
-     128
+     "section-space-l",
+     "section-space-xl"
     ]
    },
    "tier": "structural",
@@ -107,14 +105,14 @@
    }
   },
   "grid.gutter": {
-   "token": "grid.gutter_px",
+   "token": "grid.gutter",
    "kind": "enum",
    "values": [
-    16,
-    24,
-    32,
-    48,
-    64
+    "space-xs",
+    "space-s",
+    "space-m",
+    "space-l",
+    "space-xl"
    ],
    "tier": "structural",
    "rules": [
