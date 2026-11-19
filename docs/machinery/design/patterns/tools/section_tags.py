@@ -91,7 +91,15 @@ def api_key():
 
 
 def img_block(path):
-    b64 = base64.b64encode(open(path, 'rb').read()).decode()
+    import io
+    from PIL import Image
+    im = Image.open(path)
+    w, h = im.size
+    if w > 900:
+        im = im.resize((900, int(h * 900 / w)))
+    buf = io.BytesIO()
+    im.convert('RGB').save(buf, 'JPEG', quality=72)
+    b64 = base64.b64encode(buf.getvalue()).decode()
     return {'type': 'image_url',
             'image_url': {'url': f'data:image/jpeg;base64,{b64}'}}
 
@@ -102,25 +110,29 @@ def tag(path):
         'messages': [{'role': 'user', 'content':
                       [{'type': 'text', 'text': SECTION_PROMPT},
                        img_block(path)]}],
-        'max_tokens': 180, 'temperature': 0}).encode()
+        'max_tokens': 400, 'temperature': 0}).encode()
     for attempt in range(4):
         try:
             req = urllib.request.Request(URL, data=body, headers={
                 'Authorization': f'Bearer {api_key()}',
                 'Content-Type': 'application/json'})
-            with urllib.request.urlopen(req, timeout=90) as r:
+            with urllib.request.urlopen(req, timeout=180) as r:
                 txt = json.loads(r.read())['choices'][0][
                     'message']['content']
-            s, e = txt.find('{'), txt.rfind('}')
-            return json.loads(txt[s:e + 1]), None
+            s = txt.find('{')
+            if s == -1:
+                return None, 'no json: ' + txt[:60]
+            res, _ = json.JSONDecoder().raw_decode(txt[s:])
+            return res, None
         except urllib.error.HTTPError as ex:
             if ex.code == 429:
                 time.sleep(5 * (attempt + 1))
                 continue
             return None, f'http {ex.code}'
         except Exception as ex:  # noqa: BLE001
-            return None, str(ex)[:120]
-    return None, '429 exhausted'
+            time.sleep(4 * (attempt + 1))
+            err = str(ex)[:120]
+    return None, err
 
 
 def main():
@@ -142,7 +154,7 @@ def main():
             break
     print(f'{len(jobs)} sections to tag via {MODEL}', flush=True)
     done = errs = 0
-    with ThreadPoolExecutor(max_workers=20) as pool:
+    with ThreadPoolExecutor(max_workers=100) as pool:
         futs = {pool.submit(tag, p): rp for rp, p in jobs}
         for fut in as_completed(futs):
             rp = futs[fut]
@@ -168,14 +180,21 @@ def main():
                        'conversion_role': res.get('conversion_role'),
                        'confidence': res.get('confidence'),
                        'gemini_section': 'v2-canonical'})
-            if done % 200 == 0:
+            if done % 50 == 0:
                 print(f'  {done}/{len(jobs)}', flush=True)
-                json.dump(idx, open(IDX, 'w'), indent=1)
-    json.dump(idx, open(IDX, 'w'), indent=1)
+                tmp = IDX + '.tmp'
+                json.dump(idx, open(tmp, 'w'), indent=1)
+                os.replace(tmp, IDX)
+    tmp = IDX + '.tmp'
+    json.dump(idx, open(tmp, 'w'), indent=1)
+    os.replace(tmp, IDX)
     sect = Counter((r.get('style_tags') or {}).get('section_type')
                    for r in rows.values())
-    style = Counter((r.get('style_tags') or {}).get('style')
-                    for r in rows.values())
+    style = Counter()
+    for r in rows.values():
+        sv = (r.get('style_tags') or {}).get('style')
+        for k in (sv if isinstance(sv, list) else [sv]):
+            style[k] += 1
     print(f'DONE {done} tagged, {errs} errs')
     print('section_type:', sect.most_common(15))
     print('style:', style.most_common(15))

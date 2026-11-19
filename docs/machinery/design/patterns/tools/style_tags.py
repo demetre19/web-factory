@@ -48,10 +48,18 @@ def api_key():
 
 
 def img_block(path):
-    ext = os.path.splitext(path)[1].lstrip('.').replace('jpg', 'jpeg')
-    b64 = base64.b64encode(open(path, 'rb').read()).decode()
+    import io
+    from PIL import Image
+    im = Image.open(path)
+    w, h = im.size
+    if w > 900:
+        im = im.resize((900, int(h * 900 / w)))
+    buf = io.BytesIO()
+    im.convert('RGB').save(buf, 'JPEG', quality=72)
+    b64 = base64.b64encode(buf.getvalue()).decode()
     return {'type': 'image_url',
-            'image_url': {'url': f'data:image/{ext};base64,{b64}'}}
+            'image_url': {'url': f'data:image/jpeg;base64,{b64}'}}
+
 
 
 def tag(path):
@@ -90,8 +98,11 @@ def main():
     rows = idx['rows']
     jobs = []
     for rp, row in rows.items():
-        if row.get('style_tags') and not reclass:
-            continue
+        st = row.get('style_tags')
+        if st and not reclass:
+            # keep tags only if they were made on the same pixels
+            if st.get('sha256') == row.get('sha256'):
+                continue
         p = os.path.join(REPO, rp)
         if os.path.exists(p):
             jobs.append((rp, p))
@@ -100,7 +111,7 @@ def main():
     print(f'{len(jobs)} rows to tag via {MODEL}', flush=True)
     done = errs = 0
     style_idx = {}
-    with ThreadPoolExecutor(max_workers=20) as pool:
+    with ThreadPoolExecutor(max_workers=100) as pool:
         futs = {pool.submit(tag, p): rp for rp, p in jobs}
         for fut in as_completed(futs):
             rp = futs[fut]
@@ -118,6 +129,7 @@ def main():
                 'medium': res.get('medium'),
                 'mood': res.get('mood'),
                 'confidence': res.get('confidence'),
+                'sha256': row.get('sha256'),
                 'model': MODEL}
             style_idx[rp] = row['style_tags']
             if done % 100 == 0:

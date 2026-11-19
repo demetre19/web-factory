@@ -58,9 +58,18 @@ def api_key():
 
 
 def img_block(path):
-    b64 = base64.b64encode(open(path, 'rb').read()).decode()
+    import io
+    from PIL import Image
+    im = Image.open(path)
+    w, h = im.size
+    if w > 900:
+        im = im.resize((900, int(h * 900 / w)))
+    buf = io.BytesIO()
+    im.convert('RGB').save(buf, 'JPEG', quality=72)
+    b64 = base64.b64encode(buf.getvalue()).decode()
     return {'type': 'image_url',
             'image_url': {'url': f'data:image/jpeg;base64,{b64}'}}
+
 
 
 def metas():
@@ -98,25 +107,29 @@ def vibe_call(tile):
         'messages': [{'role': 'user', 'content':
                       [{'type': 'text', 'text': VIBE_PROMPT},
                        img_block(tile)]}],
-        'max_tokens': 140, 'temperature': 0}).encode()
+        'max_tokens': 400, 'temperature': 0}).encode()
     for attempt in range(4):
         try:
             req = urllib.request.Request(URL, data=body, headers={
                 'Authorization': f'Bearer {api_key()}',
                 'Content-Type': 'application/json'})
-            with urllib.request.urlopen(req, timeout=90) as r:
+            with urllib.request.urlopen(req, timeout=180) as r:
                 txt = json.loads(r.read())['choices'][0][
                     'message']['content']
-            s, e = txt.find('{'), txt.rfind('}')
-            return json.loads(txt[s:e + 1]), None
+            s = txt.find('{')
+            if s == -1:
+                return None, 'no json: ' + txt[:60]
+            res, _ = json.JSONDecoder().raw_decode(txt[s:])
+            return res, None
         except urllib.error.HTTPError as ex:
             if ex.code == 429:
                 time.sleep(5 * (attempt + 1))
                 continue
             return None, f'http {ex.code}'
         except Exception as ex:  # noqa: BLE001
-            return None, str(ex)[:120]
-    return None, '429 exhausted'
+            time.sleep(4 * (attempt + 1))
+            err = str(ex)[:120]
+    return None, err
 
 
 def pass_vibe(limit):
@@ -153,7 +166,7 @@ def pass_vibe(limit):
             break
     print(f'{len(jobs)} sites to vibe via {MODEL}', flush=True)
     done = errs = 0
-    with ThreadPoolExecutor(max_workers=20) as pool:
+    with ThreadPoolExecutor(max_workers=100) as pool:
         futs = {pool.submit(vibe_call, tp): (f, m)
                 for f, m, tp in jobs}
         for fut in as_completed(futs):
@@ -167,7 +180,9 @@ def pass_vibe(limit):
                 continue
             m['vibe'] = res
             m['vibe_method'] = MODEL
-            json.dump(m, open(f, 'w'), indent=1)
+            tmp = f + '.tmp'
+            json.dump(m, open(tmp, 'w'), indent=1)
+            os.replace(tmp, f)
             if done % 100 == 0:
                 print(f'  {done}/{len(jobs)}', flush=True)
     styles = Counter()
@@ -178,7 +193,9 @@ def pass_vibe(limit):
             continue
         v = m.get('vibe')
         if v:
-            styles[v.get('style')] += 1
+            sv = v.get('style')
+            for k in (sv if isinstance(sv, list) else [sv]):
+                styles[k] += 1
     print(f'DONE {done} vibed, {errs} errs. '
           f'corpus style dist: {styles.most_common()}')
 
