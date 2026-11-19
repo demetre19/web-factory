@@ -6,23 +6,28 @@ form-centered) rendered under 5 DNA knob vectors, presented as a
 VG.7 tabbed picker, then run through the real gate chain:
 
   PREBUILD.json (J.3)  → build → compliance battery (R.12/T.1/R.4)
-  → REVIEW.json quality rows (J.1, mechanical judgment — the VLM
-    lane is the configured pi-default-vlm; this run substitutes the
-    deterministic scorer honestly and records judged_by)
+  → REVIEW.json quality rows (J.1 — REAL VLM judgment via
+    tools/design-gate/vlm.py on rendered shots; mechanical dims
+    retained as the comparison baseline, vlm_parsed on record)
   → PRESENT-ORDER hash equality (J.2)
   → BLOCK-TRACE fields on every option (J.4)
 
 No fake scores: every dimension is computed from the render + the
 knob vectors, not written by hand.
 """
-import hashlib, json, os, re, sys
+import hashlib, json, os, re, subprocess, sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
 import gate  # noqa: E402
+import vlm   # noqa: E402  (P.24 — judgment is a real invocation)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out')
+SHOTS = os.path.join(OUT, 'shots')
+VENV_PY = os.path.join(os.path.dirname(os.path.dirname(
+    os.path.dirname(HERE))), '.venv-vlm', 'bin', 'python')
+SHOT_RENDERER = os.path.join(HERE, 'shot_render.py')
 RECIPE = 'brixies/cta-sections/cta-1.topo'
 
 # five DNA profiles — knob vectors over the same set the gate
@@ -110,7 +115,7 @@ DNAS = {
             '--btn-pad': '.75rem 1.5rem'}},
 }
 
-JUDGED_BY = 'pi-default-vlm'  # configured cheap lane
+JUDGED_BY = vlm.DEFAULT_MODEL  # the cheap lane IS the local VLM
 
 
 def _lum(hx):
@@ -286,12 +291,53 @@ def main():
                q['composite'] < 60]
     for n in dropped:
         del DNAS[n], quality[n]
+    # ---- shots: deterministic raster of each option (PIL lane) ----
+    os.makedirs(SHOTS, exist_ok=True)
+    shot_map = {}
+    for n, d in DNAS.items():
+        spec = {'width': 1280, 'height': 800, 'vars': d['vars'],
+                'copy': d['copy']}
+        sp = os.path.join(SHOTS, f'{n}.json')
+        pp_ = os.path.join(SHOTS, f'{n}.png')
+        open(sp, 'w').write(json.dumps(spec))
+        subprocess.run([VENV_PY, SHOT_RENDERER, sp, pp_], check=True)
+        shot_map[n] = f'shots/{n}.png'
+
+    # ---- J.1 the judgment is a REAL call --------------------------
+    # one bounded VLM invocation over the rendered shots; mechanical
+    # dims stay on record as the comparison baseline.
+    mech = {n: dict(q) for n, q in quality.items()}
+    try:
+        call = vlm.judge([os.path.join(SHOTS, f'{n}.png')
+                          for n in DNAS], max_tokens=300)
+    except vlm.VLMUnavailable as e:
+        call = None
+        print('VLM unavailable — mechanical judgment only:', e,
+              file=sys.stderr)
+    if call and call.get('parsed'):
+        pd_ = call['parsed']
+        for n in DNAS:
+            for d in gate.J_QUALITY_DIMS:
+                if isinstance(pd_.get(d), (int, float)):
+                    quality[n][d] = int(pd_[d])
+            quality[n]['composite'] = round(
+                (2 * quality[n]['hero_clarity'] +
+                 2 * quality[n]['layout_craft'] +
+                 quality[n]['media_fit'] + quality[n]['mobile'] +
+                 quality[n]['distinctness']) / 7)
+            quality[n]['vlm_parsed'] = pd_
+            quality[n]['mechanical'] = {d: mech[n][d]
+                                        for d in gate.J_QUALITY_DIMS}
+    for n in DNAS:
+        quality[n]['judged_by'] = call['model'] if call else JUDGED_BY
     picker = build_picker(quality)
     pp = os.path.join(OUT, 'vibe-picker.html')
     open(pp, 'w').write(picker)
     h = hashlib.sha256(picker.encode()).hexdigest()[:16]
 
-    review = {'reviewer_model': JUDGED_BY, 'vlm_calls': 1,
+    review = {'reviewer_model': call['model'] if call else JUDGED_BY,
+              'vlm_calls': 1 if call else 0,
+              'vlm_evidence': call,
               'viewports': [1280, 768, 360],
               'quality': quality, 'quality_retries': retries,
               'dropped_below_floor': dropped,
@@ -341,6 +387,10 @@ def main():
                       'dims': {n: {d: quality[n][d]
                                    for d in gate.J_QUALITY_DIMS}
                                for n in DNAS},
+                      'vlm': {'model': review['reviewer_model'],
+                              'calls': review['vlm_calls'],
+                              'evidence': bool(
+                                  review.get('vlm_evidence'))},
                       'gate_fails': fails}, indent=1))
     return 0 if not fails else 2
 
