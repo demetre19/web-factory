@@ -875,6 +875,16 @@ def check_mobbin_refs(ctx):
     if not parsed:
         return ['P.14 MOBBIN-REFS.md has no reference table — one row per '
                 'reference: | id/url | kind | informs | wave |']
+    for r in parsed:
+        rid = r[0]
+        if not _canon_ref_ok(rid):
+            f.append(f'P.14 {rid}: not a canonical ref — Mobbin '
+                     'screen/section ids or operator site URLs only '
+                     '(web corpus and negatives removed from canon)')
+        elif re.search(r'\b(web|negative)s?\b',
+                       ' '.join(r[1:]).lower()):
+            f.append(f'P.14 {rid}: kind/informs says web/negative — '
+                     'removed from canon')
     if not any(re.search(r'https?://|mobbin\.com/|screen[-_ ]?id|\b[0-9a-f]{8,}\b',
                          ' '.join(r), re.I) for r in parsed):
         f.append('P.14 MOBBIN-REFS.md rows carry no screen IDs/URLs')
@@ -1504,11 +1514,11 @@ def assemble_layouts(ctx):
                         f'data-ratio="{c["media_ratio"]}" '
                         f'data-disclosure="{c["disclosure"]}"></section>')
         refs = ' '.join(
-            r['id'] for r in _canon_rows(ctx)[:3]) or 'pattern-bank'
+            r['id'] for r in _canon_rows(ctx)[:3] if r['ok']) or 'none'
         hero_attr = ' data-hero="image-scrim"' if i == 0 else ''
         blocks.append(f'  <article class="card" id="d{i + 1}" '
                       f'data-layout="{lid}"{hero_attr}\n'
-                      f'    data-refs="{refs} pattern-{lid}" '
+                      f'    data-refs="{refs}" '
                       f'data-score="{0.9 - i * 0.05:.2f}" '
                       f'data-review="visual-pass" data-ignored="none">\n'
                       f'    <h2>Layout {lid}</h2>\n'
@@ -1528,8 +1538,32 @@ def assemble_layouts(ctx):
     return os.path.join(ctx.dir, 'preview', 'layouts.html'), txt, h
 
 
+CANON_BAN = ('data/web', 'validation-negative', 'annotations_negative',
+             'negative_sections', 'anti.json', 'quarantine')
+
+
+def _canon_ref_ok(ref):
+    """A canonical ref is a Mobbin screen/section id or URL, or an
+    operator-supplied site URL (literal http(s)://). The web corpus and
+    the anti/negatives layer are removed from canon — any ref into
+    data/web, validation-negatives or the quarantine is never valid."""
+    r = str(ref).strip().lower()
+    if not r or r == 'none':
+        return False
+    if any(b in r for b in CANON_BAN):
+        return False
+    if 'negative' in r or r.startswith(('pattern-', 'web-',
+                                        'https-', 'http-')):
+        return False
+    if r.startswith('mobbin') or 'mobbin.com' in r:
+        return True
+    return r.startswith(('http://', 'https://'))
+
+
 def _canon_rows(ctx):
-    """MOBBIN-REFS.md rows → {id/url, kind, informs, wave, ignored?}."""
+    """MOBBIN-REFS.md rows → {id/url, kind, informs, wave, ignored?,
+    ok?}. ok=False marks rows the canon ruling bans (web corpus /
+    negatives) — they fail instead of tracing."""
     t = ctx.read('MOBBIN-REFS.md') or ''
     rows = []
     for ln in t.splitlines():
@@ -1538,9 +1572,15 @@ def _canon_rows(ctx):
         cells = [c.strip() for c in ln.strip().strip('|').split('|')]
         if len(cells) >= 3 and cells[0] not in ('id/url', 'id / url'):
             row_text = ' '.join(cells).lower()
-            rows.append({'id': cells[0], 'kind': cells[1] if len(cells) > 1 else '',
+            rid = cells[0]
+            ok = _canon_ref_ok(rid) \
+                and not re.search(r'\b(web|negative)s?\b',
+                                  (cells[1] or '').lower())
+            rows.append({'id': rid,
+                         'kind': cells[1] if len(cells) > 1 else '',
                          'informs': cells[2] if len(cells) > 2 else '',
                          'wave': cells[3] if len(cells) > 3 else '',
+                         'ok': ok,
                          'ignored': 'ignored' in row_text
                          or 'skipped' in row_text
                          or 'dropped' in row_text})
@@ -1565,7 +1605,13 @@ def check_canon_trace(ctx):
     f = []
     rows = _canon_rows(ctx)
     opsites = _operator_sites(ctx)
-    txt_refs = ' '.join(r['id'] + ' ' + r['informs'] for r in rows).lower()
+    for r in rows:
+        if not r['ok']:
+            f.append(f"LAW.REF {r['id']}: not a canonical ref — canon "
+                     'is Mobbin screens + operator sites only; the web '
+                     'corpus / negatives / banked sites are removed')
+    txt_refs = ' '.join(r['id'] + ' ' + r['informs'] for r in rows
+                        if r['ok']).lower()
     # operator sites must appear in the canon set when the operator gave any
     for site in opsites:
         if site.lower() not in txt_refs:
@@ -1590,8 +1636,12 @@ def check_canon_trace(ctx):
                              'ref — the composition traces to nothing')
                 else:
                     for ref in refs:
-                        if str(ref).lower() not in txt_refs and \
-                                not str(ref).startswith('pattern-'):
+                        if not _canon_ref_ok(ref):
+                            f.append(f'LAW.REF {slug}:{r.get("name")} '
+                                     f'cites {ref} — not a canonical '
+                                     'ref (Mobbin id / operator site '
+                                     'URL only)')
+                        elif str(ref).lower() not in txt_refs:
                             f.append(f'LAW.REF {slug}:{r.get("name")} '
                                      f'cites {ref} — not in the canon '
                                      'set (MOBBIN-REFS.md)')
@@ -4699,14 +4749,14 @@ def assemble_variants(ctx, page_pane=True):
         h_i = 0
         page_secs = '\n'.join(section_mock(c) for c in contracts.values())
         refs = ' '.join(
-            r['id'] for r in _canon_rows(ctx)[:3]) or 'pattern-bank'
+            r['id'] for r in _canon_rows(ctx)[:3] if r['ok']) or 'none'
         sc01 = (e.get('score') or 0) / 100 if (e.get('score') or 0) > 1 \
             else (e.get('score') or 0)
         tiles.append(
             f'  <article class="variant-frame" data-variant="{vid}" '
             f'data-vector="{e.get("vector")}" '
             f'data-score="{sc01:.2f}" data-score100="{e.get("score")}" '
-            f'data-refs="{refs} pattern-{e.get("vector")}" '
+            f'data-refs="{refs}" '
             f'data-review="visual-pass" '
             f'data-breaks="{breaks}" '
             f'data-look="{dna_slices(m).get("core", "")}" '
@@ -5784,9 +5834,18 @@ def check_round(path, round_no, stub=None):
         tags[d] = m.group(0) if m else ''
     for d, b in blocks.items():
         scope = tags[d] + '\n' + b
-        if not re.search(r'data-(?:refs|canon)=', scope):
+        rm = re.search(r'data-(?:refs|canon)="([^"]*)"', scope)
+        if not rm:
             f.append(f'LAW.REF option {d} carries no canon refs '
-                     '(Mobbin id / operator site / banked pattern)')
+                     '(Mobbin screen id / operator site URL)')
+        else:
+            bad = [t for t in rm.group(1).split()
+                   if not _canon_ref_ok(t)]
+            if bad:
+                f.append(f'LAW.REF option {d} cites non-canon '
+                         f'{bad[:3]} — Mobbin ids or operator site '
+                         'URLs only (web corpus / negatives / banked '
+                         'sites removed)')
         sc = re.search(r'data-score="([\d.]+)"', scope)
         if not sc:
             f.append(f'ROUND score.py ranking missing on option {d} — '

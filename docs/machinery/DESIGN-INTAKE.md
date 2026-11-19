@@ -99,8 +99,11 @@ computable; `inferred` direction axes and asset inventory
 (first-party photos/logos = T1 keep-list). Nothing is asked before
 this is on the table.
 
-**Phase B — direction cards (the only choice).** The agent presents
-**three cards**, never settings. Each card is a coherent bundle:
+**Phase B — the W3 layout round (the only choice).** The agent presents
+the rendered layout picker (`preview/layouts.html`), never settings:
+**≥5 real full-page designs** — copy + styling, ≥30% pairwise structure
+distance, each option lockable, scored, canon-referenced and
+visual-reviewed (P.18). Each card is a coherent bundle:
 a one-line name, all six `direction` axes, the `refused` it
 replaces, and an ASCII sketch — the **full money-page skeleton**,
 every planned section as a labeled box, ~40–80 lines, annotated
@@ -113,10 +116,10 @@ must differ on ≥3 axes — same direction in different wrappers is
 fraudulent variety. The operator picks one or remixes
 ("A's axes, B's hero") — that single answer fills `direction:`.
 
-The three cards ship as ONE file:
-`design-proposals/<site>/<page>/cards/index.html` — greyscale
-WIREFRAMES (Balsamiq idiom), one level above ASCII, never a styled
-mock. A sticky segmented switch
+The designs ship as ONE file: `preview/layouts.html` — real
+rendered options (copy + styling). The older greyscale card idiom
+(`cards/index.html`, Balsamiq boxes) was superseded at F-01:
+options the operator judges are the real page, not a sketch. A sticky segmented switch
 (`Design 1 · Design 2 · Design 3`, labelled with the card names)
 sits fixed at the top of the page; pressing it swaps the rendered
 wireframe instantly — same page, no navigation, no scrolling back.

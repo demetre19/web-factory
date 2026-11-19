@@ -118,7 +118,9 @@ Every wave ends in `python3 tools/design-gate/gate.py <wave>
 failures[], sha256 of inputs}`. `run.py` refuses to run wave N unless
 GATES.json shows wave N-1 `pass` for the CURRENT input hashes AND
 `approved: true`. Approval is the operator's recorded act
-(`gate.py <wave> <dir> --approve` after reviewing the artifact);
+(the operator approves in chat or clicks Approve — `run.py nonce`
+mints the one-time nonce, `run.py approve <wave> <dir> --nonce N`
+records it; `gate.py --approve` exits 2);
 unapproved artifacts block the next wave. The designer model NEVER
 runs its own gates or writes `GATES.json`/`REVIEW.json` — self-graded
 QA is the defect this machinery replaces. Reviewer output is

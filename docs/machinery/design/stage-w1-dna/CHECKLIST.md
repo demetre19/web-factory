@@ -14,7 +14,7 @@ Copy into `<pipeline-dir>/CHECKLIST/w1.md`. Blank cell = fail (P.9).
 | Rule | Evidence |
 |---|---|
 | P.14 `~/.mobbin-oauth/refresh.sh` run; MCP initialize 200 (paste) | |
-| P.14 `MOBBIN-REFS.md` ≥1 row per composition, with screen + URL | |
+| P.14 `MOBBIN-REFS.md` ≥3 refs per page type (≥3 per composition at W3), screen + URL | |
 | P.8 `design_mode` ∈ DESIGN-INTAKE enum (`site.design_mode:`) | |
 | P.8 `sources:` rows carry `live:` / `copy-contract:` / `wireframe:` provenance | |
 | P.8 `intent.who` noun phrase / `one_action` verb / `worst_case` | |

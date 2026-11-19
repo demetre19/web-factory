@@ -62,8 +62,8 @@ gated sections, never written in one pass.
   rule. Intake front end: `tools/site-intake/` +
   `docs/machinery/DESIGN-INTAKE.md`. Design proposals live outside
   the repo (`~/Documents/DEV-WORK/design-proposals/<site>/`), never
-  in `refs/` — refs are evidence, not drafts. Phase B direction
-  cards instantiate `templates/wireframe-cards/` (greyscale
+  in `refs/` — refs are evidence, not drafts. The W3 layout picker
+  renders real full-page options; `templates/wireframe-cards/` (greyscale
   wireframe, operator-approved fidelity); never hand-rolled.
 
 ## Write set

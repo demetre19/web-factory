@@ -30,7 +30,7 @@ responsive pages — one real design per variant. It is generated —
 picker drifts from the designs it claims to show.
 
 **Enforcement** — script `check_variants` @ w2 and w8. Threshold: file
-exists, `data-variant` count ∈ [3, 5], every rendered id is a computed
+exists, `data-variant` count is exactly 3 (look round), every rendered id is a computed
 pass, and `data-pane="page"` holds a full responsive page mock.
 
 ### VG.2 A variant is a vector, not a mood

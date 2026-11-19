@@ -68,7 +68,8 @@ query|claim · `zone` macro|micro|end|chrome.
   usually lives here.
 - **S-M-L step:** adjacent sections show a visible density step — no
   two adjacent rows may share `density` AND `composition` both; at
-  least one density change every 3 rows (L.7).
+  never >2 consecutive rows at one density (L.7); exactly one interior
+  inverse/brand surface band per page.
 - **≤2 consecutive same composition:** never 3+ adjacent rows sharing
   `composition` (§4 adjacency hardened — a merged organism declares
   itself via `organism:` + logged decision).

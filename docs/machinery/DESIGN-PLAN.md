@@ -56,7 +56,7 @@ is the design-DNA loss this file exists to prevent.
 | **W1** DNA + audit | this file's `site:`; `audit.md`; `MOBBIN-REFS.md`; **`DNA.json` v0 at exit** | Intent, the six direction axes, the map (profile + genotype + seeded knobs + vector targets) | `gate.py w1` + `gate.py dna` — Mobbin, intent, audit, genotype total, map complete and provenance-tagged |
 | **W2** content | STUB → content inventory | Copy contract: heading vector + `fs` + body blocks | `gate.py w2` — inventory complete, verbatim headings |
 | **W3** layout round | `options:` — ≥5 layout cards on real copy; `pages.<slug>.sections[]` 1:1 from the picked card (`wf_ref`) + `sections/*.contract.json` | The argument as boxes; the layout lock | `gate.py w3` — ≥5 options, ≥30% pairwise distance, data-* 1:1, rhythm/motif, vector, genotype, contracts |
-| **W4** look round | `options:` — 3 visual directions as distinct genotype vectors on the picked layout | The aesthetic, chosen by the operator | `gate.py w4` — axes ∈ enums, ≥2 distinct genotypes, burst declared |
+| **W4** look round | `options:` — 3 visual directions as distinct genotype vectors on the picked layout | The aesthetic, chosen by the operator | `gate.py w4` — axes ∈ enums, 3 distinct genotypes, burst declared |
 | **W5** system | `system:` → `TOKENS.json` → `tailwind.config` + `global.css` + `preview/system.html` | Every number bound, rendered on the tile | `gate.py w5` — enums, spacing, breakpoints, contrast, config derived |
 | **W6** components | `src/components/sections/<Sec>.astro` per section + `src/components/*.astro` + tile | Each section built and gated alone | `gate.py w6` — shell, allowed classes, section gates, exemplars, build 0 |
 | **W7** page | `assemble.py` → `src/pages/<slug>.astro`; `dist/` | The page, assembled mechanically from plan order | `gate.py w7` — assembly, data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6 |
@@ -282,7 +282,7 @@ site:
 
   # ---- variants — knob vectors, never new sections (VG.1–VG.6) ----
   variants:                                # rendered as src/pages/variants.astro
-    count: 3                               # 3 default, 5 max
+    count: 3                               # exactly 3 look directions
     sheet_first: true                      # every variant renders its own system sheet before its page
     burst_wildcard: 1                      # ≥1 wildcard variant whenever burst > 0 (VG.5)
 

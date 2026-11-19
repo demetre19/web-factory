@@ -21,8 +21,9 @@ gate receipt in `GATES.json.artifacts` (wave, sha256, all-pass).
 `gate.py receipt <file>` validates it; the orchestrator never opens
 an unreceipted file.
 
-**LAW.REF (canon):** Mobbin screens + operator-suggested sites + the
-banked reference set are the highest design authority after the copy
+**LAW.REF (canon):** Mobbin screens + operator-supplied sites — web
+corpus and anti layer removed — are
+the highest design authority after the copy
 contract and brand invariants — every composition, hero archetype,
 section rhythm and look-knob choice traces to ≥1 canon ref recorded in
 the option's metadata; retrieval is complete (nothing silently dropped;
@@ -81,7 +82,7 @@ can never approve its own work (P.8). Recorded in
 | **W1 DNA + audit** | `stage-w1-dna/` | Mobbin refs, `DESIGN-PLAN.md` `site:`+`intent:`, Phase-0 `audit.md`, **`DNA.json` v0 at exit** (invariants + constraints + pattern-library median/IQR seeding + vector targets) | P D E V T C L G S I M R W DM | `gate.py w1` — Mobbin auth+refs, design_mode, intent, audit, genotype, DNA v0 |
 | **W2 content** | `stage-w2-content/` | STUB → content inventory: heading vector + body blocks + copy fields | E W R P | `gate.py w2` — inventory complete, verbatim headings, copy fields |
 | **W3 layout round** | `stage-w3-layout/` | `preview/layouts.html` — **≥5** real responsive page layouts on the real copy (one may be ★ wildcard); `sections[]` 1:1 from the picked card (`wf_ref`), layout lock | L R E V W P D PS VG | `gate.py w3` — ≥5 options, pairwise ≥30% section distance, data-* 1:1, rhythm/motif/emphasis, vector 1:1, genotype alleles |
-| **W4 look round** | `stage-w4-look/` | `preview/variants.html` — **3** visual directions on the picked layout = distinct **knob vectors** derived from DNA v0, light+dark per direction; operator picks the baseline | C G S M T R V P D DM VG | `gate.py w4` — axes ∈ enums, refused, ≥2 distinct vectors, modes, picker, `--design` |
+| **W4 look round** | `stage-w4-look/` | `preview/variants.html` — **3** visual directions on the picked layout = distinct **knob vectors** derived from DNA v0, light+dark per direction; operator picks the baseline | C G S M T R V P D DM VG | `gate.py w4` — axes ∈ enums, refused, 3 distinct vectors, modes, picker, `--design` |
 | **W5 system** | `stage-w5-system/` | `TOKENS.json` (both modes + knob values) → `tailwind.config` + `global.css` + `preview/system.html` primitives sheet with a Light/Dark toggle; **map locked to v1** | T C G S I V M W R P DM | `gate.py w5` — enums, spacing/breakpoints, contrast both modes, toggle, config derived |
 | **W6 components** | `stage-w6-components/` | `src/components/*.astro` + `@layer components` + tile catalogue | S I V R W M P | `gate.py w6` — every composition a component, classes ⊆ layer, no emoji, build 0 |
 | **W7 page** | `stage-w7-page/` | `src/pages/<slug>.astro` from components; `dist/`; `PAGES/<slug>/SPEC.md` | R E W V M P PS | `gate.py w7` — data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6, rhythm |
@@ -89,7 +90,9 @@ can never approve its own work (P.8). Recorded in
 
 **Operator approval points (P.8):** W1 (DNA v0), W3 (layout pick), W4
 (look pick), W8 (verdict). The operator NEVER sees a preview unless every
-earlier gate is green and `SCORECARD.json` has no section below 90.
+earlier gate is green and the operator has approved each decision
+wave via the nonce service (approvals bind the wave's inputs, not a
+W8 artefact).
 
 ## Rulebook files (load only what your CARD names)
 
@@ -143,7 +146,7 @@ earlier gate is green and `SCORECARD.json` has no section below 90.
 ```bash
 python3 tools/design-gate/gate.py <w0..w8> <pipeline-dir> \
     [--wireframe <cards/index.html>] [--design <id>] [--stub <stub.md>] \
-    [--approve]
+    [--design <pick>]
 python3 tools/design-gate/gate.py coverage     # 100% of rule IDs enforced
 python3 tools/design-gate/gate.py consistency  # no duplicate/contradictory numbers, no dangling refs
 python3 tools/design-gate/gate.py graph        # knowledge graph integrity

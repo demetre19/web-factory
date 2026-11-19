@@ -29,12 +29,12 @@ maps to exactly one speech-act; a section that maps to none is a defect
 
 | `speech_act` | Question it answers | Maps to category (slug) | Canonical default (surface / density) |
 |---|---|---|---|
-| `promise` | "what do I get / why this" | `hero` | `inverse` · `spacious` |
+| `promise` | "what do I get / why this" | `hero` | `base` or `muted` · `spacious` |
 | `proof` | "why believe you" | `testimonials` · `logo-sections` · `counter` | `base` · `compact` |
 | `tension` | "what's wrong now" | `content` · `feature` | `muted` · `regular` |
 | `how` | "how does it work" | `how-it-works` · `feature` · `timeline` · `teams` | `base` or `muted` · `regular` |
 | `objection` | "but what about X" | `comparison` · `banner` · `pricing` · `content` (FAQ) | `base` · `regular` |
-| `act` | "what do I do now" | `call-to-action` · `contact` · `newsletter` | `inverse` or `brand` · `spacious` |
+| `act` | "what do I do now" | `call-to-action` · `contact` · `newsletter` | `inverse` or `brand` (exactly one per page) · `spacious` |
 | `detail` | "show me more" | `gallery` · `grids-and-cards` · `table` · `content` · `blog-*` · `portfolio-*` | `base` or `muted` · `regular` |
 | `chrome` | site structure | `headers` · `footer` · `megamenu` · `404-error` · `thank-you-page` | `base` · `compact` |
 
@@ -148,7 +148,7 @@ Verified against 5 real service-business pages
   Company runs ~80% on one base) and spend ONE contrast moment, not a
   checkerboard. The checkable rule is composition variety + the
   contrast moment + the fold boundary, not forced alternation.
-- `inverse` surfaces ≤ 2 per page + footer; `brand` ≤ 1 per page —
+- `inverse`+`brand` surfaces: exactly ONE interior band per page (footer counts its own surface) —
   verified: every observed page has exactly one contrast moment.
 - `spacious` density is spent at `promise` and `act` — the two rests —
   plus at most one interior section. Uniform `regular` everywhere is the

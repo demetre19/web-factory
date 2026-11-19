@@ -5,8 +5,8 @@ Scores each section and the page 0–100 from four measured components:
 
   1. pattern_fit   similarity of the section's genotype to the proven
                    patterns for its (site, page, section) cell, weighted
-                   by pattern prevalence; penalised by proximity to the
-                   ANTI alleles mined from the negative corpus.
+                   by pattern prevalence. Positive-pattern fit only —
+                   the anti/negatives layer is removed.
   2. ps            the PS.* page-segmentation features (identical names
                    to tools/design-gate/ps_features.py; DOM-side here,
                    gate.py's checks win when importable).
@@ -75,7 +75,6 @@ DEFAULT_WEIGHTS = {
     's_cta_presence': 0.10,
     's_row_regularity': 0.06,
     's_prose_mass': 0.04,
-    'anti': 0.08,
 }
 
 # ordered: specific before generic; matched against the section's own
@@ -426,7 +425,7 @@ def pattern_fit(rec, geno, bank, section_known=True):
         # specificity ladder: a match against the exact cell is the
         # strongest evidence; a match that only the global bucket can
         # supply is weak. Without this discount a corpus that carries no
-        # section label (negatives) scores *higher* than one that does,
+        # section label scores *higher* than one that does,
         # because it may match any of the 80+ mined signatures.
         keys = [((site, page, sec), 1.00),
                 ((site, '*', sec), 0.95),
@@ -450,15 +449,10 @@ def pattern_fit(rec, geno, bank, section_known=True):
     if best[2] < 0.7:
         reasons.append(f"genotype diverges from {best[1]} "
                        f"(cos={best[2]:.2f})")
-    # The allele-level anti rows live in anti.json for provenance only:
-    # every candidate allele appeared at similar rates in both corpora
-    # (VALIDATION.md §5), so no allele may subtract here. The anti signal
-    # that does separate the corpora is the *feature* rows, applied by
-    # anti_score to the feature vector — never to pattern_fit.
     return max(0.0, min(1.0, best[0])), reasons, best[1]
 
 
-def score_file(path, site_type, page_type, weights, bank, anti):
+def score_file(path, site_type, page_type, weights, bank):
     doc = parse_html(path)
     cards = doc.cards or [None]
     out = {'file': path, 'site_type': site_type, 'page_type': page_type,
@@ -481,9 +475,9 @@ def score_file(path, site_type, page_type, weights, bank, anti):
             geno, derived = geno_of(r)
             fit, reasons, pid = pattern_fit(r, geno, bank)
             fits.append(fit)
-            comp = section_features(fit, ps, mm, 1.0)
+            comp = section_features(fit, ps, mm)
             comp.update(section_shape(r))
-            comp['anti'], anti_hits = anti_score(comp, anti)
+
             sc = 100 * sum(weights.get(k, 0.0) * comp[k] for k in comp)
             sec_out.append({
                 'label': r['label'] or r['section_type'],
@@ -494,7 +488,7 @@ def score_file(path, site_type, page_type, weights, bank, anti):
                 'components': {k: round(v, 3) for k, v in comp.items()},
                 'reasons': reasons + ([f'{r["section_type"]} classified '
                                        f'from DOM'] if r['section_type']
-                                      == 'other' else []) + anti_hits,
+                                      == 'other' else []),
             })
         # page score: hero-weighted mean
         wt = [2.0 if s['section_type'] == 'hero' else 1.0 for s in sec_out]
@@ -606,39 +600,14 @@ def image_fit(rec, means=None):
     return round(best, 4)
 
 
-def anti_score(feats, anti):
-    """1.0 minus the measured anti-pattern penalties.
 
-    `data/anti.json` -> `features` holds rows that were only written when
-    the negative corpus actually differed (lift >= 1.8, negative rate
-    >= 0.33). Each hit subtracts its measured penalty; the result is a
-    feature in its own right, not a hidden multiplier, so the model can
-    weigh it.
-    """
-    pen = 0.0
-    hits = []
-    for row in (anti.get('features') or []):
-        v = feats.get(row['feature'])
-        if v is None:
-            continue
-        generic = (v >= row['cut']) if row['direction'] == 'high' \
-            else (v < row['cut'])
-        if generic:
-            pen += row['penalty']
-            hits.append(f"{row['feature']} {'>=' if row['direction'] == 'high' else '<'} "
-                        f"{row['cut']} ({row['negative']:.0%} of negatives vs "
-                        f"{row['mobbin']:.0%} of curated)")
-    return max(0.0, min(1.0, 1.0 - pen)), hits
-
-
-def section_features(fit, ps, mm, anti_val):
+def section_features(fit, ps, mm):
     """The single feature vector used by both `score` and `validate`."""
     ps = ps or {}
     feats = {
         'pattern_fit': fit,
         'ps': (sum(ps.values()) / len(ps)) if ps else 0.5,
         'macro_micro': mm,
-        'anti': max(0.0, min(1.0, anti_val)),
     }
     for k in PS_KEYS:
         feats[k] = ps.get(k, 0.5)
@@ -650,14 +619,20 @@ PS_THRESHOLDS = {'block_role_uniqueness': 1.0, 'boilerplate_at_edges': 1.0,
                  'footer_is_boilerplate': 1.0, 'priority_order': 1.0}
 
 def build_dataset(seed=7):
-    """Positives = Mobbin annotations; negatives = contrast corpus tiles."""
+    """Positives = Mobbin annotations only.
+
+    Contrast = our own generated/failed designs
+    (`data/annotations_contrast.jsonl`, written by
+    `patterns/tools/capture_contrast.py`). No scraped negative sites and
+    no anti layer: the negative crops were random photo snippets, not
+    layout patterns, and were teaching the wrong contrast.
+    """
     from genome import genotype, vector
     from corpus_filter import filter_records
     meta, bank = pattern_bank()
-    anti = load_json(os.path.join(DATA, 'anti.json'), {})
     rows = []
     for name, label in (('annotations.jsonl', 1),
-                        ('annotations_negatives.jsonl', 0)):
+                        ('annotations_contrast.jsonl', 0)):
         p = os.path.join(DATA, name)
         if not os.path.exists(p):
             continue
@@ -678,9 +653,8 @@ def build_dataset(seed=7):
             ps = r.get('ps') or {}
             mm = 1.0 - min(1.0, abs((ps.get('main_content_share', 0.8)) - 0.8)
                            / 0.35)
-            feats = section_features(fit, ps, mm, 1.0)
+            feats = section_features(fit, ps, mm)
             feats.update(section_shape(r))
-            feats['anti'], _ = anti_score(feats, anti)
             r['image_key'] = os.path.relpath(
                 r['image'], DATA).replace(os.sep, '/')
             v = image_fit(r)
@@ -851,51 +825,6 @@ def section_shape(rec):
     }
 
 
-# The anti rows must be cut on the data the model trains on, not the
-# corpus being scored: choosing cut thresholds by argmax-lift over the
-# full corpus leaks the held-out half into feature engineering. This is
-# the same computation build_patterns.py runs once over the corpus —
-# _validate_once runs it per fold on the training half.
-ANTI_RULES = [
-    ('s_row_regularity', 'high', [0.80, 0.85, 0.90, 0.95]),
-    ('s_cta_presence', 'low', [0.50]),
-    ('s_block_pace', 'low', [0.20, 0.40, 0.60]),
-    ('s_prose_mass', 'high', [0.40, 0.60, 0.80]),
-]
-
-
-def feature_anti_rows(pos, neg, getter):
-    """pos/neg: item lists; getter: item -> feature dict. Same gates as
-    the corpus pass: negative rate >= 0.33, lift >= 1.8."""
-    rows = []
-    for feature, direction, cuts in ANTI_RULES:
-        best = None
-        for cut in cuts:
-            def rate(items):
-                vals = [getter(r)[feature] for r in items]
-                hit = [v for v in vals if (v >= cut if direction == 'high'
-                                           else v < cut)]
-                return len(hit) / max(1, len(vals))
-            pm, pn = rate(pos), rate(neg)
-            lift = (pn + 0.01) / (pm + 0.01)
-            if pn >= 0.33 and lift >= 1.8 and (best is None
-                                               or lift > best['lift']):
-                best = {'feature': feature, 'direction': direction,
-                        'cut': cut, 'mobbin': round(pm, 3),
-                        'negative': round(pn, 3), 'lift': round(lift, 2),
-                        'penalty': round(min(0.25, (pn - pm) * 0.5), 3)}
-        if best:
-            rows.append(best)
-    return sorted(rows, key=lambda r: -r['lift'])
-
-
-def fold_anti(train):
-    pos = [r for r in train if r['label'] == 1]
-    neg = [r for r in train if r['label'] == 0]
-    return {'features': feature_anti_rows(pos, neg,
-                                          lambda r: r['features'])}
-
-
 def cross_fit(rows, folds=4):
     """Out-of-fold pattern_fit for training rows.
 
@@ -948,8 +877,8 @@ def cmd_validate(args):
            'precision_at_10pct_mean': round(sum(p10s) / len(p10s), 4)}
     name = 'seeds_image.json' if getattr(args, 'image', False) \
         else 'seeds.json'
-    out['feature_set'] = ('14 + img_fit' if getattr(args, 'image', False)
-                          else '14')
+    out['feature_set'] = ('13 + img_fit' if getattr(args, 'image', False)
+                          else '13')
     json.dump(out, open(os.path.join(DATA, 'validation', name), 'w'),
               indent=1)
     print(json.dumps(out, indent=1))
@@ -967,9 +896,6 @@ def _validate_once(args):
     train_d = set(domains[:cut])
     train = [r for r in rows if r['domain'] in train_d]
     test = [r for r in rows if r['domain'] not in train_d]
-    # anti cuts are fit on TRAIN only — argmax-lift over the full corpus
-    # leaked the held-out half into feature engineering (ADV review F2).
-    anti = fold_anti(train)
     # Rebuild the pattern bank from TRAIN domains only. Test rows are
     # scored against it (no self-inclusion); train rows are scored
     # out-of-fold inside train, so the coefficients are fitted on the
@@ -983,11 +909,10 @@ def _validate_once(args):
         fit, _, _ = pattern_fit(r, r['genotype'], train_bank,
                                 section_known=known)
         r['features']['pattern_fit'] = fit
-    # fold-fit anti + means for every row (test rows now see no crop
-    # from their own side; train rows were recomputed inside cross_fit)
+    # fold-fit means for every row (test rows now see no crop from
+    # their own side; train rows were recomputed inside cross_fit)
     means = fold_means(train)
     for r in rows:
-        r['features']['anti'], _ = anti_score(r['features'], anti)
         v = image_fit(r, means=means)
         if v is not None:
             r['features']['img_fit'] = v
@@ -1024,14 +949,14 @@ def _validate_once(args):
         dy = math.sqrt(sum((y - my) ** 2 for y in ys)) or 1
         corr[k] = round(num / (dx * dy), 3)
 
-    # per-feature prevalence in mobbin vs negatives (effect size)
+    # per-feature prevalence in mobbin vs contrast crops (effect size)
     prev = {}
     for k in keys:
         mp = sum(r['features'][k] for r in rows if r['label'] == 1) / max(
             1, sum(1 for r in rows if r['label'] == 1))
         mn = sum(r['features'][k] for r in rows if r['label'] == 0) / max(
             1, sum(1 for r in rows if r['label'] == 0))
-        prev[k] = {'mobbin': round(mp, 3), 'negative': round(mn, 3),
+        prev[k] = {'mobbin': round(mp, 3), 'contrast': round(mn, 3),
                    'diff': round(mp - mn, 3)}
 
     os.makedirs(os.path.join(DATA, 'validation'), exist_ok=True)
@@ -1049,7 +974,7 @@ def _validate_once(args):
         'prevalence': prev,
         'score_distribution': {
             'positive_mean': round(sum(pos) / max(1, len(pos)), 3),
-            'negative_mean': round(sum(neg) / max(1, len(neg)), 3),
+            'contrast_mean': round(sum(neg) / max(1, len(neg)), 3),
         },
     }
     json.dump(result, open(os.path.join(DATA, 'validation',
@@ -1099,9 +1024,8 @@ def load_weights(path=None):
 
 def cmd_score(args):
     meta, bank = pattern_bank()
-    anti = load_json(os.path.join(DATA, 'anti.json'), {})
     res = score_file(args.file, args.site_type, args.page_type,
-                     load_weights(args.weights), bank, anti)
+                     load_weights(args.weights), bank)
     if args.json:
         print(json.dumps(res, indent=1))
         return
