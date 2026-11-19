@@ -1,0 +1,6092 @@
+{
+ "version": "f50953f2f74c",
+ "n_records": 3054,
+ "n_sites": 704,
+ "rules": {
+  "S.2": {
+   "baseline": "radius ladder {0,2,4,6,8,12,16,24,9999}",
+   "unit": 0.2,
+   "n_sites": 175,
+   "adherence": 0.966,
+   "on_rule": 169,
+   "bent": [
+    "freeform_2/8_off_ladder",
+    "freeform_3/12_off_ladder",
+    "freeform_2/9_off_ladder",
+    "freeform_2/9_off_ladder",
+    "freeform_1/3_off_ladder",
+    "freeform_12/49_off_ladder"
+   ]
+  },
+  "T.1": {
+   "baseline": "primary type contrast 3-6x body",
+   "unit": 1.5,
+   "n_sites": 175,
+   "adherence": 0.52,
+   "on_rule": 91,
+   "bent": [
+    "off_by_1.4x",
+    "off_by_0.5x",
+    "off_by_0.6x",
+    "off_by_7.1x",
+    "off_by_0.1x",
+    "off_by_0.6x",
+    "off_by_5.3x",
+    "off_by_2.0x",
+    "off_by_3.7x",
+    "off_by_2.0x"
+   ]
+  },
+  "T.6": {
+   "baseline": "measure <= 65ch; body >= 16px",
+   "unit": 15.0,
+   "n_sites": 529,
+   "adherence": 1.0,
+   "on_rule": 529,
+   "bent": []
+  },
+  "R.1": {
+   "baseline": "content width <= 1440 (ceiling 1280-1440 band)",
+   "unit": 240.0,
+   "n_sites": 80,
+   "adherence": 0.113,
+   "on_rule": 9,
+   "bent": [
+    "off_by_-346px",
+    "off_by_-300px",
+    "off_by_-820px",
+    "off_by_-570px",
+    "off_by_-585px",
+    "off_by_-580px",
+    "off_by_-585px",
+    "off_by_160px",
+    "off_by_-380px",
+    "off_by_-770px"
+   ]
+  },
+  "L.4": {
+   "baseline": "whitespace share >= canon P25 for the type",
+   "unit": 0.15,
+   "n_sites": 529,
+   "adherence": 0.983,
+   "on_rule": 520,
+   "bent": [
+    "off_by_0.18",
+    "off_by_0.02",
+    "off_by_0.09",
+    "off_by_0.00",
+    "off_by_0.11",
+    "off_by_0.00",
+    "off_by_0.10",
+    "off_by_0.04",
+    "off_by_0.03"
+   ]
+  },
+  "V.4": {
+   "baseline": "text-on-image: text-zone luminance <=20% or >=85% with scrim",
+   "unit": 0.15,
+   "n_sites": 229,
+   "adherence": 0.86,
+   "on_rule": 197,
+   "bent": [
+    "off_by_zone_0.69",
+    "off_by_zone_0.49",
+    "off_by_zone_0.50",
+    "off_by_zone_0.82",
+    "off_by_zone_0.50",
+    "off_by_zone_0.61",
+    "off_by_zone_0.47",
+    "off_by_zone_0.43",
+    "off_by_zone_0.82",
+    "off_by_zone_0.83"
+   ]
+  },
+  "I.2": {
+   "baseline": "icon stroke {1.5,2,2.5,3}px",
+   "unmeasurable": "stroke width not resolvable in 720px section crops \u2014 DOM/icon inspection needed"
+  },
+  "R.1-bp": {
+   "baseline": "breakpoints {360,640,768,1024,1280,1440,1920} min-width",
+   "unmeasurable": "not derivable from a still"
+  }
+ },
+ "sites": {
+  "Lovart": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Phantom Studios": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Analogue Agency": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "B\u00fcro": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Unseen Studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "COLLINS": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Fiasco": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Pentagram": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Metalab": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Contra": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Koto": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "basement.studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Instrument": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Framer": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Shade": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Figma": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "MindMarket": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "FLORA": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Webflow": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "metic.": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Wild": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Customer.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Calendly": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Kajabi": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Kit": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Clay": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Vucko": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Upwork": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Vimeo": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Squarespace": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Anima": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cloudstudio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "MOUTHWASH Studio": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Heron AI": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "YLLW": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Craft": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Inkwell": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Aave": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Wise": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Fibery": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Kinfolk": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Dovetail": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Linear": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "BitcoinOS": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Vercel": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Nite Riot": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ClickUp": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Shopify Editions": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "SIGMA": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Trawelt": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Runway": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "DICE": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Studio Freight": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "OFF+BRAND": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Cosmos": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "The Content Architecture": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "TinyWins": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Lightship": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "1Password": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Zoox": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Patch": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Stripe": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Vizcom": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Complex Law": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Joby Aviation": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Waabi": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Phantom": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Klarna": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "SSENSE": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Face Formula": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "UGLYCASH": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "VanMoof": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Dropbox": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Notion": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Fresha": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "FARFETCH": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "TheyDo": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "incident.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Rox": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Sketch": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Tailscale": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Evernote": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mailchimp": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Taxi Studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "The Performance Lab": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Fiverr": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Teachable": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Circle": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Tally": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Selfridges": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Miro": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Cloudflare": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Threads": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Loom": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Intercom": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Unfair": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Slack": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Eventbrite": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Patreon": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Oyster": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Plain": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Whop": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Beside": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Descript": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "monday.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Shopify": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Braintrust": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Replit": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Bird": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Airtable": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Browserbase": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Greptile": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "PayPal": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Save.design": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Mistral AI": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Anchor": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Antimetal": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "WhatsApp": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "OpenSea": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Sui": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "V7": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Harvest": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "IFTTT": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Dub": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "GitHub": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mural": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Lens": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "HubSpot": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Frontify": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Cursor": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Resend": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Supabase": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Lemon Squeezy": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Spline": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Canva": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "ToDesktop": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Speakeasy": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Opacity": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Height": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Typeform": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Wellfound": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Kastle": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "fal": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Ramp": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Hashnode": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Railway": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Programa": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Headspace": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Givingli": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mobbin": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Sprout Social": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "HoneyBook": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "NEON": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Swap": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "The New Yorker": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Rains": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Glossier": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Touchy Coffee": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Assembly Coffee": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "United Carriers": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Shopify Supply": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "K\u00d6PPEN": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Escape Cafe": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Revolut": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Podia": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Superpower": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Dollar Shave Club": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Apple": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Kalstore": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Shop": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Yellowbird": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "beehiiv": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Faculty Department": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Zellerfeld": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Coinbase": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Hims": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "FREITAG": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Busy Bee Honey": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Employment Hero": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "A24": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Grammarly": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Becane": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Whereby": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Ghost": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "BAGGU": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "In Common With": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Waka Waka": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Duolingo": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Glide": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Zendesk": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "David": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Oryzo": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Quicken": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Front": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Deezer": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "VEED": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Sana": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Vanta": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "TravelPerk": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Square": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Fruitful": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Varo Bank": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "SOTF": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "TIDAL": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Graza": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Jasper": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Huey Lightshop": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Shupatto": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Little Amps Coffee": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Wix": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "MasterClass": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Brilliant": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "mymind": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Pangram": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Assembly": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Oku": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Sprig": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "ClassPass": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "SpaceXAI": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Unify": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Riverside": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Maze": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Luma": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ElevenLabs": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Clockwise": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Bumble": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Calm": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Blue Apron": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "KOBU": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Claude Type": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Oatly": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Fourmula AI": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cash App Design": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Slash": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Legend": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Spade": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Lattice": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Cake Equity": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Monarch": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Titan": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mercury": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Tempo": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Grain": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Public": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Base": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Maxima Therapy": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "T1 Energy": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mixpanel": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Ragged Edge": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Daylight": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Airtasker": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Eat Real Food": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Ease": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Amigo": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Titan Intake": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Amperos": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Function": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Biograph": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Melius": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Sunday": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Ploy": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Aboard": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Relume": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "ramp.design": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Lovable": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Monte": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "OpenTable": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Mews": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "7shifts": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "re_": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Tripadvisor": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Corgi": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "sweetgreen": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Impossible Foods": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Butter": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Goldsand": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cassette": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Savor": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Legora": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Harvey": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Contractbook": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Raw Materials": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Passionfroot": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Eat Hungry Tiger": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Superr": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Microsoft AI": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Duna": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Aurora": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Grok": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Attio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Deel": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Epidemic Sound": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Flim": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Brik": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Surfshark": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Campsite": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Faire": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Rarible": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Udemy": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Coda": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Homerun": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Uxcel": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Proton": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Agentcard": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Rows": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Feather": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Shader": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mother Design": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Seasats": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Hex": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Readymag": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Fuser": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "folk": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Airbnb": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "AngelList": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Ada": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Workable": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Craft Agency": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Todoist": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Claude": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Midday": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Toggl Track": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Copy.ai": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Teak": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Overmind": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cohere": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Clerk": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Twenty": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Lightdash": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Granola": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Profound": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Pitch": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Daydream": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ReadMe": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cycle": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "User Interviews": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Amplemarket": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Charma": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Twingate": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Superhuman": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Equals": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Runner": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Air": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Zaro": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Autosend": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "heyclicky": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Loops": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Sequence": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mintlify": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Town": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Lassie": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cofounder": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Aside": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Robot.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Altitude": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Humble": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Zipline": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "Garden": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Paraform": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Firecrawl": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Atlas": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Parker AI": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Mora": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "Cash App": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "resend.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "aacckc.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "supabird.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "atelier-ko-topaz.vercel.app": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "fyrre-seven.vercel.app": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "kobbe.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "longisland-officecleaning.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "swissfolio.netlify.app": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "u24.gov.ua": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ellipsus.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "github.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.apple.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "ramp.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "overrrides.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "slack.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.hubspot.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.typeform.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.shopify.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "themessagetoukraine.obys.agency": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.hotjar.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "ventriloc.ca": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "111w57.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "21tsi.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "calendly.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "247artists.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "zapier.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "stripe.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "mdconsultingny.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "grids.obys.agency": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.3200kelvin.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.notion.so": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.depo.studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "360lexingtonave.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.figma.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.fabric.vc": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "375.studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.xero.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.auxility.ca": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.sebto.media": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.a1mobile.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "pebblelife.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "cantunsee.space": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.aardvarkbookclub.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "basecamp.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "abetterlou.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "moral-skin.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "mural.co": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.xn--80a2abbdd.xn--j1amh": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "toggl.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "facemedstore.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.fluent.health": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.coursera.org": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.ikea.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "adapt.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.mariecurie.org.uk": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "dumy.com.ua": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.docusign.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "keap.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.agrumeafarm.it": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.cloudflare.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.canva.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "enpowertrading.co.za": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.freshbooks.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "firebase.studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "alexandre-araujo.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.alnf.org": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "proton.me": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.adidasarena.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "teenage.engineering": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.arttechreport.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "endlesstools.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.anima.ai": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "animos.app": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "developers.cloudflare.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "antimetal.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ethnocare.ca": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.anuchome.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "appwrite.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.artbruno.ua": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "docs.netlify.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "arrowdynamics.dev": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "enterprise.wikimedia.org": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.lonelyplanet.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "tinywins.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "www.gemnote.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ario.law": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "labelstud.io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.arqui9.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "press.stripe.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "pitch.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "sydopia.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "artpill.studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ashleybrookecs.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "aelen.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "alfred.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "aside.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "astromaxsp.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "kolfest.bermet.design": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "brightlight.lexdemos.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "etoile.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "buio.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.charles.fr": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "carbon.lexdemos.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "carriera.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "carrington.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "coleman.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "copperlane.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.primal-instinct.net": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "dusk.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "fredericlord.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "ellamae.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "enlightr.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "flabbergasted.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "arrova.eu": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "flaco.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "gerstner.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "halden.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "conwest.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "hemingway.lexdemos.com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0
+  },
+  "hirewise.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "atolldigital.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.haikoo.org": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "jacobsen.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "kinfolk.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "kotei.lexdemos.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "www.jonpilkington.co.uk": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "autorouter.com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0
+  },
+  "https-proton-me-meet": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.936
+  },
+  "https-newbeautycompany-com-services": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-375-studio-en": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.779
+  },
+  "https-labelstud-io": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-abetterlou-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.952
+  },
+  "https-aside-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.998
+  },
+  "https-111w57-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-canva-com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.021
+  },
+  "https-ventriloc-ca-en": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.844
+  },
+  "https-www-lonelyplanet-com-articles": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.936
+  },
+  "https-jcsignatureaesthetics-com-blog": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.873
+  },
+  "https-www-auxility-ca": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.147
+  },
+  "https-labelstud-io-blog": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.854
+  },
+  "https-jcsignatureaesthetics-com-contact-us": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.999
+  },
+  "https-www-xero-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-mariecurie-org-uk-help-support-book-a-call": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.388
+  },
+  "https-www-ikea-com-global-en-stories": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.285
+  },
+  "https-360lexingtonave-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-mdconsultingny-com-services": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.992
+  },
+  "https-www-lonelyplanet-com": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.356
+  },
+  "https-proton-me-support-contact-product": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.998
+  },
+  "https-www-mariecurie-org-uk-contact-us": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.417
+  },
+  "https-jcsignatureaesthetics-com-team": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-jcsignatureaesthetics-com-pricing": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.998
+  },
+  "https-mural-co": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.847
+  },
+  "https-mdconsultingny-com-contact": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.991
+  },
+  "https-www-aether1-ai": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-ethnocare-ca": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-proton-me": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.751
+  },
+  "https-www-alethia-earth": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.952
+  },
+  "https-www-lonelyplanet-com-articles-wellness-retreats-usa": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.973
+  },
+  "https-newbeautycompany-com-blog": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.849
+  },
+  "https-www-depo-studio": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.349
+  },
+  "https-mode-com": {
+   "held": 3,
+   "measured": 3,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.912
+  },
+  "https-newbeautycompany-com-contact-us": {
+   "held": 2,
+   "measured": 2,
+   "discipline": 1.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "Aino Agency": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Freshman": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Locomotive": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "illoca": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Siena Film Foundation": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Rivian": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Tines": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Discord": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Oevra": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Apollo": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "15Five": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Retool": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Palmer Dinnerware": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Seed": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Fluz": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Telepathic Instruments": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Skillshare": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Origin": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "Samara": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "OpenPhone": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "ombra-lemon.vercel.app": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "mode.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "trello.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "www.drvaesthetics.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "umbrel.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "jcsignatureaesthetics.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "www.grammarly.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "www.alethia.earth": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "flayks.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "amritpalace.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "www.flyingpapers.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "moxietheatre.com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667
+  },
+  "https-ashleybrookecs-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.921
+  },
+  "https-www-grammarly-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.987
+  },
+  "https-facemedstore-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.967
+  },
+  "https-facemedstore-com-blog": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.959
+  },
+  "https-atelier-ko-topaz-vercel-app": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-facemedstore-com-contact": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.962
+  },
+  "https-flayks-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "display-led+R.1-0.7",
+   "coherence": 1.0
+  },
+  "https-longisland-officecleaning-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.969
+  },
+  "https-amritpalace-com-about": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.897
+  },
+  "https-tinywins-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.994
+  },
+  "https-www-hubspot-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.994
+  },
+  "https-slack-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.318
+  },
+  "https-firebase-studio": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.998
+  },
+  "https-www-a1mobile-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.976
+  },
+  "https-monday-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.987
+  },
+  "https-www-cloudflare-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.962
+  },
+  "https-www-shopify-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.921
+  },
+  "https-appwrite-io": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.974
+  },
+  "https-jcsignatureaesthetics-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 1.0
+  },
+  "https-ellipsus-com-introduction": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.923
+  },
+  "https-www-cloudflare-com-resource-contact-enterprise-sales": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.962
+  },
+  "https-mdconsultingny-com-team": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.956
+  },
+  "https-alexandre-araujo-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.244
+  },
+  "http-web-archive-org-web-20240616042458-https-antimetal-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.988
+  },
+  "https-www-coursera-org": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.983
+  },
+  "https-ombra-lemon-vercel-app": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.924
+  },
+  "https-www-drvaesthetics-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.992
+  },
+  "https-stripe-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.958
+  },
+  "https-ramp-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-www-arttechreport-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.946
+  },
+  "https-www-adaline-ai": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.912
+  },
+  "https-www-typeform-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.962
+  },
+  "https-www-cloudflare-com-about": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.947
+  },
+  "https-moral-skin-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.986
+  },
+  "https-animos-app": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-mdconsultingny-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.999
+  },
+  "https-artpill-studio": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.969
+  },
+  "https-developers-cloudflare-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-www-arqui9-com-services": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-www-b-egg-farm": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.977
+  },
+  "https-kobbe-io": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-resend-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.969
+  },
+  "https-www-tacaloa-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.996
+  },
+  "https-www-docusign-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.97
+  },
+  "https-www-freshbooks-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.971
+  },
+  "https-keap-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.955
+  },
+  "https-newbeautycompany-com-about-us": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.974
+  },
+  "https-www-hotjar-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.976
+  },
+  "https-calendly-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.992
+  },
+  "https-www-apollo-io": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.989
+  },
+  "https-facemedstore-com-about": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.934
+  },
+  "https-www-arqui9-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.993
+  },
+  "https-www-figma-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.95
+  },
+  "https-antimetal-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.982
+  },
+  "https-zapier-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.971
+  },
+  "https-aacckc-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.998
+  },
+  "https-www-adidasarena-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.988
+  },
+  "https-www-notion-so": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.832
+  },
+  "https-autorouter-com": {
+   "held": 2,
+   "measured": 3,
+   "discipline": 0.667,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.969
+  },
+  "Fauna Robotics": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5
+  },
+  "www.adaline.ai": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5
+  },
+  "author.lexdemos.com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5
+  },
+  "https-www-charles-fr": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-amritpalace-com-catering": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.699
+  },
+  "https-fyrre-seven-vercel-app": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.995
+  },
+  "https-www-anuchome-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-lusion-co": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-aspensearch-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-www-fabric-vc": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-21tsi-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.984
+  },
+  "https-arrova-eu": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-trello-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 1.0
+  },
+  "https-www-anima-ai": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-teenage-engineering": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-proton-me-blog": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-docs-netlify-com-api-and-cli-guides-overview": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.971
+  },
+  "https-www-diko-co": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-artbruno-ua": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.992
+  },
+  "https-www-mariecurie-org-uk-about-us-feedback-patient-family": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": -0.554
+  },
+  "https-basecamp-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-drvaesthetics-com-contact-us": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.982
+  },
+  "https-www-haikoo-org": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-coaika-co": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-swissfolio-netlify-app": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-www-fluent-health": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-www-xn-80a2abbdd-xn-j1amh": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-flyingpapers-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.7",
+   "coherence": 0.999
+  },
+  "https-atolldigital-com-creative-montreal-web-agency": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.963
+  },
+  "https-www-drvaesthetics-com-blog": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.964
+  },
+  "https-amritpalace-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.979
+  },
+  "https-pitch-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.995
+  },
+  "https-auge-xp-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-arrowdynamics-dev": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.988
+  },
+  "https-www-jonpilkington-co-uk": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-mariecurie-org-uk": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.373
+  },
+  "https-www-ikea-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-fredericlord-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-primal-instinct-net": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-docs-netlify-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.752
+  },
+  "https-ario-law-en": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-enpowertrading-co-za": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "http-www-madebyhusk-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-atolldigital-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.93
+  },
+  "https-www-alnf-org": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-cloudflare-com-learning": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-press-stripe-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-newbeautycompany-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-supabird-io-new-landing-x": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-www-agrumeafarm-it-en-experience": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.996
+  },
+  "https-developers-cloudflare-com-cloudflare-one-team-and-resources": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-ikea-com-global-en-support-contact-ikea-submit-complaint": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.933
+  },
+  "https-www-maximalestudio-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-save-day": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-gemnote-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-3200kelvin-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.997
+  },
+  "https-developers-cloudflare-com-workers": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-www-drvaesthetics-com-services": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.986
+  },
+  "https-www-drvaesthetics-com-about-dr-vaidehi-patel": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.999
+  },
+  "https-enterprise-wikimedia-org": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.985
+  },
+  "https-gusto-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "https-moxietheatre-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.997
+  },
+  "https-nordvpn-com": {
+   "held": 1,
+   "measured": 2,
+   "discipline": 0.5,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  },
+  "adidas": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333
+  },
+  "bella": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333
+  },
+  "HBO Max": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333
+  },
+  "https-pebblelife-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.73
+  },
+  "https-u24-gov-ua-uk-rebuild-map": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.851
+  },
+  "https-endlesstools-io": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.965
+  },
+  "https-www-revolut-com-en-au": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.828
+  },
+  "https-247artists-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.999
+  },
+  "https-facemedstore-com-product-facial-neuromodulator-injections-course": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.97
+  },
+  "https-adapt-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.864
+  },
+  "https-www-lonelyplanet-com-about": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.698
+  },
+  "https-www-aardvarkbookclub-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.865
+  },
+  "https-www-avax-network": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.711
+  },
+  "https-www-andreadiego-es": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.776
+  },
+  "https-github-com-mona-sans": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "display-led+R.1-0.3",
+   "coherence": 0.955
+  },
+  "https-youcanbeanything-tftl-agency": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "display-led+R.1-0.7",
+   "coherence": 1.0
+  },
+  "https-etoile-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.92
+  },
+  "https-umbrel-com-country-ua": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.948
+  },
+  "https-sydopia-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.848
+  },
+  "https-www-apple-com-siri": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.902
+  },
+  "https-kolfest-bermet-design": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.888
+  },
+  "https-conwest-com": {
+   "held": 1,
+   "measured": 3,
+   "discipline": 0.333,
+   "cluster": "R.1-2.8+freeform-radius",
+   "coherence": 0.592
+  },
+  "https-www-martinfoucaut-com": {
+   "held": 0,
+   "measured": 2,
+   "discipline": 0.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.971
+  },
+  "https-toggl-com": {
+   "held": 0,
+   "measured": 2,
+   "discipline": 0.0,
+   "cluster": "T.1-1.0+freeform-radius",
+   "coherence": 0.952
+  }
+ },
+ "style_space": {
+  "rules": [
+   {
+    "id": "S.2",
+    "baseline": "radius ladder {0,2,4,6,8,12,16,24,9999}",
+    "unit": 0.2
+   },
+   {
+    "id": "T.1",
+    "baseline": "primary type contrast 3-6x body",
+    "unit": 1.5
+   },
+   {
+    "id": "T.6",
+    "baseline": "measure <= 65ch; body >= 16px",
+    "unit": 15.0
+   },
+   {
+    "id": "R.1",
+    "baseline": "content width <= 1440 (ceiling 1280-1440 band)",
+    "unit": 240.0
+   },
+   {
+    "id": "L.4",
+    "baseline": "whitespace share >= canon P25 for the type",
+    "unit": 0.15
+   },
+   {
+    "id": "V.4",
+    "baseline": "text-on-image: text-zone luminance <=20% or >=85% with scrim",
+    "unit": 0.15
+   }
+  ],
+  "clusters": {
+   "R.1-2.8+freeform-radius": {
+    "name": "R.1-2.8+freeform-radius",
+    "centroid": {
+     "S.2": 0.31,
+     "T.1": -0.185,
+     "T.6": 0.0,
+     "R.1": -2.754,
+     "L.4": 0.0,
+     "V.4": 0.0
+    },
+    "members": [
+     "https-ashleybrookecs-com",
+     "https-pebblelife-com",
+     "https-www-grammarly-com",
+     "https-facemedstore-com",
+     "https-facemedstore-com-blog",
+     "https-atelier-ko-topaz-vercel-app",
+     "https-facemedstore-com-contact",
+     "https-longisland-officecleaning-com",
+     "https-endlesstools-io",
+     "https-tinywins-com",
+     "https-www-hubspot-com",
+     "https-www-a1mobile-com",
+     "https-monday-com",
+     "https-www-cloudflare-com",
+     "https-facemedstore-com-product-facial-neuromodulator-injections-course",
+     "https-www-shopify-com",
+     "https-adapt-com",
+     "https-appwrite-io",
+     "https-jcsignatureaesthetics-com",
+     "https-ellipsus-com-introduction",
+     "https-www-cloudflare-com-resource-contact-enterprise-sales",
+     "https-mdconsultingny-com-team",
+     "https-www-lonelyplanet-com-about",
+     "http-web-archive-org-web-20240616042458-https-antimetal-com",
+     "https-www-coursera-org",
+     "https-ombra-lemon-vercel-app",
+     "https-www-drvaesthetics-com",
+     "https-stripe-com",
+     "https-www-avax-network",
+     "https-ramp-com",
+     "https-www-arttechreport-com",
+     "https-www-adaline-ai",
+     "https-www-typeform-com",
+     "https-www-cloudflare-com-about",
+     "https-moral-skin-com",
+     "https-animos-app",
+     "https-mdconsultingny-com",
+     "https-developers-cloudflare-com",
+     "https-www-arqui9-com-services",
+     "https-kobbe-io",
+     "https-resend-com",
+     "https-www-tacaloa-com",
+     "https-etoile-com",
+     "https-www-docusign-com",
+     "https-www-freshbooks-com",
+     "https-umbrel-com-country-ua",
+     "https-newbeautycompany-com-about-us",
+     "https-www-hotjar-com",
+     "https-sydopia-com",
+     "https-calendly-com",
+     "https-www-apollo-io",
+     "https-facemedstore-com-about",
+     "https-www-arqui9-com",
+     "https-www-figma-com",
+     "https-antimetal-com",
+     "https-zapier-com",
+     "https-aacckc-com",
+     "https-www-apple-com-siri",
+     "https-kolfest-bermet-design",
+     "https-www-notion-so",
+     "https-autorouter-com",
+     "https-conwest-com"
+    ],
+    "coherence": {
+     "https-ashleybrookecs-com": 0.921,
+     "https-pebblelife-com": 0.73,
+     "https-www-grammarly-com": 0.987,
+     "https-facemedstore-com": 0.967,
+     "https-facemedstore-com-blog": 0.959,
+     "https-atelier-ko-topaz-vercel-app": 0.993,
+     "https-facemedstore-com-contact": 0.962,
+     "https-longisland-officecleaning-com": 0.969,
+     "https-endlesstools-io": 0.965,
+     "https-tinywins-com": 0.994,
+     "https-www-hubspot-com": 0.994,
+     "https-www-a1mobile-com": 0.976,
+     "https-monday-com": 0.987,
+     "https-www-cloudflare-com": 0.962,
+     "https-facemedstore-com-product-facial-neuromodulator-injections-course": 0.97,
+     "https-www-shopify-com": 0.921,
+     "https-adapt-com": 0.864,
+     "https-appwrite-io": 0.974,
+     "https-jcsignatureaesthetics-com": 1.0,
+     "https-ellipsus-com-introduction": 0.923,
+     "https-www-cloudflare-com-resource-contact-enterprise-sales": 0.962,
+     "https-mdconsultingny-com-team": 0.956,
+     "https-www-lonelyplanet-com-about": 0.698,
+     "http-web-archive-org-web-20240616042458-https-antimetal-com": 0.988,
+     "https-www-coursera-org": 0.983,
+     "https-ombra-lemon-vercel-app": 0.924,
+     "https-www-drvaesthetics-com": 0.992,
+     "https-stripe-com": 0.958,
+     "https-www-avax-network": 0.711,
+     "https-ramp-com": 0.993,
+     "https-www-arttechreport-com": 0.946,
+     "https-www-adaline-ai": 0.912,
+     "https-www-typeform-com": 0.962,
+     "https-www-cloudflare-com-about": 0.947,
+     "https-moral-skin-com": 0.986,
+     "https-animos-app": 0.993,
+     "https-mdconsultingny-com": 0.999,
+     "https-developers-cloudflare-com": 0.993,
+     "https-www-arqui9-com-services": 0.993,
+     "https-kobbe-io": 0.952,
+     "https-resend-com": 0.969,
+     "https-www-tacaloa-com": 0.996,
+     "https-etoile-com": 0.92,
+     "https-www-docusign-com": 0.97,
+     "https-www-freshbooks-com": 0.971,
+     "https-umbrel-com-country-ua": 0.948,
+     "https-newbeautycompany-com-about-us": 0.974,
+     "https-www-hotjar-com": 0.976,
+     "https-sydopia-com": 0.848,
+     "https-calendly-com": 0.992,
+     "https-www-apollo-io": 0.989,
+     "https-facemedstore-com-about": 0.934,
+     "https-www-arqui9-com": 0.993,
+     "https-www-figma-com": 0.95,
+     "https-antimetal-com": 0.982,
+     "https-zapier-com": 0.971,
+     "https-aacckc-com": 0.998,
+     "https-www-apple-com-siri": 0.902,
+     "https-kolfest-bermet-design": 0.888,
+     "https-www-notion-so": 0.832,
+     "https-autorouter-com": 0.969,
+     "https-conwest-com": 0.592
+    },
+    "n": 62
+   },
+   "T.1-1.0+freeform-radius": {
+    "name": "T.1-1.0+freeform-radius",
+    "centroid": {
+     "S.2": 0.32,
+     "T.1": -0.998,
+     "T.6": 0.0,
+     "R.1": -0.002,
+     "L.4": 0.0,
+     "V.4": 0.0
+    },
+    "members": [
+     "https-www-charles-fr",
+     "https-proton-me-meet",
+     "https-newbeautycompany-com-services",
+     "https-amritpalace-com-catering",
+     "https-www-anuchome-com",
+     "https-375-studio-en",
+     "https-lusion-co",
+     "https-www-fabric-vc",
+     "https-arrova-eu",
+     "https-labelstud-io",
+     "https-trello-com",
+     "https-abetterlou-com",
+     "https-aside-com",
+     "https-www-martinfoucaut-com",
+     "https-u24-gov-ua-uk-rebuild-map",
+     "https-amritpalace-com-about",
+     "https-111w57-com",
+     "https-teenage-engineering",
+     "https-www-revolut-com-en-au",
+     "https-slack-com",
+     "https-proton-me-blog",
+     "https-docs-netlify-com-api-and-cli-guides-overview",
+     "https-www-canva-com",
+     "https-www-diko-co",
+     "https-www-artbruno-ua",
+     "https-www-mariecurie-org-uk-about-us-feedback-patient-family",
+     "https-basecamp-com",
+     "https-ventriloc-ca-en",
+     "https-www-drvaesthetics-com-contact-us",
+     "https-www-lonelyplanet-com-articles",
+     "https-jcsignatureaesthetics-com-blog",
+     "https-www-haikoo-org",
+     "https-www-auxility-ca",
+     "https-www-coaika-co",
+     "https-labelstud-io-blog",
+     "https-jcsignatureaesthetics-com-contact-us",
+     "https-www-xn-80a2abbdd-xn-j1amh",
+     "https-atolldigital-com-creative-montreal-web-agency",
+     "https-www-xero-com",
+     "https-www-mariecurie-org-uk-help-support-book-a-call",
+     "https-alexandre-araujo-com",
+     "https-www-drvaesthetics-com-blog",
+     "https-auge-xp-com",
+     "https-arrowdynamics-dev",
+     "https-www-ikea-com-global-en-stories",
+     "https-www-jonpilkington-co-uk",
+     "https-www-mariecurie-org-uk",
+     "https-www-ikea-com",
+     "https-360lexingtonave-com",
+     "https-fredericlord-com",
+     "https-www-primal-instinct-net",
+     "https-docs-netlify-com",
+     "https-mdconsultingny-com-services",
+     "https-enpowertrading-co-za",
+     "http-www-madebyhusk-com",
+     "https-www-andreadiego-es",
+     "https-atolldigital-com",
+     "https-www-alnf-org",
+     "https-www-cloudflare-com-learning",
+     "https-press-stripe-com",
+     "https-www-lonelyplanet-com",
+     "https-toggl-com",
+     "https-proton-me-support-contact-product",
+     "https-www-mariecurie-org-uk-contact-us",
+     "https-jcsignatureaesthetics-com-team",
+     "https-developers-cloudflare-com-cloudflare-one-team-and-resources",
+     "https-jcsignatureaesthetics-com-pricing",
+     "https-www-ikea-com-global-en-support-contact-ikea-submit-complaint",
+     "https-mural-co",
+     "https-mdconsultingny-com-contact",
+     "https-keap-com",
+     "https-www-aether1-ai",
+     "https-ethnocare-ca",
+     "https-www-maximalestudio-com",
+     "https-proton-me",
+     "https-www-save-day",
+     "https-www-gemnote-com",
+     "https-developers-cloudflare-com-workers",
+     "https-www-alethia-earth",
+     "https-www-lonelyplanet-com-articles-wellness-retreats-usa",
+     "https-newbeautycompany-com-blog",
+     "https-www-drvaesthetics-com-services",
+     "https-www-depo-studio",
+     "https-www-drvaesthetics-com-about-dr-vaidehi-patel",
+     "https-enterprise-wikimedia-org",
+     "https-mode-com",
+     "https-gusto-com",
+     "https-newbeautycompany-com-contact-us",
+     "https-nordvpn-com"
+    ],
+    "coherence": {
+     "https-www-charles-fr": 0.952,
+     "https-proton-me-meet": 0.936,
+     "https-newbeautycompany-com-services": 0.952,
+     "https-amritpalace-com-catering": -0.699,
+     "https-www-anuchome-com": 0.952,
+     "https-375-studio-en": -0.779,
+     "https-lusion-co": 0.952,
+     "https-www-fabric-vc": 0.952,
+     "https-arrova-eu": 0.952,
+     "https-labelstud-io": 0.952,
+     "https-trello-com": 1.0,
+     "https-abetterlou-com": -0.952,
+     "https-aside-com": 0.998,
+     "https-www-martinfoucaut-com": 0.971,
+     "https-u24-gov-ua-uk-rebuild-map": 0.851,
+     "https-amritpalace-com-about": -0.897,
+     "https-111w57-com": 0.952,
+     "https-teenage-engineering": 0.952,
+     "https-www-revolut-com-en-au": 0.828,
+     "https-slack-com": 0.318,
+     "https-proton-me-blog": 0.952,
+     "https-docs-netlify-com-api-and-cli-guides-overview": 0.971,
+     "https-www-canva-com": 0.021,
+     "https-www-diko-co": 0.952,
+     "https-www-artbruno-ua": 0.992,
+     "https-www-mariecurie-org-uk-about-us-feedback-patient-family": -0.554,
+     "https-basecamp-com": 0.952,
+     "https-ventriloc-ca-en": 0.844,
+     "https-www-drvaesthetics-com-contact-us": 0.982,
+     "https-www-lonelyplanet-com-articles": 0.936,
+     "https-jcsignatureaesthetics-com-blog": 0.873,
+     "https-www-haikoo-org": 0.952,
+     "https-www-auxility-ca": -0.147,
+     "https-www-coaika-co": 0.952,
+     "https-labelstud-io-blog": 0.854,
+     "https-jcsignatureaesthetics-com-contact-us": 0.999,
+     "https-www-xn-80a2abbdd-xn-j1amh": 0.952,
+     "https-atolldigital-com-creative-montreal-web-agency": 0.963,
+     "https-www-xero-com": 0.952,
+     "https-www-mariecurie-org-uk-help-support-book-a-call": 0.388,
+     "https-alexandre-araujo-com": 0.244,
+     "https-www-drvaesthetics-com-blog": 0.964,
+     "https-auge-xp-com": 0.952,
+     "https-arrowdynamics-dev": 0.988,
+     "https-www-ikea-com-global-en-stories": -0.285,
+     "https-www-jonpilkington-co-uk": 0.952,
+     "https-www-mariecurie-org-uk": 0.373,
+     "https-www-ikea-com": 0.952,
+     "https-360lexingtonave-com": 0.952,
+     "https-fredericlord-com": 0.952,
+     "https-www-primal-instinct-net": 0.952,
+     "https-docs-netlify-com": 0.752,
+     "https-mdconsultingny-com-services": 0.992,
+     "https-enpowertrading-co-za": 0.952,
+     "http-www-madebyhusk-com": 0.952,
+     "https-www-andreadiego-es": 0.776,
+     "https-atolldigital-com": 0.93,
+     "https-www-alnf-org": 0.952,
+     "https-www-cloudflare-com-learning": 0.952,
+     "https-press-stripe-com": 0.952,
+     "https-www-lonelyplanet-com": -0.356,
+     "https-toggl-com": 0.952,
+     "https-proton-me-support-contact-product": 0.998,
+     "https-www-mariecurie-org-uk-contact-us": 0.417,
+     "https-jcsignatureaesthetics-com-team": 0.993,
+     "https-developers-cloudflare-com-cloudflare-one-team-and-resources": 0.952,
+     "https-jcsignatureaesthetics-com-pricing": 0.998,
+     "https-www-ikea-com-global-en-support-contact-ikea-submit-complaint": 0.933,
+     "https-mural-co": -0.847,
+     "https-mdconsultingny-com-contact": 0.991,
+     "https-keap-com": 0.955,
+     "https-www-aether1-ai": 0.952,
+     "https-ethnocare-ca": 0.952,
+     "https-www-maximalestudio-com": 0.952,
+     "https-proton-me": 0.751,
+     "https-www-save-day": 0.952,
+     "https-www-gemnote-com": 0.952,
+     "https-developers-cloudflare-com-workers": 0.952,
+     "https-www-alethia-earth": -0.952,
+     "https-www-lonelyplanet-com-articles-wellness-retreats-usa": 0.973,
+     "https-newbeautycompany-com-blog": 0.849,
+     "https-www-drvaesthetics-com-services": 0.986,
+     "https-www-depo-studio": -0.349,
+     "https-www-drvaesthetics-com-about-dr-vaidehi-patel": 0.999,
+     "https-enterprise-wikimedia-org": 0.985,
+     "https-mode-com": -0.912,
+     "https-gusto-com": 0.952,
+     "https-newbeautycompany-com-contact-us": 0.952,
+     "https-nordvpn-com": 0.952
+    },
+    "n": 89
+   },
+   "display-led+R.1-0.3": {
+    "name": "display-led+R.1-0.3",
+    "centroid": {
+     "S.2": 0.214,
+     "T.1": 4.305,
+     "T.6": 0.0,
+     "R.1": -0.342,
+     "L.4": 0.0,
+     "V.4": 0.0
+    },
+    "members": [
+     "https-fyrre-seven-vercel-app",
+     "https-www-aspensearch-com",
+     "https-21tsi-com",
+     "https-www-anima-ai",
+     "https-firebase-studio",
+     "https-247artists-com",
+     "https-swissfolio-netlify-app",
+     "https-www-fluent-health",
+     "https-amritpalace-com",
+     "https-pitch-com",
+     "https-www-aardvarkbookclub-com",
+     "https-ario-law-en",
+     "https-github-com-mona-sans",
+     "https-newbeautycompany-com",
+     "https-artpill-studio",
+     "https-supabird-io-new-landing-x",
+     "https-www-b-egg-farm",
+     "https-www-agrumeafarm-it-en-experience",
+     "https-www-3200kelvin-com",
+     "https-www-adidasarena-com",
+     "https-moxietheatre-com"
+    ],
+    "coherence": {
+     "https-fyrre-seven-vercel-app": 0.995,
+     "https-www-aspensearch-com": 0.996,
+     "https-21tsi-com": 0.984,
+     "https-www-anima-ai": 0.996,
+     "https-firebase-studio": 0.998,
+     "https-247artists-com": 0.999,
+     "https-swissfolio-netlify-app": 0.996,
+     "https-www-fluent-health": 0.996,
+     "https-amritpalace-com": 0.979,
+     "https-pitch-com": 0.995,
+     "https-www-aardvarkbookclub-com": 0.865,
+     "https-ario-law-en": 0.996,
+     "https-github-com-mona-sans": 0.955,
+     "https-newbeautycompany-com": 0.996,
+     "https-artpill-studio": 0.969,
+     "https-supabird-io-new-landing-x": 0.996,
+     "https-www-b-egg-farm": 0.977,
+     "https-www-agrumeafarm-it-en-experience": 0.996,
+     "https-www-3200kelvin-com": 0.997,
+     "https-www-adidasarena-com": 0.988,
+     "https-moxietheatre-com": 0.997
+    },
+    "n": 21
+   },
+   "display-led+R.1-0.7": {
+    "name": "display-led+R.1-0.7",
+    "centroid": {
+     "S.2": 0.048,
+     "T.1": 18.505,
+     "T.6": 0.0,
+     "R.1": -0.722,
+     "L.4": 0.0,
+     "V.4": 0.0
+    },
+    "members": [
+     "https-flayks-com",
+     "https-www-flyingpapers-com",
+     "https-youcanbeanything-tftl-agency"
+    ],
+    "coherence": {
+     "https-flayks-com": 1.0,
+     "https-www-flyingpapers-com": 0.999,
+     "https-youcanbeanything-tftl-agency": 1.0
+    },
+    "n": 3
+   }
+  },
+  "sites": [
+   {
+    "site": "https-www-charles-fr",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.96
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-ashleybrookecs-com",
+    "vector": {
+     "S.2": 0.715,
+     "T.1": 0.54,
+     "R.1": -1.942
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.921
+   },
+   {
+    "site": "https-pebblelife-com",
+    "vector": {
+     "S.2": 0.97,
+     "T.1": 1.333,
+     "R.1": -1.75
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.73
+   },
+   {
+    "site": "https-proton-me-meet",
+    "vector": {
+     "S.2": 0.395,
+     "T.1": -0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.936
+   },
+   {
+    "site": "https-newbeautycompany-com-services",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-amritpalace-com-catering",
+    "vector": {
+     "S.2": 0.74,
+     "T.1": 1.4
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.699
+   },
+   {
+    "site": "https-fyrre-seven-vercel-app",
+    "vector": {
+     "S.2": 0.605,
+     "T.1": 5.7
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.995
+   },
+   {
+    "site": "https-www-anuchome-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.053
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-375-studio-en",
+    "vector": {
+     "S.2": 0.37,
+     "T.1": 0.96
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.779
+   },
+   {
+    "site": "https-www-grammarly-com",
+    "vector": {
+     "S.2": 0.145,
+     "T.1": -0.833,
+     "R.1": -3.917
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.987
+   },
+   {
+    "site": "https-lusion-co",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.413
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-facemedstore-com",
+    "vector": {
+     "S.2": 0.925,
+     "T.1": -0.707,
+     "R.1": -2.875
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.967
+   },
+   {
+    "site": "https-www-aspensearch-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 4.527
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-www-fabric-vc",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-21tsi-com",
+    "vector": {
+     "S.2": 0.75,
+     "T.1": 3.473
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.984
+   },
+   {
+    "site": "https-arrova-eu",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-labelstud-io",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-trello-com",
+    "vector": {
+     "S.2": 0.47,
+     "T.1": -1.4
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 1.0
+   },
+   {
+    "site": "https-facemedstore-com-blog",
+    "vector": {
+     "S.2": 0.75,
+     "T.1": -1.0,
+     "R.1": -2.938
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.959
+   },
+   {
+    "site": "https-atelier-ko-topaz-vercel-app",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.06,
+     "R.1": -2.917
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-www-anima-ai",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 3.093
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-abetterlou-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.2
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.952
+   },
+   {
+    "site": "https-facemedstore-com-contact",
+    "vector": {
+     "S.2": 0.665,
+     "T.1": -1.0,
+     "R.1": -2.938
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.962
+   },
+   {
+    "site": "https-flayks-com",
+    "vector": {
+     "S.2": 0.145,
+     "T.1": 16.2,
+     "R.1": -0.5
+    },
+    "cluster": "display-led+R.1-0.7",
+    "coherence": 1.0
+   },
+   {
+    "site": "https-aside-com",
+    "vector": {
+     "S.2": 0.4,
+     "T.1": -1.0
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.998
+   },
+   {
+    "site": "https-www-martinfoucaut-com",
+    "vector": {
+     "S.2": 1.25,
+     "T.1": -2.04
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.971
+   },
+   {
+    "site": "https-u24-gov-ua-uk-rebuild-map",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333,
+     "R.1": 1.167
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.851
+   },
+   {
+    "site": "https-longisland-officecleaning-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.333,
+     "R.1": -2.083
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.969
+   },
+   {
+    "site": "https-amritpalace-com-about",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.4,
+     "R.1": 0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.897
+   },
+   {
+    "site": "https-endlesstools-io",
+    "vector": {
+     "S.2": 0.735,
+     "T.1": -1.253,
+     "R.1": -3.708
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.965
+   },
+   {
+    "site": "https-111w57-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.78
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-teenage-engineering",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.207
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-tinywins-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.24,
+     "R.1": -3.758
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.994
+   },
+   {
+    "site": "https-www-hubspot-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.293,
+     "R.1": -3.333
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.994
+   },
+   {
+    "site": "https-www-revolut-com-en-au",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333,
+     "R.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.828
+   },
+   {
+    "site": "https-slack-com",
+    "vector": {
+     "S.2": 0.12,
+     "T.1": -0.333,
+     "R.1": -1.062
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.318
+   },
+   {
+    "site": "https-proton-me-blog",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-firebase-studio",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 2.333,
+     "R.1": -0.3
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.998
+   },
+   {
+    "site": "https-docs-netlify-com-api-and-cli-guides-overview",
+    "vector": {
+     "S.2": 0.77,
+     "T.1": -1.253
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.971
+   },
+   {
+    "site": "https-www-canva-com",
+    "vector": {
+     "S.2": 0.18,
+     "T.1": 0.047,
+     "R.1": 0.4
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.021
+   },
+   {
+    "site": "https-www-diko-co",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.8
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-247artists-com",
+    "vector": {
+     "S.2": 0.5,
+     "T.1": 9.727,
+     "R.1": -1.15
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.999
+   },
+   {
+    "site": "https-www-artbruno-ua",
+    "vector": {
+     "S.2": 0.625,
+     "T.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.992
+   },
+   {
+    "site": "https-www-a1mobile-com",
+    "vector": {
+     "S.2": 0.61,
+     "T.1": 0.333,
+     "R.1": -2.667
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.976
+   },
+   {
+    "site": "https-www-mariecurie-org-uk-about-us-feedback-patient-family",
+    "vector": {
+     "S.2": 1.0,
+     "T.1": 1.253
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.554
+   },
+   {
+    "site": "https-monday-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.667,
+     "R.1": -3.546
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.987
+   },
+   {
+    "site": "https-www-cloudflare-com",
+    "vector": {
+     "S.2": 0.525,
+     "T.1": -0.927,
+     "R.1": -2.642
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.962
+   },
+   {
+    "site": "https-basecamp-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.553
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-facemedstore-com-product-facial-neuromodulator-injections-course",
+    "vector": {
+     "S.2": 0.385,
+     "T.1": -1.333,
+     "R.1": -4.125
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.97
+   },
+   {
+    "site": "https-ventriloc-ca-en",
+    "vector": {
+     "S.2": 0.665,
+     "T.1": -0.553
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.844
+   },
+   {
+    "site": "https-www-drvaesthetics-com-contact-us",
+    "vector": {
+     "S.2": 0.625,
+     "T.1": -1.147
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.982
+   },
+   {
+    "site": "https-www-lonelyplanet-com-articles",
+    "vector": {
+     "S.2": 0.79,
+     "T.1": -1.0
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.936
+   },
+   {
+    "site": "https-jcsignatureaesthetics-com-blog",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": -0.78
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.873
+   },
+   {
+    "site": "https-www-haikoo-org",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.167
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-auxility-ca",
+    "vector": {
+     "S.2": 0.675,
+     "T.1": 0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.147
+   },
+   {
+    "site": "https-www-coaika-co",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-shopify-com",
+    "vector": {
+     "S.2": 0.25,
+     "T.1": 1.0,
+     "R.1": -2.875
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.921
+   },
+   {
+    "site": "https-swissfolio-netlify-app",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 2.333
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-labelstud-io-blog",
+    "vector": {
+     "S.2": 0.385,
+     "T.1": -0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.854
+   },
+   {
+    "site": "https-www-fluent-health",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.887
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-jcsignatureaesthetics-com-contact-us",
+    "vector": {
+     "S.2": 0.28,
+     "T.1": -0.78
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.999
+   },
+   {
+    "site": "https-www-xn-80a2abbdd-xn-j1amh",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-adapt-com",
+    "vector": {
+     "S.2": 1.25,
+     "T.1": -0.5,
+     "R.1": -1.75
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.864
+   },
+   {
+    "site": "https-appwrite-io",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.167,
+     "R.1": -1.233
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.974
+   },
+   {
+    "site": "https-www-flyingpapers-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 13.267
+    },
+    "cluster": "display-led+R.1-0.7",
+    "coherence": 0.999
+   },
+   {
+    "site": "https-jcsignatureaesthetics-com",
+    "vector": {
+     "S.2": 0.335,
+     "T.1": -0.113,
+     "R.1": -3.0
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 1.0
+   },
+   {
+    "site": "https-atolldigital-com-creative-montreal-web-agency",
+    "vector": {
+     "S.2": 1.0,
+     "T.1": -1.52
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.963
+   },
+   {
+    "site": "https-ellipsus-com-introduction",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.0,
+     "R.1": -3.083
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.923
+   },
+   {
+    "site": "https-www-cloudflare-com-resource-contact-enterprise-sales",
+    "vector": {
+     "S.2": 0.19,
+     "T.1": -0.667,
+     "R.1": -1.85
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.962
+   },
+   {
+    "site": "https-www-xero-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.707
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-mariecurie-org-uk-help-support-book-a-call",
+    "vector": {
+     "S.2": 0.91,
+     "T.1": -0.08
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.388
+   },
+   {
+    "site": "https-mdconsultingny-com-team",
+    "vector": {
+     "S.2": 0.61,
+     "T.1": -0.833,
+     "R.1": -2.35
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.956
+   },
+   {
+    "site": "https-alexandre-araujo-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.667,
+     "R.1": 2.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.244
+   },
+   {
+    "site": "https-www-lonelyplanet-com-about",
+    "vector": {
+     "S.2": 0.295,
+     "T.1": 2.333,
+     "R.1": -2.583
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.698
+   },
+   {
+    "site": "https-www-drvaesthetics-com-blog",
+    "vector": {
+     "S.2": 0.75,
+     "T.1": -1.147
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.964
+   },
+   {
+    "site": "https-amritpalace-com",
+    "vector": {
+     "S.2": 0.57,
+     "T.1": 2.333
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.979
+   },
+   {
+    "site": "https-pitch-com",
+    "vector": {
+     "S.2": 0.77,
+     "T.1": 7.0
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.995
+   },
+   {
+    "site": "https-auge-xp-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.813
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "http-web-archive-org-web-20240616042458-https-antimetal-com",
+    "vector": {
+     "S.2": 0.455,
+     "T.1": 0.333,
+     "R.1": -3.833
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.988
+   },
+   {
+    "site": "https-arrowdynamics-dev",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": -1.667
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.988
+   },
+   {
+    "site": "https-www-aardvarkbookclub-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 4.747,
+     "R.1": -3.267
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.865
+   },
+   {
+    "site": "https-www-ikea-com-global-en-stories",
+    "vector": {
+     "S.2": 0.625,
+     "T.1": 0.427
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.285
+   },
+   {
+    "site": "https-www-coursera-org",
+    "vector": {
+     "S.2": 0.155,
+     "T.1": -1.0,
+     "R.1": -4.167
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.983
+   },
+   {
+    "site": "https-www-jonpilkington-co-uk",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-ombra-lemon-vercel-app",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.92,
+     "R.1": -2.867
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.924
+   },
+   {
+    "site": "https-www-mariecurie-org-uk",
+    "vector": {
+     "S.2": 1.11,
+     "T.1": -0.08
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.373
+   },
+   {
+    "site": "https-www-ikea-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.093
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-drvaesthetics-com",
+    "vector": {
+     "S.2": 0.51,
+     "T.1": -0.627,
+     "R.1": -3.304
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.992
+   },
+   {
+    "site": "https-360lexingtonave-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-stripe-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.667,
+     "R.1": -1.921
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.958
+   },
+   {
+    "site": "https-www-avax-network",
+    "vector": {
+     "S.2": 0.105,
+     "T.1": 2.133,
+     "R.1": -2.479
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.711
+   },
+   {
+    "site": "https-ramp-com",
+    "vector": {
+     "S.2": 0.335,
+     "T.1": -0.333,
+     "R.1": -1.946
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-fredericlord-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-primal-instinct-net",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-arttechreport-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.747,
+     "R.1": -3.0
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.946
+   },
+   {
+    "site": "https-docs-netlify-com",
+    "vector": {
+     "S.2": 1.11,
+     "T.1": -0.667
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.752
+   },
+   {
+    "site": "https-ario-law-en",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 8.113
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-www-adaline-ai",
+    "vector": {
+     "S.2": 0.32,
+     "T.1": 1.0,
+     "R.1": -2.663
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.912
+   },
+   {
+    "site": "https-mdconsultingny-com-services",
+    "vector": {
+     "S.2": 0.155,
+     "T.1": -0.833
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.992
+   },
+   {
+    "site": "https-enpowertrading-co-za",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "http-www-madebyhusk-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.167
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-andreadiego-es",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333,
+     "R.1": -1.667
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.776
+   },
+   {
+    "site": "https-atolldigital-com",
+    "vector": {
+     "S.2": 1.0,
+     "T.1": -1.22
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.93
+   },
+   {
+    "site": "https-www-typeform-com",
+    "vector": {
+     "S.2": 0.215,
+     "T.1": 0.333,
+     "R.1": -1.567
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.962
+   },
+   {
+    "site": "https-www-cloudflare-com-about",
+    "vector": {
+     "S.2": 0.4,
+     "T.1": -0.667,
+     "R.1": -1.667
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.947
+   },
+   {
+    "site": "https-www-alnf-org",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.3
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-cloudflare-com-learning",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-press-stripe-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-lonelyplanet-com",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": 0.667
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.356
+   },
+   {
+    "site": "https-github-com-mona-sans",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 7.08,
+     "R.1": -2.8
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.955
+   },
+   {
+    "site": "https-newbeautycompany-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 2.833
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-toggl-com",
+    "vector": {
+     "S.2": 1.665,
+     "T.1": -2.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-proton-me-support-contact-product",
+    "vector": {
+     "S.2": 0.4,
+     "T.1": -1.0
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.998
+   },
+   {
+    "site": "https-moral-skin-com",
+    "vector": {
+     "S.2": 0.215,
+     "T.1": -0.84,
+     "R.1": -3.7
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.986
+   },
+   {
+    "site": "https-animos-app",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333,
+     "R.1": -3.25
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-mdconsultingny-com",
+    "vector": {
+     "S.2": 0.47,
+     "T.1": -0.5,
+     "R.1": -4.083
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.999
+   },
+   {
+    "site": "https-artpill-studio",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 3.02,
+     "R.1": 0.5
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.969
+   },
+   {
+    "site": "https-developers-cloudflare-com",
+    "vector": {
+     "S.2": 0.455,
+     "T.1": -0.667,
+     "R.1": -3.5
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-supabird-io-new-landing-x",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.887
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-youcanbeanything-tftl-agency",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 26.047,
+     "R.1": -1.667
+    },
+    "cluster": "display-led+R.1-0.7",
+    "coherence": 1.0
+   },
+   {
+    "site": "https-www-arqui9-com-services",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333,
+     "R.1": -3.017
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-www-b-egg-farm",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": 3.113,
+     "R.1": -0.342
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.977
+   },
+   {
+    "site": "https-kobbe-io",
+    "vector": {
+     "S.2": 0.715,
+     "T.1": -1.0,
+     "R.1": -2.7
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-mariecurie-org-uk-contact-us",
+    "vector": {
+     "S.2": 0.665,
+     "T.1": -0.08
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.417
+   },
+   {
+    "site": "https-resend-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.553,
+     "R.1": -3.5
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.969
+   },
+   {
+    "site": "https-www-agrumeafarm-it-en-experience",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 5.533
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-www-tacaloa-com",
+    "vector": {
+     "S.2": 0.575,
+     "T.1": -0.4,
+     "R.1": -3.083
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.996
+   },
+   {
+    "site": "https-jcsignatureaesthetics-com-team",
+    "vector": {
+     "S.2": 0.355,
+     "T.1": -0.78
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-developers-cloudflare-com-cloudflare-one-team-and-resources",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.54
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-etoile-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -2.0,
+     "R.1": -4.083
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.92
+   },
+   {
+    "site": "https-jcsignatureaesthetics-com-pricing",
+    "vector": {
+     "S.2": 0.31,
+     "T.1": -0.78
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.998
+   },
+   {
+    "site": "https-www-docusign-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 0.333,
+     "R.1": -2.167
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.97
+   },
+   {
+    "site": "https-www-freshbooks-com",
+    "vector": {
+     "S.2": 0.165,
+     "T.1": -0.5,
+     "R.1": -1.567
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.971
+   },
+   {
+    "site": "https-umbrel-com-country-ua",
+    "vector": {
+     "S.2": 1.225,
+     "T.1": -0.46,
+     "R.1": -2.7
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.948
+   },
+   {
+    "site": "https-www-ikea-com-global-en-support-contact-ikea-submit-complaint",
+    "vector": {
+     "S.2": 0.88,
+     "T.1": -1.093
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.933
+   },
+   {
+    "site": "https-mural-co",
+    "vector": {
+     "S.2": 0.085,
+     "T.1": 0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.847
+   },
+   {
+    "site": "https-mdconsultingny-com-contact",
+    "vector": {
+     "S.2": 0.4,
+     "T.1": -0.833
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.991
+   },
+   {
+    "site": "https-keap-com",
+    "vector": {
+     "S.2": 0.715,
+     "T.1": -1.333,
+     "R.1": -0.375
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.955
+   },
+   {
+    "site": "https-www-aether1-ai",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.747
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-ethnocare-ca",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-newbeautycompany-com-about-us",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.5,
+     "R.1": -1.833
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.974
+   },
+   {
+    "site": "https-www-hotjar-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.0,
+     "R.1": -3.8
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.976
+   },
+   {
+    "site": "https-www-maximalestudio-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.407
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-sydopia-com",
+    "vector": {
+     "S.2": 0.355,
+     "T.1": -1.5,
+     "R.1": -2.062
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.848
+   },
+   {
+    "site": "https-calendly-com",
+    "vector": {
+     "S.2": 0.625,
+     "T.1": 0.0,
+     "R.1": -2.833
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.992
+   },
+   {
+    "site": "https-www-apollo-io",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333,
+     "R.1": -1.967
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.989
+   },
+   {
+    "site": "https-proton-me",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": -0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.751
+   },
+   {
+    "site": "https-facemedstore-com-about",
+    "vector": {
+     "S.2": 0.355,
+     "T.1": -1.0,
+     "R.1": -2.167
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.934
+   },
+   {
+    "site": "https-www-arqui9-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.333,
+     "R.1": -3.638
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.993
+   },
+   {
+    "site": "https-www-save-day",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.107
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-gemnote-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-figma-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.667,
+     "R.1": -1.746
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.95
+   },
+   {
+    "site": "https-antimetal-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.747,
+     "R.1": -3.367
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.982
+   },
+   {
+    "site": "https-www-3200kelvin-com",
+    "vector": {
+     "S.2": 0.28,
+     "T.1": 3.867
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.997
+   },
+   {
+    "site": "https-developers-cloudflare-com-workers",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.54
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-www-alethia-earth",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.0
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.952
+   },
+   {
+    "site": "https-zapier-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.667,
+     "R.1": -2.3
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.971
+   },
+   {
+    "site": "https-aacckc-com",
+    "vector": {
+     "S.2": 0.215,
+     "T.1": 0.0,
+     "R.1": -2.308
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.998
+   },
+   {
+    "site": "https-www-lonelyplanet-com-articles-wellness-retreats-usa",
+    "vector": {
+     "S.2": 0.605,
+     "T.1": -1.0
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.973
+   },
+   {
+    "site": "https-newbeautycompany-com-blog",
+    "vector": {
+     "S.2": 0.59,
+     "T.1": -0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.849
+   },
+   {
+    "site": "https-www-apple-com-siri",
+    "vector": {
+     "S.2": 0.45,
+     "T.1": -1.12,
+     "R.1": -2.0
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.902
+   },
+   {
+    "site": "https-www-drvaesthetics-com-services",
+    "vector": {
+     "S.2": 0.59,
+     "T.1": -1.147
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.986
+   },
+   {
+    "site": "https-www-adidasarena-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 2.413,
+     "R.1": 0.167
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.988
+   },
+   {
+    "site": "https-www-depo-studio",
+    "vector": {
+     "S.2": 0.95,
+     "T.1": 0.747
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.349
+   },
+   {
+    "site": "https-www-drvaesthetics-com-about-dr-vaidehi-patel",
+    "vector": {
+     "S.2": 0.31,
+     "T.1": -1.147
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.999
+   },
+   {
+    "site": "https-kolfest-bermet-design",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.767,
+     "R.1": -4.204
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.888
+   },
+   {
+    "site": "https-www-notion-so",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.0,
+     "R.1": -1.783
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.832
+   },
+   {
+    "site": "https-enterprise-wikimedia-org",
+    "vector": {
+     "S.2": 0.215,
+     "T.1": -1.533
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.985
+   },
+   {
+    "site": "https-mode-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": 1.0,
+     "R.1": -0.3
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": -0.912
+   },
+   {
+    "site": "https-gusto-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-autorouter-com",
+    "vector": {
+     "S.2": 0.835,
+     "T.1": -0.667,
+     "R.1": -2.688
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.969
+   },
+   {
+    "site": "https-moxietheatre-com",
+    "vector": {
+     "S.2": 0.18,
+     "T.1": 5.393
+    },
+    "cluster": "display-led+R.1-0.3",
+    "coherence": 0.997
+   },
+   {
+    "site": "https-newbeautycompany-com-contact-us",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -0.5
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-nordvpn-com",
+    "vector": {
+     "S.2": 0.0,
+     "T.1": -1.333
+    },
+    "cluster": "T.1-1.0+freeform-radius",
+    "coherence": 0.952
+   },
+   {
+    "site": "https-conwest-com",
+    "vector": {
+     "S.2": 0.715,
+     "T.1": 1.68,
+     "R.1": -1.408
+    },
+    "cluster": "R.1-2.8+freeform-radius",
+    "coherence": 0.592
+   }
+  ]
+ }
+}

@@ -282,6 +282,7 @@ def nav_measure(a, blk, H):
 
 
 def measure(path, rec):
+    pool = rec.get('source_pool') or 'canon'
     key = f'{cache.file_sha(path)}:{PAD_V}'
     hit = cache.get('padding', key)
     if hit is not None:
@@ -302,26 +303,32 @@ def measure(path, rec):
         t = classify(m, blk, rec, H)
         if t:
             rows.append({'type': t, 'pad_v': m['pad_v'],
-                         'pad_h': m['pad_h'], 'src': path})
+                         'pad_h': m['pad_h'], 'src': path,
+                         'source_pool': pool})
     for blk in blocks:
         for m in repeated_rows(a, blk, H, H):
             m['src'] = path
+            m['source_pool'] = pool
             rows.append(m)
         if blk['role'] == 'chrome-nav':
             for m in nav_measure(a, blk, H):
                 m['src'] = path
+                m['source_pool'] = pool
                 rows.append(m)
         if blk['role'] == 'chrome-footer':
             rows.append({'type': 'footer-column',
                          'pad_v': (blk['y1'] - blk['y0']) * H / 4,
-                         'pad_h': blk['x0'] * W, 'src': path})
+                         'pad_h': blk['x0'] * W, 'src': path,
+                         'source_pool': pool})
         if blk.get('has_form'):
             rows.append({'type': 'form-panel',
                          'pad_v': (blk['y1'] - blk['y0']) * H / 3,
-                         'pad_h': blk['x0'] * W, 'src': path})
+                         'pad_h': blk['x0'] * W, 'src': path,
+                         'source_pool': pool})
     if rec and rec.get('section_type') == 'hero':
         rows.append({'type': 'hero-content-block',
-                     'pad_v': H * 0.08, 'pad_h': W * 0.06, 'src': path})
+                     'pad_v': H * 0.08, 'pad_h': W * 0.06, 'src': path,
+                     'source_pool': pool})
     # section: inter-block vertical gap vs inline column gutter
     main = sorted([b for b in blocks if b['role'] == 'main'],
                   key=lambda b: b['y0'])
@@ -330,14 +337,20 @@ def measure(path, rec):
         gutter = min(b1['x0'], b2['x0']) * W
         if vgap > 10 and gutter > 4:
             rows.append({'type': 'section', 'pad_v': vgap,
-                         'pad_h': gutter, 'src': path})
+                         'pad_h': gutter, 'src': path,
+                         'source_pool': pool})
     cache.put('padding', key,
               json.loads(json.dumps(rows, default=float)))
     return rows
 
 
 def canon():
-    """Mobbin + banked canon (capture_ok only), with record context."""
+    """PRINCIPLES pool: canon annotations + pending candidates.
+
+    Layer law (operator): principles stats (padding, structure) may
+    draw from every captured crop, approved or not — LOOK stats may
+    not. Every record carries source_pool so the table can say where
+    each number came from."""
     sys.path.insert(0, os.path.normpath(os.path.join(
         PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
     from corpus_filter import keep
@@ -346,8 +359,33 @@ def canon():
         r = json.loads(line)
         if 'error' not in r and keep(r) and \
                 os.path.exists(r.get('image') or ''):
+            r['source_pool'] = 'canon:' + (r.get('source') or 'mobbin')
             recs.append(r)
+    # pending candidates: web/canon sec-*.png crops, source tagged
+    import glob
+    for mp in glob.glob(os.path.join(
+            DATA, 'web', 'canon', '*', 'meta.json')):
+        meta = json.load(open(mp))
+        if meta.get('capture_status', 'ok') != 'ok':
+            continue
+        d = os.path.dirname(mp)
+        src = 'candidate:' + (meta.get('source') or 'web')
+        for sp in sorted(glob.glob(os.path.join(d, 'sec-*.png'))):
+            recs.append({'image': sp,
+                         'site_type': meta.get('site_type'),
+                         'section_type': None,
+                         'source_pool': src})
     return recs
+
+
+def skeleton_rows():
+    """HyperUI/shadcn class-derived padding, tagged pool."""
+    try:
+        import skeleton_padding
+        return skeleton_padding.scan()
+    except Exception as e:
+        print(f'skeleton pool skipped: {e}', file=sys.stderr)
+        return []
 
 
 def size_tier(h_type, pad_v):
@@ -398,13 +436,21 @@ def summarise(rows, recs):
     return out
 
 
+def _work(r):
+    return measure(r['image'], r)
+
+
 def main():
     recs = canon()
     rows = []
-    for i, r in enumerate(recs):
-        rows.extend(measure(r['image'], r))
-        if i % 400 == 399:
-            print(f'  {i + 1}/{len(recs)}', flush=True)
+    import multiprocessing as mp
+    with mp.Pool(max(2, min(8, mp.cpu_count() - 2))) as pool:
+        for i, part in enumerate(pool.imap(_work, recs,
+                                           chunksize=8)):
+            rows.extend(part)
+            if i % 200 == 199:
+                print(f'  {i + 1}/{len(recs)}', flush=True)
+    rows.extend(skeleton_rows())
     table = summarise(rows, recs)
     for t, note in GUIDELINES.items():
         if t not in table:
@@ -418,7 +464,9 @@ def main():
             v['insufficient'] = True
             v['guideline'] = GUIDELINES.get(
                 t, 'n<10 — use designer guideline')
-    res = {'method': 'pixel segmentation, v:h inner padding, thumb 720w',
+    res = {'layer': 'principles',
+           'sources': sorted({r.get('source_pool') for r in rows}),
+           'method': 'pixel segmentation, v:h inner padding, thumb 720w',
            'version': PAD_V, 'n_images': len(recs),
            'n_measurements': len(rows), 'types': table}
     json.dump(res, open(OUT_JSON, 'w'), indent=1)

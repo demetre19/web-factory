@@ -172,6 +172,7 @@ def aspect_of_media(blk):
 
 
 def measure(path, rec):
+    pool = rec.get('source_pool') or 'canon'
     key = f'{cache.file_sha(path)}:{PROF_V}'
     hit = cache.get('component', key)
     if hit is not None:
@@ -198,6 +199,7 @@ def measure(path, rec):
             continue
         prof['type'] = t
         prof['src'] = path
+        prof['source_pool'] = pool
         prof['n_ctas'] = n_cta
         asp = aspect_of_media(blk)
         if asp:
@@ -207,27 +209,27 @@ def measure(path, rec):
     for blk in blocks:
         for m in repeated_rows(a, blk, H, H):
             out.append({'type': m['type'], 'pad_v': m['pad_v'],
-                        'pad_h': m['pad_h'], 'src': path,
+                        'pad_h': m['pad_h'], 'src': path, 'source_pool': pool,
                         'n_ctas': n_cta})
         if blk['role'] == 'chrome-nav':
             for m in nav_measure(a, blk, H):
                 out.append({'type': 'nav-item', 'pad_v': m['pad_v'],
-                            'pad_h': m['pad_h'], 'src': path,
+                            'pad_h': m['pad_h'], 'src': path, 'source_pool': pool,
                             'n_ctas': n_cta})
         if blk['role'] == 'chrome-footer':
             out.append({'type': 'footer-column',
                         'pad_v': (blk['y1'] - blk['y0']) * H / 4,
-                        'pad_h': blk['x0'] * W, 'src': path,
+                        'pad_h': blk['x0'] * W, 'src': path, 'source_pool': pool,
                         'n_ctas': n_cta})
         if blk.get('has_form'):
             out.append({'type': 'form-panel',
                         'pad_v': (blk['y1'] - blk['y0']) * H / 3,
-                        'pad_h': blk['x0'] * W, 'src': path,
+                        'pad_h': blk['x0'] * W, 'src': path, 'source_pool': pool,
                         'n_ctas': n_cta})
     if rec and rec.get('section_type') == 'hero':
         out.append({'type': 'hero-content-block',
                     'pad_v': H * 0.08, 'pad_h': W * 0.06,
-                    'src': path, 'n_ctas': n_cta})
+                    'src': path, 'source_pool': pool, 'n_ctas': n_cta})
     main = sorted([b for b in blocks if b['role'] == 'main'],
                   key=lambda b: b['y0'])
     for b1, b2 in zip(main, main[1:]):
@@ -235,7 +237,7 @@ def measure(path, rec):
         gutter = min(b1['x0'], b2['x0']) * W
         if vgap > 10 and gutter > 4:
             out.append({'type': 'section', 'pad_v': vgap,
-                        'pad_h': gutter, 'src': path, 'n_ctas': n_cta})
+                        'pad_h': gutter, 'src': path, 'source_pool': pool, 'n_ctas': n_cta})
     cache.put('component', key,
               json.loads(json.dumps(out, default=float)))
     return out
@@ -278,13 +280,20 @@ def summarise(rows):
     return out
 
 
+def _work(r):
+    return measure(r['image'], r)
+
+
 def main():
     recs = canon()
     rows = []
-    for i, r in enumerate(recs):
-        rows.extend(measure(r['image'], r))
-        if i % 400 == 399:
-            print(f'  {i + 1}/{len(recs)}', flush=True)
+    import multiprocessing as mp
+    with mp.Pool(max(2, min(8, mp.cpu_count() - 2))) as pool:
+        for i, part in enumerate(pool.imap(_work, recs,
+                                           chunksize=8)):
+            rows.extend(part)
+            if i % 200 == 199:
+                print(f'  {i + 1}/{len(recs)}', flush=True)
     table = summarise(rows)
     for t, note in EXTRA_GUIDELINES.items():
         if t not in table or table[t]['n'] < 10:
@@ -295,7 +304,9 @@ def main():
         if v['n'] < 10 and not v.get('insufficient'):
             v['insufficient'] = True
             v['guideline'] = 'n<10 — use designer guideline'
-    res = {'method': 'pixel pass, canon crops 720w; per-type fields',
+    res = {'layer': 'principles',
+           'sources': sorted({r.get('source_pool') for r in rows}),
+           'method': 'pixel pass, canon crops 720w; per-type fields',
            'version': PROF_V, 'n_images': len(recs),
            'n_measurements': len(rows), 'types': table}
     json.dump(res, open(OUT_JSON, 'w'), indent=1)
