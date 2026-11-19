@@ -1138,7 +1138,31 @@ def check_speed_budget(ctx):
             if 'loading=' not in tag and 'fetchpriority' not in tag:
                 f.append(f'P.12 {name}: <img> no lazy/fetchpriority '
                          'hint')
+    css_files = []
+    if os.path.isdir(dist):
+        for dp, _, fns in os.walk(dist):
+            for fn in fns:
+                if fn.endswith('.css'):
+                    css_files.append(os.path.join(dp, fn))
+    if css_files:
+        css_kb = sum(os.path.getsize(p) for p in css_files) / 1024
+        if css_kb > 100:
+            f.append(f'P.12 total CSS {css_kb:.0f}KB > 100KB budget — '
+                     'purge dead utilities, keep one owner per class')
+    fonts = []
+    for dp_root in (os.path.join(dist, '_astro'),
+                    os.path.join(dist, 'fonts'),
+                    os.path.join(ctx.site, 'public', 'fonts')):
+        if os.path.isdir(dp_root):
+            for _, _, fns in os.walk(dp_root):
+                fonts += [fn for fn in fns
+                          if fn.endswith(('.woff2', '.woff', '.ttf',
+                                          '.otf'))]
     g = ctx.read('site/src/styles/global.css') or ''
+    n_faces = len(re.findall(r'@font-face', g))
+    if len(fonts) > 4 or n_faces > 4:
+        f.append(f'P.12 {max(len(fonts), n_faces)} font files/faces > '
+                 '4 — two families x two weights max')
     if '@font-face' in g and 'font-display' not in g:
         f.append('P.12 @font-face without font-display: swap')
     # Lighthouse is NOT a gate: it is an operator post-build check run by
@@ -1266,12 +1290,17 @@ def check_system_enums(ctx):
         if not s.get(k):
             f.append(f'system.{k} missing/empty')
     ic = s.get('icons') or {}
-    if ic.get('family') and str(ic['family']) not in \
-            {'lucide', 'heroicons', 'phosphor', 'feather', 'custom'}:
-        f.append(f'icons.family "{ic["family"]}" ∉ I.1 set')
+    if ic.get('family') and str(ic['family']) != 'lucide':
+        f.append(f'icons.family "{ic["family"]}" — the icon family is '
+                 'Lucide only (I.1 single-family; linecap/geometry '
+                 'rules assume the Lucide grid)')
     if ic.get('style') and str(ic['style']) not in \
             {'outline', 'solid', 'duotone', 'hand-drawn', '3d-hero-only'}:
         f.append(f'icons.style "{ic["style"]}" ∉ I.1 set')
+    if str(ic.get('style') or '') == 'outline' \
+            and str(ic.get('fill') or 'none') != 'none':
+        f.append('icons.fill must be "none" on outline Lucide — '
+                 'filled glyphs break the stroke contract (I.2)')
     if ic.get('stroke_class') and str(ic['stroke_class']) not in \
             {'light', 'regular', 'bold'}:
             f.append(f'icons.stroke_class "{ic["stroke_class"]}" ∉ I.1 set')
