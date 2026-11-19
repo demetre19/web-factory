@@ -1,0 +1,120 @@
+---
+/**
+ * bm-404-error-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-15-container">
+    <div class="intro width--s">
+      <div class="intro__top">
+        <h2 class="intro__heading text--primary">404 error</h2>
+        <p class="intro__subheading intro__subheading--alt">Page not found.</p>
+      </div>
+      <p class="intro__subheading">Sorry, the page you are looking for doesn't exist.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="error-15-media-list list--none">
+      {items.map((it) => (
+        <div class="error-15-image-wrapper">
+          <figure class="error-15-image-wrapper__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .error-15-container {
+    row-gap: var(--space-m);
+    position: relative;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro__top {
+    align-items: center;
+  }
+
+  .intro__subheading--alt {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .error-15-media-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+    height: 65rem;
+    position: absolute;
+  }
+
+  .error-15-image-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .error-15-image-wrapper__image {
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .error-15-image-wrapper:nth-child(1) {
+  	transform: TranslateY(24rem);
+  }
+  
+  .error-15-image-wrapper:nth-child(3) {
+  	transform: TranslateY(9rem);
+  }
+  
+  
+  @media (max-width:767px) {
+  
+  	.error-15-image-wrapper:nth-child(1) {
+  	transform: TranslateY(0rem);
+  }
+  
+  .error-15-image-wrapper:nth-child(3) {
+  	transform: TranslateY(0rem);
+  }
+  
+    
+  }
+
+  /* bm-custom */
+  .error-15-image-wrapper__image {
+  	aspect-ratio: 4/6;
+  }
+}
+</style>

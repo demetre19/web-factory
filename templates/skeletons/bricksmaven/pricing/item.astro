@@ -1,0 +1,134 @@
+---
+/**
+ * bm-item — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="pricing-10-container">
+    <div class="intro">
+      <h2 class="intro__heading">Get access to the Origin library today!</h2>
+      <p class="intro__subheading">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="cta-combo__text">OR</p>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+      <p class="intro__accent-heading">Pricing tagline</p>
+    </div>
+    <div class="pricing-10-content">
+      {items.map((it) => (
+        <div class="pricing-10-card">
+          <h2 class="pricing-10-card__heading">{it.title}</h2>
+          <p class="pricing-10-card__price">{it.text}</p>
+          <p class="pricing-10-card__desc">{it.text}</p>
+          <a class="pricing-10-box__cta btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+          <p class="pricing-10-card__small-letters">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .pricing-10-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .pricing-10-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+    width: 100%;
+  }
+
+  .pricing-10-card {
+    display: flex;
+    row-gap: var(--space-xs);
+    align-items: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    flex-direction: column;
+  }
+
+  .pricing-10-card__heading {
+    font-size: var(--fs-1);
+    font-weight: 400;
+  }
+
+  .pricing-10-card__price {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  .pricing-10-card__desc {
+    text-align: center;
+  }
+
+  .pricing-10-box__cta {
+    width: 100% !important;
+    margin: auto 0 0 0;
+  }
+
+  .pricing-10-card__small-letters {
+    text-align: center;
+  }
+
+  /* bm-custom */
+  .pricing-10-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  /* bm-custom */
+  .pricing-10-card__price span {
+  	font-size: var(--fs-1);
+  }
+}
+</style>

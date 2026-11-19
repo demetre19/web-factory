@@ -1,0 +1,194 @@
+---
+/**
+ * bm-hero-79 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-79.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-79__container">
+    <div class="bm-hero-79__intro">
+      <h1 class="bm-hero-79__heading">Long headline to turn your visitors into customers</h1>
+      <p class="bm-hero-79__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="cta-combo">
+        <a class="btn--primary" href="#">Call to action</a>
+        <a class="link--black" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="bm-hero-79__content">
+      <div class="bm-hero-79__media">
+        <figure class="bm-hero-79__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-testimonial-card-79">
+        <figure class="bm-testimonial-card-79__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-testimonial-card-79__review">
+          <div class="bm-testimonial-card-79__top">
+            <p class="bm-testimonial-card-79__quotation">“</p>
+            <p class="bm-testimonial-card-79__full-review">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+          </div>
+          <div class="testimonial-36-card__head">
+            <div class="testimonial-36-card__avatar">
+              <figure class="testimonial-36-card__avatar-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div class="testimonial-36-card__client-data">
+              <custom class="testimonial-36-card__client-name">John Smith</custom>
+              <p class="testimonial-36-card__client-title">Secure Marketing</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-79 {
+    position: relative;
+  }
+
+  .bm-hero-79__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-79__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-79__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-79__content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-hero-79__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-testimonial-card-79 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: flex-end;
+  }
+
+  .bm-testimonial-card-79__image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-testimonial-card-79__review {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--bg-canvas);
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-card-79__quotation {
+    font-size: calc(var(--fs-4) * 3);
+    line-height: .6;
+  }
+
+  .bm-testimonial-card-79__full-review {
+    font-size: var(--fs-1);
+    font-weight: 700;
+    margin: calc(-1 * var(--space-s)) 0 0 0;
+  }
+
+  .testimonial-36-card__head {
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .testimonial-36-card__avatar {
+    display: flex;
+    width: 40;
+    height: 40;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .testimonial-36-card__avatar-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .testimonial-36-card__client-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-36-card__client-name {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .testimonial-36-card__client-title {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-hero-79::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 65%;
+    background: linear-gradient(transparent, var(--bg-subtle));
+    z-index: -1;
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+    .bm-testimonial-card-79 {
+    aspect-ratio: 4/3;
+  }
+  }
+}
+</style>

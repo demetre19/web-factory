@@ -1,0 +1,185 @@
+---
+/**
+ * bm-contact-25 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-25.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-25-container">
+    <div class="intro">
+      <h1 class="intro__heading">Contact with us</h1>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+    </div>
+    <div class="contact-25-content">
+      <div class="contact-25-side">
+        <div class="contact-25-side-intro">
+          <h2 class="contact-25-side-intro__title">Get in touch</h2>
+          <p class="contact-25-side-intro__desc">We’ love to hear from you. Our friendly team is always here to chat.</p>
+        </div>
+        <div class="contact-25-side-list-ul list--none">
+          {items.map((it) => (
+            <div class="contact-25-side-list-item">
+              <div class="contact-25-side-list-item__detail">
+                <h2 class="contact-25-side-list-item__title">{it.title}</h2>
+                <p class="contact-25-side-list-item__desc">{it.text}</p>
+                <a class="contact-25-side-list-item__cta wf-cta-button" href={it.href}>{it.label}</a>
+              </div>
+              <span class="contact-25-side-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+        <div class="contact-25-side-social">
+          <div class="contact-25-side-social__icon"></div>
+        </div>
+      </div>
+      <div class="contact-25-form">
+        <h2 class="contact-25-form__title">Leave Us a Message</h2>
+        <form class="contact-25-form__content" novalidate>
+        </form>
+      </div>
+    </div>
+    <div class="contact-25-media">
+      <figure class="contact-25-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-25-container {
+    row-gap: var(--space-l);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-25-content {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    width: 100%;
+    gap: var(--space-l);
+  }
+
+  .contact-25-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-l);
+    background: var(--action-primary);
+    padding: 3rem 3rem 3rem 3rem;
+  }
+
+  .contact-25-side-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-25-side-intro__title {
+    font-size: var(--fs-2);
+    font-weight: 500;
+  }
+
+  .contact-25-side-list-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: 1.5rem;
+  }
+
+  .contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-25-side-list-item__title {
+    font-size: var(--fs-1);
+  }
+
+  .contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    margin: 1.5rem 0 0 0;
+    text-align: left;
+  }
+
+  .contact-25-side-list-item__icon {
+    padding: .5rem .5rem .5rem .5rem;
+    background: var(--bg-canvas);
+    border-radius: 50% 50% 50% 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-25-side-social {
+    margin: auto 0 0 0;
+  }
+
+  .contact-25-side-social__icon {
+    font-size: var(--fs-2);
+    align-self: flex-end;
+  }
+
+  .contact-25-form {
+    background: var(--bg-subtle);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 2rem;
+  }
+
+  .contact-25-media {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .contact-25-media__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  .contact-25-media__image {
+  	grid-column: 2/12;
+  }
+}
+</style>

@@ -1,0 +1,115 @@
+---
+/**
+ * bm-newsletter-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (newsletter-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="newsletter-2-container">
+    <div class="newsletter-2__left-box">
+      <h2 class="newsletter-2__heading">Convise your audience to sign up</h2>
+      <p class="newsletter-2__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+      <div class="bm-list">
+        {items.map((it) => (
+          <div class="bm-list__item">
+            <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
+            <p class="bm-list__item-text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <div class="bm-form">
+        <form class="bm-form-widget" novalidate>
+        </form>
+        <p class="bm-form__terms">We care about your data in our privacy policy.</p>
+      </div>
+    </div>
+    <div class="newsletter-2__media">
+      <figure class="newsletter-2__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .newsletter-2-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+
+  .newsletter-2__left-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .newsletter-2__heading {
+    margin: 0 0 0 0;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-list__item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-list__item-icon {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .bm-form-widget {
+    display: flex;
+    gap: var(--space-xs);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .newsletter-2__image {
+    height: 45rem;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .bm-form-widget {
+  flex-wrap: nowrap;
+  }
+  .bm-form-widget input:focus {
+  	outline-offset: 0;
+  }
+}
+</style>

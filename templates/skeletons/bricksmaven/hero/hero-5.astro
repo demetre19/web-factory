@@ -1,0 +1,69 @@
+---
+/**
+ * bm-hero-5 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-5.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-5-container">
+    <div class="hero-5-wrapper__content hero-5__content">
+      <p class="hero-5-wrapper__tag hero-5__accent">TAGLINE</p>
+      <h1 class="hero-5-wrapper__title hero-5__heading">Long headline to turn your visitors into customers</h1>
+      <p class="hero-5-wrapper__desc hero-5__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="hero-5-wrapper__cta--primary btn--primary hero-5__button wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-5-wrapper__thumb hero-5__media">
+      <figure class="hero-5-wrapper__img hero-5__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-5-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .hero-5-wrapper__content {
+    flex-direction: column;
+    row-gap: var(--space-m);
+    justify-content: center;
+    display: flex;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    align-items: flex-start;
+  }
+
+  .hero-5-wrapper__tag {
+    font-weight: 700;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-5-wrapper__img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+</style>

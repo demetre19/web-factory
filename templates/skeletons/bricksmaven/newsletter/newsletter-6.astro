@@ -1,0 +1,73 @@
+---
+/**
+ * bm-newsletter-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (newsletter-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="newsletter-6-container">
+    <div class="newsletter-6__content">
+      <h2 class="newsletter-6__heading">Join 10k+ subscribers</h2>
+      <p class="newsletter-6__text">Stay in the loop with everything you need to know.</p>
+      <div class="bm-form">
+        <form class="bm-form-widget" novalidate>
+        </form>
+        <p class="bm-form__terms">We care about your data in our privacy policy.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .newsletter-6__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: var(--bg-subtle);
+    row-gap: var(--flow-spacing);
+    text-align: center;
+  }
+
+  .bm-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .bm-form-widget {
+    display: flex;
+    gap: var(--space-xs);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* bm-custom */
+  .bm-form-widget {
+  flex-wrap: nowrap;
+  }
+  .bm-form-widget input:focus {
+  	outline-offset: 0;
+  }
+}
+</style>

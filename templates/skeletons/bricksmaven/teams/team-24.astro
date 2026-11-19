@@ -1,0 +1,193 @@
+---
+/**
+ * bm-team-24 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (team-24.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-team-24__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-team-24-list">
+      {items.map((it) => (
+        <div class="bm-team-24-card">
+          <div class="bm-team-24-card__content">
+            <p class="bm-team-24-card__name">{it.text}</p>
+            <p class="bm-team-24-card__title">{it.text}</p>
+          </div>
+          <figure class="bm-team-24-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+      <div class="bm-team-24-card-cta">
+        <div class="bm-team-24-card-cta__content">
+          <h2 class="bm-team-24-card-cta__heading">15+ marketing professionals help you get quick results</h2>
+          <p class="bm-team-24-card-cta__text">With a record 300+ years experience we are leaders in the space of...</p>
+          <a class="bm-team-24-card-cta__link" href="#">See all members</a>
+        </div>
+        <div class="bm-team-24-card-cta__top">
+          <div class="bm-team-list list-none">
+            {items.map((it) => (
+              <div class="bm-team-media">
+                <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-team-24 {
+    background: var(--fs-0);
+  }
+
+  .bm-team-24__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-team-24-list {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+  }
+
+  .bm-team-24-card {
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    height: var(--measure);
+    justify-content: flex-end;
+    position: relative;
+    overflow: clip;
+  }
+
+  .bm-team-24-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: color-mix(in srgb, var(--bg-canvas) 60%, transparent);
+    row-gap: calc(var(--flow-spacing) / 6);
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-team-24-card__name {
+    font-weight: 700;
+  }
+
+  .bm-team-24-card__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-team-24-card__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-team-24-card-cta {
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    height: var(--measure);
+    justify-content: space-between;
+  }
+
+  .bm-team-24-card-cta__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-team-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-team-media__image {
+    object-fit: cover;
+    width: 50;
+    height: 50;
+    border-top: .4rem solid var(--bg-canvas);
+    border-right: .4rem solid var(--bg-canvas);
+    border-bottom: .4rem solid var(--bg-canvas);
+    border-left: .4rem solid var(--bg-canvas);
+    border-radius: var(--radius-circle, 999px) var(--radius-circle, 999px) var(--radius-circle, 999px) var(--radius-circle, 999px);
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  @media (max-width:1200px) {
+    .bm-team-24-list {
+      grid-template-columns: calc(100% * 1 / 2) !important;
+    }
+  } 
+  
+  @media (max-width:648px) {
+    .bm-team-24-list {
+      grid-template-columns: calc(100% * 1 / 1) !important;
+    }
+  }
+
+  /* bm-custom */
+  .bm-team-24-card__content {
+    backdrop-filter: blur(4px);
+  }
+
+  /* bm-custom */
+  .bm-team-list {
+  	list-style: none;
+  }
+
+  /* bm-custom */
+  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
+  	margin-inline-start: -20px;
+  }
+  
+  .bm-team-media:first-child {
+  	margin-inline-start: 0px;
+  }
+}
+</style>

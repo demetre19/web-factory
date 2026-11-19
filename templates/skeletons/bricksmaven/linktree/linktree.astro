@@ -1,0 +1,90 @@
+---
+/**
+ * bm-linktree — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (linktree.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="linktree-container">
+    <div class="linktree__content">
+      <div class="linktree__brand">
+        <img class="linktree__logo"></img>
+        <p class="linktree__desc">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+      </div>
+      <div class="linktree-list list--none">
+        {items.map((it) => (
+          <div class="linktree-card">
+            <a class="linktree-card__link" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+      <div class="linktree-social list--none">
+        {items.map((it) => (
+          <div class="linktree-li">
+            <span class="linktree-li__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .linktree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .linktree__content {
+    width: 100%;
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .linktree__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .linktree-card {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    text-align: center;
+    align-items: center;
+    background: var(--bg-subtle);
+  }
+
+  .linktree-social {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    justify-content: center;
+  }
+}
+</style>

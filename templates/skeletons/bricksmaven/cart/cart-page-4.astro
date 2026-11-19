@@ -1,0 +1,329 @@
+---
+/**
+ * bm-cart-page-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (cart-page-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cart-page-4__container-top">
+    <h1 class="cart-page-4__heading">Cart</h1>
+    <p class="cart-page-4__breadcrumb">Home / Cart</p>
+  </div>
+  <div class="cart-page-4__container">
+    <div class="bm-woo-notice-container">
+      <div class="bm-woo-notice"></div>
+    </div>
+    <div>
+      <p>{do_action:woocommerce_before_cart}</p>
+    </div>
+    <div class="cart-page-4__cart-container">
+      <div class="cart-page-4__cart-items-container">
+        <div class="cart-page-4__cart-items"></div>
+        <div class="cart-page-usp list--none">
+          {items.map((it) => (
+            <div class="cart-page-card-usp">
+              <div class="cart-page-card-usp__media">
+                <figure class="cart-page-card-usp__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div class="cart-page-card-usp__content">
+                <p class="cart-page-card-usp__heading">{it.text}</p>
+                <p class="cart-page-card-usp__text">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <p>{do_action:woocommerce_before_cart_collaterals}</p>
+        </div>
+      </div>
+      <div class="cart-page-4__cart-totals-container">
+        <div class="cart-page-4__cart-totals"></div>
+        <div class="cart-page-credit-card-wrapper">
+          <p class="cart-page-credit-label">We accept:</p>
+          <div class="cart-page-card-list list--none">
+            {items.map((it) => (
+              <div class="cart-page-card-credit">
+                <figure class="cart-page-card-credit__brands"><img src="/media/placeholder.svg" alt="Credit Card Logos" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p>{do_action:woocommerce_after_cart}</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cart-page-4 {
+    row-gap: var(--space-s);
+  }
+
+  .cart-page-4__container-top {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .cart-page-4__breadcrumb {
+    font-weight: 700;
+  }
+
+  .bm-woo-notice-container {
+    position: relative;
+  }
+
+  .cart-page-4__cart-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .cart-page-4__cart-items-container {
+    row-gap: var(--space-l);
+  }
+
+  .cart-page-usp {
+    flex-direction: row;
+  }
+
+  .cart-page-card-usp {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  .cart-page-card-usp__media {
+    width: 7rem;
+  }
+
+  .cart-page-card-usp__image {
+    width: 5rem;
+    border-radius: 100% 100% 100% 100%;
+    height: 5rem;
+  }
+
+  .cart-page-card-usp__content {
+    row-gap: calc( var(--space-xs) / 2 );
+  }
+
+  .cart-page-card-usp__heading {
+    font-weight: 700;
+    font-size: var(--fs-1);
+  }
+
+  .cart-page-card-usp__text {
+    font-size: var(--fs-0);
+  }
+
+  .cart-page-4__cart-totals-container {
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 1 solid var(--color-line-default);
+    border-right: 1 solid var(--color-line-default);
+    border-bottom: 1 solid var(--color-line-default);
+    border-left: 1 solid var(--color-line-default);
+    background: var(--bg-subtle);
+    padding: var(--space-xs) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+  }
+
+  .cart-page-credit-card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .cart-page-credit-label {
+    font-size: var(--fs-0);
+  }
+
+  .cart-page-card-list {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .cart-page-card-credit__brands {
+    height: 4rem;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .cart-page-4__cart-items {
+  
+  		--cart-items--primary: var(--text-primary);
+  		--focus-color: var(--action-primary);
+  
+    	/* Style shop table */
+    	.shop_table {
+        	border-collapse: separate;
+        	border-spacing: var(--space-s);
+    	}
+    	
+    	/* Style shop table header cell */
+    	 .shop_table thead th {
+      		line-height: 30px;
+  				padding: 0 var(--space-s);
+    	}
+    
+    	/* Style cart item */
+    	.shop_table .cart_item {
+        	outline: 1px solid var(--color-line-default);
+    	}
+    
+    	/* Style shop table table cell */
+    	.shop_table tbody td {
+        	padding: var(--space-xs) var(--space-s);
+    	}
+  
+    	/* Set the width of the quantity element */
+  		.shop_table .quantity {
+        	width: 13rem;
+    	}
+    
+    	/* Remove the right border on the minus quantity element */
+    	.shop_table .quantity .minus {
+        	border-right: 0;
+    	}
+    
+    	/* Remove the left border on the plus quantity element */
+    	.shop_table .quantity .plus {
+        	border-left: 0;
+    	}
+    
+    	/* Style the shop table button */
+    	.shop_table .button {
+        	padding: var(--space-xs) var(--space-m);
+        	background-color: var(--action-primary);
+        	color: var(--bg-canvas);
+    	}
+    
+    	
+    	/* Style the shop table links */
+    	.shop_table a {
+        	color: var(--action-primary);
+    	}    
+    
+  }
+
+  /* bm-custom */
+  .cart-page-4__cart-totals {
+  
+  		--cart-items--primary: var(--text-primary);
+  		--focus-color: var(--action-primary);
+  
+    	
+    	background-color: var(--bg-subtle);
+    	
+    	/* Remove border top & bottom and margin bottom on the table */
+    	.cart_totals table {
+      		border-top: 0;
+        	border-bottom: 0;
+        	margin-bottom: 0;
+    	}  	
+    
+    .cart_totals table .cart-subtotal td, .cart_totals table .shipping td, .cart_totals table .order-total td {
+      text-align: end;
+      font-size: var(--fs-0);
+    }
+    
+    /* Increase the Total price font size */
+    .cart_totals table .order-total td {
+      font-size: var(--fs-2);
+    }
+    
+    	/* Style Cart totals button */
+    	.cart_totals .button {
+        padding: 0 var(--space-s);	
+        background-color: var(--action-primary);
+        	color: var(--bg-canvas);
+        	font-size: 18px;
+        	display: block;
+        	text-align: center;      	
+        	line-height: 40px;
+    	}
+    
+    	/* Style Cart totals links */
+    	.cart_totals a {
+        	color: var(--action-primary);
+    	}  
+    
+    	/* Style shipping calculator button */
+    	.shipping-calculator-button {
+      		text-decoration: none;
+        	font-weight: bold;
+    	}
+    
+    	/* Add margin top to the calculation button */
+      .woocommerce-shipping-calculator .button {
+      margin-block-start: var(--space-xs);
+      
+    }
+    
+    	/* Style th & shipping destination color */
+    	.cart-subtotal th,
+    	.shipping th,
+    	.woocommerce-shipping-destination {	
+        color: var(--text-secondary);
+    	}
+    
+    	 /* Style add padding to the right of the th cell */
+    	.shipping th {	
+        padding-inline-end: var(--space-m);
+    	}
+    
+    
+    	/* Style strong color of shipping destination */
+    	.woocommerce-shipping-destination strong {
+      		color: var(--text-primary);
+    	}  
+    
+    	/* Right align the shipping methods */
+      ul.woocommerce-shipping-methods li {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+      }
+    	
+    	/* Right align the shipping methods */
+    	ul.woocommerce-shipping-methods input[type=radio]+label {
+      	font-size: 14px;
+        color: var(--text-secondary) !important;
+        font-weight: 700;
+  		}
+    
+    	/* Style data title subtotal */
+    	.cart-subtotal td[data-title=Subtotal] {
+        	font-weight: bold;
+    	}  	 
+    	
+    	/* Style order total th and td font-size */
+    	.order-total th, .order-total td {
+        	font-size: var(--fs-2);
+    	}
+  }
+}
+</style>

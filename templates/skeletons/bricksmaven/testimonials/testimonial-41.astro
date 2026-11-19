@@ -1,0 +1,112 @@
+---
+/**
+ * bm-testimonial-41 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-41.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-41__container">
+    <div class="bm-testimonial-41__content">
+      <div class="bm-testimonial-41__top">
+        <h2 class="bm-testimonial-41__heading">John Smith</h2>
+        <p class="bm-testimonial-41__text">CEO and Product owner</p>
+      </div>
+      <div class="bm-testimonial-41__review-wrapper">
+        <p class="bm-testimonial-41__review-text">“Numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam quis nostrum exercitationem. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.”</p>
+      </div>
+      <div class="bm-testimonial-41__footer">
+        <p class="bm-testimonial-41__footer-text">Don’t miss out on this opportunity to be a part of something extraordinary.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="bm-testimonial-41__media">
+      <figure class="bm-testimonial-41__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-41 {
+    background: var(--bg-subtle);
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .bm-testimonial-41__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 12);
+  }
+
+  .bm-testimonial-41__content {
+    padding: var(--space-xl) 0 var(--space-xl) 0;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+  }
+
+  .bm-testimonial-41__top {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-testimonial-41__review-wrapper {
+    padding: var(--space-xl) 0 0 0;
+  }
+
+  .bm-testimonial-41__review-text {
+    position: relative;
+  }
+
+  .bm-testimonial-41__footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+    justify-content: space-between;
+    padding: var(--space-m) 0 0 0;
+    border-top: 1 solid var(--color-line-default);
+  }
+
+  .bm-testimonial-41__footer-text {
+    width: var(--measure);
+  }
+
+  .bm-testimonial-41__media {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .bm-testimonial-41__image {
+    object-fit: cover;
+    width: calc(50vw - ((var(--content-width) / 12) * 1));
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-testimonial-41__review-text::before {
+    content: '"';
+    position: absolute;
+    top: calc(-1 * var(--space-s));
+    left: calc(-1 * var(--space-xs));
+    font-size: calc(var(--fs-4) * 4);
+  }
+}
+</style>

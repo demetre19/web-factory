@@ -1,0 +1,58 @@
+---
+/**
+ * bm-grid-5 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-5.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-5-container">
+    <div class="gridcard-5-grid-ul list--none">
+      {items.map((it) => (
+        <div class="gridcard-5-card">
+          <h2 class="gridcard-5-card__heading">{it.title}</h2>
+          <p class="gridcard-5-card__desc">{it.text}</p>
+          <a class="gridcard-5-card-btn wf-cta-button" href={it.href}>{it.label}</a>
+          <span class="gridcard-5-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-5-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .gridcard-5-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .gridcard-5-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }
+}
+</style>

@@ -1,0 +1,86 @@
+---
+/**
+ * bm-item-bpivlr — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-bpivlr.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="pricing-2-container">
+    <div class="intro">
+      <h2 class="intro__heading">Get access to the Origin library today!</h2>
+      <p class="intro__subheading">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <p class="intro__accent-heading">Pricing tagline</p>
+    </div>
+    <div class="pricing-2-price-wrapper">
+      <p class="pricing-2-price-wrapper__price">$99/year</p>
+    </div>
+    <div class="bm-ul-benefits list--none">
+      {items.map((it) => (
+        <div class="bm-li-benefits">
+          <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="bm-li-benefits__text">{it.text}</p>
+        </div>
+      ))}
+    </div>
+    <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .pricing-2 {
+    height: 100vh;
+  }
+
+  .pricing-2-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    row-gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .pricing-2-price-wrapper__price {
+    font-size: calc( var(--fs-4) + 3rem );
+    font-weight: 700;
+  }
+
+  .bm-li-benefits {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+}
+</style>

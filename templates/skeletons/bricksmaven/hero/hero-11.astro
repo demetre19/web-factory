@@ -1,0 +1,77 @@
+---
+/**
+ * bm-hero-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-11-container">
+    <div class="hero-11__content">
+      <p class="hero-11__tag">TAGLINE</p>
+      <h1 class="hero-11__title">Long headline to turn your visitors into customers</h1>
+      <p class="hero-11__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <figure class="hero-11__section-bg-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-11 {
+    padding: 0 0 0 0;
+    height: 100vh;
+  }
+
+  .hero-11-container {
+    height: 100%;
+    position: relative;
+    justify-content: center;
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+  }
+
+  .hero-11__content {
+    display: flex;
+    row-gap: var(--space-s);
+    width: var(--content-width);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    align-self: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-11__section-bg-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+    object-fit: cover;
+  }
+}
+</style>

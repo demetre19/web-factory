@@ -1,0 +1,96 @@
+---
+/**
+ * bm-item-faimix — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-faimix.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="pricing-1-container">
+    <div class="intro">
+      <h2 class="intro__heading">Get access to the Origin library today!</h2>
+      <p class="intro__subheading">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <p class="intro__accent-heading">Pricing tagline</p>
+    </div>
+    <div class="pricing-1-price-wrapper">
+      <p class="pricing-1-price-wrapper__bill">$99/year</p>
+      <p class="pricing-1-price-wrapper__desc">BILLED ONCE PER YEAR UNTIL CANCELLED</p>
+    </div>
+    <div class="cta-combo">
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <p class="cta-combo__text">OR</p>
+      <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .pricing-1 {
+    height: 100vh;
+  }
+
+  .pricing-1-container {
+    height: 100%;
+    display: flex;
+    row-gap: var(--space-m);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .pricing-1-price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pricing-1-price-wrapper__bill {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+}
+</style>

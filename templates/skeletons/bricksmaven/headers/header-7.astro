@@ -1,0 +1,119 @@
+---
+/**
+ * bm-header-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-7__topbar">
+    <div class="bm-header-7__menu-top bm-menu-left"></div>
+    <div class="bm-header-7__menu-top bm-menu-right"></div>
+  </div>
+  <div class="bm-header-7__container">
+    <div class="bm-header-7__brand">
+      <img class="bm-header-7__brand-logo"></img>
+    </div>
+    <div class="bm-header-7__nav-wrapper">
+      <div class="bm-header-7__menu"></div>
+    </div>
+    <div class="bm-header-7__cta-wrapper">
+      <a class="bm-header-7__cta--secondary btn--primary btn--outline" href="#">See it in action!</a>
+      <a class="bm-header-7__cta btn--primary" href="#">Call to action</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .header-7 {
+    padding: 0 var(--space-s) 0 var(--space-s);
+  }
+
+  .bm-header-7__topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .bm-header-7__container {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-7__brand {
+    width: 20%;
+  }
+
+  .bm-header-7__nav-wrapper {
+    display: flex;
+  }
+
+  .bm-header-7__cta-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    column-gap: var(--flow-spacing);
+    width: 35%;
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-7__cta--secondary {
+    font-size: var(--fs-0);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .bm-header-7__cta {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-header-7__topbar {
+  	padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: .1rem solid var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-header-7__menu-top .bricks-nav-menu {
+  	gap: 3rem;
+  }
+  .bm-header-7__menu-top.menu-left .bricks-nav-menu {
+  	justify-content: flex-start;
+  }
+  .bm-header-7__menu-top.menu-right .bricks-nav-menu {
+  	justify-content: flex-end;
+  }
+}
+</style>

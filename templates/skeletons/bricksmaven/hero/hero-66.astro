@@ -1,0 +1,97 @@
+---
+/**
+ * bm-hero-66 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-66.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-66__container">
+    <div class="bm-hero-66__intro">
+      <div class="bm-hero-66__column bm-hero-66__column--left">
+        <h1 class="bm-hero-66__heading">Long headline to turn your visitors into customers</h1>
+        <p class="accent-h accent-h--alt">Accent heading</p>
+      </div>
+      <div class="bm-hero-66__column bm-hero-66__column--right">
+        <p class="bm-hero-66__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="cta-combo">
+          <a class="btn--primary btn--white" href="#">Call to action</a>
+          <a class="btn--link" href="#">Secondary action →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bm-hero-66__container-footer">
+    <div class="bm-hero-66__media">
+      <figure class="bm-hero-66__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-66 {
+    background: var(--text-secondary);
+    padding: 0 0 0 0;
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-66__intro {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-hero-66__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-66__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .bm-hero-66__container-footer {
+    width: 100%;
+  }
+
+  .bm-hero-66__media {
+    position: relative;
+  }
+
+  .bm-hero-66__image {
+    object-fit: cover;
+    width: 100%;
+    height: 760;
+  }
+}
+</style>

@@ -1,0 +1,129 @@
+---
+/**
+ * bm-blog-section-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-11-container">
+    <div class="blog-section-11__top">
+      <div class="intro intro--left">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Tagline</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="blog-section-11__slider">
+      <div class="blog-section-11__slide">
+        <div class="blog-section-11-list-item">
+          <div class="blog-section-11-list-item__content">
+            <div class="blog-section-11-list-item__intro">
+              <h2 class="blog-section-11-list-item__heading">{post_title}</h2>
+              <p class="blog-section-11-list-item__date">{post_date}</p>
+              <div class="blog-section-11-list-item__excerpt"></div>
+            </div>
+            <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          </div>
+          <figure class="blog-section-11-list-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-11-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-section-11__top {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-section-11-list-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .blog-section-11-list-item__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-11-list-item__intro {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .blog-section-11-list-item__image {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

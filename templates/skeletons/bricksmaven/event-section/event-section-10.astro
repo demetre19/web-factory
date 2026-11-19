@@ -1,0 +1,160 @@
+---
+/**
+ * bm-event-section-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (event-section-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-event-section-10__container">
+    <div class="bm-event-section-10__intro">
+      <div class="bm-event-section-10__column">
+        <h2 class="bm-event-section-10__heading">Upcoming events</h2>
+        <p class="bm-event-section-10__text">This annual event brings together top musicians from around the world to perform in front of a passionate crowd of music lovers.</p>
+      </div>
+      <div class="bm-event-section-10__cta">
+        <a class="bm-event-section-10__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="bm-event-section-10__event-container">
+      <div class="bm-event-section-10-slider">
+        {items.map((it) => (
+          <div class="bm-event-section-10-card">
+            <figure class="bm-event-section-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-event-section-10-card__content">
+              <div class="bm-event-section-10-card__head">
+                <div class="bm-event-section-10-card__meta">
+                  <div class="bm-event-section-10-card__term-wrapper">
+                    <p class="bm-event-section-10-card__terms">{it.text}</p>
+                  </div>
+                  <div class="bm-event-meta-info bm-event-meta-info--alt">
+                    <p class="bm-event-meta-info__location">{it.text}</p>
+                  </div>
+                  <div class="bm-event-meta-info bm-event-meta-info--alt">
+                    <span class="bm-event-meta-info__icon" data-icon="lucide" aria-hidden="true"></span>
+                    <p class="bm-event-meta-info__location">{it.text}</p>
+                  </div>
+                </div>
+                <h2 class="bm-event-section-10-card__heading">{it.title}</h2>
+              </div>
+              <div class="bm-event-section-10-card__footer">
+                <p class="bm-event-section-10-card__text">{it.text}</p>
+                <a class="btn--white wf-cta-button" href={it.href}>{it.label}</a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-event-section-10 {
+    overflow: hidden;
+  }
+
+  .bm-event-section-10__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-event-section-10__intro {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-10__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-10__cta {
+    align-items: flex-end;
+  }
+
+  .bm-event-section-10-slider {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    left: 50%;
+  }
+
+  .bm-event-section-10-card {
+    position: relative;
+    padding: var(--space-xl) var(--section-space-s) var(--space-xl) var(--section-space-s);
+  }
+
+  .bm-event-section-10-card__image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-event-section-10-card__head {
+    row-gap: var(--flow-spacing);
+    margin: 0 0 calc(var(--section-space-xxl) * 3) 0;
+  }
+
+  .bm-event-section-10-card__meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-event-section-10-card__term-wrapper {
+    padding: calc(var(--space-xs) / 4) calc(var(--space-m) / 2) calc(var(--space-xs) / 4) calc(var(--space-m) / 2);
+    background: var(--bg-subtle);
+  }
+
+  .bm-event-meta-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+    background: var(--bg-subtle);
+    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
+  }
+
+  .bm-event-meta-info--alt {
+    padding: 0 0 0 0;
+    background: transparent;
+    width: auto;
+  }
+
+  .bm-event-section-10-card__heading {
+    font-size: calc(var(--fs-3) * 1.4);
+  }
+
+  .bm-event-section-10-card__footer {
+    row-gap: var(--flow-spacing);
+  }
+}
+</style>

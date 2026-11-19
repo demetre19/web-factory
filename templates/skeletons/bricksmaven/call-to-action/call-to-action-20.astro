@@ -1,0 +1,92 @@
+---
+/**
+ * bm-call-to-action-20 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-20.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-20__container">
+    <div class="bm-cta-20__content">
+      <h2 class="bm-cta-20__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
+      <p class="bm-cta-20__text">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div class="bm-cta-20__footer">
+        <h2 class="bm-cta-20__footer-heading">Or shoot us a message</h2>
+        <div class="bm-cta-20-list list--none">
+          <div class="bm-cta-20-item">
+            <a class="bm-cta-20-item__link" href="#">+000 123 456 789</a>
+          </div>
+          <div class="bm-cta-20-item">
+            <a class="bm-cta-20-item__link" href="#">info@clienturl.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-cta-20__media">
+      <figure class="bm-cta-20__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-20__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    padding: var(--space-l) var(--space-xl) var(--space-l) var(--space-xl);
+    background: var(--bg-subtle);
+  }
+
+  .bm-cta-20__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-20__footer {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-cta-20__footer-heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-cta-20-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-cta-20__media {
+    position: relative;
+    justify-content: flex-end;
+  }
+
+  .bm-cta-20__image {
+    position: absolute;
+    object-fit: cover;
+    height: calc(100% + (var(--space-l) * 2));
+    width: 100%;
+  }
+}
+</style>

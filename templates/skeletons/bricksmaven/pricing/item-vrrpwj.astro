@@ -1,0 +1,81 @@
+---
+/**
+ * bm-item-vrrpwj — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-vrrpwj.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gap--l pricing-8-container">
+    <div class="width--l self--center flex--col center--all gap--xs pricing-8-heading">
+      <p class="text--primary pricing-8-heading__tag">Pricing tagline</p>
+      <h2 class="pricing-8-heading__title">Get access to the Alpha library today!</h2>
+      <p class="pricing-8-heading__desc">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <div class="pricing-8-heading__cta flex--row gap--xs align-items--center">
+        <a class="pricing-8-heading__cta--primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="pricing-8-heading__cta--outline btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="grid--3 grid--m-1 gap--m pricing-8-content">
+      <div class="center--all gap--xs pricing-8-box pad--m">
+        <span class="text--primary pricing-8-box__icon" data-icon="lucide" aria-hidden="true"></span>
+        <p class="text--700 text--shade-dark pricing-8-box__type">Curious</p>
+        <p class="pricing-8-box__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="text--700 text--xxl pricing-8-box__price">$0</p>
+        <a class="btn--primary btn--outline pricing-8-box__cta" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="center--all gap--xs pricing-8-box pad--m box-shadow--m">
+        <span class="text--primary pricing-8-box__icon" data-icon="lucide" aria-hidden="true"></span>
+        <p class="text--700 text--shade-dark pricing-8-box__type">Full access</p>
+        <p class="pricing-8-box__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="text--700 text--xxl pricing-8-box__price">$99/mo</p>
+        <a class="btn--primary pricing-8-box__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="center--all gap--xs pricing-8-box pad--m">
+        <span class="text--primary pricing-8-box__icon" data-icon="lucide" aria-hidden="true"></span>
+        <p class="text--700 text--shade-dark pricing-8-box__type">LTD Full access</p>
+        <p class="pricing-8-box__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="text--700 text--xxl pricing-8-box__price">$129/once</p>
+        <a class="btn--primary btn--outline pricing-8-box__cta" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  /* bm-custom */
+  .pricing-8-box__price span {
+  	font-size: var(--fs-2);
+  }
+}
+</style>

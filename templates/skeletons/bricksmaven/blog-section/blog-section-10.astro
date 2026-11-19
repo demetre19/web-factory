@@ -1,0 +1,148 @@
+---
+/**
+ * bm-blog-section-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-10-container">
+    <div class="blog-section-10-wrapper">
+      <div class="blog-section-10-head">
+        <p class="accent-h">Latest</p>
+        <h2 class="blog-section-10-head__title">Maven talk</h2>
+        <p class="blog-section-10-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut no</p>
+        <a class="blog-section-10-head__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="blog-section-10-body list--none">
+        <div class="blog-section-10-card">
+          <div class="blog-section-10-card__media">
+            <figure class="blog-section-10-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <p class="blog-section-10-card__term">{post_terms_category}</p>
+          </div>
+          <div class="blog-section-10-card__meta">
+            <div class="blog-section-10-card__author">
+              <figure class="blog-section-10-card__author-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <p class="blog-section-10-card__name">{author_name}</p>
+              <p class="blog-section-10-card__date">{post_date}</p>
+            </div>
+            <h2 class="blog-section-10-card__title">{post_title}</h2>
+            <div class="blog-section-10-card__excerpt"></div>
+            <p class="blog-section-10-card__read">Read the full story</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-10-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .blog-section-10-head {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-section-10-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-10-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .blog-section-10-card__media {
+    height: 28rem;
+    position: relative;
+    align-items: flex-end;
+    display: flex;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .blog-section-10-card__thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .blog-section-10-card__term {
+    padding: .4rem .8rem .4rem .8rem;
+    z-index: 10;
+    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
+  }
+
+  .blog-section-10-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-10-card__author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--space-xs);
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-10-card__author-image {
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .blog-section-10-card__name {
+    font-weight: 700;
+  }
+
+  /* bm-custom */
+  .blog-section-10-card__thumb {
+  	aspect-ratio: 1/1;
+  }
+
+  /* bm-custom */
+  .blog-section-10-card__term a {
+  	color: var(--bg-canvas);
+    font-weight: 700;
+  }
+}
+</style>

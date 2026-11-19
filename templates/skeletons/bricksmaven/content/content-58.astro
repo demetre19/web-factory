@@ -1,0 +1,141 @@
+---
+/**
+ * bm-content-58 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-58.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-58__container">
+    <div class="bm-content-58__top">
+      <h2 class="bm-content-58__heading">Long headline to turn your visitors into customers</h2>
+      <p class="accent-h">Accent heading</p>
+    </div>
+    <div class="bm-content-58__media">
+      <figure class="bm-content-58__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-content-58__content-wrapper">
+      <div class="bm-content-58__column">
+        <h2 class="bm-content-58__column-heading">Stay connected</h2>
+        <div class="bm-content-58__contact">
+          <div class="bm-content-58-list list--none">
+            <div class="bm-content-58-item">
+              <p class="bm-content-58-item__text">For general inquiries</p>
+              <a class="bm-content-58-item__link" href="#">info@bricksmaven.com</a>
+            </div>
+            <div class="bm-content-58-item">
+              <p class="bm-content-58-item__text">For sponsorships</p>
+              <a class="bm-content-58-item__link" href="#">info@bricksmaven.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="bm-content-58__social">
+          <p class="bm-content-58__column-text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+          <div class="bm-social-share list--none bm-social-share--left">
+            {items.map((it) => (
+              <div class="bm-social-share__icon-wrapper">
+                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="bm-content-58__content">
+        <h2 class="bm-content-58__column-heading">Paragraph headline to grab the readers attention. This headline can be as short or as long as needed.</h2>
+        <p class="bm-content-58__column-text bm-content-58__columns">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-58__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-58__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1 solid var(--bg-subtle);
+  }
+
+  .bm-content-58__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-content-58__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-content-58__content-wrapper {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .bm-content-58__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-58__contact {
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1 solid var(--color-line-default);
+  }
+
+  .bm-content-58-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-58-item__text {
+    font-weight: 700;
+  }
+
+  .bm-content-58__social {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-content-58__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  /* bm-custom */
+  @media (min-width:768px) {
+  
+  .bm-content-58__columns {
+    columns: 2;
+  }
+    
+  }
+}
+</style>

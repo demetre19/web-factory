@@ -1,0 +1,144 @@
+---
+/**
+ * bm-blog-archive-18 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-18.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-18-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="blog-archive-18-archive-list list--none">
+      <div class="blog-archive-18-archive-card">
+        <div class="blog-archive-18-archive-card__content">
+          <div class="blog-archive-18-archive-card__post-title"></div>
+          <div class="blog-archive-18-archive-card__meta-data">
+            <p class="blog-archive-18-archive-card__author-name">Written by {author_name}</p>
+          </div>
+          <div class="blog-archive-18-archive-card__excerpt"></div>
+          <a class="btn--primary blog-archive-18-archive-card__btn wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+        <div class="blog-archive-18-archive-card__media">
+          <figure class="blog-archive-18-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="blog-archive-18-archive-card__catgeory-date">
+            <p class="blog-archive-18-archive-card__terms">{post_terms_category}</p>
+            <p class="blog-archive-18-archive-card__date">{post_date}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blog-archive-pagination"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-18-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-archive-18-archive-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .blog-archive-18-archive-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .blog-archive-18-archive-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    height: 100%;
+  }
+
+  .blog-archive-18-archive-card__meta-data {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+  }
+
+  .blog-archive-18-archive-card__author-name {
+    font-size: var(--fs-0);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-archive-18-archive-card__media {
+    position: relative;
+  }
+
+  .blog-archive-18-archive-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .blog-archive-18-archive-card__catgeory-date {
+    position: absolute;
+    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
+    padding: .8rem var(--space-xs) .8rem var(--space-xs);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 1rem;
+    top: var(--space-xs);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    font-size: var(--fs-0);
+    left: var(--space-xs);
+  }
+
+  .blog-archive-18-archive-card__terms {
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    padding: .4rem .8rem .4rem .8rem;
+  }
+
+  .blog-archive-pagination {
+    margin: var(--space-xl) 0 0 0;
+  }
+
+  /* bm-custom */
+  .blog-archive-18-archive-card__image {
+  	aspect-ratio: 1/1;
+  }
+}
+</style>

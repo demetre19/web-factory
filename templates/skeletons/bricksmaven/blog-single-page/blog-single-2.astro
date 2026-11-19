@@ -1,0 +1,176 @@
+---
+/**
+ * bm-blog-single-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-single-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-single-2-container">
+    <div class="blog-single-2-head">
+      <div class="blog-single-2__title"></div>
+      <div class="blog-single-2__meta">
+        <div class="blog-single-2__author">
+          <figure class="blog-single-2__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="align-items--start flex--col blog-single-2__author-data">
+            <p class="blog-single-2__name">{author_name}</p>
+            <p class="blog-single-2__position">Author Position</p>
+          </div>
+        </div>
+        <div class="flex--row align-items--center gap--xs">
+          <p class="blog-single-2__term">{post_terms_category}</p>
+          <p class="blog-single-2__date">{post_date}</p>
+        </div>
+      </div>
+      <p class="blog-single-2__subtitle">This is a static text. Maybe you want to add a tagline or short message here?</p>
+      <div class="blog-single-2__media">
+        <figure class="blog-single-2__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="blog-single-2__body">
+      <div class="text--left width--xl blog-single-2__body-content"></div>
+    </div>
+    <div class="blog-single-2-footer">
+      <div class="blog-single-2-footer__meta">
+        <p class="blog-single-2-footer__tags">{post_terms_post_tag}</p>
+        <div class="blog-single-2-footer__share">
+          <div class="blog-single-2-footer__share-item"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-single-2 {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  }
+
+  .blog-single-2-container {
+    row-gap: var(--flow-spacing);
+    text-align: center;
+    align-items: center;
+  }
+
+  .blog-single-2-head {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-single-2__meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    text-align: center;
+  }
+
+  .blog-single-2__author {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+    padding: 0 var(--space-m) 0 0;
+    border-right: .1rem solid var(--bg-subtle);
+  }
+
+  .blog-single-2__photo {
+    width: 4.4rem;
+    height: 4.4rem;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .blog-single-2__name {
+    font-weight: 700;
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__position {
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__term {
+    padding: .4rem .8rem .4rem .8rem;
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__date {
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__featured-image {
+    height: 60rem;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .blog-single-2-footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) 0 0 0;
+    border-top: .1rem solid var(--bg-subtle);
+  }
+
+  .blog-single-2-footer__meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  /* bm-custom */
+  .blog-single-2__term a {
+  	color: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .blog-single-2__body-content h1,
+  .blog-single-2__body-content h2,
+  .blog-single-2__body-content h3,
+  .blog-single-2__body-content h4,
+  .blog-single-2__body-content h5,
+  .blog-single-2__body-content h6,
+  .blog-single-2__body-content p {
+  	max-width: 100%; 
+  }
+
+  /* bm-custom */
+  .blog-single-2-footer__share-item {
+  	gap: .5rem;
+  }
+  .blog-single-2-footer__share-item li a {
+  	background-color: color-mix(in srgb, var(--bg-subtle) 60%, transparent);
+    border-radius: 0;
+    color: var(--bg-subtle);
+    width: 4rem;
+    height: 4rem;
+  }
+}
+</style>

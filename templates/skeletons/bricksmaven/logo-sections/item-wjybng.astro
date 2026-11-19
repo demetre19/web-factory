@@ -1,0 +1,70 @@
+---
+/**
+ * bm-item-wjybng — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-wjybng.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="logo-6-container gap--xxl">
+    <div class="width--full center--all gap--s logo-6-row">
+      <h2 class="logo-6-title text--white">Tired of building from scratch? Get Bricksmaven today!</h2>
+      <p class="logo-6-desc width--l text--white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue.</p>
+      <div class="logo-6-cta flex--row align-items--center gap--s">
+        <a class="logo-6-cta__primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="logo-6-cta__outline btn--white btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="width--full logo-6-list bg--white">
+      <div class="logo-6-list-item"></div>
+    </div>
+  </div>
+  <figure class="logo-6-bg object-fit--cover"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .logo-6-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+  }
+
+  /* bm-custom */
+  .logo-6-list-item li div {
+  background-size: contain!important;
+  }
+}
+</style>

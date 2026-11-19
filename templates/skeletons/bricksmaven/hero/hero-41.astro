@@ -1,0 +1,108 @@
+---
+/**
+ * bm-hero-41 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-41.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-41-container">
+    <div class="hero-41__content">
+      <div class="intro">
+        <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Accent heading</p>
+      </div>
+    </div>
+    <div class="hero-41__media">
+      <figure class="hero-41__image-left"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="hero-41__image-right"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="hero-41__overlay"></div>
+  <div class="hide-code-ct"></div>
+  <div class="hide-code-ct"></div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-41 {
+    position: relative;
+    height: 78vh;
+    justify-content: center;
+  }
+
+  .hero-41-container {
+    align-items: center;
+  }
+
+  .hero-41__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hero-41__media {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .hero-41__image-left {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .hero-41__image-right {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .hero-41__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  /* bm-custom */
+  .hide-code-ct {
+  	display: none; 
+  }
+}
+</style>

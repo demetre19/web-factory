@@ -1,0 +1,189 @@
+---
+/**
+ * bm-blog-archive-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-15-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="blog-archive-15-archive-list list--none">
+      <div class="blog-archive-15-archive-card">
+        <div class="blog-archive-15-archive-card__content">
+          <div class="blog-archive-15-archive-card__post-title"></div>
+          <div class="blog-archive-15-archive-card__meta">
+            <p class="blog-archive-15-archive-card__author">Written by {author_name}</p>
+          </div>
+          <div class="blog-archive-15-archive-card__excerpt"></div>
+          <a class="btn--primary blog-archive-15-archive-card__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+        <div class="blog-archive-15-archive-card__media">
+          <figure class="blog-archive-15-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-15-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-archive-15-archive-list {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
+
+  .blog-archive-15-archive-card {
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .blog-archive-15-archive-card__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    height: 100%;
+  }
+
+  .blog-archive-15-archive-card__post-title {
+    font-size: var(--fs-2);
+  }
+
+  .blog-archive-15-archive-card__meta {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-xs);
+    font-size: var(--fs-0);
+  }
+
+  .blog-archive-15-archive-card__excerpt {
+    display: none;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-archive-15-archive-card__cta {
+    margin: auto 0 0 0;
+  }
+
+  .blog-archive-15-archive-card__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .blog-archive-15-archive-card:nth-child(odd) {
+  	grid-column: 10/-1;
+  }
+  
+  .blog-archive-15-archive-card:first-child {
+    grid-column: 1/4;
+    grid-row: 1;
+  }
+  
+  .blog-archive-15-archive-card .blog-archive-15-archive-card__image {
+  	aspect-ratio: 16/9;
+    height: 100%;
+  }
+  
+  .blog-archive-15-archive-card:nth-child(2) {
+  	grid-column: 4/10;
+    grid-row: 1/-1;
+  }
+  
+  .blog-archive-15-archive-card:nth-child(2) .blog-archive-15-archive-card__excerpt {
+  	display:block;
+  }
+  
+  .blog-archive-15-archive-card:nth-child(2) .blog-archive-15-archive-card__post-title {
+  	font-size: var(--fs-3);
+  }
+  
+  .blog-archive-15-archive-card:nth-child(2) .blog-archive-15-archive-card__image {
+  	aspect-ratio: 9/16;
+    height: 100%;
+  }
+  
+  .blog-archive-15-archive-card:nth-child(3) {
+  	grid-column: 10/-1;
+    grid-row: 1;
+  }
+  
+  @media (max-width:767px) {
+  
+      .blog-archive-15-archive-card:nth-child(odd) {
+      grid-column: span 1;
+    }
+  
+    .blog-archive-15-archive-card:first-child, .blog-archive-15-archive-card:nth-child(3) {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+  
+    .blog-archive-15-archive-card .blog-archive-15-archive-card__image {
+      aspect-ratio: 6/4;
+      height: 100%;
+    }
+  
+    .blog-archive-15-archive-card:nth-child(2) {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+  
+    .blog-archive-15-archive-card:nth-child(2) .blog-archive-15-archive-card__post-title {
+      font-size: var(--fs-2);
+    }
+  
+    .blog-archive-15-archive-card:nth-child(2) .blog-archive-15-archive-card__image {
+      aspect-ratio: 6/4;
+      height: 100%;
+    }
+  
+  
+    
+  }
+}
+</style>

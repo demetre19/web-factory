@@ -1,0 +1,127 @@
+---
+/**
+ * bm-hero-34 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-34.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-34-container">
+    <div class="hero-34__content">
+      <div class="intro intro--left">
+        <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Tagline</p>
+        <div class="cta-combo">
+          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          <a class="btn--link wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-34__media-wrapper">
+      <figure class="hero-34__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="hero-34-container-logo">
+    <p>Trusted by 10+ companies worldwide</p>
+    <div class="hero-34-logo-list list--none">
+      {items.map((it) => (
+        <div class="hero-34-logo-list-item">
+          <figure class="hero-34-logo-list-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-34 {
+    padding: 0 0 0 0;
+    row-gap: var(--space-l);
+    overflow: hidden;
+  }
+
+  .hero-34-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-34__content {
+    padding: 0 var(--space-l) 0 0;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-34__image {
+    object-fit: cover;
+    width: 50vw;
+  }
+
+  .hero-34-container-logo {
+    row-gap: var(--space-m);
+  }
+
+  .hero-34-logo-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: var(--space-m);
+    row-gap: var(--space-m);
+  }
+
+  .hero-34-logo-list-item__image {
+    object-fit: contain;
+  }
+}
+</style>

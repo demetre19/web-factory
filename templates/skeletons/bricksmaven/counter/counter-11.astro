@@ -1,0 +1,83 @@
+---
+/**
+ * bm-counter-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (counter-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-counter-11__container">
+    <div class="bm-counter-11__intro">
+      <h2 class="bm-counter-11__heading">Long headline to turn your visitors into customers</h2>
+      <p class="accent-h">Accent heading</p>
+      <p class="bm-counter-11__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-counter-11-list list--none">
+      {items.map((it) => (
+        <div class="bm-counter-11-card">
+          <span class="bm-counter-11-card__counter"></span>
+          <h2 class="bm-counter-11-card__heading">{it.title}</h2>
+          <p class="bm-counter-11-card__text">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-counter-11__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-counter-11__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: var(--measure);
+  }
+
+  .bm-counter-11-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+  }
+
+  .bm-counter-11-card {
+    row-gap: calc(var(--flow-spacing) / 2);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 10 solid var(--bg-subtle);
+    border-right: 1 solid var(--bg-subtle);
+    border-bottom: 1 solid var(--bg-subtle);
+    border-left: 1 solid var(--bg-subtle);
+    text-align: center;
+    align-items: center;
+  }
+
+  .bm-counter-11-card__counter {
+    font-size: calc(var(--fs-4) * 1.8);
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .bm-counter-11-card__text {
+    margin: auto 0 0 0;
+  }
+}
+</style>

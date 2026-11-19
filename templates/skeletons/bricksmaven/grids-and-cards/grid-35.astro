@@ -1,0 +1,108 @@
+---
+/**
+ * bm-grid-35 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-35.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-grid-35__container">
+    <div class="bm-grid-35__grid">
+      <div class="bm-grid-35__content">
+        <h2 class="bm-grid-35__heading">Long headline to turn your visitors into customers</h2>
+        <div class="list--none bm-grid-35-list">
+          {items.map((it) => (
+            <div class="bm-grid-35-card">
+              <h2 class="bm-grid-35-card__heading">{it.title}</h2>
+              <p class="bm-grid-35-card__text">{it.text}</p>
+              <a class="bm-grid-35-card__link" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bm-grid-35-card__media">
+        <figure class="bm-grid-35-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-grid-35__grid {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 1);
+    background: var(--bg-subtle);
+  }
+
+  .bm-grid-35__content {
+    row-gap: var(--space-s);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    justify-content: center;
+  }
+
+  .bm-grid-35-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-grid-35-card {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+  }
+
+  .bm-grid-35-card__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .bm-grid-35-card::after {
+  	content: '';
+    display: flex;
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-line-default);
+    right: calc(-1 * (var(--space-m) / 2));
+    z-index: 1;
+  }
+  
+  .bm-grid-35-card:last-child::after {
+    display: none; 
+  }
+  
+  @media (max-width:767px) {
+    
+    .bm-grid-35-card::after {
+    width: 100%;
+    height: 1px;
+    right: unset;
+    bottom: calc(-1 * (var(--space-m) / 2));
+  }
+    
+  }
+}
+</style>

@@ -1,0 +1,81 @@
+---
+/**
+ * bm-item-dwqpax — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-dwqpax.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="grid--2 logo-9-container grid--l-1 width--full">
+    <div class="flex--col logo-9-col gap--xl">
+      <div class="gap--m flex--col logo-9-heading">
+        <h2 class="logo-9-title">Tired of building from scratch? Get Bricksmaven today!</h2>
+        <p class="logo-9-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue.</p>
+        <div class="flex--row gap--s logo-9-btn">
+          <a class="logo-9-btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+      </div>
+      <div class="logo-9-list">
+        <div class="logo-9-list-item"></div>
+      </div>
+    </div>
+    <figure class="logo-9-img object-fit--cover width--full"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .logo-9-col {
+    padding: var(--space-xl) var(--space-xl) var(--section-space-xxl) var(--section-space-xxl);
+  }
+
+  .logo-9-btn--white {
+    padding: 0 0 0 0;
+  }
+
+  .logo-9-list-item {
+    border-top: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+    border-right: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+    border-bottom: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+    border-left: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+  }
+
+  .logo-9-img {
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .logo-9-list-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)!important;
+    grid-template-rows: repeat(2, 1fr);
+  }
+  
+  .logo-9-list-item li {
+    width: 21.5vw;
+    background: var(--bg-canvas);
+  }
+  
+  .logo-9-list-item li div {
+  		background-size: contain!important;
+    	transition: all .2s ease-in-out;
+  }
+}
+</style>

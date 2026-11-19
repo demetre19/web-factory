@@ -1,0 +1,176 @@
+---
+/**
+ * bm-testimonial-33 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-33.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-33-container">
+    <div class="intro intro--left">
+      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+      <p class="intro__accent-heading">Accent heading</p>
+      <div class="intro__text-cta-wrapper">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="testimonial-33-slider">
+      {items.map((it) => (
+        <div class="testimonial-33-slide">
+          <div class="testimonial-33-slide__content">
+            <div class="testimonial-33-slide__intro">
+              <h2 class="testimonial-33-slide__heading">{it.title}</h2>
+            </div>
+            <div class="testimonial-33-slide__client-data">
+              <p class="testimonial-33-slide__client-name">{it.text}</p>
+              <p class="testimonial-33-slide__title">{it.text}</p>
+            </div>
+            <div class="testimonial-33-slide__logo-wrapper">
+              <figure class="testimonial-33-slide__logo-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+          <div class="testimonial-33-slide__media">
+            <figure class="testimonial-33-slide__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-33 {
+    overflow: hidden;
+  }
+
+  .testimonial-33-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .intro__text-cta-wrapper {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .testimonial-33-slide {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .testimonial-33-slide__content {
+    row-gap: calc(var(--flow-spacing) * 1.4);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background: var(--bg-subtle);
+    padding: 0 var(--space-xl) 0 var(--space-xl);
+    justify-content: center;
+  }
+
+  .testimonial-33-slide__intro {
+    position: relative;
+  }
+
+  .testimonial-33-slide__client-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-33-slide__client-name {
+    font-weight: 700;
+  }
+
+  .testimonial-33-slide__logo-image {
+    object-fit: contain;
+  }
+
+  .testimonial-33-slide__media {
+    overflow: hidden;
+  }
+
+  .testimonial-33-slide__image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .testimonial-33-slider .splide__track {
+      overflow: visible;
+  }
+  
+  .testimonial-33-slider::before {
+  	content: "";
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    right: 100%;
+    background-color: var(--bg-canvas);
+    
+  }
+
+  /* bm-custom */
+  .testimonial-33-slide {
+  	display:grid !important;
+    align-items: stretch !important;
+    
+  }
+
+  /* bm-custom */
+  /*
+  .testimonial-33-slide__heading::before {
+  	content: '"';
+    position: absolute;
+    top: calc(var(--space-m) * -1);
+    font-size: calc(var(--fs-4) * 3);
+  	line-height: 1;
+  }
+  */
+}
+</style>

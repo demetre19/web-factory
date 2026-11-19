@@ -1,0 +1,114 @@
+---
+/**
+ * bm-counter-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (counter-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="counter-6-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Tagline</p>
+    </div>
+  </div>
+  <div class="counter-6-container">
+    <div class="counter-6-grid-ul list--none">
+      {items.map((it) => (
+        <div class="counter-6-card">
+          <span class="counter-6-card__number"></span>
+          <div class="counter-6-card__box">
+            <h2 class="counter-6-card__heading">{it.title}</h2>
+            <p class="counter-6-card__desc">{it.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .counter-6 {
+    background: color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-6-grid-ul {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .counter-6-card {
+    padding: 0 var(--space-m) 0 var(--space-m);
+    border-right: 1px solid var(--fs-0);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .counter-6-card__number {
+    font-size: calc(var(--fs-4) + 2rem);
+    line-height: .65;
+    font-weight: 700;
+  }
+
+  .counter-6-card__box {
+    display: flex;
+    row-gap: var(--space-xs);
+    flex-direction: column;
+  }
+
+  /* bm-custom */
+  .counter-6-wrap:first-child {
+  	padding-left: 0px !important;
+  }
+  
+  .counter-6-wrap:last-child {
+  	padding-right: 0px;
+    border-right: none;
+  }
+  
+  
+  @media (max-width:768px) {
+    .counter-6-wrap:last-child {
+  	border-bottom: none !important;
+    }
+  }
+
+  /* bm-custom */
+  .counter-6-card__number {
+  -webkit-text-stroke: .1rem var(--bg-canvas);
+  -webkit-text-fill-color: transparent;
+  }
+}
+</style>

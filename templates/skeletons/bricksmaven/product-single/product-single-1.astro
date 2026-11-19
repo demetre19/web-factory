@@ -1,0 +1,343 @@
+---
+/**
+ * bm-product-single-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (product-single-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div>
+    <div class="bm-woo-notice-container">
+      <div class="bm-woo-notice"></div>
+    </div>
+  </div>
+  <div class="bm-product-single-1__container">
+    <div class="bm-product-single-1__breadcrumb-wrapper">
+      <div class="bm-product-single__breadcrumb"></div>
+      <p>{do_action:before_single_product}</p>
+    </div>
+    <div class="bm-product-single-1__main">
+      <div class="bm-product-single-1__content">
+        <p>{do_action:woocommerce_single_product_summary}</p>
+        <div class="bm-product-single-1__top">
+          <div class="bm-product-single__product-title"></div>
+          <div class="bm-product-single__product-rating"></div>
+        </div>
+        <div class="bm-product-single-1__mid">
+          <div class="bm-product-single__product-price"></div>
+          <div class="bm-product-single__product-stock"></div>
+        </div>
+        <div class="bm-product-single__product-short-description"></div>
+        <div class="bm-product-single__add-to-cart--variation"></div>
+        <div class="bm-product-single__product-meta"></div>
+      </div>
+      <div class="bm-product-single-1__media">
+        <p>{do_action:woocommerce_before_single_product_summary}</p>
+        <div class="bm-product-single__product-gallery"></div>
+        <div class="bm-payment-options-wrapper-2">
+          <div class="bm-payment-options-2__text-icon">
+            <p class="bm-payment-options-2__text">Secure payment at checkout</p>
+            <span class="bm-payment-options-2__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <div class="bm-payment-options list--none">
+            {items.map((it) => (
+              <div class="bm-footer-option">
+                <figure class="bm-footer-option__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-product-single-1__product-footer">
+      <p>{do_action:woocommerce_after_single_product_summary}</p>
+      <div class="bm-product-single-1__product-tabs">
+        <div class="bm-product-single__product-tabs"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bm-product-single__related-products-container">
+    <h2 class="bm-product-single__related-products-heading">Related products</h2>
+    <div class="bm-related-products-list-1__list">
+      <div class="bm-related-products-list-1__slider">
+        <div class="bm-related-products-list-1-card">
+          <div class="bm-related-products-list-1-card__content">
+            <div class="bm-related-products-list-1-card__top">
+              <h3 class="bm-related-products-list-1-card__heading">{post_title}</h3>
+              <custom class="bm-related-products-list-1-card__price">{woo_product_price}</custom>
+            </div>
+            <div class="bm-related-products-list-1-card__add-to-cart"></div>
+          </div>
+          <div class="bm-related-products-list-1-card__media">
+            <figure class="bm-related-products-list-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-product-list-notice__wrapper">
+            <div class="bm-product-list-notice-circle__sale-badge">
+              <p class="bm-product-list-notice-circle__sale">{woo_product_on_sale}</p>
+            </div>
+            <p class="bm-product-list-1-card__new">New!</p>
+            <p class="bm-product-list-1-card__soldout">Sold Out</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>{do_action:woocommerce_after_single_product}</p>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-product-single-1 {
+    row-gap: 0;
+  }
+
+  .bm-woo-notice-container {
+    position: relative;
+  }
+
+  .bm-product-single-1__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-product-single-1__main {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-product-single-1__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-product-single-1__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-product-single-1__mid {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-product-single__product-stock {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-subtle);
+    border-top: 1 solid var(--color-line-default);
+    border-right: 1 solid var(--color-line-default);
+    border-bottom: 1 solid var(--color-line-default);
+    border-left: 1 solid var(--color-line-default);
+  }
+
+  .bm-product-single__product-meta {
+    width: 100%;
+    border-top: 1 solid var(--color-line-default);
+    padding: var(--space-m) 0 0 0;
+  }
+
+  .bm-product-single-1__media {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-payment-options-wrapper-2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-subtle);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-payment-options-2__text-icon {
+    width: auto;
+    flex-direction: row-reverse;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-payment-options-2__text {
+    font-size: var(--fs-0);
+  }
+
+  .bm-payment-options {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    flex-direction: row;
+    width: auto;
+  }
+
+  .bm-footer-option__image {
+    object-fit: contain;
+    width: 32;
+    height: 32;
+  }
+
+  .bm-product-single__related-products-container {
+    row-gap: var(--space-s);
+    margin: var(--space-s) 0 0 0;
+  }
+
+  .bm-related-products-list-1__list {
+    gap: calc( var(--space-m) / 2 );
+    row-gap: var(--space-s);
+  }
+
+  .bm-related-products-list-1-card {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-related-products-list-1-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .bm-related-products-list-1-card__top {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-related-products-list-1-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    align-self: flex-start;
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .bm-related-products-list-1-card__price {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    align-self: flex-start;
+    font-weight: 700;
+  }
+
+  .bm-related-products-list-1-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+    width: 100%;
+    height: 30rem;
+  }
+
+  .bm-product-list-notice__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--space-xs);
+    width: var(--measure);
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 4);
+    left: var(--space-xs);
+  }
+
+  .bm-product-list-notice-circle__sale-badge {
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    background: var(--primitive-state-danger);
+    display: flex;
+    align-items: center;
+  }
+
+  .bm-product-list-1-card__new {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+  }
+
+  .bm-product-list-1-card__soldout {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    position: relative;
+  }
+
+  /* bm-custom */
+  .bm-product-single__product-rating .woocommerce-review-link {
+    color: var(--text-secondary);
+    font-size: var(--fs-0);
+  }
+  
+  .bm-product-single__product-rating .woocommerce-product-rating {
+    gap: calc(var(--flow-spacing) / 4);
+  }
+
+  /* bm-custom */
+  .bm-product-single__add-to-cart--variation .woocommerce-variation-add-to-cart {
+    
+    display: flex;
+    gap: var(--flow-spacing);
+  }
+  
+  .bm-product-single__add-to-cart--variation form.cart .quantity+button, form.woocommerce-cart-form .quantity+button {
+      margin-top: 0px;
+    width: 100%;
+  }
+  
+  .bm-product-single__add-to-cart--variation form.cart {
+    
+    display: flex;
+    gap: var(--flow-spacing);
+  }
+  
+  .bm-product-single__add-to-cart--variation form.variations_form {
+    
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* bm-custom */
+  .bm-related-products-list-1__slider .splide__pagination {
+  		margin: calc(var(--space-xl) * -1) auto;
+  }
+  
+  .bm-related-products-list-1__slider .splide__arrow--prev {
+    	right: calc(var(--space-xl) / 1.02);
+    	left: unset;
+      top: calc(-1 * (var(--section-space-xxl) / 1.17)) !important;
+  }
+  .bm-related-products-list-1__slider .splide__arrow--next {
+    	right: 0px;
+    	left: unset;
+    top: calc(-1 * (var(--section-space-xxl) / 1.17)) !important;
+  }
+
+  /* bm-custom */
+  .bm-related-products-list-1-card {
+    justify-content: space-between !important;
+    
+  }
+
+  /* bm-custom */
+  .bm-related-products-list-1-card__price del .amount {
+    	color: var(--bg-subtle);
+  }
+  .bm-related-products-list-1-card__price ins {
+    	text-decoration: none;
+  }
+  .bm-related-products-list-1-card__price ins .amount {
+    	text-decoration: none;
+    	border-bottom: 0;
+  }
+}
+</style>

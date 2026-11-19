@@ -1,0 +1,78 @@
+---
+/**
+ * bm-header-page-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-page-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="header-page-8-container">
+    <div class="header-page-8__content">
+      <h1 class="header-page__title">Short heading here</h1>
+      <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="header-page-8__media">
+      <figure class="header-page-8__image--2"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="header-page-8__image--1"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .header-page-8 {
+    padding: 0 0 0 0;
+    background: var(--bg-subtle);
+  }
+
+  .header-page-8-container {
+    display: grid;
+    gap: var(--section-space-xxl);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .header-page-8__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--space-s);
+  }
+
+  .header-page-8__media {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-page-8__image--2 {
+    height: 40rem;
+    margin: 0 -7.8rem 0 0;
+    width: 29.6rem;
+    object-fit: cover;
+    z-index: 10;
+  }
+
+  .header-page-8__image--1 {
+    height: 60rem;
+    margin: 0 0 -8rem 0;
+    width: 42rem;
+    object-fit: cover;
+  }
+}
+</style>

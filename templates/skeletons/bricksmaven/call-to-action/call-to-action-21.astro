@@ -1,0 +1,94 @@
+---
+/**
+ * bm-call-to-action-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-21__container">
+    <div class="bm-cta-21-card">
+      <div class="bm-cta-21-card__left">
+        <div class="bm-team-list list--none">
+          {items.map((it) => (
+            <div class="bm-team-media">
+              <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+        <span class="bm-cta-21-card__counter"></span>
+        <p class="bm-cta-21-card__text">We are creating a UI patterns community, be part of it</p>
+      </div>
+      <div class="bm-cta-21-card__right">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-21-card {
+    background: var(--bg-subtle);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-cta-21-card__left {
+    row-gap: calc(var(--flow-spacing) / 1.4);
+  }
+
+  .bm-team-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-team-media__image {
+    object-fit: cover;
+    width: 53;
+    height: 52;
+    border-top: .4rem solid var(--bg-canvas);
+    border-right: .4rem solid var(--bg-canvas);
+    border-bottom: .4rem solid var(--bg-canvas);
+    border-left: .4rem solid var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .bm-cta-21-card__right {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  /* bm-custom */
+  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
+  	margin-inline-start: -20px;
+  }
+  
+  .bm-team-media:first-child {
+  	margin-inline-start: 0px;
+  }
+}
+</style>

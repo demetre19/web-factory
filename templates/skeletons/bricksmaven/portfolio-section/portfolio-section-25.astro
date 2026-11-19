@@ -1,0 +1,202 @@
+---
+/**
+ * bm-portfolio-section-25 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-section-25.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-section-25__container">
+    <div class="intro intro--split">
+      <div class="intro__left-column">
+        <h2 class="intro__heading">Recent work we did for awesome brands</h2>
+        <p class="bm-accent-heading">Work</p>
+      </div>
+      <div class="intro__right-column">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--white" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="bm-portfolio-section-25-list">
+      {items.map((it) => (
+        <div class="bm-portfolio-section-25-card">
+          <div class="bm-portfolio-section-25-card__content">
+            <div class="bm-portfolio-section-25-card__intro">
+              <h2 class="bm-portfolio-section-25-card__heading clickable-parent">{it.title}</h2>
+              <div class="bm-portfolio-section-25-card-terms-list">
+                <div class="bm-portfolio-section-25-card-terms-item">
+                  <p class="bm-portfolio-section-25-card-terms-item__label">{it.text}</p>
+                </div>
+              </div>
+            </div>
+            <p class="bm-portfolio-section-25-card__results">{it.text}</p>
+          </div>
+          <div class="bm-portfolio-section-25-card__media">
+            <figure class="bm-portfolio-section-25-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-section-25__container {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--fs-0);
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    text-align: left;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-25-list {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-section-25-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--fs-0);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+    position: relative;
+  }
+
+  .bm-portfolio-section-25-card__content {
+    height: 100%;
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-25-card__intro {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-portfolio-section-25-card-terms-list {
+    display: flex;
+    padding: 0 0 0 0;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-portfolio-section-25-card-terms-item__label {
+    font-size: var(--fs-0);
+  }
+
+  .bm-portfolio-section-25-card__results {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .bm-portfolio-section-25-card__media {
+    display: flex;
+    height: 100%;
+  }
+
+  .bm-portfolio-section-25-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-25__container .intro__heading {
+    color: var(--fs-0);
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+  
+  .bm-portfolio-section-25-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-portfolio-section-25-card:hover {
+    border-color: var(--fs-0);
+  }
+  
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-25-card-terms-list {
+    list-style:none;
+  } 
+  
+  .bm-portfolio-section-25-card-terms-list li {
+    display:flex;
+    align-items: center;
+    gap: calc(var(--space-xs) / 2);
+  }
+  
+  .bm-portfolio-section-25-card-terms-list li:not(:first-child)::before {
+    content:'+';
+    color: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-25-card__results {
+    display:flex;
+    gap: calc(var(--space-xs) / 2);
+    align-items: baseline;
+  }
+  
+  .bm-portfolio-section-25-card__results::after {
+    content:attr(data-after);
+    font-size: var(--fs-0);
+    font-weight: 400;
+  }
+}
+</style>

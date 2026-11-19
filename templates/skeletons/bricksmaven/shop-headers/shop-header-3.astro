@@ -1,0 +1,184 @@
+---
+/**
+ * bm-shop-header-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (shop-header-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-shop-header-3__top-container">
+    <div class="bm-shop-header-3__brand">
+      <img class="bm-shop-header-3__logo"></img>
+    </div>
+    <div class="bm-shop-header-3__search-wrapper">
+      <div class="bm-shop-header-3__search"></div>
+    </div>
+    <div class="bm-shop-header-3__end">
+      <div class="bm-megamenu-7">
+        <div class="bm-megamenu-7__nav-items">
+          <div class="bm-megamenu-7__dropdown">
+            <div class="bm-megamenu-7__content">
+              <div class="list--none bm-megamenu-7__column-wrapper">
+                {items.map((it) => (
+                  <div class="bm-megamenu-7__column">
+                    <h2 class="bm-megamenu-group-heading">{it.title}</h2>
+                    <div class="list--none bm-megamenu-7__card-wrapper">
+                      {(it.items || []).map((it2) => (
+                        <div class="bm-megamenu-card-link-5">
+                          <a class="bm-megamenu-card-link-5__text" href="#">{it2.text}</a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {items.map((it) => (
+            <a class="bm-megamenu-7__nav-link" href="#">{it.text}</a>
+          ))}
+          <div class="bm-megamenu-7__close"></div>
+        </div>
+        <div class="bm-megamenu-7__open"></div>
+      </div>
+      <div class="bm-shop-header-mini-cart"></div>
+    </div>
+  </div>
+  <div class="bm-shop-header-3__footer-container">
+    <div class="bm-shop-header-3__top-menu">
+      <div class="bm-shop-header-3__nav-items">
+        {items.map((it) => (
+          <a class="bm-shop-header-3__nav-link" href="#">{it.text}</a>
+        ))}
+        <div class="bm-shop-header-3__close"></div>
+      </div>
+      <div class="bm-shop-header-3__close"></div>
+    </div>
+    <p class="bm-shop-header-3__nav-label">View categories</p>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-shop-header-3 {
+    padding: var(--space-s) 0 var(--space-s) 0;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-shop-header-3__top-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-shop-header-3__search-wrapper {
+    display: flex;
+    width: 100%;
+  }
+
+  .bm-shop-header-3__search {
+    width: 100%;
+  }
+
+  .bm-shop-header-3__end {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .bm-megamenu-7__content {
+    display: grid;
+  }
+
+  .bm-megamenu-7__column-wrapper {
+    width: var(--content-width);
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-megamenu-7__column {
+    row-gap: calc(var(--flow-spacing) / 2);
+    height: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-megamenu-group-heading {
+    text-transform: uppercase;
+    font-size: var(--fs-1);
+  }
+
+  .bm-megamenu-7__card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-megamenu-card-link-5 {
+    align-items: center;
+  }
+
+  .bm-shop-header-3__footer-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-shop-header-3__nav-items {
+    justify-content: space-between;
+  }
+
+  .bm-shop-header-3__nav-link {
+    font-size: var(--fs-0);
+  }
+
+  .bm-shop-header-3__nav-label {
+    font-size: var(--fs-0);
+    display: none;
+  }
+
+  /* bm-custom */
+  @media (max-width:1336px) {
+  .bm-shop-header-3__search-wrapper {
+    display: none;
+  }
+  
+  }
+
+  /* bm-custom */
+  .bricks-search-form input[type=search] {
+    width: 100% !important;
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+    .bm-shop-header-3__top-menu {
+    width: 100%;
+  }
+  }
+}
+</style>

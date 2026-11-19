@@ -1,0 +1,206 @@
+---
+/**
+ * bm-feature-39 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-39.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-39__container">
+    <div class="intro intro--split">
+      <div class="intro__left-column">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__accent-heading">Tagline</p>
+      </div>
+      <div class="intro__right-column">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="feature-39__grid-wrapper">
+      <div class="feature-39-grid-ul list--none">
+        {items.map((it) => (
+          <div class="feature-39-card">
+            <div class="feature-39-card__content">
+              <h2 class="feature-39-card__heading">{it.title}</h2>
+              <p class="feature-39-card__text">{it.text}</p>
+            </div>
+            <div class="feature-39-card__icon-wrapper">
+              <span class="feature-39-card__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="feature-39-card__media">
+        <figure class="feature-39-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-39__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--split {
+    display: grid;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .feature-39__grid-wrapper {
+    position: relative;
+  }
+
+  .feature-39-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+    position: relative;
+    z-index: 1;
+  }
+
+  .feature-39-card {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .feature-39-card__content {
+    row-gap: var(--flow-spacing);
+    background: var(--bg-subtle);
+    padding: var(--space-m) var(--space-xl) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .feature-39-card__icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-39-card__icon {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .feature-39-card__media {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64rem;
+    height: 64rem;
+  }
+
+  .feature-39-card__image {
+    object-fit: cover;
+    width: 100%;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  .feature-39-card:nth-child(odd) {
+  	grid-column:1/5;
+  }
+  
+  .feature-39-card:nth-child(even) {
+  	grid-column:9/-1;
+  }
+  
+  .feature-39-card:nth-child(even) .feature-39-card__content {
+  	padding-inline-end: var(--space-m);
+    padding-inline-start: var(--space-xl);
+    grid-column: 3/-1;
+  }
+  
+  .feature-39-card:nth-child(even) .feature-39-card__icon-wrapper {
+  	grid-column: 1/4;
+  }
+  
+  @media (max-width:991px) {
+  	
+    .feature-39-card:nth-child(odd) {
+  	grid-column:1/7;
+    }
+  
+    .feature-39-card:nth-child(even) {
+      grid-column:7/-1;
+    }
+  
+    
+  }
+  
+  @media (max-width:767px) {
+  	
+    .feature-39-card:nth-child(odd) {
+  		grid-column:span 12;
+    }
+    
+     .feature-39-card:nth-child(odd) .feature-39-card__content {
+      padding-inline-end: calc(var(--section-space-xxl) * 1.8);
+    	grid-column: 1/12;
+    }
+  
+    .feature-39-card:nth-child(odd) .feature-39-card__icon-wrapper {
+      grid-column: 9/-1;
+    }
+  
+    .feature-39-card:nth-child(even) {
+      grid-column:span 12;
+    }
+  	
+    .feature-39-card:nth-child(even) .feature-39-card__content {
+      padding-inline-end: calc(var(--section-space-xxl) * 1.8);
+    	padding-inline-start: var(--space-m);
+    	grid-column: 1/12;
+    }
+  
+    .feature-39-card:nth-child(even) .feature-39-card__icon-wrapper {
+      grid-column: 9/-1;
+    }
+    
+  }
+}
+</style>

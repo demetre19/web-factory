@@ -1,0 +1,95 @@
+---
+/**
+ * bm-team-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (team-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="team-1-container">
+    <div class="team-1-intro">
+      <h2 class="team-1-intro__title">Meet our leadership</h2>
+      <p class="team-1-intro__desc">Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper suspendisse. Vivamus fringilla.</p>
+    </div>
+    <div class="team-1-list list--none">
+      {items.map((it) => (
+        <div class="team-1-profile">
+          <div class="team-1-profile__detail">
+            <h2 class="team-1-profile__name">{it.title}</h2>
+            <p class="team-1-profile__title">{it.text}</p>
+          </div>
+          <div class="team-1-profile__image-wrapper">
+            <figure class="team-1-profile__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .team-1-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-1-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .team-1-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .team-1-profile {
+    display: flex;
+    column-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .team-1-profile__detail {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .team-1-profile__name {
+    font-size: var(--fs-1);
+  }
+
+  .team-1-profile__image {
+    width: 10rem;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  /* bm-custom */
+  .team-1-profile__image {
+  	aspect-ratio:1/1;
+  }
+}
+</style>

@@ -1,0 +1,91 @@
+---
+/**
+ * bm-hero-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-16-container">
+    <div class="hero-16-content">
+      <p class="hero-16-content__tagline">Tagline</p>
+      <h1 class="hero-16-content__title">Long headline to turn your visitors into customers</h1>
+      <p class="hero-16-content__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="hero-16-content__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <figure class="hero-16-content__background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="hero-16-media">
+      <figure class="hero-16-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-16-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .hero-16-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-16-content__tagline {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .hero-16-content__title {
+    margin: 0 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-16-content__background {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  .hero-16-media__img {
+    object-fit: cover;
+    height: 100%;
+  }
+}
+</style>

@@ -1,0 +1,131 @@
+---
+/**
+ * bm-hero-75 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-75.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-75__container">
+    <div class="bm-hero-75__top">
+      <div class="bm-hero-75__content">
+        <h1 class="bm-hero-75__heading">Long headline to turn your visitors into customers</h1>
+        <p class="bm-accent-heading">Accent heading</p>
+        <p class="bm-hero-75__text">Hello, I'm Ryan, a creative and forward-thinking videographer with more than 10 years of experience. My passion for visual storytelling and cutting-edge technology has shaped my journey, blending art and innovation to capture compelling visuals</p>
+      </div>
+      <div class="bm-hero-75__cta">
+        <a class="bm-hero-75__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="bm-hero-75-media list--none">
+      {items.map((it) => (
+        <div class="bm-hero-75-image-wrapper">
+          <figure class="bm-hero-75-image-wrapper__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div class="bm-hero-75-logo-ul list--none">
+      {items.map((it) => (
+        <div class="bm-hero-75-logo-item">
+          <figure class="bm-hero-75-logo-item__brand"><img src="/media/placeholder.svg" alt="Brand" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-75__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-75__top {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-hero-75__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-75__heading {
+    font-size: calc(var(--fs-4) * 1.5);
+  }
+
+  .bm-hero-75__text {
+    font-size: var(--fs-2);
+  }
+
+  .bm-hero-75__cta {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .bm-hero-75-media {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .bm-hero-75-image-wrapper__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-hero-75-logo-ul {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-75-logo-item {
+    justify-content: center;
+  }
+
+  .bm-hero-75-logo-item__brand {
+    object-fit: contain;
+  }
+
+  /* bm-custom */
+  .bm-hero-75-image-wrapper {
+    --image-radius: calc(var(--r-card) * 8);
+  }
+  
+  .bm-hero-75-image-wrapper:first-child .bm-hero-75-image-wrapper__image {
+    border-bottom-left-radius: var(--acss-image-radius);
+  }
+  
+  .bm-hero-75-image-wrapper:last-child .bm-hero-75-image-wrapper__image {
+    border-top-right-radius: var(--acss-image-radius);
+  }
+}
+</style>

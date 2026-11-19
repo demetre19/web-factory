@@ -1,0 +1,89 @@
+---
+/**
+ * bm-hero-51 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-51.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-51__container">
+    <div class="hero-51__media-left">
+      <figure class="hero-51__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="hero-51__content">
+      <h1 class="hero-51__heading">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</h1>
+      <p class="hero-51__accent-heading">Accent Heading</p>
+      <p class="hero-51__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <a class="btn--black hero-51__button wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-51__media-right">
+      <figure class="hero-51__image--alt"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-51 {
+    overflow: hidden;
+  }
+
+  .hero-51__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 12);
+  }
+
+  .hero-51__media-left {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  .hero-51__image {
+    width: 50vw;
+    object-fit: cover;
+    height: 72rem;
+  }
+
+  .hero-51__content {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    row-gap: var(--flow-spacing);
+    background: var(--bg-canvas);
+    text-align: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-51__accent-heading {
+    font-size: var(--fs-0);
+  }
+
+  .hero-51__media-right {
+    margin: 0 0 calc(-1 * var(--section-space-xxl)) 0;
+  }
+
+  .hero-51__image--alt {
+    width: 50vw;
+    object-fit: cover;
+    height: 72rem;
+  }
+}
+</style>

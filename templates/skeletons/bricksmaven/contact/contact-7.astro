@@ -1,0 +1,120 @@
+---
+/**
+ * bm-contact-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-7-container gap--l">
+    <div class="contact-content__intro">
+      <h2 class="contact-content__heading">Contact Us Today!</h2>
+      <p class="contact-content__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="contact-7-content">
+      <div class="contact-form">
+        <h2 class="contact-form__heading">Do you have a question for us? Don’t hesitate and send us a mail</h2>
+        <form class="contact-form__fields" novalidate>
+        </form>
+      </div>
+      <div class="contact-aside">
+        <h2 class="contact-aside__heading">Contact</h2>
+        <div class="contact-aside-list list--none">
+          {items.map((it) => (
+            <div class="contact-aside-list-item">
+              <span class="contact-aside-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              <p class="contact-aside-list-item__text">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-content__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+    width: 100%;
+  }
+
+  .contact-7-content {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: var(--space-s);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+  }
+
+  .contact-aside {
+    display: flex;
+    background: var(--action-primary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .contact-aside-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .contact-aside-list-item {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-xs);
+  }
+
+  .contact-aside-list-item__text {
+    font-style: normal;
+  }
+
+  /* bm-custom */
+  .contact-form__fields .bricks-button {
+  padding: 1em 1.5em;
+  }
+  
+  .contact-form__fields .required:after{
+  color: var(--action-primary);
+  }
+  
+  .contact-form__fields input:focus {
+  outline-offset: 0;
+  }
+  
+  
+  .contact-form__fields textarea:focus {
+  outline-offset: 0;
+  }
+}
+</style>

@@ -1,0 +1,99 @@
+---
+/**
+ * bm-content-66 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-66.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-66__container">
+    <div class="bm-content-66__intro">
+      <h2 class="bm-content-66__heading">Our Exquisite rooms</h2>
+      <p class="bm-content-66__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="bm-content-66__inner-container">
+      <div class="bm-content-66__content">
+        <h2 class="bm-content-66__heading">Superior Suite</h2>
+        <p class="bm-content-66__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <a class="btn--primary bm-content-66__button wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-content-66__slider-wrapper">
+        <div class="bm-content-66__slider-50vw">
+          <div class="bm-content-66__slider-nested">
+            {items.map((it) => (
+              <div class="bm-content-66__slide">
+                <figure class="bm-content-66__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-66__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-66__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-66__inner-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-content-66__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    justify-content: center;
+    padding: 0 0 0 var(--section-space-xxl);
+  }
+
+  .bm-content-66__slider-wrapper {
+    align-items: flex-end;
+  }
+
+  .bm-content-66__slider-50vw {
+    width: 50vw;
+  }
+
+  .bm-content-66__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+  
+  .bm-content-66__slider-nested .splide__arrows--ltr {
+    width: var(--measure);
+    position: absolute;
+    bottom: var(--space-m);
+    right: calc(-1 * (var(--section-space-xxl) * 2.4));
+  }
+  
+  }
+}
+</style>

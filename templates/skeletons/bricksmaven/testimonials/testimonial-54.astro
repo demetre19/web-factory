@@ -1,0 +1,170 @@
+---
+/**
+ * bm-testimonial-54 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-54.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-54__container">
+    <div class="intro intro--left">
+      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Tagline</p>
+    </div>
+    <div class="bm-testimonial-54-slider">
+      {items.map((it) => (
+        <div class="bm-testimonial-54-slide">
+          <div class="bm-testimonial-54-slide__content">
+            <div class="bm-testimonial-54-slide__client-review">
+              <p class="bm-testimonial-54-slide__name">{it.text}</p>
+              <p class="bm-testimonial-54-slide__review">{it.text}</p>
+            </div>
+            <div class="bm-testimonial-54-slide__respons">
+              <p class="bm-testimonial-54-slide__name">{it.text}</p>
+              <p class="bm-testimonial-54-slide__respons-text">{it.text}</p>
+            </div>
+          </div>
+          <div class="testimonial-list-card__profile">
+            <div class="testimonial-list-card__meta">
+              <custom class="testimonial-list-card__name">{it.title}</custom>
+              <p class="testimonial-list-card__jobtitle">{it.text}</p>
+            </div>
+            <div class="testimonial-list-card__media">
+              <figure class="testimonial-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+          <figure class="bm-testimonial-54-slide__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-54__container {
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-testimonial-54-slide {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    align-items: flex-start;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: clip;
+    justify-content: space-between;
+  }
+
+  .bm-testimonial-54-slide__content {
+    row-gap: calc(var(--flow-spacing) / 4);
+    align-items: flex-end;
+  }
+
+  .bm-testimonial-54-slide__client-review {
+    row-gap: calc(var(--flow-spacing) / 4);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    background: color-mix(in srgb, var(--fs-0) 60%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    width: 100%;
+  }
+
+  .bm-testimonial-54-slide__name {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-54-slide__respons {
+    row-gap: calc(var(--flow-spacing) / 4);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: color-mix(in srgb, var(--bg-canvas) 50%, transparent);
+    width: 100%;
+  }
+
+  .testimonial-list-card__profile {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .testimonial-list-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(--content-gap / 2);
+  }
+
+  .testimonial-list-card__name {
+    font-weight: 700;
+  }
+
+  .testimonial-list-card__jobtitle {
+    font-size: var(--fs-0);
+  }
+
+  .testimonial-list-card__image {
+    object-fit: cover;
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 50% 50% 50% 50%;
+  }
+
+  .bm-testimonial-54-slide__background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .bm-testimonial-54-slide__client-review {
+    backdrop-filter: blur(10px);
+  }
+
+  /* bm-custom */
+  .bm-testimonial-54-slide__respons {
+    backdrop-filter: blur(10px);
+  }
+}
+</style>

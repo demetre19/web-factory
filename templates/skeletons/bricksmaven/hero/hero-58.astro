@@ -1,0 +1,92 @@
+---
+/**
+ * bm-hero-58 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-58.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-58__container">
+    <div class="hero-58__content">
+      <div class="hero-58__top">
+        <h1 class="hero-58__heading">The life you dream of is nearer than you imagine.</h1>
+        <p class="accent-h accent-h--alt">Accent heading</p>
+        <p class="hero-58__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--white" href="#">Call to action</a>
+        <a class="btn--link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <figure class="hero-58__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-58 {
+    height: 100vh;
+    position: relative;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .hero-58__content {
+    width: var(--content-width);
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .hero-58__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .hero-58__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .hero-58__subheading {
+    width: var(--content-width);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-58__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

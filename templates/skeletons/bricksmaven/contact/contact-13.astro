@@ -1,0 +1,133 @@
+---
+/**
+ * bm-contact-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-13-container">
+    <div class="intro contact-13-intro">
+      <h2 class="intro__heading">Contact with us</h2>
+      <p class="intro__subheading">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+    </div>
+    <div class="contact-13-list-ul list--none">
+      <div class="contact-13-list-card">
+        <h2 class="contact-13-list-card__title">Support</h2>
+        <p class="contact-13-list-card__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+        <a class="contact-13-list-card__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div class="contact-13-list-card__media">
+          <figure class="contact-13-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="contact-13-list-card">
+        <h2 class="contact-13-list-card__title">Sales</h2>
+        <p class="contact-13-list-card__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+        <a class="contact-13-list-card__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div class="contact-13-list-card__media">
+          <figure class="contact-13-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figure class="contact-13-bg"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-13 {
+    position: relative;
+  }
+
+  .contact-13-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--section-space-xxl);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-13-intro {
+    text-align: left;
+    align-items: flex-start;
+    align-self: flex-start;
+  }
+
+  .contact-13-list-ul {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .contact-13-list-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--space-xs);
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+    background: var(--bg-canvas);
+  }
+
+  .contact-13-list-card__desc {
+    text-align: center;
+  }
+
+  .contact-13-list-card__cta {
+    background: transparent;
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .contact-13-list-card__media {
+    margin: -7.5rem 0 0 0;
+  }
+
+  .contact-13-list-card__image {
+    object-fit: cover;
+    width: 10rem;
+    height: 10rem;
+    overflow: hidden;
+    border-radius: 10rem 10rem 10rem 10rem;
+  }
+
+  .contact-13-bg {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    z-index: -1;
+  }
+}
+</style>

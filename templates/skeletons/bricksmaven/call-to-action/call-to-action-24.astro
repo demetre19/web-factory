@@ -1,0 +1,128 @@
+---
+/**
+ * bm-call-to-action-24 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-24.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-call-to-action-24__container">
+    <div class="bm-call-to-action-24-testimonial">
+      <p class="bm-call-to-action-24-testimonial__review">“Using Bricksmaven made it easy to experiment with different layouts and design combinations. Within minutes, we were building a production-ready site.”</p>
+      <div class="bm-call-to-action-24-testimonial__customer-bio">
+        <div class="bm-call-to-action-24-testimonial__media">
+          <figure class="bm-call-to-action-24-testimonial__thumbnail"><img src="/media/placeholder.svg" alt="Thumbnail" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-call-to-action-24-testimonial__bio">
+          <p class="bm-call-to-action-24-testimonial__name">John Smith</p>
+          <p class="bm-call-to-action-24-testimonial__title">Add your title here</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-call-to-action-24-cta-card">
+      <div class="bm-call-to-action-24-cta-card__content">
+        <h2 class="bm-call-to-action-24-cta-card__heading">Start building today!</h2>
+        <p class="bm-call-to-action-24-cta-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="bm-call-to-action-24-cta-card__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-call-to-action-24-cta-card__media">
+        <figure class="bm-call-to-action-24-cta-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-call-to-action-24 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-call-to-action-24__container {
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-call-to-action-24-testimonial {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-call-to-action-24-testimonial__review {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .bm-call-to-action-24-testimonial__customer-bio {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-call-to-action-24-testimonial__thumbnail {
+    object-fit: cover;
+    width: 92px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-call-to-action-24-testimonial__bio {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .bm-call-to-action-24-testimonial__name {
+    font-weight: 700;
+  }
+
+  .bm-call-to-action-24-testimonial__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-call-to-action-24-cta-card {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 3);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: hidden;
+    background: var(--color-ink-secondary);
+  }
+
+  .bm-call-to-action-24-cta-card__content {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-call-to-action-24-cta-card__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-call-to-action-24-cta-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

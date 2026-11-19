@@ -1,0 +1,193 @@
+---
+/**
+ * bm-event-section-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (event-section-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-event-section-7__container">
+    <div class="bm-event-section__intro">
+      <h2 class="bm-event-section__heading">Event List</h2>
+      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-event-section-7-event-list">
+      {items.map((it) => (
+        <div class="bm-event-section-7-event-card">
+          <div class="bm-event-section-7-event-card__date">
+            <p class="bm-event-section-7-event-card__day-week">{it.text}</p>
+            <p class="bm-event-section-7-event-card__day">{it.text}</p>
+            <p class="bm-event-section-7-event-card__month-year">{it.text}</p>
+          </div>
+          <div class="bm-event-section-7-event-card__content">
+            <h2 class="bm-event-section-7-event-card__heading">{it.title}</h2>
+            <div class="bm-event-section-7-event-card__details-wrapper">
+              <p class="bm-event-section-7-event-card__details">{it.text}</p>
+              <p class="bm-event-section-7-event-card__text">{it.text}</p>
+            </div>
+            <div class="bm-event-section-7-card__speaker-wrapper">
+              <p class="bm-event-section-4-card__speaker-label">{it.text}</p>
+              <div class="bm-event-speaker-list list--none">
+                {(it.items || []).map((it2) => (
+                  <div class="bm-event-speaker-card">
+                    <figure class="bm-event-speaker-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+          <div class="bm-event-section-7-event-card__media">
+            <figure class="bm-event-section-7-event-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-event-section-5__meta-placement">
+              <div class="bm-event-meta-info">
+                <span class="bm-event-meta-info__icon" data-icon="lucide" aria-hidden="true"></span>
+                <p class="bm-event-meta-info__location">{it.text}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-event-section-7__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-event-section__intro {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bm-event-section-7-event-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-7-event-card {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    gap: var(--space-m);
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1 solid var(--text-secondary);
+  }
+
+  .bm-event-section-7-event-card__date {
+    display: flex;
+    padding: var(--space-xs) var(--space-s) var(--space-s) var(--space-s);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-subtle);
+    row-gap: calc(var(--flow-spacing) / 6);
+    width: 128;
+    height: 128;
+    justify-content: center;
+  }
+
+  .bm-event-section-7-event-card__day-week {
+    font-size: var(--fs-0);
+  }
+
+  .bm-event-section-7-event-card__day {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .bm-event-section-7-event-card__month-year {
+    font-size: var(--fs-0);
+  }
+
+  .bm-event-section-7-event-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-7-event-card__details-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-event-section-7-event-card__details {
+    font-weight: 700;
+  }
+
+  .bm-event-section-7-card__speaker-wrapper {
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-event-section-4-card__speaker-label {
+    font-weight: 700;
+  }
+
+  .bm-event-speaker-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .bm-event-speaker-card__image {
+    width: 48;
+    height: 48;
+    border-top: 1 solid var(--bg-canvas);
+    border-right: 1 solid var(--bg-canvas);
+    border-bottom: 1 solid var(--bg-canvas);
+    border-left: 1 solid var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-event-section-7-event-card__media {
+    position: relative;
+  }
+
+  .bm-event-section-7-event-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-event-section-5__meta-placement {
+    position: absolute;
+    top: var(--space-s);
+    left: var(--space-s);
+  }
+
+  .bm-event-meta-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+    background: var(--bg-subtle);
+    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
+  }
+
+  /* bm-custom */
+  .bm-event-speaker-card:not(:first-child) {
+    margin-inline-start: calc(-1 * (var(--space-xs) / 3));
+  }
+}
+</style>

@@ -1,0 +1,109 @@
+---
+/**
+ * bm-hero-103 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-103.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-103__container">
+    <div class="bm-hero-103__intro">
+      <div class="bm-hero-103__column">
+        <h1 class="bm-hero-103__heading">Short headling to grab the customers attention</h1>
+        <p class="bm-accent-heading">Accent heading</p>
+      </div>
+      <div class="bm-hero-103__column">
+        <p class="bm-hero-103__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div class="cta-combo">
+          <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+          <a class="link--white" href="#">Secondary action →</a>
+        </div>
+      </div>
+    </div>
+    <div class="bm-hero-103__media">
+      <figure class="bm-hero-103__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-103 {
+    position: relative;
+    overflow: clip;
+  }
+
+  .bm-hero-103__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-103__intro {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-hero-103__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-103__heading {
+    font-size: calc(var(--fs-4) * 1.8);
+  }
+
+  .bm-hero-103__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-103__media {
+    align-items: flex-end;
+  }
+
+  .bm-hero-103__image {
+    height: 100%;
+    width: calc(50vw + (var(--content-width) /  2));
+    object-fit: cover;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+  }
+
+  /* bm-custom */
+  .bm-hero-103 {
+    --block-size: 80%; /* Control psuedo height */
+    --psuedo-bg-color: var(--fs-0);
+  }
+  
+  .bm-hero-103::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inline-size: 100%;
+    block-size: var(--acss-block-size);
+    background-color: var(--acss-psuedo-bg-color);
+    z-index: -1;
+  }
+}
+</style>

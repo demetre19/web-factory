@@ -1,0 +1,78 @@
+---
+/**
+ * bm-header-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-16__container">
+    <div class="bm-header-16__brand-nav">
+      <div class="bm-header-16__nav-wrapper">
+        <div class="bm-header-16__nav-menu"></div>
+      </div>
+      <div class="bm-header-16__brand">
+        <figure class="bm-header-16__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="bm-header-16__search-button">
+      <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-16 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-16__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-16__brand-nav {
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-header-16__nav-wrapper {
+    flex-wrap: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-header-16__search-button {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+</style>

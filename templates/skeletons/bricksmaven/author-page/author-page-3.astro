@@ -1,0 +1,154 @@
+---
+/**
+ * bm-author-page-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (author-page-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-author-page-3__top-container">
+    <div class="bm-author-page-3__inner">
+      <div class="bm-author-card-3">
+        <div class="bm-author-card-3__media">
+          <figure class="bm-author-card-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-author-card-3__content">
+          <h1 class="bm-author-card-3__heading">Author: {author_name}</h1>
+          <p class="bm-author-card-3__text-basic">{author_bio}</p>
+        </div>
+      </div>
+    </div>
+    <figure class="bm-author-page-3__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+  <div class="bm-author-page-3__post-container">
+    <h2 class="bm-author-page-3__heading">All Post By {author_name}</h2>
+    <div class="bm-author-page-3-post-list">
+      <div class="bm-blog-section-22-card">
+        <div class="bm-blog-section-22-card__media">
+          <figure class="bm-blog-section-22-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-blog-section-22-card__content">
+          <h2 class="bm-blog-section-22-card__heading">{post_title}</h2>
+          <p class="bm-blog-section-22-card__date">{post_date}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-author-page-3 {
+    padding: 0 0 0 0;
+    row-gap: var(--space-s);
+    overflow: hidden;
+  }
+
+  .bm-author-page-3__top-container {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    left: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--section-space-m) var(--gutter) var(--section-space-m) var(--gutter);
+  }
+
+  .bm-author-page-3__inner {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-author-card-3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-author-card-3__image {
+    object-fit: cover;
+    width: 165px;
+    height: 165px;
+    border-top: 8px solid var(--bg-canvas);
+    border-right: 8px solid var(--bg-canvas);
+    border-bottom: 8px solid var(--bg-canvas);
+    border-left: 8px solid var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-author-card-3__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-author-card-3__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-author-page-3__background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-author-page-3__post-container {
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .bm-author-page-3-post-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-blog-section-22-card {
+    flex-direction: row;
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--space-m);
+  }
+
+  .bm-blog-section-22-card__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-blog-section-22-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-blog-section-22-card__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-blog-section-22-card__date {
+    font-size: var(--fs-0);
+  }
+}
+</style>

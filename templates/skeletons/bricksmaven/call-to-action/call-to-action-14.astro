@@ -1,0 +1,65 @@
+---
+/**
+ * bm-call-to-action-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-14-container">
+    <div class="cta-14__box">
+      <h2 class="cta-14__heading">Get your projects done quicker with ACSS + Bricksmaven now!</h2>
+      <p class="cta-14__desc">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="cta-14__media">
+      <figure class="cta-14__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-14-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta-14__box {
+    background: var(--action-primary);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .cta-14__media {
+    position: relative;
+  }
+
+  .cta-14__image {
+    object-fit: cover;
+    width: 100%;
+    position: absolute;
+    height: 400px;
+    bottom: 0;
+  }
+}
+</style>

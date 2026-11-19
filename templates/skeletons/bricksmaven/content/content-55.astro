@@ -1,0 +1,78 @@
+---
+/**
+ * bm-content-55 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-55.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-55__container">
+    <div class="bm-content-55__intro">
+      <div class="bm-content-55__column">
+        <h2 class="bm-content-55__heading">Long headline to turn your visitors into customers</h2>
+        <p class="accent-h">Accent heading</p>
+      </div>
+      <p class="bm-content-55__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div class="bm-content-55__content">
+      <div class="bm-content-55-card">
+        <h2 class="bm-content-55-card__heading">Paragraph headline to grab the readers attention</h2>
+        <p class="bm-content-55-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      </div>
+      <div class="bm-content-55-card">
+        <h2 class="bm-content-55-card__heading">Paragraph headline to grab the readers attention</h2>
+        <p class="bm-content-55-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-55 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-content-55__intro {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 3 / 2);
+    margin: 0 0 calc(var(--section-space-xxl) * 2.5) 0;
+  }
+
+  .bm-content-55__column {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-55__text {
+    font-size: var(--fs-2);
+  }
+
+  .bm-content-55__content {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-content-55-card {
+    row-gap: var(--flow-spacing);
+  }
+}
+</style>

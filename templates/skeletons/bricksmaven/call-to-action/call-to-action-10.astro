@@ -1,0 +1,110 @@
+---
+/**
+ * bm-call-to-action-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-10-container">
+    <div class="cta-10-content">
+      <div class="cta-10-heading">
+        <h2 class="cta-10__title">Ready to dive in?</h2>
+        <p class="cta-10__sub-heading">Start your free trial today.</p>
+      </div>
+      <div class="hero-1__cta">
+        <a class="btn--primary hero-1-wrapper__cta--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="btn--primary btn--outline hero-1-wrapper__cta--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="cta-10-media-wrapper">
+      <figure class="cta-10-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-10 {
+    padding: 0 0 0 0;
+    width: 100%;
+  }
+
+  .cta-10-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .cta-10-content {
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    display: flex;
+    row-gap: var(--space-m);
+    flex-direction: column;
+    width: var(--measure);
+    margin: 0 0 0 auto;
+  }
+
+  .cta-10-heading {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cta-10__sub-heading {
+    font-size: var(--fs-2);
+    font-weight: 600;
+  }
+
+  .hero-1__cta {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .cta-10-media-wrapper {
+    width: 100%;
+  }
+
+  .cta-10-img {
+    height: 42rem;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .cta-10-img {
+  clip-path: polygon(12% 0%, 100% 0, 100% 100%, 0% 100%);
+  
+  }
+}
+</style>

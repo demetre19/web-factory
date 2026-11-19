@@ -1,0 +1,218 @@
+---
+/**
+ * bm-empty-cart — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (empty-cart.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-empty-cart__container">
+    <div class="bm-empty-cart__content">
+      <h1 class="bm-empty-cart__heading">You cart is empty!</h1>
+      <span class="bm-empty-cart__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="link--black" href="#">Back to homepage →</a>
+      </div>
+    </div>
+  </div>
+  <div class="bm-product-list-1__container">
+    <div class="intro">
+      <h2 class="intro__heading">Check ouw our new range</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div class="bm-product-list-1__list list--none">
+      <div class="bm-product-list-1-card">
+        <div class="bm-product-list-1-card__content">
+          <p class="bm-product-list-category">{post_terms_product_cat}</p>
+          <div class="bm-product-list-1-card__top">
+            <h3 class="bm-product-list-1-card__heading">{post_title}</h3>
+            <custom class="bm-product-list-card__price">{woo_product_price}</custom>
+          </div>
+          <div class="bm-product-list-card__add-to-cart"></div>
+        </div>
+        <div class="bm-product-list-notice__wrapper">
+          <div class="bm-product-list-notice-circle__sale-badge">
+            <p class="bm-product-list-notice-circle__sale">{woo_product_on_sale}</p>
+          </div>
+          <p class="bm-product-list-1-card__new">New!</p>
+          <p class="bm-product-list-1-card__soldout">Sold Out</p>
+        </div>
+        <figure class="bm-product-list-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-empty-cart {
+    padding: 0 0 0 0;
+    row-gap: var(--space-s);
+    overflow: clip;
+  }
+
+  .bm-empty-cart__container {
+    padding: var(--section-space-m) 0 var(--section-space-m) 0;
+    background: var(--fs-0);
+    margin: 0 0 0 -50vw;
+    left: 50%;
+    position: relative;
+    width: 100vw;
+    align-items: center;
+  }
+
+  .bm-empty-cart__content {
+    width: 100%;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-empty-cart__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-product-list-1__container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-product-list-1__list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+  }
+
+  .bm-product-list-1-card {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    position: relative;
+    flex-wrap: nowrap;
+  }
+
+  .bm-product-list-1-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .bm-product-list-category {
+    font-size: var(--fs-0);
+  }
+
+  .bm-product-list-1-card__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-product-list-1-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .bm-product-list-notice__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--space-xs);
+    width: var(--measure);
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 4);
+    left: var(--space-xs);
+  }
+
+  .bm-product-list-notice-circle__sale-badge {
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    background: var(--primitive-state-danger);
+    display: flex;
+    align-items: center;
+  }
+
+  .bm-product-list-1-card__new {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+  }
+
+  .bm-product-list-1-card__soldout {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    position: relative;
+  }
+
+  .bm-product-list-1-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .bm-product-list-category a {
+    	color: var(--text-primary);
+    	background: transparent;
+  }
+
+  /* bm-custom */
+  .bm-product-list-card__price del {
+    	color: var(--bg-subtle);
+  }
+  
+  .bm-product-list-card__price ins {
+    	text-decoration: none;
+  }
+  .bm-product-list-card__price ins .amount {
+    	text-decoration: none;
+    	border-bottom: 0;
+  }
+
+  /* bm-custom */
+  .bm-product-list-card__add-to-cart form.cart .quantity, form.woocommerce-cart-form .quantity {
+      width: 100%;
+  }
+    
+  form.cart .button, form.woocommerce-cart-form .button {
+  
+      width: 100%;
+  }
+}
+</style>

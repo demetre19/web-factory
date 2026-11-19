@@ -1,0 +1,72 @@
+---
+/**
+ * bm-content-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-23-container">
+    <div class="content-23__content">
+      <h2 class="content-23__heading">Get in touch with me!</h2>
+      <p class="content-23__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <figure class="content-23__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-23 {
+    position: relative;
+  }
+
+  .content-23-container {
+    align-items: flex-end;
+  }
+
+  .content-23__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    background: var(--bg-subtle);
+    width: var(--content-width);
+    z-index: 1;
+    position: relative;
+    margin: calc((var(--section-space-m) + var(--space-l)) * -1) 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-23__background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

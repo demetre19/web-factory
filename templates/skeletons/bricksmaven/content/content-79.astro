@@ -1,0 +1,92 @@
+---
+/**
+ * bm-content-79 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-79.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-79__container">
+    <div class="bm-content-79__content-intro">
+      <div class="intro intro--left">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="bm-accent-heading">Tagline</p>
+      </div>
+      <div class="bm-content-79__content-media">
+        <figure class="bm-content-79__content-image"><img src="/media/placeholder.svg" alt="Content Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="bm-content-79__media">
+      <figure class="bm-content-79__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-79__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 3);
+  }
+
+  .bm-content-79__content-intro {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-content-79__content-media {
+    justify-content: flex-end;
+  }
+
+  .bm-content-79__content-image {
+    width: 342px;
+    height: 342px;
+    object-fit: cover;
+  }
+
+  .bm-content-79__image {
+    object-fit: cover;
+    height: 586px;
+  }
+}
+</style>

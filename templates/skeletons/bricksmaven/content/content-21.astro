@@ -1,0 +1,78 @@
+---
+/**
+ * bm-content-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-21-container">
+    <div class="content-21__content">
+      <h2 class="content-21__heading">What is Lorem Ipsum?</h2>
+      <p class="content-21__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="content-21__media">
+      <figure class="content-21__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-21 {
+    background: var(--bg-subtle);
+    position: relative;
+  }
+
+  .content-21-container {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+  }
+
+  .content-21__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--section-space-xxl) var(--space-l) var(--section-space-xxl) var(--section-space-xxl);
+    border-top: .4rem solid var(--bg-canvas);
+    border-right: .4rem solid var(--bg-canvas);
+    border-bottom: .4rem solid var(--bg-canvas);
+    border-left: .4rem solid var(--bg-canvas);
+    position: relative;
+    z-index: 1;
+  }
+
+  .content-21__image {
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .content-21::before {
+  	content:'';
+    width:50vw;
+    height:75%;
+    background-color:  var(--bg-subtle);
+    position:absolute;
+    left:0;
+    bottom:0;
+  }
+}
+</style>

@@ -1,0 +1,96 @@
+---
+/**
+ * bm-contact-5 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-5.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-5-container">
+    <div class="contact-left-box">
+      <div class="contact-left-box__top-row">
+        <p class="contact-left-box__accent-heading">Have a question?</p>
+        <h2 class="contact-left-box__heading">Contact with us</h2>
+        <p class="contact-left-box__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="cta-combo__text">OR</p>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="contact-5-media">
+      <figure class="contact-5-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-5-container {
+    display: grid;
+    gap: var(--section-space-xxl);
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .contact-left-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+    padding: 0 var(--section-space-xxl) 0 0;
+  }
+
+  .contact-left-box__top-row {
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    display: flex;
+  }
+
+  .contact-left-box__accent-heading {
+    width: fit-content;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .contact-5-media__image {
+    height: 30rem;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+</style>

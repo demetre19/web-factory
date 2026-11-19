@@ -1,0 +1,127 @@
+---
+/**
+ * bm-footer-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="footer-10-container">
+    <div class="footer-nav-wrapper">
+      {items.map((it) => (
+        <div class="footer-nav-column">
+          <h3 class="footer-nav-heading">{it.title}</h3>
+          <div class="footer-menu list--none">
+            {(it.items || []).map((it2) => (
+              <div class="footer-menu__link">
+                <a class="footer-menu__link-text" href="#">{it2.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="footer-10-bottom">
+    <div class="footer-bottom__left">
+      <div class="footer-brand">
+        <img></img>
+      </div>
+      <div class="footer-bottom__copyright">
+        <p class="footer-copyright">© 2022 Alpha. All right reserved.</p>
+      </div>
+    </div>
+    <div class="footer-nav-legal">
+      <div class="footer-legal-nav list--none">
+        {items.map((it) => (
+          <div class="footer-legal__li">
+            <a class="footer-legal__link-text" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .footer-10 {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .footer-10-bottom {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .footer-bottom__left {
+    flex-direction: row;
+    row-gap: var(--space-xs);
+    column-gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-legal__link-text {
+    font-size: var(--fs-0);
+  }
+}
+</style>

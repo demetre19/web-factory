@@ -1,0 +1,82 @@
+---
+/**
+ * bm-item — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-18-container">
+    <div class="cta-18__box">
+      <h2 class="cta-18__heading">Start your 30-day free trial</h2>
+      <p class="cta-18__desc">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <p class="accent-h">Get started</p>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="cta-18__media">
+      <figure class="cta-18__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-18-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .cta-18__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+    padding: 0 var(--section-space-xxl) 0 var(--section-space-xxl);
+    text-align: center;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .cta-18__image {
+    object-fit: cover;
+    width: 100%;
+  }
+}
+</style>

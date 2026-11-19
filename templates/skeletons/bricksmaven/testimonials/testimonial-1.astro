@@ -1,0 +1,75 @@
+---
+/**
+ * bm-testimonial-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-1-container">
+    <div class="testimonial-1-content">
+      <div class="testimonial-1-slides">
+        {items.map((it) => (
+          <div class="testimonial-1-slides-item">
+            <p class="testimonial-1-slides__desc">{it.text}</p>
+            <p class="testimonial-1-slides__bio text--primary">{it.text}</p>
+            <div class="testimonial-1-slides-item__image-wrapper">
+              <figure class="testimonial-1-slides__img rounded--circle object-fit--cover"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-1-content {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .testimonial-1-slides-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--space-m);
+    padding: 0 var(--space-xl) 0 var(--space-xl);
+  }
+
+  .testimonial-1-slides__img {
+    width: 13rem;
+    height: 13rem;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  .testimonial-1-slides svg {
+  	fill: var(--bg-canvas);
+    width: 1rem;
+  }
+}
+</style>

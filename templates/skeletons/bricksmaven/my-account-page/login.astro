@@ -1,0 +1,83 @@
+---
+/**
+ * bm-login — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (login.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-woo-login__container">
+    <div class="intro">
+      <h2 class="intro__heading">Log into your account</h2>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-woo-login__cover">
+      <div class="bm-woo-login__column">
+        <h2 class="bm-woo-login__heading">Login</h2>
+        <div class="bm-woo-login__form"></div>
+      </div>
+      <div class="bm-woo-login__column">
+        <h2 class="bm-woo-login__heading">Register</h2>
+        <div class="bm-woo-login__register"></div>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-woo-login {
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .bm-woo-login__container {
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-woo-login__cover {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-woo-login__column {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--space-m);
+  }
+
+  /* bm-custom */
+  .bm-woo-login__column:nth-child(1) {
+    background-color: var(--fs-0);
+    border-radius: var(--r-card);
+  }
+}
+</style>

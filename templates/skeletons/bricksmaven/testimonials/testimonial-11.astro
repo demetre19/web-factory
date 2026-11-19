@@ -1,0 +1,92 @@
+---
+/**
+ * bm-testimonial-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-11-container">
+    <div class="testimonial-11-title">
+      <h2 class="testimonial-11-title__heading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</h2>
+    </div>
+    <div class="testimonial-11-content">
+      <p class="testimonial-11-content__desc">"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus".</p>
+      <div class="testimonial-11-content__profile">
+        <div class="testimonial-11-content__bio">
+          <h4 class="testimonial-11-content__name">John Smith,</h4>
+          <p class="testimonial-11-content__job-title">Etiam ultricies nisi vel augue. Curabitur ullamcorper .</p>
+        </div>
+        <div class="testimonial-11-content__company">
+          <figure class="testimonial-11-content__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-11-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .testimonial-11-content {
+    background: var(--bg-subtle);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+    position: relative;
+  }
+
+  .testimonial-11-content__profile {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .testimonial-11-content__bio {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+  }
+
+  .testimonial-11-content__job-title {
+    font-size: var(--fs-0);
+  }
+
+  .testimonial-11-content__logo {
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .testimonial-11-content::before {
+  	content: '"';
+    font-size: calc(var(--fs-4) * 6);
+    line-height: .4;
+    color: var(--action-primary);
+    position: absolute;
+    top: 0rem;
+    left: 3rem;
+  }
+}
+</style>

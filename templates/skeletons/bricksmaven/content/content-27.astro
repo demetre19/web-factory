@@ -1,0 +1,132 @@
+---
+/**
+ * bm-content-27 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-27.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-27-container">
+    <div class="intro intro--left width--m">
+      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+      <p class="intro__accent-heading">Tagline</p>
+    </div>
+    <div class="content-27__content-wrapper">
+      <div class="content-27__content-intro">
+        <h2 class="content-27__content-heading">This is a subheading that needs meaning</h2>
+        <p class="content-27__text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+        <a class="content-27__btn btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="content-27__media">
+        <figure class="content-27__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="content-27__data">
+      <div class="content-27__data-content">
+        <div class="content-27__data-column">
+          <h2 class="content-27__data-heading">Clients</h2>
+          <span class="content-27__data-counter"></span>
+          <p class="content-27__data-text">Nemo enim ipsam voluptatem</p>
+        </div>
+        <div class="content-27__data-column">
+          <h2 class="content-27__data-heading">Coaches</h2>
+          <span class="content-27__data-counter"></span>
+          <p class="content-27__data-text">Nemo enim ipsam voluptatem</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-27-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .content-27__content-wrapper {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 3);
+  }
+
+  .content-27__content-intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .content-27__content-heading {
+    font-size: var(--fs-3);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-27__image {
+    object-fit: cover;
+  }
+
+  .content-27__data {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 1);
+    margin: calc(var(--section-space-xxl) * -1 + -2rem) 0 0 0;
+    z-index: 1;
+    position: relative;
+  }
+
+  .content-27__data-content {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) * 2);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    background: var(--bg-subtle);
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .content-27__data-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .content-27__data-counter {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+}
+</style>

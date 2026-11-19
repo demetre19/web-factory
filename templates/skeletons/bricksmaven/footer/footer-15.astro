@@ -1,0 +1,230 @@
+---
+/**
+ * bm-footer-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="footer-15-container">
+    <div class="footer-15__cta">
+      <h2 class="footer-15__cta-heading">Helping business owners grow on their teams</h2>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="footer-15__header">
+      <div class="footer-15__brand">
+        <img class="footer-15__logo"></img>
+      </div>
+      <div class="footer-15__social-wrapper">
+        <div class="footer-15__text-wrapper">
+          <p class="footer-15__socials-text">Socials</p>
+        </div>
+        <div class="footer-15__socials list--none">
+          {items.map((it) => (
+            <div class="footer-15__social-item">
+              <span class="footer-15__social-icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="footer-15__footer">
+      <div class="footer-15__footer-intro">
+        <div class="footer-15__newsletter">
+          <p class="footer-15__newsletter-text">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+          <form class="footer-newsletter__form" novalidate>
+          </form>
+        </div>
+        <div class="footer-15__nav-wrapper">
+          <div class="footer-nav-wrapper footer-nav-wrapper-15">
+            {items.map((it) => (
+              <div class="footer-nav-column">
+                <h3 class="footer-nav-heading">{it.title}</h3>
+                <div class="footer-menu list--none">
+                  {(it.items || []).map((it2) => (
+                    <div class="footer-menu__link">
+                      <a class="footer-menu__link-text" href="#">{it2.text}</a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="footer-15__copy-legal">
+        <div class="footer-bottom__left">
+          <div class="footer-bottom__copyright">
+            <p class="footer-copyright">© 2022 Alpha. All right reserved.</p>
+          </div>
+        </div>
+        <div class="footer-nav-legal">
+          <div class="footer-legal-nav list--none">
+            {items.map((it) => (
+              <div class="footer-legal__li">
+                <a class="footer-legal__link-text" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .footer-15-container {
+    row-gap: var(--space-s);
+  }
+
+  .footer-15__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-15__cta-heading {
+    font-size: var(--fs-4);
+    text-align: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .footer-15__header {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-top: .1rem solid var(--color-line-default);
+    border-right: .1rem solid var(--color-line-default);
+    border-bottom: .1rem solid var(--color-line-default);
+    border-left: .1rem solid var(--color-line-default);
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .footer-15__social-wrapper {
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    justify-content: flex-end;
+  }
+
+  .footer-15__socials-text {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .footer-15__socials {
+    display: flex;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-15__footer {
+    row-gap: var(--space-s);
+  }
+
+  .footer-15__footer-intro {
+    row-gap: var(--flow-spacing);
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 12);
+    gap: var(--space-m);
+  }
+
+  .footer-15__newsletter {
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .footer-nav-wrapper-15 {
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .footer-15__copy-legal {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    padding: var(--space-l) 0 0 0;
+    border-top: .1rem solid var(--bg-subtle);
+  }
+
+  .footer-bottom__left {
+    flex-direction: row;
+    row-gap: var(--space-xs);
+    column-gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-legal__link-text {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .footer-newsletter__form {
+  	flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .footer-newsletter__form [type="submit"] {
+  	height: 100%;
+  }
+}
+</style>

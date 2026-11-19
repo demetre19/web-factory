@@ -1,0 +1,61 @@
+---
+/**
+ * bm-item-vulozy — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-vulozy.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gallery-5-container">
+    <div class="gallery-5-row">
+      <h2 class="gallery-5-title">Our Gallery</h2>
+      <p class="gallery-5-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+    </div>
+    <div class="gallery-5-card"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gallery-5-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .gallery-5-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-s);
+    row-gap: var(--space-s);
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .gallery-5-card {
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+}
+</style>

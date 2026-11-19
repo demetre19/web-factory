@@ -1,0 +1,65 @@
+---
+/**
+ * bm-content-39 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-39.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-39__container">
+    <h2 class="bm-content-39__heading">Long headline to turn your visitors into customers</h2>
+    <div class="bm-content-39__content">
+      <div class="bm-content-39__center">
+        <p class="bm-content-39__text-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <p class="bm-content-39__text">Irony mumblecore disrupt fam pinterest la croix bicycle rights flannel vaporware retro normcore knausgaard migas taiyaki banjo. Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Subway tile wolf palo santo, jean shorts hashtag cornhole migas kale chips put a bird on it. Distillery offal ramps adaptogen.</p>
+      </div>
+    </div>
+    <div class="bm-content-39__media">
+      <figure class="bm-content-39__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-39__heading {
+    width: var(--content-width);
+  }
+
+  .bm-content-39__content {
+    align-items: center;
+  }
+
+  .bm-content-39__center {
+    width: var(--content-width);
+  }
+
+  .bm-content-39__text-bold {
+    font-weight: 700;
+    font-size: var(--fs-2);
+  }
+
+  .bm-content-39__image {
+    object-fit: cover;
+    width: 100%;
+    height: 64rem;
+  }
+}
+</style>

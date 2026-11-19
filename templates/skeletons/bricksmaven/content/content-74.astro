@@ -1,0 +1,181 @@
+---
+/**
+ * bm-content-74 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-74.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-74__container">
+    <div class="intro">
+      <h2 class="intro__heading">Studio Bricksmaven is a multidisciplinary design studio helping brands to express their story through strategy, creativity, and culture.</h2>
+      <p class="bm-accent-heading">Accent heading</p>
+      <div class="list--none bm-content-ul-list">
+        {items.map((it) => (
+          <div class="bm-content-item">
+            <h2 class="bm-content-item__heading">{it.title}</h2>
+            <p class="bm-content-item__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-content-74-list list--none">
+      {items.map((it) => (
+        <div class="bm-content-74-card">
+          <div class="bm-content-74-card__content">
+            <span class="bm-content-74-card__counter"></span>
+            <p class="bm-content-74-card__text">{it.text}</p>
+          </div>
+          <div class="bm-content-74-card__overlay-blur"></div>
+          <figure class="bm-content-74-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-74 {
+    background: color-mix(in srgb, var(--fs-0) 30%, transparent);
+  }
+
+  .bm-content-74__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-content-ul-list {
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--space-xs) / 2);
+    padding: var(--space-xs) var(--space-s) var(--space-xs) var(--space-s);
+    background: var(--bg-canvas);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    border-radius: 100% 100% 100% 100%;
+    width: auto;
+    align-items: center;
+  }
+
+  .bm-content-item__heading {
+    font-size: var(--fs-1);
+    font-weight: 400;
+  }
+
+  .bm-content-item__text {
+    font-weight: 700;
+  }
+
+  .bm-content-74-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-content-74-card {
+    justify-content: flex-end;
+    position: relative;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: clip;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-content-74-card__content {
+    position: relative;
+    z-index: 2;
+    row-gap: calc(var(--flow-spacing) / 3);
+  }
+
+  .bm-content-74-card__overlay-blur {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--measure);
+  }
+
+  .bm-content-74-card__image {
+    object-fit: cover;
+    position: absolute;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+  }
+
+  /* bm-custom */
+  .bm-content-74__container .intro {
+    inline-size: 100%);
+    max-inline-size: var(--content-width);
+  }
+
+  /* bm-custom */
+  .bm-content-item::before {
+    content: '●';
+    color:var(--fs-0);
+    font-size: var(--fs-1);
+  }
+
+  /* bm-custom */
+  @media (max-width:881px) {
+    
+    .bm-content-74-list {
+      grid-template-columns: calc(100% * 1 / 1);
+    }
+    
+    .bm-content-74-list .bm-content-74-card {
+      aspect-ratio: 6/4;
+    }
+    
+  }
+
+  /* bm-custom */
+  .bm-content-74-card__overlay-blur {
+    backdrop-filter: blur(20px);
+    mask-image: linear-gradient(transparent, black);
+  }
+}
+</style>

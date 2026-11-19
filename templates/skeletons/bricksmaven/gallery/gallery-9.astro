@@ -1,0 +1,110 @@
+---
+/**
+ * bm-gallery-9 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (gallery-9.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gallery-9-container">
+    <div class="gallery-9-row">
+      <h2 class="gallery-9-title">Our Gallery</h2>
+      <p class="gallery-9-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+    </div>
+    <div class="gallery-9-card"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gallery-9-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .gallery-9-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-s);
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .gallery-9-card {
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  /* bm-custom */
+  .gallery-9-card {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m)!important;
+  }
+  
+  .gallery-9-card li {
+  	width:100%;
+  }
+  
+  .gallery-9-card .image {
+  	width:100%;
+    height:40rem;
+  }
+  
+  .gallery-9-card figure {
+  	display:inline;
+  }
+  
+  
+  .gallery-9-card li:nth-child(1) {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+  .gallery-9-card li:nth-child(2) {
+    grid-area: 1 / 3 / 2 / -1;
+  }
+  .gallery-9-card li:nth-child(3) {
+    grid-area: 2 / 1 / -1 / 2;
+  }
+  .gallery-9-card li:nth-child(4) {
+    grid-area: 2 / 2 / -1 / -1;
+  }
+    
+  @media (max-width:767px) {
+  	.gallery-9-card {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    grid-template-rows: auto;
+  }
+    
+    .gallery-9-card li:nth-child(1), .gallery-9-card li:nth-child(2), .gallery-9-card li:nth-child(3), .gallery-9-card li:nth-child(4) {
+      grid-column: span 1;
+      grid-row: span 1;
+      
+    }
+  }
+}
+</style>

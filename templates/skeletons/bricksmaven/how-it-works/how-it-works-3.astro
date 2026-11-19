@@ -1,0 +1,114 @@
+---
+/**
+ * bm-how-it-works-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hworks-3-container">
+    <div class="hworks-intro">
+      <h2 class="hworks-intro__heading">Build your business website in minutes</h2>
+      <p class="hworks-intro__accent-heading">HOW IT WORKS</p>
+    </div>
+    <div class="hworks-3-grid-ul list--none">
+      {items.map((it) => (
+        <div class="hworks-3-list-item">
+          <div class="hworks-3-list-item__text-wrapper">
+            <p class="hworks-3-list-item__text">{it.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hworks-3-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+    align-items: center;
+  }
+
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-3-grid-ul {
+    width: 100%;
+  }
+
+  .hworks-3-list-item {
+    margin: 0 0 var(--space-l) 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-s);
+  }
+
+  /* bm-custom */
+  .hworks-3-grid-ul {
+    -moz-column-count: 2;
+    -moz-column-gap: var(--space-xl);
+    -webkit-column-count: 2;
+    -webkit-column-gap: var(--space-xl);
+    column-count: 2;
+    column-gap: var(--space-xl);
+  }
+  
+  .hworks-3-grid-ul {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-3-grid-ul li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:1.4rem;
+    padding-block:.4rem;
+    color:var(--action-primary);
+  }
+  
+  
+  @media (max-width:768px) {
+  
+  	.hworks-3-grid-ul {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+  
+  }
+}
+</style>

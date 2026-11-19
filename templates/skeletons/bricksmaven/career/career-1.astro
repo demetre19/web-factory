@@ -1,0 +1,136 @@
+---
+/**
+ * bm-career-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (career-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-career-1__container">
+    <div class="intro intro--left">
+      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Tagline</p>
+    </div>
+    <div class="list--none bm-career-1-career-list">
+      {items.map((it) => (
+        <div class="bm-career-1-career-card">
+          <div class="bm-career-1-career-card__top">
+            <h2 class="bm-career-1-career-card__heading">{it.title}</h2>
+            <div class="bm-career-card__status-cover">
+              <p class="bm-career-card__status-label">{it.text}</p>
+            </div>
+          </div>
+          <p class="bm-career-1-career-card__text">{it.text}</p>
+          <div class="list--none bm-career-meta-list">
+            <div class="bm-career-meta-item">
+              <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              <p class="bm-career-meta-item__label">{it.text}</p>
+            </div>
+            <div class="bm-career-meta-item">
+              <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              <p class="bm-career-meta-item__label">{it.text}</p>
+            </div>
+          </div>
+          <a class="btn--outline" href={it.href}>{it.label}</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-career-1__container {
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-career-1-career-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-career-1-career-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-career-1-career-card__top {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-career-1-career-card__heading {
+    width: 100%;
+  }
+
+  .bm-career-card__status-cover {
+    padding: calc(var(--space-xs) / 4) var(--space-xs) calc(var(--space-xs) / 4) var(--space-xs);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-career-card__status-label {
+    font-size: var(--fs-0);
+  }
+
+  .bm-career-meta-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-career-meta-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 3);
+  }
+}
+</style>

@@ -1,0 +1,47 @@
+---
+/**
+ * bm-testimonial-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-7-container center--all gap--s">
+    <img class="testimonial-7__logo"></img>
+    <p class="testimonial-7__desc text--xl width--50">We've been using Alpha to kick start every project and can't imagine working without it</p>
+    <figure class="testimonial-7__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="testimonial-7__profile flex--col align-items--center">
+      <h4 class="testimonial-7__name text--primary text--400">John Smith</h4>
+      <p class="testimonial-7__title text--s">Product Manager, Bricksmaven</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-7__img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 100% 100% 100% 100%;
+  }
+}
+</style>

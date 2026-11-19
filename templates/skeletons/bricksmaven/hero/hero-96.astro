@@ -1,0 +1,175 @@
+---
+/**
+ * bm-hero-96 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-96.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-96__container">
+    <div class="bm-hero-96__intro">
+      <h1 class="bm-hero-96__heading">Designing digital experiences that connect, excite and convert</h1>
+      <p class="bm-hero-96__accent-heading">Hey I’m Ryan!</p>
+    </div>
+  </div>
+  <div class="bm-carousel-list">
+    <div class="bm-media-carousel-list list--none">
+      <div class="bm-carousel-track">
+        <figure class="bm-carousel-track__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-carousel-track">
+        <figure class="bm-carousel-track__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="bm-hero-96__footer">
+      <div class="bm-hero-96__column">
+        <p class="bm-hero-96__subheading">I’m dedicated to building exceptional websites that not only reflect your brand but also drive conversions and attract clients effectively.</p>
+      </div>
+      <div class="bm-hero-96__column-right">
+        <div class="cta-combo">
+          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          <a class="link--black" href="#">Secondary action →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-96 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-96__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-96__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-96__heading {
+    font-size: calc(var(--fs-4) * 1.3);
+    width: 100%;
+  }
+
+  .bm-hero-96__accent-heading {
+    font-size: calc(var(--fs-4) * 1.7);
+    font-weight: 700;
+  }
+
+  .bm-carousel-list {
+    width: calc(100% + (var(--gutter) * 2));
+    flex-wrap: nowrap;
+  }
+
+  .bm-media-carousel-list {
+    width: 100%;
+    overflow: clip;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .bm-carousel-track__image {
+    object-fit: cover;
+    width: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    height: 100%;
+  }
+
+  .bm-hero-96__footer {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    padding: var(--space-m) 0 0 0;
+    border-top: 1px solid var(--color-line-default);
+  }
+
+  .bm-hero-96__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .bm-hero-96__column-right {
+    align-items: flex-end;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  /* bm-custom */
+  .bm-carousel-list {
+    --logo-gap: var(--flow-spacing);
+    --scroll-duration: 100s;
+  }
+  
+  /* Outer wrapper */
+  .bm-carousel-list {
+    overflow: hidden;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  
+  /* Track that scrolls */
+  .bm-carousel-list .bm-media-carousel-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: max-content;
+    gap: var(--acss-logo-gap);
+    will-change: transform;
+    /* key part: content is as wide as needed */
+    animation: scroll-logos var(--acss-scroll-duration) linear infinite;
+  }
+  
+  /* Pause animation on hover of the whole carousel */
+  .bm-carousel-list:hover .bm-media-carousel-list {
+    animation-play-state: paused;
+  }
+  
+  /* Also pause if user tabs into any logo (keyboard users) */
+  .bm-carousel-list:focus-within .bm-media-carousel-list {
+    animation-play-state: paused;
+  }
+  
+  /* Animation: move track left by 50% (because we duplicated the content) */
+  @keyframes scroll-logos {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .bm-media-carousel-list  {
+      animation: none;
+    }
+  }
+}
+</style>

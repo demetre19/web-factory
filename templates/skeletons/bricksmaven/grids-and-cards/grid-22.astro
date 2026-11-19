@@ -1,0 +1,212 @@
+---
+/**
+ * bm-grid-22 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-22.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="grid-22-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="grid-22-list list--none">
+      {items.map((it) => (
+        <div class="grid-22-card">
+          <div class="grid-22-card__front">
+            <h2 class="grid-22-card__heading">{it.title}</h2>
+          </div>
+          <div class="grid-22-card__back">
+            <p class="grid-22-card__text">{it.text}</p>
+            <a class="btn--primary clickable-parent wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+          <div class="grid-22-card__overlay"></div>
+          <figure class="grid-22-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .grid-22-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .grid-22-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .grid-22-card {
+    position: relative;
+    height: 36rem;
+    overflow: hidden;
+  }
+
+  .grid-22-card__front {
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    background: color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+  }
+
+  .grid-22-card__heading {
+    font-size: var(--fs-2);
+  }
+
+  .grid-22-card__back {
+    row-gap: var(--flow-spacing);
+    z-index: 2;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .grid-22-card__text {
+    font-size: var(--fs-0);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .grid-22-card__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .grid-22-card__image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  /* Card */
+  
+  .grid-22-card:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  .grid-22-card:focus-within {
+  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
+  
+  }
+  
+  /* Front */
+  
+  .grid-22-card__front {
+  	transition: .5s ease-in-out;
+    backdrop-filter: blur(10px);
+  }
+  
+  .grid-22-card:hover .grid-22-card__front, .grid-22-card:focus-within .grid-22-card__front {
+  	transform: translateY(100%);
+  }
+  
+  .grid-22-card__heading {
+  	transition: .4s ease-in-out;
+    writing-mode: vertical-rl;
+  }
+  
+  .grid-22-card:hover .grid-22-card__heading, .grid-22-card:focus-within .grid-22-card__heading {
+  	opacity: 0;
+  }
+  
+  
+  /* Back */
+  .grid-22-card__back {
+  	transition: .5s ease-in-out;
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  
+  .grid-22-card:hover .grid-22-card__back, .grid-22-card:focus-within .grid-22-card__back {
+  	transform: translateY(0%);
+    opacity: 1;
+  }
+  
+  /* Overlay */
+  .grid-22-card__overlay {
+  	transition: .5s ease-in-out;
+    opacity: 0;
+  }
+  
+  .grid-22-card:hover .grid-22-card__overlay, .grid-22-card:focus-within .grid-22-card__overlay {
+    opacity: 1;
+  }
+  
+  /* Image */
+  .grid-22-card__image {
+  	transition: .8s ease-in-out;
+    filter: blur(10px) grayscale(1);
+  }
+  
+  .grid-22-card:hover .grid-22-card__image, .grid-22-card:focus-within .grid-22-card__image {
+  	filter: blur(0px) grayscale(0);
+    scale: 1.1;
+  }
+}
+</style>

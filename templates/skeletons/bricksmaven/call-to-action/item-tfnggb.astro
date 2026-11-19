@@ -1,0 +1,115 @@
+---
+/**
+ * bm-item-tfnggb — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-tfnggb.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-12-container">
+    <div class="cta-12-main-cta">
+      <h2 class="cta-12__heading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</h2>
+      <p class="cta-12__desc">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <p class="cta-12__call-back">Or let us call you back</p>
+    </div>
+    <div class="cta-12-sales-card-wrapper list--none">
+      <div class="cta-12-sales-card">
+        <h3 class="cta-12-sales-card__heading">Celine Dion</h3>
+        <p class="cta-12-sales-card__label">Sales</p>
+        <div class="cta-12-sales-card__media">
+          <figure class="cta-12-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="cta-12-sales-card__footer">
+          <p class="cta-12-sales-card__phone">+32 465 45 37 15</p>
+          <p class="cta-12-sales-card__email">hi@bricksmaven.com</p>
+        </div>
+      </div>
+      <div class="cta-12-sales-card">
+        <h3 class="cta-12-sales-card__heading">John Baker</h3>
+        <p class="cta-12-sales-card__label">Sales</p>
+        <div class="cta-12-sales-card__media">
+          <figure class="cta-12-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="cta-12-sales-card__footer">
+          <p class="cta-12-sales-card__phone">+32 465 45 37 15</p>
+          <p class="cta-12-sales-card__email">hi@bricksmaven.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-12-container {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: var(--space-m);
+  }
+
+  .cta-12-main-cta {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--space-s);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .cta-12-sales-card-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .cta-12-sales-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .cta-12-sales-card__heading {
+    font-size: var(--fs-1);
+  }
+
+  .cta-12-sales-card__image {
+    object-fit: cover;
+    width: 86px;
+    height: 86px;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .cta-12-sales-card__footer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

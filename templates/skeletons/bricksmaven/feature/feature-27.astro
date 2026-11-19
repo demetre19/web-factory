@@ -1,0 +1,97 @@
+---
+/**
+ * bm-feature-27 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-27.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-27-container">
+    <div class="feature-27-intro">
+      <h2 class="feature-27__heading">Long headline to turn your visitors into users</h2>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="cta-combo__text">OR</p>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div>
+      <div class="bm-feature-list-ul list--none bm-feature-list-ul--alt">
+        {items.map((it) => (
+          <div class="bm-feature-list-card">
+            <h2 class="bm-feature-list-card__heading">{it.title}</h2>
+            <p class="bm-feature-list-card__text">{it.text}</p>
+            <span class="bm-feature-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-27-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .feature-27-intro {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .bm-feature-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    padding: 0 0 0 0;
+  }
+
+  .bm-feature-list-ul--alt {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-feature-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+}
+</style>

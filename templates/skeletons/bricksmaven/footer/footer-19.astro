@@ -1,0 +1,152 @@
+---
+/**
+ * bm-footer-19 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-19.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-footer-19__container">
+    <div class="bm-footer-19__brand">
+      <img class="bm-footer-19__logo"></img>
+    </div>
+    <div class="bm-footer-19__content">
+      {items.map((it) => (
+        <div class="bm-footer-19__content-column">
+          <h2 class="bm-footer-19__heading">{it.title}</h2>
+          <a class="bm-footer-19__link" href="#">{it.text}</a>
+          <div class="bm-footer-19-phone-ul list--none">
+            <div class="bm-footer-19-phone-list">
+              <div class="bm-footer-19-phone-list__icon-wrapper">
+                <span class="bm-footer-19-phone-list__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <div class="bm-footer-19-phone-list__link-wrapper">
+                <a class="bm-footer-19-phone-list__link" href="#">{it.text}</a>
+              </div>
+            </div>
+            <div class="bm-footer-19-phone-list">
+              <div class="bm-footer-19-phone-list__icon-wrapper">
+                <span class="bm-footer-19-phone-list__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <div class="bm-footer-19-phone-list__link-wrapper">
+                <a class="bm-footer-19-phone-list__link" href="#">{it.text}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="bm-footer-19__footer">
+    <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-footer-19 {
+    row-gap: var(--space-s);
+    overflow: hidden;
+  }
+
+  .bm-footer-19__container {
+    row-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .bm-footer-19__content {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-footer-19__content-column {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    text-align: center;
+    align-items: center;
+  }
+
+  .bm-footer-19-phone-ul {
+    width: auto;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-19-phone-list {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-footer-19__column {
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-19__footer {
+    align-items: center;
+    padding: var(--space-l) var(--space-m) var(--space-l) var(--space-m);
+    background: var(--text-secondary);
+    width: 100vw;
+    left: 50%;
+    margin: 0 0 0 -50vw ;
+    position: relative;
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-footer-19__content-column:not(:last-child) {
+  	border-right: 1px solid var(--color-line-default);
+  }
+  
+  @media (max-width:991px) {
+  	.bm-footer-19__content-column:not(:last-child) {
+  	border-bottom: 1px solid var(--color-line-default);
+    border-right: none;
+  }
+  
+  
+  }
+
+  /* bm-custom */
+  .footer-newsletter__form {
+  	flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .footer-newsletter__form [type="submit"] {
+  	height: 100%;
+  }
+}
+</style>

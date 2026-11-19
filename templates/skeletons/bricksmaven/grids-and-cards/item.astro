@@ -1,0 +1,121 @@
+---
+/**
+ * bm-item — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-12-container">
+    <div class="gridcard-12-ct">
+      <p class="gridcard-12-ct__tag">Awesome Tagline</p>
+      <h2 class="gridcard-12-ct__title">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+      <a class="gridcard-12-ct__cta" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="gridcard-12-media">
+      <div class="gridcard-12-media__box--light">
+        <h2>Lorem ipsum heading</h2>
+        <a class="gridcard-12-media__box-cta" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="gridcard-12-media__wrapper">
+        <figure class="gridcard-12-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="gridcard-12-media__wrapper">
+        <figure class="gridcard-12-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="gridcard-12-media__box">
+        <h2 class="gridcard-12-media__box-title--white">Lorem ipsum heading</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-12-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .gridcard-12-ct {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-xs);
+  }
+
+  .gridcard-12-ct__tag {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .gridcard-12-ct__title {
+    margin: 0 0 0 0;
+  }
+
+  .gridcard-12-ct__cta {
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-12-media {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-12-media__box--light {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
+  }
+
+  .gridcard-12-media__box-cta {
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-12-media__wrapper {
+    object-fit: cover;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gridcard-12-media__img {
+    object-fit: cover;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gridcard-12-media__box {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--action-primary);
+  }
+}
+</style>

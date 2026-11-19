@@ -1,0 +1,53 @@
+---
+/**
+ * bm-grid-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-3-container">
+    <div class="gridcard-3-grid-ul list--none">
+      {items.map((it) => (
+        <div class="gridcard-3-card">
+          <h2 class="gridcard-3-card__heading">{it.title}</h2>
+          <p class="gridcard-3-card__desc">{it.text}</p>
+          <span class="gridcard-3-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-3-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-3-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+}
+</style>

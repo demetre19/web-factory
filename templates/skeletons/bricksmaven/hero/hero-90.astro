@@ -1,0 +1,299 @@
+---
+/**
+ * bm-hero-90 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-90.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-90__container">
+    <div class="bm-hero-90__content">
+      <h1 class="bm-hero-90__heading">Long headline to turn your visitors into customers</h1>
+      <p class="bm-hero-90__accent-heading bm-accent-heading">Accent heading</p>
+      <p class="bm-hero-90__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div class="bm-review-widget bm-hero-90__review-widget">
+        <div class="bm-team-list list--none">
+          {items.map((it) => (
+            <div class="bm-team-media">
+              <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+        <div class="bm-testimonial-38__star-ratings">
+          <div class="bm-testimonial-38-star-list list--none">
+            {items.map((it) => (
+              <div class="bm-testimonial-38-star-li">
+                <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+          <p class="bm-testimonial-38__meta-text">Rated 5 Stars on TrustPilot</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-hero-90__case-slider">
+      <div class="bm-hero-90__slider-nested">
+        {items.map((it) => (
+          <div class="bm-hero-90-slide">
+            <div class="bm-hero-90-case">
+              <div class="bm-hero-90-case__content">
+                <h2 class="bm-hero-90-case__heading clickable-parent">{it.title}</h2>
+                <div class="bm-hero-90-case__footer">
+                  <p class="bm-hero-90-case__text">{it.text}</p>
+                  <a class="bm-hero-90-case__link link--white" href="#">{it.text}</a>
+                </div>
+              </div>
+              <div class="bm-hero-90-case__overlay"></div>
+              <figure class="bm-hero-90-case__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div class="bm-hero-90-testimonial">
+              <div class="bm-testimonial-38-star-list list--none">
+                {(it.items || []).map((it2) => (
+                  <div class="bm-testimonial-38-star-li">
+                    <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
+              <p class="bm-hero-90-testimonial__review">{it.text}</p>
+              <div class="bm-hero-90-testimonial__client-meta">
+                <div class="bm-hero-90-testimonial__client-data">
+                  <p class="bm-hero-90-testimonial__name">{it.text}</p>
+                  <p class="bm-hero-90-testimonial__title">{it.text}</p>
+                </div>
+                <figure class="bm-hero-90-testimonial__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-90 {
+    overflow: clip;
+  }
+
+  .bm-hero-90__container {
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-90__content {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-hero-90__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .bm-hero-90__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .bm-review-widget {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    text-align: center;
+    align-items: center;
+  }
+
+  .bm-hero-90__review-widget {
+    width: auto;
+  }
+
+  .bm-team-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-team-media__image {
+    object-fit: cover;
+    width: 53;
+    height: 52;
+    border-top: .4rem solid var(--bg-canvas);
+    border-right: .4rem solid var(--bg-canvas);
+    border-bottom: .4rem solid var(--bg-canvas);
+    border-left: .4rem solid var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .bm-testimonial-38__star-ratings {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: 0;
+  }
+
+  .bm-testimonial-38-star-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-90-slide {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-90-case {
+    position: relative;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: clip;
+  }
+
+  .bm-hero-90-case__content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    justify-content: flex-end;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-hero-90-case__footer {
+    flex-wrap: nowrap;
+  }
+
+  .bm-hero-90-case__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-hero-90-testimonial {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: calc(var(--flow-spacing) / 2);
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--bg-canvas);
+  }
+
+  .bm-hero-90-testimonial__review {
+    font-size: var(--fs-0);
+  }
+
+  .bm-hero-90-testimonial__client-meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-hero-90-testimonial__name {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-hero-90-testimonial__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-hero-90-testimonial__image {
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  /* bm-custom */
+  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
+  	margin-inline-start: -20px;
+  }
+  
+  .bm-team-media:first-child {
+  	margin-inline-start: 0px;
+  }
+
+  /* bm-custom */
+  /* Flip testimonial card in the even cards  */
+  .bm-hero-90__slider-nested .bm-hero-90-slide:nth-child(odd) .bm-hero-90-testimonial {
+    order: -1;
+  }
+  
+  .bm-hero-90__slider-nested .splide__track {
+    overflow: visible;
+  }
+
+  /* bm-custom */
+  /* CARD */
+  .bm-hero-90-case {
+    --footer-height: 26px;
+    transition: all 0.2s linear; 
+  }
+  
+  /* Overlay */
+  .bm-hero-90-case .bm-hero-90-case__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: color-mix(in srgb, var(--text-secondary) 60%, transparent);
+    block-size: 100%;
+    z-index: 1;
+    transition: 0.5s linear; 
+  }
+  
+  .bm-hero-90-case:hover .bm-hero-90-case__overlay {
+    background-color: color-mix(in srgb, var(--text-secondary) 80%, transparent); 
+  }
+  
+  /* FOOTER */
+  .bm-hero-90-case__footer {
+    overflow: clip;
+    block-size: var(--acss-footer-height);
+  }
+  
+  /* Text */
+  .bm-hero-90-case .bm-hero-90-case__text {
+    transition: 0.1s linear; 
+  }
+  
+  .bm-hero-90-case:hover .bm-hero-90-case__text {
+    margin-block-start: calc(-1 * var(--acss-footer-height)); 
+  }
+  
+  /* IMAGE */
+  
+  .bm-hero-90-case .bm-hero-90-case__image {
+    transition: 0.5s linear; 
+  }
+  
+  .bm-hero-90-case:hover .bm-hero-90-case__image {
+    transform: scale(1.4); 
+  }
+}
+</style>

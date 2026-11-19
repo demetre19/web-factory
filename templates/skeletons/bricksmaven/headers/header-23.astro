@@ -1,0 +1,80 @@
+---
+/**
+ * bm-header-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-23__container">
+    <div class="bm-header-23__nav">
+      <div class="bm-header-23__nav-menu"></div>
+      <div class="bm-search"></div>
+    </div>
+    <div class="bm-header-23__brand">
+      <figure class="bm-header-23__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-header-23__cta-wrapper">
+      <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-23 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-23__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-23__nav {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-header-23__brand {
+    width: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+
+  .bm-header-23__logo {
+    object-fit: contain;
+  }
+
+  .bm-header-23__cta-wrapper {
+    align-items: flex-end;
+    width: auto;
+  }
+}
+</style>

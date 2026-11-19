@@ -1,0 +1,134 @@
+---
+/**
+ * bm-shop-hero-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (shop-hero-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-shop-hero-7__hero-container">
+    <div class="bm-shop-hero-7__intro">
+      <div class="bm-shop-hero-7__header">
+        <h1 class="bm-shop-hero-7__heading">Long headline to turn your visitors into customers</h1>
+        <p class="accent-h">Accent heading</p>
+        <p class="bm-shop-hero-7__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--white" href="#">Call to action</a>
+        <a class="bm-link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <figure class="bm-shop-hero-7__background-image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+  <div class="bm-shop-hero-7__carousel-container">
+    <div class="shop-hero-3-category-slider__slider">
+      <div class="shop-hero-3-category-slider__slide">
+        <div class="shop-hero-3-category-slider__content">
+          <h2 class="shop-hero-3-category-slider__content">{term_name}</h2>
+          <a class="shop-hero-3-category-slider__link" href="#">View all</a>
+        </div>
+        <div class="shop-hero-3-category-slider__media">
+          <figure class="shop-hero-3-category-slider__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-shop-hero-7 {
+    padding: 0 0 0 0;
+    row-gap: var(--space-s);
+  }
+
+  .bm-shop-hero-7__hero-container {
+    position: relative;
+    width: 100%;
+    align-items: center;
+    padding: var(--section-space-xxl) var(--gutter) var(--section-space-xxl) var(--gutter);
+    height: 740px;
+    justify-content: center;
+  }
+
+  .bm-shop-hero-7__intro {
+    row-gap: var(--flow-spacing);
+    width: var(--measure);
+  }
+
+  .bm-shop-hero-7__header {
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: var(--content-width);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-shop-hero-7__background-image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-shop-hero-7__carousel-container {
+    width: 100%;
+    padding: 0 var(--gutter) 0 var(--gutter);
+    align-items: center;
+  }
+
+  .shop-hero-3-category-slider__slider {
+    width: var(--measure);
+  }
+
+  .shop-hero-3-category-slider__slide {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    justify-content: flex-start;
+  }
+
+  .shop-hero-3-category-slider__content {
+    row-gap: calc(var(--flow-spacing) / 4);
+    font-size: var(--fs-1);
+  }
+
+  .shop-hero-3-category-slider__link {
+    font-size: var(--fs-0);
+  }
+
+  .shop-hero-3-category-slider__image {
+    object-fit: cover;
+    width: 92;
+    height: 92;
+    overflow: hidden;
+    border-radius: 100% 100% 100% 100%;
+  }
+}
+</style>

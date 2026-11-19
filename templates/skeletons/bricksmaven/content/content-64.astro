@@ -1,0 +1,133 @@
+---
+/**
+ * bm-content-64 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-64.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-64__container">
+    <div class="bm-content-64__content">
+      <h2 class="bm-content-64__heading">Long headline to turn your visitors into customers</h2>
+      <p class="bm-content-64__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+      <div class="bm-feature-list-beta">
+        <div class="bm-feature-list-item">
+          <p class="bm-feature-list-item__list-text">Add a helpful benefit for the consumer</p>
+          <div class="bm-feature-list-item__icon-wrapper">
+            <span class="bm-feature-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="bm-feature-list-item">
+          <p class="bm-feature-list-item__list-text">Add a helpful benefit for the consumer</p>
+          <div class="bm-feature-list-item__icon-wrapper">
+            <span class="bm-feature-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-content-64__media">
+      <figure class="bm-content-64__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div class="bm-quote-card">
+        <p class="bm-quote-card__review-text">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting.</p>
+        <p class="bm-quote-card__name-title">Ricky Marty, CEO</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-64__container {
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-content-64__content {
+    display: flex;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-list-beta {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-feature-list-item {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-feature-list-item__icon-wrapper {
+    padding: 8px 12px 8px 12px;
+    background: var(--text-primary);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-content-64__media {
+    position: relative;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: flex-end;
+    height: 496px;
+  }
+
+  .bm-content-64__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-quote-card {
+    position: relative;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-xl);
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: calc(var(--flow-spacing) / 3);
+  }
+
+  .bm-quote-card__review-text {
+    font-weight: 700;
+    position: relative;
+  }
+
+  .bm-quote-card__name-title {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-quote-card__review-text::before {
+    content:   '"';
+    position:absolute;
+    left: calc(-1 * var(--space-l));
+    font-size: var(--fs-3);
+    line-height: 1;
+      
+  }
+}
+</style>

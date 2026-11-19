@@ -1,0 +1,102 @@
+---
+/**
+ * bm-team-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (team-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="team-3-container">
+    <div class="intro">
+      <h2 class="intro__heading">Meet our team</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">We're hiring!</p>
+    </div>
+    <div class="team-3-content list--none">
+      {items.map((it) => (
+        <div class="team-3-card">
+          <div class="team-3-card__content">
+            <h3 class="team-3-card__name">{it.title}</h3>
+            <p class="team-3-card__title">{it.text}</p>
+          </div>
+          <div class="team-3-card__image-wrapper">
+            <figure class="team-3-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .team-3-container {
+    display: flex;
+    row-gap: var(--space-l);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .team-3-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-s);
+    width: 100%;
+  }
+
+  .team-3-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .team-3-card__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    align-items: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .team-3-card__image-wrapper {
+    width: 100%;
+    height: 30rem;
+  }
+
+  .team-3-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .team-3-card__image {
+  aspect-ratio: 4/;
+  }
+}
+</style>

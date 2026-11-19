@@ -1,0 +1,136 @@
+---
+/**
+ * bm-call-to-action-33 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-33.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-33__container">
+    <div class="bm-cta-33__content">
+      <div class="bm-cta-33__intro">
+        <div class="bm-project-status">
+          <p class="bm-project-status__label">Available for new projects</p>
+        </div>
+        <h2 class="bm-cta-33__heading">Ready for a website that actually works?</h2>
+        <p class="bm-cta-33__text">If your site isn’t helping you grow, I’ll help you build one that looks sharp, builds trust, and converts better.</p>
+      </div>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-cta-33__faq-wrapper">
+      <div class="bm-cta-33-accordion">
+        {items.map((it) => (
+          <div class="bm-cta-33-accordion-item">
+            <div class="bm-cta-33-accordion-item__title">
+              <h3 class="bm-cta-33-accordion-item__heading">{it.title}</h3>
+              <span class="bm-cta-33-accordion-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="bm-cta-33-accordion-item__content">
+              <p class="bm-cta-33-accordion-item__text">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-33__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-cta-33__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-33__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-project-status {
+    padding: 6px var(--space-s) 6px var(--space-s);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-project-status__label {
+    position: relative;
+  }
+
+  .bm-cta-33__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-cta-33-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-cta-33-accordion-item__title {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-cta-33-accordion-item__heading {
+    font-size: var(--fs-2);
+  }
+
+  /* bm-custom */
+  @media (max-width:991px) {
+  
+  .bm-cta-33__container {
+   		grid-template-columns: calc(100% * 1 / 1); 
+    }
+    
+  }
+
+  /* bm-custom */
+  .bm-project-status__label::before {
+    content: '●';
+    padding-inline-end: calc(var(--space-s) / 2);
+    color: var(--bg-subtle);
+    animation: 3s ease-in 0s infinite alternate both running glow;
+  
+  }
+  
+  @keyframes glow {
+    from {
+      
+      filter: blur(1px);
+    }
+  
+    to {
+      
+      filter: blur(3px);
+    }
+  }
+}
+</style>

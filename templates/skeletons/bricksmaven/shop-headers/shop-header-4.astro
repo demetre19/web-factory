@@ -1,0 +1,124 @@
+---
+/**
+ * bm-shop-header-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (shop-header-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-shop-header-4__container">
+    <div class="list--none bm-shop-header-4-usp-list">
+      {items.map((it) => (
+        <div class="bm-shop-header-4-usp-item">
+          <p class="bm-shop-header-4-usp-item__usp">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="bm-shop-header-4__main-container">
+    <div class="bm-shop-header-4-item__nav">
+      <div class="bm-shop-header-4-item__nav-menu"></div>
+    </div>
+    <div class="bm-shop-header-4-item__brand">
+      <img class="bm-shop-header-4-item__logo"></img>
+    </div>
+    <div class="bm-shop-header-4-item__end">
+      <a class="btn--primary bm-shop-header-4-item__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div class="bm-shop-header-cart-search">
+        <div class="bm-shop-header-search"></div>
+        <div class="bm-shop-header-mini-cart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-shop-header-4 {
+    padding: 0 0 var(--space-s) 0;
+    row-gap: calc(var(--flow-spacing) / 2);
+    overflow: clip;
+  }
+
+  .bm-shop-header-4__container {
+    width: 100vw;
+    align-items: center;
+    margin: 0 0 0 -50vw;
+    left: 50%;
+    position: relative;
+    padding: calc(var(--space-xs) / 2) var(--gutter) calc(var(--space-xs) / 2) var(--gutter);
+    background: var(--bg-subtle);
+  }
+
+  .bm-shop-header-4-usp-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .bm-shop-header-4-usp-item {
+    width: auto;
+    position: relative;
+  }
+
+  .bm-shop-header-4-usp-item__usp {
+    font-size: var(--fs-0);
+  }
+
+  .bm-shop-header-4__main-container {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    position: relative;
+    width: 100%;
+  }
+
+  .bm-shop-header-4-item__brand {
+    width: auto;
+    position: absolute;
+    left: 50%;
+    z-index: 99;
+  }
+
+  .bm-shop-header-4-item__end {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    justify-content: flex-end;
+  }
+
+  .bm-shop-header-cart-search {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 3);
+    align-items: center;
+  }
+
+  /* bm-custom */
+  /* Remove the left margin on the first link */
+  .bm-shop-header-4-item__nav-menu .bricks-nav-menu>li:first-child {
+    margin-inline-start: 0;
+  }
+}
+</style>

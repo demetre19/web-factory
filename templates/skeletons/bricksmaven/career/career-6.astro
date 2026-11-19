@@ -1,0 +1,149 @@
+---
+/**
+ * bm-career-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (career-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-career-6__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-career-6-list list--none">
+      {items.map((it) => (
+        <div class="bm-career-6-card">
+          <div class="bm-career-6-card__content">
+            <h2 class="bm-career-6-card__heading">{it.title}</h2>
+            <div class="list--none bm-career-meta-list">
+              {(it.items || []).map((it2) => (
+                <div class="bm-career-meta-item">
+                  <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
+                  <p class="bm-career-meta-item__label">{it2.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="bm-career-6-card__media">
+            <figure class="bm-career-6-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <a class="btn--primary bm-career-6-card__cta btn--s wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-career-6__container {
+    row-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-career-6-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-career-6-card {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 4fr);
+    position: relative;
+  }
+
+  .bm-career-6-card__content {
+    padding: var(--space-l) var(--space-m) var(--space-l) var(--space-m);
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    background: var(--fs-0);
+  }
+
+  .bm-career-meta-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-career-meta-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 3);
+  }
+
+  .bm-career-6-card__media {
+    position: relative;
+    overflow: clip;
+  }
+
+  .bm-career-6-card__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-career-6-card__cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  /* bm-custom */
+  .bm-career-6-card .bm-career-6-card__cta {
+    opacity: 0;
+    transition: 0.5s ease;
+  }
+  
+  .bm-career-6-card:hover .bm-career-6-card__cta {
+    opacity: 1;
+  }
+  
+  .bm-career-6-card .bm-career-6-card__image {
+    transition: 0.5s ease;
+  }
+  
+  .bm-career-6-card:hover .bm-career-6-card__image {
+    scale: 1.2;
+  }
+  
+  .bm-career-6-card__heading:not(a) > a::after {
+    content: '';
+    position: absolute;
+    display: flex;
+    inset: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+}
+</style>

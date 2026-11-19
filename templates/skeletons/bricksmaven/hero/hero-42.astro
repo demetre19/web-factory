@@ -1,0 +1,79 @@
+---
+/**
+ * bm-hero-42 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-42.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-42__container">
+    <div class="hero-42__content">
+      <h1 class="hero-42__heading">Get the Alpha template now</h1>
+      <p class="accent-h">Accent heading</p>
+      <p class="hero-42__text">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-42__image-left">
+      <figure class="hero-42__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="hero-42__image-right">
+      <figure class="hero-42__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-42 {
+    height: 80vh;
+    padding: 0 0 0 0;
+    display: flex;
+  }
+
+  .hero-42__container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr) minmax(0, 4fr);
+  }
+
+  .hero-42__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    justify-content: center;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    background: var(--bg-subtle);
+  }
+
+  .hero-42__image-left {
+    display: flex;
+  }
+
+  .hero-42__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

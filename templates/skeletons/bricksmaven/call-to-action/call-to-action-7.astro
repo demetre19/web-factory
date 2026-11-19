@@ -1,0 +1,90 @@
+---
+/**
+ * bm-call-to-action-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-7-container">
+    <div class="cta-7-content">
+      <h2 class="cta-7__title">Tired of building from scratch? Get Bricksmaven today!</h2>
+      <div class="hero-1__cta">
+        <a class="btn--primary hero-1-wrapper__cta--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="btn--primary btn--outline hero-1-wrapper__cta--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+  </div>
+  <figure class="cta-7-bg"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-7 {
+    position: relative;
+    background: color-mix(in srgb, var(--bg-subtle) 70%, transparent);
+  }
+
+  .cta-7-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-7-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--bg-canvas);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--space-m);
+    z-index: 1;
+  }
+
+  .hero-1__cta {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .cta-7-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+</style>

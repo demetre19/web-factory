@@ -1,0 +1,87 @@
+---
+/**
+ * bm-table-of-content-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (table-of-content-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="table-of-content-2">
+    <div class="table-of-content-2__intro">
+      <h2 class="table-of-content-2__heading">Table of contents</h2>
+      <span class="table-of-content-2__icon" data-icon="lucide" aria-hidden="true"></span>
+    </div>
+    <div class="table-of-content-2-ol">
+      <div class="table-of-content-2-li">
+        <a class="table-of-content-2-li__link" href="#">Text link</a>
+        <div class="table-of-content-2-ol">
+          <div class="table-of-content-2-li">
+            <a class="table-of-content-2-li__link-l2" href="#">Text link</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .table-of-content-2 {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-top: .1rem solid var(--bg-subtle);
+    border-right: .1rem solid var(--bg-subtle);
+    border-bottom: .1rem solid var(--bg-subtle);
+    border-left: .1rem solid var(--bg-subtle);
+  }
+
+  .table-of-content-2__intro {
+    padding: 0 0 var(--space-xs) 0;
+    border-bottom: .1rem solid var(--bg-subtle);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-of-content-2-ol {
+    row-gap: var(--flow-spacing);
+    overflow: hidden;
+  }
+
+  .table-of-content-2-li__link {
+    padding: 0 25px 0 0;
+  }
+
+  /* bm-custom */
+  .table-of-content-2__icon.rotated {
+  	transform: scaleY(-1);
+  }
+
+  /* bm-custom */
+  .table-of-content-2-li {
+  	    display: list-item;
+  }
+
+  /* bm-custom */
+  .table-of-content-2-li__link {
+  	gap: 25px;
+  }
+}
+</style>

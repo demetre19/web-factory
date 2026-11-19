@@ -1,0 +1,126 @@
+---
+/**
+ * bm-author-page-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (author-page-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-author-page-1__container">
+    <div class="bm-author-page-1__content">
+      <div class="bm-author-card-1">
+        <div class="bm-author-card-1__thumb">
+          <figure class="bm-author-card-1__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-author-card-1__details">
+          <p class="bm-author-card-1__name">{author_name}</p>
+          <p class="bm-author-card-1__title">Co-founder/CEO</p>
+        </div>
+        <p class="bm-author-card-1__bio">{author_bio}</p>
+        <div class="bm-social-share list--none bm-social-share--left">
+          {items.map((it) => (
+            <div class="bm-social-share__icon-wrapper">
+              <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bm-author-page-1__post-container">
+        <h2 class="bm-author-page-1__heading">All posts by {author_name}</h2>
+        <div class="bm-author-page-1__post-list">
+          <div class="bm-blog-section-1-card">
+            <p class="bm-blog-section-1-card__date">{post_date}</p>
+            <h2 class="bm-blog-section-1-card__heading">{post_title}</h2>
+            <a class="bm-blog-section-1-card__read" href="#">Read the full story</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-author-page-1__content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-author-card-1 {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--bg-subtle);
+  }
+
+  .bm-author-card-1__image {
+    object-fit: cover;
+    width: 128px;
+    height: 128px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-author-card-1__name {
+    font-weight: 700;
+    font-size: var(--fs-1);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-author-page-1__post-container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-author-page-1__post-list {
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-blog-section-1-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: var(--space-s);
+    align-items: flex-start;
+  }
+
+  .bm-blog-section-1-card__date {
+    font-size: var(--fs-0);
+  }
+
+  .bm-blog-section-1-card__read {
+    margin: auto 0 0 0;
+  }
+}
+</style>

@@ -1,0 +1,125 @@
+---
+/**
+ * bm-testimonial-58 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-58.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-58__container">
+    <div class="bm-testimonial-58-card">
+      <div class="bm-testimonial-58-card__review-cover">
+        <h2 class="bm-testimonial-58-card__heading">"Bricksmaven analyzes your full content library, adapting to your voice, style, and what's performed best for you in the past."</h2>
+        <p class="bm-accent-heading bm-testimonial-58-card__accent-heading">Customer Stories</p>
+      </div>
+      <div class="bm-testimonial-58-card__footer">
+        <div class="bm-testimonial-58-card__customer">
+          <p class="bm-testimonial-58-card__name">John Smith</p>
+          <p class="bm-testimonial-58-card__title">Owner of FirstEra Sounds</p>
+        </div>
+        <a class="bm-testimonial-58-card__cta btn--white" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-testimonial-58-card__overlay"></div>
+      <figure class="bm-testimonial-58-card__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-58 {
+    position: relative;
+    height: 80vh;
+    justify-content: center;
+  }
+
+  .bm-testimonial-58__container {
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-testimonial-58-card {
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .bm-testimonial-58-card__review-cover {
+    row-gap: calc(var(--flow-spacing) / 2);
+    z-index: 2;
+  }
+
+  .bm-testimonial-58-card__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-testimonial-58-card__accent-heading {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-testimonial-58-card__footer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    z-index: 2;
+  }
+
+  .bm-testimonial-58-card__name {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-58-card__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-testimonial-58-card__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .bm-testimonial-58-card__background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  /* Overlay */
+  .bm-testimonial-58-card__overlay {
+    transition: 0.4s ease;
+    opacity:0.8;
+  }
+  
+  .bm-testimonial-58-card:hover .bm-testimonial-58-card__overlay {
+    opacity:1;
+  }
+}
+</style>

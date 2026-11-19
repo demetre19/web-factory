@@ -1,0 +1,102 @@
+---
+/**
+ * bm-call-to-action-29 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-29.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-29__container">
+    <div class="bm-contact-widget-8">
+      <h2 class="bm-contact-widget-8__heading">Ready to start a project?</h2>
+      <div class="bm-contact-widget-8__right">
+        <div class="bm-contact-widget-8__manager-data">
+          <div class="bm-contact-widget-8__media">
+            <figure class="bm-contact-widget-8__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-contact-widget-8__data">
+            <div class="bm-contact-widget-8__top">
+              <p class="bm-contact-widget-8__name">Alan Smith</p>
+              <p class="bm-contact-widget-8__title">Account manager</p>
+            </div>
+          </div>
+        </div>
+        <a class="bm-contact-widget-8__link" href="#">Let's Talk</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-widget-8 {
+    row-gap: var(--flow-spacing);
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-xl) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    justify-content: space-between;
+  }
+
+  .bm-contact-widget-8__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+    width: 100%;
+  }
+
+  .bm-contact-widget-8__right {
+    row-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-contact-widget-8__manager-data {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .bm-contact-widget-8__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-8__image {
+    object-fit: cover;
+    width: 72;
+    height: 72;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget-8__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-8__name {
+    font-weight: 700;
+  }
+
+  .bm-contact-widget-8__link {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+}
+</style>

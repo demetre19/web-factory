@@ -1,0 +1,83 @@
+---
+/**
+ * bm-feature-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-23-container">
+    <div class="feature-23__content">
+      <h2 class="feature-23__heading">Long headline to turn your visitors into users</h2>
+      <p class="feature-23__text">Separated they live in Bookmarks right at the coast of the famous Semantics, large language ocean Separated they live in Bookmarks right at the coast</p>
+      <span class="feature-23__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div class="feature-23-list-ul list--none">
+        <div class="feature-23-list-card">
+          <div class="feature-23-list-card__content">
+            <p class="feature-23-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+          <span class="feature-23-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div class="feature-23-list-card">
+          <div class="feature-23-list-card__content">
+            <p class="feature-23-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+          <span class="feature-23-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+    <div class="feature-23__media">
+      <figure class="feature-23__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-23-container {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 3fr);
+    gap: var(--space-l);
+  }
+
+  .feature-23__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .feature-23-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .feature-23-list-card {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-s);
+    flex-wrap: nowrap;
+  }
+
+  .feature-23__image {
+    object-fit: cover;
+  }
+}
+</style>

@@ -1,0 +1,136 @@
+---
+/**
+ * bm-how-it-works-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hworks-21-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="hworks-21-tabs">
+      <div class="hworks-21-tabs-menu">
+        {items.map((it) => (
+          <div class="hworks-21-tabs__title">
+            <p class="hworks-21-tabs__number">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <div class="hworks-21-tabs-content">
+        {items.map((it) => (
+          <div class="hworks-21-tabs__pane">
+            <div class="hworks-21-tabs__pane-wrapper">
+              <div class="hworks-21-tabs__content">
+                <h2>{it.title}</h2>
+                <p class="hworks-21-tabs__text">{it.text}</p>
+              </div>
+              <div class="hworks-21-tabs__media">
+                <figure class="hworks-21-tabs__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hworks-21-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hworks-21-tabs {
+    gap: var(--space-s);
+  }
+
+  .hworks-21-tabs-menu {
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .hworks-21-tabs__title {
+    position: relative;
+  }
+
+  .hworks-21-tabs__number {
+    font-size: var(--fs-0);
+  }
+
+  .hworks-21-tabs__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hworks-21-tabs__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .hworks-21-tabs.brxe-tabs-nested > .tab-menu .tab-title:hover {
+  		color: var(--bg-canvas);
+      background-color: var(--action-primary) !important;
+    	border: 0.1rem solid var(--bg-canvas);
+  }
+
+  /* bm-custom */
+  .hworks-21-tabs-menu::before {
+  	content: "";
+    position: absolute;
+    top: 50%;
+      transform: translateY(-50%);
+    width: 100%;
+    height: .1rem;
+    border: .1rem solid var(--bg-subtle);
+    
+  }
+
+  /* bm-custom */
+  .hworks-21-tabs__pane-wrapper {
+  	display: grid !important;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+    align-items: center;
+  }
+  
+  @media (max-width:767px) {
+  	.hworks-21-tabs__pane-wrapper {
+    grid-template-columns: calc(100% * 1 / 1);
+  }
+  }
+}
+</style>

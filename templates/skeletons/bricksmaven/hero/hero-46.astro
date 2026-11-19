@@ -1,0 +1,168 @@
+---
+/**
+ * bm-hero-46 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-46.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-46-container">
+    <div class="hero-46__content">
+      <h1 class="hero-46__heading">Long headline to turn your visitors into users</h1>
+      <p class="hero-46__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="accent-h">Accent heading</p>
+      <div class="cta-combo">
+        <a class="btn--black" href={cta.href}>{cta.label}</a>
+        <a class="btn--link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="hero-46__media">
+      <div class="hero-46__carousel">
+        <div class="hero-46-carousel-ul list--none">
+          {items.map((it) => (
+            <div class="hero-46-carousel-item">
+              <figure class="hero-46-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="hero-46__carousel">
+        <div class="hero-46-carousel-ul list--none">
+          {items.map((it) => (
+            <div class="hero-46-carousel-item">
+              <figure class="hero-46-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-46 {
+    padding: 0 0 0 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-46-container {
+    height: 100%;
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .hero-46__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .hero-46__heading {
+    font-size: calc(var(--fs-4) * 1.3);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-46__media {
+    display: grid;
+    gap: calc(var(--space-m) / 1.6);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .hero-46__carousel {
+    position: relative;
+    display: flex;
+  }
+
+  .hero-46-carousel-ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .hero-46-carousel-item__image {
+    object-fit: cover;
+    width: 100%;
+    height: var(--acss-image-desktop);
+  }
+
+  /* bm-custom */
+  .hero-46__carousel {
+  	--animation-duration-up: 35s;
+    --animation-duration-down: 35s;
+    --scroll-up-end-position: -50%;
+    --scroll-down-start-position: -50%;
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+    --animation-timing-function-down: linear;
+    --image-desktop: 50rem;
+    --image-mobile: 32rem;
+  }
+  
+  /* Define the animation for the first child */
+  .hero-46__carousel:first-child .hero-46-carousel-ul {
+    animation: scrollUp var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animation for the last child */
+  .hero-46__carousel:last-child .hero-46-carousel-ul {
+    animation: scrollDown var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes scrollUp {
+    0% {
+      transform: translateY(0%);
+    }
+    100% {
+      transform: translateY(var(--acss-scroll-up-end-position));
+    }
+  }
+  
+  /* Define the animations starting point for the last child */
+  @keyframes scrollDown {
+    0% {
+      transform: translateY(var(--acss-scroll-down-start-position));
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+}
+</style>

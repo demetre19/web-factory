@@ -1,0 +1,111 @@
+---
+/**
+ * bm-feature-57 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-57.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-feature-57__container">
+    <div class="bm-feature-57__intro">
+      <h2 class="bm-feature-57__heading">An online brochure will not get you any leads and is not built for conversion.</h2>
+      <p class="bm-feature-57__subheading">Most online brochures just don’t cut it when it comes to catching the eye of potential customers. They often lack the interactive features and engaging content that really help boost conversions and draw in leads.</p>
+    </div>
+    <div class="bm-feature-57-list list--none">
+      {items.map((it) => (
+        <div class="bm-feature-57-card">
+          <h2 class="bm-feature-57-card__heading">{it.title}</h2>
+          <p class="bm-feature-57-card__text">{it.text}</p>
+          <div class="bm-feature-57-card__icon-wrapper">
+            <span class="bm-feature-57-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-feature-57__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-feature-57__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-57__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .bm-feature-57__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .bm-feature-57-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-57-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--color-line-default);
+    border-right: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-left: 1px solid var(--color-line-default);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-feature-57-card__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--color-line-default);
+  }
+
+  /* bm-custom */
+  .bm-feature-57-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-feature-57-card:hover {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .bm-feature-57-card:nth-child(1) {
+    inline-size: 100%;
+    max-inline-size: var(--measure);
+  }
+  
+  .bm-feature-57-card:nth-child(2) {
+    inline-size: 100%;
+    max-inline-size: var(--content-width);
+  }
+  
+  .bm-feature-57-card:nth-child(3) {
+    inline-size: 100%;
+    max-inline-size: var(--content-width);
+  }
+}
+</style>

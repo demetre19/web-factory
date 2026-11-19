@@ -1,0 +1,253 @@
+---
+/**
+ * bm-event-section-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (event-section-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-event-section-2__container">
+    <div class="bm-event-section__intro">
+      <h2 class="bm-event-section__heading">New events in your city</h2>
+      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-event-section-2-grid-ul list--none">
+      {items.map((it) => (
+        <div class="bm-event-section-2-card">
+          <div class="bm-event-section-2-card__content">
+            <div class="bm-event-section-2-card__header">
+              <div class="bm-event-section-2-card__heading-wrapper">
+                <h2 class="clickable-parent bm-event-section-2-card__heading">{it.title}</h2>
+              </div>
+              <div class="bm-event-section-2-card__price-wrapper">
+                <p class="bm-event-section-2-card__price">{it.text}</p>
+              </div>
+            </div>
+            <div class="bm-event-section-2-card__mid">
+              <div class="bm-event-section-2-card__date">
+                <div class="bm-event-section-2-card__icon-wrapper">
+                  <span class="bm-event-section-2-card__icon" data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <div class="bm-event-section-2-card__date-time">
+                  <div class="bm-event-section-2-card__date-wrapper">
+                    <p class="bm-event-section-2-card__date-text">{it.text}</p>
+                  </div>
+                  <div class="bm-event-section-2-card__time-wrapper">
+                    <p class="bm-event-section-2-card__time">{it.text}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bm-event-section-2-card__location">
+                <div class="bm-event-section-2-card__icon-wrapper">
+                  <span class="bm-event-section-2-card__icon" data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="bm-event-section-2-card__location-text">{it.text}</p>
+              </div>
+            </div>
+            <div class="bm-event-section-2-card__footer">
+              <a class="btn--primary bm-event-section-2-card__cta wf-cta-button" href={it.href}>{it.label}</a>
+            </div>
+          </div>
+          <div class="bm-event-section-2-card__media">
+            <div class="bm-event-section-2-card__hart-wrapper">
+              <span class="bm-event-section-2-card__hart-icon-unactive" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="bm-event-section-2-card__hart-wrapper--active">
+              <span class="bm-event-section-2-card__hart-icon-active" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <figure class="bm-event-section-2-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-event-section-2__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-event-section__intro {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bm-event-section-2-grid-ul {
+    display: flex;
+    row-gap: var(--space-m);
+  }
+
+  .bm-event-section-2-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-event-section-2-card__content {
+    border-top: 1 solid var(--bg-subtle);
+    border-right: 1 solid var(--bg-subtle);
+    border-bottom: 1 solid var(--bg-subtle);
+    padding: var(--space-l) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+    background: var(--bg-canvas);
+    position: relative;
+  }
+
+  .bm-event-section-2-card__header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .bm-event-section-2-card__price-wrapper {
+    display: flex;
+  }
+
+  .bm-event-section-2-card__price {
+    font-size: var(--fs-0);
+  }
+
+  .bm-event-section-2-card__mid {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-event-section-2-card__date {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-event-section-2-card__icon-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-event-section-2-card__date-time {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-event-section-2-card__date-wrapper {
+    padding: 0 calc(var(--space-xs) / 2) 0 0;
+    border-right: 1 solid var(--text-secondary);
+  }
+
+  .bm-event-section-2-card__date-text {
+    font-weight: 700;
+  }
+
+  .bm-event-section-2-card__time-wrapper {
+    padding: 0 0 0 calc(var(--space-xs) / 2);
+  }
+
+  .bm-event-section-2-card__time {
+    font-weight: 700;
+  }
+
+  .bm-event-section-2-card__location {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-event-section-2-card__location-text {
+    font-weight: 700;
+  }
+
+  .bm-event-section-2-card__media {
+    position: relative;
+  }
+
+  .bm-event-section-2-card__hart-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1 solid var(--bg-subtle);
+    border-right: 1 solid var(--bg-subtle);
+    border-bottom: 1 solid var(--bg-subtle);
+    border-left: 1 solid var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--bg-canvas);
+    position: absolute;
+    top: var(--space-s);
+    z-index: 2;
+    right: var(--space-s);
+  }
+
+  .bm-event-section-2-card__hart-wrapper--active {
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    border-top: 1 solid var(--bg-subtle);
+    border-right: 1 solid var(--bg-subtle);
+    border-bottom: 1 solid var(--bg-subtle);
+    border-left: 1 solid var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--text-secondary);
+    position: absolute;
+    top: var(--space-s);
+    z-index: 1;
+    display: flex;
+    right: var(--space-s);
+  }
+
+  .bm-event-section-2-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 32rem;
+  }
+
+  /* bm-custom */
+  .bm-event-section-2-card:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  .bm-event-section-2-card:focus-within {
+    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--color-line-default) 10%, transparent);
+  }
+  
+  .bm-event-section-2-card__content {
+    transition: 1s ease;
+  }
+  
+  .bm-event-section-2-card:hover .bm-event-section-2-card__content, .bm-event-section-2-card:focus-within .bm-event-section-2-card__content {
+    background-color: var(--bg-subtle);
+  }
+}
+</style>

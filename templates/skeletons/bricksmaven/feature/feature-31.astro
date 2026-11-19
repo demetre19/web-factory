@@ -1,0 +1,140 @@
+---
+/**
+ * bm-feature-31 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-31.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-31-container">
+    <div class="feature-31__feature-wrapper">
+      <div class="bm-delta-feature-list-ul list--none">
+        <div class="bm-delta-feature-list-card">
+          <div class="bm-delta-feature-list-card__content">
+            <p class="bm-delta-feature-list-card__number">01</p>
+            <p class="bm-delta-feature-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+          <div class="bm-delta-feature-list-card__media">
+            <figure class="bm-delta-feature-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+        <div class="bm-delta-feature-list-card">
+          <div class="bm-delta-feature-list-card__content">
+            <p class="bm-delta-feature-list-card__number">02</p>
+            <p class="bm-delta-feature-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          </div>
+          <div class="bm-delta-feature-list-card__media">
+            <figure class="bm-delta-feature-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-31__content">
+      <h2 class="feature-31__heading">What is Lorem Ipsum?</h2>
+      <p class="feature-31__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-31 {
+    position: relative;
+  }
+
+  .feature-31-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-l);
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-delta-feature-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .bm-delta-feature-list-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+  }
+
+  .bm-delta-feature-list-card__number {
+    font-weight: 700;
+    font-size: var(--fs-4);
+  }
+
+  .bm-delta-feature-list-card__media {
+    height: 100%;
+  }
+
+  .bm-delta-feature-list-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .feature-31__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  /* bm-custom */
+  .feature-31:before {
+  	content:'';
+    width:50vw;
+    height:100%;
+    background-color: var(--action-primary);
+    position: absolute;
+    top:0;
+    right:0;
+  }
+  
+  
+  @media (max-width:767px) {
+  	.feature-31:before {
+  	content:'';
+    width:100%;
+    height:50%;
+    background-color: var(--action-primary);
+    position: absolute;
+    top:0;
+    left:0;
+  }
+  }
+
+  /* bm-custom */
+  .bm-delta-feature-list-card:nth-child(even) .bm-delta-feature-list-card__media {
+  	order: -1;
+  }
+  
+  
+  @media (max-width:478px) {
+  		.bm-delta-feature-list-card:nth-child(even) .bm-delta-feature-list-card__media {
+  	order: 1;
+  }
+   
+  }
+}
+</style>

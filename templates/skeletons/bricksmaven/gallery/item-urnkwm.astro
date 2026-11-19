@@ -1,0 +1,64 @@
+---
+/**
+ * bm-item-urnkwm — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-urnkwm.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gallery-3-container">
+    <div class="gallery-3-row">
+      <h2 class="gallery-3-title">Our Gallery</h2>
+      <p class="gallery-3-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+    </div>
+    <figure class="gallery-3-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gallery-3-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-xl);
+    row-gap: var(--space-xl);
+  }
+
+  .gallery-3-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--space-s);
+    row-gap: var(--space-s);
+    width: 100%;
+    text-align: center;
+  }
+
+  .gallery-3-img {
+    height: 54rem;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
+  }
+}
+</style>

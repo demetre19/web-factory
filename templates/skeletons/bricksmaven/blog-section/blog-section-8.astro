@@ -1,0 +1,131 @@
+---
+/**
+ * bm-blog-section-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-8-container">
+    <div class="blog-section-8-head">
+      <h2 class="blog-section-8-head__title">Latest writings</h2>
+      <p class="blog-section-8-head__desc">Interviews, tips, guides, industry best practices, and news.</p>
+    </div>
+    <div class="blog-section-8-body">
+      <div class="blog-section-8-wrapper list--none">
+        <div class="blog-section-8-card">
+          <div class="blog-section-8-card__media">
+            <figure class="blog-section-8-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="blog-section-8-card__meta">
+            <p class="blog-section-8-card__term">{post_terms_category}</p>
+            <h2 class="blog-section-8-card__title">{post_title}</h2>
+            <div class="blog-section-8-card__excerpt"></div>
+            <div class="blog-section-8-card__author">
+              <figure class="blog-section-8-card__author-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="blog-section-8-card__meta">
+                <h4 class="blog-section-8-card__name">{author_name}</h4>
+                <p class="blog-section-8-card__date">{post_date}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="blog-section-8-cta btn--primary self--center wf-cta-button" href={cta.href}>{cta.label}</a>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-8-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-section-8-head {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+  }
+
+  .blog-section-8-body {
+    width: 100%;
+  }
+
+  .blog-section-8-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    width: 100%;
+  }
+
+  .blog-section-8-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .blog-section-8-card__thumb {
+    height: 30rem;
+    object-fit: cover;
+  }
+
+  .blog-section-8-card__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-8-card__term {
+    padding: .4rem .8rem .4rem .8rem;
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .blog-section-8-card__author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .blog-section-8-card__author-image {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .blog-section-8-card__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

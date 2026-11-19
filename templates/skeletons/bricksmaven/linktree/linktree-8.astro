@@ -1,0 +1,162 @@
+---
+/**
+ * bm-linktree-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (linktree-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-linktree-8__container">
+    <div class="bm-linktree-8__content">
+      <div class="bm-linktree-7-bio bm-linktree-7-bio--left-s">
+        <div class="bm-linktree-7-bio__data">
+          <p class="bm-linktree-7-bio__name">John Smith</p>
+          <p class="bm-linktree-7-bio__title">Title</p>
+        </div>
+        <div class="bm-linktree-7-bio__author-media">
+          <figure class="bm-linktree-7-bio__author-image"><img src="/media/placeholder.svg" alt="Author Image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="bm-social-share list--none bm-social-share--left">
+        {items.map((it) => (
+          <div class="bm-social-share__icon-wrapper">
+            <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-linktree-8__links-absolute">
+      <div class="bm-linktree-8__links">
+        <div class="bm-linktree-list list--none">
+          {items.map((it) => (
+            <div class="bm-linktree-card">
+              <a class="bm-linktree-card__link clickable-parent" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <figure class="bm-linktree-8__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-linktree-8 {
+    position: relative;
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .bm-linktree-8__container {
+    flex-direction: row;
+    width: 100%;
+    padding: var(--section-space-m) 0 0 0;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-8__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  .bm-linktree-7-bio {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-7-bio__name {
+    font-weight: 700;
+  }
+
+  .bm-linktree-7-bio__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-linktree-7-bio__author-media {
+    width: auto;
+  }
+
+  .bm-linktree-7-bio__author-image {
+    object-fit: cover;
+    width: 64px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-8__links-absolute {
+    position: relative;
+  }
+
+  .bm-linktree-8__links {
+    background: var(--bg-canvas);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+    background: var(--text-secondary);
+    position: relative;
+  }
+
+  .bm-linktree-8__background-image {
+    object-fit: cover;
+    width: 100vw;
+    margin: 0 0 0 -50vw !important;
+    left: 50%;
+    position: absolute;
+    z-index: -1;
+    height: 40rem;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  /* bm-custom */
+  .bm-linktree-8__content a {
+    color: var(--bg-canvas);
+  }
+}
+</style>

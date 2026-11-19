@@ -1,0 +1,154 @@
+---
+/**
+ * bm-coming-soon-9 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (coming-soon-9.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-coming-soon-9__container">
+    <div class="coming-soon__brand">
+      <svg class="coming-soon-2__logo"></svg>
+    </div>
+    <div class="bm-coming-soon-9__content">
+      <div class="bm-coming-soon-9__intro">
+        <h1 class="bm-coming-soon-9__heading">Coming soon</h1>
+        <p class="bm-coming-soon-9__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="bm-form">
+          <h2 class="bm-coming-soon__heading-form">Drop your email to get notified!</h2>
+          <form class="bm-form-widget" novalidate>
+          </form>
+          <p class="bm-form__terms">Notify me when project is launched</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-social-share list--none">
+      {items.map((it) => (
+        <div class="bm-social-share__icon-wrapper">
+          <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+  <figure class="bm-coming-soon-9__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-coming-soon-9 {
+    height: 100vh;
+    position: relative;
+    background: var(--bg-subtle);
+  }
+
+  .bm-coming-soon-9__container {
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .coming-soon__brand {
+    position: relative;
+    z-index: 1;
+  }
+
+  .coming-soon-2__logo {
+    object-fit: contain;
+  }
+
+  .bm-coming-soon-9__content {
+    width: var(--measure);
+  }
+
+  .bm-coming-soon-9__intro {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    background: var(--bg-canvas);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-coming-soon__heading-form {
+    font-size: var(--fs-1);
+  }
+
+  .bm-form-widget {
+    display: flex;
+    gap: var(--space-xs);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .bm-form__terms {
+    font-size: var(--fs-0);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-coming-soon-9__background-image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .bm-form-widget {
+  flex-wrap: nowrap;
+  }
+  
+  .bm-form-widget input:focus {
+  	outline-offset: 0;
+  } 
+  
+  .bm-form-widget button[type=submit].bricks-button {
+      height: 100% !important;
+  }
+  
+  .bm-form-widget .submit-button-wrapper {
+      height: 100% !important;
+  }
+
+  /* bm-custom */
+  .bm-coming-soon-9__background-image {
+  	clip-path: polygon(100% 0, 80% 0, 50% 50%, 80% 100%, 100% 100%);
+  
+  }
+}
+</style>

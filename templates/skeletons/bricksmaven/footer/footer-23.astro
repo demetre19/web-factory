@@ -1,0 +1,199 @@
+---
+/**
+ * bm-footer-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-footer-23__top-container">
+    <div class="bm-footer-23__contact">
+      <div class="bm-footer-23__top">
+        <h2 class="bm-footer-23__top-heading">Let's chat</h2>
+        <a class="bm-footer-23__top-link" href="#">hello@bricksmaven.com</a>
+      </div>
+      <div class="bm-footer-22__social">
+        <h2 class="bm-footer-22__social-heading bm-footer-22__social-heading--bold">Socials</h2>
+        <div class="bm-footer-22-social-links list--none">
+          {items.map((it) => (
+            <div class="bm-footer-22-social-item">
+              <a class="bm-footer-22-social-item__link" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-footer-23__nav-wrapper">
+      <div class="footer-nav-wrapper footer-nav-wrapper-23">
+        {items.map((it) => (
+          <div class="footer-nav-column">
+            <h3 class="footer-nav-heading bm-footer-22__footer-heading">{it.title}</h3>
+            <div class="footer-menu list--none">
+              {(it.items || []).map((it2) => (
+                <div class="footer-menu__link">
+                  <a class="footer-menu__link-text" href="#">{it2.text}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="bm-footer-23__contact__mid-container">
+    <svg class="bm-footer-23__brand"></svg>
+  </div>
+  <div class="bm-footer-23__footer-container">
+    <div class="bm-footer-23__start">
+      <div class="footer-nav-legal">
+        <div class="footer-legal-nav list--none">
+          {items.map((it) => (
+            <div class="footer-legal__li">
+              <a class="footer-legal__link-text" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-footer-23__end">
+      <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-footer-23__top-container {
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1px solid var(--color-line-default);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-footer-23__contact {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-23__top {
+    display: flex;
+    row-gap: 0;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .bm-footer-23__top-link {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .bm-footer-22__social-heading {
+    font-weight: 400;
+  }
+
+  .bm-footer-22__social-heading--bold {
+    font-weight: 700;
+  }
+
+  .bm-footer-22-social-links {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-22-social-item__link {
+    font-weight: 700;
+    font-size: var(--fs-2);
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .footer-nav-wrapper-23 {
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-footer-22__footer-heading {
+    font-size: var(--fs-2);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .bm-footer-23__contact__mid-container {
+    padding: var(--space-m) 0 var(--space-m) 0;
+  }
+
+  .bm-footer-23__footer-container {
+    padding: var(--space-m) 0 0 0;
+    border-top: 1px solid var(--color-line-default);
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-nav-legal {
+    display: flex;
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-legal__li {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-legal__link-text {
+    font-size: var(--fs-0);
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+}
+</style>

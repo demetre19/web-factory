@@ -1,0 +1,247 @@
+---
+/**
+ * bm-blog-archive-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-2-container">
+    <div class="blog-archive-2-head">
+      <div class="blog-archive-2-head__intro">
+        <h1 class="blog-archive-2-head__title">Grow in knowledge</h1>
+        <p class="blog-archive-2-head__tag accent-h">Our blog</p>
+        <p class="blog-archive-2-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut non Rem sit Quia earum aut error</p>
+        <div class="blog-archive-2-head__form"></div>
+      </div>
+    </div>
+    <div class="blog-archive-2-body">
+      <div class="blog-archive-2-wrapper list--none">
+        <div class="blog-archive-2-card">
+          <figure class="blog-archive-2-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="blog-archive-2-card__box">
+            <div class="blog-archive-2-card__meta">
+              <p class="blog-archive-2-card__meta-name">{author_name}</p>
+              <p class="blog-archive-2-card__meta-date">{post_date}</p>
+            </div>
+            <h2 class="blog-archive-2-card__title">{post_title}</h2>
+            <div class="blog-archive-2-card__excerpt"></div>
+            <div class="blog-archive-2-card__more">
+              <p class="blog-archive-2-card__term">{post_terms_category}</p>
+              <p class="blog-archive-2-card__read">Read the full story</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="blog-archive-2-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-2-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-2-head {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-archive-2-head__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-2-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-2-wrapper {
+    gap: var(--space-m);
+  }
+
+  .blog-archive-2-card {
+    border-top: .1rem solid color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+    border-right: .1rem solid color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+    border-bottom: .1rem solid color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+    border-left: .1rem solid color-mix(in srgb, var(--bg-subtle) 80%, transparent);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .blog-archive-2-card__thumb {
+    height: 30rem;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .blog-archive-2-card__box {
+    padding: 0 var(--space-xs) 0 var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+  }
+
+  .blog-archive-2-card__meta {
+    padding: .8rem .8rem .8rem .8rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+  }
+
+  .blog-archive-2-card__meta-name {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: var(--fs-0);
+  }
+
+  .blog-archive-2-card__more {
+    margin: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-archive-2-card__term {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .blog-archive-2-head__form .bricks-search-form {
+  	gap: 1.5rem;
+  }
+  .blog-archive-2-head__form [type="search"] {
+  	width: 70% !important;
+  }
+  .blog-archive-2-head__form [type="submit"] {
+  	background-color: var(--action-primary);
+    color: var(--bg-canvas);
+    width: 30%;
+    padding: 10px 15px;
+    text-align: center;
+    height: auto;
+    position: static!important;
+    clip-path: unset !important;
+  }
+  .blog-archive-2-head__form [type="submit"]:focus {
+  	border-radius: 0;
+    box-shadow: none;
+    font-size: 100%;
+    font-weight: 400;
+    line-height: 100%;
+    outline: none;
+    padding: 10px;
+    text-align: center;
+    clip-path: unset;
+  }
+  .blog-archive-2-head__form [type="submit"] span {
+  	height: auto;
+    position: static!important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .blog-archive-2-wrapper {
+  	display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 3;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(3) {
+  	grid-area: 2 / 3 / 3 / 5;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(4) {
+  	grid-area: 2 / 5 / 3 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(5) {
+  	grid-area: 3 / 1 / 4 / 3;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(6) {
+  	grid-area: 3 / 3 / 4 / 5;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(7) {
+  	grid-area: 3 / 5 / 4 / 7;
+  }
+  
+  @media (max-width:767px) {
+  	.blog-archive-2-wrapper .blog-archive-2-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(3) {
+  	grid-area: 3 / 1 / 4 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(4) {
+  	grid-area: 4 / 1 / 5 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(5) {
+  	grid-area: 5 / 1 / 6 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(6) {
+  	grid-area: 6 / 1 / 7 / 7;
+  }
+  .blog-archive-2-wrapper .blog-archive-2-card:nth-child(7) {
+  	grid-area: 7 / 1 / 8 / 7;
+  }
+  }
+
+  /* bm-custom */
+  .blog-archive-2-card:first-child {
+    display: grid !important;
+  	grid-template-columns: repeat(6, 1fr);
+  }
+  .blog-archive-2-card:first-child .blog-archive-2-card__thumb {
+  	grid-column: span 4;
+  }
+  .blog-archive-2-card:first-child .blog-archive-2-card__box {
+  	grid-column: span 2;
+  }
+  
+  @media (max-width:767px) {
+  	.blog-archive-2-card:first-child .blog-archive-2-card__thumb {
+  	grid-column: span 6;
+  }
+  .blog-archive-2-card:first-child .blog-archive-2-card__box {
+  	grid-column: span 6;
+  }
+  }
+
+  /* bm-custom */
+  .blog-archive-2-card__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

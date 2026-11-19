@@ -1,0 +1,116 @@
+---
+/**
+ * bm-how-it-works-24 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-24.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-how-it-works-24__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="bm-accent-heading">Accent heading</p>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div class="bm-how-it-works-24-list-ul">
+      {items.map((it) => (
+        <div class="bm-how-it-works-24-card">
+          <h3 class="bm-how-it-works-24-card__heading">{it.title}</h3>
+          <div class="bm-how-it-works-24-card__top">
+            <p class="bm-how-it-works-24-card__label">{it.text}</p>
+            <div class="bm-how-it-works-24-card__line"></div>
+          </div>
+          <p class="bm-how-it-works-24-card__text">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-how-it-works-24__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .bm-how-it-works-24-list-ul {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 4);
+    gap: 0;
+  }
+
+  .bm-how-it-works-24-card {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-how-it-works-24-card__top {
+    margin: 0 0 var(--space-m) 0;
+    row-gap: var(--space-m);
+  }
+
+  .bm-how-it-works-24-card__label {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-how-it-works-24-card__line {
+    width: 100%;
+    height: 1;
+    background: var(--bg-subtle);
+    position: relative;
+  }
+
+  .bm-how-it-works-24-card__text {
+    padding: 0 var(--space-xl) 0 0;
+  }
+
+  /* bm-custom */
+  @media (min-width:478px) {
+  
+    .bm-how-it-works-24-card {
+      margin-block-end: var(--space-m);
+    }
+    
+  }
+
+  /* bm-custom */
+  .bm-how-it-works-24-card__line::before {
+    content: '';
+    position: absolute;
+    top:calc(-1 * 5px);
+    left:0;
+    inline-size: 12px;
+    block-size: 12px;
+    background-color: var(--text-secondary);
+    border-radius: 100%;
+  }
+}
+</style>

@@ -1,0 +1,136 @@
+---
+/**
+ * bm-testimonial-45 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-45.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-45__container">
+    <div class="bm-testimonial-45__content">
+      <div class="bm-testimonial-45__top">
+        <h2 class="bm-testimonial-45__heading">Agency's and freelancers use Bricksmaven to create stunning websites</h2>
+        <p class="bm-testimonial-45__accent">Accent heading</p>
+      </div>
+      <div class="bm-testimonial-45__customer-list">
+        <p class="bm-testimonial-45__customer-text">Our customers</p>
+        <div class="list--none bm-testimonial-45-brand-list">
+          {items.map((it) => (
+            <div class="bm-testimonial-45-brand-item">
+              <figure class="bm-testimonial-45-brand-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-testimonial-45__testimonial-slider">
+      <div class="bm-testimonial-45__slider">
+        {items.map((it) => (
+          <div class="bm-testimonial-45-card">
+            <div class="bm-testimonial-45-card__content">
+              <p class="bm-testimonial-45-card__review">{it.text}</p>
+              <div class="bm-testimonial-45-card__customer-data">
+                <p class="bm-testimonial-45-card__name">{it.text}</p>
+                <p class="bm-testimonial-45-card__title">{it.text}</p>
+              </div>
+            </div>
+            <div class="bm-testimonial-45-card__media">
+              <figure class="bm-testimonial-45-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-45__container {
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 1 / 2);
+    width: 100%;
+  }
+
+  .bm-testimonial-45__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-45__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-testimonial-45__customer-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-testimonial-45__customer-text {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-45-brand-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-testimonial-45-brand-item {
+    width: auto;
+  }
+
+  .bm-testimonial-45-card {
+    padding: var(--space-s) var(--space-l) var(--space-l) var(--space-l);
+  }
+
+  .bm-testimonial-45-card__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-right: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-left: 1px solid var(--color-line-default);
+    border-radius: 0 0 var(--r-card) var(--r-card);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    background: var(--bg-canvas);
+  }
+
+  .bm-testimonial-45-card__review {
+    font-size: var(--fs-2);
+  }
+
+  .bm-testimonial-45-card__name {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-45-card__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-testimonial-45-card__media {
+    border-radius: var(--r-card) var(--r-card) 0 0;
+    overflow: hidden;
+  }
+
+  .bm-testimonial-45-card__image {
+    object-fit: cover;
+  }
+}
+</style>

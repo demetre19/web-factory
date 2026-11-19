@@ -1,0 +1,63 @@
+---
+/**
+ * bm-header-page-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-page-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="header-page-10-container">
+    <div class="header-page-10__left">
+      <h1 class="header-page__title">Short heading here</h1>
+    </div>
+    <div class="header-page-10__right">
+      <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .header-page-10 {
+    padding: 0 0 0 0;
+  }
+
+  .header-page-10-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 5);
+  }
+
+  .header-page-10__left {
+    background: var(--bg-subtle);
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  }
+
+  .header-page-10__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  }
+}
+</style>

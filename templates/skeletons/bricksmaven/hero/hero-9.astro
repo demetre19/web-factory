@@ -1,0 +1,71 @@
+---
+/**
+ * bm-hero-9 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-9.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-9-container">
+    <div class="hero-9__content">
+      <h1 class="hero-9__title">Long headline to turn your visitors into customers</h1>
+      <p class="hero-9__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-9__media">
+      <figure class="hero-9__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-9 {
+    background: var(--action-primary);
+  }
+
+  .hero-9__content {
+    width: var(--measure);
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    row-gap: var(--space-s);
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-9__media {
+    margin: var(--section-space-xxl) 0 0 0;
+    width: 100%;
+  }
+
+  .hero-9__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .hero-9 {
+  background-image: -moz-linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
+  background-image: -webkit-linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
+  background-image: linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
+  }
+}
+</style>

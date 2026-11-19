@@ -1,0 +1,175 @@
+---
+/**
+ * bm-event-section-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (event-section-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-event-section-11__container">
+    <div class="intro">
+      <h2 class="intro__heading">Upcoming events in your city</h2>
+      <p class="intro__accent-heading">Accent heading</p>
+      <p class="intro__subheading">This annual event brings together top musicians from around the world to perform in front of a passionate crowd of music lovers.</p>
+    </div>
+    <div class="bm-event-section-11-list list--none">
+      <div class="bm-event-section-11-card">
+        <div class="bm-event-section-11-card__content">
+          <div class="bm-event-section-11-card__top">
+            <h2 class="bm-event-section-11-card__heading">Medium long event title comes here</h2>
+            <div class="bm-event-section-11-card__mid">
+              <div class="bm-event-section-table">
+                <div class="bm-event-section-table__tbody">
+                  {items.map((it) => (
+                    <div class="bm-event-section-table__tr">
+                      <div class="bm-event-section-table__td">
+                        <p class="bm-event-section-table__property">{it.text}</p>
+                      </div>
+                      <div class="bm-event-section-table__td">
+                        <p class="bm-event-section-table__value">{it.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bm-event-section-11-card__footer">
+            <p class="bm-event-section-11-card__text">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          </div>
+        </div>
+        <div class="bm-event-section-11-card__media">
+          <figure class="bm-event-section-11-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="bm-event-section-11-card">
+        <div class="bm-event-section-11-card__content">
+          <div class="bm-event-section-11-card__top">
+            <h2 class="bm-event-section-11-card__heading">Medium long event title comes here</h2>
+            <div class="bm-event-section-11-card__mid">
+              <div class="bm-event-section-table">
+                <div class="bm-event-section-table__tbody">
+                  {items.map((it) => (
+                    <div class="bm-event-section-table__tr">
+                      <div class="bm-event-section-table__td">
+                        <p class="bm-event-section-table__property">{it.text}</p>
+                      </div>
+                      <div class="bm-event-section-table__td">
+                        <p class="bm-event-section-table__value">{it.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bm-event-section-11-card__footer">
+            <p class="bm-event-section-11-card__text">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          </div>
+        </div>
+        <div class="bm-event-section-11-card__media">
+          <figure class="bm-event-section-11-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-event-section-11 {
+    overflow: hidden;
+  }
+
+  .bm-event-section-11__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-event-section-11-card {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-event-section-11-card__content {
+    justify-content: space-between;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .bm-event-section-11-card__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-11-card__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-event-section-table {
+    width: auto;
+  }
+
+  .bm-event-section-table__td {
+    padding: 0 var(--space-s) 0 0;
+  }
+
+  .bm-event-section-table__property {
+    font-weight: 700;
+  }
+
+  .bm-event-section-11-card__footer {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-event-section-11-card__media {
+    align-items: flex-end;
+  }
+
+  .bm-event-section-11-card__image {
+    object-fit: cover;
+    width: 50vw;
+    height: 624px;
+  }
+
+  /* bm-custom */
+  .bm-event-section-11-card:nth-child(even) .bm-event-section-11-card__media {
+    order: 0;
+    align-items: start;
+  }
+  
+  @media (max-width: 991px) {
+    .bm-event-section-11-card:nth-child(even) .bm-event-section-11-card__media {
+    order: -1;
+    align-items: baseline;
+  }
+    
+  }
+}
+</style>

@@ -1,0 +1,137 @@
+---
+/**
+ * bm-login-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (login-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="login-1__container">
+    <div class="login-1__content">
+      <div class="login-1__brand">
+        <figure class="login-1__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="login-form-wrapper">
+        <h1 class="login-1__heading">Sign in</h1>
+        <form class="login-form" novalidate>
+        </form>
+        <div class="login-footer list--none">
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Back to home</a>
+          </div>
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Lost your password?</a>
+          </div>
+        </div>
+      </div>
+      <div class="login-1__logged-in-heading-wrapper">
+        <h1 class="login-1__logged-in-heading">You are logged in.</h1>
+        <div class="login-footer list--none">
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Back to home</a>
+          </div>
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Lost your password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-login-1__media">
+      <figure class="login-1__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .login-1 {
+    overflow: hidden;
+    padding: 0 0 0 0;
+    height: 100vh;
+  }
+
+  .login-1__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    height: 100%;
+  }
+
+  .login-1__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-1__logo {
+    object-fit: contain;
+  }
+
+  .login-form-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .login-footer__link {
+    font-size: var(--fs-0);
+  }
+
+  .login-1__logged-in-heading-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-login-1__media {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+  }
+
+  .login-1__image {
+    object-fit: cover;
+    width: 50vw;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .login-form .form-group ul li {
+  	display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .login-form .form-group span {
+  	display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+  
+  .login-form .form-group span a, .login-form .form-group ul li label {
+  	font-size: var(--fs-0);
+  }
+  
+  .login-form .form-group:nth-child(4) {
+      align-items: end;
+  }
+}
+</style>

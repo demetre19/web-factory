@@ -1,0 +1,124 @@
+---
+/**
+ * bm-item-gouojh — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-gouojh.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-10-container">
+    <div class="contact-10-map">
+      <figure class="contact-10-map__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="contact-10-content">
+      <div class="contact-10-intro">
+        <p class="contact-10-intro__accent-heading">Contact us</p>
+        <h2 class="contact-10-intro__heading">Visit our stores</h2>
+        <p class="contact-10-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      </div>
+      <div class="contact-10-information-grid-ul list--none">
+        {items.map((it) => (
+          <div class="contact-10-info-card">
+            <div class="contact-10-info-card__content">
+              <h2 class="contact-10-info-card__heading">{it.title}</h2>
+              <p class="contact-10-info-card__desc">{it.text}</p>
+              <p class="contact-10-info-card__text">{it.text}</p>
+            </div>
+            <span class="contact-10-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+        <div class="contact-10-info-card flex--row width--full align-items--start">
+          <div class="contact-10-info-card__content">
+            <h2 class="contact-10-info-card__heading">Chat us</h2>
+            <p class="contact-10-info-card__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+            <p class="contact-10-info-card__text">Chat with us</p>
+          </div>
+          <span class="contact-10-info-card__icon text--primary center--left" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-10-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .contact-10-map__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .contact-10-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .contact-10-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-10-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .contact-10-information-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .contact-10-info-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-xs);
+  }
+
+  .contact-10-info-card__content {
+    width: 88%;
+    margin: .5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-10-info-card__heading {
+    font-weight: 700;
+    font-size: var(--fs-1);
+  }
+
+  .contact-10-info-card__text {
+    font-style: normal;
+  }
+
+  .contact-10-info-card__icon {
+    width: 12%;
+  }
+}
+</style>

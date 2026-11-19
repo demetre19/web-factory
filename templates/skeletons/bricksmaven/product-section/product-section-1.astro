@@ -1,0 +1,176 @@
+---
+/**
+ * bm-product-section-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (product-section-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="product-list-1__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div class="product-list-1__list list--none">
+      <div class="product-list-1-card">
+        <div class="product-list-1-card__content">
+          <p class="product-list-category">{post_terms_product_cat}</p>
+          <div class="product-list-1-card__top">
+            <h3 class="product-list-1-card__heading">{post_title}</h3>
+            <custom class="product-list-card__price">{woo_product_price}</custom>
+          </div>
+          <div class="product-list-card__add-to-cart"></div>
+        </div>
+        <div class="product-list-notice__wrapper">
+          <div class="product-list-notice-circle__sale-badge">
+            <p class="product-list-notice-circle__sale">{woo_product_on_sale}</p>
+          </div>
+          <p class="product-list-1-card__new">New!</p>
+          <p class="product-list-1-card__soldout">Sold Out</p>
+        </div>
+        <figure class="product-list-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .product-list-1__container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .product-list-1__list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+  }
+
+  .product-list-1-card {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    position: relative;
+    flex-wrap: nowrap;
+  }
+
+  .product-list-1-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .product-list-category {
+    font-size: var(--fs-0);
+  }
+
+  .product-list-1-card__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .product-list-1-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .product-list-notice__wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--space-xs);
+    width: var(--measure);
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 4);
+    left: var(--space-xs);
+  }
+
+  .product-list-notice-circle__sale-badge {
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    background: var(--primitive-state-danger);
+    display: flex;
+    align-items: center;
+  }
+
+  .product-list-1-card__new {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+  }
+
+  .product-list-1-card__soldout {
+    background: var(--bg-canvas);
+    font-size: var(--fs-0);
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    position: relative;
+  }
+
+  .product-list-1-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .product-list-category a {
+    	color: var(--text-primary);
+    	background: transparent;
+  }
+
+  /* bm-custom */
+  .product-list-card__price del {
+    	color: var(--bg-subtle);
+  }
+  
+  .product-list-card__price ins {
+    	text-decoration: none;
+  }
+  .product-list-card__price ins .amount {
+    	text-decoration: none;
+    	border-bottom: 0;
+  }
+
+  /* bm-custom */
+  .product-list-card__add-to-cart form.cart .quantity, form.woocommerce-cart-form .quantity {
+      width: 100%;
+  }
+    
+  form.cart .button, form.woocommerce-cart-form .button {
+  
+      width: 100%;
+  }
+}
+</style>

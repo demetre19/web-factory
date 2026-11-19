@@ -1,0 +1,244 @@
+---
+/**
+ * bm-pricing-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (pricing-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-pricing-21__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-pricing-21-pricing-wrapper list--none">
+      <div class="bm-pricing-21-card">
+        <div class="bm-pricing-21-card__top">
+          <div class="bm-pricing-21-card__media">
+            <figure class="bm-pricing-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-pricing-21-card__footer">
+            <p class="bm-pricing-21-card__plan">Try for free</p>
+            <p class="bm-pricing-21-card__pricing">0</p>
+          </div>
+        </div>
+        <div class="bm-list list--none">
+          {items.map((it) => (
+            <div class="bm-list-item">
+              <div class="bm-list-item__icon-wrapper">
+                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="bm-list-item__text">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div class="bm-pricing-21-card__cta-wrapper">
+          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+          <p class="bm-pricing-21-card__meta-copy">Get started in 1 minute!</p>
+        </div>
+      </div>
+      <div class="bm-pricing-21-card">
+        <div class="bm-pricing-21-card__top">
+          <div class="bm-pricing-21-card__media">
+            <figure class="bm-pricing-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-pricing-21-card__footer">
+            <p class="bm-pricing-21-card__plan">Premium Plan</p>
+            <div class="bm-pricing-21-card__pricing-wrapper">
+              <p class="bm-pricing-21-card__pricing">99</p>
+              <p class="bm-pricing-21-card__timeframe">/year</p>
+            </div>
+            <p class="bm-pricing-21-card__text">for unlimited site cancel anytime</p>
+          </div>
+        </div>
+        <div class="bm-list list--none">
+          {items.map((it) => (
+            <div class="bm-list-item">
+              <div class="bm-list-item__icon-wrapper">
+                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="bm-list-item__text">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div class="bm-pricing-21-card__cta-wrapper">
+          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+          <p class="bm-pricing-21-card__meta-copy">Get started in 1 minute!</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-pricing-21__review-wrapper">
+      <p class="bm-pricing-21__rating">4.5</p>
+      <div class="bm-pricing-21-star-list list--none">
+        {items.map((it) => (
+          <div class="bm-pricing-21-star-item">
+            <span class="bm-pricing-21-star-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+      <p class="bm-pricing-21__text">Our precious customers rate us at a whooping 4.5!</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-pricing-21__container {
+    row-gap: var(--space-s);
+    align-items: center;
+    width: var(--content-width);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-pricing-21-pricing-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-pricing-21-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+  }
+
+  .bm-pricing-21-card__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-pricing-21-card__media {
+    width: 128;
+    height: 128;
+  }
+
+  .bm-pricing-21-card__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .bm-pricing-21-card__footer {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-pricing-21-card__plan {
+    font-weight: 700;
+    font-size: var(--fs-2);
+  }
+
+  .bm-pricing-21-card__pricing {
+    font-size: var(--fs-4);
+    font-weight: 700;
+    position: relative;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item__icon-wrapper {
+    padding: var(--tap) var(--tap) var(--tap) var(--tap);
+    background: var(--bg-subtle);
+    border-radius: 50% 50% 50% 50%;
+    position: relative;
+  }
+
+  .bm-list-item__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+    font-size: var(--fs-0);
+  }
+
+  .bm-pricing-21-card__cta-wrapper {
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) / 4);
+    padding: 0 0 0 0;
+  }
+
+  .bm-pricing-21-card__meta-copy {
+    font-size: var(--fs-0);
+  }
+
+  .bm-pricing-21-card__pricing-wrapper {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .bm-pricing-21-card__timeframe {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-pricing-21-card__text {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-pricing-21__review-wrapper {
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-pricing-21__rating {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  /* bm-custom */
+  .bm-pricing-21-card__pricing::before {
+  	content: '$';
+    position: absolute;
+    font-size: var(--fs-0);
+    top: calc(-1 * var(--space-xs));
+    left: calc(-1 * (var(--space-xs)) / 2);
+      
+  }
+
+  /* bm-custom */
+  .bm-list-item {
+  	--circle-size: var(--fs-0);
+  }
+}
+</style>

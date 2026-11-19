@@ -1,0 +1,152 @@
+---
+/**
+ * bm-thank-you-page-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (thank-you-page-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-thank-you-1__container">
+    <div class="bm-thank-you-1__element"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  /* bm-custom */
+  /* Thank you element  */
+  .bm-thank-you-1__element {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 12);
+    align-items: start;
+    gap: var(--space-m);
+  }
+  
+  
+  /* RESET */
+  .woocommerce-checkout .shop_table td, .woocommerce-checkout .shop_table th {
+      line-height: 1;
+  }
+  
+  
+  /* Woocommerce Notice  */
+  .bm-thank-you-1__element .woocommerce-notice {
+    font-size: calc(var(--fs-4) * 1.4);
+    font-weight: 700;
+    grid-column: span 12;
+    grid-row: auto;
+    display: flex;
+    align-items: start;
+    text-align: left;
+  }
+  
+  /* Woocommerce Order Overview  */
+  .bm-thank-you-1__element ul.woocommerce-order-overview {
+    grid-column: 1/5;
+    grid-row: 2;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    position: relative;
+    margin-block-start: var(--space-xl);
+  }
+  
+  .bm-thank-you-1__element ul.woocommerce-order-overview::before {
+    content: 'Order overview';
+    position: absolute;
+    font-size: var(--fs-3);
+    
+    line-height: var(--lh-0);
+    font-weight: 700;
+    inset-block-start: calc(-1 * var(--space-xl));
+  }
+  
+  /* Woocommerce Order Details  */
+  .bm-thank-you-1__element .woocommerce-order-details {
+    grid-column: 5/-1;
+    grid-row: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--flow-spacing);
+  }
+  
+  .bm-thank-you-1__element .woocommerce-table__product-name {
+    font-weight: 700; /* Style font-weight price name */ 
+  }
+  
+  .bm-thank-you-1__element .woocommerce-Price-amount {
+    font-weight: 400; /* Style font-weight price amount */ 
+  }
+  
+  /* Woocommerce Customer Details  */
+  .bm-thank-you-1__element .woocommerce-customer-details {
+    grid-column: 5/-1;
+    grid-row: auto;
+    margin-block: 0px;
+  }
+  
+  .bm-thank-you-1__element .woocommerce-customer-details .woocommerce-column--billing-address, .bm-thank-you-1__element .woocommerce-customer-details .woocommerce-column--shipping-address {
+    display: flex;
+    flex-direction: column;
+    gap: var(--flow-spacing);
+    background-color: var(--bg-subtle);
+    padding: var(--space-m);
+    border: 1px solid var(--color-line-default);
+  }
+  
+  
+  @media (max-width:991px) {
+    /* Thank you element  */
+    .bm-thank-you-1__element {
+      grid-template-columns: calc(100% * 1 / 1);
+    }
+    
+    /* Woocommerce Notice  */
+    .bm-thank-you-1__element .woocommerce-notice {
+      grid-column: span 1;
+    }
+    
+    /* Woocommerce Order Overview  */
+    .bm-thank-you-1__element ul.woocommerce-order-overview {
+      grid-column: span 1;
+      grid-row: auto;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    
+    /* Woocommerce Order Details  */
+    .bm-thank-you-1__element .woocommerce-order-details {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+    
+    /* Woocommerce Customer Details  */
+    .bm-thank-you-1__element .woocommerce-customer-details {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+  
+  }
+  
+  @media (max-width:478px) {
+      /* Woocommerce Customer Details  */
+    .bm-thank-you-1__element .woocommerce-customer-details .woocommerce-columns--addresses{
+      flex-direction: column;
+    }
+  }
+}
+</style>

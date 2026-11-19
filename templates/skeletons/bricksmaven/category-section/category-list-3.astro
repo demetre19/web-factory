@@ -1,0 +1,98 @@
+---
+/**
+ * bm-category-list-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (category-list-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="category-list-3__container">
+    <div class="intro">
+      <h2 class="intro__heading">Browse our collection</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="category-list-3__list">
+      <div class="category-list-3-card">
+        <h3 class="category-list-3-card__heading">{term_name}</h3>
+        <figure class="category-list-3-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .category-list-3 {
+    row-gap: var(--flow-spacing);
+  }
+
+  .category-list-3__container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .category-list-3__list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+  }
+
+  .category-list-3-card {
+    align-items: flex-start;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    position: relative;
+  }
+
+  .category-list-3-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    z-index: 2;
+    position: absolute;
+    bottom: var(--space-s);
+    font-size: var(--fs-2);
+    left: var(--space-s);
+  }
+
+  .category-list-3-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  /* bm-custom */
+  @media (min-width:767px) {
+     .category-list-3-card:first-child {
+  		grid-column: span 2;
+    	grid-row: span 2;
+  }
+    
+  }
+}
+</style>

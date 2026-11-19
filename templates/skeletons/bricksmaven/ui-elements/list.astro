@@ -1,0 +1,58 @@
+---
+/**
+ * bm-list — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (list.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-list">
+    {items.map((it) => (
+      <div class="bm-list__item">
+        <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
+        <p class="bm-list__item-text">{it.text}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-list__item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-list__item-icon {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+}
+</style>

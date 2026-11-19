@@ -1,0 +1,121 @@
+---
+/**
+ * bm-banner-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (banner-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-banner-7__container">
+    <div class="coming-soon__countdown-wrapper">
+      <div class="coming-soon-countdown--alt"></div>
+    </div>
+    <div class="bm-banner-inline-content">
+      <div class="bm-banner-inline-content__info">
+        <h2 class="bm-banner-inline-content__heading">Short headline to grab attention</h2>
+        <p class="bm-banner-inline-content__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <a class="bm-banner-inline-content__link" href="#">Link</a>
+      </div>
+    </div>
+    <div class="bm-banner__close-wrapper">
+      <span class="bm-banner__close" data-icon="lucide" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-banner-7 {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: transparent;
+  }
+
+  .bm-banner-7__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-top: 1 solid var(--text-primary);
+    border-right: 1 solid var(--text-primary);
+    border-bottom: 1 solid var(--text-primary);
+    border-left: 1 solid var(--text-primary);
+    position: relative;
+    background: var(--bg-canvas);
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-banner-inline-content {
+    width: auto;
+  }
+
+  .bm-banner-inline-content__info {
+    column-gap: calc(var(--flow-spacing) / 4);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+    align-items: center;
+  }
+
+  .bm-banner-inline-content__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-banner-inline-content__link {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  .bm-banner__close-wrapper {
+    background: transparent;
+    position: absolute;
+    right: var(--space-m);
+  }
+
+  /* bm-custom */
+  .bm-banner-7__container {
+    box-shadow: var(--shadow-card);
+    
+  }
+
+  /* bm-custom */
+  .coming-soon-countdown--alt .field {
+  	gap: calc(var(--space-xs) / 4);
+    background-color: var(--text-secondary);
+    padding-inline: var(--space-xs);
+    padding-block: var(--space-xs);
+    color: var(--fs-0);
+    
+  }
+  
+  .coming-soon-countdown--alt .field:not(:last-of-type) {
+  	margin-inline-end: var(--space-xs) !important;
+  }
+
+  /* bm-custom */
+  .bm-banner-inline-content__text a {
+    text-decoration: underline;
+    font-weight: 700;
+  }
+}
+</style>

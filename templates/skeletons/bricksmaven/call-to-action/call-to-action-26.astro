@@ -1,0 +1,116 @@
+---
+/**
+ * bm-call-to-action-26 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-26.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-26__container">
+    <div class="bm-contact-widget-3">
+      <h2 class="bm-contact-widget-3__heading">Ready to start a project?</h2>
+      <div class="bm-contact-widget-3__manager-data">
+        <div class="bm-contact-widget-3__media">
+          <figure class="bm-contact-widget-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-contact-widget-3__data">
+          <div class="bm-contact-widget-3__top">
+            <p class="bm-contact-widget-3__name">Alan Smith</p>
+            <p class="bm-contact-widget-3__title">Account manager</p>
+          </div>
+          <div class="bm-contact-widget-link">
+            <div class="bm-contact-widget-link__icon-wrapper">
+              <span class="bm-contact-widget-link__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <p class="bm-contact-widget-link__data clickable-parent">+000 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-widget-3 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-contact-widget-3__heading {
+    width: 100%;
+    font-size: calc(var(--fs-4) * 2);
+  }
+
+  .bm-contact-widget-3__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget-3__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-3__image {
+    object-fit: cover;
+    width: 128;
+    height: 128;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget-3__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-3__name {
+    font-weight: 700;
+  }
+
+  .bm-contact-widget-link {
+    display: flex;
+    align-items: center;
+    background: var(--color-ink-secondary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    column-gap: calc(var(--flow-spacing) / 2);
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+    position: relative;
+  }
+
+  .bm-contact-widget-link__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    width: 32;
+    height: 32;
+  }
+
+  /* bm-custom */
+  .bm-contact-widget-link__data {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }
+}
+</style>

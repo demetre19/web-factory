@@ -1,0 +1,167 @@
+---
+/**
+ * bm-login-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (login-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <figure class="bm-login-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="bm-login-6__container">
+    <div class="coming-soon__brand">
+      <svg class="bm-login-6__logo"></svg>
+    </div>
+    <div class="bm-login-6__login-wrapper">
+      <div class="login-form-wrapper login-form-wrapper--alt">
+        <h1 class="login-3__heading">Login</h1>
+        <form class="login-form" novalidate>
+        </form>
+        <div class="login-footer list--none">
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Back to home</a>
+          </div>
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Lost your password?</a>
+          </div>
+        </div>
+      </div>
+      <div class="login-1__logged-in-heading-wrapper">
+        <h1 class="login-3__heading">You are logged in.</h1>
+        <div class="login-footer list--none">
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Back to home</a>
+          </div>
+          <div class="login-footer__li">
+            <a class="login-footer__link" href="#">Lost your password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-login-6__copyright-wrapper">
+      <p class="bm-login-6__copyright">{site_url} @ {current_date:Y}</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-login-6 {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .bm-login-6__image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-login-6__container {
+    position: relative;
+    z-index: 1{"content":[{"id":"gcrhde","name":"block","parent":"hdlhyp","children":["niccqb","raeigt"],"settings":{"_cssGlobalClasses":["oecxtu"]},"label":"Login"},{"id":"niccqb","name":"block","parent":"gcrhde","children":["nvvvam","ndkmst","wilzic"],"settings":{"_cssGlobalClasses":["wxylfm","zgoxjd"],"_conditions":[[{"id":"gxexmh","key":"user_logged_in","compare":"==","value":"0"}]]},"label":"Form"},{"id":"nvvvam","name":"heading","parent":"niccqb","children":[],"settings":{"text":"Login","tag":"h1","_cssGlobalClasses":["pancnh"]}},{"id":"ndkmst","name":"form","parent":"niccqb","children":[],"settings":{"fields":[{"type":"email","label":"Username or Email","placeholder":"Your Email","required":true,"id":"225d8b"},{"type":"password","label":"Password","placeholder":"Your Name","id":"zeicsm"},{"type":"rememberme","placeholder":"Remember me","id":"vzyotp","width":"50"},{"type":"html","placeholder":"Your Name","id":"vzphws","html":"<span><a href=\"#\">Forgot your password</a></span>","width":"50"}],"submitButtonStyle":"primary","successMessage":"You are logged in.","emailSubject":"Contact form request","emailTo":"admin_email","fromName":"acss.bricksmaven.com","emailErrorMessage":"Submission failed. Please reload the page and try to submit the form again.","htmlEmail":true,"mailchimpPendingMessage":"Please check your email to confirm your subscription.","mailchimpErrorMessage":"Sorry, but we could not subscribe you.","sendgridErrorMessage":"Sorry, but we could not subscribe you.","_cssGlobalClasses":["msdita"],"actions":["login"],"showLabels":true,"submitButtonText":"Log in","loginName":"225d8b","loginPassword":"zeicsm","loginRemember":"vzyotp","loginErrorMessage":"Username of password is incorrect"},"themeStyles":[]},{"id":"wilzic","name":"div","parent":"niccqb","children":["pseebh","cmuaab"],"settings":{"_cssGlobalClasses":["bfyteo","acss_import_list--none"],"tag":"ul"},"label":"Footer"},{"id":"pseebh","name":"div","parent":"wilzic","children":["fjxszk"],"settings":{"_cssGlobalClasses":["ytvjsk"],"tag":"li"},"label":"li"},{"id":"fjxszk","name":"text-link","parent":"pseebh","children":[],"settings":{"text":"Back to home","_cssGlobalClasses":["fjrrkt"],"link":{"type":"meta","useDynamicData":"{site_url}"}},"label":"Back to home","themeStyles":[]},{"id":"cmuaab","name":"div","parent":"wilzic","children":["owbezy"],"settings":{"_cssGlobalClasses":["ytvjsk"],"tag":"li"},"label":"li"},{"id":"owbezy","name":"text-link","parent":"cmuaab","children":[],"settings":{"text":"Lost your password?","_cssGlobalClasses":["fjrrkt"],"link":{"type":"external","url":"#"}},"label":"Lost your password?","themeStyles":[]},{"id":"raeigt","name":"block","parent":"gcrhde","children":["acphby","ppchla"],"settings":{"_cssGlobalClasses":["buvxnz"],"_conditions":[[{"id":"astmzb","key":"user_logged_in","compare":"==","value":"1"}]]},"label":"Logged in Heading"},{"id":"acphby","name":"heading","parent":"raeigt","children":[],"settings":{"text":"You are logged in.","tag":"h1","_cssGlobalClasses":["pancnh"]}},{"id":"ppchla","name":"div","parent":"raeigt","children":["groiij","xavaqg"],"settings":{"_cssGlobalClasses":["bfyteo","acss_import_list--none"],"tag":"ul"},"label":"Footer"},{"id":"groiij","name":"div","parent":"ppchla","children":["tkchom"],"settings":{"_cssGlobalClasses":["ytvjsk"],"tag":"li"},"label":"li"},{"id":"tkchom","name":"text-link","parent":"groiij","children":[],"settings":{"text":"Back to home","_cssGlobalClasses":["fjrrkt"],"link":{"type":"meta","useDynamicData":"{site_url}"}},"label":"Back to home"},{"id":"xavaqg","name":"div","parent":"ppchla","children":["mjbuwz"],"settings":{"_cssGlobalClasses":["ytvjsk"],"tag":"li"},"label":"li"},{"id":"mjbuwz","name":"text-link","parent":"xavaqg","children":[],"settings":{"text":"Lost your password?","_cssGlobalClasses":["fjrrkt"],"link":{"type":"external","url":"#"}},"label":"Lost your password?"}],"source":"bricksCopiedElements","sourceUrl":"https://acss.bricksmaven.com","version":"1.9.9","globalClasses":[{"id":"oecxtu","name":"bm-login-5__login","settings":{"_padding":{"top":"var(--space-m)","right":"var(--space-m)","bottom":"var(--space-m)","left":"var(--space-m)"},"_border":{"width":{"top":"1px","right":"1px","bottom":"1px","left":"1px"},"style":"solid","color":{"id":"acss_import_neutral-light","name":"neutral-light","raw":"var(--color-line-default)"}},"_background":{"color":{"id":"acss_import_white","name":"white","raw":"var(--bg-canvas)"}}}},{"id":"wxylfm","name":"login-form-wrapper","settings":{"_width:mobile_landscape":"100%","_rowGap":"var(--flow-spacing)"},"modified":1722396720,"user_id":7},{"id":"zgoxjd","name":"login-form-wrapper--alt","settings":{"_width":"var(--measure)"}},{"id":"pancnh","name":"login-3__heading","settings":[]},{"id":"msdita","name":"login-form","settings":{"submitButtonBackgroundColor":{"id":"acss_import_neutral","name":"neutral","raw":"var(--text-secondary)"},"submitButtonTypography":{"color":{"id":"acss_import_neutral-ultra-light","name":"neutral-ultra-light","raw":"var(--bg-subtle)"}},"fieldBorder":{"color":{"id":"acss_import_neutral-light","name":"neutral-light","raw":"var(--color-line-default)"},"width":{"top":".1rem","right":".1rem","bottom":".1rem","left":".1rem"},"style":"solid"},"fieldPadding":{"top":"calc(var(--space-xs) / 2)","bottom":"calc(var(--space-xs) / 2)","left":"var(--space-xs)","right":"var(--space-xs)"},"_cssCustom":".login-form .form-group ul li {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: center;\n}\n\n.login-form .form-group span {\n\tdisplay: flex;\n  flex-direction: row;\n  align-items: end;\n}\n\n.login-form .form-group span a, .login-form .form-group ul li label {\n\tfont-size: var(--fs-0);\n}\n\n.login-form .form-group:nth-child(4) {\n    align-items: end;\n}"}},{"id":"bfyteo","name":"login-footer","settings":{"_display":"flex","_flexWrap":"nowrap","_columnGap":"var(--flow-spacing)"}},{"id":"acss_import_list--none","name":"list--none","settings":[]},{"id":"ytvjsk","name":"login-footer__li","settings":[]},{"id":"fjrrkt","name":"login-footer__link","settings":{"_typography":{"font-size":"var(--fs-0)"}}},{"id":"buvxnz","name":"login-1__logged-in-heading-wrapper","settings":{"_rowGap":"var(--flow-spacing)"}}],"globalElements":[]};
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .coming-soon__brand {
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-login-6__login-wrapper {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--color-line-default);
+    border-right: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-left: 1px solid var(--color-line-default);
+    background: var(--bg-canvas);
+    width: var(--measure);
+    position: relative;
+    z-index: 1;
+  }
+
+  .login-form-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-form-wrapper--alt {
+    width: var(--measure);
+  }
+
+  .login-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .login-footer__link {
+    font-size: var(--fs-0);
+  }
+
+  .login-1__logged-in-heading-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-login-6__copyright {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-login-6::before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 75%;
+    background: linear-gradient(var(--bg-canvas) 15%, transparent);
+    z-index: 1;
+  }
+
+  /* bm-custom */
+  .login-form .form-group ul li {
+  	display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .login-form .form-group span {
+  	display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+  
+  .login-form .form-group span a, .login-form .form-group ul li label {
+  	font-size: var(--fs-0);
+  }
+  
+  .login-form .form-group:nth-child(4) {
+      align-items: end;
+  }
+}
+</style>

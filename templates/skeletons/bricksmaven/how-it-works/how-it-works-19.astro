@@ -1,0 +1,127 @@
+---
+/**
+ * bm-how-it-works-19 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-19.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hworks-19-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="hworks-19__content">
+      <div class="hworks-19-list list--none">
+        {items.map((it) => (
+          <div class="hworks-19-card">
+            <div class="hworks-19-card__line-wrapper">
+              <div class="hworks-19-card__line"></div>
+            </div>
+            <div class="hworks-19-card__content">
+              <h2 class="hworks-19-card__heading">{it.title}</h2>
+              <p class="hworks-19-card__text">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="hworks-19__media">
+        <figure class="hworks-19__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hworks-19-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hworks-19__content {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .hworks-19-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .hworks-19-card__line {
+    height: 100%;
+    border-top: .1rem solid var(--bg-subtle);
+    border-right: .1rem solid var(--bg-subtle);
+    border-bottom: .1rem solid var(--bg-subtle);
+    border-left: .1rem solid var(--bg-subtle);
+  }
+
+  .hworks-19-card__content {
+    row-gap: var(--flow-spacing);
+    padding: 0 0 var(--space-l) 0;
+  }
+
+  .hworks-19__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .hworks-19-list {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-19-list li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: var(--action-primary);
+    padding-inline:1rem;
+    padding-block:.4rem;
+    color:var(--bg-canvas);
+    font-size: var(--fs-0);
+    font-weight: 700;
+    border-radius: 100%;
+    position:absolute;
+    left:-1.1rem;
+      top:0%;
+    transform: translateY(-50%);
+    
+  }
+}
+</style>

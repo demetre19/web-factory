@@ -1,0 +1,134 @@
+---
+/**
+ * bm-content-51 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-51.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-51__container">
+    <div class="bm-content-51__content">
+      <div class="bm-content-51__top">
+        <h2 class="bm-content-51__heading">Long headline to turn your visitors into customers</h2>
+        <p class="accent-h">Accent heading</p>
+        <p class="bm-content-51__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--primary" href="#">Call to action</a>
+        <a class="bm-content-51__link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="bm-content-51__media">
+      <figure class="bm-content-51__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="bm-content-51__carousel-container">
+    <div class="logo-12__logo-list-wrapper">
+      <div class="logo-12-list">
+        <div class="logo-12-list-item">
+          <figure class="logo-12-list-item__brand"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-51 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-51__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-content-51__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-51__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-content-51__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .logo-12__logo-list-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .logo-12-list {
+    flex-direction: row;
+  }
+
+  .logo-12-list-item__brand {
+    object-fit: contain;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .logo-12__logo-list-wrapper::before {
+  	content:'';
+    position: absolute;
+    left:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
+    z-index: 99;
+  }
+  
+  .logo-12__logo-list-wrapper::after {
+  	content:'';
+    position: absolute;
+    right:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
+    z-index: 99;
+  }
+
+  /* bm-custom */
+  .logo-12-list  .splide__track{
+  	overflow:visible;
+  }
+  
+  .logo-12-list .splide__list {
+    gap: calc(var(--flow-spacing) * 3);
+    align-items: center;
+  }
+  
+  .logo-12-list :where(.splide__list, .splide__slide){
+    transition-timing-function: linear !important;
+  }
+}
+</style>

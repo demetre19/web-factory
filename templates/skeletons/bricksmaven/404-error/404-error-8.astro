@@ -1,0 +1,88 @@
+---
+/**
+ * bm-404-error-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-8-container">
+    <div class="error-8-grid-ul list--none">
+      <div class="error-8-intro">
+        <div class="error-8-intro__heading-wrapper">
+          <h1 class="error-8-intro__heading">404 ERROR</h1>
+          <p class="error-8-intro__subheading">Page not found.</p>
+          <p class="error-8-intro__desc">Sorry, the page you are looking for doesn't exist.</p>
+        </div>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      {items.map((it) => (
+        <div class="error-8-card">
+          <div class="error-8-card__heading-wrapper">
+            <h3 class="error-8-card__heading">{it.title}</h3>
+            <p class="error-8-card__desc">{it.text}</p>
+          </div>
+          <a class="error-8-card-btn wf-cta-button" href={it.href}>{it.label}</a>
+          <span class="error-8-icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .error-8-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-m);
+  }
+
+  .error-8-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    align-items: flex-start;
+  }
+
+  .error-8-intro__subheading {
+    font-weight: 700;
+    font-size: var(--fs-3);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .error-8-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+  }
+
+  .error-8-card-btn {
+    padding: 0 0 0 0;
+    justify-content: flex-start;
+  }
+}
+</style>

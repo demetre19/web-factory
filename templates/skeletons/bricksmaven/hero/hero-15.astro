@@ -1,0 +1,83 @@
+---
+/**
+ * bm-hero-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-15-container">
+    <div class="hero-15__content">
+      <h1 class="hero-15__title">Long headline to turn your visitors into customers</h1>
+      <p class="hero-15__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="hero-15__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-15__media">
+      <figure class="hero-15__media-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-15 {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    padding: 0 0 0 0;
+  }
+
+  .hero-15-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 12);
+    height: 100%;
+    position: relative;
+  }
+
+  .hero-15__content {
+    background: var(--bg-canvas);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    align-items: flex-start;
+    z-index: 1;
+    align-self: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-15__media {
+    position: relative;
+    background: var(--bg-subtle);
+  }
+
+  .hero-15__media-img {
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top:  0;
+    right: 0;
+  }
+}
+</style>

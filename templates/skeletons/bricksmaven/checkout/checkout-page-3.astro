@@ -1,0 +1,332 @@
+---
+/**
+ * bm-checkout-page-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (checkout-page-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <h1 class="checkout-page-3__heading">Checkout</h1>
+  <div class="checkout-page-3__container">
+    <div class="bm-woo-notice-container">
+      <div class="bm-woo-notice"></div>
+    </div>
+    <div class="checkout-page-3__details">
+      <div class="checkout-page-3__customer-details"></div>
+    </div>
+    <div class="checkout-page-3__order">
+      <div class="checkout-page-3__order-review"></div>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .checkout-page-3__heading {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: 0 var(--space-l) 0 var(--space-l);
+    margin: 0 0 var(--space-xl) 0;
+  }
+
+  .checkout-page-3__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 1);
+    gap: var(--space-xl);
+    width: 100%;
+  }
+
+  .bm-woo-notice-container {
+    position: relative;
+  }
+
+  .checkout-page-3__details {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .checkout-page-3__customer-details {
+    width: 100%;
+  }
+
+  .checkout-page-3__order {
+    width: 100%;
+  }
+
+  .checkout-page-3__order-review {
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .checkout-page-3__customer-details {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+  
+    	/* Change accent color of checkbox and radio */
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+    	
+    	/* Set container of billing and shiiping fiedls to display flex */
+    	.col2-set {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    .col-2 {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    	/* Sets margin-bottom of h3 element */
+  		.woocommerce-shipping-fields > h3, .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+    
+    #ship-to-different-address label {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .woocommerce-shipping-fields h3 span {
+      font-size: var(--fs-2) !important;
+      order: -1;
+      color: var(--action-primary);
+      font-weight: 700;
+      
+    }
+    
+    
+  }
+
+  /* bm-custom */
+  .checkout-page-3__order {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+  
+      .woocommerce-shipping-fields {
+        margin-top: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields label {
+        font-size: var(--fs-1);
+        color: var(--action-primary);
+        font-weight: bold;
+      }
+  
+      .woocommerce-billing-fields #ship-to-different-address-checkbox + span {
+        color: var(--action-primary);
+        font-weight: bold;
+        font-size: var(--fs-1);
+      }
+    
+  }
+
+  /* bm-custom */
+  .checkout-page-3__order-review {  	
+    	--order-review--primary: var(--text-primary);
+    	--order-review--border: var(--color-line-default);
+    	--focus-color: var(--action-primary);
+    
+    	/* Removes border around checkout element */
+    	#order_review {
+      		border: 0;
+    	}
+    
+       	/* Adds margin bottom to the order review heading */
+    		#order_review_heading {
+  				margin-bottom: var(--space-m);
+  		}  
+  		
+  		
+    	/* Shop table styling */
+  		.shop_table {
+       		text-align: left;
+        	border-spacing: 0;
+        	border: 0;
+    	}		
+    
+    	/* Style shop table table cell */
+  		.shop_table thead th {
+          text-align: left;
+          background-color: var(--acss-order-review--border);
+          width: 50%;
+      }
+    
+    
+    /* Align subtotal column to the right */
+    .shop_table .cart-subtotal td, .shop_table .order-total td, .shop_table .cart_item .product-total, .shop_table .product-total {
+      	text-align: end;
+    }
+    
+      /* Right align the shipping methods*/
+    ul.woocommerce-shipping-methods li {
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+  	}
+    
+    	/* Sets padding on td and th elements */
+  		.shop_table td,
+    	.shop_table th {
+      		padding: var(--space-xs);
+    	}
+    
+    	/* Sets the border-bottom of the shop table to 0 */
+    	.shop_table tfoot {
+        	border-bottom: 0;
+    	}
+    
+    	/* Sets table rows background color */
+      .shop_table tbody tr {
+        	background-color: var(--bg-canvas);
+      }
+  		
+    	/* Sets left and bottom border of product name */
+    	#order_review .product-name {
+  				border-left: 1px solid var(--acss-order-review--border);
+        	border-bottom: 1px solid var(--acss-order-review--border);
+  		}
+    
+    	/* Sets left and bottom border of product total */
+      #order_review .product-total {
+  				border-right: 1px solid var(--acss-order-review--border);
+        	border-bottom: 1px solid var(--acss-order-review--border);
+  				font-weight: bold;
+  		}
+  		
+    	/* Sets bottom border of last of type cart item */
+    	#order_review .cart_item:last-of-type td {
+        	border-bottom: 1px solid var(--acss-order-review--border);
+    	}
+  
+    	/* Sets bottom border of cart subtotal */
+  		.cart-subtotal th,
+    	.cart-subtotal td {
+        	border-bottom: 1px solid var(--acss-order-review--border) !important;
+    	} 
+  		
+    	/* Styles Subtotal font weight */
+      .shop_table tfoot th {
+        	font-weight: bold;
+      }
+    
+    	/* Styles Subtotal price font weight */
+      .shop_table tfoot td {
+        	font-weight: bold;            
+      }			
+    
+    	/* Styles order total font size and weight */
+      .order-total th {
+        	font-size: var(--fs-1);
+        	font-weight: 700 !important;
+      }
+    	
+    	/* Styles order total price font size */
+      .order-total .amount {
+        	font-size: var(--fs-2);
+      }
+    
+    	/* Styles payment container */
+    	#payment {
+        	padding: var(--space-s);
+        	border: 1px solid var(--acss-order-review--border);
+        	background-color: var(--bg-subtle);
+    	}
+    
+    	/* Styles payment content wrapper */
+      #payment ul {
+        list-style-type: none;
+        padding-inline: 0;
+        
+      }
+  
+    	/* Styles payment label */
+      #payment label {
+          display: inline;
+          color: var(--action-primary);
+          font-weight: bold;
+        	font-size: var(--fs-1) !important;
+      }		
+        
+    	/* Styles payment Paragraph margin */  
+      #payment .payment_box p {
+        margin: var(--space-xs) 0;
+        padding: 0 var(--space-xs);
+        font-size: var(--fs-0);
+      }
+    
+    /* Styles payment Paragraph margin */  
+      #payment .woocommerce-privacy-policy-text p {
+        	margin: var(--space-xs) 0;
+        	font-size: var(--fs-0);
+      }
+    	
+    	/* Styles gap payment input label & span  */
+    	#payment input + label, #payment input + span {
+        	margin-left: calc(var(--space-xs) / 4);
+    	}
+       
+    	/* Styles payment input accent color */
+    	#payment .payment_methods input[type="checkbox"],
+    	#payment .payment_methods input[type="radio"]  {
+        	accent-color: var(--action-primary);
+    	}
+    	
+    	/* Styles payment privacy policy link */
+      #payment .woocommerce-privacy-policy-link {
+          color: var(--action-primary);
+          font-weight: 700;
+      }  
+      
+    	/* Styles payment Place order button */
+      #payment button {
+          background-color: var(--action-primary);
+          color: var(--bg-canvas);
+          font-weight: normal;
+          font-size: var(--fs-1);
+        	line-height: 30px;
+          text-align: center;
+          width: 100%;
+      }
+  
+  }
+}
+</style>

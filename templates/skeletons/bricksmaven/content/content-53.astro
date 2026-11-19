@@ -1,0 +1,110 @@
+---
+/**
+ * bm-content-53 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-53.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-53__container">
+    <div class="bm-content-53__content">
+      <div class="bm-content-53__top">
+        <h2 class="bm-content-53__heading">Long headline to grab your users attention</h2>
+        <p class="accent-h">Accent heading</p>
+      </div>
+      <div class="bm-content-53-list">
+        {items.map((it) => (
+          <div class="bm-content-53-card">
+            <div class="bm-content-53-card__icon-wrapper">
+              <span class="bm-content-53-card__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="bm-content-53-card__content">
+              <h2 class="bm-content-53-card__heading">{it.title}</h2>
+              <p class="bm-content-53-card__text">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-content-53__media">
+      <div class="bm-content-53__image-wrapper">
+        <figure class="bm-content-53-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-53__container {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--space-m);
+    background: var(--bg-subtle);
+    padding: var(--space-xl) var(--space-xl) 0 0;
+  }
+
+  .bm-content-53__content {
+    padding: 0 var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-53__top {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-content-53-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-53-card {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-content-53-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-53__media {
+    position: relative;
+    height: calc(100% + var(--acss-offset-height));
+  }
+
+  .bm-content-53__image-wrapper {
+    position: sticky;
+    top: 6rem;
+    height: 100vh;
+  }
+
+  .bm-content-53-card__image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-content-53__media {
+    --offset-height: 10rem;
+  }
+}
+</style>

@@ -1,0 +1,142 @@
+---
+/**
+ * bm-blog-section-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-7-container">
+    <div class="blog-section-7-head">
+      <p class="accent-h">Our blog</p>
+      <h2 class="blog-section-7-head__title">Lastest blog posts</h2>
+      <p class="blog-section-7-head__desc">Tool and strategies modern teams need to help their companies grow.</p>
+    </div>
+    <div class="blog-section-7-body">
+      <div class="blog-section-7-wrapper list--none">
+        <div class="blog-section-7-card">
+          <div class="blog-section-7-card__media">
+            <figure class="blog-section-7-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="blog-section-7-card__meta">
+            <div class="blog-section-7-card__meta-profile-date">
+              <p class="blog-section-7-card__author">{author_name}</p>
+              <p class="blog-section-7-card__date">{post_date}</p>
+            </div>
+            <h2 class="blog-section-7-card__title">{post_title}</h2>
+            <div class="blog-section-7-card__excerpt"></div>
+            <div class="blog-section-7-card__cta">
+              <p class="blog-section-7-card__term">{post_terms_category}</p>
+              <p class="blog-section-7-card__read">Read the full story</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="blog-section-7-cta btn--primary self--center wf-cta-button" href={cta.href}>{cta.label}</a>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-7-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-section-7-head {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-7-body {
+    width: 100%;
+  }
+
+  .blog-section-7-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .blog-section-7-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-section-7-card__thumb {
+    height: 30rem;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .blog-section-7-card__meta {
+    border-right: .1rem solid color-mix(in srgb, var(--fs-0) 40%, transparent);
+    border-bottom: .1rem solid color-mix(in srgb, var(--fs-0) 40%, transparent);
+    border-left: .1rem solid color-mix(in srgb, var(--fs-0) 40%, transparent);
+    height: 100%;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-section-7-card__meta-profile-date {
+    display: flex;
+    flex-direction: row;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    column-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .blog-section-7-card__author {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-7-card__date {
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-7-card__cta {
+    margin: auto 0 0 0;
+    font-size: var(--fs-0);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .blog-section-7-card__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

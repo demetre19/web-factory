@@ -1,0 +1,78 @@
+---
+/**
+ * bm-header-9 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-9.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-9__container">
+    <div class="bm-header-9__brand">
+      <img class="bm-header-9__brand-logo"></img>
+    </div>
+    <div class="bm-header-9__right">
+      <div class="header-9__search"></div>
+      <a class="header-9__cta btn--primary" href="#">Call to action</a>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-9 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-9__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-9__right {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .header-9__cta {
+    margin: 0 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .bm-header-9__brand-logo.white path {
+  	fill: var(--bg-canvas);
+  }
+
+  /* bm-custom */
+  .header-9__cta {
+  	margin-left: 2rem;
+    white-space: nowrap;
+  }
+}
+</style>

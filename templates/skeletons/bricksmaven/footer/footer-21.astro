@@ -1,0 +1,285 @@
+---
+/**
+ * bm-footer-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-footer-21__cta-container">
+    <h2 class="bm-footer-21__heading">Helping business owners grow their teams</h2>
+    <p class="bm-footer-21__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  </div>
+  <div class="bm-footer-21__footer-container">
+    <div class="bm-footer-21__nav-wrapper">
+      <div class="footer-nav-wrapper footer-nav-wrapper-21">
+        <div class="footer-nav-column">
+          <h3 class="footer-nav-heading">1st column</h3>
+          <div class="footer-menu list--none">
+            {items.map((it) => (
+              <div class="footer-menu__link">
+                <a class="footer-menu__link-text" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="footer-nav-column">
+          <h3 class="footer-nav-heading">2nd column</h3>
+          <div class="footer-menu list--none">
+            {items.map((it) => (
+              <div class="footer-menu__link">
+                <a class="footer-menu__link-text" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-footer-21__contact">
+      <h3 class="bm-footer-heading">3rd column</h3>
+      <div class="list--none bm-contact-information-grid-ul">
+        <div class="bm-contact-info-card">
+          <div class="bm-contact-info-card__content">
+            <h2 class="bm-contact-info-card__heading">Call us</h2>
+            <p class="bm-contact-info-card__text">+32 465 45 37 15</p>
+          </div>
+          <span class="bm-contact-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div class="bm-contact-info-card">
+          <div class="bm-contact-info-card__content">
+            <h2 class="bm-contact-info-card__heading">Email us</h2>
+            <p class="bm-contact-info-card__text">info@clienturl.com</p>
+          </div>
+          <span class="bm-contact-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+    <div class="bm-footer-21__newsletter">
+      <p class="bm-footer-21__newsletter-text">Subscribe for the latest event updates</p>
+      <form class="footer-newsletter__form" novalidate>
+      </form>
+    </div>
+  </div>
+  <div class="bm-footer-21__bottom-container">
+    <div class="footer-bottom__left">
+      <div class="footer-bottom__copyright">
+        <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+      </div>
+      <div class="footer-nav-legal">
+        <div class="footer-legal-nav list--none">
+          {items.map((it) => (
+            <div class="footer-legal__li">
+              <a class="footer-legal__link-text" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-social-share list--none bm-social-share--left">
+      {items.map((it) => (
+        <div class="bm-social-share__icon-wrapper">
+          <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-footer-21 {
+    background: var(--bg-canvas);
+    row-gap: var(--space-s);
+    position: relative;
+  }
+
+  .bm-footer-21__cta-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-21__heading {
+    font-size: calc(var(--fs-3) * 2);
+    width: var(--content-width);
+  }
+
+  .bm-footer-21__subheading {
+    width: var(--content-width);
+  }
+
+  .bm-footer-21__footer-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 4);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: var(--bg-canvas);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .footer-nav-wrapper-21 {
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .bm-footer-heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-contact-information-grid-ul {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 1);
+    gap: calc(var(--space-m) / 2);
+    width: 100%;
+  }
+
+  .bm-contact-info-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-info-card__content {
+    width: 88%;
+    margin: .5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-info-card__heading {
+    font-weight: 700;
+    font-size: var(--fs-1);
+  }
+
+  .bm-contact-info-card__text {
+    font-style: normal;
+  }
+
+  .bm-contact-info-card__icon {
+    width: 12%;
+  }
+
+  .bm-footer-21__newsletter {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-21__bottom-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .footer-bottom__left {
+    flex-direction: row;
+    row-gap: var(--flow-spacing);
+    column-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-legal__li {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer-legal__link-text {
+    font-size: var(--fs-0);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  /* bm-custom */
+  .bm-footer-21::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background-color: var(--bg-subtle);
+    width:100%;
+    height: 60%;
+    z-index: -1;
+    
+    
+  }
+
+  /* bm-custom */
+  .footer-newsletter__form {
+  	flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .footer-newsletter__form [type="submit"] {
+  	height: 100%;
+  }
+}
+</style>

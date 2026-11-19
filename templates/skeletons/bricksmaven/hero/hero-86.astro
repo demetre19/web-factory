@@ -1,0 +1,179 @@
+---
+/**
+ * bm-hero-86 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-86.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-86__container">
+    <div class="bm-hero-86__content">
+      <div class="bm-hero-86__top">
+        <h1 class="bm-hero-86__heading">Long headline to turn your visitors into customers</h1>
+        <p class="bm-hero-86__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-hero-86__footer">
+        <div class="bm-hero-86__slider-nested">
+          {items.map((it) => (
+            <div class="bm-hero-86-card">
+              <div class="bm-hero-86-card__thumb">
+                <figure class="bm-hero-86-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div class="bm-hero-86-card__content">
+                <div class="bm-hero-86-card__top">
+                  <p class="bm-hero-86-card__social-handle">{it.text}</p>
+                  <span class="bm-hero-86-card__icon" data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="bm-hero-86-card__review">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-hero-86__media-wrapper">
+      <div class="list--none bm-hero-86-media">
+        {items.map((it) => (
+          <div class="bm-hero-86-image-wrapper">
+            <figure class="bm-hero-86-image-wrapper__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-86 {
+    background: var(--bg-subtle);
+    overflow: clip;
+  }
+
+  .bm-hero-86__container {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--space-m);
+  }
+
+  .bm-hero-86__content {
+    row-gap: var(--flow-spacing);
+    justify-content: space-between;
+  }
+
+  .bm-hero-86__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-86-card {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-hero-86-card__thumb {
+    display: flex;
+  }
+
+  .bm-hero-86-card__image {
+    object-fit: cover;
+    width: 64px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-hero-86-card__content {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-86-card__top {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bm-hero-86-card__social-handle {
+    font-size: var(--fs-0);
+  }
+
+  .bm-hero-86-card__review {
+    font-size: var(--fs-0);
+    padding: 0 0 var(--space-s) 0;
+  }
+
+  .bm-hero-86-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-rows: repeat(24, minmax(0, 1fr));
+  }
+
+  .bm-hero-86-image-wrapper__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-hero-86-image-wrapper {
+    overflow: clip;
+  }
+  
+  .bm-hero-86-image-wrapper:nth-child(1) {
+    grid-column:1/10;
+    grid-row:1/12;
+    border-start-start-radius: 100%;
+    border-end-end-radius: var(--r-card);
+  }
+  
+  .bm-hero-86-image-wrapper:nth-child(2) {
+    grid-column:1/10;
+    grid-row:12/-1;
+    border-start-end-radius: var(--r-card);
+    border-end-start-radius: var(--r-card);
+  }
+  
+  .bm-hero-86-image-wrapper:nth-child(3) {
+    grid-column:10/17;
+    grid-row:3/16;
+    border-start-end-radius: 100%;
+    border-end-start-radius: var(--r-card);
+    border-end-end-radius: var(--r-card);
+  }
+  
+  .bm-hero-86-image-wrapper:nth-child(4) {
+    grid-column:10/17;
+    grid-row:16/-1;
+    border-radius: var(--r-card);
+  }
+  
+  .bm-hero-86-image-wrapper:nth-child(5) {
+    grid-column:17/-1;
+    grid-row:9/-1;
+    border-start-end-radius: 100%;
+    border-end-end-radius: 100%;
+  }
+}
+</style>

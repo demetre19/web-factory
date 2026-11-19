@@ -1,0 +1,103 @@
+---
+/**
+ * bm-content-56 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-56.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-56__container">
+    <div class="bm-content-56__intro">
+      <h2 class="bm-content-56__heading">Long headline to turn your visitors into customers</h2>
+      <p class="accent-h">Accent heading</p>
+    </div>
+    <div class="bm-content-56__content">
+      <div class="bm-content-56__column">
+        <p class="bm-content-56__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+        <div class="cta-combo">
+          <a class="btn--primary" href="#">Call to action</a>
+          <a class="bm-link" href="#">Secondary action →</a>
+        </div>
+      </div>
+      <div class="bm-content-56-data list--none">
+        <div class="bm-content-56-data-card">
+          <span class="bm-content-56-data-card__counter"></span>
+          <p class="bm-content-56-data-card__text">Custom-made templates to suit all your design needs</p>
+        </div>
+        <div class="bm-content-56-data-card">
+          <span class="bm-content-56-data-card__counter"></span>
+          <p class="bm-content-56-data-card__text">Of users report increased client satisfaction after using out product</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-56__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-56__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+    padding: 0 0 var(--space-l) 0;
+    border-bottom: 1 solid var(--color-line-default);
+  }
+
+  .bm-content-56__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-content-56__content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-content-56__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-content-56-data {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-56-data-card {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-56-data-card__counter {
+    font-size: calc(var(--fs-4) * 3);
+    line-height: 1;
+    font-weight: 700;
+  }
+}
+</style>

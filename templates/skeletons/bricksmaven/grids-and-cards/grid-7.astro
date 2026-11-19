@@ -1,0 +1,82 @@
+---
+/**
+ * bm-grid-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-7-container">
+    <div class="gridcard-7-grid-ul list--none">
+      {items.map((it) => (
+        <div class="gridcard-7-card">
+          <div class="gridcard-7-card__box">
+            <div class="gridcard-7-card__header">
+              <h2 class="gridcard-7-card__heading">{it.title}</h2>
+              <p class="gridcard-7-card__caption">{it.text}</p>
+            </div>
+            <p class="gridcard-7-card__desc">{it.text}</p>
+          </div>
+          <div class="gridcard-7-card__media">
+            <figure class="gridcard-7-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-7-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-7-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-7-card__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-7-card__header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .gridcard-7-card__caption {
+    font-size: var(--fs-0);
+  }
+
+  .gridcard-7-card__image {
+    height: 25rem;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+</style>

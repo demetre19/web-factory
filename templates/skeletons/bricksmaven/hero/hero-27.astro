@@ -1,0 +1,58 @@
+---
+/**
+ * bm-hero-27 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-27.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-27__container-media">
+    <div class="hero-27__media-wrapper">
+      <figure class="hero-27__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-27 {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: var(--acss-image-height);
+  }
+
+  .hero-27__image {
+    object-fit: cover;
+    width: 100vw;
+    margin: 0 0 0 -50vw !important;
+    left: 50%;
+    position: absolute;
+    top: 0;
+    height: var(--acss-image-height);
+  }
+
+  /* bm-custom */
+  .hero-27 {
+  	--image-height: 48rem;
+  }
+}
+</style>

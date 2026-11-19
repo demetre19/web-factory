@@ -1,0 +1,216 @@
+---
+/**
+ * bm-header-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="header-21__container">
+    <div class="header-21__nav">
+      <div class="header-21__nav-menu"></div>
+    </div>
+    <div class="header-21__brand">
+      <figure class="header-21__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="header-21__cta">
+      <p class="bm-header-21__label">Contact</p>
+      <span class="bm-header-21__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div class="bm-off-canvas-6__toggle"></div>
+        <div class="bm-off-canvas-6">
+          <div class="bm-off-canvas-6__content">
+            <div class="bm-off-canvas-6__close"></div>
+            <h2 class="bm-off-canvas-6__heading">Menu</h2>
+            <div class="bm-off-canvas-nav-ul list--none">
+              {items.map((it) => (
+                <div class="bm-off-canvas-nav-li">
+                  <a class="bm-off-canvas-nav-li__link bm-off-canvas-nav-li__link--larger" href="#">{it.text}</a>
+                </div>
+              ))}
+            </div>
+            <div class="bm-off-canvas-6__contact-footer">
+              <h2 class="bm-off-canvas-6__contact-heading">Get in touch with us</h2>
+              <div class="bm-off-canvas-contact list--none">
+                <div class="bm-off-canvas-contact-item">
+                  <div class="bm-off-canvas-contact-item__icon-wrapper">
+                    <span class="bm-off-canvas-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                  <a class="bm-off-canvas-contact-item__link" href="#">info@clienturl.com</a>
+                </div>
+                <div class="bm-off-canvas-contact-item">
+                  <div class="bm-off-canvas-contact-item__icon-wrapper">
+                    <span class="bm-off-canvas-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                  <a class="bm-off-canvas-contact-item__link" href="#">+32 456 78 3456</a>
+                </div>
+              </div>
+              <p class="bm-off-canvas-6__contact-address">10333 Freeman Ave Ste 1000, Boston TX 34542, USA</p>
+            </div>
+            <div class="bm-off-canvas-6__socials">
+              <div class="bm-social-share list--none bm-social-share--column">
+                {items.map((it) => (
+                  <div class="bm-social-share__icon-wrapper">
+                    <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
+              <p class="bm-off-canvas-6__social-heading">Social</p>
+            </div>
+          </div>
+          <div class="bm-off-canvas-6__backdrop"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-21 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .header-21__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+
+  .header-21__nav {
+    width: auto;
+  }
+
+  .header-21__brand {
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .header-21__cta {
+    width: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-header-21__label {
+    text-transform: uppercase;
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-off-canvas-6 {
+    position: relative;
+  }
+
+  .bm-off-canvas-6__content {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-off-canvas-6__close {
+    position: absolute;
+    right: var(--space-xl);
+    top: var(--space-xl);
+  }
+
+  .bm-off-canvas-nav-ul {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .bm-off-canvas-nav-li__link {
+    font-size: var(--fs-2);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .bm-off-canvas-nav-li__link--larger {
+    font-size: var(--fs-4);
+  }
+
+  .bm-off-canvas-6__contact-footer {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-off-canvas-contact {
+    row-gap: calc(var(--flow-spacing) / 1.8);
+  }
+
+  .bm-off-canvas-contact-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-off-canvas-6__contact-address {
+    width: var(--measure);
+  }
+
+  .bm-off-canvas-6__socials {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: auto;
+    right: var(--space-xl);
+    z-index: 1;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--column {
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-off-canvas-6__social-heading {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* bm-custom */
+  .bm-off-canvas-6__social-heading {
+  	writing-mode: vertical-lr;
+    transform: rotate(180deg);
+  }
+}
+</style>

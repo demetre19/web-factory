@@ -1,0 +1,395 @@
+---
+/**
+ * bm-portfolio-single-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-single-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-single-10__hero-container">
+    <div class="bm-portfolio-single-10__hero-content">
+      <h1 class="bm-portfolio-single-10__hero-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <p class="bm-portfolio-single-10__subheading">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility.</p>
+      <a class="bm-live-website-link" href="#">View website</a>
+    </div>
+    <div class="bm-portfolio-single-media-hero list--none">
+      {items.map((it) => (
+        <div class="bm-portfolio-single-media-hero__image-wrapper">
+          <figure class="bm-portfolio-single-media-hero__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="bm-portfolio-single-10__content-container">
+    <div class="bm-portfolio-single-10__top">
+      <h2 class="bm-portfolio-single-10__heading">From Problem to solution</h2>
+      <p class="bm-portfolio-single-10__badge">About the project</p>
+    </div>
+    <p class="bm-portfolio-single-10__text">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+  </div>
+  <div>
+    <div class="bm-1col-media">
+      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-10__content-container">
+    <div class="bm-portfolio-single-10__top">
+      <h2 class="bm-portfolio-single-10__heading">Brand new website and campaign</h2>
+      <p class="bm-portfolio-single-10__badge">What we did</p>
+    </div>
+    <p class="bm-portfolio-single-10__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+  </div>
+  <div class="bm-portfolio-single-10__results-container">
+    <div class="bm-portfolio-single-10__content">
+      <div class="bm-portfolio-single-10__top-result">
+        <h2 class="bm-portfolio-single-10__heading">Results speak louder</h2>
+        <p class="bm-portfolio-single-10__badge">What we did</p>
+      </div>
+      <p class="bm-portfolio-single-10__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div class="list--none bm-portfolio-single-10-data-list">
+      <div class="bm-portfolio-single-10-data">
+        <p class="bm-portfolio-single-10-data__numbers">€4,60</p>
+        <p class="bm-portfolio-single-10-data__label">Avg. per lead</p>
+      </div>
+      <div class="bm-portfolio-single-10-data">
+        <p class="bm-portfolio-single-10-data__numbers">280</p>
+        <p class="bm-portfolio-single-10-data__label">Leads in 90 days</p>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-10__2col-media-container bm-portfolio-single-10__overlap">
+    <div class="list--none bm-portfolio-single-media-2col">
+      <div class="bm-portfolio-single-media-2col__image-wrapper">
+        <figure class="bm-portfolio-single-media-2col__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-portfolio-single-media-2col__image-wrapper">
+        <figure class="bm-portfolio-single-media-2col__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-10__testimonial-container">
+    <div class="bm-portfolio-single-testimonial">
+      <p class="bm-portfolio-single-testimonial__review">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <div class="bm-portfolio-single-testimonial__footer">
+        <p class="bm-portfolio-single-testimonial__name">John Smith</p>
+        <p class="bm-portfolio-single-testimonial__title">Owner</p>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-10__cta-container">
+    <div class="bm-contact-widget-10">
+      <h2 class="bm-contact-widget-10__heading">Ready to Tell Your Story? Let's do this.</h2>
+      <a class="btn--outline bm-contact-widget-10__button" href={cta.href}>{cta.label}</a>
+    </div>
+    <figure class="bm-contact-widget-10__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+  <div class="bm-portfolio-single-10__footer-container">
+    <h2 class="bm-portfolio-single-10__footer-heading">We have more work for you to see</h2>
+    <div class="bm-portfolio-8-related-list list--none">
+      {items.map((it) => (
+        <div class="bm-portfolio-8-related-card">
+          <div class="bm-portfolio-8-related-card__content">
+            <h2 class="bm-portfolio-8-related-card__heading">{it.title}</h2>
+            <a class="bm-portfolio-8-related-card__cta" href="#">{it.text}</a>
+          </div>
+          <div class="bm-portfolio-8-related-card__media">
+            <figure class="bm-portfolio-8-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-single-10 {
+    row-gap: var(--space-s);
+    overflow: hidden;
+  }
+
+  .bm-portfolio-single-10__hero-container {
+    width: 100%;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-10__hero-content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-10__hero-heading {
+    font-size: calc(var(--fs-4) * 1.6);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-10__subheading {
+    width: 100%;
+  }
+
+  .bm-live-website-link {
+    font-size: var(--fs-2);
+    position: relative;
+  }
+
+  .bm-portfolio-single-media-hero {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-media-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-portfolio-single-10__content-container {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-10__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-single-10__badge {
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    font-size: var(--fs-0);
+  }
+
+  .bm-1col-media__image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+
+  .bm-portfolio-single-10__results-container {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    position: relative;
+    left: 50%;
+    padding: var(--section-space-m) var(--gutter) calc(var(--section-space-xxl) * 1.4) var(--gutter);
+    align-items: center;
+    background: var(--bg-subtle);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-10__content {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-single-10__top-result {
+    row-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    text-align: center;
+  }
+
+  .bm-portfolio-single-10-data-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-single-10-data {
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-portfolio-single-10-data__numbers {
+    font-size: calc(var(--fs-4) * 1.4);
+    font-weight: 700;
+  }
+
+  .bm-portfolio-single-10-data__label {
+    font-weight: 700;
+  }
+
+  .bm-portfolio-single-10__overlap {
+    margin: calc(-1 * (var(--section-space-xxl) * 1.2)) 0 0 0;
+  }
+
+  .bm-portfolio-single-media-2col {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-single-10__testimonial-container {
+    align-items: center;
+    margin: var(--section-space-m) 0 0 0;
+  }
+
+  .bm-portfolio-single-testimonial {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .bm-portfolio-single-testimonial__review {
+    font-size: var(--fs-2);
+  }
+
+  .bm-portfolio-single-testimonial__footer {
+    align-items: center;
+  }
+
+  .bm-portfolio-single-10__cta-container {
+    position: relative;
+    padding: var(--section-space-l) var(--gutter) var(--section-space-l) var(--gutter);
+    width: 100vw;
+    left: 50%;
+    margin: 0 0 0 -50vw;
+    align-items: center;
+  }
+
+  .bm-contact-widget-10 {
+    position: relative;
+    z-index: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .bm-contact-widget-10__heading {
+    font-size: calc(var(--fs-4) * 1.2);
+  }
+
+  .bm-contact-widget-10__button {
+    font-size: var(--fs-2) !important;
+  }
+
+  .bm-contact-widget-10__background-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .bm-portfolio-single-10__footer-container {
+    row-gap: var(--space-s);
+    align-items: center;
+    margin: var(--section-space-m) 0 0 0;
+  }
+
+  .bm-portfolio-single-10__footer-heading {
+    font-size: calc(var(--fs-4) * 1.4);
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-8-related-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-portfolio-8-related-card {
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .bm-portfolio-8-related-card__content {
+    background: var(--bg-canvas);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    width: 90%;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    margin: calc(-1 * var(--space-m)) 0 0 0;
+    z-index: 1;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-8-related-card__media {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .bm-portfolio-8-related-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-live-website-link::before {
+    --animation-duration-up: 0.4s;
+    --animation-iteration-count: 1;
+    --animation-timing-function-up: linear;
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-secondary);
+    transition: all 0.5 ease;
+  }
+  
+  
+  /* Define the animation for the first child */
+  .bm-live-website-link:hover::before{
+    animation: motion var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) ;
+    width: 100%;
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes motion {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  /* bm-custom */
+  .bm-portfolio-single-media-2col__image-wrapper:first-child {
+    margin-block-start: var(--space-l);
+  }
+
+  /* bm-custom */
+  /*  Scale images on hover */
+  .bm-portfolio-8-related-card__image { 
+    transition: 0.5s linear;
+  }
+  
+  .bm-portfolio-8-related-card:hover .bm-portfolio-8-related-card__image, .bm-portfolio-8-related-card:focus-within .bm-portfolio-8-related-card__image {
+    scale: 1.4;
+  }
+}
+</style>

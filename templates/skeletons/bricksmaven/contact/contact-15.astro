@@ -1,0 +1,90 @@
+---
+/**
+ * bm-contact-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-15-container">
+    <div class="intro">
+      <h2 class="intro__heading">Our teams are here to help</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="contact-15-list-ul list--none">
+      {items.map((it) => (
+        <div class="contact-15-list-team">
+          <h2 class="contact-15-list-team__title">{it.title}</h2>
+          <p class="contact-15-list-team__desc">{it.text}</p>
+          <div class="contact-15-list-team__info-wrapper">
+            <a class="contact-15-list-team__info wf-cta-button" href={it.href}>{it.label}</a>
+            <a class="contact-15-list-team__info wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+          <a class="contact-15-list-team__cta btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-15-container {
+    row-gap: var(--space-xl);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-15-list-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-m);
+  }
+
+  .contact-15-list-team {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+  }
+
+  .contact-15-list-team__title {
+    border-bottom: .1rem solid var(--action-primary);
+    padding: 0 0 .5rem 0;
+  }
+
+  .contact-15-list-team__info {
+    padding: 0 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+}
+</style>

@@ -1,0 +1,81 @@
+---
+/**
+ * bm-content-41 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-41.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-41__container">
+    <div class="content-41__main">
+      <div class="content-41__column">
+        <div class="content-41__top">
+          <h2 class="content-41__heading">Long headline to turn your visitors into customers</h2>
+          <p class="accent-h">Accent heading</p>
+        </div>
+        <div class="content-41__media">
+          <figure class="content-41__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="content-41__column">
+        <p class="content-41__text">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <div class="content-41__media--alt">
+          <figure class="content-41__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-41__main {
+    display: grid;
+    gap: calc(var(--space-m) * 4);
+    grid-template-columns: calc(100% * 2 / 3);
+  }
+
+  .content-41__column {
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  .content-41__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  .content-41__media {
+    width: var(--measure);
+    height: 500;
+  }
+
+  .content-41__image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .content-41__media--alt {
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

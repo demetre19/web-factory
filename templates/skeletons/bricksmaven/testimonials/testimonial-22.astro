@@ -1,0 +1,155 @@
+---
+/**
+ * bm-testimonial-22 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-22.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-22-container">
+    <div class="intro">
+      <h2 class="intro__heading">Medium title placeholder text</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+    </div>
+    <div class="testimonial-22-content">
+      <div class="testimonial-22-content__list list--none">
+        {items.map((it) => (
+          <div class="testimonial-22-content__item">
+            <div class="testimonial-22-content__wrapper">
+              <div class="testimonial-22-content__boxlabel">
+                <p class="testimonial-22-content__label">{it.text}</p>
+                <div class="testimonial-22-content__box">
+                  <p class="testimonial-22-content__desc">{it.text}</p>
+                  <h4 class="testimonial-22-content__name">{it.title}</h4>
+                  <p class="testimonial-22-content__jobtitle">{it.text}</p>
+                </div>
+              </div>
+              <figure class="testimonial-22-content__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-22-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .testimonial-22-content {
+    width: 100%;
+  }
+
+  .testimonial-22-content__list {
+    display: flex;
+  }
+
+  .testimonial-22-content__item {
+    width: 20%;
+  }
+
+  .testimonial-22-content__wrapper {
+    position: relative;
+  }
+
+  .testimonial-22-content__boxlabel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    height: 40rem;
+  }
+
+  .testimonial-22-content__label {
+    background: var(--action-primary);
+    font-weight: 700;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .testimonial-22-content__box {
+    flex-direction: column;
+    background: var(--bg-canvas);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--space-s);
+    align-items: flex-start;
+    z-index: 0;
+    width: 100%;
+    align-self: stretch;
+    display: flex;
+    position: absolute;
+    left: 4.5rem;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .testimonial-22-content__desc {
+    margin: 0 0 0 0;
+  }
+
+  .testimonial-22-content__jobtitle {
+    font-size: calc(var(--fs-1) - .4rem);
+  }
+
+  .testimonial-22-content__photo {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  /* bm-custom */
+  .testimonial-22-content__item:hover {
+  	width: 100%;
+  }
+  .testimonial-22-content__item:hover .testimonial-22-content__box {
+    transform: translateX(0%);
+  }
+
+  /* bm-custom */
+  .testimonial-22-content__label {
+  	writing-mode: vertical-rl;
+  }
+}
+</style>

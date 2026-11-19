@@ -1,0 +1,142 @@
+---
+/**
+ * bm-hero-63 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-63.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-63__container">
+    <div class="bm-hero-63__content">
+      <div class="bm-hero-63__top">
+        <h1 class="bm-hero-63__heading">Long headline to turn your visitors into customers</h1>
+        <p class="accent-h accent-h--alt">Accent heading</p>
+        <p class="bm-hero-63__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--white" href="#">Call to action</a>
+        <a class="btn--link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="bm-top-feature list--none">
+      {items.map((it) => (
+        <div class="bm-top-feature-card">
+          <h2 class="bm-top-feature-card__heading">{it.title}</h2>
+          <figure class="bm-top-feature-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <figure class="bm-hero-63__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-63 {
+    position: relative;
+    justify-content: center;
+  }
+
+  .bm-hero-63__container {
+    row-gap: var(--space-s);
+    align-items: center;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .bm-hero-63__content {
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-63__top {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .bm-hero-63__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .bm-hero-63__subheading {
+    width: var(--content-width);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .bm-top-feature {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-top-feature-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) 0 var(--space-l);
+    background: var(--bg-canvas);
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bm-top-feature-card__image {
+    object-fit: cover;
+  }
+
+  .bm-hero-63__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  @media (max-width:991px) {
+  
+  .bm-top-feature-card:nth-child(3) {
+    grid-column: span 2;
+  }
+    
+  }
+  
+  @media (max-width:767px) {
+  
+  .bm-top-feature-card:nth-child(3) {
+    grid-column: span 1;
+  }
+    
+  }
+}
+</style>

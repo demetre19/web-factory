@@ -1,0 +1,579 @@
+---
+/**
+ * bm-portoflio-single-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portoflio-single-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-single-3__container">
+    <div class="bm-portfolio-single-3__intro">
+      <h1 class="bm-portfolio-single-3__intro-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <p class="bm-portfolio-single-3__terms">Category</p>
+      <p class="bm-portfolio-single-3__intro-text">EcoEssentials – An online retailer specializing in sustainable and eco-friendly household products.. Corem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.</p>
+      <div class="bm-live-website-btn">
+        <div class="bm-live-website-btn__dot"></div>
+        <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
+      </div>
+    </div>
+    <div class="bm-full-width-media">
+      <figure class="bm-full-width-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-portfolio-single__case-section-1">
+      <div class="bm-portfolio-single-intro-inline">
+        <h2 class="bm-portfolio-single-intro-inline__heading">Problem</h2>
+        <p class="bm-portfolio-single-intro-inline__text">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+      </div>
+      <div class="bm-2col-media list--none">
+        <div class="bm-2col-media-item">
+          <figure class="bm-2col-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-2col-media-item">
+          <figure class="bm-2col-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+    <div class="bm-portfolio-single__case-section-1">
+      <div class="bm-portfolio-single-intro-inline bm-portfolio-single-intro-inline--alt">
+        <h2 class="bm-portfolio-single-intro-inline__heading">Research & Analysis</h2>
+        <p class="bm-portfolio-single-intro-inline__text">PixelPundits initiated a deep dive into EcoEssentials' existing digital footprint and market landscape. This involved:</p>
+      </div>
+      <div class="bm-portfolio-single__case-section-content-wrapper">
+        <div class="bm-portfolio-single__case-section-content">
+          <p>Comprehensive Website Audit: Analyzing site speed, mobile responsiveness, user experience (UX), and existing SEO structure. Key issues identified included slow loading times, a confusing navigation, and a lack of clear calls to action. Competitor Analysis: Identifying key competitors, their marketing strategies, and what made them successful in attracting and retaining customers. This revealed gaps in EcoEssentials' content and keyword targeting. Target Audience Profiling: Developing detailed buyer personas based on existing customer data and market research. This helped understand the motivations, pain points, and online behavior of eco-conscious consumers. Keyword Research: Identifying high-volume, low-competition keywords relevant to sustainable products and environmentally friendly living, which EcoEssentials was not effectively ranking for.</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-1col-media">
+      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-portfolio-single__case-section-1">
+      <div class="bm-portfolio-single-intro-inline">
+        <h2 class="bm-portfolio-single-intro-inline__heading">The Solution</h2>
+        <p class="bm-portfolio-single-intro-inline__text">Based on the research, PixelPundits developed a multi-pronged digital marketing strategy:</p>
+      </div>
+      <div class="bm-portfolio-single__solution-wrapper">
+        <div class="bm-portfolio-single__solution-content">
+          <p>Website Revitalization We redesigned the website for a cleaner UX/UI, ensured mobile optimization, and integrated conversion rate optimization (CRO) elements like clear CTAs and simplified checkout. Search Engine Optimization (SEO): We executed on-page SEO, created a content marketing calendar with educational blog posts, and addressed technical SEO issues like site speed. Targeted Digital Advertising: We launched highly targeted Google Ads and visually engaging social media campaigns on Instagram and Facebook, emphasizing EcoEssentials' unique selling propositions.</p>
+        </div>
+        <div class="bm-portfolio-single__solution-media">
+          <figure class="bm-portfolio-single__solution-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+    <div class="bm-portfolio-single__case-section-2">
+      <div class="bm-portfolio-single-2-intro-stacked">
+        <h2 class="bm-portfolio-single-2-intro-stacked__heading">Results</h2>
+        <p class="bm-portfolio-single-2-intro-stacked__text">Within six months of implementing PixelPundits' strategy, EcoEssentials experienced a dramatic transformation:</p>
+      </div>
+      <div class="bm-portfolio-single-result-list list--none bm-portfolio-single-result-list--alt">
+        {items.map((it) => (
+          <div class="bm-portfolio-single-result-item">
+            <h2 class="bm-portfolio-single-result-item__heading">{it.title}</h2>
+            <p class="bm-portfolio-single-result-item__percentage">{it.text}</p>
+            <p class="bm-portfolio-single-result-item__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-span2-media list--none">
+      {items.map((it) => (
+        <div class="bm-span2-media-item bm-span2-media-item--alt">
+          <figure class="bm-span2-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div class="bm-portfolio-single-testimonial-3">
+      <p class="bm-portfolio-single-testimonial-3__review">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <div class="testimonial-list-card__profile">
+        <div class="testimonial-list-card__meta">
+          <custom class="testimonial-list-card__name">John Doe</custom>
+          <p class="testimonial-list-card__jobtitle">Freelance Developer</p>
+        </div>
+        <div class="testimonial-list-card__media">
+          <figure class="testimonial-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-3__cta-container">
+    <div class="bm-contact-widget-4">
+      <h2 class="bm-contact-widget-4__heading">Ready to start a project?</h2>
+      <div class="bm-contact-widget-4__manager-data">
+        <div class="bm-contact-widget-4__media">
+          <figure class="bm-contact-widget-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-contact-widget-4__data">
+          <div class="bm-contact-widget-4__top">
+            <p class="bm-contact-widget-4__name">Alan Smith</p>
+            <p class="bm-contact-widget-4__title">Account manager</p>
+          </div>
+          <div class="bm-live-website-btn">
+            <div class="bm-live-website-btn__dot"></div>
+            <p class="bm-live-website-btn__text clickable-parent">We are now available</p>
+          </div>
+          <div class="bm-contact-25-side-list-ul list--none">
+            <div class="bm-contact-25-side-list-item">
+              <div class="bm-contact-25-side-list-item__detail">
+                <a class="bm-contact-25-side-list-item__cta" href="#">hi@bricksmaven.com</a>
+              </div>
+              <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="bm-contact-25-side-list-item">
+              <div class="bm-contact-25-side-list-item__detail">
+                <a class="bm-contact-25-side-list-item__cta" href="#">+32 465 45 37 15</a>
+              </div>
+              <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-3__footer-container">
+    <h2 class="bm-portfolio-single-3__footer-heading">See other work</h2>
+    <div class="bm-portfolio-2-related-list list--none">
+      <div class="bm-portfolio-2-related-card">
+        <div class="bm-portfolio-2-related-card__content">
+          <div class="bm-portfolio-2-related-card__top">
+            <h2 class="bm-portfolio-2-related-card__heading">Firefly Productions</h2>
+            <p class="bm-portfolio-2-related-card__terms">Category</p>
+          </div>
+          <p class="bm-portfolio-2-related-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="bm-portfolio-2-related-card__media">
+          <figure class="bm-portfolio-2-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="bm-portfolio-2-related-card">
+        <div class="bm-portfolio-2-related-card__content">
+          <div class="bm-portfolio-2-related-card__top">
+            <h2 class="bm-portfolio-2-related-card__heading">Firefly Productions</h2>
+            <p class="bm-portfolio-2-related-card__terms">Category</p>
+          </div>
+          <p class="bm-portfolio-2-related-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="bm-portfolio-2-related-card__media">
+          <figure class="bm-portfolio-2-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-single-3 {
+    position: relative;
+    overflow: hidden;
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-3__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-3__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-3__intro-heading {
+    font-size: calc(var(--fs-4) * 2);
+  }
+
+  .bm-portfolio-single-3__terms {
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-portfolio-single-3__intro-text {
+    width: 100%;
+    font-size: var(--fs-2);
+  }
+
+  .bm-live-website-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+    background: var(--action-primary);
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    position: relative;
+  }
+
+  .bm-live-website-btn__dot {
+    width: 8;
+    height: 8;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-full-width-media {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    left: 50%;
+    position: relative;
+  }
+
+  .bm-full-width-media__image {
+    object-fit: cover;
+    width: 100%;
+    height: 690px;
+  }
+
+  .bm-portfolio-single__case-section-1 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-intro-inline {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-2col-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-2col-media-item__image {
+    object-fit: cover;
+  }
+
+  .bm-portfolio-single-intro-inline--alt {
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-single__case-section-content-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single__case-section-content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-1col-media__image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+
+  .bm-portfolio-single__solution-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-single__solution-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bm-portfolio-single__case-section-2 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-2-intro-stacked {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-single-result-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-portfolio-single-result-list--alt {
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-single-result-item {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 3);
+    border-top: 1 solid;
+    border-right: 1 solid;
+    border-bottom: 1 solid;
+    border-left: 1 solid;
+  }
+
+  .bm-portfolio-single-result-item__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-portfolio-single-result-item__percentage {
+    font-size: calc(var(--fs-4) * 2);
+    font-weight: 700;
+  }
+
+  .bm-span2-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-span2-media-item__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-portfolio-single-testimonial-3 {
+    row-gap: var(--flow-spacing);
+    padding: calc(var(--section-space-xxl) * 1.3) var(--space-xl) var(--space-xl) var(--space-xl);
+    background: var(--text-secondary);
+  }
+
+  .bm-portfolio-single-testimonial-3__review {
+    position: relative;
+    font-size: var(--fs-3);
+    width: 100%;
+  }
+
+  .testimonial-list-card__profile {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .testimonial-list-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(--content-gap / 2);
+  }
+
+  .testimonial-list-card__name {
+    font-weight: 700;
+  }
+
+  .testimonial-list-card__jobtitle {
+    font-size: var(--fs-0);
+  }
+
+  .testimonial-list-card__image {
+    object-fit: cover;
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+    border-radius: 50% 50% 50% 50%;
+  }
+
+  .bm-portfolio-single-3__cta-container {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget-4 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    align-items: center;
+  }
+
+  .bm-contact-widget-4__heading {
+    font-size: calc(var(--fs-3) * 2);
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-contact-widget-4__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-contact-widget-4__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-4__image {
+    object-fit: cover;
+    width: 164;
+    height: 164;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget-4__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-4__name {
+    font-weight: 700;
+  }
+
+  .bm-contact-25-side-list-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .bm-contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bm-contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    text-align: left;
+  }
+
+  .bm-contact-25-side-list-item__icon {
+    padding: .5rem .5rem .5rem .5rem;
+    background: var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-contact-side-list-item__icon--alt {
+    background: var(--color-line-default);
+  }
+
+  .bm-portfolio-single-3__footer-container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-2-related-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-2-related-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-2-related-card__top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-portfolio-2-related-card__terms {
+    font-size: var(--fs-0);
+  }
+
+  .bm-portfolio-2-related-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__dot {
+    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+  	--animation-duration-up: 1.2s;
+    --shadow-light: var(--shadow-card);
+    --shadow-heavy: var(--shadow-card);
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+  }
+  
+  /* Define the animation for the first child */
+  .bm-live-website-btn__dot{
+    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes glow {
+    0% {
+      box-shadow: var(--shadow-card);
+    }
+    100% {
+      box-shadow: var(--shadow-card);
+    }
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__text {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }
+
+  /* bm-custom */
+  @media (min-width:767px) {
+  
+  .bm-portfolio-single-intro-inline--alt .bm-portfolio-single-intro-inline__text {
+    order: -1;
+  }
+    
+  }
+
+  /* bm-custom */
+  @media (min-width:767px) {
+  
+  .bm-span2-media-item:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+    
+  }
+
+  /* bm-custom */
+  @media (min-width:767px) {
+  
+  .bm-span2-media-item--alt:first-child {
+    grid-column: span 1;
+    aspect-ratio: 4/3;
+  }  
+    
+  .bm-span2-media-item--alt:last-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+    
+  }
+
+  /* bm-custom */
+  .bm-portfolio-single-testimonial-3__review::before {
+    content: ' " ';
+    position: absolute;
+    top: calc(-1 * (var(--space-xl) * 1.3));
+    font-size: calc(var(--fs-4) * 3);
+    line-height: 1;
+    left: calc(-1 * (var(--space-xs) / 1.4));
+    
+  }
+}
+</style>

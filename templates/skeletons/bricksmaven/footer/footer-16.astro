@@ -1,0 +1,161 @@
+---
+/**
+ * bm-footer-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-footer-16__container">
+    <div class="bm-footer-16__intro">
+      <div class="bm-footer-16__media">
+        <svg class="bm-footer-16__logo"></svg>
+      </div>
+      <p class="bm-footer-16__intro-text">Save the clock tower. Damn. I'm late for school. No, I refuse to accept the responsibility. Listen, woh. Hello, uh excuse me.</p>
+    </div>
+    <div class="bm-footer-16__content">
+      {items.map((it) => (
+        <div class="bm-footer-16-card">
+          <h2 class="bm-footer-16-card__heading">{it.title}</h2>
+          <div class="bm-social-share list--none">
+            {(it.items || []).map((it2) => (
+              <div class="bm-social-share__icon-wrapper">
+                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+          <div class="bm-footer-payment-options list--none">
+            {(it.items || []).map((it2) => (
+              <div class="bm-footer-option">
+                <figure class="bm-footer-option__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="bm-footer-16__nav">
+      <div class="list--none bm-footer-16-nav-menu">
+        {items.map((it) => (
+          <div class="bm-footer-16-nav-list">
+            <a class="bm-footer-16-nav-list__link" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+      <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-footer-16 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-footer-16__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-footer-16__intro {
+    align-items: center;
+    width: var(--measure);
+    align-self: center;
+    row-gap: var(--flow-spacing);
+    text-align: center;
+  }
+
+  .bm-footer-16__media {
+    width: auto;
+  }
+
+  .bm-footer-16__content {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+    text-align: center;
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1px solid var(--color-line-default);
+  }
+
+  .bm-footer-16-card {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+  }
+
+  .bm-footer-16-card__heading {
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1px solid var(--bg-subtle);
+    width: 100%;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-payment-options {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    flex-direction: row;
+    width: auto;
+  }
+
+  .bm-footer-option__image {
+    object-fit: contain;
+    width: 32;
+    height: 32;
+  }
+
+  .bm-footer-16__nav {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-footer-16-nav-menu {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-footer-16-nav-list {
+    align-items: center;
+    width: auto;
+  }
+
+  .bm-footer-16-nav-list__link {
+    font-size: var(--fs-0);
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+}
+</style>

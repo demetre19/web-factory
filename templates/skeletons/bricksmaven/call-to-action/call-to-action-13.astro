@@ -1,0 +1,86 @@
+---
+/**
+ * bm-call-to-action-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-13-container">
+    <div class="cta-13__box">
+      <h2 class="cta-13__heading">Get your projects done quicker with ACSS + Bricksmaven now!</h2>
+      <p class="cta-13__desc">Get the ultimate building tool for freelance devs,</p>
+    </div>
+    <div class="cta-13__call-to-action">
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-13 {
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .cta-13-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    position: relative;
+  }
+
+  .cta-13__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .cta-13__call-to-action {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+}
+</style>

@@ -1,0 +1,69 @@
+---
+/**
+ * bm-call-to-action-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-11-container">
+    <div class="cta-11__box">
+      <h2 class="cta-11__heading">Join the team</h2>
+      <p class="cta-11__desc">Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="cta-11__media">
+      <figure class="cta-11__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-11-container {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: var(--content-width);
+  }
+
+  .cta-11__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+    padding: var(--space-xl) var(--space-l) var(--space-xl) min(22vw, 22rem);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .cta-11__media {
+    padding: var(--space-m) 0 var(--space-m) 0;
+  }
+
+  .cta-11__image {
+    object-fit: cover;
+    width: 100%;
+    height: 270px;
+  }
+}
+</style>

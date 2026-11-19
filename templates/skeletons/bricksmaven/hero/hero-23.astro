@@ -1,0 +1,74 @@
+---
+/**
+ * bm-hero-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-23-container">
+    <div class="hero-23__content">
+      <h2 class="hero-23__heading">Long headline to turn your visitors into customers</h2>
+      <p class="hero-23__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hero-23__media-wrapper">
+      <figure class="hero-23__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-23 {
+    padding: 0 0 0 0;
+  }
+
+  .hero-23-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .hero-23__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: center;
+    background: var(--action-primary);
+    margin: var(--space-m) 0 var(--space-m) 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-23__media-wrapper {
+    align-items: flex-end;
+  }
+
+  .hero-23__image {
+    width: 50vw;
+    object-fit: cover;
+    height: 740;
+  }
+}
+</style>

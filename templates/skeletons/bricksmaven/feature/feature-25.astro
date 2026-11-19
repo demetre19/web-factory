@@ -1,0 +1,109 @@
+---
+/**
+ * bm-feature-25 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-25.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-25-container">
+    <div class="feature-25__content">
+      <h2 class="feature-25__heading">Long headline to turn your visitors into users</h2>
+      <div class="bm-feature-list-ul list--none">
+        {items.map((it) => (
+          <div class="bm-feature-list-card">
+            <h2 class="bm-feature-list-card__heading">{it.title}</h2>
+            <p class="bm-feature-list-card__text">{it.text}</p>
+            <span class="bm-feature-list-card__icon bm-feature-list-card__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="feature-25__media">
+      <figure class="feature-25__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-25 {
+    position: relative;
+  }
+
+  .feature-25-container {
+    row-gap: var(--space-xl);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+    z-index: 1;
+  }
+
+  .feature-25__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .bm-feature-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    padding: 0 0 0 0;
+  }
+
+  .bm-feature-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .feature-25__image {
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .feature-25::before {
+  	content:'';
+    width:75vw;
+    height:100%;
+  	background-color: var(--action-primary);
+    position:absolute;
+    top:0;
+    left:0;
+  }
+  
+  @media (max-width:767px) {
+  
+    .feature-25::before {
+  	content:'';
+    width:100%;
+    height:75%;
+  
+  }
+  
+  }
+
+  /* bm-custom */
+  .feature-25__image {
+  	aspect-ratio: 1/1
+  }
+}
+</style>

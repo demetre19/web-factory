@@ -1,0 +1,73 @@
+---
+/**
+ * bm-pay — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (pay.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-pay__container">
+    <div class="intro">
+      <h2 class="intro__heading">You left these products in the cart</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-pay__order-widgets">
+      <div class="bm-pay-order-table"></div>
+      <div class="bm-pay-order-payment"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-pay__container {
+    align-items: center;
+    width: 100%;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-pay__order-widgets {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-pay-order-payment {
+    background: var(--fs-0);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+}
+</style>

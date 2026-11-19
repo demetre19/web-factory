@@ -1,0 +1,152 @@
+---
+/**
+ * bm-hero-52 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-52.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-52__container">
+    <div class="hero-52__content">
+      <h1 class="hero-52__heading">Medium length hero heading goes here</h1>
+      <p class="hero-52__accent-heading">Accent heading</p>
+      <p class="hero-52__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <div class="hero-52__usp-list">
+        <div class="hero-52__usp-list-item">
+          <span class="hero-52__usp-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="hero-52__usp-list-item__text">Benefit #1</p>
+        </div>
+        <div class="hero-52__usp-list-item">
+          <span class="hero-52__usp-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="hero-52__usp-list-item__text">Benefit #2</p>
+        </div>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="hero-52__media">
+      <figure class="hero-52__top-image"><img src="/media/placeholder.svg" alt="Top Image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="hero-52__bottom-image hero-52__bottom-image-wrapper"><img src="/media/placeholder.svg" alt="Bottom Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-52 {
+    position: relative;
+    padding: 0 0 var(--acss-image-overlap) 0;
+  }
+
+  .hero-52__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .hero-52__content {
+    justify-content: center;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-xl) 0 var(--space-xl) 0;
+  }
+
+  .hero-52__usp-list {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .hero-52__usp-list-item {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    width: auto;
+  }
+
+  .hero-52__usp-list-item__icon {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--color-line-default);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .hero-52__media {
+    z-index: -1;
+    position: relative;
+    flex-wrap: nowrap;
+  }
+
+  .hero-52__top-image {
+    object-fit: cover;
+    height: 40rem;
+    width: 85%;
+  }
+
+  .hero-52__bottom-image {
+    object-fit: cover;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    height: 38rem;
+    width: 100%;
+    display: flex;
+    align-self: flex-end;
+  }
+
+  .hero-52__bottom-image-wrapper {
+    margin: calc(-1 * var(--acss-image-overlap)) 0 0 auto !important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .hero-52 {
+  	--image-overlap: calc(var(--section-space-xxl) * 1.8);
+    --image-overlap-mobile: calc(var(--section-space-xxl) * 3);
+  }
+  
+  .hero-52::before {
+  	content:'';
+    position: absolute;
+    inset:0;
+    background-color: var(--bg-subtle);
+    clip-path: polygon(0 40%, 100% 10%, 100% 100%, 0 100%);
+    z-index:-1;
+  }
+}
+</style>

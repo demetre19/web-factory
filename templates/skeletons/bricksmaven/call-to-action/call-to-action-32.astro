@@ -1,0 +1,102 @@
+---
+/**
+ * bm-call-to-action-32 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-32.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-32__container">
+    <div class="bm-cta-32__intro">
+      <h2 class="bm-cta-32__heading">Do you recognize this?</h2>
+      <p class="bm-accent-heading">Time for a change</p>
+    </div>
+    <div class="bm-cta-ul-list list--none">
+      {items.map((it) => (
+        <div class="bm-cta-item">
+          <p class="bm-cta-item__text">{it.text}</p>
+        </div>
+      ))}
+    </div>
+    <div class="bm-cta-32__footer">
+      <p class="bm-cta-32__footer-text">Taking action will bring you the desired results. Contact us today.</p>
+      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-32__container {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    text-align: center;
+    width: 100%;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-32__intro {
+    align-items: center;
+    text-align: center;
+    width: auto;
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-cta-ul-list {
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-cta-item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 3);
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+    background: var(--fs-0);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    border-radius: 100% 100% 100% 100%;
+    width: auto;
+  }
+
+  .bm-cta-32__footer {
+    width: auto;
+    align-items: center;
+    text-align: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  /* bm-custom */
+  .bm-cta-item::before {
+    content: '●';
+    color:var(--fs-0);
+    font-size: var(--fs-0);
+  }
+}
+</style>

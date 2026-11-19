@@ -1,0 +1,93 @@
+---
+/**
+ * bm-header-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-11__container">
+    <div class="bm-header-11__brand">
+      <img class="bm-header-11__logo"></img>
+    </div>
+    <div class="bm-header-11__nav">
+      <div class="bm-header-11__nav-menu">
+        <div class="bm-header-11-nav-items">
+          <a class="bm-header-11-nav-items__link" href="#">Home</a>
+          <div class="bm-header-11-nav-items__dropdown">
+            <div class="bm-header-11-nav-items__content">
+              <a class="bm-header-11-nav-items__link" href="#">Dropdown link 1</a>
+              <a class="bm-header-11-nav-items__link" href="#">Dropdown link 2</a>
+            </div>
+          </div>
+          <div class="bm-header-11-nav-items__dropdown">
+            <div class="bm-header-11-nav-items__content">
+              <a class="bm-header-11-nav-items__link" href="#">Dropdown link 1</a>
+              <a class="bm-header-11-nav-items__link" href="#">Dropdown link 2</a>
+            </div>
+          </div>
+          {items.map((it) => (
+            <a class="bm-header-11-nav-items__link" href="#">{it.text}</a>
+          ))}
+          <div class="bm-header-11-nav-items__close"></div>
+        </div>
+        <div class="bm-header-11-nav-items__open"></div>
+      </div>
+    </div>
+    <div class="bm-header-11-nav-items__footer">
+      <div class="bm-header-11-nav-items-social-list">
+        {items.map((it) => (
+          <div class="bm-header-11-nav-items-social-li">
+            <span class="bm-header-11-nav-items-social-li__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-11 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-header-11__container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .bm-header-11-nav-items {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-header-11-nav-items-social-list {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+}
+</style>

@@ -1,0 +1,111 @@
+---
+/**
+ * bm-grid-17 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-17.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-17-container">
+    <div class="intro">
+      <p class="intro__subheading">Lorem ipsum set dolor amet</p>
+      <h2 class="intro__heading">You and I, know that ACSS is the plug!</h2>
+    </div>
+    <div class="gridcard-17-list list--none">
+      {items.map((it) => (
+        <div class="gridcard-17-card">
+          <div class="gridcard-17-card__content">
+            <div class="gridcard-17-article__detail">
+              <p class="gridcard-17-article__date">{it.text}</p>
+              <h2 class="gridcard-17-article__title clickable-parent">{it.title}</h2>
+            </div>
+            <span class="gridcard-17-article__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <div class="gridcard-17-card__media">
+            <figure class="gridcard-17-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-17-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .gridcard-17-list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-17-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .gridcard-17-card__content {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, auto));
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    height: 100%;
+  }
+
+  .gridcard-17-article__detail {
+    display: grid;
+    gap: .5em;
+  }
+
+  .gridcard-17-article__icon {
+    background: var(--action-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .gridcard-17-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .gridcard-17-article__title > a::after {
+  	z-index: 1;
+  }
+}
+</style>

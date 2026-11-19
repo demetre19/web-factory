@@ -1,0 +1,79 @@
+---
+/**
+ * bm-404-error-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-4-container">
+    <div class="error-4-content">
+      <div class="error-4-content__intro">
+        <h1 class="error-4-content__title">404 ERROR</h1>
+        <p class="error-4-content__subtitle">Page not found.</p>
+      </div>
+      <p class="error-4-content__desc">Sorry, the page you are looking for doesn't exist.</p>
+      <a class="error-4-content__btn wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="error-4-content__list"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .error-4-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+    align-items: center;
+    text-align: center;
+  }
+
+  .error-4-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .error-4-content__subtitle {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .error-4-content__btn {
+    padding: 0 0 0 0;
+  }
+
+  .error-4-content__list {
+    padding: .6rem 2.4rem .6rem 2.4rem;
+  }
+
+  /* bm-custom */
+  .error-4-content__list li a {
+  	color: var(--fs-0)!important;
+  }
+  
+  .error-4-content__list li:nth-child(2) {
+  	border: .1rem solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+    border-top: 0;
+    border-bottom: 0;
+  }
+}
+</style>

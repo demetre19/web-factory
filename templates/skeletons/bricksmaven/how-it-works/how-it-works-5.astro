@@ -1,0 +1,128 @@
+---
+/**
+ * bm-how-it-works-5 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-5.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hworks-5-container">
+    <div class="hworks-5-content">
+      <div class="hworks-intro hworks-intro--alt">
+        <h2 class="hworks-intro__heading">How to spend money on designs sets with Oxymaven</h2>
+        <p class="hworks-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      </div>
+      <div class="hworks-5-list list--none">
+        {items.map((it) => (
+          <div class="hworks-5-list-item">
+            <div class="flex--col hworks-5-list-item__content gap--xs">
+              <p class="hworks-5-list-item__title">{it.text}</p>
+              <p class="hworks-5-list-item__desc">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="hworks-5-media">
+      <figure class="hworks-5-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hworks-5-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .hworks-5-content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro--alt {
+    text-align: left;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-5-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .hworks-5-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-s);
+  }
+
+  .hworks-5-list-item__title {
+    font-weight: 700;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hworks-5-media__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .hworks-5-list {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-5-list li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:1.5rem;
+    padding-block:.4rem;
+    color:var(--action-primary);
+  
+  }
+}
+</style>

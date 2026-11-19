@@ -1,0 +1,129 @@
+---
+/**
+ * bm-remove-this — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (remove-this.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div>
+    <div class="hero-21-container">
+      <div class="hero-21-content__wrapper">
+        <h1 class="hero-21-content__heading">Long headline to turn your visitors into customers</h1>
+        <p class="hero-21-content__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="hero-21-content__accent-heading">Tagline</p>
+        <figure class="hero-21-content__background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="hero-21-container--alt">
+      <div class="list--none hero-21-list">
+        {items.map((it) => (
+          <div class="hero-21-card">
+            <h2 class="hero-21-card__heading">{it.title}</h2>
+            <p class="hero-21-card__desc">{it.text}</p>
+            <a class="hero-21-card__cta wf-cta-button" href={it.href}>{it.label}</a>
+            <span class="hero-21-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-21 {
+    position: relative;
+    height: 80vh;
+    justify-content: center;
+  }
+
+  .hero-21-container {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-21-content__wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--space-s);
+    margin: 0 0 var(--section-space-xxl) 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-21-content__accent-heading {
+    margin: 0 0 0 0;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .hero-21-content__background {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -5;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-21-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: relative;
+    background: var(--bg-canvas);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    margin: calc((var(--section-space-m) + var(--section-space-xxl)) * -1) 0 0 0 !important;
+  }
+
+  .hero-21-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: flex-start;
+  }
+
+  .hero-21-card__cta {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-21-card__icon {
+    background: color-mix(in srgb, var(--fs-0) 10%, transparent);
+    padding: .6em .6em .6em .6em;
+    border-radius: 1.5em 1.5em 1.5em 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+</style>

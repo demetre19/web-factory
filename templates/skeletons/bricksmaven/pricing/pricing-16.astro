@@ -1,0 +1,186 @@
+---
+/**
+ * bm-pricing-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (pricing-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-pricing-16__container">
+    <div class="bm-pricing-16__intro">
+      <h2 class="bm-pricing-16__heading">Get access to the Alpha library today!</h2>
+      <p class="accent-h">Accent heading</p>
+      <p class="bm-pricing-16__text">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+    </div>
+    <div class="bm-pricing-16__price-wrapper list--none">
+      <div class="bm-pricing-13-card">
+        <div class="bm-pricing-13-card__icon-wrapper">
+          <span class="bm-pricing-13-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div class="bm-pricing-13-card__top">
+          <p class="bm-pricing-13-card__plan">Basic Plan</p>
+          <p class="bm-pricing-13-card__price">$10/mth</p>
+          <p class="bm-pricing-13-card__billing">Billed annually</p>
+        </div>
+        <div class="bm-list list--none">
+          {items.map((it) => (
+            <div class="bm-list-item">
+              <div class="bm-list-item__icon-wrapper">
+                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="bm-list-item__text">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div class="bm-pricing-13-card__cta-wrapper">
+          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+      </div>
+      <div class="bm-pricing-13-card">
+        <div class="bm-pricing-13-card__icon-wrapper">
+          <span class="bm-pricing-13-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div class="bm-pricing-13-card__top">
+          <p class="bm-pricing-13-card__plan">Professional Plan</p>
+          <p class="bm-pricing-13-card__price">$20/mth</p>
+          <p class="bm-pricing-13-card__billing">Billed annually</p>
+        </div>
+        <div class="bm-list list--none">
+          {items.map((it) => (
+            <div class="bm-list-item">
+              <div class="bm-list-item__icon-wrapper">
+                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="bm-list-item__text">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div class="bm-pricing-13-card__cta-wrapper">
+          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-pricing-16__container {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--space-m);
+  }
+
+  .bm-pricing-16__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-pricing-16__price-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-pricing-13-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+    border-top: 1 solid var(--color-line-default);
+    border-right: 1 solid var(--color-line-default);
+    border-bottom: 1 solid var(--color-line-default);
+    border-left: 1 solid var(--color-line-default);
+    position: relative;
+  }
+
+  .bm-pricing-13-card__icon-wrapper {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    display: flex;
+  }
+
+  .bm-pricing-13-card__top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-pricing-13-card__price {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item__icon-wrapper {
+    padding: var(--tap) var(--tap) var(--tap) var(--tap);
+    background: var(--bg-subtle);
+    border-radius: 50% 50% 50% 50%;
+    position: relative;
+  }
+
+  .bm-list-item__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+    font-size: var(--fs-0);
+  }
+
+  .bm-pricing-13-card__cta-wrapper {
+    align-items: stretch;
+    margin: auto 0 0 0;
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+  
+  .bm-pricing-13-card {
+    transition: .5s linear;
+  }
+  
+  .bm-pricing-13-card:hover {
+    box-shadow: var(--shadow-card);
+  }
+  
+  }
+
+  /* bm-custom */
+  .bm-list-item {
+  	--circle-size: var(--fs-0);
+  }
+}
+</style>

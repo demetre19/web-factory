@@ -1,0 +1,75 @@
+---
+/**
+ * bm-header-5 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-5.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-5__container">
+    <div class="bm-header-5__brand">
+      <img class="bm-header-5__brand-logo"></img>
+    </div>
+    <div class="bm-header-5__nav-wrapper">
+      <div class="bm-header-5__menu"></div>
+    </div>
+    <div class="bm-header-5__right">
+      <div class="bm-header-5__search"></div>
+      <a class="btn--primary bm-header-5__cta" href="#">Call to action</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-5 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-5__container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-header-5__brand {
+    width: auto;
+  }
+
+  .bm-header-5__nav-wrapper {
+    width: 60%;
+  }
+
+  .bm-header-5__right {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin: 0 0 0 auto;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+}
+</style>

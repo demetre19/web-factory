@@ -1,0 +1,74 @@
+---
+/**
+ * bm-content-46 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-46.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-46__container">
+    <div class="bm-content-46__wrapper">
+      <div class="bm-content-46__content">
+        <h2 class="bm-content-46__heading">Long headline to turn your visitors into customers</h2>
+        <p class="bm-content-46__accent-heading accent-h">Accent heading</p>
+        <p class="bm-content-46__text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit sed quia consequuntur.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-content-46__media-left">
+        <figure class="bm-content-46__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-content-46__media-right">
+        <figure class="bm-content-46__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-46 {
+    padding: 0 0 0 0;
+  }
+
+  .bm-content-46__wrapper {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-rows: repeat(24, minmax(0, 1fr));
+    height: 960;
+  }
+
+  .bm-content-46__content {
+    display: flex;
+    row-gap: var(--flow-spacing);
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    background: var(--bg-subtle);
+    text-align: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .bm-content-46__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

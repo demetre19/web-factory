@@ -1,0 +1,172 @@
+---
+/**
+ * bm-content-29 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-29.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-29-container">
+    <div class="content-29__content">
+      <div class="intro intro--left">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Tagline</p>
+      </div>
+      <div class="content-29__2col">
+        <div class="content-29__list-cta">
+          <div class="bm-list">
+            {items.map((it) => (
+              <div class="bm-list__item">
+                <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
+                <p class="bm-list__item-text">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        </div>
+        <div class="content-29-stats list--none">
+          <div class="content-29-list-item">
+            <div class="content-29-list-item__icon-wrapper">
+              <span class="content-29-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="content-29-list-item__data">
+              <span class="content-29-list-item__counter"></span>
+              <p class="content-29-list-item__text">Installs</p>
+            </div>
+          </div>
+          <div class="content-29-list-item">
+            <div class="content-29-list-item__icon-wrapper">
+              <span class="content-29-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="content-29-list-item__data">
+              <span class="content-29-list-item__counter"></span>
+              <p class="content-29-list-item__text">Breakdowns</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-29__media">
+      <figure class="content-29__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-29-container {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 2);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .content-29__content {
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .content-29__2col {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .content-29__list-cta {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-list__item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-list__item-icon {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-29-stats {
+    background: color-mix(in srgb, var(--bg-subtle) 10%, transparent);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .content-29-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-bottom: -1rem solid var(--bg-subtle);
+    flex-wrap: nowrap;
+  }
+
+  .content-29-list-item__data {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .content-29-list-item__counter {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .content-29__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .content-29-list-item:last-child {
+  	border-bottom: none;
+  }
+}
+</style>

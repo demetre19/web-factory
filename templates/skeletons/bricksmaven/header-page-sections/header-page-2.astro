@@ -1,0 +1,72 @@
+---
+/**
+ * bm-header-page-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-page-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="header-page-2-container">
+    <div class="header-page-2__content">
+      <div class="header-page__intro">
+        <h1 class="header-page__title">Short heading here</h1>
+        <p class="accent-h">Accent Heading</p>
+        <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      </div>
+      <form class="header-page-form" novalidate>
+      </form>
+      <p class="header-page-terms">By clicking Sign Up you're confiriming that you agree with our Terms and Conditions.</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .header-page-2 {
+    background: var(--bg-subtle);
+  }
+
+  .header-page-2-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-page-2__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .header-page__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .header-page-terms {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .header-page-form {
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+    align-items: center;
+  }
+}
+</style>

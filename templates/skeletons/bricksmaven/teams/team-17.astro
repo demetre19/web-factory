@@ -1,0 +1,214 @@
+---
+/**
+ * bm-team-17 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (team-17.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-team-17__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-team-17-grid-ul">
+      <div class="bm-team-17-card">
+        <div class="bm-team-17-card__content">
+          <div class="bm-team-17-card__sticky">
+            <h2 class="bm-team-17-card__heading">If you flip it upside down it’s actually not that complicated</h2>
+            <div class="bm-team-17-card__inner">
+              <div class="bm-team-17-card__column">
+                <p class="bm-team-17-card__name">John Smith</p>
+                <div class="bm-team-card__contact-details">
+                  <div class="bm-team-card__item">
+                    <p class="bm-team-card__label">Phone:</p>
+                    <a class="bm-team-card__link" href="#">+1 (123) 456-7890</a>
+                  </div>
+                  <div class="bm-team-card__item">
+                    <p class="bm-team-card__label">Email:</p>
+                    <a class="bm-team-card__link" href="#">info@example.com</a>
+                  </div>
+                </div>
+              </div>
+              <p class="bm-team-17-card__text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bm-team-17-card__media">
+          <figure class="bm-team-17-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="bm-team-17-card">
+        <div class="bm-team-17-card__content">
+          <div class="bm-team-17-card__sticky">
+            <h2 class="bm-team-17-card__heading">If you flip it upside down it’s actually not that complicated</h2>
+            <div class="bm-team-17-card__inner">
+              <div class="bm-team-17-card__column">
+                <p class="bm-team-17-card__name">John Smith</p>
+                <div class="bm-team-card__contact-details">
+                  <div class="bm-team-card__item">
+                    <p class="bm-team-card__label">Phone:</p>
+                    <a class="bm-team-card__link" href="#">+1 (123) 456-7890</a>
+                  </div>
+                  <div class="bm-team-card__item">
+                    <p class="bm-team-card__label">Email:</p>
+                    <a class="bm-team-card__link" href="#">info@example.com</a>
+                  </div>
+                </div>
+              </div>
+              <p class="bm-team-17-card__text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bm-team-17-card__media">
+          <figure class="bm-team-17-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-team-17__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-team-17-grid-ul {
+    row-gap: var(--space-s);
+    display: flex;
+  }
+
+  .bm-team-17-card {
+    display: grid;
+    gap: var(--flow-spacing);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-team-17-card__content {
+    position: relative;
+  }
+
+  .bm-team-17-card__sticky {
+    position: sticky;
+    top: var(--space-m);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-team-17-card__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .bm-team-17-card__inner {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-team-17-card__column {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-team-17-card__name {
+    font-weight: 700;
+  }
+
+  .bm-team-card__contact-details {
+    flex-direction: column;
+    padding: 0 0 0 0;
+  }
+
+  .bm-team-card__item {
+    column-gap: calc(var(--flow-spacing) / 4);
+    font-size: var(--fs-0);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bm-team-17-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-team-17-card {
+    --image-width: 49.1vw; /* Image width variable*/
+  }
+  
+  @media (min-width:991px) {
+    
+  	.bm-team-17-card .bm-team-17-card__media {
+    	order: -1; /* Flip media element to the left*/
+      align-items: end;
+  
+  }
+    	/* Set image width*/
+    	.bm-team-17-card .bm-team-17-card__image {
+      width: var(--acss-image-width);
+      max-width: var(--acss-image-width);
+  
+  }
+    /* Set even media card to align right*/
+    .bm-team-17-card:nth-child(even) .bm-team-17-card__media {
+    	order: 0;
+      align-items: start;
+  }
+    
+  }
+  
+  @media (max-width:991px) {
+    
+    .bm-team-17-card {
+    --image-width: 100vw; /* Image width variable*/
+  }
+    
+    .bm-team-17-card .bm-team-17-card__media {
+    	order: -1; /* Flip media element to the Top*/
+      align-items: start;
+  
+  }
+    
+    /* Set image width */
+    	.bm-team-17-card .bm-team-17-card__image {
+      width: var(--acss-image-width);
+      max-width: var(--acss-image-width);
+      margin-inline-start: -50vw;
+      left: 50%;  
+  }
+     /* Flip text to the left */
+    .bm-team-17-card .bm-team-17-card__text {
+      	order: -1;
+    }
+    
+  }
+}
+</style>

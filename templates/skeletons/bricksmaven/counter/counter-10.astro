@@ -1,0 +1,109 @@
+---
+/**
+ * bm-counter-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (counter-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="counter-10-container">
+    <div class="counter-10-box">
+      <p class="counter-10-box__accent-heading">YOUR TAGLINE</p>
+      <h2 class="counter-10-box__heading">Neque porro quisquam est qui dolorem</h2>
+      <div class="counter-10-box__media">
+        <figure class="counter-10-box__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <p class="counter-10-box__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="counter-10-grid-ul list--none">
+      {items.map((it) => (
+        <div class="counter-10-card">
+          <span class="counter-10-card__number"></span>
+          <p class="counter-10-card__label">{it.text}</p>
+          <p class="counter-10-card__desc">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .counter-10-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+
+  .counter-10-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+  }
+
+  .counter-10-box__image {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .counter-10-grid-ul {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m) !important;
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+  }
+
+  .counter-10-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    text-align: center;
+  }
+
+  .counter-10-card__number {
+    font-size: calc(var(--fs-4) + 3.7rem);
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .counter-10-card__label {
+    font-weight: 700;
+  }
+
+  /* bm-custom */
+  .counter-10-card__number {
+      -webkit-text-stroke: 0.1rem var(--bg-subtle);
+      -webkit-text-fill-color: transparent;
+  }
+}
+</style>

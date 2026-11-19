@@ -1,0 +1,182 @@
+---
+/**
+ * bm-contact-34 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-34.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-contact-34__container">
+    <div class="bm-contact-34__content">
+      <h2 class="bm-contact-34__heading">Leave us a Message</h2>
+      <div class="bm-contact-34__contact-data">
+        <div class="bm-contact-widget bm-contact-34__widget-negative">
+          <div class="bm-contact-widget__avatar-wrapper">
+            <figure class="bm-contact-widget__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-contact-widget__footer">
+            <p class="bm-contact-widget__heading">Meet in person?</p>
+            <div class="bm-contact-widget__notification">
+              <p class="bm-contact-widget__label">We are now available</p>
+              <div class="bm-contact-widget__dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bm-contact-25-side-list-ul">
+          {items.map((it) => (
+            <div class="bm-contact-25-side-list-item bm-contact-25-side-list-item--alt">
+              <div class="bm-contact-25-side-list-item__detail">
+                <a class="bm-contact-25-side-list-item__cta" href="#">{it.text}</a>
+              </div>
+              <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-contact-34__media">
+      <figure class="bm-contact-34__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-34 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-contact-34__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-contact-34__content {
+    row-gap: calc(var(--space-s) * 2);
+  }
+
+  .bm-contact-34__contact-data {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    width: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-34__widget-negative {
+    margin: calc(-1 * var(--space-xl)) 0 0 0;
+  }
+
+  .bm-contact-widget__avatar-wrapper {
+    width: auto;
+  }
+
+  .bm-contact-widget__image {
+    object-fit: cover;
+    width: 64;
+    height: 64;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget__footer {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-contact-widget__heading {
+    font-weight: 700;
+  }
+
+  .bm-contact-widget__notification {
+    background: var(--text-secondary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    display: flex;
+  }
+
+  .bm-contact-widget__label {
+    font-size: var(--fs-0);
+  }
+
+  .bm-contact-widget__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--bg-subtle);
+    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+  }
+
+  .bm-contact-25-side-list-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .bm-contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-25-side-list-item--alt {
+    align-items: center;
+  }
+
+  .bm-contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bm-contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    text-align: left;
+  }
+
+  .bm-contact-25-side-list-item__icon {
+    padding: .5rem .5rem .5rem .5rem;
+    background: var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-contact-side-list-item__icon--alt {
+    background: var(--color-line-default);
+  }
+
+  .bm-contact-34__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

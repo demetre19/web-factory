@@ -1,0 +1,198 @@
+---
+/**
+ * bm-call-to-action-27 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-27.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-27__container">
+    <div class="bm-contact-widget-4">
+      <h2 class="bm-contact-widget-4__heading">Ready to start a project?</h2>
+      <div class="bm-contact-widget-4__manager-data">
+        <div class="bm-contact-widget-4__media">
+          <figure class="bm-contact-widget-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-contact-widget-4__data">
+          <div class="bm-contact-widget-4__top">
+            <p class="bm-contact-widget-4__name">Alan Smith</p>
+            <p class="bm-contact-widget-4__title">Account manager</p>
+          </div>
+          <div class="bm-live-website-btn">
+            <div class="bm-live-website-btn__dot"></div>
+            <p class="bm-live-website-btn__text clickable-parent">We are now available</p>
+          </div>
+          <div class="bm-contact-25-side-list-ul list--none">
+            <div class="bm-contact-25-side-list-item">
+              <div class="bm-contact-25-side-list-item__detail">
+                <a class="bm-contact-25-side-list-item__cta" href="#">hi@bricksmaven.com</a>
+              </div>
+              <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div class="bm-contact-25-side-list-item">
+              <div class="bm-contact-25-side-list-item__detail">
+                <a class="bm-contact-25-side-list-item__cta" href="#">+32 465 45 37 15</a>
+              </div>
+              <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-widget-4 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    align-items: center;
+  }
+
+  .bm-contact-widget-4__heading {
+    font-size: calc(var(--fs-3) * 2);
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-contact-widget-4__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-contact-widget-4__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-4__image {
+    object-fit: cover;
+    width: 164;
+    height: 164;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget-4__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-4__name {
+    font-weight: 700;
+  }
+
+  .bm-live-website-btn {
+    background: var(--action-primary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+    position: relative;
+  }
+
+  .bm-live-website-btn__dot {
+    width: 8;
+    height: 8;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-25-side-list-ul {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .bm-contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bm-contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    text-align: left;
+  }
+
+  .bm-contact-25-side-list-item__icon {
+    display: flex;
+    align-items: center;
+    padding: .5rem .5rem .5rem .5rem;
+    background: var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    width: 3.5rem;
+    height: 3.5rem;
+    justify-content: center;
+  }
+
+  .bm-contact-side-list-item__icon--alt {
+    background: var(--color-line-default);
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__dot {
+    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+  	--animation-duration-up: 1.2s;
+    --shadow-light: var(--shadow-card);
+    --shadow-heavy: var(--shadow-card);
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+  }
+  
+  /* Define the animation for the first child */
+  .bm-live-website-btn__dot{
+    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes glow {
+    0% {
+      box-shadow: var(--shadow-card);
+    }
+    100% {
+      box-shadow: var(--shadow-card);
+    }
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__text {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }
+}
+</style>

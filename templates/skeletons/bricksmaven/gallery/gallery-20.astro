@@ -1,0 +1,141 @@
+---
+/**
+ * bm-gallery-20 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (gallery-20.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-gallery-20__container">
+    <div class="bm-intro-center">
+      <h2 class="bm-intro-center__heading">Add your titel here</h2>
+      <p class="bm-accent-heading">Ontdek meer video's</p>
+    </div>
+    <div class="bm-gallery-20__cover">
+      <div class="bm-gallery-20-slider">
+        {items.map((it) => (
+          <div class="bm-gallery-20-media">
+            <figure class="bm-gallery-20-media__video"></figure>
+            <figure class="bm-gallery-20-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-gallery-20 {
+    background: var(--fs-0);
+    overflow: clip;
+  }
+
+  .bm-gallery-20__container {
+    row-gap: var(--space-s);
+    align-items: center;
+    padding: var(--space-xl) var(--space-xl) var(--section-space-l) var(--space-xl);
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-intro-center {
+    align-items: center;
+    flex-wrap: nowrap;
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    text-align: center;
+  }
+
+  .bm-gallery-20-slider {
+    align-self: center;
+  }
+
+  .bm-gallery-20-media__video {
+    overflow: clip;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-gallery-20-media__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-gallery-20-slider {
+     --icon-dimension: 64px; /* Change the icon dimensions*/
+    --icon-size: 16px; /* Change the icon size*/
+    --icon-opacity: 0.5;  /* Change the icon opacity*/
+    inline-size: var(--content-width) !important;
+  }
+  
+  
+  .bm-gallery-20-slider .splide__track {
+    overflow:visible;
+  }
+  
+  
+  .bm-gallery-20-slider .is-active {
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+  }
+  
+  
+  .bm-gallery-20-slider .splide__arrow--next {
+    left: var(--space-s);
+    transition: 0.5s ease;
+  }
+  
+  .bm-gallery-20-slider .splide__arrow--prev {
+    left: calc(-1 * var(--acss-icon-dimension));
+    transition: 0.5s ease;
+  }
+  
+  .bm-gallery-20-slider .splide__arrows {
+      position: absolute;
+      inset-block-end: calc(-1 * var(--section-space-s));
+    	inset-inline-start: var(--acss-icon-dimension);
+    left:50%
+     	
+  }
+  
+    .bm-gallery-20-slider .is-active .bm-gallery-20-media__video {
+    transform: scaleY(1.05) scaleX(1.05);
+      
+  }
+    
+    .bm-gallery-20-slider .bm-gallery-20-media__video {
+    transform: scaleY(0.8) scaleX(0.8);
+      transition: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  
+  @media (max-width:767px) {
+    
+    .bm-gallery-20-slider {
+     --icon-dimension: 40px; /* Change the icon dimensions*/
+    --icon-size: 16px; /* Change the icon size*/
+    --icon-opacity: 0.5;  /* Change the icon opacity*/
+  }
+  
+  
+  }
+}
+</style>

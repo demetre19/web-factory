@@ -1,0 +1,139 @@
+---
+/**
+ * bm-linktree-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (linktree-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-linktree-4__container">
+    <div class="bm-linktree-4__bio-cover">
+      <div class="bm-linktree-4__bio">
+        <div class="bm-linktree-4__author-details">
+          <div class="bm-linktree-4__content">
+            <p class="bm-linktree-4__name">John Smith</p>
+            <p class="bm-linktree-4__title">Add your title</p>
+          </div>
+          <div class="bm-linktree-4__media">
+            <figure class="bm-linktree-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+        <div class="bm-social-share list--none bm-social-share--left">
+          {items.map((it) => (
+            <div class="bm-social-share__icon-wrapper">
+              <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bm-linktree-4__links">
+        <div class="bm-linktree-list list--none">
+          {items.map((it) => (
+            <div class="bm-linktree-card">
+              <a class="bm-linktree-card__link clickable-parent" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-linktree-4 {
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .bm-linktree-4__container {
+    align-items: center;
+  }
+
+  .bm-linktree-4__bio-cover {
+    width: 100%;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-4__bio {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-4__author-details {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    column-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-linktree-4__name {
+    font-weight: 700;
+  }
+
+  .bm-linktree-4__media {
+    width: auto;
+  }
+
+  .bm-linktree-4__image {
+    object-fit: cover;
+    width: 64px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-4__links {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--bg-subtle);
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+    background: var(--text-secondary);
+    position: relative;
+  }
+}
+</style>

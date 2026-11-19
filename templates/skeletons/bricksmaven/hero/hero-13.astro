@@ -1,0 +1,71 @@
+---
+/**
+ * bm-hero-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-13-container">
+    <div class="hero-13__content">
+      <p class="hero-13__tag">TAGLINE</p>
+      <h1 class="hero-13__title">Long headline to turn your visitors into customers</h1>
+      <p class="hero-13__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <a class="hero-13__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <figure class="hero-13-media"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-13-container {
+    position: relative;
+  }
+
+  .hero-13__content {
+    display: flex;
+    row-gap: var(--space-s);
+    width: var(--content-width);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-13-media {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+}
+</style>

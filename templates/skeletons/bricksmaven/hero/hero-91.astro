@@ -1,0 +1,222 @@
+---
+/**
+ * bm-hero-91 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-91.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-91__container">
+    <div class="bm-hero-91__intro">
+      <h1 class="bm-hero-91__heading">Long headline to turn your visitors into customers</h1>
+      <p class="bm-accent-heading">Accent heading</p>
+      <p class="bm-hero-91__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div class="cta-combo">
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="link--black" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="list--none bm-gallery-19-media">
+      {items.map((it) => (
+        <div class="bm-gallery-19-hero-li">
+          <figure class="bm-gallery-19-hero-li__hero-image"><img src="/media/placeholder.svg" alt="Hero Image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div class="bm-logo-12-carousel">
+      <div class="bm-logo-12-track list--none">
+        <div class="bm-logo-12-item">
+          <svg class="bm-logo-12-item__brand"></svg>
+        </div>
+      </div>
+      <div class="bm-logo-12-track list--none">
+        <div class="bm-logo-12-item">
+          <svg class="bm-logo-12-item__brand"></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-91 {
+    position: relative;
+  }
+
+  .bm-hero-91__container {
+    align-items: center;
+    row-gap: calc(var(--space-s) / 1.6);
+  }
+
+  .bm-hero-91__intro {
+    row-gap: var(--flow-spacing);
+    text-align: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .bm-hero-91__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-gallery-19-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 12);
+  }
+
+  .bm-gallery-19-hero-li__hero-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-logo-12-carousel {
+    flex-wrap: nowrap;
+  }
+
+  .bm-logo-12-track {
+    flex-wrap: nowrap;
+  }
+
+  /* bm-custom */
+  .bm-gallery-19-hero-li:nth-child(1) {
+    grid-column: 1 / 6;
+    grid-row: 1 / 14;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(2) {
+    grid-column: 6 / 10;
+    grid-row: 1 / 8;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(3) {
+    grid-column: 10 / -1;
+    grid-row: 1 / 8;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(4) {
+    grid-column: 6 / -1;
+    grid-row: 8 / 14;
+  }
+  
+  @media (max-width:767px) {
+    .bm-gallery-19-hero-li:nth-child(1) {
+    grid-column: 1 / -1;
+    grid-row: 1 / 7;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(2) {
+    grid-column: 1 / 8;
+    grid-row: 7 / 12;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(3) {
+    grid-column: 8 / -1;
+    grid-row: 7 / 12;
+  }
+  
+  .bm-gallery-19-hero-li:nth-child(4) {
+    grid-column: 1 / -1;
+    grid-row: 12 / 16;
+  }
+  }
+
+  /* bm-custom */
+  .bm-logo-12-carousel {
+    --logo-gap: var(--flow-spacing);
+    --scroll-duration: 35s;
+  }
+  
+  /* Outer wrapper */
+  .bm-logo-12-carousel {
+    overflow: hidden;
+    position: relative;
+    flex-direction: row;
+  }
+  
+  /* Track that scrolls */
+  .bm-logo-12-carousel .bm-logo-12-track {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: max-content;
+    gap: var(--acss-logo-gap);
+    will-change: transform;
+    /* key part: content is as wide as needed */
+    animation: scroll-logos var(--acss-scroll-duration) linear infinite;
+  }
+  
+  /* Each logo */
+  .bm-logo-12-item{
+    flex: 0 0 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .bm-logo-12-item .bm-logo-12-item__brand {
+    max-height: 40px; /* adjust to your design */
+    filter: grayscale(1) opacity(0.4);
+    transition: filter 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Color + slight scale on hover */
+  .bm-logo-12-item .bm-logo-12-item__brand:hover {
+    filter: none;
+    transform: scale(1.05);
+  }
+  
+  /* Pause animation on hover of the whole carousel */
+  .bm-logo-12-carousel:hover .bm-logo-12-track {
+    animation-play-state: paused;
+  }
+  
+  /* Also pause if user tabs into any logo (keyboard users) */
+  .bm-logo-12-carousel:focus-within .bm-logo-12-track {
+    animation-play-state: paused;
+  }
+  
+  /* Animation: move track left by 50% (because we duplicated the content) */
+  @keyframes scroll-logos {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Respect users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .bm-logo-12-track  {
+      animation: none;
+    }
+  }
+}
+</style>

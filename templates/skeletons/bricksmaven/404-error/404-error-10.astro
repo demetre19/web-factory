@@ -1,0 +1,84 @@
+---
+/**
+ * bm-404-error-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-10-container">
+    <div class="error-10-intro">
+      <div class="error-10-intro__heading-wrapper">
+        <h1 class="error-10-intro__heading">404 ERROR</h1>
+        <p class="error-10-intro__subheading">Oops the page is gone</p>
+      </div>
+      <p class="error-10-intro__desc">Sorry, the page you are looking for doesn't exist.</p>
+      <a class="error-10-intro-btn wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+  <figure class="error-10-image-background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .error-10 {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: flex-end;
+  }
+
+  .error-10-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .error-10-intro {
+    display: flex;
+    row-gap: var(--space-m);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .error-10-intro__subheading {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .error-10-intro-btn {
+    padding: 0 0 0 0;
+    justify-content: flex-start;
+  }
+
+  .error-10-image-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+}
+</style>

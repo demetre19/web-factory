@@ -1,0 +1,115 @@
+---
+/**
+ * bm-testimonial-31 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-31.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-31-container">
+    <div class="testimonial-31-list-ul list--none">
+      {items.map((it) => (
+        <div class="testimonial-31-list-card">
+          <div class="intro testimonial-31-content__intro">
+            <h2 class="intro__heading testimonial-31-content__intro-title">{it.title}</h2>
+            <p class="intro__subheading testimonial-31-content__intro-desc">{it.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-31-list-ul {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .testimonial-31-content__intro {
+    align-items: flex-start;
+  }
+
+  .testimonial-31-content__intro-title {
+    text-align: left;
+  }
+
+  .testimonial-31-content__intro-desc {
+    text-align: left;
+  }
+
+  .testimonial-31-list-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .testimonial-31-list-card__profile {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .testimonial-31-list-card__heading {
+    font-weight: 500;
+  }
+
+  .testimonial-31-list-card__text {
+    font-size: calc(var(--fs-1) - .4rem);
+  }
+
+  .testimonial-31-list-card__image {
+    object-fit: cover;
+    width: 7rem;
+    height: 7rem;
+    overflow: hidden;
+    border-radius: 50% 50% 50% 50%;
+  }
+
+  /* bm-custom */
+  @media (min-width:767) {
+  
+  .testimonial-31-list-card:nth-child(1) {
+  	grid-column: span 5;
+  }
+  .testimonial-31-list-card:nth-child(2) {
+  	grid-column: span 7;
+  }
+  
+  }
+
+  /* bm-custom */
+  .testimonial-31-list-card__desc {
+  	grid-column: span 6;
+  }
+}
+</style>

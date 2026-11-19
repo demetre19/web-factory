@@ -1,0 +1,238 @@
+---
+/**
+ * bm-grid-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="grid-23-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="grid-23-card-list list--none">
+      {items.map((it) => (
+        <div class="grid-23-card">
+          <div class="grid-23-card__heading-wrapper">
+            <h2 class="grid-23-card__heading">{it.title}</h2>
+          </div>
+          <div class="grid-23-card__content">
+            <p class="grid-23-card__psuedo-heading">{it.text}</p>
+            <p class="grid-23-card__text">{it.text}</p>
+            <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+          <div class="grid-23-card__overlay"></div>
+          <figure class="grid-23-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .grid-23-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .grid-23-card-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .grid-23-card {
+    position: relative;
+    overflow: hidden;
+    height: 50rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .grid-23-card__heading-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-23-card__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-23-card__psuedo-heading {
+    font-weight: 700;
+    font-size: var(--fs-2);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .grid-23-card__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .grid-23-card__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  /* Card */
+  .grid-23-card {
+  	 --heading-wrapper-padding: var(--space-m);
+    --heading-arrow-top: calc(var(--space-s) * -1);
+    --heading-color: var(--bg-canvas);
+  }
+  
+  .grid-23-card:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  .grid-23-card:focus-within {
+    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
+  }
+  
+  /* Heading Wrapper */
+  .grid-23-card__heading-wrapper {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    transform: translate(-50%, calc(var(--space-m) * -1));
+    align-content: center;
+    transition: .3s ease;
+  }
+  
+  /* Add arrows to the left (pointing right) */
+  .grid-23-card__heading-wrapper::before {
+      content: " ";
+      height: 0px;
+      position: absolute;
+      top: var(--acss-heading-arrow-top);
+      width: 0;
+      z-index: 1;
+      left: 50%;
+      opacity: 0;
+    	transform: translateX(-50%);
+      border: medium solid var(--action-primary);
+      border-width: 10px 10px 10px 10px;
+      border-color: transparent transparent var(--acss-heading-color) transparent;
+    }
+  
+  .grid-23-card__heading-wrapper::after {
+      content: " ";
+      height: 0px;
+      position: absolute;
+      top: 100%;
+      bottom: 0;
+      width: 0;
+      z-index: 1;
+      left: 50%;
+    	transform: translateX(-50%);
+      opacity: 1;
+      border: medium solid var(--action-primary);
+      border-width: 10px 10px 10px 10px;
+      border-color: var(--acss-heading-color) transparent transparent transparent;
+    }
+  
+  .grid-23-card:hover .grid-23-card__heading-wrapper, .grid-23-card:focus-within .grid-23-card__heading-wrapper {
+    transform: translate(-50%, 100%);
+  }
+  
+  .grid-23-card:hover .grid-23-card__heading-wrapper::before, .grid-23-card:focus-within .grid-23-card__heading-wrapper::before {
+    opacity: 0;
+  }
+  
+  .grid-23-card:hover .grid-23-card__heading-wrapper::before, .grid-23-card:focus-within .grid-23-card__heading-wrapper::before {
+    opacity: 1;
+  }
+  
+  
+  
+  .grid-23-card__heading {
+    padding: var(--space-s);
+      color: var(--bg-subtle);
+    align-content: center;
+    text-align: center;
+    background-color: var(--acss-heading-color);
+  }
+  
+  /* Content */
+  .grid-23-card__content {
+  	position: relative;
+    z-index: 2;
+    transition: .4s ease;
+    transform: translate(0%, 100%);
+    padding: var(--space-m);
+    color: var(--bg-canvas);
+    text-align: center;
+    align-items: center;
+    opacity: 0;
+  }
+  
+  .grid-23-card:hover .grid-23-card__content, .grid-23-card:focus-within .grid-23-card__content {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  /* Overlay */
+  .grid-23-card__overlay {
+  	transition: 1s ease;
+  }
+  
+  .grid-23-card:hover .grid-23-card__overlay, .grid-23-card:focus-within .grid-23-card__overlay {
+    background-image: linear-gradient(color-mix(in srgb, var(--bg-subtle) 40%, transparent), color-mix(in srgb, var(--bg-subtle) 90%, transparent));
+  }
+  
+  /* Image */
+  .grid-23-card__image {
+  	transition: 1s ease;
+  }
+  
+  .grid-23-card:hover .grid-23-card__image, .grid-23-card:focus-within .grid-23-card__image {
+    scale: 1.1;
+  }
+}
+</style>

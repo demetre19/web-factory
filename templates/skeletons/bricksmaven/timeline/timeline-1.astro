@@ -1,0 +1,127 @@
+---
+/**
+ * bm-timeline-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (timeline-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="timeline-1-container">
+    <div class="timeline-1__content">
+      <div class="intro intro--left">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Tagline</p>
+      </div>
+      <div class="timeline-1-list list--none">
+        {items.map((it) => (
+          <div class="timeline-1-card">
+            <div class="timeline-1-card__line-wrapper">
+              <div class="timeline-1-card__circle"></div>
+              <div class="timeline-1-card__extending-line"></div>
+            </div>
+            <div class="timeline-1-card__content">
+              <h2 class="timeline-1-card__heading">{it.title}</h2>
+              <p class="timeline-1-card__text">{it.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .timeline-1-container {
+    align-items: center;
+  }
+
+  .timeline-1__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    width: var(--measure);
+    background: var(--action-primary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .timeline-1-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-1-card {
+    position: relative;
+    display: flex;
+  }
+
+  .timeline-1-card__line-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-self: flex-start;
+    position: absolute;
+    left: -2rem;
+  }
+
+  .timeline-1-card__circle {
+    background: var(--bg-canvas);
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+    border-radius: 100% 100% 100% 100%;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .timeline-1-card__extending-line {
+    width: .1rem;
+    height: 100%;
+    background: var(--action-primary);
+  }
+
+  .timeline-1-card__content {
+    padding: 0 0 var(--space-s) 0;
+    row-gap: var(--space-xs);
+  }
+}
+</style>

@@ -1,0 +1,179 @@
+---
+/**
+ * bm-megamenu-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (megamenu-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-1__container">
+    <div class="bm-header-1__brand">
+      <img class="bm-header-1-brand__logo"></img>
+    </div>
+    <div class="bm-header-1__nav-wrapper">
+      <div class="megamenu-4">
+        <div class="megamenu-4__nav-items">
+          <a class="megamenu-4__nav-link" href="#">First</a>
+          <a class="megamenu-4__nav-link" href="#">Second</a>
+          <div class="megamenu-4__dropdown">
+            <div class="megamenu-4__content">
+              <div class="megamenu-4__column">
+                <div class="list--none megamenu-4__card-wrapper">
+                  {items.map((it) => (
+                    <div class="megamenu-card-link-3">
+                      <div class="megamenu-card-link-3__content">
+                        <a class="megamenu-card-link-3__text clickable-parent" href="#">{it.text}</a>
+                        <p class="megamenu-card-link-3__description">{it.text}</p>
+                      </div>
+                      <div class="megamenu-card-link-3__icon-wrapper">
+                        <span class="megamenu-card-link-3__icon" data-icon="lucide" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div class="megamenu-4__column">
+                <div class="list--none megamenu-4__card-wrapper">
+                  {items.map((it) => (
+                    <div class="megamenu-card-link-3">
+                      <div class="megamenu-card-link-3__content">
+                        <a class="megamenu-card-link-3__text clickable-parent" href="#">{it.text}</a>
+                        <p class="megamenu-card-link-3__description">{it.text}</p>
+                      </div>
+                      <div class="megamenu-card-link-3__icon-wrapper">
+                        <span class="megamenu-card-link-3__icon" data-icon="lucide" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="megamenu-4__nav-link" href="#">Fourth</a>
+          <a class="megamenu-4__nav-link" href="#">Fifth</a>
+          <div class="megamenu-4__close"></div>
+        </div>
+        <div class="megamenu-4__open"></div>
+      </div>
+    </div>
+    <div class="bm-header-1__cta">
+      <a class="cta-header btn--primary btn--outline" href="#">Call to action</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-1 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+    position: relative;
+    z-index: 1;
+    background: var(--bg-canvas);
+  }
+
+  .bm-header-1__container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-header-1__brand {
+    align-items: flex-start;
+  }
+
+  .bm-header-1__nav-wrapper {
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .megamenu-4__content {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .megamenu-4__column {
+    row-gap: var(--flow-spacing);
+    border-right: 1 solid var(--color-line-default);
+    height: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+
+  .megamenu-4__card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .megamenu-card-link-3 {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    position: relative;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .megamenu-card-link-3__text {
+    font-weight: 700;
+  }
+
+  .megamenu-card-link-3__icon-wrapper {
+    display: flex;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-canvas);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-header-1__cta {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+  
+  .megamenu-4__content {
+     min-width: var(--content-width) !important;
+     align-self: center;
+     left: unset !important;
+  }
+  }
+
+  /* bm-custom */
+  .megamenu-4__column:last-child {
+    border-right: none;
+  }
+
+  /* bm-custom */
+  .megamenu-card-link-3 {
+    transition: .5s ease;
+  }
+  
+  .megamenu-card-link-3:hover, .megamenu-card-link-3:focus-within {
+    background-color: var(--bg-subtle);
+  }
+}
+</style>

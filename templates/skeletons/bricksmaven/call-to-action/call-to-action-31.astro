@@ -1,0 +1,151 @@
+---
+/**
+ * bm-call-to-action-31 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-31.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-31__container">
+    <div class="bm-testimonial-card-cta">
+      <div class="bm-testimonial-card-cta__content">
+        <p class="bm-testimonial-card-cta__review">"We’ve never seen so many trial visitors turn into members this quickly. The new flows feel personal and keep people coming back."</p>
+        <div class="bm-testimonial-card-cta__icon-wrapper">
+          <span class="bm-testimonial-card-cta__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <p class="bm-testimonial-card-cta__name">James White, Founder at Maskerade</p>
+      </div>
+      <div class="bm-testimonial-card-cta__media">
+        <figure class="bm-testimonial-card-cta__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="bm-cta-31__content">
+      <div class="bm-cta-31__top">
+        <h2 class="bm-cta-31__heading">Join over 50 founders who supercharged their email marketing</h2>
+        <div class="bm-avatar-list-2 bm-cta-31__avatar-list">
+          {items.map((it) => (
+            <div class="bm-avatar-item-2">
+              <figure class="bm-avatar-item-2__avatar"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+      <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-31__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  .bm-testimonial-card-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: var(--space-m);
+    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+    background: var(--bg-canvas);
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-testimonial-card-cta__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-card-cta__review {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .bm-testimonial-card-cta__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+    background: var(--text-primary);
+  }
+
+  .bm-testimonial-card-cta__image {
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    object-fit: cover;
+  }
+
+  .bm-cta-31__content {
+    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+    background: var(--bg-canvas);
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-31__top {
+    margin: 0 0 auto 0;
+    row-gap: var(--fs-0);
+  }
+
+  .bm-avatar-list-2 {
+    flex-wrap: nowrap;
+    display: flex;
+  }
+
+  .bm-avatar-item-2__avatar {
+    object-fit: cover;
+    width: 48px;
+    height: 48px;
+    border-top: 2px solid var(--bg-canvas);
+    border-right: 2px solid var(--bg-canvas);
+    border-bottom: 2px solid var(--bg-canvas);
+    border-left: 2px solid var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  /* bm-custom */
+  .bm-avatar-item-2:not(:first-child) {
+    margin-inline-start: calc(-1 * var(--fs-0));
+  }
+  
+  .bm-avatar-item-2:nth-child(odd) {
+    transform: rotate(-10deg);
+  }
+  
+  .bm-avatar-item-2:nth-child(even) {
+    transform: rotate(10deg);
+  }
+}
+</style>

@@ -1,0 +1,118 @@
+---
+/**
+ * bm-content-59 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-59.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-59__container">
+    <div class="bm-content-59__row">
+      <div class="bm-content-59__intro">
+        <h2 class="bm-content-59__heading">About</h2>
+      </div>
+      <div class="bm-content-59__content">
+        <p class="bm-content-59__text-large">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
+      </div>
+    </div>
+    <div class="bm-content-59__row">
+      <div class="bm-content-59__intro">
+        <h2 class="bm-content-59__heading">Mission</h2>
+        <p class="bm-content-59__text">Ignite a spark within each person I encounter, encouraging them to embrace their strengths, overcome challenges, and pursue their dreams with unwavering determination. I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
+        <div class="bm-content-59__section">
+          <p class="bm-content-59__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+          <div class="bm-social-share list--none bm-social-share--left">
+            {items.map((it) => (
+              <div class="bm-social-share__icon-wrapper">
+                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="bm-content-59__section">
+          <p class="bm-content-59__text">For inquiries, speaking engagements, or collaboration opportunities, please email me at:</p>
+          <div class="bm-content-59__contact-information">
+            <p class="bm-content-59__text-heading">For general inquiries</p>
+            <a class="bm-content-59__link" href="#">info@bricksmaven.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="bm-content-59__content">
+        <div class="bm-content-59__media">
+          <figure class="bm-content-59__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-59__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-content-59__row {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .bm-content-59__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-content-59__text-large {
+    font-size: var(--fs-3);
+  }
+
+  .bm-content-59__section {
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1 solid var(--color-line-default);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-content-59__text-heading {
+    font-weight: 700;
+  }
+
+  .bm-content-59__media {
+    height: 100%;
+  }
+
+  .bm-content-59__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

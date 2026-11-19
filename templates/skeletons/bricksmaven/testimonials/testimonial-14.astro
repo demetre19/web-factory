@@ -1,0 +1,91 @@
+---
+/**
+ * bm-testimonial-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-14-container">
+    <div class="testimonial-14-slide">
+      {items.map((it) => (
+        <div class="testimonial-14-slide__item">
+          <div class="testimonial-14-slide__card">
+            <div class="testimonial-14-slide__card-profile">
+              <h2 class="testimonial-14-slide__card-name">{it.title}</h2>
+              <p class="testimonial-14-slide__card-job-title">{it.text}</p>
+            </div>
+            <div class="testimonial-14-slide__card-media">
+              <figure class="testimonial-14-slide__card-photo"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <p class="testimonial-14-slide__card-desc">{it.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-14-slide {
+    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  }
+
+  .testimonial-14-slide__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: 2rem;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 0 0;
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .testimonial-14-slide__card-profile {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+
+  .testimonial-14-slide__card-photo {
+    object-fit: cover;
+    width: 10rem;
+    height: 10rem;
+    border-top: .7rem solid color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-right: .7rem solid color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-bottom: .7rem solid color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-left: .7rem solid color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-radius: 50% 50% 50% 50%;
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  .testimonial-14-slide .splide__arrow {
+  	box-shadow: .2rem .2rem 2.6rem rgba(235, 235, 235, 0.71) ;
+  }
+
+  /* bm-custom */
+  .testimonial-14-slide__item.is-active:not(.is-prev, .is-next) .testimonial-14-slide__card {
+  	transform: scale(1,1);
+  }
+}
+</style>

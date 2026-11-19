@@ -1,0 +1,80 @@
+---
+/**
+ * bm-logo-carousel — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (logo-carousel.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-logo-13__container">
+    <div class="bm-logo-13__wrapper">
+      <div class="bm-logo-13__lijst">
+        <div class="list--none bm-logo-13-list">
+          {items.map((it) => (
+            <div class="bm-logo-13-item">
+              <div class="bm-logo-13-item__icon-wrapper">
+                <svg class="bm-logo-13-item__icon"></svg>
+              </div>
+              <p class="bm-logo-13-item__niche">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div class="bm-logo-13__wrapper">
+      <div class="bm-logo-13__lijst">
+        <div class="list--none bm-logo-13-list">
+          {items.map((it) => (
+            <div class="bm-logo-13-item">
+              <div class="bm-logo-13-item__icon-wrapper">
+                <svg class="bm-logo-13-item__icon"></svg>
+              </div>
+              <p class="bm-logo-13-item__niche">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-logo-13 {
+    overflow: clip;
+  }
+
+  .bm-logo-13-item {
+    object-fit: cover;
+    overflow: clip;
+  }
+
+  .bm-logo-13-item__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: var(--action-primary);
+    border-radius: 100% 100% 100% 100%;
+  }
+}
+</style>

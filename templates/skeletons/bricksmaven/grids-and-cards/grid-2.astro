@@ -1,0 +1,69 @@
+---
+/**
+ * bm-grid-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (grid-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-2-container">
+    <div class="gridcard-2-grid-ul list--none">
+      <div class="gridcard-2-card">
+        <h2 class="gridcard-2-card__heading">Feature One</h2>
+        <p class="gridcard-2-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <a class="gridcard-2-card-btn wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="gridcard-2-card">
+        <h2 class="gridcard-2-card__heading">Feature One</h2>
+        <p class="gridcard-2-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <a class="gridcard-2-card-btn wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gridcard-2-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 var(--space-s) 0;
+  }
+
+  .gridcard-2-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }
+
+  /* bm-custom */
+  .gridcard-2-card:nth-child(odd) {
+  
+  	border-right: 1px solid var(--bg-subtle);
+  
+  }
+}
+</style>

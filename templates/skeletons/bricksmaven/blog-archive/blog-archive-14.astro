@@ -1,0 +1,154 @@
+---
+/**
+ * bm-blog-archive-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-14-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="blog-archive-14-archive-list list--none">
+      <div class="blog-archive-14-archive-card">
+        <div class="blog-archive-14-archive-card__content">
+          <div class="blog-archive-14-archive-card__post-title"></div>
+          <p class="blog-archive-14-archive-card__date">{post_date}</p>
+        </div>
+        <figure class="blog-archive-14-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-14-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-archive-14-archive-list {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+    gap: var(--space-xs);
+  }
+
+  .blog-archive-14-archive-card {
+    position: relative;
+  }
+
+  .blog-archive-14-archive-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: var(--flow-spacing);
+    text-align: center;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .blog-archive-14-archive-card__date {
+    font-size: var(--fs-0);
+  }
+
+  .blog-archive-14-archive-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .blog-archive-14-archive-card:nth-child(1) {
+  	grid-column: 1/9;
+    grid-row: 1/3;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(2) {
+  	grid-column: 9/17;
+    grid-row: 1/5;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(3) {
+  	grid-column: 17/-1;
+    grid-row: 1/6;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(4) {
+  	grid-column: 1/9;
+    grid-row: 3/6;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(5) {
+  	grid-column: 9/17;
+    grid-row: 5/9;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(6) {
+  	grid-column: 17/-1;
+    grid-row: 6/9;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(7) {
+  	grid-column: 1/9;
+    grid-row: 6/12;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(8) {
+  	grid-column: 9/17;
+    grid-row: 9/12;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(9) {
+  	grid-column: 17/-1;
+    grid-row: 9/12;
+  }
+  
+  .blog-archive-14-archive-card:nth-child(10) {
+  	grid-column: 1/9;
+    grid-row: 12/12;
+  }
+  
+  @media (max-width:767px) {
+  
+    .blog-archive-14-archive-card:nth-child(1n+1) {
+  	grid-column: span 1;
+    grid-row: span 1;
+      
+  }
+    
+  }
+}
+</style>

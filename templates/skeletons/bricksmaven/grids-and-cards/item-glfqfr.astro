@@ -1,0 +1,135 @@
+---
+/**
+ * bm-item-glfqfr — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-glfqfr.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-11-container">
+    <div class="gridcard-11-wrapper list--none">
+      {items.map((it) => (
+        <div class="gridcard-11-media">
+          <div class="gridcard-11-media__figure">
+            <figure class="gridcard-11-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="gridcard-11-wrapper">
+      <div class="gridcard-11-heading">
+        <h2 class="gridcard-11-heading__title">What is lorem ipsum?</h2>
+        <p class="gridcard-11-heading__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+        <a class="gridcard-11-heading__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="gridcard-11-profile">
+        <div class="gridcard-11-profile__author">
+          <div class="gridcard-11-profile__figure">
+            <figure class="gridcard-11-profile__photo"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="gridcard-11-profile__meta">
+            <p class="gridcard-11-profile__name">John Smith</p>
+            <p class="gridcard-11-profile__title">Product manager and support</p>
+          </div>
+        </div>
+        <p class="gridcard-11-profile__bio">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-11-wrapper {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .gridcard-11-media {
+    width: 100%;
+  }
+
+  .gridcard-11-media__figure {
+    margin: 0 0 0 0;
+  }
+
+  .gridcard-11-media__img {
+    width: 100%;
+    height: 40rem;
+    object-fit: cover;
+  }
+
+  .gridcard-11-heading {
+    flex-direction: column;
+    padding: 0 var(--space-xl) 0 0;
+    row-gap: var(--space-s);
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .gridcard-11-profile {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+  }
+
+  .gridcard-11-profile__author {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .gridcard-11-profile__figure {
+    margin: 0 0 0 0;
+    width: auto;
+  }
+
+  .gridcard-11-profile__photo {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+
+  .gridcard-11-profile__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+  }
+
+  .gridcard-11-profile__name {
+    font-size: var(--fs-2);
+    font-weight: 600;
+  }
+
+  /* bm-custom */
+  .gridcard-11-container {
+  	row-gap: 5rem;
+  }
+}
+</style>

@@ -1,0 +1,98 @@
+---
+/**
+ * bm-how-it-works-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (how-it-works-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hworks-4-container">
+    <div class="hworks-intro">
+      <h2 class="hworks-intro__heading">Build your business website easily in a matter of few minutes</h2>
+      <p class="hworks-intro__accent-heading">READY, SET, SHIP</p>
+    </div>
+    <div class="hworks-4-grid-ul list--none">
+      {items.map((it) => (
+        <div class="hworks-4-card">
+          <h3 class="hworks-4-card__heading">{it.title}</h3>
+          <p class="hworks-4-card__desc">{it.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hworks-4-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--section-space-xxl);
+    align-items: center;
+  }
+
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-4-grid-ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    display: grid;
+  }
+
+  .hworks-4-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  /* bm-custom */
+  .hworks-4-grid-ul {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-4-grid-ul li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:3.2rem;
+    padding-block:1.8rem;
+    color:var(--action-primary);
+    border-radius: 100%;
+    font-size: var(--fs-3);
+  }
+}
+</style>

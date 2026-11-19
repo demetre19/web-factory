@@ -1,0 +1,108 @@
+---
+/**
+ * bm-feature-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-16-container">
+    <div class="feature-16-content list--none">
+      <div class="feature-16-content__intro">
+        <h3 class="feature-16-content__heading">Sky rocket your next build with ACSS + Bricksmaven!</h3>
+        <p class="feature-16-content__desc">This is a block of text. Double-click this text to edit it.</p>
+      </div>
+      {items.map((it) => (
+        <div class="feature-16-card">
+          <h2 class="feature-16-card__heading">{it.title}</h2>
+          <p class="feature-16-card__text">{it.text}</p>
+          <span class="feature-16-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-16-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .feature-16-content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .feature-16-content__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .feature-16-content__heading {
+    font-size: var(--fs-3);
+  }
+
+  .feature-16-card {
+    background: var(--bg-subtle);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    position: relative;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .feature-16-card__heading {
+    margin: var(--space-xl) 0 0 0;
+  }
+
+  .feature-16-card__icon {
+    background: var(--action-primary);
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    border-radius: 100% 100% 100% 100%;
+    position: absolute;
+    top: -2rem;
+  }
+
+  /* bm-custom */
+  .feature-16-card:nth-child(3) {
+  	margin-block-start:4rem;
+  }
+  
+  .feature-16-card:nth-child(5) {
+  	margin-block-start:2rem;
+  }
+  
+  .feature-16-card:nth-child(6) {
+  	margin-block-start:6rem;
+  }
+  
+  @media (max-width:767px) {
+  	.feature-16-card:nth-child(3), .feature-16-card:nth-child(5), .feature-16-card:nth-child(6) {
+  	margin-block-start:0rem;
+  }
+  }
+}
+</style>

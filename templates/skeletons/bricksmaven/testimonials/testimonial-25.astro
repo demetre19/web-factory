@@ -1,0 +1,98 @@
+---
+/**
+ * bm-testimonial-25 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-25.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-25-container">
+    <div class="testimonial-25-content">
+      {items.map((it) => (
+        <div class="testimonial-25-content__item">
+          <div class="testimonial-25-content__wrapper">
+            <p class="testimonial-25-content__desc">{it.text}</p>
+            <div class="testimonial-25-content__profile">
+              <h4 class="testimonial-25-content__name">{it.title}</h4>
+              <p class="testimonial-25-content__jobtitle">{it.text}</p>
+            </div>
+            <div class="testimonial-25-content__media">
+              <figure class="testimonial-25-content__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-25 {
+    overflow: hidden;
+  }
+
+  .testimonial-25-content__wrapper {
+    background: var(--bg-canvas);
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    position: relative;
+  }
+
+  .testimonial-25-content__desc {
+    text-align: center;
+    font-size: var(--fs-2);
+  }
+
+  .testimonial-25-content__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-xs);
+  }
+
+  .testimonial-25-content__jobtitle {
+    font-size: calc(var(--fs-1) - .4rem);
+  }
+
+  .testimonial-25-content__photo {
+    object-fit: cover;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50% 50% 50% 50%;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    z-index: 1;
+    top: -5rem;
+  }
+
+  /* bm-custom */
+  .testimonial-25-content .splide__track {
+  	overflow: visible;
+  }
+}
+</style>

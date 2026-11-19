@@ -1,0 +1,69 @@
+---
+/**
+ * bm-header-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="header-2__container">
+    <div class="header-2__brand">
+      <img class="header-2__brand-logo"></img>
+    </div>
+    <div class="Header-2__right-column">
+      <div class="header-2__menu"></div>
+      <a class="header-2__cta btn--primary" href="#">Call to action</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .header-2 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .header-2__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .header-2__brand {
+    width: auto;
+  }
+
+  .Header-2__right-column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    justify-content: flex-end;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+}
+</style>

@@ -1,0 +1,167 @@
+---
+/**
+ * bm-delete-me — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (delete-me.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="footer-cta-container">
+    <div class="footer-cta__content">
+      <h2 class="footer-cta__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
+      <p class="footer-cta__text">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="footer-cta__media">
+      <figure class="footer-cta__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="footer-14-container">
+    <div class="footer-nav-wrapper">
+      {items.map((it) => (
+        <div class="footer-nav-column">
+          <h3 class="footer-nav-heading">{it.title}</h3>
+          <div class="footer-menu list--none">
+            {(it.items || []).map((it2) => (
+              <div class="footer-menu__link">
+                <a class="footer-menu__link-text" href="#">{it2.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div class="footer-14-bottom-container">
+    <div class="footer-bottom__left">
+      <div class="footer-brand">
+        <img class="footer-brand__logo"></img>
+      </div>
+      <div class="footer-bottom__copyright">
+        <p class="footer-copyright">© 2022 Alpha. All right reserved.</p>
+      </div>
+    </div>
+    <div class="footer-nav-legal">
+      <div class="footer-legal-nav list--none">
+        {items.map((it) => (
+          <div class="footer-legal__li">
+            <a class="footer-legal__link-text" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .footer-cta {
+    padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
+    margin: 0 0 calc(var(--section-space-xs) * -1 ) 0;
+  }
+
+  .footer-cta-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    z-index: 99;
+    position: relative;
+  }
+
+  .footer-cta__content {
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+    padding: var(--space-m) var(--space-xl) var(--space-m) var(--space-xl);
+    background: var(--bg-canvas);
+    justify-content: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .footer-cta__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .footer-14-bottom-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .footer-bottom__left {
+    flex-direction: row;
+    row-gap: var(--space-xs);
+    column-gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-legal__link-text {
+    font-size: var(--fs-0);
+  }
+
+  .footer-14 {
+    row-gap: var(--space-s);
+    background: var(--bg-subtle);
+  }
+}
+</style>

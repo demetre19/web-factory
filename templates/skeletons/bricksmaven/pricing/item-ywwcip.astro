@@ -1,0 +1,112 @@
+---
+/**
+ * bm-item-ywwcip — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-ywwcip.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="pricing-6-container gap--l">
+    <div class="intro">
+      <h2 class="intro__heading">Get access to the Origin library today!</h2>
+      <p class="intro__subheading">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <p class="intro__accent-heading">Pricing tagline</p>
+    </div>
+    <div class="pricing-6-content">
+      <div class="pricing-6-card">
+        <p class="pricing-6-card__label">Beginner</p>
+        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="pricing-6-card__price">$59/mo</p>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      </div>
+      <div class="pricing-6-card">
+        <p class="pricing-6-card__label">Personal</p>
+        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="pricing-6-card__price">$59/mo</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      </div>
+      <div class="pricing-6-card center--all gap--xs">
+        <p class="pricing-6-card__label">Untitled</p>
+        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
+        <p class="pricing-6-card__price">$59/mo</p>
+        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .pricing-6-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+
+  .pricing-6-card {
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-xs);
+    flex-direction: column;
+  }
+
+  .pricing-6-card__label {
+    font-weight: 700;
+  }
+
+  .pricing-6-card__desc {
+    text-align: center;
+  }
+
+  .pricing-6-card__price {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  /* bm-custom */
+  .pricing-6-card__price span {
+  	font-size: var(--fs-2);
+  }
+}
+</style>

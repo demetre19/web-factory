@@ -1,0 +1,140 @@
+---
+/**
+ * bm-feature-49 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-49.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-feature-49__top-container">
+    <div class="bm-feature-49__content">
+      <h2 class="bm-feature-49__heading">Long headline to turn your visitors into customers</h2>
+      <p class="bm-feature-49__text">Lorem insum dolor amet consec tetur adiriscin elit eiusmod temsor incididunt labore dolore masna alirua enim minim veniam nostrud exerci tation ullamco laboris aliruis commodo conseruat irure dolor renrehen derit volustate velit esse cillum dolore.</p>
+      <a class="bm-feature-49__link" href="#">Read more</a>
+    </div>
+    <div class="bm-feature-49__wrapper">
+      <div class="list--none bm-feature-49-grid-ul">
+        {items.map((it) => (
+          <div class="bm-feature-49-card">
+            <div class="bm-feature-49-card__top">
+              <h2 class="bm-feature-49-card__heading">{it.title}</h2>
+              <p class="bm-feature-49-card__text">{it.text}</p>
+            </div>
+            <div class="bm-feature-49-card__footer">
+              <a class="btn--white bm-feature-49-card__cta wf-cta-button" href={it.href}>{it.label}</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <figure class="bm-feature-49__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-feature-49 {
+    background: color-mix(in srgb, var(--text-secondary) 70%, transparent);
+    position: relative;
+  }
+
+  .bm-feature-49__top-container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-feature-49__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-49__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-feature-49__wrapper {
+    position: relative;
+  }
+
+  .bm-feature-49-grid-ul {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    width: 100%;
+  }
+
+  .bm-feature-49-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .bm-feature-49-card__top {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-feature-49__background-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .bm-feature-49-card:nth-child(1) {
+    background-color: var(--color-ink-secondary);
+  }
+  
+  .bm-feature-49-card:nth-child(2) {
+    background-color: var(--bg-subtle);
+  }
+  
+  .bm-feature-49-card:nth-child(4) {
+    background-color: var(--color-ink-secondary);
+  }
+  
+  .bm-feature-49-card:nth-child(3) {
+    background-color: var(--bg-subtle);
+    
+  }
+  
+  @media (max-width:478px) {
+    
+    .bm-feature-49-card:nth-child(4) {
+    background-color:  var(--bg-subtle);
+  }
+  
+  .bm-feature-49-card:nth-child(3) {
+    background-color: var(--color-ink-secondary);
+    
+  }
+    
+  }
+}
+</style>

@@ -1,0 +1,116 @@
+---
+/**
+ * bm-team-4 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (team-4.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="team-4-container">
+    <div class="intro--alt">
+      <h2 class="intro__heading">Meet our team</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">We're hiring!</p>
+    </div>
+    <div class="team-4-list list--none">
+      {items.map((it) => (
+        <div class="team-4-card">
+          <div class="team-4-card__box">
+            <h3 class="team-4-box__name">{it.title}</h3>
+            <p class="team-4-box__title">{it.text}</p>
+          </div>
+          <div class="team-4-card__image-wrapper">
+            <figure class="team-4-box__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .team-4-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--section-space-xxl);
+  }
+
+  .intro--alt {
+    position: relative;
+    z-index: 1;
+  }
+
+  .team-4-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .team-4-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .team-4-card__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-subtle);
+  }
+
+  .team-4-card__image-wrapper {
+    width: 100%;
+  }
+
+  .team-4-box__img {
+    height: 30rem;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .team-4-list .team-4-card:nth-child(even) {
+  
+  	margin-top:8rem;
+  }
+  
+  
+  @media  (max-width:478px){
+  
+      .team-4-list .team-4-card:nth-child(even) {
+  
+      margin-top:0rem;
+    }
+  
+  
+  }
+
+  /* bm-custom */
+  .team-4-box__img {
+  	aspect-ratio: 4/5;
+  }
+}
+</style>

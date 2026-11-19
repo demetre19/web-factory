@@ -1,0 +1,97 @@
+---
+/**
+ * bm-gallery-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (gallery-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-gallery-15__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-gallery-15-media list--none">
+      {items.map((it) => (
+        <div class="bm-gallery-15-item">
+          <figure class="bm-gallery-15-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-gallery-15__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-gallery-15-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 12);
+    grid-template-rows: calc(100% * 1 / 12);
+  }
+
+  .bm-gallery-15-item__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  @media (min-width:478px) {
+  
+  .bm-gallery-15-item:first-child {
+    grid-column: 1/5;
+    grid-row:1/9;
+  }
+  
+  .bm-gallery-15-item:nth-child(2) {
+    grid-column: 5/9;
+    grid-row:1/6;
+  }
+  
+  .bm-gallery-15-item:nth-child(3) {
+    grid-column: 5/9;
+    grid-row:6/-1;
+  }
+  
+  .bm-gallery-15-item:nth-child(4) {
+    grid-column: 9/ -1;
+    grid-row:1/9;
+  }
+  
+  
+  
+  }
+}
+</style>

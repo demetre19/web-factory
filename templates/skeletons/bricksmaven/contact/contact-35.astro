@@ -1,0 +1,272 @@
+---
+/**
+ * bm-contact-35 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-35.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-contact-35__container">
+    <div class="bm-contact-35__content">
+      <h2 class="bm-contact-35__heading">Leave Us a Message</h2>
+      <p class="bm-contact-35__text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+      <div class="bm-contact-widget bm-contact-widget--inline">
+        <div class="bm-contact-widget__avatar-wrapper">
+          <figure class="bm-contact-widget__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-contact-widget__footer">
+          <p class="bm-contact-widget__heading">Meet in person?</p>
+          <div class="bm-contact-widget__notification">
+            <p class="bm-contact-widget__label">We are now available</p>
+            <div class="bm-contact-widget__dot"></div>
+          </div>
+        </div>
+      </div>
+      <div class="bm-contact-25-side-list-ul list--none">
+        {items.map((it) => (
+          <div class="bm-contact-25-side-list-item">
+            <div class="bm-contact-25-side-list-item__detail">
+              <a class="bm-contact-25-side-list-item__cta" href="#">{it.text}</a>
+            </div>
+            <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-contact-tab">
+      <div class="bm-contact-tab__tabs-nested">
+        <div class="bm-contact-tab__tab-menu">
+          <div class="bm-contact-tab__title">
+            <p class="bm-contact-tab__text">Send us a message</p>
+          </div>
+          <div class="bm-contact-tab__title">
+            <p class="bm-contact-tab__text">F.A.Q.</p>
+          </div>
+        </div>
+        <div class="bm-contact-tab__tab-content">
+          <div class="bm-contact-tab__pane">
+            <form class="bm-contact-25__form-content" novalidate>
+            </form>
+          </div>
+          <div class="bm-contact-tab__pane">
+            <div class="accordion-4-main">
+              {items.map((it) => (
+                <div class="accordion-4-item">
+                  <div class="accordion-4-head">
+                    <p class="accordion-4-head__title">{it.text}</p>
+                    <div class="accordion-4-head__icon">
+                      <span class="accordion-4-head__icon--default" data-icon="lucide" aria-hidden="true"></span>
+                      <span class="accordion-4-head__icon--switch" data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                  </div>
+                  <div class="accordion-4-body">
+                    <p class="accordion-4-body__content">{it.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-35__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-contact-35__content {
+    width: 100%;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget--inline {
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    column-gap: calc(var(--flow-spacing) / 3);
+  }
+
+  .bm-contact-widget__avatar-wrapper {
+    width: auto;
+  }
+
+  .bm-contact-widget__image {
+    object-fit: cover;
+    width: 64;
+    height: 64;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget__footer {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-contact-widget__heading {
+    font-weight: 700;
+  }
+
+  .bm-contact-widget__notification {
+    background: var(--text-secondary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    display: flex;
+  }
+
+  .bm-contact-widget__label {
+    font-size: var(--fs-0);
+  }
+
+  .bm-contact-widget__dot {
+    width: 8px;
+    height: 8px;
+    background: var(--bg-subtle);
+    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+  }
+
+  .bm-contact-25-side-list-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .bm-contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bm-contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    text-align: left;
+  }
+
+  .bm-contact-25-side-list-item__icon {
+    padding: .5rem .5rem .5rem .5rem;
+    background: var(--bg-canvas);
+    border-radius: 100% 100% 100% 100%;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-contact-side-list-item__icon--alt {
+    background: var(--color-line-default);
+  }
+
+  .bm-contact-tab__tab-menu {
+    flex-direction: row;
+  }
+
+  .accordion-4-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .accordion-4-item {
+    display: flex;
+    row-gap: var(--space-xs);
+  }
+
+  .accordion-4-head {
+    border-top: .1rem solid var(--bg-subtle);
+    border-right: .1rem solid var(--bg-subtle);
+    border-bottom: .1rem solid var(--bg-subtle);
+    border-left: .1rem solid var(--bg-subtle);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    row-gap: var(--space-xs);
+    justify-content: space-between;
+  }
+
+  .accordion-4-head__title {
+    width: 75%;
+    text-align: left;
+    font-size: var(--fs-2);
+    font-weight: 700;
+    margin: 0 0 0 var(--space-s);
+  }
+
+  .accordion-4-head__icon {
+    border-left: .1rem solid;
+    position: relative;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+  }
+
+  .accordion-4-head__icon--default {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .accordion-4-head__icon--switch {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+  }
+
+  .accordion-4-body {
+    text-align: left;
+    background: var(--bg-subtle);
+  }
+
+  .accordion-4-body__content {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  /* bm-custom */
+  .accordion-4-item.brx-open .accordion-4-head__icon {
+  	background-color: color-mix(in srgb, var(--action-primary) 10%, transparent);
+  }
+  .accordion-4-item.brx-open .accordion-4-head__icon--switch {
+  	transform: translateX(-50%) translateY(-50%) rotateZ(0deg);
+    color: var(--action-primary);
+  }
+  .accordion-4-item.brx-open .accordion-4-head__title {
+  	color: var(--action-primary);
+  }
+}
+</style>

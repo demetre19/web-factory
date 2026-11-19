@@ -1,0 +1,85 @@
+---
+/**
+ * bm-404-error-11 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-11.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-11-container">
+    <div class="intro box-shadow--m error-11__intro">
+      <div class="intro__top">
+        <h2 class="intro__heading text--primary">404 error</h2>
+        <p class="intro__subheading intro__subheading--alt">Oops the page is gone</p>
+      </div>
+      <p class="intro__subheading">Sorry, the page you are looking for doesn't exist.</p>
+      <p class="intro__link">← Go back home</p>
+    </div>
+  </div>
+  <figure class="intro-background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .error-11 {
+    height: 100vh;
+    padding: 0 0 0 0;
+    position: relative;
+  }
+
+  .error-11-container {
+    position: relative;
+    z-index: 1;
+    padding: 0 var(--space-m) 0 var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .error-11__intro {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    width: var(--measure);
+  }
+
+  .intro__top {
+    align-items: center;
+  }
+
+  .intro__subheading--alt {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .intro-background-image {
+    position: absolute;
+    height: 80vh;
+    object-fit: cover;
+    bottom: 0;
+    width: 100%;
+  }
+}
+</style>

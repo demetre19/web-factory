@@ -1,0 +1,93 @@
+---
+/**
+ * bm-testimonial-18 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-18.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-18-container">
+    <p class="testimonial-18-subtitle">Trusted by more than 500,000 designers and product managers across the globe</p>
+    <div class="testimonial-18-list">
+      {items.map((it) => (
+        <div class="testimonial-18-list__slide">
+          <p class="testimonial-18-list__text">{it.text}</p>
+          <div class="testimonial-18-list__author">
+            <div class="testimonial-18-list__meta">
+              <h4 class="testimonial-18-list__title">{it.title}</h4>
+              <p class="testimonial-18-list__desc">{it.text}</p>
+            </div>
+            <div class="testimonial-18-list__media">
+              <figure class="testimonial-18-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-18-container {
+    flex-direction: column;
+    row-gap: 3rem;
+    align-items: center;
+  }
+
+  .testimonial-18-subtitle {
+    text-align: center;
+  }
+
+  .testimonial-18-list__slide {
+    row-gap: 3rem;
+    align-items: center;
+  }
+
+  .testimonial-18-list__text {
+    font-size: var(--fs-3);
+    text-align: center;
+  }
+
+  .testimonial-18-list__author {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .testimonial-18-list__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+  }
+
+  .testimonial-18-list__desc {
+    font-size: calc( var(--fs-0) + .4rem );
+  }
+
+  .testimonial-18-list__image {
+    object-fit: cover;
+    width: 7rem;
+    height: 7rem;
+    overflow: hidden;
+    border-radius: 50% 50% 50% 50%;
+  }
+}
+</style>

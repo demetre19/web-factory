@@ -1,0 +1,103 @@
+---
+/**
+ * bm-call-to-action-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-cta-23__container">
+    <div class="bm-cta-23__content">
+      <h2 class="bm-cta-23__heading">Think. Action. Results.</h2>
+      <p class="bm-cta-23__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <a class="btn--primary btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-cta-23__image-list list--none">
+      {items.map((it) => (
+        <div class="bm-cta-23-background-image-list__container">
+          <figure class="bm-cta-23-background-image-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-cta-23 {
+    position: relative;
+    padding: 0 0 0 0;
+  }
+
+  .bm-cta-23__container {
+    width: 100%;
+    height: var(--acss-viewport-height);
+    padding: 0 0 var(--section-space-m) 0;
+  }
+
+  .bm-cta-23__content {
+    position: sticky;
+    z-index: 1;
+    width: 100%;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    top: var(--section-space-m);
+  }
+
+  .bm-cta-23__heading {
+    font-size: calc(var(--fs-4) * 2);
+  }
+
+  .bm-cta-23__text {
+    font-size: var(--fs-2);
+  }
+
+  .bm-cta-23__image-list {
+    row-gap: 0;
+    width: 100%;
+    position: absolute;
+  }
+
+  .bm-cta-23-background-image-list {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+
+  .bm-cta-23-background-image-list__container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-cta-23-background-image-list__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  /*  This sets the container at a 300vh so the content element can scroll through the background images. If you add more images you will have to change the viewport height  */
+  .bm-cta-23__container {
+    --viewport-height: 300vh;
+  }
+}
+</style>

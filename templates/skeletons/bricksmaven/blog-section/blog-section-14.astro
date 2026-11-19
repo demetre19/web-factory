@@ -1,0 +1,124 @@
+---
+/**
+ * bm-blog-section-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-14-container">
+    <div class="intro intro--left">
+      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Tagline</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="blog-section-14-article-list list--none">
+      <div class="blog-section-14-article">
+        <div class="blog-section-14-article__content">
+          <div class="blog-section-14-article__meta">
+            <p class="blog-section-14-article__author-name">{author_name}</p>
+            <p class="blog-section-14-article__date">{post_date}</p>
+          </div>
+          <h2 class="blog-section-14-article__heading">{post_title}</h2>
+          <p class="blog-section-14-article__text">{post_excerpt}</p>
+          <p class="blog-section-14-article__term">{post_terms_category}</p>
+        </div>
+        <div class="blog-section-14-article__media">
+          <figure class="blog-section-14-article__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-14-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-section-14-article-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 2fr);
+  }
+
+  .blog-section-14-article__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+    height: 100%;
+    background: var(--bg-subtle);
+  }
+
+  .blog-section-14-article__meta {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .blog-section-14-article__author-name {
+    font-weight: 700;
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-14-article__date {
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-14-article__term {
+    margin: auto 0 0 0;
+    font-size: var(--fs-0);
+  }
+
+  .blog-section-14-article__featured-image {
+    object-fit: cover;
+    width: 100%;
+    height: 30rem;
+  }
+
+  /* bm-custom */
+  .blog-section-14-article__featured-image {
+  	aspect-ratio: 16/9;
+  }
+}
+</style>

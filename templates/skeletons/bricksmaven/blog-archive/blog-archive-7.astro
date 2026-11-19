@@ -1,0 +1,156 @@
+---
+/**
+ * bm-blog-archive-7 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-7.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-7-container">
+    <div class="blog-archive-7-head">
+      <h1 class="blog-archive-7-head__title">Our Articles</h1>
+    </div>
+    <div class="blog-archive-7-body">
+      <div class="blog-archive-7-wrapper list--none">
+        <div class="blog-archive-7-card">
+          <div class="blog-archive-7-card__category">
+            <p class="blog-archive-7-card__term">{post_terms_category}</p>
+            <p class="blog-archive-7-card__date">{post_date}</p>
+          </div>
+          <h3 class="blog-archive-7-card__title">{post_title}</h3>
+          <a class="blog-archive-7-card__read" href={cta.href}>{cta.label}</a>
+          <div class="blog-archive-7-card__media">
+            <figure class="blog-archive-7-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      </div>
+      <div class="blog-archive-7-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-7-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-7-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-7-wrapper {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .blog-archive-7-card {
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-archive-7-card__category {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .blog-archive-7-card__term {
+    padding: .3rem .8rem .3rem .8rem;
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .blog-archive-7-card__read {
+    padding: 0 0 0 0;
+  }
+
+  .blog-archive-7-card__thumb {
+    height: 30rem;
+    margin: auto 0 0 0;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .blog-archive-7-wrapper {
+  	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(3) {
+  	grid-area: 2 / 2 / 3 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(4) {
+  	grid-area: 3 / 1 / 4 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(5) {
+  	grid-area: 3 / 2 / 4 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(6) {
+  	grid-area: 4 / 1 / 5 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(7) {
+  	grid-area: 4 / 2 / 5 / 3;
+  }
+  
+  @media (max-width:767px) {
+  	.blog-archive-7-wrapper .blog-archive-7-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(3) {
+  	grid-area: 3 / 1 / 4 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(4) {
+  	grid-area: 4 / 1 / 5 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(5) {
+  	grid-area: 5 / 1 / 6 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(6) {
+  	grid-area: 6 / 1 / 7 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(7) {
+  	grid-area: 7 / 1 / 8 / 3;
+  }
+  }
+
+  /* bm-custom */
+  .blog-archive-7-card__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

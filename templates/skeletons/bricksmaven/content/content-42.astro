@@ -1,0 +1,94 @@
+---
+/**
+ * bm-content-42 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-42.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-42__container">
+    <div class="bm-content-42__main">
+      <div class="bm-content-42__content">
+        <div class="bm-content-42__top">
+          <h2 class="bm-content-42__heading">Long headline to turn your visitors into users</h2>
+          <p class="bm-content-42__label">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        </div>
+        <div class="list--none bm-content-42-data">
+          {items.map((it) => (
+            <div class="bm-content-42-data-list">
+              <div class="bm-content-42-data-list__numbers">
+                <p class="bm-content-42-data-list__percentage">{it.text}</p>
+                <p class="bm-content-42-data-list__label">{it.text}</p>
+              </div>
+              <div class="bm-content-42-data-list__content">
+                <p class="bm-content-42-data-list__text">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bm-content-42__media">
+        <figure class="bm-content-42__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-42__main {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-content-42__content {
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .bm-content-42-data-list {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 2);
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: 1 solid var(--bg-subtle);
+  }
+
+  .bm-content-42-data-list__numbers {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-content-42-data-list__percentage {
+    font-size: calc(var(--fs-3) * 2);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .bm-content-42-data-list__label {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .bm-content-42__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

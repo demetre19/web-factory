@@ -1,0 +1,67 @@
+---
+/**
+ * bm-item — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="logo-10-container">
+    <div class="logo-10-heading center--all width--full gap--l">
+      <h2 class="logo-10-title">Tired of building from scratch?</h2>
+      <div class="logo-10-slide">
+        <div class="logo-10-slide--1">
+          <figure class="logo-10-img-1"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--2">
+          <figure class="logo-10-img-2"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--3">
+          <figure class="logo-10-img-3"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--4">
+          <figure class="logo-10-img-4"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--5">
+          <figure class="logo-10-img-5"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--6">
+          <figure class="logo-10-img-6"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="logo-10-slide--7">
+          <figure class="logo-10-img-7"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  /* bm-custom */
+  .logo-10-slide .splide__slide {
+  	transition: all .4s ease-in-out;
+  }
+  .logo-10-slide .splide__slide:hover {
+  	background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    box-shadow: 0 4px 36px color-mix(in srgb, var(--fs-0) 10%, transparent);
+  }
+}
+</style>

@@ -1,0 +1,118 @@
+---
+/**
+ * bm-contact-17 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-17.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-17-container">
+    <div class="intro">
+      <h2 class="intro__heading">Contact with us</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+    </div>
+    <div class="contact-17-content">
+      <div class="contact-17-content__detail list--none">
+        <div class="contact-17-content__inner">
+          <span class="contact-17-content__inner-icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="contact-17-content__inner-label">+32 465 45 37 15</p>
+        </div>
+        <div class="contact-17-content__inner">
+          <span class="contact-17-content__inner-icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="contact-17-content__inner-label">support@bricksmaven.com</p>
+        </div>
+      </div>
+      <div class="contact-17-content__cta">
+        <a class="contact-17-content__cta--primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <a class="contact-17-content__cta--secondary btn--outline" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="contact-17-maps">
+      <figure class="contact-17-maps__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-17-container {
+    row-gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-17-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .contact-17-content__detail {
+    display: flex;
+    justify-content: center;
+    column-gap: var(--space-s);
+  }
+
+  .contact-17-content__inner {
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 1.8rem 1.4rem 1.8rem 1.4rem;
+    column-gap: var(--space-xs);
+  }
+
+  .contact-17-content__cta {
+    display: flex;
+    justify-content: center;
+    column-gap: var(--space-s);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+
+  .contact-17-maps {
+    width: 100%;
+  }
+
+  .contact-17-maps__image {
+    object-fit: cover;
+    width: 100%;
+    height: 28rem;
+    overflow: hidden;
+  }
+}
+</style>

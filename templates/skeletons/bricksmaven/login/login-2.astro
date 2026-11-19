@@ -1,0 +1,176 @@
+---
+/**
+ * bm-login-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (login-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="login-2__brand">
+    <figure class="login-2__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+  <div class="login-2__container">
+    <div class="login-2__content">
+      <div class="login-2-tabs">
+        <div class="login-2-tab-menu">
+          <div class="login-2-tabs__title">
+            <p class="login-2-tabs__link">Sign in</p>
+          </div>
+          <div class="login-2-tabs__title">
+            <p class="login-2-tabs__link">Register</p>
+          </div>
+        </div>
+        <div class="login-2-tab-content">
+          <div class="login-2-tab-content__pane">
+            <div class="login-form-wrapper login-form-wrapper--alt">
+              <form class="login-form" novalidate>
+              </form>
+              <div class="login-footer list--none">
+                <div class="login-footer__li">
+                  <a class="login-footer__link" href="#">Back to home</a>
+                </div>
+                <div class="login-footer__li">
+                  <a class="login-footer__link" href="#">Lost your password?</a>
+                </div>
+              </div>
+            </div>
+            <div class="login-1__logged-in-heading-wrapper">
+              <h1 class="login-1__logged-in-heading">You are logged in.</h1>
+              <div class="login-footer list--none">
+                <div class="login-footer__li">
+                  <a class="login-footer__link" href="#">Back to home</a>
+                </div>
+                <div class="login-footer__li">
+                  <a class="login-footer__link" href="#">Lost your password?</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="login-2-tab-content__pane">
+            <div class="login-form-wrapper login-form-wrapper--alt">
+              <form class="login-form" novalidate>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login-2__overlay"></div>
+  <figure class="login-2__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .login-2 {
+    background: var(--bg-subtle);
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .login-2__brand {
+    z-index: 3;
+  }
+
+  .login-2__logo {
+    object-fit: contain;
+  }
+
+  .login-2__container {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    width: var(--measure);
+    background: var(--bg-canvas);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    row-gap: var(--flow-spacing);
+    z-index: 3;
+  }
+
+  .login-2__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-form-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-form-wrapper--alt {
+    width: var(--measure);
+  }
+
+  .login-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .login-footer__link {
+    font-size: var(--fs-0);
+  }
+
+  .login-1__logged-in-heading-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-2__overlay {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .login-2__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .login-form .form-group ul li {
+  	display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .login-form .form-group span {
+  	display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+  
+  .login-form .form-group span a, .login-form .form-group ul li label {
+  	font-size: var(--fs-0);
+  }
+  
+  .login-form .form-group:nth-child(4) {
+      align-items: end;
+  }
+}
+</style>

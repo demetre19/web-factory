@@ -1,0 +1,253 @@
+---
+/**
+ * bm-timeline-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (timeline-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="timeline-14-container">
+    <div class="timeline-14__content">
+      <div class="intro">
+        <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__accent-heading">Accent heading</p>
+      </div>
+    </div>
+    <div class="timeline-14-list list--none">
+      {items.map((it) => (
+        <div class="timeline-14-card">
+          <div class="timeline-14-card__content">
+            <div class="timeline-14-card__top">
+              <h2 class="timeline-14-card__heading">{it.title}</h2>
+              <p class="timeline-14-card__text">{it.text}</p>
+            </div>
+            <div class="timeline-14-card__date-wrapper">
+              <p class="timeline-14-card__date-data">{it.text}</p>
+            </div>
+          </div>
+          <div class="timeline-14-card__media">
+            <figure class="timeline-14-card__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .timeline-14-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .timeline-14-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    position: relative;
+    gap: calc(var(--space-m) * 4);
+  }
+
+  .timeline-14-card {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 3);
+  }
+
+  .timeline-14-card__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-14-card__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .timeline-14-card__date-data {
+    font-size: var(--fs-4);
+  }
+
+  .timeline-14-card__image {
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .timeline-14-list::before {
+  	content:'';
+    position: absolute;
+    left:50%;
+    height:100%;
+    width:.2rem;
+    background-color: var(--color-ink-secondary);
+  }
+  
+  @media (max-width:478px) {
+  	.timeline-14-list::before {
+    left:0%;
+  
+  }
+  }
+
+  /* bm-custom */
+  .timeline-14-card:last-child {
+  	padding-block-end: var(--section-space-xxl);
+  }
+  
+  
+  .timeline-14-card:first-child {
+  	padding-block-start: var(--section-space-xxl);
+  }
+  
+  /* ODD card styling */
+  .timeline-14-card:nth-child(odd) {
+  	grid-column: 2 / -1;
+  }
+  
+  .timeline-14-card__date-wrapper {
+    	position:relative;
+  }
+  
+  .timeline-14-card:nth-child(odd) .timeline-14-card__date-wrapper::before {
+  	content:'';
+    position:absolute;
+    width: calc(100% + (var(--space-m) * 2)) ;
+  	height:.1rem;
+    bottom: calc(-1 * var(--space-xs));
+    left: calc((var(--space-m) * 2) * -1 );
+    background-color: var(--color-ink-secondary);
+    transition: .5s ease;
+  }
+  
+  
+  
+  .timeline-14-card:nth-child(odd):hover .timeline-14-card__date-wrapper::before {
+    background-color: var(--color-line-default);
+  }
+  
+  .timeline-14-card:nth-child(odd) .timeline-14-card__date-wrapper::after {
+  	content:'';
+    position:absolute;
+    width: 0 ;
+  	height:.2rem;
+    bottom: calc(-1 * var(--space-xs));
+    left: calc((var(--space-m) * 2) * -1 );
+    background-color: var(--color-ink-secondary);
+    transition: .5s ease, width 1s;
+  }
+  
+  .timeline-14-card:nth-child(odd):hover .timeline-14-card__date-wrapper::after {
+    width: calc(100% + (var(--space-m) * 2)) ;
+  }
+  
+  /* EVEN card styling */
+  .timeline-14-card:nth-child(even) {
+  	grid-template-columns: calc(100% * 3 / 2);
+    grid-column: 1 / 2;
+    transform: translateY(-50%);
+  }
+  
+  .timeline-14-card:nth-child(even) .timeline-14-card__media {
+    order:-1;	
+  }
+  
+  .timeline-14-card:nth-child(even) .timeline-14-card__date-wrapper::before {
+  	content:'';
+    position:absolute;
+    width: calc(100% + (var(--space-m) * 2)) ;
+  	height:.1rem;
+    bottom: calc(-1 * var(--space-xs));
+    right: calc((var(--space-m) * 2) * -1);
+    background-color: var(--color-ink-secondary);
+    transition: .5s ease;
+  }
+  
+  .timeline-14-card:nth-child(even):hover .timeline-14-card__date-wrapper::before {
+    background-color: var(--color-line-default);
+  }
+  
+  .timeline-14-card:nth-child(even) .timeline-14-card__date-wrapper::after {
+  	content:'';
+    position:absolute;
+    width: 0 ;
+  	height:.2rem;
+    bottom: calc(-1 * var(--space-xs));
+    right: calc((var(--space-m) * 2) * -1 );
+    background-color: var(--color-ink-secondary);
+    transition: .5s ease, width 1s;
+  }
+  
+  .timeline-14-card:nth-child(even):hover .timeline-14-card__date-wrapper::after {
+    width: calc(100% + (var(--space-m) * 2)) ;
+  }
+  
+  
+  @media (max-width:991px) {
+  		
+    /* EVEN card styling */
+        .timeline-14-card:nth-child(even) {
+          grid-template-columns: calc(100% * 1 / 1);
+        }
+    
+    /* ODD card styling */
+        .timeline-14-card:nth-child(odd) {
+          grid-template-columns: calc(100% * 1 / 1);
+        }
+  	
+  }
+  
+  @media (max-width:478px) {
+  		
+    .timeline-14-card {
+    	padding-inline-start: calc(var(--space-m) * 2);
+    }
+    
+    /* EVEN card styling */
+        .timeline-14-card:nth-child(even) {
+          grid-column: unset;
+          transform: translateY(0%);
+        }
+    
+        .timeline-14-card:nth-child(even) .timeline-14-card__date-wrapper::before,
+    		.timeline-14-card:nth-child(even) .timeline-14-card__date-wrapper::after{
+  				 left: calc((var(--space-m) * 2) * -1);
+      }
+    
+    .timeline-14-card:nth-child(even) .timeline-14-card__media {
+    order:unset;	
+  }
+    
+    /* ODD card styling */
+        .timeline-14-card:nth-child(odd) {
+          grid-column: unset;
+        }
+  	
+  }
+}
+</style>

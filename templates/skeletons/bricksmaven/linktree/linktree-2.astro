@@ -1,0 +1,145 @@
+---
+/**
+ * bm-linktree-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (linktree-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-linktree-2__container">
+    <div class="bm-linktree-2__bio-wrapper">
+      <div class="bm-linktree-2-bio">
+        <div class="bm-linktree-2-bio__bio-data">
+          <figure class="bm-linktree-2-bio__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="bm-linktree-2-bio__name-cover">
+            <p class="bm-linktree-2-bio__name">John Smith</p>
+            <p class="bm-linktree-2-bio__title">Add your title</p>
+          </div>
+          <p class="bm-linktree-2-bio__short-biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+      </div>
+      <div class="bm-linktree-2__links">
+        <div class="bm-linktree-list list--none">
+          {items.map((it) => (
+            <div class="bm-linktree-card">
+              <a class="bm-linktree-card__link clickable-parent" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="bm-linktree-2__socials">
+        <div class="bm-social-share list--none bm-social-share--left">
+          {items.map((it) => (
+            <div class="bm-social-share__icon-wrapper">
+              <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-linktree-2 {
+    background: var(--bg-subtle);
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .bm-linktree-2__container {
+    align-items: center;
+  }
+
+  .bm-linktree-2__bio-wrapper {
+    width: 100%;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-2-bio {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--bg-canvas);
+  }
+
+  .bm-linktree-2-bio__bio-data {
+    display: flex;
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+  }
+
+  .bm-linktree-2-bio__image {
+    object-fit: cover;
+    width: 128px;
+    height: 128px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-linktree-2-bio__name {
+    font-weight: 700;
+  }
+
+  .bm-linktree-2-bio__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-linktree-2__links {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+    background: var(--text-secondary);
+    position: relative;
+  }
+
+  .bm-linktree-2__socials {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: center;
+    background: var(--bg-canvas);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+}
+</style>

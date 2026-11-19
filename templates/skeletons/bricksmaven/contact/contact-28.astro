@@ -1,0 +1,86 @@
+---
+/**
+ * bm-contact-28 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-28.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-contact-28__container">
+    <div class="bm-contact-28__content">
+      <div class="bm-contact-28__top">
+        <h1 class="bm-contact-28__heading">Need Answers? Get in Touch. We’ll Respond Shortly</h1>
+        <p class="accent-h">Accent heading</p>
+      </div>
+      <p class="bm-contact-28__text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+      <div class="bm-contact-28__grid">
+        {items.map((it) => (
+          <div class="bm-contact-28-card">
+            <p class="bm-contact-28-card__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-contact-28__media">
+      <figure class="bm-contact-28__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-28__container {
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-contact-28__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-28__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .bm-contact-28__grid {
+    display: grid;
+    gap: calc(var(--space-m) * 2);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-contact-28-card__heading-text {
+    font-weight: 700;
+  }
+
+  .bm-contact-28-social-ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-contact-28__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

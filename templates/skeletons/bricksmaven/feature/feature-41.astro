@@ -1,0 +1,171 @@
+---
+/**
+ * bm-feature-41 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-41.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-41__container">
+    <div class="intro intro--split">
+      <div class="intro__left-column">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__accent-heading">Tagline</p>
+      </div>
+      <div class="intro__right-column">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="feature-41-list list--none">
+      {items.map((it) => (
+        <div class="feature-41-items">
+          <div class="feature-41-items__inner">
+            <div class="feature-41-items__content">
+              <div class="feature-41-items__top">
+                <h2 class="feature-41-items__heading clickable-parent">{it.title}</h2>
+                <p class="feature-41-items__accent-heading">{it.text}</p>
+                <p class="feature-41-items__text">{it.text}</p>
+              </div>
+              <a class="btn--black wf-cta-button" href={it.href}>{it.label}</a>
+            </div>
+            <div class="feature-41-items__media">
+              <figure class="feature-41-items__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-41__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--split {
+    display: grid;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .feature-41-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .feature-41-items__inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .feature-41-items__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    justify-content: space-between;
+  }
+
+  .feature-41-items__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .feature-41-items__accent-heading {
+    font-size: var(--fs-0);
+  }
+
+  .feature-41-items__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .feature-41-items {
+  	perspective: 1000px;
+  }
+  
+  .feature-41-items:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  @media (min-width:991px) {
+  
+  
+    .feature-41-items:hover .feature-41-items__inner, .feature-41-items:focus-within .feature-41-items__inner {
+  	transform: rotateY(180deg);
+  }
+  
+  }
+
+  /* bm-custom */
+  .feature-41-items__inner {
+  	transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  /* bm-custom */
+  .feature-41-items__content {
+  	position:absolute;
+    inset:0;
+    padding: var(--space-m);
+    background: var(--bg-canvas);
+    border: .1rem solid var(--color-line-default);
+    transition: .5s ease;
+    backface-visibility: hidden;
+    height:100%;
+  }
+
+  /* bm-custom */
+  .feature-41-items__media {
+  	position:absolute;
+    inset:0;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+  }
+}
+</style>

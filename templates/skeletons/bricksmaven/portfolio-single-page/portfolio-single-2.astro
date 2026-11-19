@@ -1,0 +1,482 @@
+---
+/**
+ * bm-portfolio-single-2 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-single-2.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-single-2__container">
+    <div class="bm-portfolio-single-2__intro">
+      <h1 class="bm-portfolio-single-2__intro-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <div class="bm-portfolio-single-2__intro-footer">
+        <div class="bm-portfolio-single-meta-data-1 bm-portfolio-single-meta-data-1--inline">
+          {items.map((it) => (
+            <div class="bm-portfolio-single-meta-data-item-1">
+              <p class="bm-portfolio-single-meta-data-item-1__type">{it.text}</p>
+              <p class="bm-portfolio-single-meta-data-item-1__label">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div class="bm-live-website-btn">
+          <div class="bm-live-website-btn__dot"></div>
+          <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
+        </div>
+      </div>
+    </div>
+    <div class="bm-1col-media">
+      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-portfolio-single-2__overview">
+      <h2 class="bm-portfolio-single-2__heading">Overview</h2>
+      <p class="bm-portfolio-single-2__overview-text">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+      <p class="bm-portfolio-single-2__text">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+    </div>
+    <div class="bm-2col-media list--none">
+      <div class="bm-2col-media-item">
+        <figure class="bm-2col-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-2col-media-item">
+        <figure class="bm-2col-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div class="bm-portfolio-single__case-section-1">
+      <div class="bm-portfolio-single-intro-inline">
+        <h2 class="bm-portfolio-single-intro-inline__heading">Solution</h2>
+        <p class="bm-portfolio-single-intro-inline__text">Based on the research, PixelPundits developed a multi-pronged digital marketing strategy:</p>
+      </div>
+      <div class="bm-portfolio-single-solution-list list--none">
+        {items.map((it) => (
+          <div class="bm-portfolio-single-solution-item">
+            <h2 class="bm-portfolio-single-solution-item__heading">{it.title}</h2>
+            <p class="bm-portfolio-single-solution-item__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="bm-span2-media list--none">
+      {items.map((it) => (
+        <div class="bm-span2-media-item">
+          <figure class="bm-span2-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div class="bm-portfolio-single-testimonial-2">
+      <p class="bm-portfolio-single-testimonial-2__review">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <p class="bm-portfolio-single-testimonial-1__name">John Smith</p>
+    </div>
+    <div class="bm-1col-media">
+      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-portfolio-single__case-section-2">
+      <div class="bm-portfolio-single-2-intro-stacked">
+        <h2 class="bm-portfolio-single-2-intro-stacked__heading">Results</h2>
+        <p class="bm-portfolio-single-2-intro-stacked__text">Based on the research, PixelPundits developed a multi-pronged digital marketing strategy:</p>
+      </div>
+      <div class="bm-portfolio-single-result-list list--none">
+        {items.map((it) => (
+          <div class="bm-portfolio-single-result-item">
+            <h2 class="bm-portfolio-single-result-item__heading">{it.title}</h2>
+            <p class="bm-portfolio-single-result-item__percentage">{it.text}</p>
+            <p class="bm-portfolio-single-result-item__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <div class="bm-portfolio-single-2__conclusion">
+        <p class="bm-portfolio-single-2__conclusion-text">By understanding EcoEssentials' unique challenges and applying a data-driven, holistic digital marketing approach, PixelPundits successfully transformed a struggling online retailer into a thriving e-commerce success story.</p>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-2__cta-container">
+    <div class="bm-contact-widget-3">
+      <h2 class="bm-contact-widget-3__heading">Ready to start a project?</h2>
+      <div class="bm-contact-widget-3__manager-data">
+        <div class="bm-contact-widget-3__media">
+          <figure class="bm-contact-widget-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="bm-contact-widget-3__data">
+          <div class="bm-contact-widget-3__top">
+            <p class="bm-contact-widget-3__name">Alan Smith</p>
+            <p class="bm-contact-widget-3__title">Account manager</p>
+          </div>
+          <div class="bm-contact-widget-link">
+            <div class="bm-contact-widget-link__icon-wrapper">
+              <span class="bm-contact-widget-link__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <p class="bm-contact-widget-link__data clickable-parent">+000 123 456 789</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bm-portfolio-single-1__footer-container">
+    <h2 class="bm-portfolio-single-1__heading">Related case studies</h2>
+    <div class="bm-portfolio-related-list list--none">
+      <div class="bm-portfolio-related-card">
+        <div class="bm-portfolio-related-card__content">
+          <h2 class="bm-portfolio-related-card__heading">Firefly Productions</h2>
+          <p class="bm-portfolio-related-card__accent=heading">Category</p>
+        </div>
+        <figure class="bm-portfolio-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-portfolio-related-card">
+        <div class="bm-portfolio-related-card__content">
+          <h2 class="bm-portfolio-related-card__heading">Firefly Productions</h2>
+          <p class="bm-portfolio-related-card__accent=heading">Category</p>
+        </div>
+        <figure class="bm-portfolio-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-single-2 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-2__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-2__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-2__intro-heading {
+    font-size: calc(var(--fs-4) * 2);
+  }
+
+  .bm-portfolio-single-2__intro-footer {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-portfolio-single-meta-data-1 {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-single-meta-data-1--inline {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) * 2);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-meta-data-item-1__label {
+    font-weight: 700;
+  }
+
+  .bm-live-website-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+    background: var(--action-primary);
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    position: relative;
+  }
+
+  .bm-live-website-btn__dot {
+    width: 8;
+    height: 8;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-1col-media__image {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+
+  .bm-portfolio-single-2__overview {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+    align-self: center;
+  }
+
+  .bm-portfolio-single-2__overview-text {
+    font-size: var(--fs-2);
+  }
+
+  .bm-2col-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-2col-media-item__image {
+    object-fit: cover;
+  }
+
+  .bm-portfolio-single__case-section-1 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-intro-inline {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-portfolio-single-solution-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-single-solution-item {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 2);
+    background: var(--bg-subtle);
+  }
+
+  .bm-span2-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-span2-media-item__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-portfolio-single-testimonial-2 {
+    padding: var(--section-space-xxl) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-testimonial-2__review {
+    font-size: var(--fs-3);
+    line-height: 1.4;
+    position: relative;
+  }
+
+  .bm-portfolio-single-testimonial-1__name {
+    font-weight: 700;
+    font-size: var(--fs-2);
+  }
+
+  .bm-portfolio-single__case-section-2 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-2-intro-stacked {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-single-result-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-portfolio-single-result-item {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 3);
+    border-top: 1 solid;
+    border-right: 1 solid;
+    border-bottom: 1 solid;
+    border-left: 1 solid;
+  }
+
+  .bm-portfolio-single-result-item__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-portfolio-single-result-item__percentage {
+    font-size: calc(var(--fs-4) * 2);
+    font-weight: 700;
+  }
+
+  .bm-portfolio-single-2__conclusion-text {
+    font-size: var(--fs-2);
+  }
+
+  .bm-portfolio-single-2__cta-container {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget-3 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-contact-widget-3__heading {
+    font-size: calc(var(--fs-4) * 2);
+    width: 100%;
+  }
+
+  .bm-contact-widget-3__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget-3__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-3__image {
+    object-fit: cover;
+    width: 128;
+    height: 128;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-contact-widget-3__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-3__name {
+    font-weight: 700;
+  }
+
+  .bm-contact-widget-link {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+    background: var(--color-ink-secondary);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    position: relative;
+  }
+
+  .bm-contact-widget-link__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    width: 32;
+    height: 32;
+  }
+
+  .bm-portfolio-single-1__footer-container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-related-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-related-card {
+    position: relative;
+    justify-content: flex-end;
+  }
+
+  .bm-portfolio-related-card__content {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 2);
+    display: flex;
+  }
+
+  .bm-portfolio-related-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__dot {
+    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+  	--animation-duration-up: 1.2s;
+    --shadow-light: var(--shadow-card);
+    --shadow-heavy: var(--shadow-card);
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+  }
+  
+  /* Define the animation for the first child */
+  .bm-live-website-btn__dot{
+    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes glow {
+    0% {
+      box-shadow: var(--shadow-card);
+    }
+    100% {
+      box-shadow: var(--shadow-card);
+    }
+  }
+
+  /* bm-custom */
+  .bm-live-website-btn__text {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }
+
+  /* bm-custom */
+  @media (min-width:767px) {
+  
+  .bm-span2-media-item:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+    
+  }
+
+  /* bm-custom */
+  .bm-portfolio-single-testimonial-2__review::before {
+    content: ' " ';
+    position: absolute;
+    top: calc(-1 * (var(--space-xl) * 1.3));
+    font-size: calc(var(--fs-4) * 3);
+    line-height: 1;
+    left: calc(-1 * (var(--space-xs) / 1.4));
+    
+  }
+
+  /* bm-custom */
+  .bm-contact-widget-link__data {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }
+
+  /* bm-custom */
+  .bm-portfolio-related-card {
+    aspect-ratio: 4/3;
+  }
+}
+</style>

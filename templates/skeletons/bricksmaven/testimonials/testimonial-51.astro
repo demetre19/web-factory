@@ -1,0 +1,95 @@
+---
+/**
+ * bm-testimonial-51 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-51.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-51__container">
+    <div class="bm-testimonial-51-testimonial-card">
+      <div class="bm-testimonial-51-testimonial-card__testimonial-content">
+        <p class="bm-testimonial-51-testimonial-card__testimonial-review">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="bm-testimonial-51-testimonial-card__testimonial-link link--white" href="#">Read the case</a>
+      </div>
+      <div class="bm-testimonial-51-testimonial-card__testimonial-media">
+        <figure class="bm-testimonial-51-testimonial-card__testimonial-image"><img src="/media/placeholder.svg" alt="Testimonial Image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-testimonial-51-testimonial-card__client-name">
+          <p class="bm-testimonial-51-testimonial-card__name">John Smith Frank</p>
+          <p class="bm-testimonial-51-testimonial-card__title">CEO, Wayward</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-51-testimonial-card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+    padding: var(--space-l) var(--space-xl) var(--space-l) var(--space-xl);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-testimonial-51-testimonial-card__testimonial-content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-51-testimonial-card__testimonial-review {
+    font-size: var(--fs-3);
+  }
+
+  .bm-testimonial-51-testimonial-card__testimonial-link {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-51-testimonial-card__testimonial-media {
+    row-gap: var(--flow-spacing);
+    width: auto;
+    align-items: center;
+  }
+
+  .bm-testimonial-51-testimonial-card__testimonial-image {
+    object-fit: cover;
+    width: 168px;
+    height: 168px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-testimonial-51-testimonial-card__client-name {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bm-testimonial-51-testimonial-card__name {
+    font-weight: 700;
+  }
+
+  .bm-testimonial-51-testimonial-card__title {
+    font-size: var(--fs-0);
+  }
+}
+</style>

@@ -1,0 +1,142 @@
+---
+/**
+ * bm-testimonial-52 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-52.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-52__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-testimonial-52__slider-nested">
+      {items.map((it) => (
+        <div class="bm-testimonial-52-card">
+          <div class="bm-testimonial-52-card__content">
+            <h2 class="bm-testimonial-52-card__heading">{it.title}</h2>
+            <svg class="bm-testimonial-52-card__brand"></svg>
+            <p class="bm-testimonial-52-card__text">{it.text}</p>
+            <a class="bm-testimonial-52-card__link" href="#">{it.text}</a>
+          </div>
+          <div class="bm-testimonial-52-card__media">
+            <figure class="bm-testimonial-52-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-52 {
+    overflow: clip;
+    padding: 0 0 var(--section-space-xl) 0;
+    background: var(--fs-0);
+  }
+
+  .bm-testimonial-52__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-testimonial-52-card {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    overflow: clip;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-testimonial-52-card__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: center;
+    background: var(--bg-canvas);
+  }
+
+  .bm-testimonial-52-card__heading {
+    font-size: var(--fs-3);
+  }
+
+  .bm-testimonial-52-card__image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* bm-custom */
+  .bm-testimonial-52__slider-nested {
+    --icon-dimension: 32px; /* Change the icon dimensions*/
+    --icon-size: 14px; /* Change the icon size*/
+    --icon-opacity: 0.5;  /* Change the icon opacity*/
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__track {
+    overflow:  visible; /* Expose other slides*/
+  }
+  
+  .bm-testimonial-52__slider-nested .is-active {
+    box-shadow: var(--shadow-card); /* Active card gets a box shadow */
+  }
+  
+  .bm-testimonial-52__slider-nested .bm-testimonial-52-card:not(.is-active) {
+    opacity: 0.4; /* non-active card gets a lower opacity */
+  }
+  
+  /* ARROWS */
+  .bm-testimonial-52__slider-nested .splide__arrow--next {
+    left: 0;
+    transition: 0.5s ease;
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrow--prev {
+    left: calc(-1 * var(--space-xl));
+    transition: 0.5s ease;
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows {
+      position: absolute;
+      inset-block-end: calc(-1 * var(--space-xl));
+    	inset-inline-end: var(--space-m);  	
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows button:hover {
+      background-color: var(--fs-0);
+    
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows button:hover svg {
+      fill: var(--fs-0);
+    
+  }
+}
+</style>

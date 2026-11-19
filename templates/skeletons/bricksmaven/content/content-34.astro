@@ -1,0 +1,137 @@
+---
+/**
+ * bm-content-34 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-34.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-34__container">
+    <div class="content-34__content">
+      <h2 class="content-34__heading">This is a long headline to capture the users attention</h2>
+      <p class="content-34__accent-heading">Accent heading</p>
+      <p class="content-34__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+      <div class="bm-list">
+        {items.map((it) => (
+          <div class="bm-list__item">
+            <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
+            <p class="bm-list__item-text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <a class="content-34__btn btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="content-34__media">
+      <figure class="content-34__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-34 {
+    overflow: hidden;
+  }
+
+  .content-34__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .content-34__content {
+    padding: var(--section-space-xxl) var(--space-xl) var(--section-space-xxl) 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    height: 76rem;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-list__item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-list__item-icon {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .content-34__media {
+    margin: var(--section-space-xxl) 0 0 0;
+  }
+
+  .content-34__image {
+    object-fit: cover;
+    width: 50vw;
+    border-radius: 0 0 0 var(--r-card);
+    overflow: hidden;
+    height: 76rem;
+  }
+
+  /* bm-custom */
+  .content-34__content::before {
+  	content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    width:50vw;
+    height:100%;
+    background-color: var(--text-secondary);
+    border-top-right-radius: var(--r-card);
+    z-index:-1;
+  }
+  
+  @media (max-width:767px) {
+  
+    .content-34__content {
+  	padding-inline-start: var(--section-space-xxl);
+  }
+  
+  .content-34__content::before {
+  	content:'';
+    position:absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left: 50%;
+    width:100vw;
+    height:100%;
+    margin-inline-start: -50vw;
+    border-top-right-radius: unset;
+    z-index:-1;
+  }
+  
+  }
+}
+</style>

@@ -1,0 +1,73 @@
+---
+/**
+ * bm-content-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-10-container">
+    <div class="content-10__content">
+      <h2 class="content-10__heading">What is Lorem Ipsum?</h2>
+      <p class="content-10__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="content-10__media">
+      <figure class="content-10__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-10 {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .content-10-container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    position: relative;
+  }
+
+  .content-10__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--space-l);
+    justify-content: center;
+    background: color-mix(in srgb, var(--bg-subtle) 20%, transparent);
+    margin: var(--section-space-xxl) 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-10__image {
+    object-fit: cover;
+    width: 100%;
+    height: 500px;
+  }
+}
+</style>

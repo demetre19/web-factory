@@ -1,0 +1,115 @@
+---
+/**
+ * bm-shop-hero-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (shop-hero-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-shop-hero-6__container">
+    <div class="bm-shop-hero-6__content">
+      <div class="bm-shop-hero-6__intro">
+        <h1 class="bm-shop-hero-6__heading">Long headline to turn your visitors into customers</h1>
+        <p class="accent-h">Accent heading</p>
+        <p class="bm-shop-hero-6__subheading">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+      </div>
+      <a class="btn--white bm-shop-hero-6__btn wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-shop-hero-6__slider">
+      {items.map((it) => (
+        <div class="bm-shop-hero-6__slide">
+          <figure class="bm-shop-hero-6__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div class="bm-shop-hero-6__overlay"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-shop-hero-6 {
+    position: relative;
+    height: var(--acss-section-height);
+  }
+
+  .bm-shop-hero-6__container {
+    height: 100%;
+    justify-content: center;
+  }
+
+  .bm-shop-hero-6__content {
+    position: relative;
+    z-index: 1;
+    align-items: center;
+    display: flex;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-shop-hero-6__intro {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    width: var(--content-width);
+  }
+
+  .bm-shop-hero-6__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .bm-shop-hero-6__slider {
+    height: 100%;
+  }
+
+  .bm-shop-hero-6__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bm-shop-hero-6__overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  /* bm-custom */
+  .bm-shop-hero-6 {
+    --section-height: 820px;
+  }
+  
+  @media (max-width:767px) {
+    .bm-shop-hero-6 {
+    --section-height: 620px;
+  }
+  
+  }
+
+  /* bm-custom */
+  .bm-shop-hero-6__slider {
+    position: absolute !important;
+    inset: 0;
+   	z-index: -1;
+  }
+}
+</style>

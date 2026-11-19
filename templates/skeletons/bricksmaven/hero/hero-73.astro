@@ -1,0 +1,78 @@
+---
+/**
+ * bm-hero-73 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-73.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-73__container">
+    <div class="bm-hero-73__content">
+      <div class="bm-hero-73__top">
+        <h1 class="bm-hero-73__heading">Long headline to turn your visitors into customers</h1>
+        <p class="accent-h">Accent heading</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div>
+      <div class="cta-combo">
+        <a class="btn--primary" href="#">Call to action</a>
+        <a class="btn--primary btn--outline" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="bm-hero-73-media list--none">
+      {items.map((it) => (
+        <div class="bm-hero-73-list">
+          <figure class="bm-hero-73-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-73__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-hero-73__content {
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+  }
+
+  .bm-hero-73__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-73-media {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+}
+</style>

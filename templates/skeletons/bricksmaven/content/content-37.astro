@@ -1,0 +1,83 @@
+---
+/**
+ * bm-content-37 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-37.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-37__container">
+    <div class="content-37__content">
+      <h2 class="content-37__heading">Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
+      <p class="content-37__text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
+      <a class="content-37__cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="content-37__media">
+      <figure class="content-37__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-37 {
+    padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
+    overflow: hidden;
+    background: var(--bg-canvas);
+  }
+
+  .content-37__container {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: calc(var(--space-m) * 2);
+    padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
+    position: relative;
+  }
+
+  .content-37__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .content-37__media {
+    position: relative;
+  }
+
+  .content-37__image {
+    object-fit: cover;
+    position: absolute;
+    bottom: calc(-1 * (var(--section-space-xxl) * 1.4));
+    left: calc(-1 * (var(--space-m) * 1.2));
+    height: 46rem;
+  }
+
+  /* bm-custom */
+  .content-37__container::before {
+  	content:'';
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    background-color: var(--bg-subtle);
+    height: 100%;
+    width:calc(50vw + ((var(--content-width) / 12) * 6));
+    z-index:-1;
+  }
+}
+</style>

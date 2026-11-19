@@ -1,0 +1,188 @@
+---
+/**
+ * bm-login-3 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (login-3.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-login-3__header">
+    <div class="bm-login-3__brand">
+      <svg class="bm-login-3__logo"></svg>
+    </div>
+    <div class="bm-login-3__link">
+      <a class="bm-login-3__text-link" href="#">Back to homepage</a>
+    </div>
+  </div>
+  <div class="bm-login-3__container">
+    <div class="bm-login-3__inner list--none">
+      <div class="bm-login-3__form-wrapper bm-login-3__login">
+        <div class="login-form-wrapper login-form-wrapper--alt">
+          <h1 class="login-3__heading">Login</h1>
+          <form class="login-form" novalidate>
+          </form>
+          <div class="login-footer list--none">
+            <div class="login-footer__li">
+              <a class="login-footer__link" href="#">Back to home</a>
+            </div>
+            <div class="login-footer__li">
+              <a class="login-footer__link" href="#">Lost your password?</a>
+            </div>
+          </div>
+        </div>
+        <div class="login-1__logged-in-heading-wrapper">
+          <h1 class="login-3__heading">You are logged in.</h1>
+          <div class="login-footer list--none">
+            <div class="login-footer__li">
+              <a class="login-footer__link" href="#">Back to home</a>
+            </div>
+            <div class="login-footer__li">
+              <a class="login-footer__link" href="#">Lost your password?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bm-login-3__register bm-login-3__form-wrapper">
+        <h1 class="login-3__heading">Register</h1>
+        <div class="login-form-wrapper login-form-wrapper--alt">
+          <form class="login-form" novalidate>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="bm-login-3__footer">
+      <p class="bm-login-3__footer-text">{site_title} © {current_date:Y}</p>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-login-3 {
+    height: 100vh;
+    position: relative;
+  }
+
+  .bm-login-3__header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    border-bottom: 1px solid var(--color-line-default);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
+    align-items: center;
+  }
+
+  .bm-login-3__text-link {
+    font-size: var(--fs-0);
+  }
+
+  .bm-login-3__container {
+    justify-content: center;
+    height: 100%;
+  }
+
+  .bm-login-3__inner {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-login-3__form-wrapper {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--color-line-default);
+    border-right: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-left: 1px solid var(--color-line-default);
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-form-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-form-wrapper--alt {
+    width: var(--measure);
+  }
+
+  .login-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .login-footer__link {
+    font-size: var(--fs-0);
+  }
+
+  .login-1__logged-in-heading-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-login-3__footer {
+    display: flex;
+    align-self: center;
+    position: absolute;
+    bottom: var(--space-m);
+  }
+
+  .bm-login-3__footer-text {
+    font-size: var(--fs-0);
+  }
+
+  /* bm-custom */
+  .bm-login-3__inner:hover .bm-login-3__form-wrapper:not(:hover){
+  	opacity: 0.33;
+  }
+
+  /* bm-custom */
+  .bm-login-3__form-wrapper {
+  	transition: 1s ease;
+  }
+  
+  .bm-login-3__form-wrapper:hover {
+  	box-shadow: var(--shadow-card);
+  }
+
+  /* bm-custom */
+  .login-form .form-group ul li {
+  	display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .login-form .form-group span {
+  	display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+  
+  .login-form .form-group span a, .login-form .form-group ul li label {
+  	font-size: var(--fs-0);
+  }
+  
+  .login-form .form-group:nth-child(4) {
+      align-items: end;
+  }
+}
+</style>

@@ -1,0 +1,119 @@
+---
+/**
+ * bm-item-xuupmg — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-xuupmg.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-8-container">
+    <div class="contact-8-intro">
+      <p class="contact-8-intro__accent-heading">We are here for you!</p>
+      <h2 class="contact-8-intro__heading">Get in touch</h2>
+      <p class="contact-8-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="contact-8-grid-ul list--none">
+      <div class="contact-8-card">
+        <div class="contact-8-card__top-row">
+          <span class="contact-8-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="contact-8-card__label">Phone</p>
+        </div>
+        <p class="contact-8-card__information">Mon-Fri from 8am to 5pm.</p>
+        <p class="contact-8-card__link">+32 465 45 37 15</p>
+      </div>
+      <div class="contact-8-media">
+        <figure class="contact-8-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="contact-8-card flex--col pad--s bg--primary-light-trans-40 gap--s">
+        <div class="contact-8-card__top-row">
+          <span class="contact-8-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="contact-8-card__label">Email</p>
+        </div>
+        <p class="contact-8-card__information">Our friendly team is here to help.</p>
+        <p class="contact-8-card__link">hi@bricksmaven.com</p>
+      </div>
+      <div class="contact-8-media">
+        <figure class="contact-8-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="contact-8-card">
+        <div class="contact-8-card__top-row">
+          <span class="contact-8-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="contact-8-card__label">Chat to support</p>
+        </div>
+        <p class="contact-8-card__information">Lorem Ipsum is not simply random text.</p>
+        <p class="contact-8-card__link">support@bricksmaven.com</p>
+      </div>
+      <div class="contact-8-media">
+        <figure class="contact-8-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-8-container {
+    display: flex;
+    row-gap: var(--space-l);
+  }
+
+  .contact-8-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    width: 100%;
+  }
+
+  .contact-8-grid-ul {
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    gap: var(--space-s);
+    width: 100%;
+  }
+
+  .contact-8-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--space-s);
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+  }
+
+  .contact-8-card__top-row {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-8-card__label {
+    font-weight: 700;
+  }
+
+  .contact-8-card__information {
+    margin: 0 0 0 0;
+  }
+
+  .contact-8-media__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+</style>

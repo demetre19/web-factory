@@ -1,0 +1,128 @@
+---
+/**
+ * bm-content-33 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-33.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="content-33-container">
+    <div class="content-33__media">
+      <figure class="content-33__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+  </div>
+  <div class="content-3-container--alt">
+    <div class="content-33__content">
+      <h2 class="content-33__heading">Long or mediun headline to encourage your visitor to read further</h2>
+      <p class="accent-h">Accent heading</p>
+      <p class="content-33__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+    </div>
+    <div class="content-33__data">
+      <div class="content-33-data-list list--none">
+        <div class="content-33-data-item">
+          <div class="content-33-data-item__number-wrapper">
+            <p class="content-33-data-item__number">98</p>
+            <p class="content-33-data-item__suffix">%</p>
+          </div>
+          <span class="content-33-data-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="content-33-data-item__label">Positive Feedback</p>
+        </div>
+        <div class="content-33-data-item">
+          <div class="content-33-data-item__number-wrapper">
+            <p class="content-33-data-item__number">15</p>
+            <p class="content-33-data-item__suffix">+</p>
+          </div>
+          <span class="content-33-data-item__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="content-33-data-item__label">Years of Experience</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .content-33 {
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .content-33-container {
+    position: relative;
+  }
+
+  .content-33__image {
+    object-fit: cover;
+    position: relative;
+    width: calc(50vw + (var(--content-width) / 2));
+    height: 45rem;
+  }
+
+  .content-3-container--alt {
+    position: relative;
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 3);
+    z-index: 1;
+    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
+  }
+
+  .content-33__content {
+    padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
+    row-gap: var(--flow-spacing);
+    background: var(--bg-canvas);
+  }
+
+  .content-33__heading {
+    font-size: calc(var(--fs-3) * 1.4);
+  }
+
+  .content-33__data {
+    justify-content: flex-end;
+  }
+
+  .content-33-data-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .content-33-data-item {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 4);
+    background: var(--bg-subtle);
+  }
+
+  .content-33-data-item__number-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .content-33-data-item__number {
+    font-size: var(--fs-4);
+    font-weight: 700;
+  }
+
+  .content-33-data-item__suffix {
+    font-size: var(--fs-2);
+  }
+}
+</style>

@@ -1,0 +1,222 @@
+---
+/**
+ * bm-footer-20 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-20.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-footer-20__container">
+    <div class="bm-footer-20__top">
+      <div class="bm-footer-20__brand">
+        <img class="bm-footer-20__logo"></img>
+      </div>
+      <div class="bm-footer-20__form-wrapper">
+        <form class="footer-newsletter__form" novalidate>
+        </form>
+      </div>
+    </div>
+    <div class="bm-footer-20__content">
+      <div class="bm-footer-20__left">
+        <div class="bm-footer-20__left-top">
+          <a class="bm-footer-20__link" href="#">(000) 345 4590</a>
+          <p class="bm-footer-20__address">2345 Eran Mill, Boston WA 04292, United States</p>
+          <p class="bm-footer-20__text">Monday to Friday: 10am - 9pm Saturday to Sunday: 9am - 10pm</p>
+        </div>
+        <div class="bm-footer-20__link-wrapper">
+          <a class="bm-footer-20__link" href="#">hello@clienturl.com</a>
+          <p class="bm-footer-20__text">Write to Our Corporate Mail.</p>
+        </div>
+        <div class="bm-footer-20__social-wrapper">
+          <h2 class="bm-footer-20__heading">Get Social</h2>
+          <div class="bm-social-share list--none bm-social-share--left">
+            {items.map((it) => (
+              <div class="bm-social-share__icon-wrapper">
+                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div class="bm-footer-20__nav-wrapper">
+        <div class="footer-nav-wrapper bm-footer-nav-wrapper--grid-2">
+          <div class="footer-nav-column">
+            <h3 class="footer-nav-heading">Shop By Collection</h3>
+            <div class="footer-menu list--none">
+              {items.map((it) => (
+                <div class="footer-menu__link">
+                  <a class="footer-menu__link-text" href="#">{it.text}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="footer-nav-column">
+            <h3 class="footer-nav-heading">Information</h3>
+            <div class="footer-menu list--none">
+              {items.map((it) => (
+                <div class="footer-menu__link">
+                  <a class="footer-menu__link-text" href="#">{it.text}</a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-footer-20__footer">
+      <div class="bm-footer-20__copyright-wrapper">
+        <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+      </div>
+      <div class="bm-footer-20__payment-options-wrapper">
+        <div class="bm-footer-payment-options list--none">
+          {items.map((it) => (
+            <div class="bm-footer-option">
+              <figure class="bm-footer-option__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-footer-20 {
+    background: var(--bg-subtle);
+  }
+
+  .bm-footer-20__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-footer-20__top {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-footer-20__content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-footer-20__left {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-footer-20__left-top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-footer-20__link {
+    font-size: var(--fs-3);
+    font-weight: 700;
+  }
+
+  .bm-footer-20__social-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 6);
+    gap: var(--space-m);
+  }
+
+  .bm-footer-nav-wrapper--grid-2 {
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-heading {
+    font-size: var(--fs-1);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    font-size: var(--fs-0);
+    font-weight: 700;
+    padding: .4rem .4rem .4rem .4rem;
+    background: var(--bg-subtle);
+    margin: 0 0 0 1rem;
+  }
+
+  .bm-footer-20__footer {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .footer-copyright {
+    font-size: var(--fs-0);
+  }
+
+  .bm-footer-20__payment-options-wrapper {
+    align-items: flex-end;
+  }
+
+  .bm-footer-payment-options {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    flex-direction: row;
+    width: auto;
+  }
+
+  .bm-footer-option__image {
+    object-fit: contain;
+    width: 32;
+    height: 32;
+  }
+
+  /* bm-custom */
+  .footer-newsletter__form {
+  	flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .footer-newsletter__form [type="submit"] {
+  	height: 100%;
+  }
+}
+</style>

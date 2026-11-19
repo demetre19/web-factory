@@ -1,0 +1,204 @@
+---
+/**
+ * bm-blog-archive-9 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-archive-9.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-archive-9-container">
+    <div class="blog-archive-intro">
+      <h1 class="blog-archive-intro__heading">Fresh from the blog</h1>
+      <p class="accent-h">Articles</p>
+      <p class="blog-archive-intro__text">Sapiente fugit aspernatur quam Ipsam debitis maxime ut no</p>
+      <div class="blog-archive-intro__search"></div>
+    </div>
+    <div class="blog-archive-9-body">
+      <div class="blog-archive-9-wrapper list--none">
+        <div class="blog-archive-9-card">
+          <div class="blog-archive-9-card__meta">
+            <p class="blog-archive-9-card__term">{post_terms_category}</p>
+            <h2 class="blog-archive-9-card__title">{post_title}</h2>
+            <div class="blog-archive-9-card__excerpt"></div>
+            <a class="blog-archive-9-card__read pad--none" href={cta.href}>{cta.label}</a>
+          </div>
+          <div class="blog-archive-9-card__media">
+            <figure class="blog-archive-9-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      </div>
+      <div class="blog-archive-9-pagination"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-archive-9-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    align-self: center;
+    align-items: center;
+  }
+
+  .blog-archive-9-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-9-wrapper {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .blog-archive-9-card {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .blog-archive-9-card__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-9-card__term {
+    padding: .4rem .8rem .4rem .8rem;
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    font-size: var(--fs-0);
+  }
+
+  .blog-archive-9-card__media {
+    width: 100%;
+    height: 100%;
+  }
+
+  .blog-archive-9-card__thumb {
+    height: 30rem;
+    width: 30rem;
+    object-fit: cover;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: hidden;
+  }
+
+  /* bm-custom */
+  .blog-archive-intro__search .bricks-search-form {
+  	gap: 1.5rem;
+  }
+  .blog-archive-intro__search [type="search"] {
+  	width: 70% !important;
+  }
+  .blog-archive-intro__search [type="submit"] {
+  	background-color: var(--action-primary);
+    color: var(--bg-canvas);
+    width: 30%;
+    padding: 10px 15px;
+    text-align: center;
+    height: auto;
+    position: static!important;
+    clip-path: unset !important;
+  }
+  .blog-archive-intro__search [type="submit"]:focus {
+  	border-radius: 0;
+    box-shadow: none;
+    font-size: 100%;
+    font-weight: 400;
+    line-height: 100%;
+    outline: none;
+    padding: 10px;
+    text-align: center;
+    clip-path: unset;
+  }
+  .blog-archive-intro__search [type="submit"] span {
+  	height: auto;
+    position: static!important;
+    width: auto;
+  }
+
+  /* bm-custom */
+  .blog-archive-9-wrapper {
+  	display: grid;
+  	grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-m);
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(1) {
+  	grid-area: 1 / 1 / 4 / 2;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-rows: repeat(1, minmax(0, 1fr));
+    align-items: flex-start;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(1) .blog-archive-9-card__thumb {
+  	height: 100%;
+    width: 100%;
+    aspect-ratio: 4/6 !important;
+  
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(1) .blog-archive-9-card__title {
+  	font-size: calc( var(--fs-4) + .2rem );
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(1) .blog-archive-9-card__read {
+  	padding: 1.2rem 2.1rem !important;
+    color: var(--bg-canvas);
+    background-color: var(--action-primary);
+    gap: 0;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(1) .blog-archive-9-card__read i::before {
+  	display: none;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(2) {
+  	grid-area: 1 / 2 / 2 / 3;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(3) {
+  	grid-area: 2 / 2 / 3 / 3;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(4) {
+  	grid-area: 3 / 2 / 4 / 3;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(5) {
+  	grid-area: 4 / 1 / 5 / 2;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(6) {
+  	grid-area: 4 / 2 / 5 / 3;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(7) {
+  	grid-area: 5 / 1 / 6 / 2;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:nth-child(8) {
+  	grid-area: 5 / 2 / 6 / 3;
+  }
+  .blog-archive-9-wrapper .blog-archive-9-card:not(:first-child) .blog-archive-9-card__excerpt {
+  	display: none;
+  }
+
+  /* bm-custom */
+  .blog-archive-9-card__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

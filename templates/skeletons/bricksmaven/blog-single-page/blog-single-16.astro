@@ -1,0 +1,267 @@
+---
+/**
+ * bm-blog-single-16 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-single-16.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-blog-single-16__container">
+    <div class="bm-blog-single-16__intro">
+      <div class="bm-blog-single-16__intro-content">
+        <div class="bm-blog-single-16__post-title"></div>
+        <div class="bm-blog-single-16__post-excerpt"></div>
+        <div class="bm-blog-single-16__aside">
+          <div class="bm-blog-single-14__meta-column">
+            <div class="blog-single-2__meta blog-single-head__meta--column">
+              {items.map((it) => (
+                <div class="blog-single-head__details blog-single-head__details--coloumn">
+                  <div class="blog-single-2__author">
+                    <div class="blog-single-head__media">
+                      <figure class="blog-single-2__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    </div>
+                    <div class="blog-single-head__data">
+                      <p class="blog-single-2__name">{it.text}</p>
+                      <p class="blog-single-2__position">{it.text}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div class="blog-single-head__details blog-single-head__details--coloumn blog-single-head__details--sticky">
+                <p class="blog-single-head__label">Share</p>
+                <div class="bm-social-share bm-social-share--left list--none">
+                  {items.map((it) => (
+                    <div class="bm-social-share__icon-wrapper">
+                      <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-blog-single-16__content">
+      <figure class="bm-blog-single-16__feature-image"><img src="/media/placeholder.svg" alt="Feature image" loading="lazy" width="900" height="600" /></figure>
+      <div class="bm-blog-single-16__post-content"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-blog-single-16 {
+    padding: 0 0 0 0;
+  }
+
+  .bm-blog-single-16__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 12);
+  }
+
+  .bm-blog-single-16__intro {
+    padding: var(--section-space-m) var(--gutter) var(--section-space-m) var(--gutter);
+    position: relative;
+  }
+
+  .bm-blog-single-16__intro-content {
+    position: sticky;
+    top: var(--space-s);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-blog-single-16__post-title {
+    font-size: calc(var(--fs-4) * 1.2);
+  }
+
+  .bm-blog-single-16__post-excerpt {
+    font-size: var(--fs-2);
+  }
+
+  .bm-blog-single-14__meta-column {
+    justify-content: flex-end;
+  }
+
+  .blog-single-2__meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    text-align: center;
+  }
+
+  .blog-single-head__meta--column {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 2);
+    justify-content: flex-start;
+  }
+
+  .blog-single-head__details {
+    display: flex;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .blog-single-head__details--coloumn {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) / 1/6);
+  }
+
+  .blog-single-2__author {
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    padding: 0 var(--space-m) 0 0;
+    border-right: .1rem solid var(--color-line-default);
+  }
+
+  .blog-single-2__photo {
+    width: 4.4rem;
+    height: 4.4rem;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .blog-single-head__data {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .blog-single-2__name {
+    font-weight: 700;
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__position {
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-head__label {
+    font-size: var(--fs-0);
+    font-weight: 700;
+  }
+
+  .blog-single-2__date {
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-2__term {
+    padding: .4rem .8rem .4rem .8rem;
+    background: var(--color-line-default);
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-head__term--alt {
+    padding: 0 0 0 0;
+  }
+
+  .blog-single-head__tags {
+    font-size: var(--fs-0);
+  }
+
+  .blog-single-head__details--sticky {
+    position: sticky;
+    top: var(--space-m);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-blog-single-16__content {
+    padding: var(--section-space-m) 0 var(--section-space-m) 0;
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-blog-single-16__feature-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-blog-single-16__intro {
+    --before-width: calc(50vw - (var(--content-width) / 12) * 1) ;
+    
+  }
+  
+  .bm-blog-single-16__intro::before { 
+    content: '';
+    position: absolute;
+    top:0;
+    right:0;
+    height:100%;
+    width:var(--acss-before-width);
+    background-color: var(--bg-subtle);
+  }
+  
+  @media (max-width:991px) {
+    
+    .bm-blog-single-16__intro::before { 
+    content: '';
+    position: absolute;
+    top:0;
+    right:0;
+      left:50%;
+      margin-inline-start: -50vw;
+    height:100%;
+    width:100vw;
+  }
+    
+  }
+
+  /* bm-custom */
+  .blog-single-head__meta--column {
+    width:100%;
+  }
+  
+  .blog-single-head__meta--column .blog-single-head__details--coloumn {
+    padding-block-end: var(--space-xs);
+    border-bottom: 1px solid var(--color-line-default);
+    width:100%;
+  }
+  
+  .blog-single-head__meta--column .blog-single-2__author {
+    border-right: none;
+  }
+
+  /* bm-custom */
+  .blog-single-2__term a {
+  	color: var(--fs-0);
+  }
+}
+</style>

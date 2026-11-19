@@ -1,0 +1,91 @@
+---
+/**
+ * bm-testimonial-17 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-17.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="testimonial-17-container">
+    <div class="testimonial-17-list-ul list--none">
+      {items.map((it) => (
+        <div class="testimonial-17-list-card">
+          <div class="testimonial-17-list-card__wrapper">
+            <div class="testimonial-17-list-card__content">
+              <div class="testimonial-17-list-card__review">
+                {(it.items || []).map((it2) => (
+                  <span class="testimonial-17-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+                ))}
+              </div>
+              <p class="testimonial-17-list-card__desc">{it.text}</p>
+              <p class="testimonial-17-list-card__author">{it.text}</p>
+            </div>
+            <div class="testimonial-17-list-card__media">
+              <figure class="testimonial-17-list-card__image"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-17-list-ul {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .testimonial-17-list-card__wrapper {
+    gap: 0;
+    display: flex;
+    column-gap: 1.5rem;
+  }
+
+  .testimonial-17-list-card__content {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 7rem);
+    row-gap: 1.5rem;
+  }
+
+  .testimonial-17-list-card__review {
+    display: flex;
+    column-gap: .5rem;
+  }
+
+  .testimonial-17-list-card__image {
+    overflow: hidden;
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+    border-radius: 50% 50% 50% 50%;
+  }
+
+  /* bm-custom */
+  .testimonial-17-list-card__author span {
+  	text-decoration: underline;
+    text-decoration-color: var(--action-primary);
+    text-decoration-thickness: .2rem;
+  }
+}
+</style>

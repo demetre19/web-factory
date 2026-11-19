@@ -1,0 +1,113 @@
+---
+/**
+ * bm-hero-50 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-50.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-50__container">
+    <div class="hero-50__content">
+      <h1 class="hero-50__heading">Medium length hero heading goes here</h1>
+      <p class="accent-h">Accent heading</p>
+      <p class="hero-50__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+      <div class="cta-combo">
+        <a class="btn--black" href={cta.href}>{cta.label}</a>
+        <a class="btn--link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="hero-50__image-wrapper">
+      <figure class="hero-50__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="hide"></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-50 {
+    flex-direction: row;
+    padding: 0 0 0 0;
+    height: 200vh;
+    align-items: flex-start;
+  }
+
+  .hero-50__container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-50__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) 0;
+    height: 100vh;
+    justify-content: center;
+    width: calc(var(--content-width) / 2);
+    margin: 0 calc(var(--content-width) / 2) 0 0;
+  }
+
+  .hero-50__heading {
+    font-size: var(--fs-4);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-50__image-wrapper {
+    width: 50%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .hero-50__image {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  /* bm-custom */
+  @media (max-width:1380px) {
+  
+  .hero-50__content {
+  	padding-inline-start: var(--space-xl);
+  }
+    
+  }
+}
+</style>

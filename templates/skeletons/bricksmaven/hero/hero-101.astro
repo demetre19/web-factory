@@ -1,0 +1,79 @@
+---
+/**
+ * bm-hero-101 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-101.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-101__container">
+    <div class="bm-hero-101__content">
+      <h1 class="bm-hero-101__heading">Short headline to grab your customers attention</h1>
+      <p class="bm-hero-101__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="bm-hero-101__carousel">
+      <div class="bm-hero-101__slider-nested">
+        {items.map((it) => (
+          <div class="bm-hero-101-slide">
+            <figure class="bm-hero-101-slide__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-101__container {
+    height: 80vh;
+    width: 100%;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-hero-101__content {
+    justify-content: flex-end;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    row-gap: var(--flow-spacing);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    background: var(--fs-0);
+    font-size: var(--fs-2);
+  }
+
+  .bm-hero-101__carousel {
+    overflow: clip;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-hero-101-slide {
+    height: 100%;
+  }
+
+  .bm-hero-101-slide__image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+</style>

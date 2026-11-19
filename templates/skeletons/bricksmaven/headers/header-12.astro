@@ -1,0 +1,79 @@
+---
+/**
+ * bm-header-12 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-12.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-12__container">
+    <div class="bm-header-12__brand">
+      <img class="bm-header-12__logo"></img>
+    </div>
+    <div class="bm-header-12__nav">
+      <div class="bm-header-12__nav-menu">
+        <div class="bm-header-12__nav-items">
+          {items.map((it) => (
+            <a class="bm-header-12__nav-links" href="#">{it.text}</a>
+          ))}
+          <div class="bm-header-12__nav-close"></div>
+        </div>
+        <div class="bm-header-12__nav-open"></div>
+      </div>
+    </div>
+    <div class="bm-header-12__cta">
+      <a class="btn--primary" href="#">Call to action</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-12 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+    background: var(--bg-subtle);
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+  }
+
+  .bm-header-12__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    position: relative;
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-12__brand {
+    width: 25%;
+  }
+
+  .bm-header-12__nav {
+    align-items: center;
+  }
+
+  .bm-header-12__cta {
+    align-items: stretch;
+    width: 25%;
+  }
+}
+</style>

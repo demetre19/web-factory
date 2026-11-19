@@ -1,0 +1,227 @@
+---
+/**
+ * bm-testimonial-39 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-39.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-testimonial-39__container">
+    <div class="intro intro--split">
+      <div class="intro__left-column">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="intro__accent-heading">Accent heading</p>
+      </div>
+      <div class="intro__right-column">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--primary" href="#">Call to action</a>
+      </div>
+    </div>
+    <div class="bm-testimonial-39__content">
+      <div class="bm-testimonial-39-list list--none">
+        <div class="bm-testimonial-39-card">
+          <div class="bm-testimonial-39-card__top">
+            <div class="bm-testimonial-39-card__media">
+              <figure class="bm-testimonial-39-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div class="bm-testimonial-39-card__meta">
+              <h2 class="bm-testimonial-39-card__heading">This was deep and brilliant!</h2>
+              <div class="bm-testimonial-39-card__name-date">
+                <p class="bm-testimonial-39-card__name">John Smith</p>
+                <p class="bm-testimonial-39-card__date">24 Januari, 2025</p>
+              </div>
+            </div>
+          </div>
+          <p class="bm-testimonial-39-card__review-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        </div>
+        <div class="bm-testimonial-39-card">
+          <div class="bm-testimonial-39-card__top">
+            <div class="bm-testimonial-39-card__media">
+              <figure class="bm-testimonial-39-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div class="bm-testimonial-39-card__meta">
+              <h2 class="bm-testimonial-39-card__heading">This was deep and brilliant!</h2>
+              <div class="bm-testimonial-39-card__name-date">
+                <p class="bm-testimonial-39-card__name">John Smith</p>
+                <p class="bm-testimonial-39-card__date">24 Januari, 2025</p>
+              </div>
+            </div>
+          </div>
+          <p class="bm-testimonial-39-card__review-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        </div>
+      </div>
+      <div class="bm-testimonial-39-card__benefits">
+        <div class="bm-list list--none">
+          {items.map((it) => (
+            <div class="bm-list-item bm-list-item--alt">
+              <div class="bm-list-item__icon-wrapper bm-list-item__icon-wrapper--alt">
+                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="bm-list-item__text bm-list-item__text--alt">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-testimonial-39__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .intro--split {
+    display: grid;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-39__content {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-testimonial-39-list {
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-39-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-testimonial-39-card__top {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: flex-start;
+  }
+
+  .bm-testimonial-39-card__image {
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  .bm-testimonial-39-card__meta {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-testimonial-39-card__name-date {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--space-xs) / 2);
+  }
+
+  .bm-testimonial-39-card__name {
+    font-size: var(--fs-0);
+    padding: 0 calc(var(--space-xs) / 2) 0 0;
+    border-right: 1 solid var(--color-line-default);
+  }
+
+  .bm-testimonial-39-card__date {
+    font-size: var(--fs-0);
+  }
+
+  .bm-testimonial-39-card__benefits {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-subtle);
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item--alt {
+    align-items: flex-start;
+  }
+
+  .bm-list-item__icon-wrapper {
+    padding: var(--tap) var(--tap) var(--tap) var(--tap);
+    background: var(--bg-subtle);
+    border-radius: 50% 50% 50% 50%;
+    position: relative;
+  }
+
+  .bm-list-item__icon-wrapper--alt {
+    background: var(--bg-canvas);
+  }
+
+  .bm-list-item__icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+    font-size: var(--fs-0);
+  }
+
+  .bm-list-item__text--alt {
+    font-size: var(--fs-1);
+  }
+
+  /* bm-custom */
+  .bm-list-item {
+  	--circle-size: var(--fs-0);
+  }
+}
+</style>

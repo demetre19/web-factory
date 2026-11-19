@@ -1,0 +1,110 @@
+---
+/**
+ * bm-portfolio-section-15 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-section-15.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-section-15__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-portfolio-6-related-list list--none">
+      {items.map((it) => (
+        <div class="bm-portfolio-6-related-card">
+          <div class="bm-portfolio-6-related-card__content">
+            <h3 class="bm-portfolio-6-related-card__heading clickable-parent">{it.title}</h3>
+            <div class="bm-portfolio-6-related-card__footer">
+              <p class="bm-portfolio-6-related-card__text">{it.text}</p>
+              <a class="btn--white wf-cta-button" href={it.href}>{it.label}</a>
+            </div>
+          </div>
+          <figure class="bm-portfolio-6-related-card__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-section-15__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-6-related-list {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 3);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-6-related-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bm-portfolio-6-related-card__content {
+    row-gap: var(--flow-spacing);
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: space-between;
+  }
+
+  .bm-portfolio-6-related-card__footer {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-6-related-card__background-image {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  /*  Scale images on hover */
+  .bm-portfolio-6-related-card__background-image { 
+    transition: 0.5s linear;
+  }
+  
+  .bm-portfolio-6-related-card:hover .bm-portfolio-6-related-card__background-image, .bm-portfolio-6-related-card:focus-within .bm-portfolio-6-related-card__background-image {
+    scale: 1.2;
+  }
+}
+</style>

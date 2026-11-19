@@ -1,0 +1,204 @@
+---
+/**
+ * bm-hero-89 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-89.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-89__container">
+    <div class="bm-hero-89__content">
+      <div class="bm-hero-89__intro">
+        <h1 class="bm-hero-89__heading">Long headline to turn your visitors into customers</h1>
+        <p class="bm-hero-89__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+      <div class="bm-hero-89__case-container">
+        <div class="bm-hero-89-case-cover">
+          <div class="bm-hero-89-case">
+            <div class="bm-hero-89-case__case-content">
+              <h2 class="bm-hero-89-case__heading">Decreased development time by 65%</h2>
+              <a class="bm-hero-89-case__cta-link link--white" href="#">Read case</a>
+            </div>
+            <figure class="bm-hero-89-case__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="bm-hero-89-testimonial">
+            <p class="bm-hero-89-testimonial__review">"I am truly impressed with Bricksmaven's pattern library. Their tools make creating responsive designs effortless and fast, saving me valuable time. I highly recommend their services for anyone looking to streamline their design process."</p>
+            <div class="bm-hero-89-testimonial__client-meta">
+              <div class="bm-hero-89-testimonial__client-data">
+                <p class="bm-hero-89-testimonial__name">John Smith</p>
+                <p class="bm-hero-89-testimonial__title">CEO, RubyBlaze</p>
+              </div>
+              <figure class="bm-hero-89-testimonial__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+          <div class="bm-hero-89__icon-wrapper">
+            <span class="bm-hero-89__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bm-hero-89__media">
+      <figure class="bm-hero-89__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div></div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-89__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-hero-89__content {
+    row-gap: var(--flow-spacing);
+    justify-content: space-between;
+  }
+
+  .bm-hero-89__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-89__heading {
+    font-size: calc(var(--fs-4) * 1.6);
+  }
+
+  .bm-hero-89__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .bm-hero-89__case-container {
+    position: relative;
+    width: 120%;
+  }
+
+  .bm-hero-89-case-cover {
+    position: relative;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+    z-index: 1;
+    margin: 0 0 calc(-1 * var(--space-xl)) 0;
+  }
+
+  .bm-hero-89-case {
+    position: relative;
+    overflow: clip;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    height: 100%;
+  }
+
+  .bm-hero-89-case__case-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: flex-end;
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-89-case__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-hero-89-case__image {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-hero-89-testimonial {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: var(--bg-canvas);
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-89-testimonial__client-meta {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-89-testimonial__name {
+    font-weight: 700;
+    font-size: var(--fs-0);
+  }
+
+  .bm-hero-89-testimonial__title {
+    font-size: var(--fs-0);
+  }
+
+  .bm-hero-89-testimonial__image {
+    width: 48px;
+    border-radius: 100% 100% 100% 100%;
+    object-fit: cover;
+  }
+
+  .bm-hero-89__icon-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--bg-canvas);
+  }
+
+  .bm-hero-89__icon {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    border-top: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    border-left: 1px solid var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--text-secondary);
+  }
+
+  .bm-hero-89__image {
+    object-fit: cover;
+    width: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .bm-hero-89-case .bm-hero-89-case__image {
+    transition: 0.2s linear;
+  }
+  
+  .bm-hero-89-case:hover .bm-hero-89-case__image {
+    scale: 1.4;
+  }
+}
+</style>

@@ -1,0 +1,139 @@
+---
+/**
+ * bm-feature-53 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-53.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-feature-53__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+  </div>
+  <div class="bm-feature-53-feature-list list--none">
+    {items.map((it) => (
+      <div class="bm-feature-53-feature-item__container">
+        <div class="bm-feature-53-feature-item-card">
+          <div class="bm-feature-53-feature-item-card__content">
+            <h2 class="bm-feature-53-feature-item-card__heading">{it.title}</h2>
+            <p class="bm-feature-53-feature-item-card__text">{it.text}</p>
+            <a class="bm-feature-53-feature-item-card__link" href="#">{it.text}</a>
+          </div>
+          <div class="bm-feature-53-feature-item-card__media">
+            <p class="bm-feature-53-feature-item-card__number">{it.text}</p>
+            <figure class="bm-feature-53-feature-item-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-feature-53 {
+    padding: 0 0 0 0;
+    row-gap: var(--space-s);
+  }
+
+  .bm-feature-53__container {
+    width: 100%;
+    padding: 0 var(--gutter) 0 var(--gutter);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-53-feature-list {
+    position: relative;
+  }
+
+  .bm-feature-53-feature-item {
+    height: 100vh;
+    justify-content: center;
+    border-top: 2px solid var(--color-line-default);
+    background: var(--bg-canvas);
+    position: sticky;
+    top: 0;
+    padding: 0 var(--gutter) 0 var(--gutter);
+  }
+
+  .bm-feature-53-feature-item__container {
+    align-items: center;
+  }
+
+  .bm-feature-53-feature-item-card {
+    width: 100%;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-feature-53-feature-item-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-53-feature-item-card__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-feature-53-feature-item-card__media {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-feature-53-feature-item-card__number {
+    font-size: var(--fs-1);
+    font-weight: 700;
+  }
+
+  .bm-feature-53-feature-item-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 52rem;
+  }
+
+  /* bm-custom */
+  .bm-feature-53-feature-item:nth-child(odd) .bm-feature-53-feature-item-card__media {
+    order: -1;
+  }
+  
+  
+  @media (max-width:991px) {
+    .bm-feature-53-feature-item:nth-child(even) .bm-feature-53-feature-item-card__media {
+    order: -1;
+  }
+  
+  
+  }
+}
+</style>

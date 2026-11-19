@@ -1,0 +1,106 @@
+---
+/**
+ * bm-hero-62 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-62.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-62__container">
+    <div class="bm-hero-62__top">
+      <h1 class="bm-hero-62__heading">Long headline to turn your visitors into customers</h1>
+    </div>
+  </div>
+  <div class="bm-hero-62__container-foot">
+    <figure class="bm-hero-62__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="bm-hero-62__content">
+      <div class="bm-hero-62__inner-block">
+        <p class="bm-hero-62__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div class="cta-combo">
+          <a class="btn--primary" href="#">Call to action</a>
+          <a class="btn--link" href="#">Secondary action →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-62 {
+    overflow: hidden;
+    height: 100vh;
+    padding: 0 0 0 0;
+  }
+
+  .bm-hero-62__top {
+    width: var(--content-width);
+  }
+
+  .bm-hero-62__heading {
+    font-size: calc(var(--fs-4) * 1.8);
+  }
+
+  .bm-hero-62__container-foot {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    left: 50%;
+    position: relative;
+    align-items: flex-end;
+    height: 100%;
+    flex-wrap: nowrap;
+  }
+
+  .bm-hero-62__image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+  }
+
+  .bm-hero-62__content {
+    position: relative;
+    z-index: 1;
+    width: 50vw;
+    background: var(--bg-canvas);
+    height: auto;
+  }
+
+  .bm-hero-62__inner-block {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    width: calc(((var(--content-width) / 12)  *  6));
+  }
+
+  .bm-hero-62__subheading {
+    font-size: var(--fs-2);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+}
+</style>

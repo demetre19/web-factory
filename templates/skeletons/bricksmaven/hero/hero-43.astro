@@ -1,0 +1,100 @@
+---
+/**
+ * bm-hero-43 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-43.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-43-container-top">
+    <div class="hero-43__intro">
+      <h1 class="hero-43__intro-heading">Build faster in Bricksbuilder</h1>
+    </div>
+  </div>
+  <div class="hero-43-container-footer">
+    <div class="hero-43__media">
+      <figure class="hero-43__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="hero-43__subtitle-wrapper">
+      <p class="hero-43__subtitle">Alpha template by Bricksmaven helps you accelerate your design & development workflow and decrease your development time.</p>
+    </div>
+    <div class="hero-43__cta">
+      <div class="hero-43__cta-wrapper">
+        <a class="hero-43__cta-btn btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+        <p class="hero-43__cta-micro">This is a micro copy</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-43 {
+    height: 100vh;
+    row-gap: var(--space-s);
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
+
+  .hero-43-container-top {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .hero-43__intro-heading {
+    font-size: calc(var(--fs-4) * 1.8);
+  }
+
+  .hero-43-container-footer {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .hero-43__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-43__cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .hero-43__cta-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-43__cta-micro {
+    font-size: var(--fs-0);
+  }
+}
+</style>

@@ -1,0 +1,164 @@
+---
+/**
+ * bm-hero-47 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-47.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="hero-47-container">
+    <div class="hero-47__content--1">
+      <h1 class="hero-47__heading">Medium length hero heading goes here</h1>
+      <p class="hero-47__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+      <div class="cta-combo">
+        <a class="btn--black" href={cta.href}>{cta.label}</a>
+        <a class="btn--link" href="#">Secondary action →</a>
+      </div>
+    </div>
+    <div class="hero-47__media">
+      <div class="hero-47__carousel">
+        <div class="hero-47-carousel-ul list--none">
+          {items.map((it) => (
+            <div class="hero-47-carousel-item">
+              <figure class="hero-47-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="hero-47__carousel">
+        <div class="hero-47-carousel-ul list--none">
+          {items.map((it) => (
+            <div class="hero-47-carousel-item">
+              <figure class="hero-47-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .hero-47 {
+    padding: 0 var(--section-space-xxl) 0 var(--section-space-xxl);
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-47-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .hero-47__content--1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--space-m);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .hero-47__media {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .hero-47__carousel {
+    overflow: hidden;
+    position: relative;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-47-carousel-ul {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    column-gap: var(--space-xs);
+  }
+
+  .hero-47-carousel-item__image {
+    width: 500;
+    object-fit: cover;
+    height: 100%;
+  }
+
+  /* bm-custom */
+  .hero-47__carousel {
+  	--animation-duration-up: 45s;
+    --animation-duration-down: 45s;
+    --scroll-up-end-position: -50%;
+    --scroll-down-start-position: -35%;
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+    --animation-timing-function-down: linear;
+  }
+  
+  
+  /* Define the animation for the first child */
+  .hero-47__carousel:first-child .hero-47-carousel-ul {
+    animation: scrollUp var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animation for the last child */
+  .hero-47__carousel:last-child .hero-47-carousel-ul {
+    animation: scrollDown var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes scrollUp {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(var(--acss-scroll-up-end-position));
+    }
+  }
+  
+  /* Define the animations starting point for the last child */
+  @keyframes scrollDown {
+    0% {
+      transform: translateX(var(--acss-scroll-down-start-position));
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+}
+</style>

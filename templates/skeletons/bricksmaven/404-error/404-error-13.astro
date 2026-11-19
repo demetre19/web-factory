@@ -1,0 +1,114 @@
+---
+/**
+ * bm-404-error-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (404-error-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="error-13-container">
+    <div class="intro pad--m box-shadow--m width--l bg--white">
+      <div class="intro__top">
+        <h2 class="intro__heading text--primary">404 error</h2>
+        <p class="intro__subheading intro__subheading--alt">Oops the page is gone</p>
+      </div>
+      <p class="intro__subheading">Sorry, the page you are looking for doesn't exist.</p>
+      <div class="error-1-box__search"></div>
+      <p class="intro__link">← Go back home</p>
+    </div>
+  </div>
+  <figure class="error-13-background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .error-13 {
+    position: relative;
+    justify-content: center;
+    height: 50vw;
+  }
+
+  .error-13-container {
+    z-index: 1;
+    position: relative;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro__top {
+    align-items: center;
+  }
+
+  .intro__subheading--alt {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .error-13-background-image {
+    width: 50vw;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    right: 0;
+  }
+
+  /* bm-custom */
+  .error-1-box__search .bricks-search-form {
+  	gap: 1.5rem;
+  }
+  .error-1-box__search [type="search"] {
+  	width: 70% !important;
+  }
+  .error-1-box__search [type="submit"] {
+  	background-color: var(--action-primary);
+    color: var(--bg-canvas);
+    width: 30%;
+    padding: 10px 15px;
+    text-align: center;
+    height: auto;
+    position: static!important;
+    clip-path: unset !important;
+  }
+  .error-1-box__search [type="submit"]:focus {
+  	border-radius: 0;
+    box-shadow: none;
+    font-size: 100%;
+    font-weight: 400;
+    line-height: 100%;
+    outline: none;
+    padding: 10px;
+    text-align: center;
+    clip-path: unset;
+  }
+  .error-1-box__search [type="submit"] span {
+  	height: auto;
+    position: static!important;
+    width: auto;
+  }
+}
+</style>

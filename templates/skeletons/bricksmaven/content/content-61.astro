@@ -1,0 +1,136 @@
+---
+/**
+ * bm-content-61 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (content-61.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-content-61__container">
+    <div class="bm-content-61__inner">
+      <div class="bm-content-61__intro">
+        <div class="bm-content-61__top">
+          <h2 class="bm-content-61__heading">Long headline to turn your visitors into customers</h2>
+          <p class="accent-h accent-h--alt">Accent heading</p>
+        </div>
+        <div class="bm-content-61__mid">
+          <p class="bm-content-61__text">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="bm-content-61__text bm-content-61__text-beta">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        </div>
+      </div>
+      <div class="bm-content-61__footer">
+        <div class="bm-content-61__left-column">
+          <p class="bm-content-61__column-text">Send us an email:</p>
+          <a class="bm-content-61__column-link" href="#">info@bricksmaven.com</a>
+        </div>
+        <div class="bm-content-61__right-column">
+          <p class="bm-content-61__column-text">Follow me on:</p>
+          <div class="bm-social-share list--none bm-social-share--left">
+            {items.map((it) => (
+              <div class="bm-social-share__icon-wrapper">
+                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figure class="bm-content-61__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-content-61 {
+    position: relative;
+  }
+
+  .bm-content-61__container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .bm-content-61__inner {
+    row-gap: var(--space-s);
+    width: var(--content-width);
+  }
+
+  .bm-content-61__intro {
+    row-gap: var(--flow-spacing);
+    padding: 0 0 calc(var(--section-space-xxl) * 2) 0;
+  }
+
+  .bm-content-61__top {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-content-61__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-content-61__mid {
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-content-61__footer {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-content-61__left-column {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-content-61__column-text {
+    font-weight: 700;
+  }
+
+  .bm-content-61__right-column {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-content-61__background-image {
+    object-fit: cover;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

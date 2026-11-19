@@ -1,0 +1,217 @@
+---
+/**
+ * bm-portfolio-section-14 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-section-14.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-section-14__container">
+    <div class="intro bm-portfolio-section-14__intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-portfolio-section-14-feature-list list--none">
+      {items.map((it) => (
+        <div class="bm-portfolio-section-14-card">
+          <div class="bm-portfolio-section-14-card__cover">
+            <div class="bm-portfolio-section-14-card__content">
+              <div class="bm-portfolio-section-14-card__top">
+                <h2 class="bm-portfolio-section-14-card__heading clickable-parent">{it.title}</h2>
+                <p class="bm-portfolio-section-14-card__text">{it.text}</p>
+              </div>
+              <div class="bm-list list--none">
+                {(it.items || []).map((it2) => (
+                  <div class="bm-list-item">
+                    <div class="bm-list-item__icon-wrapper">
+                      <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                    <p class="bm-list-item__text">{it2.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="bm-portfolio-section-14-card__testimonial">
+              <div class="bm-portfolio-section-14-card__top">
+                <p class="bm-portfolio-section-14-card__review">{it.text}</p>
+              </div>
+              <div class="testimonial-list-card__profile">
+                <div class="testimonial-list-card__meta">
+                  <custom class="testimonial-list-card__name">{it.title}</custom>
+                  <p class="testimonial-list-card__jobtitle">{it.text}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bm-portfolio-section-14-card__media">
+            <figure class="bm-portfolio-section-14-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-portfolio-section-14-card__cta">
+              <a class="btn--primary bm-portfolio-section-14-card__btn wf-cta-button" href={it.href}>{it.label}</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+  <div></div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-section-14__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-section-14__intro {
+    width: 100%;
+  }
+
+  .bm-portfolio-section-14-feature-list {
+    row-gap: var(--space-s);
+    position: relative;
+  }
+
+  .bm-portfolio-section-14-card {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    border-top: 1px solid var(--color-line-default);
+    border-right: 1px solid var(--color-line-default);
+    border-bottom: 1px solid var(--color-line-default);
+    border-left: 1px solid var(--color-line-default);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    position: sticky;
+    top: var(--space-m);
+    background: var(--bg-canvas);
+    overflow: hidden;
+  }
+
+  .bm-portfolio-section-14-card__cover {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-portfolio-section-14-card__content {
+    justify-content: space-between;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    border-right: 1px solid var(--bg-subtle);
+  }
+
+  .bm-portfolio-section-14-card__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+    margin: 0 0 var(--section-space-xxl) 0;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item__icon-wrapper {
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+    font-size: var(--fs-0);
+  }
+
+  .bm-portfolio-section-14-card__testimonial {
+    justify-content: space-between;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .bm-portfolio-section-14-card__review {
+    font-size: var(--fs-2);
+    font-weight: 700;
+  }
+
+  .testimonial-list-card__profile {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .testimonial-list-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(--content-gap / 2);
+  }
+
+  .testimonial-list-card__name {
+    font-weight: 700;
+  }
+
+  .testimonial-list-card__jobtitle {
+    font-size: var(--fs-0);
+  }
+
+  .bm-portfolio-section-14-card__media {
+    position: relative;
+  }
+
+  .bm-portfolio-section-14-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .bm-portfolio-section-14-card__cta {
+    position: absolute;
+    bottom: var(--space-s);
+    right: var(--space-s);
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-14-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-portfolio-section-14-card:hover, .bm-portfolio-section-14-card:focus-within {
+    box-shadow: var(--shadow-card);
+  }
+}
+</style>

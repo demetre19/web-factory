@@ -1,0 +1,89 @@
+---
+/**
+ * bm-header-20 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-20.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-20__container">
+    <div class="bm-header-20__brand">
+      <figure class="bm-header-20__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div class="bm-header-20__right-column">
+      <div class="bm-header-20__nav-menu"></div>
+      <div class="bm-header-20__search-wrapper">
+        <div class="bm-search"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-20 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-20__container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-header-20__brand {
+    width: auto;
+    display: flex;
+  }
+
+  .bm-header-20__image {
+    object-fit: contain;
+  }
+
+  .bm-header-20__right-column {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-header-20__nav-menu {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-header-20__search-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    border-left: 1 solid var(--bg-subtle);
+  }
+}
+</style>

@@ -1,0 +1,133 @@
+---
+/**
+ * bm-contact-36 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-36.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-contact-36__container">
+    <div class="bm-contact-36__content">
+      <div class="bm-contact-36__intro">
+        <h1 class="bm-contact-36__heading">Need Answers? Get in Touch. We’ll Respond Shortly</h1>
+        <p class="bm-accent-heading">Accent heading</p>
+      </div>
+      <p class="bm-contact-36__intro-text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+      <div class="bm-contact-36__footer">
+        <p class="bm-contact-36__contact-info">Address: 123 Main Street, Anytown USA Send us an email: info@bricksmaven.com</p>
+      </div>
+    </div>
+    <div class="bm-contact-team-list">
+      <div class="bm-team-card">
+        <div class="bm-team-card__content">
+          <h2 class="bm-team-card__heading">John Smith</h2>
+          <div class="bm-team-card__contact-details">
+            <div class="bm-team-card__item">
+              <p class="bm-team-card__label">Phone:</p>
+              <a class="bm-team-card__link" href="#">+1 (123) 456-7890</a>
+            </div>
+            <div class="bm-team-card__item">
+              <p class="bm-team-card__label">Email:</p>
+              <a class="bm-team-card__link" href="#">info@example.com</a>
+            </div>
+          </div>
+        </div>
+        <figure class="bm-team-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div class="bm-team-card">
+        <div class="bm-team-card__content">
+          <h2 class="bm-team-card__heading">John Smith</h2>
+          <div class="bm-team-card__contact-details list--none">
+            <div class="bm-team-card__item">
+              <p class="bm-team-card__label">Phone:</p>
+              <a class="bm-team-card__link" href="#">+1 (123) 456-7890</a>
+            </div>
+            <div class="bm-team-card__item">
+              <p class="bm-team-card__label">Email:</p>
+              <a class="bm-team-card__link" href="#">info@example.com</a>
+            </div>
+          </div>
+        </div>
+        <figure class="bm-team-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-contact-36__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 2);
+  }
+
+  .bm-contact-36__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-36__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-36__heading {
+    font-size: calc(var(--fs-4) * 1.2);
+  }
+
+  .bm-contact-team-list {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: var(--space-m);
+  }
+
+  .bm-team-card {
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-team-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-team-card__heading {
+    font-size: var(--fs-1);
+  }
+
+  .bm-team-card__contact-details {
+    flex-direction: column;
+    padding: 0 0 0 0;
+  }
+
+  .bm-team-card__item {
+    column-gap: calc(var(--flow-spacing) / 4);
+    font-size: var(--fs-0);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bm-team-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

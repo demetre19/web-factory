@@ -1,0 +1,101 @@
+---
+/**
+ * bm-counter-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (counter-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="counter-8-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Tagline</p>
+    </div>
+    <div class="counter-8-content">
+      <div class="counter-8-grid-ul list--none">
+        {items.map((it) => (
+          <div class="counter-8-card">
+            <span class="counter-8-card__number"></span>
+            <h2 class="counter-8-card__label">{it.title}</h2>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .counter-8-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-8-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .counter-8-grid-ul {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 6);
+  }
+
+  .counter-8-card {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    align-items: center;
+    background: var(--action-primary);
+    text-align: center;
+  }
+
+  .counter-8-card__number {
+    font-size: calc(var(--fs-4) + 9.25rem);
+    line-height: 1;
+  }
+
+  /* bm-custom */
+  .counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
+  	grid-column: span 3;
+  }
+  
+  
+  @media (max-width:768px) {
+  	.counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
+  	grid-column: auto;
+  }
+  }
+}
+</style>

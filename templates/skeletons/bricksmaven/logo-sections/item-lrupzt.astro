@@ -1,0 +1,46 @@
+---
+/**
+ * bm-item-lrupzt — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-lrupzt.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="logo-3-container">
+    <div class="center--all logo-3-row pad--m width--full bg--shade-ultra-light rounded--l gap--m align-items--center flex--col">
+      <h2 class="logo-3-title">Tired of building from scratch?</h2>
+      <div class="logo-3-list-item"></div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  /* bm-custom */
+  .logo-3-list-item li {
+  	padding-left: var(--space-xs);
+    padding-bottom: 0!important;
+  }
+  
+  .logo-3-list-item li div {
+  	background-size: contain!important;
+  }
+}
+</style>

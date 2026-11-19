@@ -1,0 +1,86 @@
+---
+/**
+ * bm-newsletter-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (newsletter-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-newsletter-13__container">
+    <div class="bm-newsletter-13__content">
+      <h2 class="bm-newsletter-13__heading">Join the Bricksmaven library newsletter today</h2>
+      <p class="bm-newsletter-13__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+      <form class="bm-newsletter-13__form" novalidate>
+      </form>
+    </div>
+    <div class="bm-newsletter-13__column">
+      <div class="list--none bm-newsletter-13-usp-list">
+        {items.map((it) => (
+          <div class="bm-newsletter-13-usp-item">
+            <span class="bm-newsletter-13-usp-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            <p class="bm-newsletter-13-usp-item__text">{it.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-newsletter-13__container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .bm-newsletter-13__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-newsletter-13__heading {
+    font-size: var(--fs-4);
+  }
+
+  .bm-newsletter-13-usp-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-newsletter-13-usp-item {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    padding: 0 0 var(--space-s) 0;
+    border-bottom: 1px solid var(--color-line-default);
+  }
+
+  .bm-newsletter-13-usp-item__icon {
+    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
+    border-radius: 100% 100% 100% 100%;
+    background: var(--text-secondary);
+  }
+
+  .bm-newsletter-13-usp-item__text {
+    font-size: var(--fs-2);
+  }
+}
+</style>

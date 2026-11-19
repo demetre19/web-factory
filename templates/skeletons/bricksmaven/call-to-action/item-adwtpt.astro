@@ -1,0 +1,68 @@
+---
+/**
+ * bm-item-adwtpt — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-adwtpt.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="cta-6-container">
+    <h2 class="cta-6__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
+    <div class="hero-1__cta">
+      <a class="btn--primary hero-1-wrapper__cta--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <a class="btn--primary btn--outline hero-1-wrapper__cta--outline" href={cta.href}>{cta.label}</a>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .cta-6-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta-6__heading {
+    padding: 0 0 var(--space-m) 0;
+    border-bottom: .1rem solid var(--color-line-default);
+  }
+
+  .hero-1__cta {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .btn--outline {
+    border-top: .1rem solid var(--action-primary);
+    border-right: .1rem solid var(--action-primary);
+    border-bottom: .1rem solid var(--action-primary);
+    border-left: .1rem solid var(--action-primary);
+  }
+}
+</style>

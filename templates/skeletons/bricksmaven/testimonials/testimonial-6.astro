@@ -1,0 +1,52 @@
+---
+/**
+ * bm-testimonial-6 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (testimonial-6.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="grid--3 gap--m grid--m-1 testimonial-6-container">
+    {items.map((it) => (
+      <div class="gap--m flex--col pad--m box-shadow--m testimonial-6-card">
+        <p class="testimonial-6-card__desc">{it.text}</p>
+        <div class="flex--row gap--xs align-items--center testimonial-6-card__bio">
+          <figure class="testimonial-6-card__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="gap--xs flex--col testimonial-6-card__profile">
+            <h4 class="text--primary testimonial-6-card__name">{it.title}</h4>
+            <p class="text--s testimonial-6-card__title">{it.text}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .testimonial-6-card__img {
+    width: 6rem;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 100% 100% 100% 100%;
+    overflow: hidden;
+  }
+}
+</style>

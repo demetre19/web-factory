@@ -1,0 +1,104 @@
+---
+/**
+ * bm-hero-64 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (hero-64.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-hero-64__container">
+    <div class="bm-hero-64__content">
+      <div class="bm-hero-64__top">
+        <h1 class="bm-hero-64__heading">Long headline to turn your visitors into customers</h1>
+      </div>
+      <div class="bm-hero-64__footer">
+        <div class="cta-combo">
+          <a class="btn--white" href="#">Call to action</a>
+          <a class="btn--link" href="#">Secondary action →</a>
+        </div>
+        <p class="bm-hero-64__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+      </div>
+    </div>
+    <figure class="bm-hero-64__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-hero-64 {
+    height: 100vh;
+    position: relative;
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+
+  .bm-hero-64__container {
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-64__content {
+    align-items: flex-start;
+    row-gap: calc(var(--flow-spacing) * 6);
+  }
+
+  .bm-hero-64__top {
+    row-gap: var(--flow-spacing);
+    width: var(--content-width);
+  }
+
+  .bm-hero-64__heading {
+    font-size: calc(var(--fs-4) * 1.4);
+  }
+
+  .bm-hero-64__footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    background: transparent;
+    padding: 0 0 0 0;
+  }
+
+  .bm-hero-64__subheading {
+    width: var(--measure);
+  }
+
+  .bm-hero-64__image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+</style>

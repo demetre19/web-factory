@@ -1,0 +1,69 @@
+---
+/**
+ * bm-item-wxlsno — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (item-wxlsno.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="gridcard-10-container">
+    <div class="gridcard-10-grid-ul list--none">
+      <div class="gridcard-10-card">
+        <h2 class="gridcard-10-card__heading">Feature headline</h2>
+        <p class="gridcard-10-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <div class="gridcard-10-card__media">
+          <figure class="gridcard-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="gridcard-10-card">
+        <h2 class="gridcard-10-card__heading">Feature headline</h2>
+        <p class="gridcard-10-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <div class="gridcard-10-card__media">
+          <figure class="gridcard-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .gridcard-10-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .gridcard-10-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-10-card__image {
+    height: 25.3rem;
+    width: 100%;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    object-fit: cover;
+  }
+}
+</style>

@@ -1,0 +1,269 @@
+---
+/**
+ * bm-portfolio-section-23 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (portfolio-section-23.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-portfolio-section-23__container">
+    <div class="intro intro--split">
+      <div class="intro__left-column">
+        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
+        <p class="bm-accent-heading">Tagline</p>
+      </div>
+      <div class="intro__right-column">
+        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    </div>
+    <div class="bm-portfolio-section-23-list">
+      <div class="bm-portfolio-section-23-card">
+        <div class="bm-portfolio-section-23-card__content">
+          <div class="bm-portfolio-section-23-term-list">
+            <div class="bm-portfolio-section-23-term-item">
+              <p class="bm-portfolio-section-23-term-item__term">E-commerce</p>
+            </div>
+            <div class="bm-portfolio-section-23-term-item">
+              <p class="bm-portfolio-section-23-term-item__term">SEO</p>
+            </div>
+          </div>
+          <div class="bm-portfolio-section-23-card__inner">
+            <div class="bm-portfolio-section-23-card__head">
+              <p class="bm-portfolio-section-23-card__data">140%</p>
+              <div class="bm-portfolio-section-23-card__icon-wrapper">
+                <span class="bm-portfolio-section-23-card__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            </div>
+            <h3 class="bm-portfolio-section-23-card__heading">Scaling E-Commerce Growth for LoxFox</h3>
+            <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+          </div>
+        </div>
+        <div class="bm-portfolio-section-23-card__media">
+          <figure class="bm-portfolio-section-23-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div class="bm-portfolio-section-23-card">
+        <div class="bm-portfolio-section-23-card__content">
+          <div class="bm-portfolio-section-23-term-list list-none">
+            <div class="bm-portfolio-section-23-term-item">
+              <p class="bm-portfolio-section-23-term-item__term">E-commerce</p>
+            </div>
+            <div class="bm-portfolio-section-23-term-item">
+              <p class="bm-portfolio-section-23-term-item__term">SEO</p>
+            </div>
+          </div>
+          <div class="bm-portfolio-section-23-card__inner">
+            <div class="bm-portfolio-section-23-card__head">
+              <p class="bm-portfolio-section-23-card__data">140%</p>
+              <div class="bm-portfolio-section-23-card__icon-wrapper">
+                <span class="bm-portfolio-section-23-card__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            </div>
+            <h3 class="bm-portfolio-section-23-card__heading">Scaling E-Commerce Growth for LoxFox</h3>
+            <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+          </div>
+        </div>
+        <div class="bm-portfolio-section-23-card__media">
+          <figure class="bm-portfolio-section-23-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-portfolio-section-23__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+    grid-template-columns: var(--fs-0);
+    gap: var(--flow-spacing);
+  }
+
+  .intro__left-column {
+    row-gap: var(--fs-0);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-23-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-portfolio-section-23-card {
+    display: grid;
+    grid-template-columns: var(--fs-0);
+    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+    background: var(--bg-subtle);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-section-23-card__content {
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-23-term-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--fs-0);
+    row-gap: var(--fs-0);
+    padding: 0 0 0 0;
+  }
+
+  .bm-portfolio-section-23-term-item {
+    background: var(--bg-subtle);
+    padding: 4px var(--fs-0) 4px var(--fs-0);
+    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+  }
+
+  .bm-portfolio-section-23-term-item__term {
+    font-size: var(--fs-0);
+  }
+
+  .bm-portfolio-section-23-card__inner {
+    row-gap: var(--fs-0);
+  }
+
+  .bm-portfolio-section-23-card__head {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: var(--fs-0);
+    align-items: baseline;
+  }
+
+  .bm-portfolio-section-23-card__data {
+    font-size: calc(var(--fs-0) * 1.5);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .bm-portfolio-section-23-card__icon-wrapper {
+    width: 28px;
+    height: 28px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background: var(--text-primary);
+    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+  }
+
+  .bm-portfolio-section-23-card__media {
+    overflow: clip;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+  }
+
+  .bm-portfolio-section-23-card__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    overflow: clip;
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-23-card {
+    transition: 0.3s ease;
+    position: relative;
+    
+  }
+  
+  @media (min-width:991px) {
+    
+    
+    .bm-portfolio-section-23-card:hover {
+      background-color: var(--bg-subtle);
+    color: white;
+  }
+    .bm-portfolio-section-23-card:hover .bricks-button[class*="primary"] {
+          color: var(--text-primary);
+      border-color: var(--bg-canvas);
+      background-color: var(--bg-canvas);
+    }
+    
+    .bm-portfolio-section-23-card:hover .bm-portfolio-section-23-term-item {
+      background-color: var(--text-primary);
+      color: var(--bg-canvas);
+    }
+  
+    .bm-portfolio-section-23-card:hover .bm-portfolio-section-23-card__heading a {
+      color: var(--bg-canvas) !important;
+      background-color: transparent;
+      border: none;
+    }
+    
+  .bm-portfolio-section-23-card:hover .bm-portfolio-section-23-card__icon-wrapper {
+      background-color: var(--bg-canvas);
+    }
+    
+    .bm-portfolio-section-23-card:hover .bm-portfolio-section-23-card__icon {
+      color: var(--text-primary);
+    }
+    
+    .bm-portfolio-section-23-card:hover .bm-portfolio-section-23-card__image {
+      scale: 1.2;
+    }
+    
+  }
+  
+  
+  .bm-portfolio-section-23-card:nth-child(even) .bm-portfolio-section-23-card__media {
+    order: -1;
+  }
+
+  /* bm-custom */
+  .bm-portfolio-section-23-card__heading:not(a) > a::after {
+    content:'';
+    position:absolute;
+    inset:0;
+    display:flex;
+    cursor:pointer;
+    z-index:1;
+  }
+}
+</style>

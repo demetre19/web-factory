@@ -1,0 +1,100 @@
+---
+/**
+ * bm-feature-21 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-21.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="feature-21-container">
+    <div class="feature-21-intro">
+      <h2>Start your next Oxygen project with Alpha</h2>
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+    </div>
+    <div class="feature-21-list-wrapper">
+      <div class="feature-21-list-ul list--none">
+        {items.map((it) => (
+          <div class="feature-21-list-card">
+            <div class="feature-21-list-card__content">
+              <h2 class="feature-21-list-card__heading">{it.title}</h2>
+              <p class="feature-21-list-card__text">{it.text}</p>
+            </div>
+            <div class="feature-21-list-card__media">
+              <span class="feature-21-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .feature-21-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .feature-21-intro {
+    padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-l);
+    align-items: center;
+    text-align: center;
+    row-gap: var(--space-m);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .feature-21-list-ul {
+    row-gap: var(--space-s);
+  }
+
+  .feature-21-list-card {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-m);
+  }
+
+  .feature-21-list-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .feature-21-list-card__icon {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    background: var(--bg-subtle);
+    border-radius: 100% 100% 100% 100%;
+  }
+
+  /* bm-custom */
+  .feature-21-intro {
+  	box-shadow: var(--shadow-card)
+  }
+}
+</style>

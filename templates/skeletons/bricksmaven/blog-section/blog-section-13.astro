@@ -1,0 +1,146 @@
+---
+/**
+ * bm-blog-section-13 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (blog-section-13.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="blog-section-13-container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__accent-heading">Accent heading</p>
+      <div class="blog-section-13__search"></div>
+    </div>
+    <div class="blog-section-13-article-list list--none">
+      <div class="blog-section-13-article">
+        <div class="blog-section-13-article__content">
+          <h2 class="blog-section-13-article__heading">{post_title}</h2>
+          <p class="blog-section-13-article__term">{post_terms_category}</p>
+          <div class="blog-section-13-article__excerpt"></div>
+        </div>
+        <div class="blog-section-13-article__media">
+          <figure class="blog-section-13-article__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .blog-section-13-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-section-13-article-list {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+    grid-template-rows: calc(100% * 1 / 2);
+  }
+
+  .blog-section-13-article {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background: var(--bg-subtle);
+  }
+
+  .blog-section-13-article__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    background: var(--bg-subtle);
+    height: 100%;
+    justify-content: center;
+  }
+
+  .blog-section-13-article__heading {
+    font-size: var(--fs-3);
+  }
+
+  .blog-section-13-article__term {
+    font-size: var(--fs-0);
+    padding: .4rem .4rem .4rem .4rem;
+    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
+  }
+
+  .blog-section-13-article__featured-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .blog-section-13-article:first-child {
+  	grid-column: 1/9;
+    grid-row: span 2;
+  }
+  
+  .blog-section-13-article:nth-child(2), .blog-section-13-article:nth-child(3) {
+  	grid-column: 9 / -1;
+  }
+  
+  .blog-section-13-article:nth-child(2) .blog-section-13-article__heading, .blog-section-13-article:nth-child(3) .blog-section-13-article__heading {
+  	font-size: var(--fs-1);
+  }
+  
+  .blog-section-13-article:nth-child(2) .blog-section-13-article__excerpt, .blog-section-13-article:nth-child(3) .blog-section-13-article__excerpt {
+  	display:none;
+  }
+  
+  @media (max-width:767px) {
+  
+  	.blog-section-13-article:first-child {
+        grid-column: 1/-1;
+        grid-row: span 1;
+    }
+  
+    .blog-section-13-article:nth-child(2), .blog-section-13-article:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+    
+    .blog-section-13-article:nth-child(2) .blog-section-13-article__heading, .blog-section-13-article:nth-child(3) .blog-section-13-article__heading {
+  	font-size: var(--fs-3);
+  }
+    
+    .blog-section-13-article:nth-child(2) .blog-section-13-article__excerpt, .blog-section-13-article:nth-child(3) .blog-section-13-article__excerpt {
+      display:block;
+    }
+    
+  }
+
+  /* bm-custom */
+  .blog-section-13-article__featured-image {
+  	aspect-ratio: 1/1;
+  }
+}
+</style>

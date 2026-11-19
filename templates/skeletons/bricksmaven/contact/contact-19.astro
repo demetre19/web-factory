@@ -1,0 +1,135 @@
+---
+/**
+ * bm-contact-19 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (contact-19.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="contact-19-container">
+    <div class="intro">
+      <h2 class="intro__heading">We’d love to hear from you</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+    </div>
+    <div class="contact-19-list-ul list--none">
+      {items.map((it) => (
+        <div class="contact-19-list-card">
+          <h2 class="contact-19-list-card__title">{it.title}</h2>
+          <p class="contact-19-list-card__desc">{it.text}</p>
+          <a class="contact-19-list-card__cta btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+        </div>
+      ))}
+    </div>
+    <div class="contact-19-location">
+      <div class="contact-19-location__box">
+        <div class="intro contact-19-location__intro">
+          <h2 class="intro__heading">Visit Our Stores</h2>
+          <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+          <p class="intro__accent-heading">Contact Us</p>
+        </div>
+      </div>
+      <div class="contact-19-location__media">
+        <figure class="contact-19-location__media-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .contact-19-container {
+    row-gap: var(--space-xl);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-19-list-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .contact-19-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    padding: var(--space-l) var(--space-s) var(--space-l) var(--space-s);
+    align-items: flex-start;
+    border-top: .1rem solid var(--fs-0);
+    border-right: .1rem solid var(--fs-0);
+    border-bottom: .1rem solid var(--fs-0);
+    border-left: .1rem solid var(--fs-0);
+    position: relative;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .contact-19-location {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .contact-19-location__box {
+    display: flex;
+    z-index: 1;
+    background: var(--bg-canvas);
+    padding: var(--space-l) var(--space-m) var(--space-l) var(--space-m);
+    flex-direction: column;
+    align-self: center;
+    row-gap: var(--space-l);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .contact-19-location__intro {
+    align-items: flex-start;
+    text-align: left;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-19-location__media-image {
+    object-fit: cover;
+    height: 35rem;
+    width: 100%;
+  }
+
+  /* bm-custom */
+  .contact-19-list-card::before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    left: var(--space-s);
+    width: 6rem;
+    height: 1rem;
+    background-color: var(--action-primary);
+  }
+}
+</style>

@@ -1,0 +1,224 @@
+---
+/**
+ * bm-feature-73 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-73.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-feature-73__container">
+    <div class="intro">
+      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-accent-heading">Accent heading</p>
+    </div>
+    <div class="bm-feature-73-grid-ul">
+      {items.map((it) => (
+        <div class="bm-feature-73-card">
+          <div class="bm-feature-73-card__content">
+            <h2 class="bm-feature-73-card__heading">{it.title}</h2>
+            <p class="bm-feature-73-card__text">{it.text}</p>
+          </div>
+          <div class="bm-feature-73-card__badge">
+            <p class="bm-feature-73-card__label">{it.text}</p>
+          </div>
+          <div class="bm-feature-service-list">
+            {(it.items || []).map((it2) => (
+              <div class="bm-feature-service-item">
+                <p class="bm-feature-service-item__label clickable-parent">{it2.text}</p>
+                <span class="bm-feature-service-item__icon" data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+          <div class="bm-feature-73-card__footer">
+            <a class="bm-feature-73-card__cta btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-feature-73__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-73-grid-ul {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 1 / 3);
+  }
+
+  .bm-feature-73-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    border-top: 1px solid var(--fs-0);
+    border-right: 1px solid var(--fs-0);
+    border-bottom: 1px solid var(--fs-0);
+    border-left: 1px solid var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    row-gap: var(--flow-spacing);
+    position: relative;
+  }
+
+  .bm-feature-73-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    padding: var(--space-m) 0 0 0;
+  }
+
+  .bm-feature-73-card__badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px var(--space-s) 4px var(--space-s);
+    column-gap: calc(var(--flow-spacing) / 2);
+    background: var(--fs-0);
+    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
+    font-size: var(--fs-0);
+  }
+
+  .bm-feature-73-card__label {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--space-xs) / 2);
+  }
+
+  .bm-feature-service-list {
+    padding: 0 0 0 0;
+  }
+
+  .bm-feature-service-item {
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    display: flex;
+    align-items: center;
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+    border-top: 1px solid var(--fs-0);
+    position: relative;
+  }
+
+  .bm-feature-service-item__label {
+    font-weight: 700;
+  }
+
+  .bm-feature-73-card__footer {
+    margin: auto 0 0 0;
+  }
+
+  /* bm-custom */
+  /* Counter Card */
+  
+  .bm-feature-73-grid-ul {
+    counter-reset: card;
+  }
+  
+  .bm-feature-73-grid-ul .bm-feature-73-card {
+    counter-increment: card;
+  }
+  
+  .bm-feature-73-grid-ul .bm-feature-73-card::before {
+    content: '0' counter(card);
+    position: absolute;
+    inset-inline-end:var(--space-m);
+    inset-block-start: calc(var(--space-s) + var(--space-xs));
+    font-size:calc(var(--fs-4) * 1.6);
+    font-weight: 700;
+    color:var(--fs-0);
+    opacity: 0.2;
+  }
+  
+  
+  /* Counter Badge */
+  
+  .bm-feature-73-grid-ul {
+    counter-reset: badge;
+  }
+  
+  .bm-feature-73-grid-ul .bm-feature-73-card__badge {
+    counter-increment: badge;
+  }
+  
+  .bm-feature-73-grid-ul .bm-feature-73-card__badge::before {
+    content: '0' counter(badge);
+  }
+
+  /* bm-custom */
+  @media (min-width:991px) {
+    
+  /* Shadow */
+  .bm-feature-73-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-feature-73-card:hover, .bm-feature-73-card:focus-within {
+    box-shadow: var(--shadow-card);
+    border-color: var(--fs-0);
+  }
+  
+  }
+  /* Background colord attr */
+  
+  .bm-feature-73-card {
+    background-color: attr(data-bg-color type(<color>));
+  }
+
+  /* bm-custom */
+  .bm-feature-73-card__label::before {
+    content:'•';
+  }
+
+  /* bm-custom */
+  .bm-feature-service-item {
+    transition: 0.2s ease;
+  }
+  
+  
+  /* Label */
+  .bm-feature-service-item:hover .bm-feature-service-item__label, .bm-feature-service-item:focus-within .bm-feature-service-item__label {
+    opacity: 0.7;
+  }
+  
+  .bm-feature-service-item__label {
+    transition: 0.2s ease;
+  }
+  
+  /* Icon */
+  .bm-feature-service-item__icon {
+    transition: 0.2s ease;
+  }
+  
+  .bm-feature-service-item:hover .bm-feature-service-item__icon, .bm-feature-service-item:focus-within .bm-feature-service-item__icon {
+    opacity: 0.7;
+    transform: translateX(calc(var(--space-s) * -1));
+  }
+}
+</style>

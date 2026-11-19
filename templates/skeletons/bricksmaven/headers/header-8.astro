@@ -1,0 +1,82 @@
+---
+/**
+ * bm-header-8 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (header-8.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string;
+             label?: string; href?: string;
+             items?: any[] }[];
+}
+const {
+  heading = 'Section heading',
+  fs = 'The first sentence a reader needs.',
+  cta, items = [],
+} = Astro.props;
+---
+
+<div>
+  <div class="bm-header-8__topbar">
+    <div class="bm-menu-right bm-header-8__menu-top"></div>
+  </div>
+  <div class="bm-header-8__container">
+    <div class="bm-header-8__brand">
+      <img class="bm-header-8__brand-logo"></img>
+    </div>
+    <div class="bm-header-8__nav-wrapper">
+      <div class="bm-header-8__menu"></div>
+    </div>
+    <div class="bm-header-8__right">
+      <div class="header-8__search"></div>
+      <span class="bm-bm-header-8__icon" data-icon="lucide" aria-hidden="true"></span>
+      <span class="bm-bm-header-8__icon" data-icon="lucide" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+@layer components {
+  .bm-header-8 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-8__topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    border-bottom: .1rem solid var(--bg-subtle);
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-8__container {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-header-8__brand {
+    width: auto;
+  }
+
+  .bm-header-8__right {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    justify-content: flex-end;
+  }
+
+  /* bm-custom */
+  .bm-header-8__menu-top .bricks-nav-menu {
+  	gap: var(--flow-spacing);
+  }
+}
+</style>
