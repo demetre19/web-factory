@@ -59,4 +59,37 @@ Then, in order (per `research/WEB-FACTORY-S5-DESIGN-DNA.md`):
   fetches anywhere in `src/`.
 - Real mobile menu: hamburger → focus-trapped, Escape-dismissible panel
   (vanilla inline script, no framework runtime).
-- Footer carries a site map + schema.org NAP block — not placeholders.
+- `MobileCTA.astro` — mobile-only bottom action bar (<768px,
+  suppressed on the contact route, safe-area padded, z-index below
+  the menu overlay): two 48px buttons — Call (`tel:`) + Get a quote.
+  `main` carries matching bottom padding in `global.css`.
+- `src/pages/404.astro` — designed 404: brand shell, H1, company
+  description, nav links + call CTA, `robots` noindex.
+- Heading surface — `.seo-h1/.seo-h2/.seo-h3` render a heading at a
+  smaller fluid step than its rank; `.display` is the oversized
+  non-heading marketing line. Semantic rank never follows visual size.
+- Hero module — `index.astro` models the fold quad: H1 (what/who) +
+  standfirst (pain → offer) + primary CTA + `wf-trust-strip`. Every
+  built page template renders the same four parts (S5 spec).
+- Mobile-usability floors — `input/select/textarea` ≥16px (no iOS
+  input zoom), `scroll-padding-top` clears the sticky header, drawer
+  bottom padding covers `safe-area-inset-bottom`, body prose caps at
+  75ch with `text-wrap: pretty`.
+- Design bans — the impeccable anti-pattern list is a S5 self-lint
+  + S7 check 23 refuse: gradient text, decorative glassmorphism,
+  side-stripes, ghost-cards, >16px card radii, stripe backgrounds,
+  sketch filters, bounce easing, eyebrow/numbered scaffolding,
+  hero-metric template, `z-index` ≥999.
+- SEO surface: `SEOHead.astro` emits the full OG + twitter card set
+  (default `og:image` = `/og-image.png`, generated from
+  `src/og/og-image.svg`); `JsonLd.astro` emits the @graph entity JSON-LD
+  (business node + WebSite + breadcrumbs + Service/Article/FAQPage).
+- Footer carries four regions: company description (verbatim from
+  `site.description`), `SocialLinks`, the grouped HTML sitemap
+  (`site.sitemap`), and the `itemscope` NAP block — labels are spans,
+  never headings.
+- A11y floors: skip link to `#main` in `BaseLayout`, landmark labels,
+  `:focus-visible` outlines, `prefers-reduced-motion` guard and
+  `overflow-x: clip` in `global.css`.
+- `_headers` cache matrix: `/_astro/` + `/assets/` immutable,
+  stable-URL `public/` assets `must-revalidate`, HTML `max-age=0`.

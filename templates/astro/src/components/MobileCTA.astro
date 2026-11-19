@@ -1,0 +1,79 @@
+---
+import { site } from '../site';
+
+// Mobile-only bottom action bar per the S5 shell contract:
+// full-width two-button strip pinned to the viewport bottom —
+// Call (tel: → site.phone) + Get a quote (→ contact route).
+// Rendered <768px only; display:none ≥768px; suppressed on the
+// contact route itself. Safe-area padded, z-index below the menu
+// overlay; <main> carries matching bottom padding in global.css.
+interface Props {
+  /** Current route path — used to suppress on the contact page. */
+  path?: string;
+}
+const { path = '/' } = Astro.props;
+const isContact = path.includes('contact');
+const tel = site.phone.replace(/[^0-9+]/g, '');
+const contactPath =
+  site.nav.find((n) => n.path.includes('contact'))?.path ?? '/contact/';
+---
+
+{tel && !isContact && (
+  <nav class="wf-mobile-cta" aria-label="Quick actions">
+    <a class="wf-mobile-cta-btn" href={`tel:${tel}`}
+       aria-label={`Call ${site.name}`}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07
+          19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2
+          2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09
+          9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573
+          2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      <span>Call</span>
+    </a>
+    <a class="wf-mobile-cta-btn" href={contactPath}
+       aria-label={`Get a quote from ${site.name}`}>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/>
+      </svg>
+      <span>Get a quote</span>
+    </a>
+  </nav>
+)}
+
+<style>
+  .wf-mobile-cta {
+    display: none;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 30; /* below the menu overlay (z 40/50) */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--c-paper);
+    border-top: 1px solid var(--c-muted);
+  }
+  .wf-mobile-cta-btn {
+    flex: 1;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: var(--fs-0);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--c-ink);
+  }
+  .wf-mobile-cta-btn:first-child {
+    background: var(--c-accent);
+    color: var(--c-paper);
+  }
+  @media (max-width: 767.98px) {
+    .wf-mobile-cta { display: flex; }
+  }
+</style>

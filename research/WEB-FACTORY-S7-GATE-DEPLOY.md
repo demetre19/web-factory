@@ -211,18 +211,30 @@ is not consent).
 | 3 | Meta description | every page `<meta name="description">` 140–160 chars, unique across routes |
 | 4 | Canonical | every page `<link rel="canonical">` = `url` + route path |
 | 5 | H1 | exactly one `<h1>` per page |
-| 6 | OG tags | every page carries `og:title`, `og:description`, `og:url`, `og:type` |
+| 6 | OG + social | every page carries `og:title`, `og:description`, `og:url`, `og:type`, `og:site_name`, `og:image` (absolute `url`-origin URL, `og:image:width`/`height` present) + `twitter:card`/`twitter:image` |
 | 7 | sitemap.xml | emitted, lists every route exactly once, URLs canonical-prefixed |
 | 8 | robots.txt | emitted at `dist/robots.txt`, references the sitemap |
-| 9 | Internal links | every `href="/…"` resolves to a built route — zero broken targets |
+| 9 | Internal links | every `href="/…"` resolves to a built route — zero broken targets; every `social_profiles` URL appears in footer markup; anchor text names the target page's H1 or a close variant — no directional-text anchors (`click here`, `this page`, `learn more`, `read more`) |
 | 10 | Self-containment | no `src`/`href` fetches remote `http(s)://` assets outside `url`'s origin (fonts, scripts, styles) — S5's rule re-verified at the artifact |
-| 11 | Image alt | every `<img>` carries a non-empty `alt` |
+| 11 | Image alt | every `<img>` carries a non-empty `alt` (or `alt=""` marked decorative), intrinsic `width`/`height`, and `srcset` when raster |
 | 12 | CTA endpoints | every `<form action>` resolves to a same-site route or an endpoint declared in `site-brief.md` or by S6's stage output — a form posting nowhere is the dead-CTA defect shipped |
-| 13 | Heading levels | no skipped levels per page (`h2`→`h4` without `h3`) |
+| 13 | Heading levels | no skipped levels per page (`h2`→`h4` without `h3`); shell components contribute no phantom headings (footer labels are not heading elements) |
+| 14 | JSON-LD | every page's `ld+json` parses; `@graph` includes the business node (`LocalBusiness`/`Organization`) with `url` = canonical `url` and `sameAs` = `social_profiles`; money pages carry `Service`, articles carry `Article`, non-root pages carry `BreadcrumbList`, `faq: yes` routes carry `FAQPage` whose Q/As match the rendered `<details>` items; no `AggregateRating`/`Review` node exists without `review_source` data |
+| 15 | JS containment | no `client:*`-hydrated framework runtime beyond `DESIGN-DNA.md`-declared islands; no `is:inline`/`define:vars`/`<script src>`/`@import url(`; emitted `.js` outside `/_astro/` fails |
+| 16 | A11y shell | body opens on a skip link to `#main`; exactly one `<main>`, `<header>`, `<footer>`; every `<nav>` carries `aria-label`; `aria-expanded`/`aria-controls` pairs resolve; icon-only controls have `aria-label` |
+| 17 | Responsive floors | `<meta name="viewport">` present, no `user-scalable=no`/`maximum-scale`; `main`/`body` clips overflow-x with zero *text* clipping (no horizontal scroll, no truncated headings at 320–1440px); grid staircases collapse per `design-dna`; touch targets ≥44×44px on nav/menu/CTA; `MobileCTA` action bar present at <768px (`tel:` + page-class CTA, ≥48px rows), absent on the contact route; form controls compute ≥16px font-size; no `100vh` without `dvh`/`svh` fallback; nothing required is hover-only; `scroll-padding-top` clears the sticky header |
+| 18 | Footer surface | every page's footer renders the company-description paragraph (verbatim from `site/company-description.md`), the social links, the HTML sitemap (its site-map `href`s cover every built route), and the NAP `itemscope` block |
+| 19 | Cache policy | `_headers`/`.htaccess` rows exist: `/_astro/*` + fingerprinted assets `immutable`; `/*.png`/`*.svg`/`favicon*`/`og-image.png` `must-revalidate`; HTML `max-age=0` |
+| 20 | Weight budget | per page, emitted bytes: HTML ≤150 KB; first-load transfer ≤500 KB; JS ≤100 KB; CSS ≤60 KB; hero image ≤150 KB; fonts WOFF2, ≤4 files — overage rows in the report, never a silent pass |
+| 21 | Ancillary surface | `404.html` emitted with brand shell + onward links; `/terms/` + `/privacy/` routes exist per the ancillary matrix; no directional text (`click here`, `read more`, `learn more`) appears as anchor or button label anywhere in `dist/` |
+| 22 | Fold quad | every page's opening block answers the four questions in DOM order before the first `h2`: `h1` carries what/who (primary keyword), the first `<p>` names the page's bound pain → offer, a trust line from the profile bank or `site-brief.md` is present (ancillary pages may omit), and the hero CTA resolves to the row's `cta` destination |
+| 23 | Design bans | `dist/` CSS/HTML carries none of the banned anti-pattern classes: no `background-clip: text` gradients, decorative `backdrop-filter` glassmorphism, side-stripe borders, 1px-border+≥16px-shadow ghost-cards, card `border-radius` >16px, `repeating-linear-gradient` stripes, sketch/doodle SVG filters, bounce/elastic timing functions, repeated eyebrow/numbered scaffolding, hero-metric template, `z-index` ≥999; exceptions exist only where `DESIGN-DNA.md` names them |
 
-Check 12 is the factory's end-to-end proof: it is the only check that
-verifies S6 actually ran — a green S7 gate on a site S6 never
-touched refuses on dead forms, which is the correct outcome.
+Checks 12 and 14 are the factory's end-to-end proofs: check 12 is the
+only check that verifies S6 actually ran — a green gate on a site S6
+never touched refuses on dead forms; check 14 is the only check that
+verifies the entity graph S5's shell contract promises — an
+unparseable block or a business node missing its `sameAs` refuses.
 
 ## Output — `site/seo-gate-report.md` + `site/deploy-report.md`
 

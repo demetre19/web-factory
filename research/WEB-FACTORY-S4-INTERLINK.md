@@ -144,6 +144,15 @@ One file, one table, one row per edge:
    re-placed as `body` where an anchor exists, or flagged in `## Notes`
    for operator review — never silently dropped.
 
+8. **Anchors name the target.** Every edge's anchor text is the
+   target page's H1 or a close variant of it (rule 11 — anchor =
+   destination title). Directional text (`click here`, `this page`,
+   `learn more`, `read more`) is banned anchor class wherever it
+   appears — seed or body copy — and is rewritten to the target's
+   title form at injection, noted in `## Notes`. An `added` edge's
+   anchor comes from the target's `primary_keyword` family (§Contested
+   — the same rule, applied to computed edges).
+
 ## Output 2 — `site/content/*.md` mutated (apply lane, injection phase)
 
 Injection executes `link-graph.md` against the corpus:
@@ -219,13 +228,16 @@ contract S5 counts against.
 ### What cleanup never touches
 
 - **Frontmatter fields** — `title`, `description`, `slug`, `path`,
-  `type`, `primary_keyword` are copied byte-for-byte. They are
+  `type`, `primary_keyword`, `faq`, `og_image`, `images`,
+  `pain_point` are copied byte-for-byte. They are
   writing decisions S3 owns and S5 binds on.
 - **Link targets.** Every injected `[anchor](<row.path>)` keeps its
   path. Edge count between `content/` and `content-final/` is
   invariant — cleanup may reword an anchor (rule 4) but never adds,
   drops, or retargets a link.
-- **Entity facts.** Name, service list, area, phone, credentials —
+- **Entity facts.** Name, service list, area, phone, credentials,
+  social profile URLs, and the `/about/` page's embedded
+  `company-description.md` paragraph —
   `site-brief.md` verbatim strings survive; cleanup flags a sentence
   it cannot de-tell without altering a fact rather than touching it.
 - **Heading skeleton.** No H2 added, dropped, or reordered — S3's

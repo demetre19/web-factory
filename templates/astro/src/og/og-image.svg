@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!--
+    Default og-image template — the S5 build lane rasterizes this to
+    public/og-image.png (1200×630) at build time. Replace tokens:
+    {{BRAND}}, {{CATEGORY}} (gbp_primary_category), {{AREA}} (service
+    area), colors from TOKENS.json. Keep text ≥24px for card previews.
+  -->
+  <rect width="1200" height="630" fill="#1a56db"/>
+  <text x="80" y="300" font-family="system-ui, sans-serif" font-size="72" font-weight="700" fill="#ffffff">{{BRAND}}</text>
+  <text x="80" y="380" font-family="system-ui, sans-serif" font-size="40" fill="#dbeafe">{{CATEGORY}} · {{AREA}}</text>
+</svg>

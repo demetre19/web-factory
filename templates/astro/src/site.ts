@@ -8,6 +8,13 @@ export interface NavItem {
   path: string;
 }
 
+export interface SocialProfile {
+  /** Display label — e.g. "Facebook", "Instagram". */
+  label: string;
+  /** Profile URL — from site-brief.md `social_profiles`. */
+  url: string;
+}
+
 export interface SiteFacts {
   name: string;
   /** Canonical origin — must equal astro.config.mjs `site`. */
@@ -16,6 +23,15 @@ export interface SiteFacts {
   email: string;
   address: string;
   nav: NavItem[];
+  /** Full route list for the footer's HTML sitemap — the build lane
+      fills this from sitemap.md grouped by pillar/cluster. */
+  sitemap: { label: string; path: string; group?: string }[];
+  /** Social profiles — footer + /about/ + JSON-LD sameAs all render this list. */
+  social: SocialProfile[];
+  /** Site-relative brand logo path (e.g. "/logo.svg") — feeds JSON-LD `image`/`logo`. */
+  logo?: string;
+  /** One-paragraph company description — verbatim from site/company-description.md. */
+  description: string;
 }
 
 export const site: SiteFacts = {
@@ -30,4 +46,8 @@ export const site: SiteFacts = {
     { label: 'About', path: '/about/' },
     { label: 'Contact', path: '/contact/' },
   ],
+  sitemap: [],
+  social: [],
+  logo: '/favicon.svg',
+  description: '',
 };

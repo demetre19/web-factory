@@ -1,25 +1,60 @@
 ---
 import { site } from '../site';
+import SocialLinks from './SocialLinks.astro';
 
-// Complete footer per the S5 spec: site map (every route) + NAP/contact
-// block. Facts come from src/site.ts — the build lane fills them from
-// site-brief.md. `itemscope` keeps the NAP machine-readable.
+// The closing surface per the S5 shell contract: company description,
+// social links, the HTML sitemap (every route — the footer IS the
+// site's HTML sitemap), NAP microdata. Shell labels are spans, never
+// headings — footer headings would pollute the page's H2 sequence.
 const year = new Date().getFullYear();
+const groups = new Map<string | undefined, typeof site.sitemap>();
+for (const item of site.sitemap) {
+  const key = item.group;
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(item);
+}
 ---
 
 <footer class="wf-footer">
   <div class="wf-container wf-footer-grid">
+    <div class="wf-footer-brand">
+      <span class="wf-footer-heading">{site.name}</span>
+      {site.description && <p class="wf-footer-desc">{site.description}</p>}
+      <SocialLinks />
+    </div>
+
     <nav class="wf-footer-sitemap" aria-label="Site map">
-      <h2 class="wf-footer-heading">Site map</h2>
-      <ul>
-        {site.nav.map((item) => (
-          <li><a href={item.path}>{item.label}</a></li>
-        ))}
-      </ul>
+      <span class="wf-footer-heading">Site map</span>
+      {site.sitemap.length > 0 ? (
+        [...groups.entries()].map(([group, items]) => (
+          group ? (
+            <details class="wf-footer-group">
+              <summary>{group}</summary>
+              <ul>
+                {items.map((item) => (
+                  <li><a href={item.path}>{item.label}</a></li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <ul>
+              {items.map((item) => (
+                <li><a href={item.path}>{item.label}</a></li>
+              ))}
+            </ul>
+          )
+        ))
+      ) : (
+        <ul>
+          {site.nav.map((item) => (
+            <li><a href={item.path}>{item.label}</a></li>
+          ))}
+        </ul>
+      )}
     </nav>
 
     <address class="wf-footer-nap" itemscope itemtype="https://schema.org/LocalBusiness">
-      <h2 class="wf-footer-heading">Contact</h2>
+      <span class="wf-footer-heading">Contact</span>
       <meta itemprop="name" content={site.name} />
       <span itemprop="address">{site.address}</span>
       <a itemprop="telephone" href={`tel:${site.phone.replace(/[^0-9+]/g, '')}`}>{site.phone}</a>
@@ -39,10 +74,15 @@ const year = new Date().getFullYear();
     grid-template-columns: 1fr; padding-block: var(--sp-fluid-m);
   }
   @media (min-width: 640px) {
-    .wf-footer-grid { grid-template-columns: 1fr 1fr; }
+    .wf-footer-grid { grid-template-columns: repeat(2, 1fr); }
   }
-  .wf-footer-heading { font-size: var(--fs-1); }
+  @media (min-width: 900px) {
+    .wf-footer-grid { grid-template-columns: 2fr 2fr 1fr; }
+  }
+  .wf-footer-heading { font-size: var(--fs-1); font-weight: 600; display: block; margin-block-end: 0.5rem; }
+  .wf-footer-desc { max-width: 60ch; margin-block-end: 1rem; }
   .wf-footer-sitemap ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .wf-footer-group summary { cursor: pointer; font-weight: 600; padding-block: 0.5rem; }
   .wf-footer-nap { font-style: normal; display: flex; flex-direction: column; gap: 0.5rem; }
   .wf-footer a { color: var(--c-ink); }
   .wf-footer-legal { padding-block: 1rem; color: var(--c-muted); }

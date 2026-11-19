@@ -1,0 +1,109 @@
+---
+import { site } from '../site';
+
+// The single emit point for structured data — one @graph rooted at
+// the business entity, per the S5 shell contract. Page-level nodes
+// reference the business `@id`; never parallel island JSON-LD.
+interface Props {
+  /** Route path (e.g. "/services/dent-removal/"). */
+  path?: string;
+  /** Page title — for Service/Article nodes. */
+  title?: string;
+  /** Meta description — for Service/Article nodes. */
+  description?: string;
+  /** sitemap `page_class` — drives Service/Article node choice. */
+  pageClass?: 'money' | 'article' | 'ancillary' | string;
+  /** Breadcrumb trail — [{ name, path }] root→leaf, built from sitemap parent chain. */
+  breadcrumbs?: { name: string; path: string }[];
+  /** FAQ Q/A pairs — only on `faq: yes` routes; generated from the same markup. */
+  faq?: { q: string; a: string }[];
+}
+
+const {
+  path = '/',
+  title,
+  description,
+  pageClass,
+  breadcrumbs = [],
+  faq = [],
+} = Astro.props;
+
+const origin = site.origin.replace(/\/$/, '');
+const pageUrl = `${origin}${path}`;
+
+const business: Record<string, unknown> = {
+  '@type': site.address ? 'LocalBusiness' : 'Organization',
+  '@id': origin,
+  name: site.name,
+  url: origin,
+  telephone: site.phone || undefined,
+  email: site.email || undefined,
+  address: site.address || undefined,
+  description: site.description || undefined,
+  logo: site.logo ? `${origin}${site.logo}` : undefined,
+  sameAs: site.social.length ? site.social.map((p) => p.url) : undefined,
+};
+
+const graph: Record<string, unknown>[] = [
+  business,
+  {
+    '@type': 'WebSite',
+    '@id': `${origin}#website`,
+    url: origin,
+    name: site.name,
+    publisher: { '@id': origin },
+  },
+];
+
+if (breadcrumbs.length > 0) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: `${origin}${crumb.path}`,
+    })),
+  });
+}
+
+if (pageClass === 'money' && title) {
+  graph.push({
+    '@type': 'Service',
+    '@id': `${pageUrl}#service`,
+    name: title,
+    description: description || undefined,
+    provider: { '@id': origin },
+    url: pageUrl,
+  });
+}
+
+if (pageClass === 'article' && title) {
+  graph.push({
+    '@type': 'Article',
+    '@id': `${pageUrl}#article`,
+    headline: title,
+    description: description || undefined,
+    author: { '@id': origin },
+    publisher: { '@id': origin },
+    mainEntityOfPage: pageUrl,
+  });
+}
+
+if (faq.length > 0) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${pageUrl}#faq`,
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  });
+}
+
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<script type="application/ld+json" set:html={json} />

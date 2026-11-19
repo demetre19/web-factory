@@ -130,8 +130,14 @@ The capability manifest. Committed, secret-free — it names env var
       "needs_env": [],
       "degrade_to": "netlify-style _headers file in public/",
       "security": ["see §Security headers"]
+    },
+    "cache_policy": {
+      "status": "pending | live",
+      "transport": "apache .htaccess | nginx conf | _headers",
+      "needs_env": [],
+      "degrade_to": "netlify-style _headers file in public/",
+      "security": ["see §Cache policy"]
     }
-  }
 }
 ```
 
@@ -266,6 +272,25 @@ command S7 will run (`curl -sI https://<domain>/`). A header that
 needs a value the CSP forbids (e.g. an operator-supplied analytics
 script) is a flag in the report, never a silent policy weakening.
 
+## Cache policy (`cache_policy`)
+
+One `Cache-Control` matrix, emitted alongside the security headers in
+the same config files (`.htaccess`/`nginx` + mirrored into
+`public/_headers`):
+
+| Path | Header | Why |
+|---|---|---|
+| `/_astro/*` | `public, max-age=31536000, immutable` | Astro fingerprinted bundles (hashed CSS/JS/processed images) — forever-cacheable, filename changes on content change |
+| `/assets/*` and any `src/assets/`-emitted path | `public, max-age=31536000, immutable` | `astro:assets` output is fingerprinted the same way |
+| `/*.png`, `/*.svg`, `/*.ico`, `/favicon*`, `/og-image.png` — `public/` stable URLs | `public, max-age=86400, must-revalidate` | referenced by URL from outside (OG scrapers, favicon caches, social crawlers) — they must stay fetchable at the same path after every deploy, so they can never ride the immutable policy |
+| HTML (everything else) | `public, max-age=0, must-revalidate` | the symlink-flip deploy model serves new HTML instantly; stale HTML defeats atomic releases |
+
+The audit-flagged defect this kills: `public/*` assets under the
+immutable policy — an `og-image.png` regenerated on re-brand would
+serve the stale card to every scraper for a year. Stable URL =
+revalidate, fingerprinted = immutable; the rule is mechanical, the
+report table rows it.
+
 ## Env/key manifest handling
 
 `.env.sample` lands at `sites/<slug>/.env.sample` — every key the
@@ -294,7 +319,7 @@ panel's env UI); `form.php` reads `getenv()` only. Rules:
    the S5 output's contact page markup (confirm the `<form>`
    contract above — action, fields, honeypot).
 2. **Create/complete the registry.** Write
-   `site/integrations.json` with the four capability rows; honor
+   `site/integrations.json` with the five capability rows; honor
    operator-pinned transports, default the rest as above.
 3. **Resolve env.** Probe every `needs_env` key once; record
    present/absent (never values) per capability.
@@ -326,7 +351,7 @@ panel's env UI); `form.php` reads `getenv()` only. Rules:
 
 The S6 done-criteria the coordinator checks before minting S7:
 
-- `site/integrations.json` parses, carries all four capability
+- `site/integrations.json` parses, carries all five capability
   rows, and contains no value-looking string.
 - `site/INTEGRATIONS.md` is non-empty with a verdict per
   capability and the present/absent env table.

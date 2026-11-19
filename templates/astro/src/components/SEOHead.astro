@@ -2,6 +2,7 @@
 // The SEO contract S7's gate greps. Every page renders this via
 // BaseLayout; frontmatter (title, description) is copied from
 // content-final/<slug>.md — never rewritten by the build lane.
+import { site } from '../site';
 interface Props {
   /** <title> content — from frontmatter `title`. */
   title: string;
@@ -10,25 +11,48 @@ interface Props {
   /** Route path from frontmatter `path` (e.g. "/services/dent-removal/").
       Canonical/OG URLs are derived from it + astro.config `site`. */
   path?: string;
-  /** Absolute or site-relative OG image URL. Omit = no og:image. */
+  /** Absolute or site-relative OG image URL. Default: /og-image.png. */
   image?: string;
+  /** OG image pixel dimensions — required for og:image:width/height. */
+  imageWidth?: number;
+  imageHeight?: number;
   /** robots meta — defaults to index,follow; utility routes may noindex. */
   robots?: string;
   /** og:type — "website" default, "article" for article routes. */
   ogType?: string;
+  /** og:site_name — defaults to site.name. */
+  siteName?: string;
+  /** og:locale — BCP-47-ish og locale (e.g. en_AU). */
+  locale?: string;
+  /** twitter:site handle (e.g. "@brand") — from social_profiles when present. */
+  twitterSite?: string;
+  /** ISO dates for article:* tags on article routes. */
+  publishedTime?: string;
+  modifiedTime?: string;
+  /** Pre-built JSON-LD string (JsonLd.astro output) — rendered as the
+      page's single ld+json block. */
+  jsonLd?: string;
 }
 
 const {
   title,
   description,
   path = '/',
-  image,
+  image = '/og-image.png',
+  imageWidth = 1200,
+  imageHeight = 630,
   robots = 'index,follow',
   ogType = 'website',
+  siteName = site.name,
+  locale = 'en_AU',
+  twitterSite,
+  publishedTime,
+  modifiedTime,
+  jsonLd,
 } = Astro.props;
 
 const canonical = new URL(path, Astro.site);
-const ogImage = image ? new URL(image, Astro.site) : undefined;
+const ogImage = new URL(image, Astro.site);
 const fullTitle = title; // site-name suffix policy is the build lane's call
 ---
 
@@ -41,9 +65,22 @@ const fullTitle = title; // site-name suffix policy is the build lane's call
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical.href} />
-{ogImage && <meta property="og:image" content={ogImage.href} />}
+<meta property="og:image" content={ogImage.href} />
+<meta property="og:image:width" content={String(imageWidth)} />
+<meta property="og:image:height" content={String(imageHeight)} />
+{siteName && <meta property="og:site_name" content={siteName} />}
+<meta property="og:locale" content={locale} />
+{ogType === 'article' && publishedTime && (
+  <meta property="article:published_time" content={publishedTime} />
+)}
+{ogType === 'article' && modifiedTime && (
+  <meta property="article:modified_time" content={modifiedTime} />
+)}
 
-<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-{ogImage && <meta name="twitter:image" content={ogImage.href} />}
+<meta name="twitter:image" content={ogImage.href} />
+{twitterSite && <meta name="twitter:site" content={twitterSite} />}
+
+{jsonLd && <script type="application/ld+json" set:html={jsonLd} />}

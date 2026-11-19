@@ -26,11 +26,17 @@ S1 sitemap.md ──> S2 tone-profile.md + content-plan.md
                               S5 design-dna (Astro build consumes copy)
 ```
 
-- **Upstream contract:** S2 produces both artifacts. `content-plan.md`
-  rows carry `slug`, `path`, `type`, `primary_keyword`,
-  `secondary_keywords`, `intent`, `word_target`, `heading_skeleton`,
-  `link_seed`, `cta`. `## Writer batches` groups rows into named lane
-  assignments with money batches first.
+- **Upstream contract:** S2 produces all four artifacts.
+  `content-plan.md` rows carry `slug`, `path`, `type`,
+  `primary_keyword`, `secondary_keywords`, `intent`, `word_target`,
+  `heading_skeleton`, `link_seed`, `cta`, `media`, `faq`, `og_image`,
+  `pain_point`. `## Writer batches` groups rows into named lane
+  assignments with money batches first. `site/customer-profile.md`
+  supplies the personas, pain-point texts, CRO bank (headline
+  directions, USP framings, subheads, trust variations, emotional
+  hooks, differentiators), and the four-question fold contract —
+  writers lift from the bank in voice, never extend it with facts the
+  brief lacks.
 - **Downstream contract:** S4 resolves each `link_seed` anchor against
   the plan, injects final links into `content/*.md`, and emits
   `content-final/`. S5 maps each `content/<slug>.md` to its `path` in
@@ -45,6 +51,8 @@ S1 sitemap.md ──> S2 tone-profile.md + content-plan.md
 | `site/tone-profile.md` | S2 stage output | YES — no writer lane mints without it |
 | `site/sitemap.md` | S1 stage output | YES — row-count precondition |
 | `site/site-brief.md` | NEW-WEBSITE intake | YES — entity, geography, service facts writers must not invent |
+| `site/company-description.md` | S2 stage output | YES when the plan carries an `/about/` row — the writer embeds it verbatim |
+| `site/customer-profile.md` | S2 stage output | YES — the row's `pain_point` persona is the page's audience; the bank is the hook/trust vocabulary |
 
 The writer lane reads all inputs from the run's shared `site/` folder —
 the run folder is the artifact of record, same convention as S2's read
@@ -59,6 +67,10 @@ The run refuses to mint any writer lane until:
    at mint time — a stale plan silently shrinks the site otherwise).
 3. Every plan row appears in exactly one `## Writer batches` batch.
 4. Each batch carries a proposed lane slug `web-writer-<site>-b<N>`.
+5. `site/company-description.md` exists when the plan carries an
+   `/about/` row — S3 cannot write the about page without it.
+6. `site/customer-profile.md` exists — no lane writes copy with no
+   audience document, and every row's `pain_point` ID must resolve.
 
 ## Output — `site/content/<slug>.md`
 
@@ -75,6 +87,11 @@ slug: <plan row slug>
 path: <plan row path>
 type: money | article | utility     # utility = sitemap `page_class: ancillary` alias (PRD D10)
 primary_keyword: <verbatim from plan row>
+faq: yes | no                        # verbatim from plan row
+og_image: default | <site-relative path or absolute URL>
+images:                              # one line per `media` slot; `none` → omit block
+  <slot-id>: <final alt text — the writer's deliverable, not the plan's seed>
+pain_point: <verbatim from plan row — `PP-<n> (<persona>)`>
 ---
 
 # <H1 — primary keyword carried naturally>
@@ -105,6 +122,88 @@ both consume them.
     paragraphs.
   - `commercial`/`transactional` (money pages) — benefit / process /
     proof / service-detail H2s; never disguised-article form.
+- **Featured-snippet posture.** Every H2 section opens with a 40–60
+  word paragraph that directly answers the heading's implicit
+  question *before* any elaboration — the answer block is what AI
+  answer surfaces and snippet extraction pull (PRD R2). Question-
+  format H2s answer in the first sentence; the elaboration follows.
+  Money pages keep this posture on informational subsections ("How
+  much does it cost?" gets the price shape up front, then the
+  qualifiers).
+- **FAQ module.** A `faq: yes` row carries an FAQ H2 whose questions
+  are `### ` sub-headings phrased as the user asks them, each
+  followed by one direct answer paragraph (≤80 words, answer first).
+  S5 renders these as `<details>` and generates FAQPage JSON-LD from
+  the same markup — the Q/A pairs must therefore be parseable: one
+  H3 = one question, the paragraph(s) beneath it = the answer, no
+  interleaved content.
+- **Outline coherence.** The heading vector reads as a nested
+  outline: every H3 is a sub-part of the H2 above it, every H4 a
+  sub-part of its H3 — never a new topic bolted under an unrelated
+  parent. The skeleton's ordering already encodes the parent/child
+  intent; a writer's appended heading must declare which parent it
+  extends by position.
+
+### Conversion contract — Rule of One, AIDA, the fold quad
+
+Every page is written *for* the persona its `pain_point` names:
+
+- **Rule of One.** One customer, one idea, one call to action per
+  page. The page's single idea is the persona's bound pain mapped to
+  the offer; secondary pains may appear as list items, never as
+  competing ideas. One `cta` phrasing per page, repeated — never two
+  different CTAs competing on one page.
+- **AIDA spine (money pages).** Section order follows Attention
+  (hero + the pain) → Interest (what the service does) → Desire
+  (proof, outcomes, differentiators) → Action (the CTA close). The
+  skeleton's commercial H2 order already encodes it — the writer
+  fills, never restructures. Articles keep their question-answer
+  skeleton; AIDA is the money-page posture.
+- **The fold quad — four answers above the fold.** Every page's
+  opening block (H1 + the first paragraph + the hero's CTA + the
+  trust line) answers, in the reader's first screen:
+  1. *Am I in the right place?* — H1 says what + who.
+  2. *Can you solve my problem?* — the opening paragraph names the
+     bound pain → offer (this doubles as the featured-snippet
+     answer-first block).
+  3. *Can I trust you?* — one trust line lifted or adapted from the
+     profile's trust bank (credentials only what `site-brief.md`
+     supports; no invented reviews/numbers — the `review_source`
+     gate applies here too).
+  4. *What do I do next?* — the hero CTA, phrased per the row's `cta`.
+  S5 renders these four as the hero module's parts; S7 check 22
+  verifies them in the DOM. Ancillary pages relax 3–4 to whatever
+  the type warrants.
+- **Bank usage.** Hook sentences, USP framings, subheadings, trust
+  variations, and differentiators may be lifted from
+  `customer-profile.md`'s CRO bank verbatim or adapted in voice —
+  the bank exists to be spent. Adaptations keep the sentence-level
+  contract (14 rules) and never import facts the brief lacks.
+
+### Sentence contract — the 14 writing rules
+
+Every page's prose satisfies this sentence-level contract (the
+operator's bound checklist; rules 9 and 12 are already the
+featured-snippet posture above — the rest add to it). S4's cleanup
+re-checks classes it can detect mechanically; the writer's self-lint
+owns the judgment classes.
+
+| # | Rule | Bound statement |
+|---|---|---|
+| 1 | Word sequence | lead with the entity + key attribute before secondary detail — "PDR is a paintless repair method…" not background-first |
+| 2 | Certainty | declaratives only; no "should/will/might" hedging about facts — state outcomes or omit them |
+| 3 | No fluff | every word carries meaning; remove fillers, pleonasms, throat-clearing |
+| 4 | Numeric values | prefer counts over vague quantifiers — "5 symptoms" not "several" |
+| 5 | Qualified instances | qualify enumerations with descriptors — "5 severe symptoms", not bare "symptoms" |
+| 6 | Verb context | verbs match the entity's domain — improve/increase for outcomes, develop for skills |
+| 7 | Examples after plural nouns | follow plural nouns with concrete named examples |
+| 8 | Uniform list grammar | every list keeps one part-of-speech pattern per item |
+| 9 | Subordinate first sentence | every H2's first sentence answers the heading directly |
+| 10 | "If" second | conditions trail the claim — "X happens, if Y" not "If Y, X" |
+| 11 | Anchor = target title | link anchor text names the destination page's H1 or its close variant — never directional text ("click here", "this page", "learn more") and never a paraphrase that misdescribes the target |
+| 12 | No delayed answer | the answer arrives inside the opening block — never after a paragraph of preamble |
+| 13 | Bold the answer, not the term | `**` wraps the answer string (the entity/definition/detail that resolves the query), not the keyword |
+| 14 | Entity + semantic vocabulary | domain terms and related entities come from `site-brief.md` + `secondary_keywords` — invented synonyms for core terms are a voice violation |
 
 ### Money page vs article page
 
@@ -123,6 +222,24 @@ The `type` column selects the writer posture:
 `utility` rows (sitemap `page_class: ancillary` under the plan alias)
 follow money-page heading rules with `word_target ≤400`
 and no proof requirement.
+
+The `/about/` row is special-cased: its body embeds
+`site/company-description.md`'s paragraph **verbatim** (the
+`## Provenance` block does not ship), then extends it with the
+supporting copy the plan's `heading_skeleton` names (team,
+credentials, service area, reviews). The description is a reviewed
+artifact — the writer wraps it, never paraphrases it.
+
+### Media slots — alt text is copy
+
+Every `media` slot on a row (`slot-id -> alt seed`) produces one
+`images:` frontmatter entry: `<slot-id>: <final alt text>`. The final
+alt is written, not copied — the plan's seed is a reminder, the file
+carries the real string the `<img alt>` renders. Alt rules: describes
+the image for a reader who can't see it (subject + context, no
+keyword stuffing), ≤140 chars, no "image of"/"picture of" openers.
+Decorative slots (`alt=""`) are named `decorative` in the seed — S5
+renders an empty alt, never a guessed description.
 
 ### Link seeds — anchors without a graph
 
@@ -167,17 +284,35 @@ qualifications, and phone/CTA destination come verbatim from
    and noted (re-run safety).
 2. **Load the voice.** Read `tone-profile.md` whole — frontmatter
    rules, lexical table, banned list, CTA palette, trust vocabulary,
-   before/after. Read `site-brief.md` for facts.
+   before/after. Read `site-brief.md` for facts and
+   `site/company-description.md` when the batch owns the `/about/` row.
 3. **Draft each row in batch order.** Build the frontmatter, the H1,
    the skeleton H2s in order, then fill sections. Keep to
    `word_target` ±15%.
 4. **Place link seeds** per §Link seeds.
 5. **Self-lint each file** before commit:
    - frontmatter parses; `title` ≤60, `description` 140–160;
+   - `faq`, `og_image`, `images` fields copied verbatim from the row
+     (`images` entries written for every `media` slot);
+   - `pain_point` copied verbatim from the row and its ID resolves in
+     `site/customer-profile.md`; the copy loops around that pain —
+     one customer, one idea, one CTA;
+   - the opening block answers the fold quad: H1 says what/who, the
+     first paragraph names pain→offer, a brief-supported trust line
+     is present, and the hero CTA matches the row's `cta`;
    - single H1 carrying the primary keyword;
-   - every skeleton H2 present in order, no skipped heading levels;
+   - every skeleton H2 present in order, no skipped heading levels,
+     and the heading vector reads as a nested outline (each sub-heading
+     extends the parent above it);
+   - each H2's opening paragraph answers before elaborating
+     (featured-snippet posture);
+   - the 14-rule sentence contract holds — mechanical classes:
+     no directional-text anchors (rule 11), `**` wraps answers not
+     keywords (rule 13), no opinion-hedged facts (rule 2);
+   - `faq: yes` rows carry parseable `### Question` + answer pairs;
    - word count inside ±15% of `word_target`;
    - zero banned tokens; `cta` phrasing present on money pages;
+   - the `/about/` row embeds `company-description.md` verbatim;
    - every `link_seed` slug linked; every linked slug exists in the plan.
 6. **Commit per page.** `site: content <slug>` — one commit per file
    keeps the review surface granular and a lane crash loses at most the
