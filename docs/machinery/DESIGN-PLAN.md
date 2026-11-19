@@ -338,8 +338,8 @@ pages:
 # ---- W4 look options — each a distinct genotype vector (D.3) ----
 options:
   - {name: d1, wildcard: false, temperature: warm, shape: p3}
-  - {name: d2, wildcard: false, temperature: cool, shape: p2-subtle}
-  - {name: d3, wildcard: true,  temperature: warm, shape: p4-playful,
+  - {name: d2, wildcard: false, temperature: cool, shape: p2}
+  - {name: d3, wildcard: true,  temperature: warm, shape: p4,
      mutates: [radius-personality, motion-tier]}      # the one wildcard
 
 # ---- decision log — append-only ----

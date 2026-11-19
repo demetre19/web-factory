@@ -16,8 +16,8 @@ Copy into `<pipeline-dir>/CHECKLIST/w4.md`. Blank cell = fail (P.9).
 | D.3 `options:` lists ≥2 genotype vectors, each differing in ≥1 gene | |
 | D.3 every option allele ∈ the W1 profile's `uses_genes` set | |
 | C.2 temperature ∈ warm\|cool\|neutral | |
-| G.3 density ∈ sparse\|balanced\|dense | |
-| S.1 shape ∈ p1-sharp\|p2-subtle\|p3-friendly\|p4-playful | |
+| G.3 density ∈ compact\|regular\|spacious | |
+| S.1 shape ∈ p1\|p2\|p3\|p4 | |
 | M.1 motion ∈ subtle\|elegant\|professional\|playful | |
 | T.3 type_contrast ∈ closed set | |
 | C.4 `refused` names the generic default replaced | |

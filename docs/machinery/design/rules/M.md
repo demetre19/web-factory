@@ -34,6 +34,7 @@ luxury/editorial one.
 
 | Token | Behaviour | Brand attributes |
 |---|---|---|
+| `none` | no motion; static content only | sites where motion adds no value |
 | `subtle` | near-instant, **<4px offset** | utilitarian, data-dense |
 | `elegant` | flowing transitions, **no scale distortion** | luxury, editorial |
 | `professional` | axis growth (Y/X expand), **no overshoot** | B2B, corporate |
