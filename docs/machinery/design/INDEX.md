@@ -4,8 +4,8 @@ type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
   contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS, comp-app-band, comp-badge-center, comp-capture-form, comp-cards-n, comp-comparison, comp-faq, comp-footer-bar, comp-form-panel, comp-full-bleed, comp-hero-act-merge, comp-link-grid, comp-logo-wall, comp-map-finder, comp-media-gallery, comp-nav-bar, comp-quote-grid, comp-sequence, comp-split-media, comp-stacked-hero, comp-stat-band, comp-text-index, comp-editorial, comp-proof-band, motion-taxonomy, motion-classifier, recipe-axis-grow, recipe-backdrop-loops, recipe-blur-reveal, recipe-clip-conveyor, recipe-dash-ticker, recipe-draw-icon, recipe-draw-icon-loop, recipe-line-mask-entrance, recipe-menu-cascade, recipe-module-stack, recipe-pop-scan, recipe-progress-rig, recipe-radar-pulse, recipe-reveal-fade, recipe-scan-sweep, recipe-scroll-draw, recipe-snap-arrange, recipe-stamp-check, recipe-word-cycler, recipe-write-lines, skeletons-index, skeleton-hyperui]
-  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF, rules-A]
-  contains_also: [section-build]
+  rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF, rules-A, rules-STYLE]
+  contains_also: [section-build, parallel-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
   index: design-index
 ---
@@ -144,6 +144,7 @@ W8 artefact).
 | `templates/system-tile/` | The system-tile reference (rendered as `preview/system.html`) |
 | `templates/sections/` | `Section.astro` shell + one gold exemplar per composition (`exemplars.py` regenerates) |
 | `SECTION-BUILD.md` | Section-unit build architecture + Design Library study (node `section-build`) |
+| `PARALLEL-BUILD.md` | Lane contract for concurrent builds — context-pack workers, model lanes, per-chain blocking (P.20/P.21) (node `parallel-build`) |
 
 ## Gate commands
 

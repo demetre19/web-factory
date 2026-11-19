@@ -22,15 +22,31 @@ built page against the stage CARDs. Evidence: rendered screenshots at
 reviewer writes `REVIEW.json` + `shots/`; the designer NEVER writes
 `GATES.json` or `REVIEW.json` — QA is never self-graded (P.8).
 
+## Context budget
+
+This step runs on a bounded context packet (`context_pack.py`),
+step class `chop` — budget 100K tokens (~4 chars/token): this CARD,
+the rules it names, the DNA decision surface, the section profile,
+skeleton payload, copy and cited canon refs — nothing else. The
+count is recorded on the wave receipt; over budget fails the step
+(P.19).
+
 ## REVIEW.json contract
 
 ```json
 {"reviewer_model": "…", "designer_model": "…",
+ "vlm_calls": 1, "viewports": [1280, 768, 360],
+ "per_design": [{"design": "d3", "pass": true, "fails": []}],
  "modes": {"light": {"verdict": "…"}, "dark": {"verdict": "…"}},
  "items": [{"rule": "T.1", "rubric": "three-tier-read-order",
             "pass": true, "evidence": "shots/1280-light-home.png",
             "note": "…"}]}
 ```
+
+The review is **bounded and model-parameterised** (P.21): a cheap VLM
+grades every design in ONE call across the three viewports and writes
+the per-design pass/fail table — `reviewer_model` is recorded; a
+strong-class model needs `machinery_review: true`.
 
 Screenshots are real PNGs named `shots/<w>-<mode>-<slug>.png` —
 `{1280,768,360} × {light,dark} × every plan slug`, width verified from

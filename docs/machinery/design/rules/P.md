@@ -209,6 +209,45 @@ bound in `GATES.json.artifacts` (relpath, wave, sha256, gate pass).
 binding; a preview or picker without a receipt is banned — the
 orchestrator never opens it.
 
+### P.19 Per-step context budgets are enforced
+
+Every step runs on a bounded context packet
+(`tools/design-gate/context_pack.py assemble_pack`), never the full
+machinery: the step's CARD, only the enforcement rules whose wave ≤
+the step's wave AND whose rule files the CARD names, the DNA decision
+surface (knobs/genotype/modes/rhythm — never variant history), the
+section profile, that section's skeleton payload, its STUB copy rows,
+and only the canon refs it cites. Budgets (≈4 chars/token):
+
+- `layout-round` (creative): ≤ 250,000 tokens
+- `wireframe`, `chop`, `per-section-build`, `per-component`: ≤
+  100,000 tokens
+
+The actual token count is recorded on the step's GATES.json receipt
+(`context_tokens`); a packet over budget FAILs the step — shrink the
+pack, never the rule.
+
+### P.20 Build lanes — fan-out never eats coordinated slots
+
+Page builds run as lanes in `BUILD-PLAN.json`
+(PARALLEL-BUILD.md): every `section`/`option`/`probe`/`worker`
+lane spawns on the cheap unlimited pool (`model_lane: cheap` —
+`pi/default` or its operator-named successor); `coordinated`
+(swe-2-class, ≈10 slots) is reserved for orchestration;
+`coherence` lanes stay single-call on the stronger model. Lane
+misuse — fan-out on `coordinated`, coherence on `cheap`, >10
+coordinated lanes — is a hard defect. A serial single-agent page
+build with ≥4 independent sections is flagged (advisory).
+
+### P.21 Visual review is bounded and model-parameterised
+
+The reviewer renders every design at the three viewports
+(1280/768/360), writes a per-design pass/fail table from the
+checklist, and grades in ONE VLM call (`vlm_calls: 1`). The
+reviewer model is recorded on `REVIEW.json`; the default lane is a
+cheap VLM — Opus-class only for machinery reviews
+(`machinery_review: true`).
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

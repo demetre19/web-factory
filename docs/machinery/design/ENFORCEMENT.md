@@ -9,12 +9,16 @@ closed set.
 
 | Rule | Rule name | Tier | Mode | Check / item | FAILs when | Wave |
 |---|---|---|---|---|---|---|
+| A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w6 |
+| A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w6 |
+| A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w6 |
 | B.1 | Every rule has exactly one tier | invariant | script | `check_tiers` | rule without tier / unknown tier | w1 |
 | B.2 | One burst toggle, closed range | invariant | script | `check_burst` | burst missing or outside {0,1,2,3} | w3 |
 | B.3 | Exactly one wildcard option | stylistic | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w3 |
 | B.4 | Declared break contract | invariant | script | `check_declared_breaks` | bad rule_id / invariant break / 2 breaks in one section / missing field | w3 |
 | B.5 | Judged for style, not compliance | invariant | script | `check_style_review` | wildcard chosen without STYLE items in REVIEW.json | w8 |
 | B.6 | Novelty stays inside the profile's orbit | invariant | script | `check_novelty` | distance > bound, or no NOVELTY.json | w8 |
+| B.7 | The wildcard rolls the gene | invariant | script | `check_wildcard_random` | no seed / same genes as last round / image.treatment sole twice | w4 |
 | C.1 | The 6-role semantic map (closed set) | stylistic | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w5 |
 | C.2 | Temperature | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w4 |
 | C.3 | Neutral construction | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w5 |
@@ -22,10 +26,12 @@ closed set.
 | C.5 | LIGHT + DARK on every design | invariant | script | `check_dark_mode` | either mode missing, no darkMode:'class', role unbound in dark, or contrast fails in a mode | w4 |
 | C.6 | The derivation workflow (fill order for `system.color`) | stylistic | reviewer | `derivation-order` | fill order followed, provenance tags | w8 |
 | C.7 | Colour QA | invariant | script | `check_contrast` | ink≥7:1, accent_fg≥4.5:1, ink_muted≥4.5:1, accent ≤10% | w5 |
+| C.8 | One accent-filled surface per viewport | structural | script | `check_accent_surfaces` | >1 accent-filled surface per viewport | w7 |
 | D.1 | One allele per gene | structural | script | `check_genotype` | gene missing / allele not in gene set | w1 |
 | D.2 | The vertical profile is named and covers the genotype | structural | script | `check_genotype` | profile absent or uses_genes incomplete | w1 |
 | D.3 | Direction options are distinct genotypes | structural | script | `check_genotype_distinct` | <2 distinct genotype vectors in W2 options | w4 |
 | D.4 | Compositions are layout-archetype alleles | structural | script | `check_genotype` | composition not in layout-archetype alleles | w1 |
+| D.5 | Intent deviations are declared | structural | script | `check_intent_deviation` | non-conventional allele without declared_deviation | w3 |
 | DM.1 | The map is complete and total | invariant | script | `check_dna` | map missing/incomplete, knob outside its range, or seeded value with no pattern id + n | w1 |
 | DM.2 | Every artifact traces to the map | invariant | script | `check_dna_fresh` | artifact built against a hash that is not the current map hash | w1 |
 | DM.3 | No untraceable values | invariant | script | `check_dna` | design value not traceable to a token, knob or allele in the map | w1 |
@@ -40,6 +46,9 @@ closed set.
 | G.2 | The proximity law | structural | script | `check_proximity` | group gap vs section gap ≥2× | w5 |
 | G.3 | Density is a named tier | stylistic | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w3 |
 | G.4 | Rules and containers as gutter devices | stylistic | reviewer | `gutter-devices` | rules/containers as gutter devices | w8 |
+| G.5 | Self-organising grids | structural | script | `check_auto_grid` | fixed repeat(N) collection grid / narrow undeclared scroll rail | w7 |
+| G.6 | Canon padding ratios | structural | script | `check_canon_padding` | padding ratio outside the type canon IQR / unclassified type | w7 |
+| G.7 | Equal-height cards | stylistic | script | `check_equal_cards` | mixed card shells in one grid | w7 |
 | I.1 | Style selection | stylistic | script | `check_system_enums` | family+style ∈ closed set; one family | w5 |
 | I.2 | Stroke math, corner geometry, the grid | stylistic | script | `check_icon_discipline` | stroke ∈ {1.5,2,2.5,3}px uniform | w6 |
 | I.3 | Size | stylistic | script | `check_icon_discipline` | sizes ∈ {16,20,24,32,48} | w6 |
@@ -48,11 +57,16 @@ closed set.
 | I.6 | Standalone glyphs, literal function, bans | stylistic | reviewer | `icon-literal` | non-literal function or a banned literal | w8 |
 | I.7 | Color and interactive states | stylistic | script | `check_icon_discipline` | currentColor, interactive states | w6 |
 | I.8 | Icon QA | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
+| I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
 | L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
 | L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1280px | w5 |
 | L.12 | Sequential anatomy | structural | script | `check_rhythm` | promise first, act first-and-last | w3 |
 | L.13 | Layout & proximity QA | stylistic | script | `check_rhythm` | S-M-L present; 960/1280 containment; ≤1 frame-break | w3 |
+| L.14 | Alternating surfaces | structural | script | `check_surface_rhythm` | adjacent identical surfaces / section without block padding | w7 |
+| L.15 | No dead half-columns | structural | script | `check_dead_columns` | media beside an empty column | w7 |
+| L.16 | Logo size + clear space | stylistic | script | `check_logo` | logo missing or unsized | w7 |
+| L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
 | L.2 | Gutter boundaries | stylistic | script | `check_rhythm` | adjacent sections stop or break, never graze (adjacency) | w3 |
 | L.3 | Edges and corners | structural | script | `check_measurable` | content never jams viewport edge | w7 |
 | L.4 | Negative space | stylistic | reviewer | `negative-space-gestalt` | space assigned, not leftover | w8 |
@@ -62,6 +76,11 @@ closed set.
 | L.8 | Breaking the frame | stylistic | script | `check_motif` | exactly one motif.break section | w3 |
 | L.9 | Asymmetry desktop, symmetry mobile | stylistic | reviewer | `asymmetry-desktop` | asym desktop / sym mobile | w8 |
 | M.1 | The personalities | stylistic | script | `check_direction_axes` | motion ∉ {none,subtle,elegant,professional,playful} | w4 |
+| M.10 | No dead keyframes | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
+| M.11 | Property budget | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
+| M.12 | Loop licensing | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
+| M.13 | Reduced-motion parity | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
+| M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | tamdoma-way default: pure CSS + CSS-animated SVG + minimal vanilla JS ≤4KB; GSAP is the ONLY licensable library — needs DESIGN-PLAN licence object {name:'gsap', justification:'why CSS cannot do this'} AND motion.engine=gsap; all other libraries (lenis/anime/lottie/scrollmagic/…) banned outright | w7 |
 | M.2 | Duration & easing tokens | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
 | M.3 | Element-class rules | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
 | M.4 | One focal animation | stylistic | reviewer | `motion-personality` | one focal animation | w8 |
@@ -69,6 +88,7 @@ closed set.
 | M.6 | Emotional states & reduced motion | structural | script | `check_reduced_motion` | prefers-reduced-motion block present | w5 |
 | M.7 | Performance | stylistic | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
 | M.8 | Motion QA | stylistic | script | `check_measurable` | QA: no linear spatial, ≤80px+fade | w7 |
+| M.9 | Recipe membership | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
 | P.1 | Golden rule | invariant | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
 | P.10 | No emoji | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w5 |
 | P.11 | Icon discipline | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
@@ -76,7 +96,13 @@ closed set.
 | P.13 | Mobile budget | invariant | script | `check_mobile_budget` | mobile-first, ≥16px body, burger nav, no h-scroll at 360 | w7 |
 | P.14 | Mobbin evidence | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist ⇒ DNA inferred.image_set | w1 |
 | P.15 | SPEC verbatim | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |
+| P.16 | Head metadata is complete | structural | script | `check_meta` | favicon/description/og tag missing on built page | w7 |
+| P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
+| P.18 | The pick funnel is real and gated | invariant | script | `check_round_gated` | picker fails gate.py round — real options, scored, refs, visual review, distinct | w3 |
+| P.19 | Per-step context budgets are enforced | invariant | script | `check_context_budget` | step pack tokens (chars/4) <= class budget: layout-round 250000, wireframe/chop/per-section-build/per-component 100000; recorded on receipt | w0 |
 | P.2 | Shared source | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
+| P.20 | Build lanes | invariant | script | `check_parallel_build` | BUILD-PLAN lanes: fan-out kinds model_lane=cheap only; coherence lanes not cheap; coordinated lanes <=10; lanes are {id,kind,model_lane} objects. Advisory: serial build >=4 independent sections (check_serial_build_warn) | w7 |
+| P.21 | Visual review is bounded and model-parameterised | invariant | script | `check_bounded_review` | REVIEW.json: reviewer_model recorded (cheap by default; strong-class requires machinery_review), vlm_calls=1, viewports=[1280,768,360], per_design table [{design,pass}] | w8 |
 | P.3 | Wireframe contract tags | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w3 |
 | P.4 | Wireframe lock | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w3 |
 | P.5 | Tailwind theme | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w5 |
@@ -85,12 +111,19 @@ closed set.
 | P.8 | Gate mechanics | invariant | operator | `approve` | gate pass + recorded approval per wave | w* |
 | P.9 | Checklist evidence | invariant | script | `check_checklist` | no blank evidence in CHECKLIST/<wave>.md | w0 |
 | PS.1 | One role, one heading per block | invariant | script | `check_segment_roles` | section w/o data-sec or >1 h1/h2 per block | w7 |
+| PS.10 | Footer structure | structural | script | `check_footer_structure` | footer lacks nav/contact/legal | w7 |
+| PS.11 | One idea, one section | invariant | script | `check_intent_sections` | rows share a section across intents / h2 count > section units / missing data-intent | w3 |
 | PS.2 | Boilerplate at the edges only | invariant | script | `check_segment_region` | chrome block outside top/bottom | w7 |
 | PS.3 | Main-content share ≥80% | invariant | script | `check_segment_share` | main-content share <80% | w7 |
 | PS.4 | Media never floats context-free | invariant | script | `check_segment_media` | img w/o alt or context text in block | w7 |
 | PS.5 | Footer is boilerplate, nothing else | invariant | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
 | PS.6 | Priority order | invariant | script | `check_segment_priority` | main after chrome / aside before main | w7 |
+| PS.7 | One primary CTA per section | invariant | script | `check_primary_cta` | >1 primary CTA in a section | w7 |
+| PS.8 | Section heading pattern | structural | script | `check_heading_pattern` | content section without its heading pattern | w7 |
+| PS.9 | Landmarks + skip link | invariant | script | `check_landmarks` | no skip-link/main/footer landmark | w7 |
 | R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
+| R.10 | Hero fold | invariant | script | `check_hero_fold` | hero CTA outside first viewport / top pad > section-space-s | w7 |
+| R.11 | Sticky header ↔ anchor offset | structural | script | `check_sticky_offset` | sticky header without scroll-margin anchors | w7 |
 | R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
 | R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
 | R.4 | Copy density budgets | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |
@@ -98,6 +131,10 @@ closed set.
 | R.6 | Touch & pointer targets | invariant | script | `check_tap_size` | targets ≥44px +8px buffer | w7 |
 | R.7 | Sizing modes | stylistic | reviewer | `sizing-modes` | fill/fixed/relative correct | w8 |
 | R.8 | Responsive QA | stylistic | script | `check_breakpoints` | closed breakpoints, min-width, 1280 ceiling | w5 |
+| R.9 | Mobile CTA mechanics | invariant | script | `check_mobile_cta` | mobile CTAs not full-width stacked ≥48px | w7 |
+| REF.1 | Every choice traces to canon | invariant | script | `check_canon_trace` | untraced choice / missing ignored list / operator site not banked | w1 |
+| REF.2 | Candidate sources | invariant | script | `check_candidate_review` | pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted | w1 |
+| REF.3 | Layered canon | invariant | script | `check_canon_trace` | look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source | w1 |
 | S.1 | The four personalities | stylistic | script | `check_direction_axes` | shape ∈ p1..p4 | w4 |
 | S.2 | The radius token scale | stylistic | script | `check_tailwind_derivation` | radius tokens ∈ personality row, compiled to config | w5 |
 | S.3 | Component → token assignment | stylistic | script | `check_measurable` | component→token assignment consistent | w7 |
@@ -106,12 +143,18 @@ closed set.
 | S.6 | Secondary shape permissions | stylistic | reviewer | `shape-permissions` | secondary shapes per personality | w8 |
 | S.7 | Elevation ↔ radius coupling | stylistic | reviewer | `elevation-radius` | elevation↔radius coupled | w8 |
 | S.8 | Shape QA | stylistic | reviewer | `one-personality` | one personality throughout | w8 |
+| S.9 | Form states | structural | script | `check_forms` | field without label / required marker / state container | w7 |
 | SB.1 | Contract per plan row | structural | script | `check_section_contracts` | one complete contract per plan row, equal to the row | w3 |
 | SB.2 | The shell owns rhythm | invariant | script | `check_section_shell` | zero outer layout declarations in section components | w6 |
 | SB.3 | One builder per section, one gate per section | invariant | script | `check_section_gates` | section gate.json missing/not passing, or class ∉ contract | w6 |
 | SB.4 | The glue is mechanical | invariant | script | `check_assembly` | page source == assemble.py output, marker current | w7 |
 | SB.5 | Gold exemplars, adapted not invented | structural | script | `check_exemplars` | every used composition has an exemplar; every component names one | w6 |
 | SB.6 | Page gates only after section gates | structural | script | `check_scorecard` | scorecard sections ≥90% | w8 |
+| SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
+| SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
+| SKL.3 | Component-tier endorsement (component-reference sources) | stylistic | script | `check_skeleton` | component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect | w7 |
+| ST.1 |  | invariant | script | `check_style_licence` | licence cluster must exist in style-profiles.json; canon_flag/invariant-waive/contradicting licence = hard fail | w5 |
+| ST.2 |  | invariant | script | `check_style_licence` | every licensed cluster recorded in DNA.md/DNA.json style_licences | w5 |
 | T.0 | Philosophy | stylistic | reviewer | `type-restraint` | restraint over excess | w8 |
 | T.1 | Universal rule of contrast | stylistic | script | `check_measurable` | primary 3–6× body visible at a glance | w7 |
 | T.10 | Inset containers vs. severing bars | stylistic | reviewer | `composition-inset` | insets ≥10–15% from edge | w8 |
@@ -133,12 +176,14 @@ closed set.
 | V.6 | Authenticity hierarchy | stylistic | script | `check_system_enums` | authenticity tier declared; T1 keep-list | w5 |
 | V.7 | Responsive art direction | stylistic | reviewer | `art-direction` | responsive crops per ratio | w8 |
 | V.8 | Media QA | stylistic | script | `check_measurable` | <picture>, ratios, scrims, tiers | w7 |
+| V.9 | Dark-mode media handling | stylistic | script | `check_dark_media` | undimmed media in dark mode | w7 |
 | VG.1 | One page, exactly 3 variants, mechanical build | invariant | script | `check_variants` | variant not expressed as a knob vector over knobs.json | w4 |
 | VG.2 | A variant is a vector, not a mood | invariant | script | `check_variants` | page variant without its own passing system sheet | w4 |
 | VG.3 | Only passing variants appear | invariant | script | `check_variants` | fewer than 3 or more than 5 variants, or a failing variant shown | w4 |
 | VG.4 | The switcher is sticky and complete | structural | script | `check_variants` | switcher missing variant/viewport/mode, or frames not container-query driven | w4 |
 | VG.5 | The wildcard is present when burst > 0 | invariant | script | `check_variants` | burst>0 and no wildcard variant, or wildcard breaks an invariant | w8 |
 | VG.6 | Each tile states its case | stylistic | script | `check_variants` | tile without predicted score, vector or declared breaks | w8 |
+| VG.7 | The picker is tabbed; the render is first and alone | invariant | script | `check_picker_ux` | option without data-pane, metadata element before the render, or machinery text outside a collapsed <details> | w1 |
 | W.1 | Voice is constant; tone is a context selection | stylistic | reviewer | `tone-errors` | voice constant, tone contextual | w8 |
 | W.10 | Writing QA | stylistic | reviewer | `writing-qa` | W QA sweep | w8 |
 | W.2 | CTAs | structural | script | `check_system_enums` | cta_person ∈ {first,second}, verb-first 2–4w | w5 |
@@ -149,46 +194,5 @@ closed set.
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
-| REF.1 | Every choice traces to canon | invariant | script | `check_canon_trace` | untraced choice / missing ignored list / operator site not banked | w1 |
-| B.7 | The wildcard rolls the gene | invariant | script | `check_wildcard_random` | no seed / same genes as last round / image.treatment sole twice | w4 |
-| C.8 | One accent-filled surface per viewport | structural | script | `check_accent_surfaces` | >1 accent-filled surface per viewport | w7 |
-| D.5 | Intent deviations are declared | structural | script | `check_intent_deviation` | non-conventional allele without declared_deviation | w3 |
-| G.5 | Self-organising grids | structural | script | `check_auto_grid` | fixed repeat(N) collection grid / narrow undeclared scroll rail | w7 |
-| G.6 | Canon padding ratios | structural | script | `check_canon_padding` | padding ratio outside the type canon IQR / unclassified type | w7 |
-| G.7 | Equal-height cards | stylistic | script | `check_equal_cards` | mixed card shells in one grid | w7 |
-| I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
-| L.14 | Alternating surfaces | structural | script | `check_surface_rhythm` | adjacent identical surfaces / section without block padding | w7 |
-| L.15 | No dead half-columns | structural | script | `check_dead_columns` | media beside an empty column | w7 |
-| L.16 | Logo size + clear space | stylistic | script | `check_logo` | logo missing or unsized | w7 |
-| P.16 | Head metadata is complete | structural | script | `check_meta` | favicon/description/og tag missing on built page | w7 |
-| PS.7 | One primary CTA per section | invariant | script | `check_primary_cta` | >1 primary CTA in a section | w7 |
-| PS.8 | Section heading pattern | structural | script | `check_heading_pattern` | content section without its heading pattern | w7 |
-| PS.9 | Landmarks + skip link | invariant | script | `check_landmarks` | no skip-link/main/footer landmark | w7 |
-| PS.10 | Footer structure | structural | script | `check_footer_structure` | footer lacks nav/contact/legal | w7 |
-| R.9 | Mobile CTA mechanics | invariant | script | `check_mobile_cta` | mobile CTAs not full-width stacked ≥48px | w7 |
-| R.10 | Hero fold | invariant | script | `check_hero_fold` | hero CTA outside first viewport / top pad > section-space-s | w7 |
-| R.11 | Sticky header ↔ anchor offset | structural | script | `check_sticky_offset` | sticky header without scroll-margin anchors | w7 |
-| S.9 | Form states | structural | script | `check_forms` | field without label / required marker / state container | w7 |
-| V.9 | Dark-mode media handling | stylistic | script | `check_dark_media` | undimmed media in dark mode | w7 |
-| PS.11 | One idea, one section | invariant | script | `check_intent_sections` | rows share a section across intents / h2 count > section units / missing data-intent | w3 |
-| P.17 | Nothing outside the pipeline | invariant | script | `check_receipts` | artifact without a bound all-pass receipt in GATES.json | w7 |
-| L.17 | Breathing room | structural | script | `check_breathing` | padding < section-space-m / header→body < space-l / grid gap < space-m / whitespace < canon P25 | w7 |
-| P.18 | The pick funnel is real and gated | invariant | script | `check_round_gated` | picker fails gate.py round — real options, scored, refs, visual review, distinct | w3 |
-| A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w6 |
-| A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w6 |
-| A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w6 |
-| M.9 | Recipe membership | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
-| M.10 | No dead keyframes | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
-| M.11 | Property budget | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
-| M.12 | Loop licensing | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
-| M.13 | Reduced-motion parity | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
-| M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | tamdoma-way default: pure CSS + CSS-animated SVG + minimal vanilla JS ≤4KB; GSAP is the ONLY licensable library — needs DESIGN-PLAN licence object {name:'gsap', justification:'why CSS cannot do this'} AND motion.engine=gsap; all other libraries (lenis/anime/lottie/scrollmagic/…) banned outright | w7 |
-| SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
-| SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
-| REF.2 | Candidate sources | invariant | script | `check_candidate_review` | pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted | w1 |
-| REF.3 | Layered canon | invariant | script | `check_canon_trace` | look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source | w1 |
-| SKL.3 | Component-tier endorsement (component-reference sources) | stylistic | script | `check_skeleton` | component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect | w7 |
-| ST.1 |  | invariant | script | `check_style_licence` | licence cluster must exist in style-profiles.json; canon_flag/invariant-waive/contradicting licence = hard fail | w5 |
-| ST.2 |  | invariant | script | `check_style_licence` | every licensed cluster recorded in DNA.md/DNA.json style_licences | w5 |
 
-181 rules — script 150, reviewer 30, operator 1; invariant 54, structural 50, stylistic 77.
+185 rules — script 154, reviewer 30, operator 1; invariant 58, structural 50, stylistic 77.

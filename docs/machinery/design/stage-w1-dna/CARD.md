@@ -13,6 +13,16 @@ links:
 produces the evidence, genotype and **DNA v0 map** every later Astro
 artifact binds. Discovery writes no map; it exits at W1. (P.1, LAW.DNA)
 
+
+## Context budget
+
+This step runs on a bounded context packet (`context_pack.py`),
+step class `chop` — budget 100K tokens (~4 chars/token): this CARD,
+the rules it names, the DNA decision surface, the section profile,
+skeleton payload, this section's copy and cited canon refs — nothing
+else. The count is recorded on the wave receipt; over budget fails
+the step (P.19).
+
 ## Job
 
 1. **Mobbin first.** `~/.mobbin-oauth/refresh.sh` → auth 200, then read

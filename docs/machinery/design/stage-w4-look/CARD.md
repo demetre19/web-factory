@@ -17,6 +17,16 @@ toggle, viewport switch — never a second style source. (P.1, P.2)
 **Read DNA map. Every decision traces to it.** `DNA.json` + `DNA.md`
 is the single source of coherence (`gate.py dna`).
 
+
+## Context budget
+
+This step runs on a bounded context packet (`context_pack.py`),
+step class `layout-round` — budget 250K tokens (~4 chars/token): this CARD,
+the rules it names, the DNA decision surface, the section profile,
+skeleton payload, this section's copy and cited canon refs — nothing
+else. The count is recorded on the wave receipt; over budget fails
+the step (P.19).
+
 ## Job
 
 1. Produce **3 variant knob vectors** — baseline + declared knob

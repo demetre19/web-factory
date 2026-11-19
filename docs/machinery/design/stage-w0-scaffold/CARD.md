@@ -15,6 +15,16 @@ from `templates/astro/`. (P.1)
 
 **Read DNA map. Every decision traces to it.** The map (`DNA.json` + `DNA.md`) is the single source of coherence: every value used here must be traceable to it (`gate.py dna`).
 
+
+## Context budget
+
+This step runs on a bounded context packet (`context_pack.py`),
+step class `chop` — budget 100K tokens (~4 chars/token): this CARD,
+the rules it names, the DNA decision surface, the section profile,
+skeleton payload, this section's copy and cited canon refs — nothing
+else. The count is recorded on the wave receipt; over budget fails
+the step (P.19).
+
 ## Job
 
 1. `cp -R templates/astro <pipeline-dir>/site/` — never `npm create`,

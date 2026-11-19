@@ -6,210 +6,297 @@
    "severity": "P0",
    "mutation": "approve without consumed service nonce / replay used:false / cross-origin POST / minted non-TTY",
    "status": "closed",
-   "fixture": "redteam:cli_selftest (nonce ledger issued+consumed required, pty mint, replay refused)"
+   "fixture": "redteam:cli_selftest (nonce ledger issued+consumed required, pty mint, replay refused)",
+   "scope": "machinery"
   },
   {
    "id": "RV3-M13-COMMENT",
    "severity": "P1",
    "mutation": "prefers-reduced-motion inside a CSS comment satisfies M.13",
    "status": "closed",
-   "fixture": "redteam:RT-M13-COMMENT"
+   "fixture": "redteam:RT-M13-COMMENT",
+   "scope": "machinery"
   },
   {
    "id": "RV3-M13-TRANSITION",
    "severity": "P1",
    "mutation": "transform/layout transition with no @keyframes bypasses M.13",
    "status": "closed",
-   "fixture": "redteam:RT-M13-TRANSITION"
+   "fixture": "redteam:RT-M13-TRANSITION",
+   "scope": "machinery"
   },
   {
    "id": "RV3-SKL-INNERDIV",
    "severity": "P1",
    "mutation": "raw colour utilities on an inner div of a data-skeleton section",
    "status": "closed",
-   "fixture": "redteam:RT-SKL-INNERDIV"
+   "fixture": "redteam:RT-SKL-INNERDIV",
+   "scope": "machinery"
   },
   {
    "id": "RV3-SKL-PY24-CONTRADICTION",
    "severity": "P1",
    "mutation": "L.17-required py-24/ACSS padding on a skeleton section failed SKL.1",
    "status": "closed",
-   "fixture": "redteam:RT-SKL-PY8 (py-24+ / section-space-* / sec-band whitelisted; py-8 still fails)"
+   "fixture": "redteam:RT-SKL-PY8 (py-24+ / section-space-* / sec-band whitelisted; py-8 still fails)",
+   "scope": "machinery"
   },
   {
    "id": "RV3-STUB-HEADERONLY",
    "severity": "P1",
    "mutation": "FAQ inventory table with header row only counts as content",
    "status": "closed",
-   "fixture": "redteam:RT-INV-HEADERONLY"
+   "fixture": "redteam:RT-INV-HEADERONLY",
+   "scope": "machinery"
   },
   {
    "id": "RV3-CAND-UNSIGNED",
    "severity": "P0",
    "mutation": "unsigned CANDIDATES.json row claims approved/rejected",
    "status": "closed",
-   "fixture": "redteam:RT-CAND-UNSIGNED"
+   "fixture": "redteam:RT-CAND-UNSIGNED",
+   "scope": "machinery"
   },
   {
    "id": "RV3-REF-ARBITRARY",
    "severity": "P0",
    "mutation": "any https:// URL counts as canon ref",
    "status": "closed",
-   "fixture": "redteam:RT-REF-ARBITRARY"
+   "fixture": "redteam:RT-REF-ARBITRARY",
+   "scope": "machinery"
   },
   {
    "id": "RV3-REC-UNSIGNED",
    "severity": "P1",
    "mutation": "artifact receipt without a valid service sig",
    "status": "closed",
-   "fixture": "redteam:RT-REC-UNSIGNED"
+   "fixture": "redteam:RT-REC-UNSIGNED",
+   "scope": "machinery"
   },
   {
    "id": "RV3-REC-GATEPASS",
    "severity": "P1",
    "mutation": "receipt recorded against gate_pass:false",
    "status": "closed",
-   "fixture": "redteam:RT-REC-GATEPASS"
+   "fixture": "redteam:RT-REC-GATEPASS",
+   "scope": "machinery"
   },
   {
    "id": "RV3-WILD-HISTORY",
    "severity": "P1",
    "mutation": "wildcard exists but WILDCARD-HISTORY.json missing; or current seed repeats a history seed",
    "status": "closed",
-   "fixture": "redteam:RT-WILD-NOHIST + redteam:RT-WILD-SEEDREUSE"
+   "fixture": "redteam:RT-WILD-NOHIST + redteam:RT-WILD-SEEDREUSE",
+   "scope": "machinery"
   },
   {
    "id": "RV3-WIDTH-TEXTWRAP-DEADWIRE",
    "severity": "P1",
    "mutation": "rendered content-width (w5) and text-wrap (w6) checks guarded but never wired in-wave",
    "status": "closed",
-   "fixture": "WAVE_CHECKS wiring + N-9 consistency rule"
+   "fixture": "WAVE_CHECKS wiring + N-9 consistency rule",
+   "scope": "machinery"
   },
   {
    "id": "RV3-N3-MINIFIED-CSS",
    "severity": "P2",
    "mutation": "minified '}p{ text-wrap' selector failed the scorecard boundary",
    "status": "closed",
-   "fixture": "boundary regex (?:^|[,{\\s}]) in text-wrap checks"
+   "fixture": "boundary regex (?:^|[,{\\s}]) in text-wrap checks",
+   "scope": "machinery"
   },
   {
    "id": "RV3-N4-SPECIMEN",
    "severity": "P2",
    "mutation": "system-sheet specimens <400 chars apart swallowed by the P.6 specimen regex",
    "status": "closed",
-   "fixture": "tempered (?:(?!<\\w+[^>]*data-comp=).){0,400}"
+   "fixture": "tempered (?:(?!<\\w+[^>]*data-comp=).){0,400}",
+   "scope": "machinery"
   },
   {
    "id": "RV3-R1-BP",
    "severity": "P1",
    "mutation": "enforcement.json R.1 breakpoint set corrupted (dup 1280, missing 1440)",
    "status": "closed",
-   "fixture": "N-6 consistency rule: threshold breakpoint set == CANON_BP"
+   "fixture": "N-6 consistency rule: threshold breakpoint set == CANON_BP",
+   "scope": "machinery"
   },
   {
    "id": "RV3-ROUND-ORDERFREE",
    "severity": "P1",
    "mutation": "reordered data-* attributes / suffixed comp ids / section reorder evade round checks",
    "status": "closed",
-   "fixture": "_secs() order-free attrs + comp suffix normalisation + multiset compare"
+   "fixture": "_secs() order-free attrs + comp suffix normalisation + multiset compare",
+   "scope": "machinery"
   },
   {
    "id": "RV3-FINE-OFFPICK",
    "severity": "P1",
-   "mutation": "w4 fine options not the picked design \u00b1 a knob nudge",
+   "mutation": "w4 fine options not the picked design ± a knob nudge",
    "status": "closed",
-   "fixture": "check_round pick\u00b1nudge vs approvals.w4.design"
+   "fixture": "check_round pick±nudge vs approvals.w4.design",
+   "scope": "machinery"
   },
   {
    "id": "COL-SRGB-BREAKPOINT",
    "severity": "P1",
    "mutation": "two sRGB linearisation constants (0.03928 vs 0.04045)",
    "status": "closed",
-   "fixture": "single WCAG 0.03928 in _lum/_luminance"
+   "fixture": "single WCAG 0.03928 in _lum/_luminance",
+   "scope": "machinery"
   },
   {
    "id": "COL-DARK-MAX-L",
    "severity": "P1",
-   "mutation": "DARK_MAX_L 20% WCAG-Y \u224815\u00d7 more permissive than C.5 HSL L 7\u201310%",
+   "mutation": "DARK_MAX_L 20% WCAG-Y ≈15× more permissive than C.5 HSL L 7–10%",
    "status": "closed",
-   "fixture": "redteam:RT-C5-LIGHTDARK (OKLCH L cap 0.24)"
+   "fixture": "redteam:RT-C5-LIGHTDARK (OKLCH L cap 0.24)",
+   "scope": "machinery"
   },
   {
    "id": "COL-OKLCH-BYPASS",
    "severity": "P0",
-   "mutation": "oklch() role tokens skip _rgb \u2192 check_contrast silently passes",
+   "mutation": "oklch() role tokens skip _rgb → check_contrast silently passes",
    "status": "closed",
-   "fixture": "_rgb parses oklch(L C H); _modes/_color_str accept it"
+   "fixture": "_rgb parses oklch(L C H); _modes/_color_str accept it",
+   "scope": "machinery"
   },
   {
    "id": "COL-TINT-METRIC",
    "severity": "P1",
    "mutation": "neutral-tint RGB channel-delta vs spec HSL-S bands disagree",
    "status": "closed",
-   "fixture": "redteam:RT-C3-DEADGREY (OKLCH C bands)"
+   "fixture": "redteam:RT-C3-DEADGREY (OKLCH C bands)",
+   "scope": "machinery"
   },
   {
    "id": "COL-SURFACE-KNOB-UNIT",
    "severity": "P2",
-   "mutation": "color.surface_contrast knob 0.02\u20130.08 unstated unit vs C.1 ratio floor",
+   "mutation": "color.surface_contrast knob 0.02–0.08 unstated unit vs C.1 ratio floor",
    "status": "closed",
-   "fixture": "knobs.json documents luminance-difference fraction"
+   "fixture": "knobs.json documents luminance-difference fraction",
+   "scope": "machinery"
   },
   {
    "id": "M14-LIB-POLICY",
    "severity": "P0",
    "mutation": "any animation library passes with a bare string licence; lenis not blocked",
    "status": "closed",
-   "fixture": "redteam:RT-M14-LENIS + redteam:RT-M14-GSAP-BARE (licence object + motion.engine=gsap required)"
+   "fixture": "redteam:RT-M14-LENIS + redteam:RT-M14-GSAP-BARE (licence object + motion.engine=gsap required)",
+   "scope": "machinery"
   },
   {
    "id": "ACSS-INCOMPLETE",
    "severity": "P1",
    "mutation": "ACSS-BASELINE vendored only 4 of ~15 token families",
    "status": "closed",
-   "fixture": "patterns/data/acss-tokens.json (430 tokens, 15 families) + baseline doc + btn/width/elevation knobs"
+   "fixture": "patterns/data/acss-tokens.json (430 tokens, 15 families) + baseline doc + btn/width/elevation knobs",
+   "scope": "machinery"
   },
   {
    "id": "PS11-MULTIVEC-ROW",
    "severity": "P1",
    "mutation": "stub row carrying >1 vector heading smuggles merged sections",
    "status": "closed",
-   "fixture": "redteam:RT-PS11-MULTIVEC"
+   "fixture": "redteam:RT-PS11-MULTIVEC",
+   "scope": "machinery"
   },
   {
    "id": "SOP-CONSTANTS-WIRING",
    "severity": "P2",
    "mutation": "rules do not consult patterns/data/sop-constants.json (PatternMiner emits verdict=confirm|tighten|relax with n)",
    "status": "open",
-   "fixture": "pending PatternMiner file shape"
+   "fixture": "pending PatternMiner file shape",
+   "scope": "machinery"
   },
   {
    "id": "STYLE-AXES-CORPUS",
    "severity": "P2",
-   "mutation": "no colour/style axes in report.json corpus; COLOUR-RULES \u00a73 + STYLE-VOCAB deviation signatures unmeasured",
+   "mutation": "no colour/style axes in report.json corpus; COLOUR-RULES §3 + STYLE-VOCAB deviation signatures unmeasured",
    "status": "open",
-   "fixture": "pending extractor"
+   "fixture": "pending extractor",
+   "scope": "machinery"
   },
   {
    "id": "STYLE-LINT-WAIVER",
    "severity": "P2",
    "mutation": "style-profiles.json licenses a design cluster's enumerated waivers via DESIGN-PLAN style_licences (skipped_rules scope); unknown/canon-flagged/invariant-waiving licences FAIL STYLE.1, unrecorded licences FAIL STYLE.2",
    "status": "closed",
-   "fixture": "redteam:RT-STYLE-BOGUS + redteam:RT-STYLE-UNRECORDED + cli_selftest licence block"
+   "fixture": "redteam:RT-STYLE-BOGUS + redteam:RT-STYLE-UNRECORDED + cli_selftest licence block",
+   "scope": "machinery"
   },
   {
    "id": "TYPO-GRID-AXES",
    "severity": "P2",
    "mutation": "TYPO-GRID-RULES axes (measure, tracking, grid tracks) not all encoded as rule ids",
    "status": "open",
-   "fixture": "pending rule-id allocation"
+   "fixture": "pending rule-id allocation",
+   "scope": "machinery"
   },
   {
    "id": "F04-APPROVAL-NONCE",
    "severity": "P1",
    "mutation": "approval records accepted without ledger-bound nonce provenance",
    "status": "closed",
-   "fixture": "approval_state requires verify_consumed_nonce; cli_selftest covers"
+   "fixture": "approval_state requires verify_consumed_nonce; cli_selftest covers",
+   "scope": "machinery"
+  },
+  {
+   "id": "RT-INV-HEADERONLY",
+   "severity": "P1",
+   "mutation": "redteam:RT-INV-HEADERONLY survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-INV-HEADERONLY",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-REC-UNSIGNED",
+   "severity": "P1",
+   "mutation": "redteam:RT-REC-UNSIGNED survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-REC-UNSIGNED",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-REC-GATEPASS",
+   "severity": "P1",
+   "mutation": "redteam:RT-REC-GATEPASS survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-REC-GATEPASS",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-WILD-NOHIST",
+   "severity": "P1",
+   "mutation": "redteam:RT-WILD-NOHIST survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-WILD-NOHIST",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-WILD-SEEDREUSE",
+   "severity": "P1",
+   "mutation": "redteam:RT-WILD-SEEDREUSE survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-WILD-SEEDREUSE",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-PS11-MULTIVEC",
+   "severity": "P1",
+   "mutation": "redteam:RT-PS11-MULTIVEC survived — no check failed",
+   "status": "closed",
+   "fixture": "redteam:RT-PS11-MULTIVEC",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
+  },
+  {
+   "id": "RT-CAND-UNSIGNED",
+   "severity": "P1",
+   "mutation": "redteam:RT-CAND-UNSIGNED survived — no check failed",
+   "status": "closed",
+   "scope": "machinery",
+   "fixture": "redteam:RT-CAND-UNSIGNED",
+   "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
   }
  ]
 }

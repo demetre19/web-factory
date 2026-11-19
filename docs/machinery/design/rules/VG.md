@@ -94,6 +94,30 @@ edits the picked design in place.
 present per entry) and the W8 reviewer (`variant-tiles` rubric item:
 the label matches what the tile actually does).
 
+### VG.7 The picker is tabbed; the render is first and alone
+
+Every option in every picker (layouts `round1`/`layouts.html`, look
+`variants.html`, fine `fine.html`, candidate sources
+`candidates.html`) is a **tabbed pane**: `data-pane` on the option's
+`<article>`, `.picker-opt{display:none}` / `.active{display:block}`,
+switching only through the top tab rail (`data-tab`/`data-goto`,
+`scrollTo(0,0)` + `#id` hash). Never a scroll-stacked list of
+options.
+
+Inside a pane the render is the **first element** — no header,
+label, nav, table or copy precedes it. The only visible chrome below
+the render is a slim **pick row** (`variant-pickrow`: option name +
+Pick/decision button). All machinery metadata — score, canon refs,
+knob deltas, wildcard breaks, vector, review verdict, system sheet —
+lives inside a collapsed `<details class="variant-data">` below the
+pick row. `data-*` attributes on the `<article>` are unchanged (the
+gate parses them).
+
+**Enforcement** — script `check_picker_ux` (w1/w3/w4 + inside
+`check_round`): an option without `data-pane`, a file with ≥2
+options but no tab switcher/hidden-pane CSS, a non-render first
+element, or metadata text outside a collapsed `<details>` FAILs.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

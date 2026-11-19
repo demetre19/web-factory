@@ -30,6 +30,11 @@
    "type": "baseline",
    "file": "ACSS-BASELINE.md"
   },
+  "parallel-build": {
+   "id": "parallel-build",
+   "type": "contract",
+   "file": "PARALLEL-BUILD.md"
+  },
   "patterns-taxonomy": {
    "id": "patterns-taxonomy",
    "type": "taxonomy",
@@ -1155,6 +1160,21 @@
    "type": "rule",
    "file": "rules/P.md"
   },
+  "P.19": {
+   "id": "P.19",
+   "type": "rule",
+   "file": "rules/P.md"
+  },
+  "P.20": {
+   "id": "P.20",
+   "type": "rule",
+   "file": "rules/P.md"
+  },
+  "P.21": {
+   "id": "P.21",
+   "type": "rule",
+   "file": "rules/P.md"
+  },
   "L.1": {
    "id": "L.1",
    "type": "rule",
@@ -1620,6 +1640,11 @@
    "type": "rule",
    "file": "rules/VG.md"
   },
+  "VG.7": {
+   "id": "VG.7",
+   "type": "rule",
+   "file": "rules/VG.md"
+  },
   "SB.1": {
    "id": "SB.1",
    "type": "rule",
@@ -1790,6 +1815,18 @@
    "type": "rule",
    "file": "rules/E.md"
   },
+  "check_acss_conventions": {
+   "id": "check_acss_conventions",
+   "type": "check"
+  },
+  "check_card_contract": {
+   "id": "check_card_contract",
+   "type": "check"
+  },
+  "check_component_profile": {
+   "id": "check_component_profile",
+   "type": "check"
+  },
   "check_tiers": {
    "id": "check_tiers",
    "type": "check"
@@ -1808,6 +1845,10 @@
   },
   "check_novelty": {
    "id": "check_novelty",
+   "type": "check"
+  },
+  "check_wildcard_random": {
+   "id": "check_wildcard_random",
    "type": "check"
   },
   "check_contrast": {
@@ -1834,12 +1875,20 @@
    "id": "derivation-order",
    "type": "rubric"
   },
+  "check_accent_surfaces": {
+   "id": "check_accent_surfaces",
+   "type": "check"
+  },
   "check_genotype": {
    "id": "check_genotype",
    "type": "check"
   },
   "check_genotype_distinct": {
    "id": "check_genotype_distinct",
+   "type": "check"
+  },
+  "check_intent_deviation": {
+   "id": "check_intent_deviation",
    "type": "check"
   },
   "check_dna": {
@@ -1886,6 +1935,18 @@
    "id": "gutter-devices",
    "type": "rubric"
   },
+  "check_auto_grid": {
+   "id": "check_auto_grid",
+   "type": "check"
+  },
+  "check_canon_padding": {
+   "id": "check_canon_padding",
+   "type": "check"
+  },
+  "check_equal_cards": {
+   "id": "check_equal_cards",
+   "type": "check"
+  },
   "check_system_enums": {
    "id": "check_system_enums",
    "type": "check"
@@ -1902,6 +1963,10 @@
    "id": "icon-literal",
    "type": "rubric"
   },
+  "check_interaction_states": {
+   "id": "check_interaction_states",
+   "type": "check"
+  },
   "check_schema_fields": {
    "id": "check_schema_fields",
    "type": "check"
@@ -1912,6 +1977,22 @@
   },
   "check_content_width": {
    "id": "check_content_width",
+   "type": "check"
+  },
+  "check_surface_rhythm": {
+   "id": "check_surface_rhythm",
+   "type": "check"
+  },
+  "check_dead_columns": {
+   "id": "check_dead_columns",
+   "type": "check"
+  },
+  "check_logo": {
+   "id": "check_logo",
+   "type": "check"
+  },
+  "check_breathing": {
+   "id": "check_breathing",
    "type": "check"
   },
   "check_measurable": {
@@ -1933,6 +2014,14 @@
   "asymmetry-desktop": {
    "id": "asymmetry-desktop",
    "type": "rubric"
+  },
+  "check_motion_recipes": {
+   "id": "check_motion_recipes",
+   "type": "check"
+  },
+  "check_motion_js_budget": {
+   "id": "check_motion_js_budget",
+   "type": "check"
   },
   "motion-element-class": {
    "id": "motion-element-class",
@@ -1970,8 +2059,32 @@
    "id": "check_spec_verbatim",
    "type": "check"
   },
+  "check_meta": {
+   "id": "check_meta",
+   "type": "check"
+  },
+  "check_receipts": {
+   "id": "check_receipts",
+   "type": "check"
+  },
+  "check_round_gated": {
+   "id": "check_round_gated",
+   "type": "check"
+  },
+  "check_context_budget": {
+   "id": "check_context_budget",
+   "type": "check"
+  },
   "check_no_stray_styles": {
    "id": "check_no_stray_styles",
+   "type": "check"
+  },
+  "check_parallel_build": {
+   "id": "check_parallel_build",
+   "type": "check"
+  },
+  "check_bounded_review": {
+   "id": "check_bounded_review",
    "type": "check"
   },
   "check_wireframe_tags": {
@@ -2002,6 +2115,14 @@
    "id": "check_segment_roles",
    "type": "check"
   },
+  "check_footer_structure": {
+   "id": "check_footer_structure",
+   "type": "check"
+  },
+  "check_intent_sections": {
+   "id": "check_intent_sections",
+   "type": "check"
+  },
   "check_segment_region": {
    "id": "check_segment_region",
    "type": "check"
@@ -2022,8 +2143,28 @@
    "id": "check_segment_priority",
    "type": "check"
   },
+  "check_primary_cta": {
+   "id": "check_primary_cta",
+   "type": "check"
+  },
+  "check_heading_pattern": {
+   "id": "check_heading_pattern",
+   "type": "check"
+  },
+  "check_landmarks": {
+   "id": "check_landmarks",
+   "type": "check"
+  },
   "check_breakpoints": {
    "id": "check_breakpoints",
+   "type": "check"
+  },
+  "check_hero_fold": {
+   "id": "check_hero_fold",
+   "type": "check"
+  },
+  "check_sticky_offset": {
+   "id": "check_sticky_offset",
    "type": "check"
   },
   "check_copy_density": {
@@ -2037,6 +2178,18 @@
   "sizing-modes": {
    "id": "sizing-modes",
    "type": "rubric"
+  },
+  "check_mobile_cta": {
+   "id": "check_mobile_cta",
+   "type": "check"
+  },
+  "check_canon_trace": {
+   "id": "check_canon_trace",
+   "type": "check"
+  },
+  "check_candidate_review": {
+   "id": "check_candidate_review",
+   "type": "check"
   },
   "check_border_widths": {
    "id": "check_border_widths",
@@ -2053,6 +2206,10 @@
   "one-personality": {
    "id": "one-personality",
    "type": "rubric"
+  },
+  "check_forms": {
+   "id": "check_forms",
+   "type": "check"
   },
   "check_section_contracts": {
    "id": "check_section_contracts",
@@ -2076,6 +2233,14 @@
   },
   "check_scorecard": {
    "id": "check_scorecard",
+   "type": "check"
+  },
+  "check_skeleton": {
+   "id": "check_skeleton",
+   "type": "check"
+  },
+  "check_style_licence": {
+   "id": "check_style_licence",
    "type": "check"
   },
   "type-restraint": {
@@ -2110,6 +2275,14 @@
    "id": "art-direction",
    "type": "rubric"
   },
+  "check_dark_media": {
+   "id": "check_dark_media",
+   "type": "check"
+  },
+  "check_picker_ux": {
+   "id": "check_picker_ux",
+   "type": "check"
+  },
   "tone-errors": {
    "id": "tone-errors",
    "type": "rubric"
@@ -2129,138 +2302,6 @@
   "i18n-copy": {
    "id": "i18n-copy",
    "type": "rubric"
-  },
-  "check_canon_trace": {
-   "id": "check_canon_trace",
-   "type": "check"
-  },
-  "check_wildcard_random": {
-   "id": "check_wildcard_random",
-   "type": "check"
-  },
-  "check_accent_surfaces": {
-   "id": "check_accent_surfaces",
-   "type": "check"
-  },
-  "check_intent_deviation": {
-   "id": "check_intent_deviation",
-   "type": "check"
-  },
-  "check_auto_grid": {
-   "id": "check_auto_grid",
-   "type": "check"
-  },
-  "check_canon_padding": {
-   "id": "check_canon_padding",
-   "type": "check"
-  },
-  "check_equal_cards": {
-   "id": "check_equal_cards",
-   "type": "check"
-  },
-  "check_interaction_states": {
-   "id": "check_interaction_states",
-   "type": "check"
-  },
-  "check_surface_rhythm": {
-   "id": "check_surface_rhythm",
-   "type": "check"
-  },
-  "check_dead_columns": {
-   "id": "check_dead_columns",
-   "type": "check"
-  },
-  "check_logo": {
-   "id": "check_logo",
-   "type": "check"
-  },
-  "check_meta": {
-   "id": "check_meta",
-   "type": "check"
-  },
-  "check_primary_cta": {
-   "id": "check_primary_cta",
-   "type": "check"
-  },
-  "check_heading_pattern": {
-   "id": "check_heading_pattern",
-   "type": "check"
-  },
-  "check_landmarks": {
-   "id": "check_landmarks",
-   "type": "check"
-  },
-  "check_footer_structure": {
-   "id": "check_footer_structure",
-   "type": "check"
-  },
-  "check_mobile_cta": {
-   "id": "check_mobile_cta",
-   "type": "check"
-  },
-  "check_hero_fold": {
-   "id": "check_hero_fold",
-   "type": "check"
-  },
-  "check_sticky_offset": {
-   "id": "check_sticky_offset",
-   "type": "check"
-  },
-  "check_forms": {
-   "id": "check_forms",
-   "type": "check"
-  },
-  "check_dark_media": {
-   "id": "check_dark_media",
-   "type": "check"
-  },
-  "check_intent_sections": {
-   "id": "check_intent_sections",
-   "type": "check"
-  },
-  "check_receipts": {
-   "id": "check_receipts",
-   "type": "check"
-  },
-  "check_breathing": {
-   "id": "check_breathing",
-   "type": "check"
-  },
-  "check_round_gated": {
-   "id": "check_round_gated",
-   "type": "check"
-  },
-  "check_acss_conventions": {
-   "id": "check_acss_conventions",
-   "type": "check"
-  },
-  "check_card_contract": {
-   "id": "check_card_contract",
-   "type": "check"
-  },
-  "check_component_profile": {
-   "id": "check_component_profile",
-   "type": "check"
-  },
-  "check_motion_recipes": {
-   "id": "check_motion_recipes",
-   "type": "check"
-  },
-  "check_motion_js_budget": {
-   "id": "check_motion_js_budget",
-   "type": "check"
-  },
-  "check_skeleton": {
-   "id": "check_skeleton",
-   "type": "check"
-  },
-  "check_candidate_review": {
-   "id": "check_candidate_review",
-   "type": "check"
-  },
-  "check_style_licence": {
-   "id": "check_style_licence",
-   "type": "check"
   },
   "w0": {
    "id": "w0",
@@ -3800,7 +3841,17 @@
   },
   {
    "from": "design-index",
+   "to": "rules-STYLE",
+   "type": "rules"
+  },
+  {
+   "from": "design-index",
    "to": "section-build",
+   "type": "contains_also"
+  },
+  {
+   "from": "design-index",
+   "to": "parallel-build",
    "type": "contains_also"
   },
   {
@@ -3942,6 +3993,41 @@
    "from": "BASE.ACSS",
    "to": "LAW.DNA",
    "type": "depends_on"
+  },
+  {
+   "from": "parallel-build",
+   "to": "design-index",
+   "type": "index"
+  },
+  {
+   "from": "parallel-build",
+   "to": "rules-P",
+   "type": "see_also"
+  },
+  {
+   "from": "parallel-build",
+   "to": "rules-SB",
+   "type": "see_also"
+  },
+  {
+   "from": "parallel-build",
+   "to": "card-w7",
+   "type": "see_also"
+  },
+  {
+   "from": "parallel-build",
+   "to": "w3",
+   "type": "used_in"
+  },
+  {
+   "from": "parallel-build",
+   "to": "w4",
+   "type": "used_in"
+  },
+  {
+   "from": "parallel-build",
+   "to": "w7",
+   "type": "used_in"
   },
   {
    "from": "patterns-taxonomy",
@@ -17509,6 +17595,21 @@
    "type": "contains"
   },
   {
+   "from": "rules-P",
+   "to": "P.19",
+   "type": "contains"
+  },
+  {
+   "from": "rules-P",
+   "to": "P.20",
+   "type": "contains"
+  },
+  {
+   "from": "rules-P",
+   "to": "P.21",
+   "type": "contains"
+  },
+  {
    "from": "design-index",
    "to": "rules-L",
    "type": "rules"
@@ -18024,6 +18125,11 @@
    "type": "contains"
   },
   {
+   "from": "rules-VG",
+   "to": "VG.7",
+   "type": "contains"
+  },
+  {
    "from": "design-index",
    "to": "rules-SB",
    "type": "rules"
@@ -18224,6 +18330,36 @@
    "type": "contains"
   },
   {
+   "from": "check_acss_conventions",
+   "to": "A.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w6",
+   "to": "A.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_card_contract",
+   "to": "A.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w6",
+   "to": "A.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_component_profile",
+   "to": "A.3",
+   "type": "enforces"
+  },
+  {
+   "from": "w6",
+   "to": "A.3",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_tiers",
    "to": "B.1",
    "type": "enforces"
@@ -18281,6 +18417,16 @@
   {
    "from": "w8",
    "to": "B.6",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_wildcard_random",
+   "to": "B.7",
+   "type": "enforces"
+  },
+  {
+   "from": "w4",
+   "to": "B.7",
    "type": "enforces_at"
   },
   {
@@ -18354,6 +18500,16 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_accent_surfaces",
+   "to": "C.8",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "C.8",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_genotype",
    "to": "D.1",
    "type": "enforces"
@@ -18391,6 +18547,16 @@
   {
    "from": "w1",
    "to": "D.4",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_intent_deviation",
+   "to": "D.5",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "D.5",
    "type": "enforces_at"
   },
   {
@@ -18534,6 +18700,36 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_auto_grid",
+   "to": "G.5",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "G.5",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_canon_padding",
+   "to": "G.6",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "G.6",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_equal_cards",
+   "to": "G.7",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "G.7",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_system_enums",
    "to": "I.1",
    "type": "enforces"
@@ -18614,6 +18810,16 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_interaction_states",
+   "to": "I.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "I.9",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_schema_fields",
    "to": "L.1",
    "type": "enforces"
@@ -18661,6 +18867,46 @@
   {
    "from": "w3",
    "to": "L.13",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_surface_rhythm",
+   "to": "L.14",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "L.14",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_dead_columns",
+   "to": "L.15",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "L.15",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_logo",
+   "to": "L.16",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "L.16",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_breathing",
+   "to": "L.17",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "L.17",
    "type": "enforces_at"
   },
   {
@@ -18754,6 +19000,56 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_motion_recipes",
+   "to": "M.10",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.10",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_motion_recipes",
+   "to": "M.11",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.11",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_motion_recipes",
+   "to": "M.12",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.12",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_motion_recipes",
+   "to": "M.13",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.13",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_motion_js_budget",
+   "to": "M.14",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.14",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_measurable",
    "to": "M.2",
    "type": "enforces"
@@ -18821,6 +19117,16 @@
   {
    "from": "w7",
    "to": "M.8",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_motion_recipes",
+   "to": "M.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "M.9",
    "type": "enforces_at"
   },
   {
@@ -18894,6 +19200,46 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_meta",
+   "to": "P.16",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "P.16",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_receipts",
+   "to": "P.17",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "P.17",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_round_gated",
+   "to": "P.18",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "P.18",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_context_budget",
+   "to": "P.19",
+   "type": "enforces"
+  },
+  {
+   "from": "w0",
+   "to": "P.19",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_no_stray_styles",
    "to": "P.2",
    "type": "enforces"
@@ -18901,6 +19247,26 @@
   {
    "from": "w6",
    "to": "P.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_parallel_build",
+   "to": "P.20",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "P.20",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_bounded_review",
+   "to": "P.21",
+   "type": "enforces"
+  },
+  {
+   "from": "w8",
+   "to": "P.21",
    "type": "enforces_at"
   },
   {
@@ -18974,6 +19340,26 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_footer_structure",
+   "to": "PS.10",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "PS.10",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_intent_sections",
+   "to": "PS.11",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "PS.11",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_segment_region",
    "to": "PS.2",
    "type": "enforces"
@@ -19024,6 +19410,36 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_primary_cta",
+   "to": "PS.7",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "PS.7",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_heading_pattern",
+   "to": "PS.8",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "PS.8",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_landmarks",
+   "to": "PS.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "PS.9",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_breakpoints",
    "to": "R.1",
    "type": "enforces"
@@ -19031,6 +19447,26 @@
   {
    "from": "w5",
    "to": "R.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_hero_fold",
+   "to": "R.10",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "R.10",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_sticky_offset",
+   "to": "R.11",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "R.11",
    "type": "enforces_at"
   },
   {
@@ -19101,6 +19537,46 @@
   {
    "from": "w5",
    "to": "R.8",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_mobile_cta",
+   "to": "R.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "R.9",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_canon_trace",
+   "to": "REF.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "REF.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_candidate_review",
+   "to": "REF.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "REF.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_canon_trace",
+   "to": "REF.3",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "REF.3",
    "type": "enforces_at"
   },
   {
@@ -19184,6 +19660,16 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_forms",
+   "to": "S.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "S.9",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_section_contracts",
    "to": "SB.1",
    "type": "enforces"
@@ -19241,6 +19727,56 @@
   {
    "from": "w8",
    "to": "SB.6",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_skeleton",
+   "to": "SKL.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "SKL.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_skeleton",
+   "to": "SKL.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "SKL.2",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_skeleton",
+   "to": "SKL.3",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "SKL.3",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_style_licence",
+   "to": "ST.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w5",
+   "to": "ST.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_style_licence",
+   "to": "ST.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w5",
+   "to": "ST.2",
    "type": "enforces_at"
   },
   {
@@ -19454,6 +19990,16 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_dark_media",
+   "to": "V.9",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "V.9",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_variants",
    "to": "VG.1",
    "type": "enforces"
@@ -19511,6 +20057,16 @@
   {
    "from": "w8",
    "to": "VG.6",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_picker_ux",
+   "to": "VG.7",
+   "type": "enforces"
+  },
+  {
+   "from": "w1",
+   "to": "VG.7",
    "type": "enforces_at"
   },
   {
@@ -19614,416 +20170,6 @@
    "type": "enforces_at"
   },
   {
-   "from": "check_canon_trace",
-   "to": "REF.1",
-   "type": "enforces"
-  },
-  {
-   "from": "w1",
-   "to": "REF.1",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_wildcard_random",
-   "to": "B.7",
-   "type": "enforces"
-  },
-  {
-   "from": "w4",
-   "to": "B.7",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_accent_surfaces",
-   "to": "C.8",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "C.8",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_intent_deviation",
-   "to": "D.5",
-   "type": "enforces"
-  },
-  {
-   "from": "w3",
-   "to": "D.5",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_auto_grid",
-   "to": "G.5",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "G.5",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_canon_padding",
-   "to": "G.6",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "G.6",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_equal_cards",
-   "to": "G.7",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "G.7",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_interaction_states",
-   "to": "I.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "I.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_surface_rhythm",
-   "to": "L.14",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "L.14",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_dead_columns",
-   "to": "L.15",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "L.15",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_logo",
-   "to": "L.16",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "L.16",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_meta",
-   "to": "P.16",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "P.16",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_primary_cta",
-   "to": "PS.7",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "PS.7",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_heading_pattern",
-   "to": "PS.8",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "PS.8",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_landmarks",
-   "to": "PS.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "PS.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_footer_structure",
-   "to": "PS.10",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "PS.10",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_mobile_cta",
-   "to": "R.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "R.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_hero_fold",
-   "to": "R.10",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "R.10",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_sticky_offset",
-   "to": "R.11",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "R.11",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_forms",
-   "to": "S.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "S.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_dark_media",
-   "to": "V.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "V.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_intent_sections",
-   "to": "PS.11",
-   "type": "enforces"
-  },
-  {
-   "from": "w3",
-   "to": "PS.11",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_receipts",
-   "to": "P.17",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "P.17",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_breathing",
-   "to": "L.17",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "L.17",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_round_gated",
-   "to": "P.18",
-   "type": "enforces"
-  },
-  {
-   "from": "w3",
-   "to": "P.18",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_acss_conventions",
-   "to": "A.1",
-   "type": "enforces"
-  },
-  {
-   "from": "w6",
-   "to": "A.1",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_card_contract",
-   "to": "A.2",
-   "type": "enforces"
-  },
-  {
-   "from": "w6",
-   "to": "A.2",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_component_profile",
-   "to": "A.3",
-   "type": "enforces"
-  },
-  {
-   "from": "w6",
-   "to": "A.3",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_recipes",
-   "to": "M.9",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.9",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_recipes",
-   "to": "M.10",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.10",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_recipes",
-   "to": "M.11",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.11",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_recipes",
-   "to": "M.12",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.12",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_recipes",
-   "to": "M.13",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.13",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_motion_js_budget",
-   "to": "M.14",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "M.14",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_skeleton",
-   "to": "SKL.1",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "SKL.1",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_skeleton",
-   "to": "SKL.2",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "SKL.2",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_candidate_review",
-   "to": "REF.2",
-   "type": "enforces"
-  },
-  {
-   "from": "w1",
-   "to": "REF.2",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_canon_trace",
-   "to": "REF.3",
-   "type": "enforces"
-  },
-  {
-   "from": "w1",
-   "to": "REF.3",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_skeleton",
-   "to": "SKL.3",
-   "type": "enforces"
-  },
-  {
-   "from": "w7",
-   "to": "SKL.3",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_style_licence",
-   "to": "ST.1",
-   "type": "enforces"
-  },
-  {
-   "from": "w5",
-   "to": "ST.1",
-   "type": "enforces_at"
-  },
-  {
-   "from": "check_style_licence",
-   "to": "ST.2",
-   "type": "enforces"
-  },
-  {
-   "from": "w5",
-   "to": "ST.2",
-   "type": "enforces_at"
-  },
-  {
    "from": "design-index",
    "to": "w0",
    "type": "sequences"
@@ -20075,27 +20221,7 @@
   },
   {
    "from": "card-w7",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "L.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.6",
+   "to": "W.7",
    "type": "loads"
   },
   {
@@ -20105,22 +20231,17 @@
   },
   {
    "from": "card-w7",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "R.5",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "R.3",
+   "to": "PS.6",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "M.6",
+   "to": "V.3",
    "type": "loads"
   },
   {
@@ -20130,17 +20251,42 @@
   },
   {
    "from": "card-w7",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
    "to": "PS.1",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "W.7",
+   "to": "R.3",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "V.6",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.1",
    "type": "loads"
   },
   {
@@ -20425,6 +20571,16 @@
   },
   {
    "from": "w7",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
+   "to": "check_parallel_build",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20445,57 +20601,7 @@
   },
   {
    "from": "card-w5",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.2",
+   "to": "C.5",
    "type": "loads"
   },
   {
@@ -20505,12 +20611,7 @@
   },
   {
    "from": "card-w5",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "R.2",
+   "to": "W.8",
    "type": "loads"
   },
   {
@@ -20520,52 +20621,27 @@
   },
   {
    "from": "card-w5",
-   "to": "W.2",
+   "to": "M.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "T.4",
+   "to": "T.3",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "G.3",
+   "to": "S.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "M.6",
+   "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "L.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.5",
+   "to": "I.1",
    "type": "loads"
   },
   {
@@ -20575,7 +20651,17 @@
   },
   {
    "from": "card-w5",
-   "to": "C.7",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.1",
    "type": "loads"
   },
   {
@@ -20585,7 +20671,22 @@
   },
   {
    "from": "card-w5",
-   "to": "R.1",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.7",
    "type": "loads"
   },
   {
@@ -20595,7 +20696,62 @@
   },
   {
    "from": "card-w5",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
    "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.4",
    "type": "loads"
   },
   {
@@ -20695,6 +20851,11 @@
   },
   {
    "from": "w5",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w5",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20725,6 +20886,11 @@
   },
   {
    "from": "w0",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w0",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20745,17 +20911,7 @@
   },
   {
    "from": "card-w4",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "T.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "C.5",
+   "to": "G.3",
    "type": "loads"
   },
   {
@@ -20765,12 +20921,22 @@
   },
   {
    "from": "card-w4",
-   "to": "G.3",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "S.1",
    "type": "loads"
   },
   {
    "from": "card-w4",
    "to": "M.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "T.3",
    "type": "loads"
   },
   {
@@ -20850,6 +21016,16 @@
   },
   {
    "from": "w4",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w4",
+   "to": "check_picker_ux",
+   "type": "gated_by"
+  },
+  {
+   "from": "w4",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20870,7 +21046,7 @@
   },
   {
    "from": "card-w1",
-   "to": "E.4",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -20885,12 +21061,12 @@
   },
   {
    "from": "card-w1",
-   "to": "T.8",
+   "to": "E.4",
    "type": "loads"
   },
   {
    "from": "card-w1",
-   "to": "V.6",
+   "to": "T.8",
    "type": "loads"
   },
   {
@@ -20955,6 +21131,16 @@
   },
   {
    "from": "w1",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w1",
+   "to": "check_picker_ux",
+   "type": "gated_by"
+  },
+  {
+   "from": "w1",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20975,7 +21161,7 @@
   },
   {
    "from": "card-w2",
-   "to": "W.10",
+   "to": "W.7",
    "type": "loads"
   },
   {
@@ -20985,17 +21171,12 @@
   },
   {
    "from": "card-w2",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
    "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "E.2",
    "type": "loads"
   },
   {
@@ -21005,12 +21186,17 @@
   },
   {
    "from": "card-w2",
-   "to": "W.7",
+   "to": "W.10",
    "type": "loads"
   },
   {
    "from": "card-w2",
    "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -21021,6 +21207,11 @@
   {
    "from": "w2",
    "to": "check_content_inventory",
+   "type": "gated_by"
+  },
+  {
+   "from": "w2",
+   "to": "check_context_budget",
    "type": "gated_by"
   },
   {
@@ -21045,6 +21236,31 @@
   },
   {
    "from": "card-w6",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
    "to": "V.3",
    "type": "loads"
   },
@@ -21055,17 +21271,7 @@
   },
   {
    "from": "card-w6",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "V.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.2",
+   "to": "R.3",
    "type": "loads"
   },
   {
@@ -21075,37 +21281,22 @@
   },
   {
    "from": "card-w6",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
    "to": "M.6",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "W.4",
+   "to": "V.4",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "G.1",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -21115,7 +21306,7 @@
   },
   {
    "from": "card-w6",
-   "to": "C.1",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -21190,6 +21381,11 @@
   },
   {
    "from": "w6",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w6",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -21210,37 +21406,17 @@
   },
   {
    "from": "card-w8",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "L.6",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
+   "to": "R.4",
    "type": "loads"
   },
   {
@@ -21250,37 +21426,27 @@
   },
   {
    "from": "card-w8",
-   "to": "T.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "W.3",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "C.4",
+   "to": "L.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "I.7",
+   "to": "L.5",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "L.9",
+   "to": "G.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "R.7",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -21290,17 +21456,12 @@
   },
   {
    "from": "card-w8",
-   "to": "S.4",
+   "to": "W.9",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.1",
+   "to": "I.6",
    "type": "loads"
   },
   {
@@ -21315,122 +21476,12 @@
   },
   {
    "from": "card-w8",
-   "to": "C.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.2",
    "type": "loads"
   },
   {
@@ -21440,17 +21491,87 @@
   },
   {
    "from": "card-w8",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "C.7",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "S.3",
+   "to": "R.7",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "G.4",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.10",
    "type": "loads"
   },
   {
@@ -21460,12 +21581,87 @@
   },
   {
    "from": "card-w8",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "S.7",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.9",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.5",
    "type": "loads"
   },
   {
@@ -21505,6 +21701,16 @@
   },
   {
    "from": "w8",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w8",
+   "to": "check_bounded_review",
+   "type": "gated_by"
+  },
+  {
+   "from": "w8",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -21525,27 +21731,12 @@
   },
   {
    "from": "card-w3",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "R.3",
    "type": "loads"
   },
   {
@@ -21560,7 +21751,22 @@
   },
   {
    "from": "card-w3",
-   "to": "W.4",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "W.2",
    "type": "loads"
   },
   {
@@ -21676,6 +21882,16 @@
   {
    "from": "w3",
    "to": "check_round_gated",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_context_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_picker_ux",
    "type": "gated_by"
   },
   {
