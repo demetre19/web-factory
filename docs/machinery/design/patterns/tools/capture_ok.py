@@ -217,12 +217,36 @@ def stretched_verdict(meta, d):
     giant tablet. Playwright captures at 900px viewport so the block
     itself is the page's real height — this only fires on legacy or
     broken captures."""
-    import image_features
+    vh = (meta.get('viewport') or [1440, 900])[1]
+    # DOM geometry check first: a single non-nav section taller than
+    # both 1.5 viewports and 60% of the page means segmentation saw one
+    # detector wrapper, not real sections (174-site leak: tiles look
+    # fine, DOM is one 8-11k px block).
+    secs = meta.get('sections') or []
+    if secs:
+        geoms = [s.get('geometry') or {} for s in secs]
+        H = (max(g.get('top', 0) + g.get('height', 0) for g in geoms)
+             - min(g.get('top', 0) for g in geoms)) if geoms else 0
+        for s in secs:
+            g = s.get('geometry') or {}
+            h = g.get('height', 0)
+            loc = str(s.get('locator') or '')
+            # section_type lies on wrapper bugs (classifier labels the
+            # giant #__next block 'nav'); a root wrapper covering the
+            # page is a capture artefact regardless of the label.
+            wrapper = loc.lstrip('#').lower() in (
+                '__next', 'root', 'app', '___gatsby', 'main-content')
+            st = str(s.get('section_type') or '').lower()
+            if H and h > max(1.5 * vh, 0.6 * H) and (
+                    wrapper or st not in ('nav', 'footer')):
+                return 'stretched', (
+                    f'dom section {h:.0f}px ({h / vh:.1f}vh, '
+                    f'{h / H:.0%} of page) — wrapper not segments')
     tiles = sorted(f for f in os.listdir(d) if f.startswith('tile-'))
     if not tiles:
         return None
-    vh = (meta.get('viewport') or [1440, 900])[1]
     try:
+        import image_features
         feat = image_features.analyze(os.path.join(d, tiles[0]))
     except Exception:
         return None

@@ -356,7 +356,18 @@ def ingest_url(url, note='', site_type='general', page_type='home',
         except Exception as e:
             desk['error'] = f'shot unreadable: {e}'
         few = len(desk.get('sections') or []) < 3 and H > 2400
-        if W and (not desk.get('sections') or few):
+        # same predicate as capture_ok.stretched_verdict: one section
+        # (often a framework root wrapper like #__next) covering the
+        # page is mis-segmented, not a real single-section site.
+        vh = h
+        geoms = [(s.get('geometry') or {}) for s in
+                 (desk.get('sections') or [])]
+        page_H = max(g.get('top', 0) + g.get('height', 0)
+                     for g in geoms) if geoms else 0
+        stretched = any(
+            g.get('height', 0) > max(1.5 * vh, 0.6 * page_H)
+            for g in geoms) if page_H else False
+        if W and (not desk.get('sections') or few or stretched):
             desk['sections'] = [
                 {'tag': 'div', 'id': '', 'className': '',
                  'geometry': {'left': 0, 'top': y0,
@@ -608,6 +619,23 @@ def bank(slug):
     if not recs:
         return 0
     out = os.path.join(DATA, 'annotations.jsonl')
+    # re-ingest contract: this slug may already have rows (stale
+    # stretched-section rows, superseded captures). bank() is the
+    # single writer for label==slug -> drop then append, never
+    # duplicate. SiteScanner's re-segment/deep-crawl manifests rely on
+    # this: slugs_to_index/resegment slugs get rebuilt, not appended.
+    if os.path.exists(out):
+        kept = []
+        for line in open(out):
+            try:
+                if json.loads(line).get('label') != slug:
+                    kept.append(line)
+            except Exception:
+                kept.append(line)
+        tmp = out + '.tmp'
+        with open(tmp, 'w') as f:
+            f.writelines(kept)
+        os.replace(tmp, out)
     with open(out, 'a') as f:
         for r in recs:
             f.write(json.dumps(r) + '\n')

@@ -123,8 +123,14 @@ def cmd_build():
     model, preprocess, torch, dev = EI.load_model()
     os.makedirs(OUT, exist_ok=True)
     meta = load_index()
-    existing = meta.setdefault('rows', {})
     bank = rows()
+    bank_order = list(meta.get('order') or [])  # vectors.bin-aligned
+    stale = [rp for rp in existing if rp not in bank]
+    for rp in stale:
+        del existing[rp]
+    if stale:
+        meta['order'] = [k for k in bank_order if k not in stale]
+        print(f'{len(stale)} stale rows dropped (re-ingest)')
     pending = []
     for key, row in bank.items():
         rp = row['render_path']
@@ -154,8 +160,8 @@ def cmd_build():
             batch = []
     if batch:
         done += flush(model, torch, dev, batch, existing, order)
-    # merge vecs: prior bin + new
-    prior = meta.get('order') or []
+    # merge vecs: pre-prune bin order (bank_order) + new
+    prior = bank_order
     old_bin = None
     if prior and os.path.exists(VBIN):
         old_bin = np.fromfile(VBIN, dtype=np.float16).reshape(

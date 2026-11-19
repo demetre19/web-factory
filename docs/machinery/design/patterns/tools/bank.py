@@ -49,7 +49,32 @@ ACT_TO_SECTION = {
 SKIP_SECTIONS = {'nav', 'footer', 'call-to-action'}
 
 
-def bank_site(slug, verbose=True):
+def drop_rows(slug):
+    """Remove every annotations.jsonl row banked under label==slug —
+    re-ingests rebuild instead of appending (stale stretched-section
+    rows must not linger)."""
+    if not os.path.exists(OUT):
+        return 0
+    rows = []
+    kept = 0
+    for line in open(OUT):
+        try:
+            r = json.loads(line)
+        except Exception:
+            continue
+        if r.get('label') == slug:
+            kept += 1
+            continue
+        rows.append(line)
+    if kept:
+        tmp = OUT + '.tmp'
+        with open(tmp, 'w') as f:
+            f.writelines(rows)
+        os.replace(tmp, OUT)
+    return kept
+
+
+def bank_site(slug, verbose=True, reindex=False):
     d = os.path.join(WEB, slug)
     mp = os.path.join(d, 'meta.json')
     if not os.path.exists(mp):
@@ -58,8 +83,10 @@ def bank_site(slug, verbose=True):
     if meta.get('capture_status', 'ok') != 'ok':
         return f"quarantined: {meta.get('capture_status')} " \
                f"({meta.get('capture_reason')})"
-    if meta.get('banked'):
+    if meta.get('banked') and not reindex:
         return 'already banked'
+    if reindex:
+        drop_rows(slug)
     # `web/` mixes curated references with a negative-ecommerce control
     # group; the negatives are contrast corpus, never canon evidence
     if (meta.get('source') or '') == 'negative':
@@ -145,15 +172,31 @@ def banked_slugs():
 
 
 def main():
-    args = [a for a in sys.argv[1:] if a != '--all']
+    reindex = '--reindex' in sys.argv
+    args = [a for a in sys.argv[1:]
+            if a not in ('--all', '--reindex')]
     slugs = args
     if '--all' in sys.argv or not slugs:
         have = banked_slugs()
         slugs = [s for s in sorted(os.listdir(WEB))
-                 if os.path.isdir(os.path.join(WEB, s)) and s not in have]
+                 if os.path.isdir(os.path.join(WEB, s))
+                 and (reindex or s not in have)]
+    # slugs listed in re-ingest manifests are always reindexed, even if
+    # the caller forgot --reindex (SiteScanner's contract)
+    manifests = []
+    for mf in ('lexdemos-deep.json', 'resegment-stretched.json'):
+        p = os.path.join(DATA, 'operator', '_sources', mf)
+        if os.path.exists(p):
+            try:
+                j = json.load(open(p))
+                manifests.extend(j.get('slugs_to_index') or
+                                 j.get('slugs') or [])
+            except Exception:
+                pass
+    reix = set(manifests)
     done = 0
     for slug in slugs:
-        r = bank_site(slug)
+        r = bank_site(slug, reindex=reindex or slug in reix)
         if isinstance(r, int):
             done += 1
         else:
