@@ -262,7 +262,8 @@
   ],
   "check_skeleton": [
    "SKL.1",
-   "SKL.2"
+   "SKL.2",
+   "SKL.3"
   ],
   "check_trend_vocab": [
    "DM.1"
@@ -1625,6 +1626,13 @@
    "wave": "w1",
    "check": "check_canon_trace",
    "threshold": "look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source"
+  },
+  "SKL.3": {
+   "mode": "script",
+   "tier": "stylistic",
+   "wave": "w7",
+   "check": "check_skeleton",
+   "threshold": "component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect"
   }
  }
 }

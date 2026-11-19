@@ -31,6 +31,18 @@ visual values — colours, spacing utilities, type size/weight, radius,
 shadow, arbitrary `[…]` values — FAIL: visuals come from Section.astro
 surfaces + ACSS tokens, identical to freehand hex.
 
+### SKL.3 Component-tier endorsement (component-reference sources)
+
+A `component-reference` source (first: `skeleton-shadcn`, operator
+endorsement) may inform **component-level** visual values — heights,
+paddings, font sizes, focus ring, aria-invalid treatment, radius
+ladder — when the DNA component profile leaves the value open; the
+DNA/profile always wins. Its classes are CSS-var tokens by design
+(`bg-primary` → `var(--primary)`) and count as token indirection
+under SKL.1, not raw utilities. Section-level layout/rhythm/look
+citations stay SKL.2 defects — component endorsement never reaches
+the page canon tiers.
+
 ### SKL.2 Never cited as canon
 
 `skeleton*`, `hyperui/*`, `templates/skeletons/*` tokens in refs,
@@ -43,3 +55,4 @@ for visual decisions.
 |---|---|---|---|---|---|
 | SKL.1 | structural | script | `check_skeleton` | raw visual utility on a data-skeleton section | w7 |
 | SKL.2 | structural | script | `check_skeleton` | skeleton id cited as a canon ref | w7 |
+| SKL.3 | stylistic | script | `check_skeleton` | component-reference visuals applied where the DNA profile is closed, or section-level cites | w7 |

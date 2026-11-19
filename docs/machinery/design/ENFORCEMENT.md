@@ -187,5 +187,6 @@ closed set.
 | SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
 | REF.2 | Candidate sources | invariant | script | `check_candidate_review` | pending candidates render in preview/candidates.html (screenshot+score+decision controls) and are rejected by canon_trace until operator-promoted | w1 |
 | REF.3 | Layered canon | invariant | script | `check_canon_trace` | look-layer informs rows cite canon sources only; principle-layer rows may cite any principle-contributing source | w1 |
+| SKL.3 | Component-tier endorsement (component-reference sources) | stylistic | script | `check_skeleton` | component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect | w7 |
 
-178 rules — script 147, reviewer 30, operator 1; invariant 52, structural 50, stylistic 76.
+179 rules — script 148, reviewer 30, operator 1; invariant 52, structural 50, stylistic 77.

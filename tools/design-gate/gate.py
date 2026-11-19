@@ -2499,7 +2499,16 @@ SKL_RAW_VISUAL = re.compile(
     r'py-|px-|pt-|pb-|pl-|pr-|mt-|mb-|ml-|mr-|rounded|shadow|w-(?!full\b)'
     r'|h-|min-h-|max-w-|opacity-|outline-|divide-|placeholder-|accent-)')
 SKL_ID = re.compile(
-    r'(?:skeleton[\w/-]*|hyperui/[\w/.-]+|templates/skeletons/[\w/.-]+)')
+    r'(?:skeleton[\w/-]*|hyperui/[\w/.-]+|shadcn/[\w/.-]+|'
+    r'templates/skeletons/[\w/.-]+)')
+# shadcn skeleton classes are CSS-var tokens by design (bg-primary →
+# var(--primary)) — component-tier indirection, not raw utilities
+SKL_TOKEN_CLASS = re.compile(
+    r'^(?:bg|text|border|ring|fill|stroke|from|via|to|placeholder|'
+    r'caret|accent|decoration|outline|divide)-(?:primary|secondary|'
+    r'muted|accent|destructive|popover|card|foreground|background|'
+    r'input|ring|border|chart-\d|sidebar[\w-]*|surface|code|'
+    r'selection)(?:/[\w.%-]+)?(?:-\w+)?$')
 
 
 def _skl_harvest_ids():
@@ -2643,10 +2652,12 @@ def check_skeleton(ctx):
                          'not a harvest id — provenance names '
                          'templates/skeletons/<src>/<file> ids')
             cls = re.search(r'class="([^"]*)"', tag)
+            shad = skel.startswith('shadcn/')
             raw = [c for c in (cls.group(1).split() if cls else [])
                    for c in [c.split(':')[-1]]
                    if SKL_RAW_VISUAL.match(c) and
-                   not SKL_STRUCTURE.match(c)]
+                   not SKL_STRUCTURE.match(c) and
+                   not SKL_TOKEN_CLASS.match(c)]
             if raw:
                 f.append(f'SKL.1 {name} sec {skel}: raw visual '
                          f'utilit{"y" if len(raw)==1 else "ies"} '
@@ -8204,7 +8215,12 @@ def build_graph():
             if not os.path.isdir(sdir):
                 continue
             sid = 'skeleton-' + src
-            nodes[sid] = {'id': sid, 'type': 'skeleton-source',
+            # component-tier endorsed sources get the marker type —
+            # their spec.json may inform component-level visuals where
+            # the DNA profile is open (structure law unchanged)
+            stype = 'component-reference' if src == 'shadcn' \
+                else 'skeleton-source'
+            nodes[sid] = {'id': sid, 'type': stype,
                           'file': f'templates/skeletons/{src}'}
             edges.append(('design-index', sid, 'templates'))
             edges.append(('section-catalog', sid, 'see_also'))
@@ -8220,8 +8236,9 @@ def build_graph():
                     if not isinstance(v, dict):
                         continue
                     comp = v.get('wf_composition')
-                    if v.get('family') and comp:
-                        fam.setdefault(v['family'], set()).add(comp)
+                    fname = v.get('family') or v.get('name')
+                    if fname and comp:
+                        fam.setdefault(fname, set()).add(comp)
             for fm_, comps in sorted(fam.items()):
                 fid = f'{sid}-{fm_}'
                 nodes[fid] = {'id': fid, 'type': 'skeleton-family',
