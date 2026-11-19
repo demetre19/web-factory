@@ -226,11 +226,12 @@ closed set.
 | BM.3 | Usage stays in declared slots | stylistic | script | `check_brand_motif` | data-motif-slot ∉ declared usage or unknown slot vocabulary | w7 |
 | O.9 | A motif is one primitive, never an illustration | invariant | script | `check_brand_motif` | data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements — illustration, not motif | w7 |
 | P.24 | VLM judgment leaves a real invocation record | invariant | script | `check_vlm_evidence` | vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model | w8 |
+| P.25 | The VLM tail is cached, parallel and shot-budgeted | structural | script | `check_vlm_evidence` | a re-judged shot whose (image,prompt,model) hash was already recorded — the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third | w8 |
 | SC.1 | The verdict table exists and covers the corpus | invariant | script | `check_sop_constants` | SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded | w5 |
 | SC.2 | Verdicts recompute, never drift | invariant | script | `check_sop_constants` | recorded verdict != derived verdict from sop-adherence.json | w5 |
 | TL.1 | The taxonomy is closed | invariant | script | `check_three_layers` | data-tl-layer value outside the closed taxonomy {ornament, motif, icon} | w5 |
 | TL.2 | Candidates are scored on DNA-FIT; the floor is 50 | invariant | script | `check_three_layers` | rendered candidate with dna-fit outside 0–100 or below the 50 floor | w5 |
 | TL.3 | Every candidate carries its seed chain | invariant | script | `check_three_layers` | candidate without its word-seed-chain provenance | w5 |
-| TL.4 | Layers multi-select; a pick is per-layer | invariant | script | `check_three_layers` | layer block with ≥2 candidates using radio inputs instead of checkboxes | w5 |
+| TL.4 | Layers multi-select; a pick is per-layer | invariant | script | `check_three_layers` | candidate surface with ≥2 candidates using radio inputs instead of checkboxes | w5 |
 
-223 rules — script 192, reviewer 30, operator 1; invariant 86, structural 54, stylistic 83.
+224 rules — script 193, reviewer 30, operator 1; invariant 86, structural 55, stylistic 83.
