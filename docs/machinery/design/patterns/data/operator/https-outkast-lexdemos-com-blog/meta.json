@@ -4486,14 +4486,15 @@
  "capture_status": "ok",
  "capture_reason": "",
  "captured_at": "2026-11-19T04:45:16Z",
- "site_type_v2": null,
+ "site_type_v2": "other",
  "site_type_suggested": "hospitality",
- "site_type_confidence": 0.5,
+ "site_type_confidence": 0.91,
  "site_type_signals": [
-  "hospitality:1 vs agency-portfolio:1",
-  "menu"
+  "vlm votes: {'agency-portfolio': 3}",
+  "The page has a donate button",
+  "The page has a donate button",
+  "The page has a donate button"
  ],
- "site_type_needs_review": true,
  "collapse": {
   "viewports": {
    "1440": {
@@ -4552,5 +4553,29 @@
   "bo_widest": 1440,
   "bo5_bleed_adjacency": 0,
   "bo9_mobile_wide": 0
- }
+ },
+ "site_type_method": "google/gemini-2.5-flash-lite",
+ "site_type_v2_confidence": 0.9,
+ "vlm_evidence": "Journal section with articles and blog posts",
+ "structure": [
+  "nav",
+  "hero",
+  "content",
+  "content",
+  "footer"
+ ],
+ "structure_hash": "7e7ebc3130",
+ "vibe": {
+  "style": "editorial",
+  "mood": "calm",
+  "tone": "light",
+  "palette_family": "neutral",
+  "whitespace_band": "balanced",
+  "type_personality": "sans-led",
+  "formality": "professional",
+  "ornament_density": "bare",
+  "imagery_type": "photograph",
+  "confidence": 0.9
+ },
+ "vibe_method": "google/gemini-2.5-flash-lite"
 }
