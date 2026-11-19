@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-pricing-22__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-pricing-22__pricing-wrapper">
-      {items.map((it) => (
-        <div class="bm-pricing-22__pricing-cover">
-          <h2 class="bm-pricing-22__heading">{it.title}</h2>
-          <div class="bm-pricing-22-pricing-ul">
-            {(it.items || []).map((it2) => (
-              <div class="bm-pricing-22-card">
-                <div class="bm-pricing-22-card__top">
-                  <div class="bm-pricing-22-card__top-left">
-                    <h4 class="bm-pricing-22-card__heading">{it2.title}</h4>
-                    <p class="bm-pricing-22-card__text">{it2.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <div>
+                    <div>
+                      <h4 class="text-fluid-2">{it2.title}</h4>
+                      <p class="text-fluid-0">{it2.text}</p>
+                    </div>
+                    <p class="text-fluid-0">{it2.text}</p>
                   </div>
-                  <p class="bm-pricing-22-card__price">{it2.text}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-pricing-22__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .bm-pricing-22__pricing-wrapper {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-pricing-22__pricing-cover {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-pricing-22-pricing-ul {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-pricing-22-card {
-    padding: 0 0 var(--space-s) 0;
-    border-bottom: 1 solid var(--bg-subtle);
-  }
-
-  .bm-pricing-22-card__top {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
-
-  .bm-pricing-22-card__price {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,169 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-61__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-61-feature-list list--none">
-      {items.map((it) => (
-        <div class="bm-feature-61-feature-card">
-          <div class="bm-feature-61-feature-inner">
-            <div class="bm-feature-61-feature-card__feature-content">
-              <h2 class="bm-feature-61-feature-card__feature-heading">{it.title}</h2>
-              <p class="bm-feature-61-feature-card__feature-text">{it.text}</p>
-              <a class="bm-feature-61-feature-card__feature-link" href="#">{it.text}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Feature Image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <figure class="bm-feature-61-feature-card__feature-image"><img src="/media/placeholder.svg" alt="Feature Image" loading="lazy" width="900" height="600" /></figure>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-61__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-feature-61-feature-inner {
-    position: relative;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    justify-content: flex-end;
-  }
-
-  .bm-feature-61-feature-card__feature-content {
-    position: relative;
-    z-index: 2;
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: 100%;
-  }
-
-  .bm-feature-61-feature-card__feature-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  /* CARD */
-  
-  .bm-feature-61-feature-card {
-    --card-radius: var(--r-card); /* change border radius */
-    --margin-bottom: 10vh; /* change margin-block-size of card */
-    --transition-duration: 0.5s;
-    --timing-function: ease;
-    --psuedo-size: 100%;
-    position: sticky;
-    block-size: 100%;
-    bottom: var(--section-space-s);
-    transition: 0.5s ease;
-    border-radius: var(--acss-card-radius);
-    overflow: clip;
-  }
-  
-  .bm-feature-61-feature-card::before {
-    content: '';
-    position: absolute;
-    inline-size: var(--acss-psuedo-size);
-    block-size: var(--acss-psuedo-size);
-    background: linear-gradient(transparent, var(--fs-0));
-    z-index: 1;
-    inset: 0;
-  }
-  
-  
-  .bm-feature-61-feature-card:nth-of-type(1) {
-    z-index: 6;
-    margin-block-end: var(--acss-margin-bottom);
-  }
-  
-  .bm-feature-61-feature-card:nth-of-type(2) {
-    z-index: 5;
-    margin-block-end: var(--acss-margin-bottom);
-  }
-  
-  .bm-feature-61-feature-card:nth-of-type(3) {
-    z-index: 4;
-    margin-block-end: var(--acss-margin-bottom);
-  }
-  
-  .bm-feature-61-feature-card:nth-of-type(4) {
-    z-index: 3;
-    margin-block-end: 0;
-  }
-  
-  /* CONTENT */
-  .bm-feature-61-feature-card .bm-feature-61-feature-card__feature-content {
-    color: var(--fs-0);
-    transition: var(--acss-transition-duration) var(--acss-timing-function);
-    padding: var(--space-m);
-  }
-  
-  .bm-feature-61-feature-card:hover .bm-feature-61-feature-card__feature-content, .bm-feature-61-feature-card:focus-within .bm-feature-61-feature-card__feature-content {
-    color: var(--fs-0);
-  }
-  
-  .bm-feature-61-feature-card .bm-feature-61-feature-card__feature-content::before {
-    content: '';
-    position: absolute;
-    inline-size: var(--acss-psuedo-size);
-    block-size: var(--acss-psuedo-size);
-    z-index: -1;
-    inset: 0;
-    border-radius: var(--acss-card-radius);
-    transition: var(--acss-transition-duration) var(--acss-timing-function);
-  }
-  
-  .bm-feature-61-feature-card:hover .bm-feature-61-feature-card__feature-content::before, .bm-feature-61-feature-card:focus-within .bm-feature-61-feature-card__feature-content::before {
-    background-color: var(--bg-canvas);
-  }
-  
-  /* HEADING */
-  .bm-feature-61-feature-card .bm-feature-61-feature-card__feature-heading {
-    transform: translateY(500%);
-    transition: var(--acss-transition-duration) var(--acss-timing-function);
-  }
-  
-  .bm-feature-61-feature-card:hover .bm-feature-61-feature-card__feature-heading, .bm-feature-61-feature-card:focus-within .bm-feature-61-feature-card__feature-heading {
-    transform: translateY(0%);
-  }
-  
-  /* TEXT & LINK */
-   .bm-feature-61-feature-card .bm-feature-61-feature-card__feature-text, .bm-feature-61-feature-card .bm-feature-61-feature-card__feature-link {
-    opacity: 0;
-    transform: translateY(100%);
-    transition: var(--acss-transition-duration) var(--acss-timing-function);
-  }
-  
-   .bm-feature-61-feature-card:hover .bm-feature-61-feature-card__feature-text, .bm-feature-61-feature-card:focus-within .bm-feature-61-feature-card__feature-text, .bm-feature-61-feature-card:hover .bm-feature-61-feature-card__feature-link, .bm-feature-61-feature-card:focus-within .bm-feature-61-feature-card__feature-link {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-</style>

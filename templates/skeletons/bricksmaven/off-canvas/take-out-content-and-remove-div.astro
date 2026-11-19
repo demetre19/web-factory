@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,150 +17,58 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="bm-off-canvas-6__toggle"></div>
-    <div class="bm-off-canvas-6">
-      <div class="bm-off-canvas-6__content">
-        <div class="bm-off-canvas-6__close"></div>
-        <h2 class="bm-off-canvas-6__heading">{heading}</h2>
-        <div class="bm-off-canvas-nav-ul list--none">
-          {items.map((it) => (
-            <div class="bm-off-canvas-nav-li">
-              <a class="bm-off-canvas-nav-li__link bm-off-canvas-nav-li__link--larger" href="#">{it.text}</a>
+    <div></div>
+    <div>
+      <div>
+        <div></div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
             </div>
           ))}
         </div>
-        <div class="bm-off-canvas-6__contact-footer">
-          <h2 class="bm-off-canvas-6__contact-heading">Get in touch with us</h2>
-          <div class="bm-off-canvas-contact list--none">
-            <div class="bm-off-canvas-contact-item">
-              <div class="bm-off-canvas-contact-item__icon-wrapper">
-                <span class="bm-off-canvas-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
+        <div>
+          <h2 class="text-fluid-2">Get in touch with us</h2>
+          <div>
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <a class="bm-off-canvas-contact-item__link" href="#">info@clienturl.com</a>
+              <a class="text-fluid-0" href="#">info@clienturl.com</a>
             </div>
-            <div class="bm-off-canvas-contact-item">
-              <div class="bm-off-canvas-contact-item__icon-wrapper">
-                <span class="bm-off-canvas-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <a class="bm-off-canvas-contact-item__link" href="#">+32 456 78 3456</a>
+              <a class="text-fluid-0" href="#">+32 456 78 3456</a>
             </div>
           </div>
-          <p class="bm-off-canvas-6__contact-address">{fs}</p>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-        <div class="bm-off-canvas-6__socials">
-          <div class="bm-social-share list--none bm-social-share--column">
-            {items.map((it) => (
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             ))}
           </div>
-          <p class="bm-off-canvas-6__social-heading">Social</p>
+          <p class="text-fluid-0">Social</p>
         </div>
       </div>
-      <div class="bm-off-canvas-6__backdrop"></div>
+      <div></div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-off-canvas-6 {
-    position: relative;
-  }
-
-  .bm-off-canvas-6__content {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: var(--space-s);
-    flex-wrap: nowrap;
-  }
-
-  .bm-off-canvas-6__close {
-    position: absolute;
-    right: var(--space-xl);
-    top: var(--space-xl);
-  }
-
-  .bm-off-canvas-nav-ul {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .bm-off-canvas-nav-li__link {
-    font-size: var(--fs-2);
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .bm-off-canvas-nav-li__link--larger {
-    font-size: var(--fs-4);
-  }
-
-  .bm-off-canvas-6__contact-footer {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-off-canvas-contact {
-    row-gap: calc(var(--flow-spacing) / 1.8);
-  }
-
-  .bm-off-canvas-contact-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-off-canvas-6__contact-address {
-    width: var(--measure);
-  }
-
-  .bm-off-canvas-6__socials {
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    width: auto;
-    right: var(--space-xl);
-    z-index: 1;
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--column {
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-off-canvas-6__social-heading {
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .bm-off-canvas-6__social-heading {
-  	writing-mode: vertical-lr;
-    transform: rotate(180deg);
-  }
-</style>

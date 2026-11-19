@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,87 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-blog-section-25__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-blog-section-25__slider-cover">
-      <div class="bm-blog-section-25-slider-nestable">
-        <div class="bm-blog-section-25-blog-card">
-          <div class="bm-blog-section-25-blog-card__content">
-            <h2 class="bm-blog-section-25-blog-card__heading">{post_title}</h2>
-            <p class="bm-blog-section-25-blog-card__date">{post_date}</p>
-          </div>
-          <div class="bm-blog-section-25-blog-card__media">
-            <figure class="bm-blog-section-25-blog-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <p class="text-fluid-0">{post_date}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-blog-section-25 {
-    overflow: clip;
-    padding: 0 0 var(--section-space-l) 0;
-  }
-
-  .bm-blog-section-25__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-blog-section-25-blog-card {
-    row-gap: var(--flow-spacing);
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-  }
-
-  .bm-blog-section-25-blog-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-blog-section-25-blog-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  .bm-blog-section-25-blog-card__image {
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  /* bm-custom */
-  .bm-blog-section-25-slider-nestable .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-blog-section-25-slider-nestable::before {
-    content:'';
-    position: absolute;
-    inset-inline-start: calc(-1 * 100vw);
-    inline-size: 100vw;
-    block-size: 100%;
-    background-color: var(--bg-canvas);
-    z-index: 1;
-  }
-</style>

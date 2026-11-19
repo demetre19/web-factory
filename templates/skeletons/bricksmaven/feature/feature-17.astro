@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,110 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-17-container">
-    <div class="feature-17-wrapper-sticky-scroll">
-      <div class="feature-17-sticky">
-        <h2>{heading}</h2>
-        <p>{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="feature-17-scroll list--none">
-        {items.map((it) => (
-          <div class="feature-17-card-list">
-            <div class="feature-17-card-list__content">
-              <h3 class="feature-17-card-list__heading">{it.title}</h3>
-              <p class="feature-17-card-list__text">{it.text}</p>
-              <p class="feature-17-card-list__cta-link">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-            <div class="feature-17-card-list__media">
-              <figure class="feature-17-card-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-17 {
-    row-gap: var(--space-l);
-  }
-
-  .feature-17-wrapper-sticky-scroll {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--section-space-xxl);
-  }
-
-  .feature-17-sticky {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .feature-17-scroll {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .feature-17-card-list {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-    border-top: 0.1rem solid var(--bg-subtle);
-    border-right: 0.1rem solid var(--bg-subtle);
-    border-bottom: 0.1rem solid var(--bg-subtle);
-    border-left: 0.1rem solid var(--bg-subtle);
-  }
-
-  .feature-17-card-list__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .feature-17-card-list__cta-link {
-    text-decoration: underline;
-    text-transform: uppercase;
-  }
-
-  .feature-17-card-list__image {
-    object-fit: cover;
-    height: 240px;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .feature-17-sticky {
-  	position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 6rem;
-  }
-  
-  @media (max-width:767px) {
-  	
-    .feature-17-sticky {
-  	position: -webkit-static; /* Safari */
-    position: static;
-    top: 0rem;
-  }
-  
-  }
-</style>

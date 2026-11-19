@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,121 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-25-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="blog-archive-25-archive-list list--none">
-      <div class="blog-archive-25-archive-card">
-        <div class="blog-archive-25-archive-card__content">
-          <div class="blog-archive-25-archive-card__post-title"></div>
-          <p class="blog-archive-25-archive-card__author">Written by {author_name}</p>
-          <div class="blog-archive-25-archive-card__excerpt"></div>
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        </div>
-        <div class="blog-archive-25-archive-card__media">
-          <figure class="blog-archive-25-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <div class="blog-archive-25-archive-card__meta-data">
-            <p class="blog-archive-25-archive-card__category">{post_terms_category}</p>
-            <p class="blog-archive-25-archive-card__date">{post_date}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div></div>
+            <p class="text-fluid-0">Written by {author_name}</p>
+            <div></div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <div class="grid-auto gap-fluid-l">
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div>
+              <p class="text-fluid-0">{post_terms_category}</p>
+              <p class="text-fluid-0">{post_date}</p>
+            </div>
           </div>
         </div>
       </div>
+      <div></div>
     </div>
-    <div class="blog-archive-pagination"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-25-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .blog-archive-25-archive-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-archive-25-archive-card__content {
-    background: var(--bg-canvas);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    margin: -8rem 0 0 0;
-    z-index: 1;
-    width: var(--content-width);
-    align-self: center;
-  }
-
-  .blog-archive-25-archive-card__post-title {
-    font-size: var(--fs-3);
-  }
-
-  .blog-archive-25-archive-card__author {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .blog-archive-25-archive-card__media {
-    position: relative;
-  }
-
-  .blog-archive-25-archive-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .blog-archive-25-archive-card__meta-data {
-    position: absolute;
-    top: var(--space-s);
-    right: var(--space-s);
-    background: var(--bg-canvas);
-    padding: .8rem .8rem .8rem .8rem;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 1rem;
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-25-archive-card__category {
-    background: var(--action-primary);
-    padding: .8rem .8rem .8rem .8rem;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .blog-archive-pagination {
-    margin: var(--space-xl) 0 0 0;
-  }
-
-  /* bm-custom */
-  .blog-archive-25-archive-card__image {
-  	aspect-ratio: 16/7;
-  }
-</style>

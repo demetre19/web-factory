@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,54 +17,24 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-12-container">
-    <div class="hero-12__content">
-      <p class="hero-12__tag">TAGLINE</p>
-      <h1 class="hero-12__title">{heading}</h1>
-      <p class="hero-12__desc">{fs}</p>
-      <a class="hero-12__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <p class="text-fluid-0">TAGLINE</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="hero-12__media"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-12-container {
-    position: relative;
-  }
-
-  .hero-12__content {
-    display: flex;
-    row-gap: var(--space-s);
-    width: var(--content-width);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    flex-direction: column;
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-12__media {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
-</style>

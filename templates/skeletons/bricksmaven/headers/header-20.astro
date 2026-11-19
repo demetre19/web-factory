@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,73 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-20__container">
-    <div class="bm-header-20__brand">
-      <figure class="bm-header-20__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="bm-header-20__right-column">
-      <div class="bm-header-20__nav-menu"></div>
-      <div class="bm-header-20__search-wrapper">
-        <div class="bm-search"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div>
+        <div></div>
+        <div>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-20 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-  }
-
-  .bm-header-20__container {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bm-header-20__brand {
-    width: auto;
-    display: flex;
-  }
-
-  .bm-header-20__image {
-    object-fit: contain;
-  }
-
-  .bm-header-20__right-column {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    width: auto;
-  }
-
-  .bm-header-20__nav-menu {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    width: auto;
-  }
-
-  .bm-header-20__search-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    border-left: 1 solid var(--bg-subtle);
-  }
-</style>

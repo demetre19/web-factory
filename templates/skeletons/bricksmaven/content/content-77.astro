@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,83 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-77__container">
-    <div class="bm-feature-77__content">
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="bm-accent-heading">Tagline</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Tagline</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
-      <div class="bm-feature-77__content-media">
-        <figure class="bm-feature-77__content-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div class="bm-feature-77__media">
-      <figure class="bm-feature-77__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-77__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-feature-77__content {
-    row-gap: calc(var(--flow-spacing) * 3);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-77__content-media {
-    align-items: flex-end;
-  }
-
-  .bm-feature-77__content-image {
-    object-fit: cover;
-    width: 342px;
-    height: 342px;
-  }
-
-  .bm-feature-77__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

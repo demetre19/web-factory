@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,137 +17,71 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-5-container gap--l">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="cta-combo__text">OR</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">OR</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+        <p class="text-fluid-0">Pricing tagline</p>
       </div>
-      <p class="intro__accent-heading">Pricing tagline</p>
-    </div>
-    <div class="pricing-5-content">
-      <div class="pricing-5-price-box">
-        <div class="pricing-5-intro">
-          <div class="pricing-5-intro__price-wrapper">
-            <p class="pricing-5-intro__price">$0</p>
-            <span class="pricing-5-intro__price-icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <p class="pricing-5-intro__price-desc">Change the color to match your brand or vision, add your logo, choose the perfect thumbnail, remove the playbar</p>
-        </div>
-        <div class="bm-ul-benefits list--none">
-          {items.map((it) => (
-            <div class="bm-li-benefits">
-              <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
-              <p class="bm-li-benefits__text">{it.text}</p>
+      <div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">$0</p>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-          ))}
-        </div>
-        <div class="pricing-5-cta">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="pricing-5-cta__btn--link" href={cta.href}>{cta.label}</a>
-        </div>
-      </div>
-      <div class="pricing-5-price-box">
-        <div class="pricing-5-intro gap--xs flex--col">
-          <div class="pricing-5-intro__price-wrapper flex--row justify-content--between">
-            <p class="pricing-5-intro__price text--700 text--xxl">$99/year</p>
-            <span class="pricing-5-intro__price-icon" data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">Change the color to match your brand or vision, add your logo, choose the perfect thumbnail, remove the playbar</p>
           </div>
-          <p class="pricing-5-intro__price-desc">Change the color to match your brand or vision, add your logo, choose the perfect thumbnail, remove the playbar</p>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
-        <div class="bm-ul-benefits list--none">
-          {items.map((it) => (
-            <div class="bm-li-benefits">
-              <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
-              <p class="bm-li-benefits__text">{it.text}</p>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">$99/year</p>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-          ))}
-        </div>
-        <div class="pricing-5-cta">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="pricing-5-cta__btn--link" href={cta.href}>{cta.label}</a>
+            <p class="text-fluid-0">Change the color to match your brand or vision, add your logo, choose the perfect thumbnail, remove the playbar</p>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .pricing-5-price-box {
-    display: flex;
-    row-gap: var(--space-m);
-    flex-direction: column;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .pricing-5-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .pricing-5-intro__price-wrapper {
-    justify-content: space-between;
-    display: flex;
-  }
-
-  .pricing-5-intro__price {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .bm-li-benefits {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .pricing-5-cta {
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* bm-custom */
-  .pricing-5-price-box {
-  box-shadow:var(--shadow-card);
-  
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,145 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-65__container">
-    <div class="bm-feature-65__column">
-      <h2 class="bm-feature-65__heading">{heading}</h2>
-      <div class="bm-feature-65__slider-media">
-        <figure class="bm-feature-65__slider-image"><img src="/media/placeholder.svg" alt="Slider Image" loading="lazy" width="900" height="600" /></figure>
-        <div class="bm-feature-slider">
-          {items.map((it) => (
-            <div class="bm-feature-slider-card">
-              <h3 class="bm-feature-slider-card__heading">{it.title}</h3>
-              <div class="bm-feature-slider-card__icon-wrapper">
-                <span class="bm-feature-slider-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div class="grid-auto gap-fluid-l">
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Slider Image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="bm-feature-slider-card__text">{it.text}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="bm-feature-65__column">
-      <div class="bm-feature-65__media">
-        <figure class="bm-feature-65__image-beta"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <p class="bm-feature-65__text">{fs}</p>
-      <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-65__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: var(--fs-0);
-  }
-
-  .bm-feature-65__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-65__heading {
-    font-size: var(--fs-0);
-  }
-
-  .bm-feature-65__slider-media {
-    height: 740px;
-    position: relative;
-    overflow: clip;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    margin: var(--fs-0) 0 0 0;
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  .bm-feature-65__slider-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-feature-slider {
-    z-index: 1;
-  }
-
-  .bm-feature-slider-card {
-    row-gap: var(--fs-0);
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    align-items: flex-start;
-    background: var(--bg-canvas);
-  }
-
-  .bm-feature-slider-card__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 1px solid var(--bg-subtle);
-    border-left: 1px solid var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-  }
-
-  .bm-feature-65__image-beta {
-    width: 100%;
-    height: 64rem;
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  /* bm-custom */
-  .bm-feature-slider {
-    --icon-dimension: 32px; /* Change the icon dimensions*/
-    --icon-size: 16px; /* Change the icon size*/
-    --icon-opacity: 0.5;  /* Change the icon opacity*/
-  }
-  
-  .bm-feature-slider .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-feature-slider .splide__arrow--next {
-    left: 0;
-    transition: 0.2s ease;
-  }
-  
-  .bm-feature-slider .splide__arrow--prev {
-    left: calc(-1 * (var(--fs-0) + var(--acss-icon-dimension)));
-    transition: 0.2s ease;
-  }
-  
-  .bm-feature-slider .splide__arrows {
-      position: absolute;
-      inset-block-start: 42px; 
-    	inset-inline-end: calc(var(--acss-icon-dimension) + var(--fs-0));
-     	
-  }
-  
-  .bm-feature-slider .is-prev, .bm-feature-slider .is-next {
-    scale: 0.9;
-  }
-
-  /* bm-custom */
-  .bm-feature-slider-card {
-    align-items: start !important;
-    
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,143 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-42__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="bm-feature-42-list list--none">
-      {items.map((it) => (
-        <div class="bm-feature-42-card">
-          <div class="bm-feature-42-card__icon-wrapper">
-            <span class="bm-feature-42-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-          <div class="bm-feature-42-card__content">
-            <h2 class="bm-feature-42-card__title">{it.title}</h2>
-            <p class="bm-feature-42-card__text">{it.text}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-42 {
-    padding: 50vh 0 50vh 0;
-  }
-
-  .bm-feature-42__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-feature-42-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-feature-42-card {
-    display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-42-card__icon-wrapper {
-    position: relative;
-  }
-
-  .bm-feature-42-card__icon {
-    background: var(--bg-canvas);
-    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
-  }
-
-  .bm-feature-42-card__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    padding: calc(var(--space-xs) / 1.8) 0 var(--space-m) 0;
-  }
-
-  /* bm-custom */
-  .bm-feature-42 {
-  	--line-height: 0%;
-  }
-
-  /* bm-custom */
-  .bm-feature-42-card {
-  	--highlight-color: color-mix(in srgb, var(--text-secondary) 80%, transparent);
-  }
-  
-  
-  .bm-feature-42-card .bm-feature-42-card__icon-wrapper::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: .2rem;
-    height: calc(100% - var(--space-m));
-    background-color: color-mix(in srgb, var(--text-secondary) 20%, transparent);
-    z-index: -2;
-  }
-  
-  .bm-feature-42-card:not(:last-child) .bm-feature-42-card__icon-wrapper::before {
-  	height: 100%;
-  }
-  
-  .bm-feature-42-card .bm-feature-42-card__icon-wrapper::after {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: .2rem;
-    height: var(--line-height, 0%);
-    max-height: 100%;
-    background-color: var(--acss-highlight-color);
-    z-index: -2;
-  }
-  
-  .bm-feature-42-card:last-child .bm-feature-42-card__icon-wrapper::after {
-  	max-height: calc(100% - var(--space-m));
-  }
-  
-  .bm-feature-42-card.onview i {
-  	color: var(--acss-highlight-color);
-    fill: var(--acss-highlight-color);
-    stroke: var(--acss-highlight-color);
-  }
-
-  /* bm-custom */
-  .bm-feature-42-card__icon-wrapper {
-  	overflow-y: clip;
-  }
-</style>

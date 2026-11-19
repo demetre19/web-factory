@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,187 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="product-list-5__container">
-    <div class="product-list-5__list">
-      <div class="intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-      </div>
-      <div class="product-list-5-card__group list--none">
-        {items.map((it) => (
-          <div class="product-list-5-card__container">
-            <div class="product-list-5__category-wrapper">
-              <p class="product-list-5__category">{it.text}</p>
-              <a class="product-list-5__category-link" href="#">{it.text}</a>
-            </div>
-            <div class="product-list-5__card-list">
-              <div class="product-list-5-card">
-                <div class="product-list-5-card__content">
-                  <div class="product-list-5-card__top">
-                    <h3 class="product-list-5-card__heading">{it.title}</h3>
-                    <div class="product-list-5__star-rating"></div>
-                    <div class="product-list-card__price"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <h3 class="text-fluid-2">{it.title}</h3>
+                      <div></div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
+                    <div></div>
                   </div>
-                  <div class="product-list-notice-rect__sale-badge">
-                    <p class="product-list-notice-rect__sale">{it.text}</p>
+                  <div>
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
-                  <div class="product-list-5__button"></div>
-                </div>
-                <div class="product-list-5__image-container">
-                  <figure class="product-list-5-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .product-list-5__list {
-    display: grid;
-    gap: calc( var(--space-m) * 2 );
-    grid-template-columns: calc(100% * 1 / 1);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .product-list-5-card__group {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .product-list-5-card__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 1);
-    gap: var(--space-m);
-  }
-
-  .product-list-5__category-wrapper {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .product-list-5__category {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .product-list-5__category-link {
-    font-size: var(--fs-0);
-  }
-
-  .product-list-5__card-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .product-list-5-card {
-    border-top: 1 solid var(--color-line-default);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .product-list-5-card__content {
-    width: 100%;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .product-list-5-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .product-list-5-card__heading {
-    row-gap: calc( var(--flow-spacing) / 2 );
-    font-size: var(--fs-2);
-  }
-
-  .product-list-notice-rect__sale-badge {
-    font-size: var(--fs-0);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-    background: var(--primitive-state-danger);
-    display: flex;
-    align-items: center;
-  }
-
-  .product-list-5__button {
-    width: 100%;
-    margin: auto 0 0 0;
-  }
-
-  .product-list-5__image-container {
-    position: relative;
-    width: 100%;
-  }
-
-  .product-list-5-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    object-fit: cover;
-    width: 100%;
-    height: 23rem;
-  }
-
-  /* bm-custom */
-  .product-list-5__category a {
-    	color: var(--text-primary);
-  }
-
-  /* bm-custom */
-  .product-list-5__star-rating .star-rating {
-  		font-size: 24px;
-    	height: 24px;
-    	width: 120px;
-    	color: transparent; /* hide default rated text */
-  }
-  
-  .product-list-5__star-rating .star-rating:before {
-    	color: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  .product-list-card__price del {
-    	color: var(--bg-subtle);
-  }
-  
-  .product-list-card__price ins {
-    	text-decoration: none;
-  }
-  .product-list-card__price ins .amount {
-    	text-decoration: none;
-    	border-bottom: 0;
-  }
-
-  /* bm-custom */
-  .product-list-4__star-rating .star-rating {
-  		font-size: 24px;
-    	height: 24px;
-    	width: 120px;
-    	color: transparent; /* hide default rated text */
-  }
-  
-  .product-list-4__star-rating .star-rating:before {
-    	color: var(--color-line-default);
-  }
-</style>

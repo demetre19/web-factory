@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,66 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-order-receipts__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-order-receipts__content">
-      <h2 class="bm-order-receipts__heading">Order Receipt</h2>
-      <div class="bm-order-receipts__lists">
-        <p class="bm-order-receipts__order-id">Order ID: {woo_order_id}</p>
-        {items.map((it) => (
-          <p>{it.text}</p>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        <h2 class="text-fluid-2">Order Receipt</h2>
+        <div>
+          <p class="text-fluid-0">Order ID: {woo_order_id}</p>
+          {(items || []).map((it) => (
+            <p class="text-fluid-0">{it.text}</p>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-order-receipts__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-order-receipts__content {
-    row-gap: var(--flow-spacing);
-    background: var(--fs-0);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-order-receipts__lists {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-</style>

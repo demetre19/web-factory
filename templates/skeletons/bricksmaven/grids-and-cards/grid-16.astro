@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,110 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-16-container">
-    <div class="gridcard-16-head">
-      <h2 class="gridcard-16-head__title">{heading}</h2>
-      <p class="gridcard-16-head__desc">{fs}</p>
-    </div>
-    <div class="gridcard-16-articles list--none">
-      {items.map((it) => (
-        <div class="gridcard-16-articles__item">
-          <div class="gridcard-16-card">
-            <div class="gridcard-16-card__box">
-              <p class="gridcard-16-card__type">{it.text}</p>
-              <div class="gridcard-16-card__title clickable-parent">
-                <h2 class="gridcard-16-card__title-label">{it.title}</h2>
-                <span class="gridcard-16-card__title-icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
-            <div class="gridcard-16-card__media">
-              <figure class="gridcard-16-card__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-16-container {
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .gridcard-16-head {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    row-gap: var(--space-s);
-    text-align: center;
-  }
-
-  .gridcard-16-articles {
-    width: 100%;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .gridcard-16-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-
-  .gridcard-16-card__box {
-    background: var(--bg-canvas);
-    width: 100%;
-    z-index: 1;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-16-card__type {
-    font-size: var(--fs-1);
-  }
-
-  .gridcard-16-card__title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .gridcard-16-card__media {
-    width: 100%;
-  }
-
-  .gridcard-16-card__img {
-    object-fit: cover;
-    width: 100%;
-    height: 42em;
-  }
-
-  /* bm-custom */
-  .gridcard-16-articles__item:nth-child(3n+1) {
-  	grid-column: span 2;
-  }
-
-  /* bm-custom */
-  .gridcard-16-card:hover .gridcard-16-card__title {
-  	color: var(--action-primary); 
-  }
-</style>

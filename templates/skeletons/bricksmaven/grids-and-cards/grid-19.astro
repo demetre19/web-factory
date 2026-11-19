@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,84 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-19-container">
-    <div class="gridcard-19-ct list--none">
-      {items.map((it) => (
-        <div class="gridcard-19-box">
-          <div class="gridcard-19-article">
-            <div class="gridcard-19-article__meta">
-              <div class="gridcard-19-article__detail">
-                <p class="gridcard-19-article__term">{it.text}</p>
-                <h2 class="gridcard-19-article__title clickable-parent">{it.title}</h2>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                </div>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
-            <div class="gridcard-19-article__media">
-              <figure class="gridcard-19-article__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-19-ct {
-    display: grid;
-    width: 100%;
-    gap: 3.125em;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-  }
-
-  .gridcard-19-article {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    grid-template-rows: auto 7.5em;
-    position: relative;
-    height: 100%;
-  }
-
-  .gridcard-19-article__meta {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: repeat(1, minmax(0, auto));
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .gridcard-19-article__detail {
-    display: grid;
-    gap: .5em;
-  }
-
-  .gridcard-19-article__thumb {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .gridcard-19-box:nth-child(2) {
-  	grid-row: span 2;
-  }
-
-  /* bm-custom */
-  .gridcard-19-article:hover a {
-  	color: var(--action-primary);
-  }
-
-  /* bm-custom */
-  .gridcard-19-article__title > a::after {
-  	z-index: 1;
-  }
-</style>

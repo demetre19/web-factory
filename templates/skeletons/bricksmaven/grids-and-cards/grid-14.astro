@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,71 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-14-container">
-    <div class="gridcard-14-ct">
-      <h2 class="gridcard-14-ct__title">{heading}</h2>
-      <p class="gridcard-14-ct__desc">{fs}</p>
-      <a class="gridcard-14-ct__cta" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="gridcard-14-media">
-      <figure class="gridcard-14-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-14-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .gridcard-14-ct {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-14-ct__cta {
-    background: var(--action-primary);
-  }
-
-  .gridcard-14-media {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  .gridcard-14-media__img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-
-  /* bm-custom */
-  .gridcard-14-media {
-  	grid-column: 6/ 12;
-  }
-  .gridcard-14-media::before {
-  	content: '';
-    position: absolute;
-    top: 50%;
-    right: -10%;
-    transform: translateY(-50%);
-    height: 120%;
-    width: 15em;
-    background-color: var(--action-primary);
-    z-index: -1;
-  }
-</style>

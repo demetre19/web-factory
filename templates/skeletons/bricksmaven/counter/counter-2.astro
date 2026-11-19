@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,83 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="counter-2-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="counter-2-grid-ul list--none">
-      {items.map((it) => (
-        <div class="counter-2-card">
-          <span class="counter-2-card__number"></span>
-          <p class="counter-2-card__heading">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .counter-2-container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .counter-2-grid-ul {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 4);
-    width: var(--content-width);
-  }
-
-  .counter-2-card {
-    border-top: .5px solid color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-    border-right: .5px solid color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-    border-bottom: .5px solid color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-    border-left: .5px solid color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .counter-2-card__number {
-    width: 11.1rem;
-    height: 11.2rem;
-    border-top: .7rem solid var(--action-primary);
-    border-right: .7rem solid var(--action-primary);
-    border-bottom: .7rem solid var(--action-primary);
-    border-left: .7rem solid var(--action-primary);
-    border-radius: 100% 100% 100% 100%;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: 700;
-    font-size: var(--fs-2);
-    display: flex;
-  }
-
-  .counter-2-card__heading {
-    font-weight: 700;
-  }
-</style>

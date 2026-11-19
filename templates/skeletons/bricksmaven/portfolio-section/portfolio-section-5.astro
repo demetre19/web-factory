@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,244 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="portfolio-section-5__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="portfolio-section-5-case-list list--none">
-      {items.map((it) => (
-        <div class="portfolio-section-5-case-card">
-          <div class="portfolio-section-5-case-card__intro">
-            <h2 class="portfolio-section-5-case-card__heading clickable-parent">{it.title}</h2>
-          </div>
-          <div class="portfolio-section-5-case-card__content">
-            <div class="portfolio-section-5-case-card__top">
-              <p class="portfolio-section-5-case-card__psuedo-heading">{it.text}</p>
-              <p class="portfolio-section-5-case-card__text-basic">{it.text}</p>
-            </div>
-            <a class="portfolio-section-5-case-card__button btn--white wf-cta-button" href={it.href}>{it.label}</a>
-          </div>
-          <div class="portfolio-section-5-case-card__overlay"></div>
-          <figure class="portfolio-section-5-case-card__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div class="grid-auto gap-fluid-l">
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+            </div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <div></div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .portfolio-section-5 {
-    align-self: flex-start;
-  }
-
-  .portfolio-section-5__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .portfolio-section-5-case-list {
-    row-gap: var(--space-s);
-  }
-
-  .portfolio-section-5-case-card {
-    height: 65vh;
-    position: relative;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    overflow: hidden;
-    justify-content: flex-end;
-  }
-
-  .portfolio-section-5-case-card__intro {
-    position: absolute;
-    z-index: 999;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-  }
-
-  .portfolio-section-5-case-card__heading {
-    font-size: calc(var(--fs-4) * 1.5);
-    position: absolute;
-  }
-
-  .portfolio-section-5-case-card__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    width: var(--measure);
-    background: color-mix(in srgb, var(--text-primary) 50%, transparent);
-    z-index: 99;
-    align-self: flex-start;
-  }
-
-  .portfolio-section-5-case-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .portfolio-section-5-case-card__psuedo-heading {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .portfolio-section-5-case-card__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  .portfolio-section-5-case-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* bm-custom */
-  /* Card */
-  .portfolio-section-5-case-card {
-    --move-content-down: calc(100% + var(--space-xl));
-    --blur-content: 1rem;
-    position:sticky;
-  }
-  
-  .portfolio-section-5-case-card:focus-within :focus {
-  	outline: 0;
-    box-shadow: none;
-  }
-  
-  .portfolio-section-5-case-card:focus-within {
-    box-shadow: 0 0 2rem 0 color-mix(in srgb, var(--text-secondary) 10%, transparent);
-  }
-  
-    /* Content */
-  .portfolio-section-5-case-card__content {
-  	
-    backdrop-filter: blur(10px);
-    color: var(--bg-canvas);
-    border: 1px solid color-mix(in srgb, var(--bg-canvas) 20%, transparent) ;
-  }
-  
-  
-  /* Overlay */
-  .portfolio-section-5-case-card__overlay {
-  	transition: .3s ease;
-    opacity: 1;
-  }
-  
-  .portfolio-section-5-case-card:hover .portfolio-section-5-case-card__overlay, .portfolio-section-5-case-card:focus-within .portfolio-section-5-case-card__overlay {
-    opacity: .6;
-  }
-  
-  /* Image */
-  .portfolio-section-5-case-card__image {
-  	transition: .3s ease;
-    filter: grayscale(1);
-  }
-  
-  .portfolio-section-5-case-card:hover .portfolio-section-5-case-card__image, .portfolio-section-5-case-card:focus-within .portfolio-section-5-case-card__image {
-  	filter: grayscale(0);
-    
-  }
-  
-  /* Sticky */
-  .portfolio-section-5-case-card:nth-of-type(1) {
-  	top: var(--section-space-xxl);
-  }
-  
-  .portfolio-section-5-case-card:nth-of-type(2) {
-  	top: calc(var(--section-space-xxl) * 1.4);
-  }
-  
-  .portfolio-section-5-case-card:nth-of-type(3) {
-  	top: calc(var(--section-space-xxl) * 1.6);
-  }
-  
-  
-  @media (min-width:991px) {
-  
-    /* Content */
-  .portfolio-section-5-case-card__content {
-  	
-    transform: translateY(var(--acss-move-content-down));
-    transition: .5s ease;
-    filter:blur(var(--acss-blur-content));
-    backdrop-filter: blur(10px);
-    color: var(--bg-canvas);
-    border: 1px solid color-mix(in srgb, var(--bg-canvas) 20%, transparent) ;
-  }
-  
-  .portfolio-section-5-case-card:hover .portfolio-section-5-case-card__content, .portfolio-section-5-case-card:focus-within .portfolio-section-5-case-card__content {
-    transform: translateY(0);
-    filter:blur(0);
-    
-  }
-    
-    /* Heading */
-  .portfolio-section-5-case-card__heading {
-  	transition: .5s ease;
-    writing-mode: vertical-rl;
-  
-  }
-  
-  .portfolio-section-5-case-card:hover .portfolio-section-5-case-card__heading, .portfolio-section-5-case-card:focus-within .portfolio-section-5-case-card__heading {
-  	opacity: 0;
-  }
-  }
-</style>

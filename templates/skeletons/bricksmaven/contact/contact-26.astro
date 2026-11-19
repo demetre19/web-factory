@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,114 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-26-container">
-    <div class="contact-26-content">
-      <div class="intro contact-26-content__intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Contact Us</p>
-      </div>
-      <div class="contact-26-content-list-ul list--none">
-        {items.map((it) => (
-          <div class="contact-26-content-list-item">
-            <div class="contact-26-content-list-item__detail">
-              <h2 class="contact-26-content-list-item__title">{it.title}</h2>
-              <p class="contact-26-content-list-item__desc">{it.text}</p>
-              <a class="contact-26-content-list-item__cta wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Contact Us</p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              </div>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-            <span class="contact-26-content-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="contact-26-form">
-      <form class="contact-26-form__content" novalidate>
-      </form>
+      <div>
+        <form novalidate>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-26-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-l);
-    background: var(--action-primary);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .contact-26-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .contact-26-content__intro {
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .contact-26-content-list-ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .contact-26-content-list-item {
-    display: flex;
-    align-items: flex-start;
-    column-gap: 1.5rem;
-  }
-
-  .contact-26-content-list-item__detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .contact-26-content-list-item__title {
-    font-size: var(--fs-1);
-  }
-
-  .contact-26-content-list-item__cta {
-    padding: 0 0 0 0;
-    margin: 1.5rem 0 0 0;
-    text-align: left;
-  }
-
-  .contact-26-content-list-item__icon {
-    padding: .5rem .5rem .5rem .5rem;
-    background: var(--bg-canvas);
-    border-radius: 50% 50% 50% 50%;
-    width: 3.5rem;
-    height: 3.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .contact-26-form__content {
-    padding: 3rem 0 3rem 0;
-    background: var(--bg-subtle);
-  }
-</style>

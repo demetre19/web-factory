@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,102 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-74__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-feature-74-list">
-      {items.map((it) => (
-        <div class="bm-feature-74-card">
-          <div class="bm-feature-74-card__content">
-            <h2 class="bm-feature-74-card__heading">{it.title}</h2>
-            <p class="bm-feature-74-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div></div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Feature Image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="bm-feature-74-card__counter"></div>
-          <div class="bm-feature-74-card__media">
-            <figure class="bm-feature-74-card__image"><img src="/media/placeholder.svg" alt="Feature Image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-74__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-feature-74-card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) * 2);
-    align-items: center;
-    padding: 0 0 var(--space-xl) 0;
-    border-bottom: 1px solid var(--fs-0);
-  }
-
-  .bm-feature-74-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-74-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 340px;
-  }
-
-  /* bm-custom */
-  .bm-feature-74-list {
-    counter-reset: count;
-  }
-  
-  .bm-feature-74-list .bm-feature-74-card {
-    counter-increment: count;
-  }
-  
-  .bm-feature-74-list .bm-feature-74-card .bm-feature-74-card__counter::before {
-    content: "0" counter(count) '.';
-    color: var(--color-line-default);
-    font-size: var(--fs-4);
-  }
-  
-  .bm-feature-74-list .bm-feature-74-card:last-child {
-    border:none;
-    padding-block-end: 0;
-  }
-
-  /* bm-custom */
-  .bm-feature-74-card:not(:first-child) {
-    padding-block-start: var(--space-xl);
-  }
-</style>

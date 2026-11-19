@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-43__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-43__media">
-      <figure class="bm-feature-43__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="bm-feature-43-grid-ul list--none">
-      {items.map((it) => (
-        <div class="bm-feature-43-card">
-          <span class="bm-feature-43-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          <h3 class="bm-feature-43-card__heading">{it.title}</h3>
-          <p class="bm-feature-43-card__text">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <h3 class="text-fluid-2">{it.title}</h3>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-43 {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .bm-feature-43__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .bm-feature-43__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-feature-43-grid-ul {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-feature-43-card {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  /* bm-custom */
-  .bm-feature-43::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 480px;
-    background-color: var(--bg-subtle);
-    z-index: -1;
-  }
-</style>

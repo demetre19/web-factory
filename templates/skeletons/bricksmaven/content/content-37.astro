@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,67 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-37__container">
-    <div class="content-37__content">
-      <h2 class="content-37__heading">{heading}</h2>
-      <p class="content-37__text">{fs}</p>
-      <a class="content-37__cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="content-37__media">
-      <figure class="content-37__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-37 {
-    padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
-    overflow: hidden;
-    background: var(--bg-canvas);
-  }
-
-  .content-37__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: calc(var(--space-m) * 2);
-    padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
-    position: relative;
-  }
-
-  .content-37__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-37__media {
-    position: relative;
-  }
-
-  .content-37__image {
-    object-fit: cover;
-    position: absolute;
-    bottom: calc(-1 * (var(--section-space-xxl) * 1.4));
-    left: calc(-1 * (var(--space-m) * 1.2));
-    height: 46rem;
-  }
-
-  /* bm-custom */
-  .content-37__container::before {
-  	content:'';
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    background-color: var(--bg-subtle);
-    height: 100%;
-    width:calc(50vw + ((var(--content-width) / 12) * 6));
-    z-index:-1;
-  }
-</style>

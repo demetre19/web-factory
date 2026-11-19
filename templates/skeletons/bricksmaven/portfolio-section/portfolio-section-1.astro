@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,154 +17,47 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="portfolio-section-1-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="portfolio-section-1-grid list--none">
-      {items.map((it) => (
-        <div class="portfolio-section-1-card">
-          <div class="portfolio-section-1-card__work">
-            <h2 class="portfolio-section-1-card__work-heading">{it.title}</h2>
-            <figure class="portfolio-section-1-card__work-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="portfolio-section-1-card__testimonial-wrapper">
-            <div class="portfolio-section-1-card__review">
-              <p class="portfolio-section-1-card__apostrophe">{it.text}</p>
-              <p class="portfolio-section-1-card__review-text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div class="grid-auto gap-fluid-l">
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="portfolio-section-1-card__client">
-              <div class="portfolio-section-1-card__client-image-wrapper">
-                <figure class="portfolio-section-1-card__client-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div class="portfolio-section-1-card__client-data">
-                <p class="portfolio-section-1-card__client-name">{it.text}</p>
-                <p class="portfolio-section-1-card__client-title">{it.text}</p>
+              <div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .portfolio-section-1 {
-    background: var(--bg-subtle);
-  }
-
-  .portfolio-section-1-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .portfolio-section-1-grid {
-    row-gap: calc(var(--flow-spacing) * 1.4);
-  }
-
-  .portfolio-section-1-card {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 6);
-    gap: calc(var(--space-m) * 1.4);
-  }
-
-  .portfolio-section-1-card__work {
-    background: var(--bg-canvas);
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) 0 0 var(--space-m);
-    flex-wrap: nowrap;
-  }
-
-  .portfolio-section-1-card__work-heading {
-    font-size: calc(var(--fs-3));
-  }
-
-  .portfolio-section-1-card__work-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .portfolio-section-1-card__testimonial-wrapper {
-    background: var(--bg-canvas);
-    display: flex;
-    justify-content: space-between;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    position: relative;
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .portfolio-section-1-card__apostrophe {
-    font-size: calc(var(--fs-4) * 4);
-    line-height: .7;
-    position: absolute;
-  }
-
-  .portfolio-section-1-card__review-text {
-    margin: var(--space-xl) 0 0 0;
-    font-size: calc(var(--fs-1) * 1.4);
-    font-weight: 600;
-  }
-
-  .portfolio-section-1-card__client {
-    row-gap: var(--flow-spacing);
-  }
-
-  .portfolio-section-1-card__client-image {
-    object-fit: cover;
-    width: 8.2rem;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  /* bm-custom */
-  .portfolio-section-1-card:nth-child(odd) .portfolio-section-1-card__testimonial-wrapper {
-    order: -1;
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-    grid-column: span 3;
-   
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__work {
-    grid-column: span 3;
-  }
-  
-  @media (max-width:767px) {
-    
-    .portfolio-section-1-card:nth-child(odd) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-  }
-    
-  	.portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-    grid-column: span 6;
-   
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__work {
-    grid-column: span 6;
-  }
-  }
-</style>

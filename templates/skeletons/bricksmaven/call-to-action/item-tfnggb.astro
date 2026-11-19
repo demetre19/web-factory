@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,99 +17,47 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-12-container">
-    <div class="cta-12-main-cta">
-      <h2 class="cta-12__heading">{heading}</h2>
-      <p class="cta-12__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      <p class="cta-12__call-back">Or let us call you back</p>
-    </div>
-    <div class="cta-12-sales-card-wrapper list--none">
-      <div class="cta-12-sales-card">
-        <h3 class="cta-12-sales-card__heading">Celine Dion</h3>
-        <p class="cta-12-sales-card__label">Sales</p>
-        <div class="cta-12-sales-card__media">
-          <figure class="cta-12-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="cta-12-sales-card__footer">
-          <p class="cta-12-sales-card__phone">+32 465 45 37 15</p>
-          <p class="cta-12-sales-card__email">hi@bricksmaven.com</p>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        <p class="text-fluid-0">Or let us call you back</p>
       </div>
-      <div class="cta-12-sales-card">
-        <h3 class="cta-12-sales-card__heading">John Baker</h3>
-        <p class="cta-12-sales-card__label">Sales</p>
-        <div class="cta-12-sales-card__media">
-          <figure class="cta-12-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <h3 class="text-fluid-2">Celine Dion</h3>
+          <p class="text-fluid-0">Sales</p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            <p class="text-fluid-0">+32 465 45 37 15</p>
+            <p class="text-fluid-0">hi@bricksmaven.com</p>
+          </div>
         </div>
-        <div class="cta-12-sales-card__footer">
-          <p class="cta-12-sales-card__phone">+32 465 45 37 15</p>
-          <p class="cta-12-sales-card__email">hi@bricksmaven.com</p>
+        <div>
+          <h3 class="text-fluid-2">John Baker</h3>
+          <p class="text-fluid-0">Sales</p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            <p class="text-fluid-0">+32 465 45 37 15</p>
+            <p class="text-fluid-0">hi@bricksmaven.com</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-12-container {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    gap: var(--space-m);
-  }
-
-  .cta-12-main-cta {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--space-s);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .cta-12-sales-card-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .cta-12-sales-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: color-mix(in srgb, var(--action-primary) 60%, transparent);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-  }
-
-  .cta-12-sales-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  .cta-12-sales-card__image {
-    object-fit: cover;
-    width: 86px;
-    height: 86px;
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .cta-12-sales-card__footer {
-    display: flex;
-    flex-direction: column;
-  }
-</style>

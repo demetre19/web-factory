@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,141 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-33-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="feature-33-list list--none">
-      {items.map((it) => (
-        <div class="feature-33-card">
-          <div class="feature-33-card__content">
-            <h2 class="feature-33-card__heading clickable-parent">{it.title}</h2>
-            <p class="feature-33-card__text">{it.text}</p>
-            <a class="link--black" href="#">{it.text}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="feature-33-card__media">
-            <figure class="feature-33-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-33-container {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    gap: calc(var(--space-m) * 4);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .feature-33-list {
-    row-gap: var(--space-s);
-  }
-
-  .feature-33-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .feature-33-card__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-    z-index: 1;
-  }
-
-  .feature-33-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  /* Set position sticky on cards */
-  .feature-33-card {
-  	position: sticky;
-    --sticky-top: var(--space-l);
-    transition: .5s ease;
-    background-color: var(--bg-subtle);
-    border-top: 1px solid var(--action-primary);
-    box-shadow: 0rem -1rem 1rem 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
-  }
-  
-  .feature-33-card:hover, .feature-33-card:focus-within {
-  	background-color: var(--bg-canvas);
-    box-shadow: var(--shadow-card);
-  }
-  
-  .feature-33-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .feature-33-card:focus-within {
-    box-shadow: var(--shadow-card);
-  }
-  
-  
-  /* Set top value of the first child */
-  .feature-33-card:first-child {
-  	top: var(--acss-sticky-top);
-  }
-  
-  .feature-33-card:nth-child(2) {
-  	top: calc(var(--acss-sticky-top) + var(--space-l));
-  }
-  
-  .feature-33-card:nth-child(3) {
-  	top: calc(var(--acss-sticky-top) + var(--space-l) + 5rem);
-  }
-  
-  .feature-33-card:nth-child(4) {
-  	top: calc(var(--acss-sticky-top) + var(--space-l) + 10rem);
-  }
-  
-  
-  /* Make last child position relative */
-  .feature-33-card:last-child {
-    position: relative;
-    top: calc(var(--acss-sticky-top) - var(--space-s))
-  }
-  
-  /* Image & media */
-  .feature-33-card__media {
-  	overflow: hidden;
-  }
-  
-  .feature-33-card__image {
-  	transition: .5s ease;
-  }
-  
-  .feature-33-card:hover .feature-33-card__image, .feature-33-card:focus-within .feature-33-card__image {
-  	scale: 1.1;
-  }
-</style>

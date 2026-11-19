@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,54 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-24__container">
-    <div class="hero-24__content">
-      <h2 class="hero-24__heading">{heading}</h2>
-      <p class="hero-24__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-24__media-wrapper">
-      <figure class="hero-24__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-24 {
-    padding: 0 0 0 0;
-  }
-
-  .hero-24__container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero-24__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: center;
-    background: var(--action-primary);
-    margin: var(--space-m) 0 var(--space-m) 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-24__image {
-    width: 50vw;
-    object-fit: cover;
-    height: 740;
-  }
-</style>

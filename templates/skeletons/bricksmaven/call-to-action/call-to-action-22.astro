@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,83 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-cta-22__container">
-    <div class="bm-cta-22-widget">
-      <div class="bm-cta-22-widget__content">
-        <h2 class="bm-cta-22-widget__heading">{heading}</h2>
-        <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="bm-cta-22-review-card">
-        <div class="bm-cta-22-review-card__content">
-          <p class="bm-cta-22-review-card__review">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div class="bm-user-card">
-          <div class="bm-user-card__media">
-            <figure class="bm-user-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <p class="text-fluid-0">{fs}</p>
           </div>
-          <div class="bm-user-card__data">
-            <p class="bm-user-card__name">John Smith</p>
-            <p class="bm-user-card__title">Account manager</p>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <p class="text-fluid-0">John Smith</p>
+              <p class="text-fluid-0">Account manager</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-cta-22-widget {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--text-primary);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-cta-22-widget__content {
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-    padding: 0 var(--space-s) 0 0;
-    border-right: 1px solid var(--bg-subtle);
-  }
-
-  .bm-cta-22-widget__heading {
-    font-size: calc(var(--fs-4) * 1.3);
-  }
-
-  .bm-cta-22-review-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-user-card {
-    display: flex;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-user-card__image {
-    object-fit: cover;
-    width: 48px;
-    height: 48px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-user-card__data {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 6);
-  }
-
-  .bm-user-card__title {
-    font-size: var(--fs-0);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,188 +17,47 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-team-21__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-team-21-team-list list--none">
-      {items.map((it) => (
-        <div class="bm-team-21-card">
-          <div class="bm-team-21-card__social-wrapper">
-            <div class="bm-social-share list--none bm-social-share--column">
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div class="grid-auto gap-fluid-l">
+            <div>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="bm-team-21-card__content">
-            <h2 class="bm-team-21-card__heading">{it.title}</h2>
-            <div class="bm-team-21-card__footer">
-              <p class="bm-team-21-card__profession">{it.text}</p>
-              <span class="bm-team-21-card__icon" data-icon="lucide" aria-hidden="true"></span>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
             </div>
+            <div></div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div class="bm-team-21-card__overlay"></div>
-          <figure class="bm-team-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-team-21__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-team-21-team-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 4);
-    gap: var(--space-m);
-  }
-
-  .bm-team-21-card {
-    position: relative;
-    padding: var(--space-m) var(--space-m) var(--space-l) var(--space-m);
-    justify-content: space-between;
-    overflow: clip;
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--column {
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-direction: column;
-  }
-
-  .bm-team-21-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  .bm-team-21-card__footer {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bm-team-21-card__image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  /* CONTENT */
-  .bm-team-21-card .bm-team-21-card__content {
-    color: var(--bg-canvas) !important;
-    z-index: 2;
-  }
-  
-  /* SOCIAL WRAPPER */
-  .bm-team-21-card .bm-team-21-card__social-wrapper {
-    z-index: 2;
-  }
-  
-  .bm-team-21-card .bm-team-21-card__social-wrapper .bm-social-share__icon {
-    color: var(--bg-canvas); 
-  }
-  
-  .bm-team-21-card .bm-team-21-card__social-wrapper {
-    transform: translateY(-200%);
-    opacity: 0;
-    transition: .3s transform, .3s opacity;
-  }
-  
-  .bm-team-21-card:hover .bm-team-21-card__social-wrapper, .bm-team-21-card:focus-within .bm-team-21-card__social-wrapper {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  
-  /* HEADING */
-  .bm-team-21-card .bm-team-21-card__heading {
-    transform: translateY(85%);
-    transition: .3s transform, .3s opacity;
-  }
-  
-  .bm-team-21-card:hover .bm-team-21-card__heading, .bm-team-21-card:focus-within .bm-team-21-card__heading {
-    transform: translateY(0%);
-  }
-  
-  /* FOOTER */
-   .bm-team-21-card .bm-team-21-card__footer {
-    transform: translateY(100%);
-    transition: .3s transform, .3s opacity;
-    opacity: 0;
-  }
-  
-   .bm-team-21-card:hover .bm-team-21-card__footer, .bm-team-21-card:focus-within .bm-team-21-card__footer {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  
-  /* IMAGE */
-  .bm-team-21-card .bm-team-21-card__image {
-    filter: grayscale(100%);
-    -webkit-filter: grayscale(100%);
-    transition: .3s all;
-  }
-  
-  .bm-team-21-card:hover .bm-team-21-card__image, .bm-team-21-card:focus-within .bm-team-21-card__image {
-    filter: grayscale(0%);
-    -webkit-filter: grayscale(0%);
-  }
-  
-  /* OVERLAY */
-  .bm-team-21-card .bm-team-21-card__overlay {
-    position: absolute;
-    inline-size: 100%;
-    block-size: 100%;
-    inset: 0;
-    background: linear-gradient(transparent 75%, color-mix(in srgb, var(--text-secondary) 90%, transparent));
-    z-index: 1;
-    
-  }
-</style>

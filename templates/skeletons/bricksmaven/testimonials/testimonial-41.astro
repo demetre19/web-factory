@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,96 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-41__container">
-    <div class="bm-testimonial-41__content">
-      <div class="bm-testimonial-41__top">
-        <h2 class="bm-testimonial-41__heading">{heading}</h2>
-        <p class="bm-testimonial-41__text">CEO and Product owner</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">CEO and Product owner</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">Don’t miss out on this opportunity to be a part of something extraordinary.</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-      <div class="bm-testimonial-41__review-wrapper">
-        <p class="bm-testimonial-41__review-text">{fs}</p>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="bm-testimonial-41__footer">
-        <p class="bm-testimonial-41__footer-text">Don’t miss out on this opportunity to be a part of something extraordinary.</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="bm-testimonial-41__media">
-      <figure class="bm-testimonial-41__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-41 {
-    background: var(--bg-subtle);
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .bm-testimonial-41__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 12);
-  }
-
-  .bm-testimonial-41__content {
-    padding: var(--space-xl) 0 var(--space-xl) 0;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .bm-testimonial-41__top {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-testimonial-41__review-wrapper {
-    padding: var(--space-xl) 0 0 0;
-  }
-
-  .bm-testimonial-41__review-text {
-    position: relative;
-  }
-
-  .bm-testimonial-41__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-    padding: var(--space-m) 0 0 0;
-    border-top: 1 solid var(--color-line-default);
-  }
-
-  .bm-testimonial-41__footer-text {
-    width: var(--measure);
-  }
-
-  .bm-testimonial-41__media {
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .bm-testimonial-41__image {
-    object-fit: cover;
-    width: calc(50vw - ((var(--content-width) / 12) * 1));
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-testimonial-41__review-text::before {
-    content: '"';
-    position: absolute;
-    top: calc(-1 * var(--space-s));
-    left: calc(-1 * var(--space-xs));
-    font-size: calc(var(--fs-4) * 4);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,222 +17,98 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="shop-hero-4__top-container">
-    <div class="shop-hero-4__navigation">
-      <h2 class="shop-hero-4__nav-heading">{heading}</h2>
-      <div class="shop-hero-4__nav">
-        <div class="shop-hero-4__nav-items">
-          <a class="shop-hero-4__nav-link" href="#">Category</a>
-          <a class="shop-hero-4__nav-link" href="#">Category</a>
-          <div class="shop-hero-4__nav-dropdown">
-            <div class="shop-hero-4__nav-content">
-              <div class="shop-hero-4__nav-dropdown-wrapper">
-                <div class="shop-hero-4__nav-dropdown-list list--none">
-                  {items.map((it) => (
-                    <div class="shop-hero-4__nav-dropdown-list-item">
-                      <custom class="shop-hero-4__nav-dropdown-list-item-heading">{it.title}</custom>
-                    </div>
-                  ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          <div>
+            <a class="text-fluid-0" href="#">Category</a>
+            <a class="text-fluid-0" href="#">Category</a>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <custom class="text-fluid-2">{it.title}</custom>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div class="shop-hero-4__nav-dropdown-wrapper">
-                <div class="shop-hero-4__nav-dropdown-list list--none">
-                  {items.map((it) => (
-                    <div class="shop-hero-4__nav-dropdown-list-item">
-                      <custom class="shop-hero-4__nav-dropdown-list-item-heading">{it.title}</custom>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="shop-hero-4__nav-dropdown">
-            <div class="shop-hero-4__nav-content">
-              <div class="shop-hero-4__nav-dropdown-wrapper">
-                <div class="shop-hero-4__nav-dropdown-list list--none">
-                  {items.map((it) => (
-                    <div class="shop-hero-4__nav-dropdown-list-item">
-                      <custom class="shop-hero-4__nav-dropdown-list-item-heading">{it.title}</custom>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div class="shop-hero-4__nav-dropdown-wrapper">
-                <div class="shop-hero-4__nav-dropdown-list list--none">
-                  {items.map((it) => (
-                    <div class="shop-hero-4__nav-dropdown-list-item">
-                      <custom class="shop-hero-4__nav-dropdown-list-item-heading">{it.title}</custom>
-                    </div>
-                  ))}
+                <div>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <custom class="text-fluid-2">{it.title}</custom>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <custom class="text-fluid-2">{it.title}</custom>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <custom class="text-fluid-2">{it.title}</custom>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {(items || []).map((it) => (
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            ))}
+            <div></div>
           </div>
-          {items.map((it) => (
-            <a class="shop-hero-4__nav-link" href="#">{it.text}</a>
-          ))}
-          <div class="shop-hero-4__close-nav"></div>
+          <div></div>
         </div>
-        <div class="shop-hero-4__open-nav"></div>
+      </div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <h1 class="text-fluid-4">Enter your headline here</h1>
+            <p class="text-fluid-0">{fs}</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <div></div>
+        </div>
       </div>
     </div>
-    <div class="shop-hero-4__hero-and-search-wrapper">
-      <div class="shop-hero-4__wrapper">
-        <div class="shop-hero-4__wrapper-content">
-          <h1 class="shop-hero-4__heading">Enter your headline here</h1>
-          <p class="shop-hero-4__subheading">{fs}</p>
-          <a class="shop-hero-4__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-        </div>
-        <figure class="shop-hero-4__hero-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="shop-hero-4__search-wrapper">
-        <div class="shop-hero-4__search"></div>
-      </div>
-    </div>
-  </div>
-  <div class="shop-hero-4__category-container">
-    <div class="shop-hero-4-category-list list--none">
-      <div class="shop-hero-4-category-card">
-        <figure class="shop-hero-4-category-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div class="shop-hero-4-category-card__content">
-          <h2 class="shop-hero-4-category-card__heading">{term_name}</h2>
+    <div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <h2 class="text-fluid-2">{term_name}</h2>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .shop-hero-4__top-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
-  }
-
-  .shop-hero-4__navigation {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .shop-hero-4__nav-items {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .shop-hero-4__nav-content {
-    row-gap: calc(var(--flow-spacing) / 4);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: row;
-  }
-
-  .shop-hero-4__nav-dropdown-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .shop-hero-4__nav-dropdown-list-item-heading {
-    font-weight: 700;
-  }
-
-  .shop-hero-4__wrapper {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    position: relative;
-    height: 540;
-    justify-content: center;
-  }
-
-  .shop-hero-4__wrapper-content {
-    width: var(--measure);
-    z-index: 1;
-    position: relative;
-  }
-
-  .shop-hero-4__hero-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .shop-hero-4__search-wrapper {
-    background: var(--bg-canvas);
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .shop-hero-4-category-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 6);
-  }
-
-  .shop-hero-4-category-card {
-    background: var(--bg-canvas);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* bm: box-shadow omitted — token layer owns elevation */
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: hidden;
-    row-gap: 0;
-  }
-
-  .shop-hero-4-category-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 14rem;
-  }
-
-  .shop-hero-4-category-card__content {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    align-items: center;
-    text-align: center;
-  }
-
-  .shop-hero-4-category-card__heading {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .shop-hero-4__nav-dropdown .brx-dropdown-content {
-      min-width: var(--measure) !important;
-    left: 0 !important;
-    box-shadow: var(--shadow-card);
-  }
-  
-  @media (max-width:478px) {
-    
-    .shop-hero-4__nav-dropdown .brx-dropdown-content {
-      min-width: var(--measure) !important;
-  }
-    
-  }
-
-  /* bm-custom */
-  /* Set div width to 100% */
-  .shop-hero-4__search {
-    	width: 100%; 
-  }
-  
-  /* Set input field width to 100% */
-  .shop-hero-4__search .bricks-search-form input[type=search] {
-  
-      width: 100%;
-  }
-</style>

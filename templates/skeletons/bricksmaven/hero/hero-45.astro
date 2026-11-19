@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,127 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-45-container">
-    <h1 class="hero-45__heading">{heading}</h1>
-    <div class="hero-45__media">
-      <figure class="hero-45__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="hero-45__footer">
-      <div class="hero-45-data-list list--none">
-        <div class="hero-45-data-item">
-          <span class="hero-45-data-list__counter"></span>
-          <p class="hero-45-data-list__text">Projects completed</p>
-        </div>
-        <div class="hero-45-data-item">
-          <span class="hero-45-data-list__counter"></span>
-          <p class="hero-45-data-list__text">Years of experience</p>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <h1 class="text-fluid-4">{heading}</h1>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="hero-45__statement-wrapper">
-        <div class="hero-45__statement">
-          <p class="hero-45__statement-text">{fs}</p>
-        </div>
-        <div class="hero-45__team-cta">
-          <div class="bm-team-list list--none">
-            {items.map((it) => (
-              <div class="bm-team-media">
-                <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
-              </div>
-            ))}
+      <div>
+        <div>
+          <div>
+            <span></span>
+            <p class="text-fluid-0">Projects completed</p>
           </div>
-          <div class="hero-45__cta-wrapper">
-            <a class="hero-45__cta-button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+          <div>
+            <span></span>
+            <p class="text-fluid-0">Years of experience</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <p class="text-fluid-0">{fs}</p>
+          </div>
+          <div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+                </div>
+              ))}
+            </div>
+            <div>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-45-container {
-    row-gap: var(--space-s);
-  }
-
-  .hero-45__heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .hero-45__image {
-    object-fit: cover;
-    width: 100%;
-    height: 24rem;
-  }
-
-  .hero-45__footer {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
-
-  .hero-45-data-list {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .hero-45-data-item {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .hero-45__statement-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-45__team-cta {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-team-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-team-media__image {
-    object-fit: cover;
-    width: 53;
-    height: 52;
-    border-top: .4rem solid var(--bg-canvas);
-    border-right: .4rem solid var(--bg-canvas);
-    border-bottom: .4rem solid var(--bg-canvas);
-    border-left: .4rem solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
-  }
-  
-  .bm-team-media:first-child {
-  	margin-inline-start: 0px;
-  }
-</style>

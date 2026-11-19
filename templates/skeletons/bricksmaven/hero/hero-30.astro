@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,99 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-30-container-content">
-    <div class="hero-30__content">
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Tagline</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="btn--link wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Tagline</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="hero-30-container">
-    <div class="hero-30__media-wrapper">
-      <figure class="hero-30__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-30 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .hero-30-container-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hero-30__content {
-    background: var(--bg-canvas);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    width: var(--measure);
-    position: relative;
-    z-index: 1;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .hero-30-container {
-    width: 100vw;
-    margin: 0 0 0 0;
-  }
-
-  .hero-30__image {
-    object-fit: cover;
-    height: 64rem;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .hero-30__content {
-  	box-shadow: var(--shadow-card)
-  }
-</style>

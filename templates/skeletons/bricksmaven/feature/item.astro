@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,77 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-29-conatiner">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="bm-gamma-feature-list-ul list--none">
-      {items.map((it) => (
-        <div class="bm-gamma-feature-list-card">
-          <h2 class="bm-gamma-feature-list-card__heading">{it.title}</h2>
-          <p class="bm-gamma-feature-list-card__text">{it.text}</p>
-          <span class="bm-gamma-feature-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-29-conatiner {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .bm-gamma-feature-list-ul {
-    background: var(--bg-subtle);
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-l);
-  }
-
-  .bm-gamma-feature-list-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    text-align: center;
-  }
-
-  /* bm-custom */
-  .bm-gamma-feature-list-card:nth-child(2) {
-  	background-color: var(--action-primary);
-    transform: translateY(-4rem);
-  }
-  
-  .bm-gamma-feature-list-card:nth-child(odd) {
-    color: var(--bg-canvas);
-  }
-  
-  @media (max-width:767px) {
-  	.bm-gamma-feature-list-card:nth-child(2) {
-    transform: translateY(0rem);
-  }
-  }
-</style>

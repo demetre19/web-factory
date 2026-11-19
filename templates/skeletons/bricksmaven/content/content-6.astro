@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-6-container">
-    <div class="content-6__box">
-      <div class="content-6__wrapper">
-        <h2 class="content-6__heading">{heading}</h2>
-        <p class="accent-h">Tagline</p>
-        <p class="content-6__desc">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="content-6__box--alt">
-      <div class="content-6__wrapper--alt">
-        <h2 class="content-6__heading">Long headline to turn your visitors into customers</h2>
-        <p class="accent-h">Tagline</p>
-        <p class="content-6__desc">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Long headline to turn your visitors into customers</h2>
+          <p class="text-fluid-0">Tagline</p>
+          <p class="text-fluid-0">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-6 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .content-6-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .content-6__box {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    margin: 0 0 0 calc(-50vw + 100%);
-    width: 50vw;
-  }
-
-  .content-6__wrapper {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    margin: 0 0 0 auto;
-    width: 100%;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .content-6__box--alt {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    width: 50vw;
-    margin: 0 calc(-50vw + 100%) 0 0;
-  }
-
-  .content-6__wrapper--alt {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    width: 100%;
-    margin: 0 auto 0 0;
-  }
-</style>

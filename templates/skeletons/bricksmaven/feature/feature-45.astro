@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-45__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Accent heading<br</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-feature-45-list">
-      {items.map((it) => (
-        <div class="bm-feature-45-card">
-          <h3 class="bm-feature-45-card__heading">{it.title}</h3>
-          <p class="bm-feature-45-card__text">{it.text}</p>
-          <a class="bm-feature-45-card__link" href="#">{it.text}</a>
-        </div>
-      ))}
-    </div>
+  <div class="sec-inner">
     <div>
-      <figure></figure>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent heading<br</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h3 class="text-fluid-2">{it.title}</h3>
+            <p class="text-fluid-0">{it.text}</p>
+            <a class="text-fluid-0" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+      <div>
+        <figure></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-45 {
-    position: relative;
-  }
-
-  .bm-feature-45__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-45-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-feature-45-card {
-    row-gap: calc(var(--flow-spacing) / 2);
-    border-left: 1 solid var(--bg-subtle);
-    padding: var(--space-l) 0 var(--space-l) var(--space-m);
-  }
-
-  .bm-feature-45-card__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-feature-45-card__text {
-    font-weight: 700;
-  }
-
-  .bm-feature-45-card__link {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-feature-45::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    z-index: -1;
-    background-color: var(--bg-subtle);
-    width: 100%;
-    height: 20%;
-  }
-  
-  @media (max-width:478px) {
-    .bm-feature-45::before {
-    height:15%;
-  }
-  }
-</style>

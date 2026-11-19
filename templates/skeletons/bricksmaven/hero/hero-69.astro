@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,97 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-69__container">
-    <div class="bm-hero-69__content">
-      <h1 class="bm-hero-69__heading">{heading}</h1>
-      <p class="bm-hero-69__subheading">{fs}</p>
-      <div class="bm-hero-69__cta">
-        <a class="btn--black btn--l wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="bm-hero-69__meta-copy">Join over 2.000 happy customers</p>
-      </div>
-    </div>
-    <div class="bm-review-grid list--none">
-      {items.map((it) => (
-        <div class="bm-review-card">
-          <div class="bm-review-star list--none">
-            {(it.items || []).map((it2) => (
-              <div class="bm-review-star-list">
-                <span class="bm-review-star-list__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
-          </div>
-          <p class="bm-review-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">Join over 2.000 happy customers</p>
         </div>
-      ))}
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-69__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-69__content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-69__heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .bm-hero-69__subheading {
-    font-size: var(--fs-2);
-    width: var(--content-width);
-  }
-
-  .bm-hero-69__cta {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-review-grid {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .bm-review-card {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: auto;
-  }
-
-  .bm-review-star {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-review-card__text {
-    font-size: var(--fs-2);
-  }
-</style>

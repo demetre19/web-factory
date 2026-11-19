@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,118 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-51__container">
-    <div class="bm-content-51__content">
-      <div class="bm-content-51__top">
-        <h2 class="bm-content-51__heading">{heading}</h2>
-        <p class="accent-h">Accent heading</p>
-        <p class="bm-content-51__text">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
-      <div class="cta-combo">
-        <a class="btn--primary" href="#">Call to action</a>
-        <a class="bm-content-51__link" href="#">Secondary action →</a>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div class="bm-content-51__media">
-      <figure class="bm-content-51__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-  </div>
-  <div class="bm-content-51__carousel-container">
-    <div class="logo-12__logo-list-wrapper">
-      <div class="logo-12-list">
-        <div class="logo-12-list-item">
-          <figure class="logo-12-list-item__brand"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <div>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-51 {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-51__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-content-51__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-51__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-content-51__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  .logo-12__logo-list-wrapper {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .logo-12-list {
-    flex-direction: row;
-  }
-
-  .logo-12-list-item__brand {
-    object-fit: contain;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .logo-12__logo-list-wrapper::before {
-  	content:'';
-    position: absolute;
-    left:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
-    z-index: 99;
-  }
-  
-  .logo-12__logo-list-wrapper::after {
-  	content:'';
-    position: absolute;
-    right:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
-    z-index: 99;
-  }
-
-  /* bm-custom */
-  .logo-12-list  .splide__track{
-  	overflow:visible;
-  }
-  
-  .logo-12-list .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .logo-12-list :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-</style>

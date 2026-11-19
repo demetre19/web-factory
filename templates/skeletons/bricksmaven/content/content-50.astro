@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,110 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-50__container">
-    <div class="bm-content-50__content">
-      <h2 class="bm-content-50__heading">{heading}</h2>
-      <p class="bm-content-50__text">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-content-50__media list--none">
-      {items.map((it) => (
-        <div class="bm-content-50__image-wrapper">
-          <figure class="bm-content-50__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-50 {
-    padding: var(--section-space-l) 0 0 0;
-  }
-
-  .bm-content-50__container {
-    align-items: center;
-    display: flex;
-    flex-wrap: nowrap;
-    row-gap: var(--space-s);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    background: var(--bg-subtle);
-  }
-
-  .bm-content-50__content {
-    width: 50ch;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-50__media {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 12);
-    margin: calc(-1 * var(--section-space-xxl)) 0 0 0 !important;
-  }
-
-  .bm-content-50__image-wrapper {
-    height: 100%;
-  }
-
-  .bm-content-50__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-content-50__image-wrapper {
-    position: relative;
-  }
-  
-  .bm-content-50__image-wrapper:nth-child(1) {
-    grid-column: 1/5;
-  }
-  
-  .bm-content-50__image-wrapper:nth-child(2) {
-    grid-column: 5/9;
-  }
-  
-  .bm-content-50__image-wrapper:nth-child(3) {
-    grid-column: 9/-1;
-  }
-  
-  
-  /* Breakout mid image */
-  .bm-content-50__image-wrapper:nth-child(2) .bm-content-50__image {
-    margin-block-start: calc(-1 * var(--space-m));
-    height: calc(100% + var(--space-xl));
-    position: absolute;
-  }
-  
-  @media (max-width: 767px) {
-    
-    .bm-content-50__image-wrapper:nth-child(1) {
-    grid-column: 1/6;
-    }
-  
-    .bm-content-50__image-wrapper:nth-child(2) {
-      grid-column: 6/-1;
-    }
-  
-    .bm-content-50__image-wrapper:nth-child(3) {
-      grid-column: 9/-1;
-      display: none;
-    }
-  
-  }
-</style>

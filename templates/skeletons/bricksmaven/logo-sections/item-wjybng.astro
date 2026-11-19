@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,54 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="logo-6-container gap--xxl">
-    <div class="width--full center--all gap--s logo-6-row">
-      <h2 class="logo-6-title text--white">{heading}</h2>
-      <p class="logo-6-desc width--l text--white">{fs}</p>
-      <div class="logo-6-cta flex--row align-items--center gap--s">
-        <a class="logo-6-cta__primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="logo-6-cta__outline btn--white btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+      </div>
+      <div>
+        <div></div>
       </div>
     </div>
-    <div class="width--full logo-6-list bg--white">
-      <div class="logo-6-list-item"></div>
-    </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="logo-6-bg object-fit--cover"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .logo-6-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -10;
-  }
-
-  /* bm-custom */
-  .logo-6-list-item li div {
-  background-size: contain!important;
-  }
-</style>

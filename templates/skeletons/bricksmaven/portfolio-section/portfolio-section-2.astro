@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,204 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="portfolio-section-2-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="portfolio-section-2-list list--none">
-      {items.map((it) => (
-        <div class="portfolio-section-2-card">
-          <div class="portfolio-section-2-card__intro">
-            <h2 class="portfolio-section-2-card__heading clickable-parent">{it.title}</h2>
-            <div class="portfolio-section-2-card__category">
-              <p class="portfolio-section-2-card__terms">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+            <div class="grid-auto gap-fluid-l">
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background-image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>
-          <div class="portfolio-section-2-card__media">
-            <figure class="portfolio-section-2-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            <figure class="portfolio-section-2-card__background-image"><img src="/media/placeholder.svg" alt="Background-image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="portfolio-section-2-card__cta">
-            <span class="portfolio-section-2-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .portfolio-section-2-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .portfolio-section-2-card {
-    position: relative;
-    border-top: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--section-space-xxl);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .portfolio-section-2-card__intro {
-    z-index: 1;
-  }
-
-  .portfolio-section-2-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .portfolio-section-2-card__media {
-    align-items: center;
-  }
-
-  .portfolio-section-2-card__image {
-    object-fit: cover;
-    height: 24rem;
-    position: absolute;
-    top: -28%;
-    z-index: 99;
-  }
-
-  .portfolio-section-2-card__background-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  .portfolio-section-2-card__cta {
-    justify-content: center;
-    align-items: flex-end;
-  }
-
-  /* bm-custom */
-  .portfolio-section-2-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .portfolio-section-2-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--bg-subtle);
-    padding-inline:1rem;
-    padding-block:.3rem;
-    color:var(--bg-canvas);
-    font-size: var(--fs-0);
-    font-weight: 700;
-    border-radius: 100%;
-    position:absolute;
-    left:3rem;
-      top:50%;
-    transform: translateY(-50%);
-    transition: .5s linear;
-    
-  }
-  
-  .portfolio-section-2-list li:hover::before {
-    background-color: var(--action-primary);
-  }
-  
-  @media (max-width:478px)  {
-  	.portfolio-section-2-list li::before {
-      left:-1.1rem;
-    }
-  }
-
-  /* bm-custom */
-  /* Card */
-  
-  .portfolio-section-2-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .portfolio-section-2-card:focus-within {
-  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
-  
-  }
-  
-  .portfolio-section-2-card {
-  	transition: .5s ease;
-  }
-  
-  .portfolio-section-2-card:hover {
-  	background-color: var(--bg-subtle);
-  }
-  
-  /* Image */
-  
-  .portfolio-section-2-card__image {
-  	opacity: 0;
-    transition: .5s ease;
-  }
-  
-  .portfolio-section-2-card:hover .portfolio-section-2-card__image, .portfolio-section-2-card:focus-within .portfolio-section-2-card__image{
-  	opacity: 1;
-  }
-  
-  /* Background Image */
-  
-  .portfolio-section-2-card__background-image {
-  	opacity: 0.1;
-    transition: .5s ease;
-  }
-  
-  .portfolio-section-2-card:hover .portfolio-section-2-card__background-image, .portfolio-section-2-card:focus-within .portfolio-section-2-card__background-image {
-  	opacity: 0;
-  }
-  
-  /* Icon */
-  
-  .portfolio-section-2-card__icon {
-    transition: .5s ease;
-  }
-  
-  .portfolio-section-2-card:hover .portfolio-section-2-card__icon, .portfolio-section-2-card:focus-within .portfolio-section-2-card__icon {
-  	color: var(--action-primary);
-  }
-  
-  @media (max-width:478px)  {
-  	.portfolio-section-2-card:hover .portfolio-section-2-card__image, .portfolio-section-2-card:focus-within .portfolio-section-2-card__image {
-  	display: none;
-  }
-  
-  }
-</style>

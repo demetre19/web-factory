@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,180 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="grid-21-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="grid-21-list">
-      <div class="grid-21-card">
-        <div class="grid-21-card__content">
-          <h2 class="grid-21-card__heading clickable-parent">Web Development</h2>
-          <p class="grid-21-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <a class="grid-21-card__link" href="#">Read Further</a>
-        </div>
-        <figure class="grid-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div class="grid-21-card__overlay"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="grid-21-card">
-        <div class="grid-21-card__content">
-          <h2 class="grid-21-card__heading clickable-parent">Marketing</h2>
-          <p class="grid-21-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <a class="grid-21-card__link" href="#">Read Further</a>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <h2 class="text-fluid-2">Web Development</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="text-fluid-0" href="#">Read Further</a>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div></div>
         </div>
-        <figure class="grid-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div class="grid-21-card__overlay"></div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <h2 class="text-fluid-2">Marketing</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a class="text-fluid-0" href="#">Read Further</a>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .grid-21-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .grid-21-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .grid-21-card {
-    position: relative;
-    height: 40rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .grid-21-card__content {
-    row-gap: calc(var(--flow-spacing) / 1.6);
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
-    position: relative;
-  }
-
-  .grid-21-card__heading {
-    text-transform: uppercase;
-    letter-spacing: .8;
-  }
-
-  .grid-21-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .grid-21-card__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  /* Card */
-  .grid-21-card {
-  	overflow: hidden;
-  }
-  
-  .grid-21-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .grid-21-card:focus-within {
-  	box-shadow: var(--shadow-card);
-  }
-  
-  /* Content */
-  
-  .grid-21-card__content {
-    padding: var(--space-m);
-    color: var(--bg-canvas);
-    transition: .6s linear .3s;
-    transform: translateY(12rem);
-    backdrop-filter: blur(1rem);
-  }
-  
-  .grid-21-card:hover .grid-21-card__content,
-  .grid-21-card:focus-within .grid-21-card__content {
-    transform: translateY(0rem);
-  }
-  
-  .grid-21-card__text, .grid-21-card__link {
-    opacity: 0;
-    transition: 1s linear;
-  }
-  
-  .grid-21-card:hover .grid-21-card__text, .grid-21-card:focus-within .grid-21-card__text, .grid-21-card:hover .grid-21-card__link, .grid-21-card:focus-within .grid-21-card__link {
-  	opacity: 1;
-    display: block;
-  }
-  
-  .grid-21-card__heading {
-    transition: 4s;
-  }
-  
-  .grid-21-card:hover .grid-21-card__heading, .grid-21-card:focus-within .grid-21-card__heading {
-  	writing-mode: unset;
-  } 
-  
-  @media (max-width: 767px) {
-  	.grid-21-card__content {
-    transform: translateY(10rem);
-  }
-  }
-  
-  @media (max-width: 478px) {
-  	.grid-21-card__content {
-    transform: translateY(12rem);
-  }
-  }
-  
-  
-  /* Image */
-  .grid-21-card__image {
-    transition: 1s linear;  
-  }
-  
-  .grid-21-card:hover .grid-21-card__image, .grid-21-card:focus-within .grid-21-card__image {
-    scale: 1.11; 
-  }
-  
-  /* Overlay */
-  .grid-21-card__overlay {
-    opacity: 0.6;
-    transition: .3s linear;  
-  }
-  
-  .grid-21-card:hover .grid-21-card__overlay, .grid-21-card:focus-within .grid-21-card__overlay {
-    opacity: 1; 
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,62 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="header-page-4-container">
-    <div class="header-page-4__top">
-      <p class="accent-h">Accent Heading</p>
-      <h1 class="header-page__title">{heading}</h1>
-    </div>
-    <div class="header-page-4__cta-text">
-      <p class="header-page__desc">{fs}</p>
-      <div class="header-page-btn">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">Accent Heading</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+      </div>
+      <div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .header-page-4-container {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: var(--section-space-xxl);
-  }
-
-  .header-page-4__top {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .header-page-4__cta-text {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .header-page-btn {
-    display: flex;
-    column-gap: var(--space-s);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-</style>

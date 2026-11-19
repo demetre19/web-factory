@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,94 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-19-container">
-    <div class="cta-19__box">
-      <h2 class="cta-19__heading">{heading}</h2>
-      <p class="cta-19__desc">{fs}</p>
-      <p class="accent-h">Get started</p>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Get started</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-    </div>
-    <div class="cta-19__media">
-      <figure class="cta-19__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-19 {
-    height: 100%;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .cta-19-container {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    display: grid;
-    position: relative;
-  }
-
-  .cta-19__box {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-s);
-    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) 0;
-    text-align: left;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .cta-19__image {
-    object-fit: cover;
-    width: 50vw;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .cta-19::before {
-    content:"";
-    background-color: var(--action-primary);
-    position: absolute;
-    width: 40vw;
-    height:100%;
-    top: 0;
-    right: 0;
-  }
-  
-  
-  @media (max-width:768px) {
-  	.cta-19::before {
-    width: 50vw;
-  
-  }
-  
-  }
-</style>

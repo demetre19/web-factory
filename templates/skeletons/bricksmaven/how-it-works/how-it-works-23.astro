@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,121 +17,46 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-how-it-works-23__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-how-it-works-23-list list--none">
-      {items.map((it) => (
-        <div class="bm-how-it-works-23-card">
-          <div class="bm-how-it-works-23-card__number-wrapper">
-            <p class="bm-how-it-works-23-card__number">{it.text}</p>
-          </div>
-          <h2 class="bm-how-it-works-23-card__heading">{it.title}</h2>
-          <div class="bm-list list--none">
-            <div class="bm-list-item">
-              <div class="bm-list-item__icon-wrapper">
-                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-              <p class="bm-list-item__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
-            <div class="bm-list-item">
-              <div class="bm-list-item__icon-wrapper">
-                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <div>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="bm-list-item__text">{it.text}</p>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-how-it-works-23__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .bm-how-it-works-23-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-how-it-works-23-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-23-card__number-wrapper {
-    display: flex;
-    width: 84;
-    height: 71;
-    justify-content: center;
-    align-items: center;
-    background: var(--bg-subtle);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-  }
-
-  .bm-how-it-works-23-card__number {
-    font-size: var(--fs-4);
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item__icon-wrapper {
-    padding: var(--tap) var(--tap) var(--tap) var(--tap);
-    background: var(--bg-subtle);
-    border-radius: 50% 50% 50% 50%;
-    position: relative;
-  }
-
-  .bm-list-item__icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .bm-list-item__text {
-    text-align: left;
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-list-item {
-  	--circle-size: var(--fs-0);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,117 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-93__container">
-    <div class="bm-hero-93__content">
-      <h1 class="bm-hero-93__heading">{heading}</h1>
-      <p class="bm-hero-93__subheading">{fs}</p>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="link--black" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
-    </div>
-    <div class="bm-hero-93__media-carousel">
-      <div class="bm-hero-93__work-row">
-        {items.map((it) => (
-          <div class="list--none bm-hero-93-work-list">
-            {(it.items || []).map((it2) => (
-              <div class="bm-hero-93-work">
-                <figure class="bm-hero-93-work__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-              </div>
-            ))}
-          </div>
-        ))}
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-93 {
-    overflow: clip;
-  }
-
-  .bm-hero-93__container {
-    row-gap: calc(var(--space-s) * 2);
-  }
-
-  .bm-hero-93__content {
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .bm-hero-93__heading {
-    font-size: calc(var(--fs-4) * 2.5);
-  }
-
-  .bm-hero-93__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-93__work-row {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    flex-wrap: nowrap;
-  }
-
-  .bm-hero-93-work-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  .bm-hero-93-work__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-hero-93__media-carousel {
-    transform: rotate(-28deg) skew(10deg, 10deg);
-  }
-
-  /* bm-custom */
-  .bm-hero-93__work-row {
-    width: 400%;
-    max-width: 400%;
-    -webkit-overflow-scrolling: touch;
-    animation: scrollwork 30s 
-  linear infinite alternate;
-    animation-play-state: running;
-    position: relative;
-   z-index: 20;
-  }
-  
-  @keyframes scrollwork {
-    from { transform: translateX(-20%); }
-    to   { transform: translateX(-2%); }
-  }
-  
-  
-  @media (max-width:767px) {
-    .bm-hero-93__work-row {
-    width: 500%;
-    max-width: 500%;
-    animation: none;
-    transform: translateX(-20%);
-  }
-    
-    
-  }
-</style>

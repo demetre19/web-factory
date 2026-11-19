@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,161 +17,65 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="footer-4-container">
-    <div class="footer-4-alpha">
-      <img class="footer-4__logo"></img>
-      <p class="footer-4__desc">{fs}</p>
-      <form class="footer-newsletter__form" novalidate>
-      </form>
-    </div>
-    <div class="footer-nav-wrapper footer-nav-wrapper-4">
-      <div class="footer-nav-column">
-        <h3 class="footer-nav-heading">{heading}</h3>
-        <div class="footer-menu list--none">
-          {items.map((it) => (
-            <div class="footer-menu__link">
-              <a class="footer-menu__link-text" href="#">{it.text}</a>
-            </div>
-          ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+        <p class="text-fluid-0">{fs}</p>
+        <form novalidate>
+        </form>
+      </div>
+      <div>
+        <div>
+          <h3 class="text-fluid-2">{heading}</h3>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 class="text-fluid-2">2nd column</h3>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div class="footer-nav-column">
-        <h3 class="footer-nav-heading">2nd column</h3>
-        <div class="footer-menu list--none">
-          {items.map((it) => (
-            <div class="footer-menu__link">
-              <a class="footer-menu__link-text" href="#">{it.text}</a>
-            </div>
-          ))}
-        </div>
+      <div>
+        <div></div>
       </div>
     </div>
-    <div class="footer-4-epsilon">
-      <div class="footer-4__social"></div>
-    </div>
-  </div>
-  <div class="footer-4-bottom">
-    <div class="footer-4-bottom__alpha">
-      <p class="footer-4__copyright">© 2022 Alpha. All right reserved.</p>
-      <div class="footer-nav-legal">
-        <div class="footer-legal-nav list--none">
-          {items.map((it) => (
-            <div class="footer-legal__li">
-              <a class="footer-legal__link-text" href="#">{it.text}</a>
-            </div>
-          ))}
+    <div>
+      <div>
+        <p class="text-fluid-0">© 2022 Alpha. All right reserved.</p>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="footer-4-bottom__beta">
-      <p class="footer-4__link">Made with AutomaticCSS</p>
+      <div>
+        <p class="text-fluid-0">Made with AutomaticCSS</p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .footer-4 {
-    row-gap: var(--space-s);
-  }
-
-  .footer-4-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 6);
-    gap: var(--space-m);
-  }
-
-  .footer-4-alpha {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .footer-nav-wrapper {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 6);
-    gap: var(--space-m);
-  }
-
-  .footer-nav-wrapper-4 {
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .footer-nav-column {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-nav-heading {
-    font-size: var(--fs-1);
-  }
-
-  .footer-menu {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-link-update {
-    font-size: var(--fs-0);
-    font-weight: 700;
-    padding: .4rem .4rem .4rem .4rem;
-    background: var(--bg-subtle);
-    margin: 0 0 0 1rem;
-  }
-
-  .footer-4-bottom {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 6);
-    gap: var(--space-s);
-  }
-
-  .footer-4-bottom__alpha {
-    display: flex;
-    column-gap: var(--space-s);
-  }
-
-  .footer-legal-nav {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .footer-legal__link-text {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .footer-newsletter__form {
-  	flex-wrap: nowrap;
-    gap: 1rem;
-  }
-  .footer-newsletter__form [type="submit"] {
-  	height: 100%;
-  }
-
-  /* bm-custom */
-  .footer-4__social {
-  	align-items: flex-start;
-    row-gap: 2rem;
-  }
-  .footer-4__social a {
-  	padding: 0 !important;
-    color: var(--text-primary);
-  }
-  .footer-4__social a:hover {
-    color: var(--action-primary);
-  }
-
-  /* bm-custom */
-  .footer-4__link {
-  	color: var(--text-primary);
-  }
-</style>

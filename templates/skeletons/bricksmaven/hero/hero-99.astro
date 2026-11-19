@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,86 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-99__container">
-    <div class="bm-hero-99__content">
-      <div class="bm-hero-99__column">
-        <h1 class="bm-hero-99__heading">{heading}</h1>
-        <p class="bm-hero-99__subheading">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="link--white" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <a class="text-fluid-0" href="#">Secondary action →</a>
+          </div>
+        </div>
+        <div>
+          <figure></figure>
+          <p class="text-fluid-0">See how it works!</p>
         </div>
       </div>
-      <div class="bm-hero-99__media">
-        <figure class="bm-hero-99__video"></figure>
-        <p class="bm-hero-99__micro-copy">See how it works!</p>
-      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="bm-hero-99__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-99 {
-    position: relative;
-    justify-content: flex-end;
-    height: 100vh;
-  }
-
-  .bm-hero-99__content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .bm-hero-99__column {
-    width: 100%;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-99__heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .bm-hero-99__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-99__media {
-    width: 100%;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-99__video {
-    overflow: clip;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-hero-99__background-image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-</style>

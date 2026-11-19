@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,66 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-19-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="feature-19-content list--none">
-      {items.map((it) => (
-        <div class="feature-19-card">
-          <h3 class="feature-19-card__heading">{it.title}</h3>
-          <p class="feature-19-card__text">{it.text}</p>
-          <span class="feature-19-card__icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h3 class="text-fluid-2">{it.title}</h3>
+            <p class="text-fluid-0">{it.text}</p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-19-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-19-content {
-    border-top: .8rem solid var(--action-primary);
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .feature-19-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    background: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .feature-19-card:nth-child(2) {
-  	box-shadow: var(--shadow-card) ;
-    position:relative;
-    z-index: 1;
-  }
-</style>

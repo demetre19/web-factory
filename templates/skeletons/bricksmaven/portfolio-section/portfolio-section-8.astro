@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,100 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="portfolio-section-8__container">
-    <div class="intro intro--split intro--split-alt">
-      <div class="intro__left-column">
-        <h2 class="intro__heading intro__heading--alt">{heading}</h2>
-        <p class="intro__accent-heading intro__accent-heading--alt">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--white" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="portfolio-section-8-list list--none">
-      {items.map((it) => (
-        <div class="portfolio-section-8-card">
-          <div class="portfolio-section-8-card__intro">
-            <h3 class="portfolio-section-8-card__heading">{it.title}</h3>
-            <p class="portfolio-section-8-card__text">{it.text}</p>
-          </div>
-          <div class="portfolio-section-8-card__media">
-            <figure class="portfolio-section-8-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
-      <div></div>
-      <div></div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+        <div></div>
+        <div></div>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .portfolio-section-8 {
-    background: var(--text-secondary);
-  }
-
-  .portfolio-section-8__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__heading--alt {
-    font-size: calc(var(--fs-3) * 2);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .portfolio-section-8-list {
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 1);
-  }
-
-  .portfolio-section-8-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .portfolio-section-8-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .portfolio-section-8-card__image {
-    object-fit: cover;
-  }
-</style>

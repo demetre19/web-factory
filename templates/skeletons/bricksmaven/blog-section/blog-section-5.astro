@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,40 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-section-5-container">
-    <div class="blog-section-5-head">
-      <div class="blog-section-5-intro">
-        <p class="bs-5-head__tag text--s text--primary">Our blog</p>
-        <h2 class="bs-5-head__title">{heading}</h2>
-        <p class="bs-5-head__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <p class="text-fluid-0">Our blog</p>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-      <div class="blog-section-5-cta">
-        <a class="blog-section-5-head__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="blog-section-5-body">
-      <div class="blog-section-5-wrapper list--none">
-        <div class="blog-section-5-card">
-          <div class="blog-section-5-card__media">
-            <figure class="blog-section-5-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-section-5-card__body">
-            <div class="blog-section-5-card__box">
-              <p class="blog-section-5-card__term">{post_terms_category}</p>
-              <h2 class="blog-section-5-card__title">{post_title}</h2>
-              <div class="blog-section-5-card__excerpt"></div>
-              <div class="blog-section-5-card__author">
-                <figure class="blog-section-5-card__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                <div class="blog-section-5-card__meta">
-                  <h4 class="blog-section-5-card__name">{author_name}</h4>
-                  <p class="blog-section-5-card__date">{post_date}</p>
+      <div>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{post_terms_category}</p>
+                <h2 class="text-fluid-2">{post_title}</h2>
+                <div></div>
+                <div class="grid-auto gap-fluid-l">
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <div>
+                    <h4 class="text-fluid-2">{author_name}</h4>
+                    <p class="text-fluid-0">{post_date}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -59,101 +64,3 @@ const {
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-section-5-container {
-    row-gap: var(--space-s);
-  }
-
-  .blog-section-5-head {
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-    display: grid;
-  }
-
-  .blog-section-5-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-section-5-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .blog-section-5-head__cta {
-    margin: 0 0 0 auto;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .blog-section-5-body {
-    width: 100%;
-  }
-
-  .blog-section-5-wrapper {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .blog-section-5-card__thumb {
-    height: 30rem;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-section-5-card__body {
-    padding: 0 var(--space-s) 0 var(--space-s);
-  }
-
-  .blog-section-5-card__box {
-    margin: calc( var(--space-m) * -1 ) 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background: var(--bg-canvas);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: var(--flow-spacing);
-    position: relative;
-    z-index: 10;
-  }
-
-  .blog-section-5-card__term {
-    padding: .4rem .8rem .4rem .8rem;
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    font-size: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .blog-section-5-card__author {
-    margin: auto 0 0 0;
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .blog-section-5-card__photo {
-    width: 6rem;
-    height: 6rem;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .blog-section-5-card__meta {
-    text-align: left;
-  }
-
-  /* bm-custom */
-  .blog-section-5-card__term a {
-  	color: var(--fs-0);
-  }
-</style>

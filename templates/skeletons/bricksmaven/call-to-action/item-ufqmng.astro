@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,71 +17,24 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-5-container">
-    <div class="cta-5-content">
-      <h2 class="cta-6__heading">{heading}</h2>
-      <p class="cta-5__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="cta-5-img--2"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    <figure class="cta-5-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-5-container {
-    border: solid var(--action-primary);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-    justify-content: center;
-    position: relative;
-  }
-
-  .cta-5-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-    text-align: center;
-    width: var(--measure);
-  }
-
-  .cta-6__heading {
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: .1rem solid var(--color-line-default);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .cta-5-img--2 {
-    height: 23rem;
-    width: 29rem;
-    position: absolute;
-    bottom: -7.5rem;
-    left: -7.5rem;
-    object-fit: cover;
-  }
-
-  .cta-5-img {
-    height: 23rem;
-    width: 29rem;
-    position: absolute;
-    top: -7.5rem;
-    right: -7.5rem;
-    object-fit: cover;
-  }
-</style>

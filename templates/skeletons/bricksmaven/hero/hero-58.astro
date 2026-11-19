@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,76 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-58__container">
-    <div class="hero-58__content">
-      <div class="hero-58__top">
-        <h1 class="hero-58__heading">{heading}</h1>
-        <p class="accent-h accent-h--alt">Accent heading</p>
-        <p class="hero-58__subheading">{fs}</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
-      <div class="cta-combo">
-        <a class="btn--white" href="#">Call to action</a>
-        <a class="btn--link" href="#">Secondary action →</a>
-      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="hero-58__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-58 {
-    height: 100vh;
-    position: relative;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-
-  .hero-58__content {
-    width: var(--content-width);
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-58__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-58__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .hero-58__subheading {
-    width: var(--content-width);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .hero-58__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

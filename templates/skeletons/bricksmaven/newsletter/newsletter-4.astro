@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,102 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="newsletter-4-container">
-    <div class="newsletter-4__content">
-      <h2 class="newsletter-4__heading">{heading}</h2>
-      <p class="newsletter-4__desc">{fs}</p>
-      <div class="bm-list">
-        {items.map((it) => (
-          <div class="bm-list__item">
-            <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="bm-list__item-text">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <form novalidate>
+          </form>
+          <p class="text-fluid-0">We care about your data in our privacy policy.</p>
+        </div>
       </div>
-      <div class="bm-form">
-        <form class="bm-form-widget" novalidate>
-        </form>
-        <p class="bm-form__terms">We care about your data in our privacy policy.</p>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-    </div>
-    <div class="newsletter-4__media">
-      <figure class="newsletter-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .newsletter-4 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .newsletter-4-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    flex-direction: row;
-    gap: var(--space-m);
-  }
-
-  .newsletter-4__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-list__item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .newsletter-4__image {
-    object-fit: cover;
-    height: 70vh;
-    width: 50vw;
-    margin: 0 calc(-50vw + 50%) 0 0;
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,84 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="error-6-container">
-    <div class="error-6-left-box">
-      <div class="error-6-left-box__intro">
-        <h1 class="error-6-left-box__heading">{heading}</h1>
-        <p class="error-6-left-box__subheading">Page not found.</p>
-        <p class="error-6-left-box__desc">{fs}</p>
-      </div>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="error-6-grid-ul list--none">
-      {items.map((it) => (
-        <div class="error-6-card">
-          <div class="error-6-card__heading-wrapper">
-            <h3 class="error-6-card__heading">{it.title}</h3>
-            <p class="error-6-card__desc">{it.text}</p>
-          </div>
-          <a class="error-6-card-btn wf-cta-button" href={it.href}>{it.label}</a>
-          <span class="error-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Page not found.</p>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-      ))}
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .error-6-container {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-    gap: var(--space-xl);
-  }
-
-  .error-6-left-box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    align-items: flex-start;
-  }
-
-  .error-6-left-box__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .error-6-left-box__subheading {
-    font-size: var(--fs-3);
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .error-6-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-s);
-  }
-
-  .error-6-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-  }
-
-  .error-6-card-btn {
-    padding: 0 0 0 0;
-    justify-content: flex-start;
-  }
-</style>

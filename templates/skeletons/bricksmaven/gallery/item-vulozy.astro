@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,45 +17,22 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gallery-5-container">
-    <div class="gallery-5-row">
-      <h2 class="gallery-5-title">{heading}</h2>
-      <p class="gallery-5-desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div></div>
     </div>
-    <div class="gallery-5-card"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gallery-5-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-xl);
-    row-gap: var(--space-xl);
-    text-align: center;
-  }
-
-  .gallery-5-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-s);
-    row-gap: var(--space-s);
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .gallery-5-card {
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-</style>

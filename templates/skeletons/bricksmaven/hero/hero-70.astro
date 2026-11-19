@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,245 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-70__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h1 class="intro__heading bm-hero-70__heading">{heading}</h1>
-        <p class="intro__accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-hero-70__media-grid list--none">
-      {items.map((it) => (
-        <div class="bm-hero-70-media-card">
-          <figure class="bm-hero-70-media-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-70 {
-    overflow: hidden;
-  }
-
-  .bm-hero-70__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-70__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-70__media-grid {
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    position: relative;
-    left: 50%;
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 10);
-    grid-template-rows: calc(100% * 1 / 11);
-    height: 860px;
-  }
-
-  .bm-hero-70-media-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-hero-70__media-grid::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 520px;
-    background: linear-gradient(transparent, var(--bg-canvas));
-    z-index: 1;
-  }
-
-  /* bm-custom */
-  .bm-hero-70-media-card:nth-child(1) {
-    grid-column: 1 / 3;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(2) {
-    grid-column: 3 / 5;
-    grid-row: 1 / 9;
-  }
-  
-  .bm-hero-70-media-card:nth-child(3) {
-    grid-column: 5 / 7;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(4) {
-    grid-column: 7 / 9;
-    grid-row: 1 / 9;
-  }
-  
-  .bm-hero-70-media-card:nth-child(5) {
-    grid-column: 9 / -1;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(6) {
-    grid-column: 1 / 3;
-    grid-row: 5 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(7) {
-    grid-column: 3 / 5;
-    grid-row: 9 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(8) {
-    grid-column: 5 / 7;
-    grid-row: 5 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(9) {
-    grid-column: 7 / 9;
-    grid-row: 9 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(10) {
-    grid-column: 9 / -1;
-    grid-row: 5 / -1;
-  }
-  
-  /* Offset Top Margin*/
-  .bm-hero-70-media-card {
-    --offset-top-margin: var(--space-xl);
-  }
-  
-  .bm-hero-70-media-card:nth-child(2) {
-    margin-block-start: var(--acss-offset-top-margin);
-  }
-  
-  .bm-hero-70-media-card:nth-child(4) {
-    margin-block-start: var(--acss-offset-top-margin);
-  }
-  
-  /* Hide on tablet*/
-  @media (max-width:991px) {
-    .bm-hero-70-media-card:nth-child(7), .bm-hero-70-media-card:nth-child(8), .bm-hero-70-media-card:nth-child(9), .bm-hero-70-media-card:nth-child(10) {
-      display: none;
-    }
-    
-    .bm-hero-70-media-card:nth-child(1) {
-    grid-column: 1 / 3;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(2) {
-    grid-column: 3 / 5;
-    grid-row: 1 / 9;
-  }
-  
-  .bm-hero-70-media-card:nth-child(3) {
-    grid-column: 5 / -1;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(4) {
-    grid-column: 1 / 3;
-    grid-row: 5 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(5) {
-    grid-column: 3 / 5;
-    grid-row: 9 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(6) {
-    grid-column: 5 / -1;
-    grid-row: 5 / -1;
-  }
-  
-    .bm-hero-70-media-card:nth-child(2) {
-    margin-block-start: var(--acss-offset-top-margin);
-  }
-  
-  .bm-hero-70-media-card:nth-child(4) {
-    margin-block-start: 0;
-  }
-    
-  }
-  
-  /* Hide on mobile*/
-  @media (max-width:767px) {
-    .bm-hero-70-media-card:nth-child(5), .bm-hero-70-media-card:nth-child(6) {
-      display: none;
-    }
-    
-    .bm-hero-70-media-card:nth-child(1) {
-    grid-column: 1 / 3;
-    grid-row: 1 / 5;
-  }
-  
-  .bm-hero-70-media-card:nth-child(2) {
-    grid-column: 3 / -1;
-    grid-row: 1 / 9;
-  }
-  
-  .bm-hero-70-media-card:nth-child(3) {
-    grid-column: 1 / 3;
-    grid-row: 5 / -1;
-  }
-  
-  .bm-hero-70-media-card:nth-child(4) {
-    grid-column: 3 / -1;
-    grid-row: 9 / -1;
-  }
-  
-  
-    .bm-hero-70-media-card:nth-child(2) {
-    margin-block-start: 0;
-  }
-  
-    
-  }
-</style>

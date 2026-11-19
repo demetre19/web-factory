@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,133 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="hero-57__container">
-      <div class="hero-57__content">
-        <h1 class="hero-57__heading">{heading}</h1>
-        <p class="hero-57__subheading">{fs}</p>
+    <div class="sec-inner">
+      <div class="grid-auto gap-fluid-l">
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <figure class="hero-57__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <div class="hero-57__footer-container">
-      <p class="hero-57__label">You might have seen me on</p>
-      <div class="bm-logo-carousel">
-        <div class="bm-logo-carousel-list">
-          <div class="bm-logo-carousel-list-item">
-            <svg class="bm-logo-carousel-list-item__brand"></svg>
+    <div class="sec-inner">
+      <div>
+        <p class="text-fluid-0">You might have seen me on</p>
+        <div>
+          <div>
+            <div>
+              <svg></svg>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-57 {
-    height: 70vh;
-    position: relative;
-    justify-content: center;
-    background: var(--text-secondary);
-  }
-
-  .hero-57__container {
-    align-items: center;
-  }
-
-  .hero-57__content {
-    width: var(--content-width);
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-57__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .hero-57__subheading {
-    width: var(--measure);
-  }
-
-  .hero-57__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  .hero-57__footer {
-    background: var(--text-secondary);
-  }
-
-  .hero-57__footer-container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .hero-57__label {
-    text-transform: uppercase;
-  }
-
-  .bm-logo-carousel {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .bm-logo-carousel-list {
-    flex-direction: row;
-  }
-
-  .bm-logo-carousel-list-item__brand {
-    object-fit: contain;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-logo-carousel::before {
-  	content:'';
-    position: absolute;
-    left:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, var(--text-secondary), transparent);
-    z-index: 99;
-  }
-  
-  .bm-logo-carousel::after {
-  	content:'';
-    position: absolute;
-    right:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, transparent,var(--text-secondary));
-    z-index: 99;
-  }
-
-  /* bm-custom */
-  .bm-logo-carousel-list  .splide__track{
-  	overflow:visible;
-  }
-  
-  .bm-logo-carousel-list .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .bm-logo-carousel-list :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-</style>

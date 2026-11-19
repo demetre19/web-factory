@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,149 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portoflio-section-24__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-portoflio-section-24-list list--none">
-      {items.map((it) => (
-        <div class="bm-portoflio-section-24-card">
-          <div class="bm-portoflio-section-24-card__content">
-            <div class="bm-portoflio-section-24-card__intro">
-              <h2 class="bm-portoflio-section-24-card__heading">{it.title}</h2>
-              <div class="bm-portoflio-section-24-card__terms">
-                <p class="bm-portoflio-section-24-card__term-text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              </div>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <h4 class="text-fluid-2">{it2.title}</h4>
+                    <p class="text-fluid-0">{it2.text}</p>
+                  </div>
+                ))}
               </div>
             </div>
-            <div class="bm-portfolio-meta-data-list list--none">
-              {(it.items || []).map((it2) => (
-                <div class="bm-portfolio-meta-data-item">
-                  <h4 class="bm-portfolio-meta-data-item__heading">{it2.title}</h4>
-                  <p class="bm-portfolio-meta-data-item__text">{it2.text}</p>
-                </div>
-              ))}
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div class="bm-portoflio-section-24-card__media">
-            <figure class="bm-portoflio-section-24-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
-    </div>
-    <div class="bm-portoflio-section-24__footer">
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      <p class="bm-portoflio-section-24__micro-copy">If you want, we can walk through relevant samples on the call based on your niche.</p>
+        ))}
+      </div>
+      <div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        <p class="text-fluid-0">If you want, we can walk through relevant samples on the call based on your niche.</p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portoflio-section-24__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-portoflio-section-24-list {
-    width: 100%;
-    row-gap: var(--space-s);
-  }
-
-  .bm-portoflio-section-24-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portoflio-section-24-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portoflio-section-24-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portoflio-section-24-card__term-text {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .bm-portfolio-meta-data-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-meta-data-item {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    padding: calc(var(--space-s) / 2) var(--space-s) calc(var(--space-s) / 2) var(--space-s);
-    column-gap: calc(var(--space-xs) / 2);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: calc(var(--space-xs) / 2);
-  }
-
-  .bm-portoflio-section-24-card__image {
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portoflio-section-24__footer {
-    align-items: center;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  /* bm-custom */
-  @media (max-width:800px) {
-  .bm-portoflio-section-24-card {
-    grid-template-columns: calc(100% * 1 / 1);
-  }
-    .bm-portoflio-section-24-card .bm-portoflio-section-24-card__image {
-    aspect-ratio: 16/9;
-  }
-  
-  }
-  @media (min-width:800px) {
-    .bm-portoflio-section-24-card:nth-child(even) .bm-portoflio-section-24-card__media {
-    order: 0;
-  }
-  }
-  
-  
-  @media (min-width:991px) {
-  
-    
-    .bm-portoflio-section-24-card .bm-portoflio-section-24-card__image {
-    transition: 0.2s ease;
-  }
-    
-   .bm-portoflio-section-24-card:hover .bm-portoflio-section-24-card__image {
-    scale: 1.1;
-     z-index: 1;
-  }
-    
-   }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,55 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-3-container">
-    <div class="cta-3__content">
-      <h2 class="cta-3__title">{heading}</h2>
-      <p class="cta-3__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="cta-3__media-wrapper">
-      <figure class="cta-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-3-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: var(--bg-subtle);
-    gap: var(--space-xs);
-    border: var(--shadow-card);
-  }
-
-  .cta-3__content {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--space-s);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .cta-3__media-wrapper {
-    height: 100%;
-  }
-
-  .cta-3__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

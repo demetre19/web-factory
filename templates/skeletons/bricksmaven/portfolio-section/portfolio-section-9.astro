@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,115 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-9__container">
-    <div class="intro bm-portfolio-section-9__intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading intro__text-basic">{fs}</p>
-      <p class="bm-accent-heading intro__tagline">Accent heading</p>
-    </div>
-    <div class="bm-portfolio-section-9-list">
-      {items.map((it) => (
-        <div class="bm-portfolio-section-9-card">
-          <div class="bm-portfolio-section-9-card__content">
-            <h2 class="bm-portfolio-section-9-card__heading clickable-parent">{it.title}</h2>
-            <div class="bm-portfolio-section-9-card__footer">
-              <p class="bm-portfolio-section-9-card__industry">{it.text}</p>
-              <p class="bm-portfolio-section-9-card__date">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div class="bm-portfolio-section-9-card__media">
-            <figure class="bm-portfolio-section-9-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-9__container {
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-portfolio-section-9-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: var(--acss-grid-auto-3);
-  }
-
-  .bm-portfolio-section-9-card {
-    row-gap: var(--flow-spacing);
-    position: relative;
-  }
-
-  .bm-portfolio-section-9-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: 1px solid var(--color-line-default);
-  }
-
-  .bm-portfolio-section-9-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .bm-portfolio-section-9-card__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-section-9-card__industry {
-    font-size: var(--fs-2);
-    position: relative;
-  }
-
-  .bm-portfolio-section-9-card__date {
-    font-size: var(--fs-2);
-  }
-
-  .bm-portfolio-section-9-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-9-card__media {
-    overflow: hidden;
-  }
-  
-  .bm-portfolio-section-9-card__image {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-9-card:hover .bm-portfolio-section-9-card__image, .bm-portfolio-section-9-card:focus-within .bm-portfolio-section-9-card__image {
-    transform: scale(1.2);
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-9-card__industry::after {
-    content: '-';
-    position: absolute;
-    right: calc(-1 * (var(--flow-spacing) / 1.4));
-  }
-</style>

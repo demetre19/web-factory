@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,110 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-39__container">
-    <div class="bm-contact-39__top">
-      <h1 class="bm-contact-39__heading">{heading}</h1>
-      <p class="bm-contact-39__text">{fs}</p>
-    </div>
-    <div class="bm-contact-39__footer">
-      <div class="bm-contact-39__form-absolute">
-        <div class="bm-contact-39__form-wrapper">
-          <h2 class="bm-contact-39__heading">Let's talk today!</h2>
-          <form class="bm-contact-25__form-content" novalidate>
-          </form>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
       </div>
-      <div class="bm-contact-39__contact-information">
-        <div class="bm-contact-39-contact-list list--none">
-          <div class="bm-contact-39-link">
-            <p class="bm-contact-39-link__label">Call Us</p>
-            <a class="bm-contact-39-link__link" href="#">+123 456 789</a>
+      <div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Let's talk today!</h2>
+            <form novalidate>
+            </form>
           </div>
-          <div class="bm-contact-39-link">
-            <p class="bm-contact-39-link__label">or send us an email</p>
-            <a class="bm-contact-39-link__link" href="#">hello@bricksmaven.com</a>
+        </div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">Call Us</p>
+              <a class="text-fluid-0" href="#">+123 456 789</a>
+            </div>
+            <div>
+              <p class="text-fluid-0">or send us an email</p>
+              <a class="text-fluid-0" href="#">hello@bricksmaven.com</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-39 {
-    position: relative;
-    background: var(--bg-subtle);
-    padding: 0 0 var(--section-space-xxl) 0;
-  }
-
-  .bm-contact-39__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-contact-39__top {
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .bm-contact-39__text {
-    font-size: var(--fs-2);
-  }
-
-  .bm-contact-39__footer {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-contact-39__form-absolute {
-    position: relative;
-  }
-
-  .bm-contact-39__form-wrapper {
-    background: var(--bg-canvas);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    position: absolute;
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-contact-39__contact-information {
-    padding: var(--space-l) var(--space-xl) var(--space-l) var(--space-xl);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-contact-39-contact-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-39-link {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-contact-39-link__label {
-    font-size: var(--fs-2);
-  }
-
-  .bm-contact-39-link__link {
-    font-size: var(--fs-3);
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  .bm-contact-39 + section {
-    padding-block-start: var(--section-space-xxl);
-  }
-  
-  }
-</style>

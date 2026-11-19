@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,91 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-24-container">
-    <div class="testimonial-24-content">
-      {items.map((it) => (
-        <div class="testimonial-24-content__item">
-          <div class="testimonial-24-content__wrapper">
-            <p class="testimonial-24-content__desc">{it.text}</p>
-            <div class="testimonial-24-content__profile">
-              <h4 class="testimonial-24-content__name">{it.title}</h4>
-              <p class="testimonial-24-content__jobtitle">{it.text}</p>
-            </div>
-            <div class="testimonial-24-content__media">
-              <figure class="testimonial-24-content__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                <h4 class="text-fluid-2">{it.title}</h4>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-24 {
-    overflow: hidden;
-  }
-
-  .testimonial-24-content__wrapper {
-    background: var(--bg-canvas);
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    position: relative;
-  }
-
-  .testimonial-24-content__desc {
-    text-align: center;
-    font-size: var(--fs-2);
-  }
-
-  .testimonial-24-content__profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-xs);
-  }
-
-  .testimonial-24-content__jobtitle {
-    font-size: calc(var(--fs-1) - .4rem);
-  }
-
-  .testimonial-24-content__photo {
-    object-fit: cover;
-    width: 10rem;
-    height: 10rem;
-    border-radius: 50% 50% 50% 50%;
-    overflow: hidden;
-    position: absolute;
-    left: 50%;
-    z-index: 1;
-    bottom: -5rem;
-  }
-
-  .jobtitle {
-    font-size: calc(var(--fs-1) - .4rem);
-  }
-
-  /* bm-custom */
-  .testimonial-24-content .splide__track {
-  	overflow: visible;
-  }
-
-  /* bm-custom */
-  .testimonial-24-content__item:not(.is-active) .testimonial-24-content__wrapper {
-  	transform: scale(.8);
-  }
-</style>

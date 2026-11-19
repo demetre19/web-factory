@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,57 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-62__container">
-    <div class="bm-content-62__intro">
-      <div class="bm-content-62__content">
-        <h2 class="bm-content-62__heading">{heading}</h2>
-        <p class="bm-content-62__content-text">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-      <div class="bm-content-62__media">
-        <figure class="bm-content-62__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <p class="text-fluid-0">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
       </div>
-    </div>
-    <div class="bm-content-62__footer">
-      <p class="bm-content-62__footer-text">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-62__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-62__intro {
-    display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
-  }
-
-  .bm-content-62__content {
-    row-gap: var(--flow-spacing);
-    background: var(--text-secondary);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    justify-content: center;
-  }
-
-  .bm-content-62__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-content-62__footer {
-    width: var(--content-width);
-    text-align: center;
-    font-size: var(--fs-3);
-    align-self: center;
-  }
-</style>

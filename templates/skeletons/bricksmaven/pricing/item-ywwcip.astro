@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,96 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-6-container gap--l">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Pricing tagline</p>
-    </div>
-    <div class="pricing-6-content">
-      <div class="pricing-6-card">
-        <p class="pricing-6-card__label">Beginner</p>
-        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
-        <p class="pricing-6-card__price">$59/mo</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
-        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Pricing tagline</p>
       </div>
-      <div class="pricing-6-card">
-        <p class="pricing-6-card__label">Personal</p>
-        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
-        <p class="pricing-6-card__price">$59/mo</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
-      </div>
-      <div class="pricing-6-card center--all gap--xs">
-        <p class="pricing-6-card__label">Untitled</p>
-        <p class="pricing-6-card__desc">All base UI elements are made using Nested Symbols and shared styles that are</p>
-        <p class="pricing-6-card__price">$59/mo</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
-        <span class="pricing-6-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div>
+          <p class="text-fluid-0">Beginner</p>
+          <p class="text-fluid-0">All base UI elements are made using Nested Symbols and shared styles that are</p>
+          <p class="text-fluid-0">$59/mo</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div>
+          <p class="text-fluid-0">Personal</p>
+          <p class="text-fluid-0">All base UI elements are made using Nested Symbols and shared styles that are</p>
+          <p class="text-fluid-0">$59/mo</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div>
+          <p class="text-fluid-0">Untitled</p>
+          <p class="text-fluid-0">All base UI elements are made using Nested Symbols and shared styles that are</p>
+          <p class="text-fluid-0">$59/mo</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .pricing-6-content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-m);
-  }
-
-  .pricing-6-card {
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-xs);
-    flex-direction: column;
-  }
-
-  .pricing-6-card__label {
-    font-weight: 700;
-  }
-
-  .pricing-6-card__desc {
-    text-align: center;
-  }
-
-  .pricing-6-card__price {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  /* bm-custom */
-  .pricing-6-card__price span {
-  	font-size: var(--fs-2);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,68 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-15-container">
-    <div class="feature-15-content">
-      <div class="feature-15__intro">
-        <h2 class="feature-15__heading">{heading}</h2>
-        <p class="feature-15__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">No visibility, no clients</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
-      <div class="feature-15-card">
-        <h2 class="feature-15-card__heading">No visibility, no clients</h2>
-        <p class="feature-15-card__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <span class="feature-15-card__icon" data-icon="lucide" aria-hidden="true"></span>
-      </div>
-    </div>
-    <div class="feature-15-content">
-      <div class="feature-15-card">
-        <h2 class="feature-15-card__heading">No visibility, no clients</h2>
-        <p class="feature-15-card__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <span class="feature-15-card__icon" data-icon="lucide" aria-hidden="true"></span>
-      </div>
-      <div class="feature-15-card">
-        <h2 class="feature-15-card__heading">No visibility, no clients</h2>
-        <p class="feature-15-card__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <span class="feature-15-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">No visibility, no clients</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">No visibility, no clients</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-15-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-l);
-  }
-
-  .feature-15-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-  }
-
-  .feature-15__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .feature-15-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-top: .1rem solid var(--bg-subtle);
-    border-right: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    border-left: .1rem solid var(--bg-subtle);
-  }
-</style>

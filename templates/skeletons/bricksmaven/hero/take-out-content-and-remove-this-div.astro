@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,183 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="hero-53__container">
-      <div class="hero-53__content">
-        <h1 class="hero-53__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-        <p class="hero-53__text">{fs}</p>
-        <a class="hero-53__btn btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+    <div class="sec-inner">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-      <div class="hero-53__media">
-        <figure class="hero-53__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="hero-53__section-background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    <div class="hero-53-testimonial__container">
-      <div class="hero-53-testimonial__intro">
-        <h2 class="hero-53-testimonial__heading">We are changing the world one agency at a time</h2>
-      </div>
-      <div class="hero-53-testimonial__review">
-        <p class="hero-53-testimonial__review-text">" I'm very impressed by the slick effects offered by this plugin. The 3-D effect on the flipbox element is unique and eye catching."</p>
-        <div class="hero-53-testimonial__review-user-rating">
-          <div class="hero-53-testimonial__review-name-wrapper">
-            <p class="hero-53-testimonial__review-name">John Smith</p>
-          </div>
-          <div class="hero-53-testimonial-review-rating">
-            {items.map((it) => (
-              <div class="hero-53-testimonial-review-rating__icon-wrapper">
-                <span class="hero-53-testimonial-review-rating__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
+    <div class="sec-inner">
+      <div>
+        <div>
+          <h2 class="text-fluid-2">We are changing the world one agency at a time</h2>
+        </div>
+        <div>
+          <p class="text-fluid-0">" I'm very impressed by the slick effects offered by this plugin. The 3-D effect on the flipbox element is unique and eye catching."</p>
+          <div>
+            <div>
+              <p class="text-fluid-0">John Smith</p>
+            </div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-53 {
-    position: relative;
-    height: 75vh;
-    justify-content: center;
-    padding: 0 0 var(--section-space-xl) 0;
-  }
-
-  .hero-53__container {
-    z-index: 1;
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .hero-53__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-53__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .hero-53__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-53__section-background-image {
-    object-fit: cover;
-    height: 99%;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-  }
-
-  .hero-53-testimonial {
-    padding: 0 0 0 0;
-    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
-    position: relative;
-  }
-
-  .hero-53-testimonial__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--text-secondary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .hero-53-testimonial__heading {
-    position: relative;
-  }
-
-  .hero-53-testimonial__review {
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .hero-53-testimonial__review-text {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .hero-53-testimonial__review-user-rating {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .hero-53-testimonial-review-rating {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    justify-content: flex-end;
-  }
-
-  /* bm-custom */
-  .hero-53::before {
-  	content:'';
-    position:absolute;
-    inset:0;
-    background-color: var(--bg-canvas);
-    clip-path: polygon(0 0, 79% 0, 51% 100%, 0% 100%);
-    z-index:1;
-  }
-  
-  @media (max-width:767px) {
-  
-  .hero-53::before {
-  	content:'';
-    position:absolute;
-    inset:0;
-    background-color: var(--bg-canvas);
-    clip-path: polygon(0 0, 100% 0, 100% 50%, 75% 100%, 0 100%, 0% 50%);
-    z-index:1;
-  }
-    
-  }
-
-  /* bm-custom */
-  .hero-53-testimonial__heading {
-  	display:flex;
-  }
-  
-  .hero-53-testimonial__heading::after {
-  	content:'';
-    position: absolute;
-    width:50%;
-    height: .1rem;
-    bottom: calc(-1 * var(--space-s));
-    background-color: var(--bg-canvas);
-  }
-  
-  @media (max-width:767px) {
-  	.hero-53-testimonial__heading::after {
-    left:50%;
-    transform: translateX(-50%);
-  }
-  }
-
-  /* bm-custom */
-  .hero-53-testimonial-review-rating {
-  	list-style-type:none;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,201 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-87__container">
-    <div class="bm-hero-87__content">
-      <h1 class="bm-hero-87__heading">{heading}</h1>
-      <p class="bm-hero-87__subheading">{fs}</p>
-      <div class="cta-combo">
-        <a class="btn--primary btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="link--white" href="#">Secondary action →</a>
-      </div>
-    </div>
-    <div class="bm-hero-87__client-stats-container">
-      <h2 class="bm-hero-87__client-stats-heading">We have generated these numbers for our clients:</h2>
-      <div class="bm-hero-87-client-stats-list list--none">
-        {items.map((it) => (
-          <div class="bm-hero-87-client-stats-card">
-            <h2 class="bm-hero-87-client-stats-card__heading">{it.title}</h2>
-            <p class="bm-hero-87-client-stats-card__numbers">{it.text}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-  <div class="bm-hero-87__footer-container">
-    <div class="bm-logo-12-carousel">
-      <div class="bm-logo-12-track list--none">
-        <div class="bm-logo-12-item">
-          <svg class="bm-logo-12-item__brand"></svg>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
         </div>
       </div>
-      <div class="bm-logo-12-track list--none">
-        <div class="bm-logo-12-item">
-          <svg class="bm-logo-12-item__brand"></svg>
+      <div>
+        <h2 class="text-fluid-2">We have generated these numbers for our clients:</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <svg></svg>
+          </div>
+        </div>
+        <div>
+          <div>
+            <svg></svg>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-87 {
-    row-gap: var(--space-s);
-    position: relative;
-  }
-
-  .bm-hero-87__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-hero-87__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-87__heading {
-    font-size: calc(var(--fs-4) * 1.5);
-  }
-
-  .bm-hero-87__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-87__client-stats-container {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--color-line-default);
-  }
-
-  .bm-hero-87-client-stats-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-87-client-stats-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-canvas);
-  }
-
-  .bm-hero-87-client-stats-card__heading {
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-87-client-stats-card__numbers {
-    font-weight: 700;
-    font-size: var(--fs-4);
-  }
-
-  .bm-hero-87__footer-container {
-    padding: var(--section-space-xl) 0 0 0;
-  }
-
-  .bm-logo-12-carousel {
-    flex-wrap: nowrap;
-  }
-
-  .bm-logo-12-track {
-    flex-wrap: nowrap;
-  }
-
-  /* bm-custom */
-  .bm-hero-87::before {
-    content: '';
-    position: absolute;
-    inset-block-start: 0;
-    inline-size: 100%;
-    block-size: calc(var(--measure) * 1.4);
-    background: linear-gradient(var(--text-secondary) 90%, transparent);
-    z-index: -1;
-  }
-
-  /* bm-custom */
-  .bm-logo-12-carousel {
-    --logo-gap: var(--flow-spacing);
-    --scroll-duration: 35s;
-  }
-  
-  /* Outer wrapper */
-  .bm-logo-12-carousel {
-    overflow: hidden;
-    position: relative;
-    flex-direction: row;
-  }
-  
-  /* Track that scrolls */
-  .bm-logo-12-carousel .bm-logo-12-track {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    min-width: max-content;
-    gap: var(--acss-logo-gap);
-    will-change: transform;
-    /* key part: content is as wide as needed */
-    animation: scroll-logos var(--acss-scroll-duration) linear infinite;
-  }
-  
-  /* Each logo */
-  .bm-logo-12-item{
-    flex: 0 0 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .bm-logo-12-item .bm-logo-12-item__brand {
-    max-height: 40px; /* adjust to your design */
-    filter: grayscale(1) opacity(0.4);
-    transition: filter 0.3s ease, transform 0.3s ease;
-  }
-  
-  /* Color + slight scale on hover */
-  .bm-logo-12-item .bm-logo-12-item__brand:hover {
-    filter: none;
-    transform: scale(1.05);
-  }
-  
-  /* Pause animation on hover of the whole carousel */
-  .bm-logo-12-carousel:hover .bm-logo-12-track {
-    animation-play-state: paused;
-  }
-  
-  /* Also pause if user tabs into any logo (keyboard users) */
-  .bm-logo-12-carousel:focus-within .bm-logo-12-track {
-    animation-play-state: paused;
-  }
-  
-  /* Animation: move track left by 50% (because we duplicated the content) */
-  @keyframes scroll-logos {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-  
-  /* Respect users who prefer reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    .bm-logo-12-track  {
-      animation: none;
-    }
-  }
-</style>

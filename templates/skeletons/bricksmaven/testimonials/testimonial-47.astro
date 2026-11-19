@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,103 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-47__container">
-    <div class="bm-testimonial-47__intro">
-      <h2 class="bm-testimonial-47__heading">{heading}</h2>
-      <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-testimonial-47__subheading">{fs}</p>
-    </div>
-    <div class="bm-testimonial-47__review-cover">
-      <div class="bm-testimonial-47__review-slider">
-        {items.map((it) => (
-          <div class="bm-testimonial-47-review-card">
-            <p class="bm-testimonial-47-review-card__client-review">{it.text}</p>
-            <div class="bm-testimonial-47-review-card__client-data">
-              <div class="bm-testimonial-47-review-card__media">
-                <figure class="bm-testimonial-47-review-card__avatar"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
-              </div>
-              <div class="bm-testimonial-47-review-card__content">
-                <p class="bm-testimonial-47-review-card__name">{it.text}</p>
-                <p class="bm-testimonial-47-review-card__title">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
+                </div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-47__container {
-    row-gap: var(--space-s);
-    align-items: center;
-    width: 100%;
-  }
-
-  .bm-testimonial-47__intro {
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-testimonial-47__heading {
-    font-size: calc(var(--fs-4) * 1.8);
-  }
-
-  .bm-testimonial-47__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .bm-testimonial-47-review-card {
-    padding: calc(var(--section-space-xxl) * 1.2) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--text-secondary);
-  }
-
-  .bm-testimonial-47-review-card__client-review {
-    font-size: var(--fs-2);
-    position: relative;
-  }
-
-  .bm-testimonial-47-review-card__client-data {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-testimonial-47-review-card__avatar {
-    object-fit: cover;
-    width: 64px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-testimonial-47-review-card__name {
-    font-weight: 700;
-    font-size: var(--fs-2);
-  }
-
-  .bm-testimonial-47-review-card__title {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-testimonial-47-review-card__client-review::before {
-    content: ' " ';
-    position: absolute;
-    font-size: calc(var(--fs-4) * 3);
-    inset-inline-start: calc(-1 * var(--space-xs));
-    inset-block-start: calc(-1 * var(--space-l));
-  }
-</style>

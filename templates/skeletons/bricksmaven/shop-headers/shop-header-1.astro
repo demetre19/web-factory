@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,70 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-shop-header-1__container">
-    <div class="bm-shop-header-1__brand">
-      <img class="bm-shop-header-logo"></img>
-    </div>
-    <div class="bm-shop-header-1__nav">
-      <div class="bm-shop-header-1__nav-menu"></div>
-    </div>
-    <div class="bm-shop-header-1__end">
-      <div class="bm-shop-header-1__login-wrapper">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="link--primary" href="#">Register</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
       </div>
-      <div class="bm-shop-header-cart-search">
-        <div class="bm-shop-header-search"></div>
-        <div class="bm-shop-header-mini-cart"></div>
+      <div>
+        <div></div>
+      </div>
+      <div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Register</a>
+        </div>
+        <div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-shop-header-1 {
-    padding: var(--space-s) 0 var(--space-s) 0;
-  }
-
-  .bm-shop-header-1__container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-  }
-
-  .bm-shop-header-1__end {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-shop-header-1__login-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-header-cart-search {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 3);
-    align-items: center;
-  }
-
-  /* bm-custom */
-  /* Remove the left margin on the first link */
-  .bm-shop-header-1__nav-menu .bricks-nav-menu>li:first-child {
-    margin-inline-start: 0;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,129 +17,46 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-blog-section-17__container">
-    <div class="intro intro--left intro--left-split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column intro__right-column-split">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="bm-blog-section-17-grid-ul list--none">
-      <div class="bm-blog-section-17-card">
-        <div class="bm-blog-section-17-card__content">
-          <div class="bm-blog-section-17-card__top">
-            <div class="bm-blog-section-17-card__term-wrapper">
-              <p class="bm-blog-section-17-card__term">{post_terms_category}</p>
-            </div>
-            <p class="bm-blog-section-17-card__date">{post_date}</p>
-          </div>
-          <h2 class="bm-blog-section-17-card__heading">{post_title}</h2>
-          <div class="bm-blog-section-17-card__footer">
-            <div class="bm-blog-section-17-card__post-reading-time"></div>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-        <div class="bm-blog-section-17-card__media">
-          <figure class="bm-blog-section-17-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{post_terms_category}</p>
+              </div>
+              <p class="text-fluid-0">{post_date}</p>
+            </div>
+            <h2 class="text-fluid-2">{post_title}</h2>
+            <div>
+              <div></div>
+            </div>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-blog-section-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .intro--left-split {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column-split {
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-
-  .bm-blog-section-17-grid-ul {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-section-17-card {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: 1px solid var(--color-line-default);
-    gap: var(--space-m);
-  }
-
-  .bm-blog-section-17-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-section-17-card__top {
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-blog-section-17-card__term-wrapper {
-    display: flex;
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    font-size: var(--fs-0);
-    background: var(--text-secondary);
-  }
-
-  .bm-blog-section-17-card__date {
-    font-size: var(--fs-0);
-  }
-
-  .bm-blog-section-17-card__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-blog-section-17-card__term a {
-    color: var(--bg-canvas);
-  }
-</style>

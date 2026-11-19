@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,208 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="grid-31-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="grid-31-list list--none">
-      {items.map((it) => (
-        <div class="grid-31-card">
-          <div class="grid-31-card__wrapper">
-            <div class="grid-31-card__content">
-              <h2 class="grid-31-card__heading clickable-parent">{it.title}</h2>
-              <p class="grid-31-card__category">{it.text}</p>
-            </div>
-            <div class="grid-31-card__media">
-              <figure class="grid-31-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .grid-31-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .grid-31-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: calc(var(--space-m) * 4);
-  }
-
-  .grid-31-card {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  .grid-31-card__wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .grid-31-card__content {
-    z-index: 1;
-  }
-
-  .grid-31-card__media {
-    overflow: hidden;
-  }
-
-  .grid-31-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  /* Card styling */
-  .grid-31-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .grid-31-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-  }
-  
-  .grid-31-card__image {
-  	transition: 1.4s ease;
-  }
-  
-  .grid-31-card:hover .grid-31-card__image, .grid-31-card:focus-within .grid-31-card__image {
-  	scale: 1.1;
-  }
-  
-  /* Grid Item 1 */
-  .grid-31-card:nth-child(1) {
-  	align-items:start;
-    transform: translate(0, 0);
-  }
-  
-  .grid-31-card:nth-child(1) .grid-31-card__wrapper {
-  	width:100%;
-  }
-  
-  .grid-31-card:nth-child(1) .grid-31-card__image {
-  	aspect-ratio: 4/3;
-  }
-  
-  /* Grid Item 2 */
-  .grid-31-card:nth-child(2) {
-  	align-items:center;
-    transform: translate(0, var(--section-space-xxl));
-  }
-  
-  .grid-31-card:nth-child(2) .grid-31-card__wrapper {
-  	width:85%;
-  }
-  
-  .grid-31-card:nth-child(2) .grid-31-card__image {
-  	aspect-ratio: 4/5;
-  }
-  
-  /* Grid Item 3 */
-  .grid-31-card:nth-child(3) {
-  	align-items:center;
-    transform: translate(0, calc(var(--space-m) * -1));
-  }
-  
-  .grid-31-card:nth-child(3) .grid-31-card__wrapper {
-  	width:65%;
-  }
-  
-  .grid-31-card:nth-child(3) .grid-31-card__image {
-  	aspect-ratio: 1/1;
-  }
-  
-  /* Grid Item 4 */
-  .grid-31-card:nth-child(4) {
-  	align-items:end;
-    transform: translate(0, calc(var(--section-space-xxl) * -1));
-  }
-  
-  .grid-31-card:nth-child(4) .grid-31-card__wrapper {
-  	width:85%;
-  }
-  
-  .grid-31-card:nth-child(4) .grid-31-card__image {
-  	aspect-ratio: 1/1;
-  }
-  
-  /* Grid Item 5 */
-  .grid-31-card:nth-child(5) {
-  	align-items:start;
-    transform: translate(0, calc(var(--section-space-xxl) * 1.4));
-  }
-  
-  .grid-31-card:nth-child(5) .grid-31-card__wrapper {
-  	width:65%;
-  }
-  
-  .grid-31-card:nth-child(5) .grid-31-card__image {
-  	aspect-ratio: 4/5;
-  }
-  
-  /* Grid Item 6 */
-  .grid-31-card:nth-child(6) {
-  	align-items:start;
-    transform: translate(0, calc(var(--section-space-xxl) * 1));
-  }
-  
-  .grid-31-card:nth-child(6) .grid-31-card__wrapper {
-  	width:100%;
-  }
-  
-  .grid-31-card:nth-child(6) .grid-31-card__image {
-  	aspect-ratio: 4/3;
-  }
-  
-  @media (max-width:767px) {
-    /* Grid Item 2 */
-  .grid-31-card:nth-child(2) {
-    transform: translate(0, var(--space-l));
-  }
-    
-  	/* Grid Item 4 */
-      .grid-31-card:nth-child(4) {
-        transform: translate(0, calc(var(--section-space-xxl) * 1.2));
-      }
-    
-    
-  	/* Grid Item 6 */
-    .grid-31-card:nth-child(6) {
-    transform: translate(0, calc(var(--section-space-xxl) * 1.6));
-  }
-    
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,95 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-4-container">
-    <div class="contact-4-details">
-      <h2 class="contact-4-details__heading">{heading}</h2>
-      <p class="contact-4-details__desc">{fs}</p>
-      <div class="contact-4-tel-email">
-        <div class="contact-4-tel-email-btn">
-          <span class="contact-4-tel-email-btn__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="contact-4-tel-email-btn__text">+32 465 45 37 15</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">+32 465 45 37 15</p>
+          </div>
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">support@bricksmaven.com</p>
+          </div>
         </div>
-        <div class="contact-4-tel-email-btn">
-          <span class="contact-4-tel-email-btn__icon text--primary" data-icon="lucide" aria-hidden="true"></span>
-          <p class="contact-4-tel-email-btn__text">support@bricksmaven.com</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">OR</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="cta-combo__text">OR</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-    </div>
-    <div class="contact-4-media">
-      <figure class="contact-4-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-4-container {
-    display: flex;
-    row-gap: var(--space-l);
-    text-align: center;
-    align-items: center;
-  }
-
-  .contact-4-details {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .contact-4-tel-email {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-s);
-  }
-
-  .contact-4-tel-email-btn {
-    width: 26rem;
-    display: flex;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .contact-4-media {
-    align-items: center;
-  }
-
-  .contact-4-media__image {
-    height: 34.7rem;
-    width: 54rem;
-    object-fit: cover;
-  }
-</style>

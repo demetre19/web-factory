@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,198 +17,61 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-grid-33__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-grid-33-grid-ul list--none">
-      <div class="bm-grid-33-card-image bm-grid-33-list">
-        <figure class="bm-grid-33-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-grid-33-card-image bm-grid-33-list">
-        <figure class="bm-grid-33-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-grid-33-card bm-grid-33-list">
-        <div class="bm-grid-33-card__intro">
-          <h2 class="bm-grid-33-card__heading">What is lorem ipsum?</h2>
-          <p class="accent-h">Accent heading</p>
-          <p class="bm-grid-33-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-        <div class="bm-grid-33-card__cta-wrapper">
-          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
         </div>
       </div>
-      <div class="bm-grid-33-card bm-grid-33-list">
-        <div class="bm-grid-33-card__intro">
-          <h2 class="bm-grid-33-card__heading">What is lorem ipsum?</h2>
-          <p class="accent-h">Accent heading</p>
-          <p class="bm-grid-33-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div class="bm-grid-33-card__cta-wrapper">
-          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-      </div>
-      <div class="bm-grid-33-card-image bm-grid-33-list">
-        <figure class="bm-grid-33-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-grid-33-card-image bm-grid-33-list">
-        <figure class="bm-grid-33-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">What is lorem ipsum?</h2>
+            <p class="text-fluid-0">Accent heading</p>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">What is lorem ipsum?</h2>
+            <p class="text-fluid-0">Accent heading</p>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-grid-33__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-grid-33-grid-ul {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 12);
-    grid-template-rows: auto;
-  }
-
-  .bm-grid-33-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-grid-33-card {
-    justify-content: space-between;
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-grid-33-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-grid-33-card__cta-wrapper {
-    margin: auto 0 0 0;
-  }
-
-  /* bm-custom */
-  .bm-grid-33-list:nth-child(1) {
-    grid-column: 1 / 5;
-    grid-row: 1/2;
-  }
-  
-  .bm-grid-33-list:nth-child(2) {
-    grid-column: 5 / 9;
-    grid-row: 1/2;
-  }
-  
-  .bm-grid-33-list:nth-child(3) {
-    grid-column: 9 / -1;
-    grid-row: 1/2;
-  }
-  
-  .bm-grid-33-list:nth-child(4) {
-    grid-column: 1 / 5;
-    grid-row: 2/-1;
-  }
-  
-  .bm-grid-33-list:nth-child(5) {
-    grid-column: 5 / 9;
-    grid-row: 2/-1;
-  }
-  
-  .bm-grid-33-list:nth-child(6) {
-    grid-column: 9 / -1;
-    grid-row: 2/-1;
-  }
-  
-  @media (max-width:991px) {
-    .bm-grid-33-list:nth-child(1) {
-    grid-column: span 6;
-    grid-row: auto;
-  }
-  
-  .bm-grid-33-list:nth-child(2) {
-    grid-column: span 6;
-    grid-row: auto;
-  }
-  
-  .bm-grid-33-list:nth-child(3) {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    aspect-ratio: 2 / 1;
-  }
-  
-  .bm-grid-33-list:nth-child(4) {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    aspect-ratio: 2 / 1;
-  }
-  
-  .bm-grid-33-list:nth-child(5) {
-    grid-column: span 6;
-    grid-row: auto;
-  }
-  
-  .bm-grid-33-list:nth-child(6) {
-    grid-column: span 6;
-    grid-row: auto;
-  }
-  }
-  
-  @media (max-width:478px) {
-    .bm-grid-33-list:nth-child(odd), .bm-grid-33-list:nth-child(even) {
-    grid-column: span 12;
-    grid-row: auto;
-      aspect-ratio: 1 / 1;
-  }
-    
-    .bm-grid-33-list:nth-child(3) {
-    grid-row: 1;
-  }
-  
-  
-  }
-</style>

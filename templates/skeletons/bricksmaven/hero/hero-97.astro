@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,106 +17,43 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-97__container">
-    <div class="bm-hero-97__content">
-      <div class="bm-hero-97__top">
-        <h1 class="bm-hero-97__heading">{heading}</h1>
-        <p class="bm-hero-97__subheading">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="link--white" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <a class="text-fluid-0" href="#">Secondary action →</a>
+          </div>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
+          <div>
+            <p class="text-fluid-0">We are rated 5.0 on Google out of 68 reviews</p>
+          </div>
         </div>
       </div>
-      <div class="bm-review-banner-1 bm-review-banner-1--text--light-m">
-        <div class="bm-testimonial-38-star-list list--none">
-          {items.map((it) => (
-            <div class="bm-testimonial-38-star-li">
-              <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
-        </div>
-        <div class="bm-review-banner-1__ratings">
-          <p class="bm-review-banner-1__text">We are rated 5.0 on Google out of 68 reviews</p>
-        </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
+      <div></div>
     </div>
-    <div class="bm-hero-97__media">
-      <figure class="bm-hero-97__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-97 {
-    position: relative;
-  }
-
-  .bm-hero-97__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-97__content {
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-hero-97__top {
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-97__heading {
-    font-size: calc(var(--fs-4) * 1.2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-review-banner-1 {
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
-  .bm-testimonial-38-star-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-review-banner-1__text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-97__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .bm-hero-97::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 75%;
-    background-color: var(--text-secondary);
-    z-index: -1;
-  }
-</style>

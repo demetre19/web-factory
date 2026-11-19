@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,97 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-71__container">
-    <div class="bm-hero-71__content">
-      <div class="bm-hero-71__top">
-        <h1 class="bm-hero-71__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-      </div>
-      <div class="bm-hero-71__footer">
-        <p class="bm-hero-71__text">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--primary" href="#">Call to action</a>
-          <a class="btn--link" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <a class="text-fluid-0" href="#">Call to action</a>
+            <a class="text-fluid-0" href="#">Secondary action →</a>
+          </div>
         </div>
       </div>
+      <div>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div class="grid-auto gap-fluid-l">
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      </div>
+      <div></div>
     </div>
-    <div class="bm-hero-71__media-wrapper">
-      <div class="bm-hero-71__media">
-        <div class="bm-hero-71__image-wrapper">
-          <figure class="bm-hero-71__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-hero-71__image-wrapper">
-          <figure class="bm-hero-71__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <figure class="bm-hero-71__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-    </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-71 {
-    overflow: hidden;
-  }
-
-  .bm-hero-71__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-71__content {
-    justify-content: space-between;
-  }
-
-  .bm-hero-71__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-71__footer {
-    row-gap: var(--flow-spacing);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .bm-hero-71__media-wrapper {
-    display: flex;
-  }
-
-  .bm-hero-71__media {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-    height: 100%;
-    width: 50vw;
-  }
-
-  .bm-hero-71__image-wrapper {
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-71__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

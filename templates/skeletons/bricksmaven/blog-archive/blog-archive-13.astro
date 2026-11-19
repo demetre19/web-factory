@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,152 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-13-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="blog-archive-13-archive-list list--none">
-      <div class="blog-archive-13-archive-card">
-        <div class="blog-archive-13-archive-card__content">
-          <div class="blog-archive-13-archive-card__post-title"></div>
-          <div class="blog-archive-13-archive-card__cta-wrapper">
-            <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <div></div>
+            <div>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
           </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <figure class="blog-archive-13-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-13-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .blog-archive-13-archive-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .blog-archive-13-archive-card {
-    position: relative;
-  }
-
-  .blog-archive-13-archive-card__content {
-    z-index: 1;
-    position: relative;
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .blog-archive-13-archive-card__post-title {
-    font-size: var(--fs-1);
-    margin: 0 0 var(--space-m) 0;
-  }
-
-  .blog-archive-13-archive-card__cta-wrapper {
-    align-items: flex-end;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .blog-archive-13-archive-card__image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .blog-archive-13-archive-card:nth-child(3n+1) {
-  	height: 25rem;
-  }
-  
-  .blog-archive-13-archive-card:first-child {
-  	grid-column: 1 / 7;
-    grid-row: span 2;
-    height:100%;
-  }
-  
-  .blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {
-  	font-size: var(--fs-3);
-  }
-  
-  .blog-archive-13-archive-card:nth-child(2) {
-  	grid-column: 7 / -1;
-    grid-row-start: 1;
-    height: 100%;
-  }
-  
-  .blog-archive-13-archive-card:nth-child(3) {
-  	grid-column: 7 / -1;
-    grid-row-start: 2;
-    height: 100%;
-  }
-  
-  @media (max-width:767px) {
-  
-  	.blog-archive-13-archive-card:nth-child(3n+1) {
-  	height: 100%;
-  }
-  
-  .blog-archive-13-archive-card:first-child {
-  	grid-column: span 1;
-    grid-row: span 1;
-    height:100%;
-  }
-  
-  .blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {
-  	font-size: var(--fs-2);
-  }
-  
-  .blog-archive-13-archive-card:nth-child(2) {
-  	grid-column: span 1;
-    grid-row-start: auto;
-    height: 100%;
-  }
-  
-  .blog-archive-13-archive-card:nth-child(3) {
-  	grid-column: span 1;
-    grid-row-start: auto;
-    height: 100%;
-  }
-  
-  }
-
-  /* bm-custom */
-  .blog-archive-13-archive-card__image {
-  	aspect-ratio: 1/1;
-  }
-</style>

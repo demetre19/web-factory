@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,126 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-14-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="hworks-14-list list--none">
-      {items.map((it) => (
-        <div class="hworks-14-card">
-          <div class="hworks-14-card__line-wrapper">
-            <div class="hworks-14-card__line"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div></div>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-          <div class="hworks-14-card__media">
-            <figure class="hworks-14-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="hworks-14-card__content">
-            <h2 class="hworks-14-card__heading">{it.title}</h2>
-            <p class="hworks-14-card__text">{it.text}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-14-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .hworks-14-list {
-    width: 100%;
-    align-self: center;
-  }
-
-  .hworks-14-card {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-    position: relative;
-  }
-
-  .hworks-14-card__line-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hworks-14-card__line {
-    width: 1px;
-    height: 100%;
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .hworks-14-card__media {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-l) 0 var(--space-l) 0;
-  }
-
-  .hworks-14-card__image {
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 50% 50% 50% 50%;
-    height: 20rem;
-    width: 20rem;
-  }
-
-  .hworks-14-card__content {
-    row-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  /* bm-custom */
-  .hworks-14-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-  }
-  
-  
-  .hworks-14-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:1.8rem;
-    padding-block:1rem;
-    color:var(--bg-canvas);
-    font-size: var(--fs-0);
-    font-weight: 700;
-    border-radius: 100%;
-    position:absolute;
-    left:0%;
-    top:0%;
-    transform: translateY(-50%);
-    transform: translateX(-45%);
-    
-  }
-</style>

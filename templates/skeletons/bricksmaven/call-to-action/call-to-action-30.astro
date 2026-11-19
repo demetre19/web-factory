@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,101 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-cta-30__container">
-    <div class="bm-cta-30-card">
-      <div class="bm-cta-30-card__content">
-        <h2 class="bm-cta-30-card__heading">{heading}</h2>
-        <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="bm-cta-30-contact-card">
-        <div class="bm-cta-30-contact-card__top">
-          <div class="bm-cta-30-contact-card__content">
-            <h2 class="bm-cta-30-contact-card__heading">Curious of what we can do for you?</h2>
-            <p class="bm-cta-30-contact-card__text">{fs}</p>
-          </div>
-          <div class="bm-cta-30-contact-card__media">
-            <figure class="bm-cta-30-contact-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div class="bm-team-card__contact-details">
-          <div class="bm-team-card__item">
-            <p class="bm-team-card__label">Call us:</p>
-            <a class="bm-team-card__link link--white" href="#">+1 (123) 456-7890</a>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Curious of what we can do for you?</h2>
+              <p class="text-fluid-0">{fs}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="bm-team-card__item">
-            <p class="bm-team-card__label">Mail us:</p>
-            <a class="bm-team-card__link link--white" href="#">info@example.com</a>
+          <div>
+            <div>
+              <p class="text-fluid-0">Call us:</p>
+              <a class="text-fluid-0" href="#">+1 (123) 456-7890</a>
+            </div>
+            <div>
+              <p class="text-fluid-0">Mail us:</p>
+              <a class="text-fluid-0" href="#">info@example.com</a>
+            </div>
           </div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <a class="btn--primary bm-cta-30-contact-card__button wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-cta-30-card {
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--fs-0);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-cta-30-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-cta-30-card__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-cta-30-contact-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-cta-30-contact-card__top {
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-cta-30-contact-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  .bm-cta-30-contact-card__text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-cta-30-contact-card__image {
-    object-fit: cover;
-    width: 92px;
-    height: 92px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-team-card__contact-details {
-    flex-direction: column;
-    padding: 0 0 0 0;
-  }
-
-  .bm-team-card__item {
-    column-gap: calc(var(--flow-spacing) / 4);
-    font-size: var(--fs-0);
-    display: flex;
-    flex-direction: row;
-  }
-</style>

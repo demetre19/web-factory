@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,219 +17,59 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-28__container">
-    <div class="blog-archive-28__intro">
-      <h1 class="blog-archive-28__heading">{heading}</h1>
-    </div>
-    <div class="blog-archive-28__archive-articles">
-      <div class="blog-archive-28-list list--none">
-        <div class="blog-archive-28-article-card">
-          <div class="blog-archive-28-article-card__meta-data">
-            <div class="blog-archive-28-article-card__terms-wrapper">
-              <p class="blog-archive-28-article-card__terms">{post_terms_category:plain}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{post_terms_category:plain}</p>
+              </div>
+              <div>
+                <p class="text-fluid-0">{post_date}</p>
+              </div>
+              <div>
+                <p class="text-fluid-0">17 minutes</p>
+              </div>
             </div>
-            <div class="blog-archive-28-article-card__date-wrapper">
-              <p class="blog-archive-28-article-card__date">{post_date}</p>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="blog-archive-28-article-card__reading-time-wrapper">
-              <p class="blog-archive-28-article-card__reading-time">17 minutes</p>
-            </div>
-          </div>
-          <div class="blog-archive-28-article-card__media">
-            <figure class="blog-archive-28-article-card__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-archive-28-article-card__content">
-            <h2 class="blog-archive-28-article-card__heading clickable-parent">{post_title}</h2>
-            <div class="blog-archive-28-article-card__author">
-              <p class="blog-archive-28-article-card__author-name">{author_name}</p>
-              <div class="blog-archive-28-article-card__author-media">
-                <figure class="blog-archive-28-article-card__author-image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+            <div>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <div>
+                <p class="text-fluid-0">{author_name}</p>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="blog-archive-28__sidebar">
-        <div class="list--none blog-archive-28-category-list">
-          {items.map((it) => (
-            <div class="blog-archive-28-category-list-items">
-              <a class="blog-archive-28-category-list-items__text-link" href="#">{it.text}</a>
-              <span class="blog-archive-28-category-list-items__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-28__container {
-    row-gap: var(--space-s);
-  }
-
-  .blog-archive-28__heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .blog-archive-28__archive-articles {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .blog-archive-28-list {
-    display: grid;
-    grid-template-columns: var(--acss-grid-auto-2);
-  }
-
-  .blog-archive-28-article-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    border-top: .1rem solid var(--bg-subtle);
-    border-right: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    border-left: .1rem solid var(--bg-subtle);
-    position: relative;
-    background: var(--bg-canvas);
-    flex-wrap: nowrap;
-  }
-
-  .blog-archive-28-article-card__meta-data {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-s);
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
-  .blog-archive-28-article-card__terms-wrapper {
-    padding: calc(var(--space-xs) / 2) calc(var(--space-m) / 2) calc(var(--space-xs) / 2) calc(var(--space-m) / 2);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: flex;
-    align-items: center;
-  }
-
-  .blog-archive-28-article-card__terms {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-28-article-card__date {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .blog-archive-28-article-card__reading-time {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-28-article-card__media {
-    overflow: hidden;
-    display: flex;
-    height: 100%;
-  }
-
-  .blog-archive-28-article-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-archive-28-article-card__content {
-    row-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .blog-archive-28-article-card__author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--space-xs);
-    flex-wrap: nowrap;
-  }
-
-  .blog-archive-28-article-card__author-name {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-28-article-card__author-image {
-    width: 40;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .blog-archive-28-category-list {
-    position: sticky;
-    top: var(--space-m);
-  }
-
-  .blog-archive-28-category-list-items {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-s) var(--space-s) var(--space-s) 0;
-    border-bottom: .1rem solid var(--bg-subtle);
-    position: relative;
-  }
-
-  /* bm-custom */
-  /* Card */
-  .blog-archive-28-article-card {
-  	transition: 1.2s ease;
-    --card-shadow: var(--shadow-card);
-  }
-  
-  .blog-archive-28-article-card:hover {
-  	box-shadow: var(--acss-card-shadow);
-    z-index: 999;
-  }
-  
-  
-  
-  /* Image */
-  .blog-archive-28-article-card__image {
-  	transition: 1.5s ease;
-  }
-  
-  .blog-archive-28-article-card:hover .blog-archive-28-article-card__image {
-  	scale:1.1;
-  }
-
-  /* bm-custom */
-  .blog-archive-28-category-list-items {
-  	transition: .3s ease;
-  }
-  
-  .blog-archive-28-category-list-items:hover {
-  	border-bottom: .1rem solid var(--color-line-default);
-  }
-  
-  
-  
-  .blog-archive-28-category-list-items__icon {
-  	transition: .3s ease;
-  }
-  
-  .blog-archive-28-category-list-items:hover .blog-archive-28-category-list-items__icon {
-  	transform: translateX(var(--space-xs));
-    font-size: 1.6rem;
-  }
-  
-  .blog-archive-28-category-list-items > a::after {
-  	content:"";
-    position: absolute;
-    inset:0;
-    cursor: pointer !important;
-  }
-</style>

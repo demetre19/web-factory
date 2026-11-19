@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,90 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-28-container">
-    <div class="content-28__intro-block">
-      <div class="content-28__accent-h-wrapper">
-        <p class="intro__accent-heading content-28__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
       </div>
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-    </div>
-    <div class="content-28__media">
-      <figure class="content-28__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-28-container {
-    row-gap: var(--space-s);
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .content-28__intro-block {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    flex-wrap: nowrap;
-  }
-
-  .content-28__accent-h-wrapper {
-    width: auto;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .content-28__media {
-    padding: var(--space-xl) 0 var(--space-xl) 0;
-    position: relative;
-  }
-
-  .content-28__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .content-28__accent-heading {
-  	writing-mode: vertical-rl;
-  }
-
-  /* bm-custom */
-  .content-28__media::before {
-  	content: "";
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    width: 75%;
-    height: 100%;
-    background-color: var(--action-primary);
-    
-  }
-</style>

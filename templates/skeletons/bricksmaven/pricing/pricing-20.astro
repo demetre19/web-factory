@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,145 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-pricing-20__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="bm-pricing-20__pricing-wrapper">
-      <div class="bm-pricing-20-feature-list list--none">
-        {items.map((it) => (
-          <div class="bm-pricing-20-feature-card">
-            <h2 class="bm-pricing-20-feature-card__heading">{it.title}</h2>
-            <p class="bm-pricing-20-feature-card__text">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
       </div>
-      <div class="bm-pricing-20-pricing-card">
-        <div class="bm-pricing-20-pricing-card__top">
-          <p class="bm-pricing-20-card__pricing">$129</p>
-          <div class="bm-list list--none">
-            {items.map((it) => (
-              <div class="bm-list-item">
-                <div class="bm-list-item__icon-wrapper">
-                  <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                </div>
-                <p class="bm-list-item__text">{it.text}</p>
-              </div>
-            ))}
-          </div>
-          <p class="bm-pricing-20-card__text">Try free for 14 days, no credit card required</p>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
         </div>
-        <div class="bm-pricing-20-card__cta-wrapper">
-          <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div>
+          <div>
+            <p class="text-fluid-0">$129</p>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              ))}
+            </div>
+            <p class="text-fluid-0">Try free for 14 days, no credit card required</p>
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-pricing-20__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-pricing-20__pricing-wrapper {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-pricing-20-feature-list {
-    row-gap: var(--flow-spacing);
-    padding: 0 var(--section-space-xxl) 0 0;
-  }
-
-  .bm-pricing-20-pricing-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    align-items: center;
-    text-align: center;
-    background: var(--bg-subtle);
-  }
-
-  .bm-pricing-20-pricing-card__top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: 1 solid var(--color-line-default);
-  }
-
-  .bm-pricing-20-card__pricing {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item__icon-wrapper {
-    padding: var(--tap) var(--tap) var(--tap) var(--tap);
-    background: var(--bg-subtle);
-    border-radius: 50% 50% 50% 50%;
-    position: relative;
-  }
-
-  .bm-list-item__icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .bm-list-item__text {
-    text-align: left;
-    font-size: var(--fs-0);
-  }
-
-  .bm-pricing-20-card__cta-wrapper {
-    align-items: stretch;
-  }
-
-  /* bm-custom */
-  .bm-list-item {
-  	--circle-size: var(--fs-0);
-  }
-</style>

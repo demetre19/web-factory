@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,126 +17,52 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-event-section-5__container">
-    <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">{heading}</h2>
-      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-event-section-5__event-wrapper">
-      <div class="bm-event-section-5-accordion">
-        {items.map((it) => (
-          <div class="bm-event-section-5-accordion__item">
-            <div class="bm-event-section-5-accordion__title">
-              <h3 class="bm-event-section-5-accordion__heading">{it.title}</h3>
-              <span class="bm-event-section-5-accordion__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-            <div class="bm-event-section-5-accordion__content">
-              <div class="bm-event-section-5-accordion-event-list">
-                {(it.items || []).map((it2) => (
-                  <div class="bm-event-section-5-accordion-event-card">
-                    <p class="bm-event-section-5-accordion-event-card__date">{it2.text}</p>
-                    <div class="bm-event-section-5-accordion-event-card__heading-wrapper">
-                      <h2 class="bm-event-section-5-accordion-event-card__heading">{it2.title}</h2>
-                      <p class="bm-event-section-5-accordion-event-card__text">{it2.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <div>
+                <div>
+                  {((it.items || []) || []).map((it2) => (
+                    <div>
+                      <p class="text-fluid-0">{it2.text}</p>
+                      <div>
+                        <h2 class="text-fluid-2">{it2.title}</h2>
+                        <p class="text-fluid-0">{it2.text}</p>
+                      </div>
+                      <p class="text-fluid-0">{it2.text}</p>
+                      <div>
+                        <span data-icon="lucide" aria-hidden="true"></span>
+                        <p class="text-fluid-0">{it2.text}</p>
+                      </div>
+                      <p class="mt-fluid-m"><a class="wf-cta-button" href={it2.href}>{it2.label}</a></p>
                     </div>
-                    <p class="bm-event-section-5-accordion-event-card__speaker">{it2.text}</p>
-                    <div class="bm-event-meta-info bm-event-meta-info--alt">
-                      <span class="bm-event-meta-info__icon" data-icon="lucide" aria-hidden="true"></span>
-                      <p class="bm-event-meta-info__location">{it2.text}</p>
-                    </div>
-                    <a class="btn--primary wf-cta-button" href={it2.href}>{it2.label}</a>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-event-section-5__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-event-section__intro {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-event-section-5-accordion {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-5-accordion__title {
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: 1 solid var(--text-secondary);
-  }
-
-  .bm-event-section-5-accordion-event-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    border-bottom: 1 solid var(--text-secondary);
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bm-event-section-5-accordion-event-card__date {
-    font-weight: 700;
-  }
-
-  .bm-event-section-5-accordion-event-card__heading-wrapper {
-    width: var(--measure);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-5-accordion-event-card__speaker {
-    font-weight: 700;
-  }
-
-  .bm-event-meta-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-    background: var(--bg-subtle);
-    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
-  }
-
-  .bm-event-meta-info--alt {
-    padding: 0 0 0 0;
-    background: transparent;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .bm-event-section-5-accordion__icon {
-    transition: .5s ease;
-  }
-  
-  .bm-event-section-5-accordion .bm-event-section-5-accordion__title[aria-expanded="false"] .bm-event-section-5-accordion__icon {
-    transform: rotate(0deg);
-  }
-  
-  .bm-event-section-5-accordion .bm-event-section-5-accordion__title[aria-expanded="true"] .bm-event-section-5-accordion__icon {
-    transform: rotate(90deg);
-  }
-</style>

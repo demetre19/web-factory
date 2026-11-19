@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,68 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="newsletter-5-container">
-    <div class="newsletter-5__content">
-      <h2 class="newsletter-5__heading">{heading}</h2>
-      <p class="newsletter-5__desc">{fs}</p>
-    </div>
-    <div class="newsletter-5__right-box">
-      <div class="bm-form">
-        <form class="bm-form-widget" novalidate>
-        </form>
-        <p class="bm-form__terms">We care about your data in our privacy policy.</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <form novalidate>
+          </form>
+          <p class="text-fluid-0">We care about your data in our privacy policy.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .newsletter-5-container {
-    grid-template-columns: 2fr 3fr;
-    display: grid;
-    gap: var(--space-s);
-  }
-
-  .newsletter-5__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .newsletter-5__right-box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  }
-</style>

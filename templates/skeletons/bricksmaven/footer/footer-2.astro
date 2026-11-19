@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,99 +17,46 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="footer-2-container">
-    <div class="footer-2-column-left">
-      <img class="footer-2__logo"></img>
-    </div>
-    <div class="footer-2-column-mid">
-      <div class="list--none footer-menu-inline">
-        {items.map((it) => (
-          <div class="footer-menu__link">
-            <a class="footer-menu__link-text" href="#">{it.text}</a>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
       </div>
-    </div>
-    <div class="footer-2-column-right">
-      <div class="footer-2__social"></div>
-    </div>
-  </div>
-  <div class="footer-2-bottom">
-    <div class="footer-2-bottom__container">
-      <p class="footer-2__copyright">{fs}</p>
-      <div class="footer-nav-legal">
-        <div class="footer-legal-nav list--none">
-          {items.map((it) => (
-            <div class="footer-legal__li">
-              <a class="footer-legal__link-text" href="#">{it.text}</a>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
             </div>
           ))}
+        </div>
+      </div>
+      <div>
+        <div></div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .footer-2 {
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .footer-2-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .footer-2-column-left {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .footer-2-column-mid {
-    position: relative;
-  }
-
-  .footer-menu-inline {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-m);
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .footer-2__social {
-    width: auto;
-  }
-
-  .footer-2-bottom__container {
-    width: 100%;
-    display: flex;
-    column-gap: var(--space-s);
-    justify-content: center;
-  }
-
-  .footer-legal-nav {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .footer-legal__link-text {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .footer-2__social {
-  	justify-content: flex-end;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,61 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-4__container">
-    <div class="hero-4__content">
-      <h1 class="hero-4__heading">{heading}</h1>
-      <p class="hero-4__text">{fs}</p>
-      <a class="btn--primary hero-4__button wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-4__media">
-      <figure class="hero-4__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-4 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-  }
-
-  .hero-4__container {
-    position: relative;
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .hero-4__content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: var(--space-m);
-    padding: var(--space-xl) 0 var(--space-xl) var(--space-xl);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-4__media {
-    width: 100%;
-  }
-
-  .hero-4__image {
-    height: 100%;
-    width: 50vw;
-    object-fit: cover;
-    margin: 0 0 0 calc(-50vw + 100%) !important;
-  }
-</style>

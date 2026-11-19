@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,88 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-64__container">
-    <div class="bm-hero-64__content">
-      <div class="bm-hero-64__top">
-        <h1 class="bm-hero-64__heading">{heading}</h1>
-      </div>
-      <div class="bm-hero-64__footer">
-        <div class="cta-combo">
-          <a class="btn--white" href="#">Call to action</a>
-          <a class="btn--link" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
         </div>
-        <p class="bm-hero-64__subheading">{fs}</p>
+        <div>
+          <div>
+            <a class="text-fluid-0" href="#">Call to action</a>
+            <a class="text-fluid-0" href="#">Secondary action →</a>
+          </div>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
       </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="bm-hero-64__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-64 {
-    height: 100vh;
-    position: relative;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-
-  .bm-hero-64__container {
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-64__content {
-    align-items: flex-start;
-    row-gap: calc(var(--flow-spacing) * 6);
-  }
-
-  .bm-hero-64__top {
-    row-gap: var(--flow-spacing);
-    width: var(--content-width);
-  }
-
-  .bm-hero-64__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-hero-64__footer {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .bm-hero-64__subheading {
-    width: var(--measure);
-  }
-
-  .bm-hero-64__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

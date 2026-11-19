@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,65 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-4__container">
-    <div class="bm-header-4__brand">
-      <img class="bm-header-4__brand-logo"></img>
-    </div>
-    <div class="bm-header-4__nav-wrapper">
-      <div class="bm-header-4__nav"></div>
-    </div>
-    <div class="bm-header-4__right">
-      <div class="bm-header-4__search"></div>
-      <a class="bm-header-4__cta btn--primary" href="#">Call to action</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div></div>
+      </div>
+      <div>
+        <div></div>
+        <a class="text-fluid-0" href="#">Call to action</a>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-4 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-  }
-
-  .bm-header-4__container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-header-4__brand {
-    width: auto;
-  }
-
-  .bm-header-4__right {
-    display: flex;
-    align-items: center;
-    width: 25%;
-    margin: 0 0 0 auto;
-    column-gap: var(--flow-spacing);
-    justify-content: flex-end;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .bm-header-4__nav nav {
-  	position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translateX(-50%) translateY(-50%);
-  }
-</style>

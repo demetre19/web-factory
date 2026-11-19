@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,56 +17,60 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-62__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-feature-62__feature-tabs">
-      <div class="bm-feature-62-tabs">
-        <div class="bm-feature-62-tabs__menu">
-          <div class="bm-feature-62-tabs__title">
-            <p class="bm-feature-62-tabs__label">Webservices</p>
-          </div>
-          <div class="bm-feature-62-tabs__title">
-            <p class="bm-feature-62-tabs__label">Marketing</p>
-          </div>
-        </div>
-        <div class="bm-feature-62-tabs__content">
-          <div class="bm-feature-62-tabs__pane">
-            <div class="bm-feature-62-feature-list list--none">
-              {items.map((it) => (
-                <div class="bm-feature-62-feature-card">
-                  <div class="bm-feature-62-feature-card__top">
-                    <h2 class="bm-feature-62-feature-card__heading clickable-parent">{it.title}</h2>
-                    <span class="bm-feature-62-feature-card__icon" data-icon="lucide" aria-hidden="true"></span>
-                    <p class="bm-feature-62-feature-card__text">{it.text}</p>
-                  </div>
-                  <a class="btn--primary btn--s wf-cta-button" href={it.href}>{it.label}</a>
-                </div>
-              ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">Webservices</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">Marketing</p>
             </div>
           </div>
-          <div class="bm-feature-62-tabs__pane">
-            <div class="bm-feature-62-feature-list list--none">
-              {items.map((it) => (
-                <div class="bm-feature-62-feature-card">
-                  <div class="bm-feature-62-feature-card__top">
-                    <h2 class="bm-feature-62-feature-card__heading clickable-parent">{it.title}</h2>
-                    <span class="bm-feature-62-feature-card__icon" data-icon="lucide" aria-hidden="true"></span>
-                    <p class="bm-feature-62-feature-card__text">{it.text}</p>
+          <div>
+            <div>
+              <div>
+                {(items || []).map((it) => (
+                  <div>
+                    <div>
+                      <h2 class="text-fluid-2">{it.title}</h2>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
+                    <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
                   </div>
-                  <a class="btn--primary btn--s wf-cta-button" href={it.href}>{it.label}</a>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+            <div>
+              <div>
+                {(items || []).map((it) => (
+                  <div>
+                    <div>
+                      <h2 class="text-fluid-2">{it.title}</h2>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
+                    <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -73,145 +78,3 @@ const {
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-62 {
-    overflow: clip;
-  }
-
-  .bm-feature-62__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-feature-62-tabs {
-    gap: var(--space-s);
-  }
-
-  .bm-feature-62-tabs__menu {
-    column-gap: calc(var(--flow-spacing) / 2);
-    flex-direction: row;
-  }
-
-  .bm-feature-62-tabs__title {
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-  }
-
-  .bm-feature-62-tabs__label {
-    font-size: var(--fs-0);
-  }
-
-  .bm-feature-62-feature-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 4);
-    position: relative;
-  }
-
-  .bm-feature-62-feature-card {
-    padding: var(--space-m) var(--space-s) var(--space-m) var(--space-s);
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-canvas);
-    position: relative;
-  }
-
-  .bm-feature-62-feature-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-62-feature-card__text {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-feature-62-feature-list {
-    --before-inline-size: calc(((50vw + (var(--content-width) / 2) + var(--space-xl)))); /* Change width of the psuedo before element*/
-    --inset-left: calc(-1 * ((100vw - var(--content-width)) / 2)) ; /* Negative left space */
-    --inset-top: var(--space-m);  /* Top margin */
-    --border-radius: var(--r-card); /* Set the border radius */
-    --before-background-color: var(--fs-0); /* set the background color of the psuedo element */
-  }
-  
-  .bm-feature-62-feature-list::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: var(--acss-inset-left);
-    inset-block-start: var(--acss-inset-top);
-    inline-size: var(--acss-before-inline-size);
-    block-size: 100%;
-    background-color: var(--acss-before-background-color);
-    border-start-end-radius: var(--acss-border-radius);
-    border-end-end-radius: var(--acss-border-radius);
-    z-index: -1;
-  }
-  
-  @media (max-width:1400px) {
-    .bm-feature-62-feature-list {
-    --before-inline-size: calc(100% + var(--space-xl));
-    --inset-left: calc(-1 * var(--gutter));
-    --inset-top: var(--space-m);
-  }
-    
-    .bm-feature-62-feature-list::before {
-    inset-inline-start: var(--acss-inset-left);
-    inset-block-start: var(--acss-inset-top);
-    inline-size: var(--acss-before-inline-size);
-  }
-  }
-
-  /* bm-custom */
-  @media (min-width:991px) {
-  
-  .bm-feature-62-feature-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-62-feature-card:hover, .bm-feature-62-feature-card:focus-within {
-    background-color: var(--fs-0);
-    border: 1px solid var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-feature-62-feature-card:hover span.btn--primary, .bm-feature-62-feature-card:focus-within span.btn--primary {
-      
-    --btn-background: var(--bg-canvas);
-    --btn-text-color: var(--fs-0);
-    --btn-border-color: var(--bg-canvas);
-  
-  }
-  
-  .bm-feature-62-feature-card a {
-    transition: 0.1s ease;
-  }
-  
-  .bm-feature-62-feature-card:hover a, .bm-feature-62-feature-card:focus-within a {
-    color: var(--fs-0);
-  }
-    
-  }
-</style>

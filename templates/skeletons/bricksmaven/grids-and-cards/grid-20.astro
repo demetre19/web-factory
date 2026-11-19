@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,92 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-20-container">
-    <div class="intro">
-      <p class="intro__subheading">Lorem ipsum set dolor amet</p>
-      <h2 class="intro__heading">{heading}</h2>
-    </div>
-    <div class="gridcard-20-ct list--none">
-      {items.map((it) => (
-        <div class="gridcard-20-box">
-          <div class="gridcard-20-article">
-            <div class="gridcard-20-article__meta">
-              <h2 class="gridcard-20-article__title clickable-parent">{it.title}</h2>
-              <p class="gridcard-20-article__excerpt">{it.text}</p>
-              <a class="gridcard-20-article__cta" href={it.href}>{it.label}</a>
-            </div>
-            <div class="gridcard-20-article__media">
-              <figure class="gridcard-20-article__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">Lorem ipsum set dolor amet</p>
+        <h2 class="text-fluid-2">{heading}</h2>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-20-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .gridcard-20-ct {
-    display: grid;
-    width: 100%;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5em 0.9375em;
-  }
-
-  .gridcard-20-article {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    position: relative;
-  }
-
-  .gridcard-20-article__meta {
-    background: var(--bg-canvas);
-    display: flex;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  .gridcard-20-article__cta {
-    padding: 0 0 0 0;
-  }
-
-  .gridcard-20-article__thumb {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .gridcard-20-article:hover a {
-  	color: var(--action-primary);
-  }
-
-  /* bm-custom */
-  .gridcard-20-article__title > a::after {
-  	z-index: 1;
-  }
-</style>

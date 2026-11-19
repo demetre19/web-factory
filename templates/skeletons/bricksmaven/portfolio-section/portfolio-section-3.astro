@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,176 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="portfolio-section-3-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="portfolio-section-3-list list--none">
-      {items.map((it) => (
-        <div class="portfolio-section-3-card">
-          <div class="portfolio-section-3-card__content">
-            <h2 class="portfolio-section-3-card__heading clickable-parent">{it.title}</h2>
-            <p class="portfolio-section-3-card__accent-heading">{it.text}</p>
-            <p class="portfolio-section-3-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="portfolio-section-3-card__media">
-            <figure class="portfolio-section-3-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .portfolio-section-3-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .portfolio-section-3-list {
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .portfolio-section-3-card {
-    border-top: .1rem solid var(--color-line-default);
-    border-right: .1rem solid var(--color-line-default);
-    border-bottom: .1rem solid var(--color-line-default);
-    border-left: .1rem solid var(--color-line-default);
-    position: relative;
-    flex-wrap: nowrap;
-  }
-
-  .portfolio-section-3-card__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    z-index: 99;
-    position: static;
-    background: var(--bg-canvas);
-  }
-
-  .portfolio-section-3-card__accent-heading {
-    font-size: var(--fs-0);
-    text-transform: uppercase;
-    letter-spacing: .5;
-  }
-
-  .portfolio-section-3-card__media {
-    overflow: hidden;
-  }
-
-  .portfolio-section-3-card__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .portfolio-section-3-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .portfolio-section-3-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    padding-inline:1rem;
-    padding-block:.3rem;
-    color:var(--bg-subtle);
-    font-size: var(--fs-1);
-    font-weight: 700;
-    position:absolute;
-    right: var(--space-s);
-      top:var(--space-s);
-    transition: .5s linear;
-    
-  }
-
-  /* bm-custom */
-  /* Card */
-  .portfolio-section-3-card {
-  	transition: .8s ease;
-    z-index:1;
-  }
-  
-  .portfolio-section-3-card:hover {
-  	background-color: var(--bg-subtle);
-    border-color: var(--action-primary);
-  }
-  
-  /* Heading */
-  .portfolio-section-3-card__heading {
-  	transition: .8s ease;
-  }
-  
-  .portfolio-section-3-card:hover .portfolio-section-3-card__heading {
-  	color: var(--action-primary);
-  }
-  
-  /* Image */
-  .portfolio-section-3-card__image {
-  	transition: .8s ease;
-  }
-  
-  .portfolio-section-3-card:hover .portfolio-section-3-card__image {
-  	scale: 1.1;
-  }
-  
-  
-  .portfolio-section-3-card::after {
-  	content: '';
-    position: absolute;
-    top:100%;
-    bottom:0;
-    left:50%;
-    width: .1rem;
-    height: calc((var(--space-m) * 2) + (var(--section-space-xxl) * 2));
-    background-color: var(--action-primary);
-  }
-  
-  .portfolio-section-3-card:last-child::after {
-  	display:none;
-  }
-  
-  .portfolio-section-3-card:nth-last-child(2)::after {
-  	display:none;
-  }
-  
-  .portfolio-section-3-card:nth-child(even) {
-  	margin-block-start: calc(var(--section-space-xxl) * 2);
-  }
-  
-  @media (max-width:478px) {
-  	.portfolio-section-3-card:nth-child(even) {
-  	margin-block-start: 0;
-  }
-    
-    .portfolio-section-3-card::after {
-  
-    height: calc(var(--space-m) * 2);
-  
-  }
-  }
-</style>

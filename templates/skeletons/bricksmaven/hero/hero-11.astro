@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,61 +17,24 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-11-container">
-    <div class="hero-11__content">
-      <p class="hero-11__tag">TAGLINE</p>
-      <h1 class="hero-11__title">{heading}</h1>
-      <p class="hero-11__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <p class="text-fluid-0">TAGLINE</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="hero-11__section-bg-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-11 {
-    padding: 0 0 0 0;
-    height: 100vh;
-  }
-
-  .hero-11-container {
-    height: 100%;
-    position: relative;
-    justify-content: center;
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-  }
-
-  .hero-11__content {
-    display: flex;
-    row-gap: var(--space-s);
-    width: var(--content-width);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    align-self: center;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-11__section-bg-image {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -10;
-    object-fit: cover;
-  }
-</style>

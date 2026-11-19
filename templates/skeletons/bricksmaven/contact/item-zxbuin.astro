@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,123 +17,46 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-3-container">
-    <div class="contact-3-grid-ul list--none">
-      <div class="contact-3-card">
-        <h2 class="contact-3-card__heading">{heading}</h2>
-        <p class="contact-3-card__desc">{fs}</p>
-      </div>
-      {items.map((it) => (
-        <div class="contact-3-card contact-3-card--alt">
-          <div class="contact-3-card__icon-wrapper">
-            <span class="contact-3-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <div class="contact-3-card__content">
-            <p class="contact-3-card__heading--alt">{it.text}</p>
-            <p class="contact-3-card__desc">{it.text}</p>
-            <p class="contact-3-card__information">{it.text}</p>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-      ))}
-    </div>
-    <div class="contact-3-footer">
-      <div class="contact-3-form">
-        <h2 class="contact-3-form__heading">Send us an email</h2>
-        <p class="contact-3-form__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-        <form class="contact-3-form__field" novalidate>
-        </form>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <div class="contact-3-media">
-        <figure class="contact-3-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Send us an email</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+          <form novalidate>
+          </form>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-3-container {
-    display: flex;
-    row-gap: var(--space-xl);
-  }
-
-  .contact-3-grid-ul {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-m);
-    background: var(--action-primary);
-  }
-
-  .contact-3-card {
-    display: flex;
-    row-gap: var(--space-s);
-    flex-direction: column;
-  }
-
-  .contact-3-card--alt {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .contact-3-card__icon-wrapper {
-    width: 15%;
-  }
-
-  .contact-3-card__icon {
-    line-height: .8;
-  }
-
-  .contact-3-card__content {
-    width: 85%;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .contact-3-card__heading--alt {
-    font-weight: 700;
-  }
-
-  .contact-3-footer {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-l);
-  }
-
-  .contact-3-form {
-    display: flex;
-    row-gap: var(--space-xs);
-    flex-direction: column;
-  }
-
-  .contact-3-media__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .contact-3-form__field .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-3-form__field .required:after{
-  color: var(--action-primary);
-  }
-  
-  .contact-3-form__field input:focus {
-  outline-offset: 0;
-  }
-  
-  
-  .contact-3-form__field textarea:focus {
-  outline-offset: 0;
-  }
-</style>

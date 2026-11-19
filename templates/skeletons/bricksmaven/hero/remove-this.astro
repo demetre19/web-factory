@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,113 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="hero-21-container">
-      <div class="hero-21-content__wrapper">
-        <h1 class="hero-21-content__heading">{heading}</h1>
-        <p class="hero-21-content__desc">{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="hero-21-content__accent-heading">Tagline</p>
-        <figure class="hero-21-content__background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="sec-inner">
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">Tagline</p>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
-    <div class="hero-21-container--alt">
-      <div class="list--none hero-21-list">
-        {items.map((it) => (
-          <div class="hero-21-card">
-            <h2 class="hero-21-card__heading">{it.title}</h2>
-            <p class="hero-21-card__desc">{it.text}</p>
-            <a class="hero-21-card__cta wf-cta-button" href={it.href}>{it.label}</a>
-            <span class="hero-21-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        ))}
+    <div class="sec-inner">
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-21 {
-    position: relative;
-    height: 80vh;
-    justify-content: center;
-  }
-
-  .hero-21-container {
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .hero-21-content__wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--space-s);
-    margin: 0 0 var(--section-space-xxl) 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-21-content__accent-heading {
-    margin: 0 0 0 0;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  .hero-21-content__background {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -5;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-21-list {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    position: relative;
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    margin: calc((var(--section-space-m) + var(--section-space-xxl)) * -1) 0 0 0 !important;
-  }
-
-  .hero-21-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    align-items: flex-start;
-  }
-
-  .hero-21-card__cta {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .hero-21-card__icon {
-    background: color-mix(in srgb, var(--fs-0) 10%, transparent);
-    padding: .6em .6em .6em .6em;
-    border-radius: 1.5em 1.5em 1.5em 1.5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>

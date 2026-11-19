@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,70 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-13-container">
-    <div class="cta-13__box">
-      <h2 class="cta-13__heading">{heading}</h2>
-      <p class="cta-13__desc">{fs}</p>
-    </div>
-    <div class="cta-13__call-to-action">
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-13 {
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .cta-13-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-xl);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    position: relative;
-  }
-
-  .cta-13__box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .cta-13__call-to-action {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-</style>

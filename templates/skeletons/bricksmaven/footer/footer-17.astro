@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,163 +17,54 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-footer-17__container">
-    <div class="bm-footer-17__nav-wrapper">
-      <div class="list--none bm-footer-17-nav-menu">
-        {items.map((it) => (
-          <div class="bm-footer-17-nav-list">
-            <a class="bm-footer-17-nav-list__link" href="#">{it.text}</a>
-          </div>
-        ))}
-      </div>
-    </div>
-    <div class="bm-footer-17__contact-info list--none">
-      {items.map((it) => (
-        <div class="bm-footer-17-address-list">
-          <a href="#">{it.text}</a>
-        </div>
-      ))}
-    </div>
-    <div class="bm-footer-17__footer">
-      <div class="bm-social-share list--none bm-social-share--left-center">
-        {items.map((it) => (
-          <div class="bm-social-share__icon-wrapper">
-            <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        ))}
-      </div>
-      <div class="bm-footer-17__copyright-wrapper">
-        <p class="footer-copyright">{fs}</p>
-      </div>
-      <div class="bm-footer-17__payment-option-wrapper">
-        <div class="bm-footer-payment-options list--none">
-          {items.map((it) => (
-            <div class="bm-footer-option">
-              <figure class="bm-footer-option__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
             </div>
           ))}
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <a class="text-fluid-0" href="#">{it.text}</a>
+          </div>
+        ))}
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-footer-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-footer-17__nav-wrapper {
-    width: auto;
-    align-self: center;
-  }
-
-  .bm-footer-17-nav-menu {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-    width: auto;
-  }
-
-  .bm-footer-17-nav-list {
-    align-items: center;
-    width: auto;
-  }
-
-  .bm-footer-17__contact-info {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .bm-footer-17-address-list {
-    align-items: center;
-    text-align: center;
-  }
-
-  .bm-footer-17__footer {
-    padding: var(--space-m) 0 0 0;
-    border-top: 1px solid var(--color-line-default);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--left-center {
-    justify-content: flex-start;
-  }
-
-  .bm-footer-17__copyright-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .footer-copyright {
-    font-size: var(--fs-0);
-  }
-
-  .bm-footer-17__payment-option-wrapper {
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-
-  .bm-footer-payment-options {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    flex-direction: row;
-    width: auto;
-  }
-
-  .bm-footer-option__image {
-    object-fit: contain;
-    width: 32;
-    height: 32;
-  }
-
-  /* bm-custom */
-  .bm-footer-17-address-list:first-child {
-  	border-right: 1px solid var(--color-line-default);
-  }
-  
-  .bm-footer-17-address-list:last-child {
-  	border-left: 1px solid var(--color-line-default);
-  }
-  
-  
-  @media (max-width:767px) {
-  	
-    .bm-footer-17-address-list:first-child {
-  	border-right: none;
-    border-bottom: 1px solid var(--color-line-default);
-    padding-block-end: var(--space-s);
-  }
-  
-  .bm-footer-17-address-list:last-child {
-    border-left: none;
-  	border-top: 1px solid var(--color-line-default);
-    padding-block-start: var(--space-s);
-  }
-    
-  }
-</style>

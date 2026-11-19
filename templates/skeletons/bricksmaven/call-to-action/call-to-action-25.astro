@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,166 +17,60 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-call-to-action-25__container">
-    <div class="bm-call-to-action-25__cta-block">
-      <div class="bm-call-to-action-25__content">
-        <div class="bm-call-to-action-25__content-inner">
-          <h2 class="bm-call-to-action-25__content-heading">{heading}</h2>
-          <p class="bm-call-to-action-25__content-text">{fs}</p>
-          <div class="bm-list list--none">
-            {items.map((it) => (
-              <div class="bm-list-item">
-                <div class="bm-list-item__icon-wrapper">
-                  <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <h2 class="text-fluid-2">{heading}</h2>
+            <p class="text-fluid-0">{fs}</p>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <p class="bm-list-item__text">{it.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <figure class="bm-call-to-action-25__content-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-call-to-action-25__contact">
-        <div class="bm-call-to-action-25__contact-inner">
-          <h2 class="bm-call-to-action-25__contact-heading">Direct contact</h2>
-          <p class="bm-call-to-action-25__contact-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <div class="bm-team-list list--none">
-            {items.map((it) => (
-              <div class="bm-team-media">
-                <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
-              </div>
-            ))}
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Direct contact</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div class="bm-call-to-action-25-contact-list list--none">
-          <div class="bm-call-to-action-25-contact-item">
-            <span class="bm-call-to-action-25-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="bm-call-to-action-25-contact-item__label">+32 456 7890 34</p>
-          </div>
-          <div class="bm-call-to-action-25-contact-item">
-            <span class="bm-call-to-action-25-contact-item__icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="bm-call-to-action-25-contact-item__label">hello@bricksmaven.com</p>
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">+32 456 7890 34</p>
+            </div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">hello@bricksmaven.com</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-call-to-action-25__cta-block {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-call-to-action-25__content {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--flow-spacing);
-    background: var(--fs-0);
-    position: relative;
-    overflow: clip;
-  }
-
-  .bm-call-to-action-25__content-inner {
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item__icon-wrapper {
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    position: relative;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-list-item__text {
-    text-align: left;
-    font-size: var(--fs-0);
-  }
-
-  .bm-call-to-action-25__content-image {
-    object-fit: cover;
-    position: absolute;
-    z-index: -1;
-    right: 0;
-    height: calc(var(--measure) / 1.4);
-    top: 50%;
-    border-radius: var(--r-card) 0 0 var(--r-card);
-  }
-
-  .bm-call-to-action-25__contact {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-call-to-action-25__contact-inner {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-team-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-team-media__image {
-    object-fit: cover;
-    width: 53;
-    height: 52;
-    border-top: .4rem solid var(--bg-canvas);
-    border-right: .4rem solid var(--bg-canvas);
-    border-bottom: .4rem solid var(--bg-canvas);
-    border-left: .4rem solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .bm-call-to-action-25-contact-item {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    position: relative;
-  }
-
-  /* bm-custom */
-  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
-  }
-  
-  .bm-team-media:first-child {
-  	margin-inline-start: 0px;
-  }
-</style>

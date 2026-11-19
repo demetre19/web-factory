@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,204 +17,52 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-12-container">
-    <div class="blog-archive-12-tabs">
-      <h1 class="blog-archive-12-tab-menu__heading">{heading}</h1>
-      <div class="blog-archive-12-tab-menu">
-        {items.map((it) => (
-          <div class="blog-archive-12-tab-menu__btn">
-            <p class="blog-archive-12-tab-menu__link">{it.text}</p>
-          </div>
-        ))}
-      </div>
-      <div class="blog-archive-12-content">
-        {items.map((it) => (
-          <div class="blog-archive-12-content__pane">
-            <div class="blog-archive-12-archive-list list--none">
-              <div class="blog-archive-12-archive-card">
-                <div class="blog-archive-12-archive-card__content">
-                  <div class="blog-archive-12-archive-card__meta">
-                    <p class="blog-archive-12-archive-card__author-name">{it.text}</p>
-                    <p class="blog-archive-12-archive-card__date">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <p class="text-fluid-0">{it.text}</p>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
+                    <div></div>
+                    <div></div>
+                    <a class="text-fluid-0" href="#">{it.text}</a>
                   </div>
-                  <div class="blog-archive-12-archive-card__post-title"></div>
-                  <div class="blog-archive-12-archive-card__excerpt"></div>
-                  <a class="blog-archive-12-archive-card__link" href="#">{it.text}</a>
-                </div>
-                <div class="blog-archive-12-archive-card__media">
-                  <figure class="blog-archive-12-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                  <div class="blog-archive-12-archive-card__category-wrapper">
-                    <p class="blog-archive-12-archive-card__category">{it.text}</p>
+                  <div class="grid-auto gap-fluid-l">
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <div>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-12-tabs {
-    position: relative;
-  }
-
-  .blog-archive-12-tab-menu__heading {
-    position: absolute;
-  }
-
-  .blog-archive-12-tab-menu {
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  .blog-archive-12-archive-list {
-    display: grid;
-    grid-template-columns: repeat(21, minmax(0, 1fr));
-    gap: var(--space-xs);
-  }
-
-  .blog-archive-12-archive-card {
-    background: var(--bg-subtle);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 1);
-  }
-
-  .blog-archive-12-archive-card__content {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
-
-  .blog-archive-12-archive-card__meta {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-xs);
-  }
-
-  .blog-archive-12-archive-card__author-name {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-12-archive-card__date {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-12-archive-card__post-title {
-    font-size: var(--fs-2);
-  }
-
-  .blog-archive-12-archive-card__media {
-    position: relative;
-  }
-
-  .blog-archive-12-archive-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: hidden;
-  }
-
-  .blog-archive-12-archive-card__category-wrapper {
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    font-size: var(--fs-0);
-    padding: .6rem .6rem .6rem .6rem;
-    position: absolute;
-    top: var(--space-s);
-    left: var(--space-s);
-  }
-
-  /* bm-custom */
-  .blog-archive-12-archive-card:nth-child(even) {
-  	grid-column: 8/15;
-  }
-  
-  .blog-archive-12-archive-card:nth-child(odd) {
-  	grid-column: 15 / -1;
-  }
-  
-  .blog-archive-12-archive-card:first-child {
-  	grid-column: 1/8;
-    grid-row: span 5;
-  }
-  
-  .blog-archive-12-archive-card:not(:first-child) {
-  	display:grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    background-color: var(--bg-canvas) !important;
-  }
-  
-  .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__excerpt, .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__link {
-  	display:none;
-  }
-  
-  .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__post-title {
-    	font-size: var(--fs-0);
-  }
-  
-  .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__image {
-    	aspect-ratio: 6/4 !important;
-    
-  }
-  
-  .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__content {
-  	justify-content: center;
-  }
-  
-  @media (max-width: 767px) {
-        .blog-archive-12-archive-card:nth-child(even) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-  
-      .blog-archive-12-archive-card:nth-child(odd) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-  
-      .blog-archive-12-archive-card:first-child {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-      .blog-archive-12-archive-card:first-child .blog-archive-12-archive-card__image {
-        aspect-ratio: 1/1 !important;
-  
-      }
-    
-      .blog-archive-12-archive-card:not(:first-child) {
-      display:grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-    
-      .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__excerpt, .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__link {
-      display:block;
-    }
-    
-      .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__post-title {
-        font-size: var(--fs-2);
-    }
-    
-      .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__content {
-      justify-content: start;
-    }
-    
-    .blog-archive-12-archive-card:not(:first-child) .blog-archive-12-archive-card__image {
-    	aspect-ratio: 1/1 !important;
-    
-  }
-  
-  }
-</style>

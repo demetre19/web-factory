@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,58 +17,62 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-blog-single-11__container">
-    <div class="bm-blog-single-11__blog-intro">
-      <div class="bm-blog-single-11__post-title"></div>
-      <div class="bm-blog-single-11__term-category">
-        <p class="blog-single-2__term">{post_terms_category}</p>
-      </div>
-      <div class="blog-single-2__meta">
-        <div class="blog-single-2__author">
-          <div class="blog-single-head__media">
-            <figure class="blog-single-2__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-single-head__data">
-            <p class="blog-single-2__name">{author_name}</p>
-            <p class="blog-single-2__position">Author Position</p>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div></div>
+        <div>
+          <p class="text-fluid-0">{post_terms_category}</p>
         </div>
-        <div class="blog-single-head__details">
-          <p class="blog-single-2__date">{post_date}</p>
-        </div>
-      </div>
-    </div>
-    <div class="bm-blog-single-11__content">
-      <figure class="bm-blog-single-featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      <div class="bm-blog-single-11__post-content"></div>
-      <div class="bm-newsletter-widget-card-1">
-        <div class="bm-newsletter-widget-card-1__media">
-          <figure class="bm-newsletter-widget-card-1__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-newsletter-widget-card-1__content">
-          <div class="bm-newsletter-widget-card-1__top">
-            <h3 class="bm-newsletter-widget-card-1__heading">{heading}</h3>
-            <p class="bm-newsletter-widget-card-1__text">{fs}</p>
-          </div>
-          <form class="bm-form-widget" novalidate>
-          </form>
-          <div class="bm-review-widget">
-            <div class="bm-team-list list--none">
-              {items.map((it) => (
-                <div class="bm-team-media">
-                  <figure class="bm-team-media__image"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
-                </div>
-              ))}
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="bm-testimonial-38__star-ratings">
-              <p class="bm-testimonial-38__meta-text">Join over 2k+ subscribers</p>
+            <div>
+              <p class="text-fluid-0">{author_name}</p>
+              <p class="text-fluid-0">Author Position</p>
+            </div>
+          </div>
+          <div>
+            <p class="text-fluid-0">{post_date}</p>
+          </div>
+        </div>
+      </div>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div></div>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{heading}</h3>
+              <p class="text-fluid-0">{fs}</p>
+            </div>
+            <form novalidate>
+            </form>
+            <div>
+              <div>
+                {(items || []).map((it) => (
+                  <div>
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <p class="text-fluid-0">Join over 2k+ subscribers</p>
+              </div>
             </div>
           </div>
         </div>
@@ -75,193 +80,3 @@ const {
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-blog-single-11__container {
-    align-items: center;
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .bm-blog-single-11__blog-intro {
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-single-11__post-title {
-    font-size: calc(var(--fs-4) * 1.5);
-  }
-
-  .bm-blog-single-11__term-category {
-    align-items: center;
-  }
-
-  .blog-single-2__term {
-    padding: .4rem .8rem .4rem .8rem;
-    background: var(--color-line-default);
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-2__meta {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    text-align: center;
-  }
-
-  .blog-single-2__author {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    padding: 0 var(--space-m) 0 0;
-    border-right: .1rem solid var(--color-line-default);
-  }
-
-  .blog-single-2__photo {
-    width: 4.4rem;
-    height: 4.4rem;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .blog-single-head__data {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .blog-single-2__name {
-    font-weight: 700;
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-2__position {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-head__details {
-    display: flex;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-  }
-
-  .blog-single-2__date {
-    font-size: var(--fs-0);
-  }
-
-  .bm-blog-single-11__content {
-    row-gap: var(--space-s);
-  }
-
-  .bm-blog-single-featured-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-newsletter-widget-card-1 {
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
-    gap: var(--space-m);
-  }
-
-  .bm-newsletter-widget-card-1__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .bm-newsletter-widget-card-1__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-newsletter-widget-card-1__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-review-widget {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    text-align: center;
-    align-items: center;
-  }
-
-  .bm-team-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-team-media__image {
-    object-fit: cover;
-    width: 53;
-    height: 52;
-    border-top: .4rem solid var(--bg-canvas);
-    border-right: .4rem solid var(--bg-canvas);
-    border-bottom: .4rem solid var(--bg-canvas);
-    border-left: .4rem solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .bm-testimonial-38__star-ratings {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  /* bm-custom */
-  .blog-single-2__term a {
-  	color: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  } 
-  
-  .bm-form-widget button[type=submit].bricks-button {
-      height: 100% !important;
-  }
-  
-  .bm-form-widget .submit-button-wrapper {
-      height: 100% !important;
-  }
-
-  /* bm-custom */
-  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
-  }
-  
-  .bm-team-media:first-child {
-  	margin-inline-start: 0px;
-  }
-</style>

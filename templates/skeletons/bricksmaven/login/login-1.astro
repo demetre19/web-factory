@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,121 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="login-1__container">
-    <div class="login-1__content">
-      <div class="login-1__brand">
-        <figure class="login-1__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="login-form-wrapper">
-        <h1 class="login-1__heading">{heading}</h1>
-        <form class="login-form" novalidate>
-        </form>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <form novalidate>
+          </form>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">You are logged in.</h1>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="login-1__logged-in-heading-wrapper">
-        <h1 class="login-1__logged-in-heading">You are logged in.</h1>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
-          </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
-          </div>
-        </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
+      <div></div>
     </div>
-    <div class="bm-login-1__media">
-      <figure class="login-1__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .login-1 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-    height: 100vh;
-  }
-
-  .login-1__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-    height: 100%;
-  }
-
-  .login-1__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-1__logo {
-    object-fit: contain;
-  }
-
-  .login-form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-footer {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .login-footer__link {
-    font-size: var(--fs-0);
-  }
-
-  .login-1__logged-in-heading-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-1__media {
-    display: flex;
-    align-items: flex-end;
-    height: 100%;
-  }
-
-  .login-1__image {
-    object-fit: cover;
-    width: 50vw;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .login-form .form-group ul li {
-  	display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .login-form .form-group span {
-  	display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-  
-  .login-form .form-group span a, .login-form .form-group ul li label {
-  	font-size: var(--fs-0);
-  }
-  
-  .login-form .form-group:nth-child(4) {
-      align-items: end;
-  }
-</style>

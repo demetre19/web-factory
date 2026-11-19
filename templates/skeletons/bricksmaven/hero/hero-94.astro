@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,201 +17,52 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-94__container">
-    <div class="bm-hero-94__content">
-      <h1 class="bm-hero-94__heading">{heading}</h1>
-      <p class="bm-hero-94__subheading">{fs}</p>
-      <div class="cta-combo bm-hero-94__cta">
-        <a class="btn--primary bm-hero-94__button wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="link--black bm-hero-94__text-link" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    <div class="bm-hero-94__review">
-      <div class="bm-hero-94__review-carousel">
-        {items.map((it) => (
-          <div class="bm-hero-94-review-card">
-            <div class="bm-hero-94-review-card__media">
-              <figure class="bm-hero-94-review-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">Since 2022, we've created hundreds of patterns for agencies and freelancers</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <svg></svg>
             </div>
-            <div class="bm-hero-94-review-card__content">
-              <p class="bm-hero-94-review-card__review-text">{it.text}</p>
-              <p class="bm-hero-94-review-card__name">{it.text}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-  <div class="bm-hero-94-footer-container">
-    <div class="bm-hero-94-footer-container__logo-cover">
-      <h2 class="bm-hero-94-footer-container__heading">Since 2022, we've created hundreds of patterns for agencies and freelancers</h2>
-      <div class="bm-hero-94-logo-list list--none">
-        {items.map((it) => (
-          <div class="bm-hero-94-logo-wrapper">
-            <svg class="bm-hero-94-logo-wrapper__svg"></svg>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-94 {
-    background: var(--acss-background-color);
-    position: relative;
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-94__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-94__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-94__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-94__review-carousel {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-hero-94-review-card {
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    flex-direction: row;
-    align-items: flex-start;
-    column-gap: calc(var(--flow-spacing) / 2);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    flex-wrap: nowrap;
-  }
-
-  .bm-hero-94-review-card__image {
-    object-fit: cover;
-    width: 64px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-hero-94-review-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-94-review-card__review-text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-94-review-card__name {
-    position: relative;
-    padding: 0 0 0 var(--space-s);
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-94-footer-container__logo-cover {
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    text-align: center;
-  }
-
-  .bm-hero-94-logo-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-94-logo-wrapper {
-    width: auto;
-  }
-
-  /* bm-custom */
-  .bm-hero-94 {
-    --background-color: var(--bg-canvas);
-    --fade-height: var(--measure);
-  }
-  
-  @media (min-width:767px) {
-    
-    .bm-hero-94::before {
-    content: '';
-    position: absolute;
-    inset-block-start: 0;
-    inline-size: 100%;
-    block-size: var(--acss-fade-height);
-    background: linear-gradient(var(--acss-background-color) 50%, transparent);
-    z-index: 1;
-  }
-    
-  }
-  
-  .bm-hero-94::after {
-    content: '';
-    position: absolute;
-    inset-block-end: 0;
-    inline-size: 100%;
-    block-size: var(--acss-fade-height);
-    background: linear-gradient(transparent, var(--acss-background-color) 50%);
-    z-index: 1;
-  }
-
-  /* bm-custom */
-  .bm-hero-94__review-carousel {
-    --fade-height: var(--measure);
-  }
-  
-  .bm-hero-94__review-carousel .splide__track {
-    height: var(--content-width);
-  }
-  
-  .bm-hero-94__review-carousel .splide__track--ttb>.splide__list {
-    height: auto;
-  }
-  
-  
-  .bm-hero-94__review-carousel::before {
-    content: '';
-    position: absolute;
-    inset-block-start: 0;
-    inline-size: 100%;
-    block-size: var(--acss-fade-height);
-    background: linear-gradient(var(--acss-background-color) 50%, transparent);
-    z-index: 1;
-  }
-  
-  .bm-hero-94__review-carousel::after {
-    content: '';
-    position: absolute;
-    inset-block-end: 0;
-    inline-size: 100%;
-    block-size: var(--acss-fade-height);
-    background: linear-gradient(transparent, var(--acss-background-color) 50%);
-    z-index: 1;
-  }
-
-  /* bm-custom */
-  .bm-hero-94-review-card__name::before {
-    content: '-';
-    position: absolute;
-    left: 0;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,81 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-24-container">
-    <div class="content-24__left-content">
-      <h2 class="content-24__heading">{heading}</h2>
-      <p class="accent-h">Accent heading</p>
-      <p class="content-24__text">{fs}</p>
-      <a class="content-24__link" href="#">Learn more</a>
-    </div>
-    <div class="content-24__slider-wrapper">
-      <div class="content-24__slider">
-        {items.map((it) => (
-          <div class="content-24__slide">
-            <figure class="content-24__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+        <a class="text-fluid-0" href="#">Learn more</a>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-24-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .content-24__left-content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-24__slider-wrapper {
-    position: relative;
-  }
-
-  .content-24__slider {
-    position: static;
-  }
-
-  .content-24__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .content-24__slider .splide__arrows {
-    display: flex!important;
-    position: absolute;
-    gap: 0;
-    top: calc(100% - 50px);
-   	left: 0%;
-    justify-content: center;
-    z-index: 1;
-  }
-  
-  .content-24__slider .splide__arrow {
-      position: relative !important;
-  }
-  
-  .brxe-slider-nested .splide__arrows:not(.custom) .splide__arrow--prev {
-      transform: translateY(0%) scaleX(-1) !important;
-  }
-  
-  .splide__arrow {
-  
-      top: 0%;
-      transform: unset !important;
-  
-  }
-</style>

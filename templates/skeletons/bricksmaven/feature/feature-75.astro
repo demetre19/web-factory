@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,173 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-75__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-75__cover">
-      <div class="bm-feature-75-slider-nestable">
-        {items.map((it) => (
-          <div class="bm-feature-75-slider-media">
-            <figure class="bm-feature-75-slider-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="bm-feature-75-accordion-nestable js-sync-accordion">
-        {items.map((it) => (
-          <div class="bm-feature-75-accordion-item">
-            <div class="bm-feature-75-accordion-item__title">
-              <h3 class="bm-feature-75-accordion-item__heading">{it.title}</h3>
-              <span class="bm-feature-75-accordion-item__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="bm-feature-75-accordion-item__content">
-              <div class="bm-feature-75-accordion-item__inner">
-                <h4 class="bm-feature-75-accordion-item__inner-heading">{it.title}</h4>
-                <span class="bm-feature-75-accordion-item__inner-icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-feature-75-accordion-item__text">{it.text}</p>
-                <figure class="bm-feature-75-accordion-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <div>
+                <div class="grid-auto gap-fluid-l">
+                  <h4 class="text-fluid-2">{it.title}</h4>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+      <div></div>
     </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-75 {
-    background: var(--fs-0);
-  }
-
-  .bm-feature-75__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-feature-75__cover {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    border: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-    height: 660px;
-  }
-
-  .bm-feature-75-slider-media {
-    height: 100%;
-  }
-
-  .bm-feature-75-slider-media__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-feature-75-accordion-nestable {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-feature-75-accordion-item__title {
-    padding: 0 var(--space-s) 0 var(--space-s);
-    border-top: 1px solid var(--fs-0);
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
-  }
-
-  .bm-feature-75-accordion-item__heading {
-    font-size: var(--fs-0);
-  }
-
-  .bm-feature-75-accordion-item__content {
-    margin: auto 0 0 0;
-  }
-
-  .bm-feature-75-accordion-item__inner {
-    row-gap: var(--flow-spacing);
-    height: 100%;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    flex-wrap: nowrap;
-  }
-
-  .bm-feature-75-accordion-item__inner-heading {
-    font-size: var(--fs-2);
-  }
-
-  .bm-feature-75-accordion-item__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    display: none;
-  }
-
-  /* bm-custom */
-  .bm-feature-75-accordion-item.brx-open {
-    /* block-size:calc(100% - (50px * 2)); */
-    flex-grow:1;
-  }  
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__title {
-    background-color: var(--bg-subtle);
-    color: var(--text-secondary) ;
-  
-  }
-  
-  .bm-feature-75-accordion-item:first-child .bm-feature-75-accordion-item__title {
-    border:none;
-  }
-  
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__content {
-    animation: tabPaneFadeIn 1s ease both;
-    opacity:1;
-  }
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__heading {
-    color: var(--text-secondary) ;
-  }
-  
-  /* .bm-feature-75-accordion-item.brx-open {
-    animation: tabPaneFadeIn 1s ease both;
-  } */
-  
-  @keyframes tabPaneFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(1px);
-    }
-  
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-</style>

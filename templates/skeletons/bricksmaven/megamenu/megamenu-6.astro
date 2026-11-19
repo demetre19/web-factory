@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,140 +17,69 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-1__container">
-    <div class="bm-header-1__brand">
-      <img class="bm-header-1-brand__logo"></img>
-    </div>
-    <div class="bm-header-1__nav-wrapper">
-      <div class="megamenu-6">
-        <div class="megamenu-6__nav-items">
-          <a class="megamenu-6__nav-link" href="#">First</a>
-          <a class="megamenu-6__nav-link" href="#">Second</a>
-          <div class="megamenu-6__dropdown">
-            <div class="megamenu-6__content">
-              <div class="megamenu-6__column">
-                <h2 class="megamenu-group-heading">{heading}</h2>
-                <div class="list--none megamenu-6__card-wrapper">
-                  {items.map((it) => (
-                    <div class="megamenu-card-link-4">
-                      <div class="megamenu-card-link-4__content">
-                        <a class="megamenu-card-link-4__text clickable-parent" href="#">{it.text}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div>
+          <div>
+            <a class="text-fluid-0" href="#">First</a>
+            <a class="text-fluid-0" href="#">Second</a>
+            <div>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{heading}</h2>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <div>
+                          <a class="text-fluid-0" href="#">{it.text}</a>
+                        </div>
+                        <div>
+                          <span data-icon="lucide" aria-hidden="true"></span>
+                        </div>
                       </div>
-                      <div class="megamenu-card-link-4__icon-wrapper">
-                        <span class="megamenu-card-link-4__icon" data-icon="lucide" aria-hidden="true"></span>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div class="megamenu-6__column">
-                <h2 class="megamenu-group-heading">Group heading</h2>
-                <div class="list--none megamenu-6__card-wrapper">
-                  {items.map((it) => (
-                    <div class="megamenu-card-link-4">
-                      <div class="megamenu-card-link-4__content">
-                        <a class="megamenu-card-link-4__text clickable-parent" href="#">{it.text}</a>
+                <div>
+                  <h2 class="text-fluid-2">Group heading</h2>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <div>
+                          <a class="text-fluid-0" href="#">{it.text}</a>
+                        </div>
+                        <div>
+                          <span data-icon="lucide" aria-hidden="true"></span>
+                        </div>
                       </div>
-                      <div class="megamenu-card-link-4__icon-wrapper">
-                        <span class="megamenu-card-link-4__icon" data-icon="lucide" aria-hidden="true"></span>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+            <a class="text-fluid-0" href="#">Fourth</a>
+            <a class="text-fluid-0" href="#">Fifth</a>
+            <div></div>
           </div>
-          <a class="megamenu-6__nav-link" href="#">Fourth</a>
-          <a class="megamenu-6__nav-link" href="#">Fifth</a>
-          <div class="megamenu-6__close"></div>
+          <div></div>
         </div>
-        <div class="megamenu-6__open"></div>
       </div>
-    </div>
-    <div class="bm-header-1__cta">
-      <a class="cta-header btn--primary btn--outline" href="#">Call to action</a>
+      <div>
+        <a class="text-fluid-0" href="#">Call to action</a>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-1 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-    position: relative;
-    z-index: 1;
-    background: var(--bg-canvas);
-  }
-
-  .bm-header-1__container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-header-1__brand {
-    align-items: flex-start;
-  }
-
-  .bm-header-1__nav-wrapper {
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .megamenu-6__content {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .megamenu-6__column {
-    row-gap: var(--flow-spacing);
-    height: 100%;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-  }
-
-  .megamenu-group-heading {
-    text-transform: uppercase;
-    font-size: var(--fs-1);
-  }
-
-  .megamenu-6__card-wrapper {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .megamenu-card-link-4 {
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    position: relative;
-  }
-
-  .bm-header-1__cta {
-    display: flex;
-    align-items: flex-end;
-  }
-
-  /* bm-custom */
-  @media (min-width:991px) {
-  
-  .megamenu-6__content {
-     min-width: var(--measure) !important;
-     align-self: center;
-     left: unset !important;
-  }
-  }
-</style>

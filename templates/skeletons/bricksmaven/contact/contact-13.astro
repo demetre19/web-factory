@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,117 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-13-container">
-    <div class="intro contact-13-intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="contact-13-list-ul list--none">
-      <div class="contact-13-list-card">
-        <h2 class="contact-13-list-card__title">Support</h2>
-        <p class="contact-13-list-card__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-        <a class="contact-13-list-card__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-        <div class="contact-13-list-card__media">
-          <figure class="contact-13-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Support</h2>
+          <p class="text-fluid-0">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">Sales</h2>
+          <p class="text-fluid-0">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
-      <div class="contact-13-list-card">
-        <h2 class="contact-13-list-card__title">Sales</h2>
-        <p class="contact-13-list-card__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-        <a class="contact-13-list-card__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-        <div class="contact-13-list-card__media">
-          <figure class="contact-13-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
     </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="contact-13-bg"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-13 {
-    position: relative;
-  }
-
-  .contact-13-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .contact-13-intro {
-    text-align: left;
-    align-items: flex-start;
-    align-self: flex-start;
-  }
-
-  .contact-13-list-ul {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-s);
-  }
-
-  .contact-13-list-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--space-xs);
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-    background: var(--bg-canvas);
-  }
-
-  .contact-13-list-card__desc {
-    text-align: center;
-  }
-
-  .contact-13-list-card__cta {
-    background: transparent;
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .contact-13-list-card__media {
-    margin: -7.5rem 0 0 0;
-  }
-
-  .contact-13-list-card__image {
-    object-fit: cover;
-    width: 10rem;
-    height: 10rem;
-    overflow: hidden;
-    border-radius: 10rem 10rem 10rem 10rem;
-  }
-
-  .contact-13-bg {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    z-index: -1;
-  }
-</style>

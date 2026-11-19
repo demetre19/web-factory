@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,145 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-20__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-portfolio-section-20__portfolio-slider">
-      <div class="bm-portfolio-section-20__portfolio-carousel">
-        {items.map((it) => (
-          <div class="bm-portfolio-section-20-card">
-            <div class="bm-portfolio-section-20-card__content">
-              <h2 class="bm-portfolio-section-20-card__heading">{it.title}</h2>
-              <p class="bm-portfolio-section-20-card__text">{it.text}</p>
-              <div class="bm-portfolio-section-20-card__results">
-                <p class="bm-portfolio-section-20-card__result-text">{it.text}</p>
-                <div class="bm-portfolio-section-20-card__icon-wrapper">
-                  <span class="bm-portfolio-section-20-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
                 </div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
               </div>
-              <a class="bm-portfolio-section-20-card__text-link" href="#">{it.text}</a>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <figure class="bm-portfolio-section-20-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-20__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-portfolio-section-20-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .bm-portfolio-section-20-card__content {
-    position: relative;
-    z-index: 1;
-    row-gap: var(--flow-spacing);
-    height: 100%;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  .bm-portfolio-section-20-card__results {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-section-20-card__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-section-20-card__image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-20-card {
-    overflow: clip;
-  }
-  
-  @media (min-width:991px) {
-  
-  
-  .bm-portfolio-section-20-card::before {
-    content: '';
-    position: absolute;
-    inline-size: 50px;
-    block-size: 50px;
-    z-index: 1;
-    transition: all 0.5s ease;
-    opacity: 0;
-    background-color: color-mix(in srgb, var(--fs-0) 20%, transparent);
-    border-radius: 100%;
-  }
-  
-   .bm-portfolio-section-20-card:hover::before {
-    inline-size: 200%;
-    block-size: 200%;
-    opacity: 1;
-    border-radius: 100%;
-    background-color: color-mix(in srgb, var(--fs-0) 70%, transparent);
-    
-  }
-  
-  .bm-portfolio-section-20-card__heading {
-    transform: translateY(400%);
-    transition: 0.2s ease-out;
-  }
-  
-  .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__heading {
-    transform: translateY(0%);
-  }
-  
-  .bm-portfolio-section-20-card__text, .bm-portfolio-section-20-card__results, .bm-portfolio-section-20-card__text-link {
-    transform: translateY(100%);
-    transition: 0.2s ease;
-    opacity: 0;
-  }
-  
-  .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__text, .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__results, .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__text-link {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,103 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-9-container">
-    <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">{heading}</h2>
-      <p class="hworks-intro__accent-heading">AWESOME TAGLINE</p>
-    </div>
-    <div class="hworks-9-grid-ul list--none">
-      {items.map((it) => (
-        <div class="hworks-9-card">
-          <div class="hworks-9-card__content">
-            <h2 class="hworks-9-card__heading">{it.title}</h2>
-            <p class="hworks-9-card__desc">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">AWESOME TAGLINE</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-9-container {
-    width: 64.5rem;
-    align-items: center;
-    row-gap: var(--space-l);
-  }
-
-  .hworks-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    text-align: center;
-  }
-
-  .hworks-intro__heading {
-    margin: 0 0 0 0;
-  }
-
-  .hworks-9-grid-ul {
-    row-gap: var(--space-l);
-    flex-direction: column;
-    display: flex;
-  }
-
-  .hworks-9-card {
-    align-items: center;
-    position: relative;
-    display: flex;
-    column-gap: var(--space-l);
-  }
-
-  .hworks-9-card__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    row-gap: var(--space-s);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-  }
-
-  /* bm-custom */
-  .hworks-9-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-9-grid-ul li::before {
-    /* Increment Counter */
-     counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") "";
-    background-color: var(--action-primary);
-    padding-inline:1.8rem;
-    padding-block:1rem;
-    color:var(--bg-canvas);
-    font-size: var(--fs-1);
-    font-weight: 700;
-    border-radius: 100%
-    
-  }
-  
-  .hworks-9-grid-ul li::after {
-    content: "step";
-    padding-inline:1.8rem;
-    padding-block:1rem;
-    color:var(--fs-0);
-    font-size: var(--fs-1);
-    position: absolute;
-    left: -10px;
-    top: 60%;
-  }
-</style>

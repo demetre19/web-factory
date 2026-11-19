@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,189 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-36__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="content-36__2col-wrapper list--none">
-      <div class="content-36-card">
-        <div class="content-36-card__intro">
-          <h2 class="content-36-card__heading clickable-parent">Long headline to turn your visitors into users</h2>
-          <p class="content-36-card__accent">Accent Heading</p>
-          <p class="content-36-card__text">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.</p>
+      <div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Long headline to turn your visitors into users</h2>
+            <p class="text-fluid-0">Accent Heading</p>
+            <p class="text-fluid-0">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div class="content-36-card__media">
-          <figure class="content-36-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Long headline to turn your visitors into users</h2>
+            <p class="text-fluid-0">Accent Heading</p>
+            <p class="text-fluid-0">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="content-36-card">
-        <div class="content-36-card__intro">
-          <h2 class="content-36-card__heading clickable-parent">Long headline to turn your visitors into users</h2>
-          <p class="content-36-card__accent">Accent Heading</p>
-          <p class="content-36-card__text">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken.</p>
-        </div>
-        <div class="content-36-card__media">
-          <figure class="content-36-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-36 {
-    background: var(--color-ink-secondary);
-    overflow: hidden;
-  }
-
-  .content-36__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-36__2col-wrapper {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: calc(var(--space-m) / 2);
-  }
-
-  .content-36-card {
-    position: relative;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) 0;
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-36-card__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-36-card__accent {
-    font-size: var(--fs-0);
-  }
-
-  .content-36-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .content-36-card:focus-within :focus {
-  	outline:none;
-    box-shadow:none;
-  }
-  
-  @media (min-width:767px) {
-  
-  .content-36-card:last-of-type {
-  	padding-left: var(--space-xl);
-    padding-right: 0;
-  }
-  
-  .content-36-card::before {
-    content: '';
-    position: absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    width: 50vw;
-    height:100%;
-    background: linear-gradient( color-mix(in srgb, var(--text-secondary) 30%, transparent), var(--color-ink-secondary));
-    transition: .3s ease-in-out;
-    border-top-right-radius: var(--r-card) ;
-    z-index:-1;
-  }
-  
-  .content-36-card:last-of-type::before {
-    content: '';
-    position: absolute;
-    top:0;
-    left:0;
-    width: 50vw;
-    height:100%;
-    background: linear-gradient( color-mix(in srgb, var(--text-secondary) 30%, transparent), var(--color-ink-secondary));
-    transition: .3s ease-in-out;
-    border-top-left-radius: var(--r-card) ;
-  	
-  }
-    
-    .content-36-card:hover::before, .content-36-card:focus-within::before {
-    top: calc(-1 * var(--space-m));
-  }
-  
-  .content-36-card::after {
-    content: '';
-    position: absolute;
-    bottom:0;
-    right:0;
-    width:0;
-    height:3px;
-    background: linear-gradient( 90deg, color-mix(in srgb, var(--text-secondary) 10%, transparent), color-mix(in srgb, var(--text-secondary) 40%, transparent));
-    transition: .3s ease-in-out;
-  	
-  }
-  
-  .content-36-card:hover::after, .content-36-card:focus-within::after {
-  	width: 50vw;
-  }
-  
-  .content-36-card:last-of-type::after {
-    content: '';
-    position: absolute;
-    bottom:0;
-    left:0;
-    width:0;
-    height:3px;
-    background: linear-gradient( 90deg, color-mix(in srgb, var(--text-secondary) 40%, transparent), color-mix(in srgb, var(--text-secondary) 10%, transparent));
-    transition:1s ease-in-out;
-  	
-  }
-  
-  .content-36-card:hover:last-of-type::after, .content-36-card:focus-within:last-of-type::after {
-  	width: 50vw;
-  }
-    
-  }
-</style>

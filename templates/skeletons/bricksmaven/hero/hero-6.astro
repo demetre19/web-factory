@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,51 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-6-container">
-    <div class="hero-6-wrapper__content hero-6__content">
-      <p class="hero-6-wrapper__tag hero-6__accent">TAGLINE</p>
-      <h1 class="herhero-6-wrapper__title hero-6__heading">{heading}</h1>
-      <p class="hero-6-wrapper__desc hero-6__text">{fs}</p>
-      <a class="btn--primary hero-6-wrapper__cta--primary hero-6__button wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-6-wrapper__thumb hero-6__media">
-      <figure class="hero-6-wrapper__img hero-6__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">TAGLINE</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-6-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .hero-6-wrapper__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: var(--space-m);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-6-wrapper__img {
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-  }
-</style>

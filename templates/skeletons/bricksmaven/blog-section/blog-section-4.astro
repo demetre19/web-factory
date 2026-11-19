@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,34 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-section-4-container gap--m">
-    <div class="blog-section-4-head gap--xs flex--col">
-      <h2 class="blog-section-4-head__title">{heading}</h2>
-      <p class="blog-section-4-head__desc">{fs}</p>
-    </div>
-    <div class="blog-section-4-body">
-      <div class="blog-section-4-wrapper list--none">
-        <div class="blog-section-4-card">
-          <div class="blog-section-4-card__media">
-            <figure class="blog-section-4-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-section-4-card__body">
-            <div class="blog-section-4-card__box">
-              <p class="blog-section-4-card__term">{post_terms_category}</p>
-              <h2 class="blog-section-4-card__title">{post_title}</h2>
-              <div class="blog-section-4-card__excerpt"></div>
-              <div class="blog-section-4-card__author">
-                <figure class="blog-section-4-card__author-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                <div class="blog-section-4-card__meta">
-                  <h4 class="blog-section-4-card__name">{author_name}</h4>
-                  <p class="blog-section-4-card__date">{post_date}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{post_terms_category}</p>
+                <h2 class="text-fluid-2">{post_title}</h2>
+                <div></div>
+                <div class="grid-auto gap-fluid-l">
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <div>
+                    <h4 class="text-fluid-2">{author_name}</h4>
+                    <p class="text-fluid-0">{post_date}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -53,87 +58,3 @@ const {
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-section-4-body {
-    width: 100%;
-  }
-
-  .blog-section-4-wrapper {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .blog-section-4-card {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  .blog-section-4-card__thumb {
-    height: 30rem;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .blog-section-4-card__body {
-    padding: 0 2.5rem 0 2.5rem;
-    height: 100%;
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    display: flex;
-  }
-
-  .blog-section-4-card__box {
-    margin: calc( var(--space-m) * -1 ) 0 0 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--bg-canvas);
-    z-index: 1;
-  }
-
-  .blog-section-4-card__term {
-    padding: .4rem .8rem .4rem .8rem;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--action-primary);
-    font-size: var(--fs-0);
-  }
-
-  .blog-section-4-card__author {
-    margin: auto 0 0 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .blog-section-4-card__author-image {
-    width: 6rem;
-    height: 6rem;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .blog-section-4-card__meta {
-    text-align: left;
-  }
-
-  /* bm-custom */
-  .blog-section-4-card__term a {
-  	color: var(--bg-canvas);
-  }
-
-  /* bm-custom */
-  .blog-section-4-card__title:not(a) > a::after {
-  	content:"";
-    position:absolute;
-    inset:0;
-    z-index:1;
-    cursor:pointer !important;
-  }
-</style>

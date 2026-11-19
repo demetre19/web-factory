@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,119 +17,46 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-22-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="hworks-22-tabs">
-      <div class="hworks-22-tab-menu">
-        {items.map((it) => (
-          <div class="hworks-22-tabs__title">
-            <p class="hworks-22-tabs__number">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="hworks-22-tab-content">
-        {items.map((it) => (
-          <div class="hworks-22-tabs__pane">
-            <div class="hworks-22-tabs__content">
-              <div class="hworks-22-tabs__intro">
-                <h2 class="hworks-22-tabs__heading">{it.title}</h2>
-                <p class="hworks-22-tabs__text">{it.text}</p>
-              </div>
-              <div class="hworks-22-tabs__media">
-                <figure class="hworks-22-tabs__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-22-container {
-    align-items: center;
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .hworks-22-tab-menu {
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-  }
-
-  .hworks-22-tabs__title {
-    position: relative;
-  }
-
-  .hworks-22-tabs__number {
-    font-size: var(--fs-0);
-  }
-
-  .hworks-22-tabs__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: .1rem solid var(--bg-subtle);
-    border-right: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    border-left: .1rem solid var(--bg-subtle);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .hworks-22-tabs__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hworks-22-tabs__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .hworks-22-tabs {
-  	display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-    width: 100%;
-    max-width: 76rem;
-  }
-  
-  .hworks-22-tab-menu {
-  	grid-column:span 2;
-  }
-  
-  .hworks-22-tab-content {
-  	grid-column:span 10;
-  }
-
-  /* bm-custom */
-  .hworks-22-tab-menu::before {
-  	content: "";
-    position: absolute;
-    width: .1rem;
-    height: 100%;
-    border: .1rem solid var(--action-primary);
-  }
-</style>

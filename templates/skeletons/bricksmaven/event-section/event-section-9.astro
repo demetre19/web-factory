@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,246 +17,75 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-event-section-9__container">
-    <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">{heading}</h2>
-      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-event-section-9__event-list list--none">
-      {items.map((it) => (
-        <div class="bm-event-section-9-card">
-          <div class="bm-event-section-9-card__content">
-            <div class="bm-event-section-9-card__top">
-              <h2 class="bm-event-section-9-card__heading">{it.title}</h2>
-              <div class="bm-event-section-9-card__mid">
-                <div class="bm-event-section-1-card__date">
-                  <div class="bm-event-section-1-card__icon-wrapper">
-                    <span class="bm-event-section-1-card__icon" data-icon="lucide" aria-hidden="true"></span>
-                  </div>
-                  <div class="bm-event-section-1-card__date-time">
-                    <div class="bm-event-section-1-card__date-wrapper bm-event-section-1-card__date-wrapper--borderless">
-                      <p class="bm-event-section-1-card__date-text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <div>
+                  <div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                    <div>
+                      <div>
+                        <p class="text-fluid-0">{it.text}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="bm-event-section-1-card__location">
-                  <div class="bm-event-section-1-card__icon-wrapper">
-                    <span class="bm-event-section-1-card__icon" data-icon="lucide" aria-hidden="true"></span>
+                  <div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
-                  <p class="bm-event-section-1-card__location-text">{it.text}</p>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <div>
+                  {((it.items || []) || []).map((it2) => (
+                    <div>
+                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <p class="bm-event-section-9-card__text">{it.text}</p>
-            </div>
-            <div class="bm-event-section-4-card__speaker-wrapper">
-              <p class="bm-event-section-4-card__speaker-label">{it.text}</p>
-              <div class="bm-event-speaker-list list--none">
-                {(it.items || []).map((it2) => (
-                  <div class="bm-event-speaker-card">
-                    <figure class="bm-event-speaker-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                  </div>
-                ))}
+              <div>
+                <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
               </div>
             </div>
-            <div class="bm-event-section-9-card__footer">
-              <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+            <div class="grid-auto gap-fluid-l">
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="bm-event-section-9-card__media">
-            <figure class="bm-event-section-9-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            <div class="bm-event-section-9-card__fav-placement">
-              <div class="bm-event-hart-molecule">
-                <span class="bm-event-hart-molecule__unactive" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-              <div class="bm-event-hart-molecule-active">
-                <span class="bm-event-hart-molecule-active__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-event-section-9__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-event-section__intro {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-event-section-9__event-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .bm-event-section-9-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    position: relative;
-    height: 624;
-    justify-content: flex-end;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-event-section-9-card__content {
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-  }
-
-  .bm-event-section-9-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-9-card__mid {
-    column-gap: calc(var(--flow-spacing) / 4);
-    row-gap: calc(var(--flow-spacing) / 4);
-    display: flex;
-    flex-direction: row;
-  }
-
-  .bm-event-section-1-card__date {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-event-section-1-card__date-time {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-event-section-1-card__date-wrapper {
-    padding: 0 calc(var(--space-xs) / 2) 0 0;
-    border-right: 1 solid var(--text-secondary);
-  }
-
-  .bm-event-section-1-card__date-wrapper--borderless {
-    width: auto;
-    padding: 0 0 0 0;
-  }
-
-  .bm-event-section-1-card__date-text {
-    font-weight: 700;
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-1-card__location {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-1-card__location-text {
-    font-weight: 700;
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-4-card__speaker-wrapper {
-    flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-4-card__speaker-label {
-    font-weight: 700;
-  }
-
-  .bm-event-speaker-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  .bm-event-speaker-card__image {
-    width: 48;
-    height: 48;
-    border-top: 1 solid var(--bg-canvas);
-    border-right: 1 solid var(--bg-canvas);
-    border-bottom: 1 solid var(--bg-canvas);
-    border-left: 1 solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-event-section-9-card__footer {
-    align-items: stretch;
-  }
-
-  .bm-event-section-9-card__media {
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .bm-event-section-9-card__image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-event-section-9-card__fav-placement {
-    position: absolute;
-    top: var(--space-s);
-    right: var(--space-s);
-  }
-
-  .bm-event-hart-molecule {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1 solid var(--bg-subtle);
-    border-right: 1 solid var(--bg-subtle);
-    border-bottom: 1 solid var(--bg-subtle);
-    border-left: 1 solid var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    background: var(--bg-canvas);
-  }
-
-  .bm-event-hart-molecule-active {
-    width: 40px;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-    border-top: 1 solid var(--bg-subtle);
-    border-right: 1 solid var(--bg-subtle);
-    border-bottom: 1 solid var(--bg-subtle);
-    border-left: 1 solid var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    background: var(--text-secondary);
-    display: none;
-  }
-
-  /* bm-custom */
-  .bm-event-speaker-card:not(:first-child) {
-    margin-inline-start: calc(-1 * (var(--space-xs) / 3));
-  }
-</style>

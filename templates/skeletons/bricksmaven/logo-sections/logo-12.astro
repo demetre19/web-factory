@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,94 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="logo-12__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="logo-12__logo-list-wrapper">
-      <div class="logo-12-list">
-        <div class="logo-12-list-item">
-          <figure class="logo-12-list-item__brand"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .logo-12 {
-    overflow: hidden;
-  }
-
-  .logo-12__container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .logo-12__logo-list-wrapper {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .logo-12-list {
-    flex-direction: row;
-  }
-
-  .logo-12-list-item__brand {
-    object-fit: contain;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .logo-12__logo-list-wrapper::before {
-  	content:'';
-    position: absolute;
-    left:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
-    z-index: 99;
-  }
-  
-  .logo-12__logo-list-wrapper::after {
-  	content:'';
-    position: absolute;
-    right:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
-    z-index: 99;
-  }
-
-  /* bm-custom */
-  .logo-12-list  .splide__track{
-  	overflow:visible;
-  }
-  
-  .logo-12-list .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .logo-12-list :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-</style>

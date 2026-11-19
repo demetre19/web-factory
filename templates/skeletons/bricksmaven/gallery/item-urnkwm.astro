@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,48 +17,22 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gallery-3-container">
-    <div class="gallery-3-row">
-      <h2 class="gallery-3-title">{heading}</h2>
-      <p class="gallery-3-desc">{fs}</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="gallery-3-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gallery-3-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-xl);
-    row-gap: var(--space-xl);
-  }
-
-  .gallery-3-row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-s);
-    row-gap: var(--space-s);
-    width: 100%;
-    text-align: center;
-  }
-
-  .gallery-3-img {
-    height: 54rem;
-    object-fit: cover;
-    width: 100%;
-    border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
-  }
-</style>

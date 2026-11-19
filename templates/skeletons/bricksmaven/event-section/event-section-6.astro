@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,154 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-event-section-6__container">
-    <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">{heading}</h2>
-      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-event-section-6-event-list list--none">
-      {items.map((it) => (
-        <div class="bm-event-section-6-event-card">
-          <div class="bm-event-section-6-event-card__date">
-            <p class="bm-event-section-6-event-card__day-week">{it.text}</p>
-            <p class="bm-event-section-6-event-card__day">{it.text}</p>
-            <p class="bm-event-section-6-event-card__month-year">{it.text}</p>
-          </div>
-          <div class="bm-event-section-6-event-card__heading-wrapper">
-            <h2 class="bm-event-section-6-event-card__heading">{it.title}</h2>
-            <p class="bm-event-section-6-event-card__text">{it.text}</p>
-          </div>
-          <div class="bm-event-section-6-card__speaker-wrapper">
-            <p class="bm-event-section-4-card__speaker-label">{it.text}</p>
-            <div class="bm-event-speaker-list list--none">
-              {(it.items || []).map((it2) => (
-                <div class="bm-event-speaker-card">
-                  <figure class="bm-event-speaker-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                </div>
-              ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
           </div>
-          <div class="bm-event-meta-info bm-event-meta-info--alt">
-            <span class="bm-event-meta-info__icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="bm-event-meta-info__location">{it.text}</p>
-          </div>
-          <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-event-section-6__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-event-section__intro {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-event-section-6-event-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1 solid var(--text-secondary);
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-event-section-6-event-card__date {
-    display: flex;
-    padding: var(--space-xs) var(--space-s) var(--space-s) var(--space-s);
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    text-align: center;
-    background: var(--bg-subtle);
-    row-gap: calc(var(--flow-spacing) / 6);
-    width: 128;
-    height: 128;
-    justify-content: center;
-  }
-
-  .bm-event-section-6-event-card__day-week {
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-6-event-card__day {
-    font-size: var(--fs-3);
-    font-weight: 700;
-  }
-
-  .bm-event-section-6-event-card__month-year {
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-6-event-card__heading-wrapper {
-    display: flex;
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-direction: column;
-    width: calc(var(--measure) / 1.4);
-  }
-
-  .bm-event-section-6-card__speaker-wrapper {
-    flex-direction: column;
-    align-items: flex-start;
-    column-gap: calc(var(--flow-spacing) / 2);
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: auto;
-  }
-
-  .bm-event-section-4-card__speaker-label {
-    font-weight: 700;
-  }
-
-  .bm-event-speaker-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  .bm-event-speaker-card__image {
-    width: 48;
-    height: 48;
-    border-top: 1 solid var(--bg-canvas);
-    border-right: 1 solid var(--bg-canvas);
-    border-bottom: 1 solid var(--bg-canvas);
-    border-left: 1 solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-event-meta-info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-    background: var(--bg-subtle);
-    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
-  }
-
-  .bm-event-meta-info--alt {
-    padding: 0 0 0 0;
-    background: transparent;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .bm-event-speaker-card:not(:first-child) {
-    margin-inline-start: calc(-1 * (var(--space-xs) / 3));
-  }
-</style>

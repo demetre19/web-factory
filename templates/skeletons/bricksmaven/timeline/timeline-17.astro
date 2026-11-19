@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,133 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-timeline-17__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
       </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-timeline-17__list">
-      <div class="bm-timeline-17__slider-nested">
-        <div class="bm-timeline-17-card">
-          <div class="bm-timeline-17-card__top">
-            <h2 class="bm-timeline-17-card__heading">This is a title heading</h2>
-            <p class="bm-timeline-17-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-          <div class="bm-timeline-17-card__year-wrapper">
-            <p class="bm-timeline-17-card__year">2008</p>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">This is a title heading</h2>
+              <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">2008</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-timeline-17 {
-    overflow: clip;
-  }
-
-  .bm-timeline-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-timeline-17-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-subtle);
-    row-gap: var(--flow-spacing);
-    position: relative;
-  }
-
-  .bm-timeline-17-card__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-timeline-17-card__year-wrapper {
-    display: flex;
-    justify-content: center;
-    align-self: flex-start;
-    align-items: center;
-    position: relative;
-  }
-
-  .bm-timeline-17-card__year {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .bm-timeline-17__slider-nested .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-timeline-17__slider-nested .splide__arrow--next {
-      left: 40px;
-  }
-
-  /* bm-custom */
-  .bm-timeline-17-card::before {
-    content: '';
-    position: absolute;
-    inline-size: calc(100% + var(--space-m));
-    block-size: 2px;
-    background-color: var(--text-secondary);
-    inset-block-start: calc(var(--space-l) + var(--space-s));
-  }
-  
-  .bm-timeline-17-card__year-wrapper {
-    z-index: 1;
-  }
-  
-  .bm-timeline-17-card__year::before {
-    content: '';
-    position: absolute;
-    inline-size: calc(100% + var(--space-m));
-    block-size: 4px;
-    background-color: var(--bg-subtle);
-    inset-block-start: var(--space-s);
-    inset-inline-start: calc(-1 * (var(--space-m) / 2));
-    z-index: -100;
-  }
-</style>

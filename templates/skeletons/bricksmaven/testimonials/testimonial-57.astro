@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,149 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-57-slider__container">
-    <div class="bm-testimonial-57-slider__content">
-      <div class="bm-testimonial-57-slider__inner">
-        <h2 class="bm-testimonial-57-slider__heading">{heading}</h2>
-        <p class="bm-testimonial-57-slider__text">What others are saying about</p>
+  <div class="sec-inner">
+    <div>
+      <div class="grid-auto gap-fluid-l">
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">What others are saying about</p>
+        </div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <figure class="bm-testimonial-57-slider__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="bm-testimonial-57-slider_slider-wrapper">
-      <div class="bm-testimonial-57-slider-comp">
-        {items.map((it) => (
-          <div class="bm-testimonial-57-slider-card">
-            <div class="bm-testimonial-38-star-list list--none">
-              {(it.items || []).map((it2) => (
-                <div class="bm-testimonial-38-star-li">
-                  <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
-                </div>
-              ))}
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
-            <h2 class="bm-testimonial-57-slider-card__heading">{it.title}</h2>
-            <div class="bm-user-data">
-              <p class="bm-user-data__name">{it.text}</p>
-              <p class="bm-user-data__title">{it.text}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-57-slider__container {
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-57-slider__content {
-    height: 100%;
-    position: relative;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-testimonial-57-slider__inner {
-    width: auto;
-    text-align: center;
-    align-items: center;
-  }
-
-  .bm-testimonial-57-slider__heading {
-    text-transform: uppercase;
-    font-size: calc(var(--fs-4) * 1.4);
-    font-weight: 900;
-  }
-
-  .bm-testimonial-57-slider__text {
-    font-weight: 700;
-    font-size: var(--fs-3);
-  }
-
-  .bm-testimonial-57-slider__image {
-    object-fit: unset;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: -1;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    top: 0;
-  }
-
-  .bm-testimonial-57-slider-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-testimonial-38-star-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-testimonial-57-slider-card__heading {
-    font-size: calc(var(--fs-4) * 1.1);
-    line-height: 1;
-  }
-
-  .bm-user-data {
-    row-gap: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-user-data__name {
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .bm-testimonial-57-slider-comp {
-    --icon-dimension: 64px; /* Change the icon dimensions*/
-    --icon-size: 16px; /* Change the icon size*/
-    --icon-opacity: 0.5;  /* Change the icon opacity*/
-  }
-  
-  
-  .bm-testimonial-57-slider-comp .splide__arrow--next {
-    left: var(--space-s);
-    transition: 0.5s ease;
-  }
-  
-  .bm-testimonial-57-slider-comp .splide__arrow--prev {
-    left: calc(-1 * var(--acss-icon-dimension));
-    transition: 0.5s ease;
-  }
-  
-  .bm-testimonial-57-slider-comp .splide__arrows {
-      position: absolute;
-      inset-block-end: var(--space-xl);
-    	inset-inline-start: var(--acss-icon-dimension);
-     	
-  }
-  
-  
-  @media (max-width:767px) {
-    .splide__pagination {
-      display:none;
-    }
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,119 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="team-12-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="team-12-list list--none">
-      {items.map((it) => (
-        <div class="team-12-card">
-          <div class="team-12-card__content">
-            <div class="team-12-card__inner-content">
-              <h2 class="team-12-card__name">{it.title}</h2>
-              <p class="team-12-card__title">{it.text}</p>
-            </div>
-            <div class="bm-social-link-list list--none">
-              <div class="bm-social-list">
-                {(it.items || []).map((it2) => (
-                  <span class="bm-social-list__icon" data-icon="lucide" aria-hidden="true"></span>
-                ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <div>
+                  {((it.items || []) || []).map((it2) => (
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  ))}
+                </div>
               </div>
             </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="team-12-card__media">
-            <figure class="team-12-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .team-12-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .team-12-list {
-    display: grid;
-    gap: calc(var(--space-m) * 1.2);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .team-12-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .team-12-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .team-12-card__inner-content {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .team-12-card__name {
-    font-size: var(--fs-1);
-  }
-
-  .team-12-card__title {
-    font-size: calc(var(--fs-1) / 1.2);
-  }
-
-  .bm-social-list {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .team-12-card__image {
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  /* bm-custom */
-  /* Card */
-  
-  .team-12-card {
-  	transition: .6s ease;
-  }
-  
-  .team-12-card:hover {
-  	background-color: var(--action-primary);
-  }
-  
-  /* Image */
-  
-  .team-12-card__image {
-  	transition: .8s ease-in;
-    filter: grayscale(1);
-  }
-  
-  .team-12-card:hover .team-12-card__image {
-  	filter: grayscale(0);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,93 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-12-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="contact-12-content">
-      <div class="contact-12-content-list-ul list--none">
-        {items.map((it) => (
-          <div class="contact-12-content-list-location">
-            <span class="contact-12-content-list-location__icon" data-icon="lucide" aria-hidden="true"></span>
-            <div class="contact-12-content-list-location__detail">
-              <h2 class="contact-12-content-list-location__title">{it.title}</h2>
-              <p class="contact-12-content-list-location__address">{it.text}</p>
-            </div>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
       </div>
-      <div class="contact-12-content-media">
-        <figure class="contact-12-content-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-12-container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .contact-12-content {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-l);
-  }
-
-  .contact-12-content-list-ul {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .contact-12-content-list-location {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
-
-  .contact-12-content-list-location__detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-xs);
-  }
-
-  .contact-12-content-list-location__title {
-    font-size: var(--fs-1);
-  }
-
-  .contact-12-content-list-location__address {
-    font-size: calc(var(--fs-1) - .4rem);
-  }
-
-  .contact-12-content-media__img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .contact-12-content-list-location__icon {
-  	grid-column: span 1;
-  }
-</style>

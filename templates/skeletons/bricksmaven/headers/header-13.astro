@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,55 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-13__container">
-    <div class="bm-header-13__brand-nav">
-      <div class="bm-header-13__nav-wrapper">
-        <div class="bm-header-13__nav-menu"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-      <div class="bm-header-13__brand">
-        <figure class="bm-header-13__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div></div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-    </div>
-    <div class="bm-header-13__search-button">
-      <div class="bm-search"></div>
-      <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-13 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-  }
-
-  .bm-header-13__container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-header-13__brand-nav {
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-header-13__search-button {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-  }
-</style>

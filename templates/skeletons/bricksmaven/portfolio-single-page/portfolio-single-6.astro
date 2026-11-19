@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,444 +17,106 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-single-6__container">
-    <div class="bm-portfolio-single-6__intro">
-      <h1 class="bm-portfolio-single-6__intro-heading">{heading}</h1>
-      <p class="bm-portfolio-single-6__intro-text">{fs}</p>
-      <div class="bm-portfolio-single-6-breadcrumbs"></div>
-      <div class="bm-portfolio-single-6-expertise-list list--none">
-        {items.map((it) => (
-          <div class="bm-portfolio-single-6-expertise-item">
-            <a class="bm-portfolio-single-6-expertise-item__term-link" href="#">{it.text}</a>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-  <div class="bm-portfolio-single-6-case-container">
-    <div class="bm-portfolio-single-6-case-container__inner">
-      <div class="bm-portfolio-single-6-case-container__slider-nested">
-        {items.map((it) => (
-          <div class="bm-portfolio-single-6-case-container__slide">
-            <figure class="bm-portfolio-single-6-case-container__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-  <div class="bm-portfolio-single-6__content-container">
-    <div class="bm-portfolio-single-6__content">
-      <div class="bm-portfolio-single-6__column">
-        <h2 class="bm-portfolio-single-6__heading">The standard Lorem Ipsum passage, used since the 1500s</h2>
-        <p class="bm-portfolio-single-6__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-      </div>
-      <div class="bm-1col-media">
-        <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-portfolio-single-6__column">
-        <h2 class="bm-portfolio-single-6__heading">Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
-        <p class="bm-portfolio-single-6__text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-      </div>
-      <div class="bm-portfolio-single-testimonial-3">
-        <p class="bm-portfolio-single-testimonial-3__review">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
-        <div class="testimonial-list-card__profile">
-          <div class="testimonial-list-card__meta">
-            <custom class="testimonial-list-card__name">John Doe</custom>
-            <p class="testimonial-list-card__jobtitle">Freelance Developer</p>
-          </div>
-          <div class="testimonial-list-card__media">
-            <figure class="testimonial-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div></div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-    <div class="bm-portfolio-single-6__aside">
-      <div class="bm-live-website-btn">
-        <div class="bm-live-website-btn__dot"></div>
-        <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
       </div>
-      <div class="bm-portfolio-single-6__sticky">
-        <div class="bm-contact-widget-2">
-          <h2 class="bm-contact-widget-2__heading">Ready to start a project?</h2>
-          <div class="bm-contact-widget-2__footer">
-            <div class="bm-contact-widget-2__media">
-              <figure class="bm-contact-widget-2__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">The standard Lorem Ipsum passage, used since the 1500s</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">Section 1.10.33 of "de Finibus Bonorum et Malorum", written by Cicero in 45 BC</h2>
+          <p class="text-fluid-0">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+          <div>
+            <div>
+              <custom class="text-fluid-2">John Doe</custom>
+              <p class="text-fluid-0">Freelance Developer</p>
             </div>
-            <div class="bm-contact-widget-2__data">
-              <p class="bm-contact-widget-2__name">Alan Smith</p>
-              <p class="bm-contact-widget-2__title">Account manager</p>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="bm-contact-widget-link">
-              <div class="bm-contact-widget-link__icon-wrapper">
-                <span class="bm-contact-widget-link__icon" data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div></div>
+          <p class="text-fluid-0">Visit website</p>
+        </div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Ready to start a project?</h2>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
-              <p class="bm-contact-widget-link__data clickable-parent">+000 123 456 789</p>
+              <div>
+                <p class="text-fluid-0">Alan Smith</p>
+                <p class="text-fluid-0">Account manager</p>
+              </div>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">+000 123 456 789</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="bm-portfolio-single-6__footer-container">
-    <h2 class="bm-portfolio-single-6__related-heading">Check out our other works</h2>
-    <div class="bm-portfolio-5-related-list list--none">
-      <div class="bm-portfolio-5-related-card">
-        <h2 class="bm-portfolio-5-related-card__heading">SlintEngine grows 20%</h2>
-        <figure class="bm-portfolio-5-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-portfolio-5-related-card">
-        <h2 class="bm-portfolio-5-related-card__heading">300 leads in 3 months</h2>
-        <figure class="bm-portfolio-5-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <h2 class="text-fluid-2">Check out our other works</h2>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <h2 class="text-fluid-2">SlintEngine grows 20%</h2>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div class="grid-auto gap-fluid-l">
+          <h2 class="text-fluid-2">300 leads in 3 months</h2>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-single-6 {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-6__intro {
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-  }
-
-  .bm-portfolio-single-6__intro-heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .bm-portfolio-single-6__intro-text {
-    font-size: var(--fs-2);
-    width: 100%;
-  }
-
-  .bm-portfolio-single-6-breadcrumbs {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-single-6-expertise-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-6-expertise-item {
-    background: var(--bg-subtle);
-    padding: calc(var(--space-xs) / 4) var(--space-xs) calc(var(--space-xs) / 4) var(--space-xs);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-single-6-expertise-item__term-link {
-    font-size: var(--fs-0);
-  }
-
-  .bm-portfolio-single-6-case-container {
-    align-items: flex-start;
-    overflow: hidden;
-  }
-
-  .bm-portfolio-single-6-case-container__slide {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-single-6-case-container__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-single-6__content-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-portfolio-single-6__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-6__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-1col-media__image {
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-  }
-
-  .bm-portfolio-single-testimonial-3 {
-    row-gap: var(--flow-spacing);
-    padding: calc(var(--section-space-xxl) * 1.3) var(--space-xl) var(--space-xl) var(--space-xl);
-    background: var(--text-secondary);
-  }
-
-  .bm-portfolio-single-testimonial-3__review {
-    position: relative;
-    font-size: var(--fs-3);
-    width: 100%;
-  }
-
-  .testimonial-list-card__profile {
-    display: flex;
-    column-gap: 1rem;
-    align-items: center;
-  }
-
-  .testimonial-list-card__meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(--content-gap / 2);
-  }
-
-  .testimonial-list-card__name {
-    font-weight: 700;
-  }
-
-  .testimonial-list-card__jobtitle {
-    font-size: var(--fs-0);
-  }
-
-  .testimonial-list-card__image {
-    object-fit: cover;
-    width: 5rem;
-    height: 5rem;
-    overflow: hidden;
-    border-radius: 50% 50% 50% 50%;
-  }
-
-  .bm-portfolio-single-6__aside {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-live-website-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 4);
-    background: var(--action-primary);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    position: relative;
-  }
-
-  .bm-live-website-btn__dot {
-    width: 8;
-    height: 8;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-portfolio-single-6__sticky {
-    position: sticky;
-    top: var(--space-m);
-  }
-
-  .bm-contact-widget-2 {
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-widget-2__footer {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-widget-2__image {
-    object-fit: cover;
-    width: 128;
-    height: 128;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-contact-widget-2__name {
-    font-weight: 700;
-  }
-
-  .bm-contact-widget-link {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    background: var(--color-ink-secondary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    position: relative;
-  }
-
-  .bm-contact-widget-link__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    width: 32;
-    height: 32;
-  }
-
-  .bm-portfolio-single-6__footer-container {
-    row-gap: var(--space-s);
-    align-items: center;
-    padding: var(--section-space-m) 0 0 0;
-  }
-
-  .bm-portfolio-single-6__related-heading {
-    font-size: calc(var(--fs-4) * 2);
-    text-align: center;
-    width: 100%;
-  }
-
-  .bm-portfolio-5-related-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portfolio-5-related-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-5-related-card__image {
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-single-6-expertise-item {
-    transition: .5s linear;
-  }
-  
-  .bm-portfolio-single-6-expertise-item:hover {
-    background-color: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  @media (min-width: 1329px) {
-  
-  .bm-portfolio-single-6-case-container {
-    width: calc(((100vw - var(--content-width)) / 2) + var(--content-width));
-    max-width: calc(((100vw - var(--content-width)) / 2) + var(--content-width));
-    margin-inline-start:calc(((99.3% - var(--content-width)) / 2)) ;
-    position: relative;
-  }
-  
-  }
-
-  /* bm-custom */
-  .bm-portfolio-single-6-case-container__slider-nested .splide__track {
-      overflow: visible;
-  }
-  
-  @layer bricks {
-      .bm-portfolio-single-6-case-container__slider-nested .splide__arrows.custom {
-      	display: flex !important;
-        flex-direction: column;
-    		gap: var(--space-s);
-      }
-    }
-  
-  .bm-portfolio-single-6-case-container__slider-nested .splide__arrows {
-    position: absolute;
-    top: 50%; 
-    transform: translateY(-30%);
-    left: var(--space-l);
-    
-  }
-  
-  .bm-portfolio-single-6-case-container__slider-nested .splide__arrow {
-      position: static;
-    transition: 1s ease;
-  
-  }
-  
-  .bm-portfolio-single-6-case-container__slider-nested .splide__arrow:hover {
-      border: 1px solid var(--bg-subtle);
-      border-radius: 100%;
-    background-color: var(--action-primary);
-    color: var(--bg-canvas);
-  }
-  
-  .bm-portfolio-single-6-case-container__slider-nested .bm-portfolio-single-6-case-container__slide {
-    transition: .5s ease;
-  }
-  
-  /* Add Blur to next slide */
-  .bm-portfolio-single-6-case-container__slider-nested .bm-portfolio-single-6-case-container__slide:not(.is-visible) {
-    filter: blur(3px);
-    opacity: .5;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-single-testimonial-3__review::before {
-    content: ' " ';
-    position: absolute;
-    top: calc(-1 * (var(--space-xl) * 1.3));
-    font-size: calc(var(--fs-4) * 3);
-    line-height: 1;
-    left: calc(-1 * (var(--space-xs) / 1.4));
-    
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn__dot {
-    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
-    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
-  	--animation-duration-up: 1.2s;
-    --shadow-light: var(--shadow-card);
-    --shadow-heavy: var(--shadow-card);
-    --animation-iteration-count: infinite;
-    --animation-direction: alternate;
-    --animation-timing-function-up: linear;
-  }
-  
-  /* Define the animation for the first child */
-  .bm-live-website-btn__dot{
-    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes glow {
-    0% {
-      box-shadow: var(--shadow-card);
-    }
-    100% {
-      box-shadow: var(--shadow-card);
-    }
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn__text {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  .bm-contact-widget-link__data {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .bm-portfolio-5-related-card:last-child {
-    margin-block-start: var(--space-xl);
-  }
-    
-  }
-</style>

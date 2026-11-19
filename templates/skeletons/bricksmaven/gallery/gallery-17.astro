@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,105 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-gallery-17__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__accent-heading">Accent heading</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
       </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-    </div>
-    <div class="bm-gallery__slider">
-      <div class="bm-gallery__media">
-        <figure class="bm-gallery__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-    </div>
-    <div class="bm-gallery__slider--2">
-      <div class="bm-gallery__media">
-        <figure class="bm-gallery__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-gallery-17 {
-    overflow: hidden;
-  }
-
-  .bm-gallery-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--split {
-    display: grid;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-gallery__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-gallery__slider  .splide__track{
-  	overflow:visible;
-  }
-  
-  .bm-gallery__slider .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .bm-gallery__slider :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-
-  /* bm-custom */
-  .bm-gallery__slider--2  .splide__track{
-  	overflow:visible;
-  }
-  
-  .bm-gallery__slider--2 .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .bm-gallery__slider--2 :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,75 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-22-container">
-    <div class="hero-22-content">
-      <div class="hero-22-content__wrapper">
-        <h1 class="hero-22-content__heading">{heading}</h1>
-        <p class="hero-22-content__desc">{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="hero-22-content__accent-heading">Tagline</p>
-        <figure class="hero-22-content__background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">Tagline</p>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-22 {
-    height: 90vh;
-    position: relative;
-  }
-
-  .hero-22-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .hero-22-content__wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--space-s);
-    margin: 0 0 var(--section-space-xxl) 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-22-content__accent-heading {
-    margin: 0 0 0 0;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  .hero-22-content__background {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -5;
-    width: 100%;
-    height: 100%;
-  }
-</style>

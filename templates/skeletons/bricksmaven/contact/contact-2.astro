@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,169 +17,63 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-2-container">
-    <div class="contact-2-content">
-      <div class="contact-content__intro">
-        <h2 class="contact-content__heading">{heading}</h2>
-        <p class="contact-content__desc">{fs}</p>
-      </div>
-      <div class="contact-2-sales-grid-ul list--none">
-        <div class="contact-2-sales-card">
-          <h2 class="contact-2-sales-card__name">Jane Doe</h2>
-          <p class="contact-2-sales-card__title">Sales</p>
-          <div class="contact-2-sales-card__contact-information">
-            <p class="contact-2-sales-card__tel-mail">+32 465 45 37 15</p>
-            <p class="contact-2-sales-card__tel-mail">hi@bricksmaven.com</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Jane Doe</h2>
+            <p class="text-fluid-0">Sales</p>
+            <div>
+              <p class="text-fluid-0">+32 465 45 37 15</p>
+              <p class="text-fluid-0">hi@bricksmaven.com</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="contact-2-sales-card__media">
-            <figure class="contact-2-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <h2 class="text-fluid-2">Jane Doe</h2>
+            <p class="text-fluid-0">Senior Consultant</p>
+            <div>
+              <p class="text-fluid-0">+32 465 45 37 15</p>
+              <p class="text-fluid-0">hi@bricksmaven.com</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
         </div>
-        <div class="contact-2-sales-card">
-          <h2 class="contact-2-sales-card__name">Jane Doe</h2>
-          <p class="contact-2-sales-card__title">Senior Consultant</p>
-          <div class="contact-2-sales-card__contact-information flex--col">
-            <p class="contact-2-sales-card__tel-mail">+32 465 45 37 15</p>
-            <p class="contact-2-sales-card__tel-mail">hi@bricksmaven.com</p>
-          </div>
-          <div class="contact-2-sales-card__media">
-            <figure class="contact-2-sales-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+        <div>
+          <h2 class="text-fluid-2">Do you have a question for us? Don’t hesitate and send us a mail</h2>
+          <form novalidate>
+          </form>
         </div>
       </div>
-      <div class="contact-form">
-        <h2 class="contact-form__heading">Do you have a question for us? Don’t hesitate and send us a mail</h2>
-        <form class="contact-form__fields" novalidate>
-        </form>
-      </div>
-    </div>
-    <div class="contact-aside">
-      <h2 class="contact-aside__heading">Contact</h2>
-      <div class="contact-aside-list list--none">
-        {items.map((it) => (
-          <div class="contact-aside-list-item">
-            <span class="contact-aside-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="contact-aside-list-item__text">{it.text}</p>
-          </div>
-        ))}
+      <div>
+        <h2 class="text-fluid-2">Contact</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-2-container {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: var(--space-m);
-  }
-
-  .contact-2-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-  }
-
-  .contact-content__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    width: 100%;
-  }
-
-  .contact-2-sales-grid-ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-l);
-  }
-
-  .contact-2-sales-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-    text-align: center;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .contact-2-sales-card__contact-information {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .contact-2-sales-card__media {
-    display: flex;
-    align-items: center;
-  }
-
-  .contact-2-sales-card__image {
-    width: 12.7rem;
-    height: 12.7rem;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-  }
-
-  .contact-aside {
-    display: flex;
-    background: var(--action-primary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    flex-direction: column;
-    row-gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .contact-aside-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-  }
-
-  .contact-aside-list-item {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-xs);
-  }
-
-  .contact-aside-list-item__text {
-    font-style: normal;
-  }
-
-  /* bm-custom */
-  .contact-form__fields .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-form__fields .required:after{
-  color: var(--action-primary);
-  }
-  
-  .contact-form__fields input:focus {
-  outline-offset: 0;
-  }
-  
-  
-  .contact-form__fields textarea:focus {
-  outline-offset: 0;
-  }
-</style>

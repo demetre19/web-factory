@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,116 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="timeline-15-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="timeline-15-list list--none">
-      <div class="timeline-15-card">
-        <div class="timeline-15-card__content">
-          <div class="timeline-15-card__intro">
-            <h2 class="timeline-15-card__heading">{post_title}</h2>
-            <p class="timeline-15-card__date">{post_date}</p>
-            <p class="timeline-15-card__text">{post_excerpt}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <p class="text-fluid-0">{post_date}</p>
+              <p class="text-fluid-0">{post_excerpt}</p>
+            </div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
           </div>
-          <a class="btn--primary timeline-15-card__btn wf-cta-button" href={cta.href}>{cta.label}</a>
-        </div>
-        <div class="timeline-15-card__media">
-          <figure class="timeline-15-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="timeline-15-card__timeline">
-          <div class="timeline-15-card__circle"></div>
-          <div class="timeline-15-card__line"></div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .timeline-15 {
-    padding: 0 0 0 0;
-  }
-
-  .timeline-15-container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .timeline-15-list {
-    width: 100%;
-  }
-
-  .timeline-15-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(24, minmax(0, 1fr));
-  }
-
-  .timeline-15-card__content {
-    row-gap: var(--flow-spacing);
-    padding: 0 0 var(--space-xl) 0;
-  }
-
-  .timeline-15-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .timeline-15-card__date {
-    font-size: var(--fs-0);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .timeline-15-card__media {
-    align-items: center;
-    padding: 0 var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .timeline-15-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .timeline-15-card__timeline {
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
-  .timeline-15-card__circle {
-    width: .8rem;
-    height: .8rem;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .timeline-15-card__line {
-    width: .1rem;
-    height: 100%;
-    background: var(--color-line-default);
-  }
-</style>

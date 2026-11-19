@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,145 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-2-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+    </div>
+    <div>
+      {(items || []).map((it) => (
+        <div>
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
-  <div class="feature-2-ul list--none">
-    {items.map((it) => (
-      <div class="feature-2-li">
-        <div class="feature-2-li__content">
-          <h2 class="feature-2-li__title">{it.title}</h2>
-          <p class="feature-2-li__desc">{it.text}</p>
-          <a class="feature-2-li__cta wf-cta-button" href={it.href}>{it.label}</a>
-          <span class="feature-2-li__icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-        <div class="feature-2-li__media-container">
-          <figure class="feature-2-li__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-    ))}
-  </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-2 {
-    display: flex;
-    row-gap: var(--space-l);
-    overflow: hidden;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-2-li__content {
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
-    row-gap: var(--space-xs);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    margin: 0 0 0 auto;
-    background: var(--bg-canvas);
-  }
-
-  .feature-2-li__cta {
-    background: var(--bg-canvas);
-    padding: 0 0 0 0;
-  }
-
-  .feature-2-li__icon {
-    border-radius: 10rem 10rem 10rem 10rem;
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .feature-2-li__image {
-    object-fit: cover;
-    width: calc(50vw + ((var(--content-width) / 12) * 3));
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .feature-2-li {
-  		display:grid;
-    	grid-template-columns:repeat(12, minmax(0, 1fr));
-    	align-items:center;
-    	margin-bottom:var(--space-xl);
-  }
-  
-  .feature-2-li:last-of-type {
-    	margin-bottom:0;
-  }
-  
-  .feature-2-li:nth-of-type(even) .feature-2-li__media-container{
-  		grid-column: 1 / 10;
-    	grid-row-start: 1;
-    display:flex;
-    flex-direction: column;
-    align-items: end;
-  }
-  
-  .feature-2-li:nth-of-type(even) .feature-2-li__content{
-  		grid-column: 8 / -1;
-    	grid-row-start: 1;
-  }
-  
-  .feature-2-li .feature-2-li__content{
-  	grid-column: 1 / 6;
-    grid-row-start: 1;
-    z-index:1;
-  }
-  
-  .feature-2-li .feature-2-li__media-container{
-  	grid-column: 4 / -1;
-    grid-row-start: 1;
-  }
-  
-  
-  @media (max-width: 768px){
-        .feature-2-li {
-          grid-template-columns:repeat(1, minmax(0, 1fr));
-          margin-bottom:0;
-      }
-  
-      .feature-2-li .feature-2-li__content{
-        grid-column: 1 / -1;
-        grid-row-start: 2;
-      }
-  
-      .feature-2-li .feature-2-li__media-container{
-        grid-column: 1 / -1;
-        grid-row-start: 1;
-        order:-1;
-      }
-    
-    .feature-2-li:nth-of-type(even) .feature-2-li__media-container{
-  		grid-column: 1 / -1;
-    	grid-row-start: 1;
-      align-items: start;
-  }
-  
-      .feature-2-li:nth-of-type(even) .feature-2-li__content{
-          grid-column: 1 / -1;
-          grid-row-start: 2;
-      }
-  }
-</style>

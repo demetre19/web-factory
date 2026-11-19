@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,64 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-2-container">
-    <div class="hworks-grid-ul list--none">
-      {items.map((it) => (
-        <div class="hworks-card">
-          <div class="hworks-card__content">
-            <h2 class="hworks-card__heading">{it.title}</h2>
-            <p class="hworks-card__desc">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-s);
-  }
-
-  .hworks-card {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    column-gap: var(--space-s);
-  }
-
-  .hworks-card__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  /* bm-custom */
-  .hworks-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-grid-ul li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:1.4rem;
-    padding-block:.4rem;
-    color:var(--action-primary);
-  }
-</style>

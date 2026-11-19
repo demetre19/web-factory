@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,86 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-7-container gap--l">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Pricing tagline</p>
-    </div>
-    <div class="pricing-7-content">
-      {items.map((it) => (
-        <div class="pricing-7-card">
-          <h3 class="pricing-7-card__heading">{it.title}</h3>
-          <div class="bm-ul-benefits list--none">
-            {(it.items || []).map((it2) => (
-              <div class="bm-li-benefits">
-                <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-li-benefits__text">{it2.text}</p>
-              </div>
-            ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Pricing tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h3 class="text-fluid-2">{it.title}</h3>
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it2.text}</p>
+                </div>
+              ))}
+            </div>
+            <p class="text-fluid-0">{it.text}</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            <span data-icon="lucide" aria-hidden="true"></span>
           </div>
-          <p class="pricing-7-card__price">{it.text}</p>
-          <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
-          <span class="pricing-7-card__icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .pricing-7-content {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    gap: var(--space-m);
-  }
-
-  .pricing-7-card {
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    flex-direction: column;
-  }
-
-  .bm-li-benefits {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .pricing-7-card__price {
-    font-size: var(--space-l);
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .pricing-7-card:nth-child(2) {
-  
-  	box-shadow: var(--shadow-card);
-  
-  }
-</style>

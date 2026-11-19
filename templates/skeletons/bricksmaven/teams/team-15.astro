@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,109 +17,58 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="team-15-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="team-15-list list--none">
-      <div class="team-15-card">
-        <div class="team-15-card__content">
-          <div class="team-15-card__intro">
-            <h2 class="team-15-card__heading">I am a heading</h2>
-            <p class="team-15-card__title">Title here</p>
-          </div>
-          <div class="team-15-card__footer">
-            <div class="team-15-card__email-wrapper">
-              <span class="team-15-card__icon" data-icon="lucide" aria-hidden="true"></span>
-              <p class="team-15-card__link">support@bricksmaven.com</p>
-            </div>
-          </div>
-        </div>
-        <div class="team-15-card__media">
-          <figure class="team-15-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="team-15-card">
-        <div class="team-15-card__content">
-          <div class="team-15-card__intro">
-            <h2 class="team-15-card__heading">I am a heading</h2>
-            <p class="team-15-card__title">Title here</p>
-          </div>
-          <div class="team-15-card__footer">
-            <div class="team-15-card__email-wrapper">
-              <span class="team-15-card__icon" data-icon="lucide" aria-hidden="true"></span>
-              <p class="team-15-card__link">support@bricksmaven.com</p>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">I am a heading</h2>
+              <p class="text-fluid-0">Title here</p>
+            </div>
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+                <p class="text-fluid-0">support@bricksmaven.com</p>
+              </div>
             </div>
           </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
-        <div class="team-15-card__media">
-          <figure class="team-15-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">I am a heading</h2>
+              <p class="text-fluid-0">Title here</p>
+            </div>
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+                <p class="text-fluid-0">support@bricksmaven.com</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .team-15-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .team-15-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .team-15-card {
-    background: var(--bg-subtle);
-  }
-
-  .team-15-card__content {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
-    height: 20rem;
-  }
-
-  .team-15-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-15-card__footer {
-    border-top: .1rem solid var(--bg-subtle);
-    padding: var(--space-s) 0 0 0;
-  }
-
-  .team-15-card__email-wrapper {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-15-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-</style>

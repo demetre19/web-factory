@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,47 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-33-container">
-    <div class="content-33__media">
-      <figure class="content-33__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
-  </div>
-  <div class="content-3-container--alt">
-    <div class="content-33__content">
-      <h2 class="content-33__heading">{heading}</h2>
-      <p class="accent-h">Accent heading</p>
-      <p class="content-33__text">{fs}</p>
-    </div>
-    <div class="content-33__data">
-      <div class="content-33-data-list list--none">
-        <div class="content-33-data-item">
-          <div class="content-33-data-item__number-wrapper">
-            <p class="content-33-data-item__number">98</p>
-            <p class="content-33-data-item__suffix">%</p>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">98</p>
+              <p class="text-fluid-0">%</p>
+            </div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">Positive Feedback</p>
           </div>
-          <span class="content-33-data-item__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="content-33-data-item__label">Positive Feedback</p>
-        </div>
-        <div class="content-33-data-item">
-          <div class="content-33-data-item__number-wrapper">
-            <p class="content-33-data-item__number">15</p>
-            <p class="content-33-data-item__suffix">+</p>
+          <div>
+            <div>
+              <p class="text-fluid-0">15</p>
+              <p class="text-fluid-0">+</p>
+            </div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">Years of Experience</p>
           </div>
-          <span class="content-33-data-item__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="content-33-data-item__label">Years of Experience</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-33 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .content-33-container {
-    position: relative;
-  }
-
-  .content-33__image {
-    object-fit: cover;
-    position: relative;
-    width: calc(50vw + (var(--content-width) / 2));
-    height: 45rem;
-  }
-
-  .content-3-container--alt {
-    position: relative;
-    display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
-    z-index: 1;
-    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
-  }
-
-  .content-33__content {
-    padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
-    row-gap: var(--flow-spacing);
-    background: var(--bg-canvas);
-  }
-
-  .content-33__heading {
-    font-size: calc(var(--fs-3) * 1.4);
-  }
-
-  .content-33__data {
-    justify-content: flex-end;
-  }
-
-  .content-33-data-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .content-33-data-item {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: calc(var(--flow-spacing) / 4);
-    background: var(--bg-subtle);
-  }
-
-  .content-33-data-item__number-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .content-33-data-item__number {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .content-33-data-item__suffix {
-    font-size: var(--fs-2);
-  }
-</style>

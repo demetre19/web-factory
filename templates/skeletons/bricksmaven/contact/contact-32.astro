@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,101 +17,43 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-32__container">
-    <div class="bm-contact-32__content">
-      <div class="bm-contact-32__top">
-        <h1 class="bm-contact-32__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-      </div>
-      <p class="bm-contact-32__text">{fs}</p>
-      <div class="bm-accordion-clean">
-        {items.map((it) => (
-          <div class="bm-accordion-clean-card">
-            <div class="bm-accordion-clean-card__title">
-              <h3 class="bm-accordion-clean-card__heading">{it.title}</h3>
-              <div class="bm-accordion-clean-card__icon-wrapper">
-                <span class="bm-accordion-clean-card__icon" data-icon="lucide" aria-hidden="true"></span>
-                <span class="bm-accordion-clean-card__icon bm-accordion-clean-card__icon--open" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-            <div class="bm-accordion-clean-card__content">
-              <p class="bm-accordion-clean-card__text">{it.text}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="bm-contact-32__media">
-      <figure class="bm-contact-32__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-32__container {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    background: var(--bg-subtle);
-    display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
-    gap: calc(var(--space-m) * 2);
-  }
-
-  .bm-contact-32__content {
-    row-gap: var(--flow-spacing);
-    height: 100%;
-  }
-
-  .bm-contact-32__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-32__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-accordion-clean {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-accordion-clean-card__icon-wrapper {
-    display: flex;
-    position: relative;
-    background: var(--bg-subtle);
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    border-radius: 100% 100% 100% 100%;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-accordion-clean-card__icon {
-    position: absolute;
-  }
-
-  .bm-contact-32__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .bm-accordion-clean-card .bm-accordion-clean-card__icon--open {
-    transform: rotate(90deg);
-    transition: .1s ease;
-  }
-  
-  .bm-accordion-clean-card .bm-accordion-clean-card__title[aria-expanded="true"] .bm-accordion-clean-card__icon--open {
-    transform: rotate(0deg) !important;
-  }
-</style>

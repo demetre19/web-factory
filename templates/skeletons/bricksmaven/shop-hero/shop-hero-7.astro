@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,118 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-shop-hero-7__hero-container">
-    <div class="bm-shop-hero-7__intro">
-      <div class="bm-shop-hero-7__header">
-        <h1 class="bm-shop-hero-7__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-        <p class="bm-shop-hero-7__subheading">{fs}</p>
-      </div>
-      <div class="cta-combo">
-        <a class="btn--white" href="#">Call to action</a>
-        <a class="bm-link" href="#">Secondary action →</a>
-      </div>
-    </div>
-    <figure class="bm-shop-hero-7__background-image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="bm-shop-hero-7__carousel-container">
-    <div class="shop-hero-3-category-slider__slider">
-      <div class="shop-hero-3-category-slider__slide">
-        <div class="shop-hero-3-category-slider__content">
-          <h2 class="shop-hero-3-category-slider__content">{term_name}</h2>
-          <a class="shop-hero-3-category-slider__link" href="#">View all</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-        <div class="shop-hero-3-category-slider__media">
-          <figure class="shop-hero-3-category-slider__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">{term_name}</h2>
+            <a class="text-fluid-0" href="#">View all</a>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-shop-hero-7 {
-    padding: 0 0 0 0;
-    row-gap: var(--space-s);
-  }
-
-  .bm-shop-hero-7__hero-container {
-    position: relative;
-    width: 100%;
-    align-items: center;
-    padding: var(--section-space-xxl) var(--gutter) var(--section-space-xxl) var(--gutter);
-    height: 740px;
-    justify-content: center;
-  }
-
-  .bm-shop-hero-7__intro {
-    row-gap: var(--flow-spacing);
-    width: var(--measure);
-  }
-
-  .bm-shop-hero-7__header {
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: var(--content-width);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-hero-7__background-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-shop-hero-7__carousel-container {
-    width: 100%;
-    padding: 0 var(--gutter) 0 var(--gutter);
-    align-items: center;
-  }
-
-  .shop-hero-3-category-slider__slider {
-    width: var(--measure);
-  }
-
-  .shop-hero-3-category-slider__slide {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    justify-content: flex-start;
-  }
-
-  .shop-hero-3-category-slider__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-    font-size: var(--fs-1);
-  }
-
-  .shop-hero-3-category-slider__link {
-    font-size: var(--fs-0);
-  }
-
-  .shop-hero-3-category-slider__image {
-    object-fit: cover;
-    width: 92;
-    height: 92;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-</style>

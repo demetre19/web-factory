@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,136 +17,43 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-37__top-container">
-    <figure class="bm-contact-37__top-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="bm-contact-37__content-container">
-    <div class="bm-contact-37__content">
-      <div class="bm-contact-37__intro">
-        <h1 class="bm-contact-37__heading">{heading}</h1>
-        <p class="bm-accent-heading">Accent heading</p>
-        <p class="bm-contact-37__text">{fs}</p>
-      </div>
-      <div class="bm-contact-25-side-list-ul">
-        <div class="bm-contact-25-side-list-item">
-          <div class="bm-contact-25-side-list-item__detail">
-            <h3 class="bm-contact-25-side-list-item__title">Phone</h3>
-            <a class="bm-contact-25-side-list-item__cta" href="#">+32 465 45 37 15</a>
+  <div class="sec-inner">
+    <div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <div>
+            <div>
+              <h3 class="text-fluid-2">Phone</h3>
+              <a class="text-fluid-0" href="#">+32 465 45 37 15</a>
+            </div>
+            <span data-icon="lucide" aria-hidden="true"></span>
           </div>
-          <span class="bm-contact-25-side-list-item__icon bm-contact-side-list-item__icon--alt" data-icon="lucide" aria-hidden="true"></span>
         </div>
       </div>
-    </div>
-    <div class="bm-contact-37__form-container">
-      <div class="bm-contact-37__form-wrapper">
-        <h2 class="bm-contact-37__heading">Reach out to us</h2>
-        <form class="bm-contact-25__form-content" novalidate>
-        </form>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Reach out to us</h2>
+          <form novalidate>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-37 {
-    row-gap: 0;
-    padding: 0 0 0 0;
-  }
-
-  .bm-contact-37__top-container {
-    width: 99.70vw;
-    margin: 0 0 0 -50vw;
-    left: 50%;
-    position: relative;
-    height: 480px;
-  }
-
-  .bm-contact-37__top-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .bm-contact-37__content-container {
-    background: var(--bg-subtle);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
-    position: relative;
-  }
-
-  .bm-contact-37__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-37__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-25-side-list-ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-    padding: 0 0 0 0;
-  }
-
-  .bm-contact-25-side-list-item {
-    display: flex;
-    align-items: flex-start;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-25-side-list-item__detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .bm-contact-25-side-list-item__title {
-    font-size: var(--fs-1);
-  }
-
-  .bm-contact-25-side-list-item__cta {
-    padding: 0 0 0 0;
-    text-align: left;
-  }
-
-  .bm-contact-25-side-list-item__icon {
-    padding: .5rem .5rem .5rem .5rem;
-    background: var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    width: 3.5rem;
-    height: 3.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-contact-side-list-item__icon--alt {
-    background: var(--color-line-default);
-  }
-
-  .bm-contact-37__form-container {
-    position: relative;
-  }
-
-  .bm-contact-37__form-wrapper {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    position: absolute;
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    row-gap: var(--flow-spacing);
-  }
-</style>

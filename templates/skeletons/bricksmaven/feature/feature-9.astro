@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-9__container">
-    <div class="bm-feature-9__content">
-      <div class="bm-feature-9__heading">
-        <h2 class="bm-feature-9__title">{heading}</h2>
-        <p class="bm-feature-9__accent-heading">Tagline</p>
-      </div>
-      <p class="bm-feature-9__desc">{fs}</p>
-      <div class="bm-feature-9__cta-wrapper">
-        <a class="bm-feature-9-content__cta--primary btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="bm-feature-9__cta--outline btn--outline btn--white" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="bm-feature-9-list-ul list--none">
-      {items.map((it) => (
-        <div class="bm-feature-9-card">
-          <div class="bm-feature-9-card__content">
-            <h2 class="bm-feature-9-card__heading">{it.title}</h2>
-            <p class="bm-feature-9-card__text">{it.text}</p>
-          </div>
-          <div class="bm-feature-9-card__media">
-            <figure class="bm-feature-9-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="bm-feature-9__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-9 {
-    height: 980;
-    justify-content: center;
-    position: relative;
-  }
-
-  .bm-feature-9__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-feature-9__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-9__heading {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-9__cta-wrapper {
-    align-items: center;
-    display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-9-list-ul {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-9-card {
-    background: var(--bg-canvas);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-feature-9-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-9-card__image {
-    object-fit: cover;
-  }
-
-  .bm-feature-9__background-image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-feature-9-card {
-    box-shadow: var(--shadow-card);
-  }
-</style>

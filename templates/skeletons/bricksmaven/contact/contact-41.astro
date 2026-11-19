@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,213 +17,76 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-41__container">
-    <div class="bm-contact-41__content">
-      <h2 class="bm-contact-41__contact-heading">{heading}</h2>
-      <div class="bm-contact-41__contact">
-        <div class="bm-contact-41__contact-data">
-          <h2 class="bm-contact-41__heading">Contact</h2>
-          <div class="bm-contact-41__column">
-            <p class="bm-contact-41__address">{fs}</p>
-            <p class="bm-contact-41__links">+31 234 456 78 info@bricksmaven.com</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Contact</h2>
+            <div>
+              <p class="text-fluid-0">{fs}</p>
+              <p class="text-fluid-0">+31 234 456 78 info@bricksmaven.com</p>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-fluid-2">Social media</h2>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div class="bm-contact-41__social-media">
-          <h2 class="bm-contact-41__heading">Social media</h2>
-          <div class="bm-social-share list--none bm-social-share--left">
-            {items.map((it) => (
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+        <div>
+          <div>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
-            ))}
+              <div>
+                <p class="text-fluid-0">Sales</p>
+                <p class="text-fluid-0">For advice and new projects</p>
+              </div>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">info@bricksmaven.com</a>
+              <a class="text-fluid-0" href="#">+31 245 3456 56</a>
+            </div>
+          </div>
+          <div>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div>
+                <p class="text-fluid-0">Support</p>
+                <p class="text-fluid-0">Fast help for our clients</p>
+              </div>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">info@bricksmaven.com</a>
+              <a class="text-fluid-0" href="#">+31 245 3456 56</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="bm-contact-41-contact-list list--none">
-        <div class="bm-contact-41-contact-card">
-          <div class="bm-contact-41-contact-card__team-data">
-            <div class="bm-contact-41-contact-card__media">
-              <figure class="bm-contact-41-contact-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <div class="bm-contact-41-contact-card__content">
-              <p class="bm-contact-41-contact-card__title">Sales</p>
-              <p class="bm-contact-41-contact-card__text">For advice and new projects</p>
-            </div>
-          </div>
-          <div class="bm-contact-41-contact-card__data">
-            <a class="bm-contact-41-contact-card__text-link" href="#">info@bricksmaven.com</a>
-            <a class="bm-contact-41-contact-card__text-link" href="#">+31 245 3456 56</a>
-          </div>
-        </div>
-        <div class="bm-contact-41-contact-card">
-          <div class="bm-contact-41-contact-card__team-data">
-            <div class="bm-contact-41-contact-card__media">
-              <figure class="bm-contact-41-contact-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <div class="bm-contact-41-contact-card__content">
-              <p class="bm-contact-41-contact-card__title">Support</p>
-              <p class="bm-contact-41-contact-card__text">Fast help for our clients</p>
-            </div>
-          </div>
-          <div class="bm-contact-41-contact-card__data">
-            <a class="bm-contact-41-contact-card__text-link" href="#">info@bricksmaven.com</a>
-            <a class="bm-contact-41-contact-card__text-link" href="#">+31 245 3456 56</a>
-          </div>
-        </div>
+      <div>
+        <h2 class="text-fluid-2">Send us a message. We respond pretty quick!</h2>
+        <form novalidate>
+        </form>
       </div>
-    </div>
-    <div class="bm-contact-41__form-wrapper">
-      <h2 class="bm-contact-41__form-heading">Send us a message. We respond pretty quick!</h2>
-      <form class="bm-contact-40__form" novalidate>
-      </form>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-41 {
-    position: relative;
-    overflow: clip;
-  }
-
-  .bm-contact-41__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-contact-41__content {
-    row-gap: var(--space-s);
-  }
-
-  .bm-contact-41__contact-heading {
-    font-size: calc(var(--fs-4) * 1.6);
-  }
-
-  .bm-contact-41__contact {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-contact-41__contact-data {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-41__heading {
-    font-size: var(--fs-0);
-  }
-
-  .bm-contact-41__column {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-41__social-media {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-contact-41-contact-list {
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-canvas);
-  }
-
-  .bm-contact-41-contact-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
-  }
-
-  .bm-contact-41-contact-card__team-data {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-41-contact-card__image {
-    object-fit: cover;
-    width: 64px;
-    height: 64px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-contact-41-contact-card__title {
-    font-weight: 700;
-  }
-
-  .bm-contact-41-contact-card__text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-contact-41-contact-card__data {
-    row-gap: 0;
-    flex-direction: column;
-    display: flex;
-  }
-
-  .bm-contact-41-contact-card__text-link {
-    font-size: var(--fs-0);
-  }
-
-  .bm-contact-41__form-wrapper {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    flex-wrap: nowrap;
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  /* bm-custom */
-  .bm-contact-41::before {
-    content: '';
-    position: absolute;
-    inset-inline-start: 0;
-    inset-block-start: 0;
-    inline-size: 65%;
-    block-size: 50vh;
-    background-color: var(--fs-0);
-    z-index: -1;
-    
-  }
-  
-  @media (max-width:767px) {
-    .bm-contact-41::before {
-    inline-size: 100vw;
-    
-  }
-  }
-
-  /* bm-custom */
-  .bm-contact-41-contact-card:not(:last-child) {
-    border-block-end: 1px solid var(--fs-0);
-  }
-</style>

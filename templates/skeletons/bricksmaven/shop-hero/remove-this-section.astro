@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,197 +17,68 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="shop-hero-3-category-slider__container">
-      <div class="shop-hero-3-category-slider__slider">
-        <div class="shop-hero-3-category-slider__slide">
-          <div class="shop-hero-3-category-slider__content">
-            <h2 class="shop-hero-3-category-slider__content">{heading}</h2>
-            <a class="shop-hero-3-category-slider__link" href="#">View all</a>
-          </div>
-          <div class="shop-hero-3-category-slider__media">
-            <figure class="shop-hero-3-category-slider__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="sec-inner">
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{heading}</h2>
+              <a class="text-fluid-0" href="#">View all</a>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="shop-hero-3__container">
-      <div class="shop-hero-3__content">
-        <h1 class="shop-hero-3__heading">Product XYZ now 25% OFF!</h1>
-        <p class="accent-h">Accent heading</p>
-        <div class="shop-hero-3__price-wrapper">
-          <p class="shop-hero-3__price">Now $799.99 /</p>
-          <p class="shop-hero-3__original-price">$999.99</p>
+    <div class="sec-inner">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">Product XYZ now 25% OFF!</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <div>
+            <p class="text-fluid-0">Now $799.99 /</p>
+            <p class="text-fluid-0">$999.99</p>
+          </div>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <p class="text-fluid-0">Use code: SALE25OFF</p>
+          </div>
         </div>
-        <div class="shop-hero-3__cta">
-          <a class="shop-hero-3__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-          <p class="shop-hero-3__discount-code">Use code: SALE25OFF</p>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-      </div>
-      <div class="shop-hero-3__media">
-        <figure class="shop-hero-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div class="shop-hero-3-featured-product__container">
-      <div class="shop-hero-3-featured-product-list list--none">
-        {items.map((it) => (
-          <div class="shop-hero-3-featured-product-card">
-            <div class="shop-hero-3-featured-product-card__content">
-              <h2 class="shop-hero-3-featured-product-card__heading">{it.title}</h2>
-              <p class="shop-hero-3-featured-product-card__label">{it.text}</p>
+    <div class="sec-inner">
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <a class="shop-hero-3-featured-product-card__cta btn--white wf-cta-button" href={it.href}>{it.label}</a>
-            <div class="shop-hero-3__badge-wrapper">
-              <p class="shop-hero-3__sales-badge">{it.text}</p>
-            </div>
-            <figure class="shop-hero-3-featured-product-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .shop-hero-3-category-slider {
-    padding: var(--section-space-xs) 0 var(--section-space-xs) 0;
-    background: color-mix(in srgb, var(--color-line-default) 10%, transparent);
-  }
-
-  .shop-hero-3-category-slider__slide {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-
-  .shop-hero-3-category-slider__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-    font-size: var(--fs-1);
-  }
-
-  .shop-hero-3-category-slider__link {
-    font-size: var(--fs-0);
-  }
-
-  .shop-hero-3-category-slider__image {
-    object-fit: cover;
-    width: 92;
-    height: 92;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .shop-hero-3 {
-    height: 640;
-    justify-content: center;
-    position: relative;
-  }
-
-  .shop-hero-3__content {
-    z-index: 1;
-    position: relative;
-  }
-
-  .shop-hero-3__heading {
-    font-size: calc(var(--fs-4) * 1.6);
-    width: var(--measure);
-  }
-
-  .shop-hero-3__price-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .shop-hero-3__price {
-    font-weight: 700;
-    font-size: var(--fs-3);
-  }
-
-  .shop-hero-3__original-price {
-    text-decoration: line-through;
-    font-weight: 600;
-  }
-
-  .shop-hero-3__cta {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .shop-hero-3__discount-code {
-    height: 100%;
-    padding: var(--acss-btn-padding-block) var(--acss-btn-padding-inline) var(--acss-btn-padding-block) var(--acss-btn-padding-inline);
-    border-top: 1 dashed var(--bg-canvas);
-    border-right: 1 dashed var(--bg-canvas);
-    border-bottom: 1 dashed var(--bg-canvas);
-    border-left: 1 dashed var(--bg-canvas);
-  }
-
-  .shop-hero-3__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .shop-hero-3-featured-product-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .shop-hero-3-featured-product-card {
-    position: relative;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    justify-content: center;
-  }
-
-  .shop-hero-3-featured-product-card__content {
-    position: relative;
-    z-index: 1;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .shop-hero-3-featured-product-card__cta {
-    position: relative;
-  }
-
-  .shop-hero-3__badge-wrapper {
-    position: absolute;
-    z-index: 1;
-    top: var(--space-s);
-    right: var(--space-m);
-    border-radius: 100% 100% 100% 100%;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    background: var(--bg-canvas);
-  }
-
-  .shop-hero-3__sales-badge {
-    font-size: var(--fs-0);
-  }
-
-  .shop-hero-3-featured-product-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-</style>

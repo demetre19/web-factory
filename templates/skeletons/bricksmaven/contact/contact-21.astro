@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,107 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-21-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Contact Us</p>
-    </div>
-    <div class="contact-21-list-ul list--none">
-      {items.map((it) => (
-        <div class="contact-21-list-item">
-          <h2 class="contact-21-list-item__title">{it.title}</h2>
-          <span class="contact-21-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-          <a class="contact-21-list-item__cta wf-cta-button" href={it.href}>{it.label}</a>
-        </div>
-      ))}
-    </div>
-    <div class="contact-21-form">
-      <form class="contact-21-form__content" novalidate>
-      </form>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Contact Us</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+          </div>
+        ))}
+      </div>
+      <div>
+        <form novalidate>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-21 {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-21-container {
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .contact-21-list-ul {
-    width: 70%;
-    margin: 0 auto 0 auto;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .contact-21-list-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-xs);
-  }
-
-  .contact-21-list-item__title {
-    font-size: var(--fs-1);
-  }
-
-  .contact-21-list-item__cta {
-    font-size: calc(var(--fs-1) - .4rem);
-    padding: 0 0 0 0;
-  }
-
-  .contact-21-form {
-    width: 80%;
-    margin: 0 auto 0 auto;
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    padding: 4rem 4rem 4rem 4rem;
-  }
-
-  .contact-21-form__content {
-    padding: 3rem 0 3rem 0;
-    background: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .contact-21::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 160%;
-    height: 50%;
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);
-    background-color: #F2F2F2;
-    z-index: -1;
-  }
-
-  /* bm-custom */
-  .contact-21-list-item__cta:hover {
-  	color: var(--action-primary);
-  }
-</style>

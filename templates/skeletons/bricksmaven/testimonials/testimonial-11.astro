@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,76 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-11-container">
-    <div class="testimonial-11-title">
-      <h2 class="testimonial-11-title__heading">{heading}</h2>
-    </div>
-    <div class="testimonial-11-content">
-      <p class="testimonial-11-content__desc">{fs}</p>
-      <div class="testimonial-11-content__profile">
-        <div class="testimonial-11-content__bio">
-          <h4 class="testimonial-11-content__name">John Smith,</h4>
-          <p class="testimonial-11-content__job-title">Etiam ultricies nisi vel augue. Curabitur ullamcorper .</p>
-        </div>
-        <div class="testimonial-11-content__company">
-          <figure class="testimonial-11-content__logo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+      </div>
+      <div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <div>
+            <h4 class="text-fluid-2">John Smith,</h4>
+            <p class="text-fluid-0">Etiam ultricies nisi vel augue. Curabitur ullamcorper .</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-11-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .testimonial-11-content {
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    row-gap: 5rem;
-    position: relative;
-  }
-
-  .testimonial-11-content__profile {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .testimonial-11-content__bio {
-    display: flex;
-    flex-direction: column;
-    row-gap: .5rem;
-  }
-
-  .testimonial-11-content__job-title {
-    font-size: var(--fs-0);
-  }
-
-  .testimonial-11-content__logo {
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .testimonial-11-content::before {
-  	content: '"';
-    font-size: calc(var(--fs-4) * 6);
-    line-height: .4;
-    color: var(--action-primary);
-    position: absolute;
-    top: 0rem;
-    left: 3rem;
-  }
-</style>

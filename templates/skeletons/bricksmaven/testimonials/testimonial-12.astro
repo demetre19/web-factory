@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,89 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-12-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="testimonial-12-list-ul list--none">
-      {items.map((it) => (
-        <div class="testimonial-12-list-card">
-          <div class="testimonial-12-list-card__profile">
-            <div class="testimonial-12-list-card__content">
-              <h2 class="testimonial-12-list-card__heading">{it.title}</h2>
-              <p class="testimonial-12-list-card__desc">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-            <div class="testimonial-12-list-card__media">
-              <figure class="testimonial-12-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
+            <p class="text-fluid-0">{it.text}</p>
+            <div></div>
           </div>
-          <p class="testimonial-12-list-card__text">{it.text}</p>
-          <div class="testimonial-12-list-card__social"></div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-12-container {
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .testimonial-12-list-ul {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-l);
-  }
-
-  .testimonial-12-list-card {
-    background: var(--bg-subtle);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .testimonial-12-list-card__profile {
-    display: flex;
-    align-items: center;
-    column-gap: 2rem;
-  }
-
-  .testimonial-12-list-card__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: .5rem;
-  }
-
-  .testimonial-12-list-card__image {
-    width: 7rem;
-    height: 7rem;
-    object-fit: cover;
-    border-radius: 50% 50% 50% 50%;
-    overflow: hidden;
-  }
-
-  .testimonial-12-list-card__social {
-    padding: 0 0 0 0 !important;
-  }
-</style>

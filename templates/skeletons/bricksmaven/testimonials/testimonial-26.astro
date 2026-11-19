@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,134 +17,54 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-26-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="testimonial-26-tabs">
-      <div class="testimonial-26-tabs__nav list--none">
-        {items.map((it) => (
-          <div class="testimonial-26-tabs__nav-item">
-            <div class="testimonial-26-tabs__nav-profile">
-              <div class="testimonial-26-tabs__nav-meta">
-                <h4 class="testimonial-26-tabs__nav-name">{it.title}</h4>
-                <p class="testimonial-26-tabs__nav-jobtitle">{it.text}</p>
-              </div>
-              <div class="testimonial-26-tabs__nav-media">
-                <figure class="testimonial-26-tabs__nav-photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <h4 class="text-fluid-2">{it.title}</h4>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div class="testimonial-26-tabs__content list--none">
-        {items.map((it) => (
-          <div class="testimonial-26-tabs__content-pane">
-            <div class="testimonial-26-tabs__content-wrapper">
-              <h2 class="testimonial-26-tabs__content-title">{it.title}</h2>
-              <div class="testimonial-26-tabs__content-review">
-                {(it.items || []).map((it2) => (
-                  <span class="testimonial-26-tabs__content-stars" data-icon="lucide" aria-hidden="true"></span>
-                ))}
+          ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <div>
+                  {((it.items || []) || []).map((it2) => (
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  ))}
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="testimonial-26-tabs__content-desc">{it.text}</p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
+      <div></div>
     </div>
-    <div class="testimonial-26-script"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-26-container {
-    row-gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .testimonial-26-tabs__nav {
-    row-gap: var(--flow-spacing);
-  }
-
-  .testimonial-26-tabs__nav-item {
-    border-radius: .5rem .5rem .5rem .5rem;
-    overflow: hidden;
-  }
-
-  .testimonial-26-tabs__nav-profile {
-    display: flex;
-    align-items: center;
-    column-gap: 1.5rem;
-    background: var(--bg-canvas);
-    padding: 2.4rem 2.4rem 2.4rem 2.4rem;
-    width: 100%;
-  }
-
-  .testimonial-26-tabs__nav-meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-  }
-
-  .testimonial-26-tabs__nav-jobtitle {
-    font-size: calc(var(--fs-1) - .4rem);
-  }
-
-  .testimonial-26-tabs__nav-photo {
-    object-fit: cover;
-    width: 6.5rem;
-    height: 6.5rem;
-    overflow: hidden;
-    border-radius: 50% 50% 50% 50%;
-  }
-
-  .testimonial-26-tabs__content-wrapper {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .testimonial-26-tabs__content-title {
-    font-weight: 500;
-    margin: 0 0 0 0;
-  }
-
-  .testimonial-26-tabs__content-review {
-    display: flex;
-    column-gap: .8rem;
-  }
-
-  .testimonial-26-script {
-    display: none;
-  }
-
-  /* bm-custom */
-  .testimonial-26-tabs {
-  	display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-s);
-  }
-
-  /* bm-custom */
-  .testimonial-26-tabs__nav-item.brx-open {
-  	box-shadow: 0 .4rem 3.6rem rgba(0, 0, 0, 0.1);
-  }
-</style>

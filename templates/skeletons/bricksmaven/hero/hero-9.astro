@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,55 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-9-container">
-    <div class="hero-9__content">
-      <h1 class="hero-9__title">{heading}</h1>
-      <p class="hero-9__desc">{fs}</p>
-      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-9__media">
-      <figure class="hero-9__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-9 {
-    background: var(--action-primary);
-  }
-
-  .hero-9__content {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-    row-gap: var(--space-s);
-    align-items: center;
-    text-align: center;
-  }
-
-  .hero-9__media {
-    margin: var(--section-space-xxl) 0 0 0;
-    width: 100%;
-  }
-
-  .hero-9__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .hero-9 {
-  background-image: -moz-linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
-  background-image: -webkit-linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
-  background-image: linear-gradient(0deg, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 30%);
-  }
-</style>

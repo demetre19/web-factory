@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,95 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-11-container">
-    <h2 class="content-11__heading">{heading}</h2>
-    <p class="content-11__desc">{fs}</p>
-  </div>
-  <div class="content-11-media-container">
-    <div class="content-11-grid-ul list--none">
-      {items.map((it) => (
-        <div class="content-11-list">
-          <figure class="content-11-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <h2 class="text-fluid-2">{heading}</h2>
+      <p class="text-fluid-0">{fs}</p>
+    </div>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-11 {
-    row-gap: var(--space-xl);
-    padding: 0 0 0 0;
-  }
-
-  .content-11-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-    width: var(--measure);
-    text-align: center;
-  }
-
-  .content-11-media-container {
-    width: 100%;
-  }
-
-  .content-11-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-s);
-  }
-
-  .content-11-list__image {
-    object-fit: cover;
-    width: 100%;
-    height: 326px;
-  }
-
-  /* bm-custom */
-  .content-11-list:nth-child(2) {
-  	margin-block-start: 4rem;
-  }
-  
-  .content-11-list:nth-child(3) {
-  	margin-block-start: 8rem;
-  }
-  
-  .content-11-list:nth-child(4) {
-  	margin-block-start: 2rem;
-  }
-  
-  
-  @media (max-width:767px) {
-  
-    	.content-11-list:nth-child(3) {
-  			margin-block-start: -2rem;
-  		}
-  
-  }
-  
-  @media (max-width:478px) {
-  
-    	.content-11-list:nth-child(2) {
-  			margin-block-start: 0rem;
-      }
-  
-      .content-11-list:nth-child(3) {
-        margin-block-start: 0rem;
-      }
-  
-      .content-11-list:nth-child(4) {
-        margin-block-start: 0rem;
-      }
-  
-  }
-</style>

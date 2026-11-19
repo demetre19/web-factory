@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,283 +17,68 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-comparison-5__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-comparison-5-list">
-      <div class="bm-comparison-5-card">
-        <div class="bm-comparison-5-card__intro">
-          <div class="bm-comparison-5-card__icon-wrapper">
-            <span class="bm-comparison-5-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <h2 class="bm-comparison-5-card__heading">The old way</h2>
-        </div>
-        <div class="bm-comparison-5-step-list">
-          {items.map((it) => (
-            <div class="bm-comparison-5-step-item">
-              <div class="bm-comparison-5-step-item__marker">
-                <div class="bm-comparison-5-step-item__circle"></div>
-                <div class="bm-comparison-5-step-item__arrow"></div>
-              </div>
-              <div class="bm-comparison-5-step-item__content">
-                <div class="bm-comparison-5-step-item__counter"></div>
-                <h4 class="bm-comparison-5-step-item__heading">{it.title}</h4>
-              </div>
-            </div>
-          ))}
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="bm-comparison-5-card">
-        <div class="bm-comparison-5-card__intro">
-          <div class="bm-comparison-5-card__icon-wrapper">
-            <span class="bm-comparison-5-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <h2 class="bm-comparison-5-card__heading">The new way</h2>
-        </div>
-        <div class="bm-comparison-5-step-list">
-          {items.map((it) => (
-            <div class="bm-comparison-5-step-item">
-              <div class="bm-comparison-5-step-item__marker">
-                <div class="bm-comparison-5-step-item__circle"></div>
-                <div class="bm-comparison-5-step-item__arrow"></div>
-              </div>
-              <div class="bm-comparison-5-step-item__content">
-                <div class="bm-comparison-5-step-item__counter"></div>
-                <h4 class="bm-comparison-5-step-item__heading">{it.title}</h4>
-              </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-          ))}
+            <h2 class="text-fluid-2">The old way</h2>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div>
+                  <div></div>
+                  <h4 class="text-fluid-2">{it.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <h2 class="text-fluid-2">The new way</h2>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div>
+                  <div></div>
+                  <h4 class="text-fluid-2">{it.title}</h4>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-comparison-5__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-comparison-5-list {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-comparison-5-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
-  }
-
-  .bm-comparison-5-card__intro {
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-comparison-5-card__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    background: var(--fs-0);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-comparison-5-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  .bm-comparison-5-step-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-    column-gap: calc(var(--flow-spacing) / 2);
-    justify-content: space-between;
-  }
-
-  .bm-comparison-5-step-item {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-comparison-5-step-item__marker {
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-comparison-5-step-item__circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-comparison-5-step-item__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-wrap: nowrap;
-  }
-
-  .bm-comparison-5-step-item__heading {
-    font-weight: 300;
-    font-size: calc(var(--fs-1) / 1.1);
-  }
-
-  /* bm-custom */
-  .bm-comparison-5-card[data-state='new'] {
-    --comparison-bg-light: var(--bg-canvas);
-    --comparison-bg-dark: var(--fs-0);
-    --comparison-text-light: var(--fs-0);
-    --comparison-text-dark: var(--fs-0);
-    --comparison-heading: var(--fs-0);
-    --comparison-border: var(--bg-canvas);
-    background-color: var(--acss-comparison-bg-dark);
-    border:1px solid var(--acss-comparison-border) ;
-  }
-  
-  .bm-comparison-5-card[data-state='new'] .bm-comparison-5-card__icon-wrapper {
-    background-color: var(--acss-comparison-bg-light);
-    border:1px solid var(--acss-comparison-border) ;
-  }
-  
-  .bm-comparison-5-card[data-state='new'] .bm-comparison-5-card__icon {
-    color: var(--acss-comparison-text-dark);
-  }
-  
-  .bm-comparison-5-card[data-state='new'] .bm-comparison-5-card__heading {
-    color: var(--acss-comparison-heading);
-  }
-  
-  .bm-comparison-5-card[data-state='new'] .bm-comparison-5-step-item__marker {
-    color: var(--acss-comparison-text-light);
-  }
-  
-  .bm-comparison-5-card[data-state='new'] .bm-comparison-5-step-item__heading {
-    color: var(--acss-comparison-text-light);
-  }
-
-  /* bm-custom */
-  .bm-comparison-5-step-list {
-    counter-reset: step;
-  }
-  
-  .bm-comparison-5-step-list .bm-comparison-5-step-item {
-    counter-increment: step;
-  }
-  
-  .bm-comparison-5-step-list .bm-comparison-5-step-item .bm-comparison-5-step-item__counter::before {
-    content: 'step ' counter(step);
-    text-transform: uppercase;
-    font-size: var(--fs-0);
-    color: var(--fs-0);
-  }
-
-  /* bm-custom */
-  /* Step item */
-  
-  .bm-comparison-5-step-item {
-    flex-basis:100%;
-    
-    --step-card-border:var(--fs-0);
-    
-    --marker-circle-bg:var(--fs-0);
-    --marker-circle-radius:100%;
-    --marker-circle-bg-before:var(--fs-0);
-    --marker-circle-radius-before:100%;
-    
-    --marker-arrow-bg:var(--fs-0);
-    --marker-arrow-border:var(--fs-0);
-  }
-  
-  .bm-comparison-5-step-item:last-child {
-    flex-basis:65%;
-  }
-  
-  .bm-comparison-5-step-item:last-child .bm-comparison-5-step-item__arrow {
-    display:none;
-  }
-  
-  
-  /* Marker Circle*/
-  
-  .bm-comparison-5-step-item  .bm-comparison-5-step-item__circle{
-    inline-size: 24px;
-    block-size:24px;
-    position:relative;
-    background-color: var(--acss-marker-circle-bg);
-    border-radius: var(--acss-marker-circle-radius);
-  }
-  
-  .bm-comparison-5-step-item .bm-comparison-5-step-item__circle::before {
-    content:'';
-    position:absolute;
-    inset-block-start: 50%;
-    inset-inline-start: 50%;
-    inline-size: 8px;
-    block-size:8px;
-    background-color: var(--acss-marker-circle-bg-before);
-    transform: translateY(-50%) translateX(-50%);
-    border-radius: var(--acss-marker-circle-radius-before);
-  }
-  
-  /* Marker Arrow */
-  
-  .bm-comparison-5-step-item  .bm-comparison-5-step-item__arrow{
-    inline-size: 100%;
-    block-size:1.5px;
-    position:relative;
-    background-color: var(--acss-marker-arrow-bg);
-  }
-  
-  .bm-comparison-5-step-item .bm-comparison-5-step-item__arrow::before {
-    content: "";
-    border: 4px solid var(--acss-marker-arrow-border);
-    border-color: var(--acss-marker-arrow-border) var(--acss-marker-arrow-border) transparent transparent;
-    position: absolute;
-    inset-inline-end: 0;
-    transform: translateY(-40%) rotate(45deg);
-  }
-  
-  @media (max-width:767px) {
-    
-    
-    .bm-comparison-5-step-item {
-      border-bottom: 1px solid var(--acss-step-card-border);
-  }
-  
-  .bm-comparison-5-step-item:last-child {
-    border-bottom: none;
-  }
-    
-  }
-</style>

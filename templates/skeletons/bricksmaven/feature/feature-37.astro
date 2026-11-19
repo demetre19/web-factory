@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,102 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-37-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="feature-37-list list--none">
-      {items.map((it) => (
-        <div class="feature-37-card">
-          <div class="feature-37-card__content">
-            <h2 class="feature-37-card__heading">{it.title}</h2>
-            <p class="feature-37-card__accent-heading">{it.text}</p>
-            <p class="feature-37-card__text">{it.text}</p>
-            <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="feature-37-card__media">
-            <figure class="feature-37-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-37-container {
-    row-gap: calc(var(--space-s) * 2);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .feature-37-list {
-    display: flex;
-    row-gap: calc(var(--space-s) * 3);
-  }
-
-  .feature-37-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: 0 var(--space-xl) 0 var(--space-xl);
-    background: var(--bg-subtle);
-    grid-template-rows: calc(100% * 1 / 1);
-  }
-
-  .feature-37-card__content {
-    row-gap: calc(var(--flow-spacing) * 1.4);
-    padding: var(--space-xl) 0 var(--space-xl) 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .feature-37-card__media {
-    height: 100%;
-  }
-
-  .feature-37-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .feature-37-card:nth-child(even) .feature-37-card__media {
-  	order: -1;
-  }
-  
-  @media (max-width:767px) {
-  		.feature-37-card:nth-child(odd) .feature-37-card__media {
-        order: -1;
-      }
-  }
-</style>

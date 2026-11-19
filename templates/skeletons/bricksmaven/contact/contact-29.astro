@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,94 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-29__container">
-    <div class="bm-contact-29__content">
-      <div class="bm-contact-29__top">
-        <h1 class="bm-contact-29__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-      </div>
-      <div class="bm-contact-29-contact-details list--none">
-        {items.map((it) => (
-          <div class="bm-contact-29-row">
-            <h2 class="bm-contact-29-row__heading">{it.title}</h2>
-            <div class="bm-contact-29-row__footer">
-              <p class="bm-contact-29-row__text">{it.text}</p>
-              <div class="bm-contact-29-row__contact-information">
-                <p class="bm-contact-29-row__contact-text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="bm-contact-29__media">
-      <figure class="bm-contact-29__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-29 {
-    overflow: hidden;
-  }
-
-  .bm-contact-29__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 12);
-  }
-
-  .bm-contact-29__content {
-    display: flex;
-    row-gap: var(--space-s);
-    padding: 0 var(--section-space-xxl) var(--space-xl) 0;
-  }
-
-  .bm-contact-29__heading {
-    width: var(--measure);
-  }
-
-  .bm-contact-29-contact-details {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-29-row {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: 1 solid var(--color-line-default);
-  }
-
-  .bm-contact-29-row__heading {
-    width: var(--measure);
-  }
-
-  .bm-contact-29-row__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-29-row__text {
-    width: var(--measure);
-  }
-
-  .bm-contact-29__image {
-    object-fit: cover;
-    width: calc(50vw - ((var(--content-width) / 12) * 2));
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-contact-29-row:last-child {
-    border: none;
-  }
-</style>

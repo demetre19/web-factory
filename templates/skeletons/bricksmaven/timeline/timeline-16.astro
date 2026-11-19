@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,130 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-timeline-16__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="bm-accent-heading">Accent heading</p>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="bm-timeline-16__slider-nested">
-      {items.map((it) => (
-        <div class="bm-timeline-16__slide">
-          <div class="bm-timeline-16-card">
-            <div class="bm-timeline-16-card__content">
-              <h2 class="bm-timeline-16-card__heading">{it.title}</h2>
-              <p class="bm-timeline-16-card__text">{it.text}</p>
-            </div>
-            <div class="bm-timeline-16-card__date-wrapper">
-              <p class="bm-timeline-16-card__date">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-timeline-16__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .bm-timeline-16-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  /* bm-custom */
-  /* CARD */
-  .bm-timeline-16__slide .bm-timeline-16-card {
-    position: relative;
-    gap: 0;
-  }
-  
-  .bm-timeline-16__slide .bm-timeline-16-card::after {
-    content: '';
-    position: absolute;
-    top:50%;
-    width:100%;
-    height:1px;
-    background-color: var(--bg-subtle);
-  }
-  .bm-timeline-16__slide:nth-child(even) .bm-timeline-16-card::before  {
-    content: '';
-    position: absolute;
-    left:50%;
-    top:50%;
-    width:1px;
-    height:var(--space-l);
-    background-color: var(--bg-subtle);
-  }
-  
-  .bm-timeline-16__slide:nth-child(odd) .bm-timeline-16-card::before  {
-    content: '';
-    position: absolute;
-    left:50%;
-    bottom:50%;
-    width:1px;
-    height:var(--space-l);
-    background-color: var(--bg-subtle);
-  }
-  
-  /* CONTENT */
-  .bm-timeline-16__slide .bm-timeline-16-card .bm-timeline-16-card__content {
-    align-items: center;
-    text-align: center;
-    padding-inline: var(--space-m);
-  }
-  
-  .bm-timeline-16__slide:nth-child(odd) .bm-timeline-16-card .bm-timeline-16-card__content {
-    padding-block-start: var(--space-xl);
-  }
-  
-  .bm-timeline-16__slide:nth-child(even) .bm-timeline-16-card .bm-timeline-16-card__content {
-    padding-block-end: var(--space-xl);
-  }
-  
-  /* DATE WRAPPER */
-  .bm-timeline-16__slide .bm-timeline-16-card .bm-timeline-16-card__date-wrapper {
-    align-items: center;
-    padding: var(--space-m);
-    position: relative;
-  }
-  
-  
-  .bm-timeline-16__slide:nth-child(odd) .bm-timeline-16-card .bm-timeline-16-card__date-wrapper {
-    order:-2;
-    padding-block-end: var(--space-xl);
-  }
-  
-  .bm-timeline-16__slide:nth-child(even) .bm-timeline-16-card .bm-timeline-16-card__date-wrapper {
-    padding-block-start: var(--space-xl);
-  }
-  
-  
-  
-  /* DATE */
-  .bm-timeline-16__slide .bm-timeline-16-card .bm-timeline-16-card__date {
-    
-    font-size: calc(var(--fs-4) * 2);
-    line-height: 1;
-    color:var(--bg-subtle)
-  }
-</style>

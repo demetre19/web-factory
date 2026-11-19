@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,80 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-12__container">
-    <div class="intro bm-portfolio-section-12__intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="list--none bm-portfolio-4-related-list">
-      {items.map((it) => (
-        <div class="bm-portfolio-4-related-card">
-          <div class="bm-portfolio-4-related-card__content">
-            <h2 class="bm-portfolio-4-related-card__heading">{it.title}</h2>
-            <p class="bm-portfolio-4-related-card__text">{it.text}</p>
-            <p class="bm-portfolio-4-related-card__terms">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="bm-portfolio-4-related-card__media">
-            <figure class="bm-portfolio-4-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-12 {
-    background: var(--bg-subtle);
-  }
-
-  .bm-portfolio-section-12__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-portfolio-4-related-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portfolio-4-related-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-4-related-card__content {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-portfolio-4-related-card__terms {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    font-size: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-subtle);
-  }
-
-  .bm-portfolio-4-related-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-</style>

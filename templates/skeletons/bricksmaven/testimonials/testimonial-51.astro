@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,79 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-51__container">
-    <div class="bm-testimonial-51-testimonial-card">
-      <div class="bm-testimonial-51-testimonial-card__testimonial-content">
-        <p class="bm-testimonial-51-testimonial-card__testimonial-review">{fs}</p>
-        <a class="bm-testimonial-51-testimonial-card__testimonial-link link--white" href="#">Read the case</a>
-      </div>
-      <div class="bm-testimonial-51-testimonial-card__testimonial-media">
-        <figure class="bm-testimonial-51-testimonial-card__testimonial-image"><img src="/media/placeholder.svg" alt="Testimonial Image" loading="lazy" width="900" height="600" /></figure>
-        <div class="bm-testimonial-51-testimonial-card__client-name">
-          <p class="bm-testimonial-51-testimonial-card__name">John Smith Frank</p>
-          <p class="bm-testimonial-51-testimonial-card__title">CEO, Wayward</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Read the case</a>
+        </div>
+        <div class="grid-auto gap-fluid-l">
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Testimonial Image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <p class="text-fluid-0">John Smith Frank</p>
+            <p class="text-fluid-0">CEO, Wayward</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-51-testimonial-card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-    padding: var(--space-l) var(--space-xl) var(--space-l) var(--space-xl);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-51-testimonial-card__testimonial-content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-testimonial-51-testimonial-card__testimonial-review {
-    font-size: var(--fs-3);
-  }
-
-  .bm-testimonial-51-testimonial-card__testimonial-link {
-    font-weight: 700;
-  }
-
-  .bm-testimonial-51-testimonial-card__testimonial-media {
-    row-gap: var(--flow-spacing);
-    width: auto;
-    align-items: center;
-  }
-
-  .bm-testimonial-51-testimonial-card__testimonial-image {
-    object-fit: cover;
-    width: 168px;
-    height: 168px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-testimonial-51-testimonial-card__client-name {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-testimonial-51-testimonial-card__name {
-    font-weight: 700;
-  }
-
-  .bm-testimonial-51-testimonial-card__title {
-    font-size: var(--fs-0);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,127 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-32-container">
-    <div class="hero-32__content">
-      <div class="intro intro--left">
-        <h1 class="intro__heading">{heading}</h1>
-        <p class="intro__subheading">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="hero-32__media-wrapper">
-      <div class="hero-32__image-wrapper">
-        <figure class="hero-32__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-      <div class="hero-32__image-wrapper-omega">
-        <figure class="hero-32__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="hero-32__container-image"><img src="/media/placeholder.svg" alt="Background image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-32 {
-    padding: 0 0 0 0;
-  }
-
-  .hero-32-container {
-    position: relative;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .hero-32__content {
-    position: relative;
-    z-index: 99;
-    width: var(--measure);
-    padding: 0 0 0 var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-32__media-wrapper {
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    row-gap: var(--space-l);
-  }
-
-  .hero-32__image {
-    object-fit: cover;
-    width: 32rem;
-  }
-
-  .hero-32__container-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-
-  /* bm-custom */
-  .hero-32-container::after {
-  	content: "";
-    position:absolute;
-    right:0;
-    width:20%;
-    height:100%;
-    background-color: var(--action-primary);
-  }
-  
-  
-  @media (max-width:767px) {
-    
-  	.hero-32-container::after {
-  	content: "";
-    position:absolute;
-    right:0;
-    bottom:0;
-    width:100%;
-    height:20%;
-    background-color: var(--action-primary);
-  }
-  
-  }
-</style>

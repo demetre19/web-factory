@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,62 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-73__container">
-    <div class="bm-hero-73__content">
-      <div class="bm-hero-73__top">
-        <h1 class="bm-hero-73__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-        <p>{fs}</p>
-      </div>
-      <div class="cta-combo">
-        <a class="btn--primary" href="#">Call to action</a>
-        <a class="btn--primary btn--outline" href="#">Secondary action →</a>
-      </div>
-    </div>
-    <div class="bm-hero-73-media list--none">
-      {items.map((it) => (
-        <div class="bm-hero-73-list">
-          <figure class="bm-hero-73-list__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-      ))}
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+      </div>
+      <div></div>
     </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-73__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-hero-73__content {
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .bm-hero-73__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-73-media {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,109 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-44__container">
-    <div class="feature-44-list list--none">
-      <div class="feature-44-card">
-        <div class="feature-44-card__content">
-          <div class="feature-44-card__intro">
-            <h2 class="feature-44-card__heading">{heading}</h2>
-            <p class="accent-h feature-44-card__accent">Accent heading</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{heading}</h2>
+              <p class="text-fluid-0">Accent heading</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">{fs}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
           </div>
-          <div class="feature-44-card__footer">
-            <p class="feature-44-card__text">{fs}</p>
-            <a class="feature-44-card__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
-        <div class="feature-44-card__media">
-          <figure class="feature-44-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Long headline to turn your visitors into customers</h2>
+              <p class="text-fluid-0">Accent heading</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
-      <div class="feature-44-card">
-        <div class="feature-44-card__content">
-          <div class="feature-44-card__intro">
-            <h2 class="feature-44-card__heading">Long headline to turn your visitors into customers</h2>
-            <p class="accent-h feature-44-card__accent">Accent heading</p>
-          </div>
-          <div class="feature-44-card__footer">
-            <p class="feature-44-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="feature-44-card__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-          </div>
-        </div>
-        <div class="feature-44-card__media">
-          <figure class="feature-44-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
+      <div></div>
     </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-44 {
-    background: var(--text-secondary);
-    padding: 0 0 var(--section-space-xl) 0;
-  }
-
-  .feature-44-list {
-    row-gap: calc(var(--space-s) * 3);
-  }
-
-  .feature-44-card {
-    position: relative;
-    align-items: center;
-    height: 86rem;
-  }
-
-  .feature-44-card__content {
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-    position: absolute;
-    bottom: calc(-1 * var(--space-xl));
-    padding: 0 var(--space-xl) 0 var(--space-xl);
-  }
-
-  .feature-44-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: var(--content-width);
-  }
-
-  .feature-44-card__heading {
-    font-size: calc(var(--fs-3) * 1.6);
-  }
-
-  .feature-44-card__accent {
-    text-transform: uppercase;
-    letter-spacing: 1;
-  }
-
-  .feature-44-card__footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .feature-44-card__text {
-    width: var(--measure);
-    font-size: var(--fs-2);
-  }
-
-  .feature-44-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-</style>

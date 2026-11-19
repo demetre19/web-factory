@@ -137,13 +137,20 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .sec-band { padding-block: var(--sec-pad, var(--section-space-m));
               background: var(--sec-bg, var(--bg-canvas));
               color: var(--sec-fg, var(--text-primary)); }
-  .sec-inner { max-width: 72rem; margin-inline: auto; }
+  /* the measure box owns the page gutter: without it a 390px phone
+     renders text flush to the bezel */
+  .sec-inner { max-width: 72rem; margin-inline: auto;
+               padding-inline: var(--space-m); }
   /* G.5 canon — every collection grid is auto-fit on the rung-bound
      card floor, never a fixed repeat(N). */
   .grid-auto { display: grid;
       grid-template-columns:
         repeat(auto-fit, minmax(min(var(--grid-min),100%),1fr)); }
   .ratio-portrait { aspect-ratio: 3 / 4; }
+  /* a ratio box owns its media: the placeholder svg's intrinsic size
+     must never decide the layout */
+  .ratio-portrait > img, .ratio-phone > img { width: 100%; height: 100%;
+                                              object-fit: cover; }
   .ratio-phone { aspect-ratio: 9 / 19; }
   .variant-stage { container-type: inline-size; }
   .variant-switcher { position: sticky; top: 0; }
@@ -213,6 +220,10 @@ def tokens_json(dna):
         return dict(m.get('roles') or m)  # tolerate {light:{roles}} shape
     return {
         'knobs': knobs,
+        # the genotype travels with the record: emit_tokens derives the
+        # display/body stacks from display-face (DM.1 keeps type.font_*
+        # out of the knob vocabulary)
+        'genotype': dict(dna.get('genotype') or {}),
         'color': {
             'modes': {
                 'light': {'roles': _roles('light')},

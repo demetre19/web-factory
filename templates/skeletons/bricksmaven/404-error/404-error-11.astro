@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,69 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="error-11-container">
-    <div class="intro box-shadow--m error-11__intro">
-      <div class="intro__top">
-        <h2 class="intro__heading text--primary">{heading}</h2>
-        <p class="intro__subheading intro__subheading--alt">Oops the page is gone</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Oops the page is gone</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">← Go back home</p>
       </div>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__link">← Go back home</p>
     </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="intro-background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .error-11 {
-    height: 100vh;
-    padding: 0 0 0 0;
-    position: relative;
-  }
-
-  .error-11-container {
-    position: relative;
-    z-index: 1;
-    padding: 0 var(--space-m) 0 var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .error-11__intro {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    width: var(--measure);
-  }
-
-  .intro__top {
-    align-items: center;
-  }
-
-  .intro__subheading--alt {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .intro-background-image {
-    position: absolute;
-    height: 80vh;
-    object-fit: cover;
-    bottom: 0;
-    width: 100%;
-  }
-</style>

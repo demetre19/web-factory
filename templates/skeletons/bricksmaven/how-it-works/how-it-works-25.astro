@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,128 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-how-it-works-25__container">
-    <div class="bm-how-it-works-25__intro">
-      <h2 class="bm-how-it-works-25__heading">{heading}</h2>
-      <p class="bm-how-it-works-25__subheading">{fs}</p>
-      <a class="btn--primary bm-how-it-works-25__button wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-how-it-works-25__content">
-      <div class="bm-how-it-works-25__slider-nested">
-        {items.map((it) => (
-          <div class="bm-how-it-works-25-card">
-            <div class="bm-how-it-works-25-card__top">
-              <h2 class="bm-how-it-works-25-card__heading">{it.title}</h2>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+              </div>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
-            <p class="bm-how-it-works-25-card__text">{it.text}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-how-it-works-25 {
-    overflow: clip;
-    padding: 0 0 var(--section-space-xl) 0;
-  }
-
-  .bm-how-it-works-25__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-how-it-works-25__intro {
-    row-gap: var(--flow-spacing);
-    position: relative;
-    z-index: 2;
-  }
-
-  .bm-how-it-works-25__content {
-    position: relative;
-  }
-
-  .bm-how-it-works-25-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--text-primary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    text-align: left;
-    justify-content: flex-start;
-  }
-
-  .bm-how-it-works-25-card__top {
-    display: flex;
-    flex-wrap: nowrap;
-    align-self: flex-start;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    flex-direction: row;
-  }
-
-  /* bm-custom */
-  .bm-how-it-works-25__content::before {
-    content: '';
-    position: absolute;
-    inline-size: 100vw;
-    block-size: 100%;
-    background-color: var(--bg-canvas);
-    margin-inline-start: calc(-1 * 100vw);
-    z-index: 1;
-    
-  }
-
-  /* bm-custom */
-  .bm-how-it-works-25__slider-nested .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-how-it-works-25__slider-nested .splide__arrow--next {
-      left: 64px;
-  }
-  
-  /* Counter for Card heading*/
-  .bm-how-it-works-25__slider-nested {
-    counter-reset: hworks; /* Start counting from 0 */
-    --counter-size: 42px;
-  }
-  
-  .bm-how-it-works-25__slider-nested .bm-how-it-works-25-card {
-    counter-increment: hworks; /* Add 1 each time we see an <h2> */
-    gap: var(--flow-spacing);
-    display: flex;
-    align-items: center;
-  }
-  
-  
-  .bm-how-it-works-25__slider-nested .bm-how-it-works-25-card .bm-how-it-works-25-card__heading {
-    padding-inline-start: calc(var(--acss-counter-size) * 1.4);
-    position: relative;
-    
-  }
-  
-  .bm-how-it-works-25__slider-nested .bm-how-it-works-25-card .bm-how-it-works-25-card__heading::before {
-    content: counter(hworks) " "; /* Display the number */
-    position: absolute;
-    inline-size: var(--acss-counter-size);
-    block-size: var(--acss-counter-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    inset-inline-start: 0;
-    inset-block-start: -4px;
-    font-size: var(--fs-0);
-    background: var(--bg-subtle);
-    border-radius: 100%;
-    
-  }
-</style>

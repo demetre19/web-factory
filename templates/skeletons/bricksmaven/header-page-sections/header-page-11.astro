@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,80 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-page-11__container">
-    <div class="bm-header-page-11__intro">
-      <div class="bm-header-page-11__top">
-        <h1 class="bm-header-page-11__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
-      <p class="bm-header-page-11__text">{fs}</p>
-      <div class="cta-combo">
-        <a class="btn--primary" href="#">Call to action</a>
-        <a class="bm-link" href="#">Secondary action →</a>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
+      <div></div>
+      <div></div>
     </div>
-    <div class="bm-header-page-11__media">
-      <figure class="bm-header-page-11__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div></div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-page-11__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    position: relative;
-  }
-
-  .bm-header-page-11__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-header-page-11__top {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-header-page-11__heading {
-    font-size: calc(var(--fs-4) * 1.26);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-header-page-11__media {
-    position: relative;
-  }
-
-  .bm-header-page-11__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-
-  /* bm-custom */
-  .bm-header-page-11__container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 50%;
-    background-color: var(--bg-subtle);
-    z-index: -1;
-  }
-</style>

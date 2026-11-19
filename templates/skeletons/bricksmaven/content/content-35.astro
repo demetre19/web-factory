@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,95 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-35__container">
-    <div class="content-35__content">
-      <h2 class="content-35__heading">{heading}</h2>
-      <p class="content-35__accent-heading">Accent heading</p>
-      <p class="content-35__text">{fs}</p>
-    </div>
-    <div class="content-35-usp-ul list--none">
-      {items.map((it) => (
-        <div class="content-35-card">
-          <h2 class="content-35-card__heading">{it.title}</h2>
-          <span class="content-35-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="content-35-card__text">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-35 {
-    overflow: hidden;
-  }
-
-  .content-35__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 12);
-  }
-
-  .content-35__content {
-    padding: var(--space-xl) calc(var(--section-space-xxl) * 3) var(--space-xl) 0;
-    row-gap: var(--flow-spacing);
-    position: relative;
-    justify-content: center;
-  }
-
-  .content-35__accent-heading {
-    font-size: var(--fs-0);
-  }
-
-  .content-35-usp-ul {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    grid-template-rows: calc(100% * 1 / 4);
-    gap: var(--space-m);
-    position: relative;
-  }
-
-  .content-35-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: calc(var(--flow-spacing) / 2);
-    background: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  @media (min-width:991px) {
-  
-  .content-35__content::before {
-  	content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    height:100%;
-    width:calc(50vw + (3 * (var(--content-width) / 12)));
-    background: linear-gradient(var(--color-line-default), var(--bg-subtle));
-    z-index:-1;
-  }
-    
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .content-35-card:nth-child(1) {
-  	  grid-row: 2 / 4;
-  }
-  
-  .content-35-card:nth-child(2), .content-35-card:nth-child(3) {
-  	grid-column: 2 / 3;
-    grid-row: span 2;
-  }
-    
-  }
-</style>

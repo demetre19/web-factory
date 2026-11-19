@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,86 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-section-1-container">
-    <div class="blog-section-1-head">
-      <div class="blog-section-1-heading">
-        <h2 class="blog-section-1__heading__title">{heading}</h2>
-        <p class="blog-section-1__heading__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <form novalidate>
+        </form>
       </div>
-      <form class="blog-section-1-subs" novalidate>
-      </form>
-    </div>
-    <div class="blog-section-1-body">
-      <div class="blog-section-1-wrapper list--none">
-        <div class="blog-section-1-card">
-          <p class="text--s blog-section-1-card__date">{post_date}</p>
-          <h2 class="blog-section-1-card__title">{post_title}</h2>
-          <div class="blog-section-1-card__excerpt"></div>
-          <a class="blog-section-1-card__read pad--none" href={cta.href}>{cta.label}</a>
+      <div>
+        <div>
+          <div>
+            <p class="text-fluid-0">{post_date}</p>
+            <h2 class="text-fluid-2">{post_title}</h2>
+            <div></div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-section-1-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .blog-section-1-head {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-    display: grid;
-    padding: 0 0 var(--space-s) 0;
-    border-bottom: .1rem solid var(--bg-subtle);
-    width: 100%;
-  }
-
-  .blog-section-1-heading {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .blog-section-1-body {
-    width: 100%;
-  }
-
-  .blog-section-1-wrapper {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-l);
-    display: grid;
-  }
-
-  .blog-section-1-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    row-gap: var(--space-s);
-    align-items: flex-start;
-  }
-
-  .blog-section-1-card__read {
-    margin: auto 0 0 0;
-  }
-
-  /* bm-custom */
-  .blog-section-1-subs {
-  	gap: 1.5rem;
-  }
-  .blog-section-1-subs .bricks-button {
-    background-color: var(--action-primary);
-    color: var(--bg-canvas);;
-  }
-</style>

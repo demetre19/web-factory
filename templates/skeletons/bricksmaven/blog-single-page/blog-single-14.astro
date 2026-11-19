@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,161 +17,48 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-blog-single-14__container">
-    <div class="bm-blog-single-14__intro">
-      <div class="bm-blog-single-14__column">
-        <div class="bm-blog-single-14__post-title"></div>
-        <div class="bm-blog-single-14__post-excerpt"></div>
-      </div>
-      <div class="bm-blog-single-14__meta-column">
-        <div class="blog-single-2__meta">
-          <div class="blog-single-2__author">
-            <div class="blog-single-head__media">
-              <figure class="blog-single-2__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <div></div>
+          <div></div>
+        </div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div>
+                <p class="text-fluid-0">{author_name}</p>
+                <p class="text-fluid-0">Author Position</p>
+              </div>
             </div>
-            <div class="blog-single-head__data">
-              <p class="blog-single-2__name">{author_name}</p>
-              <p class="blog-single-2__position">Author Position</p>
+            <div>
+              <p class="text-fluid-0">Date</p>
+              <p class="text-fluid-0">{post_date}</p>
             </div>
-          </div>
-          <div class="blog-single-head__details blog-single-head__details--coloumn">
-            <p class="blog-single-head__label">Date</p>
-            <p class="blog-single-2__date">{post_date}</p>
-          </div>
-          <div class="blog-single-head__details blog-single-head__details--coloumn">
-            <p class="blog-single-head__label">Category</p>
-            <p class="blog-single-2__term blog-single-head__term--alt">{post_terms_category}</p>
+            <div>
+              <p class="text-fluid-0">Category</p>
+              <p class="text-fluid-0">{post_terms_category}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="bm-blog-single-14__content">
-      <figure class="bm-blog-single-14__featured-image"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
-      <div class="bm-blog-single-14__post-content"></div>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
+        <div></div>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-blog-single-14__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .bm-blog-single-14__intro {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-blog-single-14__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-single-14__post-title {
-    font-size: calc(var(--fs-4) * 1.5);
-  }
-
-  .bm-blog-single-14__meta-column {
-    justify-content: flex-end;
-  }
-
-  .blog-single-2__meta {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    text-align: center;
-  }
-
-  .blog-single-2__author {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    padding: 0 var(--space-m) 0 0;
-    border-right: .1rem solid var(--color-line-default);
-  }
-
-  .blog-single-2__photo {
-    width: 4.4rem;
-    height: 4.4rem;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .blog-single-head__data {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .blog-single-2__name {
-    font-weight: 700;
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-2__position {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-head__details {
-    display: flex;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-  }
-
-  .blog-single-head__details--coloumn {
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: calc(var(--flow-spacing) / 1/6);
-  }
-
-  .blog-single-head__label {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .blog-single-2__date {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-2__term {
-    padding: .4rem .8rem .4rem .8rem;
-    background: var(--color-line-default);
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-head__term--alt {
-    padding: 0 0 0 0;
-  }
-
-  .bm-blog-single-14__content {
-    align-items: center;
-    row-gap: var(--space-s);
-  }
-
-  .bm-blog-single-14__featured-image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-blog-single-14__post-content {
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .blog-single-2__term a {
-  	color: var(--fs-0);
-  }
-</style>

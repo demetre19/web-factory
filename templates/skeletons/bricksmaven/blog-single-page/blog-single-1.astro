@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,159 +17,47 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-single-1-container">
-    <div class="blog-single-1__head">
-      <div class="blog-single-1__title"></div>
-      <div class="blog-single-1__meta">
-        <p class="blog-single-1-head__term">{post_terms_category}</p>
-        <p class="blog-single-1__date">{post_date}</p>
-      </div>
-      <p class="blog-single-1__subtitle">{fs}</p>
-      <div class="blog-single-1__media">
-        <figure class="blog-single-1__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-    </div>
-    <div class="blog-single-1__body">
-      <div class="blog-single-1__content text--left width--xl"></div>
-    </div>
-    <div class="blog-single-1-footer">
-      <div class="blog-single-1-footer__meta">
-        <div class="blog-single-1-footer__author">
-          <div class="blog-single-1-footer__author-media">
-            <figure class="blog-single-1-footer__author-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-single-1-footer__author-data">
-            <p class="blog-single-1-footer__name">{author_name}</p>
-            <p class="blog-single-1-footer__position">Author Position</p>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div></div>
+        <div>
+          <p class="text-fluid-0">{post_terms_category}</p>
+          <p class="text-fluid-0">{post_date}</p>
         </div>
-        <div class="blog-single-1-footer__share">
-          <div class="blog-single-1-footer__share-item"></div>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div>
+        <div></div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <p class="text-fluid-0">{author_name}</p>
+              <p class="text-fluid-0">Author Position</p>
+            </div>
+          </div>
+          <div>
+            <div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-single-1 {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .blog-single-1-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-  }
-
-  .blog-single-1__head {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-single-1__meta {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-    justify-content: center;
-  }
-
-  .blog-single-1-head__term {
-    padding: .4rem .8rem .4rem .8rem;
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-1__date {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single-1__thumb {
-    height: 60rem;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-single-1-footer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    column-gap: var(--flow-spacing);
-    border-top: .1rem solid var(--bg-subtle);
-    padding: var(--space-s) 0 0 0;
-  }
-
-  .blog-single-1-footer__meta {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .blog-single-1-footer__author {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-  }
-
-  .blog-single-1-footer__author-image {
-    width: 3.4rem;
-    height: 3.4rem;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .blog-single-1-footer__author-data {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .blog-single-1-footer__name {
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .blog-single-1-head__term a {
-  	color: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .blog-single-1__content h1,
-  .blog-single-1__content h2,
-  .blog-single-1__content h3,
-  .blog-single-1__content h4,
-  .blog-single-1__content h5,
-  .blog-single-1__content h6,
-  .blog-single-1__content p {
-  	max-width: 100%; 
-  }
-
-  /* bm-custom */
-  .blog-single-1-footer__share-item {
-  	gap: .5rem;
-  }
-  .blog-single-1-footer__share-item li a {
-  	background-color: color-mix(in srgb, var(--bg-subtle) 60%, transparent);
-    border-radius: 0;
-    color: var(--bg-subtle);
-    width: 4rem;
-    height: 4rem;
-  }
-</style>

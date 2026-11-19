@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,68 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="error-10-container">
-    <div class="error-10-intro">
-      <div class="error-10-intro__heading-wrapper">
-        <h1 class="error-10-intro__heading">{heading}</h1>
-        <p class="error-10-intro__subheading">Oops the page is gone</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Oops the page is gone</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <p class="error-10-intro__desc">{fs}</p>
-      <a class="error-10-intro-btn wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="error-10-image-background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .error-10 {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    justify-content: flex-end;
-  }
-
-  .error-10-container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .error-10-intro {
-    display: flex;
-    row-gap: var(--space-m);
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .error-10-intro__subheading {
-    font-size: var(--fs-3);
-    font-weight: 700;
-  }
-
-  .error-10-intro-btn {
-    padding: 0 0 0 0;
-    justify-content: flex-start;
-  }
-
-  .error-10-image-background {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-  }
-</style>

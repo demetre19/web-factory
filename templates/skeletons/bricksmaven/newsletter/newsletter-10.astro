@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,88 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <figure class="newsletter-10__bg-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-  <div class="newsletter-10-container">
-    <div class="newsletter-10__intro">
-      <h2 class="newsletter-10__intro__heading">{heading}</h2>
-      <p class="newsletter-10__intro__desc">{fs}</p>
-    </div>
-    <div class="newsletter-10__form-container">
-      <p class="newsletter-10__form-container__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-      <div class="bm-form">
-        <form class="bm-form-widget" novalidate>
-        </form>
-        <p class="bm-form__terms">We care about your data in our privacy policy.</p>
+  <div class="sec-inner">
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <p class="text-fluid-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <div>
+          <form novalidate>
+          </form>
+          <p class="text-fluid-0">We care about your data in our privacy policy.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .newsletter-10 {
-    position: relative;
-  }
-
-  .newsletter-10__bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -10;
-    object-fit: cover;
-  }
-
-  .newsletter-10-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-    text-align: center;
-    z-index: 1;
-  }
-
-  .newsletter-10__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .newsletter-10__form-container {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-  }
-
-  .bm-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  }
-</style>

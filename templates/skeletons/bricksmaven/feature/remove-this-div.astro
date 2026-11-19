@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,182 +17,76 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="feature-40__container">
-      <div class="intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Accent heading</p>
+    <div class="sec-inner">
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
       </div>
     </div>
-    <div class="feature-40__list-container">
-      <div class="feature-40-feature-nav">
-        {items.map((it) => (
-          <div class="feature-40-nav-item">
-            <a class="feature-40-nav-item__link link--black" href="#">{it.text}</a>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <a class="text-fluid-0" href="#">{it.text}</a>
           </div>
         ))}
       </div>
-      <div class="feature-40__feature-container">
-        <div class="feature-40__list-content">
-          <h2 class="feature-40__list-heading">Unleash Performance.</h2>
-          <p class="feature-40__list-text">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
-          <a class="feature-40__list-cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div class="sec-inner">
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Unleash Performance.</h2>
+            <p class="text-fluid-0">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
-        <div class="feature-40__list-media">
-          <figure class="feature-40__list-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Simple & Flexible.</h2>
+            <p class="text-fluid-0">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
-      </div>
-      <div class="feature-40__feature-container">
-        <div class="feature-40__list-content">
-          <h2 class="feature-40__list-heading">Simple & Flexible.</h2>
-          <p class="feature-40__list-text">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
-          <a class="feature-40__list-cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Built-In Reliability.</h2>
+            <p class="text-fluid-0">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
-        <div class="feature-40__list-media">
-          <figure class="feature-40__list-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-      <div class="feature-40__feature-container">
-        <div class="feature-40__list-content">
-          <h2 class="feature-40__list-heading">Built-In Reliability.</h2>
-          <p class="feature-40__list-text">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
-          <a class="feature-40__list-cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
-        </div>
-        <div class="feature-40__list-media">
-          <figure class="feature-40__list-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-      <div class="feature-40__feature-container">
-        <div class="feature-40__list-content">
-          <h2 class="feature-40__list-heading">All the Features. Half the Costs.</h2>
-          <p class="feature-40__list-text">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
-          <a class="feature-40__list-cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
-        </div>
-        <div class="feature-40__list-media">
-          <figure class="feature-40__list-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">All the Features. Half the Costs.</h2>
+            <p class="text-fluid-0">Every server you launch is powered by a fully optimized stack with built-in advanced cache and CDN, ensuring peak website performance that drives results.</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
       <div></div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-40__container {
-    row-gap: calc(var(--flow-spacing) * 2);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-40__list-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .feature-40-feature-nav {
-    column-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: row;
-    padding: var(--space-xs) var(--space-s) var(--space-xs) var(--space-s);
-    margin: 0 0 0 0;
-    background: var(--bg-subtle);
-    border-top: .4rem solid var(--bg-canvas);
-    border-right: .4rem solid var(--bg-canvas);
-    border-bottom: .4rem solid var(--bg-canvas);
-    border-left: .4rem solid var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    z-index: 1;
-    width: var(--measure);
-    position: sticky;
-    top: var(--space-xl);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .feature-40-nav-item {
-    align-items: center;
-  }
-
-  .feature-40-nav-item__link {
-    font-size: calc(var(--fs-0) * 1.4);
-  }
-
-  .feature-40__section {
-    row-gap: var(--space-s);
-    height: 100%;
-  }
-
-  .feature-40__feature-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-  }
-
-  .feature-40__list-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .feature-40__list-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .feature-40__feature-container {
-    position: sticky;
-    top: var(--section-space-xxl);
-    background: var(--bg-subtle);
-  }
-  
-  .feature-40__feature-container:nth-of-type(2) {
-  	top: calc(var(--section-space-xxl) * 1.2);
-    background: var(--color-line-default);
-  }
-  
-  .feature-40__feature-container:nth-of-type(3) {
-  	top:  calc(var(--section-space-xxl) * 1.4);
-    background: var(--bg-subtle);
-  }
-  
-  .feature-40__feature-container:nth-of-type(4) {
-  	top: calc(var(--section-space-xxl) * 1.6);
-    background: var(--color-ink-secondary);
-    color: var(--bg-canvas);
-  }
-  
-  @media (min-width:767px) {
-  
-    .feature-40__feature-container {
-      height:70vh;
-      align-items: center;
-    }
-    
-    
-  }
-</style>

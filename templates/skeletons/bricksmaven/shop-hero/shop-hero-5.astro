@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,184 +17,56 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-shop-hero-5__container">
-    <div class="bm-shop-hero-5__intro">
-      <div class="bm-shop-hero-5__top">
-        <h1 class="bm-shop-hero-5__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-        <p class="bm-shop-hero-5__text-basic">{fs}</p>
-      </div>
-      <div class="cta-combo">
-        <a class="btn--primary" href="#">Call to action</a>
-        <a class="bm-link" href="#">Secondary action →</a>
-      </div>
-    </div>
-    <div class="bm-shop-hero-5__grid">
-      <div class="bm-shop-hero-5__new-arrival">
-        <div class="bm-shop-hero-5__button-wrapper">
-          <p class="bm-shop-hero-5__label">New Arrival</p>
-          <p class="bm-shop-hero-5__price">$129</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-        <figure class="bm-shop-hero-5__image-alpha"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="bm-shop-hero-5__content">
-        <div class="bm-shop-hero-5__header">
-          <span class="bm-shop-hero-5__counter"></span>
-          <h2 class="bm-shop-hero-5__content-heading">Recyclable</h2>
-          <p class="bm-shop-hero-5__content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
         </div>
-        <a class="bm-shop-hero-5__link" href="#">Call to action</a>
       </div>
-      <div class="bm-shop-hero-5__limited-offers">
-        <div class="bm-shop-hero-5__offer">
-          <div class="bm-shop-hero-5__left-column">
-            <h2 class="bm-shop-hero-5__offer-heading">Limited Offers</h2>
-            <p class="bm-shop-hero-5__offer-text">Up to 50% discount</p>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <p class="text-fluid-0">New Arrival</p>
+            <p class="text-fluid-0">$129</p>
           </div>
-          <span class="bm-shop-hero-5__offer-icon" data-icon="lucide" aria-hidden="true"></span>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <figure class="bm-shop-hero-5__image-beta"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <span></span>
+            <h2 class="text-fluid-2">Recyclable</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Limited Offers</h2>
+              <p class="text-fluid-0">Up to 50% discount</p>
+            </div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-shop-hero-5__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-shop-hero-5__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-hero-5__top {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-hero-5__grid {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 12);
-    grid-template-rows: calc(100% * 1 / 12);
-  }
-
-  .bm-shop-hero-5__new-arrival {
-    position: relative;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: flex-end;
-    height: 100%;
-  }
-
-  .bm-shop-hero-5__button-wrapper {
-    display: flex;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
-    background: var(--bg-canvas);
-  }
-
-  .bm-shop-hero-5__label {
-    font-size: var(--fs-0);
-  }
-
-  .bm-shop-hero-5__price {
-    font-size: var(--fs-3);
-    line-height: 1;
-    font-weight: 700;
-  }
-
-  .bm-shop-hero-5__image-alpha {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-shop-hero-5__content {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-hero-5__header {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-shop-hero-5__counter {
-    font-size: var(--fs-4);
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .bm-shop-hero-5__link {
-    margin: auto 0 0 0;
-  }
-
-  .bm-shop-hero-5__limited-offers {
-    position: relative;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: flex-end;
-  }
-
-  .bm-shop-hero-5__offer {
-    background: var(--bg-canvas);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    flex-direction: row;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-shop-hero-5__left-column {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-shop-hero-5__image-beta {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-shop-hero-5__new-arrival {
-    aspect-ratio: 4/6;
-  }
-
-  /* bm-custom */
-  @media (max-width:478px) {
-    .bm-shop-hero-5__limited-offers {
-    aspect-ratio: 6/4;
-  }
-  }
-</style>

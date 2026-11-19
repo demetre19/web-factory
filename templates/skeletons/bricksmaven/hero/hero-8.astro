@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,60 +17,24 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-8-container">
-    <div class="hero-8__content">
-      <p class="hero-8__tag">TAGLINE</p>
-      <h1 class="hero-8__title">{heading}</h1>
-      <p class="hero-8__desc">{fs}</p>
-      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">TAGLINE</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
     </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="hero-8-bg"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-8 {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-
-  .hero-8-container {
-    display: flex;
-    align-items: center;
-  }
-
-  .hero-8__content {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-    text-align: center;
-  }
-
-  .hero-8__tag {
-    font-weight: 700;
-  }
-
-  .hero-8-bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -10;
-    object-fit: cover;
-  }
-</style>

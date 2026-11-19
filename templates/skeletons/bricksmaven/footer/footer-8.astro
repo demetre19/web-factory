@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,200 +17,66 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="footer-brand footer-brand-8">
-    <img class="footer-brand__logo"></img>
-  </div>
-  <div class="footer-8-top-container">
-    <div class="footer-8-nav">
-      <div class="footer-8-nav-menu list--none">
-        {items.map((it) => (
-          <div class="footer-8-nav-list">
-            <a class="footer-8-nav-list__link" href="#">{it.text}</a>
-          </div>
-        ))}
-      </div>
+  <div class="sec-inner">
+    <div>
+      <span class="logo">{brand}</span>
     </div>
-  </div>
-  <div class="footer-8-mid-container">
-    {items.map((it) => (
-      <div class="footer-8__mid-column">
-        <h2 class="footer-8__heading">{it.title}</h2>
-        <div class="footer-8__email-phone">
-          <a class="footer-8__phone" href="#">{it.text}</a>
-          <a class="footer-8__email" href="#">{it.text}</a>
-        </div>
-        <p class="footer-8__text">{it.text}</p>
-      </div>
-    ))}
-  </div>
-  <div class="footer-8-bottom-container">
-    <div class="footer-8-bottom__left-column">
-      <div class="footer-bottom__left footer-bottom__left-8">
-        <div class="footer-brand">
-          <img class="footer-brand__logo"></img>
-        </div>
-        <div class="footer-bottom__copyright">
-          <p class="footer-copyright">{fs}</p>
-        </div>
-      </div>
-      <div class="footer-nav-legal">
-        <div class="footer-legal-nav list--none">
-          {items.map((it) => (
-            <div class="footer-legal__li">
-              <a class="footer-legal__link-text" href="#">{it.text}</a>
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
             </div>
           ))}
         </div>
       </div>
     </div>
-    <div class="footer-social-wrapper footer-social-wrapper-8">
-      <p class="footer-8__social-heading">Let's connect:</p>
-      <div class="footer-social"></div>
+    <div>
+      {(items || []).map((it) => (
+        <div>
+          <h2 class="text-fluid-2">{it.title}</h2>
+          <div>
+            <a class="text-fluid-0" href="#">{it.text}</a>
+            <a class="text-fluid-0" href="#">{it.text}</a>
+          </div>
+          <p class="text-fluid-0">{it.text}</p>
+        </div>
+      ))}
+    </div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <span class="logo">{brand}</span>
+          </div>
+          <div>
+            <p class="text-fluid-0">{fs}</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="text-fluid-0">Let's connect:</p>
+        <div></div>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .footer-8 {
-    position: relative;
-    row-gap: var(--space-s);
-  }
-
-  .footer-brand-8 {
-    position: absolute;
-    left: 50%;
-    top: 0;
-  }
-
-  .footer-8-nav-menu {
-    flex-direction: row;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-    border-top: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-  }
-
-  .footer-8-nav-list {
-    align-items: center;
-  }
-
-  .footer-8-mid-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .footer-8__mid-column {
-    text-align: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-8__heading {
-    font-size: var(--fs-1);
-  }
-
-  .footer-8__email-phone {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .footer-8__text {
-    font-style: normal;
-  }
-
-  .footer-8__openinghours {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: .5rem;
-  }
-
-  .footer-nav-column {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-menu {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-menu-8 {
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer-link-update {
-    font-size: var(--fs-0);
-    font-weight: 700;
-    padding: .4rem .4rem .4rem .4rem;
-    background: var(--bg-subtle);
-    margin: 0 0 0 1rem;
-  }
-
-  .footer-8-bottom-container {
-    display: grid;
-    flex-direction: row;
-    padding: var(--space-m) 0 0 0;
-    border-top: .1rem solid var(--bg-subtle);
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .footer-8-bottom__left-column {
-    row-gap: var(--space-xs);
-  }
-
-  .footer-bottom__left {
-    flex-direction: row;
-    row-gap: var(--space-xs);
-    column-gap: var(--space-xs);
-    align-items: center;
-  }
-
-  .footer-copyright {
-    font-size: var(--fs-0);
-  }
-
-  .footer-legal-nav {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .footer-legal__link-text {
-    font-size: var(--fs-0);
-  }
-
-  .footer-social-wrapper-8 {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    justify-content: flex-end;
-  }
-
-  .footer-social {
-    width: auto;
-  }
-
-  /* bm-custom */
-  .footer-social {
-  	justify-content: center;
-  }
-</style>

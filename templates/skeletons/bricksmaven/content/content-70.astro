@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,78 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-70__container">
-    <div class="bm-content-70__content">
-      <h2 class="bm-content-70__heading">{heading}</h2>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="list--none bm-content-70-usp-list">
-      {items.map((it) => (
-        <div class="bm-content-70-card">
-          <p class="bm-content-70-card__text">{it.text}</p>
-          <div class="bm-content-70-card__icon-wrapper">
-            <span class="bm-content-70-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <p class="text-fluid-0">{it.text}</p>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-70__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .bm-content-70__content {
-    width: 100%;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-70-usp-list {
-    width: 100%;
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-content-70-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    text-align: center;
-    align-items: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-content-70-card__text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-content-70-card__icon-wrapper {
-    border-radius: 100% 100% 100% 100%;
-    background: var(--text-secondary);
-    width: var(--acss-icon-circle-size);
-    height: var(--acss-icon-circle-size);
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* bm-custom */
-  .bm-content-70-card__icon-wrapper {
-    --icon-circle-size: 48px;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-coming-soon-1__container">
-    <div class="bm-coming-soon-1__content">
-      <div class="coming-soon__brand">
-        <svg class="coming-soon__logo"></svg>
-      </div>
-      <div class="bm-coming-soon-1__intro">
-        <h1 class="bm-coming-soon-1__heading">{heading}</h1>
-        <p class="bm-coming-soon-1__text">{fs}</p>
-      </div>
-      <div class="coming-soon__countdown-wrapper">
-        <div class="coming-soon-countdown text--light"></div>
-      </div>
-      <div class="cta-combo">
-        <a class="btn--white" href="#">Call to action</a>
-        <a class="btn--outline btn--white" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <svg></svg>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
     </div>
+    <div></div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <div class="bm-coming-soon-1__overlay"></div>
-  <figure class="bm-coming-soon-1__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-coming-soon-1 {
-    position: relative;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .bm-coming-soon-1__container {
-    z-index: 2;
-    text-align: center;
-  }
-
-  .bm-coming-soon-1__content {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .coming-soon__brand {
-    position: relative;
-    z-index: 1;
-  }
-
-  .coming-soon__logo {
-    object-fit: contain;
-  }
-
-  .bm-coming-soon-1__intro {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .bm-coming-soon-1__overlay {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .bm-coming-soon-1__background-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .coming-soon-countdown {
-  	gap: var(--flow-spacing);
-  }
-</style>

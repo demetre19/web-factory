@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,29 +17,21 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="logo-2-container">
-    <div class="width--full logo-2-row center--all gap--l">
-      <h2 class="logo-2-title">{heading}</h2>
-      <div class="logo-2-list-item"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div></div>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  /* bm-custom */
-  .logo-2-list-item li {
-  	padding-left: var(--space-xs);
-  }
-  
-  .logo-2-list-item li div {
-  	background-size: contain!important;
-  }
-</style>

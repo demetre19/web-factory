@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,111 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-60__container">
-    <div class="bm-content-60__intro">
-      <div class="bm-content-60__wrapper">
-        <h2 class="bm-content-60__heading">{heading}</h2>
-        <p class="accent-h accent-h--alt">Accent heading</p>
+  <div class="sec-inner">
+    <div>
+      <div class="grid-auto gap-fluid-l">
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <figure class="bm-content-60__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="bm-content-60__content">
-      <div class="bm-content-60__top">
-        <h2 class="bm-content-60__top-heading">Paragraph headline to grab the readers attention. This headline can be as short or as long as needed.</h2>
-      </div>
-      <div class="bm-content-60__text-wrapper">
-        <p class="bm-content-60__text bm-content-60__columns">{fs}</p>
-      </div>
-      <div class="bm-content-60__footer">
-        <p class="bm-content-60__text">Connect with us on social media to stay in the loop with all things related to our brand:</p>
-        <div class="bm-social-share list--none bm-social-share--left">
-          {items.map((it) => (
-            <div class="bm-social-share__icon-wrapper">
-              <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Paragraph headline to grab the readers attention. This headline can be as short or as long as needed.</h2>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">Connect with us on social media to stay in the loop with all things related to our brand:</p>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-60 {
-    overflow: hidden;
-  }
-
-  .bm-content-60__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-60__intro {
-    height: 580px;
-    position: relative;
-    justify-content: flex-end;
-    padding: 0 0 var(--space-xl) 0;
-  }
-
-  .bm-content-60__wrapper {
-    position: relative;
-    z-index: 1;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-content-60__background-image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 50%;
-    height: 100%;
-    width: 100vw;
-    object-fit: cover;
-    margin: 0 0 0 -50vw !important;
-  }
-
-  .bm-content-60__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-60__top {
-    width: var(--measure);
-  }
-
-  .bm-content-60__footer {
-    display: flex;
-    row-gap: var(--flow-spacing);
-    flex-direction: column;
-    flex-wrap: nowrap;
-    width: var(--measure);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  /* bm-custom */
-  @media (min-width:768px) {
-  
-  .bm-content-60__columns {
-    columns: 2;
-  }
-  
-  }
-</style>

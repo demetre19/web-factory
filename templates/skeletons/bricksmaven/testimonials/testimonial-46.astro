@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,172 +17,49 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-46__container">
-    <div class="intro bm-testimonial-46__intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-testimonial-46__review-cover">
-      <div class="bm-testimonial-46__slider-nested">
-        <div class="bm-testimonial-46-card">
-          <div class="bm-testimonial-46-card__content">
-            <h2 class="bm-testimonial-46-card__heading">More than happy with the patterns of Bricksmaven</h2>
-            <p class="bm-testimonial-46-card__review">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard</p>
-          </div>
-          <div class="bm-testimonial-38-star-list list--none bm-testimonial-46-card__star-list">
-            {items.map((it) => (
-              <div class="bm-testimonial-38-star-li">
-                <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
-          </div>
-          <div class="bm-testimonial-46-card__footer">
-            <div class="bm-testimonial-46-card__client">
-              <div class="bm-testimonial-46-card__client-brand-wrapper">
-                <span class="bm-testimonial-46-card__client-brand" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-              <p class="bm-testimonial-46-card__client-name">Shine Brands</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">More than happy with the patterns of Bricksmaven</h2>
+              <p class="text-fluid-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard</p>
             </div>
-            <span class="bm-testimonial-46-card__icon" data-icon="lucide" aria-hidden="true"></span>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">Shine Brands</p>
+              </div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-46 {
-    overflow: clip;
-  }
-
-  .bm-testimonial-46__container {
-    row-gap: var(--space-s);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    background: var(--text-secondary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    align-items: center;
-    position: relative;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-testimonial-46__review-cover {
-    align-items: center;
-    position: relative;
-    width: calc(100% + (var(--space-xl) * 2)) ;
-  }
-
-  .bm-testimonial-46__slider-nested {
-    position: static;
-    width: 100%;
-  }
-
-  .bm-testimonial-46-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-46-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-testimonial-38-star-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-testimonial-46-card__star-list {
-    align-self: flex-start;
-  }
-
-  .bm-testimonial-46-card__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-  }
-
-  .bm-testimonial-46-card__client {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-testimonial-46-card__client-name {
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .bm-testimonial-46__container::before {
-    content: '';
-    position: absolute;
-    inline-size: 100vw;
-    block-size: 100%;
-    background: var(--bg-canvas);
-    inset-inline-start: -100vw;
-    z-index: 1;
-    
-  }
-  
-  .bm-testimonial-46__container::after {
-    content: '';
-    position: absolute;
-    inline-size: 100vw;
-    block-size: 100%;
-    background: var(--bg-canvas);
-    inset-inline-end: -100vw;
-    z-index: 1;
-    
-  }
-
-  /* bm-custom */
-  .bm-testimonial-46__slider-nested .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-testimonial-46__slider-nested .splide__arrow  {
-   z-index: 99; 
-  }
-  
-  .bm-testimonial-46__slider-nested .bm-testimonial-46-card.is-visible {
-    border: 1px solid var(--bg-subtle);
-  }
-  
-  .bm-testimonial-46__slider-nested .bm-testimonial-46-card:not(.is-visible) {
-    background: var(--text-secondary);
-    color: var(--bg-canvas);
-    border: 1px solid var(--bg-subtle);
-    transition: 0.5s ease all;
-  }
-  
-  .bm-testimonial-46__slider-nested .bm-testimonial-46-card:hover:not(.is-visible) {
-    background: var(--bg-canvas);
-    color: var(--text-secondary);
-    border: unset;
-  }
-</style>

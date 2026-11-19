@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,66 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-47__container">
-    <div class="bm-content-47__content">
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__accent-heading">Accent heading</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
       </div>
-      <p class="bm-content-47__text">{fs}</p>
-    </div>
-    <div class="bm-content-47__media">
-      <figure class="bm-content-47__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-47__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-47__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-content-47__image {
-    width: 100%;
-    object-fit: cover;
-    height: 640px;
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .bm-content-47__text {
-    columns: 2;
-  }
-    
-  }
-</style>

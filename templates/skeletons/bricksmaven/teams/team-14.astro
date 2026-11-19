@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,137 +17,64 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="team-14-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="team-14-list list--none">
-      <div class="team-14-card">
-        <div class="team-14-card__content">
-          <div class="team-14-card__intro">
-            <h2 class="team-14-card__heading">Johnathan Cliff</h2>
-            <p class="team-14-card__accent-heading">Title</p>
-          </div>
-          <p class="team-14-card__text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <a class="team-14-card__email" href="#">Text link</a>
-        </div>
-        <div class="team-14-card__media-socials">
-          <figure class="team-14-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <div class="team-14-card__social-list list--none">
-            {items.map((it) => (
-              <div class="team-14-card__social-li">
-                <span class="team-14-card__social-icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
-          </div>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="team-14-card">
-        <div class="team-14-card__content">
-          <div class="team-14-card__intro">
-            <h2 class="team-14-card__heading">Johnathan Cliff</h2>
-            <p class="team-14-card__accent-heading">Title</p>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Johnathan Cliff</h2>
+              <p class="text-fluid-0">Title</p>
+            </div>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <a class="text-fluid-0" href="#">Text link</a>
           </div>
-          <p class="team-14-card__text">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <a class="team-14-card__email" href="#">Text link</a>
+          <div class="grid-auto gap-fluid-l">
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div class="team-14-card__media-socials">
-          <figure class="team-14-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <div class="team-14-card__social-list list--none">
-            {items.map((it) => (
-              <div class="team-14-card__social-li">
-                <span class="team-14-card__social-icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Johnathan Cliff</h2>
+              <p class="text-fluid-0">Title</p>
+            </div>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <a class="text-fluid-0" href="#">Text link</a>
+          </div>
+          <div class="grid-auto gap-fluid-l">
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .team-14-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .team-14-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .team-14-card {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: calc(var(--space-m) * 2);
-  }
-
-  .team-14-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .team-14-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-14-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .team-14-card__media-socials {
-    position: relative;
-  }
-
-  .team-14-card__image {
-    object-fit: cover;
-  }
-
-  .team-14-card__social-list {
-    position: absolute;
-    left: calc(var(--space-m) * -1);
-    top: 50%;
-    background: var(--bg-subtle);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    column-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m) !important;
-  }
-
-  /* bm-custom */
-  .team-14-card:nth-child(even) .team-14-card__media-socials {
-  	order: -1;
-  }
-  
-  .team-14-card:nth-child(even) .team-14-card__social-list {
-  	left: unset;
-    right: calc(var(--space-m) * -1);
-  }
-  
-  @media (max-width:478px) {
-  	.team-14-card:nth-child(even) .team-14-card__social-list {
-  	left: 50%;
-    right: unset;
-  }
-  }
-</style>

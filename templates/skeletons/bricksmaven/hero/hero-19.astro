@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,72 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-19-container">
-    <div class="hero-19-content">
-      <p class="hero-19-content__tagline">Tagline</p>
-      <h1 class="hero-19-content__title">{heading}</h1>
-      <p class="hero-19-content__desc">{fs}</p>
-      <a class="hero-19-content__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-19-media list--none">
-      <div class="hero-19-media__wrapper hero-19-media__wrapper--first">
-        <figure class="hero-19-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">Tagline</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div class="hero-19-media__wrapper hero-19-media__wrapper--second">
-        <figure class="hero-19-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="hero-19-media__wrapper hero-19-media__wrapper--third">
-        <figure class="hero-19-media__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-19-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .hero-19-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: flex-start;
-  }
-
-  .hero-19-content__tagline {
-    text-transform: uppercase;
-    font-weight: 700;
-    margin: 0 0 0 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-19-media {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    gap: var(--space-s);
-    grid-template-rows: repeat(2, minmax(0, 30rem));
-  }
-
-  .hero-19-media__img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-</style>

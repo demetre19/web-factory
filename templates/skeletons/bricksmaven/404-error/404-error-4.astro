@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,63 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="error-4-container">
-    <div class="error-4-content">
-      <div class="error-4-content__intro">
-        <h1 class="error-4-content__title">{heading}</h1>
-        <p class="error-4-content__subtitle">Page not found.</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Page not found.</p>
+        </div>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <p class="error-4-content__desc">{fs}</p>
-      <a class="error-4-content__btn wf-cta-button" href={cta.href}>{cta.label}</a>
+      <div></div>
     </div>
-    <div class="error-4-content__list"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .error-4-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xl);
-    align-items: center;
-    text-align: center;
-  }
-
-  .error-4-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .error-4-content__subtitle {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .error-4-content__btn {
-    padding: 0 0 0 0;
-  }
-
-  .error-4-content__list {
-    padding: .6rem 2.4rem .6rem 2.4rem;
-  }
-
-  /* bm-custom */
-  .error-4-content__list li a {
-  	color: var(--fs-0)!important;
-  }
-  
-  .error-4-content__list li:nth-child(2) {
-  	border: .1rem solid color-mix(in srgb, var(--fs-0) 20%, transparent);
-    border-top: 0;
-    border-bottom: 0;
-  }
-</style>

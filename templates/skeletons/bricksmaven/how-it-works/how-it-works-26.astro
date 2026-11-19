@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,255 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-how-it-works-26__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
     </div>
-  </div>
-  <div class="bm-how-it-works-26__full-container">
-    <div class="bm-how-it-works-26-list">
-      {items.map((it) => (
-        <div class="bm-how-it-works-26-card">
-          <div class="bm-how-it-works-26-card__intro">
-            <p class="bm-how-it-works-26-card__step">{it.text}</p>
-            <div class="bm-how-it-works-26-card__circle"></div>
-            <div class="bm-how-it-works-26-card__vertical-line"></div>
-          </div>
-          <div class="bm-how-it-works-26-card__inner">
-            <div class="bm-how-it-works-26-card__highlight">
-              <p class="bm-how-it-works-26-card__highlight-label">{it.text}</p>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <div></div>
+              <div></div>
             </div>
-            <h2 class="bm-how-it-works-26-card__heading">{it.title}</h2>
-            <p class="bm-how-it-works-26-card__text">{it.text}</p>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-how-it-works-26 {
-    row-gap: var(--space-s);
-    overflow: clip;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-how-it-works-26__full-container {
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    left: 50%;
-    position: relative;
-  }
-
-  .bm-how-it-works-26-list {
-    padding: 0 var(--gutter) 0 var(--gutter);
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    margin: 0 0 0 0;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-26-card {
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-26-card__intro {
-    align-items: center;
-    text-align: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-  }
-
-  .bm-how-it-works-26-card__step {
-    font-weight: 700;
-    display: flex;
-    gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-how-it-works-26-card__circle {
-    background: var(--fs-0);
-    border-top: 2px solid var(--fs-0);
-    border-right: 2px solid var(--fs-0);
-    border-bottom: 2px solid var(--fs-0);
-    border-left: 2px solid var(--fs-0);
-    border-radius: 100% 100% 100% 100%;
-    width: 32px;
-    height: 32px;
-  }
-
-  .bm-how-it-works-26-card__vertical-line {
-    background: var(--fs-0);
-    height: 40px;
-    width: 1px;
-  }
-
-  .bm-how-it-works-26-card__inner {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-how-it-works-26-card__highlight {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: var(--acss-space-2xs) var(--space-m) var(--acss-space-2xs) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--fs-0);
-  }
-
-  .bm-how-it-works-26-card__highlight-label {
-    font-size: var(--fs-0);
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .bm-how-it-works-26-card__heading {
-    font-size: var(--fs-1);
-  }
-
-  /* bm-custom */
-  /* Counter on step element */
-  
-  .bm-how-it-works-26-list {
-    --hw-vertical-line: var(--color-line-default);
-    --hw-counter-color: var(--color-line-default);
-    counter-reset: step;
-  }
-  
-  .bm-how-it-works-26-list .bm-how-it-works-26-card__step {
-    counter-increment: step;
-  }
-  
-  .bm-how-it-works-26-list .bm-how-it-works-26-card__step::before {
-    content: '0' counter(step);
-    color: var(--acss-hw-counter-color);
-  }
-  
-  /* Horizontal line full width */
-  
-  .bm-how-it-works-26-list::before {
-    content:'';
-    position: absolute;
-    inline-size: 100vw;
-    max-inline-size: 100vw;
-    margin-inline-start: -50vw;
-    margin-block-start: 50px;
-    inset-inline-start:50%;
-    block-size: 2px;
-    background-color: var(--acss-hw-vertical-line);
-    z-index: -1;
-  }
-  
-  @media (max-width:991px) {
-    
-    
-    .bm-how-it-works-26-list::before {
-    inline-size: 2px;
-    max-inline-size: 2px;
-    margin-inline-start: unset;
-    margin-block-start: unset;
-    inset-inline-start:calc(var(--gutter) + 0.9em);
-    block-size: 100%;
-  }
-    
-  }
-
-  /* bm-custom */
-  .bm-how-it-works-26-card {
-    --highlight-bg-color: var(--fs-0);
-    --highlight-color: var(--bg-canvas);
-    --highlight-border-color: var(--fs-0);
-    
-    --box-shadow: var(--shadow-card);
-    --hw-translate-y: calc(-1 * var(--space-xs));
-  }
-  
-  @media (min-width:991px) {
-  
-  .bm-how-it-works-26-card .bm-how-it-works-26-card__inner {
-    transition: 0.2s ease;
-  }
-  
-  .bm-how-it-works-26-card:hover .bm-how-it-works-26-card__inner {
-    box-shadow: var(--acss-box-shadow);
-    transform: translateY(var(--acss-hw-translate-y));
-  }
-  
-  .bm-how-it-works-26-card:hover .bm-how-it-works-26-card__circle {
-    scale: 1.1;
-  }
-    
-  .bm-how-it-works-26-card[data-highlight='true']:hover .bm-how-it-works-26-card__circle {
-    scale: 1.3;
-  }
-    
-    
-  }
-  
-  /* Data-highlight styling */
-  
-  .bm-how-it-works-26-card[data-highlight='true'] .bm-how-it-works-26-card__inner {
-    background-color: var(--acss-highlight-bg-color);
-  }
-  
-  .bm-how-it-works-26-card[data-highlight='true'] .bm-how-it-works-26-card__circle {
-    scale: 1.2;
-    background-color: var(--acss-highlight-bg-color);
-    border: 2px solid var(--acss-highlight-border-color);
-    
-  }
-  
-  
-  .bm-how-it-works-26-card[data-highlight='true'] .bm-how-it-works-26-card__text {
-    color: var(--acss-highlight-color);
-  }
-  
-  
-  .bm-how-it-works-26-card[data-highlight='true'] .bm-how-it-works-26-card__heading {
-    color: var(--acss-highlight-color);
-  }
-  
-  /* Show highlight */
-  
-  .bm-how-it-works-26-card[data-highlight='true'] .bm-how-it-works-26-card__highlight {
-    display:flex;
-  }
-</style>

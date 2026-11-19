@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,147 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="grid-32__container">
-    <div class="intro intro--left">
-      <div class="intro__head">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="accent-h">Accent Heading</p>
-      </div>
-      <p class="intro__subheading">{fs}</p>
-    </div>
-    <div class="grid-32-card-ul">
-      {items.map((it) => (
-        <div class="grid-32-card">
-          <span class="grid-32-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          <div class="grid-32-card__content">
-            <h2 class="grid-32-card__heading">{it.title}</h2>
-            <p class="grid-32-card__text">{it.text}</p>
-          </div>
-          <a class="grid-32-card__btn btn--black wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Accent Heading</p>
         </div>
-      ))}
-    </div>
-    <div class="grid-32__background-media">
-      <figure class="grid-32__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+          </div>
+        ))}
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .grid-32 {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .grid-32__container {
-    row-gap: var(--space-s);
-    z-index: 1;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .intro__head {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .grid-32-card-ul {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-    position: relative;
-    z-index: 3;
-  }
-
-  .grid-32-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--bg-canvas);
-    border-top: .1rem solid var(--color-line-default);
-    border-right: .1rem solid var(--color-line-default);
-    border-bottom: .1rem solid var(--color-line-default);
-    border-left: .1rem solid var(--color-line-default);
-  }
-
-  .grid-32-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .grid-32__background-media {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .grid-32__background-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .grid-32__container::before {
-  	content:'';
-    position:absolute;
-    inset:0;
-    clip-path: polygon(0 0, 69% 0, 100% 100%, 0% 100%);
-    background-color: var(--bg-canvas);
-    z-index:1;
-  }
-    
-  }
-
-  /* bm-custom */
-  /* CARD */
-  .grid-32-card {
-  	transition: .6s ease;
-    position:relative;
-  }
-  
-  .grid-32-card:focus-within :focus{
-  	outline:0;
-  }
-  
-  .grid-32-card:hover, .grid-32-card:focus-within {
-  	box-shadow: var(--shadow-card);
-    transform: translateY(calc(-1 * var(--space-xs)));
-  }
-  
-  /* CARD Heading */
-  .grid-32-card .grid-32-card__heading:not(a) > a:after {
-  	content:'';
-    position: absolute;
-    inset:0;
-    cursor: pointer;
-  }
-</style>

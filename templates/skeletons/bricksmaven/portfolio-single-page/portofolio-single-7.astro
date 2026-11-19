@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,300 +17,74 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-single-7__container">
-    <div class="bm-portfolio-single-7__intro">
-      <h1 class="bm-portfolio-single-7__intro-heading">{heading}</h1>
-      <div class="bm-portfolio-single-meta-data-1 bm-portfolio-single-meta-data-1--inline bm-portfolio-single-meta-data-1--order">
-        {items.map((it) => (
-          <div class="bm-portfolio-single-meta-data-item-2">
-            <p class="bm-portfolio-single-meta-data-item-2__type">{it.text}</p>
-            <p class="bm-portfolio-single-meta-data-item-2__label">{it.text}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-    <div class="bm-1col-media">
-      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="bm-portfolio-single-7__content-container">
-      <div class="bm-portfolio-single-7__content">
-        <h2 class="bm-portfolio-single-7__heading">Project overview</h2>
-        <p class="bm-portfolio-single-7__text">{fs}</p>
-        <a class="bm-live-website-link" href="#">View website</a>
-      </div>
-      <div class="bm-portfolio-single-7__media">
-        <div class="bm-portfolio-single-7__media-wrapper list--none">
-          {items.map((it) => (
-            <div class="bm-portfolio-single-7__item">
-              <figure class="bm-portfolio-single-7__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}
         </div>
       </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Project overview</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">View website</a>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="bm-portfolio-single-3__cta-container">
-    <div class="bm-contact-widget-7">
-      <h2 class="bm-contact-widget-7__heading">Ready to start a project?</h2>
-      <div class="bm-contact-widget-7__link-cta">
-        <a class="bm-contact-widget-7__link" href="#">Let's Talk</a>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">Ready to start a project?</h2>
+        <div>
+          <a class="text-fluid-0" href="#">Let's Talk</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-fluid-2">Related case studies</h2>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
-  <div class="bm-portfolio-single-7__footer-container">
-    <h2 class="bm-portfolio-single-7__footer-heading">Related case studies</h2>
-    <div class="bm-portfolio-section-9-list">
-      {items.map((it) => (
-        <div class="bm-portfolio-section-9-card">
-          <div class="bm-portfolio-section-9-card__content">
-            <h2 class="bm-portfolio-section-9-card__heading clickable-parent">{it.title}</h2>
-            <div class="bm-portfolio-section-9-card__footer">
-              <p class="bm-portfolio-section-9-card__industry">{it.text}</p>
-              <p class="bm-portfolio-section-9-card__date">{it.text}</p>
-            </div>
-          </div>
-          <div class="bm-portfolio-section-9-card__media">
-            <figure class="bm-portfolio-section-9-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-single-7 {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-7__container {
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .bm-portfolio-single-7__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-7__intro-heading {
-    font-size: calc(var(--fs-4) * 2);
-  }
-
-  .bm-portfolio-single-meta-data-1 {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-single-meta-data-1--inline {
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) * 2);
-    width: 100%;
-  }
-
-  .bm-portfolio-single-meta-data-item-2__label {
-    font-weight: 700;
-    font-size: var(--fs-2);
-  }
-
-  .bm-1col-media__image {
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-  }
-
-  .bm-portfolio-single-7__content-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-    position: relative;
-    width: 100%;
-  }
-
-  .bm-portfolio-single-7__content {
-    row-gap: var(--flow-spacing);
-    position: sticky;
-    top: var(--space-m);
-  }
-
-  .bm-live-website-link {
-    font-size: var(--fs-2);
-    position: relative;
-  }
-
-  .bm-portfolio-single-7__media-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-7__image {
-    width: 100%;
-  }
-
-  .bm-portfolio-single-3__cta-container {
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .bm-contact-widget-7 {
-    padding: var(--section-space-s) 0 var(--section-space-s) 0;
-    row-gap: var(--flow-spacing);
-    flex-direction: row;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    border-top: 1px solid var(--color-line-default);
-    border-bottom: 1px solid var(--color-line-default);
-  }
-
-  .bm-contact-widget-7__heading {
-    font-size: calc(var(--fs-4) * 2);
-    width: 100%;
-  }
-
-  .bm-contact-widget-7__link {
-    font-size: var(--fs-3);
-    font-weight: 700;
-    position: relative;
-  }
-
-  .bm-portfolio-single-7__footer-container {
-    width: 100%;
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-7__footer-heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-portfolio-section-9-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: var(--acss-grid-auto-3);
-  }
-
-  .bm-portfolio-section-9-card {
-    row-gap: var(--flow-spacing);
-    position: relative;
-  }
-
-  .bm-portfolio-section-9-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: 1px solid var(--color-line-default);
-  }
-
-  .bm-portfolio-section-9-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .bm-portfolio-section-9-card__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-section-9-card__industry {
-    font-size: var(--fs-2);
-    position: relative;
-  }
-
-  .bm-portfolio-section-9-card__date {
-    font-size: var(--fs-2);
-  }
-
-  .bm-portfolio-section-9-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-live-website-link::before {
-    --animation-duration-up: 0.4s;
-    --animation-iteration-count: 1;
-    --animation-timing-function-up: linear;
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    width: 0%;
-    height: 1px;
-    background-color: var(--text-secondary);
-    transition: all 0.5 ease;
-  }
-  
-  
-  /* Define the animation for the first child */
-  .bm-live-website-link:hover::before{
-    animation: motion var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) ;
-    width: 100%;
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes motion {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: 100%;
-    }
-  }
-
-  /* bm-custom */
-  .bm-contact-widget-7__link::before {
-    --animation-duration-up: 0.4s;
-    --animation-iteration-count: 1;
-    --animation-timing-function-up: linear;
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    width: 0%;
-    height: 1px;
-    background-color: var(--text-secondary);
-    transition: all 0.5 ease;
-  }
-  
-  
-  /* Define the animation for the first child */
-  .bm-contact-widget-7__link:hover::before{
-    animation: motion var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) ;
-    width: 100%;
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes motion {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: 100%;
-    }
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-9-card__media {
-    overflow: hidden;
-  }
-  
-  .bm-portfolio-section-9-card__image {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-9-card:hover .bm-portfolio-section-9-card__image, .bm-portfolio-section-9-card:focus-within .bm-portfolio-section-9-card__image {
-    transform: scale(1.2);
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-9-card__industry::after {
-    content: '-';
-    position: absolute;
-    right: calc(-1 * (var(--flow-spacing) / 1.4));
-  }
-</style>

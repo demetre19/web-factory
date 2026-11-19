@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-5-container">
-    <div class="hworks-5-content">
-      <div class="hworks-intro hworks-intro--alt">
-        <h2 class="hworks-intro__heading">{heading}</h2>
-        <p class="hworks-intro__desc">{fs}</p>
-      </div>
-      <div class="hworks-5-list list--none">
-        {items.map((it) => (
-          <div class="hworks-5-list-item">
-            <div class="flex--col hworks-5-list-item__content gap--xs">
-              <p class="hworks-5-list-item__title">{it.text}</p>
-              <p class="hworks-5-list-item__desc">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hworks-5-media">
-      <figure class="hworks-5-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-5-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-xl);
-  }
-
-  .hworks-5-content {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .hworks-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    text-align: center;
-  }
-
-  .hworks-intro--alt {
-    text-align: left;
-  }
-
-  .hworks-intro__heading {
-    margin: 0 0 0 0;
-  }
-
-  .hworks-5-list {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .hworks-5-list-item {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    column-gap: var(--space-s);
-  }
-
-  .hworks-5-list-item__title {
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hworks-5-media__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .hworks-5-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-5-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:1.5rem;
-    padding-block:.4rem;
-    color:var(--action-primary);
-  
-  }
-</style>

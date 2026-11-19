@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,80 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-7-container">
-    <div class="hworks-7-content list--none">
-      {items.map((it) => (
-        <div class="hworks-7-card">
-          <div class="hworks-7-card__media">
-            <figure class="hworks-7-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
           </div>
-          <h2 class="hworks-7-card__heading">{it.title}</h2>
-          <p class="hworks-7-card__desc">{it.text}</p>
-        </div>
-      ))}
+        ))}
+      </div>
+      <span data-icon="lucide" aria-hidden="true"></span>
     </div>
-    <span class="hworks-icon" data-icon="lucide" aria-hidden="true"></span>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-7-content {
-    position: relative;
-    display: grid;
-    gap: var(--section-space-xxl);
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .hworks-7-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    text-align: center;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .hworks-7-card__media {
-    display: flex;
-    align-items: center;
-  }
-
-  .hworks-7-card__image {
-    width: 14.8rem;
-    height: 14.8rem;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .hworks-7-card__heading {
-    text-transform: uppercase;
-  }
-
-  .hworks-icon {
-    display: none;
-  }
-
-  /* bm-custom */
-  .hworks-7-card::after  {
-    content: "\e628";
-    font-family: 'themify';
-    color: var(--action-primary);
-    position: absolute;
-    right: -6rem;
-  }
-  
-  .hworks-7-card:last-child::after  {
-    content: none;
-  }
-</style>

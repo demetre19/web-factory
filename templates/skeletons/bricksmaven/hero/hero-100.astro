@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,87 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-100__container">
-    <div class="bm-hero-100__intro">
-      <h1 class="bm-hero-100__heading">{heading}</h1>
-      <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-hero-100__subheading">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-hero-100__media">
-      <figure class="bm-hero-100__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-100__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .bm-hero-100__intro {
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .bm-hero-100__heading {
-    font-size: calc(var(--fs-4) * 1.6);
-  }
-
-  .bm-hero-100__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .bm-hero-100__media {
-    align-items: center;
-    position: relative;
-    padding: 0 var(--gutter) 0 var(--gutter);
-    justify-content: flex-end;
-  }
-
-  .bm-hero-100__image {
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) 0 0;
-    height: var(--acss-image-height);
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-hero-100__media {
-    --psuedo-width: 100%;
-    --psuedo-height: 60%;
-    --psuedo-gradient-alpha: var(--fs-0);
-    --psuedo-gradient-beta: var(--fs-0);
-    
-    --image-height: 64rem;
-  }
-  
-  .bm-hero-100__media::before {
-    content: '';
-    position: absolute;
-    inline-size: var(--acss-psuedo-width);
-    block-size: var(--acss-psuedo-height);
-    inset-block-end: 0;
-    background: linear-gradient(var(--acss-psuedo-gradient-alpha), var(--acss-psuedo-gradient-beta));
-    border-radius: var(--r-card);
-    
-  } 
-  
-  @media (max-width:767px) {
-    .bm-hero-100__media {
-    
-    --image-height: calc(50rem / 1.5);
-  }
-  }
-</style>

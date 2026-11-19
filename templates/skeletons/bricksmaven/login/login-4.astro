@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,153 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-login-4__container">
-    <div class="bm-login-4__login">
-      <div class="login-form-wrapper login-form-wrapper--alt">
-        <h1 class="login-3__heading">{heading}</h1>
-        <form class="login-form" novalidate>
-        </form>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <form novalidate>
+          </form>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">You are logged in.</h1>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="login-1__logged-in-heading-wrapper">
-        <h1 class="login-3__heading">You are logged in.</h1>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
-          </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
-          </div>
+      <div class="grid-auto gap-fluid-l">
+        <div>
+          <h2 class="text-fluid-2">Short headline</h2>
+          <p class="text-fluid-0">{fs}</p>
         </div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div class="bm-login-4__content">
-      <div class="bm-login-4__content-intro">
-        <h2 class="bm-login-4__heading">Short headline</h2>
-        <p class="bm-login-4__text">{fs}</p>
-      </div>
-      <figure class="bm-login-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-login-4 {
-    overflow: hidden;
-  }
-
-  .bm-login-4__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-login-4__login {
-    justify-content: center;
-  }
-
-  .login-form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-form-wrapper--alt {
-    width: var(--measure);
-  }
-
-  .login-footer {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .login-footer__link {
-    font-size: var(--fs-0);
-  }
-
-  .login-1__logged-in-heading-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-4__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .bm-login-4__content-intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-4__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .login-form .form-group ul li {
-  	display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .login-form .form-group span {
-  	display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-  
-  .login-form .form-group span a, .login-form .form-group ul li label {
-  	font-size: var(--fs-0);
-  }
-  
-  .login-form .form-group:nth-child(4) {
-      align-items: end;
-  }
-
-  /* bm-custom */
-  .bm-login-4__content::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 50vw;
-    max-width: 50vw;
-    background-color: var(--bg-subtle);
-    z-index: -1;
-    
-  }
-  
-    @media (max-width:991px) {
-    
-      
-      .bm-login-4__content::before {
-        right: 0;
-        bottom: 0;
-        left: 50%;
-        width: 100vw;
-        max-width: 100vw;
-        margin-left: -50vw !important;
-  
-      }
-      
-    }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,37 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="team-6-container grid--3 gap--m grid--m-1">
-    <div class="team-6-heading gap--xs flex--col">
-      <p class="team-6-heading__tag text--primary">We're hiring!</p>
-      <h2 class="team-6-heading__title">{heading}</h2>
-      <p class="team-6-heading__desc">{fs}</p>
-    </div>
-    <div class="team-6-content col-span--2">
-      <div class="team-6-slide">
-        {items.map((it) => (
-          <div class="team-6-slide-item gap--xs">
-            <figure class="team-6-slide-item__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            <h2 class="team-6-slide-item__name">{it.title}</h2>
-            <p class="team-6-slide-item__title">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">We're hiring!</p>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .team-6-slide-item__img {
-    height: 100%;
-    object-fit: cover;
-  }
-</style>

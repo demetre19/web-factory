@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,79 +17,22 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gallery-10-container">
-    <div class="gallery-10-row">
-      <h2 class="gallery-10-title">{heading}</h2>
-      <p class="gallery-10-desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div></div>
     </div>
-    <div class="gallery-10-card"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gallery-10-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-xl);
-    row-gap: var(--space-xl);
-    text-align: center;
-  }
-
-  .gallery-10-row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    column-gap: var(--space-s);
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .gallery-10-card {
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  /* bm-custom */
-  .gallery-10-card {
-  	display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(2, 1fr);
-    gap: var(--space-m)!important;
-  }
-  
-  .gallery-10-card li {
-  width: 100%;
-  }
-  
-  .gallery-10-card li:nth-child(1){
-    grid-area: 1 / 1 / 3 / 3;
-  }  
-  
-  .gallery-10-card li:nth-child(2){
-    grid-area: 1 / 3 / 2 / 4;
-  } 
-  
-  .gallery-10-card li:nth-child(3){
-    grid-area: 1 / 4 / 2 / 5;
-  } 
-  
-  
-  .gallery-10-card li:nth-child(4){
-    grid-area: 2 / 3 / 3 / 4;
-  } 
-  
-  
-  .gallery-10-card li:nth-child(5){
-    grid-area: 2 / 4 / 3 / 5; 
-  }
-</style>

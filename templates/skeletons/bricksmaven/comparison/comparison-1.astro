@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,174 +17,67 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-conparison-1__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-conparison-1-list">
-      <div class="bm-conparison-1-card bm-conparison-1-card--before">
-        <div class="bm-conparison-status bm-conparison-status--before">
-          <p class="bm-conparison-status__label">Before</p>
-        </div>
-        <div class="bm-conparison-1-card__media">
-          <figure class="bm-conparison-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-list">
-          {items.map((it) => (
-            <div class="bm-list-item">
-              <div class="bm-list-item__icon-wrapper bm-list-item__icon-wrapper--before">
-                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <p class="text-fluid-0">Before</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="bm-list-item__text bm-list-item__text--alt">{it.text}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div>
+          <div>
+            <p class="text-fluid-0">After</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      <div class="bm-conparison-1-card">
-        <div class="bm-conparison-status">
-          <p class="bm-conparison-status__label">After</p>
+      <div>
+        <p class="text-fluid-0">Final push to get the reader to take action</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
         </div>
-        <div class="bm-conparison-1-card__media">
-          <figure class="bm-conparison-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-list list--none">
-          {items.map((it) => (
-            <div class="bm-list-item">
-              <div class="bm-list-item__icon-wrapper bm-list-item__icon-wrapper--after">
-                <span class="bm-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-              <p class="bm-list-item__text">{it.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-    <div class="bm-conparison-1__footer">
-      <p class="bm-conparison-1__footer-text">Final push to get the reader to take action</p>
-      <div class="cta-combo">
-        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a href="#">Secondary action →</a>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-conparison-1__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-conparison-1-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: var(--fs-0);
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-conparison-1-card {
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-conparison-1-card--before {
-    background: var(--bg-subtle);
-  }
-
-  .bm-conparison-status {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    background: var(--bg-subtle);
-    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-  }
-
-  .bm-conparison-status--before {
-    background: var(--acss-dark-l-6);
-  }
-
-  .bm-conparison-1-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 0;
-    row-gap: var(--fs-0);
-    margin: 0 0 0 0;
-  }
-
-  .bm-list-item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: var(--fs-0);
-  }
-
-  .bm-list-item__icon-wrapper {
-    position: relative;
-    padding: var(--acss-icon-size) var(--acss-icon-size) var(--acss-icon-size) var(--acss-icon-size);
-    background: var(--bg-subtle);
-    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-  }
-
-  .bm-list-item__icon-wrapper--before {
-    background: var(--bg-subtle);
-  }
-
-  .bm-list-item__icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .bm-list-item__icon-wrapper--after {
-    background: var(--fs-0);
-  }
-
-  .bm-conparison-1__footer {
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-    align-self: center;
-    width: 100%;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  /* bm-custom */
-  .bm-list-item__icon-wrapper {
-  	--icon-size: var(--fs-0);
-  }
-</style>

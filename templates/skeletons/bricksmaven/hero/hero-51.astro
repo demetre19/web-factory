@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,73 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-51__container">
-    <div class="hero-51__media-left">
-      <figure class="hero-51__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-    <div class="hero-51__content">
-      <h1 class="hero-51__heading">{heading}</h1>
-      <p class="hero-51__accent-heading">Accent Heading</p>
-      <p class="hero-51__text">{fs}</p>
-      <a class="btn--black hero-51__button wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-51__media-right">
-      <figure class="hero-51__image--alt"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">Accent Heading</p>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-51 {
-    overflow: hidden;
-  }
-
-  .hero-51__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 12);
-  }
-
-  .hero-51__media-left {
-    display: flex;
-    align-items: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  .hero-51__image {
-    width: 50vw;
-    object-fit: cover;
-    height: 72rem;
-  }
-
-  .hero-51__content {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    row-gap: var(--flow-spacing);
-    background: var(--bg-canvas);
-    text-align: center;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-51__accent-heading {
-    font-size: var(--fs-0);
-  }
-
-  .hero-51__media-right {
-    margin: 0 0 calc(-1 * var(--section-space-xxl)) 0;
-  }
-
-  .hero-51__image--alt {
-    width: 50vw;
-    object-fit: cover;
-    height: 72rem;
-  }
-</style>

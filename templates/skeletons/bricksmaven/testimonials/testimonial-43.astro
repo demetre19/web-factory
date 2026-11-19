@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,205 +17,56 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-43__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-testimonial-43__content-container">
-      <div class="bm-testimonial-43-slider">
-        {items.map((it) => (
-          <div class="bm-testimonial-43-card">
-            <div class="bm-testimonial-43-card__video-wrapper">
-              <figure class="bm-testimonial-43-card__video"></figure>
-              <div class="bm-testimonial-43-card__video-footer">
-                <div class="bm-user-card__data">
-                  <p class="bm-user-card__name">{it.text}</p>
-                  <p class="bm-user-card__title">{it.text}</p>
-                </div>
-              </div>
-            </div>
-            <div class="bm-testimonial-43-card__standard">
-              <div class="bm-testimonial-43-card__top">
-                <h2 class="bm-testimonial-43-card__heading">{it.title}</h2>
-                <p class="bm-testimonial-43-card__review">{it.text}</p>
-              </div>
-              <div class="bm-testimonial-43-card__standard-footer">
-                <div class="bm-user-card">
-                  <div class="bm-user-card__media">
-                    <figure class="bm-user-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                  </div>
-                  <div class="bm-user-card__data">
-                    <p class="bm-user-card__name">{it.text}</p>
-                    <p class="bm-user-card__title">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <figure></figure>
+                <div>
+                  <div>
+                    <p class="text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
               </div>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <div>
+                    <div>
+                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    </div>
+                    <div>
+                      <p class="text-fluid-0">{it.text}</p>
+                      <p class="text-fluid-0">{it.text}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-43 {
-    overflow: hidden;
-    padding: 0 0 var(--section-space-l) 0;
-  }
-
-  .bm-testimonial-43__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-testimonial-43-card__video-wrapper {
-    position: relative;
-    height: 100%;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: hidden;
-  }
-
-  .bm-testimonial-43-card__video {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-testimonial-43-card__video-footer {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: none;
-  }
-
-  .bm-user-card__data {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 6);
-  }
-
-  .bm-user-card__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-testimonial-43-card__standard {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 1px solid var(--bg-subtle);
-    border-left: 1px solid var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .bm-testimonial-43-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-user-card {
-    display: flex;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-user-card__image {
-    object-fit: cover;
-    width: 48px;
-    height: 48px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  /* bm-custom */
-  .bm-testimonial-43-slider .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-testimonial-43-slider .splide__arrows {
-  	position: absolute;
-    display: flex !important;
-    flex-direction: row;
-    width: auto;
-    gap: var(--space-m);
-    bottom: calc((var(--space-m) + 5rem) * -1 );
-    right: 0;
-  }
-  
-  .bm-testimonial-43-slider .splide__arrow {
-  	position: relative;
-    transform: unset !important;
-  }
-  
-  .bm-testimonial-43-slider .splide__arrows.custom {
-      display: flex!important;
-  }
-  
-  
-  .brxe-slider-nested .splide__arrows:not(.custom) .splide__arrow--prev {
-      transform: translateY(0%) scaleX(-1) !important;
-  }
-
-  /* bm-custom */
-  /* Standard card */
-  .bm-testimonial-43-card[data-card-status='standard'] .bm-testimonial-43-card__video-wrapper {
-    display: none;
-  }
-  
-  
-  /* Video card */
-  .bm-testimonial-43-card[data-card-status='video'] .bm-testimonial-43-card__standard {
-    display: none;
-  }
-  
-  .bm-testimonial-43-card[data-card-status='video'] .bm-testimonial-43-card__video-wrapper {
-    min-height: var(--measure);
-  }
-  
-  .bm-testimonial-43-card[data-card-status='video'] .bm-user-card__data {
-    color: var(--bg-canvas);
-  }
-  
-  .bm-testimonial-43-card[data-card-status='video'] .bm-user-card__name {
-    font-size: var(--fs-2);
-  }
-
-  /* bm-custom */
-  .bm-testimonial-43-card__video[data-visible='show'] + .bm-testimonial-43-card__video-footer {
-    display: flex;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,148 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div>
-    <div class="hero-48__content">
-      <h1 class="hero-48__heading">{heading}</h1>
-      <p class="hero-48__text">{fs}</p>
-      <div class="cta-combo">
-        <a class="btn--black" href={cta.href}>{cta.label}</a>
-        <a class="btn--link" href="#">Secondary action →</a>
-      </div>
-    </div>
-    <div class="hero-48__media">
-      <div class="hero-48__carousel">
-        <div class="hero-48-carousel-ul list--none">
-          {items.map((it) => (
-            <div class="hero-48-carousel-item">
-              <figure class="hero-48-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
         </div>
       </div>
-      <div class="hero-48__carousel">
-        <div class="hero-48-carousel-ul list--none">
-          {items.map((it) => (
-            <div class="hero-48-carousel-item">
-              <figure class="hero-48-carousel-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          ))}
+      <div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-48 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .hero-48__content {
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
-    row-gap: var(--space-m);
-    align-items: center;
-    text-align: center;
-  }
-
-  .hero-48__heading {
-    font-size: var(--fs-4);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .hero-48__media {
-    width: 100vw;
-    padding: 0 0 var(--section-space-xxl) 0;
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 1);
-    margin: 0 -50vw 0 -50vw;
-    position: relative;
-    right: 50%;
-    left: 50%;
-    gap: var(--space-xs);
-  }
-
-  .hero-48__carousel {
-    position: relative;
-    overflow: hidden;
-    height: 300;
-  }
-
-  .hero-48-carousel-ul {
-    height: 300;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    column-gap: var(--space-xs);
-  }
-
-  .hero-48-carousel-item__image {
-    width: 800;
-    height: 300;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .hero-48__carousel {
-  	--animation-duration-up: 25s;
-    --animation-duration-down: 25s;
-    --scroll-up-end-position: -50%;
-    --scroll-down-start-position: -20%;
-    --animation-iteration-count: infinite;
-    --animation-direction: alternate;
-    --animation-timing-function-up: linear;
-    --animation-timing-function-down: linear;
-  }
-  
-  
-  
-  /* Define the animation for the first child */
-  .hero-48__carousel:first-child .hero-48-carousel-ul {
-    animation: scrollUp var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animation for the last child */
-  .hero-48__carousel:last-child .hero-48-carousel-ul {
-    animation: scrollDown var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes scrollUp {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(var(--acss-scroll-up-end-position));
-    }
-  }
-  
-  /* Define the animations starting point for the last child */
-  @keyframes scrollDown {
-    0% {
-      transform: translateX(var(--acss-scroll-down-start-position));
-    }
-    100% {
-      transform: translateX(0%);
-    }
-  }
-</style>

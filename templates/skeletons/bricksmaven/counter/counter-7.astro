@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,94 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="counter-7-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
     </div>
-  </div>
-  <div class="counter-7-container">
-    <figure class="counter-7-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="counter-7-container--alt">
-    <div class="counter-7-grid-ul list--none">
-      {items.map((it) => (
-        <div class="counter-7-card">
-          <span class="counter-7-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          <span class="counter-7-card__number"></span>
-          <p class="counter-7-card__label">{it.text}</p>
-        </div>
-      ))}
+    <div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <span></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .counter-7 {
-    row-gap: var(--space-s);
-    overflow: hidden;
-  }
-
-  .counter-7-container {
-    width: 100%;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .counter-7-image {
-    height: 53rem;
-    width: 100vw;
-    object-fit: cover;
-    margin: 0 0 0 -50vw !important;
-    left: 50%;
-  }
-
-  .counter-7-container--alt {
-    margin: -24rem 0 0 0;
-    position: relative;
-    padding: 0 var(--space-s) 0 var(--space-s);
-  }
-
-  .counter-7-grid-ul {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 4);
-    gap: var(--space-m);
-  }
-
-  .counter-7-card {
-    height: 28rem;
-    /* bm: box-shadow omitted — token layer owns elevation */
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    align-items: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .counter-7-card__number {
-    font-size: var(--fs-3);
-  }
-
-  .counter-7-card__label {
-    font-weight: 700;
-  }
-</style>

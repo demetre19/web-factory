@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,23 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="table-of-content-1">
-    <div class="table-of-content-1__intro">
-      <h2 class="table-of-content-1__heading">{heading}</h2>
+  <div>
+    <div>
+      <h2 class="text-fluid-2">{heading}</h2>
     </div>
-    <div class="table-of-content-1-ol">
-      <div class="table-of-content-1-li">
-        <a class="table-of-content-1-li__link" href="#">Text link</a>
-        <div class="table-of-content-1-ol">
-          <div class="table-of-content-1-li">
-            <a class="table-of-content-1-li__link-l2" href="#">Text link</a>
+    <div>
+      <div>
+        <a class="text-fluid-0" href="#">Text link</a>
+        <div>
+          <div>
+            <a class="text-fluid-0" href="#">Text link</a>
           </div>
         </div>
       </div>
@@ -40,28 +43,3 @@ const {
     <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .table-of-content-1 {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-top: .1rem solid var(--bg-subtle);
-    border-right: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    border-left: .1rem solid var(--bg-subtle);
-  }
-
-  .table-of-content-1__intro {
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: .1rem solid var(--bg-subtle);
-  }
-
-  .table-of-content-1-ol {
-    row-gap: var(--flow-spacing);
-  }
-
-  /* bm-custom */
-  .table-of-content-1-li {
-  	    display: list-item;
-  }
-</style>

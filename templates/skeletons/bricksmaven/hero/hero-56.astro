@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,142 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-56__container">
-    <div class="hero-55__introduction">
-      <h1 class="hero-56__heading">{heading}</h1>
-      <p class="hero-55__subheading">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
-    <div class="hero-57__media">
-      <figure class="hero-55__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-  </div>
-  <div class="hero-55__logo-carousel">
-    <div class="logo-12__logo-list-wrapper">
-      <div class="bm-gallery__slider">
-        <div class="bm-gallery__media">
-          <figure class="bm-gallery__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <div>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="hero-55__intro">
-    <div class="hero-56__content">
-      <p class="hero-55__intro-heading">Hello, I'm Ryan, a creative and forward-thinking videographer with more than 10 years of experience. My passion for visual storytelling and cutting-edge technology has shaped my journey, blending art and innovation to capture compelling visuals</p>
-      <a class="hero-55__intro-cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
+    <div>
+      <div>
+        <p class="text-fluid-0">Hello, I'm Ryan, a creative and forward-thinking videographer with more than 10 years of experience. My passion for visual storytelling and cutting-edge technology has shaped my journey, blending art and innovation to capture compelling visuals</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-56 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .hero-56__container {
-    height: 74rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-  }
-
-  .hero-55__introduction {
-    width: var(--measure);
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-    position: relative;
-  }
-
-  .hero-56__heading {
-    font-size: calc(var(--fs-4) * 3);
-    text-transform: uppercase;
-    line-height: 1;
-  }
-
-  .hero-57__media {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 50%;
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-  }
-
-  .hero-55__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-55__logo-carousel {
-    padding: var(--space-m) 0 var(--space-m) 0;
-    width: 100%;
-  }
-
-  .logo-12__logo-list-wrapper {
-    overflow: hidden;
-    position: relative;
-  }
-
-  .bm-gallery__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .hero-56__content {
-    width: var(--content-width);
-    row-gap: var(--flow-spacing);
-  }
-
-  .hero-55__intro-heading {
-    font-size: var(--fs-3);
-  }
-
-  /* bm-custom */
-  .logo-12__logo-list-wrapper::before {
-  	content:'';
-    position: absolute;
-    left:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
-    z-index: 99;
-  }
-  
-  .logo-12__logo-list-wrapper::after {
-  	content:'';
-    position: absolute;
-    right:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
-    z-index: 99;
-  }
-
-  /* bm-custom */
-  .bm-gallery__slider  .splide__track{
-  	overflow:visible;
-  }
-  
-  .bm-gallery__slider .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .bm-gallery__slider :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
-  }
-</style>

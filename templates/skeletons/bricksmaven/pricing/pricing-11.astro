@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,89 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-11-container">
-    <div class="intro intro--left width--m">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="pricing-11-list list--none">
-      {items.map((it) => (
-        <div class="pricing-11-card">
-          <div class="pricing-11-card__menu-item">
-            <h2 class="pricing-11-card__heading">{it.title}</h2>
-            <p class="pricing-11-card__extra-info">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-          <div class="pricing-11-card__price-wrapper">
-            <p class="pricing-11-card__currency">{it.text}</p>
-            <p class="pricing-11-card__price">{it.text}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .pricing-11-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .pricing-11-list {
-    row-gap: calc(var(--flow-spacing) * 1.6);
-    display: block;
-  }
-
-  .pricing-11-card {
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 3);
-    padding: 0 var(--space-m) var(--space-m) 0;
-    border-bottom: .1rem solid var(--bg-subtle);
-    margin: 0 0 var(--space-l) 0;
-  }
-
-  .pricing-11-card__menu-item {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .pricing-11-card__price-wrapper {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 6);
-    font-size: var(--fs-2);
-    font-weight: 700;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  /* bm-custom */
-  .pricing-11-list {
-  	column-count: 2;
-  }
-</style>

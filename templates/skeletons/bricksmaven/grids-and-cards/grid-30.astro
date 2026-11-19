@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,233 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="grid-30-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="grid-30-list list--none">
-      {items.map((it) => (
-        <div class="grid-30-card">
-          <div class="grid-30-card__content">
-            <div class="grid-30-card__top">
-              <h3 class="grid-30-card__heading clickable-parent">{it.title}</h3>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+              </div>
+              <div>
+                <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              </div>
             </div>
-            <div class="grid-30-card__footer">
-              <a class="grid-30-card__cta btn--outline btn--white" href={it.href}>{it.label}</a>
+            <div></div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div class="grid-30-card__overlay"></div>
-          <div class="grid-30-card__media">
-            <figure class="grid-30-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+        ))}
+        <div>
+          <h2 class="text-fluid-2">Are you looking for a custom quote?</h2>
+          <p class="text-fluid-0">Don't hesitate to contact us</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-      ))}
-      <div class="grid-30-cta-card">
-        <h2 class="grid-30-cta-card__heading">Are you looking for a custom quote?</h2>
-        <p class="grid-30-cta-card__text">Don't hesitate to contact us</p>
-        <a class="btn--white clickable-parent wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .grid-30-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .grid-30-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: var(--acss-grid-auto-3);
-  }
-
-  .grid-30-card {
-    overflow: hidden;
-    flex-wrap: nowrap;
-  }
-
-  .grid-30-card__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    flex-wrap: nowrap;
-    height: 100%;
-    justify-content: space-between;
-  }
-
-  .grid-30-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-wrap: nowrap;
-  }
-
-  .grid-30-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .grid-30-card__footer {
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .grid-30-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .grid-30-cta-card {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: 0 0 var(--r-card) var(--r-card);
-    position: relative;
-  }
-
-  .grid-30-cta-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  /* bm-custom */
-  .grid-30-list li:nth-child(1) {
-  	order: 1;
-  }
-  
-  .grid-30-list li:nth-child(2) {
-  	order: 2;
-  }
-  
-  .grid-30-list li:nth-child(3) {
-  	order: 3;
-  }
-  
-  .grid-30-list li:nth-child(4) {
-  	order: 4;
-  }
-  
-  .grid-30-list li:nth-child(5) {
-  	order: 6;
-  }
-  
-  .grid-30-list li:nth-child(6) {
-  	order: 7;
-  }
-  
-  .grid-30-list li:nth-child(7) {
-  	order: 8;
-  }
-  
-  .grid-30-list li:nth-child(8) {
-  	order: 9;
-  }
-  
-  /* Call to action card */
-  
-  .grid-30-list li:nth-child(9) {
-  	order: 5;
-  }
-
-  /* bm-custom */
-  /* Card */
-  .grid-30-card {
-  	transition: .5s ease;
-    height: 46rem;
-    position: relative;
-    justify-content: end;
-    align-items: center;
-  }
-  
-  .grid-30-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .grid-30-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-  }
-  
-  /* Media */
-  .grid-30-card__media {
-  	position: absolute;
-    top: 0;
-    left:0;
-    bottom:0;
-    right:0;
-    transition: .5s ease;
-  }
-  
-  /* Overlay */
-  
-  .grid-30-card__overlay {
-  	position: absolute;
-    top: 0;
-    left:0;
-    bottom:0;
-    right:0;
-    z-index: 1;
-    transition: .5s ease;
-    opacity: .8;
-  }
-  
-  .grid-30-card:hover .grid-30-card__overlay, .grid-30-card:focus-within .grid-30-card__overlay {
-  	opacity: 1;
-  }
-  
-  /* Content */
-  
-  .grid-30-card__content {
-  	width:90%;
-    position: relative;
-    z-index: 2;
-    color: var(--bg-canvas);
-  }
-  
-  .grid-30-card__cta {
-  	transition: .5s ease;
-    opacity: .3;
-  }
-  
-  .grid-30-card:hover .grid-30-card__cta, .grid-30-card:focus-within .grid-30-card__cta {
-  	opacity: 1;
-  }
-</style>

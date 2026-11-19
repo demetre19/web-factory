@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,126 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="coming-soon-4__container">
-    <div class="coming-soon-4__brand-content">
-      <div class="coming-soon__brand">
-        <svg class="coming-soon-3__logo"></svg>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <svg></svg>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div class="bm-social-share list--none">
-        {items.map((it) => (
-          <div class="bm-social-share__icon-wrapper">
-            <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <h2 class="text-fluid-2">Drop your email to get notified!</h2>
+            <form novalidate>
+            </form>
+            <p class="text-fluid-0">Notify me when project is launched</p>
           </div>
-        ))}
-      </div>
-    </div>
-    <div class="coming-soon-4__content">
-      <div class="bm-coming-soon-4__intro">
-        <h1 class="bm-coming-soon-4__heading">{heading}</h1>
-        <p class="bm-coming-soon-4__text">{fs}</p>
-        <div class="bm-form">
-          <h2 class="bm-coming-soon__heading-form">Drop your email to get notified!</h2>
-          <form class="bm-form-widget" novalidate>
-          </form>
-          <p class="bm-form__terms">Notify me when project is launched</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .coming-soon-4 {
-    padding: var(--section-space-xl) 0 var(--section-space-xl) 0;
-  }
-
-  .coming-soon-4__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .coming-soon-4__brand-content {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    justify-content: flex-end;
-    row-gap: var(--flow-spacing);
-  }
-
-  .coming-soon__brand {
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .coming-soon-4__content {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-coming-soon-4__intro {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .bm-coming-soon__heading-form {
-    font-size: var(--fs-1);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-form__terms {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  } 
-  
-  .bm-form-widget button[type=submit].bricks-button {
-      height: 100% !important;
-  }
-  
-  .bm-form-widget .submit-button-wrapper {
-      height: 100% !important;
-  }
-</style>

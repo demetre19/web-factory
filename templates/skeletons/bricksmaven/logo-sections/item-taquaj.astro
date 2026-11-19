@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,49 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="logo-1-container grid--2 align-items--center gap--xxl grid--m-1">
-    <div class="logo-1-heading gap--m flex--col center--all-m">
-      <h2 class="logo-1-title">{heading}</h2>
-      <p class="logo-1-desc">{fs}</p>
-      <div class="logo-1-btn flex--row gap--s">
-        <a class="logo-1-btn-primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="logo-1-btn--outline btn--primary btn--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-    </div>
-    <div class="logo-1-list">
-      <div class="logo-1-list--item"></div>
+      <div>
+        <div></div>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  /* bm-custom */
-  .logo-1-list--item li {
-  	padding-right: var(--space-xs);
-    padding-left: var(--space-xs);
-  }
-  
-  .logo-1-list--item li div {
-  	background-size: contain!important;
-  }
-</style>

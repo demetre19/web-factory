@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,225 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-team-23__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-team-23-lijst list--none">
-      {items.map((it) => (
-        <div class="bm-team-23-card">
-          <div class="bm-team-23-card__content">
-            <h2 class="bm-team-23-card__heading clickable-parent">{it.title}</h2>
-            <div class="bm-team-23-card-feature-list list--none">
-              {(it.items || []).map((it2) => (
-                <div class="bm-team-23-card-feature-badge">
-                  <p class="bm-team-23-card-feature-badge__label">{it2.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="bm-team-23-card__overlay"></div>
-          <figure class="bm-team-23-card__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
-      <div class="bm-team-23-cta">
-        <h2 class="bm-team-23-cta__heading clickable-parent">Full team member list</h2>
-        <div class="bm-team-23-cta__icon-wrapper">
-          <span class="bm-team-23-cta__icon" data-icon="lucide" aria-hidden="true"></span>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div class="grid-auto gap-fluid-l">
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <p class="text-fluid-0">{it2.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div></div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        ))}
+        <div>
+          <h2 class="text-fluid-2">Full team member list</h2>
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-team-23__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-team-23-lijst {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 4);
-  }
-
-  .bm-team-23-card {
-    height: 100%;
-    position: relative;
-    overflow: clip;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-team-23-card__content {
-    z-index: 1;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-team-23-card-feature-list {
-    flex-direction: row;
-    flex-wrap: wrap;
-    column-gap: calc(var(--space-xs) / 2);
-    row-gap: calc(var(--space-xs) / 2);
-  }
-
-  .bm-team-23-card-feature-badge {
-    padding: 4px var(--space-s) 4px var(--space-s);
-    border-radius: 100% 100% 100% 100%;
-    background: color-mix(in srgb, var(--bg-canvas) 30%, transparent);
-  }
-
-  .bm-team-23-card-feature-badge__label {
-    font-size: var(--fs-0);
-  }
-
-  .bm-team-23-card__overlay {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
-
-  .bm-team-23-card__background-image {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-team-23-cta {
-    position: relative;
-    height: 100%;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-team-23-cta__heading {
-    font-size: calc(var(--fs-2) * 1.2);
-  }
-
-  .bm-team-23-cta__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 64px;
-    height: 64px;
-    border-radius: 100% 100% 100% 100%;
-    background: var(--fs-0);
-    position: absolute;
-    right: var(--space-m);
-    top: var(--space-m);
-  }
-
-  /* bm-custom */
-  @media (max-width:1400px) {
-    .bm-team-23-lijst {
-       grid-template-columns: calc(100% * 1 / 3) !important ;
-    }
-  }
-  
-  @media (max-width:991px) {
-    .bm-team-23-lijst {
-       grid-template-columns: calc(100% * 1 / 2) !important;
-    }
-  }
-  
-  @media (max-width:624px) {
-    .bm-team-23-lijst {
-       grid-template-columns: calc(100% * 1 / 1) !important;
-    }
-  }
-
-  /* bm-custom */
-  .bm-team-23-card__background-image {
-    transition: 0.5s ease;
-  }
-  
-  .bm-team-23-card:hover .bm-team-23-card__background-image {
-    scale: 1.2;
-  }
-
-  /* bm-custom */
-  .bm-team-23-card__overlay {
-    backdrop-filter: blur(10px);
-    mask: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%);
-  }
-
-  /* bm-custom */
-  .bm-team-23-cta {
-    transition: 0.3s ease;
-  }
-  
-  .bm-team-23-cta:hover {
-    background-color: var(--fs-0);
-    color: var(--bg-canvas);
-  }
-  
-  .bm-team-23-cta__icon-wrapper, .bm-team-23-cta__icon {
-    transition: 0.3s ease;
-  }
-  
-  .bm-team-23-cta:hover .bm-team-23-cta__icon-wrapper {
-    background-color: var(--bg-canvas);
-  }
-  
-  .bm-team-23-cta:hover .bm-team-23-cta__icon {
-    color: var(--text-primary);
-  }
-  
-  .bm-team-23-cta__heading a {
-    transition: 0.3s ease;
-  }
-</style>

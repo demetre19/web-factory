@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,134 +17,43 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-team-22__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-team-22-team-list">
-      {items.map((it) => (
-        <div class="bm-team-22-team-card">
-          <div class="bm-team-22-team-card__content">
-            <div class="bm-team-22-team-card__data">
-              <p class="bm-team-22-team-card__name">{it.text}</p>
-              <p class="bm-team-22-team-card__title">{it.text}</p>
-            </div>
-            <div class="bm-social-share list--none bm-social-share--left">
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div class="grid-auto gap-fluid-l">
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
               </div>
             </div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <figure class="bm-team-22-team-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-team-22__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-team-22-team-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .bm-team-22-team-card {
-    position: relative;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    display: flex;
-    flex-wrap: nowrap;
-    height: 26em;
-    justify-content: flex-end;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-  }
-
-  .bm-team-22-team-card__content {
-    z-index: 1;
-    background: var(--bg-canvas);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-team-22-team-card__name {
-    font-weight: 700;
-  }
-
-  .bm-team-22-team-card__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-team-22-team-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .bm-team-22-team-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-team-22-team-card:hover {
-    transform: translateY(var(--space-s));
-  }
-  
-  .bm-team-22-team-card .bm-team-22-team-card__image {
-    filter: grayscale(1);
-    transition: 0.5s ease;
-  }
-  
-  .bm-team-22-team-card:hover .bm-team-22-team-card__image {
-    filter: grayscale(0.1);
-  }
-</style>

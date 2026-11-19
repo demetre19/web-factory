@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,116 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-3-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Pricing tagline</p>
-    </div>
-    <div class="pricing-3-toggle">
-      <p class="pricing-3-toggle__label monthly active">Monthly</p>
-      <div class="pricing-3-toggle__switch">
-        <div class="pricing-3-toggle__switch-state"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Pricing tagline</p>
       </div>
-      <p class="pricing-3-toggle__label yearly">Yearly</p>
-    </div>
-    <p class="text--700 pricing-3-price yearly hide">$99/year</p>
-    <p class="text--700 pricing-3-price monthly active">$8.25/month</p>
-    <div class="bm-ul-benefits list--none">
-      {items.map((it) => (
-        <div class="bm-li-benefits">
-          <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="bm-li-benefits__text">{it.text}</p>
+      <div>
+        <p class="text-fluid-0">Monthly</p>
+        <div>
+          <div></div>
         </div>
-      ))}
+        <p class="text-fluid-0">Yearly</p>
+      </div>
+      <p class="text-fluid-0">$99/year</p>
+      <p class="text-fluid-0">$8.25/month</p>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      <div></div>
     </div>
-    <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .pricing-3-container {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    row-gap: var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .pricing-3-toggle {
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-s);
-  }
-
-  .pricing-3-toggle__label {
-    letter-spacing: .3rem;
-  }
-
-  .pricing-3-toggle__switch {
-    background: var(--action-primary);
-    height: 2.5rem;
-    width: 4.5rem;
-    border-radius: 2rem 2rem 2rem 2rem;
-    padding: .5rem .5rem .5rem .5rem;
-    position: relative;
-  }
-
-  .pricing-3-toggle__switch-state {
-    width: 1.5rem;
-    height: 1.5rem;
-    background: var(--bg-canvas);
-    border-radius: 2rem 2rem 2rem 2rem;
-    position: absolute;
-    top: 50%;
-    left: .5rem;
-  }
-
-  .pricing-3-price {
-    font-size: calc( var(--fs-4) + 3rem );
-  }
-
-  .hide {
-    display: none;
-  }
-
-  .bm-li-benefits {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .pricing-3-toggle__switch {
-    cursor: pointer;
-  }
-
-  /* bm-custom */
-  .pricing-3-toggle__switch-state.active {
-  	transform: translateY(-50%) translateX(calc(100% + .5rem));
-  }
-</style>

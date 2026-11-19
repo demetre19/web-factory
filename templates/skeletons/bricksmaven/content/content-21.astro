@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,62 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-21-container">
-    <div class="content-21__content">
-      <h2 class="content-21__heading">{heading}</h2>
-      <p class="content-21__text">{fs}</p>
-      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="content-21__media">
-      <figure class="content-21__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-21 {
-    background: var(--bg-subtle);
-    position: relative;
-  }
-
-  .content-21-container {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
-  }
-
-  .content-21__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--section-space-xxl) var(--space-l) var(--section-space-xxl) var(--section-space-xxl);
-    border-top: .4rem solid var(--bg-canvas);
-    border-right: .4rem solid var(--bg-canvas);
-    border-bottom: .4rem solid var(--bg-canvas);
-    border-left: .4rem solid var(--bg-canvas);
-    position: relative;
-    z-index: 1;
-  }
-
-  .content-21__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .content-21::before {
-  	content:'';
-    width:50vw;
-    height:75%;
-    background-color:  var(--bg-subtle);
-    position:absolute;
-    left:0;
-    bottom:0;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,99 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-banner-2__container">
-    <div class="bm-banner-content">
-      <div class="bm-banner-content__info">
-        <h2 class="bm-banner-content__heading">{heading}</h2>
-        <p class="bm-banner-content__text">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
-      <div class="bm-banner-content__icon-wrapper">
-        <span class="bm-banner-content__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        <div>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
-    <div class="bm-banner-2__right-column">
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      <div class="bm-banner-2__close-wrapper">
-        <span class="bm-banner-2__close" data-icon="lucide" aria-hidden="true"></span>
-      </div>
-    </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-banner-2 {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: transparent;
-  }
-
-  .bm-banner-2__container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-top: 1 solid var(--text-primary);
-    border-right: 1 solid var(--text-primary);
-    border-bottom: 1 solid var(--text-primary);
-    border-left: 1 solid var(--text-primary);
-    position: relative;
-  }
-
-  .bm-banner-content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: auto;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-banner-content__info {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    display: flex;
-  }
-
-  .bm-banner-content__heading {
-    font-size: var(--fs-1);
-  }
-
-  .bm-banner-content__text {
-    font-size: var(--fs-0);
-  }
-
-  .bm-banner-content__icon-wrapper {
-    display: flex;
-  }
-
-  .bm-banner-2__right-column {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    padding: 0 var(--space-xl) 0 0;
-  }
-
-  .bm-banner-2__close-wrapper {
-    background: transparent;
-    position: absolute;
-    right: var(--space-m);
-    top: 50%;
-  }
-
-  /* bm-custom */
-  .bm-banner-2__container {
-    box-shadow: var(--shadow-card);
-    
-  }
-</style>

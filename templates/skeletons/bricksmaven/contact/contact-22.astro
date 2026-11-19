@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-22-container">
-    <div class="contact-22-content">
-      <div class="intro contact-22-content__intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Contact Us</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Contact Us</p>
+        </div>
+        <div>
+          <form novalidate>
+          </form>
+        </div>
       </div>
-      <div class="contact-22-content__form">
-        <form class="contact-22-content__form-inner" novalidate>
-        </form>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-    </div>
-    <div class="contact-22-media">
-      <figure class="contact-22-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-22 {
-    position: relative;
-  }
-
-  .contact-22-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-l);
-  }
-
-  .contact-22-content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .contact-22-content__intro {
-    align-items: flex-start;
-    text-align: left;
-    row-gap: var(--space-xs);
-  }
-
-  .contact-22-content__form {
-    width: 100%;
-  }
-
-  .contact-22-content__form-inner {
-    padding: 3rem 0 3rem 0;
-    gap: var(--space-s);
-  }
-
-  .contact-22-media {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 100%;
-  }
-
-  .contact-22-media__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-</style>

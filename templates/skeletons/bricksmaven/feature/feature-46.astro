@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,116 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-46__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-46__cover">
-      <div class="bm-feature-46-list">
-        {items.map((it) => (
-          <div class="bm-feature-46-card">
-            <div class="bm-feature-46-card__icon-wrapper">
-              <span class="bm-feature-46-card__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-            <h2 class="bm-feature-46-card__heading">{it.title}</h2>
-            <p class="bm-feature-46-card__text">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="bm-feature-46__media">
-        <figure class="bm-feature-46__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-46__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .bm-feature-46__cover {
-    position: relative;
-  }
-
-  .bm-feature-46-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 12);
-    grid-template-rows: calc(100% * 1 / 12);
-  }
-
-  .bm-feature-46-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-46-card__icon-wrapper {
-    width: 56;
-    height: 56;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-feature-46__media {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: auto;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: hidden;
-  }
-
-  .bm-feature-46__image {
-    object-fit: cover;
-    width: 100%;
-    height: 420px;
-  }
-
-  /* bm-custom */
-  @media (min-width:991px) {
-  .bm-feature-46-card:nth-child(1) {
-    grid-column:1/5;
-    grid-row:1/5;
-  }
-  
-  .bm-feature-46-card:nth-child(2) {
-    grid-column:1/5;
-    grid-row:5/9;
-  }
-  
-  .bm-feature-46-card:nth-child(3) {
-    grid-column:9/-1;
-    grid-row:5/9;
-  }
-  
-  .bm-feature-46-card:nth-child(4) {
-    grid-column:9/-1;
-    grid-row:9/-1;
-  }
-    
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,133 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-1-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+    </div>
+    <div>
+      {(items || []).map((it) => (
+        <div>
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it2.text}</p>
+                </div>
+              ))}
+            </div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
-  <div class="feature-1-ul list--none">
-    {items.map((it) => (
-      <div class="feature-1-li">
-        <div class="feature-1-li__content">
-          <h2 class="feature-1-li__title">{it.title}</h2>
-          <p class="feature-1-li__desc">{it.text}</p>
-          <div class="bm-list">
-            {(it.items || []).map((it2) => (
-              <div class="bm-list__item">
-                <span class="bm-list__item-icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-list__item-text">{it2.text}</p>
-              </div>
-            ))}
-          </div>
-          <span class="feature-1__content-icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-        <div class="feature-1-li__media-container">
-          <figure class="feature-1-li__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-    ))}
-  </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-1 {
-    row-gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-1-ul {
-    row-gap: var(--space-xl);
-  }
-
-  .feature-1-li {
-    width: 100%;
-    grid-template-columns: calc(100% * 1 / 2);
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .feature-1-li__content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    row-gap: var(--space-xs);
-    margin: 0 0 0 auto;
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-list__item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .feature-1__content-icon {
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    border-radius: 10rem 10rem 10rem 10rem;
-  }
-
-  .feature-1-li__media-container {
-    width: 100%;
-  }
-
-  .feature-1-li__image {
-    object-fit: cover;
-    width: calc(50vw + var(--space-m));
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	order:-1;
-  }
-  
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	display:flex;
-    flex-direction: column;
-    align-items: end;
-  }
-  
-  
-  @media (max-width:768px) {
-  
-    .feature-1-li:nth-of-type(even) .feature-1-li__image {
-  	margin-left:0;
-  }
-    
-    
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,171 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-38-container">
-    <div class="hero-37__content hero-38__content">
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Tagline</p>
-        <div class="cta-combo">
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="btn--link btn--link-white wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Tagline</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <h3 class="text-fluid-2">10x your development speed with the ALPHA template</h3>
+            <p class="text-fluid-0">Accent heading</p>
+            <p class="text-fluid-0">Join 1000 others who have saved thousands of hours developing websites.</p>
+          </div>
+          <div>
+            <form novalidate>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-    <div class="hero-38-form">
-      <div class="bm-form__inner">
-        <div class="bm-form__content">
-          <h3 class="bm-form__heading">10x your development speed with the ALPHA template</h3>
-          <p class="bm-form__accent-heading">Accent heading</p>
-          <p class="bm-form__desc">Join 1000 others who have saved thousands of hours developing websites.</p>
-        </div>
-        <div class="bm-form__form-wrapper">
-          <form class="bm-form-opt-in" novalidate>
-          </form>
-        </div>
-      </div>
-    </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="hero-38__hero-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-38 {
-    position: relative;
-    padding: 0 0 0 0;
-    height: 100vh;
-    justify-content: center;
-  }
-
-  .hero-38-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
-    gap: var(--space-m);
-  }
-
-  .hero-37__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: row;
-    align-self: center;
-  }
-
-  .hero-38__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: row;
-    align-self: center;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .hero-38-form {
-    z-index: 1;
-    position: relative;
-  }
-
-  .bm-form__inner {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    background: var(--bg-canvas);
-    top: 0;
-    z-index: 1;
-    align-self: flex-start;
-  }
-
-  .bm-form__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .bm-form__heading {
-    margin: 0 0 -1 0;
-  }
-
-  .bm-form__accent-heading {
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .bm-form-opt-in {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hero-38__hero-image {
-    object-fit: cover;
-    width: 100%;
-    position: absolute;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .bm-form__inner {
-  	box-shadow: var(--shadow-card);
-  }
-
-  /* bm-custom */
-  .bm-form-opt-in {
-  flex-wrap: nowrap;
-  }
-  .bm-form-opt-in input:focus {
-  	outline-offset: 0;
-  }
-
-  /* bm-custom */
-  .hero-38__hero-image {
-  	aspect-ratio: 16 / 9;
-  }
-</style>

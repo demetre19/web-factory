@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,86 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="team-3-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">We're hiring!</p>
-    </div>
-    <div class="team-3-content list--none">
-      {items.map((it) => (
-        <div class="team-3-card">
-          <div class="team-3-card__content">
-            <h3 class="team-3-card__name">{it.title}</h3>
-            <p class="team-3-card__title">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">We're hiring!</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="team-3-card__image-wrapper">
-            <figure class="team-3-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .team-3-container {
-    display: flex;
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .team-3-content {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-s);
-    width: 100%;
-  }
-
-  .team-3-card {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .team-3-card__content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    align-items: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .team-3-card__image-wrapper {
-    width: 100%;
-    height: 30rem;
-  }
-
-  .team-3-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .team-3-card__image {
-  aspect-ratio: 4/;
-  }
-</style>

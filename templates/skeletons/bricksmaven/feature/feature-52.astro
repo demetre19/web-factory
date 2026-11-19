@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,179 +17,56 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-52__container">
-    <div class="intro intro--split bm-feature-52__intro">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="bm-feature-52__feature-container">
-    <div class="list--none bm-feature-52-card-list">
-      {items.map((it) => (
-        <div class="bm-feature-52-card">
-          <div class="bm-feature-52-card-inner">
-            <div class="bm-feature-52-card__top">
-              <h2 class="bm-feature-52-card__heading">{it.title}</h2>
-            </div>
-            <div class="bm-feature-52-card__inner">
-              <div class="bm-feature-52-card__content">
-                <p class="bm-feature-52-card__text">{it.text}</p>
-                <div class="list--none bm-link-list">
-                  {(it.items || []).map((it2) => (
-                    <div class="bm-link-list-item">
-                      <p class="bm-link-list-item__link clickable-parent">{it2.text}</p>
-                      <span class="bm-link-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                    </div>
-                  ))}
-                </div>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
               </div>
-              <div class="bm-feature-52-card__media">
-                <figure class="bm-feature-52-card__content__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <div>
+                    {((it.items || []) || []).map((it2) => (
+                      <div>
+                        <p class="text-fluid-0">{it2.text}</p>
+                        <span data-icon="lucide" aria-hidden="true"></span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-52 {
-    row-gap: var(--space-s);
-    padding: 0 0 0 0;
-  }
-
-  .bm-feature-52__container {
-    row-gap: var(--space-s);
-    width: 100%;
-    align-items: center;
-    padding: 0 var(--gutter) 0 var(--gutter);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-52__feature-container {
-    width: 100%;
-  }
-
-  .bm-feature-52-card-list {
-    width: 100%;
-  }
-
-  .bm-feature-52-card {
-    row-gap: var(--space-s);
-    align-items: center;
-    padding: var(--section-space-m) var(--gutter) 0 var(--gutter);
-  }
-
-  .bm-feature-52-card-inner {
-    row-gap: var(--space-s);
-  }
-
-  .bm-feature-52-card__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-feature-52-card__inner {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-feature-52-card__content {
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-link-list-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid var(--bg-subtle);
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-    position: relative;
-  }
-
-  .bm-link-list-item__link {
-    font-weight: 700;
-  }
-
-  .bm-feature-52-card__content__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-    .bm-feature-52-card {
-      position: sticky;
-    	--sticky-top: var(--section-space-l);
-    }
-    
-      /* Set top value of the first child */
-    .bm-feature-52-card:first-child {
-      top: 0;
-    }
-  
-    .bm-feature-52-card:nth-child(2) {
-      top: calc(var(--acss-sticky-top) * 1.2);
-    }
-  
-    .bm-feature-52-card:nth-child(3) {
-      top: calc(var(--acss-sticky-top) * 2.4);
-    }
-  
-  }
-  
-  .bm-feature-52-card:nth-child(1) {
-    background-color: var(--bg-subtle);
-  }
-  
-  .bm-feature-52-card:nth-child(2) {
-    background-color: var(--color-ink-secondary);
-  }
-  
-  .bm-feature-52-card:nth-child(3) {
-    background-color: var(--bg-subtle);
-  }
-</style>

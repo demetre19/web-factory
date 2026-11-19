@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,151 +17,49 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-linktree-10__container">
-    <div class="bm-linktree-10__link-cover">
-      <div class="bm-linktree-10-bio">
-        <div class="bm-linktree-10-bio__content">
-          <p class="bm-linktree-10-bio__name">John Smith</p>
-          <p class="bm-linktree-10-bio__title">@socialhandle</p>
-        </div>
-        <figure class="bm-linktree-10-bio__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div class="bm-linktree-10-bio__social-position">
-          <div class="bm-social-share list--none bm-social-share--left">
-            {items.map((it) => (
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <p class="text-fluid-0">John Smith</p>
+            <p class="text-fluid-0">@socialhandle</p>
           </div>
-        </div>
-      </div>
-      <div class="bm-linktree-10__links">
-        {items.map((it) => (
-          <div class="bm-linktree-9__link-row">
-            <h2 class="bm-linktree-9__links-heading">{it.title}</h2>
-            <div class="bm-linktree-list list--none">
-              {(it.items || []).map((it2) => (
-                <div class="bm-linktree-card">
-                  <a class="bm-linktree-card__link clickable-parent" href="#">{it2.text}</a>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
               ))}
             </div>
           </div>
-        ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <a class="text-fluid-0" href="#">{it2.text}</a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-linktree-10__container {
-    align-items: center;
-  }
-
-  .bm-linktree-10__link-cover {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
-    width: 100%;
-  }
-
-  .bm-linktree-10-bio {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    justify-content: flex-end;
-    position: relative;
-    overflow: hidden;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    margin: var(--space-xl) 0 0 0;
-  }
-
-  .bm-linktree-10-bio__content {
-    position: relative;
-    z-index: 1;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-linktree-10-bio__name {
-    font-weight: 700;
-  }
-
-  .bm-linktree-10-bio__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-linktree-10-bio__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-linktree-10__links {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--section-space-xxl);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-subtle);
-  }
-
-  .bm-linktree-9__link-row {
-    row-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-linktree-9__links-heading {
-    font-size: var(--fs-0);
-    text-transform: uppercase;
-    letter-spacing: 1;
-  }
-
-  .bm-linktree-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-card {
-    text-align: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    align-items: center;
-    background: var(--text-secondary);
-    position: relative;
-  }
-
-  /* bm-custom */
-  .bm-linktree-10-bio__social-position {
-    inline-size: auto;
-    block-size: auto;
-    position: absolute;
-    inset-block-end: var(--space-s);
-    inset-inline-start: var(--space-s);
-    z-index: 1;
-    writing-mode: vertical-lr;
-  }
-  
-  .bm-linktree-10-bio__social-position .bm-social-share__icon {
-    color: var(--bg-canvas);
-  }
-</style>

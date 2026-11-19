@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,66 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-57__container">
-    <div class="bm-content-57__intro">
-      <h2 class="bm-content-57__heading">{heading}</h2>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
-    <div class="bm-content-57__footer">
-      {items.map((it) => (
-        <div class="bm-content-57-card">
-          <p class="bm-content-57-card__accent-heading">{it.text}</p>
-        </div>
-      ))}
-    </div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <figure class="bm-content-57__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-57 {
-    position: relative;
-  }
-
-  .bm-content-57__intro {
-    padding: 0 0 calc(var(--section-space-xxl) * 3) 0;
-  }
-
-  .bm-content-57__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-content-57__footer {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-content-57-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-57-card__accent-heading {
-    line-height: 1;
-    font-size: var(--fs-3);
-    font-weight: 700;
-  }
-
-  .bm-content-57__background-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-  }
-</style>

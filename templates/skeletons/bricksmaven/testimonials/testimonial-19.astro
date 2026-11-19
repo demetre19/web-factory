@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,67 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-19-container">
-    <div class="testimonial-19-content">
-      {items.map((it) => (
-        <div class="testimonial-19-content__slide">
-          <div class="testimonial-19-content__card">
-            <h3 class="testimonial-19-content__card-name">{it.title}</h3>
-            <p class="testimonial-19-content__card-jobtitle">{it.text}</p>
-            <hr class="testimonial-19-content__card-divider" />
-            <p class="testimonial-19-content__card-desc">{it.text}</p>
-            <div class="testimonial-19-content__card-media">
-              <figure class="testimonial-19-content__card-photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <div class="testimonial-19-content__card-review">
-              {(it.items || []).map((it2) => (
-                <span class="testimonial-19-content__card-stars" data-icon="lucide" aria-hidden="true"></span>
-              ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+              <hr />
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-19-content__card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: 1rem;
-  }
-
-  .testimonial-19-content__card-divider {
-    margin: 1rem 0 1rem 0;
-  }
-
-  .testimonial-19-content__card-photo {
-    object-fit: cover;
-    width: 10rem;
-    height: 10rem;
-    overflow: hidden;
-    border-radius: 50% 50% 50% 50%;
-  }
-
-  .testimonial-19-content__card-review {
-    display: flex;
-    column-gap: 1rem;
-  }
-
-  /* bm-custom */
-  .testimonial-19-content__slide.is-active .testimonial-19-content__card {
-  	box-shadow: 13px 6px 56px rgba(87, 87, 87, 0.1);
-  }
-</style>

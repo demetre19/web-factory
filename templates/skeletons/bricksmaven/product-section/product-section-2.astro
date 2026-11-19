@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,127 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="product-list-2__container">
-    <div class="product-list-2__list">
-      <div class="product-list-2__content">
-        <h2 class="product-list-2__heading">{heading}</h2>
-        <p class="product-list-2__headline">{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="product-list-2__slider">
-        <div class="product-list-2-card">
-          <div class="product-list-2-card__content">
-            <h3 class="product-list-2-card__heading">{post_title}</h3>
-            <p class="product-list-category order--first">{post_terms_product_cat}</p>
-            <p class="product-list-2-card__description">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
-          </div>
-          <div class="product-list-notice-rect__sale-badge">
-            <p class="product-list-notice-rect__sale">{woo_product_on_sale}</p>
-          </div>
-          <custom class="product-list-card__price">{woo_product_price}</custom>
-          <div class="product-list-2-card__media">
-            <figure class="product-list-2-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+        <div>
+          <div>
+            <div>
+              <h3 class="text-fluid-2">{post_title}</h3>
+              <p class="text-fluid-0">{post_terms_product_cat}</p>
+              <p class="text-fluid-0">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+            </div>
+            <div>
+              <p class="text-fluid-0">{woo_product_on_sale}</p>
+            </div>
+            <custom class="text-fluid-2">{woo_product_price}</custom>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .product-list-2__list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .product-list-2__content {
-    row-gap: calc( var(--flow-spacing) / 2 );
-  }
-
-  .product-list-2__heading {
-    width: auto;
-  }
-
-  .product-list-2__headline {
-    width: auto;
-  }
-
-  .product-list-2-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--bg-subtle);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    row-gap: var(--flow-spacing);
-    width: 100%;
-    flex-wrap: nowrap;
-  }
-
-  .product-list-2-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    height: 100%;
-  }
-
-  .product-list-2-card__heading {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    align-self: flex-start;
-    font-weight: 700;
-  }
-
-  .product-list-category {
-    font-size: var(--fs-0);
-  }
-
-  .product-list-notice-rect__sale-badge {
-    font-size: var(--fs-0);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-    background: var(--primitive-state-danger);
-    display: flex;
-    align-items: center;
-  }
-
-  .product-list-2-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    object-fit: cover;
-    width: 100%;
-    height: 23rem;
-  }
-
-  /* bm-custom */
-  .product-list-2-card {
-    
-    justify-content: space-between !important;
-    align-items: start !important;
-  }
-
-  /* bm-custom */
-  .product-list-category a {
-    	color: var(--text-primary);
-    	background: transparent;
-  }
-
-  /* bm-custom */
-  .product-list-card__price del {
-    	color: var(--bg-subtle);
-  }
-  
-  .product-list-card__price ins {
-    	text-decoration: none;
-  }
-  .product-list-card__price ins .amount {
-    	text-decoration: none;
-    	border-bottom: 0;
-  }
-</style>

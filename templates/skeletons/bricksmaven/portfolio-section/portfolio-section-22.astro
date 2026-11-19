@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,134 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-22__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Tagline</p>
-      </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="bm-portfolio-section-22-slider">
-      {items.map((it) => (
-        <div class="bm-portfolio-section-22-slide-card">
-          <div class="bm-portfolio-section-22-slide-card__content">
-            <h2 class="bm-portfolio-section-22-slide-card__heading">{it.title}</h2>
-            <p class="bm-portfolio-section-22-slide-card__terms">{it.text}</p>
-          </div>
-          <div class="bm-portfolio-section-22-slide-card__media">
-            <div class="bm-portfolio-section-22-slide-card__top">
-              <svg class="bm-portfolio-section-22-slide-card__brand"></svg>
-              <span class="bm-portfolio-section-22-slide-card__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-            <figure class="bm-portfolio-section-22-slide-card__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
         </div>
-      ))}
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <svg></svg>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-22 {
-    padding: 0 0 var(--section-space-l) 0;
-    overflow: clip;
-  }
-
-  .bm-portfolio-section-22__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-section-22-slide-card {
-    height: 100%;
-  }
-
-  .bm-portfolio-section-22-slide-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .bm-portfolio-section-22-slide-card__media {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) 0 0 var(--space-l);
-    background: var(--fs-0);
-  }
-
-  .bm-portfolio-section-22-slide-card__top {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--space-m) 0 0;
-  }
-
-  .bm-portfolio-section-22-slide-card__featured-image {
-    object-fit: cover;
-    width: 100%;
-    height: 460px;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-22-slider .splide__track {
-    overflow: visible;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-22-slide-card__content {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-22-slide-card:hover .bm-portfolio-section-22-slide-card__content  {
-    background-color: var(--bg-subtle);
-  } 
-  .bm-portfolio-section-22-slide-card__media {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-22-slide-card:hover .bm-portfolio-section-22-slide-card__media  {
-    padding-inline-start: unset;
-  } 
-  
-  .bm-portfolio-section-22-slide-card__top {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-22-slide-card:hover .bm-portfolio-section-22-slide-card__top {
-    padding-inline-start: var(--space-l);
-  }
-</style>

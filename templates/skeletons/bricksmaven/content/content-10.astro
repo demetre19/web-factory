@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,57 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-10-container">
-    <div class="content-10__content">
-      <h2 class="content-10__heading">{heading}</h2>
-      <p class="content-10__desc">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="content-10__media">
-      <figure class="content-10__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-10 {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xl);
-  }
-
-  .content-10-container {
-    display: grid;
-    grid-template-columns: repeat(24, 1fr);
-    position: relative;
-  }
-
-  .content-10__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--space-l);
-    justify-content: center;
-    background: color-mix(in srgb, var(--bg-subtle) 20%, transparent);
-    margin: var(--section-space-xxl) 0 0 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .content-10__image {
-    object-fit: cover;
-    width: 100%;
-    height: 500px;
-  }
-</style>

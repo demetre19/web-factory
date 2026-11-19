@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="counter-8-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-    </div>
-    <div class="counter-8-content">
-      <div class="counter-8-grid-ul list--none">
-        {items.map((it) => (
-          <div class="counter-8-card">
-            <span class="counter-8-card__number"></span>
-            <h2 class="counter-8-card__label">{it.title}</h2>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span></span>
+              <h2 class="text-fluid-2">{it.title}</h2>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .counter-8-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .counter-8-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .counter-8-grid-ul {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 6);
-  }
-
-  .counter-8-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-    align-items: center;
-    background: var(--action-primary);
-    text-align: center;
-  }
-
-  .counter-8-card__number {
-    font-size: calc(var(--fs-4) + 9.25rem);
-    line-height: 1;
-  }
-
-  /* bm-custom */
-  .counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
-  	grid-column: span 3;
-  }
-  
-  
-  @media (max-width:768px) {
-  	.counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
-  	grid-column: auto;
-  }
-  }
-</style>

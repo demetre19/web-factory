@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,31 +17,24 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-7-container center--all gap--s">
-    <img class="testimonial-7__logo"></img>
-    <p class="testimonial-7__desc text--xl width--50">{fs}</p>
-    <figure class="testimonial-7__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    <div class="testimonial-7__profile flex--col align-items--center">
-      <h4 class="testimonial-7__name text--primary text--400">{heading}</h4>
-      <p class="testimonial-7__title text--s">Product Manager, Bricksmaven</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <span class="logo">{brand}</span>
+      <p class="text-fluid-0">{fs}</p>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <h4 class="text-fluid-2">{heading}</h4>
+        <p class="text-fluid-0">Product Manager, Bricksmaven</p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-7__img {
-    width: 4rem;
-    height: 4rem;
-    object-fit: cover;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-</style>

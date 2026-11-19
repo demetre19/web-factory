@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,109 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-58__container">
-    <div class="bm-testimonial-58-card">
-      <div class="bm-testimonial-58-card__review-cover">
-        <h2 class="bm-testimonial-58-card__heading">{heading}</h2>
-        <p class="bm-accent-heading bm-testimonial-58-card__accent-heading">Customer Stories</p>
-      </div>
-      <div class="bm-testimonial-58-card__footer">
-        <div class="bm-testimonial-58-card__customer">
-          <p class="bm-testimonial-58-card__name">John Smith</p>
-          <p class="bm-testimonial-58-card__title">Owner of FirstEra Sounds</p>
+  <div class="sec-inner">
+    <div>
+      <div class="grid-auto gap-fluid-l">
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Customer Stories</p>
         </div>
-        <a class="bm-testimonial-58-card__cta btn--white" href={cta.href}>{cta.label}</a>
+        <div>
+          <div>
+            <p class="text-fluid-0">John Smith</p>
+            <p class="text-fluid-0">Owner of FirstEra Sounds</p>
+          </div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
+        <div></div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="bm-testimonial-58-card__overlay"></div>
-      <figure class="bm-testimonial-58-card__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-58 {
-    position: relative;
-    height: 80vh;
-    justify-content: center;
-  }
-
-  .bm-testimonial-58__container {
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-testimonial-58-card {
-    height: 100%;
-    justify-content: space-between;
-  }
-
-  .bm-testimonial-58-card__review-cover {
-    row-gap: calc(var(--flow-spacing) / 2);
-    z-index: 2;
-  }
-
-  .bm-testimonial-58-card__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-testimonial-58-card__accent-heading {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .bm-testimonial-58-card__footer {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    z-index: 2;
-  }
-
-  .bm-testimonial-58-card__name {
-    font-weight: 700;
-  }
-
-  .bm-testimonial-58-card__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-testimonial-58-card__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  .bm-testimonial-58-card__background-image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  /* Overlay */
-  .bm-testimonial-58-card__overlay {
-    transition: 0.4s ease;
-    opacity:0.8;
-  }
-  
-  .bm-testimonial-58-card:hover .bm-testimonial-58-card__overlay {
-    opacity:1;
-  }
-</style>

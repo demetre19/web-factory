@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,145 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-login-7__container">
-    <div class="bm-login-7__brand">
-      <svg class="bm-login-7__logo"></svg>
-    </div>
-    <div class="bm-login-7__login-wrapper">
-      <div class="login-form-wrapper login-form-wrapper--alt">
-        <h1 class="login-3__heading">{heading}</h1>
-        <form class="login-form" novalidate>
-        </form>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <svg></svg>
+      </div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <form novalidate>
+          </form>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">You are logged in.</h1>
+          <div>
+            <div>
+              <a class="text-fluid-0" href="#">Back to home</a>
+            </div>
+            <div>
+              <a class="text-fluid-0" href="#">Lost your password?</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="login-1__logged-in-heading-wrapper">
-        <h1 class="login-3__heading">You are logged in.</h1>
-        <div class="login-footer list--none">
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Back to home</a>
-          </div>
-          <div class="login-footer__li">
-            <a class="login-footer__link" href="#">Lost your password?</a>
-          </div>
-        </div>
+      <div>
+        <p class="text-fluid-0">{site_url} @ {current_date:Y}</p>
       </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <div class="bm-login-7__copyright-wrapper">
-      <p class="bm-login-7__copyright">{site_url} @ {current_date:Y}</p>
-    </div>
-    <figure class="bm-login-7__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-login-7 {
-    height: 100vh;
-    padding: var(--section-space-xs) 0 var(--section-space-xs) 0;
-  }
-
-  .bm-login-7__container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--space-m) 0 var(--space-m);
-    position: relative;
-    row-gap: var(--space-s);
-  }
-
-  .bm-login-7__brand {
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-login-7__login-wrapper {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--color-line-default);
-    border-right: 1px solid var(--color-line-default);
-    border-bottom: 1px solid var(--color-line-default);
-    border-left: 1px solid var(--color-line-default);
-    background: var(--bg-canvas);
-    width: var(--measure);
-    position: relative;
-    z-index: 1;
-  }
-
-  .login-form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-form-wrapper--alt {
-    width: var(--measure);
-  }
-
-  .login-footer {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-  }
-
-  .login-footer__link {
-    font-size: var(--fs-0);
-  }
-
-  .login-1__logged-in-heading-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-7__copyright-wrapper {
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-login-7__copyright {
-    font-size: var(--fs-0);
-  }
-
-  .bm-login-7__background-image {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .login-form .form-group ul li {
-  	display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .login-form .form-group span {
-  	display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-  
-  .login-form .form-group span a, .login-form .form-group ul li label {
-  	font-size: var(--fs-0);
-  }
-  
-  .login-form .form-group:nth-child(4) {
-      align-items: end;
-  }
-</style>

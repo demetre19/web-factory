@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,85 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-10-container">
-    <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">{heading}</h2>
-      <p class="hworks-10-desc hworks-intro__desc">{fs}</p>
-    </div>
-    <div class="hworks-10-grid-ul list--none">
-      {items.map((it) => (
-        <div class="hworks-10-card">
-          <h2 class="hworks-10-card__heading">{it.title}</h2>
-          <p class="hworks-10-card__desc">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-10 {
-    background: color-mix(in srgb, var(--bg-subtle) 20%, transparent);
-  }
-
-  .hworks-10-container {
-    align-items: center;
-    row-gap: var(--space-xl);
-  }
-
-  .hworks-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    text-align: center;
-  }
-
-  .hworks-intro__heading {
-    margin: 0 0 0 0;
-  }
-
-  .hworks-10-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-m);
-  }
-
-  .hworks-10-card {
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: flex-start;
-  }
-
-  /* bm-custom */
-  .hworks-10-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-10-grid-ul li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:3.2rem;
-    padding-block:1.4rem;
-    color:var(--action-primary);
-    border-radius: 100%;
-    font-size: var(--fs-3);
-  }
-</style>

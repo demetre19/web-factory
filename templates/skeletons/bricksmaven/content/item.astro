@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,110 +17,40 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-20-container">
-    <div class="content-20__content">
-      <h2 class="content-20__heading">{heading}</h2>
-      <div class="content-20-list-ul list--none">
-        <div class="content-20-list-card">
-          <h2 class="content-20-list-card__heading">Feature One</h2>
-          <p class="content-20-list-card__text">{fs}</p>
-          <span class="content-20-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
-        </div>
-        <div class="content-20-list-card">
-          <h2 class="content-20-list-card__heading">Feature Two</h2>
-          <p class="content-20-list-card__text">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
-          <span class="content-20-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Feature One</h2>
+            <p class="text-fluid-0">{fs}</p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+          <div>
+            <h2 class="text-fluid-2">Feature Two</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="content-20__media">
-      <div class="content-20-image-wrapper content-20-image-wrapper--alt">
-        <figure class="content-20-image-wrapper__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="content-20-image-wrapper content-20-image-wrapper--absolute">
-        <figure class="content-20-image-wrapper__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-20 {
-    position: relative;
-  }
-
-  .content-20-container {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-    gap: var(--space-xl);
-  }
-
-  .content-20__content {
-    row-gap: var(--space-m);
-  }
-
-  .content-20-list-ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .content-20-list-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .content-20__media {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    position: relative;
-    width: 100%;
-  }
-
-  .content-20-image-wrapper {
-    height: 100%;
-  }
-
-  .content-20-image-wrapper--alt {
-    padding: var(--space-xl) 0 var(--space-xl) 0;
-  }
-
-  .content-20-image-wrapper__image {
-    object-fit: cover;
-    height: 100%;
-  }
-
-  .content-20-image-wrapper--absolute {
-    position: absolute;
-    left: 8rem;
-  }
-
-  /* bm-custom */
-  .content-20::before {
-  	content:'';
-    width:25%;
-    height:100%;
-    background-color: var(--bg-subtle);
-    position:absolute;
-    top:0;
-    left:0;
-    
-  }
-  
-  @media (max-width:478px) {
-  	.content-20::before {
-    width:100%;
-    height:30%;
-  }
-  }
-</style>

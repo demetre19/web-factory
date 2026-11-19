@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,53 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hero-5-container">
-    <div class="hero-5-wrapper__content hero-5__content">
-      <p class="hero-5-wrapper__tag hero-5__accent">TAGLINE</p>
-      <h1 class="hero-5-wrapper__title hero-5__heading">{heading}</h1>
-      <p class="hero-5-wrapper__desc hero-5__text">{fs}</p>
-      <a class="hero-5-wrapper__cta--primary btn--primary hero-5__button wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="hero-5-wrapper__thumb hero-5__media">
-      <figure class="hero-5-wrapper__img hero-5__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">TAGLINE</p>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hero-5-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .hero-5-wrapper__content {
-    flex-direction: column;
-    row-gap: var(--space-m);
-    justify-content: center;
-    display: flex;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    align-items: flex-start;
-  }
-
-  .hero-5-wrapper__tag {
-    font-weight: 700;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .hero-5-wrapper__img {
-    height: 100%;
-    object-fit: cover;
-  }
-</style>

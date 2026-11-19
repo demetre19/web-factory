@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,130 +17,49 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-30-container">
-    <div class="content-30__content-block">
-      <div class="intro intro--left">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Accent heading</p>
-      </div>
-      <div class="content-30-list list--none">
-        <div class="content-30-item">
-          <div class="content-30-item__number-wrapper">
-            <p class="content-30-item__number">01.</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">01.</p>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">Webdevelopment</h2>
+            </div>
           </div>
-          <div class="content-30-item__heading-wrapper">
-            <h2 class="content-30-item__heading">Webdevelopment</h2>
+          <div>
+            <div>
+              <p class="text-fluid-0">02.</p>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">Marketing</h2>
+            </div>
           </div>
         </div>
-        <div class="content-30-item">
-          <div class="content-30-item__number-wrapper">
-            <p class="content-30-item__number">02.</p>
-          </div>
-          <div class="content-30-item__heading-wrapper">
-            <h2 class="content-30-item__heading">Marketing</h2>
-          </div>
-        </div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="content-30-item__media">
-      <figure class="content-30-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      <div class="content-30-item__media-content">
-        <h2 class="content-30-item__media-content-heading">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <h2 class="text-fluid-2">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-30-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: calc(var(--space-m) * 4);
-  }
-
-  .content-30__content-block {
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .content-30-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .content-30-item {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-s) 0 var(--space-s) 0;
-    border-bottom: .1rem solid var(--bg-subtle);
-    align-items: center;
-  }
-
-  .content-30-item__number {
-    font-weight: 700;
-    font-size: var(--fs-2);
-  }
-
-  .content-30-item__heading {
-    font-size: var(--fs-3);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .content-30-item__media {
-    position: relative;
-  }
-
-  .content-30-item__image {
-    object-fit: cover;
-    width: 85%;
-  }
-
-  .content-30-item__media-content {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--action-primary);
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    right: 0;
-  }
-
-  .content-30-item__media-content-heading {
-    font-size: var(--fs-3);
-  }
-
-  /* bm-custom */
-  .content-30-item:last-child {
-  	border-bottom: none;
-  }
-</style>

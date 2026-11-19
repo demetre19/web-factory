@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,107 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-28-container">
-    <div class="feature-28__content">
-      <div class="intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-        <p class="intro__accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
+        </div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">OR</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-      <div class="bm-feature-list-ul">
-        {items.map((it) => (
-          <div class="bm-feature-list-card">
-            <h2 class="bm-feature-list-card__heading">{it.title}</h2>
-            <p class="bm-feature-list-card__text">{it.text}</p>
-            <span class="bm-feature-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        ))}
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="cta-combo__text">OR</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="feature-28__media">
-      <figure class="feature-28__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-28 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .feature-28-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .feature-28__content {
-    justify-content: center;
-    row-gap: var(--space-l);
-    padding: var(--space-xl) 0 var(--space-xl) 0;
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .bm-feature-list-ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-    padding: 0 0 0 0;
-  }
-
-  .bm-feature-list-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .feature-28__media {
-    align-items: flex-end;
-  }
-
-  .feature-28__image {
-    object-fit: cover;
-    height: 100%;
-    width: 50vw;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,109 +17,35 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-48__top-container">
-    <div class="bm-feature-48__intro">
-      <h2 class="bm-feature-48__heading">{heading}</h2>
-      <p class="bm-feature-48__text">{fs}</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="bm-feature-48__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="bm-feature-48__footer-container">
-    <div class="bm-feature-48-grid-ul list--none">
-      {items.map((it) => (
-        <div class="bm-feature-48-card">
-          <div class="bm-feature-48-card__content">
-            <h2 class="bm-feature-48-card__heading">{it.title}</h2>
-            <a class="btn--white bm-feature-48-card__cta wf-cta-button" href={it.href}>{it.label}</a>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div class="grid-auto gap-fluid-l">
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <figure class="bm-feature-48-card__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-48 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .bm-feature-48__top-container {
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    left: 50%;
-    position: relative;
-    padding: var(--section-space-xl) var(--gutter) var(--section-space-xl) var(--gutter);
-  }
-
-  .bm-feature-48__intro {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-feature-48__background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .bm-feature-48-grid-ul {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: 0;
-    margin: calc(-1 * var(--section-space-m)) 0 0 0 !important;
-  }
-
-  .bm-feature-48-card {
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-feature-48-card__content {
-    position: relative;
-    z-index: 1;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-48-card__heading {
-    font-size: var(--fs-2);
-  }
-
-  .bm-feature-48-card__background-image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .bm-feature-48-card {
-    aspect-ratio: 6/4;
-  }
-</style>

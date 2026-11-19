@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,53 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-10-container">
-    <div class="gridcard-10-grid-ul list--none">
-      <div class="gridcard-10-card">
-        <h2 class="gridcard-10-card__heading">{heading}</h2>
-        <p class="gridcard-10-card__desc">{fs}</p>
-        <div class="gridcard-10-card__media">
-          <figure class="gridcard-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
-      </div>
-      <div class="gridcard-10-card">
-        <h2 class="gridcard-10-card__heading">Feature headline</h2>
-        <p class="gridcard-10-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
-        <div class="gridcard-10-card__media">
-          <figure class="gridcard-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <h2 class="text-fluid-2">Feature headline</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-10-grid-ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-m);
-  }
-
-  .gridcard-10-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .gridcard-10-card__image {
-    height: 25.3rem;
-    width: 100%;
-    /* bm: box-shadow omitted — token layer owns elevation */
-    object-fit: cover;
-  }
-</style>

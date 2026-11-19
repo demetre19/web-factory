@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,142 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="coming-soon-3__container">
-    <div class="coming-soon-3__content">
-      <div class="coming-soon__brand">
-        <svg class="coming-soon-3__logo"></svg>
-      </div>
-      <div class="bm-coming-soon-3__intro">
-        <h1 class="bm-coming-soon-3__heading">{heading}</h1>
-        <p class="bm-coming-soon-3__text">{fs}</p>
-        <div class="bm-form">
-          <h2 class="bm-coming-soon__heading-form">Drop your email to get notified!</h2>
-          <form class="bm-form-widget" novalidate>
-          </form>
-          <p class="bm-form__terms">Notify me when project is launched</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <svg></svg>
+        </div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <h2 class="text-fluid-2">Drop your email to get notified!</h2>
+            <form novalidate>
+            </form>
+            <p class="text-fluid-0">Notify me when project is launched</p>
+          </div>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+          ))}
         </div>
       </div>
-      <div class="bm-social-share list--none">
-        {items.map((it) => (
-          <div class="bm-social-share__icon-wrapper">
-            <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-        ))}
-      </div>
     </div>
+    <div></div>
+    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
-  <div class="coming-soon-3__overlay"></div>
-  <figure class="coming-soon-3__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .coming-soon-3 {
-    position: relative;
-    height: 100vh;
-  }
-
-  .coming-soon-3__container {
-    height: 100%;
-  }
-
-  .coming-soon-3__content {
-    position: relative;
-    z-index: 3;
-    width: var(--measure);
-    height: 100%;
-    background: var(--bg-canvas);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    justify-content: space-between;
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .coming-soon__brand {
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-coming-soon-3__intro {
-    width: var(--measure);
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-  }
-
-  .bm-coming-soon__heading-form {
-    font-size: var(--fs-1);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-form__terms {
-    font-size: var(--fs-0);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .coming-soon-3__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-    background: color-mix(in srgb, var(--text-secondary) 40%, transparent);
-  }
-
-  .coming-soon-3__background-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  } 
-  
-  .bm-form-widget button[type=submit].bricks-button {
-      height: 100% !important;
-  }
-  
-  .bm-form-widget .submit-button-wrapper {
-      height: 100% !important;
-  }
-</style>

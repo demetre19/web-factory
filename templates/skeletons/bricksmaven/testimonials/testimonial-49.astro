@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,124 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-49__container">
-    <div class="bm-testimonial-49__slider-nested">
-      {items.map((it) => (
-        <div class="bm-testimonial-49-card">
-          <div class="bm-testimonial-49-card__content">
-            <h2 class="bm-testimonial-49-card__heading">{it.title}</h2>
-            <div class="bm-testimonial-49-card__badge">
-              <div class="bm-testimonial-49-card__icon-wrapper">
-                <span class="bm-testimonial-49-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="bm-testimonial-49-card__label">{it.text}</p>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
-            <div class="bm-testimonial-49-card__client-wrapper">
-              <p class="bm-testimonial-49-card__name">{it.text}</p>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div class="bm-testimonial-49-card__media">
-            <figure class="bm-testimonial-49-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-49 {
-    background: var(--text-primary);
-    padding: 0 0 0 0;
-  }
-
-  .bm-testimonial-49-card {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-testimonial-49-card__content {
-    row-gap: calc(var(--flow-spacing) * 1.4);
-    width: 100%;
-    padding: var(--section-space-xxl) 0 0 0;
-  }
-
-  .bm-testimonial-49-card__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-testimonial-49-card__badge {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-testimonial-49-card__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--fs-0);
-    width: 32px;
-    height: 32px;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-49-card__name {
-    font-size: var(--fs-2);
-  }
-
-  .bm-testimonial-49-card__image {
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) 0 0;
-  }
-
-  /* bm-custom */
-  .bm-testimonial-49__slider-nested {
-    --icon-dimension: 64px; /* Change the icon dimensions*/
-    --icon-size: 16px; /* Change the icon size*/
-    --icon-opacity: 0.5;  /* Change the icon opacity*/
-  }
-  
-  
-  .bm-testimonial-49__slider-nested .splide__arrow--next {
-    left: var(--space-m);
-    transition: 0.5s ease;
-  }
-  
-  .bm-testimonial-49__slider-nested .splide__arrow--prev {
-    left: calc(-1 * var(--acss-icon-dimension));
-    transition: 0.5s ease;
-  }
-  
-  .bm-testimonial-49__slider-nested .splide__arrows {
-      position: absolute;
-      inset-block-end: var(--section-space-xxl);
-    	inset-inline-start: var(--acss-icon-dimension);
-     	
-  }
-  
-  @media (max-width:991px) {
-    
-    .bm-testimonial-49__slider-nested {
-    --icon-dimension: 42px; /* Change the icon dimensions*/
-  }
-    
-    .bm-testimonial-49__slider-nested .splide__arrows {
-      position: absolute;
-      inset-inline-start: unset;
-      inset-block-end: var(--space-s);
-    	inset-inline-end: calc(var(--acss-icon-dimension) + var(--space-m));
-  }
-  }
-</style>

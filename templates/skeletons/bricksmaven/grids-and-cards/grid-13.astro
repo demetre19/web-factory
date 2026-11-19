@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,81 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-13-container">
-    <div class="gridcard-13-ct">
-      <div class="gridcard-13-ct__detail">
-        <p class="gridcard-13-ct__tag">Awesome Tagline</p>
-        <h2 class="gridcard-13-ct__title">{heading}</h2>
-        <p class="gridcard-13-ct__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <p class="text-fluid-0">Awesome Tagline</p>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
-      <div class="gridcard-13-ct__media">
-        <figure class="gridcard-13-ct__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-    </div>
-    <div class="gridcard-13-ct">
-      <div class="gridcard-13-ct__detail">
-        <p class="gridcard-13-ct__tag">Awesome Tagline</p>
-        <h2 class="gridcard-13-ct__title">What is lorem ipsum?</h2>
-        <p class="gridcard-13-ct__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
-      </div>
-      <div class="gridcard-13-ct__media">
-        <figure class="gridcard-13-ct__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <p class="text-fluid-0">Awesome Tagline</p>
+          <h2 class="text-fluid-2">What is lorem ipsum?</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-13-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-xl);
-  }
-
-  .gridcard-13-ct {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-m);
-  }
-
-  .gridcard-13-ct__detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-13-ct__tag {
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: .1em;
-    margin: 0 0 0 0;
-  }
-
-  .gridcard-13-ct__media {
-    width: 100%;
-    height: 100%;
-    display: flex;
-  }
-
-  .gridcard-13-ct__img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  /* bm-custom */
-  .gridcard-13-ct:nth-child(even) .gridcard-13-ct__detail {
-  	order: 1;
-  }
-</style>

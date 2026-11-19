@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,89 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="category-list-6__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="category-list-6__list list--none">
-      <div class="category-list-6-card">
-        <div class="category-list-6-card__content">
-          <h3 class="category-list-6-card__heading">{term_name}</h3>
-          <p class="category-list-6-card__text">{echo:get_product_count_by_category( {term_id} )}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <h3 class="text-fluid-2">{term_name}</h3>
+            <p class="text-fluid-0">{echo:get_product_count_by_category( {term_id} )}</p>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <figure class="category-list-6-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .category-list-6 {
-    row-gap: var(--flow-spacing);
-  }
-
-  .category-list-6__container {
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .category-list-6__list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 4);
-  }
-
-  .category-list-6-card {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    flex-direction: row;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    column-gap: calc( var(--flow-spacing) / 2 );
-    flex-wrap: nowrap;
-  }
-
-  .category-list-6-card__content {
-    row-gap: var(--space-xs);
-  }
-
-  .category-list-6-card__heading {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    font-size: var(--fs-1);
-  }
-
-  .category-list-6-card__text {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-  }
-
-  .category-list-6-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    width: 9rem;
-  }
-</style>

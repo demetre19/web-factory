@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,199 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-blog-section-24__container">
-    <div class="intro intro--split">
-      <div class="intro__left-column">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="bm-accent-heading">Tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">Tagline</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Call to action</a>
+        </div>
       </div>
-      <div class="intro__right-column">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary" href="#">Call to action</a>
-      </div>
-    </div>
-    <div class="list--none bm-blog-section-24-list">
-      <div class="bm-blog-section-24-card">
-        <div class="bm-blog-section-24-card__content">
-          <div class="bm-blog-section-24-card__post-title clickable-parent"></div>
-          <div class="bm-blog-section-24-card__footer">
-            <p class="bm-blog-section-24-card__date">{post_date}</p>
-            <div class="bm-blog-section-24-card__icon-wrapper">
-              <span class="bm-blog-section-24-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <div></div>
+            <div>
+              <p class="text-fluid-0">{post_date}</p>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
             </div>
           </div>
+          <div>
+            <p class="text-fluid-0">{post_terms_category:plain}</p>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div class="bm-blog-section-24-card__term-wrapper">
-          <p class="bm-blog-section-24-card__terms">{post_terms_category:plain}</p>
-        </div>
-        <figure class="bm-blog-section-24-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-blog-section-24__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-section-24-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .bm-blog-section-24-card {
-    position: relative;
-    justify-content: space-between;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    overflow: clip;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    flex-wrap: nowrap;
-  }
-
-  .bm-blog-section-24-card__content {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    z-index: 2;
-    row-gap: var(--flow-spacing);
-    position: relative;
-  }
-
-  .bm-blog-section-24-card__footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-blog-section-24-card__icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-blog-section-24-card__term-wrapper {
-    display: flex;
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    z-index: 2;
-  }
-
-  .bm-blog-section-24-card__terms {
-    font-size: var(--fs-0);
-  }
-
-  .bm-blog-section-24-card__image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-blog-section-24-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    background-color: color-mix(in srgb, var(--fs-0) 60%, transparent);
-    z-index: 1;
-    opacity: 1;
-    transition: 0.5s ease;
-  }
-  
-  @media (min-width:991px) {
-    .bm-blog-section-24-card:hover::before, .bm-blog-section-24-card:focus-within::before {
-  
-    opacity: 0.2;
-  }
-    
-    .bm-blog-section-24-card .bm-blog-section-24-card__content::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    transition: 0.2s ease;
-    scale: 0.9;
-    border-radius: var(--r-card);
-    
-  }
-  
-  .bm-blog-section-24-card:hover .bm-blog-section-24-card__content::before, .bm-blog-section-24-card:focus-within .bm-blog-section-24-card__content::before {
-    background-color: var(--fs-0);
-    scale: 1;
-  }
-  
-  .bm-blog-section-24-card .bm-blog-section-24-card__post-title {
-    transform: translateY(75%);
-    transition: 0.5s ease;
-  }
-  
-  .bm-blog-section-24-card .bm-blog-section-24-card__footer {
-    transform: translateY(100%);
-    transition: 0.5s ease;
-  }
-  
-  
-  .bm-blog-section-24-card:hover .bm-blog-section-24-card__post-title, .bm-blog-section-24-card:focus-within .bm-blog-section-24-card__post-title {
-    transform: translateY(0%);
-  }
-  
-  .bm-blog-section-24-card .bm-blog-section-24-card__footer {
-    opacity: 0;
-  }
-  
-  .bm-blog-section-24-card:hover .bm-blog-section-24-card__footer, .bm-blog-section-24-card:focus-within .bm-blog-section-24-card__footer {
-    opacity: 1;
-    transform: translateY(0%);
-  }
-  }
-</style>

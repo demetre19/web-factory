@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,349 +17,95 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
   <div>
-    <div class="bm-product-archive-4__header-container">
-      <h1 class="bm-product-archive-4__heading">{heading}</h1>
-      <p>{fs}</p>
-      <div class="bm-product-archive-4__breadcrumb-wrapper">
-        <div class="bm-breadcrumd-woo-1"></div>
+    <div class="sec-inner">
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <div></div>
+        </div>
       </div>
     </div>
-    <div class="bm-product-archive-4__container">
-      <div class="bm-woo-notice-container">
-        <div class="bm-woo-notice"></div>
-      </div>
-      <p>{do_action:woocommerce_before_shop_loop}</p>
-      <div class="bm-product-archive-4__product-filters">
-        <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
-          <div class="bm-product-archive-filter-wrapper__toggle-button">
-            <div class="bm-product-archive-filter-wrapper__toggle bm-product-archive-filter-wrapper__toggle--alt"></div>
-          </div>
-          <div class="bm-product-archive-off-canvas">
-            <div class="bm-product-archive-off-canvas__content">
-              <h2 class="bm-product-archive-off-canvas__content-heading">Filter</h2>
-              <div class="bm-product-archive-2__filter-container display--inline-flex flex--col">
-                {items.map((it) => (
-                  <div class="bm-product-archive__filter-row bm-product-archive__filter-row--alt">
-                    <h4 class="bm-product-archive-1__filter-heading">{it.title}</h4>
-                    <div class="bm-filter-search"></div>
-                  </div>
-                ))}
-                <div class="btn--primary"></div>
+    <div class="sec-inner">
+      <div>
+        <div>
+          <div></div>
+        </div>
+        <p class="text-fluid-0">{do_action:woocommerce_before_shop_loop}</p>
+        <div>
+          <div>
+            <div>
+              <div></div>
+            </div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">Filter</h2>
+                <div>
+                  {(items || []).map((it) => (
+                    <div>
+                      <h4 class="text-fluid-2">{it.title}</h4>
+                      <div></div>
+                    </div>
+                  ))}
+                  <div></div>
+                </div>
+                <div></div>
               </div>
-              <div class="bm-product-archive-off-canvas__close"></div>
+              <div></div>
             </div>
-            <div class="bm-product-archive-off-canvas__backgrop"></div>
+          </div>
+          <div>
+            <div></div>
+            <div></div>
           </div>
         </div>
-        <div class="bm-product-archive-1__sort-wrapper">
-          <div class="bm-product-orderby"></div>
-          <div class="bm-product-total-results"></div>
+        <div>
+          <div></div>
         </div>
-      </div>
-      <div class="bm-product-archive-4__active-filter-wrapper">
-        <div class="bm-filter-active"></div>
-      </div>
-      <div class="bm-product-archive__product-list">
-        <div class="product-list-1-card">
-          <p>{do_action:woocommerce_before_shop_loop_item}</p>
-          <p>{do_action:woocommerce_before_shop_loop_item_title}</p>
-          <div class="product-list-1-card__content">
-            <p>{do_action:woocommerce_shop_loop_item_title}</p>
-            <p class="product-list-category">{post_terms_product_cat}</p>
-            <div class="product-list-1-card__top">
-              <h3 class="product-list-1-card__heading">{post_title}</h3>
-              <p>{do_action:woocommerce_after_shop_loop_item_title}</p>
-              <custom class="product-list-card__price">{woo_product_price}</custom>
+        <div>
+          <div class="grid-auto gap-fluid-l">
+            <p class="text-fluid-0">{do_action:woocommerce_before_shop_loop_item}</p>
+            <p class="text-fluid-0">{do_action:woocommerce_before_shop_loop_item_title}</p>
+            <div>
+              <p class="text-fluid-0">{do_action:woocommerce_shop_loop_item_title}</p>
+              <p class="text-fluid-0">{post_terms_product_cat}</p>
+              <div>
+                <h3 class="text-fluid-2">{post_title}</h3>
+                <p class="text-fluid-0">{do_action:woocommerce_after_shop_loop_item_title}</p>
+                <custom class="text-fluid-2">{woo_product_price}</custom>
+              </div>
+              <div></div>
             </div>
-            <div class="product-list-card__add-to-cart"></div>
-          </div>
-          <div class="product-list-notice__wrapper">
-            <div class="product-list-notice-circle__sale-badge">
-              <p class="product-list-notice-circle__sale">{woo_product_on_sale}</p>
+            <div>
+              <div>
+                <p class="text-fluid-0">{woo_product_on_sale}</p>
+              </div>
+              <p class="text-fluid-0">New!</p>
+              <p class="text-fluid-0">Sold Out</p>
             </div>
-            <p class="product-list-1-card__new">New!</p>
-            <p class="product-list-1-card__soldout">Sold Out</p>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <p class="text-fluid-0">{do_action:woocommerce_after_shop_loop_item}</p>
           </div>
-          <figure class="product-list-1-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <p>{do_action:woocommerce_after_shop_loop_item}</p>
         </div>
-      </div>
-      <div class="bm-product-archive__pagination-wrapper">
-        <div class="bm-pagination"></div>
-      </div>
-      <p>{do_action:woocommerce_after_shop_loop}</p>
-      <div class="bm-product-archive__seo-text-block">
-        <h2 class="bm-product-archive__seo-heading">SEO title comes here</h2>
-        <p class="bm-product-archive__seo-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <div>
+          <div></div>
+        </div>
+        <p class="text-fluid-0">{do_action:woocommerce_after_shop_loop}</p>
+        <div>
+          <h2 class="text-fluid-2">SEO title comes here</h2>
+          <p class="text-fluid-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-product-archive-4__header-page {
-    padding: var(--section-space-xs) 0 var(--section-space-xs) 0;
-    border-bottom: 1 solid var(--bg-subtle);
-  }
-
-  .bm-product-archive-4__header-container {
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-product-archive-4__breadcrumb-wrapper {
-    display: flex;
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-    background: var(--bg-subtle);
-  }
-
-  .bm-breadcrumd-woo-1 {
-    font-size: var(--fs-0);
-  }
-
-  .bm-product-archive-4__container {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-woo-notice-container {
-    position: relative;
-  }
-
-  .bm-product-archive-4__product-filters {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    justify-content: space-between;
-    border-bottom: 1 solid var(--bg-subtle);
-    padding: 0 0 var(--space-s) 0;
-  }
-
-  .bm-product-archive-filter-wrapper {
-    display: none;
-  }
-
-  .bm-product-archive-filter-wrapper--alt {
-    display: flex;
-  }
-
-  .bm-product-archive-filter-wrapper__toggle-button {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) /2);
-    align-items: center;
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    position: relative;
-    justify-content: center;
-    background: var(--text-secondary);
-  }
-
-  .bm-product-archive-filter-wrapper__toggle {
-    width: 100%;
-    padding: var(--space-xs) var(--space-s) var(--space-xs) var(--space-s);
-  }
-
-  .bm-product-archive-off-canvas {
-    position: relative;
-  }
-
-  .bm-product-archive-off-canvas__content {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-product-archive-2__filter-container {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    display: flex;
-    column-gap: var(--space-m);
-    position: relative;
-    z-index: 99;
-  }
-
-  .bm-product-archive__filter-row {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: 1 solid var(--color-line-default);
-  }
-
-  .bm-product-archive__filter-row--alt {
-    border: none;
-  }
-
-  .bm-product-archive-off-canvas__close {
-    position: absolute;
-    right: var(--space-m);
-    top: var(--space-m);
-  }
-
-  .bm-product-archive-1__sort-wrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing)/ 2);
-    margin: 0 0 0 auto;
-  }
-
-  .bm-product-orderby {
-    font-size: var(--fs-0);
-  }
-
-  .bm-product-total-results {
-    font-size: var(--fs-0);
-  }
-
-  .bm-product-archive__product-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .product-list-1-card {
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    position: relative;
-    flex-wrap: nowrap;
-  }
-
-  .product-list-1-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    text-align: center;
-    height: 100%;
-    justify-content: space-between;
-  }
-
-  .product-list-category {
-    font-size: var(--fs-0);
-  }
-
-  .product-list-1-card__top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .product-list-1-card__heading {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-  }
-
-  .product-list-notice__wrapper {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: var(--space-xs);
-    width: var(--measure);
-    align-items: flex-start;
-    row-gap: calc(var(--flow-spacing) / 4);
-    left: var(--space-xs);
-  }
-
-  .product-list-notice-circle__sale-badge {
-    font-size: var(--fs-0);
-    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
-    background: var(--primitive-state-danger);
-    display: flex;
-    align-items: center;
-  }
-
-  .product-list-1-card__new {
-    background: var(--bg-canvas);
-    font-size: var(--fs-0);
-    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
-  }
-
-  .product-list-1-card__soldout {
-    background: var(--bg-canvas);
-    font-size: var(--fs-0);
-    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
-    position: relative;
-  }
-
-  .product-list-1-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    object-fit: cover;
-  }
-
-  .bm-product-archive__seo-text-block {
-    row-gap: var(--flow-spacing);
-  }
-
-  /* bm-custom */
-  /* Change the link and hover color */
-  .bm-breadcrumd-woo-1 a {
-    color: var(--acss-light);
-  }
-  
-  .bm-breadcrumd-woo-1 a:hover {
-    color: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .bm-product-archive-filter-wrapper__toggle-button {
-    color: var(--bg-subtle);
-  }
-  
-  .bm-product-archive-filter-wrapper__toggle-button:hover {
-    background-color: var(--color-ink-secondary);
-  }
-
-  /* bm-custom */
-  .bm-product-archive-filter-wrapper__toggle::after {
-    content: 'Filter';
-    color: inherit;
-    display: flex;
-    margin-inline-start: var(--space-xs);
-  }
-
-  /* bm-custom */
-  .product-list-category a {
-    	color: var(--text-primary);
-    	background: transparent;
-  }
-
-  /* bm-custom */
-  .product-list-card__price del {
-    	color: var(--bg-subtle);
-  }
-  
-  .product-list-card__price ins {
-    	text-decoration: none;
-  }
-  .product-list-card__price ins .amount {
-    	text-decoration: none;
-    	border-bottom: 0;
-  }
-
-  /* bm-custom */
-  .product-list-card__add-to-cart form.cart .quantity, form.woocommerce-cart-form .quantity {
-      width: 100%;
-  }
-    
-  form.cart .button, form.woocommerce-cart-form .button {
-  
-      width: 100%;
-  }
-</style>

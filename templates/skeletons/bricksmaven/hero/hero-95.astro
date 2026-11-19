@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,102 +17,43 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-95__container">
-    <div class="bm-hero-95__content">
-      <div class="bm-hero-95__top">
-        <h1 class="bm-hero-95__heading">{heading}</h1>
-        <p class="bm-accent-heading bm-hero-95__accent-heading">Accent heading</p>
-        <p class="bm-hero-95__subheading">{fs}</p>
-      </div>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <a class="link--black" href="#">Secondary action →</a>
-      </div>
-      <div class="bm-hero-95-review">
-        <p class="bm-hero-95-review__review-text">‘ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ‘</p>
-        <div class="bm-hero-95-review__client-review">
-          <div class="bm-hero-95-review__avatar-cover">
-            <figure class="bm-hero-95-review__avatar"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="bm-hero-95-review__client-data">
-            <p class="bm-hero-95-review__name">John Smith</p>
-            <p class="bm-hero-95-review__title">CEO, FirstLight</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
+        <div>
+          <p class="text-fluid-0">‘ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. ‘</p>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <p class="text-fluid-0">John Smith</p>
+              <p class="text-fluid-0">CEO, FirstLight</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="bm-hero-95__media">
-      <figure class="bm-hero-95__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-95__container {
-    display: grid;
-    gap: calc(var(--space-m) * 2);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-95__content {
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-hero-95__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-95__heading {
-    font-size: calc(var(--fs-4) * 2.4);
-    text-transform: uppercase;
-    width: 155%;
-    z-index: 1;
-    position: relative;
-  }
-
-  .bm-hero-95__subheading {
-    font-size: var(--fs-2);
-    font-weight: 500;
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-95-review {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-95-review__client-review {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-hero-95-review__avatar {
-    object-fit: cover;
-    width: 48px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-hero-95-review__name {
-    font-weight: 700;
-  }
-
-  .bm-hero-95__image {
-    object-fit: cover;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-</style>

@@ -91,6 +91,19 @@ def _scaffold(ctx, comps):
        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">'
        '<rect width="16" height="16" rx="3"/></svg>\n')
     _w(os.path.join(site, 'src', 'pages', 'index.astro'), '')
+    # Every translated bank figure points at /media/placeholder.svg.
+    # It must exist or the ratio boxes render empty. Its fill is the
+    # DNA's own surface rung — never an ad-libbed colour.
+    roles = ((gate.dna_map(ctx) or {}).get('modes', {})
+             .get('light') or {})
+    fill = roles.get('surface_elevated') or roles.get('surface') \
+        or '#E7E0D6'
+    _w(os.path.join(site, 'public', 'media', 'placeholder.svg'),
+       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" '
+       'preserveAspectRatio="xMidYMid slice">'
+       f'<rect width="900" height="1200" fill="{fill}"/>'
+       '<path d="M0 1200 L900 0" stroke="#00000010" stroke-width="2"/>'
+       '</svg>\n')
 
 
 def _exemplar_paths(comps):
@@ -123,6 +136,30 @@ def _comp_copy(ctx, comp):
     shutil.copyfile(src, dst)
 
 
+BANK = os.path.join(REPO, 'templates', 'skeletons', 'bricksmaven')
+
+
+def _bank_copy(ctx, comp, recipe):
+    """P6 — a banked composition: the translated Bricksmaven skeleton
+    IS the component (markup only, SB.2), and its sibling .css returns
+    for hoisting into the shared layer. The recipe is the identity:
+    bricksmaven/<category>/<stem>."""
+    parts = recipe.split('/')
+    if len(parts) != 3 or parts[0] != 'bricksmaven':
+        raise SystemExit(f'P6 bad bank recipe "{recipe}" '
+                         '(want bricksmaven/<cat>/<stem>)')
+    cat, stem = parts[1], parts[2]
+    src = os.path.join(BANK, cat, stem + '.astro')
+    if not os.path.isfile(src):
+        raise SystemExit(f'P6 no bank skeleton for "{recipe}" — run '
+                         'bricks_translate.py on that payload')
+    dst = os.path.join(ctx.site, 'src', 'components', comp + '.astro')
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copyfile(src, dst)
+    css = os.path.join(BANK, cat, stem + '.css')
+    return _read(css) if os.path.isfile(css) else ''
+
+
 def _instance(ctx, contract, row):
     """W6 — the section instance: frontmatter contract + import + render.
     Copy/props come from the contract content + plan row (cta/items/
@@ -145,6 +182,12 @@ def _instance(ctx, contract, row):
             props.append(f'{k}={{({json.dumps(src)})}}')
     if h1_text:
         props.append('h1={true}')
+    # the brand is site chrome: every composition that renders a logo
+    # takes it from the plan's site block, never a default
+    site = ctx.site_block() or {}
+    if site.get('brand'):
+        props.append('brand=' + json.dumps(str(site['brand']),
+                                          ensure_ascii=False))
     body = (f'<{camel} ' + ' '.join(props) + ' />'
             if props else f'<{camel} />')
     txt = ('---\n'
@@ -245,9 +288,28 @@ def main(argv):
        _read(os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro')))
     print('  Section.astro + BaseLayout.astro')
 
-    # P6/W6 — component skeleton + instance per contract
+    # P6/W6 — component skeleton + instance per contract. A plan row
+    # carrying recipe: bricksmaven/<cat>/<stem> resolves to the banked
+    # skeleton; every other row resolves to the gold exemplar.
+    bank = {c['composition']: str(c.get('recipe'))
+            for c in contracts
+            if str(c.get('recipe') or '').startswith('bricksmaven/')}
+    bank_css = []
     for comp in comps:
+        if comp in bank:
+            css = _bank_copy(ctx, comp, bank[comp])
+            if css:
+                bank_css.append(f'/* {bank[comp]} */\n' + css)
+            continue
         _comp_copy(ctx, comp)
+    if bank_css:
+        # SB.2 — bank rules live in the shared layer, never in a
+        # component. @tailwind components in global.css opens it.
+        with open(os.path.join(ctx.site, 'src', 'styles',
+                               'global.css'), 'a') as fh:
+            fh.write('\n@layer components {\n'
+                     + '\n'.join(bank_css) + '\n}\n')
+        print(f'  bank css: {len(bank_css)} skeleton(s) → global.css')
     for c in contracts:
         _instance(ctx, c, by_name.get(str(c['section'])) or {})
     print(f'  {len(comps)} components + {len(contracts)} instances')

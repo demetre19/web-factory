@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,79 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-20-container">
-    <div class="list--none feature-20-content">
-      <div class="feature-20-content__intro">
-        <h2 class="feature-20-content__heading">{heading}</h2>
-        <p class="feature-20-content__desc">{fs}</p>
-      </div>
-      {items.map((it) => (
-        <div class="feature-20-card">
-          <h2 class="feature-20-card__heading">{it.title}</h2>
-          <p class="feature-20-card__text">{it.text}</p>
-          <span class="feature-20-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-      ))}
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-20 {
-    background: var(--action-primary);
-  }
-
-  .feature-20-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xl);
-  }
-
-  .feature-20-content {
-    display: grid;
-    gap: var(--space-xl);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .feature-20-content__intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .feature-20-content__heading {
-    font-size: var(--fs-3);
-  }
-
-  .feature-20-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    position: relative;
-    border-top: .8rem solid var(--bg-canvas);
-    border-right: .8rem solid var(--bg-canvas);
-    border-bottom: .8rem solid var(--bg-canvas);
-    border-left: .8rem solid var(--bg-canvas);
-  }
-
-  .feature-20-card__heading {
-    margin: var(--space-m) 0 0 0;
-  }
-
-  .feature-20-card__icon {
-    background: var(--action-primary);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-radius: 100% 100% 100% 100%;
-    position: absolute;
-    top: -4rem;
-  }
-</style>

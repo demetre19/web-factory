@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,113 +17,49 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="footer-3-container">
-    <div class="footer-3-left">
-      <img class="footer-3__logo"></img>
-    </div>
-    <div class="footer-3-mid">
-      <div class="list--none footer-menu-inline">
-        {items.map((it) => (
-          <div class="footer-menu__link">
-            <a class="footer-menu__link-text" href="#">{it.text}</a>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <p class="text-fluid-0">English version</p>
+      </div>
+      <div>
+        <div></div>
       </div>
     </div>
-    <div class="footer-3-right">
-      <p class="footer-3__lang">English version</p>
-    </div>
-    <div class="footer-3-mid-bottom">
-      <div class="footer-social"></div>
-    </div>
-  </div>
-  <div class="footer-3-bottom">
-    <div class="footer-nav-legal">
-      <div class="footer-legal-nav list--none">
-        {items.map((it) => (
-          <div class="footer-legal__li">
-            <a class="footer-legal__link-text" href="#">{it.text}</a>
-          </div>
-        ))}
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="footer-3-bottom__right">
-      <p class="footer-copyright">{fs}</p>
+      <div>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .footer-3 {
-    row-gap: var(--space-m);
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .footer-3-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: var(--space-m);
-  }
-
-  .footer-3-mid {
-    position: relative;
-  }
-
-  .footer-menu-inline {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-m);
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .footer-social {
-    width: auto;
-  }
-
-  .footer-3-bottom {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-xs);
-  }
-
-  .footer-legal-nav {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .footer-legal__link-text {
-    font-size: var(--fs-0);
-  }
-
-  .footer-3-bottom__right {
-    display: flex;
-  }
-
-  .footer-copyright {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .footer-3__lang {
-  	text-align: right;
-  }
-
-  /* bm-custom */
-  .footer-social {
-  	justify-content: center;
-  }
-</style>

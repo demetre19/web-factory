@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,212 +17,65 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-linktree-5__container">
-    <div class="bm-linktree-5__bio-data">
-      <div class="bm-linktree-5__bio-cover">
-        <div class="bm-linktree-5-bio-card">
-          <div class="bm-linktree-5-bio-card__bio">
-            <p class="bm-linktree-5-bio-card__name">John Smith</p>
-            <p class="bm-linktree-5-bio-card__title">Add your title</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <p class="text-fluid-0">John Smith</p>
+              <p class="text-fluid-0">Add your title</p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <p class="text-fluid-0">{fs}</p>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div class="bm-linktree-5-bio-card__media">
-            <figure class="bm-linktree-5-bio-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <p class="bm-linktree-5-bio-card__short-bio">{fs}</p>
-          <div class="bm-social-share list--none bm-social-share--left">
-            {items.map((it) => (
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href="#">{it.text}</a>
               </div>
             ))}
           </div>
         </div>
-      </div>
-      <div class="bm-linktree-5__links">
-        <div class="bm-linktree-list list--none">
-          {items.map((it) => (
-            <div class="bm-linktree-card">
-              <a class="bm-linktree-card__link clickable-parent" href="#">{it.text}</a>
+        <div>
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{heading}</h2>
+                <p class="text-fluid-0">Stay up to date with Bricksmaven latest blogs and events.</p>
+              </div>
+              <div>
+                <form novalidate>
+                </form>
+                <p class="text-fluid-0">Join 3k+ users growing their skills</p>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-      <div class="bm-linktree-5__newsletter-cover">
-        <div class="bm-linktree-5-newsletter-card">
-          <div class="bm-linktree-5-newsletter-card__content">
-            <div class="bm-linktree-5-newsletter-card__top">
-              <h2 class="bm-linktree-5-newsletter-card__heading">{heading}</h2>
-              <p class="bm-linktree-5-newsletter-card__text">Stay up to date with Bricksmaven latest blogs and events.</p>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image newsletter" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="bm-linktree-5-newsletter-card__form-wrapper">
-              <form class="bm-form-widget bm-form-widget--stacked bm-linktree-5-newsletter-card__form" novalidate>
-              </form>
-              <p class="bm-linktree-5-newsletter-card__micro-copy">Join 3k+ users growing their skills</p>
-            </div>
-          </div>
-          <div class="bm-linktree-5-newsletter-card__media-newsletter">
-            <figure class="bm-linktree-5-newsletter-card__image-newsletter"><img src="/media/placeholder.svg" alt="Image newsletter" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-linktree-5 {
-    background: var(--bg-subtle);
-    padding: var(--section-space-l) 0 0 0;
-  }
-
-  .bm-linktree-5__bio-data {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
-    gap: var(--space-m);
-  }
-
-  .bm-linktree-5-bio-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    row-gap: var(--flow-spacing);
-    background: var(--bg-canvas);
-  }
-
-  .bm-linktree-5-bio-card__name {
-    font-weight: 700;
-  }
-
-  .bm-linktree-5-bio-card__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-linktree-5-bio-card__media {
-    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
-  }
-
-  .bm-linktree-5-bio-card__image {
-    object-fit: cover;
-    border-top: 4px solid var(--bg-canvas);
-    border-right: 4px solid var(--bg-canvas);
-    border-bottom: 4px solid var(--bg-canvas);
-    border-left: 4px solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    width: 128px;
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-linktree-5__links {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-linktree-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-card {
-    text-align: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    align-items: center;
-    background: var(--text-secondary);
-    position: relative;
-  }
-
-  .bm-linktree-5-newsletter-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-canvas);
-  }
-
-  .bm-linktree-5-newsletter-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-5-newsletter-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-5-newsletter-card__form-wrapper {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-form-widget {
-    display: flex;
-    gap: var(--space-xs);
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-form-widget--stacked {
-    flex-direction: column;
-  }
-
-  .bm-linktree-5-newsletter-card__image-newsletter {
-    object-fit: cover;
-    width: 100%;
-    height: 30rem;
-  }
-
-  /* bm-custom */
-  @media  (max-width:991px) {
-    
-    .bm-linktree-5__bio-data {
-    grid-template-columns: calc(100% * 1 / 2);
-      
-    }
-    
-    .bm-linktree-5__bio-data .bm-linktree-5__bio-cover {
-      grid-column: span 2;
-    }
-  }
-  
-  @media  (max-width:767px) {
-    
-    .bm-linktree-5__bio-data {
-    grid-template-columns: calc(100% * 1 / 1);
-      
-    }
-    
-    .bm-linktree-5__bio-data .bm-linktree-5__bio-cover {
-      grid-column: span 1;
-    }
-  }
-
-  /* bm-custom */
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  } 
-  
-  .bm-form-widget button[type=submit].bricks-button {
-      height: 100% !important;
-  }
-  
-  .bm-form-widget .submit-button-wrapper {
-      height: 100% !important;
-  }
-</style>

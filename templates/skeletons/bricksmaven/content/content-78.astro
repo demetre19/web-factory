@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,80 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-78__container">
-    <div class="bm-content-78__content">
-      <div class="bm-content-78__content-intro">
-        <div class="intro intro--left">
-          <h2 class="intro__heading">{heading}</h2>
-          <p class="intro__subheading">{fs}</p>
-          <p class="bm-accent-heading">Tagline</p>
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">{heading}</h2>
+            <p class="text-fluid-0">{fs}</p>
+            <p class="text-fluid-0">Tagline</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+        </div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Content Image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
-      <div class="bm-content-78__content-media">
-        <figure class="bm-content-78__content-image"><img src="/media/placeholder.svg" alt="Content Image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div class="bm-content-78__media">
-      <figure class="bm-content-78__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-78__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: calc(var(--space-m) * 4);
-  }
-
-  .bm-content-78__content {
-    row-gap: calc(var(--flow-spacing) * 4);
-  }
-
-  .bm-content-78__content-intro {
-    padding: 0 0 0 calc(var(--acss-space-4xl) * 1.4);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-content-78__content-image {
-    object-fit: cover;
-    width: 342px;
-    height: 342px;
-  }
-
-  .bm-content-78__media {
-    justify-content: flex-end;
-  }
-
-  .bm-content-78__image {
-    object-fit: cover;
-    height: 586px;
-  }
-</style>

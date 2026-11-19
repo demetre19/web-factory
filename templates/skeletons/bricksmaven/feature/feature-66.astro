@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,69 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-66__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-66-list">
-      {items.map((it) => (
-        <div class="bm-feature-66-item">
-          <h2 class="bm-feature-66-list__heading">{it.title}</h2>
-          <p class="bm-feature-66-list__text">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-66__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-feature-66-list {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    justify-content: center;
-    flex-wrap: wrap;
-    row-gap: var(--flow-spacing);
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-feature-66-item {
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--fs-0);
-    width: auto;
-    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    background: var(--text-primary);
-    border-radius: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
-    justify-content: center;
-    text-align: center;
-  }
-
-  .bm-feature-66-list__heading {
-    font-size: var(--fs-0);
-  }
-</style>

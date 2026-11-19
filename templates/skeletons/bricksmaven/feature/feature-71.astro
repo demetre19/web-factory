@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,478 +17,48 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-71__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="bm-feature-71-grid-ul">
-      {items.map((it) => (
-        <div class="bm-feature-71-card">
-          <div class="bm-feature-71-card__content">
-            <h2 class="bm-feature-71-card__heading">{it.title}</h2>
-            <p class="bm-feature-71-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+            <p class="text-fluid-0">{it.text}</p>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
           </div>
-          <p class="bm-feature-71-card__accent-heading">{it.text}</p>
-          <a class="bm-feature-71-card__btn wf-cta-button" href={it.href}>{it.label}</a>
-          <div class="bm-feature-71-card__icon-wrapper">
-            <span class="bm-feature-71-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        ))}
+        <div>
+          <div>
+            <h2 class="text-fluid-2">We would like to advice you</h2>
+            <p class="text-fluid-0">If your specific situation is mentioned you can contact us and we will dive into your specefic situation and see if we can be of help</p>
           </div>
-        </div>
-      ))}
-      <div class="bm-feature-71-cta-card bm-feature-71-card">
-        <div class="bm-feature-71-cta-card__content">
-          <h2 class="bm-feature-71-cta-card__heading">We would like to advice you</h2>
-          <p class="bm-feature-71-cta-card__text">If your specific situation is mentioned you can contact us and we will dive into your specefic situation and see if we can be of help</p>
-        </div>
-        <p class="bm-feature-71-cta-card__accent-heading">Different situation?</p>
-        <a class="bm-feature-71-cta-card__btn" href={cta.href}>{cta.label}</a>
-        <div class="bm-feature-71-cta-card__icon-wrapper">
-          <span class="bm-feature-71-cta-card__icon" data-icon="lucide" aria-hidden="true"></span>
+          <p class="text-fluid-0">Different situation?</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-71__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-feature-71-grid-ul {
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .bm-feature-71-card {
-    row-gap: calc(var(--flow-spacing) * 2);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    position: relative;
-  }
-
-  .bm-feature-71-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-71-card__accent-heading {
-    font-size: var(--fs-0);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: calc(var(--space-xs) / 2);
-  }
-
-  .bm-feature-71-card__btn {
-    margin: auto 0 0 0;
-  }
-
-  .bm-feature-71-card__icon-wrapper {
-    background: var(--bg-canvas);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-    border-radius: 100% 100% 100% 100%;
-    position: absolute;
-    top: calc(var(--space-s) + var(--space-s));
-    right: var(--space-m);
-  }
-
-  .bm-feature-71-cta-card {
-    row-gap: calc(var(--flow-spacing) * 2);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    position: relative;
-    background: var(--action-primary);
-  }
-
-  .bm-feature-71-cta-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-71-cta-card__accent-heading {
-    font-size: var(--fs-0);
-    display: flex;
-    flex-direction: row;
-    gap: calc(var(--space-xs) / 2);
-  }
-
-  .bm-feature-71-cta-card__btn {
-    margin: auto 0 0 0;
-  }
-
-  .bm-feature-71-cta-card__icon-wrapper {
-    position: absolute;
-    top: calc(var(--space-s) + var(--space-s));
-    right: var(--space-m);
-    background: var(--acss-bg-body);
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid var(--acss-border-color--light);
-    border-right: 1px solid var(--acss-border-color--light);
-    border-bottom: 1px solid var(--acss-border-color--light);
-    border-left: 1px solid var(--acss-border-color--light);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  /* bm-custom */
-  /* Feature grid */
-  
-  .bm-feature-71-grid-ul {
-    --line-thickness:1px;
-    --line-color: var(--fs-0);
-    --line-offset:0px;
-    overflow: hidden;
-  }
-  
-  
-  /* Psuedo Elmenets */
-  
-  .bm-feature-71-grid-ul > .bm-feature-71-card::before,
-  .bm-feature-71-grid-ul > .bm-feature-71-card::after {
-    content: '';
-    position: absolute;
-    background-color: var(--acss-line-color);
-  }
-  
-  /* Row Lines */
-  
-  .bm-feature-71-grid-ul > .bm-feature-71-card::after {
-    inline-size: 100vw;
-    block-size: var(--acss-line-thickness);
-    inset-block-start: calc(var(--acss-line-offset) * -1);
-    inset-inline-start:0;
-  }
-  
-  /* Column Lines */
-  
-  .bm-feature-71-grid-ul > .bm-feature-71-card::before {
-    inline-size: var(--acss-line-thickness);
-    block-size: 100vh;
-    inset-block-start: 0;
-    inset-inline-start: calc(var(--acss-line-offset) * -1);
-  }
-  
-  
-  @media (min-width:991px) {
-    
-      .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(1)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(4)::before{
-        inset-inline-start: calc(1em * -1);
-      }
-    
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(1)::after,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(2)::after,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(3)::after{
-        inset-block-start: calc(1em * -1);
-      }
-    
-    }
-    
-      .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(1)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(4)::before{
-        inset-inline-start: calc(1em * -1);
-      }
-    
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(1)::after,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(2)::after,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(3)::after{
-        inset-block-start: calc(1em * -1);
-      }
-    
-  @media (max-width:991px) {
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(3)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(5)::before{
-        inset-inline-start: calc(1em * -1);
-      }
-    
-   .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(4)::before{
-        inset-inline-start: calc(var(--acss-line-offset) * -1);
-      }
-    
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(3)::after{
-        inset-block-start: calc(var(--acss-line-offset) * -1);
-      }
-  }
-  
-  @media (max-width:767px) {
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(2)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(3)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(4)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(5)::before,
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(6)::before{
-        inset-inline-start: calc(1em * -1);
-      }
-    
-    
-    .bm-feature-71-grid-ul > .bm-feature-71-card:nth-child(2)::after{
-        inset-block-start: calc(var(--acss-line-offset) * -1);
-      }
-  }
-
-  /* bm-custom */
-  /* CARD */
-  
-  .bm-feature-71-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-71-card:hover {
-    background-color: var(--fs-0);
-  }
-  
-  /* Icon wrapper */
-  
-  .bm-feature-71-card__icon-wrapper {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-71-card:hover .bm-feature-71-card__icon-wrapper {
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  /* Button */
-  .bm-feature-71-card:hover .bm-feature-71-card__btn{
-     /* Outline */
-    --btn-custom-outline-color--hover: var(--fs-0);
-  
-    --btn-custom-outline-background--hover: var(--fs-0);
-   	color: var(--acss-btn-custom-outline-color--hover) !important;
-    background-color: var(--acss-btn-custom-outline-background--hover) !important;
-    
-  }
-
-  /* bm-custom */
-  .bm-feature-71-card__accent-heading::before {
-    content: '•';
-  }
-
-  /* bm-custom */
-  .bm-feature-71-card__btn {
-    /* Filled */
-    --btn-custom-color: var(--fs-0);
-    --btn-custom-color--hover: var(--fs-0);
-  
-    --btn-custom-background: var(--action-primary);
-    --btn-custom-background--hover: var(--action-primary);
-  
-    --btn-custom-border-color: var(--action-primary);
-    --btn-custom-border--hover: var(--action-primary);
-    
-     /* Outline */
-    --btn-custom-outline-color: var(--fs-0);
-    --btn-custom-outline-color--hover: var(--acss-body-text-white);
-  
-    --btn-custom-outline-background: transparent;
-    --btn-custom-outline-background--hover: transparent;
-  
-    --btn-custom-outline-border-color: var(--action-primary);
-    --btn-custom-outline-border--hover: var(--action-primary);
-  
-     /* Style */
-    --btn-border-radius: var(--r-card);
-    --btn-border-radius-hover: var(--r-card);
-    --btn-border-width: 1px;
-    --btn-border-width-hover: 1px;
-    --btn-shadow: none;
-    --btn-transition: all 0.5s ease;
-    --btn-outline-shadow: none;
-    --btn-outline-border-width-hover: 1px;
-    --btn-outline-border-width: 1px;
-    --btn-shadow-hover: var(--shadow-card);
-    --btn-outline-border-radius: var(--r-card);
-    --btn-outline-border-radius-hover: var(--r-card)  ;
-    
-  	/* Sizes */
-    --btn-small-font-size: var(--fs-0);
-    --btn-small-block: 0.8em;
-    --btn-small-inline: 1em;
-  
-    --btn-medium-font-size: var(--fs-0);
-    --btn-medium-block: 1.2em;
-    --btn-medium-inline: 1.6em;
-  
-    --btn-large-font-size: var(--fs-1);
-    --btn-large-block: 1.2em;
-    --btn-large-inline: 1.6em;
-  
-    --btn-x-large-font-size: var(--fs-2);
-    --btn-x-large-block: 1.2em;
-    --btn-x-large-inline: 1.6em;
-  
-  
-    /* Actual button styles using the variables */
-    font-size: var(--acss-btn-large-font-size);
-   	color: var(--acss-btn-custom-outline-color) !important;
-    text-align: center;
-    font-style: normal;
-    line-height: 1;
-    text-decoration: none;
-    background-color: var(--acss-btn-custom-outline-background) !important;
-    border: var(--acss-btn-border-width) solid var(--acss-btn-custom-border-color);
-    border-radius: var(--acss-btn-border-radius) !important;
-    box-shadow: var(--acss-btn-shadow);
-    transition: var(--acss-btn-transition);
-   	padding-block: var(--acss-btn-small-block);
-    padding-inline: var(--acss-btn-medium-inline);
-    position:relative;
-    overflow:clip;
-    isolation: isolate;
-  }
-
-  /* bm-custom */
-  /* CARD */
-  
-  .bm-feature-71-cta-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-71-cta-card:hover {
-    background-color: var(--action-primary);
-  }
-  
-  /* Icon wrapper */
-  .bm-feature-71-cta-card__icon-wrapper {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-71-cta-card:hover .bm-feature-71-cta-card__icon-wrapper {
-    background-color: var(--fs-0);
-    border-color: var(--fs-0) !important;
-  }
-  
-  /* Icon */
-  .bm-feature-71-cta-card:hover .bm-feature-71-cta-card__icon {
-    color: var(--fs-0) !important;
-  }
-  
-  /* Button */
-  .bm-feature-71-cta-card:hover .bm-feature-71-cta-card__btn{
-     /* Outline */
-    --btn-custom-outline-color--hover: var(--fs-0);
-  
-    --btn-custom-outline-background--hover: var(--fs-0);
-   	color: var(--acss-btn-custom-outline-color--hover) !important;
-    background-color: var(--acss-btn-custom-outline-background--hover) !important;
-    
-  }
-
-  /* bm-custom */
-  .bm-feature-71-cta-card__accent-heading::before {
-    content: '•';
-  }
-
-  /* bm-custom */
-  .bm-feature-71-cta-card__btn {
-    /* Filled */
-    --btn-custom-color: var(--fs-0);
-    --btn-custom-color--hover: var(--fs-0);
-  
-    --btn-custom-background: var(--bg-canvas);
-    --btn-custom-background--hover: var(--acss-bg-light);
-  
-    --btn-custom-border-color: var(--action-primary);
-    --btn-custom-border--hover: var(--action-primary);
-    
-     /* Outline */
-    --btn-custom-outline-color: var(--fs-0);
-    --btn-custom-outline-color--hover: var(--fs-0);
-  
-    --btn-custom-outline-background: transparent;
-    --btn-custom-outline-background--hover: transparent;
-  
-    --btn-custom-outline-border-color: var(--action-primary);
-    --btn-custom-outline-border--hover: var(--action-primary);
-  
-     /* Style */
-    --btn-border-radius: var(--r-card);
-    --btn-border-radius-hover: var(--r-card);
-    --btn-border-width: 1px;
-    --btn-border-width-hover: 1px;
-    --btn-shadow: none;
-    --btn-transition: all 0.5s ease;
-    --btn-outline-shadow: none;
-    --btn-outline-border-width-hover: 1px;
-    --btn-outline-border-width: 1px;
-    --btn-shadow-hover: var(--shadow-card);
-    --btn-outline-border-radius: var(--r-card);
-    --btn-outline-border-radius-hover: var(--r-card)  ;
-    
-  	/* Sizes */
-    --btn-small-font-size: var(--fs-0);
-    --btn-small-block: 0.8em;
-    --btn-small-inline: 1em;
-  
-    --btn-medium-font-size: var(--fs-0);
-    --btn-medium-block: 1.2em;
-    --btn-medium-inline: 1.6em;
-  
-    --btn-large-font-size: var(--fs-1);
-    --btn-large-block: 1.2em;
-    --btn-large-inline: 1.6em;
-  
-    --btn-x-large-font-size: var(--fs-2);
-    --btn-x-large-block: 1.2em;
-    --btn-x-large-inline: 1.6em;
-  
-  
-    /* Actual button styles using the variables */
-    font-size: var(--acss-btn-large-font-size);
-   	color: var(--acss-btn-custom-color);
-    text-align: center;
-    font-style: normal;
-    line-height: 1;
-    text-decoration: none;
-    background-color: var(--acss-btn-custom-background) !important;
-    border: var(--acss-btn-border-width) solid var(--acss-btn-custom-border-color);
-    border-radius: var(--acss-btn-border-radius) !important;
-    box-shadow: var(--acss-btn-shadow);
-    transition: var(--acss-btn-transition);
-   	padding-block: var(--acss-btn-small-block);
-    padding-inline: var(--acss-btn-medium-inline);
-    position:relative;
-    overflow:clip;
-    isolation: isolate;
-  }
-</style>

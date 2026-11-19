@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,171 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-35-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="feature-35-list list--none">
-      {items.map((it) => (
-        <div class="feature-35-card">
-          <div class="feature-35-card__content">
-            <h2 class="feature-35-card__heading">{it.title}</h2>
-            <p class="accent-h">{it.text}</p>
-            <p class="feature-35-card__text">{it.text}</p>
-            <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="feature-35-card__media">
-            <figure class="feature-35-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-35 {
-    overflow: hidden;
-  }
-
-  .feature-35-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-35-list {
-    row-gap: var(--space-s);
-  }
-
-  .feature-35-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 12);
-  }
-
-  .feature-35-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .feature-35-card__image {
-    object-fit: cover;
-    height: 64rem;
-  }
-
-  /* bm-custom */
-  /* Card Locally scoped variable */ 
-  .feature-35-card {
-  	--image-desktop-height: 64rem;
-    --image-mobile-height: 32rem;
-    --image-desktop-width: calc(50vw + (2 * (var(--content-width) / 12)));
-    --image-mobile-width: 100%;
-    --image-left-margin: calc(((50vw + (2 * (var(--content-width) / 12))) * -1) + 100%);
-  }
-  
-  /* Image height */ 
-  .feature-35-card .feature-35-card__image {
-  	height: var(--acss-image-desktop-height);
-  }
-  
-  /* Odd cards */ 
-  .feature-35-card:nth-child(odd) .feature-35-card__content {
-  	grid-column: span 4;
-  }
-  
-  .feature-35-card:nth-child(odd) .feature-35-card__media {
-  	grid-column: span 8;
-  }
-  
-  .feature-35-card:nth-child(odd) .feature-35-card__image {
-  	width: var(--acss-image-desktop-width);
-    max-width: var(--acss-image-desktop-width);
-    margin-left: var(--acss-image-left-margin);
-  }
-  
-  /* Even cards */ 
-  .feature-35-card:nth-child(even) .feature-35-card__content {
-  	order: -1;
-    grid-column: span 4;
-  }
-  
-  .feature-35-card:nth-child(even) .feature-35-card__media {
-  	grid-column: span 8;
-  }
-  
-  .feature-35-card:nth-child(even) .feature-35-card__image {
-    width: var(--acss-image-desktop-width);
-    max-width: var(--acss-image-desktop-width);
-  }
-  
-  @media (max-width:767px) {
-  
-    /* Mobile Image Height */ 
-    .feature-35-card .feature-35-card__image {
-  	height: var(--acss-image-mobile-height);
-  }
-    
-  /* Odd cards */   
-    .feature-35-card:nth-child(odd) .feature-35-card__content {
-      grid-column: span 1;
-    }
-  
-    .feature-35-card:nth-child(odd) .feature-35-card__media {
-      grid-column: span 1;
-    }
-    
-    .feature-35-card:nth-child(odd) .feature-35-card__image {
-      width: var(--acss-image-mobile-width) ;
-      max-width: var(--acss-image-mobile-width) ;
-      margin-left: unset;
-    }
-    
-  /* Even cards */ 
-    
-    .feature-35-card:nth-child(even) {
-  	grid-column: span 1;
-  }
-    
-    .feature-35-card:nth-child(even) .feature-35-card__media {
-  	grid-column: span 1;
-    order: -1;
-  }
-    
-  .feature-35-card:nth-child(even) .feature-35-card__image {
-    width: var(--acss-image-mobile-width) ;
-    max-width: var(--acss-image-mobile-width) ;
-    margin-right: unset;
-    margin-left: 0;
-  }
-    
-    
-    .feature-35-card:nth-child(even) .feature-35-card__content {
-        grid-column: span 1;
-      	order: 1;
-    }
-  
-  
-  }
-</style>

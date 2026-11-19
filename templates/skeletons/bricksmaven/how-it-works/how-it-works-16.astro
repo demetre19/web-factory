@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,103 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-16-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="hworks-16-list list--none">
-      {items.map((it) => (
-        <div class="hworks-16-card">
-          <h2 class="hworks-16-card__heading">{it.title}</h2>
-          <span class="hworks-16-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="hworks-16-card__text">{it.text}</p>
-        </div>
-      ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-16-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .hworks-16-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .hworks-16-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    position: relative;
-  }
-
-  .hworks-16-card__icon {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  /* bm-custom */
-  .hworks-16-card::after {
-  	content: "";
-    position: absolute;
-    top: 50%;
-    right: calc(var(--space-m) * -1);
-    width: var(--space-m);
-    border: 1px dashed var(--bg-subtle);
-  }
-  
-  .hworks-16-card:last-child::after {
-  	display: none;
-  }
-  
-  .hworks-16-card__icon {
-  	transition: .5s linear;
-  }
-  
-  .hworks-16-card:hover .hworks-16-card__icon {
-  	background-color: var(--action-primary);
-    color: var(--bg-canvas);
-  }
-  
-  
-  @media (max-width:767px) {
-  	.hworks-16-card::after {
-  	content: "";
-    position: absolute;
-    top: 100%;
-    right: unset;
-    left: 50%;
-    width: 0;
-    height: var(--space-m);
-    border: 1px dashed var(--bg-subtle);
-  }
-  }
-</style>

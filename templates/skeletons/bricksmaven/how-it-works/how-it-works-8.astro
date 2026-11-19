@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,91 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="hworks-8-container center--all gap--xl width--l">
-    <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">{heading}</h2>
-      <p class="hworks-intro__accent-heading">AWESOME TAGLINE</p>
-    </div>
-    <div class="hworks-8-grid-ul list--none">
-      {items.map((it) => (
-        <div class="hworks-8-card">
-          <div class="hworks-8-card__content">
-            <h2 class="hworks-8-card__heading">{it.title}</h2>
-            <p class="hworks-8-card__desc">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">AWESOME TAGLINE</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .hworks-intro {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    text-align: center;
-  }
-
-  .hworks-intro__heading {
-    margin: 0 0 0 0;
-  }
-
-  .hworks-8-grid-ul {
-    text-align: center;
-    align-items: center;
-    display: grid;
-    flex-direction: column;
-    gap: var(--space-xl);
-    grid-template-columns: 1fr;
-  }
-
-  .hworks-8-card {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
-
-  .hworks-8-card__content {
-    margin: -2rem 0 0 0;
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    text-align: center;
-    align-items: center;
-  }
-
-  /* bm-custom */
-  .hworks-8-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-8-grid-ul li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:1.5rem;
-    padding-block:.6rem;
-    color:var(--bg-canvas);
-    border-radius: 100%;
-    font-size: var(--fs-1);
-    font-weight: 700;
-    position: relative;
-  }
-</style>

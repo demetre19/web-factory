@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,63 +17,32 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-101__container">
-    <div class="bm-hero-101__content">
-      <h1 class="bm-hero-101__heading">{heading}</h1>
-      <p class="bm-hero-101__subheading">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-hero-101__carousel">
-      <div class="bm-hero-101__slider-nested">
-        {items.map((it) => (
-          <div class="bm-hero-101-slide">
-            <figure class="bm-hero-101-slide__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div></div>
     </div>
-    <div></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-101__container {
-    height: 80vh;
-    width: 100%;
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-hero-101__content {
-    justify-content: flex-end;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--fs-0);
-    font-size: var(--fs-2);
-  }
-
-  .bm-hero-101__carousel {
-    overflow: clip;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-hero-101-slide {
-    height: 100%;
-  }
-
-  .bm-hero-101-slide__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-</style>

@@ -3,15 +3,15 @@
 The five layers, in order — the ONLY emission shape the gate
 accepts (TK.*):
 
-  1. @theme          primitives: colour ramps (neutral + brand +
+  1. :root           primitives: colour ramps (neutral + brand +
                      semantic states), spacing, radius, fonts,
                      easing/duration, z-index
   2. :root           semantic layer: bg-*/text-*/border-*/action-*/
                      shadow-* — what components consume
   3. .dark           every semantic var overridden
-  4. @theme inline   semantic names → Tailwind utilities
+  4. :root           semantic names → utility names
                      (color-canvas, ink-primary, line-default…)
-  5. @custom-variant dark — the dark variant utilities consume
+  5. .dark scope — the dark mode block the utilities consume
 
 Components bind semantic names only — a raw hex or a primitive
 var in a component is a TK.3 FAIL.
@@ -108,8 +108,9 @@ def emit(tokens):
     A('@tailwind components;')
     A('@tailwind utilities;')
     A('')
-    # ---- 1. @theme primitives -------------------------------------
-    A('@theme {')
+    # ---- 1. primitives (plain :root — the project is Tailwind v3,
+    # where @theme is a literal at-rule the browser drops) ------
+    A(':root {')
     A('  /* neutral ramp — brand-tinted at knobs.color.neutral_tint */')
     for role, hexv in light.items():
         safe = re.sub(r'\W+', '-', role)
@@ -130,7 +131,14 @@ def emit(tokens):
     # the system sans stack.
     _def_stack = ('ui-sans-serif, system-ui, -apple-system, '
                   '"Segoe UI", Roboto, Helvetica, Arial, sans-serif')
-    _fd = str(knobs.get('type.font_display') or _def_stack)
+    _fd = str(knobs.get('type.font_display') or '')
+    if not _fd:
+        # DM.1 keeps type.font_* OUT of DNA knobs (closed vocabulary);
+        # the stack is derived from the genotype allele instead.
+        import dna_tokens
+        _fd = dna_tokens._FONT_STACK.get(
+            (tokens.get('genotype') or {}).get('display-face', 'sans'),
+            _def_stack)
     _fb = str(knobs.get('type.font_body') or _fd)
     # A stack is a comma LIST, not a string: `font-family: 'a, b, c'`
     # parses as ONE family name and silently falls back to the browser
@@ -216,22 +224,21 @@ def emit(tokens):
         A(f'  --{name}: {val};')
     A('}')
     A('')
-    # ---- 4. @theme inline — semantic → utilities ------------------
-    A('@theme inline {')
+    # ---- 4. semantic → utility names (v3: plain :root) ------------
+    A(':root {')
     for var, util in UTILITY_MAP.items():
         A(f'  --color-{util}: var(--{var});')
     A('}')
     A('')
-    # ---- 5. dark variant -------------------------------------------
-    A('@custom-variant dark (&:where(.dark, .dark *));')
+    # ---- 5. dark scope — v3 has no @custom-variant; the .dark class
+    # on <html> is what the utilities and the mode block key off.
     return '\n'.join(L) + '\n'
 
 
 def main(argv):
     if len(argv) >= 2 and argv[1] == '--check':
         css = open(argv[2], encoding='utf-8').read()
-        need = ['@theme {', ':root {', '.dark {',
-                '@theme inline {', '@custom-variant dark']
+        need = [':root {', '.dark {']
         miss = [x for x in need if x not in css]
         print('layers missing:', miss if miss else 'none')
         return 0 if not miss else 1

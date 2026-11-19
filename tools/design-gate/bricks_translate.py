@@ -295,14 +295,39 @@ def translate(payload, stem):
     gc_names = {g.get('id'): g.get('name')
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
-    rules, raw_css = classes_css(payload, unmapped)
     seen = {'h': False, 'p': False}   # first heading→{heading},
                                     # first paragraph→{fs}
 
-    def cls(el):
-        names = [gc_names.get(i) for i in _classes_of(el)]
-        names = [n for n in names if n]
-        return ' '.join(names)
+    def cls(el, depth=1):
+        """Topology → OUR token classes.
+
+        The bank supplies element composition only. Every visual value
+        (type step, rhythm, ratio, colour) comes from the DNA token
+        layer, so no skeleton CSS is emitted and no ACSS var survives
+        into the page. Each name below has a real rule in global.css
+        @layer components — SB.3 holds by construction.
+        """
+        n = el.get('name')
+        if n == 'heading':
+            # the payload's own tag is the rank: an h1 is the hero
+            return ('text-fluid-4' if (el.get('settings') or {})
+                    .get('tag') == 'h1' else 'text-fluid-2')
+        if n in ('text-basic', 'text', 'text-link'):
+            return 'text-fluid-0'
+        if n == 'image':
+            return 'ratio-portrait'
+        if n == 'logo':
+            return 'logo'
+        if n in ('div', 'container', 'block'):
+            kids = [els[k] for k in (el.get('children') or [])
+                    if els.get(k)]
+            # a grid only where the skeleton actually pairs media with
+            # text; text-only stacks stay in normal flow, never a
+            # squeezed 3-up of one-word columns
+            if len(kids) >= 2 and any(k.get('name') == 'image'
+                                      for k in kids):
+                return 'grid-auto gap-fluid-l'
+        return ''
 
     def tag_of(el):
         n = el.get('name')
@@ -347,23 +372,29 @@ def translate(payload, stem):
             i = j
 
         if name == 'section':
-            return ''.join(render(c, depth, ivar)
-                           for c in children)
+            # The page shell already wraps every component in
+            # <section class="sec-band surface-* density-*">. The bank
+            # only supplies the measure box, never a second band.
+            inner = ''.join(render(c, depth + 1, ivar) for c in children)
+            return (f'{pad}<div class="sec-inner">\n{inner}'
+                    f'{pad}</div>\n')
 
         tag = tag_of(el)
-        c = cls(el)
+        c = cls(el, depth)
         cattr = f' class="{c}"' if c else ''
         if name == 'button':
             style_ = str(s.get('style') or '')
-            if 'outline' not in c and style_ == 'primary' or \
-                    'primary' in c and 'outline' not in c:
-                cattr = f' class="{(c + " wf-cta-button").strip()}"'
+            cattr = ' class="wf-cta-button"'
             txt = re.sub(r'<[^>]+>', '', str(s.get('text') or ''))
-            inner = '{cta.label}' if txt and not ivar else \
+            inner = "{cta.label || 'Continue'}" if txt and not ivar else \
                 (f'{{{ivar}.label}}' if ivar else 'Action')
-            return (f'{pad}<a{cattr} href='
+            # the wrapper keeps the inline-block button from being
+            # stretched by a grid cell
+            return (f'{pad}<p class="mt-fluid-m"><a{cattr} href='
                     f'{"{cta.href}" if not ivar else "{%s.href}" % ivar}>'
-                    f'{inner}</a>\n')
+                    f'{inner}</a></p>\n')
+        if name == 'logo':
+            return (f'{pad}<span{cattr}>{{brand}}</span>\n')
         if name == 'image':
             alt = str(s.get('alt') or el.get('label') or 'image')
             return (f'{pad}<figure{cattr}><img '
@@ -398,7 +429,7 @@ def translate(payload, stem):
                 # nested repeats iterate the parent's row: it.items
                 coll, var = (f'({ivar}.items || [])',
                              ivar + '2') if ivar else ('items', 'it')
-                inner += (f'{pad}  {{{coll}.map(({var}) => (\n'
+                inner += (f'{pad}  {{({coll} || []).map(({var}) => (\n'
                           + ''.join(render(r, depth + 2, var)
                                     for r in run[:1])
                           + f'{pad}  ))}}\n')
@@ -416,24 +447,9 @@ def translate(payload, stem):
     body = ''.join(render(r, 1) for r in roots)
 
     style = ''
-    if rules or raw_css:
-        decl = []
-        for name, props in rules.items():
-            lines = []
-            for prop, val in props:
-                lines.append(f'    {prop}: {val};' if val is not None
-                             else f'    {prop}')
-            decl.append(f'  .{name} {{\n' + '\n'.join(lines) + '\n  }')
-        # _cssCustom blocks land verbatim at top level — they carry
-        # their own selectors/keyframes. NO @layer wrapper: Astro
-        # PostCSS-processes is:global as its own stylesheet and
-        # `@layer components` errors without a @tailwind directive
-        # in the same file.
-        decl += ['  /* bm-custom */\n  ' + r.strip().replace(
-                 '\n', '\n  ') for r in raw_css if r.strip()]
-        style = ('<style is:global>\n/* bm: components layer '
-                 '(unlayered — see bricks_translate) */\n'
-                 + '\n\n'.join(decl) + '\n</style>\n')
+    # No CSS: the bank is topology, the DNA is the style. pipeline_emit
+    # still hoists a sibling .css when one exists, so this stays empty.
+    style = ''
 
     comp = camel('bm-' + stem)
     src = (f'---\n/**\n * bm-{stem} — TRANSLATED Bricksmaven skeleton.\n'
@@ -444,6 +460,7 @@ def translate(payload, stem):
            ' * var(--acss-*) and are listed in the translate report.\n'
            ' */\n'
            'interface Props {\n'
+           '  brand?: string;\n'
            '  heading?: string;\n'
            '  fs?: string;\n'
            '  cta?: { label: string; href: string };\n'
@@ -452,12 +469,14 @@ def translate(payload, stem):
            '             items?: any[] }[];\n'
            '}\n'
            'const {\n'
+           "  brand = 'Brand',\n"
            "  heading = 'Section heading',\n"
            "  fs = 'The first sentence a reader needs.',\n"
-           '  cta, items = [],\n'
+           "  cta = { label: '', href: '#' },\n"
+           '  items = [],\n'
            '} = Astro.props;\n'
-           '---\n\n<div>\n' + body + '</div>\n\n' + style)
-    return src, {'stem': stem, 'rules': len(rules),
+           '---\n\n<div>\n' + body + '</div>\n')
+    return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
 
 
@@ -498,10 +517,13 @@ def main(argv):
         out = os.path.splitext(f)[0] + '.astro'
         with open(out, 'w', encoding='utf-8') as fh:
             fh.write(src)
+        with open(os.path.splitext(f)[0] + '.css', 'w',
+                  encoding='utf-8') as fh:
+            fh.write(rep.get('css') or '')
         total += 1
         for v in rep['unmapped_vars']:
             unmapped_all[v] = unmapped_all.get(v, 0) + 1
-    print(f'translated {total} payloads → .astro beside each')
+    print(f'translated {total} payloads → .astro + .css beside each')
     if unmapped_all:
         print('unmapped ACSS vars (surfaced as var(--acss-*)):')
         for v, c in sorted(unmapped_all.items(),

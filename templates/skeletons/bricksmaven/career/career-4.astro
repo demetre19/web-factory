@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,113 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-career-4__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-career-4-list list--none">
-      {items.map((it) => (
-        <div class="bm-career-4-card">
-          <h2 class="bm-career-4-card__heading clickable-parent">{it.title}</h2>
-          <div class="bm-career-4-card__footer">
-            <div class="list--none bm-career-meta-list">
-              <div class="bm-career-meta-item">
-                <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-career-meta-item__label">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <div>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
-              <div class="bm-career-meta-item">
-                <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-career-meta-item__label">{it.text}</p>
-              </div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
             </div>
-            <a class="bm-career-4-card__cta" href="#">{it.text}</a>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-career-4__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-career-4-list {
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .bm-career-4-card {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    width: auto;
-    position: relative;
-  }
-
-  .bm-career-4-card__footer {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-career-meta-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    width: auto;
-  }
-
-  .bm-career-meta-item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-career-4-card__cta {
-    font-weight: 700;
-  }
-
-  /* bm-custom */
-  .bm-career-4-card {
-    transition: 0.1s ease;
-  }
-  
-  .bm-career-4-card:hover, .bm-career-4-card:focus-within {
-    transform: translateY(calc(-1 * var(--space-xs)));
-    background-color: var(--bg-canvas);
-    color: var(--fs-0);
-    border: 1px solid var(--bg-subtle);
-    box-shadow: var(--shadow-card);
-  }
-</style>

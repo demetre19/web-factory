@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,89 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-27-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="blog-archive-27-list list--none">
-      <div class="blog-archive-27-card">
-        <div class="blog-archive-27-card__content">
-          <div class="blog-archive-27-card__content-intro">
-            <div class="blog-archive-27-card__post-title"></div>
-            <p class="blog-archive-27-card__date">{post_date}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <div></div>
+              <p class="text-fluid-0">{post_date}</p>
+            </div>
+            <div></div>
+            <a class="text-fluid-0" href="#">Read more</a>
           </div>
-          <div class="blog-archive-27-card__excerpt"></div>
-          <a class="blog-archive-27-card__link" href="#">Read more</a>
-        </div>
-        <div class="blog-archive-27-card__media">
-          <figure class="blog-archive-27-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
         </div>
       </div>
+      <div></div>
     </div>
-    <div class="blog-archive-pagination"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-27-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .blog-archive-27-list {
-    display: flex;
-    row-gap: var(--space-s);
-  }
-
-  .blog-archive-27-card {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
-  }
-
-  .blog-archive-27-card__content {
-    row-gap: var(--flow-spacing);
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) calc(var(--section-space-xxl) * 2.2);
-    background: var(--bg-subtle);
-  }
-
-  .blog-archive-27-card__content-intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .blog-archive-27-card__date {
-    font-size: var(--fs-0);
-  }
-
-  .blog-archive-27-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 28rem;
-    border-top: 2rem solid var(--bg-canvas);
-    border-right: 2rem solid var(--bg-canvas);
-    border-bottom: 2rem solid var(--bg-canvas);
-    border-left: 2rem solid var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .blog-archive-pagination {
-    margin: var(--space-xl) 0 0 0;
-  }
-</style>

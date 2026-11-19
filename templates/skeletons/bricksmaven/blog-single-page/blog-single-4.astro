@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,259 +17,70 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-single-4-container">
-    <div class="blog-single-4__head">
-      <div class="blog-single-4__title"></div>
-      <div class="blog-single-4__excerpt"></div>
-      <div class="blog-single-4__featured">
-        <figure class="blog-single-4__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-      <div class="blog-single-4__meta">
-        <div class="blog-single-4__meta-wrapper">
-          <div class="blog-single-4__meta-wrapper-inner">
-            <div class="blog-single__meta">
-              <div class="blog-single__author blog-single__column">
-                <p class="blog-single__author-label">Written By</p>
-                <p class="blog-single__author-title">{author_name}</p>
-              </div>
-              <div class="blog-single__date">
-                <p class="blog-single__date-label">Published On</p>
-                <p class="blog-single__date-title">{post_date}</p>
-              </div>
-              <div class="blog-single__term blog-single__column">
-                <p class="blog-single__term-label">Category</p>
-                <p class="blog-single__term-title">{post_terms_category}</p>
-              </div>
-              <div class="blog-single__tags blog-single__column">
-                <p class="blog-single__tags-label">Tags</p>
-                <p class="blog-single__tags-title">{post_terms_post_tag}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div></div>
+        <div></div>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+        <div>
+          <div>
+            <div>
+              <div>
+                <div>
+                  <p class="text-fluid-0">Written By</p>
+                  <p class="text-fluid-0">{author_name}</p>
+                </div>
+                <div>
+                  <p class="text-fluid-0">Published On</p>
+                  <p class="text-fluid-0">{post_date}</p>
+                </div>
+                <div>
+                  <p class="text-fluid-0">Category</p>
+                  <p class="text-fluid-0">{post_terms_category}</p>
+                </div>
+                <div>
+                  <p class="text-fluid-0">Tags</p>
+                  <p class="text-fluid-0">{post_terms_post_tag}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="blog-single-4__body">
-      <div class="blog-single-4__content">
-        <div class="blog-single-4__body-content"></div>
-      </div>
-      <div class="blog-single__newsletter">
-        <span class="blog-single-newsletter__icon" data-icon="lucide" aria-hidden="true"></span>
-        <h2 class="blog-single-newsletter__title">{heading}</h2>
-        <p class="blog-single-newsletter__desc">{fs}</p>
-        <form class="blog-single-newsletter__form" novalidate>
-        </form>
-        <p class="blog-single-newsletter__policy">Your information is protected by us. Read our privacy policy</p>
-        <div class="blog-single-newsletter__social">
-          <h2 class="blog-single-newsletter__social-label">Follow us:</h2>
-          <div class="blog-single-newsletter__social-item"></div>
+      <div>
+        <div>
+          <div></div>
+        </div>
+        <div>
+          <span data-icon="lucide" aria-hidden="true"></span>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <form novalidate>
+          </form>
+          <p class="text-fluid-0">Your information is protected by us. Read our privacy policy</p>
+          <div>
+            <h2 class="text-fluid-2">Follow us:</h2>
+            <div></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="blog-single-4__footer">
-      <div class="blog-single-4__footer-adjacent">
-        <div class="blog-single-4__footer-adjacent-post"></div>
+      <div>
+        <div>
+          <div></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-single-4 {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .blog-single-4-container {
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-single-4__head {
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
-  }
-
-  .blog-single-4__excerpt {
-    font-weight: 700;
-    font-size: var(--fs-2);
-  }
-
-  .blog-single-4__featured-image {
-    height: 60rem;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .blog-single-4__meta {
-    display: grid;
-    grid-template-columns: var(--acss-grid-auto-4);
-    z-index: 1;
-  }
-
-  .blog-single-4__meta-wrapper {
-    margin: calc( var(--section-space-xxl) * -1 ) 0 0 0;
-    padding: var(--space-m) var(--space-m) var(--space-m) 0;
-    background: var(--bg-canvas);
-  }
-
-  .blog-single-4__meta-wrapper-inner {
-    display: flex;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-  }
-
-  .blog-single__meta {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    flex-wrap: wrap;
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .blog-single__author-label {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__author-title {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__date-label {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__date-title {
-    font-weight: 700;
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__term-label {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__term-title {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .blog-single__tags-label {
-    font-size: var(--fs-0);
-  }
-
-  .blog-single__tags-title {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .blog-single-4__body {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 6);
-    gap: var(--space-m);
-  }
-
-  .blog-single__newsletter {
-    position: sticky;
-    top: 5rem;
-    background: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .blog-single-newsletter__icon {
-    background: var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .blog-single-newsletter__social {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-single-4__footer {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-    padding: var(--space-m) 0 0 0;
-    border-top: .1rem solid var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .blog-single-4__excerpt p {
-  	max-width: 100%;
-  }
-
-  /* bm-custom */
-  .blog-single__term-title a {
-  	color: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .blog-single__tags-title a {
-  	color: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .blog-single-4__body-content h1,
-  .blog-single-4__body-content h2,
-  .blog-single-4__body-content h3,
-  .blog-single-4__body-content h4,
-  .blog-single-4__body-content h5,
-  .blog-single-4__body-content h6,
-  .blog-single-4__body-content p {
-  	max-width: 100%; 
-  }
-
-  /* bm-custom */
-  .blog-single-newsletter__form {
-  	gap: 1rem;
-    flex-wrap: nowrap;
-  }
-  .blog-single-newsletter__form [type="submit"] {
-  	height: 100%;
-  }
-
-  /* bm-custom */
-  .blog-single-4__footer-adjacent-post a {
-  	max-width: 30rem;
-  }
-  .blog-single-4__footer-adjacent-post a.prev-post .content {
-  	align-items: flex-start;
-  }
-  .blog-single-4__footer-adjacent-post a.next-post .content {
-  	align-items: flex-end;
-  }
-  .blog-single-4__footer-adjacent-post a .swiper-button {
-  	height: 100%;
-    align-items: flex-end;
-  }
-  .blog-single-4__footer-adjacent-post a .content {
-  	display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    overflow: visible;
-  }
-  .blog-single-4__footer-adjacent-post a .label {
-  	order: 1;
-    text-transform: capitalize;
-    font-weight: 400;
-    font-size: var(--fs-0);
-  }
-  .blog-single-4__footer-adjacent-post a .title {
-  	white-space: normal;
-  }
-</style>

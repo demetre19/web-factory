@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,49 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-39__container">
-    <h2 class="bm-content-39__heading">{heading}</h2>
-    <div class="bm-content-39__content">
-      <div class="bm-content-39__center">
-        <p class="bm-content-39__text-bold">{fs}</p>
-        <p class="bm-content-39__text">Irony mumblecore disrupt fam pinterest la croix bicycle rights flannel vaporware retro normcore knausgaard migas taiyaki banjo. Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Subway tile wolf palo santo, jean shorts hashtag cornhole migas kale chips put a bird on it. Distillery offal ramps adaptogen.</p>
+  <div class="sec-inner">
+    <div>
+      <h2 class="text-fluid-2">{heading}</h2>
+      <div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="text-fluid-0">Irony mumblecore disrupt fam pinterest la croix bicycle rights flannel vaporware retro normcore knausgaard migas taiyaki banjo. Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Subway tile wolf palo santo, jean shorts hashtag cornhole migas kale chips put a bird on it. Distillery offal ramps adaptogen.</p>
+        </div>
       </div>
-    </div>
-    <div class="bm-content-39__media">
-      <figure class="bm-content-39__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-39__heading {
-    width: var(--content-width);
-  }
-
-  .bm-content-39__content {
-    align-items: center;
-  }
-
-  .bm-content-39__center {
-    width: var(--content-width);
-  }
-
-  .bm-content-39__text-bold {
-    font-weight: 700;
-    font-size: var(--fs-2);
-  }
-
-  .bm-content-39__image {
-    object-fit: cover;
-    width: 100%;
-    height: 64rem;
-  }
-</style>

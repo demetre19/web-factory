@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,212 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-21__container">
-    <div class="bm-portfolio-section-21__content">
-      <h2 class="bm-portfolio-section-21__heading">{heading}</h2>
-      <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-portfolio-section-21__text">{fs}</p>
-      <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-portfolio-section-21__portfolio-wrapper">
-      <div class="bm-portfolio-section-21__portfolio-carosuel">
-        {items.map((it) => (
-          <div class="bm-portfolio-section-21-card">
-            <div class="bm-portfolio-section-21-card__content">
-              <h2 class="bm-portfolio-section-21-card__heading">{it.title}</h2>
-              <p class="bm-portfolio-section-21-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <svg></svg>
+              </div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="bm-portfolio-section-21-card__brand">
-              <svg class="bm-portfolio-section-21-card__logo"></svg>
-            </div>
-            <figure class="bm-portfolio-section-21-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-21 {
-    position: relative;
-    height: 80vh;
-    justify-content: center;
-    overflow: clip;
-    background: var(--fs-0);
-  }
-
-  .bm-portfolio-section-21__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portfolio-section-21__content {
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-    position: relative;
-    z-index: 3;
-  }
-
-  .bm-portfolio-section-21-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: space-between;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-    align-items: flex-start;
-  }
-
-  .bm-portfolio-section-21-card__content {
-    position: relative;
-    z-index: 1;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-section-21-card__brand {
-    position: relative;
-    z-index: 2;
-  }
-
-  .bm-portfolio-section-21-card__image {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-21::before { 
-    content:''; 
-    position:absolute; 
-    inline-size: 100%; 
-    block-size: var(--measure); 
-    inset-inline: 0; 
-    inset-block-start:0; 
-    z-index:3; 
-    background: linear-gradient(var(--text-primary), transparent);
-  }
-  
-  .bm-portfolio-section-21::after { 
-    content:''; 
-    position:absolute; 
-    inline-size: 100%; 
-    block-size: var(--measure); 
-    inset-inline: 0; 
-    inset-block-end:0; 
-    z-index:2; 
-    background: linear-gradient(transparent, var(--text-primary));
-  }
-
-  /* bm-custom */
-  .bm-portfolio-section-21__portfolio-carosuel .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-portfolio-section-21__portfolio-carosuel .splide__arrows {
-    position: absolute;
-    inset-block-start: var(--space-m);
-    inset-inline-end: var(--space-l);
-  }
-  
-  .bm-portfolio-section-21__portfolio-carosuel .splide__arrow--next {
-    margin-block-start: 48px;
-  }
-  
-  
-  .bm-portfolio-section-21__portfolio-carosuel  {
-    --image-slide: 1.2; /* increase or decrease image scale */
-    --image-duration: 0.5s; /* transition duration raise for a slower scale and decrease to speed it up */
-    --image-timing-function: ease; 
-    
-    --slide-blur: 6px; /* Slide blur intensity */
-    --slide-opacity: 0.7; /* Opacity temparature */
-    
-    --animation-timing-function: ease;
-    --animation-duration: 1s; /* lenghthen or shorten the animation duration */
-    --animation-play-state: forwards;
-    
-    --keyframe-content-start: 40%; /* Animation start content */
-    --keyframe-content-end: 0%; /* Animation end content */
-    
-    --keyframe-brand-start: 3%; /* Animation start brand */
-    --keyframe-brand-end: 0%; /* Animation end brand */
-    
-    z-index: 2;
-    will-change: blur transform opacity;
-  }
-  
-  
-  /* Blur and lower opacity on non-active slide  */
-  .bm-portfolio-section-21__portfolio-carosuel .is-prev, .bm-portfolio-section-21__portfolio-carosuel .is-next {
-    
-    filter: blur(var(--acss-slide-blur));
-    opacity: var(--acss-slide-opacity);
-  }
-  
-  /* Scale image */
-  .bm-portfolio-section-21__portfolio-carosuel .bm-portfolio-section-21-card .bm-portfolio-section-21-card__image {
-    transition: var(--acss-image-duration) var(--acss-image-timing-function);
-  }
-  
-  .bm-portfolio-section-21__portfolio-carosuel .bm-portfolio-section-21-card:hover .bm-portfolio-section-21-card__image {
-    scale: var(--acss-image-slide);
-  }
-  
-  /* Hide content */
-  .bm-portfolio-section-21__portfolio-carosuel .bm-portfolio-section-21-card .bm-portfolio-section-21-card__content {
-    opacity: 0;
-  }
-  
-  /* Animate card content  */
-  .bm-portfolio-section-21__portfolio-carosuel .is-active .bm-portfolio-section-21-card__content {
-    animation: contentslide var(--primitive-duration-med) var(--primitive-ease) var(--acss-animation-play-state) ;
-  } 
-  
-  @keyframes contentslide {
-    0% {
-     
-      transform: var(--acss-keyframe-content-start);
-    }
-    
-    100% {
-      opacity: 1;
-      transform: var(--acss-keyframe-content-end);
-    }
-  }
-  
-  /* Hide brand */
-  .bm-portfolio-section-21__portfolio-carosuel .bm-portfolio-section-21-card .bm-portfolio-section-21-card__brand {
-    opacity: 0;
-  }
-  
-  /* Slide in Brand logo */
-  .bm-portfolio-section-21__portfolio-carosuel .is-active .bm-portfolio-section-21-card__brand {
-    animation: brandslide-in var(--primitive-duration-med) var(--primitive-ease) var(--acss-animation-play-state) ;
-    
-  } 
-  
-  @keyframes brandslide-in {
-    0% {
-      
-      margin-block-start: var(--acss-keyframe-brand-start);
-    }
-    
-    100% {
-      opacity: 1;
-      margin-block-start: var(--acss-keyframe-brand-end);
-    }
-  }
-</style>

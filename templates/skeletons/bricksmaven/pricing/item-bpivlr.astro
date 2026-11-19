@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,70 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="pricing-2-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Pricing tagline</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Pricing tagline</p>
+      </div>
+      <div>
+        <p class="text-fluid-0">$99/year</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <span data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
+      <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
     </div>
-    <div class="pricing-2-price-wrapper">
-      <p class="pricing-2-price-wrapper__price">$99/year</p>
-    </div>
-    <div class="bm-ul-benefits list--none">
-      {items.map((it) => (
-        <div class="bm-li-benefits">
-          <span class="bm-li-benefits__icon" data-icon="lucide" aria-hidden="true"></span>
-          <p class="bm-li-benefits__text">{it.text}</p>
-        </div>
-      ))}
-    </div>
-    <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .pricing-2 {
-    height: 100vh;
-  }
-
-  .pricing-2-container {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    row-gap: var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .pricing-2-price-wrapper__price {
-    font-size: calc( var(--fs-4) + 3rem );
-    font-weight: 700;
-  }
-
-  .bm-li-benefits {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-</style>

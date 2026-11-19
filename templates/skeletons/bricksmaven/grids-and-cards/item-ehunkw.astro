@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,59 +17,31 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-8-container">
-    <div class="list--none gridcard-8-grid-ul">
-      {items.map((it) => (
-        <div class="gridcard-8-card">
-          <div class="gridcard-8-card__box">
-            <h2 class="gridcard-8-card__heading">{it.title}</h2>
-            <p class="gridcard-8-card__desc">{it.text}</p>
-            <a class="gridcard-8-card-btn wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="gridcard-8-card__media">
-            <figure class="gridcard-8-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-8-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .gridcard-8-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .gridcard-8-card__box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-8-card-btn {
-    align-self: flex-start;
-    padding: 0 0 0 0;
-  }
-
-  .gridcard-8-card__image {
-    height: 25.3rem;
-    width: 100%;
-    object-fit: cover;
-  }
-</style>

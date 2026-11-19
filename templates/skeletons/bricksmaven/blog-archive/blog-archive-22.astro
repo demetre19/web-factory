@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,79 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-archive-22-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="blog-archive-22-archive-list list--none">
-      <div class="blog-archive-22-archive-card">
-        <div class="blog-archive-22-archive-card__content">
-          <div class="blog-archive-22-archive-card__post-title clickable-parent"></div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <div></div>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <figure class="blog-archive-22-archive-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-archive-22-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .blog-archive-22-archive-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .blog-archive-22-archive-card {
-    height: 40rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .blog-archive-22-archive-card__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-  }
-
-  .blog-archive-22-archive-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-
-  /* bm-custom */
-  .blog-archive-22-archive-card:hover .blog-archive-22-archive-card__image{
-  	transform: scale(2);
-    transition: all 3s ease 0s;
-  }
-</style>

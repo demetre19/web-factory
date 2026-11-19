@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,83 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="counter-4-container">
-    <div class="counter-4-right-box">
-      <p class="counter-4-right-box__accent-heading">AWESOME TAGLINE</p>
-      <h2 class="counter-4-right-box__heading">{heading}</h2>
-      <p class="counter-4-right-box__desc">{fs}</p>
-      <div class="counter-4-list list--none">
-        {items.map((it) => (
-          <div class="counter-4-list-card">
-            <span class="counter-4-list-card__number"></span>
-            <p class="counter-4-list-card__label">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">AWESOME TAGLINE</p>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span></span>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="counter-4-media">
-      <figure class="counter-4-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .counter-4-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .counter-4-right-box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .counter-4-right-box__heading {
-    margin: 0 0 0 0;
-  }
-
-  .counter-4-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 3);
-    gap: var(--space-m);
-  }
-
-  .counter-4-list-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    border-right: 1px solid color-mix(in srgb, var(--bg-subtle) 80%, transparent);
-    align-items: flex-start;
-    padding: 0 0 0 var(--space-s);
-  }
-
-  .counter-4-list-card__number {
-    font-weight: 700;
-    font-size: var(--fs-3);
-  }
-
-  .counter-4-media__image {
-    width: 100%;
-    height: 35rem;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .counter-4-list-card:last-child {
-  	border-right: none;
-  }
-  
-  .counter-4-list-card:first-child {
-  	padding-left: 0px;
-  }
-</style>

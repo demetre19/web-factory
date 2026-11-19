@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,125 +17,55 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-1__container">
-    <div class="bm-header-1__brand">
-      <img class="bm-header-1-brand__logo"></img>
-    </div>
-    <div class="bm-header-1__nav-wrapper">
-      <div class="megamenu-1">
-        <div class="megamenu-1__nav-items">
-          <a class="megamenu-1__nav-link" href="#">First</a>
-          <a class="megamenu-1__nav-link" href="#">Second</a>
-          <div class="megamenu-1__dropdown">
-            <div class="megamenu-1__content">
-              <div class="megamenu-1__wrapper">
-                <div class="megamenu-1__card-wrapper list--none">
-                  {items.map((it) => (
-                    <div class="megamenu-card">
-                      <a class="megamenu-card__link clickable-parent" href="#">{it.text}</a>
-                      <p class="megamenu-card__description">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div>
+          <div>
+            <a class="text-fluid-0" href="#">First</a>
+            <a class="text-fluid-0" href="#">Second</a>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    {(items || []).map((it) => (
+                      <div>
+                        <a class="text-fluid-0" href="#">{it.text}</a>
+                        <p class="text-fluid-0">{it.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div>
+                      <a class="text-fluid-0" href="#">Submenu Link 7</a>
+                      <p class="text-fluid-0">{fs}</p>
                     </div>
-                  ))}
-                </div>
-                <div class="megamenu-1__footer list--none">
-                  <div class="megamenu-card">
-                    <a class="megamenu-card__link clickable-parent" href="#">Submenu Link 7</a>
-                    <p class="megamenu-card__description">{fs}</p>
                   </div>
                 </div>
               </div>
             </div>
+            <a class="text-fluid-0" href="#">Fourth</a>
+            <a class="text-fluid-0" href="#">Fifth</a>
+            <div></div>
           </div>
-          <a class="megamenu-1__nav-link" href="#">Fourth</a>
-          <a class="megamenu-1__nav-link" href="#">Fifth</a>
-          <div class="megamenu-1__close"></div>
+          <div></div>
         </div>
-        <div class="megamenu-1__open"></div>
       </div>
-    </div>
-    <div class="bm-header-1__cta">
-      <a class="cta-header btn--primary btn--outline" href="#">Call to action</a>
+      <div>
+        <a class="text-fluid-0" href="#">Call to action</a>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-1 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-    position: relative;
-    z-index: 1;
-    background: var(--bg-canvas);
-  }
-
-  .bm-header-1__container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-header-1__brand {
-    align-items: flex-start;
-  }
-
-  .bm-header-1__nav-wrapper {
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
-
-  .megamenu-1__content {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .megamenu-1__wrapper {
-    display: flex;
-    row-gap: var(--flow-spacing);
-  }
-
-  .megamenu-1__card-wrapper {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-    padding: 0 0 var(--space-l) 0 !important;
-    border-bottom: 1 solid var(--color-line-default);
-  }
-
-  .megamenu-card {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
-    position: relative;
-  }
-
-  .megamenu-card__link {
-    font-weight: 700;
-  }
-
-  .bm-header-1__cta {
-    display: flex;
-    align-items: flex-end;
-  }
-
-  /* bm-custom */
-  .megamenu-1__content {
-     min-width: var(--content-width) !important;
-     align-self: center;
-     left: unset !important;
-  }
-</style>

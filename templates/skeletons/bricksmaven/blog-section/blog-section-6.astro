@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,91 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-section-6-container">
-    <div class="blog-section-6-head flex--col gap--xs">
-      <h2 class="blog-section-6-head__title">{heading}</h2>
-      <p class="blog-section-6-head__desc">{fs}</p>
-    </div>
-    <div class="blog-section-6-body">
-      <div class="blog-section-6-wrapper list--none">
-        <div class="blog-section-6-card">
-          <div class="blog-section-6-card__media">
-            <figure class="blog-section-6-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="blog-section-6-card__meta">
-            <p class="blog-section-6-card__date">{post_date}</p>
-            <h2 class="blog-section-6-card__title">{post_title}</h2>
-            <div class="blog-section-6-card__excerpt"></div>
-            <a class="blog-section-6-card__read" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <p class="text-fluid-0">{post_date}</p>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <div></div>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
           </div>
         </div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <a class="blog-section-6-cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-section-6-container {
-    row-gap: var(--space-s);
-  }
-
-  .blog-section-6-body {
-    border-bottom: .1rem solid var(--bg-subtle);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: flex-start;
-  }
-
-  .blog-section-6-wrapper {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .blog-section-6-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-section-6-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-section-6-card__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-section-6-card__read {
-    margin: auto 0 0 0;
-    padding: 0 0 0 0;
-  }
-
-  .blog-section-6-cta {
-    margin: 0 0 0 auto;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  /* bm-custom */
-  .blog-section-6-card__image {
-  	aspect-ratio: 4/3;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,157 +17,54 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-author-page-2__container">
-    <div class="bm-author-card-2">
-      <figure class="bm-author-card-2__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      <div class="bm-author-card-2__bottom">
-        <div class="bm-author-card-2__thumb">
-          <figure class="bm-author-card-2__thumb-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-author-card-2__content">
-          <div class="bm-author-card-2__details">
-            <p class="bm-author-card-2__name">{author_name}</p>
-            <p class="bm-author-card-2__title">Co-founder/CEO</p>
+  <div class="sec-inner">
+    <div>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <p class="bm-author-card-2__bio">{author_bio}</p>
-          <div class="bm-social-share list--none bm-social-share--left">
-            {items.map((it) => (
-              <div class="bm-social-share__icon-wrapper">
-                <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
+          <div>
+            <div>
+              <p class="text-fluid-0">{author_name}</p>
+              <p class="text-fluid-0">Co-founder/CEO</p>
+            </div>
+            <p class="text-fluid-0">{author_bio}</p>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="bm-author-page-2__post-container">
-      <h2 class="bm-author-page-2__heading">{heading}</h2>
-      <div class="bm-author-page-2-post-list">
-        <div class="bm-blog-archive-6-card">
-          <div class="bm-blog-archive-6-card__media">
-            <figure class="bm-blog-archive-6-card__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="bm-blog-archive-6-card__meta">
-            <p class="bm-blog-archive-6-card__term">{post_terms_category}</p>
-            <h2 class="bm-blog-archive-6-card__title">{post_title}</h2>
-            <a class="bm-blog-archive-6-card__read" href={cta.href}>{cta.label}</a>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <p class="text-fluid-0">{post_terms_category}</p>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-author-page-2__container {
-    width: 100%;
-    row-gap: var(--space-s);
-  }
-
-  .bm-author-card-2__image {
-    object-fit: cover;
-    height: 280px;
-    width: 100%;
-  }
-
-  .bm-author-card-2__bottom {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-author-card-2__thumb {
-    display: flex;
-    justify-content: center;
-    margin: calc(var(--section-space-xxl) * -1) 0 0 0;
-  }
-
-  .bm-author-card-2__thumb-image {
-    width: 186px;
-    height: 186px;
-    object-fit: cover;
-    border-top: 8px solid var(--bg-canvas);
-    border-right: 8px solid var(--bg-canvas);
-    border-bottom: 8px solid var(--bg-canvas);
-    border-left: 8px solid var(--bg-canvas);
-    border-radius: 100% 100% 100% 100%;
-    margin: -200px 0 0 0;
-  }
-
-  .bm-author-card-2__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-author-card-2__name {
-    font-weight: 700;
-    font-size: var(--fs-1);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-author-page-2__post-container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-author-page-2-post-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-archive-6-card {
-    grid-template-columns: calc(100% * 2 / 1);
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .bm-blog-archive-6-card__media {
-    width: 100%;
-  }
-
-  .bm-blog-archive-6-card__thumb {
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-  }
-
-  .bm-blog-archive-6-card__meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
-  }
-
-  .bm-blog-archive-6-card__term {
-    padding: .4rem .8rem .4rem .8rem;
-    background: var(--bg-subtle);
-    font-size: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-blog-archive-6-card__read {
-    padding: 0 0 0 0;
-  }
-
-  /* bm-custom */
-  .bm-blog-archive-6-card__term a {
-  	color: var(--fs-0);
-  }
-</style>

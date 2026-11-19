@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,70 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-63__container">
-    <div class="content-63__content">
-      <h2 class="content-63__heading">{heading}</h2>
-      <p class="content-63__text">{fs}</p>
-    </div>
-    <div class="content-63__media">
-      <figure class="content-63__image-alpha"><img src="/media/placeholder.svg" alt="Image alpha" loading="lazy" width="900" height="600" /></figure>
-      <figure class="content-63__image-beta"><img src="/media/placeholder.svg" alt="Image beta" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image alpha" loading="lazy" width="900" height="600" /></figure>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image beta" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-63__container {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-63__content {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
-  }
-
-  .content-63__text {
-    font-size: var(--fs-2);
-    font-weight: 500;
-  }
-
-  .content-63__media {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-  }
-
-  .content-63__image-alpha {
-    width: 100%;
-    height: var(--acss-image-height);
-    object-fit: cover;
-  }
-
-  .content-63__image-beta {
-    width: 100%;
-    height: var(--acss-image-height);
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .content-63__media {
-    --image-height: 496px;
-  }
-  
-  @media (max-width:767px) {
-    
-    .content-63__media {
-    --image-height: 296px;
-  }
-    
-  }
-</style>

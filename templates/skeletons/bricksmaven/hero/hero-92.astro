@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,249 +17,61 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-92__container">
-    <div class="bm-hero-92__intro">
-      <div class="bm-hero-92__top">
-        <h1 class="bm-hero-92__heading">{heading}</h1>
-        <p class="bm-accent-heading">Accent heading</p>
-        <p class="bm-hero-92__subheading">{fs}</p>
-      </div>
-      <div class="bm-hero-92__case-cover">
-        <div class="bm-hero-90-slide bm-hero-92__case-card">
-          <div class="bm-hero-90-case">
-            <div class="bm-hero-90-case__content">
-              <h2 class="bm-hero-90-case__heading clickable-parent">BurstRay</h2>
-              <div class="bm-hero-90-case__footer">
-                <p class="bm-hero-90-case__text">25% revenue growth within 90 days</p>
-                <a class="bm-hero-90-case__link link--white" href="#">View project</a>
-              </div>
-            </div>
-            <div class="bm-hero-90-case__overlay"></div>
-            <figure class="bm-hero-90-case__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="bm-hero-90-testimonial">
-            <div class="bm-testimonial-38-star-list list--none">
-              {items.map((it) => (
-                <div class="bm-testimonial-38-star-li">
-                  <span class="bm-testimonial-38-star-li__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <div>
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">BurstRay</h2>
+                <div>
+                  <p class="text-fluid-0">25% revenue growth within 90 days</p>
+                  <a class="text-fluid-0" href="#">View project</a>
                 </div>
-              ))}
-            </div>
-            <p class="bm-hero-90-testimonial__review">"It has made my design process so much more responsive and effortless"</p>
-            <div class="bm-hero-90-testimonial__client-meta">
-              <div class="bm-hero-90-testimonial__client-data">
-                <p class="bm-hero-90-testimonial__name">John Smith</p>
-                <p class="bm-hero-90-testimonial__title">CEO, BurstRay</p>
               </div>
-              <figure class="bm-hero-90-testimonial__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div></div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <div>
+                {(items || []).map((it) => (
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
+              <p class="text-fluid-0">"It has made my design process so much more responsive and effortless"</p>
+              <div class="grid-auto gap-fluid-l">
+                <div>
+                  <p class="text-fluid-0">John Smith</p>
+                  <p class="text-fluid-0">CEO, BurstRay</p>
+                </div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
-    <div class="bm-hero-92__media">
-      <figure class="bm-hero-92__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
+    <div></div>
+    <div></div>
   </div>
-  <div></div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-92 {
-    height: var(--acss-section-height);
-    padding: 0 0 0 0;
-    position: relative;
-  }
-
-  .bm-hero-92__container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    height: 100%;
-  }
-
-  .bm-hero-92__intro {
-    padding: var(--section-space-m) 0 0 0;
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-92__top {
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-  }
-
-  .bm-hero-92__heading {
-    font-size: calc(var(--fs-4) * 1.9);
-    width: 130%;
-  }
-
-  .bm-hero-92__case-cover {
-    width: 100%;
-    margin: 0 0 calc(-1 * var(--section-space-xxl)) 0;
-  }
-
-  .bm-hero-90-slide {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-90-case {
-    position: relative;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-  }
-
-  .bm-hero-90-case__content {
-    position: relative;
-    z-index: 2;
-    height: 100%;
-    justify-content: flex-end;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-hero-90-case__footer {
-    flex-wrap: nowrap;
-  }
-
-  .bm-hero-90-case__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-hero-90-testimonial {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: calc(var(--flow-spacing) / 2);
-    border-top: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 1px solid var(--bg-subtle);
-    border-left: 1px solid var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-canvas);
-  }
-
-  .bm-testimonial-38-star-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-hero-90-testimonial__review {
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-90-testimonial__client-meta {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-hero-90-testimonial__name {
-    font-size: var(--fs-0);
-    font-weight: 700;
-  }
-
-  .bm-hero-90-testimonial__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-hero-90-testimonial__image {
-    width: 40px;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-hero-92__media {
-    height: 100%;
-  }
-
-  .bm-hero-92__image {
-    object-fit: cover;
-    width: 50vw;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .bm-hero-92 {
-    --section-height: 1024px;
-    overflow-x: clip;
-  }
-  
-  .bm-hero-92::before {
-    content: '';
-    position: absolute;
-    inline-size: 100%;
-    block-size: var(--content-width);
-    background: linear-gradient(transparent 75%, color-mix(in srgb, var(--text-secondary) 20%, transparent));
-    inset-block-end: 0;
-    z-index: -1;
-  }
-  
-  @media (max-width:767px) {
-    .bm-hero-92 {
-    --section-height: 100%;
-  }
-  }
-
-  /* bm-custom */
-  /* CARD */
-  .bm-hero-90-case {
-    --footer-height: 26px;
-    transition: all 0.2s linear; 
-  }
-  
-  /* Overlay */
-  .bm-hero-90-case .bm-hero-90-case__overlay {
-    position: absolute;
-    inset: 0;
-    background-color: color-mix(in srgb, var(--text-secondary) 60%, transparent);
-    block-size: 100%;
-    z-index: 1;
-    transition: 0.5s linear; 
-  }
-  
-  .bm-hero-90-case:hover .bm-hero-90-case__overlay {
-    background-color: color-mix(in srgb, var(--text-secondary) 80%, transparent); 
-  }
-  
-  /* FOOTER */
-  .bm-hero-90-case__footer {
-    overflow: clip;
-    block-size: var(--acss-footer-height);
-  }
-  
-  /* Text */
-  .bm-hero-90-case .bm-hero-90-case__text {
-    transition: 0.1s linear; 
-  }
-  
-  .bm-hero-90-case:hover .bm-hero-90-case__text {
-    margin-block-start: calc(-1 * var(--acss-footer-height)); 
-  }
-  
-  /* IMAGE */
-  
-  .bm-hero-90-case .bm-hero-90-case__image {
-    transition: 0.5s linear; 
-  }
-  
-  .bm-hero-90-case:hover .bm-hero-90-case__image {
-    transform: scale(1.4); 
-  }
-</style>

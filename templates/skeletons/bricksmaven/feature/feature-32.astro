@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,160 +17,51 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-32-container">
-    <div class="feature-32__content">
-      <div class="feature-32__top">
-        <h2 class="feature-32__heading">{heading}</h2>
-        <p class="feature-32__text">{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-      <div class="feature-32__media">
-        <figure class="feature-32__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      </div>
-    </div>
-    <div class="feature-32__feature">
-      <div class="bm-beta-feature-list-ul list--none">
-        <div class="bm-beta-feature-list-card">
-          <div class="bm-beta-feature-list-card__content">
-            <h2 class="bm-beta-feature-list-card__heading">Feature 1</h2>
-            <p class="bm-beta-feature-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <span class="bm-beta-feature-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <div class="bm-beta-feature-list-card__media">
-            <figure class="bm-beta-feature-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div class="bm-beta-feature-list-card">
-          <div class="bm-beta-feature-list-card__content">
-            <h2 class="bm-beta-feature-list-card__heading">Feature 2</h2>
-            <p class="bm-beta-feature-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-            <span class="bm-beta-feature-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
+        <div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Feature 1</h2>
+              <p class="text-fluid-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="bm-beta-feature-list-card__media">
-            <figure class="bm-beta-feature-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <div>
+              <h2 class="text-fluid-2">Feature 2</h2>
+              <p class="text-fluid-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-32 {
-    position: relative;
-  }
-
-  .feature-32-container {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--space-m);
-    z-index: 1;
-    position: relative;
-  }
-
-  .feature-32__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    row-gap: var(--space-m);
-  }
-
-  .feature-32__top {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .feature-32__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-beta-feature-list-ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .bm-beta-feature-list-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    flex-wrap: nowrap;
-  }
-
-  .bm-beta-feature-list-card__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .bm-beta-feature-list-card__icon {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .bm-beta-feature-list-card__media {
-    height: 100%;
-  }
-
-  .bm-beta-feature-list-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .feature-32::before {
-  	content:'';
-    width:25%;
-    height:35%;
-    background-color: var(--action-primary);
-    position: absolute;
-    bottom:0;
-    left:0;
-  }
-  
-  @media (max-width:767px) {
-  	.feature-32::before {
-  	content:'';
-    width:35%;
-    height:15%;
-    background-color: var(--action-primary);
-    position: absolute;
-    bottom:0;
-    left:auto;
-    right:0;
-  }
-  }
-
-  /* bm-custom */
-  .bm-beta-feature-list-card:nth-child(odd) .bm-beta-feature-list-card__media {
-  	order:-1;
-  }
-  
-  @media (max-width:478px) {
-  
-  		.bm-beta-feature-list-card:nth-child(odd) .bm-beta-feature-list-card__media {
-  	order:1;
-  }
-  }
-
-  /* bm-custom */
-  .bm-beta-feature-list-card__icon {
-  	box-shadow: var(--shadow-card);
-  }
-</style>

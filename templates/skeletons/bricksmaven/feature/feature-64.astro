@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,135 +17,38 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-64__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-feature-64-list list--none">
-      {items.map((it) => (
-        <div class="bm-feature-64-card">
-          <div class="bm-feature-64-card__content">
-            <div class="bm-feature-64-card__inner">
-              <h2 class="bm-feature-64-card__heading">{it.title}</h2>
-              <p class="bm-feature-64-card__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
             </div>
-            <div class="bm-feature-64-card__icon-wrapper">
-              <span class="bm-feature-64-card__icon" data-icon="lucide" aria-hidden="true"></span>
-            </div>
+            <div></div>
           </div>
-          <div class="bm-feature-64-card__spacer"></div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-64 {
-    background: var(--fs-0);
-  }
-
-  .bm-feature-64__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-feature-64-list {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-feature-64-card {
-    height: 100%;
-    justify-content: space-between;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    position: relative;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-64-card__content {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-    flex-wrap: nowrap;
-  }
-
-  .bm-feature-64-card__inner {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-64-card__spacer {
-    height: 40px;
-    border-bottom: 1px solid var(--fs-0);
-  }
-
-  /* bm-custom */
-  /* Create the counter on Parent */
-  .bm-feature-64-list {
-    counter-reset: cards ; /* starts at 0 */
-  }
-  
-  /* Every card we meet → add +1 to the counter */
-  
-  .bm-feature-64-list .bm-feature-64-card {
-    counter-increment: cards ;
-  }
-  
-  /* Show the number BEFORE each card */
-  .bm-feature-64-list .bm-feature-64-card::before {
-    content: "0"counter(cards);
-    position: absolute;
-    inset-block-start: var(--space-m);
-    font-size: var(--fs-1);
-    color: var(--color-line-default);
-  }
-  
-  /* CARD */
-  .bm-feature-64-list  .bm-feature-64-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-64-list .bm-feature-64-card:hover, .bm-feature-64-list .bm-feature-64-card:focus-within {
-    background-color: var(--text-secondary);
-    color: var(--bg-canvas);
-  }
-  
-  .bm-feature-64-list .bm-feature-64-card:hover::before, .bm-feature-64-list .bm-feature-64-card:focus-within::before {
-    color: var(--bg-canvas);
-  }
-  
-  /* Make whole CARD clickable */
-  .bm-feature-64-list  .bm-feature-64-card .bm-feature-64-card__heading > a {
-    transition: 0.1s ease;
-  }
-  
-  .bm-feature-64-list  .bm-feature-64-card .bm-feature-64-card__heading:not(a) > a::after {
-    content: '';
-    position: absolute;
-    display: flex;
-    inset: 0;
-    cursor: pointer;
-  }
-</style>

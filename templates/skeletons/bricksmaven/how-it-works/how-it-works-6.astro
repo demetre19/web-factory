@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,114 +17,65 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hworks-6__container">
-    <div class="bm-hworks-6-tabs">
-      <div class="bm-hworks-6-menu">
-        {items.map((it) => (
-          <div class="bm-hworks-6-menu-list">
-            <h2 class="bm-hworks-6-menu__number">{it.title}</h2>
-            <p class="bm-hworks-6-menu__title">{it.text}</p>
-          </div>
-        ))}
-      </div>
-      <div class="bm-hworks-6__content">
-        <div class="bm-hworks-6__pane">
-          <div class="bm-hworks-6__media">
-            <figure class="bm-hworks-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="bm-hworks-6__pane-content">
-            <h2 class="bm-hworks-6-pane__title">{heading}</h2>
-            <p class="bm-hworks-6-pane__desc">{fs}</p>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
         </div>
-        <div class="bm-hworks-6__pane">
-          <div class="bm-hworks-6__media">
-            <figure class="bm-hworks-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">{heading}</h2>
+              <p class="text-fluid-0">{fs}</p>
+            </div>
           </div>
-          <div class="bm-hworks-6__pane-content">
-            <h2 class="bm-hworks-6-pane__title">The enterprise</h2>
-            <p class="bm-hworks-6-pane__desc">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">The enterprise</h2>
+              <p class="text-fluid-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+            </div>
           </div>
-        </div>
-        <div class="bm-hworks-6__pane grid--2 align-items--center grid--m-1">
-          <div class="bm-hworks-6__media">
-            <figure class="bm-hworks-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">The resources</h2>
+              <p class="text-fluid-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+            </div>
           </div>
-          <div class="bm-hworks-6__pane-content">
-            <h2 class="bm-hworks-6-pane__title">The resources</h2>
-            <p class="bm-hworks-6-pane__desc">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
-          </div>
-        </div>
-        <div class="bm-hworks-6__pane">
-          <div class="bm-hworks-6__media">
-            <figure class="bm-hworks-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-          <div class="bm-hworks-6__pane-content">
-            <h2 class="bm-hworks-6-pane__title">The cources</h2>
-            <p class="bm-hworks-6-pane__desc">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+          <div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+            <div>
+              <h2 class="text-fluid-2">The cources</h2>
+              <p class="text-fluid-0">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hworks-6-tabs {
-    display: flex;
-    gap: var(--space-xl);
-  }
-
-  .bm-hworks-6-menu {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 4);
-    gap: var(--space-m);
-  }
-
-  .bm-hworks-6-menu-list {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-hworks-6__pane {
-    flex-direction: row;
-    grid-template-columns: calc(100% * 1 / 2);
-    width: 100%;
-    gap: var(--space-m);
-  }
-
-  .bm-hworks-6__image {
-    width: 100%;
-    height: 42.8rem;
-    object-fit: cover;
-  }
-
-  .bm-hworks-6__pane-content {
-    display: flex;
-    flex-direction: column;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--space-m);
-  }
-
-  /* bm-custom */
-  .bm-hworks-6__pane:not(.brx-open) {
-  	display: none !important;
-  }
-  
-  .bm-hworks-6__pane {
-  
-  	display:grid !important;
-    
-  }
-</style>

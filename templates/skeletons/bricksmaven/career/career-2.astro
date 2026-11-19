@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,140 +17,48 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-career-2__container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Tagline</p>
-    </div>
-    <div class="list--none bm-career-2__career-list">
-      {items.map((it) => (
-        <div class="bm-career-2-card">
-          <div class="bm-career-2-card__intro">
-            <h2 class="bm-career-2-card__heading">{it.title}</h2>
-            <div class="bm-career-card__status-cover">
-              <p class="bm-career-card__status-label">{it.text}</p>
-            </div>
-          </div>
-          <div class="bm-career-2-card__content">
-            <p class="bm-career-2-card__text">{it.text}</p>
-            <div class="list--none bm-career-meta-list">
-              <div class="bm-career-meta-item">
-                <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-career-meta-item__label">{it.text}</p>
-              </div>
-              <div class="bm-career-meta-item">
-                <span class="bm-career-meta-item__icon" data-icon="lucide" aria-hidden="true"></span>
-                <p class="bm-career-meta-item__label">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-            <a class="bm-career-2-card__link" href="#">{it.text}</a>
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              </div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-career-2__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .bm-career-2__career-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-career-2-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    border-top: 1px solid var(--fs-0);
-    border-right: 1px solid var(--fs-0);
-    border-bottom: 1px solid var(--fs-0);
-    border-left: 1px solid var(--fs-0);
-  }
-
-  .bm-career-2-card__intro {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-career-card__status-cover {
-    padding: calc(var(--space-xs) / 4) var(--space-xs) calc(var(--space-xs) / 4) var(--space-xs);
-    background: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-career-card__status-label {
-    font-size: var(--fs-0);
-  }
-
-  .bm-career-2-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-career-meta-list {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    width: auto;
-  }
-
-  .bm-career-meta-item {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  /* bm-custom */
-  .bm-career-2-card {
-    transition: 0.2s ease;
-  }
-  
-  .bm-career-2-card:hover, .bm-career-2-card:focus-within {
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-career-2-card:hover .bm-career-card__status-cover, .bm-career-2-card:focus-within .bm-career-card__status-cover {
-    background-color: var(--bg-canvas);
-  }
-  
-  .bm-career-2-card:hover .bm-career-card__status-label, .bm-career-2-card:focus-within .bm-career-card__status-label {
-    color: var(--fs-0);
-  }
-</style>

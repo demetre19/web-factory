@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,146 +17,57 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-table-comp-2-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-table-2__table-container">
-      <div class="bm-table-2">
-        <div class="bm-table-2__caption">
-          <p class="bm-table-2__caption-text">Caption text</p>
-        </div>
-        <div class="bm-table-2__thead">
-          <div class="bm-table-2__tr">
-            {items.map((it) => (
-              <div class="bm-table-2__th">
-                <p class="bm-table-2__th-text">{it.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div class="bm-table-2__tbody">
-          <div class="bm-table-2__tr">
-            {items.map((it) => (
-              <div class="bm-table-2__td">
-                <p class="bm-table-2__td-text">{it.text}</p>
-              </div>
-            ))}
-          </div>
-          <div class="bm-table-2__tr">
-            {items.map((it) => (
-              <div class="bm-table-2__td">
-                <p class="bm-table-2__td-text">{it.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      {items.map((it) => (
-        <div></div>
-      ))}
+      <div>
+        <div>
+          <div>
+            <p class="text-fluid-0">Caption text</p>
+          </div>
+          <div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              ))}
+            </div>
+            <div>
+              {(items || []).map((it) => (
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {(items || []).map((it) => (
+          <div></div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-table-comp-2-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-table-2 {
-    display: table;
-  }
-
-  .bm-table-2__thead {
-    display: table-header-group;
-  }
-
-  .bm-table-2__tr {
-    display: table-row;
-  }
-
-  .bm-table-2__th {
-    text-align: left;
-    padding: var(--space-xs) 0 var(--space-xs) var(--space-s);
-    display: table-cell;
-  }
-
-  .bm-table-2__th-text {
-    font-weight: 700;
-  }
-
-  .bm-table-2__tbody {
-    display: table-row-group;
-  }
-
-  .bm-table-2__td {
-    padding: var(--space-s) 0 var(--space-s) var(--space-s);
-    display: table-cell;
-  }
-
-  .bm-table-2__td-text {
-    font-weight: 400;
-  }
-
-  /* bm-custom */
-  .bm-table-2 {
-    --table-cell-width: 150px;
-    --table-border-color: var(--fs-0);
-    --table-padding: var(--space-xs);
-    inline-size: 100%;
-    border-spacing: 0px;
-    border-collapse: collapse;
-  }
-  
-  .bm-table-2__caption {
-    background-color: var(--fs-0);
-    padding: var(--acss-table-padding);
-    text-align: left;
-    font-size: var(--fs-2);
-    font-weight: 700;
-    /* display: none; */
-    border-inline: 1px solid var(--acss-table-border-color);
-    border-top: 1px solid var(--acss-table-border-color);
-    text-transform: uppercase;
-  }
-  
-  .bm-table-2 thead {
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-table-2 thead th {
-    border-bottom: 1px solid var(--acss-table-border-color);
-  }
-  
-  .bm-table-2 th, .bm-table-2 td {
-    padding: var(--acss-table-padding);
-    text-align: left;
-    min-width: var(--acss-table-cell-width);
-  }
-  
-  .bm-table-2__tbody .bm-table-2__tr:nth-child(even) {
-    background-color: var(--fs-0);
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,127 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-section-19__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-portfolio-section-19-list list--none">
-      {items.map((it) => (
-        <div class="bm-portfolio-section-19-card">
-          <div class="bm-portfolio-section-19-card__content">
-            <div class="bm-portfolio-section-19-card__brand">
-              <svg class="bm-portfolio-section-19-card__logo"></svg>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <svg></svg>
+              </div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+              </div>
             </div>
-            <div class="bm-portfolio-section-19-card__inner">
-              <h2 class="bm-portfolio-section-19-card__heading">{it.title}</h2>
-              <p class="bm-portfolio-section-19-card__text">{it.text}</p>
-              <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div class="bm-portfolio-section-19-card__media">
-            <figure class="bm-portfolio-section-19-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-section-19__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-portfolio-section-19-list {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-section-19-card {
-    height: 70vh;
-    background: var(--fs-0);
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portfolio-section-19-card__content {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    display: flex;
-    flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .bm-portfolio-section-19-card__inner {
-    row-gap: var(--flow-spacing);
-    margin: auto 0 0 0;
-  }
-
-  .bm-portfolio-section-19-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    overflow: clip;
-  }
-
-  /* bm-custom */
-  @supports (animation-timeline: view()) {
-    .bm-portfolio-section-19-card {
-  		position: sticky;
-    	top: var(--section-space-xxl); /* where the card will stick */
-      backdrop-filter: blur(100px);
-    	transform-origin: center center;
-      will-change: transform, filter;
-      
-      
-      animation-name: shrink-blur;
-      animation-duration: 1s;  /* acts as a scale, not real time now */
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-      /* Each card gets its own view-based timeline */
-      animation-timeline: view(block 90vh);
-  
-      /* When should the animation run during its journey in the viewport? */
-      /* entry 0%  = when it just starts entering
-         exit 100% = when it has almost left */
-      animation-range: entry 0% exit 100%;
-    }
-  }
-  
-  @keyframes shrink-blur {
-    from {
-      transform: scale(1);
-      filter: blur(0);
-      opacity: 1;
-    }
-  
-    to {
-      transform: scale(0.5);
-      filter: blur(6px);
-      opacity: 0.8;
-    }
-  }
-</style>

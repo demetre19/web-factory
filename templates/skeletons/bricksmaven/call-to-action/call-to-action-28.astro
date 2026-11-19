@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,112 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-cta-28__container">
-    <div class="bm-contact-widget-5">
-      <h2 class="bm-contact-widget-5__heading">{heading}</h2>
-      <div class="bm-contact-widget-5__manager-data">
-        <div class="bm-contact-widget-5__media">
-          <figure class="bm-contact-widget-5__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-        <div class="bm-contact-widget-5__data">
-          <div class="bm-contact-widget-5__top">
-            <p class="bm-contact-widget-5__name">Alan Smith</p>
-            <p class="bm-contact-widget-5__title">Account manager</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div class="bm-contact-widget-link">
-            <div class="bm-contact-widget-link__icon-wrapper">
-              <span class="bm-contact-widget-link__icon" data-icon="lucide" aria-hidden="true"></span>
+          <div>
+            <div>
+              <p class="text-fluid-0">Alan Smith</p>
+              <p class="text-fluid-0">Account manager</p>
             </div>
-            <p class="bm-contact-widget-link__data clickable-parent">+000 123 456 789</p>
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <p class="text-fluid-0">+000 123 456 789</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-cta-28__container {
-    align-items: center;
-  }
-
-  .bm-contact-widget-5 {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-  }
-
-  .bm-contact-widget-5__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-contact-widget-5__manager-data {
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .bm-contact-widget-5__media {
-    width: auto;
-  }
-
-  .bm-contact-widget-5__image {
-    width: 128px;
-    object-fit: cover;
-    height: 128px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-contact-widget-5__data {
-    width: auto;
-    row-gap: calc(var(--flow-spacing) / 2);
-    align-items: flex-start;
-  }
-
-  .bm-contact-widget-5__top {
-    width: auto;
-  }
-
-  .bm-contact-widget-5__name {
-    font-weight: 700;
-  }
-
-  .bm-contact-widget-link {
-    display: flex;
-    align-items: center;
-    background: var(--color-ink-secondary);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    column-gap: calc(var(--flow-spacing) / 2);
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    position: relative;
-  }
-
-  .bm-contact-widget-link__icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    width: 32;
-    height: 32;
-  }
-
-  /* bm-custom */
-  .bm-contact-widget-link__data {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-</style>

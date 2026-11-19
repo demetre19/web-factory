@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,56 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="header-page-2-container">
-    <div class="header-page-2__content">
-      <div class="header-page__intro">
-        <h1 class="header-page__title">{heading}</h1>
-        <p class="accent-h">Accent Heading</p>
-        <p class="header-page__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent Heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <form novalidate>
+        </form>
+        <p class="text-fluid-0">By clicking Sign Up you're confiriming that you agree with our Terms and Conditions.</p>
       </div>
-      <form class="header-page-form" novalidate>
-      </form>
-      <p class="header-page-terms">By clicking Sign Up you're confiriming that you agree with our Terms and Conditions.</p>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .header-page-2 {
-    background: var(--bg-subtle);
-  }
-
-  .header-page-2-container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .header-page-2__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-  }
-
-  .header-page__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .header-page-terms {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .header-page-form {
-    flex-wrap: nowrap;
-    gap: var(--space-s);
-    align-items: center;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,59 +17,30 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-1-container">
-    <div class="testimonial-1-content">
-      <div class="testimonial-1-slides">
-        {items.map((it) => (
-          <div class="testimonial-1-slides-item">
-            <p class="testimonial-1-slides__desc">{it.text}</p>
-            <p class="testimonial-1-slides__bio text--primary">{it.text}</p>
-            <div class="testimonial-1-slides-item__image-wrapper">
-              <figure class="testimonial-1-slides__img rounded--circle object-fit--cover"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-1-content {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .testimonial-1-slides-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: var(--space-m);
-    padding: 0 var(--space-xl) 0 var(--space-xl);
-  }
-
-  .testimonial-1-slides__img {
-    width: 13rem;
-    height: 13rem;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  /* bm-custom */
-  .testimonial-1-slides svg {
-  	fill: var(--bg-canvas);
-    width: 1rem;
-  }
-</style>

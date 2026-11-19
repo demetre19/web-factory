@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,140 +17,45 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-28-container">
-    <div class="testimonial-28-content">
-      <div class="testimonial-28-content__wrapper">
-        <h2 class="testimonial-28-content__title">{heading}</h2>
-        <div class="testimonial-28-content__list">
-          {items.map((it) => (
-            <div class="testimonial-28-content__item">
-              <p class="testimonial-28-content__desc">{it.text}</p>
-            </div>
-          ))}
-        </div>
-        <div class="testimonial-28-content__list">
-          {items.map((it) => (
-            <div class="testimonial-28-content__item">
-              <div class="testimonial-28-content__profile">
-                <div class="testimonial-28-content__meta">
-                  <h4 class="testimonial-28-content__name">{it.title}</h4>
-                  <p class="testimonial-28-content__jobtitle">{it.text}</p>
-                </div>
-                <div class="testimonial-28-content__media">
-                  <figure class="testimonial-28-content__photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}
+          </div>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <div>
+                  <div>
+                    <h4 class="text-fluid-2">{it.title}</h4>
+                    <p class="text-fluid-0">{it.text}</p>
+                  </div>
+                  <div>
+                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+      <div></div>
     </div>
-    <div class="testimonial-28-script"></div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-28-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1rem;
-  }
-
-  .testimonial-28-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .testimonial-28-content__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-  }
-
-  .testimonial-28-content__desc {
-    text-align: center;
-  }
-
-  .testimonial-28-content__profile {
-    display: flex;
-    flex-direction: column;
-    row-gap: 3rem;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .testimonial-28-content__meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: .3rem;
-    align-items: center;
-    text-align: center;
-  }
-
-  .testimonial-28-content__jobtitle {
-    font-size: calc(var(--fs-1) - .4rem);
-  }
-
-  .testimonial-28-content__photo {
-    object-fit: cover;
-    width: 6.5rem;
-    height: 6.5rem;
-    overflow: hidden;
-    border-radius: 50% 50% 50% 50%;
-    position: relative;
-  }
-
-  .testimonial-28-script {
-    display: none;
-  }
-
-  /* bm-custom */
-  .testimonial-28-content__item:not(.is-active, .is-next, .is-prev) .testimonial-28-content__photo {
-  	transform: scale(.75);
-  }
-  .testimonial-28-content__item:not(.is-active, .is-next, .is-prev) .testimonial-28-content__meta {
-  	opacity: 0;
-  }
-  .testimonial-28-content__item:not(.is-active).is-next .testimonial-28-content__photo,
-  .testimonial-28-content__item:not(.is-active).is-prev .testimonial-28-content__photo {
-  	transform: scale(1);
-  }
-  .testimonial-28-content__item:not(.is-active).is-next .testimonial-28-content__meta,
-  .testimonial-28-content__item:not(.is-active).is-prev .testimonial-28-content__meta {
-  	opacity: 0;
-  }
-  
-  .testimonial-28-content__item .testimonial-28-content__photo::before {
-  	content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: transparent;
-    transition: all .3s cubic-bezier(0.2, 1, 0.3, 1);
-  }
-  .testimonial-28-content__item:not(.is-active) .testimonial-28-content__photo::before {
-    background: rgba(219, 35, 35, 0.39);
-  }
-  
-  .testimonial-28-content__item.is-active .testimonial-28-content__photo {
-  	transform: scale(1.5);
-  }
-  
-  .testimonial-28-content__item {
-  	border: none !important;
-  }
-</style>

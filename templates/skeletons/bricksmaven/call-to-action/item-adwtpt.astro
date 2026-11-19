@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,52 +17,22 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="cta-6-container">
-    <h2 class="cta-6__heading">{heading}</h2>
-    <div class="hero-1__cta">
-      <a class="btn--primary hero-1-wrapper__cta--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      <a class="btn--primary btn--outline hero-1-wrapper__cta--outline" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <h2 class="text-fluid-2">{heading}</h2>
+      <div>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .cta-6-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    align-items: center;
-    text-align: center;
-  }
-
-  .cta-6__heading {
-    padding: 0 0 var(--space-m) 0;
-    border-bottom: .1rem solid var(--color-line-default);
-  }
-
-  .hero-1__cta {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-</style>

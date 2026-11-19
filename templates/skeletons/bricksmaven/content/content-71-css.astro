@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,83 +17,22 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-content-71__container">
-    <div class="bm-content-71__content">
-      <h2 class="bm-content-71__heading">{heading}</h2>
-      <p class="bm-content-71__text">{fs}</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="bm-content-71__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-content-71 {
-    position: relative;
-    height: 70vh;
-    justify-content: center;
-  }
-
-  .bm-content-71__container {
-    row-gap: var(--space-s);
-    align-items: flex-end;
-  }
-
-  .bm-content-71__content {
-    row-gap: var(--flow-spacing);
-    background: var(--bg-canvas);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-top: 1px solid var(--color-line-default);
-    border-right: 1px solid var(--color-line-default);
-    border-bottom: 1px solid var(--color-line-default);
-    border-left: 1px solid var(--color-line-default);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    width: 100%;
-    z-index: 1;
-  }
-
-  .bm-content-71__background-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  /* bm-custom */
-  .bm-content-71 {
-    --gradient-color: var(--bg-canvas);
-    --gradient-height: var(--measure);
-    --gradient-width: 100%;
-  }
-  
-  .bm-content-71::before {
-    content: '';
-    background: linear-gradient(var(--acss-gradient-color), transparent);
-    position: absolute;
-    inset-block-start: 0;
-    width: var(--acss-gradient-width);
-    height: var(--acss-gradient-height);
-    z-index: 1;
-  }
-  
-  .bm-content-71::after {
-    content: '';
-    background: linear-gradient(transparent, var(--acss-gradient-color));
-    position: absolute;
-    inset-block-end: 0;
-    width: var(--acss-gradient-width);
-    height: var(--acss-gradient-height);
-    z-index: 1;
-  }
-</style>

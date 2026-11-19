@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,63 +17,28 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-10__container">
-    <div class="testimonial-10__content">
-      <p class="testimonial-10-content__desc text--xl">{fs}</p>
-      <div class="testimonial-10-content__stars text--l"></div>
-      <div class="testimonial-10-content__profile gap--xs flex--col">
-        <h4 class="testimonial-10-content__name text--primary">{heading}</h4>
-        <p class="testimonial-10-content__title text--s">Product Designer, Bricksmaven</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">{fs}</p>
+        <div></div>
+        <div>
+          <h4 class="text-fluid-2">{heading}</h4>
+          <p class="text-fluid-0">Product Designer, Bricksmaven</p>
+        </div>
       </div>
-    </div>
-    <div class="testimonial-10-photo">
-      <figure class="testimonial-10-photo__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-10__container {
-    display: grid;
-    grid-template-columns: calc(100% * 3 / 2);
-    gap: var(--space-m);
-  }
-
-  .testimonial-10__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-  }
-
-  .testimonial-10-photo {
-    padding: 0 var(--section-space-xxl) var(--space-m) var(--space-m);
-    background: var(--bg-subtle);
-  }
-
-  .testimonial-10-photo__img {
-    width: 100%;
-    height: calc(100% + var(--acss-breakout-height));
-    object-fit: cover;
-    margin: calc(-1 * var(--acss-breakout-height)) 0 0 0 !important;
-  }
-
-  /* bm-custom */
-  .testimonial-10-content__stars .repeater-item {
-  	justify-content: flex-start !important;
-    flex: .03 !important;
-  }
-
-  /* bm-custom */
-  .testimonial-10-photo__img {
-  	--breakout-height: var(--space-m);
-  }
-</style>

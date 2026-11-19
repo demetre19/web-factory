@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,136 +17,39 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-testimonial-48__container">
-    <div class="bm-testimonial-48__intro">
-      <h2 class="bm-testimonial-48__heading">{heading}</h2>
-      <p class="bm-testimonial-48__text">{fs}</p>
-    </div>
-    <div class="bm-testimonial-48__list">
-      <div class="bm-testimonial-48__slider">
-        {items.map((it) => (
-          <div class="bm-testimonial-48-card">
-            <div class="bm-testimonial-48-card__client-card">
-              <div class="bm-testimonial-48-card__client-avatar">
-                <figure class="bm-testimonial-48-card__client-image"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
+                </div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
-              <div class="bm-testimonial-48-card__client-data">
-                <p class="bm-testimonial-48-card__name">{it.text}</p>
-                <p class="bm-testimonial-48-card__title">{it.text}</p>
-              </div>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
-            <p class="bm-testimonial-48-card__review">{it.text}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-testimonial-48 {
-    overflow: clip;
-  }
-
-  .bm-testimonial-48__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-testimonial-48__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-    width: 100%;
-  }
-
-  .bm-testimonial-48-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    background: var(--bg-subtle);
-    border-top: 1px solid var(--color-line-default);
-    border-right: 1px solid var(--color-line-default);
-    border-bottom: 1px solid var(--color-line-default);
-    border-left: 1px solid var(--color-line-default);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-48-card__client-card {
-    flex-direction: row;
-    display: flex;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-testimonial-48-card__client-image {
-    object-fit: cover;
-    width: 120px;
-    height: 120px;
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-testimonial-48-card__client-data {
-    display: flex;
-    row-gap: 0;
-    flex-direction: column;
-  }
-
-  .bm-testimonial-48-card__name {
-    font-weight: 700;
-  }
-
-  .bm-testimonial-48-card__review {
-    font-size: var(--fs-2);
-  }
-
-  /* bm-custom */
-  .bm-testimonial-48__slider {
-    --icon-dimension: 92px; /* Change the icon dimensions*/
-    --icon-size: 24px; /* Change the icon size*/
-    --icon-opacity: 0.5;  /* Change the icon opacity*/
-  }
-  
-  .bm-testimonial-48__slider .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-testimonial-48__slider .splide__arrow--next {
-    left: 0;
-    transition: 0.2s ease;
-  }
-  
-  .bm-testimonial-48__slider .splide__arrow--prev {
-    left: calc(-1 * (var(--space-m) + var(--acss-icon-dimension)));
-    transition: 0.2s ease;
-  }
-  
-  .bm-testimonial-48__slider .splide__arrows {
-      position: absolute;
-      inset-block-start: calc(-1 * (var(--space-s) + 4rem)); 
-    	inset-inline-end: var(--acss-icon-dimension);
-     	
-  }
-  
-  @media (max-width:767px) {
-    .bm-testimonial-48__slider .splide__arrows {
-      position: absolute;
-      inset-block-start: unset;
-      inset-block-end: calc(-1 * (var(--space-s) + 3rem));
-    	inset-inline-end: var(--acss-icon-dimension);
-  }
-  }
-
-  /* bm-custom */
-  .bm-testimonial-48-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-testimonial-48-card:hover {
-    box-shadow: var(--shadow-card);
-  }
-</style>

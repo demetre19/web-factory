@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,117 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-9-container">
-    <div class="contact-left-box">
-      <div class="contact-left-box__top-row">
-        <p class="contact-left-box__accent-heading">Have a question?</p>
-        <h2 class="contact-left-box__heading">{heading}</h2>
-        <p class="contact-left-box__desc">{fs}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <p class="text-fluid-0">Have a question?</p>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          <p class="text-fluid-0">OR</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+        </div>
       </div>
-      <div class="cta-combo">
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-        <p class="cta-combo__text">OR</p>
-        <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="contact-9-right">
-      <figure class="contact-9-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      <div class="contact-9-right__form">
-        <form class="contact-9-form" novalidate>
-        </form>
+      <div class="grid-auto gap-fluid-l">
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div>
+          <form novalidate>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-9 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-  }
-
-  .contact-9-container {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .contact-left-box {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-    padding: 0 var(--section-space-xxl) 0 0;
-  }
-
-  .contact-left-box__top-row {
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    display: flex;
-  }
-
-  .contact-left-box__accent-heading {
-    width: fit-content;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .contact-9-right {
-    height: 100vh;
-    position: relative;
-  }
-
-  .contact-9-image {
-    width: 50vw;
-    object-fit: cover;
-    margin: 0 calc(-50vw + 50% ) 0 0;
-    height: 100%;
-  }
-
-  .contact-9-right__form {
-    position: absolute;
-    top: 50%;
-    padding: var(--space-m) var(--space-s) var(--space-m) var(--space-s);
-    /* bm: box-shadow omitted — token layer owns elevation */
-    left: calc(-1 * var(--space-xl));
-    background: var(--bg-canvas);
-  }
-
-  .contact-9-form {
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  /* bm-custom */
-  .contact-9-form .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-9-form .required:after{
-  color: var(--action-primary);
-  }
-</style>

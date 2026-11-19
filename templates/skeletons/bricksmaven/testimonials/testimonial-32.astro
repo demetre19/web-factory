@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,144 +17,48 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-32-container">
-    <div class="intro intro--left">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__accent-heading">Accent heading</p>
-      <div class="intro__text-cta-wrapper">
-        <p class="intro__subheading">{fs}</p>
-        <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-      </div>
-    </div>
-    <div class="testimonial-32-slider">
-      {items.map((it) => (
-        <div class="testimonial-32-slide">
-          <p class="testimonial-32-slide__quote">{it.text}</p>
-          <div class="testimonial-32-slide__rating-wrapper list--none">
-            {(it.items || []).map((it2) => (
-              <div class="testimonial-32-slide__rating-li">
-                <span class="testimonial-32-slide__rating-icon" data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            ))}
-          </div>
-          <div class="testimonial-32-slide__client-wrapper">
-            <div class="testimonial-32-slide__media">
-              <figure class="testimonial-32-slide__client-image"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <div class="testimonial-32-slide__meta-data">
-              <h2 class="testimonial-32-slide__heading">{it.title}</h2>
-              <p class="testimonial-32-slide__text">{it.text}</p>
-            </div>
-          </div>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-      ))}
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <p class="text-fluid-0">{it.text}</p>
+            <div>
+              {((it.items || []) || []).map((it2) => (
+                <div>
+                  <span data-icon="lucide" aria-hidden="true"></span>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-32 {
-    overflow: hidden;
-  }
-
-  .testimonial-32-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .intro__text-cta-wrapper {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .testimonial-32-slide {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-    border-top: .1rem solid var(--bg-subtle);
-    border-right: .1rem solid var(--bg-subtle);
-    border-bottom: .1rem solid var(--bg-subtle);
-    border-left: .1rem solid var(--bg-subtle);
-  }
-
-  .testimonial-32-slide__rating-wrapper {
-    display: flex;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .testimonial-32-slide__client-wrapper {
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
-  }
-
-  .testimonial-32-slide__media {
-    width: auto;
-  }
-
-  .testimonial-32-slide__client-image {
-    object-fit: cover;
-    height: 6rem;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-    width: 6rem;
-  }
-
-  .testimonial-32-slide__meta-data {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .testimonial-32-slide__heading {
-    font-size: var(--fs-1);
-  }
-
-  .testimonial-32-slide__text {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .testimonial-32-slider .splide__track {
-  	overflow: visible;
-  }
-
-  /* bm-custom */
-  .testimonial-32-slide {
-  	transition: .5s linear;
-  }
-  
-  .testimonial-32-slide:hover {
-  	box-shadow: 0 0 2rem 0 rgb(0,0,0,0.2);
-  }
-</style>

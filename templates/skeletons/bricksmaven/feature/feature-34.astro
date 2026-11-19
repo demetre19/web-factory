@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,89 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-34-container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="list--none feature-34-list">
-      {items.map((it) => (
-        <div class="feature-34-card">
-          <div class="feature-34-card__content">
-            <h2 class="feature-34-card__heading">{it.title}</h2>
-            <p class="accent-h">{it.text}</p>
-            <p class="feature-34-card__text">{it.text}</p>
-            <a class="btn--primary wf-cta-button" href={it.href}>{it.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+            </div>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="feature-34-card__media">
-            <figure class="feature-34-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-34-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-34-list {
-    row-gap: var(--space-s);
-  }
-
-  .feature-34-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-    padding: var(--space-m) var(--space-m) 0 var(--space-m);
-    background: var(--bg-subtle);
-  }
-
-  .feature-34-card__content {
-    padding: 0 0 var(--space-l) 0;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .feature-34-card__media {
-    align-self: flex-end;
-  }
-
-  .feature-34-card__image {
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .feature-34-card:nth-child(even) .feature-34-card__media {
-  	order: 1;
-  }
-  
-  @media (max-width:767px) {
-  	.feature-34-card:nth-child(even) .feature-34-card__media {
-  	order: -1;
-  }
-  }
-</style>

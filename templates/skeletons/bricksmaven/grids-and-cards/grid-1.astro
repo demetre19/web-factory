@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,48 +17,29 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-1-container">
-    <div class="gridcard-1-grid-ul list--none">
-      <div class="gridcard-1-card">
-        <h2 class="gridcard-1-card__heading">{heading}</h2>
-        <p class="gridcard-1-card__desc">{fs}</p>
-        <span class="gridcard-1-card__icon" data-icon="lucide" aria-hidden="true"></span>
-      </div>
-      <div class="gridcard-1-card">
-        <h2 class="gridcard-1-card__heading">Medium length headline</h2>
-        <p class="gridcard-1-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
-        <span class="gridcard-1-card__icon" data-icon="lucide" aria-hidden="true"></span>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
+        <div>
+          <h2 class="text-fluid-2">Medium length headline</h2>
+          <p class="text-fluid-0">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+          <span data-icon="lucide" aria-hidden="true"></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-1-grid-ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .gridcard-1-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    margin: 0 0 var(--space-s) 0;
-  }
-
-  /* bm-custom */
-  .gridcard-1-card:nth-child(odd) {
-  
-  	border-right: 1px solid var(--bg-subtle);
-    
-  }
-</style>

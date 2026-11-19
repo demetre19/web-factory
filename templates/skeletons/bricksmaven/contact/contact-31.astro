@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,119 +17,50 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-31__container">
-    <div class="bm-contact-31__content">
-      <div class="bm-contact-31__top">
-        <h1 class="bm-contact-31__heading">{heading}</h1>
-        <p class="accent-h">Accent heading</p>
-      </div>
-      <p class="bm-contact-31__text">{fs}</p>
-      <div class="bm-contact-31-list list--none">
-        {items.map((it) => (
-          <div class="bm-contact-31-card">
-            <h2 class="bm-contact-31-card__heading">{it.title}</h2>
-            <p class="bm-contact-31-card__text">{it.text}</p>
-            <div class="bm-social-share list--none bm-social-share--left">
-              {(it.items || []).map((it2) => (
-                <div class="bm-social-share__icon-wrapper">
-                  <span class="bm-social-share__icon" data-icon="lucide" aria-hidden="true"></span>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="bm-contact-31__address">
-        <div class="bm-contact-31__column">
-          <h2 class="bm-contact-31__address-heading">Address</h2>
-          <p class="bm-contact-31__address-text">123 Main Street, Anytown USA</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
         </div>
-        <a href="#">Get directions</a>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <h2 class="text-fluid-2">{it.title}</h2>
+              <p class="text-fluid-0">{it.text}</p>
+              <div>
+                {((it.items || []) || []).map((it2) => (
+                  <div>
+                    <span data-icon="lucide" aria-hidden="true"></span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Address</h2>
+            <p class="text-fluid-0">123 Main Street, Anytown USA</p>
+          </div>
+          <a class="text-fluid-0" href="#">Get directions</a>
+        </div>
       </div>
-    </div>
-    <div class="bm-contact-31__form-wrapper">
-      <form class="bm-contact-31__form" novalidate>
-      </form>
+      <div>
+        <form novalidate>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-31__container {
-    display: grid;
-    gap: calc(var(--space-m) * 4);
-    grid-template-columns: calc(100% * 2 / 3);
-  }
-
-  .bm-contact-31__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-31__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-contact-31__text {
-    font-size: var(--fs-2);
-  }
-
-  .bm-contact-31-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 3);
-    padding: 0 0 var(--space-l) 0;
-    border-bottom: 1 solid var(--color-line-default);
-  }
-
-  .bm-contact-31-card {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-contact-31-card-ul {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-contact-31__address {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-contact-31__column {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-contact-31__form-wrapper {
-    background: var(--bg-subtle);
-    border-top: 1 solid var(--color-line-default);
-    border-right: 1 solid var(--color-line-default);
-    border-bottom: 1 solid var(--color-line-default);
-    border-left: 1 solid var(--color-line-default);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-</style>

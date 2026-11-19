@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,146 +17,41 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-team-18__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="bm-accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-team-18-team-list list--none">
-      {items.map((it) => (
-        <div class="bm-team-18-card">
-          <div class="bm-team-18-card__content">
-            <div class="bm-team-18-card__top">
-              <p class="bm-team-18-card__name">{it.text}</p>
-              <div class="bm-team-18-card__foot">
-                <p class="bm-team-18-card__title">{it.text}</p>
-                <p class="bm-team-18-card__socials">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
-            <p class="bm-team-18-card__story">{it.text}</p>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="bm-team-18-card__media">
-            <figure class="bm-team-18-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-team-18__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
-  }
-
-  .bm-team-18-team-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-team-18-card {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
-  }
-
-  .bm-team-18-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-team-18-card__top {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0;
-  }
-
-  .bm-team-18-card__name {
-    font-weight: 700;
-  }
-
-  .bm-team-18-card__foot {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 0;
-  }
-
-  .bm-team-18-card__title {
-    font-size: var(--fs-0);
-  }
-
-  .bm-team-18-card__socials {
-    font-size: var(--fs-0);
-  }
-
-  .bm-team-18-card__media {
-    align-items: center;
-    position: relative;
-    justify-content: center;
-  }
-
-  .bm-team-18-card__image {
-    object-fit: cover;
-    width: 124px;
-    height: 124px;
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  /* bm-custom */
-  /* Sets vertical bar on desktop */
-  .bm-team-18-card .bm-team-18-card__media:before {
-    content: '';
-    position: absolute;
-    inline-size: 50%;
-    block-size: 100%;
-    background-color: var(--bg-subtle);
-    left: 0;
-    transition: 0.5s ease;
-    
-  }
-  
-  /* Vertical bar fills the whole width on hover */
-  .bm-team-18-card:hover .bm-team-18-card__media:before {
-    inline-size: 100%;
-  }
-  
-  @media (max-width:991px) {
-     
-    /* Top and bottom padding on the media element to give the image some breathing space */
-    .bm-team-18-card .bm-team-18-card__media {
-      padding-block: var(--space-m);
-    }
-    
-    /* Flips vertical bar to horizontal on tablet breakpoint */
-    .bm-team-18-card .bm-team-18-card__media:before {
-  
-      inline-size: 100%;
-      block-size: 50%;
-       top: 0; 
-  }
-    /* Horizontal bar fills the whole height on hover */
-    .bm-team-18-card:hover .bm-team-18-card__media:before {
-    block-size: 100%;
-  }
-  }
-</style>

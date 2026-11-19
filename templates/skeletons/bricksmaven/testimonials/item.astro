@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,96 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-3-container">
-    <div class="testimonial-3-slides">
-      {items.map((it) => (
-        <div class="testimonial-3-slides-item">
-          <div class="testimonial-3-slides-item__details">
-            <div class="testimonial-3-slides-item__media-wrapper">
-              <figure class="testimonial-3-slides__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
-            <p class="testimonial-3-slides__desc">{it.text}</p>
+            <div>
+              <custom class="text-fluid-2">{it.title}</custom>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
           </div>
-          <div class="testimonial-3-slides-item__bio">
-            <custom class="testimonial-3-slides-item__name">{it.title}</custom>
-            <p class="testimonial-3-slides-item__title">{it.text}</p>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-3-slides-item {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    width: 100%;
-  }
-
-  .testimonial-3-slides-item__details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: var(--space-m);
-    text-align: center;
-  }
-
-  .testimonial-3-slides-item__media-wrapper {
-    display: flex;
-    align-items: center;
-  }
-
-  .testimonial-3-slides__img {
-    width: 13rem;
-    height: 13rem;
-    object-fit: cover;
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .testimonial-3-slides-item__bio {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: var(--space-xs);
-  }
-
-  .testimonial-3-slides-item__name {
-    font-weight: 700;
-  }
-
-  .testimonial-3-slides-item__title {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .testimonial-3-slides svg {
-  	fill: var(--bg-canvas);
-    width: 1rem;
-  }
-
-  /* bm-custom */
-  .testimonial-3-slides-item.is-active::after {
-  	content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: .1rem;
-    height: 80%;
-    background-color: var(--bg-subtle);
-  }
-</style>

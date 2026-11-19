@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,439 +17,123 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-portfolio-single-5__container">
-    <div class="bm-portfolio-single-5__intro">
-      <h1 class="bm-portfolio-single-5__intro-heading">{heading}</h1>
-      <p class="bm-portfolio-single-5__intro-terms">Category</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h1 class="text-fluid-4">{heading}</h1>
+        <p class="text-fluid-0">Category</p>
+      </div>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <figure class="bm-portfolio-single-5__featured-image"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="bm-portfolio-single-5__overview-container">
-    <div class="bm-portfolio-single-5__expertise">
-      <h2 class="bm-portfolio-single-5__heading">Experise</h2>
-      <div class="bm-portfolio-single-5-expetise-list list--none">
-        {items.map((it) => (
-          <div class="bm-portfolio-single-5-expetise-item">
-            <a class="bm-portfolio-single-5-expetise-item__link" href="#">{it.text}</a>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">Experise</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <a class="text-fluid-0" href="#">{it.text}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2 class="text-fluid-2">The Challenge</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <div>
+          <div></div>
+          <p class="text-fluid-0">Visit website</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Maximum focus on UX</h2>
+          <p class="text-fluid-0">Website Revitalization</p>
+          <p class="text-fluid-0">We redesigned the website for a cleaner UX/UI, ensured mobile optimization, and integrated conversion rate optimization (CRO) elements like clear CTAs and simplified checkout.</p>
+        </div>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Focus on storytelling</h2>
+          <p class="text-fluid-0">Brand Design</p>
+          <p class="text-fluid-0">We executed on-page SEO, created a content marketing calendar with educational blog posts, and addressed technical SEO issues like site speed.</p>
+        </div>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         ))}
       </div>
-    </div>
-    <div class="bm-portfolio-single-5__overview-content">
-      <h2 class="bm-portfolio-single-5__heading">The Challenge</h2>
-      <p class="bm-portfolio-single-5__text">{fs}</p>
-      <div class="bm-live-website-btn bm-live-website-btn--alt">
-        <div class="bm-live-website-btn__dot bm-live-website-btn__dot--alt"></div>
-        <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Increased traffic by 3x folds</h2>
+          <p class="text-fluid-0">Digital Marketing</p>
+          <p class="text-fluid-0">We launched highly targeted Google Ads and visually engaging social media campaigns on Instagram and Facebook, emphasizing EcoEssentials' unique selling propositions.</p>
+        </div>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-  </div>
-  <div class="bm-portfolio-single-5__wide-media-container">
-    <div class="bm-1col-media">
-      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-  </div>
-  <div class="bm-portfolio-single-5__carousel-container">
-    <div class="bm-portfolio-single-5__intro-wrapper">
-      <div class="bm-portfolio-single-5__content-intro">
-        <h2 class="bm-portfolio-single-5__content-heading">Maximum focus on UX</h2>
-        <p class="bm-portfolio-single-5__content-accent-heading">Website Revitalization</p>
-        <p class="bm-portfolio-single-5__content-text">We redesigned the website for a cleaner UX/UI, ensured mobile optimization, and integrated conversion rate optimization (CRO) elements like clear CTAs and simplified checkout.</p>
+    <div>
+      <div>
+        <h2 class="text-fluid-2">Feel a need to revamp your online presence</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
     </div>
-    <div class="bm-portfolio-single-5__slider-wrapper">
-      <div class="bm-portfolio-single-slider">
-        {items.map((it) => (
-          <div class="bm-portfolio-slider__slide">
-            <figure class="bm-portfolio-slider__slide-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div>
+      <h2 class="text-fluid-2">Related case studies</h2>
+      <div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Firefly Productions</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="text-fluid-0">Category</p>
           </div>
-        ))}
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
+        <div>
+          <div>
+            <h2 class="text-fluid-2">Firefly Productions</h2>
+            <p class="text-fluid-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="text-fluid-0">Category</p>
+          </div>
+          <div>
+            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          </div>
+        </div>
       </div>
     </div>
+    <div></div>
   </div>
-  <div class="bm-portfolio-single-5__content-container">
-    <div class="bm-portfolio-single-5__intro-wrapper bm-portfolio-single-5__intro-wrapper--centered">
-      <div class="bm-portfolio-single-5__content-intro">
-        <h2 class="bm-portfolio-single-5__content-heading">Focus on storytelling</h2>
-        <p class="bm-portfolio-single-5__content-accent-heading">Brand Design</p>
-        <p class="bm-portfolio-single-5__content-text">We executed on-page SEO, created a content marketing calendar with educational blog posts, and addressed technical SEO issues like site speed.</p>
-      </div>
-    </div>
-    <div class="bm-span2-media list--none">
-      {items.map((it) => (
-        <div class="bm-span2-media-item bm-span2-media-item--alt">
-          <figure class="bm-span2-media-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      ))}
-    </div>
-    <div class="bm-portfolio-single-5__intro-wrapper bm-portfolio-single-5__intro-wrapper--right">
-      <div class="bm-portfolio-single-5__content-intro">
-        <h2 class="bm-portfolio-single-5__content-heading">Increased traffic by 3x folds</h2>
-        <p class="bm-portfolio-single-5__content-accent-heading">Digital Marketing</p>
-        <p class="bm-portfolio-single-5__content-text">We launched highly targeted Google Ads and visually engaging social media campaigns on Instagram and Facebook, emphasizing EcoEssentials' unique selling propositions.</p>
-      </div>
-    </div>
-    <div class="bm-1col-media">
-      <figure class="bm-1col-media__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
-  </div>
-  <div class="bm-portfolio-single-5__cta-container">
-    <div class="bm-contact-widget-6">
-      <h2 class="bm-contact-widget-6__heading">Feel a need to revamp your online presence</h2>
-      <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-  </div>
-  <div class="bm-portfolio-single-5__footer-container">
-    <h2 class="bm-portfolio-single-5__heading">Related case studies</h2>
-    <div class="list--none bm-portfolio-4-related-list">
-      <div class="bm-portfolio-4-related-card">
-        <div class="bm-portfolio-4-related-card__content">
-          <h2 class="bm-portfolio-4-related-card__heading">Firefly Productions</h2>
-          <p class="bm-portfolio-4-related-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <p class="bm-portfolio-4-related-card__terms">Category</p>
-        </div>
-        <div class="bm-portfolio-4-related-card__media">
-          <figure class="bm-portfolio-4-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-      <div class="bm-portfolio-4-related-card">
-        <div class="bm-portfolio-4-related-card__content">
-          <h2 class="bm-portfolio-4-related-card__heading">Firefly Productions</h2>
-          <p class="bm-portfolio-4-related-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          <p class="bm-portfolio-4-related-card__terms">Category</p>
-        </div>
-        <div class="bm-portfolio-4-related-card__media">
-          <figure class="bm-portfolio-4-related-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-portfolio-single-5 {
-    padding: 0 0 0 0;
-    row-gap: var(--space-s);
-    overflow: hidden;
-  }
-
-  .bm-portfolio-single-5__container {
-    padding: 0 var(--gutter) var(--section-space-m) var(--gutter);
-    flex-direction: column;
-    display: flex;
-    justify-content: flex-end;
-    height: 75vh;
-    align-items: center;
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    position: relative;
-    left: 50%;
-  }
-
-  .bm-portfolio-single-5__intro {
-    row-gap: var(--flow-spacing);
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-portfolio-single-5__intro-heading {
-    font-size: calc(var(--fs-4) * 1.8);
-    width: 100%;
-  }
-
-  .bm-portfolio-single-5__intro-terms {
-    font-size: var(--fs-0);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2)  var(--space-s);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-portfolio-single-5__featured-image {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-portfolio-single-5__overview-container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
-  }
-
-  .bm-portfolio-single-5__expertise {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-5-expetise-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-single-5-expetise-item {
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: 1px solid var(--bg-subtle);
-  }
-
-  .bm-portfolio-single-5__overview-content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-live-website-btn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 4);
-    background: var(--action-primary);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    position: relative;
-  }
-
-  .bm-live-website-btn--alt {
-    background: var(--bg-canvas) !important;
-  }
-
-  .bm-live-website-btn__dot {
-    width: 8;
-    height: 8;
-    background: var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-  }
-
-  .bm-portfolio-single-5__wide-media-container {
-    width: 100%;
-  }
-
-  .bm-1col-media__image {
-    width: 100%;
-    object-fit: cover;
-    height: 100%;
-  }
-
-  .bm-portfolio-single-5__carousel-container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-5__content-intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-single-5__slider-wrapper {
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    left: 50%;
-    position: relative;
-  }
-
-  .bm-portfolio-slider__slide-image {
-    object-fit: cover;
-    height: 452px;
-    width: 100%;
-  }
-
-  .bm-portfolio-single-5__content-container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-5__intro-wrapper--centered {
-    align-items: center;
-  }
-
-  .bm-span2-media {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-span2-media-item__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  .bm-portfolio-single-5__intro-wrapper--right {
-    align-items: flex-end;
-  }
-
-  .bm-portfolio-single-5__cta-container {
-    width: 100%;
-    align-items: center;
-  }
-
-  .bm-contact-widget-6 {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-  }
-
-  .bm-contact-widget-6__heading {
-    font-size: calc(var(--fs-4) * 1.7);
-    width: 100%;
-  }
-
-  .bm-portfolio-single-5__footer-container {
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .bm-portfolio-4-related-list {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-portfolio-4-related-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-4-related-card__content {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-portfolio-4-related-card__terms {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    font-size: var(--fs-0);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    background: var(--bg-subtle);
-  }
-
-  .bm-portfolio-4-related-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* bm-custom */
-  .bm-portfolio-single-5-expetise-item__link {
-    transition: 1s ease;
-  }
-  
-  .bm-portfolio-single-5-expetise-item__link:hover {
-    --link-color-hover: var(--bg-subtle);
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn--alt .bm-live-website-btn__dot {
-    background-color: var(--text-secondary);
-  }
-  
-  .bm-live-website-btn--alt .bm-live-website-btn__text {
-    color: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn__dot {
-    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
-    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
-  	--animation-duration-up: 1.2s;
-    --shadow-light: var(--shadow-card);
-    --shadow-heavy: var(--shadow-card);
-    --animation-iteration-count: infinite;
-    --animation-direction: alternate;
-    --animation-timing-function-up: linear;
-  }
-  
-  /* Define the animation for the first child */
-  .bm-live-website-btn__dot{
-    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes glow {
-    0% {
-      box-shadow: var(--shadow-card);
-    }
-    100% {
-      box-shadow: var(--shadow-card);
-    }
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn__dot--alt {
-    --shadow-m:  0 0 4px 2px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 0 16px 4px rgba(0, 0, 0, 0.8);
-  	--animation-duration-up: 1.2s;
-    --shadow-light: var(--shadow-card);
-    --shadow-heavy: var(--shadow-card);
-    --animation-iteration-count: infinite;
-    --animation-direction: alternate;
-    --animation-timing-function-up: linear;
-  }
-  
-  /* Define the animation for the first child */
-  .bm-live-website-btn__dot--alt{
-    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes glow {
-    0% {
-      box-shadow: var(--shadow-card);
-    }
-    100% {
-      box-shadow: var(--shadow-card);
-    }
-  }
-
-  /* bm-custom */
-  .bm-live-website-btn__text {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-
-  /* bm-custom */
-  .bm-portfolio-slider__slide .bm-portfolio-slider__slide-image::before  {
-    background-image: linear-gradient(color-mix(in srgb, var(--text-secondary) 10%, transparent), color-mix(in srgb, var(--text-secondary) 80%, transparent));
-    transition: 1s linear;
-        position: absolute;
-      content: "";
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      pointer-events: none;
-  }
-  
-  .bm-portfolio-slider__slide:hover .bm-portfolio-slider__slide-image::before {
-      background-image: linear-gradient(color-mix(in srgb, var(--text-secondary) 40%, transparent), color-mix(in srgb, var(--text-secondary) 90%, transparent));
-  
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .bm-span2-media-item:first-child {
-    grid-column: span 2;
-    aspect-ratio: 16/9;
-  }
-    
-  }
-
-  /* bm-custom */
-  @media (min-width:767px) {
-  
-  .bm-span2-media-item--alt:first-child {
-    grid-column: span 1;
-    aspect-ratio: 4/3;
-  }  
-    
-  .bm-span2-media-item--alt:last-child {
-    grid-column: span 2;
-    aspect-ratio: 16/9;
-  }
-    
-  }
-</style>

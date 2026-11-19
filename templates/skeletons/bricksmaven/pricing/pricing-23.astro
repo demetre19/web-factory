@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,127 +17,60 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-pricing-23__container">
-    <div class="intro">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Accent heading</p>
-    </div>
-    <div class="bm-pricing-23__menu-wrapper">
-      <div class="bm-pricing-23-menu-list list--none">
-        {items.map((it) => (
-          <div class="bm-pricing-23-menu-card">
-            <div class="bm-pricing-23-menu-card__content">
-              <div class="bm-pricing-23-menu-card__top">
-                <h2 class="bm-pricing-23-menu-card__title">{it.title}</h2>
-                <p class="bm-pricing-23-menu-card__price">{it.text}</p>
-              </div>
-              <div class="bm-pricing-23-menu-card__ingredients-wrapper">
-                <p class="bm-pricing-23-menu-card__ingredients-text">{it.text}</p>
-              </div>
-            </div>
-            <div class="bm-pricing-23-menu-card__media">
-              <figure class="bm-pricing-23-menu-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Accent heading</p>
       </div>
-      <div class="bm-pricing-23-menu-list list--none">
-        {items.map((it) => (
-          <div class="bm-pricing-23-menu-card">
-            <div class="bm-pricing-23-menu-card__content">
-              <div class="bm-pricing-23-menu-card__top">
-                <h2 class="bm-pricing-23-menu-card__title">{it.title}</h2>
-                <p class="bm-pricing-23-menu-card__price">{it.text}</p>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
               </div>
-              <div class="bm-pricing-23-menu-card__ingredients-wrapper">
-                <p class="bm-pricing-23-menu-card__ingredients-text">{it.text}</p>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
-            <div class="bm-pricing-23-menu-card__media">
-              <figure class="bm-pricing-23-menu-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          ))}
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-pricing-23 {
-    background: var(--bg-subtle);
-  }
-
-  .bm-pricing-23__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-  }
-
-  .bm-pricing-23__menu-wrapper {
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-pricing-23-menu-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-pricing-23-menu-card {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-pricing-23-menu-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-pricing-23-menu-card__top {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0 var(--space-xs) 0;
-    border-bottom: 1 dashed var(--color-line-default);
-  }
-
-  .bm-pricing-23-menu-card__price {
-    font-size: var(--fs-2);
-    font-weight: 700;
-  }
-
-  .bm-pricing-23-menu-card__media {
-    width: auto;
-  }
-
-  .bm-pricing-23-menu-card__image {
-    object-fit: cover;
-    width: 92;
-    height: 92;
-    overflow: hidden;
-    border-radius: 100% 100% 100% 100%;
-  }
-</style>

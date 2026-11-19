@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,123 +17,44 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-feature-47__top-container">
-    <div class="bm-feature-47__head">
-      <h2 class="bm-feature-47__heading">{heading}</h2>
-      <a class="bm-feature-47__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <figure class="bm-feature-47__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-  </div>
-  <div class="bm-feature-47__container">
-    <div class="bm-feature-47__services">
-      <div class="bm-feature-47__content">
-        <h2 class="bm-feature-47__content-heading">Short headline that introduces your services</h2>
-        <p class="bm-feature-47__content-text">{fs}</p>
-        <a class="bm-feature-47__content-link btn--primary" href="#">Secondary action</a>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div class="list--none bm-feature-47-grid-ul">
-        {items.map((it) => (
-          <div class="bm-content-26-card">
-            <div class="bm-content-26-card__media">
-              <span class="bm-content-26-card__icon" data-icon="lucide" aria-hidden="true"></span>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    </div>
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Short headline that introduces your services</h2>
+          <p class="text-fluid-0">{fs}</p>
+          <a class="text-fluid-0" href="#">Secondary action</a>
+        </div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+              <div>
+                <h4 class="text-fluid-2">{it.title}</h4>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
             </div>
-            <div class="bm-content-26-card__content">
-              <h4 class="bm-content-26-card__heading">{it.title}</h4>
-              <p class="bm-content-26-card__text">{it.text}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-feature-47 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .bm-feature-47__top-container {
-    position: relative;
-    padding: var(--section-space-xl) var(--gutter) var(--section-space-xl) var(--gutter);
-    width: 100vw;
-    margin: 0 0 0 -50vw;
-    left: 50%;
-  }
-
-  .bm-feature-47__head {
-    position: relative;
-    z-index: 1;
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-    align-self: center;
-  }
-
-  .bm-feature-47__heading {
-    font-size: var(--fs-4);
-  }
-
-  .bm-feature-47__background-image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .bm-feature-47__container {
-    position: relative;
-  }
-
-  .bm-feature-47__services {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    display: grid;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-    margin: calc(-1 * var(--section-space-m)) 0 0 0;
-    background: var(--bg-canvas);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-feature-47__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-47__content-heading {
-    font-size: var(--fs-3);
-  }
-
-  .bm-feature-47__content-link {
-    margin: auto 0 0 0;
-  }
-
-  .bm-feature-47-grid-ul {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-content-26-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-content-26-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-</style>

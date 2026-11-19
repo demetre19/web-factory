@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,88 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="testimonial-15-container">
-    <div class="testimonial-15-content list--none">
-      {items.map((it) => (
-        <div class="testimonial-15-content__card">
-          <div class="testimonial-15-content__card-author">
-            <div class="testimonial-15-content__card-meta">
-              <h4 class="testimonial-15-content__card-name">{it.title}</h4>
-              <p class="testimonial-15-content__card-username">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <h4 class="text-fluid-2">{it.title}</h4>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-            <div class="testimonial-15-content__card-media">
-              <figure class="testimonial-15-content__card-photo"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-            <span class="testimonial-15-content__card-icon" data-icon="lucide" aria-hidden="true"></span>
+            <p class="text-fluid-0">{it.text}</p>
           </div>
-          <p class="testimonial-15-content__card-desc">{it.text}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .testimonial-15-content {
-    width: 100%;
-    display: grid;
-    gap: var(--space-s);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .testimonial-15-content__card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    background: var(--action-primary);
-    border-radius: 1rem 1rem 1rem 1rem;
-    height: 100%;
-  }
-
-  .testimonial-15-content__card-author {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    margin: 0 0 var(--space-s) 0;
-    gap: 1rem;
-  }
-
-  .testimonial-15-content__card-meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: .3rem;
-  }
-
-  .testimonial-15-content__card-photo {
-    object-fit: cover;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 100% 100% 100% 100%;
-    overflow: hidden;
-  }
-
-  .testimonial-15-content__card-icon {
-    margin: 0 0 auto auto;
-  }
-
-  /* bm-custom */
-  .testimonial-15-content__card:nth-child(2) {
-  	grid-column: span 8;
-  }
-  .testimonial-15-content__card:nth-child(2) .testimonial-15-content__card-media {
-  	grid-column: span 1;
-  }
-  .testimonial-15-content__card:nth-child(2) .testimonial-15-content__card-meta {
-  	grid-column: span 9;
-  }
-
-  /* bm-custom */
-  .testimonial-15-content__card-icon {
-  	grid-column: span 2;
-  }
-</style>

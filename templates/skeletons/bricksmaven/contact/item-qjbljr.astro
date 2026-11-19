@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,92 +17,33 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="contact-6-container">
-    <div class="contact-6-details">
-      <p class="contact-6-details__accent-heading">Have a question?</p>
-      <h2 class="contact-6-details__heading">{heading}</h2>
-      <div class="contact-6-ul-list list--none">
-        {items.map((it) => (
-          <div class="contact-6-list">
-            <span class="contact-6-list__icon" data-icon="lucide" aria-hidden="true"></span>
-            <p class="contact-6-list__text">{it.text}</p>
-          </div>
-        ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">Have a question?</p>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-    <div class="contact-6-form">
-      <form class="contact-6-form__field" novalidate>
-      </form>
+      <div>
+        <form novalidate>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .contact-6-container {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    gap: var(--space-xl);
-  }
-
-  .contact-6-details {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .contact-6-details__heading {
-    margin: 0 0 0 0;
-  }
-
-  .contact-6-ul-list {
-    padding: 0 0 0 var(--space-xs);
-    display: flex;
-    row-gap: var(--space-s);
-    flex-direction: column;
-  }
-
-  .contact-6-list {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .contact-6-list__text {
-    text-align: left;
-  }
-
-  .contact-6-form {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-l);
-    background: color-mix(in srgb, var(--bg-subtle) 40%, transparent);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  /* bm-custom */
-  .contact-6-form__field .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-6-form__field .required:after{
-  color: var(--action-primary);
-  }
-  
-  .contact-6-form__field input:focus {
-  outline-offset: 0;
-  }
-  
-  
-  .contact-6-form__field textarea:focus {
-  outline-offset: 0;
-  }
-</style>

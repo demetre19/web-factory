@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,101 +17,42 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-contact-30__container">
-    <div class="bm-contact-30__intro">
-      <div class="bm-contact-30__top">
-        <h1 class="bm-contact-30__heading">{heading}</h1>
-        <p class="accent-h">Accent Heading</p>
-      </div>
-      <p class="bm-contact-30__text">{fs}</p>
-    </div>
-    <div class="bm-contact-30-card">
-      <div class="bm-contact-30-card__top">
-        <h2 class="bm-contact-30-card__heading">Contact Us</h2>
-        <div class="bm-social-share list--none bm-social-share--left">
-          {items.map((it) => (
-            <div class="bm-social-share__icon-wrapper">
-              <span class="bm-social-share__icon bm-social-share__icon--alt" data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          ))}
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent Heading</p>
         </div>
+        <p class="text-fluid-0">{fs}</p>
       </div>
-      {items.map((it) => (
-        <div class="bm-contact-30-card__row">
-          <h2 class="bm-contact-30-card__row-heading">{it.title}</h2>
-          <p class="bm-contact-30-card__row-text">{it.text}</p>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">Contact Us</h2>
+          <div>
+            {(items || []).map((it) => (
+              <div>
+                <span data-icon="lucide" aria-hidden="true"></span>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+        {(items || []).map((it) => (
+          <div>
+            <h2 class="text-fluid-2">{it.title}</h2>
+            <p class="text-fluid-0">{it.text}</p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-contact-30__container {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 3);
-  }
-
-  .bm-contact-30__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-30__top {
-    padding: 0 0 var(--space-l) 0;
-    border-bottom: 1 solid var(--color-line-default);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-30__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-contact-30-card {
-    background: var(--text-secondary);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-30-card__top {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 0 var(--space-s) 0;
-    border-bottom: 1 solid var(--bg-subtle);
-  }
-
-  .bm-contact-30-card__heading {
-    font-size: var(--fs-2);
-  }
-
-  .bm-social-share {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-contact-30-card__row {
-    padding: 0 0 var(--space-s) 0;
-    border-bottom: 1 solid var(--bg-subtle);
-  }
-
-  .bm-contact-30-card__row-heading {
-    font-size: var(--fs-1);
-  }
-</style>

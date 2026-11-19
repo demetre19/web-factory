@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,241 +17,73 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-event-section-8__container">
-    <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">{heading}</h2>
-      <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="bm-event-section-8__event-list">
-      <div class="bm-event-section-8-slider">
-        {items.map((it) => (
-          <div class="bm-event-section-8-card">
-            <div class="bm-event-section-8-card__date">
-              <p class="bm-event-section-8-card__day-week">{it.text}</p>
-              <p class="bm-event-section-8-card__day">{it.text}</p>
-              <p class="bm-event-section-8-card__month-year">{it.text}</p>
-            </div>
-            <div class="bm-event-section-8-card__content">
-              <div class="bm-event-section-8-card__head">
-                <h2 class="bm-event-section-8-card__heading clickable-parent">{it.title}</h2>
-                <p class="bm-event-section-8-card__pricing">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div class="bm-event-section-1-card__mid--alt">
-                <div class="bm-event-section-1-card__date--alt">
-                  <div class="bm-event-section-1-card__icon-wrapper--alt">
-                    <span class="bm-event-section-1-card__icon--alt" data-icon="lucide" aria-hidden="true"></span>
-                  </div>
-                  <div class="bm-event-section-1-card__date-time--alt">
-                    <div class="bm-event-section-1-card__date-wrapper--alt">
-                      <p class="bm-event-section-1-card__date-text--alt">{it.text}</p>
+              <div>
+                <div>
+                  <h2 class="text-fluid-2">{it.title}</h2>
+                  <p class="text-fluid-0">{it.text}</p>
+                </div>
+                <div>
+                  <div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
                     </div>
-                    <div class="bm-event-section-1-card__time-wrapper--alt">
-                      <p class="bm-event-section-1-card__time--alt">{it.text}</p>
+                    <div>
+                      <div>
+                        <p class="text-fluid-0">{it.text}</p>
+                      </div>
+                      <div>
+                        <p class="text-fluid-0">{it.text}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                    <p class="text-fluid-0">{it.text}</p>
+                  </div>
+                </div>
+                <div>
+                  <p class="mt-fluid-m"><a class="wf-cta-button" href={it.href}>{it.label}</a></p>
+                  <div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
+                    </div>
+                    <div>
+                      <span data-icon="lucide" aria-hidden="true"></span>
                     </div>
                   </div>
                 </div>
-                <div class="bm-event-section-1-card__location--alt">
-                  <div class="bm-event-section-1-card__icon-wrapper--alt">
-                    <span class="bm-event-section-1-card__icon--alt" data-icon="lucide" aria-hidden="true"></span>
-                  </div>
-                  <p class="bm-event-section-1-card__location-text--alt">{it.text}</p>
-                </div>
               </div>
-              <div class="bm-event-section-8-card__footer">
-                <a class="bm-event-section-8-card__btn btn--white wf-cta-button" href={it.href}>{it.label}</a>
-                <div class="bm-event-section-8__fav-placement">
-                  <div class="bm-event-hart-molecule">
-                    <span class="bm-event-hart-molecule__unactive" data-icon="lucide" aria-hidden="true"></span>
-                  </div>
-                  <div class="bm-event-hart-molecule-active">
-                    <span class="bm-event-hart-molecule-active__icon" data-icon="lucide" aria-hidden="true"></span>
-                  </div>
-                </div>
-              </div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <figure class="bm-event-section-8-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-event-section-8__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-event-section__intro {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-event-section-8-card {
-    display: flex;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    position: relative;
-  }
-
-  .bm-event-section-8-card__date {
-    display: flex;
-    padding: var(--space-xs) var(--space-m) var(--space-s) var(--space-s);
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    text-align: center;
-    background: var(--bg-subtle);
-    row-gap: calc(var(--flow-spacing) / 4);
-    justify-content: center;
-    align-self: flex-end;
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-event-section-8-card__day-week {
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-8-card__day {
-    font-size: var(--fs-4);
-    font-weight: 700;
-  }
-
-  .bm-event-section-8-card__month-year {
-    font-size: var(--fs-0);
-  }
-
-  .bm-event-section-8-card__content {
-    row-gap: var(--flow-spacing);
-    z-index: 1;
-    margin: auto 0 0 0;
-  }
-
-  .bm-event-section-8-card__head {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-8-card__heading {
-    font-size: var(--fs-3);
-  }
-
-  .bm-event-section-1-card__mid--alt {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-event-section-1-card__date--alt {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-event-section-1-card__icon-wrapper--alt {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-event-section-1-card__date-time--alt {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-event-section-1-card__date-wrapper--alt {
-    padding: 0 calc(var(--space-xs) / 2) 0 0;
-    border-right: 1 solid var(--bg-canvas);
-  }
-
-  .bm-event-section-1-card__date-text--alt {
-    font-weight: 700;
-  }
-
-  .bm-event-section-1-card__time-wrapper--alt {
-    padding: 0 0 0 calc(var(--space-xs) / 2);
-  }
-
-  .bm-event-section-1-card__time--alt {
-    font-weight: 700;
-  }
-
-  .bm-event-section-1-card__location--alt {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-event-section-1-card__location-text--alt {
-    font-weight: 700;
-  }
-
-  .bm-event-section-8-card__footer {
-    flex-direction: row;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-event-hart-molecule {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1 solid var(--bg-subtle);
-    border-right: 1 solid var(--bg-subtle);
-    border-bottom: 1 solid var(--bg-subtle);
-    border-left: 1 solid var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    background: var(--bg-canvas);
-  }
-
-  .bm-event-hart-molecule-active {
-    width: 40px;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-    border-top: 1 solid var(--bg-subtle);
-    border-right: 1 solid var(--bg-subtle);
-    border-bottom: 1 solid var(--bg-subtle);
-    border-left: 1 solid var(--bg-subtle);
-    border-radius: 100% 100% 100% 100%;
-    background: var(--text-secondary);
-    display: none;
-  }
-
-  .bm-event-section-8-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  /* Set the height of the slide card */
-  .bm-event-section-8-slider .splide__slide {
-      height: 560px !important;
-  }
-</style>

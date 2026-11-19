@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,100 +17,36 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="blog-section-12-container">
-    <div class="blog-section-12__top">
-      <div class="intro">
-        <h2 class="intro__heading">{heading}</h2>
-        <p class="intro__subheading">{fs}</p>
-      </div>
-    </div>
-    <div class="blog-section-12-list-ul list--none">
-      <div class="blog-section-12-list-item">
-        <div class="blog-section-12-list-item__content">
-          <div class="blog-section-12-list-item__intro">
-            <h2 class="blog-section-12-list-item__heading">{post_title}</h2>
-            <p class="blog-section-12-list-item__date">{post_date}</p>
-            <div class="blog-section-12-list-item__excerpt"></div>
-          </div>
-          <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h2 class="text-fluid-2">{heading}</h2>
+          <p class="text-fluid-0">{fs}</p>
         </div>
-        <figure class="blog-section-12-list-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
+      <div>
+        <div class="grid-auto gap-fluid-l">
+          <div>
+            <div>
+              <h2 class="text-fluid-2">{post_title}</h2>
+              <p class="text-fluid-0">{post_date}</p>
+              <div></div>
+            </div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+          </div>
+          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .blog-section-12-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .blog-section-12-list-ul {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .blog-section-12-list-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    overflow: hidden;
-  }
-
-  .blog-section-12-list-item__content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-section-12-list-item__intro {
-    row-gap: var(--flow-spacing);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .blog-section-12-list-item__heading {
-    font-size: var(--fs-2);
-  }
-
-  .blog-section-12-list-item__date {
-    font-size: var(--fs-0);
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .blog-section-12-list-item__image {
-    position: absolute;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-</style>

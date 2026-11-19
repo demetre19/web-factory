@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,81 +17,27 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-3__container">
-    <div class="bm-header-3__brand">
-      <img class="bm-header-3__brand-logo"></img>
-    </div>
-    <div class="bm-header-3__nav-wrapper">
-      <div class="bm-header-3__menu"></div>
-    </div>
-    <div class="bm-header-3__cta-wrapper">
-      <a class="btn--primary btn--outline bm-header-3__cta-secondary" href="#">Secondary CTA</a>
-      <a class="btn--primary bm-header-3__cta--primary" href="#">Call to action</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div></div>
+      </div>
+      <div>
+        <a class="text-fluid-0" href="#">Secondary CTA</a>
+        <a class="text-fluid-0" href="#">Call to action</a>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-3 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-  }
-
-  .bm-header-3__container {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    align-items: center;
-    column-gap: var(--space-s);
-  }
-
-  .bm-header-3__brand {
-    width: 15%;
-  }
-
-  .bm-header-3__nav-wrapper {
-    width: 60%;
-    display: flex;
-    flex-direction: row;
-  }
-
-  .bm-header-3__cta-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    column-gap: var(--space-s);
-    width: 25%;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  .bm-header-3__cta-secondary {
-    font-size: var(--fs-0);
-  }
-
-  .bm-header-3__cta--primary {
-    font-size: var(--fs-0);
-  }
-
-  /* bm-custom */
-  .bm-header-3__cta-secondary {
-  	margin-left: 2rem;
-  }
-</style>

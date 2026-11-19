@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,103 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="feature-18-container">
-    <div class="feature-18-content">
-      <h2 class="feature-18-content__heading">{heading}</h2>
-      <p class="accent-h">Accent heading</p>
-      <p class="feature-18-content__text">{fs}</p>
-    </div>
-    <div class="feature-18-list-wrapper">
-      <div class="feature-18-list-ul list--none">
-        {items.map((it) => (
-          <div class="feature-18-list-item">
-            <div class="feature-18-list-item__content">
-              <h3 class="feature-18-list-item__heading">{it.title}</h3>
-              <p class="feature-18-list-item__text">{it.text}</p>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">Accent heading</p>
+        <p class="text-fluid-0">{fs}</p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div>
+              <div>
+                <h3 class="text-fluid-2">{it.title}</h3>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              <div>
+                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              </div>
             </div>
-            <div class="feature-18-list-item__media">
-              <figure class="feature-18-list-item__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .feature-18-container {
-    display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .feature-18-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .feature-18-list-ul {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .feature-18-list-item {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
-    align-items: center;
-  }
-
-  .feature-18-list-item__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .feature-18-list-item__image {
-    object-fit: cover;
-    height: 10rem;
-  }
-
-  /* bm-custom */
-  .feature-18-list-item {
-  	box-shadow: var(--shadow-card);
-  }
-  
-  .feature-18-list-item:nth-child(1), .feature-18-list-item:nth-child(4) {
-  	grid-column: 1 / 10;
-  }
-  
-  .feature-18-list-item:nth-child(2), .feature-18-list-item:nth-child(3) {
-  	grid-column: 4 / -1;
-  }
-  
-  @media (max-width:991px) {
-  	.feature-18-list-item:nth-child(1), .feature-18-list-item:nth-child(4) {
-  	grid-column: auto;
-  }
-  
-  .feature-18-list-item:nth-child(2), .feature-18-list-item:nth-child(3) {
-  	grid-column: auto;
-  }
-  }
-
-  /* bm-custom */
-  .feature-18-list-item__image {
-  	aspect-ratio: 6 / 5;
-  }
-</style>

@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,93 +17,34 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-103__container">
-    <div class="bm-hero-103__intro">
-      <div class="bm-hero-103__column">
-        <h1 class="bm-hero-103__heading">{heading}</h1>
-        <p class="bm-accent-heading">Accent heading</p>
-      </div>
-      <div class="bm-hero-103__column">
-        <p class="bm-hero-103__subheading">{fs}</p>
-        <div class="cta-combo">
-          <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
-          <a class="link--white" href="#">Secondary action →</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+        </div>
+        <div>
+          <p class="text-fluid-0">{fs}</p>
+          <div>
+            <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+            <a class="text-fluid-0" href="#">Secondary action →</a>
+          </div>
         </div>
       </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
-    <div class="bm-hero-103__media">
-      <figure class="bm-hero-103__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    </div>
+    <div></div>
   </div>
-  <div></div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-103 {
-    position: relative;
-    overflow: clip;
-  }
-
-  .bm-hero-103__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-103__intro {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: calc(100% * 1 / 2);
-  }
-
-  .bm-hero-103__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-103__heading {
-    font-size: calc(var(--fs-4) * 1.8);
-  }
-
-  .bm-hero-103__subheading {
-    font-size: var(--fs-2);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-103__media {
-    align-items: flex-end;
-  }
-
-  .bm-hero-103__image {
-    height: 100%;
-    width: calc(50vw + (var(--content-width) /  2));
-    object-fit: cover;
-    border-radius: 0 var(--r-card) var(--r-card) 0;
-  }
-
-  /* bm-custom */
-  .bm-hero-103 {
-    --block-size: 80%; /* Control psuedo height */
-    --psuedo-bg-color: var(--fs-0);
-  }
-  
-  .bm-hero-103::before {
-    content: '';
-    position: absolute;
-    inset-block-start: 0;
-    inline-size: 100%;
-    block-size: var(--acss-block-size);
-    background-color: var(--acss-psuedo-bg-color);
-    z-index: -1;
-  }
-</style>

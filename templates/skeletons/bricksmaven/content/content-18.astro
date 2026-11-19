@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,73 +17,25 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="content-18-container">
-    <div class="content-18__content">
-      <h2 class="content-18__heading">{heading}</h2>
-      <p class="content-18__text">{fs}</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="content-18__media">
-      <figure class="content-18__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .content-18 {
-    background: var(--bg-subtle);
-    position: relative;
-  }
-
-  .content-18-container {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .content-18__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    position: relative;
-    z-index: 1;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .content-18__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .content-18::before {
-  	content:"";
-    width:20vw;
-    height:50%;
-    background-color: var(--bg-subtle);
-    position:absolute;
-    left:0;
-    top:50%;
-    transform: translateY(-50%);
-  }
-  
-  @media (max-width:478px) {
-  	.content-18::before {
-    height:100%;
-    width:50%;
-  }
-  }
-</style>

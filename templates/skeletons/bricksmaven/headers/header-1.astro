@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,69 +17,26 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-header-1__container">
-    <div class="bm-header-1__brand">
-      <img class="bm-header-1-brand__logo"></img>
-    </div>
-    <div class="bm-header-1__nav-wrapper">
-      <div class="bm-header-1__nav"></div>
-    </div>
-    <div class="bm-header-1__cta">
-      <a class="cta-header btn--primary btn--outline" href="#">Call to action</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <span class="logo">{brand}</span>
+      </div>
+      <div>
+        <div></div>
+      </div>
+      <div>
+        <a class="text-fluid-0" href="#">Call to action</a>
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-header-1 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-    position: relative;
-    z-index: 1;
-  }
-
-  .bm-header-1__container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bm-header-1__brand {
-    align-items: flex-start;
-  }
-
-  .bm-header-1__cta {
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .btn--outline {
-    border-top: .1rem solid var(--action-primary);
-    border-right: .1rem solid var(--action-primary);
-    border-bottom: .1rem solid var(--action-primary);
-    border-left: .1rem solid var(--action-primary);
-  }
-
-  /* bm-custom */
-  .header-1__nav nav {
-  	  position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-  }
-</style>

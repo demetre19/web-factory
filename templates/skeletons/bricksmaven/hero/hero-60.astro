@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,171 +17,60 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="bm-hero-60__container">
-    <div class="bm-hero-60__content">
-      <div class="bm-hero-60__top">
-        <h1 class="bm-hero-60__heading">{heading}</h1>
-        <p class="accent-h accent-h--alt">Accent heading</p>
-        <p class="bm-hero-60__subheading">{fs}</p>
+  <div class="sec-inner">
+    <div class="grid-auto gap-fluid-l">
+      <div>
+        <div>
+          <h1 class="text-fluid-4">{heading}</h1>
+          <p class="text-fluid-0">Accent heading</p>
+          <p class="text-fluid-0">{fs}</p>
+        </div>
+        <div>
+          <a class="text-fluid-0" href="#">Call to action</a>
+          <a class="text-fluid-0" href="#">Secondary action →</a>
+        </div>
       </div>
-      <div class="cta-combo">
-        <a class="btn--white" href="#">Call to action</a>
-        <a class="btn--link" href="#">Secondary action →</a>
+      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div>
+        <div>
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <p class="text-fluid-0">Call us</p>
+              <p class="text-fluid-0">+000 123 456 789</p>
+            </div>
+          </div>
+          <div>
+            <div>
+              <span data-icon="lucide" aria-hidden="true"></span>
+            </div>
+            <div>
+              <p class="text-fluid-0">E-mail</p>
+              <p class="text-fluid-0">info@clienturl.com</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <figure class="bm-hero-60__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-    <div class="bm-hero-60__footer">
-      <div class="bm-hero-60-contact-usp list--none">
-        <div class="bm-hero-60-contact-usp-card">
-          <div class="bm-hero-60-contact-usp-card__icon-wrapper">
-            <span class="bm-hero-60-contact-usp-card__icon" data-icon="lucide" aria-hidden="true"></span>
+    <div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <a class="text-fluid-0" href="#">{it.text}</a>
           </div>
-          <div class="bm-hero-60-contact-usp-card__content">
-            <p class="bm-hero-60-contact-usp-card__heading">Call us</p>
-            <p class="bm-hero-60-contact-usp-card__text">+000 123 456 789</p>
-          </div>
-        </div>
-        <div class="bm-hero-60-contact-usp-card">
-          <div class="bm-hero-60-contact-usp-card__icon-wrapper">
-            <span class="bm-hero-60-contact-usp-card__icon" data-icon="lucide" aria-hidden="true"></span>
-          </div>
-          <div class="bm-hero-60-contact-usp-card__content">
-            <p class="bm-hero-60-contact-usp-card__heading">E-mail</p>
-            <p class="bm-hero-60-contact-usp-card__text">info@clienturl.com</p>
-          </div>
-        </div>
+        ))}
       </div>
-    </div>
-  </div>
-  <div class="bm-social-list__wrapper">
-    <div class="bm-social-list-text list--none">
-      {items.map((it) => (
-        <div class="bm-social-list-text-item">
-          <a class="bm-social-list-text-item__link" href="#">{it.text}</a>
-        </div>
-      ))}
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .bm-hero-60 {
-    height: 1020;
-    position: relative;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-
-  .bm-hero-60__container {
-    height: 100vh;
-    justify-content: center;
-    align-items: flex-start;
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-60__content {
-    width: var(--content-width);
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-60__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-60__heading {
-    font-size: calc(var(--fs-4) * 1.4);
-  }
-
-  .bm-hero-60__subheading {
-    width: var(--content-width);
-  }
-
-  .cta-combo {
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .btn--link {
-    background: transparent;
-    padding: 0 0 0 0;
-  }
-
-  .bm-hero-60__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  .bm-hero-60__footer {
-    padding: var(--space-l) 0 0 0;
-    border-top: 1 solid var(--bg-subtle);
-  }
-
-  .bm-hero-60-contact-usp {
-    flex-direction: row;
-  }
-
-  .bm-hero-60-contact-usp-card {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    width: auto;
-  }
-
-  .bm-hero-60-contact-usp-card__icon-wrapper {
-    width: auto;
-  }
-
-  .bm-hero-60-contact-usp-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-    flex-wrap: nowrap;
-  }
-
-  .bm-hero-60-contact-usp-card__heading {
-    font-weight: 700;
-  }
-
-  .bm-social-list__wrapper {
-    position: absolute;
-    right: var(--space-xs);
-    justify-content: flex-end;
-    align-items: flex-end;
-    top: 50%;
-  }
-
-  .bm-social-list-text {
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .bm-social-list-text-item {
-    height: auto;
-    width: auto;
-  }
-
-  .bm-social-list-text-item__link {
-    text-transform: uppercase;
-  }
-
-  /* bm-custom */
-  .bm-social-list-text-item__link {
-    writing-mode: vertical-lr;
-  }
-</style>

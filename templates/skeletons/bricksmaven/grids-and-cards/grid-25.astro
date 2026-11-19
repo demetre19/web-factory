@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,202 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="grid-25-container">
-    <div class="intro intro--left z--10">
-      <h2 class="intro__heading">{heading}</h2>
-      <p class="intro__subheading">{fs}</p>
-      <p class="intro__accent-heading">Tagline</p>
-      <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
-    </div>
-    <div class="grid-25-card-slider">
-      <div class="grid-25-slider">
-        {items.map((it) => (
-          <div class="grid-25-card">
-            <div class="grid-25-card__inner-content">
-              <h2 class="grid-25-card__heading clickable-parent">{it.title}</h2>
-              <a class="grid-25-card__link" href="#">{it.text}</a>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <h2 class="text-fluid-2">{heading}</h2>
+        <p class="text-fluid-0">{fs}</p>
+        <p class="text-fluid-0">Tagline</p>
+        <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
+      </div>
+      <div>
+        <div>
+          {(items || []).map((it) => (
+            <div class="grid-auto gap-fluid-l">
+              <div>
+                <h2 class="text-fluid-2">{it.title}</h2>
+                <a class="text-fluid-0" href="#">{it.text}</a>
+              </div>
+              <div></div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div class="grid-25-card__overlay"></div>
-            <figure class="grid-25-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .grid-25 {
-    overflow: hidden;
-  }
-
-  .grid-25-container {
-    display: grid;
-    grid-template-columns: calc(100% * 3 / 1);
-    gap: calc(var(--space-m) * 1.2);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .intro--left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
-    width: auto;
-  }
-
-  .grid-25-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-  }
-
-  .grid-25-card__inner-content {
-    row-gap: calc(var(--flow-spacing) / 6);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    z-index: 2;
-    height: 100%;
-    justify-content: flex-end;
-  }
-
-  .grid-25-card__heading {
-    font-size: var(--fs-1);
-    text-transform: uppercase;
-    letter-spacing: 2;
-  }
-
-  .grid-25-card__link {
-    font-size: var(--fs-0);
-  }
-
-  .grid-25-card__overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  .grid-25-card__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
-
-  /* bm-custom */
-  .grid-25-slider .splide__track {
-  	overflow: visible;
-  }
-  
-  .grid-25-slider::before {
-  	content: "";
-    width: 100vw;
-    max-width: 100vw;
-    height: 100%;
-    min-height: 100%;
-    max-height: 100%;
-    position: absolute;
-    top: 0;
-    right: 100%;
-    z-index: 1;
-    background-color: var(--bg-canvas);
-    
-  }
-  
-  
-  .grid-25-slider .splide__arrows {
-    display: flex!important;
-    position: absolute;
-    gap: var(--space-xs);
-    top: calc(100% + var(--space-l));
-   	left: 50%;
-    width: 100%;
-    justify-content: center;
-    transform: translateX(-50%);
-    z-index: 0;
-  }
-  
-  .grid-25-slider .splide__arrow {
-      position: relative !important;
-  }
-
-  /* bm-custom */
-  /* Card */
-  
-  .grid-25-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .grid-25-card:focus-within {
-  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
-  
-  }
-  
-  /* Content */
-  .grid-25-card__inner-content {
-    transition: .4s linear;
-  	backdrop-filter: blur(1px);
-  }
-  
-  .grid-25-card:hover .grid-25-card__inner-content, .grid-25-card:focus-within .grid-25-card__inner-content {
-  	backdrop-filter: blur(0px);
-  }
-  
-  .grid-25-card__heading {
-    transition: .4s linear;
-  }
-  
-  .grid-25-card:hover .grid-25-card__heading, .grid-25-card:focus-within .grid-25-card__heading {
-  	color: var(--action-primary);
-  }
-  
-  /* Image */
-  .grid-25-card__image {
-  	transition: .6s linear;
-  }
-  
-  .grid-25-card:hover .grid-25-card__image, .grid-25-card:focus-within .grid-25-card__image {
-  	scale: 1.1;
-  }
-  
-  /* Overlay */
-  .grid-25-card__overlay {
-  	transition: .8s linear;
-    opacity: 0.8;
-  }
-  
-  .grid-25-card:hover .grid-25-card__overlay, .grid-25-card:focus-within .grid-25-card__overlay {
-  	background-image: linear-gradient(color-mix(in srgb, var(--bg-subtle) 10%, transparent), color-mix(in srgb, var(--bg-subtle) 90%, transparent));
-    opacity: 1;
-  }
-</style>

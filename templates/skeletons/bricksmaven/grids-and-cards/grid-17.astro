@@ -8,6 +8,7 @@
  * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
@@ -16,95 +17,37 @@ interface Props {
              items?: any[] }[];
 }
 const {
+  brand = 'Brand',
   heading = 'Section heading',
   fs = 'The first sentence a reader needs.',
-  cta, items = [],
+  cta = { label: '', href: '#' },
+  items = [],
 } = Astro.props;
 ---
 
 <div>
-  <div class="gridcard-17-container">
-    <div class="intro">
-      <p class="intro__subheading">Lorem ipsum set dolor amet</p>
-      <h2 class="intro__heading">{heading}</h2>
-    </div>
-    <div class="gridcard-17-list list--none">
-      {items.map((it) => (
-        <div class="gridcard-17-card">
-          <div class="gridcard-17-card__content">
-            <div class="gridcard-17-article__detail">
-              <p class="gridcard-17-article__date">{it.text}</p>
-              <h2 class="gridcard-17-article__title clickable-parent">{it.title}</h2>
+  <div class="sec-inner">
+    <div>
+      <div>
+        <p class="text-fluid-0">Lorem ipsum set dolor amet</p>
+        <h2 class="text-fluid-2">{heading}</h2>
+      </div>
+      <div>
+        {(items || []).map((it) => (
+          <div>
+            <div>
+              <div>
+                <p class="text-fluid-0">{it.text}</p>
+                <h2 class="text-fluid-2">{it.title}</h2>
+              </div>
+              <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-            <span class="gridcard-17-article__icon" data-icon="lucide" aria-hidden="true"></span>
+            <div>
+              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            </div>
           </div>
-          <div class="gridcard-17-card__media">
-            <figure class="gridcard-17-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </div>
 </div>
-
-<style is:global>
-/* bm: components layer (unlayered — see bricks_translate) */
-  .gridcard-17-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .gridcard-17-list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-m);
-  }
-
-  .gridcard-17-card {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-
-  .gridcard-17-card__content {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, auto));
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    background: var(--bg-canvas);
-    height: 100%;
-  }
-
-  .gridcard-17-article__detail {
-    display: grid;
-    gap: .5em;
-  }
-
-  .gridcard-17-article__icon {
-    background: var(--action-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .gridcard-17-card__image {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* bm-custom */
-  .gridcard-17-article__title > a::after {
-  	z-index: 1;
-  }
-</style>
