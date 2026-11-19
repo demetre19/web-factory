@@ -88,7 +88,6 @@ job (bullet marker, ghost background, badge frame, divider); a
 motif too complex to scale across all four isn't a motif.
 `data-motif` svgs with >2 geometric elements or text/image detail
 FAIL.
-DNA already ruled incoherent.
 
 ## Enforcement
 
