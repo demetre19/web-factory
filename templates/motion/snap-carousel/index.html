@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: snap-carousel — CSS scroll-snap carousel</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.wrap{width:min(920px,94vw)}
+h1{font-size:1.6rem;margin:0 0 16px}
+/* --- recipe ----------------------------------------------------------
+   KeenSlider without the library (bastion/westend pattern): an overflow
+   scroller with x-mandatory snap, centred peeks via scroll-padding,
+   prev/next buttons scrollBy one snap distance, progress dots synced on
+   scroll events, and a scaleX progress bar with auto-advance — the
+   whole carousel vocabulary the site family uses, ~30 lines of JS. */
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-padding-inline:calc(50% - 140px);scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;padding:4px 0 12px}
+.rail::-webkit-scrollbar{display:none}
+.slide{flex:0 0 280px;scroll-snap-align:center;aspect-ratio:4/3;
+  border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(150deg,var(--card,#fff),transparent);
+  display:grid;place-items:center;font-size:1rem;color:var(--muted);
+  transition:opacity .4s ease,transform .4s ease}
+.slide:not(.is-active){opacity:.55;transform:scale(.97)}
+.slide.is-active{opacity:1}
+.ctl{display:flex;align-items:center;gap:14px;margin-top:12px}
+.ctl button{border:1px solid var(--line);background:var(--bg);color:var(--ink);
+  border-radius:8px;padding:.4em .9em;font:12px system-ui;cursor:pointer}
+.dots{display:flex;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}
+.dot.on{background:var(--accent)}
+.prog{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);transform-origin:0 50%;
+  transform:scaleX(var(--p,0));transition:transform .25s linear}
+@media (prefers-reduced-motion:reduce){
+  .slide{transition:none}
+  .prog{display:none} /* no auto-advance without motion */
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="wrap">
+  <h1>Testimonials</h1>
+  <div class="rail" id="rail">
+    <div class="slide">“It just works.” — A</div>
+    <div class="slide">“Shipped in a week.” — B</div>
+    <div class="slide">“The calm kind of motion.” — C</div>
+    <div class="slide">“Support answered in minutes.” — D</div>
+    <div class="slide">“We stopped tweaking.” — E</div>
+    <div class="slide">“Six more demos like this.” — F</div>
+  </div>
+  <div class="ctl">
+    <button id="prev" aria-label="previous">← prev</button>
+    <div class="dots" id="dots"></div>
+    <div class="prog"><i id="prog"></i></div>
+    <button id="next" aria-label="next">next →</button>
+  </div>
+</div>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS (~30 lines): dots + prev/next + active-slide sync + a 7 s
+// scaleX auto-advance (Stage's data-progress pattern). All optional —
+// the rail scrolls+snaps natively with zero JS.
+const rail = document.getElementById('rail');
+const slides = [...rail.children];
+const dots = document.getElementById('dots');
+const prog = document.getElementById('prog');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const idx = () => Math.round(rail.scrollLeft / (slides[1].offsetLeft - slides[0].offsetLeft));
+const go = i => { i = Math.max(0, Math.min(slides.length-1, i));
+  rail.scrollTo({left: slides[i].offsetLeft - (rail.clientWidth - slides[i].offsetWidth)/2,
+    behavior: reduce ? 'instant' : 'smooth'}); };
+slides.forEach((s, i) => { const d = document.createElement('button'); d.className = 'dot'; d.setAttribute('aria-label','slide '+(i+1));
+  d.onclick = () => go(i); dots.append(d); });
+const dotEls = [...dots.children];
+function sync() { const i = Math.min(idx(), slides.length - 1);
+  slides.forEach((s,n)=>s.classList.toggle('is-active', n===i));
+  dotEls.forEach((d,n)=>d.classList.toggle('on', n===i));
+  if (!reduce) prog.parentElement.style.setProperty('--p', i/(slides.length-1)); }
+rail.addEventListener('scroll', sync, {passive:true}); sync();
+document.getElementById('prev').onclick = () => go(idx()-1);
+document.getElementById('next').onclick = () => go(idx()+1);
+if (!reduce) setInterval(() => {
+  if (document.hidden || rail.matches(':hover')) return;
+  go(idx() >= slides.length-1 ? 0 : idx()+1);
+}, 7000);
+</script>
+</body>
+</html>

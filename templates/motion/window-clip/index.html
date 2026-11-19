@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: window-clip — scroll curtain reveal</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{height:90vh;display:grid;place-items:center;color:var(--muted)}
+.spacer.bot{height:60vh}
+/* --- recipe ----------------------------------------------------------
+   Motion.astro's data-window curtain (brightlight/gerstner family):
+   the [data-window] frame clips its own content top-down while the
+   inner [data-window-view] slides up the same distance — a "window"
+   that opens on scroll. Rounded frame stays rounded (round keyword).
+   Self-subject transform freeze workaround: the WRAPPER's named
+   timeline drives both children (wrapper doesn't move). */
+[data-window]{position:relative;height:70vh;max-width:900px;margin:0 auto;
+  border-radius:24px;overflow:hidden;
+  clip-path:inset(0 round 24px)}
+[data-window-view]{position:absolute;inset:0;
+  background:linear-gradient(160deg,var(--accent) 0%,var(--muted) 100%);
+  display:grid;place-items:center;color:var(--bg);font-size:1.4rem}
+html.native-tl [data-window]{view-timeline-name:--win}
+html.native-tl [data-window]{animation:win-clip linear both;animation-timeline:--win}
+@keyframes win-clip{from{clip-path:inset(0 round 24px)}
+  to{clip-path:inset(70vh 0 0 0 round 24px)}}
+html.native-tl [data-window-view]{animation:win-view linear both;animation-timeline:--win}
+@keyframes win-view{from{transform:translateY(0)}to{transform:translateY(70vh)}}
+@media (prefers-reduced-motion:reduce){
+  [data-window],[data-window-view]{animation:none;clip-path:none;transform:none;position:relative}
+}
+/* --------------------------------------------------------------------- */
+small{display:block;text-align:center;color:var(--muted);margin-top:12px}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer">scroll ↓ — a rounded window opens over the panel</div>
+<div data-window>
+  <div data-window-view>the panel under the curtain</div>
+</div>
+<small>clip-path inset round + matched inner translate — one scroll timeline</small>
+<div class="spacer bot">curtain fully open ↑</div>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS: CSS scroll-timeline where supported, else rAF writes the
+// same two values (clip inset + view translate) from section progress.
+const win = document.querySelector('[data-window]');
+const view = win.querySelector('[data-window-view]');
+const R = getComputedStyle(win).borderTopLeftRadius || '24px';
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (CSS.supports('animation-timeline','view()')) {
+    document.documentElement.classList.add('native-tl');
+  } else {
+    const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+    (function scr(){
+      const r = win.getBoundingClientRect();
+      const q = clamp((innerHeight - r.top)/(innerHeight + r.height), 0, 1);
+      const h = r.height * q;
+      win.style.clipPath = `inset(${h}px 0 0 0 round ${R})`;
+      view.style.transform = `translateY(${h}px)`;
+      requestAnimationFrame(scr);
+    })();
+  }
+}
+</script>
+</body>
+</html>

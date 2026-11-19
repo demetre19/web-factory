@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: count-up — settle-in + number reveal</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{height:70vh;display:grid;place-items:center;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;max-width:760px;margin:0 auto;padding:0 24px 40vh;text-align:center}
+.stats b{display:block;font-size:2.6rem;font-weight:600}
+.stats span{color:var(--muted);font-size:.85rem}
+/* --- recipe ----------------------------------------------------------
+   Reveal.astro pair (copperlane): [data-settle] load-time settle —
+   opacity 0→1 + scale 1.04→1 on 1.6s power2-ish out — plus [data-count]
+   numbers that count 0→n once at 92% view, power2-eased, Intl-formatted.
+   Settle is transform+opacity, count-up is JS text only (cheap). */
+[data-settle]{opacity:0;transform:scale(1.04);
+  transition:opacity 1.6s var(--ease-out,cubic-bezier(.25,.46,.45,.94)),
+             transform 1.6s var(--ease-out,cubic-bezier(.25,.46,.45,.94))}
+[data-settle].in{opacity:1;transform:none}
+[data-count]{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){
+  [data-settle]{opacity:1;transform:none;transition:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer">scroll ↓ — the numbers settle, then count</div>
+<div class="stats" data-settle>
+  <div><b><span data-count>12400</span></b><span>projects shipped</span></div>
+  <div><b><span data-count>98</span>%</b><span>uptime</span></div>
+  <div><b><span data-count>36</span></b><span>team members</span></div>
+  <div><b><span data-count>1250</span>k</b><span>lines reviewed</span></div>
+</div>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS (~20 lines): .in on settle elements; count-up via rAF with
+// a power2-out ease; Intl formatting; once per element; reduce-aware.
+const fmt = new Intl.NumberFormat('en-US');
+const io = new IntersectionObserver(es => {
+  for (const e of es) if (e.isIntersecting) {
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-count]').forEach(n => count(n));
+    io.unobserve(e.target);
+  }
+}, { rootMargin: '0px 0px -8%' });
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('[data-settle]').forEach(el => io.observe(el));
+} else {
+  document.querySelectorAll('[data-settle]').forEach(el => el.classList.add('in'));
+}
+function count(el) {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const tail = el.textContent.replace(/[\d,\s]/g, '');       // keep % / k suffix
+  const target = parseInt(el.textContent.replace(/\D/g, ''), 10);
+  if (!target) return;
+  el.textContent = fmt.format(target) + tail;                  // final text first…
+  el.style.display = 'inline-block';
+  el.style.minWidth = el.getBoundingClientRect().width + 'px'; // …so growth never shifts layout
+  const t0 = performance.now(), dur = 1400;
+  (function step(t) {
+    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 2); // power2.out
+    el.textContent = fmt.format(Math.round(target * e)) + tail;
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+</script>
+</body>
+</html>

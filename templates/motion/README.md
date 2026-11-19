@@ -42,9 +42,11 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
 | blob-morph | ambient border-radius blobs | loop | none |
 | blur-reveal | photo "focus" reveal | in-view | light |
 | clip-conveyor | windowed translate loop + dash ticker | loop | none |
+| count-up | settle-in + number reveal | in-view | light |
 | dash-ticker | pulse line sweep | loop | none |
 | draw-icon-loop | looping line-draw cycle | loop | none |
 | draw-icon | SVG line-draw entrance | in-view | light |
+| ken-burns | slow settle zoom on imagery | load | none |
 | leaf-sway | ambient botanical sway | loop | none |
 | line-mask-entrance | masked headline rise | load | light |
 | menu-cascade | staggered item entrance on open | active | light |
@@ -59,8 +61,10 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
 | scroll-scrub | ink words + parallax + horizontal track | scroll-linked | light |
 | slide-entrance | enterView animation system | in-view | light |
 | snap-arrange | scatter-to-grid loop | loop | none |
+| snap-carousel | CSS scroll-snap carousel (KeenSlider without KeenSlider) | active | light |
 | stamp-check | confirm sequence (tint → draw → stamp) | loop | none |
 | story-vine | zigzag process illustration | loop | none |
+| window-clip | scroll curtain reveal | scroll-linked | light |
 | word-cycler | handoff phrase rotation | loop | none |
 | write-lines | staggered text-write + stamp | loop | none |
 

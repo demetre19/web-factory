@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: ken-burns — slow settle zoom on imagery</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;padding:6vh 6vw}
+.frame{position:relative;overflow:hidden;border-radius:20px;min-height:60vh}
+.copy{display:grid;place-items:center;padding:0 5vw;text-align:center}
+.copy h1{font-size:2rem;margin:0 0 10px}
+.copy p{color:var(--muted);max-width:34ch;margin:0}
+/* --- recipe ----------------------------------------------------------
+   Stage.astro's project-backdrop move (flaco): the active image starts
+   scale(1.08–1.2) and settles to 1 over ~9 s power1-2.out — a slow
+   "breathing room" zoom-OUT (zoom-in reads as cheap zoom galleries).
+   One-shot on activation; transform-only. */
+.kb{position:absolute;inset:-8%;overflow:hidden}
+.kb img{width:100%;height:100%;object-fit:cover;display:block;
+  transform:scale(1.08);transform-origin:60% 40%;
+  animation:kb var(--kb-dur,9s) cubic-bezier(.25,.46,.45,.94) both}
+@keyframes kb{from{transform:scale(1.08)}to{transform:none}}
+.kb .scene{position:absolute;inset:0;width:100%;height:100%;
+  background:linear-gradient(200deg,var(--accent) 0%,var(--muted) 55%,var(--line) 100%);
+  transform:scale(1.08);transform-origin:60% 40%;
+  animation:kb var(--kb-dur,9s) cubic-bezier(.25,.46,.45,.94) both}
+@media (prefers-reduced-motion:reduce){
+  .kb .scene,.kb img{animation:none;transform:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="hero">
+  <div class="frame"><div class="kb"><div class="scene"></div></div></div>
+  <div class="copy">
+    <div>
+      <h1>Settle, don't zoom</h1>
+      <p>The image starts 8% oversized and relaxes to fit over 9 s — the
+      stage-backdrop move. Zoom-out reads as editorial; zoom-in reads as
+      a gallery widget.</p>
+    </div>
+  </div>
+</div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
+</body>
+</html>
