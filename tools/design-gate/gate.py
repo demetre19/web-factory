@@ -5981,9 +5981,10 @@ def cmd_selftest():
                 fails.append(f'{name}/fail fixture NOT caught')
     fails += cli_selftest()
     tested = [n for n in checks if os.path.isdir(os.path.join(fx, n))]
-    missing = set(checks) - set(tested) - {
+    exempt = {
             'check_astro_build',     # needs a real astro toolchain
             'check_mobbin_auth'}     # needs ~/.mobbin-oauth outside fixtures
+    missing = set(checks) - set(tested) - exempt
     for n in sorted(missing):
         fails.append(f'no fixtures for {n}')
     if fails:
@@ -5992,7 +5993,8 @@ def cmd_selftest():
             print('  -', x)
         return 1
     print(f'selftest PASS: {ran} fixture runs across '
-          f'{len(tested)} checks')
+          f'{len(tested)} checks '
+          f'({len(exempt)} env-exempt: {", ".join(sorted(exempt))})')
     return 0
 
 # ---------------------------------------------------------------- main
