@@ -4827,6 +4827,16 @@ def _variant_fails(ctx, e):
                  'vector, not a mood (mark the baseline one baseline: true)')
     if not isinstance(e.get('score'), (int, float)):
         f.append(f'VG.6 variant {vid}: no predicted score on the tile')
+    # B F-31 — the W3 layout lock is frozen: NO non-baseline variant may
+    # move a structural knob (wildcard or not); only the wildcard vector
+    # earns style-only exceptions downstream.
+    if not e.get('baseline') and e.get('vector') != 'wildcard':
+        for k in (e.get('deltas') or {}):
+            tier = (knobs.get(k) or {}).get('tier')
+            if tier in ('structural', 'invariant'):
+                f.append(f'VG.5 variant {vid}: delta on {tier} knob '
+                         f'"{k}" — layout locks at W3; look variants '
+                         'move stylistic knobs only')
     # B F-31 — a wildcard mutates style only; structural knobs never move
     if e.get('vector') == 'wildcard':
         for k in (e.get('deltas') or {}):
