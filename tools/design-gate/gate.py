@@ -9030,6 +9030,12 @@ REDTEAM_MUTATIONS = [
  ('RT-TK3-HEX', 'TK.3', (
   ('APPEND', 'site/src/components/sections/Hero.astro',
    '<div style="color: #123456">x</div>'),)),
+ ('RT-VG9-ACCENTCHROME', 'VG.9', (
+  ('APPEND', 'preview/variants.html',
+   '<style>.variant-pickrow{background:var(--accent)}</style>'),)),
+ ('RT-VG9-SELECTFILL', 'VG.9', (
+  ('APPEND', 'preview/variants.html',
+   '<style>.picker-opt.active{background:#2563eb}</style>'),)),
 ]
 
 
