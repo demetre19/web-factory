@@ -30,8 +30,27 @@ import cache  # noqa: E402
 HTML_KITS = ('preline', 'flowbite', 'hyperui')
 SVG_KITS = ('shapes', 'icons')
 
+# shell v2: kits use Tailwind v4 semantic tokens (text-body,
+# bg-neutral-primary, rounded-base, fg-brand) — the v3 CDN build
+# doesn't emit them, which is why v1 renders all read 'minimal'.
+SHELL_V = 'v2'
+
+TW4 = ('<script src="https://cdn.jsdelivr.net/npm/'
+       '@tailwindcss/browser@4"></script>')
+KIT_ASSETS = {
+    'flowbite': TW4 +
+        '<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/'
+        'dist/flowbite.min.css" rel="stylesheet">'
+        '<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/'
+        'dist/flowbite.min.js"></script>',
+    'preline': TW4 +
+        '<script src="https://cdn.jsdelivr.net/npm/preline@3.2.3/'
+        'dist/preline.js"></script>',
+    'hyperui': TW4,  # markup-only kit, no vendored CSS
+}
+
 SHELL = """<!doctype html><html><head><meta charset="utf-8">
-<script src="https://cdn.tailwindcss.com"></script>
+__ASSETS__
 <style>body{margin:0;background:#fff}</style>
 </head><body style="padding:24px;display:flex;align-items:center;
 justify-content:center;min-height:100vh">
@@ -67,7 +86,7 @@ def render(kit_filter=None, limit=10**9):
         if kit_filter and kit != kit_filter:
             continue
         for src, kind in jobs(kit):
-            key = sha(src)
+            key = sha(src) + ':' + SHELL_V
             if cache.get('bank_shot', key):
                 continue
             todo.append((kit, src, kind, key))
@@ -86,9 +105,10 @@ def render(kit_filter=None, limit=10**9):
                 else:
                     body = open(src, encoding='utf-8',
                                 errors='replace').read()
-                pg.set_content(SHELL.replace('__BODY__', body),
-                               wait_until='load')
-                pg.wait_for_timeout(400)
+                shell = SHELL.replace('__ASSETS__', KIT_ASSETS.get(
+                    kit, TW4)).replace('__BODY__', body)
+                pg.set_content(shell, wait_until='load')
+                pg.wait_for_timeout(600)
                 op = out_path(src, kit)
                 os.makedirs(os.path.dirname(op), exist_ok=True)
                 pg.screenshot(path=op)

@@ -1,0 +1,707 @@
+{
+ "model": "google/gemini-2.5-flash-lite",
+ "n": 100,
+ "agreement": 34,
+ "labels": {
+  "http-www-madebyhusk-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Book a Discovery Meeting, Request a free quote"
+  },
+  "http-fionavilmer-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Curating, Textes, Publications, artist names"
+  },
+  "http-dmcg-co": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1,
+   "evidence": "The Design Office, Projects, Catalog"
+  },
+  "http-atlason-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Client work gallery, 'Works' section"
+  },
+  "https-21tsi-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.8,
+   "evidence": "Navigation links: THE SPHERE LAB, JOIN THE TEAM, INVEST"
+  },
+  "https-111w57-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "hospitality",
+   "gemini_conf": 0.9,
+   "evidence": "Manhattan's Newest Landmark, full-floor residences"
+  },
+  "https-1984-vc": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Portfolio, About, Team, client work"
+  },
+  "https-360lexingtonave-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "hospitality",
+   "gemini_conf": 0.9,
+   "evidence": "Prime Corner Retail, Explore Offices, Contact Us"
+  },
+  "https-abelfragrance-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "ecommerce",
+   "gemini_conf": 1,
+   "evidence": "Product images, 'DISCOVER HOLIDAY SHOP' button"
+  },
+  "https-abetterlou-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "med-spa",
+   "gemini_conf": 0.9,
+   "evidence": "Weight loss, GLP-1, prescription, medication"
+  },
+  "https-adapt-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Products, Solutions, Pricing, Get started button"
+  },
+  "https-aelen-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "med-spa",
+   "gemini_conf": 1,
+   "evidence": "Clinic, treatments, physiotherapists, patient reviews"
+  },
+  "https-aacckc-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 1.0,
+   "evidence": "Carpet cleaning service with quotes and call buttons"
+  },
+  "https-aelen-lexdemos-com-book": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "med-spa",
+   "gemini_conf": 0.9,
+   "evidence": "Book an appointment, treatments, physiotherapist"
+  },
+  "https-aelen-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "med-spa",
+   "gemini_conf": 0.9,
+   "evidence": "Treatments, classes, pricing, patient reviews"
+  },
+  "https-aelen-lexdemos-com-first-visit": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "med-spa",
+   "gemini_conf": 0.9,
+   "evidence": "Treatments, Classes, Pricing, Buy"
+  },
+  "https-albedo-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "technology",
+   "gemini_conf": 0.9,
+   "evidence": "Albedo logo, systems, company, careers, blog"
+  },
+  "https-alexandre-araujo-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1,
+   "evidence": "Featured work, work, archive, contact"
+  },
+  "https-alexandratellez-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Artist name, project title, image gallery"
+  },
+  "https-alfred-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Buy Alfred, Sign In, Contact"
+  },
+  "https-alexzarour-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Gallery of client work, designer name"
+  },
+  "https-alfred-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Buy Alfred, Sign in, Contact"
+  },
+  "https-alfred-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Company, Resources, Buy Alfred"
+  },
+  "https-alfred-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Company, Resources, Buy Alfred"
+  },
+  "https-andfriends-soccer": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "digital archive documents soccer scene"
+  },
+  "https-andmade-jp": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Grid of client projects with descriptions"
+  },
+  "https-animos-app": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Features, Pricing, FAQ, Try it Free"
+  },
+  "https-aliciadubuis-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Photographer & Director, PRINTS, portfolio can be requested"
+  },
+  "https-archives-surfersjournal-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Magazine cover, subscribe, library, issues"
+  },
+  "https-archivio-uno-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Large numbers and letters, minimalist design"
+  },
+  "https-americanhousing-co": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Housing production, saving American dream"
+  },
+  "https-arrova-eu": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Stylized shelving display of objects"
+  },
+  "https-arcteryx-com-us-en-explore-system0": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "ecommerce",
+   "gemini_conf": 1,
+   "evidence": "Shop women's, shop men's buttons"
+  },
+  "https-ario-law-en": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Law firm website with 'Practices', 'Team', 'Contacts'"
+  },
+  "https-arrowdynamics-dev": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "technology",
+   "gemini_conf": 0.9,
+   "evidence": "Animation library for Framer"
+  },
+  "https-atolldigital-com-creative-montreal-web-agency": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Creative Montreal Web Agency, services, work, blog"
+  },
+  "https-atolldigital-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Montreal Web Design Agency"
+  },
+  "https-ashleybrookecs-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Creative studio, work, services, about"
+  },
+  "https-aubergine-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "aubergine projects menu garden company"
+  },
+  "https-aubergine-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "aubergine projects menu contact information"
+  },
+  "https-auge-xp-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Large text, social media links, minimal design"
+  },
+  "https-autorouter-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1.0,
+   "evidence": "Download for free, see how it works"
+  },
+  "https-aubergine-lexdemos-com-journal": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "aubergine projects journal client work"
+  },
+  "https-ayocin-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "technology",
+   "gemini_conf": 0.9,
+   "evidence": "Product page for Atmos Lamp"
+  },
+  "https-aventuradentalarts-com-service-esthetic-dentistry": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "docs",
+   "gemini_conf": 1.0,
+   "evidence": "Dental services, patient transformation gallery"
+  },
+  "https-bastion-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Construction company blog with articles"
+  },
+  "https-basecamp-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1.0,
+   "evidence": "Manage any project, coordinate every team"
+  },
+  "https-bd85bd85-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "creative studio making ideas matter"
+  },
+  "https-beings-co": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Discover talent, client work gallery"
+  },
+  "https-binkmade-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "ecommerce",
+   "gemini_conf": 0.9,
+   "evidence": "Product grid, new & best sellers"
+  },
+  "https-bergerfohr-art": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Design and art buttons, client work description"
+  },
+  "https-blackalgo-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "AI-powered trading algorithms, join waiting list"
+  },
+  "https-blink-capital": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Navigation links: Home, Origin, How Blink Works, Strategy, Contacts"
+  },
+  "https-aubergine-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "aubergine, projects, menu links"
+  },
+  "https-brand-squarespace-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Squarespace Foundations, Index, Typography"
+  },
+  "https-blond-cc": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Product images with titles and arrows"
+  },
+  "https-bloomparis-tv": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "production partner, full services, talents, locations"
+  },
+  "https-brant-paints-webflow-io-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Products, Solutions, Media, Contact links"
+  },
+  "https-brant-paints-webflow-io": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Industrial coatings for furniture and woodwork"
+  },
+  "https-brightlight-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Pricing, Buy Brightlight buttons"
+  },
+  "https-brightlight-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1.0,
+   "evidence": "Product, Pricing, Buy Brightlight button"
+  },
+  "https-brightlight-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Pricing, Buy Brightlight buttons"
+  },
+  "https-buio-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Magazine articles with tags and 'read further'"
+  },
+  "https-buio-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 0.9,
+   "evidence": "Contact form, buy button, sign in"
+  },
+  "https-buio-lexdemos-com-team": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "technology",
+   "gemini_conf": 0.9,
+   "evidence": "Product, Resources, Company, Customers, Overview"
+  },
+  "https-cactusdigitale-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Creative company, gallery of client work"
+  },
+  "https-bureaurouge-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Projects, talents, and client work"
+  },
+  "https-cantunsee-space": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Interactive tutorial with visual bugs"
+  },
+  "https-carbon-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Directory of production websites, studios"
+  },
+  "https-brightlight-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1.0,
+   "evidence": "Product, Pricing, Buy Brightlight button"
+  },
+  "https-carbon-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Journal, interviews, features, studios, buy Carbon"
+  },
+  "https-carbon-lexdemos-com-pricing": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Studios, job post, sponsored spot"
+  },
+  "https-carbon-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1,
+   "evidence": "Hand-picked directory of production websites and studios"
+  },
+  "https-carriera-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 1,
+   "evidence": "Job search, employers, post a job"
+  },
+  "https-carrington-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Contact form, attorneys, practice areas, offices"
+  },
+  "https-carrington-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Law firm, attorneys, practice areas, legal knowledge"
+  },
+  "https-buildaustralia-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "nonprofit",
+   "gemini_conf": 0.9,
+   "evidence": "Donate button, \"Join the Movement\" section"
+  },
+  "https-casagay-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Rental, catalog, and contact links"
+  },
+  "https-carrington-lexdemos-com-team": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 1,
+   "evidence": "Our Attorneys section with lawyer profiles"
+  },
+  "https-caverzasio-ch": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Selected works, client work examples"
+  },
+  "https-cctype-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Typeface by CC Type - new foundry"
+  },
+  "https-carrington-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "docs",
+   "gemini_conf": 1.0,
+   "evidence": "Our Attorneys, Practice Areas, Offices, Contact"
+  },
+  "https-charlesleclerc-com-en-calendar": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Cookiebot consent banner present"
+  },
+  "https-chimi-online-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 1.0,
+   "evidence": "Cloudflare security verification page"
+  },
+  "https-charlesleclerc-com-en": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "automotive",
+   "gemini_conf": 0.9,
+   "evidence": "Charles Leclerc logo, \"Beyond Speed\" text"
+  },
+  "https-cerebrium-ai": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "technology",
+   "gemini_conf": 0.9,
+   "evidence": "AI infrastructure, LLMs, real-time AI"
+  },
+  "https-coleman-lexdemos-com-contact": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Contact information, address, phone, email"
+  },
+  "https-coleman-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Class schedule, \"free trial\" button"
+  },
+  "https-chochoicreative-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "ChoChoi Creative, branding studio, client work"
+  },
+  "https-coloniazacamil-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Large text, aerial image, discover button"
+  },
+  "https-coleman-lexdemos-com-about": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Classes left today, free trial"
+  },
+  "https-conwest-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Project Portfolio, View Projects button"
+  },
+  "https-copperlane-lexdemos-com-blog": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "automotive",
+   "gemini_conf": 1,
+   "evidence": "Images of tires, EV, car inspection, brakes"
+  },
+  "https-copperlane-lexdemos-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "automotive",
+   "gemini_conf": 1,
+   "evidence": "Service for Volvo and German cars"
+  },
+  "https-corentinbernadou-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 0.9,
+   "evidence": "Featured works, archive, client work"
+  },
+  "https-cryptosea-com": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1,
+   "evidence": "Dashboard, trading solutions, get started button"
+  },
+  "https-coleman-lexdemos-com-journal": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.8,
+   "evidence": "Journal, classes left today, free trial"
+  },
+  "https-customer-io": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "saas",
+   "gemini_conf": 1,
+   "evidence": "Platform, Solutions, Pricing, Get started"
+  },
+  "https-cydstumpel-nl": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "agency-portfolio",
+   "gemini_conf": 1.0,
+   "evidence": "Client work examples, creative engineer title"
+  },
+  "https-curocapital-dk": {
+   "local": "agency-portfolio",
+   "local_conf": null,
+   "gemini": "other",
+   "gemini_conf": 0.9,
+   "evidence": "Investment Office, B\u00e6redygtighed & Alternativer"
+  }
+ }
+}

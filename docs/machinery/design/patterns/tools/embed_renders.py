@@ -171,7 +171,12 @@ def cmd_build():
     os.makedirs(OUT, exist_ok=True)
     meta = load_index()
     rows = meta.setdefault('rows', {})
-    pending = [p for p in shots() if rel(p) not in rows]
+    pending = [p for p in shots()
+               if rel(p) not in rows
+               or (lambda r: r.get('sha256') is not None
+                   and r['sha256'] != __import__('hashlib').sha256(
+                       open(p, 'rb').read()).hexdigest()[:16])(
+                   rows.get(rel(p)) or {})]
     print(f'{len(rows)} indexed, {len(pending)} to embed')
     vecs = []
     VBIN = os.path.join(OUT, 'vectors.bin')
@@ -192,14 +197,22 @@ def cmd_build():
     if batch:
         done += flush(model, torch, dev, batch, rows, order)
     mat = []
-    # rows indexed before this run carry no in-memory vec — theirs
-    # already live in vectors.bin, aligned to meta['order']
+    # already live in vectors.bin, aligned to meta['order']. A row
+    # that re-rendered (sha changed) has a fresh 'vec' and keeps its
+    # slot: prefer the in-memory vector per position.
     prior = meta.get('order') or []
+    old_bin = None
     if prior and os.path.exists(VBIN):
-        mat.extend(np.fromfile(VBIN, dtype=np.float16)
-                   .reshape(len(prior), EI.DIM))
-    for k in order[len(prior):]:
-        mat.append(np.array(rows[k]['vec'], dtype=np.float16))
+        old_bin = np.fromfile(VBIN, dtype=np.float16).reshape(
+            len(prior), EI.DIM)
+    pos_of = {k: i for i, k in enumerate(prior)}
+    for i, k in enumerate(order):
+        if 'vec' in rows[k]:
+            mat.append(np.array(rows[k]['vec'], dtype=np.float16))
+        elif old_bin is not None and k in pos_of:
+            mat.append(old_bin[pos_of[k]])
+        else:
+            raise KeyError(f'no vector for {k}')
     arr = np.array(mat, dtype=np.float16)
     with open(VBIN, 'wb') as f:
         arr.tofile(f)
@@ -226,7 +239,8 @@ def flush(model, torch, dev, batch, rows, order):
         m = row_meta(p)
         m['vec'] = v.tolist()
         rows[m['render_path']] = m
-        order.append(m['render_path'])
+        if m['render_path'] not in order:
+            order.append(m['render_path'])
     return len(batch)
 
 
