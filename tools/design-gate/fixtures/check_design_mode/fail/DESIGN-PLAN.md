@@ -5,6 +5,11 @@ site:
   slug: fixture
   date: 2026-11-19
   design_mode: bogus
+  vertical: services
+  attributes: [reliability, care]
+  intent_choices:
+    - {choice: imagery, allele: image-led}
+    - {choice: image_style, allele: editorial, declared_deviation: {chosen: editorial, expected: ["other:ambiguous", corporate], reason: "brief asks for editorial warmth", copy_cite: "like an editorial feature, not a brochure"}}
   sources:
     - copy-contract: STUB.md
     - wireframe: cards/index.html#d1

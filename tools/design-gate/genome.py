@@ -25,7 +25,13 @@ import math
 import os
 import random
 import statistics
+import sys
 from collections import Counter, defaultdict
+
+sys.path.insert(0, os.path.normpath(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), '..', '..', 'docs',
+    'machinery', 'design', 'patterns', 'tools')))
+import cache  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(
     os.path.abspath(__file__))))
@@ -264,31 +270,17 @@ _GENE_V = None
 def _geno_key(rec):
     global _GENE_V
     if _GENE_V is None:
-        import os, sys
-        sys.path.insert(0, os.path.normpath(os.path.join(
-            __file__, '..', '..', 'docs', 'machinery', 'design',
-            'patterns', 'tools')))
-        import cache
         _GENE_V = cache.text_sha(
             repr(sorted((k, tuple(v)) for k, v in ALLELES.items())))[:12]
-    return f"{cache.text_sha(rec.get('image') or cache.hash_obj(rec))}:"            f"{_GENE_V}"
+    # record-content address: any measured field change -> new key
+    return f'{cache.hash_obj(rec)}:{_GENE_V}'
 
 
 def _geno_cache_get(rec):
-    import os, sys
-    sys.path.insert(0, os.path.normpath(os.path.join(
-        __file__, '..', '..', 'docs', 'machinery', 'design',
-        'patterns', 'tools')))
-    import cache
     return cache.get('genome', _geno_key(rec))
 
 
 def _geno_cache_put(rec, out):
-    import os, sys
-    sys.path.insert(0, os.path.normpath(os.path.join(
-        __file__, '..', '..', 'docs', 'machinery', 'design',
-        'patterns', 'tools')))
-    import cache
     cache.put('genome', _geno_key(rec),
               {'genotype': out[0], 'derived': out[1]})
 

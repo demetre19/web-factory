@@ -57,6 +57,14 @@ disagree, the genotype wins and the card row is re-picked. FAIL: a
 composition outside the gene's allele set, or a section whose
 `data-comp` has no genotype allele.
 
+### D.5 Intent deviations are declared
+
+Non-conventional choices — an allele outside the intent model's top-2
+(`p_choice_given_vertical` ∪ `p_choice_given_attribute`) — carry
+`declared_deviation {choice, chosen, expected, reason}`; imagery
+deviations also cite the licensing copy sentence (`copy_cite`). The
+intent layer is a contract, not a quality score.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

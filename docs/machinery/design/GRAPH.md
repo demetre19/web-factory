@@ -30,6 +30,11 @@
 - ← check_novelty [enforces]
 - ← w8 [enforces_at]
 
+## B.7 (rule)
+- ← rules-B [contains]
+- ← check_wildcard_random [enforces]
+- ← w4 [enforces_at]
+
 ## BASE.ACSS (baseline)
 - → w1 [used_in]
 - → w3 [used_in]
@@ -53,8 +58,9 @@
 - ← pattern-ecommerce-product-add-to-cart-form-panel [implies_rules]
 - ← pattern-ecommerce-category-product-grid-cards-n [implies_rules]
 - ← pattern-ecommerce-home-product-grid-cards-n [implies_rules]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [implies_rules]
 - ← pattern-nonprofit-home-call-to-action-full-bleed [implies_rules]
-- ← pattern-healthcare-service-detail-feature-editorial [implies_rules]
+- ← pattern-healthcare-service-detail-feature-split-media [implies_rules]
 - ← pattern-homes-project-case-study-gallery-media-gallery [implies_rules]
 - ← pattern-recruitment-listing-listing-cards-n [implies_rules]
 - ← pattern-recruitment-home-hero-split-media [implies_rules]
@@ -128,8 +134,9 @@
 - ← pattern-ecommerce-product-add-to-cart-form-panel [implies_rules]
 - ← pattern-ecommerce-category-product-grid-cards-n [implies_rules]
 - ← pattern-ecommerce-home-product-grid-cards-n [implies_rules]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [implies_rules]
 - ← pattern-nonprofit-home-call-to-action-full-bleed [implies_rules]
-- ← pattern-healthcare-service-detail-feature-editorial [implies_rules]
+- ← pattern-healthcare-service-detail-feature-split-media [implies_rules]
 - ← pattern-homes-project-case-study-gallery-media-gallery [implies_rules]
 - ← pattern-recruitment-listing-listing-cards-n [implies_rules]
 - ← pattern-recruitment-home-hero-split-media [implies_rules]
@@ -168,6 +175,11 @@
 - ← card-w5 [loads]
 - ← card-w8 [loads]
 
+## C.8 (rule)
+- ← rules-C [contains]
+- ← check_accent_surfaces [enforces]
+- ← w7 [enforces_at]
+
 ## D.1 (rule)
 - ← rules-DNA [contains]
 - ← check_genotype [enforces]
@@ -187,6 +199,11 @@
 - ← rules-DNA [contains]
 - ← check_genotype [enforces]
 - ← w1 [enforces_at]
+
+## D.5 (rule)
+- ← rules-DNA [contains]
+- ← check_intent_deviation [enforces]
+- ← w3 [enforces_at]
 
 ## DM.1 (rule)
 - ← rules-DM [contains]
@@ -232,6 +249,7 @@
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-home-hero-full-bleed [implies_rules]
 - ← pattern-nonprofit-home-hero-full-bleed [implies_rules]
+- ← pattern-healthcare-service-detail-feature-split-media [implies_rules]
 - ← pattern-healthcare-home-hero-full-bleed [implies_rules]
 - ← pattern-recruitment-home-hero-split-media [implies_rules]
 - ← pattern-real-estate-home-hero-stacked-hero [implies_rules]
@@ -278,12 +296,10 @@
 ## G.3 (rule)
 - ← pattern-hospitality-home-hero-full-bleed [implies_rules]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
-- ← pattern-ecommerce-search-results-product-grid-cards-n [implies_rules]
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-home-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-product-reviews-quote-grid [implies_rules]
 - ← pattern-technology-home-content-editorial [implies_rules]
-- ← pattern-healthcare-service-detail-feature-editorial [implies_rules]
 - ← pattern-healthcare-home-hero-full-bleed [implies_rules]
 - ← pattern-recruitment-listing-listing-cards-n [implies_rules]
 - ← pattern-automotive-home-hero-full-bleed [implies_rules]
@@ -305,6 +321,21 @@
 - ← rules-G [contains]
 - ← w8 [enforces_at]
 - ← card-w8 [loads]
+
+## G.5 (rule)
+- ← rules-G [contains]
+- ← check_auto_grid [enforces]
+- ← w7 [enforces_at]
+
+## G.6 (rule)
+- ← rules-G [contains]
+- ← check_canon_padding [enforces]
+- ← w7 [enforces_at]
+
+## G.7 (rule)
+- ← rules-G [contains]
+- ← check_equal_cards [enforces]
+- ← w7 [enforces_at]
 
 ## I.1 (rule)
 - ← rules-I [contains]
@@ -353,6 +384,11 @@
 - ← rules-I [contains]
 - ← check_icon_discipline [enforces]
 - ← w6 [enforces_at]
+
+## I.9 (rule)
+- ← rules-I [contains]
+- ← check_interaction_states [enforces]
+- ← w7 [enforces_at]
 
 ## L.1 (rule)
 - ← pattern-hospitality-service-detail-content-editorial [implies_rules]
@@ -487,6 +523,21 @@
 - ← check_rhythm [enforces]
 - ← w3 [enforces_at]
 
+## L.14 (rule)
+- ← rules-L [contains]
+- ← check_surface_rhythm [enforces]
+- ← w7 [enforces_at]
+
+## L.15 (rule)
+- ← rules-L [contains]
+- ← check_dead_columns [enforces]
+- ← w7 [enforces_at]
+
+## L.16 (rule)
+- ← rules-L [contains]
+- ← check_logo [enforces]
+- ← w7 [enforces_at]
+
 ## L.2 (rule)
 - ← rules-L [contains]
 - ← check_rhythm [enforces]
@@ -572,12 +623,10 @@
 ## L.7 (rule)
 - ← pattern-hospitality-home-hero-full-bleed [implies_rules]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [implies_rules]
-- ← pattern-ecommerce-search-results-product-grid-cards-n [implies_rules]
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-home-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-product-reviews-quote-grid [implies_rules]
 - ← pattern-technology-home-content-editorial [implies_rules]
-- ← pattern-healthcare-service-detail-feature-editorial [implies_rules]
 - ← pattern-healthcare-home-hero-full-bleed [implies_rules]
 - ← pattern-recruitment-listing-listing-cards-n [implies_rules]
 - ← pattern-automotive-home-hero-full-bleed [implies_rules]
@@ -715,6 +764,11 @@
 - ← check_spec_verbatim [enforces]
 - ← w7 [enforces_at]
 
+## P.16 (rule)
+- ← rules-P [contains]
+- ← check_meta [enforces]
+- ← w7 [enforces_at]
+
 ## P.2 (rule)
 - ← rules-P [contains]
 - ← check_no_stray_styles [enforces]
@@ -760,6 +814,11 @@
 - ← card-w7 [loads]
 - ← card-w1 [loads]
 
+## PS.10 (rule)
+- ← rules-PS [contains]
+- ← check_footer_structure [enforces]
+- ← w7 [enforces_at]
+
 ## PS.2 (rule)
 - ← rules-PS [contains]
 - ← check_segment_region [enforces]
@@ -786,12 +845,37 @@
 - ← w7 [enforces_at]
 - ← card-w7 [loads]
 
+## PS.7 (rule)
+- ← rules-PS [contains]
+- ← check_primary_cta [enforces]
+- ← w7 [enforces_at]
+
+## PS.8 (rule)
+- ← rules-PS [contains]
+- ← check_heading_pattern [enforces]
+- ← w7 [enforces_at]
+
+## PS.9 (rule)
+- ← rules-PS [contains]
+- ← check_landmarks [enforces]
+- ← w7 [enforces_at]
+
 ## R.1 (rule)
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
 - ← w5 [enforces_at]
 - ← card-w7 [loads]
 - ← card-w5 [loads]
+
+## R.10 (rule)
+- ← rules-R [contains]
+- ← check_hero_fold [enforces]
+- ← w7 [enforces_at]
+
+## R.11 (rule)
+- ← rules-R [contains]
+- ← check_sticky_offset [enforces]
+- ← w7 [enforces_at]
 
 ## R.2 (rule)
 - ← rules-R [contains]
@@ -839,6 +923,11 @@
 - ← rules-R [contains]
 - ← check_breakpoints [enforces]
 - ← w5 [enforces_at]
+
+## R.9 (rule)
+- ← rules-R [contains]
+- ← check_mobile_cta [enforces]
+- ← w7 [enforces_at]
 
 ## REF.1 (rule)
 - ← rules-REF [contains]
@@ -897,6 +986,11 @@
 - ← rules-S [contains]
 - ← w8 [enforces_at]
 - ← card-w8 [loads]
+
+## S.9 (rule)
+- ← rules-S [contains]
+- ← check_forms [enforces]
+- ← w7 [enforces_at]
 
 ## SB.1 (rule)
 - ← rules-SB [contains]
@@ -1136,6 +1230,11 @@
 - ← w7 [enforces_at]
 - ← card-w8 [loads]
 
+## V.9 (rule)
+- ← rules-V [contains]
+- ← check_dark_media [enforces]
+- ← w7 [enforces_at]
+
 ## VG.1 (rule)
 - ← rules-VG [contains]
 - ← check_variants [enforces]
@@ -1323,7 +1422,7 @@
 - ← pattern-nonprofit-home-hero-full-bleed [implies_rules]
 - ← pattern-technology-home-feature-editorial [implies_rules]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [implies_rules]
-- ← pattern-healthcare-service-detail-feature-editorial [implies_rules]
+- ← pattern-healthcare-service-detail-feature-split-media [implies_rules]
 - ← pattern-healthcare-home-hero-full-bleed [implies_rules]
 - ← pattern-homes-project-case-study-gallery-media-gallery [implies_rules]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [implies_rules]
@@ -1358,6 +1457,7 @@
 - ← pattern-ecommerce-collection-hero-full-bleed [implies_rules]
 - ← pattern-ecommerce-home-hero-full-bleed [implies_rules]
 - ← pattern-nonprofit-home-hero-full-bleed [implies_rules]
+- ← pattern-healthcare-service-detail-feature-split-media [implies_rules]
 - ← pattern-healthcare-home-hero-full-bleed [implies_rules]
 - ← pattern-recruitment-home-hero-split-media [implies_rules]
 - ← pattern-real-estate-home-hero-stacked-hero [implies_rules]
@@ -1415,167 +1515,171 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → T.8 [loads]
 - → V.6 [loads]
-- → PS.1 [loads]
-- → E.4 [loads]
+- → T.8 [loads]
 - → E.1 [loads]
+- → E.4 [loads]
+- → PS.1 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
-- → W.8 [loads]
-- → W.6 [loads]
-- → W.10 [loads]
-- → W.7 [loads]
 - → W.2 [loads]
-- → E.2 [loads]
-- → W.1 [loads]
+- → W.6 [loads]
+- → W.8 [loads]
 - → E.1 [loads]
+- → W.7 [loads]
+- → W.1 [loads]
+- → E.2 [loads]
+- → W.10 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → L.1 [loads]
-- → R.3 [loads]
-- → L.7 [loads]
 - → V.3 [loads]
 - → W.2 [loads]
-- → W.4 [loads]
-- → E.2 [loads]
 - → E.1 [loads]
+- → R.3 [loads]
+- → L.7 [loads]
+- → L.1 [loads]
+- → E.2 [loads]
+- → W.4 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
-- → C.2 [loads]
-- → M.1 [loads]
 - → S.1 [loads]
 - → G.3 [loads]
-- → T.3 [loads]
+- → C.2 [loads]
 - → C.5 [loads]
+- → M.1 [loads]
+- → T.3 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → R.3 [loads]
-- → C.2 [loads]
-- → C.1 [loads]
-- → C.7 [loads]
-- → C.5 [loads]
-- → M.6 [loads]
+- → C.3 [loads]
+- → G.3 [loads]
+- → S.7 [loads]
 - → W.2 [loads]
 - → R.2 [loads]
-- → T.6 [loads]
-- → W.8 [loads]
+- → C.7 [loads]
 - → R.1 [loads]
-- → L.11 [loads]
-- → G.3 [loads]
-- → I.3 [loads]
-- → T.4 [loads]
-- → V.2 [loads]
-- → E.2 [loads]
-- → C.4 [loads]
-- → S.2 [loads]
-- → S.1 [loads]
-- → T.3 [loads]
-- → G.2 [loads]
-- → S.5 [loads]
-- → S.7 [loads]
-- → G.1 [loads]
-- → I.1 [loads]
+- → R.3 [loads]
 - → I.2 [loads]
-- → M.2 [loads]
-- → C.3 [loads]
+- → S.2 [loads]
+- → S.5 [loads]
+- → E.2 [loads]
+- → T.4 [loads]
+- → M.6 [loads]
+- → L.11 [loads]
+- → C.4 [loads]
+- → I.1 [loads]
+- → S.1 [loads]
+- → T.6 [loads]
+- → V.2 [loads]
+- → C.2 [loads]
+- → G.2 [loads]
 - → V.6 [loads]
+- → M.2 [loads]
+- → I.3 [loads]
+- → W.8 [loads]
+- → C.5 [loads]
 - → M.1 [loads]
+- → C.1 [loads]
+- → G.1 [loads]
+- → T.3 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
+- → V.3 [loads]
+- → W.2 [loads]
 - → M.2 [loads]
-- → S.2 [loads]
+- → M.6 [loads]
+- → I.3 [loads]
+- → R.6 [loads]
 - → R.3 [loads]
 - → S.4 [loads]
+- → S.2 [loads]
 - → C.1 [loads]
-- → I.3 [loads]
-- → V.4 [loads]
-- → R.5 [loads]
-- → V.3 [loads]
-- → R.6 [loads]
 - → G.1 [loads]
-- → I.1 [loads]
-- → M.6 [loads]
-- → W.2 [loads]
+- → R.5 [loads]
 - → W.4 [loads]
+- → V.4 [loads]
+- → I.1 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
-- → R.3 [loads]
-- → V.6 [loads]
-- → PS.1 [loads]
+- → V.3 [loads]
 - → R.1 [loads]
+- → PS.6 [loads]
+- → V.6 [loads]
+- → R.6 [loads]
+- → E.1 [loads]
+- → R.3 [loads]
 - → W.7 [loads]
 - → L.7 [loads]
-- → V.3 [loads]
-- → R.5 [loads]
-- → PS.6 [loads]
-- → R.6 [loads]
-- → M.6 [loads]
+- → PS.1 [loads]
 - → E.3 [loads]
+- → R.5 [loads]
 - → E.2 [loads]
-- → E.1 [loads]
+- → M.6 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → T.5 [loads]
-- → S.4 [loads]
-- → I.6 [loads]
-- → V.0 [loads]
-- → T.7 [loads]
-- → L.5 [loads]
-- → C.7 [loads]
-- → G.4 [loads]
-- → I.4 [loads]
-- → M.6 [loads]
-- → E.3 [loads]
-- → W.1 [loads]
-- → M.4 [loads]
-- → T.11 [loads]
-- → S.3 [loads]
-- → W.7 [loads]
-- → W.5 [loads]
-- → R.7 [loads]
-- → R.5 [loads]
-- → L.6 [loads]
-- → C.6 [loads]
-- → V.1 [loads]
-- → E.2 [loads]
-- → V.8 [loads]
-- → L.4 [loads]
-- → T.9 [loads]
-- → C.4 [loads]
-- → V.5 [loads]
-- → T.10 [loads]
-- → V.7 [loads]
-- → M.3 [loads]
-- → T.0 [loads]
-- → L.9 [loads]
-- → W.6 [loads]
-- → S.8 [loads]
-- → G.2 [loads]
-- → S.5 [loads]
-- → S.7 [loads]
-- → L.3 [loads]
-- → M.2 [loads]
 - → C.3 [loads]
-- → R.4 [loads]
+- → L.5 [loads]
+- → S.8 [loads]
 - → I.7 [loads]
-- → V.6 [loads]
-- → W.9 [loads]
+- → S.7 [loads]
 - → W.10 [loads]
+- → L.3 [loads]
+- → R.4 [loads]
 - → M.8 [loads]
-- → V.4 [loads]
-- → M.5 [loads]
-- → S.6 [loads]
-- → T.1 [loads]
+- → W.6 [loads]
+- → T.0 [loads]
+- → V.0 [loads]
+- → W.5 [loads]
+- → T.7 [loads]
+- → T.9 [loads]
+- → V.8 [loads]
+- → C.7 [loads]
+- → W.1 [loads]
+- → V.7 [loads]
+- → R.5 [loads]
+- → T.11 [loads]
 - → W.3 [loads]
+- → I.4 [loads]
+- → I.6 [loads]
+- → S.4 [loads]
+- → L.9 [loads]
+- → S.6 [loads]
+- → M.4 [loads]
+- → S.5 [loads]
+- → T.10 [loads]
+- → E.2 [loads]
+- → M.6 [loads]
+- → V.4 [loads]
+- → C.4 [loads]
+- → G.4 [loads]
+- → M.2 [loads]
+- → G.2 [loads]
+- → V.6 [loads]
+- → C.6 [loads]
+- → T.5 [loads]
+- → M.5 [loads]
+- → S.3 [loads]
+- → V.5 [loads]
+- → W.7 [loads]
+- → W.9 [loads]
+- → T.1 [loads]
+- → V.1 [loads]
+- → M.3 [loads]
+- → E.3 [loads]
+- → R.7 [loads]
+- → L.4 [loads]
+- → L.6 [loads]
 - ← w8 [has_card]
+
+## check_accent_surfaces (check)
+- → C.8 [enforces]
+- ← w7 [gated_by]
 
 ## check_assembly (check)
 - → SB.4 [enforces]
@@ -1587,6 +1691,10 @@
 
 ## check_audit_artifacts (check)
 - ← w1 [gated_by]
+
+## check_auto_grid (check)
+- → G.5 [enforces]
+- ← w7 [gated_by]
 
 ## check_border_widths (check)
 - → S.5 [enforces]
@@ -1602,6 +1710,10 @@
 - → B.3 [enforces]
 - ← w4 [gated_by]
 - ← w3 [gated_by]
+
+## check_canon_padding (check)
+- → G.6 [enforces]
+- ← w7 [gated_by]
 
 ## check_canon_trace (check)
 - → REF.1 [enforces]
@@ -1650,8 +1762,9 @@
 - ← pattern-ecommerce-product-add-to-cart-form-panel [enforced_by]
 - ← pattern-ecommerce-category-product-grid-cards-n [enforced_by]
 - ← pattern-ecommerce-home-product-grid-cards-n [enforced_by]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [enforced_by]
 - ← pattern-nonprofit-home-call-to-action-full-bleed [enforced_by]
-- ← pattern-healthcare-service-detail-feature-editorial [enforced_by]
+- ← pattern-healthcare-service-detail-feature-split-media [enforced_by]
 - ← pattern-homes-project-case-study-gallery-media-gallery [enforced_by]
 - ← pattern-recruitment-listing-listing-cards-n [enforced_by]
 - ← pattern-recruitment-home-hero-split-media [enforced_by]
@@ -1685,6 +1798,10 @@
 - → R.4 [enforces]
 - ← w7 [gated_by]
 
+## check_dark_media (check)
+- → V.9 [enforces]
+- ← w7 [gated_by]
+
 ## check_dark_mode (check)
 - → C.5 [enforces]
 - ← w7 [gated_by]
@@ -1694,6 +1811,10 @@
 ## check_dark_toggle (check)
 - ← w7 [gated_by]
 - ← w5 [gated_by]
+
+## check_dead_columns (check)
+- → L.15 [enforces]
+- ← w7 [gated_by]
 
 ## check_declared_breaks (check)
 - → B.4 [enforces]
@@ -1794,9 +1915,21 @@
 - ← pattern-media-home-hero-stacked-hero [enforced_by]
 - ← w3 [gated_by]
 
+## check_equal_cards (check)
+- → G.7 [enforces]
+- ← w7 [gated_by]
+
 ## check_exemplars (check)
 - → SB.5 [enforces]
 - ← w6 [gated_by]
+
+## check_footer_structure (check)
+- → PS.10 [enforces]
+- ← w7 [gated_by]
+
+## check_forms (check)
+- → S.9 [enforces]
+- ← w7 [gated_by]
 
 ## check_genotype (check)
 - → D.1 [enforces]
@@ -1810,8 +1943,16 @@
 - → D.3 [enforces]
 - ← w4 [gated_by]
 
+## check_heading_pattern (check)
+- → PS.8 [enforces]
+- ← w7 [gated_by]
+
 ## check_heading_verbatim (check)
 - → E.4 [enforces]
+- ← w7 [gated_by]
+
+## check_hero_fold (check)
+- → R.10 [enforces]
 - ← w7 [gated_by]
 
 ## check_icon_discipline (check)
@@ -1830,8 +1971,25 @@
 ## check_intent (check)
 - ← w1 [gated_by]
 
+## check_intent_deviation (check)
+- → D.5 [enforces]
+- ← w4 [gated_by]
+- ← w3 [gated_by]
+
+## check_interaction_states (check)
+- → I.9 [enforces]
+- ← w7 [gated_by]
+
+## check_landmarks (check)
+- → PS.9 [enforces]
+- ← w7 [gated_by]
+
 ## check_layout_distinct (check)
 - ← w3 [gated_by]
+
+## check_logo (check)
+- → L.16 [enforces]
+- ← w7 [gated_by]
 
 ## check_measurable (check)
 - → L.3 [enforces]
@@ -1848,6 +2006,10 @@
 - → W.3 [enforces]
 - ← w7 [gated_by]
 
+## check_meta (check)
+- → P.16 [enforces]
+- ← w7 [gated_by]
+
 ## check_mobbin_auth (check)
 - ← w1 [gated_by]
 
@@ -1861,6 +2023,7 @@
 - ← w7 [gated_by]
 
 ## check_mobile_cta (check)
+- → R.9 [enforces]
 - ← w7 [gated_by]
 
 ## check_motif (check)
@@ -1888,6 +2051,10 @@
 
 ## check_page_data_attrs (check)
 - → P.7 [enforces]
+- ← w7 [gated_by]
+
+## check_primary_cta (check)
+- → PS.7 [enforces]
 - ← w7 [gated_by]
 
 ## check_proximity (check)
@@ -1927,7 +2094,7 @@
 - ← pattern-ecommerce-product-reviews-quote-grid [enforced_by]
 - ← pattern-nonprofit-home-call-to-action-full-bleed [enforced_by]
 - ← pattern-technology-home-content-editorial [enforced_by]
-- ← pattern-healthcare-service-detail-feature-editorial [enforced_by]
+- ← pattern-healthcare-service-detail-feature-split-media [enforced_by]
 - ← pattern-healthcare-home-hero-full-bleed [enforced_by]
 - ← pattern-homes-project-case-study-gallery-media-gallery [enforced_by]
 - ← pattern-recruitment-listing-listing-cards-n [enforced_by]
@@ -2018,6 +2185,7 @@
 - ← pattern-technology-home-hero-stacked-hero [enforced_by]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [enforced_by]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [enforced_by]
+- ← pattern-healthcare-service-detail-feature-split-media [enforced_by]
 - ← pattern-healthcare-home-hero-full-bleed [enforced_by]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [enforced_by]
 - ← pattern-homes-home-hero-stacked-hero [enforced_by]
@@ -2148,12 +2316,10 @@
 - → R.2 [enforces]
 - ← pattern-hospitality-home-hero-full-bleed [enforced_by]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [enforced_by]
-- ← pattern-ecommerce-search-results-product-grid-cards-n [enforced_by]
 - ← pattern-ecommerce-collection-hero-full-bleed [enforced_by]
 - ← pattern-ecommerce-home-hero-full-bleed [enforced_by]
 - ← pattern-ecommerce-product-reviews-quote-grid [enforced_by]
 - ← pattern-technology-home-content-editorial [enforced_by]
-- ← pattern-healthcare-service-detail-feature-editorial [enforced_by]
 - ← pattern-healthcare-home-hero-full-bleed [enforced_by]
 - ← pattern-recruitment-listing-listing-cards-n [enforced_by]
 - ← pattern-automotive-home-hero-full-bleed [enforced_by]
@@ -2182,7 +2348,7 @@
 - ← pattern-nonprofit-home-hero-full-bleed [enforced_by]
 - ← pattern-technology-home-feature-editorial [enforced_by]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [enforced_by]
-- ← pattern-healthcare-service-detail-feature-editorial [enforced_by]
+- ← pattern-healthcare-service-detail-feature-split-media [enforced_by]
 - ← pattern-healthcare-home-hero-full-bleed [enforced_by]
 - ← pattern-homes-project-case-study-gallery-media-gallery [enforced_by]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [enforced_by]
@@ -2214,9 +2380,17 @@
 - → P.12 [enforces]
 - ← w7 [gated_by]
 
+## check_sticky_offset (check)
+- → R.11 [enforces]
+- ← w7 [gated_by]
+
 ## check_style_review (check)
 - → B.5 [enforces]
 - ← w8 [gated_by]
+
+## check_surface_rhythm (check)
+- → L.14 [enforces]
+- ← w7 [gated_by]
 
 ## check_system_enums (check)
 - → I.1 [enforces]
@@ -2276,6 +2450,10 @@
 ## check_wildcard (check)
 - ← w4 [gated_by]
 - ← w3 [gated_by]
+
+## check_wildcard_random (check)
+- → B.7 [enforces]
+- ← w4 [gated_by]
 
 ## check_wireframe_lock (check)
 - → P.4 [enforces]
@@ -2732,12 +2910,10 @@
 ## gene-density-tier (gene)
 - ← pattern-hospitality-home-hero-full-bleed [consumes]
 - ← pattern-government-service-detail-grids-and-cards-cards-n [consumes]
-- ← pattern-ecommerce-search-results-product-grid-cards-n [consumes]
 - ← pattern-ecommerce-collection-hero-full-bleed [consumes]
 - ← pattern-ecommerce-home-hero-full-bleed [consumes]
 - ← pattern-ecommerce-product-reviews-quote-grid [consumes]
 - ← pattern-technology-home-content-editorial [consumes]
-- ← pattern-healthcare-service-detail-feature-editorial [consumes]
 - ← pattern-healthcare-home-hero-full-bleed [consumes]
 - ← pattern-recruitment-listing-listing-cards-n [consumes]
 - ← pattern-automotive-home-hero-full-bleed [consumes]
@@ -2781,6 +2957,7 @@
 - ← pattern-ecommerce-collection-hero-full-bleed [consumes]
 - ← pattern-ecommerce-home-hero-full-bleed [consumes]
 - ← pattern-nonprofit-home-hero-full-bleed [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
 - ← pattern-healthcare-home-hero-full-bleed [consumes]
 - ← pattern-recruitment-home-hero-split-media [consumes]
 - ← pattern-real-estate-home-hero-stacked-hero [consumes]
@@ -3296,7 +3473,7 @@
 - ← pattern-nonprofit-home-hero-full-bleed [consumes]
 - ← pattern-technology-home-feature-editorial [consumes]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [consumes]
-- ← pattern-healthcare-service-detail-feature-editorial [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
 - ← pattern-healthcare-home-hero-full-bleed [consumes]
 - ← pattern-homes-project-case-study-gallery-media-gallery [consumes]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [consumes]
@@ -3389,8 +3566,9 @@
 - ← pattern-ecommerce-product-add-to-cart-form-panel [consumes]
 - ← pattern-ecommerce-category-product-grid-cards-n [consumes]
 - ← pattern-ecommerce-home-product-grid-cards-n [consumes]
+- ← pattern-ecommerce-search-results-product-grid-cards-n [consumes]
 - ← pattern-nonprofit-home-call-to-action-full-bleed [consumes]
-- ← pattern-healthcare-service-detail-feature-editorial [consumes]
+- ← pattern-healthcare-service-detail-feature-split-media [consumes]
 - ← pattern-homes-project-case-study-gallery-media-gallery [consumes]
 - ← pattern-recruitment-listing-listing-cards-n [consumes]
 - ← pattern-recruitment-home-hero-split-media [consumes]
@@ -4718,19 +4896,19 @@
 - → section-catalog [composition]
 - → w4 [used_in]
 - → w5 [used_in]
-- → G.3 [implies_rules]
-- → L.7 [implies_rules]
+- → C.1 [implies_rules]
+- → C.6 [implies_rules]
 - → W.2 [implies_rules]
 - → W.3 [implies_rules]
 - → W.5 [implies_rules]
+- → check_contrast [enforced_by]
 - → check_emphasis [enforced_by]
 - → check_rhythm [enforced_by]
-- → check_spacing_scale [enforced_by]
 - → check_speech_acts [enforced_by]
 - → check_wireframe_tags [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
-- → gene-density-tier [consumes]
+- → gene-surface-rhythm [consumes]
 - → gene-cta-restraint [consumes]
 - → gene-proof-type [consumes]
 - ← patterns-index [patterns]
@@ -5010,25 +5188,25 @@
 - → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
-## pattern-healthcare-service-detail-feature-editorial (pattern)
+## pattern-healthcare-service-detail-feature-split-media (pattern)
 - → patterns-index [index]
 - → section-catalog [composition]
 - → w4 [used_in]
 - → w5 [used_in]
 - → C.1 [implies_rules]
 - → C.6 [implies_rules]
-- → G.3 [implies_rules]
-- → L.7 [implies_rules]
+- → E.2 [implies_rules]
 - → W.5 [implies_rules]
+- → W.6 [implies_rules]
 - → check_contrast [enforced_by]
 - → check_rhythm [enforced_by]
-- → check_spacing_scale [enforced_by]
+- → check_section_enums [enforced_by]
 - → check_speech_acts [enforced_by]
 - → w4 [used_in]
 - → w5 [used_in]
-- → gene-density-tier [consumes]
 - → gene-surface-rhythm [consumes]
 - → gene-proof-type [consumes]
+- → gene-disclosure-tier [consumes]
 - ← patterns-index [patterns]
 
 ## pattern-homes-floor-plans-grids-and-cards-cards-n (pattern)
@@ -6187,7 +6365,7 @@
 - → pattern-technology-home-hero-stacked-hero [patterns]
 - → pattern-agency-portfolio-home-work-grid-cards-n [patterns]
 - → pattern-agency-portfolio-home-hero-stacked-hero [patterns]
-- → pattern-healthcare-service-detail-feature-editorial [patterns]
+- → pattern-healthcare-service-detail-feature-split-media [patterns]
 - → pattern-healthcare-home-hero-full-bleed [patterns]
 - → pattern-homes-project-case-study-gallery-media-gallery [patterns]
 - → pattern-homes-floor-plans-grids-and-cards-cards-n [patterns]
@@ -6334,7 +6512,7 @@
 - ← pattern-technology-home-hero-stacked-hero [index]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [index]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [index]
-- ← pattern-healthcare-service-detail-feature-editorial [index]
+- ← pattern-healthcare-service-detail-feature-split-media [index]
 - ← pattern-healthcare-home-hero-full-bleed [index]
 - ← pattern-homes-project-case-study-gallery-media-gallery [index]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [index]
@@ -7212,6 +7390,7 @@
 - → B.4 [contains]
 - → B.5 [contains]
 - → B.6 [contains]
+- → B.7 [contains]
 - ← design-index [rules]
 - ← rules-VG [see_also]
 - ← rules-DM [see_also]
@@ -7228,6 +7407,7 @@
 - → C.5 [contains]
 - → C.6 [contains]
 - → C.7 [contains]
+- → C.8 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
 - ← rules-VG [see_also]
@@ -7277,6 +7457,7 @@
 - → D.2 [contains]
 - → D.3 [contains]
 - → D.4 [contains]
+- → D.5 [contains]
 - ← design-index [rules]
 - ← rules-REF [see_also]
 - ← rules-B [depends_on]
@@ -7305,6 +7486,9 @@
 - → G.2 [contains]
 - → G.3 [contains]
 - → G.4 [contains]
+- → G.5 [contains]
+- → G.6 [contains]
+- → G.7 [contains]
 - ← section-build [uses]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
@@ -7324,6 +7508,7 @@
 - → I.6 [contains]
 - → I.7 [contains]
 - → I.8 [contains]
+- → I.9 [contains]
 - ← design-index [rules]
 - ← design-index [rules]
 
@@ -7345,6 +7530,9 @@
 - → L.11 [contains]
 - → L.12 [contains]
 - → L.13 [contains]
+- → L.14 [contains]
+- → L.15 [contains]
+- → L.16 [contains]
 - ← design-index [rules]
 - ← rules-REF [see_also]
 - ← rules-SB [see_also]
@@ -7388,6 +7576,7 @@
 - → P.13 [contains]
 - → P.14 [contains]
 - → P.15 [contains]
+- → P.16 [contains]
 - ← section-build [uses]
 - ← design-index [rules]
 - ← rules-B [depends_on]
@@ -7406,6 +7595,10 @@
 - → PS.4 [contains]
 - → PS.5 [contains]
 - → PS.6 [contains]
+- → PS.7 [contains]
+- → PS.8 [contains]
+- → PS.9 [contains]
+- → PS.10 [contains]
 - ← section-build [uses]
 - ← design-index [rules]
 - ← rules-SB [see_also]
@@ -7424,6 +7617,9 @@
 - → R.6 [contains]
 - → R.7 [contains]
 - → R.8 [contains]
+- → R.9 [contains]
+- → R.10 [contains]
+- → R.11 [contains]
 - ← design-index [rules]
 - ← design-index [rules]
 
@@ -7454,6 +7650,7 @@
 - → S.6 [contains]
 - → S.7 [contains]
 - → S.8 [contains]
+- → S.9 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
 - ← rules-DNA [depends_on]
@@ -7516,6 +7713,7 @@
 - → V.6 [contains]
 - → V.7 [contains]
 - → V.8 [contains]
+- → V.9 [contains]
 - ← section-build [uses]
 - ← design-index [rules]
 - ← rules-SB [see_also]
@@ -7643,7 +7841,7 @@
 - ← pattern-technology-home-hero-stacked-hero [composition]
 - ← pattern-agency-portfolio-home-work-grid-cards-n [composition]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [composition]
-- ← pattern-healthcare-service-detail-feature-editorial [composition]
+- ← pattern-healthcare-service-detail-feature-split-media [composition]
 - ← pattern-healthcare-home-hero-full-bleed [composition]
 - ← pattern-homes-project-case-study-gallery-media-gallery [composition]
 - ← pattern-homes-floor-plans-grids-and-cards-cards-n [composition]
@@ -7938,6 +8136,7 @@
 - → SB.1 [enforces_at]
 - → V.3 [enforces_at]
 - → W.4 [enforces_at]
+- → D.5 [enforces_at]
 - → card-w3 [has_card]
 - → checklist-w3 [has_checklist]
 - → check_wireframe_tags [gated_by]
@@ -7957,6 +8156,7 @@
 - → check_section_contracts [gated_by]
 - → check_layout_distinct [gated_by]
 - → check_canon_trace [gated_by]
+- → check_intent_deviation [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
@@ -8044,6 +8244,7 @@
 - → VG.2 [enforces_at]
 - → VG.3 [enforces_at]
 - → VG.4 [enforces_at]
+- → B.7 [enforces_at]
 - → card-w4 [has_card]
 - → checklist-w4 [has_checklist]
 - → check_direction_axes [gated_by]
@@ -8055,6 +8256,8 @@
 - → check_dark_mode [gated_by]
 - → check_variants [gated_by]
 - → check_canon_trace [gated_by]
+- → check_intent_deviation [gated_by]
+- → check_wildcard_random [gated_by]
 - → check_checklist [gated_by]
 - → check_dna [gated_by]
 - → check_dna_fresh [gated_by]
@@ -8111,8 +8314,8 @@
 - ← pattern-agency-portfolio-home-work-grid-cards-n [used_in]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [used_in]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [used_in]
-- ← pattern-healthcare-service-detail-feature-editorial [used_in]
-- ← pattern-healthcare-service-detail-feature-editorial [used_in]
+- ← pattern-healthcare-service-detail-feature-split-media [used_in]
+- ← pattern-healthcare-service-detail-feature-split-media [used_in]
 - ← pattern-healthcare-home-hero-full-bleed [used_in]
 - ← pattern-healthcare-home-hero-full-bleed [used_in]
 - ← pattern-homes-project-case-study-gallery-media-gallery [used_in]
@@ -8385,8 +8588,8 @@
 - ← pattern-agency-portfolio-home-work-grid-cards-n [used_in]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [used_in]
 - ← pattern-agency-portfolio-home-hero-stacked-hero [used_in]
-- ← pattern-healthcare-service-detail-feature-editorial [used_in]
-- ← pattern-healthcare-service-detail-feature-editorial [used_in]
+- ← pattern-healthcare-service-detail-feature-split-media [used_in]
+- ← pattern-healthcare-service-detail-feature-split-media [used_in]
 - ← pattern-healthcare-home-hero-full-bleed [used_in]
 - ← pattern-healthcare-home-hero-full-bleed [used_in]
 - ← pattern-homes-project-case-study-gallery-media-gallery [used_in]
@@ -8581,6 +8784,24 @@
 - → V.4 [enforces_at]
 - → V.8 [enforces_at]
 - → W.3 [enforces_at]
+- → C.8 [enforces_at]
+- → G.5 [enforces_at]
+- → G.6 [enforces_at]
+- → G.7 [enforces_at]
+- → I.9 [enforces_at]
+- → L.14 [enforces_at]
+- → L.15 [enforces_at]
+- → L.16 [enforces_at]
+- → P.16 [enforces_at]
+- → PS.7 [enforces_at]
+- → PS.8 [enforces_at]
+- → PS.9 [enforces_at]
+- → PS.10 [enforces_at]
+- → R.9 [enforces_at]
+- → R.10 [enforces_at]
+- → R.11 [enforces_at]
+- → S.9 [enforces_at]
+- → V.9 [enforces_at]
 - → card-w7 [has_card]
 - → checklist-w7 [has_checklist]
 - → check_assembly [gated_by]
@@ -8602,6 +8823,23 @@
 - → check_mobile_cta [gated_by]
 - → check_measurable [gated_by]
 - → check_canon_trace [gated_by]
+- → check_auto_grid [gated_by]
+- → check_surface_rhythm [gated_by]
+- → check_dead_columns [gated_by]
+- → check_hero_fold [gated_by]
+- → check_canon_padding [gated_by]
+- → check_primary_cta [gated_by]
+- → check_interaction_states [gated_by]
+- → check_forms [gated_by]
+- → check_heading_pattern [gated_by]
+- → check_equal_cards [gated_by]
+- → check_dark_media [gated_by]
+- → check_logo [gated_by]
+- → check_accent_surfaces [gated_by]
+- → check_landmarks [gated_by]
+- → check_sticky_offset [gated_by]
+- → check_footer_structure [gated_by]
+- → check_meta [gated_by]
 - → check_dark_mode [gated_by]
 - → check_dark_toggle [gated_by]
 - → check_astro_build [gated_by]

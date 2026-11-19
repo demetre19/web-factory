@@ -166,6 +166,12 @@ Checked at DESIGN-PLAN review and build self-lint:
 
 ---
 
+### S.9 Form states
+
+Every field has a label, a required marker when required, and
+helper/error/success state containers — a bare input + button is not
+a form.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

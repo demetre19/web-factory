@@ -59,7 +59,7 @@ PS_KEYS = ['block_role_uniqueness', 'boilerplate_at_edges',
 # Weights are fitted on held-out domains by `validate`; these are the
 # prior/fallback used by `score` when no fitted weights file exists.
 # Feature set chosen by the leave-domain-out experiment recorded in
-# patterns/VALIDATION.md (mean AUC 0.872 over 8 splits): the pattern-bank
+# patterns/VALIDATION.md (mean AUC ~0.93 over 8 splits): the pattern-bank
 # fit plus every page-structure sub-feature, individually.
 DEFAULT_WEIGHTS = {
     'pattern_fit': 0.34,

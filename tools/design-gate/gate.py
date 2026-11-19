@@ -1593,6 +1593,546 @@ def check_canon_trace(ctx):
     return f
 
 
+def _intent_model(ctx):
+    """PatternMiner's intent model — contract/extraction layer only."""
+    mp = os.path.join(DESIGN_DIR, 'patterns', 'data', 'intent-model.json')
+    if not os.path.isfile(mp):
+        return None
+    try:
+        return json.load(open(mp))
+    except Exception:
+        return None
+
+
+def _expected_alleles(model, choice, vertical, attrs):
+    """Top-2 alleles of P(choice|vertical) ∪ P(choice|attr) per attribute."""
+    exp = set()
+    for bucket, key in ((model.get('p_choice_given_vertical') or {},
+                       vertical),):
+        dist = (bucket.get(choice) or {}).get(key) or {}
+        for a, _p in sorted(dist.items(), key=lambda kv: -kv[1])[:2]:
+            exp.add(a)
+    for attr in attrs:
+        dist = ((model.get('p_choice_given_attribute') or {})
+                .get(choice) or {}).get(attr) or {}
+        for a, _p in sorted(dist.items(), key=lambda kv: -kv[1])[:2]:
+            exp.add(a)
+    return exp
+
+
+def check_intent_deviation(ctx):
+    """D.5 — non-conventional choices carry declared_deviation; imagery
+    alleles agree with attribute predictions or cite a copy sentence."""
+    if not _wave_ge(ctx, 'w3'):
+        return []
+    model = _intent_model(ctx)
+    if not model:
+        return []
+    f = []
+    site = ctx.site_block()
+    vertical = str(site.get('vertical') or
+                   str(site.get('vertical_profile') or
+                       '').replace('profile-', '').split('/')[0] or '')
+    attrs = site.get('attributes') or []
+    if isinstance(attrs, str):
+        attrs = [attrs]
+    choices = site.get('intent_choices') or []
+    if isinstance(choices, dict):
+        choices = [dict(v, choice=k) for k, v in choices.items()]
+    for c in choices:
+        ch, allele = c.get('choice'), c.get('allele')
+        if not ch or not allele:
+            f.append(f'D.5 intent choice {c} lacks choice/allele fields')
+            continue
+        exp = _expected_alleles(model, ch, vertical, attrs)
+        dev = c.get('declared_deviation')
+        if exp and allele not in exp:
+            if not dev or not (dev.get('reason') if isinstance(dev, dict)
+                               else dev):
+                f.append(f'D.5 {ch}={allele} ∉ expected {sorted(exp)} '
+                         '— needs declared_deviation {choice, chosen, '
+                         'expected, reason}')
+            continue
+        if dev and isinstance(dev, dict) and not dev.get('expected'):
+            f.append(f'D.5 {ch} declared_deviation lacks "expected" '
+                     '(record the model top-2)')
+        if ch in ('imagery', 'image_style', 'mood_register') and dev \
+                and not dev.get('copy_cite'):
+            f.append(f'D.5 {ch} deviation needs copy_cite — the sentence '
+                     'in the copy contract that licenses it')
+    return f
+
+
+def check_wildcard_random(ctx):
+    """B.7 — the wildcard's gene set is RNG-chosen (seed recorded), not a
+    default image overlay; differs from the last run's wildcard."""
+    if not _wave_ge(ctx, 'w4'):
+        return []
+    f = []
+    try:
+        dna = json.loads(ctx.read('DNA.json') or '{}')
+    except Exception:
+        return []
+    hist = []
+    try:
+        hist = json.loads(ctx.read('WILDCARD-HISTORY.json') or '[]')
+    except Exception:
+        hist = []
+    last_genes = set()
+    for h in hist[-1:]:
+        last_genes |= set(h.get('genes') or [])
+    image_sole_prev = False
+    for h in hist[-1:]:
+        if set(h.get('genes') or []) == {'image.treatment'}:
+            image_sole_prev = True
+    for v in dna.get('variants') or []:
+        if str(v.get('vector')) != 'wildcard' \
+                and not v.get('wildcard_genes'):
+            continue
+        genes = set(v.get('wildcard_genes') or
+                    (v.get('deltas') or {}).keys())
+        if v.get('wildcard_seed') in (None, ''):
+            f.append(f'B.7 wildcard {v.get("id")} has no wildcard_seed — '
+                     'the gene set must be RNG-chosen, not defaulted')
+        if genes and last_genes and genes == last_genes:
+            f.append(f'B.7 wildcard genes {sorted(genes)} repeat the '
+                     'previous round — re-roll (seeded RNG over the '
+                     'allowed genes, weighted to unused)')
+        if genes == {'image.treatment'} and image_sole_prev:
+            f.append('B.7 image.treatment is the sole wildcard change '
+                     'twice in a row — banned')
+    return f
+
+
+def check_auto_grid(ctx):
+    """G.5 — collections use auto-fit minmax grids; no narrow scroll
+    rails that are not declared full-bleed."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, css in dist_csss(ctx) + [
+            (ctx.dir + '/global.css',
+             ctx.read('site/src/styles/global.css') or '')]:
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'grid-template-columns:\s*repeat\(\s*(\d+|\d+fr)',
+                css):
+            f.append(f'G.5 {name}: fixed repeat({m.group(1)}) grid — '
+                     'collections use '
+                     'repeat(auto-fit, minmax(min(var(--grid-min,28rem),'
+                     '100%),1fr))')
+        for m in re.finditer(r'([\w.#\[\]-]+)[^{}]*\{[^}]*overflow-x:\s*'
+                             r'(auto|scroll)[^}]*\}', css):
+            sel, body = m.group(1), m.group(0)
+            if 'full-bleed' in sel or 'full-bleed' in body or \
+                    '100vw' in body or 'bleed' in sel:
+                continue
+            f.append(f'G.5 {name}: "{sel.strip()}" scrolls horizontally '
+                     '— rails are banned unless declared full-bleed '
+                     '(edge-to-edge)')
+    return f
+
+
+def _surface_of(sec):
+    """A comparable surface signature for a rendered section block."""
+    cls = ' '.join(str(sec.get('class') or '').split())
+    style = str(sec.get('style') or '')
+    sig = re.search(r'background(?:-color)?:\s*([^;]+)', style)
+    if sig:
+        return 'bg:' + sig.group(1).strip()
+    toks = [c for c in cls.split() if re.search(
+        r'band|inverse|brand|muted|bg-|surface|tint|alt', c)]
+    return ' '.join(sorted(toks)) or 'default'
+
+
+def check_surface_rhythm(ctx):
+    """L.14 — alternating surfaces: no adjacent identical backgrounds;
+    every section has block padding; heading precedes content."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt, parsed, blocks in _segmented(ctx):
+        name = os.path.basename(p)
+        tagged = [s for s in blocks if s.get('data-sec')]
+        surfaces = [_surface_of(s) for s in tagged]
+        for i in range(1, len(surfaces)):
+            if surfaces[i] == surfaces[i - 1] and \
+                    surfaces[i] != 'default':
+                f.append(f'L.14 {name}: sections {i}/{i + 1} share '
+                         f'surface "{surfaces[i]}" — alternate '
+                         'white → light grey/tint → white')
+        for i, s in enumerate(tagged):
+            cls = str(s.get('class') or '')
+            style = str(s.get('style') or '')
+            has_pad = re.search(r'\bpy-\d+', cls) or \
+                re.search(r'padding(?:-block)?:', style) or \
+                re.search(r'sec-band|section-space|pad-', cls)
+            if not has_pad:
+                f.append(f'L.14 {name} sec {s.get("data-sec")}: no block '
+                         'padding — every Section pads ≥ section-space-s')
+    return f
+
+
+def check_dead_columns(ctx):
+    """L.15 — no dead half-columns: a media block with an empty column
+    beside it FAILs; splits pair media with comparable content."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-comp="([^"]*)"[^>]*>(.*?)'
+                r'</section>', txt, re.S):
+            comp, body = m.group(1), m.group(2)
+            if 'split' not in comp:
+                continue
+            media = bool(re.search(
+                r'<(?:img|video|picture|figure|svg)[\s>]', body))
+            empties = re.findall(
+                r'<(?:div|aside)[^>]*>(?:\s|&nbsp;)*'
+                r'</(?:div|aside)>', body)
+            if media and empties:
+                f.append(f'L.15 {name} sec {comp}: media sits beside '
+                         f'{len(empties)} empty column(s) — pair media '
+                         'with comparable content or go full width')
+    return f
+
+
+def _cta_count(body):
+    return len(re.findall(
+        r'<(?:a|button)[^>]*class="[^"]*(?:btn-primary|cta-primary'
+        r'|btn-primary|primary)[^"]*"', body)) or len(re.findall(
+        r'class="[^"]*(?:cta|btn|button)[^"]*"', body))
+
+
+def check_hero_fold(ctx):
+    """R.10 — hero CTA fully above the fold (1280x720, 1440x800,
+    375x667); hero top pad <= section-space-s (~80px)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        m = re.search(r'<section[^>]*data-sec="hero"[^>]*>(.*?)'
+                      r'</section>', txt, re.S)
+        if not m:
+            continue
+        tag = re.search(r'<section[^>]*data-sec="hero"[^>]*>',
+                        txt).group(0)
+        body = m.group(1)
+        if not _cta_count(body):
+            f.append(f'R.10 {name}: hero has no CTA — the primary CTA '
+                     'must sit fully inside the first viewport '
+                     '(1280x720, 1440x800, 375x667)')
+        cls = re.search(r'class="([^"]*)"', tag)
+        cls = cls.group(1) if cls else ''
+        py = re.search(r'\bpy-(\d+)', cls)
+        if py and int(py.group(1)) * 4 > 80:
+            f.append(f'R.10 {name}: hero top padding py-{py.group(1)} '
+                     '(~{}px) exceeds section-space-s (~80px) — hero '
+                     'uses a reduced top tier'.format(
+                         int(py.group(1)) * 4))
+        lead = re.search(r'<p[^>]*>(.*?)</p>', body, re.S)
+        if lead and len(re.sub(r'<[^>]+>', '', lead.group(1))) > 240:
+            f.append(f'R.10 {name}: hero lead >240 chars — ≤3 lines on '
+                     'desktop, the CTA needs the room')
+        h1 = re.search(r'<h1[^>]*>(.*?)</h1>', body, re.S)
+        if h1 and len(re.sub(r'<[^>]+>', '', h1.group(1))) > 80:
+            f.append(f'R.10 {name}: hero H1 >80 chars — display text '
+                     'must leave the CTA above the fold')
+    return f
+
+
+def check_canon_padding(ctx):
+    """G.6 — padding ratios within canon IQR (PatternMiner's
+    CANON-PADDING.json: vertical:horizontal per comp + block:inline)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    cp = ctx.read('CANON-PADDING.json')
+    if not cp:
+        return []
+    try:
+        canon = json.loads(cp)
+    except Exception:
+        return ['G.6 CANON-PADDING.json unparseable']
+    f = []
+    comps = canon.get('components') or {}
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-comp="([^"]*)"[^>]*'
+                r'style="[^"]*padding:\s*([\d.]+)px\s+([\d.]+)px',
+                txt):
+            comp, vb, hb = m.group(1), float(m.group(2)), float(m.group(3))
+            spec = comps.get(comp) or {}
+            lo, hi = (spec.get('vh_iqr') or [None, None])
+            if not spec:
+                f.append(f'G.6 {name} {comp}: component type not in '
+                         'CANON-PADDING.json — every type carries its '
+                         'own ratio band (per type + size tier, never '
+                         'one global median)')
+                continue
+            if lo is None or not hb:
+                continue
+            ratio = vb / hb
+            if not (lo <= ratio <= hi):
+                f.append(f'G.6 {name} {comp}: padding ratio '
+                         f'{ratio:.2f} outside canon IQR '
+                         f'[{lo}, {hi}]')
+    return f
+
+
+def check_primary_cta(ctx):
+    """PS.7 — one primary CTA per section; secondary/tertiary stay
+    visually subordinate (never two filled primaries)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-sec="([^"]*)"[^>]*>(.*?)</section>',
+                txt, re.S):
+            n = len(re.findall(
+                r'class="[^"]*(?:btn-primary|cta-primary|btn--primary'
+                r'|is-primary)[^"]*"', m.group(2)))
+            if n > 1:
+                f.append(f'PS.7 {name} sec {m.group(1)}: {n} primary '
+                         'CTAs — one per section; the rest take '
+                         'secondary/tertiary weight')
+    return f
+
+
+def check_interaction_states(ctx):
+    """I.9 — every interactive element carries hover + focus-visible
+    (and disabled where applicable) styles."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    css = ctx.read('site/src/styles/global.css') or ''
+    for p, c in dist_csss(ctx):
+        css += '\n' + c
+    for p, txt in ctx.page_htmls():
+        for m in re.finditer(r'class="([^"]*(?:btn|cta|button)[^"]*)"',
+                             txt):
+            base = m.group(1).split()[0]
+            if not re.search(rf'{re.escape(base)}[^{{]*:(?:hover|focus)',
+                             css) and not re.search(
+                             rf'\.(?:btn|cta)[^{{]*:(?:hover|focus)',
+                             css):
+                f.append(f'I.9 {os.path.basename(p)}: .{base} has no '
+                         'hover/focus style in the compiled CSS')
+    if css and re.search(r'\.(?:btn|cta|button)', css) \
+            and ':focus-visible' not in css:
+        f.append('I.9 no :focus-visible rule for interactive classes')
+    return f
+
+
+def check_forms(ctx):
+    """S.9 — form fields carry label, required marker, helper/error
+    state containers."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(r'<form[^>]*>(.*?)</form>', txt, re.S):
+            body = m.group(1)
+            if re.search(r'<input|<textarea|<select', body):
+                if not re.search(r'<label|aria-label', body):
+                    f.append(f'S.9 {name}: form field without a label')
+                if 'required' in body and not re.search(
+                        r'aria-required|\*', body):
+                    f.append(f'S.9 {name}: required field has no '
+                             'required marker')
+            if re.search(r'<input|<textarea|<select', body) and not \
+                    re.search(r'helper|error|hint|success', body):
+                f.append(f'S.9 {name}: form has no helper/error state '
+                         'container')
+    return f
+
+
+def check_heading_pattern(ctx):
+    """PS.8 — every content section leads with a heading; eyebrow →
+    H2 → lead order is consistent across sections."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-sec="([^"]*)"[^>]*>(.*?)</section>',
+                txt, re.S):
+            sec, body = m.group(1), m.group(2)
+            if sec in ('nav', 'footer'):
+                continue
+            if not re.search(r'<h[1-6][\s>]', body):
+                f.append(f'PS.8 {name} sec {sec}: no heading — every '
+                         'Section opens eyebrow/H2/lead, never stray '
+                         'content first')
+    return f
+
+
+def check_equal_cards(ctx):
+    """G.7 — cards in a row share the same shell classes (equal height
+    via one grid track)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section[^>]*data-sec="([^"]*)"[^>]*>(.*?)</section>',
+                txt, re.S):
+            cards = [c for c in re.findall(
+                r'class="([^"]*card[^"]*)"', m.group(2))
+                if 'card-grid' not in c]
+            if len(cards) >= 2 and len(set(cards)) > 1:
+                f.append(f'G.7 {name} sec {m.group(1)}: sibling cards '
+                         f'carry different shells {sorted(set(cards))} '
+                         '— equal-height rows use one card class')
+    return f
+
+
+def check_dark_media(ctx):
+    """V.9 — dark-mode images are dimmed (filter or explicit opt-out),
+    never pure-white blocks in a dark page."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    css = ctx.read('site/src/styles/global.css') or ''
+    for p, c in dist_csss(ctx):
+        css += '\n' + c
+    if '.dark' not in css and 'data-theme' not in css \
+            and 'prefers-color-scheme' not in css:
+        return []
+    has_rule = re.search(
+        r'(?:\.dark|data-theme.?=.?"?dark|prefers-color-scheme:\s*dark)'
+        r'[^\n]*\b(img|video|picture)[^{]*\{[^}]*'
+        r'(filter|brightness|opacity)', css)
+    if has_rule:
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        for m in re.finditer(r'<(?:img|video)[^>]*>', txt):
+            if 'data-dark' not in m.group(0):
+                f.append(f'V.9 {os.path.basename(p)}: media without '
+                         'dark handling — dim images in dark mode '
+                         '(.dark img{filter:brightness(…)}) or mark '
+                         'data-dark="ok"')
+                break
+    return f
+
+
+def check_logo(ctx):
+    """L.16 — the logo carries an explicit size and clear space."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        m = re.search(r'<(?:a|div|img|svg)[^>]*class="[^"]*logo[^"]*"[^>]*'
+                      r'>(?:.*?</(?:a|div)>)?', txt)
+        if not m:
+            f.append(f'L.16 {name}: no logo element found')
+            continue
+        tag = m.group(0)
+        if not re.search(r'(width|height)=|font-size|logo-(\d+|sm|md|lg)'
+                         r'|h-(\d+|\[)', tag):
+            f.append(f'L.16 {name}: logo has no explicit size')
+    return f
+
+
+def check_accent_surfaces(ctx):
+    """C.8 — at most one accent-filled surface per viewport (page-level:
+    one inverse/brand band)."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt, parsed, blocks in _segmented(ctx):
+        name = os.path.basename(p)
+        dark = [s for s in blocks if re.search(
+            r'inverse|brand|bg-accent|accent-fill', str(s.get('class')))]
+        if len(dark) > 1:
+            f.append(f'C.8 {name}: {len(dark)} accent-filled surfaces — '
+                     'max one per viewport')
+    return f
+
+
+def check_landmarks(ctx):
+    """PS.9 — skip-link, main/nav/footer landmarks, sane focus order."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        if 'skip' not in txt.lower():
+            f.append(f'PS.9 {name}: no skip-link')
+        if not re.search(r'<main[\s>]|role="main"', txt):
+            f.append(f'PS.9 {name}: no <main> landmark')
+        if not re.search(r'<footer[\s>]|role="contentinfo"', txt):
+            f.append(f'PS.9 {name}: no <footer> landmark')
+    return f
+
+
+def check_sticky_offset(ctx):
+    """R.11 — a sticky/fixed header forces scroll-margin on anchors."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        sticky = re.search(r'class="[^"]*(?:sticky|fixed)[^"]*"',
+                           txt) or re.search(
+                               r'position:\s*(?:sticky|fixed)', txt)
+        if sticky and 'scroll-margin' not in txt and \
+                'scroll-padding' not in txt:
+            f.append(f'R.11 {name}: sticky/fixed element but no '
+                     'scroll-margin/scroll-padding — anchored sections '
+                     'slide under the header')
+    return f
+
+
+def check_footer_structure(ctx):
+    """PS.10 — footer carries nav links, contact, and legal."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        m = re.search(r'<footer[^>]*>(.*?)</footer>', txt, re.S)
+        if not m:
+            continue
+        body = m.group(1).lower()
+        if not re.search(r'<a[\s]', body):
+            f.append(f'PS.10 {name}: footer has no nav links')
+        if not re.search(r'contact|mailto|tel:|address|st\b|street',
+                         body):
+            f.append(f'PS.10 {name}: footer has no contact block')
+        if not re.search(r'privacy|terms|©|&copy;|legal|abn', body):
+            f.append(f'PS.10 {name}: footer has no legal line')
+    return f
+
+
+def check_meta(ctx):
+    """P.16 — favicon, meta description, and OG tags on the build."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        head = txt[:txt.find('</head>')] if '</head>' in txt else txt
+        if not re.search(r'rel="(?:icon|shortcut icon|apple-touch)"',
+                         head):
+            f.append(f'P.16 {name}: no favicon link')
+        if not re.search(r'name="description"', head):
+            f.append(f'P.16 {name}: no meta description')
+        for og in ('og:title', 'og:description', 'og:image'):
+            if og not in head:
+                f.append(f'P.16 {name}: missing {og}')
+    return f
+
+
 def check_mobile_cta(ctx):
     """R.9 — below tablet, primary/secondary CTAs are full-width,
     stacked, centred, min-height 48."""
@@ -6045,11 +6585,13 @@ WAVE_CHECKS = {
            check_rhythm, check_vector_map, check_schema_fields,
            check_genotype, check_burst, check_declared_breaks,
            check_wildcard, check_section_contracts,
-           check_layout_distinct, check_canon_trace],
+           check_layout_distinct, check_canon_trace,
+           check_intent_deviation],
     'w4': [check_direction_axes, check_genotype,
            check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
-           check_dark_mode, check_variants, check_canon_trace],
+           check_dark_mode, check_variants, check_canon_trace,
+           check_intent_deviation, check_wildcard_random],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
            check_content_width, check_contrast, check_type_system,
            check_tailwind_derivation, check_tile_is_system,
@@ -6068,7 +6610,12 @@ WAVE_CHECKS = {
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
-           check_canon_trace,
+           check_canon_trace, check_auto_grid, check_surface_rhythm,
+           check_dead_columns, check_hero_fold, check_canon_padding,
+           check_primary_cta, check_interaction_states, check_forms,
+           check_heading_pattern, check_equal_cards, check_dark_media,
+           check_logo, check_accent_surfaces, check_landmarks,
+           check_sticky_offset, check_footer_structure, check_meta,
            check_dark_mode, check_dark_toggle, check_astro_build] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

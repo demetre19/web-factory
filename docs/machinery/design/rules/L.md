@@ -156,6 +156,24 @@ build self-lint:
 - [ ] Content inside 960px container; only surfaces/media bleed
 - [ ] One declared frame-break max (motif.break); no random overlap
 
+### L.14 Alternating surfaces
+
+Every content group is a Section: block padding ≥ `--section-space-s`,
+heading first, then content. Adjacent sections never share a
+background — default rhythm white → very light grey (L 96–97%) or a
+very light accent tint → white; inverse/brand bands are their own
+surface.
+
+### L.15 No dead half-columns
+
+A media block never sits at half width beside an empty column. Splits
+pair media with content of comparable height, or go full width.
+
+### L.16 Logo size + clear space
+
+The logo carries an explicit size and clear space ≥ its own height —
+never an unsized image floating in the nav.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

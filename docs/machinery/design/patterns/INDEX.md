@@ -46,7 +46,7 @@ A composition with no pattern row has no evidence and cannot be chosen
 | `pattern-ecommerce-cart-mini-cart-form-panel` | ecommerce/cart | mini-cart | form-panel | 29 | 0.83 | check_contrast, check_emphasis, check_rhythm, check_section_enums, check_wireframe_lock, check_wireframe_tags |
 | `pattern-ecommerce-category-product-grid-cards-n` | ecommerce/category | product-grid | cards-n | 16 | 0.94 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
 | `pattern-ecommerce-home-product-grid-cards-n` | ecommerce/home | product-grid | cards-n | 27 | 0.63 | check_contrast, check_emphasis, check_rhythm, check_section_enums, check_segment_media, check_wireframe_tags |
-| `pattern-ecommerce-search-results-product-grid-cards-n` | ecommerce/search-results | product-grid | cards-n | 13 | 0.61 | check_emphasis, check_rhythm, check_spacing_scale, check_speech_acts, check_wireframe_tags |
+| `pattern-ecommerce-search-results-product-grid-cards-n` | ecommerce/search-results | product-grid | cards-n | 13 | 0.85 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
 | `pattern-ecommerce-product-reviews-quote-grid` | ecommerce/product | reviews | quote-grid | 28 | 0.61 | check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock |
 | `pattern-ecommerce-product-trust-badges-badge-center` | ecommerce/product | trust-badges | badge-center | 24 | 0.71 | check_contrast, check_rhythm, check_section_enums, check_segment_media, check_wireframe_lock |
 | `pattern-education-home-hero-stacked-hero` | education/home | hero | stacked-hero | 30 | 0.63 | check_emphasis, check_section_enums, check_speech_acts, check_wireframe_lock, check_wireframe_tags |
@@ -60,7 +60,7 @@ A composition with no pattern row has no evidence and cannot be chosen
 | `pattern-finance-home-trust-badges-badge-center` | finance/home | trust-badges | badge-center | 26 | 0.61 | check_contrast, check_rhythm, check_section_enums, check_segment_media, check_wireframe_lock |
 | `pattern-government-service-detail-grids-and-cards-cards-n` | government/service-detail | grids-and-cards | cards-n | 29 | 0.66 | check_contrast, check_rhythm, check_section_enums, check_segment_media, check_spacing_scale |
 | `pattern-government-home-hero-stacked-hero` | government/home | hero | stacked-hero | 25 | 0.64 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
-| `pattern-healthcare-service-detail-feature-editorial` | healthcare/service-detail | feature | editorial | 17 | 0.65 | check_contrast, check_rhythm, check_spacing_scale, check_speech_acts |
+| `pattern-healthcare-service-detail-feature-split-media` | healthcare/service-detail | feature | split-media | 17 | 1.00 | check_contrast, check_rhythm, check_section_enums, check_speech_acts |
 | `pattern-healthcare-home-hero-full-bleed` | healthcare/home | hero | full-bleed | 28 | 0.61 | check_rhythm, check_section_enums, check_spacing_scale, check_speech_acts |
 | `pattern-homes-project-case-study-gallery-media-gallery` | homes/project-case-study | gallery | media-gallery | 21 | 0.91 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
 | `pattern-homes-floor-plans-grids-and-cards-cards-n` | homes/floor-plans | grids-and-cards | cards-n | 30 | 0.63 | check_emphasis, check_section_enums, check_speech_acts, check_wireframe_lock, check_wireframe_tags |
@@ -81,7 +81,7 @@ A composition with no pattern row has no evidence and cannot be chosen
 | `pattern-nonprofit-home-hero-full-bleed` | nonprofit/home | hero | full-bleed | 11 | 0.64 | check_section_enums, check_speech_acts, check_wireframe_lock |
 | `pattern-personal-brand-service-detail-feature-editorial` | personal-brand/service-detail | feature | editorial | 26 | 0.61 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
 | `pattern-personal-brand-home-hero-stacked-hero` | personal-brand/home | hero | stacked-hero | 26 | 0.73 | check_contrast, check_emphasis, check_rhythm, check_speech_acts, check_wireframe_tags |
-| `pattern-portfolio-case-study-case-study-editorial` | portfolio/case-study | case-study | editorial | 21 | 0.62 | check_emphasis, check_rhythm, check_section_enums, check_spacing_scale, check_wireframe_lock, check_wireframe_tags |
+| `pattern-portfolio-case-study-case-study-editorial` | portfolio/case-study | case-study | editorial | 21 | 0.67 | check_emphasis, check_rhythm, check_section_enums, check_spacing_scale, check_wireframe_lock, check_wireframe_tags |
 | `pattern-portfolio-contact-contact-form-panel` | portfolio/contact | contact | form-panel | 29 | 0.69 | check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock |
 | `pattern-portfolio-about-content-editorial` | portfolio/about | content | editorial | 27 | 0.67 | check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags |
 | `pattern-portfolio-home-hero-stacked-hero` | portfolio/home | hero | stacked-hero | 13 | 0.61 | check_emphasis, check_section_enums, check_speech_acts, check_wireframe_lock, check_wireframe_tags |
@@ -106,7 +106,7 @@ A composition with no pattern row has no evidence and cannot be chosen
 | `pattern-services-home-how-it-works-sequence` | services/home | how-it-works | sequence | 26 | 0.69 | check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags |
 | `pattern-services-service-detail-pricing-cards-n` | services/service-detail | pricing | cards-n | 22 | 0.64 | check_contrast, check_emphasis, check_rhythm, check_section_enums, check_segment_media, check_wireframe_tags |
 | `pattern-services-service-detail-testimonials-quote-grid` | services/service-detail | testimonials | quote-grid | 14 | 0.64 | check_contrast, check_rhythm, check_section_enums, check_segment_media, check_wireframe_lock |
-| `pattern-technology-home-content-editorial` | technology/home | content | editorial | 25 | 0.64 | check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock |
+| `pattern-technology-home-content-editorial` | technology/home | content | editorial | 25 | 0.60 | check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock |
 | `pattern-technology-home-feature-editorial` | technology/home | feature | editorial | 52 | 0.65 | check_emphasis, check_section_enums, check_segment_media, check_speech_acts, check_wireframe_tags |
 | `pattern-technology-home-hero-stacked-hero` | technology/home | hero | stacked-hero | 27 | 0.70 | check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags |
 | `pattern-technology-home-logo-sections-logo-wall` | technology/home | logo-sections | logo-wall | 29 | 0.90 | check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags |

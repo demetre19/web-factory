@@ -180,6 +180,11 @@ reference. Unavailable tool blocks the wave — never a silent skip.
 verbatim; the gate is the verbatim diff. A SPEC that contradicts the
 plan is a refuse, not an improvisation.
 
+### P.16 Head metadata is complete
+
+Every built page ships favicon link, meta description, and
+`og:title`/`og:description`/`og:image`.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

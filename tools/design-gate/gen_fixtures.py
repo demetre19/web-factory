@@ -45,6 +45,11 @@ site:
   slug: fixture
   date: 2026-11-19
   design_mode: variants
+  vertical: services
+  attributes: [reliability, care]
+  intent_choices:
+    - {choice: imagery, allele: image-led}
+    - {choice: image_style, allele: editorial, declared_deviation: {chosen: editorial, expected: ["other:ambiguous", corporate], reason: "brief asks for editorial warmth", copy_cite: "like an editorial feature, not a brochure"}}
   sources:
     - copy-contract: STUB.md
     - wireframe: cards/index.html#d1
@@ -188,6 +193,15 @@ GLOBAL_CSS = '''@tailwind base;
   .inverse { background: var(--c-ink); color: var(--c-paper); }
   .fold-row { border-top: 1px solid var(--c-line); }
   .card-grid { display: grid; gap: var(--space-4); }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 2px; }
+  .btn-primary:disabled { opacity: .5; }
+  .skip-link { position: absolute; left: -9999px; }
+  .skip-link:focus { left: 8px; }
+  .logo { font-weight: 700; }
+  .helper { font-size: .875rem; }
+}
+.dark img { filter: brightness(.85) contrast(.92); }
 }
 '''
 
@@ -239,30 +253,43 @@ TOKENS = json.dumps({
 
 PAGE_HTML = '''<!doctype html><html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Fixture page">
+<meta property="og:title" content="Fixture">
+<meta property="og:description" content="Fixture page">
+<meta property="og:image" content="og.webp">
+<link rel="icon" href="/favicon.svg">
 <script>(function(){var s=localStorage.getItem('theme');var m=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=m;})();</script>
 </head><body>
+<a class="skip-link" href="#main">Skip to content</a>
 <button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
 <nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"
-     class="flex items-center gap-4">
+     class="flex items-center gap-4 py-4">
+  <a class="logo h-6" href="/">Fixture Co</a>
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
 </nav>
-<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" class="sec-band py-24">
+<main id="main">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" class="sec-band py-16">
   <h1 class="text-fluid-0">Testing Site</h1>
   <p>Testing is the thing.</p>
-  <img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero">
+  <a class="btn-primary" href="/book">Book now</a>
+  <img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim">
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" class="card-grid">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" class="card-grid py-16">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
 </section>
 <section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" class="sec-band inverse">
-  <p class="text-fluid-0">Book now</p>
-  <form><button class="btn-primary">Book now</button></form>
+  <h2 class="text-fluid-0">Book now</h2>
+  <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
 </section>
 <section data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open" class="sec-band">
-  <p>Fixture Co, 1 Test St</p>
 </section>
+</main>
+<footer>
+  <a href="/about">About</a>
+  <p>Fixture Co, 1 Test St — contact@fixture.test · Copyright 2026 · Privacy · Terms</p>
+</footer>
 </body></html>'''
 
 SYSTEM_ASTRO = '''---
@@ -862,6 +889,9 @@ def dna_doc():
                         "image.treatment": "duotone"},
              "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 78,
+             "wildcard_seed": 424242,
+             "wildcard_genes": ["radius.personality", "motion.level",
+                                "elevation.level", "image.treatment"],
              "wildcard_breaks": ["S.1"]},
         ],
         "vector_targets": {
@@ -923,6 +953,15 @@ BASE = {
     '.wave': 'w3',
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
     'site/dist/home/index.html': PAGE_HTML,
+    'WILDCARD-HISTORY.json':
+        '[{"round":1,"genes":["color.accent_usage","image.treatment"],'
+        '"seed":117}]',
+    'CANON-PADDING.json': json.dumps({'components': {
+        'split-media': {'vh_iqr': [0.8, 1.6], 'block_inline': [1.0, 2.0]},
+        'cards-n': {'vh_iqr': [0.5, 1.2]},
+        'form-panel': {'vh_iqr': [0.6, 1.4]},
+        'nav-bar': {'vh_iqr': [0.2, 0.8]},
+        'footer-bar': {'vh_iqr': [0.5, 1.2]}}}),
     **SHOTS,
 }
 
@@ -991,8 +1030,8 @@ MUT = {
       'h2{text-transform:uppercase}</style><h2>A BOLD ALL CAPS TITLE '
       'HEADING</h2>')),
  'check_tile_page_parity': mut(
-     ('REPL','site/dist/home/index.html','class="sec-band py-24"',
-      'class="sec-band py-24 drift-class"')),
+     ('REPL','site/dist/home/index.html','class="sec-band py-16"',
+      'class="sec-band py-16 drift-class"')),
  'check_direction_axes': mut(('REPL','DESIGN-PLAN.md','temperature: warm','temperature: hot')),
  'check_wireframe_tags': mut(('REPL','preview/layouts.html',
     'data-ratio="none" data-disclosure','data-ratio="bogus" data-disclosure')),
@@ -1033,6 +1072,49 @@ MUT = {
  'check_no_emoji': mut(('APPEND','site/dist/home/index.html','<p>Done \U0001F389</p>')),
  'check_icon_discipline': mut(('REPL','site/dist/home/index.html','width="24" height="24" viewBox="0 0 24 24"','width="13" height="13"')),
  'check_review_completeness': mut(('REPL','REVIEW.json','"opus-4"','"swe-2"')),
+ 'check_hero_fold': mut(('REPL','site/dist/home/index.html',
+     '<a class="btn-primary" href="/book">Book now</a>','')),
+ 'check_canon_padding': mut(('SET','CANON-PADDING.json',
+     '{"components":{}}'),
+     ('REPL','site/dist/home/index.html','data-disclosure="open"',
+      'data-disclosure="open" style="padding:96px 48px"')),
+ 'check_primary_cta': mut(('REPL','site/dist/home/index.html',
+     '<form><label','<a class="btn-primary" href="/x">Extra</a><form><label')),
+ 'check_interaction_states': mut(('REPL','site/src/styles/global.css',
+     ':focus-visible',':focus'),('REPL','site/src/styles/global.css',
+     '.btn-primary:hover','')),
+ 'check_forms': mut(('REPL','site/dist/home/index.html',
+     '<form><label','<form><x-label')),
+ 'check_heading_pattern': mut(('REPL','site/dist/home/index.html',
+     '<h2 class="text-fluid-0">What is testing?</h2>','')),
+ 'check_equal_cards': mut(('REPL','site/dist/home/index.html',
+     '<svg width="24"','<div class="card"></div><div class="cardx feature"></div><svg width="24"')),
+ 'check_dark_media': mut(('REPL','site/src/styles/global.css',
+     '.dark img { filter: brightness(.85) contrast(.92); }',''),
+     ('REPL','site/dist/home/index.html',' data-dark="dim"','')),
+ 'check_logo': mut(('REPL','site/dist/home/index.html',' h-6','')),
+ 'check_accent_surfaces': mut(('REPL','site/dist/home/index.html',
+     'class="card-grid','class="card-grid inverse')),
+ 'check_landmarks': mut(('REPL','site/dist/home/index.html',
+     '<main id="main">','<div id="main">')),
+ 'check_sticky_offset': mut(('REPL','site/dist/home/index.html',
+     'class="sec-band py-16"','class="sec-band py-16 sticky"',
+     'class="sec-band py-16 sticky"')),
+ 'check_footer_structure': mut(('REPL','site/dist/home/index.html',
+     ' · Privacy · Terms','')),
+ 'check_meta': mut(('REPL','site/dist/home/index.html',
+     '<meta name="description" content="Fixture page">','')),
+ 'check_intent_deviation': mut(('REPL','DESIGN-PLAN.md',
+     'reason: "brief asks for editorial warmth"','reason: ""')),
+ 'check_wildcard_random': mut(('REPL','DNA.json',
+     '"wildcard_seed": 424242','"wildcard_seed": null')),
+ 'check_auto_grid': mut(('REPL','site/src/styles/global.css',
+     '.card-grid { display: grid; gap: var(--space-4); }',
+     '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }')),
+ 'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
+     'class="card-grid py-16"','class="sec-band"')),
+ 'check_dead_columns': mut(('REPL','site/dist/home/index.html',
+     '<img src="hero.webp"','<div></div><img src="hero.webp"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
  'check_burst': mut(('REPL','DESIGN-PLAN.md',
     'name: d2, wildcard: false','name: d2, wildcard: true')),
@@ -1057,8 +1139,8 @@ MUT = {
  'check_reduced_motion': mut(('REPL','site/src/styles/global.css',
     '@media (prefers-reduced-motion: reduce)','@media (min-width: 9999px)')),
  'check_copy_density': mut(('REPL','site/dist/home/index.html',
-    '<p class="text-fluid-0">Book now</p>',
-    '<p class="text-fluid-0">' + 'long copy sentence ' * 20 + '</p>')),
+    '<p>Testing is the thing.</p>',
+    '<p>' + 'long copy sentence ' * 20 + '</p>')),
  'check_seo_lint': mut(('REPL','site/dist/home/index.html',
     '<h2 class="text-fluid-0">What is testing?</h2>',
     '<h4 class="text-fluid-0">What is testing?</h4>')),
@@ -1093,12 +1175,14 @@ MUT = {
  'check_segment_region': mut(('REPL','site/dist/home/index.html',
     '<section data-sec="macro"','<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>\n<section data-sec="macro"')),
  'check_segment_share': mut(('REPL','site/dist/home/index.html',
-    '<p>Fixture Co, 1 Test St</p>',
-    '<p>Fixture Co, 1 Test St</p>' + '<p>footer boilerplate</p>' * 20)),
+    'Fixture Co, 1 Test St — contact@fixture.test · Copyright 2026 · Privacy · Terms',
+    'Fixture Co, 1 Test St — contact@fixture.test' +
+    '<p>footer boilerplate</p>' * 20)),
  'check_segment_media': mut(('REPL','site/dist/home/index.html',
     ' alt="hero"','')),
  'check_segment_footer': mut(('REPL','site/dist/home/index.html',
-    '<p>Fixture Co, 1 Test St</p>','<h1>Fixture Co</h1>')),
+    'Fixture Co, 1 Test St — contact@fixture.test',
+    '<h1>Fixture Co</h1>')),
  'check_segment_priority': mut(('REPL','site/dist/home/index.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
  'check_checklist': mut(('SET','CHECKLIST/w3.md',

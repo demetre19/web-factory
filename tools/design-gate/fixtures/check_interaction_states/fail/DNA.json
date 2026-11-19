@@ -1,0 +1,268 @@
+{
+ "version": 1,
+ "site": "fixture",
+ "vertical_profile": "profile-services",
+ "genotype": {
+  "layout-archetype": "split-media",
+  "page-macro-structure": "promise-proof-how-act",
+  "density-tier": "regular",
+  "image-led-ratio": "balanced",
+  "type-contrast": "medium",
+  "display-face": "sans",
+  "radius-personality": "soft",
+  "surface-rhythm": "one-contrast-moment",
+  "cta-restraint": "single-primary",
+  "cta-rank": "hero",
+  "disclosure-tier": "open",
+  "nav-pattern": "bar-cta",
+  "motion-tier": "subtle",
+  "proof-type": "logos",
+  "media-treatment": "photo",
+  "columns": "3",
+  "heading-form": "claim",
+  "whitespace-band": "medium",
+  "gallery-mode": "grid",
+  "form-presence": "inline",
+  "mood-energy": "calm",
+  "mood-register": "approachable",
+  "image-style": "minimal"
+ },
+ "knobs": {
+  "type.ratio": 1.25,
+  "type.base": 16,
+  "type.display_weight": 700,
+  "type.tracking_display": -0.02,
+  "space.density_scale": 0,
+  "space.section_py": {
+   "compact": 48,
+   "regular": 64,
+   "spacious": 96
+  },
+  "grid.gutter": 24,
+  "radius.personality": "p3",
+  "color.surface_contrast": 0.05,
+  "color.accent_usage": "cta+motif",
+  "color.neutral_tint": 0.03,
+  "elevation.level": 1,
+  "motion.level": "subtle",
+  "image.treatment": "natural"
+ },
+ "modes": {
+  "light": {
+   "bg": "#FDFCFA",
+   "surface": "#F1EFEC",
+   "surface_elevated": "#EBE7E1",
+   "border": "#D8D3CC",
+   "ink": "#221F1B",
+   "ink_muted": "#6F665D",
+   "accent": "#0055AA",
+   "accent_foreground": "#FFFFFF",
+   "inverse": "#1D2325"
+  },
+  "dark": {
+   "bg": "#14181A",
+   "surface": "#1C2224",
+   "surface_elevated": "#232A2C",
+   "border": "#2C3437",
+   "ink": "#EDEBE7",
+   "ink_muted": "#A8A49D",
+   "accent": "#4C93D6",
+   "accent_foreground": "#0E1416",
+   "inverse": "#F4F2EE"
+  }
+ },
+ "invariants": {
+  "accent": "#0055AA",
+  "logo": "wordmark",
+  "fonts": {
+   "display": "Inter",
+   "body": "Inter"
+  }
+ },
+ "constraints": {
+  "likes": [
+   "calm editorial spacing"
+  ],
+  "dislikes": [
+   "gradient meshes"
+  ],
+  "references": [
+   "mobbin:app/linear"
+  ]
+ },
+ "rhythm": [
+  {
+   "section": "nav",
+   "surface": "base",
+   "density": "compact"
+  },
+  {
+   "section": "hero",
+   "surface": "base",
+   "density": "spacious"
+  },
+  {
+   "section": "macro",
+   "surface": "muted",
+   "density": "regular"
+  },
+  {
+   "section": "end-act",
+   "surface": "inverse",
+   "density": "spacious"
+  },
+  {
+   "section": "footer",
+   "surface": "base",
+   "density": "compact"
+  }
+ ],
+ "variants": [
+  {
+   "id": "v1",
+   "vector": "best-predicted",
+   "baseline": true,
+   "deltas": {},
+   "sheet_pass": {
+    "light": true,
+    "dark": true
+   },
+   "pass": true,
+   "score": 84,
+   "wildcard_breaks": []
+  },
+  {
+   "id": "v2",
+   "vector": "typography-led",
+   "deltas": {
+    "type.ratio": 1.3625,
+    "type.display_weight": 800,
+    "type.tracking_display": -0.035,
+    "color.neutral_tint": 0.06
+   },
+   "sheet_pass": {
+    "light": true,
+    "dark": true
+   },
+   "pass": true,
+   "score": 81,
+   "wildcard_breaks": []
+  },
+  {
+   "id": "v3",
+   "vector": "wildcard",
+   "deltas": {
+    "radius.personality": "p4",
+    "motion.level": "playful",
+    "elevation.level": 3,
+    "image.treatment": "duotone"
+   },
+   "sheet_pass": {
+    "light": true,
+    "dark": true
+   },
+   "pass": true,
+   "score": 78,
+   "wildcard_seed": 424242,
+   "wildcard_genes": [
+    "radius.personality",
+    "motion.level",
+    "elevation.level",
+    "image.treatment"
+   ],
+   "wildcard_breaks": [
+    "S.1"
+   ]
+  }
+ ],
+ "vector_targets": {
+  "ease_of_use": 7,
+  "clarity": 8,
+  "layout": 6,
+  "typography": 7,
+  "colour": 6,
+  "rhythm": 6,
+  "imagery": 5,
+  "trust": 8,
+  "conversion": 9,
+  "seo": 8,
+  "mobile": 8,
+  "speed": 9,
+  "a11y": 8
+ },
+ "provenance": {
+  "type.ratio": {
+   "tag": "snapped",
+   "patterns": [
+    "pattern-hero-split"
+   ],
+   "n": 24
+  },
+  "type.base": {
+   "tag": "snapped",
+   "patterns": [
+    "pattern-hero-split"
+   ],
+   "n": 24
+  },
+  "space.section_py": {
+   "tag": "snapped",
+   "patterns": [
+    "pattern-cards-n"
+   ],
+   "n": 18
+  },
+  "grid.gutter": {
+   "tag": "snapped",
+   "patterns": [
+    "pattern-nav-bar"
+   ],
+   "n": 21
+  },
+  "type.display_weight": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "type.tracking_display": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "space.density_scale": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "radius.personality": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "color.surface_contrast": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "color.accent_usage": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "color.neutral_tint": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "elevation.level": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "motion.level": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  },
+  "image.treatment": {
+   "tag": "chosen",
+   "reason": "fixture baseline"
+  }
+ },
+ "hashes": {
+  "core": "11f1b43b54cefc13",
+  "structure": "489acd9bfe7c3402",
+  "variants": "84348ee7a7f00e26"
+ }
+}

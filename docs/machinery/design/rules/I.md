@@ -202,6 +202,12 @@ build self-lint:
 
 ---
 
+### I.9 Interaction states
+
+Every interactive element carries hover, focus-visible and active
+styles (and a disabled style where applicable); focus rings come from
+tokens (I.7), never the default outline.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

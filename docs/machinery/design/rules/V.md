@@ -222,6 +222,12 @@ Checked at DESIGN-PLAN review and build self-lint:
 
 ---
 
+### V.9 Dark-mode media handling
+
+Images and video in dark mode are dimmed (`.dark img { filter:
+brightness(…) }`) or explicitly opted out (`data-dark="ok"`); a
+pure-white image block on a dark page = FAIL.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

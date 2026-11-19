@@ -145,7 +145,8 @@
    "VG.4"
   ],
   "check_mobile_cta": [
-   "R.6"
+   "R.6",
+   "R.9"
   ],
   "check_measurable": [
    "T.1",
@@ -163,6 +164,63 @@
   ],
   "check_canon_trace": [
    "REF.1"
+  ],
+  "check_wildcard_random": [
+   "B.7"
+  ],
+  "check_accent_surfaces": [
+   "C.8"
+  ],
+  "check_intent_deviation": [
+   "D.5"
+  ],
+  "check_auto_grid": [
+   "G.5"
+  ],
+  "check_canon_padding": [
+   "G.6"
+  ],
+  "check_equal_cards": [
+   "G.7"
+  ],
+  "check_interaction_states": [
+   "I.9"
+  ],
+  "check_surface_rhythm": [
+   "L.14"
+  ],
+  "check_dead_columns": [
+   "L.15"
+  ],
+  "check_logo": [
+   "L.16"
+  ],
+  "check_meta": [
+   "P.16"
+  ],
+  "check_primary_cta": [
+   "PS.7"
+  ],
+  "check_heading_pattern": [
+   "PS.8"
+  ],
+  "check_landmarks": [
+   "PS.9"
+  ],
+  "check_footer_structure": [
+   "PS.10"
+  ],
+  "check_hero_fold": [
+   "R.10"
+  ],
+  "check_sticky_offset": [
+   "R.11"
+  ],
+  "check_forms": [
+   "S.9"
+  ],
+  "check_dark_media": [
+   "V.9"
   ]
  },
  "graph": {
@@ -1260,6 +1318,146 @@
    "threshold": "untraced choice / missing ignored list / operator site not banked",
    "tier": "invariant",
    "wave": "w1"
+  },
+  "B.7": {
+   "check": "check_wildcard_random",
+   "mode": "script",
+   "threshold": "no seed / same genes as last round / image.treatment sole twice",
+   "tier": "invariant",
+   "wave": "w4"
+  },
+  "C.8": {
+   "check": "check_accent_surfaces",
+   "mode": "script",
+   "threshold": ">1 accent-filled surface per viewport",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "D.5": {
+   "check": "check_intent_deviation",
+   "mode": "script",
+   "threshold": "non-conventional allele without declared_deviation",
+   "tier": "structural",
+   "wave": "w3"
+  },
+  "G.5": {
+   "check": "check_auto_grid",
+   "mode": "script",
+   "threshold": "fixed repeat(N) collection grid / narrow undeclared scroll rail",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "G.6": {
+   "check": "check_canon_padding",
+   "mode": "script",
+   "threshold": "padding ratio outside the type canon IQR / unclassified type",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "G.7": {
+   "check": "check_equal_cards",
+   "mode": "script",
+   "threshold": "mixed card shells in one grid",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "I.9": {
+   "check": "check_interaction_states",
+   "mode": "script",
+   "threshold": "interactive class without hover/focus-visible/disabled styles",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "L.14": {
+   "check": "check_surface_rhythm",
+   "mode": "script",
+   "threshold": "adjacent identical surfaces / section without block padding",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "L.15": {
+   "check": "check_dead_columns",
+   "mode": "script",
+   "threshold": "media beside an empty column",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "L.16": {
+   "check": "check_logo",
+   "mode": "script",
+   "threshold": "logo missing or unsized",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "P.16": {
+   "check": "check_meta",
+   "mode": "script",
+   "threshold": "favicon/description/og tag missing on built page",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "PS.7": {
+   "check": "check_primary_cta",
+   "mode": "script",
+   "threshold": ">1 primary CTA in a section",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "PS.8": {
+   "check": "check_heading_pattern",
+   "mode": "script",
+   "threshold": "content section without its heading pattern",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "PS.9": {
+   "check": "check_landmarks",
+   "mode": "script",
+   "threshold": "no skip-link/main/footer landmark",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "PS.10": {
+   "check": "check_footer_structure",
+   "mode": "script",
+   "threshold": "footer lacks nav/contact/legal",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "R.9": {
+   "check": "check_mobile_cta",
+   "mode": "script",
+   "threshold": "mobile CTAs not full-width stacked \u226548px",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "R.10": {
+   "check": "check_hero_fold",
+   "mode": "script",
+   "threshold": "hero CTA outside first viewport / top pad > section-space-s",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "R.11": {
+   "check": "check_sticky_offset",
+   "mode": "script",
+   "threshold": "sticky header without scroll-margin anchors",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "S.9": {
+   "check": "check_forms",
+   "mode": "script",
+   "threshold": "field without label / required marker / state container",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "V.9": {
+   "check": "check_dark_media",
+   "mode": "script",
+   "threshold": "undimmed media in dark mode",
+   "tier": "stylistic",
+   "wave": "w7"
   }
  }
 }

@@ -1,0 +1,40 @@
+<!doctype html><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Fixture page">
+<meta property="og:title" content="Fixture">
+<meta property="og:description" content="Fixture page">
+<meta property="og:image" content="og.webp">
+<link rel="icon" href="/favicon.svg">
+<script>(function(){var s=localStorage.getItem('theme');var m=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=m;})();</script>
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
+<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" style="padding:96px 48px"
+     class="flex items-center gap-4 py-4">
+  <a class="logo h-6" href="/">Fixture Co</a>
+  <button class="burger btn-primary" aria-label="Menu">Menu</button>
+</nav>
+<main id="main">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" style="padding:96px 48px" class="sec-band py-16">
+  <h1 class="text-fluid-0">Testing Site</h1>
+  <p>Testing is the thing.</p>
+  <a class="btn-primary" href="/book">Book now</a>
+  <img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim">
+</section>
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" style="padding:96px 48px" class="card-grid py-16">
+  <h2 class="text-fluid-0">What is testing?</h2>
+  <p>Testing is the thing.</p>
+  <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
+</section>
+<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" style="padding:96px 48px" class="sec-band inverse">
+  <h2 class="text-fluid-0">Book now</h2>
+  <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
+</section>
+<section data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open" style="padding:96px 48px" class="sec-band">
+</section>
+</main>
+<footer>
+  <a href="/about">About</a>
+  <p>Fixture Co, 1 Test St — contact@fixture.test · Copyright 2026 · Privacy · Terms</p>
+</footer>
+</body></html>

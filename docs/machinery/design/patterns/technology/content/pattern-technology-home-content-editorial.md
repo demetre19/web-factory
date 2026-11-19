@@ -6,7 +6,7 @@ page_types: [home]
 section_type: content
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.64
+prevalence: 0.6
 n: 25
 evidence:
   - https://mobbin.com/sites/sections/a89e05aa-c41c-4cf8-b196-9af59035b98d?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -18,7 +18,7 @@ evidence:
   - https://mobbin.com/sites/sections/d0cbe981-946b-4ca8-96c6-abd8d8a85c17?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/1143697c-abc1-45f6-81bb-158770b63be4?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/848358e0-f42c-4880-84ae-e972247e8583?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/8ab0580d-f853-4c0c-91f4-e70bbb530465?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/a956c73e-a879-4da4-ad59-3accaf7454e7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
 implies_rules: [G.3, L.1, L.10, L.5, L.7, V.1, V.3]
 enforced_by: [check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_lock]
 consumes: [gene-layout-archetype, gene-image-led-ratio, gene-density-tier]
@@ -35,7 +35,7 @@ links:
 
 # pattern-technology-home-content-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On technology content sections built for developers checking the API surface, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 64% of 25 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On technology content sections built for developers checking the API surface, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 60% of 25 annotated screens (layout-archetype, image-led-ratio, density-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 

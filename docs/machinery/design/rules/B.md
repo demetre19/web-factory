@@ -88,6 +88,14 @@ The chosen genotype's distance from its vertical profile centroid
 surprise, not a different business. FAIL: `distance > bound`, or a
 wildcard chosen with no `NOVELTY.json`.
 
+### B.7 The wildcard rolls the gene
+
+The wildcard's target genes are RNG-chosen (seeded, recorded in
+`DNA.variants[].wildcard_seed` + `wildcard_genes`), weighted toward
+genes not used recently — never a default image overlay. The set
+differs from the previous round's wildcard (`WILDCARD-HISTORY.json`);
+`image.treatment` is never the sole change twice in a row.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

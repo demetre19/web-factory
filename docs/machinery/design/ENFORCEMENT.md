@@ -150,5 +150,25 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 | REF.1 | Every choice traces to canon | invariant | script | `check_canon_trace` | untraced choice / missing ignored list / operator site not banked | w1 |
+| B.7 | The wildcard rolls the gene | invariant | script | `check_wildcard_random` | no seed / same genes as last round / image.treatment sole twice | w4 |
+| C.8 | One accent-filled surface per viewport | structural | script | `check_accent_surfaces` | >1 accent-filled surface per viewport | w7 |
+| D.5 | Intent deviations are declared | structural | script | `check_intent_deviation` | non-conventional allele without declared_deviation | w3 |
+| G.5 | Self-organising grids | structural | script | `check_auto_grid` | fixed repeat(N) collection grid / narrow undeclared scroll rail | w7 |
+| G.6 | Canon padding ratios | structural | script | `check_canon_padding` | padding ratio outside the type canon IQR / unclassified type | w7 |
+| G.7 | Equal-height cards | stylistic | script | `check_equal_cards` | mixed card shells in one grid | w7 |
+| I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
+| L.14 | Alternating surfaces | structural | script | `check_surface_rhythm` | adjacent identical surfaces / section without block padding | w7 |
+| L.15 | No dead half-columns | structural | script | `check_dead_columns` | media beside an empty column | w7 |
+| L.16 | Logo size + clear space | stylistic | script | `check_logo` | logo missing or unsized | w7 |
+| P.16 | Head metadata is complete | structural | script | `check_meta` | favicon/description/og tag missing on built page | w7 |
+| PS.7 | One primary CTA per section | invariant | script | `check_primary_cta` | >1 primary CTA in a section | w7 |
+| PS.8 | Section heading pattern | structural | script | `check_heading_pattern` | content section without its heading pattern | w7 |
+| PS.9 | Landmarks + skip link | invariant | script | `check_landmarks` | no skip-link/main/footer landmark | w7 |
+| PS.10 | Footer structure | structural | script | `check_footer_structure` | footer lacks nav/contact/legal | w7 |
+| R.9 | Mobile CTA mechanics | invariant | script | `check_mobile_cta` | mobile CTAs not full-width stacked ≥48px | w7 |
+| R.10 | Hero fold | invariant | script | `check_hero_fold` | hero CTA outside first viewport / top pad > section-space-s | w7 |
+| R.11 | Sticky header ↔ anchor offset | structural | script | `check_sticky_offset` | sticky header without scroll-margin anchors | w7 |
+| S.9 | Form states | structural | script | `check_forms` | field without label / required marker / state container | w7 |
+| V.9 | Dark-mode media handling | stylistic | script | `check_dark_media` | undimmed media in dark mode | w7 |
 
-141 rules — script 110, reviewer 30, operator 1; invariant 41, structural 29, stylistic 71.
+161 rules — script 130, reviewer 30, operator 1; invariant 46, structural 41, stylistic 74.

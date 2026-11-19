@@ -6,7 +6,7 @@ page_types: [case-study]
 section_type: case-study
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.619
+prevalence: 0.667
 n: 21
 evidence:
   - https://mobbin.com/sites/sections/2df021cc-6734-4975-9eb8-e9f874fff0b9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-portfolio-case-study-case-study-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On portfolio case-study sections built for clients scanning craft in seconds, hold `compact` vertical rhythm, CTA restraint `single-primary`. This signature appears in 62% of 21 annotated screens (layout-archetype, density-tier, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On portfolio case-study sections built for clients scanning craft in seconds, hold `compact` vertical rhythm, CTA restraint `single-primary`. This signature appears in 67% of 21 annotated screens (layout-archetype, density-tier, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 

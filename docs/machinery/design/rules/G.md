@@ -45,6 +45,27 @@ proof bands and chrome. Uniform `regular` everywhere is the
 
 ---
 
+### G.5 Self-organising grids — auto-fit only
+
+Card/feature/step collections use
+`repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr))` with
+`gap: var(--grid-gap)`. No `repeat(N, …)` on collections. Horizontal
+scroll rails are banned unless deliberately full-bleed and declared —
+a rail narrower than the viewport that scrolls = FAIL.
+
+### G.6 Canon padding ratios — per component type
+
+Every component type carries its own padding-ratio band from
+`CANON-PADDING.json` (PatternMiner's canon measurements, per type and
+size tier — never one global median). A rendered component whose
+type is unclassified, or whose block:inline ratio sits outside its
+band, FAILs.
+
+### G.7 Equal-height cards
+
+Cards in one row share a single shell class/grid track; mixed shells
+in a grid = FAIL.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

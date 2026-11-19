@@ -172,6 +172,25 @@ Assignment rules; the CSS mechanism is `position`/flex/grid, the
 
 ---
 
+### R.9 Mobile CTA mechanics
+
+Below tablet, primary and secondary CTAs are full-width, stacked,
+centred, ≥48px tall. The mobile media block carries the rules; a
+desktop-shaped button at 375px is a FAIL.
+
+### R.10 Hero fold — the CTA is above the fold
+
+The hero's primary CTA is fully visible inside the first viewport at
+1280×720, 1440×800 and 375×667, nav included. Hero top padding is a
+reduced tier — ≤ `--section-space-s` (~80px), never `l`/`xl` above the
+content. Display text + lead leave room: lead ≤3 lines on desktop;
+H1/lead/CTA gaps come from `space-*` tokens only.
+
+### R.11 Sticky header ↔ anchor offset
+
+A sticky/fixed header pairs with `scroll-margin`/`scroll-padding` on
+anchored targets; sections must not slide under the bar.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

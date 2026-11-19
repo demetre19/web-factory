@@ -67,6 +67,27 @@ signal: once the page moves to boilerplate it doesn't resume the
 argument. FAIL: a main block following a chrome block, or an
 `aside`/`sidebar` preceding the first main section.
 
+### PS.7 One primary CTA per section
+
+One primary CTA per section; secondary/tertiary actions stay visually
+subordinate — two filled primaries in one section = FAIL.
+
+### PS.8 Section heading pattern
+
+Every content Section opens with its heading pattern (eyebrow → H2 →
+lead, consistent order + spacing across sections). Content-first or
+heading-less content sections = FAIL.
+
+### PS.9 Landmarks + skip link
+
+Every page ships a skip-link, `<main>`, `<nav>` and `<footer>`
+landmarks, and a sane focus order.
+
+### PS.10 Footer structure
+
+The footer carries secondary nav links, a contact block, and a legal
+line — boilerplate, nothing else (see PS.5).
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

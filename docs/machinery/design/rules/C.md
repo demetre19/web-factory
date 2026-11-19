@@ -154,6 +154,11 @@ mode's shots or items are missing.
 - [ ] One hue per CTA class; hover/active states derived
 - [ ] Grayscale proof: 5 distinct value steps visible
 
+### C.8 One accent-filled surface per viewport
+
+At most one accent/inverse-filled band per viewport; stacked filled
+surfaces read as noise, not hierarchy.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
