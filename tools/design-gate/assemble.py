@@ -27,9 +27,10 @@ import gate
 def main(argv):
     args = [a for a in argv[1:] if not a.startswith('--')]
     flags = {a for a in argv[1:] if a.startswith('--')}
-    if not args or flags - {'--variants', '--layouts', '--fine'}:
+    if not args or flags - {'--variants', '--layouts', '--fine',
+                            '--candidates'}:
         print('usage: assemble.py <pipeline-dir> '
-              '[--variants | --fine | --layouts]')
+              '[--variants | --fine | --layouts | --candidates]')
         return 2
     ctx = gate.Ctx(args[0])
     if '--layouts' in flags:
@@ -47,6 +48,14 @@ def main(argv):
             fh.write(txt)
         print(f'assembled picker → {os.path.relpath(path, ctx.dir)} '
               f'(marker {h})')
+        return 0
+    if '--candidates' in flags:
+        path, txt, h = gate.assemble_candidates(ctx)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as fh:
+            fh.write(txt)
+        print(f'assembled candidates → '
+              f'{os.path.relpath(path, ctx.dir)} (marker {h})')
         return 0
     if '--fine' in flags:
         path, txt, h = gate.assemble_fine(ctx)
