@@ -24,7 +24,7 @@ const {
   <div class="max-w-prose">
     {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
     <p class="mt-stack text-fluid-0">{fs}</p>
-    <ul class="mt-stack grid grid-cols-2 gap-fluid-s text-fluid-0">
+    <ul class="mt-stack grid-auto gap-fluid-s text-fluid-0">
       {items.map((it) => (
         <li><a class="underline" href={it.href ?? '#'}>{it.label}</a></li>
       ))}

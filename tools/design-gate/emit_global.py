@@ -74,6 +74,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --section-space-xl: clamp(8rem, 5rem + 15vi, 10rem);
   --section-space-xxl: clamp(10rem, 6rem + 20vi, 12rem);
   --gutter: var(--primitive-gutter);
+  --grid-min: var(--primitive-grid-min);
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
@@ -137,6 +138,11 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               background: var(--sec-bg, var(--bg-canvas));
               color: var(--sec-fg, var(--text-primary)); }
   .sec-inner { max-width: 72rem; margin-inline: auto; }
+  /* G.5 canon — every collection grid is auto-fit on the rung-bound
+     card floor, never a fixed repeat(N). */
+  .grid-auto { display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(min(var(--grid-min),100%),1fr)); }
   .ratio-portrait { aspect-ratio: 3 / 4; }
   .ratio-phone { aspect-ratio: 9 / 19; }
   .variant-stage { container-type: inline-size; }

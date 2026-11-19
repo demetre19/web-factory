@@ -22,7 +22,7 @@ const {
 
 <div>
   {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
-  <ul class="mt-stack grid grid-cols-2 gap-fluid-s md:grid-cols-3">
+  <ul class="mt-stack grid-auto gap-fluid-s">
     {items.map((it) => (
       <li class="aspect-square overflow-hidden rounded-card">
         <picture><img class="h-full w-full object-cover" src={it.href ?? '/media/placeholder.svg'}

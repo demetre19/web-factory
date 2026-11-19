@@ -22,7 +22,7 @@ const {
 
 <div>
   {h1 ? <h1 class="text-fluid-1">{heading}</h1> : <h2 class="text-fluid-1">{heading}</h2>}
-  <dl class="mt-stack grid grid-cols-2 gap-stack md:grid-cols-4">
+  <dl class="mt-stack grid-auto gap-stack">
     {items.map((it) => (
       <div>
         <dd class="text-fluid-4 font-bold">{it.value}</dd>

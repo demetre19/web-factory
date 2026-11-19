@@ -30,22 +30,22 @@ OUT = os.environ.get('VARIANCE_OUT', '/tmp/variance')
 VARIANTS = {
     'spacious-serif-editorial': {
         'knobs': {
-            'type.ratio': 1.333, 'type.base': 18,
+            'type.ratio': 1.3375, 'type.base': 18,
             'type.display_weight': 400,
             'type.tracking_display': -0.01,
             'space.density_scale': 'space-l',
-            'space.section_py': {'compact': 'section-space-m',
-                                 'regular': 'section-space-l',
+            'space.section_py': {'compact': 'section-space-s',
+                                 'regular': 'section-space-m',
                                  'spacious': 'section-space-xl'},
             'grid.gutter': 'space-l',
             'radius.personality': 'p2',
             'color.surface_contrast': 0.03,
-            'color.accent_usage': 'cta',
+            'color.accent_usage': 'cta-only',
             'color.neutral_tint': 0.02,
             'elevation.level': 0, 'motion.level': 'none',
             'image.treatment': 'natural', 'motion.engine': 'css',
             'btn.padding_ratio': 1.5, 'btn.size': 'l',
-            'width.inner_rung': 68},
+            'width.inner_rung': '70'},
         'modes': {'light': {
             'bg': '#FAF7F2', 'surface': '#F0EBE3',
             'surface_elevated': '#E7E0D4', 'border': '#D9CFC0',
@@ -90,7 +90,7 @@ VARIANTS = {
             'elevation.level': 0, 'motion.level': 'none',
             'image.treatment': 'natural', 'motion.engine': 'css',
             'btn.padding_ratio': 2.5, 'btn.size': 's',
-            'width.inner_rung': 56},
+            'width.inner_rung': '50'},
         'modes': {'light': {
             'bg': '#FFFFFF', 'surface': '#F2F2F2',
             'surface_elevated': '#E6E6E6', 'border': '#0A0A0A',
@@ -125,7 +125,7 @@ VARIANTS = {
             'space.density_scale': 'space-m',
             'space.section_py': {'compact': 'section-space-s',
                                  'regular': 'section-space-l',
-                                 'spacious': 'section-space-xxl'},
+                                 'spacious': 'section-space-xl'},
             'grid.gutter': 'space-s',
             'radius.personality': 'p4',
             'color.surface_contrast': 0.08,
@@ -134,7 +134,7 @@ VARIANTS = {
             'elevation.level': 2, 'motion.level': 'playful',
             'image.treatment': 'natural', 'motion.engine': 'css',
             'btn.padding_ratio': 2.0, 'btn.size': 'm',
-            'width.inner_rung': 64},
+            'width.inner_rung': '60'},
         'modes': {'light': {
             'bg': '#0D0F1A', 'surface': '#141826',
             'surface_elevated': '#1B2134', 'border': '#2A3150',
@@ -208,7 +208,23 @@ def _set_dna(dst, patch):
     d = json.load(open(p))
     d['knobs'].update(patch['knobs'])
     d['modes'] = patch['modes']
-    d['rhythm'] = patch['rhythm']
+    # DM.6 binds plan-row density/surface to the DNA rhythm — the
+    # harness derives the map's matching rows from the patched
+    # surface/density so rhythm and plan never disagree.
+    rows = patch.get('rows') or {}
+    rhy = {r['section']: r for r in d.get('rhythm') or []}
+    for sec, (surf, dens) in rows.items():
+        if sec in rhy:
+            rhy[sec] = dict(rhy[sec], surface=surf, density=dens)
+        else:
+            rhy[sec] = {'section': sec, 'surface': surf,
+                        'density': dens}
+    d['rhythm'] = list(rhy.values())
+    # DM.1 — re-hash the edited map (same slices gate.dna_slices
+    # produces) so hashes.core/.structure stay fresh.
+    sys.path.insert(0, HERE)
+    import gate as _g
+    d['hashes'] = _g.dna_slices(d)
     json.dump(d, open(p, 'w'), indent=1)
 
 

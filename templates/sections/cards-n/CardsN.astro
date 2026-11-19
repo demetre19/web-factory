@@ -23,7 +23,7 @@ const {
 <div>
   {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
   <p class="mt-stack max-w-prose text-fluid-0">{fs}</p>
-  <ul class="mt-fluid-l grid gap-stack sm:grid-cols-2 lg:grid-cols-3">
+  <ul class="mt-fluid-l grid-auto gap-stack">
     {items.map((it) => (
       <li class="rounded-card border border-muted p-fluid-m">
         <h3 class="text-fluid-1">{it.title}</h3>

@@ -142,6 +142,14 @@ def emit(tokens):
                     'space-xl', 'space-2xl'):
         _gut = 'space-m'
     A(f'  --primitive-gutter: var(--{_gut});')
+    # width.inner_rung sizes the collection card floor; off-rung →
+    # the 28rem canon the G.5 check names.
+    _inner = str(knobs.get('width.inner_rung') or 'full')
+    _gridmin = {'10': '16rem', '20': '18rem', '30': '20rem',
+                '40': '24rem', '50': '26rem', '60': '28rem',
+                '70': '32rem', '80': '36rem', '90': '40rem',
+                'full': '28rem'}.get(_inner, '28rem')
+    A(f'  --primitive-grid-min: {_gridmin};')
     # the fs scale is sequential idx -1..+5 around the knob base —
     # emitted per step so --fs-* stays a pure binding, never a copy.
     for n in (-1, 0, 1, 2, 3, 4, 5):

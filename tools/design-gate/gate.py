@@ -1779,7 +1779,7 @@ def check_mobile_budget(ctx):
     # linked stylesheets carry the real rules (B F-26)
     for p, txt in dist_csss(ctx):
         name = os.path.basename(p)
-        for m in re.finditer(r'width:\s*(\d{3,})px', txt):
+        for m in re.finditer(r'(?<![a-z-])width:\s*(\d{3,})px', txt):
             if int(m.group(1)) > 360:
                 f.append(f'P.13 {name}: fixed width {m.group(1)}px '
                          '>360 — horizontal scroll risk at 360')
@@ -1790,7 +1790,7 @@ def check_mobile_budget(ctx):
     for p, txt in ctx.page_htmls():
         name = os.path.basename(p)
         # fixed widths >360px → h-scroll risk at 360
-        for m in re.finditer(r'width:\s*(\d{3,})px', txt):
+        for m in re.finditer(r'(?<![a-z-])width:\s*(\d{3,})px', txt):
             if int(m.group(1)) > 360:
                 f.append(f'P.13 {name}: fixed width {m.group(1)}px '
                          '>360 — horizontal scroll risk at 360')
@@ -3914,6 +3914,29 @@ def check_js_cost(ctx):
                          'a library ships only with a written '
                          'justification in DESIGN-PLAN')
     return f
+def _strip_media(css):
+    """Remove balanced @media/@supports {…} blocks — a rule inside
+    one stacks at base by definition, so a fixed-track grid there
+    is a responsive split, not a non-collapsing collection."""
+    out = []
+    i, n = 0, len(css)
+    while i < n:
+        m = re.match(r'@(media|supports)\b', css[i:])
+        if m:
+            j = css.index('{', i + m.end())
+            depth = 0
+            k = j
+            while k < n:
+                depth += (css[k] == '{') - (css[k] == '}')
+                if depth == 0:
+                    break
+                k += 1
+            i = k + 1
+            continue
+        out.append(css[i])
+        i += 1
+    return ''.join(out)
+
 
 def check_auto_grid(ctx):
     """G.5 — collections use auto-fit minmax grids; no narrow scroll
@@ -3925,6 +3948,9 @@ def check_auto_grid(ctx):
             (ctx.dir + '/global.css',
              ctx.read('site/src/styles/global.css') or '')]:
         name = os.path.basename(p)
+        # media/supports-wrapped rules collapse at base; only the
+        # un-wrapped rules carry the scroll risk.
+        css = _strip_media(css)
         for m in re.finditer(
                 r'grid-template-columns:\s*repeat\(\s*(\d+|\d+fr)',
                 css):
