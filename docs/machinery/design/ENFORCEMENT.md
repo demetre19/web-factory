@@ -90,7 +90,7 @@ closed set.
 | PS.4 | Media never floats context-free | invariant | script | `check_segment_media` | img w/o alt or context text in block | w7 |
 | PS.5 | Footer is boilerplate, nothing else | invariant | script | `check_segment_footer` | h1/prose paragraph inside footer | w7 |
 | PS.6 | Priority order | invariant | script | `check_segment_priority` | main after chrome / aside before main | w7 |
-| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1280,1920} or max-width only | w5 |
+| R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
 | R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
 | R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
 | R.4 | Copy density budgets | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |

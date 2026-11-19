@@ -43,8 +43,8 @@ final Astro build consumes. (P.1)
 **Read DNA map. Every decision traces to it.** `<pipeline>/DNA.json` +
 rendered `DNA.md` is the single source of coherence — vertical profile,
 genotype, the knob vector, token refs, rhythm plan and both colour
-modes. DNA v0 is created at W1 exit; W3 locks it to v1 and issues a
-hash that every contract, section and page carries. No design value may
+modes. DNA v0 is created at W1 exit; W4 approval — and only W4 —
+locks it to v1 and issues a hash that every contract, section and page carries. No design value may
 be untraceable to it; a changed map invalidates everything downstream
 (`run.py` rebuilds from the earliest affected wave). LAW: `DNA-MAP.md`.
 
@@ -86,7 +86,7 @@ can never approve its own work (P.8). Recorded in
 | **W2 content** | `stage-w2-content/` | STUB → content inventory: heading vector + body blocks + copy fields | E W R P | `gate.py w2` — inventory complete, verbatim headings, copy fields |
 | **W3 layout round** | `stage-w3-layout/` | `preview/layouts.html` — **≥5** real responsive page layouts on the real copy (one may be ★ wildcard); `sections[]` 1:1 from the picked card (`wf_ref`), layout lock | L R E V W P D PS VG | `gate.py w3` — ≥5 options, pairwise ≥30% section distance, data-* 1:1, rhythm/motif/emphasis, vector 1:1, genotype alleles |
 | **W4 look round** | `stage-w4-look/` | `preview/variants.html` — **3** visual directions on the picked layout = distinct **knob vectors** derived from DNA v0, light+dark per direction; operator picks the baseline | C G S M T R V P D DM VG | `gate.py w4` — axes ∈ enums, refused, 3 distinct vectors, modes, picker, `--design` |
-| **W5 system** | `stage-w5-system/` | `TOKENS.json` (both modes + knob values) → `tailwind.config` + `global.css` + `preview/system.html` primitives sheet with a Light/Dark toggle; **map locked to v1** | T C G S I V M W R P DM | `gate.py w5` — enums, spacing/breakpoints, contrast both modes, toggle, config derived |
+| **W5 system** | `stage-w5-system/` | `TOKENS.json` (both modes + knob values) → `tailwind.config` + `global.css` + `preview/system.html` primitives sheet with a Light/Dark toggle | T C G S I V M W R P DM | `gate.py w5` — enums, spacing/breakpoints, contrast both modes, toggle, config derived |
 | **W6 components** | `stage-w6-components/` | `src/components/*.astro` + `@layer components` + tile catalogue | S I V R W M P | `gate.py w6` — every composition a component, classes ⊆ layer, no emoji, build 0 |
 | **W7 page** | `stage-w7-page/` | `src/pages/<slug>.astro` from components; `dist/`; `PAGES/<slug>/SPEC.md` | R E W V M P PS | `gate.py w7` — data-* 1:1, verbatim headings, speed, mobile, PS.1–PS.6, rhythm |
 | **W8 review** | `stage-w8-review/` | Independent `REVIEW.json` + screenshots 1280/768/360 **in both modes**; `SCORECARD.json`; `preview/variants.html` deltas | all CARDs (rubric) | `gate.py w8` — review complete in both modes, reviewer ≠ designer, every section ≥ 90, variants all-pass |

@@ -426,9 +426,15 @@ class Ctx:
                                      if c.strip()]) > 1:
                         rows.append([c.strip() for c in
                                      ln.strip().strip('|').split('|')])
-            if rows and not all('---' in c or not c
-                                for r_ in rows for c in r_):
-                out[key] = rows[1:] if len(rows) > 1 else rows
+            # N-2 — a header-only table is an EMPTY inventory (the
+            # first row is always the header), and placeholder cells
+            # never count as content
+            body = [r_ for r_ in rows[1:] if any(
+                c and not re.fullmatch(
+                    r'(?i)t\.?b\.?d\.?|todo|n/?a|lorem\w*|x+|\?+', c)
+                for c in r_)]
+            if body:
+                out[key] = body
         return out
 
     def stub_vector(self):
@@ -744,21 +750,28 @@ IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
 IMG_DIRS = ('discovery', 'INTAKE', 'assets', 'images', 'media')
 
 
-def _schema_errors(obj, schema, path='$'):
+def _schema_errors(obj, schema, path='$', _root=None):
     """Minimal draft-07 subset: type, required, enum, pattern, min/max,
-    minItems/minProperties, items, $ref (local). No dependencies."""
+    minItems/minProperties, items, $ref (local, always resolved against
+    the document root). No dependencies."""
     f = []
+    root = schema if _root is None else _root
 
     def resolve(sc):
-        ref = sc.get('$ref')
-        if not ref:
-            return sc
-        node = schema
-        for part in ref.lstrip('#/').split('/'):
-            node = node.get(part) or {}
-        return node
+        # $ref lookups walk the ROOT document — a ref inside items or a
+        # nested property would otherwise resolve against the local
+        # sub-schema's (nonexistent) definitions and silently become {}
+        for _ in range(8):  # follow chained refs, cap cycles
+            ref = sc.get('$ref')
+            if not ref:
+                return sc
+            node = root
+            for part in ref.lstrip('#/').split('/'):
+                node = node.get(part) or {}
+            sc = node
+        return sc
 
-    sc = resolve(schema if path == '$' else schema)
+    sc = resolve(schema)
     t = sc.get('type')
     ok = {'object': dict, 'array': list, 'string': str,
           'integer': int, 'number': (int, float)}.get(t)
@@ -775,13 +788,14 @@ def _schema_errors(obj, schema, path='$'):
             f.append(f'{path}: fewer than {sc["minProperties"]} fields')
         for k, sub in (sc.get('properties') or {}).items():
             if k in obj:
-                f += _schema_errors(obj[k], resolve(sub), f'{path}.{k}')
+                f += _schema_errors(obj[k], sub, f'{path}.{k}',
+                                    _root=root)
     if t == 'array':
         if 'minItems' in sc and len(obj) < sc['minItems']:
             f.append(f'{path}: fewer than {sc["minItems"]} items')
         for i, it in enumerate(obj):
-            f += _schema_errors(it, resolve(sc.get('items') or {}),
-                               f'{path}[{i}]')
+            f += _schema_errors(it, sc.get('items') or {},
+                               f'{path}[{i}]', _root=root)
     if t == 'string':
         if 'minLength' in sc and len(obj) < sc['minLength']:
             f.append(f'{path}: empty string')
@@ -1227,18 +1241,30 @@ def check_speed_budget(ctx):
     return f
 
 def dist_csss(ctx):
-    """[(path, css)] every stylesheet under dist/ and preview/."""
+    """[(path, css)] every stylesheet under dist/ and preview/ —
+    INCLUDING inline <style> blocks in dist HTML (a <style> tag is
+    stylesheet content; motion checks that skipped it missed inline
+    animations, F-13)."""
     out = []
-    for root in (os.path.join(ctx.site, 'dist'),
-                 os.path.join(ctx.dir, 'preview')):
+    for root, inline in ((os.path.join(ctx.site, 'dist'), True),
+                         (os.path.join(ctx.dir, 'preview'), False)):
         if not os.path.isdir(root):
             continue
         for dp, _, fns in os.walk(root):
             for fn in sorted(fns):
+                p = os.path.join(dp, fn)
                 if fn.endswith('.css'):
-                    p = os.path.join(dp, fn)
                     out.append((p, open(p, encoding='utf-8',
                                         errors='replace').read()))
+                elif inline and fn.endswith(('.html', '.astro')):
+                    try:
+                        t = open(p, encoding='utf-8',
+                                 errors='replace').read()
+                    except Exception:
+                        continue
+                    for m in re.finditer(
+                            r'<style[^>]*>(.*?)</style>', t, re.S):
+                        out.append((p + '::inline', m.group(1)))
     return out
 
 
@@ -1623,7 +1649,11 @@ def check_tile_is_system(ctx):
         # listing names is not a specimen (F-25)
         rendered = set()
         for m in re.finditer(
-                r'<(\w+)[^>]*data-comp="([^"]+)"[^>]*>(.{0,400})', tile,
+                # the window may not cross the NEXT specimen's tag —
+                # untempered .{0,400} swallowed adjacent specimens on
+                # compact sheets and reported them missing (N-4)
+                r'<(\w+)[^>]*data-comp="([^"]+)"[^>]*>'
+                r'((?:(?!<\w+[^>]*data-comp=).){0,400})', tile,
                 re.S):
             inner = m.group(3)
             if re.search(r'<[a-zA-Z]|\S', inner.strip()):
@@ -1796,21 +1826,53 @@ CANON_BAN = ('data/web', 'validation-negative', 'annotations_negative',
 
 def _endorsed_sites():
     """Operator-endorsed canon lists — site domains/URLs recorded by
-    PatternMiner under patterns/data/operator/_sources/ (one list file
-    per endorsed source, e.g. the eleken.co best-website-design-examples
-    list). Tier order: operator direct > endorsed list > Mobbin."""
+    the canon job under patterns/data/operator/_sources/ (one list
+    file per endorsed source, e.g. the eleken.co list). Tier order:
+    operator direct > endorsed list > Mobbin."""
     root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator',
                         '_sources')
     out = set()
     if not os.path.isdir(root):
         return out
-    for dp, _, fns in os.walk(root):
+    for dp, dns, fns in os.walk(root):
+        # cache dirs (.details-cache, .candidate-html) are scraped
+        # HTML, not source lists — skip or every walk burns minutes
+        dns[:] = [d for d in dns if not d.startswith('.')]
         for fn in fns:
             p = os.path.join(dp, fn)
             try:
                 txt = open(p, encoding='utf-8', errors='replace').read()
             except Exception:
                 continue
+            if fn.endswith('.json'):
+                try:
+                    data = json.loads(txt)
+                    tier = str(data.get('tier') or
+                               'operator-endorsed').lower()
+                except Exception:
+                    data, tier = None, 'operator-endorsed'
+                # only operator-endorsed lists feed canon — a 'candidate'
+                # source (astro-showcase) supplies the review tier, NOT
+                # endorsed refs, or every pending site would self-promote
+                if 'candidate' in tier:
+                    continue
+                if data is not None:
+                    # structured fast path — walk url/domain values
+                    # instead of regex-scanning megabytes
+                    stack = [data]
+                    while stack:
+                        v = stack.pop()
+                        if isinstance(v, dict):
+                            stack += list(v.values())
+                        elif isinstance(v, list):
+                            stack += v
+                        elif isinstance(v, str):
+                            u = v.lower().strip()
+                            m = re.match(r'https?://([^/?#]+)', u)
+                            if m:
+                                out.add(u.rstrip('.,;/'))
+                                out.add(m.group(1))
+                    continue
             for u in re.findall(r'https?://[^\s\)\]>"\']+', txt):
                 out.add(u.rstrip('.,;/').lower())
                 m = re.match(r'https?://([^/?#]+)', u)
@@ -1836,6 +1898,38 @@ _ENDORSED_EXEMPLARS = None
 _CANDIDATES = None
 
 
+def _source_candidates():
+    """Sites inside tier:'candidate' _sources files, all 'pending'
+    until a signed operator decision promotes them — the decision
+    registry overrides by explicit status. {url_or_domain: status}"""
+    root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator',
+                        '_sources')
+    reg = {}
+    if not os.path.isdir(root):
+        return reg
+    for fn in os.listdir(root):
+        if not fn.endswith('.json'):
+            continue
+        try:
+            d = json.load(open(os.path.join(root, fn)))
+        except Exception:
+            continue
+        if 'candidate' not in str(d.get('tier') or '').lower():
+            continue
+        for c in d.get('sites') or d.get('candidates') or []:
+            if not isinstance(c, dict):
+                continue
+            u = str(c.get('url') or c.get('site') or
+                    c.get('id') or '').lower().rstrip('/')
+            if u:
+                reg[u] = str(c.get('status') or 'pending')
+                m = re.match(r'https?://([^/]+)', u)
+                if m:
+                    reg.setdefault(m.group(1),
+                                   str(c.get('status') or 'pending'))
+    return reg
+
+
 def _candidate_registry(path=None):
     """{domain: status} — the candidate tier: sites scanned + scored by
     a source list (first: astro-showcase) but NOT canon until the
@@ -1846,7 +1940,9 @@ def _candidate_registry(path=None):
     global _CANDIDATES
     if path is None and _CANDIDATES is not None:
         return _CANDIDATES
-    reg = {}
+    # a tier:'candidate' source file seeds every site as 'pending';
+    # an explicit registry row (or a service-signed decision) overrides
+    reg = _source_candidates() if path is None else {}
     for p in ([os.path.join(DESIGN_DIR, 'patterns', 'data',
                            'operator', 'candidates.json')]
               if path is None else [path]):
@@ -1862,12 +1958,24 @@ def _candidate_registry(path=None):
                 continue
             u = str(c.get('url') or c.get('site') or
                     c.get('id') or '').lower().rstrip('/')
-            if u:
-                reg[u] = str(c.get('status') or 'pending')
-                m = re.match(r'https?://([^/]+)', u)
-                if m:
-                    reg.setdefault(m.group(1),
-                                   str(c.get('status') or 'pending'))
+            if not u:
+                continue
+            st = str(c.get('status') or 'pending')
+            # N-5 — a designer-written status is unsigned: only a
+            # service-signed decision_sig (over {site,decision,ts})
+            # promotes or excludes; every unsigned row stays 'pending'
+            if st in ('approved', 'rejected'):
+                key = op_key()
+                body = {'site': str(c.get('url') or c.get('site') or
+                                   c.get('id')),
+                        'decision': st,
+                        'ts': str(c.get('decided_ts') or '')}
+                if not key or c.get('decision_sig') != _sig(body, key):
+                    st = 'pending'
+            reg[u] = st
+            m = re.match(r'https?://([^/]+)', u)
+            if m:
+                reg.setdefault(m.group(1), st)
     if path is None:
         _CANDIDATES = reg
     return reg
@@ -1984,10 +2092,21 @@ def _source_tier(ref, candidates=None):
         return 'mobbin', ['principles', 'look']
     src_root = os.path.join(DESIGN_DIR, 'patterns', 'data',
                             'operator', '_sources')
-    if os.path.isdir(src_root) and any(
-            fn[:-5] == r for fn in os.listdir(src_root)
-            if fn.endswith('.json')):
-        return 'endorsed', ['principles', 'look']
+    if os.path.isdir(src_root):
+        for fn in os.listdir(src_root):
+            if not (fn.endswith('.json') and fn[:-5] == r):
+                continue
+            # a source-list slug resolves to ITS OWN tier — a candidate
+            # source (astro-showcase) contributes principles only
+            try:
+                tier = str(json.load(open(
+                    os.path.join(src_root, fn))).get('tier') or
+                    'operator-endorsed').lower()
+            except Exception:
+                tier = 'operator-endorsed'
+            if 'candidate' in tier:
+                return 'candidate', ['principles']
+            return 'endorsed', ['principles', 'look']
     if r.startswith(('http://', 'https://', 'https-', 'http-')):
         return 'operator', ['principles', 'look']
     return 'other', []
@@ -2029,13 +2148,25 @@ def _canon_ref_ok(ref, endorsed=None, candidates=None):
         return False
     if r.startswith('mobbin') or 'mobbin.com' in r:
         return True
+    if endorsed is None:
+        if _ENDORSED is None:
+            _ENDORSED = _endorsed_sites()
+        endorsed = _ENDORSED
     cst = _candidate_status(r, candidates)
-    if cst in ('pending', 'rejected'):
+    if cst == 'rejected':
+        return False
+    if cst == 'pending' and not _endorsed_match(r, endorsed):
         return False
     if cst == 'approved':
         return True
     if r.startswith(('http://', 'https://')):
-        return True
+        # a URL is canon only when it names a REGISTERED source —
+        # operator-sites registry, an operator capture dir, or an
+        # endorsed-list domain. Any other URL is designer-sourced and
+        # unverifiable (CT2: arbitrary URLs used to pass silently)
+        if _operator_url_ok(r):
+            return True
+        return _endorsed_match(r, endorsed)
     # operator-direct captures live as dir slugs under data/operator/;
     # endorsed-source file slugs (eleken-*, semrush-*, details-so,
     # siteinspire-*) and any id recorded in operator_sites.json count
@@ -2051,10 +2182,19 @@ def _canon_ref_ok(ref, endorsed=None, candidates=None):
                 return True
         return False
     src_root = os.path.join(op_root, '_sources')
-    if os.path.isdir(src_root) and any(
-            fn[:-5] == r for fn in os.listdir(src_root)
-            if fn.endswith('.json')):
-        return True
+    if os.path.isdir(src_root):
+        for fn in os.listdir(src_root):
+            if not (fn.endswith('.json') and fn[:-5] == r):
+                continue
+            try:
+                tier = str(json.load(open(
+                    os.path.join(src_root, fn))).get('tier') or
+                    'operator-endorsed').lower()
+            except Exception:
+                tier = 'operator-endorsed'
+            # a candidate-tier source slug is never a canon ref — its
+            # sites are the review queue
+            return 'candidate' not in tier
     ops = os.path.join(DESIGN_DIR, 'patterns', 'data',
                        'operator_sites.json')
     if os.path.isfile(ops):
@@ -2066,13 +2206,71 @@ def _canon_ref_ok(ref, endorsed=None, candidates=None):
                     return True
         except Exception:
             pass
-    if endorsed is None:
-        if _ENDORSED is None:
-            _ENDORSED = _endorsed_sites()
-        endorsed = _ENDORSED
+    return _endorsed_match(r, endorsed)
+
+
+def _operator_url_ok(url):
+    """An http(s) ref is canon iff its host is recorded by the
+    operator: an id/url in operator_sites.json, or a captured dir
+    https-<slug> under patterns/data/operator/."""
+    m = re.match(r'https?://([^/?#]+)', url)
+    if not m:
+        return False
+    host = m.group(1).lower()
+    ops = os.path.join(DESIGN_DIR, 'patterns', 'data',
+                       'operator_sites.json')
+    if os.path.isfile(ops):
+        try:
+            for row in json.load(open(ops)):
+                if not isinstance(row, dict):
+                    if str(row).lower() == host:
+                        return True
+                    continue
+                for k in ('id', 'slug', 'url', 'domain', 'site'):
+                    v = str(row.get(k) or '').lower()
+                    if not v:
+                        continue
+                    vh = re.match(r'https?://([^/?#]+)', v)
+                    vh = vh.group(1) if vh else v.split('/')[0]
+                    if vh == host or vh.lstrip('w.') == \
+                            host.lstrip('w.'):
+                        return True
+        except Exception:
+            pass
+    op_root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator')
+    if os.path.isdir(op_root):
+        # https-<slug> capture dirs: slug labels joined by '.' or '-'
+        # (hyphenated domains slug to the same string)
+        for d in os.listdir(op_root):
+            if not d.startswith('https-'):
+                continue
+            sl = d[6:]
+            if host == sl.replace('-', '.') or \
+                    host.replace('-', '') == sl.replace('-', ''):
+                return True
+    return False
+
+
+def _registrable(host):
+    """Bare registrable domain (last two labels) of a host."""
+    parts = host.split('.')
+    return '.'.join(parts[-2:]) if len(parts) >= 2 else host
+
+
+def _endorsed_match(ref, endorsed):
+    """ref is on an operator-endorsed list — exact, path-prefix, or
+    same registrable domain (a demo subdomain of an endorsed family
+    resolves to endorsed, e.g. *.lexdemos.com under lexington)."""
+    r = str(ref).strip().lower()
+    m = re.match(r'https?://([^/?#]+)', r)
+    host = m.group(1) if m else r.split('/')[0]
+    reg = _registrable(host)
     for e in endorsed:
         if r == e or r.startswith(e + '/') or ('://' + e) in r \
                 or r.startswith(e):
+            return True
+        eh = e.split('/')[0]
+        if eh and _registrable(eh) == reg:
             return True
     return False
 
@@ -2319,6 +2517,29 @@ def check_wildcard_random(ctx):
         last_genes = set(genes_h)
         image_sole_prev = genes_h == ['image.treatment']
     base_knobs = dna.get('knobs') or {}
+    has_wildcard = any(
+        str(v.get('vector')) == 'wildcard' or v.get('wildcard_genes')
+        for v in dna.get('variants') or [])
+    # F-12 W2/W4/W5b/W5c — when a wildcard exists the history is
+    # MANDATORY and seed integrity is verified: a designer must not
+    # delete it, rebuild it, or replay/reuse a seed
+    if has_wildcard and not hist:
+        f.append('B.7 WILDCARD-HISTORY.json missing/empty while a '
+                 'wildcard variant exists — the RNG log is append-only '
+                 'and must start with this run (deleting it is a '
+                 'defect, not a reset)')
+    seen_seeds = set()
+    for i, h in enumerate(hist):
+        if h.get('seed') in (None, '', 0, '0'):
+            f.append(f'B.7 history entry {i} has no valid seed '
+                     '(0/empty banned)')
+        if h.get('seed') in seen_seeds:
+            f.append(f'B.7 history entry {i} reuses seed '
+                     f'{h.get("seed")} — every round re-rolls '
+                     '(a replayed or parent seed is a designer '
+                     'pick, not RNG)')
+        seen_seeds.add(h.get('seed'))
+    cur_seeds = {str(h.get('seed')) for h in hist}
     for v in dna.get('variants') or []:
         if str(v.get('vector')) != 'wildcard' \
                 and not v.get('wildcard_genes'):
@@ -2342,6 +2563,9 @@ def check_wildcard_random(ctx):
             f.append(f'B.7 wildcard {v.get("id")} has no valid '
                      'wildcard_seed (0/empty banned — the gene set '
                      'must be RNG-chosen, not defaulted)')
+        if str(v.get('wildcard_seed')) in cur_seeds:
+            f.append(f'B.7 wildcard {v.get("id")} repeats a seed from '
+                     'the history — every round re-rolls')
         if genes and last_genes and genes == last_genes:
             f.append(f'B.7 wildcard genes {sorted(genes)} repeat the '
                      'previous round — re-roll (seeded RNG over the '
@@ -2477,9 +2701,25 @@ def check_motion_recipes(ctx):
             f.append(f'M.12 "{name}" loops infinitely outside the '
                      'licensed loop set (ambient/status/iconography/'
                      'word-cycle) — one-shot or declare')
-    if (used or defined) and 'prefers-reduced-motion' not in css_all:
+    # M.13 — a CSS comment never satisfies reduced motion: strip
+    # comments before the substring test (a /* prefers-reduced-motion:
+    # later */ note used to pass), and a transform/layout TRANSITION
+    # is motion too — it needs the same fallback, even with no
+    # @keyframes (transition-only bypass)
+    css_nc = re.sub(r'/\*.*?\*/', '', css_all, flags=re.S)
+    transitions = re.findall(
+        r'transition\s*:\s*([^;}]+)', css_nc)
+    heavy_transitions = [t for t in transitions
+                         if re.search(
+                             r'transform|translate|scale|width|height|'
+                             r'margin|top|left|right|bottom|'
+                             r'grid-template|clip-path', t)]
+    if (used or defined or heavy_transitions) and \
+            'prefers-reduced-motion' not in css_nc:
         f.append('M.13 motion ships without a prefers-reduced-motion '
-                 'block — every animation needs a reduced fallback')
+                 'block — every animation needs a reduced fallback '
+                 '(comments do not count; transform/layout '
+                 'transitions are motion)')
     return f
 
 
@@ -2491,7 +2731,14 @@ SKL_STRUCTURE = re.compile(
     r'justify-(?:start|end|center|between|around|evenly)|self-\w+|'
     r'place-(?:items|content|self)-\w+|aspect-(?:square|video|auto)|'
     r'\[data-[\w"-]+\]|sec-band|sec-inner|wf-container|card-grid|'
-    r'flow)$')
+    r'section-space-\w+|measure|content-width\w*|flow)$')
+# ACSS/L.17-required padding is layer-legitimate on a skeleton
+# section (N-1: SKL.1 and L.17 contradicted — py-24+ / sec-band /
+# section-space-* are the REQUIRED padding path, never a raw-utility
+# violation; py-8 smuggling still fails)
+SKL_PAD_OK = re.compile(
+    r'^(?:py-(?:2[4-9]|[3-9]\d|\d{3,})|(?:sm|md|lg|xl|2xl):py-\d+|'
+    r'px-\d+|sec-band|section-space-\w+)$')
 SKL_RAW_VISUAL = re.compile(
     r'^(?:bg-|text-(?!(?:wrap|balance|pretty)\b)|font-|leading-|'
     r'tracking-|border(?:-[trblxyse])?(?!\s)|ring-|from-|via-|to-|'
@@ -2644,26 +2891,36 @@ def check_skeleton(ctx):
     for p, txt in ctx.page_htmls():
         name = os.path.basename(p)
         for m in re.finditer(
-                r'<section\b[^>]*data-skeleton="([^"]*)"([^>]*)>',
-                txt):
-            skel, tag = m.group(1), m.group(0)
+                r'<section\b[^>]*data-skeleton="([^"]*)"([^>]*)>'
+                r'(.*?)</section>',
+                txt, re.S):
+            skel, attrs, inner_html = m.groups()
+            tag = '<section' + m.group(0)[8:m.group(0).index('>') + 1]
             if harvest and skel not in harvest:
                 f.append(f'SKL.1 {name}: data-skeleton "{skel}" is '
                          'not a harvest id — provenance names '
                          'templates/skeletons/<src>/<file> ids')
-            cls = re.search(r'class="([^"]*)"', tag)
-            shad = skel.startswith('shadcn/')
-            raw = [c for c in (cls.group(1).split() if cls else [])
+            # SKL.1 scans EVERY class in the subtree — raw visuals on
+            # an inner div launder the same defect past a section-tag
+            # read (section tag clean, inner bg-indigo-600 passed)
+            classes = set()
+            for cm in re.finditer(r'class="([^"]*)"',
+                                  tag + inner_html):
+                classes.update(cm.group(1).split())
+            raw = [c for c in classes
                    for c in [c.split(':')[-1]]
                    if SKL_RAW_VISUAL.match(c) and
+                   not SKL_PAD_OK.match(c) and
                    not SKL_STRUCTURE.match(c) and
                    not SKL_TOKEN_CLASS.match(c)]
             if raw:
                 f.append(f'SKL.1 {name} sec {skel}: raw visual '
                          f'utilit{"y" if len(raw)==1 else "ies"} '
-                         f'{raw[:5]} on a skeleton-derived section — '
-                         'skeletons supply structure only; visuals '
-                         'come from surfaces + ACSS tokens')
+                         f'{sorted(set(raw))[:5]} inside a '
+                         'skeleton-derived section — skeletons supply '
+                         'structure only; visuals come from surfaces '
+                         '+ ACSS tokens (padding: py-24+/sec-band/'
+                         'section-space-* only)')
     # plan-row skeleton provenance must resolve to the harvest
     for slug, r in ctx.rows():
         sk = r.get('skeleton')
@@ -2735,15 +2992,30 @@ def check_auto_grid(ctx):
                      'collections use '
                      'repeat(auto-fit, minmax(min(var(--grid-min,28rem),'
                      '100%),1fr))')
-        for m in re.finditer(r'([\w.#\[\]-]+)[^{}]*\{[^}]*overflow-x:\s*'
-                             r'(auto|scroll)[^}]*\}', css):
-            sel, body = m.group(1), m.group(0)
+        # fixed literal tracks (1fr 1fr 1fr 1fr) are the same defect
+        # as repeat(4) — a grid that never collapses
+        for m in re.finditer(
+                r'grid-template-columns:\s*((?:[\d.]+fr\s*){4,})', css):
+            f.append(f'G.5 {name}: fixed {m.group(1).count("fr")}-track '
+                     'literal grid — collections use '
+                     'repeat(auto-fit, minmax(...))')
+        for m in re.finditer(r'([\w.#\[\]-]+)[^{}]*\{([^}]*)\}', css):
+            sel, body, rule = m.group(1), m.group(2), m.group(0)
             if 'full-bleed' in sel or 'full-bleed' in body or \
                     '100vw' in body or 'bleed' in sel:
                 continue
-            f.append(f'G.5 {name}: "{sel.strip()}" scrolls horizontally '
-                     '— rails are banned unless declared full-bleed '
-                     '(edge-to-edge)')
+            # F-13 — overflow-x scrollers AND the shorthand
+            # "overflow: auto|scroll [hidden]" two-axis form: both are
+            # rails; a fixed ≥4-column grid beside either is the tell
+            rail = re.search(
+                r'overflow-x\s*:\s*(?:auto|scroll)', body) or \
+                re.search(
+                    r'overflow\s*:\s*(?:auto|scroll)\s+'
+                    r'(?:auto|scroll|hidden)', body)
+            if rail:
+                f.append(f'G.5 {name}: "{sel.strip()}" scrolls '
+                         'horizontally — rails are banned unless '
+                         'declared full-bleed (edge-to-edge)')
     for p, txt in ctx.page_htmls():
         name = os.path.basename(p)
         for m in re.finditer(
@@ -2857,9 +3129,14 @@ def check_hero_fold(ctx):
                      '(1280x720, 1440x800, 375x667)')
         cls = re.search(r'class="([^"]*)"', tag)
         cls = cls.group(1) if cls else ''
-        if re.search(r'\bmin-h-screen\b', cls) or re.search(
-                r'min-height:\s*100(?:d|s)?vh', tag):
-            f.append(f'R.10 {name}: hero is min-h-screen/100vh — the '
+        # F-13 — the viewport-pinning escape set is closed:
+        # min-h-screen, h-screen, min-h-dvh, and any 100*vh in CSS or
+        # inline style — a hero never pins a viewport of dead air
+        if re.search(r'\b(?:min-h-screen|h-screen|min-h-dvh)\b', cls) \
+                or re.search(
+                    r'(?:min-height|height)\s*:\s*100[lvsd]?vh', tag):
+            f.append(f'R.10 {name}: hero is viewport-pinned '
+                     '(min-h-screen/h-screen/100vh family) — the '
                      'hero sizes to content + section-space padding, '
                      'never pins a viewport of dead air above the CTA')
         py = re.search(r'\bpy-(\d+)', cls)
@@ -2886,7 +3163,10 @@ def check_canon_padding(ctx):
         return []
     cp = ctx.read('CANON-PADDING.json')
     if not cp:
-        return []
+        return ['G.6 CANON-PADDING.json missing at W7 — the canon '
+                'padding ratios are a REQUIRED artifact (PatternMiner '
+                'publishes it); a missing file is a missing gate, not '
+                'a skip (F-18)']
     try:
         canon = json.loads(cp)
     except Exception:
@@ -3217,6 +3497,14 @@ def check_intent_sections(ctx):
             else:
                 units.add(r.get('name'))
             vec = r.get('vector') or []
+            # F-04 — a row carrying >1 vector heading smuggles merged
+            # sections past the unit budget: each heading needs its own
+            # row or a declared same-intent group
+            if len(vec) > 1 and not r.get('group'):
+                f.append(f'PS.11 {slug}:{r.get("name")} carries '
+                         f'{len(vec)} vector headings in one row — '
+                         'every H2 opens its own Section unless a '
+                         'same-intent group is declared')
             h2_units += len(vec)
         if h2_units > len(units):
             f.append(f'PS.11 {h2_units} vector headings vs '
@@ -3270,13 +3558,15 @@ def check_breathing(ctx):
         name = os.path.basename(p)
         dense_run = 0
         for m in re.finditer(
-                r'<section[^>]*data-sec="([^"]*)"([^>]*)>(.*?)'
-                r'</section>', txt, re.S):
-            sec, attrs, body = m.groups()
-            if sec in ('nav', 'footer'):
+                # attrs are ORDER-FREE — class may precede data-sec in
+                # legal markup; a regex that read attrs only after
+                # data-sec false-FAILED on the padding check (F-14/M13)
+                r'<section\b([^>]*)>(.*?)</section>', txt, re.S):
+            ad = dict(re.findall(r'([\w-]+)="([^"]*)"', m.group(1)))
+            sec, body = ad.get('data-sec') or '', m.group(2)
+            if sec in ('nav', 'footer', ''):
                 continue
-            cls = re.search(r'class="([^"]*)"', attrs)
-            cls = cls.group(1) if cls else ''
+            cls = ad.get('class', '')
             if sec != 'hero':
                 pm = re.search(r'(?<![:\w-])py-(\d+)(?![\w-])', cls)
                 ov = [int(x) for x in re.findall(
@@ -3284,7 +3574,13 @@ def check_breathing(ctx):
                 # a breakpoint override that drops below the base tier
                 # smuggles cramped padding past the base-class check
                 tiers = ([int(pm.group(1))] if pm else []) + ov
-                if not tiers or min(tiers) * 4 < 96:
+                # the ACSS class path pads via the layer tokens —
+                # sec-band or section-space-m+ satisfies the floor
+                acss_pad = bool(re.search(
+                    r'\b(?:sec-band|section-space-(?:m|l|xl|xxl))\b',
+                    cls))
+                if not acss_pad and (not tiers or
+                                     min(tiers) * 4 < 96):
                     f.append(f'L.17 {name} sec {sec}: block padding '
                              '< section-space-m (~96px) at some '
                              'breakpoint — cramped sections get no '
@@ -3310,9 +3606,7 @@ def check_breathing(ctx):
                 elif gm and int(gm.group(1)) * 4 < 24:
                     f.append(f'L.17 {name} sec {sec}: grid gap '
                              '< space-m (~24px)')
-            spec = specs.get(re.search(
-                r'data-comp="([^"]*)"', attrs).group(1)
-                if re.search(r'data-comp="([^"]*)"', attrs) else '')
+            spec = specs.get(ad.get('data-comp') or '')
             if spec and spec.get('whitespace_p25') is not None:
                 text = len(re.sub(r'<[^>]+>', '', body))
                 total = max(len(body), 1)
@@ -3329,6 +3623,19 @@ def check_breathing(ctx):
                              'one dense group per viewport')
             else:
                 dense_run = 0
+    # F-13/M8 — viewport-UNIT padding is the min-h-screen escape
+    # hatch: padding-block-start:60vh buries the CTA without touching
+    # height. Section space is a tier token, never a vh fraction.
+    for p, css in dist_csss(ctx):
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'([\w.#\[\]-]+)[^{}]*\{[^}]*padding[^:]*:\s*[^;}]*'
+                r'(\d+)(?:lvsd)?vh', css):
+            if int(m.group(2)) >= 20 and not re.search(
+                    r'hero|bleed', m.group(1)):
+                f.append(f'L.17 {name}: "{m.group(1).strip()[:40]}" '
+                         f'pads {m.group(2)}vh — section space is a '
+                         'tier token, never a viewport fraction')
     return f
 
 
@@ -3373,14 +3680,20 @@ def check_receipts(ctx):
             f.append(f'P.17 {rel} receipt binds wave {rec.get("wave")}, '
                      f'expected {wv} — receipts bind the artifact to '
                      'the wave that produced it')
+        # F-19 P3 — a receipt recorded AGAINST a failing wave is no
+        # receipt: pass-state is part of the binding
+        if rec.get('gate_pass') is not True:
+            f.append(f'P.17 {rel} receipt records '
+                     f'gate_pass={rec.get("gate_pass")} — artifacts '
+                     'bind only to PASSING gates')
         key = op_key()
-        if key:
-            want = _sig({k: v for k, v in rec.items() if k != 'sig'},
-                        key)
-            if rec.get('sig') != want:
-                f.append(f'P.17 {rel} receipt unsigned or badly '
-                         'signed — receipts are bound by the service '
-                         'key, not just a hash row')
+        # fail-closed: no verifiable key means no verifiable receipt
+        want = _sig({k: v for k, v in rec.items() if k != 'sig'},
+                    key) if key else None
+        if not want or rec.get('sig') != want:
+            f.append(f'P.17 {rel} receipt unsigned or badly '
+                     'signed — receipts are bound by the service '
+                     'key, not just a hash row')
     return f
 
 
@@ -3445,18 +3758,59 @@ def check_fine_round(ctx):
         f_blocks = _design_blocks(ft)
         l_blocks = _design_blocks(lt)
         shared = [d for d in f_blocks if d in l_blocks]
-        if shared and len(shared) == len(f_blocks):
-            verbatim = all(
-                (f_scoped.get(d, '').strip() ==
-                 l_scoped.get(d, '').strip()) if
-                (f_scoped.get(d) or l_scoped.get(d)) else
-                _render_sig(f_blocks[d]) == _render_sig(l_blocks[d])
-                for d in shared)
-            if verbatim:
+        # N-8 — verbatim-by-id only fired when every fine id exists in
+        # the look round: renaming ids (fv1..fv3) skipped the test.
+        # Compare signatures across ALL ids instead: a renamed verbatim
+        # re-serve still matches.
+        def _sheet_sig(blocks, scoped):
+            return sorted(
+                (scoped.get(d, '').strip() or
+                 repr(_render_sig(blocks[d])))
+                for d in blocks)
+        if f_blocks and l_blocks:
+            shared_ids_verbatim = bool(shared) and \
+                len(shared) == len(f_blocks) and all(
+                    (f_scoped.get(d, '').strip() ==
+                     l_scoped.get(d, '').strip()) if
+                    (f_scoped.get(d) or l_scoped.get(d)) else
+                    _render_sig(f_blocks[d]) ==
+                    _render_sig(l_blocks[d])
+                    for d in shared)
+            sheet_verbatim = _sheet_sig(f_blocks, f_scoped) == \
+                _sheet_sig(l_blocks, l_scoped)
+            if shared_ids_verbatim or sheet_verbatim:
                 f.append('P.18 fine round re-serves the look round '
                          'verbatim — a knob-nudge round must change '
                          'at least one rendered knob vs the look '
-                         'round')
+                         'round (renamed ids do not dodge this)')
+        # R7b — the fine round nudges the PICKED look option, not any
+        # design: read the w4 approval's design, then every fine option
+        # must differ from THAT design in a small knob delta while
+        # keeping its section multiset (a 1-knob change to an option
+        # that isn't the pick is a fresh design, not a nudge)
+        pick = ((read_approvals(ctx) or {}).get('w4') or {}).get(
+            'design')
+        if pick and pick in l_blocks:
+            l_css = l_scoped.get(pick, '') + l_blocks[pick]
+            pick_knobs = dict(re.findall(
+                r'--([a-z][\w-]*)\s*:\s*([^;}]+)', l_css))
+            pick_secs = sorted(re.findall(
+                r'data-sec="([^"]+)"', l_blocks[pick]))
+            for d, b in f_blocks.items():
+                f_css = f_scoped.get(d, '') + b
+                fd = dict(re.findall(
+                    r'--([a-z][\w-]*)\s*:\s*([^;}]+)', f_css))
+                delta = {k for k in set(fd) | set(pick_knobs)
+                         if fd.get(k) != pick_knobs.get(k)}
+                same_secs = sorted(re.findall(
+                    r'data-sec="([^"]+)"', b)) == pick_secs
+                if not (1 <= len(delta) <= 6 and same_secs):
+                    f.append(f'P.18 fine option {d} is not a nudge of '
+                             f'the picked design ({pick}): '
+                             f'{len(delta)} knob diff, '
+                             f'{"same" if same_secs else "different"} '
+                             'section set — the fine round varies the '
+                             'WINNER by ±1 step, not a new design')
     return f
 
 
@@ -3550,7 +3904,7 @@ def check_acss_conventions(ctx):
                              dcss):
                 f.append('A.1 built CSS: headings lack '
                          'text-wrap: balance (token-bound)')
-            if not re.search(r'(?:^|[,{\s])p\s*\{[^}]*text-wrap:\s*'
+            if not re.search(r'(?:^|[,{\s}])p\s*\{[^}]*text-wrap:\s*'
                              r'(?:pretty|var\(--text-wrap-body\))',
                              dcss):
                 f.append('A.1 built CSS: body lacks '
@@ -3666,20 +4020,53 @@ def check_component_profile(ctx):
     if not _wave_ge(ctx, 'w7'):
         return []
     pdir = os.path.join(DESIGN_DIR, 'components')
-    known = {os.path.splitext(fn)[0] for fn in os.listdir(pdir)
-             if fn.endswith('.md')} if os.path.isdir(pdir) else set()
+    profiles = {}
+    if os.path.isdir(pdir):
+        for fn in os.listdir(pdir):
+            if not fn.endswith('.md'):
+                continue
+            t = open(os.path.join(pdir, fn), encoding='utf-8',
+                     errors='replace').read()
+            fields = dict((k.strip().lower(), v.strip())
+                          for k, v in re.findall(
+                              r'^\|\s*([\w-]+)\s*\|\s*([^|]+)\|',
+                              t, re.M))
+            profiles[os.path.splitext(fn)[0]] = fields
     f = []
     for p, txt, parsed, blocks in _segmented(ctx):
         name = os.path.basename(p)
         for sblk in blocks:
             comp = str(sblk.get('data-comp') or '')
-            if comp and comp not in known:
-                f.append(f'A.3 {name}: data-comp "{comp}" has no '
-                         'component profile — every type carries its '
-                         'own rule profile (components/<type>.md)')
             if not comp:
                 f.append(f'A.3 {name}: unclassified section — '
                          'data-comp required')
+                continue
+            prof = profiles.get(comp)
+            if prof is None:
+                f.append(f'A.3 {name}: data-comp "{comp}" has no '
+                         'component profile — every type carries its '
+                         'own rule profile (components/<type>.md)')
+                continue
+            # profile VALUES bind the render — a section whose
+            # attributes contradict the profile is a defect (F-17)
+            intent = str(sblk.get('data-intent') or '')
+            want_intent = (prof.get('intent') or '').lower()
+            if want_intent and intent and all(
+                    w not in want_intent
+                    for w in intent.lower().split('/')):
+                f.append(f'A.3 {name}: {comp} renders intent '
+                         f'"{intent}" — the profile allows '
+                         f'{prof.get("intent")!r} (profile values '
+                         'bind, not just classify)')
+            cls = str(sblk.get('class') or '')
+            pad = (prof.get('padding') or '')
+            pm = re.search(r'section-space-(\w+)', pad)
+            if pm and 'sec-band' not in cls and \
+                    f'section-space-{pm.group(1)}' not in cls and \
+                    not re.search(r'\bpy-(?:2[4-9]|[3-9]\d|\d{3,})',
+                                  cls):
+                f.append(f'A.3 {name}: {comp} pads below its profile '
+                         f'({pad}) — profile padding tier binds')
     return f
 
 
@@ -6246,7 +6633,8 @@ def check_reduced_motion(ctx):
             if fn.endswith('.css'):
                 css += open(os.path.join(root, fn), encoding='utf-8',
                             errors='replace').read()
-    if motion != 'none' and 'prefers-reduced-motion' not in css:
+    if motion != 'none' and 'prefers-reduced-motion' not in \
+            re.sub(r'/\*.*?\*/', '', css, flags=re.S):
         f.append('M.6 no prefers-reduced-motion block — reduced motion is '
                  'mandatory, all spatial movement falls back to a 150ms '
                  'opacity crossfade')
@@ -6309,11 +6697,12 @@ def check_seo_lint(ctx):
 # requires an interactive TTY, then HMAC-signs {wave, input hash, DNA
 # slices} with a key that only that command creates. Gates re-verify the
 # signature against the CURRENT inputs; a changed input voids the approval.
-
-# operator home is fixed in production — the env override exists only
-# for the fixture/selftest harness (isolated key + approval dir)
-OPERATOR_HOME = os.path.expanduser(
-    os.environ.get('WF_SELFTEST_OPERATOR_HOME', '~/.web-factory'))
+# operator home is fixed in production — every env override was a
+# designer bypass (F-03/A8: renaming the var does not remove it).
+# The selftest harness sets OPERATOR_HOME in-process (cmd_selftest)
+# and gives subprocesses an isolated HOME so the default resolves
+# under the temp dir — no env channel reaches the real key.
+OPERATOR_HOME = os.path.expanduser('~/.web-factory')
 
 
 def op_key(create=False):
@@ -6386,9 +6775,10 @@ def approval_state(ctx, wave):
         return 'missing'
     if not key or rec.get('sig') != _sig(rec, key):
         return 'unsigned'
-    # provenance: an interactive TTY confirm or a consumed service
-    # nonce — a record the designer minted itself is unverifiable (P.8)
-    if rec.get('by') != 'operator-tty' and not rec.get('nonce'):
+    # provenance: a consumed service nonce, verified against the
+    # signed issue/consume ledger — a record the designer wrote itself
+    # (any by/nonce field it chose) is unverifiable (A7/A9/P.8)
+    if not verify_consumed_nonce(rec.get('nonce'), wave, ctx.dir):
         return 'no-provenance'
     sl = dna_slices(dna_map(ctx) or {})
     if rec.get('inputs') != _h(input_hashes_for(ctx, wave)):
@@ -6406,6 +6796,67 @@ def approval_state(ctx, wave):
             return 'ok'
         return 'stale'
     return 'ok'
+
+
+def _nonce_ledger_path():
+    return os.path.join(OPERATOR_HOME, 'nonces', 'ledger.json')
+
+
+def read_nonce_ledger():
+    """[] when missing/corrupt/unsigned — the ledger is authoritative:
+    no signed ledger means no service ever ran here."""
+    p = _nonce_ledger_path()
+    try:
+        d = json.load(open(p))
+    except Exception:
+        return []
+    key = op_key()
+    if not isinstance(d, dict) or not key or \
+            d.get('sig') != _sig(d, key):
+        return []
+    return [e for e in d.get('events') or [] if isinstance(e, dict)]
+
+
+def append_nonce_event(**ev):
+    """Service-side write only — gate.py consumers read, never append.
+    Append-only + re-signed every write: a designer rewrite either
+    keeps the chain (entries stand) or breaks the signature (registry
+    reads empty → every approval unverifiable)."""
+    p = _nonce_ledger_path()
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    try:
+        d = json.load(open(p))
+        if not isinstance(d, dict) or \
+                not isinstance(d.get('events'), list):
+            d = {'events': []}
+    except Exception:
+        d = {'events': []}
+    d['events'].append(dict(ev))
+    d['sig'] = _sig(d, op_key(create=True))
+    with open(p, 'w') as fh:
+        json.dump(d, fh)
+    os.chmod(p, 0o600)
+
+
+def verify_consumed_nonce(nonce, wave, pipeline):
+    """True iff the signed registry says the service issued THIS nonce
+    for THIS wave+pipeline and consumed it exactly once (A5: restoring
+    used:false on the nonce file cannot replay — approvals verify the
+    consumed EVENT, and the file itself is deleted at consume)."""
+    events = read_nonce_ledger()
+    if not events or not nonce:
+        return False
+    pd = os.path.abspath(pipeline)
+    issued = consumed = 0
+    for e in events:
+        if e.get('nonce') != nonce:
+            continue
+        if e.get('event') == 'issued' and e.get('wave') == wave \
+                and e.get('pipeline') == pd:
+            issued += 1
+        if e.get('event') == 'consumed':
+            consumed += 1
+    return issued == 1 and consumed == 1
 
 
 def migrate_approvals(ctx):
@@ -6810,9 +7261,7 @@ def cli_selftest():
         with open(os.path.join(home, '.web-factory', 'operator.key'),
                   'w') as fh:
             fh.write('fixture-key')
-        os.environ['WF_SELFTEST_OPERATOR_HOME'] = \
-            os.path.join(home, '.web-factory')
-        gate_self.OPERATOR_HOME = os.environ['WF_SELFTEST_OPERATOR_HOME']
+        gate_self.OPERATOR_HOME = os.path.join(home, '.web-factory')
         pd_ = os.path.join(tmpd, 'p')
         fxd = os.path.join(HERE, 'fixtures')
         shutil.copytree(os.path.join(fxd, '_base'), pd_, symlinks=True)
@@ -6823,7 +7272,7 @@ def cli_selftest():
                  'w1': {'pass': True,
                         'inputs_sha256': input_hashes_for(ctx_t, 'w1')}}
         json.dump(gates, open(gp, 'w'))
-        env = dict(os.environ)
+        env = dict(os.environ, HOME=home)
         r = subprocess.run(
             [sys.executable, os.path.join(HERE, 'run.py'), 'approve',
              'w1', pd_], capture_output=True, text=True, env=env)
@@ -6831,12 +7280,36 @@ def cli_selftest():
             f.append('run.py approve without TTY/nonce did not refuse')
         if '--evidence' in (r.stdout + r.stderr) or r.returncode == 0:
             f.append('run.py approve still accepts a free-text path')
-        r = subprocess.run(
-            [sys.executable, os.path.join(HERE, 'run.py'), 'nonce',
-             'w1', pd_], capture_output=True, text=True, env=env)
-        nonce = r.stdout.strip()
-        if r.returncode != 0 or len(nonce) != 32:
-            f.append(f'run.py nonce failed: {r.stdout + r.stderr}')
+        # minting is TTY-only — the selftest drives it through a real
+        # pty so the interactive path is exercised, not stubbed
+        nonce = None
+        try:
+            import pty, select
+            mfd, sfd = pty.openpty()
+            pr = subprocess.Popen(
+                [sys.executable, os.path.join(HERE, 'run.py'), 'nonce',
+                 'w1', pd_], stdin=sfd, stdout=sfd, stderr=sfd, env=env,
+                close_fds=True)
+            os.close(sfd)
+            buf = b''
+            while True:
+                try:
+                    rl, _, _ = select.select([mfd], [], [], 10)
+                    chunk = rl and os.read(mfd, 4096)
+                except OSError:
+                    break
+                if not chunk:
+                    break
+                buf += chunk
+            pr.wait(timeout=10)
+            os.close(mfd)
+            mm = re.search(r'\b([0-9a-f]{32})\b',
+                           buf.decode('utf-8', 'replace'))
+            nonce = mm.group(1) if mm else None
+        except Exception as e:
+            f.append(f'run.py nonce (pty) failed: {e}')
+        if not nonce:
+            f.append('run.py nonce under pty minted nothing')
         else:
             r = subprocess.run(
                 [sys.executable, os.path.join(HERE, 'run.py'),
@@ -6993,9 +7466,7 @@ def cli_selftest():
             json.dump({'w0': {'pass': True, 'dna': None},
                        'w1': {'pass': True, 'approved': True,
                               'inputs_sha256': input_hashes(c1)}}, fh)
-        os.environ['WF_SELFTEST_OPERATOR_HOME'] = \
-            os.path.join(home, '.web-factory')
-        env = dict(os.environ, HOME=home, WF_SELFTEST_OPERATOR_HOME=os.path.join(home, '.web-factory'))
+        env = dict(os.environ, HOME=home)
         rp = os.path.join(HERE, 'run.py')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
                            capture_output=True, text=True, env=env)
@@ -7005,7 +7476,13 @@ def cli_selftest():
         g = json.load(open(gp))
         if g.get('w2', {}).get('pass'):
             f.append('run.py gated w2 without its ancestors being clean')
-        # signed approval → w2 runs, then a changed DNA core stops it
+        # signed approval → w2 runs, then a changed DNA core stops it.
+        # Ledger events first: the approval only verifies when the
+        # registry says the service issued+consumed THIS nonce (A5).
+        append_nonce_event(event='issued', nonce='selftest-nonce',
+                           wave='w1', pipeline=os.path.abspath(pdir))
+        append_nonce_event(event='consumed', nonce='selftest-nonce',
+                           wave='w1', pipeline=os.path.abspath(pdir))
         gate_self.write_approval(c1, 'w1', nonce='selftest-nonce')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
                            capture_output=True, text=True, env=env)
@@ -7227,9 +7704,21 @@ def check_round(path, round_no, stub=None, candidates=None):
             f.append(f'ROUND{round_no} {len(ids)} design(s) — finer rounds '
                      'show exactly 3')
     # distinctness between designs
-    secs = {d: re.findall(
-        r'<(?:section|nav)[^>]*data-sec="([^"]+)"[^>]*'
-        r'data-comp="([^"]+)"', b) for d, b in blocks.items()}
+    def _secs(b):
+        # order-free attr parse (F-09: data-comp before data-sec is
+        # legal markup and used to dodge the sequence compare), and
+        # comp names normalize — a -v3 suffix or trailing index is the
+        # same composition (renaming spoof)
+        out = []
+        for m in re.finditer(
+                r'<(?:section|nav)\b([^>]*)>', b):
+            ad = dict(re.findall(r'([\w-]+)="([^"]*)"',
+                                 m.group(1)))
+            comp = re.sub(r'(?:-v\d+|-\d+)$', '',
+                          ad.get('data-comp') or '')
+            out.append((ad.get('data-sec') or '', comp))
+        return out
+    secs = {d: _secs(b) for d, b in blocks.items()}
     scope_css = dict(re.findall(
         r'\[(?:data-(?:variant|design)-scope)="([^"]+)"\]\{([^}]*)\}',
         txt))
@@ -7238,14 +7727,42 @@ def check_round(path, round_no, stub=None, candidates=None):
         css = scope_css.get(d, '') + b
         knob_sets[d] = set(re.findall(
             r'--([a-z][\w-]*)\s*:\s*([^;}]+)', css))
+    # CSS rules with their selector text — a var is "consumed" only
+    # when a rule that references it is grounded in markup (R6b: a
+    # dead .zz-unused{...var(--zz-a)...} used to count as a difference)
+    rules = re.findall(r'([^{}]+)\{([^{}]*var\(--[^{}]*)\}', txt)
+    inline = re.findall(r'style="([^"]*var\(--[^"]*)"', txt)
+
+    def _consumed(k):
+        pat = r'var\(--' + re.escape(k) + r'\b'
+        for sel, decl in rules:
+            if not re.search(pat, decl):
+                continue
+            if re.search(r'\[data-(?:variant|design|layout)-scope', sel):
+                return True  # scope selectors apply to the design
+            for tok in re.findall(r'[.#]([\w-]+)|^(\w+)', sel):
+                tok = tok[0] or tok[1]
+                if tok and re.search(
+                        rf'class="[^"]*\b{re.escape(tok)}\b|'
+                        rf'<{re.escape(tok)}\b|id="{re.escape(tok)}"',
+                        txt):
+                    return True
+        return any(re.search(pat, s) for s in inline)
+
     for a, b in itertools.combinations(ids, 2):
         if round_no == 1 and secs[a] and secs[a] == secs[b]:
             f.append(f'ROUND1 designs {a}/{b} identical section list — '
                      'duplicates are regenerated, never shown')
         if round_no == 1 and (secs[a] or secs[b]):
-            n = max(len(secs[a]), len(secs[b])) or 1
+            sa, sb = secs[a], secs[b]
+            # identical as a MULTISET too — reordering the same
+            # sections is not a different design (F-09 R4b)
+            if sorted(sa) == sorted(sb):
+                f.append(f'ROUND1 designs {a}/{b} same section multiset '
+                         '(reordered duplicates count as identical)')
+            n = max(len(sa), len(sb)) or 1
             diff = sum(1 for x, y in itertools.zip_longest(
-                secs[a], secs[b], fillvalue=(None, None)) if x != y)
+                sa, sb, fillvalue=(None, None)) if x != y)
             if diff / n < 0.3:
                 f.append(f'ROUND1 designs {a}/{b} differ in {diff}/{n} '
                          'sections (<30% floor) — near-duplicates are '
@@ -7254,9 +7771,7 @@ def check_round(path, round_no, stub=None, candidates=None):
             ka = dict(knob_sets.get(a) or [])
             kb = dict(knob_sets.get(b) or [])
             diff = {k for k in set(ka) | set(kb) if ka.get(k) != kb.get(k)}
-            consumed = {k for k in diff
-                        if re.search(r'var\(--' + re.escape(k) +
-                                     r'\b', txt)}
+            consumed = {k for k in diff if _consumed(k)}
             dead = diff - consumed
             if len(consumed) < 3:
                 f.append(f'ROUND{round_no} designs {a}/{b} differ in '
@@ -8486,6 +9001,45 @@ def cmd_consistency():
     for w in sorted(impl_waves):
         if f'W{w[1]}' not in idx:
             fails.append(f'INDEX.md missing wave {w}')
+
+    # N-9 — dead-wiring detector: every check's _wave_ge floor must be
+    # reachable from a wave it is WIRED to. A check wired at w5 whose
+    # rendered branch guards w6+ runs its rendered half never.
+    src = open(__file__, encoding='utf-8').read()
+    wnum = {w: i for i, w in enumerate(sorted(WAVE_CHECKS))}
+    for wv, checks in WAVE_CHECKS.items():
+        for c in checks:
+            body = re.search(
+                rf'def {c.__name__}\(.*?\n(.*?)(?=\ndef |\Z)',
+                src, re.S)
+            if not body:
+                continue
+            for g in re.findall(r"_wave_ge\(ctx,\s*'(w\d)'\)",
+                                body.group(1)):
+                if wnum.get(g, 99) > wnum.get(wv, 0) and all(
+                        wnum.get(x, 0) < wnum.get(g, 99)
+                        for x, cs in WAVE_CHECKS.items()
+                        if c in cs):
+                    fails.append(
+                        f'{c.__name__}: _wave_ge({g}) branch '
+                        'unreachable — wired only at ' +
+                        str(sorted(w for w, cs in WAVE_CHECKS.items()
+                                   if c in cs)))
+                    break
+    # N-6 — enforcement.json thresholds must agree with the code's
+    # canonical sets (the bd73ae0 blind replace corrupted R.1 once)
+    enf = json.load(open(ENFORCEMENT))['rules']
+    for rid, e in enf.items():
+        th = str(e.get('threshold') or '')
+        for m in re.finditer(r'\{([\d,\s]+)\}', th):
+            got = set(re.findall(r'\d+', m.group(1)))
+            for label, canon in (
+                    ('breakpoint', CANON_BP), ('edge', CANON_EDGE)):
+                if len(got) >= 5 and got != canon and \
+                        canon & got == got:
+                    fails.append(
+                        f'enforcement.json {rid}: {label} set '
+                        f'{sorted(got)} ≠ code {sorted(canon)}')
     if fails:
         print(f'consistency FAIL ({len(fails)}):')
         for x in fails:
@@ -8545,6 +9099,7 @@ WAVE_CHECKS = {
            check_candidate_review, check_trend_vocab],
     'w2': [check_content_inventory],
     'w3': [check_wireframe_tags, check_mobbin_refs,
+           check_content_inventory,
            check_wireframe_lock, check_section_enums,
            check_speech_acts, check_emphasis, check_motif,
            check_rhythm, check_vector_map, check_schema_fields,
@@ -8552,11 +9107,13 @@ WAVE_CHECKS = {
            check_wildcard, check_section_contracts,
            check_layout_distinct, check_canon_trace,
            check_intent_deviation, check_intent_sections,
+           check_receipts,
            check_round_gated],
     'w4': [check_direction_axes, check_genotype,
            check_genotype_distinct,
            check_burst, check_declared_breaks, check_wildcard,
            check_dark_mode, check_variants, check_canon_trace,
+           check_receipts,
            check_intent_deviation, check_wildcard_random,
            check_round_gated_look, check_fine_round],
     'w5': [check_system_enums, check_spacing_scale, check_breakpoints,
@@ -8569,6 +9126,7 @@ WAVE_CHECKS = {
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
            check_acss_conventions,
+           check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
            check_astro_build],
     'w7': [check_assembly, check_spec_verbatim, check_page_data_attrs,
@@ -8577,6 +9135,8 @@ WAVE_CHECKS = {
            check_icon_discipline, check_speed_budget,
            check_motion_recipes, check_motion_js_budget,
            check_skeleton,
+           check_acss_conventions,
+           check_content_width,
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
@@ -8617,10 +9177,10 @@ for _w in list(WAVE_CHECKS):
     WAVE_CHECKS[_w].append(check_dna)
     WAVE_CHECKS[_w].append(check_dna_fresh)
 
-# The five operator decision points (A F23): confirm discovery, pick the
-# look, approve the system sheet (locks DNA v1), pick the wireframe
-# (locks structure), sign off the final page. Everything else is
-# mechanical.
+# The operator decision points (A F23): confirm discovery (w1), pick
+# the wireframe (w3), approve the look sheet — THE DNA v1 lock (w4),
+# sign off the final page (w8). One lock point: w4 only. Everything
+# else is mechanical.
 APPROVABLE = {'w1', 'w3', 'w4', 'w8'}
 
 if __name__ == '__main__':

@@ -67,8 +67,8 @@ variants}`, first 12 hex of each canonical slice). A section contract
 embeds `dna_hash` (core) plus `structure_hash`; a section component
 echoes both in its frontmatter (`dna_hash:`, `structure_hash:`); a
 variant record carries `dna_hash` plus its knob diff against the
-map's baseline. W3 locks the structure slice, W4 the core, W5 issues
-map v1.
+map's baseline. W4 approval locks the WHOLE map to v1 — one
+lock point; w3/w5 never lock.
 
 **Enforcement** — script `check_dna`. Threshold: every
 `sections/*.contract.json` and every `components/sections/*.astro` hash

@@ -2,19 +2,19 @@
 """run.py — design-gate orchestrator + operator approval.
 
   python3 run.py <wave> <pipeline-dir> [gate.py options]
-  python3 run.py approve <wave> <pipeline-dir> [--nonce N] [--design D]
-  python3 run.py nonce <wave> <pipeline-dir>
+  python3 run.py approve <wave> <pipeline-dir> --nonce N [--design D]
+  python3 run.py nonce <wave> <pipeline-dir>            (TTY only)
   python3 run.py migrate-approvals <pipeline-dir>
   python3 run.py sign-review <pipeline-dir>
 
 A wave runs only when EVERY earlier wave passed, every approvable one is
 operator-approved for the CURRENT inputs, and no recorded input changed
-(ORDER / DM.6). Approvals are minted by approve_service.py — a one-time
-nonce per render (picker "Approve" button POSTs; `run.py nonce` mints
-one for a chat approval) — or by an interactive TTY confirm. Records are
-HMAC-signed {wave, inputs, DNA slices, nonce} under
-~/.web-factory/operator.key; the designer cannot produce one (P.8).
-Approving w3/w4 locks DNA v1.
+(ORDER / DM.6). Approvals are service-nonce spends — approve_service.py
+mints a one-time nonce per render (interactive `run.py nonce` or the
+picker Approve button POST), spends it once, and writes the HMAC-signed
+record under ~/.web-factory/operator.key. The signed nonce ledger is the
+only provenance the registry can prove (P.8). Approving w4 — and only
+w4 — locks DNA v1.
 """
 import json, os, subprocess, sys
 
@@ -40,50 +40,27 @@ def approve(wave, pdir, G, nonce=None, design=None, chat=None):
               'mechanical')
         return 2
     tty = sys.stdin.isatty()
-    if wave == 'w4' and not nonce:
-        print('run.py approve w4 REFUSED: w4 is the DNA v1 lock — '
-              'service-nonce channel only. Mint one: '
-              'python3 run.py nonce w4 <dir> then approve with '
-              '--nonce (THE lock point).')
-        return 1
-    if not tty and not nonce:
-        print('run.py approve REFUSED: no interactive terminal and no '
-              '--nonce. Mint one: python3 run.py nonce <wave> <dir> '
-              '(orchestrator / picker service only).')
-        return 1
     import approve_service as S
-    if nonce:
-        code, txt = S.record_approval(wave, pdir, nonce=nonce,
-                                      design=design, chat=chat)
-        print(txt)
-        return code
-    ctx = G.Ctx(pdir)
-    ctx.wave = wave
-    fails = G.ancestry_fails(ctx) if wave != 'w0' else []
-    if fails:
-        print(f'run.py approve {wave} REFUSED — earlier waves are not '
-              'clean:')
-        for x in fails[:6]:
-            print('  -', x)
+    if not nonce:
+        # every approval is a service-nonce spend now — a bare record
+        # (by=operator-tty) has no verifiable provenance: scripted
+        # ptys pass any TTY check, so the signed nonce ledger is the
+        # only thing the registry can prove (A7/A9/F-02)
+        print(f'run.py approve REFUSED: approvals spend a service '
+              f'nonce — mint one first: python3 run.py nonce {wave} '
+              f'<dir> (interactive terminal), or the picker '
+              f'Approve button')
         return 1
-    g = G.load_gates(ctx)
-    if not (g.get(wave) or {}).get('pass'):
-        print(f'run.py approve {wave} REFUSED: {wave} has not passed')
-        return 1
-    sl = G.dna_slices(G.dna_map(ctx) or {})
-    print(f'wave      {wave}')
-    print(f'inputs    {G._h(G.input_hashes_for(ctx, wave))}')
-    print(f'dna       look {sl.get("core")} · structure '
-          f'{sl.get("structure")}')
     if tty:
         ans = input(f'type "APPROVE {wave}" to record operator '
-                    'approval: ')
+                    f'approval: ')
         if ans.strip() != f'APPROVE {wave}':
             print('not approved')
             return 1
-    rec = G.write_approval(ctx, wave, by='operator-tty', design=design)
-    print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}')
-    return 0
+    code, txt = S.record_approval(wave, pdir, nonce=nonce,
+                                  design=design, chat=chat)
+    print(txt)
+    return code
 
 
 def sign_review(pdir, G):
@@ -141,6 +118,14 @@ def main():
         sys.path.insert(0, HERE)
         import gate as G  # noqa: F401
         import approve_service as S
+        # a nonce is operator authority — minting is an interactive act
+        # (chat flow) or a picker POST; a pipeline must never mint its
+        # own (A2: non-TTY mint is a designer forgery channel)
+        if not sys.stdin.isatty():
+            print('nonce REFUSED: minting is operator-side — '
+                  'interactive terminal or the approve service '
+                  '(picker) only')
+            return 1
         nonce, rec = S.issue_nonce(a[2], a[1])
         if not nonce:
             print(f'nonce REFUSED: {rec}')

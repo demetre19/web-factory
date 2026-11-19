@@ -312,12 +312,12 @@ PAGE_HTML = '''<!doctype html><html><head>
   <a class="btn-primary" href="/book">Book now</a>
   <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="definition" class="card-grid py-24">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
 </section>
-<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="cta" class="sec-band inverse py-24">
+<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" class="sec-band inverse py-24">
   <h2 class="text-fluid-0">Book now</h2>
   <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
 </section>
@@ -443,7 +443,7 @@ MOBBIN = '''# MOBBIN-REFS — consulted before direction (W1) and per compositio
 | mobbin-abc125 | section | home · split-media · CTA restraint | w1 |
 | mobbin-def456 | section | home · cards-n · card density | w1 |
 | mobbin-def457 | section | home · cards-n · card radius | w1 |
-| https://example-operator-site.com | site | operator-suggested · whole-site feel | w1 |
+| https://lexingtonthemes.com | site | operator-suggested · whole-site feel | w1 |
 | mobbin-xyz999 | screen | home · split-media · ignored — wrong vertical | w1 |
 | https://mobbin.com/screens/def458 | screen | home · cards-n · three-up grid | w1 |
 | https://mobbin.com/screens/ghi789 | screen | home · form-panel · field stack | w1 |
@@ -968,6 +968,10 @@ def _wild_hist():
         rec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     return json.dumps([e])
 
+def _fx_sig(rec):
+    """Fixture decision signature — same HMAC the service writes."""
+    return gate._sig(rec, b'fixture-key')
+
 
 BASE = {
     'DNA.json': json.dumps(dna_doc(), indent=1) + '\n',
@@ -1011,9 +1015,19 @@ BASE = {
              'status': 'pending', 'score': 0.71,
              'shot': 'shots/pending.webp'},
             {'url': 'https://approved-candidate.example.com',
-             'status': 'approved', 'score': 0.88},
+             'status': 'approved', 'score': 0.88,
+             'decided_ts': '2026-11-19T10:00:00',
+             'decision_sig': _fx_sig({
+                 'site': 'https://approved-candidate.example.com',
+                 'decision': 'approved',
+                 'ts': '2026-11-19T10:00:00'})},
             {'url': 'https://rejected-candidate.example.com',
-             'status': 'rejected', 'score': 0.42}]}),
+             'status': 'rejected', 'score': 0.42,
+             'decided_ts': '2026-11-19T10:00:00',
+             'decision_sig': _fx_sig({
+                 'site': 'https://rejected-candidate.example.com',
+                 'decision': 'rejected',
+                 'ts': '2026-11-19T10:00:00'})}]}),
     'preview/candidates.html': '<html><head><meta name="viewport" '
         'content="width=device-width"></head><body>'
         '<h1>Candidate sources</h1>'

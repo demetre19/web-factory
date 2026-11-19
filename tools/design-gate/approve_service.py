@@ -7,17 +7,21 @@ orchestrator's control and holds the signing key
 record an approval through the pipeline: the record needs a
 single-use NONCE the operator's channel minted (the picker's
 "Approve" button POSTs here; the orchestrator mints one for a chat
-approval). Same-user processes on one machine cannot be made
-cryptographically unforgeable — the nonce+key binding is
-tamper-evident, not tamper-proof. There is no env-var or
-free-text bypass.
+approval), and every approval re-verifies that nonce's signed
+issue+consume events on read. Same-user processes on one machine
+cannot be made cryptographically unforgeable — the key is
+same-uid-readable, so a same-uid attacker can sign a registry; the
+registry is tamper-evident, not tamper-proof. Every NON-same-uid
+path is closed: loopback-only Host, same-origin Origin (cross-origin
+POSTs refused), JSON-only, per-page token on spends, single-use
+consumed-event ledger, no env-var or free-text bypass.
 
 Commands:
     approve_service.py serve [--port 4173]     orchestrator runs this
-    approve_service.py nonce <wave> <pipeline> mint a one-time nonce
+    approve_service.py nonce <wave> <pipeline> mint a one-time nonce (TTY only)
     approve_service.py record <wave> <pipeline> --nonce N [--design D] [--chat TEXT]
 
-HTTP (127.0.0.1 only):
+HTTP (127.0.0.1 only, X-WF-Page-Token on spends — GET /page-token):
     POST /nonce   {wave, pipeline}              → {nonce}
     POST /approve {wave, pipeline, nonce, design?, chat?} → {ok|error}
     POST /promote {site, decision, pipeline?} → {ok|error}
@@ -67,6 +71,10 @@ def issue_nonce(pipeline, wave):
     with open(p, 'w') as fh:
         json.dump(rec, fh)
     os.chmod(p, 0o600)
+    # the ledger is the registry of truth — issued here, consumed at
+    # spend; approvals verify events, not file contents (A5/A7)
+    G.append_nonce_event(event='issued', nonce=nonce, wave=wave,
+                         pipeline=pd, inputs=ih)
     return nonce, rec
 
 
@@ -91,7 +99,11 @@ def _prune_nonces():
 
 
 def consume_nonce(nonce):
-    """Return the nonce record iff valid+unused; mark used atomically."""
+    """Return the nonce record iff valid+unused. Consumption DELETES
+    the nonce file and appends a signed 'consumed' event to the
+    ledger — restoring used:false on the file replays nothing because
+    the ledger already says spent, and a restored file never
+    re-verifies (verify_consumed_nonce reads events only)."""
     p = _nonce_file(nonce)
     if not p or not os.path.isfile(p):
         return None, 'unknown nonce'
@@ -104,14 +116,24 @@ def consume_nonce(nonce):
     key = G.op_key()
     if not key or rec.get('sig') != G._sig(
             {k: v for k, v in rec.items() if k != 'sig'}, key):
-        return None, 'nonce not service-issued (bad signature — the '                      'registry only honours its own)'
+        return None, ('nonce not service-issued (bad signature — the '
+                      'registry only honours its own)')
     exp = rec.get('expires')
     if exp and datetime.datetime.now() > \
             datetime.datetime.fromisoformat(exp):
         return None, 'nonce expired (30 min) — mint a fresh one'
-    rec['used'] = True
-    with open(p, 'w') as fh:
-        json.dump(rec, fh)
+    # ledger check: a file consumed then restored (used flipped back)
+    # is refused before it can spend again
+    spent = [e for e in G.read_nonce_ledger()
+             if e.get('nonce') == nonce
+             and e.get('event') == 'consumed']
+    if spent:
+        return None, ('nonce already consumed (ledger says spent — '
+                      'a restored file cannot replay)')
+    os.remove(p)
+    G.append_nonce_event(event='consumed', nonce=nonce,
+                         wave=rec.get('wave'),
+                         pipeline=rec.get('pipeline'))
     return rec, None
 
 
@@ -223,6 +245,20 @@ def record_candidate_decision(site, decision, pipeline=None):
                f'({"endorsed tier" if decision == "approved" else "excluded — contrast corpus"})')
 
 
+def _page_token():
+    """The per-page secret picker JS sends on spend calls — minted
+    once per service run, served only over loopback at GET
+    /page-token, required as X-WF-Page-Token on /approve + /promote
+    (A10: a cross-origin POST can arrive but can never carry it)."""
+    global _TOKEN
+    if _TOKEN is None:
+        _TOKEN = secrets.token_hex(16)
+    return _TOKEN
+
+
+_TOKEN = None
+
+
 def _handler():
     from http.server import BaseHTTPRequestHandler
 
@@ -243,7 +279,46 @@ def _handler():
             self.end_headers()
             self.wfile.write(b)
 
+        def _guard(self):
+            """A10 — the service is a local, same-origin, JSON API:
+            browsers hitting it cross-origin are refused outright, and
+            a page-level secret (served only to loopback callers at
+            /page-token, where SOP keeps cross-origin reads away)
+            must accompany /approve and /promote spends."""
+            host = (self.headers.get('Host') or '').split(':')[0]
+            if host not in ('127.0.0.1', 'localhost', '::1'):
+                self._send(403, {'error': 'host not loopback'})
+                return False
+            origin = self.headers.get('Origin')
+            if origin is not None and origin != 'null' and \
+                    not re.match(
+                        r'https?://(127\.0\.0\.1|localhost|::1)(:\d+)?$',
+                        origin):
+                self._send(403, {'error': 'cross-origin refused'})
+                return False
+            if 'application/json' not in \
+                    (self.headers.get('Content-Type') or ''):
+                self._send(415, {'error': 'application/json only'})
+                return False
+            if self.path in ('/approve', '/promote') and \
+                    self.headers.get('X-WF-Page-Token') != _page_token():
+                self._send(403, {'error': 'missing/invalid page token '
+                                 '(GET /page-token from the picker '
+                                 'server origin first)'})
+                return False
+            return True
+
+        def do_GET(self):
+            if self.path == '/page-token':
+                host = (self.headers.get('Host') or '').split(':')[0]
+                if host in ('127.0.0.1', 'localhost', '::1'):
+                    self._send(200, {'token': _page_token()})
+                    return
+            self._send(404, {'error': 'not found'})
+
         def do_POST(self):
+            if not self._guard():
+                return
             body = self._post()
             if self.path == '/promote':
                 code, txt = record_candidate_decision(
@@ -258,6 +333,11 @@ def _handler():
                            {'nonce': nonce, 'error': None if nonce
                             else rec})
             elif self.path == '/approve':
+                if not body.get('nonce'):
+                    self._send(400, {'ok': False, 'message':
+                                     'HTTP approvals spend a service '
+                                     'nonce — POST /nonce first'})
+                    return
                 code, txt = record_approval(
                     body.get('wave', ''), body.get('pipeline', ''),
                     nonce=body.get('nonce'), design=body.get('design'),
@@ -297,6 +377,15 @@ def main(argv=None):
     if a.cmd == 'serve':
         serve(a.port)
         return 0
+    # operator authority lives behind two channels: an interactive
+    # TTY (chat flow) or the loopback HTTP service (picker flow).
+    # A non-interactive caller gets neither — a batch pipeline must
+    # never mint or spend authority on its own (A2/A3/A9/A10)
+    if not sys.stdin.isatty():
+        print(f'{a.cmd} REFUSED: this command runs operator-side — '
+              'interactive terminal (chat) or the approve service '
+              '(picker) only')
+        return 1
     if a.cmd == 'promote':
         code, txt = record_candidate_decision(
             a.site, a.decision, pipeline=a.pipeline)
