@@ -2922,6 +2922,117 @@ def _recipe_topo_map():
                 '/'.join(parts + [block])] = v
     return out
 
+# ---------------------------------------------------------------- J.7
+# ELEMENT-VARIANT — the selection level between topology and style
+# knobs: recipes that share a topology_id but differ in elements[]
+# are different VARIANTS (image card grid vs numbered card grid vs
+# text card grid). Media expectation is CANON — set by the vertical's
+# endorsed/Mobbin references, not by the sampled corpus majority
+# (the corpus under-weights media: fashion's image-led-ratio reads
+# text-led because the ingested sites were text-heavy pages).
+# CANON: {media classes an element-variant may carry,
+#         whether text-only is acceptable}. The sampled genotype
+# (image-led-ratio / media-treatment / image-style) weights choice
+# inside canon-compliant variants and TIGHTENS canon — never loosens.
+
+MEDIA_CLASS_RX = {
+    'image':  r'image|photo|background|figure|picture|img\b',
+    'icon':   r'\bicon',
+    'number': r'number|numeral|counter|stat\b|score',
+    'avatar': r'avatar|author|person|team',
+    'logo':   r'\blogo|brand|partner',
+    'video':  r'video',
+    'chart':  r'chart|graph\b|diagram|illustration',
+}
+
+
+def _recipe_element_sig(recipe_id):
+    """Canonical media classes in a bank recipe's elements[] —
+    the element-variant signature. [] means text-only."""
+    v = _recipe_topo_map().get(recipe_id) or {}
+    els = ' '.join(str(e) for e in (v.get('elements') or [])).lower()
+    return sorted(k for k, rx in MEDIA_CLASS_RX.items()
+                  if re.search(rx, els))
+
+
+def _element_variant_name(sig):
+    return 'text' if not sig else '+'.join(sig)
+
+
+# media expectation per vertical — derived from the canon/endorsed
+# reference corpus, NOT the sampled gene distribution. (accept,
+# text_ok): text_ok=False means the vertical's canon is media-led and
+# a text-only variant is a selection defect regardless of what the
+# sampled image-led-ratio majority says.
+VERTICAL_MEDIA_CANON = {
+    'fashion':         ({'image', 'video'}, False),
+    'luxury-goods':    ({'image', 'video'}, False),
+    'jewellery':       ({'image'}, False),
+    'architecture':    ({'image'}, False),
+    'real-estate':     ({'image'}, False),
+    'homes':           ({'image'}, False),
+    'hospitality':     ({'image'}, False),
+    'portfolio':       ({'image'}, False),
+    'agency-portfolio': ({'image'}, False),
+    'ecommerce':       ({'image'}, False),
+    'automotive':      ({'image'}, False),
+    'media':           ({'image', 'video'}, False),
+    'events':          ({'image'}, False),
+    'community':       ({'image', 'avatar'}, True),
+    'finance':         ({'number', 'logo', 'chart'}, True),
+    'legal':           ({'avatar', 'icon', 'logo'}, True),
+    'government':      ({'icon', 'image'}, True),
+    'saas':            ({'image', 'icon', 'chart', 'logo'}, True),
+    'technology':      ({'image', 'icon', 'chart'}, True),
+    'marketplace':     ({'image', 'avatar'}, True),
+    'healthcare':      ({'icon', 'avatar', 'image'}, True),
+    'education':       ({'icon', 'image', 'avatar'}, True),
+    'services':        ({'avatar', 'image', 'icon', 'logo',
+                         'number'}, True),
+    'recruitment':     ({'avatar', 'icon', 'logo', 'image'}, True),
+    'nonprofit':       ({'image', 'icon', 'logo'}, True),
+    'personal-brand':  ({'avatar', 'image'}, True),
+}
+
+
+def _element_variant_fails(recipe_id, declared, vertical, genotype):
+    """J.7 — return [fail, ...] for one pre-build option row."""
+    f = []
+    bank_sig = _recipe_element_sig(recipe_id)
+    bank_name = _element_variant_name(bank_sig)
+    if recipe_id in _recipe_topo_map():
+        if not declared:
+            f.append(f'J.7 {recipe_id}: no element_variant declared — '
+                     'topology→variant→knobs is the selection chain; '
+                     'the variant level is recorded, not implied')
+        elif str(declared) != bank_name:
+            f.append(f'J.7 {recipe_id}: element_variant {declared!r} '
+                     f'!= bank signature {bank_name!r} — the declared '
+                     'variant must match the recipe elements')
+    media = set(bank_sig)
+    canon = VERTICAL_MEDIA_CANON.get(vertical)
+    if canon:
+        accept, text_ok = canon
+        extra = media - accept
+        if extra:
+            f.append(f'J.7 {recipe_id}: element classes '
+                     f'{sorted(extra)} outside {vertical} canon '
+                     f'{sorted(accept)} — canon media expectation '
+                     'binds the variant, not the sampled corpus')
+        if not media and not text_ok:
+            f.append(f'J.7 {recipe_id}: text-only variant under '
+                     f'{vertical} canon — {vertical} is media-led '
+                     f'({sorted(accept)}); corpus text-majority is '
+                     'sampling bias, not design truth')
+    # the DECLARED genotype tightens canon: an image-led/media-first
+    # genotype may not present a text-only variant even where canon
+    # tolerates one (the operator chose image-led for this design)
+    led = str((genotype or {}).get('image-led-ratio') or '')
+    if led in ('image-led', 'media-first') and not media:
+        f.append(f'J.7 {recipe_id}: genotype declares {led} but the '
+                 'variant is text-only — the declared allele binds '
+                 'element selection')
+    return f
 
 def check_candidate_review(ctx):
     """REF.2 — candidate sources are reviewed by the operator through
@@ -8166,6 +8277,14 @@ REDTEAM_MUTATIONS = [
    '(refs, score, review)</summary>',
    '<p class="variant-meta">Design machinery '
    '(refs, score, review):'),)),
+ ('RT-J7-DECLAREDWRONG', 'J.7', (
+  ('REPL', 'PREBUILD.json',
+   '"element_variant": "text"', '"element_variant": "image"'),)),
+ ('RT-J7-TEXTUNDERLED', 'J.7', (
+  ('REPL', 'PREBUILD.json',
+   '"element_variant": "text"', '"element_variant": "chart"'),
+  ('REPL', 'DESIGN-PLAN.md',
+   'image-led-ratio: balanced', 'image-led-ratio: image-led'),)),
 ]
 
 
@@ -9598,6 +9717,10 @@ def check_prebuild_receipt(ctx):
     if not isinstance(opts, dict):
         return ['J.3 PREBUILD.json must be {options: {<id>: row}}']
     bank = _skl_harvest_ids()
+    plan_dna = (ctx.plan or {}).get('dna') or {}
+    vertical = str(plan_dna.get('profile') or '').replace(
+        'profile-', '').split('/')[0]
+    genotype = plan_dna.get('genotype') or {}
     f = []
     for oid, row in opts.items():
         if not isinstance(row, dict):
@@ -9621,6 +9744,11 @@ def check_prebuild_receipt(ctx):
             f.append(f'J.3 {oid}: plan_vector_dist {d} < 0.3 — '
                      'sibling options must be distinct on the plan, '
                      'not discovered different after render')
+        # J.7 ELEMENT-VARIANT — the variant level of the selection
+        # chain: declared variant must match the bank signature and
+        # satisfy the vertical canon + declared genotype.
+        f.extend(_element_variant_fails(
+            rid, row.get('element_variant'), vertical, genotype))
     return f
 
 

@@ -179,6 +179,47 @@ PREBUILD recipe family outside the page's families; seam continuity
 rides the glue/block-trace checks; the tail prior rides the
 advisory channel.
 
+### J.7 ELEMENT-VARIANT — topology names the structure, the variant
+names what fills it, knobs restyle it
+
+The selection chain is three levels, and the middle one is where
+"every card has a number" used to hide: **topology** (structure —
+grid-3col-uniform) → **element-variant** (what fills each cell:
+image-led, numbered, icon-led, avatar-led, text-only) → **style
+knobs** (DNA vector). Recipes sharing a `topology_id` but differing
+in `elements[]` are DIFFERENT variants; the variant must be chosen
+before knobs apply, and restyling one variant is never a substitute
+for choosing another.
+
+Media expectation is **canon, not corpus**: the endorsed/Mobbin
+reference set per vertical defines expected media treatment
+(fashion/luxury = photo-driven, finance = sparse/numbered,
+healthcare = icon/avatar-led). The sampled `image-led-ratio` gene
+distribution is biased text-led in every vertical — it is a weight
+inside canon-compliant choices, never the selector. When corpus and
+canon conflict, canon wins outright: a text-only card grid under an
+image-led vertical is a selection defect regardless of what the
+sampled majority says.
+
+Pre-build rules, per option (`PREBUILD.json` row):
+
+- `element_variant` — the declared media signature of the recipe
+  (`text`, or `+`-joined classes: `image`, `icon`, `number`,
+  `avatar`, `logo`, `video`, `chart`); MUST equal the signature the
+  bank derives from the recipe's `elements[]`.
+- CANON (`VERTICAL_MEDIA_CANON` in gate.py): the variant's classes
+  must all be accepted for the plan's `dna.profile` vertical, and a
+  media-led vertical (`text_ok = false`) rejects text-only variants.
+- GENOTYPE TIGHTENING: a declared `image-led`/`media-first`
+  `image-led-ratio` allele rejects text-only variants even where
+  canon tolerates them — the declared genotype binds element
+  selection (genes tighten canon, never loosen it).
+
+**Enforcement** — script `check_prebuild_receipt` (w4): missing
+`element_variant`, declared ≠ bank signature, class outside the
+vertical canon, text-only under a media-led canon, or text-only
+under a declared image-led genotype FAILs.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

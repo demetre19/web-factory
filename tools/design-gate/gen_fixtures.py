@@ -991,10 +991,16 @@ BASE = {
     'MOBBIN-REFS.md': MOBBIN,
     'PREBUILD.json': json.dumps({'options': {**{
         f'd{i}': {'recipe_id': f'brixies/banner-section/banner-{i}',
+                  'element_variant': gate._element_variant_name(
+                      gate._recipe_element_sig(
+                          f'brixies/banner-section/banner-{i}')),
                   'plan_fit': True, 'refs_resolve': True,
                   'tokens_resolve': True, 'plan_vector_dist': 0.5}
         for i in range(1, 6)}, **{
         f'v{i}': {'recipe_id': f'hyperui/marketing/feature-grids/{i}',
+                  'element_variant': gate._element_variant_name(
+                      gate._recipe_element_sig(
+                          f'hyperui/marketing/feature-grids/{i}')),
                   'plan_fit': True, 'refs_resolve': True,
                   'tokens_resolve': True, 'plan_vector_dist': 0.4}
         for i in range(1, 4)}}}, indent=1),
@@ -1256,7 +1262,7 @@ MUT = {
      ('REPL','REVIEW.json','"judgment_pass_hash": "',
       '"judgment_pass_hash": "tampered-')),
  'check_prebuild_receipt': mut(
-     ('DEL','PREBUILD.json')),
+    ('DEL','PREBUILD.json')),
  'check_block_trace': mut(
      ('REPL','REVIEW.json',
       '"recipe_id": "brixies/banner-section/banner-1.topo"',
