@@ -6,7 +6,7 @@ page_types: [listing]
 section_type: listing
 speech_acts: [detail]
 composition: cards-n
-prevalence: 0.88
+prevalence: 0.84
 n: 25
 evidence:
   - https://mobbin.com/sites/sections/3697455f-f6b0-47db-8dbe-98c93d5ec606?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-recruitment-listing-listing-cards-n
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On recruitment listing sections built for candidates scanning roles, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 88% of 25 annotated screens (image-led-ratio, density-tier, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On recruitment listing sections built for candidates scanning roles, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 84% of 25 annotated screens (image-led-ratio, density-tier, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 

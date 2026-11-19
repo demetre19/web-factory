@@ -66,7 +66,6 @@ Each section is annotated with the same pixel pass the corpus used
 | `s_cta_presence` | 0.10 | one block is an action (curated 0.89 vs generic 0.15) |
 | `s_row_regularity` | 0.06 | even block sizing — *high* is the generic tell (0.87 vs 0.38) |
 | `s_prose_mass` | 0.04 | prose weight in the crop |
-| `anti` | 0.08 | 1.0 minus the measured anti-pattern penalties (`data/anti.json` → `features`) |
 
 The last five exist because the six `PS.*` checks are *page* checks and
 do not transfer to a section crop (VALIDATION.md §5). They are measured
@@ -88,7 +87,7 @@ eight domain splits **0.925 ± 0.017**. Adding the CLIP image-fit layer
 takes the same split to **0.946** and the eight-seed mean to
 **0.939 ± 0.016** (`validate --image`). Numbers, the failing features
 and the limitations are in `patterns/VALIDATION.md`. The short version:
-the section-shape features and the measured anti layer carry most of
+the section-shape features carry most of
 the model; `pattern_fit` adds a smaller, independent contribution; the
 page-structure checks still transfer only in a distorted way across the
 two corpora and keep their positive prior for that reason.

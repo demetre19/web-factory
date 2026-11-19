@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
-prevalence: 0.704
-n: 27
+prevalence: 0.792
+n: 24
 evidence:
   - https://mobbin.com/sites/sections/9e2a1671-1d4d-4b23-bf11-476ae27af70d?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/c9310efe-b671-4cb9-8c59-0807ff33ab22?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-technology-home-hero-stacked-hero
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On technology hero sections built for developers checking the API surface, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 70% of 27 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On technology hero sections built for developers checking the API surface, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 79% of 24 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.621 |
-| `median_media_ratio` | 0 |
-| `median_columns` | 2 |
+| `median_whitespace_share` | 0.623 |
+| `median_media_ratio` | 0.0 |
+| `median_columns` | 2.0 |
 
 ## Evidence
 
-27 annotated screens; 10 Mobbin citations in the frontmatter.
+24 annotated screens; 10 Mobbin citations in the frontmatter.

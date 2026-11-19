@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: content
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.609
-n: 23
+prevalence: 0.636
+n: 22
 evidence:
   - https://mobbin.com/sites/sections/2fb8b273-b40c-4e66-aa87-96f58111972f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/64e351ac-d627-4ce3-838f-c54dae7b4c38?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-services-service-detail-content-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On services content sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`. This signature appears in 61% of 23 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On services content sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`. This signature appears in 64% of 22 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.762 |
-| `median_media_ratio` | 0 |
-| `median_columns` | 3 |
+| `median_whitespace_share` | 0.779 |
+| `median_media_ratio` | 0.0 |
+| `median_columns` | 3.0 |
 
 ## Evidence
 
-23 annotated screens; 10 Mobbin citations in the frontmatter.
+22 annotated screens; 10 Mobbin citations in the frontmatter.

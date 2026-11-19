@@ -1,18 +1,21 @@
 # Captured corpora (632 MB of PNG/WebP crops) stay out of git.
 # Regenerate with:
 #   patterns/tools/mine.py fetch
-#   patterns/tools/capture_negatives.py
-#   patterns/tools/split_negatives.py
-#   patterns/tools/annotate_det.py mobbin|negatives
+#   tools/design-gate/ingest_good.py <url> (operator canon)
+#   patterns/tools/capture_contrast.py (our generated designs)
+#   patterns/tools/annotate_det.py mobbin
 data/screens/
-data/negatives/
-data/negatives_sections/
 data/web/
 data/annotations.jsonl
-data/annotations_negatives.jsonl
+data/annotations_contrast.jsonl
+data/operator/*/sec-*.png
+data/operator/*/tile-*.png
+data/operator/*/shot-*.png
+data/operator/*/dribbble*.png
 
 # Derived artefacts ARE committed: data/pattern-index.json, data/genome.json,
-# data/genotypes.jsonl, data/anti.json, data/validation/.
+# data/genotypes.jsonl, data/trends.json, data/validation/,
+# data/operator/**/meta.json + reports, data/operator/_sources/.
 __pycache__/
 
 # derived-artefact cache: blobs are recomputable, meta is not

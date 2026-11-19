@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: pricing
 speech_acts: [objection]
 composition: cards-n
-prevalence: 0.636
-n: 22
+prevalence: 0.824
+n: 17
 evidence:
   - https://mobbin.com/sites/sections/da9fbf06-a5c3-4b5b-98f7-529dfac95d1a?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/7b908be2-a2c1-4883-8b59-59fe59654e62?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-services-service-detail-pricing-cards-n
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On services pricing sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 64% of 22 annotated screens (image-led-ratio, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On services pricing sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 82% of 17 annotated screens (image-led-ratio, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.738 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 2.0 |
+| `median_whitespace_share` | 0.768 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-22 annotated screens; 10 Mobbin citations in the frontmatter.
+17 annotated screens; 10 Mobbin citations in the frontmatter.

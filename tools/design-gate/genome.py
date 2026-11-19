@@ -81,6 +81,13 @@ GENES = [
                        'ultra']),
     ('image-style', ['minimal', 'editorial', 'luxury', 'bold-graphic',
                      'playful', 'technical']),
+    # 2026 trend label (closed vocab, patterns/TRENDS.md, year-stamped).
+    # Multi-label evidence lives in the record's `trend` list; the gene
+    # carries the dominant allele so it can vector + wildcard.
+    ('trend', ['none', 'cute-alism', 'dial-up-delight', 'resonant-stark',
+               'frosted-touch', 'light-skeuomorphism',
+               'ai-personalisation', 'snug-simple', 'human-scribble',
+               'dated']),
 ]
 GENE_NAMES = [g for g, _ in GENES]
 ALLELES = dict(GENES)
@@ -96,7 +103,7 @@ DIMS = _o
 STYLISTIC = {'display-face', 'radius-personality', 'motion-tier',
              'density-tier', 'whitespace-band', 'image-led-ratio',
              'type-contrast', 'media-treatment', 'gallery-mode',
-             'proof-type', 'form-presence', 'heading-form'}
+             'proof-type', 'form-presence', 'heading-form', 'trend'}
 RULES = {
     'layout-archetype': ['L.1', 'L.5', 'L.10'],
     'page-macro-structure': ['E.1', 'L.7'],
@@ -408,6 +415,8 @@ def _genotype(rec, density_cuts=(0.12, 0.24)):
         'mood-energy': m_energy,
         'mood-register': m_register,
         'image-style': m_style,
+        'trend': ((rec.get('trend') or [{}])[0].get('trend')
+                  or 'none'),
     }, derived
 
 
@@ -432,7 +441,7 @@ def load(mode='mobbin'):
     """Annotations minus failed captures (see capture_ok.py)."""
     from corpus_filter import filter_records
     p = os.path.join(DATA, 'annotations.jsonl' if mode == 'mobbin'
-                     else 'annotations_negatives.jsonl')
+                     else 'annotations_contrast.jsonl')
     out = []
     with open(p) as f:
         for line in f:
@@ -440,8 +449,7 @@ def load(mode='mobbin'):
             if 'error' in r:
                 continue
             out.append(r)
-    kept, dropped = filter_records(out, label=(
-        0 if mode == 'negatives' else 1))
+    kept, dropped = filter_records(out, label=1)
     if any(dropped.values()):
         print(f'{mode}: kept {len(kept)}/{len(out)} (dropped {dropped})')
     return kept
@@ -598,12 +606,47 @@ def novelty(geno, site):
     return round(1.0 - cosine(vector(geno), c), 4)
 
 
+# Trend -> marker-gene biases (patterns/TRENDS.md). Applied by
+# `mutate --trend` so a trend pick is a menu of coordinated moves, not
+# just a label.
+TREND_BIAS = {
+    'cute-alism': {'display-face': 'mono', 'radius-personality': 'pill',
+                   'type-contrast': 'high'},
+    'dial-up-delight': {'display-face': 'mixed',
+                        'type-contrast': 'extreme',
+                        'density-tier': 'compact',
+                        'radius-personality': 'sharp'},
+    'resonant-stark': {'whitespace-band': 'airy',
+                       'density-tier': 'spacious',
+                       'type-contrast': 'high'},
+    'frosted-touch': {'radius-personality': 'soft',
+                      'surface-rhythm': 'one-contrast-moment'},
+    'light-skeuomorphism': {'radius-personality': 'soft'},
+    'snug-simple': {'radius-personality': 'pill',
+                    'whitespace-band': 'medium'},
+    'human-scribble': {'media-treatment': 'illustration',
+                       'image-style': 'playful'},
+    'ai-personalisation': {},  # behavioural; no still-image markers
+    'dated': {}, 'none': {},
+}
+
+
 def cmd_mutate(args):
     genes = profile_dist(args.profile)
     base = {}
     for g in GENE_NAMES:
         dist = genes.get(g) or {}
         base[g] = next(iter(dist), ALLELES[g][0])
+    trend_bias = []
+    if args.trend:
+        if args.trend not in TREND_BIAS:
+            raise SystemExit(f'unknown trend: {args.trend} '
+                             f'(vocab: {sorted(TREND_BIAS)})')
+        base['trend'] = args.trend
+        for g, a in TREND_BIAS[args.trend].items():
+            if a in ALLELES[g] and base.get(g) != a:
+                base[g] = a
+                trend_bias.append(g)
     burst = max(1, min(2, args.burst))
     rng = random.Random(args.seed)
     wild = []
@@ -621,7 +664,7 @@ def cmd_mutate(args):
         wild.append(g)
     nov = novelty(base, args.profile)
     out = {'profile': f'profile-{args.profile}', 'genotype': base,
-           'wildcard': wild, 'novelty': nov,
+           'wildcard': wild, 'trend_bias': trend_bias, 'novelty': nov,
            'within_bound': nov <= args.max_novelty}
     print(json.dumps(out, indent=1))
 
@@ -658,6 +701,9 @@ def main():
     m.add_argument('--burst', type=int, default=1)
     m.add_argument('--seed', type=int, default=0)
     m.add_argument('--temp', type=float, default=1.0)
+    m.add_argument('--trend', default='',
+                   help='bias the wildcard toward a 2026 trend '
+                        '(patterns/TRENDS.md closed vocab)')
     m.add_argument('--max-novelty', type=float, default=0.55)
     n = sub.add_parser('novelty')
     n.add_argument('--profile', required=True)

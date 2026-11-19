@@ -6,8 +6,8 @@ page_types: [checkout]
 section_type: form
 speech_acts: [act]
 composition: form-panel
-prevalence: 0.647
-n: 17
+prevalence: 0.733
+n: 15
 evidence:
   - https://mobbin.com/sites/sections/61123492-6bf0-449e-9660-9a0b11b64af5?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/6b8b2d14-cb78-4b4a-a112-c18f0c3d682f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-ecommerce-checkout-form-form-panel
 
-Split the block into a form and its supporting copy, form on the dominant side. On ecommerce form sections built for shoppers deciding whether this product is right, hold imagery at `text-led`. This signature appears in 65% of 17 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Split the block into a form and its supporting copy, form on the dominant side. On ecommerce form sections built for shoppers deciding whether this product is right, hold imagery at `text-led`. This signature appears in 73% of 15 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.705 |
+| `median_whitespace_share` | 0.72 |
 | `median_media_ratio` | 0 |
 | `median_columns` | 2 |
 
 ## Evidence
 
-17 annotated screens; 10 Mobbin citations in the frontmatter.
+15 annotated screens; 10 Mobbin citations in the frontmatter.

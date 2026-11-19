@@ -11,7 +11,7 @@ enrich semantic fields (quality_tier, serif, composition refinement) —
 records are keyed by `image`, VLM output wins on conflict.
 
   uv run annotate_det.py mobbin      # data/annotations.jsonl
-  uv run annotate_det.py negatives   # data/annotations_negatives.jsonl
+  uv run annotate_det.py negatives   # data/annotations_contrast.jsonl
 """
 import json
 import os
@@ -21,7 +21,7 @@ from concurrent.futures import ProcessPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
 SCREENS = os.path.join(DATA, 'screens')
-NEG = os.path.join(DATA, 'negatives')
+CONTRAST = os.path.join(DATA, 'contrast')
 
 # cell_query → (section_type, page_type) prior. The annotator trusts the
 # query that retrieved the crop; pixel geometry refines composition.
@@ -321,7 +321,7 @@ def collect(mode):
                 'page_type': m.get('page_type'),
                 'section_type': 'other',
                 'source': 'negative'}))
-    return work, os.path.join(DATA, 'annotations_negatives.jsonl')
+    return work, os.path.join(DATA, 'annotations_contrast.jsonl')
 
 
 def main():

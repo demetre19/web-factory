@@ -15,12 +15,9 @@ Measured from page copy with a closed cue lexicon (`intent.py` ATTRIBUTES); ever
 
 | dimension | allele | P(choice given attribute) |
 |---|---|---|
-| page_length | long | 60% |
-| surface | mid | 40% |
-| surface | light | 40% |
-| page_length | medium | 20% |
+| page_length | medium | 60% |
+| page_length | long | 20% |
 | page_length | short | 20% |
-| surface | dark | 20% |
 
 ## Use
 

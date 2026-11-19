@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
-prevalence: 0.633
-n: 30
+prevalence: 0.792
+n: 24
 evidence:
   - https://mobbin.com/sites/sections/4d878d97-1d96-4ff9-a3c2-965d17eaf3c9?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/e3e861ef-33e7-4733-8212-2e70caece3d0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-education-home-hero-stacked-hero
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On education hero sections built for learners checking outcomes, hold CTA restraint `single-primary`. This signature appears in 63% of 30 annotated screens (layout-archetype, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On education hero sections built for learners checking outcomes, hold CTA restraint `single-primary`. This signature appears in 79% of 24 annotated screens (layout-archetype, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.538 |
-| `median_media_ratio` | 0.308 |
+| `median_whitespace_share` | 0.583 |
+| `median_media_ratio` | 0.151 |
 | `median_columns` | 2.0 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+24 annotated screens; 10 Mobbin citations in the frontmatter.

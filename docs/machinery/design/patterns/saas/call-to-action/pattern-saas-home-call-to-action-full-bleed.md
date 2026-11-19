@@ -6,8 +6,8 @@ page_types: [home]
 section_type: call-to-action
 speech_acts: [act]
 composition: full-bleed
-prevalence: 0.6
-n: 30
+prevalence: 0.621
+n: 29
 evidence:
   - https://mobbin.com/sites/sections/3ad59aee-0e6a-47e2-a84a-f6bda99a6702?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/66f6354b-428e-435a-9878-c46e38c9c249?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-saas-home-call-to-action-full-bleed
 
-Run one edge-to-edge media plane with a single centred statement over it. On saas call-to-action sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 60% of 30 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Run one edge-to-edge media plane with a single centred statement over it. On saas call-to-action sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 62% of 29 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.684 |
-| `median_media_ratio` | 0.09 |
-| `median_columns` | 3.0 |
+| `median_whitespace_share` | 0.718 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+29 annotated screens; 10 Mobbin citations in the frontmatter.

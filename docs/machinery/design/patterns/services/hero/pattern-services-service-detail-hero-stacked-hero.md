@@ -7,26 +7,26 @@ section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
 prevalence: 0.714
-n: 21
+n: 14
 evidence:
-  - https://mobbin.com/sites/sections/d29134e9-fa1d-4e0c-b68e-0fd544010215?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/2c48bf0b-3622-44fc-8fb1-76ff63d17cbb?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/2533e373-1411-454d-9d4f-bf600db924ed?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/25573833-0618-4b05-9a95-9e766eb3fb0b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/94d39c3f-025a-4d4e-894b-de12954f2ee8?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/015688c9-93ac-45f9-bf82-35bf9a53c1a3?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/4195c1ff-edeb-4100-8967-ec3b5d667f39?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/be6b4888-7b2f-465a-bb5d-17d112cee0ea?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-  - https://mobbin.com/sites/sections/3d371462-eede-464f-9512-2ecc9a3e008a?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/42f65111-201b-4676-9c5f-f18b5623b52f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/1a5caa74-32a8-4a3b-93ab-99d14109ee2f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-implies_rules: [C.1, C.6, E.2, W.5, W.6]
-enforced_by: [check_contrast, check_rhythm, check_section_enums, check_speech_acts]
-consumes: [gene-surface-rhythm, gene-proof-type, gene-disclosure-tier]
+  - https://mobbin.com/sites/sections/da964be7-30a2-4110-95c5-cb28ed63935e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/2ce48fe2-bea1-438e-a2aa-0b1af12f7996?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/ce502cd9-c17f-45be-ad46-a91198465bdd?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/d197d73b-531a-430f-bf7e-827e232e458e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+  - https://mobbin.com/sites/sections/caa1a6b1-4b01-4b6a-8d30-df5454015bbf?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
+implies_rules: [L.1, L.10, L.5, V.1, V.3, W.2, W.3]
+enforced_by: [check_emphasis, check_section_enums, check_segment_media, check_wireframe_lock, check_wireframe_tags]
+consumes: [gene-layout-archetype, gene-image-led-ratio, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
-  surface-rhythm: one-contrast-moment
-  disclosure-tier: open
-  proof-type: none
+  layout-archetype: stacked-center
+  image-led-ratio: text-led
+  cta-restraint: single-primary
 links:
   index: patterns-index
   composition: section-catalog#stacked-hero
@@ -35,16 +35,16 @@ links:
 
 # pattern-services-service-detail-hero-stacked-hero
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On services hero sections built for service buyers scanning for competence and a quote, hold disclosure `open`. This signature appears in 71% of 21 annotated screens (surface-rhythm, proof-type, disclosure-tier), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On services hero sections built for service buyers scanning for competence and a quote, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 71% of 14 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.569 |
-| `median_media_ratio` | 0.225 |
-| `median_columns` | 2 |
+| `median_whitespace_share` | 0.693 |
+| `median_media_ratio` | 0.0 |
+| `median_columns` | 2.0 |
 
 ## Evidence
 
-21 annotated screens; 10 Mobbin citations in the frontmatter.
+14 annotated screens; 10 Mobbin citations in the frontmatter.

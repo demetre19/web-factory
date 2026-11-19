@@ -6,8 +6,8 @@ page_types: [listing]
 section_type: listing
 speech_acts: [detail]
 composition: cards-n
-prevalence: 0.714
-n: 28
+prevalence: 0.741
+n: 27
 evidence:
   - https://mobbin.com/sites/sections/fa0ef483-41dd-4128-b800-f21b45dcfa61?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/a59ca241-cbdc-446a-9886-e333b836c67c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-automotive-listing-listing-cards-n
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On automotive listing sections built for buyers comparing specification, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 71% of 28 annotated screens (image-led-ratio, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On automotive listing sections built for buyers comparing specification, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 74% of 27 annotated screens (image-led-ratio, cta-restraint, proof-type), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.775 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 3.0 |
+| `median_whitespace_share` | 0.778 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-28 annotated screens; 10 Mobbin citations in the frontmatter.
+27 annotated screens; 10 Mobbin citations in the frontmatter.

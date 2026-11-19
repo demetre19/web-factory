@@ -2,7 +2,7 @@
 """Vision-annotate Mobbin section crops + page screenshots with GPT-4o.
 
 Emits one JSONL record per image to data/annotations.jsonl (Mobbin) and
-data/annotations_negatives.jsonl (negatives). The blocks[] vocabulary is
+data/annotations_contrast.jsonl (negatives). The blocks[] vocabulary is
 shared with tools/design-gate/ps_features.py so vision-derived and
 DOM-derived PS.* features have identical names.
 
@@ -21,7 +21,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
 SCREENS = os.path.join(DATA, 'screens')
-NEG = os.path.join(DATA, 'negatives')
+CONTRAST = os.path.join(DATA, 'contrast')
 MODEL = 'gpt-4o'
 
 PROMPT = """You are a design-pattern annotator for a website pattern library.
@@ -220,12 +220,12 @@ def mobbin_worklist(limit=None):
     return work
 
 
-def negatives_worklist(limit=None):
+def contrast_worklist(limit=None):
     work = []
-    if not os.path.isdir(NEG):
+    if not os.path.isdir(CONTRAST):
         return work
-    for qdir in sorted(os.listdir(NEG)):
-        d = os.path.join(NEG, qdir)
+    for qdir in sorted(os.listdir(CONTRAST)):
+        d = os.path.join(CONTRAST, qdir)
         meta = os.path.join(d, 'meta.json')
         if not os.path.isfile(meta):
             continue
@@ -280,7 +280,7 @@ def run(work, out_path, workers=8):
 def main():
     args = sys.argv[1:]
     if not args or args[0] == 'stats':
-        for name in ('annotations', 'annotations_negatives'):
+        for name in ('annotations', 'annotations_contrast'):
             p = os.path.join(DATA, f'{name}.jsonl')
             if os.path.exists(p):
                 lines = open(p).read().strip().split('\n')
@@ -297,9 +297,9 @@ def main():
     if mode == 'mobbin':
         run(mobbin_worklist(limit),
             os.path.join(DATA, 'annotations.jsonl'), workers)
-    elif mode == 'negatives':
-        run(negatives_worklist(limit),
-            os.path.join(DATA, 'annotations_negatives.jsonl'), workers)
+    elif mode == 'contrast':
+        run(contrast_worklist(limit),
+            os.path.join(DATA, 'annotations_contrast.jsonl'), workers)
     else:
         print(__doc__)
 

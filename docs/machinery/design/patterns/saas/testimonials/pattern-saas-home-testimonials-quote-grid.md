@@ -6,8 +6,8 @@ page_types: [home]
 section_type: testimonials
 speech_acts: [proof]
 composition: quote-grid
-prevalence: 0.778
-n: 27
+prevalence: 0.808
+n: 26
 evidence:
   - https://mobbin.com/sites/sections/e941637d-9edc-4fe1-8d01-1a730c78dfd0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/709abe6c-07ba-4be5-aade-48c9711f6d5a?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-saas-home-testimonials-quote-grid
 
-Lay the content as three equal cards in one row. On saas testimonials sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 78% of 27 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Lay the content as three equal cards in one row. On saas testimonials sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 81% of 26 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.769 |
-| `median_media_ratio` | 0 |
-| `median_columns` | 3 |
+| `median_whitespace_share` | 0.777 |
+| `median_media_ratio` | 0.0 |
+| `median_columns` | 3.0 |
 
 ## Evidence
 
-27 annotated screens; 10 Mobbin citations in the frontmatter.
+26 annotated screens; 10 Mobbin citations in the frontmatter.

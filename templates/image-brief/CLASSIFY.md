@@ -98,6 +98,7 @@ fear · anger · disgust (flag) · relief · freedom · care
 | `era_feel` | timeless · contemporary · retro · futuristic |
 | `brand_register` | budget · mainstream · premium · luxury |
 | `authenticity_tier` | T1 first-party · T2 editorial stock · T3 AI · T4 illustrated kit (rules/V) |
+| `trend` | multi-label, year-stamped; closed 2026 vocab from docs/machinery/design/patterns/TRENDS.md: cute-alism · dial-up-delight · resonant-stark · frosted-touch · light-skeuomorphism · ai-personalisation · snug-simple · human-scribble; `dated` when era markers say old-web not revival |
 
 ## 8. Intent (why it was made this way)
 
@@ -121,6 +122,7 @@ fear · anger · disgust (flag) · relief · freedom · care
   "emotion_axes": {"sad_happy": 1, "calm_energetic": 0, "slow_fast": -1, "...": 0},
   "emotion_tags": ["trust", "care"],
   "style": {"style": "documentary", "era_feel": "contemporary", "brand_register": "mainstream", "authenticity_tier": "T1"},
+  "trend": {"year": 2026, "labels": [{"trend": "resonant-stark", "confidence": 0.9, "evidence": "whitespace 88%"}]},
   "intent": {"intended_audience": "...", "brand_attributes_served": ["reliability"], "choice_reason": [{"choice": "...", "reason": "..."}], "convention_vs_deliberate": "conventional"}
 }
 ```

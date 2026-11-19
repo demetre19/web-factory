@@ -6,15 +6,16 @@ Rules (TAXONOMY §5):
 - PATTERN  = the modal genotype signature of a cell, present in >=60%
              of the cell's screens, n >= 10. Written as a positive
              imperative.
-- SIGNATURE = an allele over-represented on Mobbin A/B screens vs the
-             negative corpus (lift >= 1.6) but not part of the modal
+- SIGNATURE = an allele over-represented inside its cell vs the whole
+             canon corpus (lift >= 1.6) but not part of the modal
              signature (<60%).
-- ANTI     = an allele over-represented on negatives vs Mobbin
-             (lift <= 0.55) — data only, `data/anti.json`.
+  Contrast corpus: NONE — negatives were dropped (they were photo
+  snippets, not layout patterns). Validation uses generated/failed
+  designs as contrast (score.py validate).
 
 Output:
   patterns/<site_type>/<section_type>/<pattern-id>.md
-  data/anti.json, data/pattern-index.json
+  data/pattern-index.json
 
   python3 build_patterns.py
 """
@@ -161,7 +162,7 @@ def load(name):
 
     `capture_ok` marks blocked / error / blank / parked captures; a
     challenge page counted as a section would inflate every prevalence
-    and poison the anti rows.
+    and poison the contrast rows.
     """
     sys.path.insert(0, os.path.join(ROOT, 'tools', 'design-gate'))
     from corpus_filter import filter_records
@@ -174,7 +175,7 @@ def load(name):
                 continue
             out.append(r)
     kept, dropped = filter_records(out, label=(
-        0 if 'negatives' in name else 1))
+        0 if 'contrast' in name else 1))
     if any(dropped.values()):
         print(f'{name}: kept {len(kept)}/{len(out)} '
               f'(dropped {dropped})')
@@ -193,6 +194,13 @@ def genotypes():
 def slug(s):
     return ''.join(c if c.isalnum() else '-'
                    for c in str(s or 'x').lower()).strip('-')[:60]
+
+
+CORPUS_SHARES = {}
+
+
+def corpus_share(gene, allele):
+    return CORPUS_SHARES.get(gene, {}).get(allele)
 
 
 def prevalence(recs, genes):
@@ -231,74 +239,14 @@ def median(rs, key):
 
 
 def build():
+    all_recs = load('annotations.jsonl')
+    for gene in SIG_GENES:
+        cnt = Counter((r.get('genotype') or {}).get(gene)
+                      for r in all_recs)
+        tot = sum(cnt.values()) or 1
+        CORPUS_SHARES[gene] = {a: n / tot for a, n in cnt.items()}
     mob = load('annotations.jsonl')
-    neg = load('annotations_negatives.jsonl')
     gen = {(g['image']): g for g in genotypes()}
-
-    # ---- ANTI: attribute lift negatives vs mobbin --------------------
-    # Measured on BOTH corpora identically: genotype alleles that are
-    # pixel-derivable, plus PS pass/fail and page fragmentation.
-    mob_g = [gen[r['image']] for r in mob if r['image'] in gen]
-    neg_g = []
-    for r in neg:
-        gg = gen.get(r['image'])
-        if gg:
-            neg_g.append(gg)
-    if not neg_g:
-        import sys
-        sys.path.insert(0, os.path.join(ROOT, 'tools', 'design-gate'))
-        from genome import genotype as _geno  # noqa: E402
-        for r in neg:
-            g_, _ = _geno(r)
-            neg_g.append({'genotype': g_, 'label': 0})
-
-    def attrs(rec):
-        g = rec['genotype']
-        ps = rec.get('ps') or {}
-        bc = rec.get('block_count')
-        return {
-            'density': g.get('density-tier'),
-            'whitespace': g.get('whitespace-band'),
-            'image-led': g.get('image-led-ratio'),
-            'media': g.get('media-treatment'),
-            'surface': g.get('surface-rhythm'),
-            'ps_main_share': 'ok' if ps.get('main_content_share', 0) >= 0.8
-                             else 'fail',
-            'ps_edges': 'ok' if ps.get('boilerplate_at_edges', 0) >= 1
-                        else 'fail',
-            'ps_priority': 'ok' if ps.get('priority_order', 0) >= 1
-                           else 'fail',
-            'page_fragmentation': ('fragmented' if (bc or 0) >= 6
-                                   else 'coherent') if bc is not None else None,
-        }
-
-    mob_a = [attrs(r) for r in mob_g]
-    neg_a = [attrs(r) for r in neg_g]
-    keys = ['density', 'whitespace', 'image-led', 'media', 'surface',
-            'ps_main_share', 'ps_edges', 'ps_priority', 'page_fragmentation']
-    anti, sigs = {}, {}
-    for k in keys:
-        cm = Counter(a.get(k) for a in mob_a if a.get(k))
-        cn = Counter(a.get(k) for a in neg_a if a.get(k))
-        tm, tn = sum(cm.values()) or 1, sum(cn.values()) or 1
-        rows = []
-        for allele in set(cm) | set(cn):
-            pm, pn = cm.get(allele, 0) / tm, cn.get(allele, 0) / tn
-            lift = (pm + 0.01) / (pn + 0.01)
-            rows.append({'allele': allele, 'mobbin': round(pm, 3),
-                         'negative': round(pn, 3), 'lift': round(lift, 2)})
-        anti[k] = sorted([r for r in rows if r['lift'] <= 0.60],
-                         key=lambda r: r['lift'])[:4]
-        sigs[k] = sorted([r for r in rows if r['lift'] >= 1.6],
-                         key=lambda r: -r['lift'])[:4]
-
-    feats = section_feature_anti(mob, neg)
-
-    with open(os.path.join(DATA, 'anti.json'), 'w') as f:
-        json.dump({'source': 'measured attribute lift, negatives vs mobbin',
-                   'n_mobbin': len(mob_g), 'n_negative': len(neg_g),
-                   'anti': anti, 'over_represented': sigs,
-                   'features': feats}, f, indent=1)
 
     # ---- cells -> patterns ------------------------------------------
     cells = defaultdict(list)
@@ -376,10 +324,10 @@ def build():
             for allele, cnt in c.most_common(3):
                 share = cnt / n
                 if 0.20 <= share < 0.60 and allele not in modal.values():
-                    for row in sigs.get(gene, []):
-                        if row['allele'] == allele:
-                            sig = (gene, allele, share, row['lift'])
-                            break
+                    c_share = corpus_share(gene, allele)
+                    if c_share and share / c_share >= 1.6:
+                        sig = (gene, allele, share,
+                               round(share / c_share, 2))
                 if sig:
                     break
             if sig:
@@ -404,7 +352,7 @@ def build():
         json.dump({'n_patterns': written, 'patterns': index}, f, indent=1)
     write_index_table(index)
     print(f'{written} patterns from {len(cells)} cells; '
-          f'{len(anti)} anti gene rows')
+          f'patterns built')
 
 
 INDEX_BEGIN = '<!-- BEGIN GENERATED PATTERN TABLE -->'
@@ -454,41 +402,7 @@ COMP_TO_CATALOG = {
 }
 
 
-# Continuous section features and the direction in which a value is
-# *generic*. A row is only written when the two corpora actually differ:
-# the negative rate must be at least 1.8x the mobbin rate and cover at
-# least a third of the negative corpus. No threshold is invented.
-ANTI_FEATURES = [
-    ('s_row_regularity', 'high', [0.80, 0.85, 0.90, 0.95]),
-    ('s_cta_presence', 'low', [0.50]),
-    ('s_block_pace', 'low', [0.20, 0.40, 0.60]),
-    ('s_prose_mass', 'high', [0.40, 0.60, 0.80]),
-]
 
-
-def section_feature_anti(mob_g, neg_g):
-    sys.path.insert(0, os.path.join(ROOT, 'tools', 'design-gate'))
-    from score import section_shape
-    rows = []
-    for feature, direction, cuts in ANTI_FEATURES:
-        best = None
-        for cut in cuts:
-            def rate(recs):
-                vals = [section_shape(r)[feature] for r in recs]
-                hit = [v for v in vals if (v >= cut if direction == 'high'
-                                           else v < cut)]
-                return len(hit) / max(1, len(vals))
-            pm, pn = rate(mob_g), rate(neg_g)
-            lift = (pn + 0.01) / (pm + 0.01)
-            if pn >= 0.33 and lift >= 1.8 and (best is None
-                                               or lift > best['lift']):
-                best = {'feature': feature, 'direction': direction,
-                        'cut': cut, 'mobbin': round(pm, 3),
-                        'negative': round(pn, 3), 'lift': round(lift, 2),
-                        'penalty': round(min(0.25, (pn - pm) * 0.5), 3)}
-        if best:
-            rows.append(best)
-    return sorted(rows, key=lambda r: -r['lift'])
 
 
 def write_pattern(path, pid, site, page, section, modal, genes, prev, n,
@@ -568,7 +482,7 @@ def write_pattern(path, pid, site, page, section, modal, genes, prev, n,
         lines.append(
             f"`{sig[0]}: {sig[1]}` appears in {sig[2]:.0%} of this cell's "
             f"screens and is {sig[3]:.1f}× more common on curated "
-            f"screens than on the negative corpus — use it when the brief "
+            f"screens than across the corpus baseline — use it when the brief "
             f"asks for a distinctive take, not by default.")
         lines.append('')
     lines.append('## Evidence')

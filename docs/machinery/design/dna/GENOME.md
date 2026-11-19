@@ -24,8 +24,10 @@ the line `alleles: [a, b, c]` is the closed set `check_genotype` reads.
 `rules:` names the SOP rule IDs that govern the gene.
 
 Source: annotations in `patterns/data/annotations.jsonl` (Mobbin,
-`source=mobbin`) and `annotations_negatives.jsonl` (contrast corpus,
-`source=negative`) + `web_supplement_urls` captures. Cluster →
+`source=mobbin`, plus operator canon `source=operator` banked by
+`ingest_good.py`). There is no negatives layer — the contrast corpus
+(`annotations_contrast.jsonl`, our generated/rejected designs) is
+validation-only and never feeds genotypes. Cluster →
 `tools/design-gate/genome.py build`; profiles → `genome.py profiles`.
 
 ---
@@ -212,18 +214,30 @@ families (`genome.STYLE_FAMILY`, one mapping used by both the genome and
 search). It is the only stylistic gene measured from the pictures
 rather than from layout geometry.
 
+
+## gene: trend
+
+alleles: [none, cute-alism, dial-up-delight, resonant-stark, frosted-touch, light-skeuomorphism, ai-personalisation, snug-simple, human-scribble, dated]
+rules: TRENDS (patterns/TRENDS.md)
+2026 trend label from the closed, year-stamped vocab. Multi-label
+evidence lives on the record (`trend: [{trend, confidence, evidence}]`);
+the gene carries the dominant allele so it vectors. `dated` flags
+old-web markers that mimic Y2K revival without the whitespace.
+`genome.py mutate --trend <label>` biases marker genes into a
+coordinated trend move.
+
 ---
 
 ## Genotype vector
 
-A genotype is the ordered tuple of alleles in the order above (23
+A genotype is the ordered tuple of alleles in the order above (24
 values). `tools/design-gate/genome.py` encodes it as a one-hot vector
-(Σ allele cardinalities = **115 dims**) for cosine/Hamming search; the
+(Σ allele cardinalities = **125 dims**) for cosine/Hamming search; the
 same vector is written into each pattern file's `genotype:` block and
 each `dna/<vertical>.json` profile.
 
-The space is finite by construction: 23 genes, 115 alleles, so at most
-115 distinct dimensions and 2^115 label sets — but only 115·23 one-hot
+The space is finite by construction: 24 genes, 125 alleles, so at most
+125 distinct dimensions and 2^125 label sets — but only 125·24 one-hot
 positions can ever be set. No design can be expressed outside it, which
 is the point: a freehand value is refused, not extrapolated.
 
@@ -236,7 +250,9 @@ sampled add <5% new layout-archetype clusters.
 curves and verdict into `patterns/data/genome.json`; unsaturated cells
 stay on the mining queue and produce no pattern.
 
-**Current state (2,700 screens, 88 cells): 86/88 saturated.** The two
+**Current state (1,735 screens post-filter, 91 cells): see
+`data/genome.json` — the corpus was rebuilt on Mobbin+operator canon
+after the negatives layer was dropped.** The two
 open cells are `technology/home/hero` and
 `luxury-goods/product/add-to-cart` — both keep adding archetypes in
 their last 20%, so their patterns are reported at n=30 but flagged

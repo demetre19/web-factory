@@ -9,13 +9,16 @@ links:
 
 # VALIDATION — does pattern fit predict design quality?
 
-**Answer: yes — held-out AUC 0.925 (target ≥ 0.85), precision@10% 1.00.**
-Across eight independent domain splits: mean 0.925, sd 0.020, min 0.901.
-Adding the CLIP image-fit layer takes it to **0.941 ± 0.018**. The
-section-shape features and the measured anti rows carry most of the
-signal; the page-structure checks still transfer only in a distorted way
-and keep a positive prior for that reason. Every number below is after
-the capture-validity gate (§2b) removed 25% of the corpus.
+**Answer: yes — held-out AUC 0.974 ± 0.015 (target ≥ 0.85),
+precision@10% 1.00.** Across eight domain splits: min 0.954, max 0.994.
+**Corpus law changed 2026-11**: positives are Mobbin + operator canon
+(1,779 kept after the section-quality gate); contrast is
+`annotations_contrast.jsonl` — our own generated and rejected designs
+(85 kept). There is no negatives layer and no anti layer. Caveat on the
+higher number: the contrast set is small and stylistically homogeneous
+(same generator), so 0.974 measures "vs our own bad output" — a
+narrower, easier claim than "vs all generic work". Both numbers are
+reported; the trend across honest runs is what matters, not the point.
 
 Raw numbers: `data/validation/validation.json` and
 `data/validation/fitted-weights.json`.
@@ -33,17 +36,17 @@ generic one — on sites it has never seen?
 
 ## 2. Datasets
 
-| Corpus | n | Source | Framing |
+| Corpus | n (kept) | Source | Framing |
 |---|---|---|---|
-| Positive | 2700 | Mobbin `search_sections`, 90 query cells, 26 verticals | section crops as Mobbin serves them |
-| Negative | 350 | live marketing pages captured headless (Brave), split into detected section bands, after the capture gate | section crops, same band detection |
+| Positive | 1779 | Mobbin `search_sections` + operator canon (`ingest_good.py` Section Scan) | whole UI sections |
+| Contrast | 85 | our own generated / rejected design refs, section-cropped | whole UI sections |
 
-Negatives are deliberately *not* broken sites: they are ordinary small
-business / template pages — the corpus a studio is hired to replace.
-They were re-cropped from full-page tiles into section bands
-(`tools/split_negatives.py`) so the corpora are compared like for like.
-Comparing full pages against section crops inflated AUC by ~0.20 in an
-early run and was rejected as a measurement artefact.
+The old "generic site" negative corpus (350 photo-snippet crops from
+ordinary small-business pages) was **dropped entirely**: the crops were
+photo bands, not layout patterns, and comparing them to curated
+section crops measured crop style more than design. The contrast set
+is deliberately *designed-but-rejected* output — the failure mode the
+scorer actually protects against.
 
 Every record is annotated by the same deterministic pixel pass
 (`patterns/tools/image_features.py`). **No VLM was used for annotation**:

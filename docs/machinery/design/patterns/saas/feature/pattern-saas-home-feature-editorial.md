@@ -6,8 +6,8 @@ page_types: [home]
 section_type: feature
 speech_acts: [how]
 composition: editorial
-prevalence: 0.667
-n: 24
+prevalence: 0.762
+n: 21
 evidence:
   - https://mobbin.com/sites/sections/9ca1bcef-f91e-44d7-aa9a-d269932e3b3c?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/c771fb14-b421-4194-813f-ce249f0ed12e?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-saas-home-feature-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On saas feature sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 67% of 24 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On saas feature sections built for evaluators checking fit before a trial, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 76% of 21 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.74 |
-| `median_media_ratio` | 0.0 |
-| `median_columns` | 3.0 |
+| `median_whitespace_share` | 0.769 |
+| `median_media_ratio` | 0 |
+| `median_columns` | 3 |
 
 ## Evidence
 
-24 annotated screens; 10 Mobbin citations in the frontmatter.
+21 annotated screens; 10 Mobbin citations in the frontmatter.

@@ -32,7 +32,7 @@ from collections import Counter, defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 PATTERNS = os.path.normpath(os.path.join(HERE, '..'))
 DATA = os.path.join(PATTERNS, 'data')
-WEB = os.path.join(DATA, 'web')
+WEB = os.path.join(DATA, 'operator')
 OUT = os.path.join(DATA, 'intent-model.json')
 UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
       'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
@@ -94,6 +94,8 @@ CTAS = {
 
 
 def sites():
+    if not os.path.isdir(WEB):
+        return
     for slug in sorted(os.listdir(WEB)):
         mp = os.path.join(WEB, slug, 'meta.json')
         if os.path.exists(mp):
@@ -355,6 +357,10 @@ def cmd_graph(args):
     pa = d['p_choice_given_attribute']
     rows = d['rows']
     os.makedirs(INTENT_DIR, exist_ok=True)
+    # drop nodes from a previous corpus run; the tree mirrors this model
+    for n in os.listdir(INTENT_DIR):
+        if n.startswith('intent-') and n.endswith('.md'):
+            os.remove(os.path.join(INTENT_DIR, n))
     # attribute -> choices it predicts
     attr_choices = defaultdict(list)
     for dim, by_attr in pa.items():

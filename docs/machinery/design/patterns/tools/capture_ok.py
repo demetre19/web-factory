@@ -37,7 +37,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
-CORPORA = ('web', 'negatives')
+CORPORA = ('web/canon', 'web/negatives', 'web/quarantine')
 QUARANTINE = os.path.join(DATA, 'quarantine.json')
 UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
       'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36')
@@ -211,6 +211,30 @@ def tile_fingerprint(d):
     return cache.text_sha('|'.join(parts))[:16]
 
 
+def stretched_verdict(meta, d):
+    """A hero/media block taller than ~1.2 viewports is a capture
+    artefact: the old 6000px window turned every 100vh section into a
+    giant tablet. Playwright captures at 900px viewport so the block
+    itself is the page's real height — this only fires on legacy or
+    broken captures."""
+    import image_features
+    tiles = sorted(f for f in os.listdir(d) if f.startswith('tile-'))
+    if not tiles:
+        return None
+    vh = (meta.get('viewport') or [1440, 900])[1]
+    try:
+        feat = image_features.analyze(os.path.join(d, tiles[0]))
+    except Exception:
+        return None
+    for b in feat.get('blocks') or []:
+        h = (b['y1'] - b['y0']) * feat['h']
+        if h > 1.5 * vh and (b.get('has_media') or
+                             b.get('role') == 'main'):
+            return 'stretched', (f'block {h / vh:.1f}vh at top of page '
+                                 f'(viewport {vh}px)')
+    return None
+
+
 def decide(meta, d):
     """(capture_status, reason) for one site directory.
 
@@ -238,6 +262,9 @@ def _decide(meta, d):
             return 'error', f'no_response({pr.get("error", "")[:60]})'
         if pr.get('status', 0) >= 400:
             return 'error', f'http_{pr["status"]}'
+    sv = stretched_verdict(meta, d)
+    if sv:
+        return sv
     pv = pixel_verdict(d, pr)
     if pv:
         return pv

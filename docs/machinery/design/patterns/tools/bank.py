@@ -25,7 +25,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
-WEB = os.path.join(DATA, 'web')
+WEB = os.path.join(DATA, 'web', 'canon')
 OUT = os.path.join(DATA, 'annotations.jsonl')
 
 sys.path.insert(0, HERE)

@@ -33,7 +33,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.normpath(os.path.join(HERE, '..', 'data'))
-WEB = os.path.join(DATA, 'web')
+WEB = os.path.join(DATA, 'web', 'canon')
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..', '..', '..', '..'))
 OLLAMA = 'http://localhost:11434'
 MODEL = 'qwen2.5vl:3b'

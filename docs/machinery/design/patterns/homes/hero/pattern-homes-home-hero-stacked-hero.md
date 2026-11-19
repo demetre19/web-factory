@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
-prevalence: 0.682
-n: 22
+prevalence: 0.833
+n: 18
 evidence:
   - https://mobbin.com/sites/sections/2f66e570-c1fd-454e-b0b0-61ee14225ac1?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/7020883d-292b-406b-b991-02e7fbbcc7f0?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-homes-home-hero-stacked-hero
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On homes hero sections built for buyers imagining the home, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 68% of 22 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On homes hero sections built for buyers imagining the home, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 83% of 18 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.653 |
+| `median_whitespace_share` | 0.707 |
 | `median_media_ratio` | 0.0 |
-| `median_columns` | 1.0 |
+| `median_columns` | 1.5 |
 
 ## Evidence
 
-22 annotated screens; 10 Mobbin citations in the frontmatter.
+18 annotated screens; 10 Mobbin citations in the frontmatter.

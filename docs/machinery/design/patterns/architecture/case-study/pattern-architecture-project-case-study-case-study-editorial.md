@@ -6,8 +6,8 @@ page_types: [project-case-study]
 section_type: case-study
 speech_acts: [detail]
 composition: editorial
-prevalence: 0.633
-n: 30
+prevalence: 0.679
+n: 28
 evidence:
   - https://mobbin.com/sites/sections/22c68f7a-e638-47bd-abb3-afc9c58e95c8?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/92ac65c4-a924-42ea-b25b-99d2727e4099?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-architecture-project-case-study-case-study-editorial
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On architecture case-study sections built for clients reading spatial judgement, hold imagery at `text-led`. This signature appears in 63% of 30 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On architecture case-study sections built for clients reading spatial judgement, hold imagery at `text-led`. This signature appears in 68% of 28 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.794 |
+| `median_whitespace_share` | 0.811 |
 | `median_media_ratio` | 0.0 |
 | `median_columns` | 2.0 |
 
 ## Evidence
 
-30 annotated screens; 10 Mobbin citations in the frontmatter.
+28 annotated screens; 10 Mobbin citations in the frontmatter.

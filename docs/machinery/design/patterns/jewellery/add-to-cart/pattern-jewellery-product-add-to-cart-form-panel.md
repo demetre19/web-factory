@@ -6,8 +6,8 @@ page_types: [product]
 section_type: add-to-cart
 speech_acts: [act]
 composition: form-panel
-prevalence: 0.615
-n: 13
+prevalence: 0.727
+n: 11
 evidence:
   - https://mobbin.com/sites/sections/1f6bce6f-d8a7-4d4e-8ed8-6d9c1e2624cb?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/79ffdba1-7d86-4521-a22a-f65994c02c93?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,7 +35,7 @@ links:
 
 # pattern-jewellery-product-add-to-cart-form-panel
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On jewellery add-to-cart sections built for buyers reading craft and provenance, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 62% of 13 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On jewellery add-to-cart sections built for buyers reading craft and provenance, hold imagery at `text-led`, CTA restraint `single-primary`. This signature appears in 73% of 11 annotated screens (layout-archetype, image-led-ratio, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
@@ -47,4 +47,4 @@ Stack the promise as centred text with no media column — reserve this for page
 
 ## Evidence
 
-13 annotated screens; 10 Mobbin citations in the frontmatter.
+11 annotated screens; 10 Mobbin citations in the frontmatter.

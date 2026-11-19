@@ -15,16 +15,9 @@ Measured from page copy with a closed cue lexicon (`intent.py` ATTRIBUTES); ever
 
 | dimension | allele | P(choice given attribute) |
 |---|---|---|
-| image_style | other:ambiguous | 85% |
-| imagery | image-led | 74% |
-| register | everyday | 67% |
-| page_length | long | 65% |
-| medium | other:ambiguous | 65% |
-| surface | light | 57% |
-| accent | warm | 57% |
-| energy | balanced | 48% |
-| energy | calm | 44% |
-| accent | cool | 39% |
+| page_length | medium | 60% |
+| page_length | long | 20% |
+| page_length | short | 20% |
 
 ## Use
 

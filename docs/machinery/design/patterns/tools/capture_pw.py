@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["playwright", "pillow"]
+# dependencies = ["playwright", "pillow", "numpy"]
 # ///
 """Capture sites at REAL viewports — never a stretched window.
 

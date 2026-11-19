@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: grids-and-cards
 speech_acts: [detail]
 composition: cards-n
-prevalence: 0.655
-n: 29
+prevalence: 0.607
+n: 28
 evidence:
   - https://mobbin.com/sites/sections/49df0d35-ba50-4c6a-9b13-ed63edabf668?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/80ce640b-eb1b-4e86-8131-7789528a0f5b?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -19,14 +19,14 @@ evidence:
   - https://mobbin.com/sites/sections/0625fc8a-9f50-4e11-97b0-bc7cc40e6d1f?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/ade34d52-d63b-4609-a9b3-f2b187fe5fe1?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/4f0797f0-57e5-442a-b3be-36bb071bd4a7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
-implies_rules: [C.1, C.6, G.3, L.7, V.1, V.3]
-enforced_by: [check_contrast, check_rhythm, check_section_enums, check_segment_media, check_spacing_scale]
-consumes: [gene-image-led-ratio, gene-density-tier, gene-surface-rhythm]
+implies_rules: [G.3, L.7, V.1, V.3, W.2, W.3]
+enforced_by: [check_emphasis, check_rhythm, check_section_enums, check_segment_media, check_spacing_scale, check_wireframe_tags]
+consumes: [gene-image-led-ratio, gene-density-tier, gene-cta-restraint]
 used_in: [w4, w5]
 genotype:
   density-tier: spacious
   image-led-ratio: text-led
-  surface-rhythm: one-contrast-moment
+  cta-restraint: single-primary
 links:
   index: patterns-index
   composition: section-catalog#cards-n
@@ -35,16 +35,16 @@ links:
 
 # pattern-government-service-detail-grids-and-cards-cards-n
 
-Set the content as one measure-constrained prose column (≤65ch) — no cards. On government grids-and-cards sections built for citizens finding a service, hold imagery at `text-led`, `spacious` vertical rhythm. This signature appears in 66% of 29 annotated screens (image-led-ratio, density-tier, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Set the content as one measure-constrained prose column (≤65ch) — no cards. On government grids-and-cards sections built for citizens finding a service, hold imagery at `text-led`, `spacious` vertical rhythm, CTA restraint `single-primary`. This signature appears in 61% of 28 annotated screens (image-led-ratio, density-tier, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.812 |
-| `median_media_ratio` | 0 |
-| `median_columns` | 3 |
+| `median_whitespace_share` | 0.814 |
+| `median_media_ratio` | 0.0 |
+| `median_columns` | 3.0 |
 
 ## Evidence
 
-29 annotated screens; 10 Mobbin citations in the frontmatter.
+28 annotated screens; 10 Mobbin citations in the frontmatter.

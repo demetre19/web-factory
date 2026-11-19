@@ -8,7 +8,7 @@ links:
 
 # PATTERNS TAXONOMY — the closed sets that tag every annotation + pattern
 
-Every screen in `data/annotations.jsonl` / `annotations_negatives.jsonl`
+Every screen in `data/annotations.jsonl`
 and every pattern file is tagged on three axes. A design request narrows
 the library by filtering on these; `patterns.py search` treats them as
 exact filters. Gene/allele vocabulary lives in `dna/GENOME.md`.
@@ -95,7 +95,7 @@ its strongest cell.
 |---|---|---|
 | `PATTERN` | combo present in ≥60% of a cell's annotated screens AND n≥10 | pattern `.md`, positive imperative |
 | `SIGNATURE` | distinctive move on `quality_tier: A` screens, <60% prevalence | `role: signature` in frontmatter |
-| `ANTI` | attribute common on negatives, absent/rare on Mobbin A/B | `data/anti.json` (data only) |
+| `TREND` | 2026 closed vocab label (patterns/TRENDS.md), multi + confidence | record `trend` field |
 
 ## 6. Annotation schema (per screen)
 

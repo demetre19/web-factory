@@ -87,7 +87,7 @@ def intent_features(meta, model):
 def main():
     model = json.load(open(os.path.join(DATA, 'intent-model.json')))
     rows = []
-    web = os.path.join(DATA, 'web')
+    web = os.path.join(DATA, 'web', 'canon')
     for slug in sorted(os.listdir(web)):
         d = os.path.join(web, slug)
         mp = os.path.join(d, 'meta.json')

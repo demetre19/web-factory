@@ -36,14 +36,14 @@ def slug_of(rec):
     """Corpus slug for a record, from its crop path.
 
     Mobbin screens live under data/screens/<cell>/ and belong to no site
-    directory, so they are keyed by mobbin_id.
+    directory, so they are keyed by mobbin_id. Negatives are gone —
+    quarantine applies to canon (operator-sourced) captures only.
     """
     img = (rec.get('image') or '').replace(os.sep, '/')
-    for corpus in ('web', 'negatives_sections', 'negatives'):
-        marker = f'/{corpus}/'
-        if marker in img:
-            tail = img.split(marker, 1)[1]
-            return f'{corpus.split("_")[0]}/{tail.split("/")[0]}'
+    for folder in ('/web/canon/', '/operator/'):
+        if folder in img:
+            tail = img.split(folder, 1)[1]
+            return f'{folder.strip("/")}/{tail.split("/")[0]}'
     return None
 
 
@@ -71,8 +71,28 @@ def is_blank_crop(rec):
     return False
 
 
+STRUCTURE_FIELDS = ('has_heading', 'has_cta', 'has_links', 'has_form')
+
+
+def is_section_quality(rec):
+    """A pattern sample must be a whole UI section, not a photo.
+
+    Operator rule: reject crops that are >70% a single photo (a media
+    block, not a section) or that carry no text/UI structure at all
+    (no heading, no CTA, no links, no form — a tile fragment).
+    """
+    if rec.get('media_ratio', 0) > 0.70:
+        return False
+    blocks = rec.get('blocks') or []
+    if blocks and not any(any(b.get(f) for f in STRUCTURE_FIELDS)
+                          for b in blocks):
+        return False
+    return True
+
+
 def keep(rec):
-    return not is_quarantined(rec) and not is_blank_crop(rec)
+    return (not is_quarantined(rec) and not is_blank_crop(rec)
+            and is_section_quality(rec))
 
 
 def dedupe(recs):
@@ -120,19 +140,17 @@ def dedupe_bands(recs):
 
 
 def filter_records(recs, label=1):
-    out, dropped = [], {'quarantined': 0, 'blank': 0}
+    out, dropped = [], {'quarantined': 0, 'blank': 0, 'not_section': 0}
     for r in recs:
         if is_quarantined(r):
             dropped['quarantined'] += 1
         elif is_blank_crop(r):
             dropped['blank'] += 1
+        elif not is_section_quality(r):
+            dropped['not_section'] += 1
         else:
             out.append(r)
     n0 = len(out)
     out = dedupe(out)
     dropped['dupes'] = n0 - len(out)
-    if label == 0:
-        n0 = len(out)
-        out = dedupe_bands(out)
-        dropped['dup_bands'] = n0 - len(out)
     return out, dropped

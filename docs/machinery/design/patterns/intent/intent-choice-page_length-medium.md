@@ -12,38 +12,25 @@ links:
 
 number of stacked sections (short / medium / long)
 
-Measured over 124 valid captures (capture_status: ok).
+Measured over 9 valid captures (capture_status: ok).
 
 ## P(choice | vertical)
 
 | vertical | share |
 |---|---|
-| fashion | 67% |
-| real-estate | 40% |
-| jewellery | 33% |
-| homes | 33% |
-| ecommerce | 31% |
-| architecture | 30% |
-| agency-portfolio | 29% |
-| hospitality | 25% |
-| nonprofit | 24% |
-| portfolio | 21% |
-| automotive | 20% |
-| luxury-goods | 11% |
-| services | 7% |
+| portfolio | 100% |
+| media | 100% |
+| fashion | 100% |
+| saas | 25% |
 
 ## Attributes it accompanies
 
 | brand attribute | P(choice given attribute) |
 |---|---|
-| innovation | 36% |
-| luxury | 32% |
-| confidence | 30% |
-| expertise | 27% |
-| exclusivity | 25% |
-| craft | 25% |
-| community | 24% |
-| reliability | 24% |
+| community | 60% |
+| calm | 60% |
+| care | 43% |
+| speed | 20% |
 
 ## Use
 

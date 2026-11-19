@@ -42,7 +42,7 @@ import cache  # noqa: E402
 CLIP_V = f'{MODEL}:{PRETRAINED}'
 DIM = 512
 EXT = ('.png', '.jpg', '.jpeg', '.webp')
-CORPORA = ('screens', 'negatives_sections', 'web')
+CORPORA = ('screens', 'web/canon', 'operator')
 BATCH = 32
 
 
@@ -57,7 +57,7 @@ def filtered_record_images():
         PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
     from corpus_filter import keep
     ok = set()
-    for fn in ('annotations.jsonl', 'annotations_negatives.jsonl'):
+    for fn in ('annotations.jsonl',):
         p = os.path.join(DATA, fn)
         if not os.path.exists(p):
             continue

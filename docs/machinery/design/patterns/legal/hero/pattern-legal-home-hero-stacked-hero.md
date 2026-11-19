@@ -6,8 +6,8 @@ page_types: [home]
 section_type: hero
 speech_acts: [promise]
 composition: stacked-hero
-prevalence: 0.625
-n: 24
+prevalence: 0.75
+n: 20
 evidence:
   - https://mobbin.com/sites/sections/d3a0d720-0baa-4e7a-aeac-4ff17681e8dc?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/f8c424fa-483a-4d38-af9e-5f2f9ae25b8a?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-legal-home-hero-stacked-hero
 
-Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On legal hero sections built for clients checking authority, hold imagery at `text-led`. This signature appears in 62% of 24 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Stack the promise as centred text with no media column — reserve this for pages without a strong hero image. On legal hero sections built for clients checking authority, hold imagery at `text-led`. This signature appears in 75% of 20 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.619 |
+| `median_whitespace_share` | 0.631 |
 | `median_media_ratio` | 0.0 |
 | `median_columns` | 1.0 |
 
 ## Evidence
 
-24 annotated screens; 10 Mobbin citations in the frontmatter.
+20 annotated screens; 10 Mobbin citations in the frontmatter.

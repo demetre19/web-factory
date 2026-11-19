@@ -189,7 +189,7 @@ def records():
     sys.path.insert(0, os.path.normpath(os.path.join(
         PATTERNS, '..', '..', '..', '..', 'tools', 'design-gate')))
     from corpus_filter import keep
-    for fn in ('annotations.jsonl', 'annotations_negatives.jsonl'):
+    for fn in ('annotations.jsonl', 'annotations_contrast.jsonl'):
         p = os.path.join(DATA, fn)
         if not os.path.exists(p):
             continue

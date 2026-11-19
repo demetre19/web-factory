@@ -6,8 +6,8 @@ page_types: [home]
 section_type: trust-badges
 speech_acts: [proof]
 composition: badge-center
-prevalence: 0.615
-n: 26
+prevalence: 0.667
+n: 24
 evidence:
   - https://mobbin.com/sites/sections/573de197-4e3c-43c0-a53c-11a7494d46b1?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/3ddf998c-d286-4a6e-9e32-0c1738ccd3e7?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-finance-home-trust-badges-badge-center
 
-Compress the proof into one tight horizontal band, not a full section. On finance trust-badges sections built for customers checking trust and regulation, hold imagery at `text-led`. This signature appears in 62% of 26 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Compress the proof into one tight horizontal band, not a full section. On finance trust-badges sections built for customers checking trust and regulation, hold imagery at `text-led`. This signature appears in 67% of 24 annotated screens (layout-archetype, image-led-ratio, surface-rhythm), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
-| `median_whitespace_share` | 0.787 |
+| `median_whitespace_share` | 0.801 |
 | `median_media_ratio` | 0.0 |
 | `median_columns` | 3.0 |
 
 ## Evidence
 
-26 annotated screens; 10 Mobbin citations in the frontmatter.
+24 annotated screens; 10 Mobbin citations in the frontmatter.

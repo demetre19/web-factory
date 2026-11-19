@@ -59,10 +59,11 @@ python3 tools/design-gate/patterns.py search "gold jewellery on black velvet" --
 ```bash
 # 1. mine Mobbin (resumable, paced, token refreshed per run)
 cd docs/machinery/design/patterns/tools && python3 mine.py fetch
-# 2. capture the contrast corpus (headless Brave) and split it into bands
-uv run --quiet capture_negatives.py && uv run --quiet split_negatives.py
+# 2. contrast corpus = OUR generated/failed designs (no negatives:
+    a contrast page must be a real designed page, not a random site)
+uv run --quiet capture_contrast.py
 # 3. annotate both corpora deterministically
-uv run --quiet annotate_det.py mobbin && uv run --quiet annotate_det.py negatives
+uv run --quiet annotate_det.py mobbin
 # 4. cells → signatures → pattern files + INDEX table
 python3 build_patterns.py
 # 5. genome + vertical profiles
@@ -74,7 +75,7 @@ python3 tools/design-gate/patterns.py index
 
 `data/` holds ~630 MB of captures and is gitignored; the derived
 artefacts (`pattern-index.json`, `genome.json`, `genotypes.jsonl`,
-`anti.json`, `validation/`) are committed.
+`trends.json`, `validation/`) are committed.
 
 ## What a pattern is
 
@@ -107,7 +108,7 @@ links:
 
 ## Genome
 
-`docs/machinery/design/dna/GENOME.md` defines 20 orthogonal genes with
+`docs/machinery/design/dna/GENOME.md` defines 21 orthogonal genes with
 closed allele sets (99 one-hot dims). Every page is a genotype; the
 genotype **is** the embedding for genome-space search, so no model is
 needed to compare two designs.
@@ -199,6 +200,24 @@ uv run --quiet embed_images.py means    # 88 pattern means
 ViT-B/32 is 151 M params / ~600 MB, small enough to install without
 asking. Anything larger is an operator decision.
 
+## Canon law
+
+Positive evidence is tiered, in rank order:
+
+1. **operator direct** — sites the operator names (`ingest_good.py
+   <url>`; real viewports, DOM Section Scan, whole-section crops).
+2. **operator-endorsed lists** — Eleken, Semrush, Siteinspire,
+   details.so extracted to `data/operator/_sources/*.json` and ingested
+   the same way with the list's verbatim rationale as the record's note.
+3. **Mobbin** — the mined base corpus.
+
+There is **no negatives layer**: the old "generic site" corpus was
+photo snippets, not layout patterns, so it was dropped. The scorer's
+contrast set is `data/annotations_contrast.jsonl` — our own generated
+and rejected designs. Sections that are >70% single photo or carry no
+text/UI structure are rejected by the corpus filter; pattern samples
+are whole UI sections.
+
 ## Intent layer — what a site is trying to be, measured
 
 `patterns/tools/intent.py` reads each valid capture's copy and pictures
@@ -225,7 +244,7 @@ P(choice | attribute) tables, so W1/W2 can cite a node and get the
 numbers.
 
 **What it is not: a quality predictor.** On the 124 valid captures
-(80 reference vs 44 template), intent features alone score AUC 0.535 —
+(operator canon), intent features alone score AUC 0.535 —
 no better than chance — and add nothing over structural (0.616 vs
 0.618). See `data/validation/intent.json`. The layer is a contract for
 W1/W2 ("the brief claims luxury; the variant picked everyday") — the
@@ -244,12 +263,11 @@ page border, grid and sections from the pixel pass), `set_summary`.
 
 - Section types come from the retrieval query plus pixel geometry, not
   from a vision model — intent is assumed, composition is measured.
-- The contrast corpus is small (44 sites) and skewed to local-service
-  templates.
-- The anti-pattern layer holds three measured rows, not a taxonomy: a
-  section with <0.4 block pace, no call to action, or near-perfect row
-  regularity is 3.9-9.7x more common in the contrast corpus. Anything
-  weaker was left out rather than invented.
+- The contrast corpus is our own generated/rejected designs (124
+  crops) — small but designed pages, which is the point.
+- There is no anti-pattern layer: generic-bad rows were dropped with
+  the negative corpus. Trend detection (TRENDS.md) is a closed
+  year-stamped vocab with confidence + evidence, not a judgement.
 - `pattern_fit` is a structural distance, not a quality judgement. It
   says "this looks like work from the curated corpus", nothing about
   whether the copy is any good.

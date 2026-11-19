@@ -1,0 +1,121 @@
+{
+ "source": "https://www.vistaprint.com.au/hub/web-design-trends",
+ "fetched": "2026-11-19",
+ "year": 2026,
+ "vocab": "closed-multi-label",
+ "trends": {
+  "cute-alism": {
+   "def": "kawaii details + brutalist utility",
+   "markers": {
+    "display-face": "mono",
+    "radius": "pill",
+    "chroma": "high",
+    "surface": "stark+pastel"
+   },
+   "detector": {
+    "display_face": "mono",
+    "radius": "pill",
+    "chroma_min": 60,
+    "weight": 1.0
+   }
+  },
+  "dial-up-delight": {
+   "def": "late-90s/Y2K remix: gothic fonts, candy gradients, metallics",
+   "markers": {
+    "face": "gothic/mono",
+    "gradient": "multi-colour",
+    "chroma": "variance high",
+    "density": "dense"
+   },
+   "detector": {
+    "gradient": true,
+    "chroma_var_min": 800,
+    "density": "compact",
+    "weight": 1.0
+   }
+  },
+  "resonant-stark": {
+   "def": "stripped minimal + subtle emotional detail",
+   "markers": {
+    "type": "ultra-thin",
+    "gradient": "soft",
+    "whitespace": ">=0.7",
+    "ink": "sparse"
+   },
+   "detector": {
+    "whitespace_min": 0.7,
+    "ink_max": 0.15,
+    "chroma_max": 25,
+    "weight": 1.0
+   }
+  },
+  "frosted-touch": {
+   "def": "glassmorphism: translucent panels, blur, diffused shadows",
+   "markers": {
+    "surface": "translucent",
+    "shadow": "diffused",
+    "palette": "pastel",
+    "border": "subtle"
+   },
+   "detector": {
+    "translucent": true,
+    "blur_shadow": true,
+    "pastel": true,
+    "weight": 1.0
+   }
+  },
+  "light-skeuomorphism": {
+   "def": "subtle real-material mimicry, embossed soft surfaces",
+   "markers": {
+    "edges": "embossed",
+    "gradient": "delicate",
+    "shadow": "light",
+    "surface": "soft"
+   },
+   "detector": {
+    "embossed": true,
+    "soft_shadow": true,
+    "radius": "soft",
+    "weight": 1.0
+   }
+  },
+  "ai-personalisation": {
+   "def": "adaptive blocks by user behaviour",
+   "markers": {
+    "insufficient": true
+   },
+   "detector": {
+    "insufficient": true
+   }
+  },
+  "snug-simple": {
+   "def": "cosy minimal: pastel blocks, rounded edges, chunky type",
+   "markers": {
+    "bg": "soft neutral",
+    "radius": "rounded",
+    "type": "chunky",
+    "texture": "light"
+   },
+   "detector": {
+    "pastel": true,
+    "radius": "pill",
+    "chroma_max": 45,
+    "weight": 1.0
+   }
+  },
+  "human-scribble": {
+   "def": "hand-drawn overlays: doodles, sketch marks",
+   "markers": {
+    "medium": "hand-drawn/illustration",
+    "edges": "irregular"
+   },
+   "detector": {
+    "medium_in": [
+     "illustration",
+     "hand-drawn"
+    ],
+    "weight": 1.0
+   }
+  }
+ }
+}

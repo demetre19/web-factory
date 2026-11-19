@@ -313,6 +313,7 @@ def cmd_index(args):
     # A banked operator site lands in annotation cells; a pattern whose
     # cell holds operator evidence outranks one built from Mobbin only.
     op_cells = set()
+    endorsed_cells = set()
     ann = os.path.join(ROOT, 'docs', 'machinery', 'design', 'patterns',
                        'data', 'annotations.jsonl')
     if os.path.exists(ann):
@@ -321,13 +322,19 @@ def cmd_index(args):
                 r = json.loads(line)
             except Exception:
                 continue
-            if r.get('source') == 'operator':
+            src = r.get('source') or ''
+            if src == 'operator':
                 op_cells.add((r.get('site_type'), r.get('page_type'),
                               r.get('section_type')))
+            elif src.startswith('operator-endorsed'):
+                endorsed_cells.add((r.get('site_type'),
+                                    r.get('page_type'),
+                                    r.get('section_type')))
     meta = {
         'backend': backend,
         'n': len(pats),
         'operator_cells': sorted(op_cells),
+        'endorsed_cells': sorted(endorsed_cells),
         'built_from': 'docs/machinery/design/patterns/**/pattern-*.md',
         'patterns': [{k: p[k] for k in (
             'id', 'path', 'site_types', 'page_types', 'section_type',
@@ -535,6 +542,8 @@ def cmd_search(args):
     # text cosine 1.0, section match 0.35, site match 0.25.
     sec_hint, site_hint = infer_intent(args.query)
     op_cells = {tuple(c) for c in meta.get('operator_cells') or []}
+    endorsed_cells = {tuple(c) for c in
+                      meta.get('endorsed_cells') or []}
     if not args.no_boost and not args.genotype:
         boosted = []
         for i, sc in scores:
@@ -543,11 +552,14 @@ def cmd_search(args):
                 sc += 0.35
             if any(s in site_hint for s in p['site_types']):
                 sc += 0.25
-            # canon: operator evidence outranks Mobbin evidence
-            if (p['site_types'] and p['page_types']) and (
-                    p['site_types'][0], p['page_types'][0],
-                    p['section_type']) in op_cells:
+            # canon tier: operator direct > endorsed lists > Mobbin
+            cell = (p['site_types'][0], p['page_types'][0],
+                    p['section_type']) if (p['site_types']
+                                           and p['page_types']) else None
+            if cell and cell in op_cells:
                 sc += 0.30
+            elif cell and cell in endorsed_cells:
+                sc += 0.15
             boosted.append((i, sc))
         scores = boosted
     scores.sort(key=lambda t: -t[1])

@@ -35,7 +35,7 @@ from collections import Counter
 HERE = os.path.dirname(os.path.abspath(__file__))
 PATTERNS = os.path.normpath(os.path.join(HERE, '..'))
 DATA = os.path.join(PATTERNS, 'data')
-WEB = os.path.join(DATA, 'web')
+WEB = os.path.join(DATA, 'web', 'canon')
 TILE_H = 1600
 MODEL_ID = 'open_clip:ViT-B-32:laion2b_s34b_b79k'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

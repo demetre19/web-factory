@@ -6,8 +6,8 @@ page_types: [service-detail]
 section_type: gallery
 speech_acts: [detail]
 composition: media-gallery
-prevalence: 0.708
-n: 24
+prevalence: 0.739
+n: 23
 evidence:
   - https://mobbin.com/sites/sections/b6d60eb3-cdf5-4538-9e7b-cbaf85684962?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
   - https://mobbin.com/sites/sections/c0f0168e-746e-47ae-92cf-1919bbfcaacd?utm_source=other&utm_medium=ai-assistant&utm_source_platform=mcp
@@ -35,16 +35,16 @@ links:
 
 # pattern-services-service-detail-gallery-media-gallery
 
-Page the items on a horizontal track with visible peek and controls. On services gallery sections built for service buyers scanning for competence and a quote, hold CTA restraint `single-primary`. This signature appears in 71% of 24 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
+Page the items on a horizontal track with visible peek and controls. On services gallery sections built for service buyers scanning for competence and a quote, hold CTA restraint `single-primary`. This signature appears in 74% of 23 annotated screens (layout-archetype, surface-rhythm, cta-restraint), so it is the default, not a variation: select it unless the brief gives a named reason to deviate, and log that reason (P.8).
 
 ## Key measurements
 
 | Measure | Median |
 |---|---|
 | `median_whitespace_share` | 0.611 |
-| `median_media_ratio` | 0.302 |
-| `median_columns` | 3.5 |
+| `median_media_ratio` | 0.295 |
+| `median_columns` | 4 |
 
 ## Evidence
 
-24 annotated screens; 10 Mobbin citations in the frontmatter.
+23 annotated screens; 10 Mobbin citations in the frontmatter.
