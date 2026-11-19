@@ -114,8 +114,13 @@ def sign_review(pdir, G):
     sl = G.dna_slices(G.dna_map(ctx) or {})
     import secrets, hmac, hashlib
     rv['nonce'] = secrets.token_hex(8)
+    # The signature binds the WHOLE record (items, modes, models) —
+    # nothing is rewritable after signing (F-07B).
+    canon = json.dumps({k: v for k, v in rv.items() if k != 'sig'},
+                       sort_keys=True)
     body = (f"{rv['nonce']}|{rv['dist_sha256']}|{sl.get('core')}|"
-            f"{rv.get('reviewer_model')}")
+            f"{rv.get('reviewer_model')}|"
+            + hashlib.sha256(canon.encode()).hexdigest()[:16])
     rv['sig'] = hmac.new(G.op_key(create=True), body.encode(),
                          hashlib.sha256).hexdigest()[:32]
     with open(rp, 'w') as fh:

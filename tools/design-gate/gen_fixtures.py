@@ -1302,8 +1302,11 @@ def main():
     rv = json.loads(BASE['REVIEW.json'])
     rv['dist_sha256'] = gate._dist_sha(ctx_b)
     sl = gate.dna_slices(gate.dna_map(ctx_b))
+    canon = json.dumps({k: v for k, v in rv.items() if k != 'sig'},
+                       sort_keys=True)
     body = (f"{rv['nonce']}|{rv['dist_sha256']}|{sl.get('core')}|"
-            f"{rv.get('reviewer_model')}")
+            f"{rv.get('reviewer_model')}|"
+            + hashlib.sha256(canon.encode()).hexdigest()[:16])
     rv['sig'] = hmac.new(gate.op_key(create=True), body.encode(),
                          hashlib.sha256).hexdigest()[:32]
     BASE['REVIEW.json'] = json.dumps(rv, indent=1)

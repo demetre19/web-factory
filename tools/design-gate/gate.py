@@ -3436,17 +3436,26 @@ def _dist_sha(ctx):
 
 def _review_sig_ok(ctx, rv):
     """The review is bound to the build it graded: sig = HMAC(operator
-    key, nonce+dist+dna+round) produced by `run.py sign-review`."""
+    key, nonce+dist+dna+reviewer+record-hash) produced by
+    `run.py sign-review` — items/modes cannot be rewritten post-sign."""
     key = op_key()
     sig = rv.get('sig')
     nonce = rv.get('nonce')
     if not sig or not nonce:
         return False
     sl = dna_slices(dna_map(ctx) or {})
-    body = f'{nonce}|{rv.get("dist_sha256")}|{sl.get("core")}|'            f'{rv.get("reviewer_model")}'
+    body = f'{nonce}|{rv.get("dist_sha256")}|{sl.get("core")}|' \
+            f'{rv.get("reviewer_model")}'
     want = hmac.new(key or b'', body.encode(),
                     hashlib.sha256).hexdigest()[:32]
-    return hmac.compare_digest(str(sig), want)
+    if hmac.compare_digest(str(sig), want):
+        return True
+    canon = json.dumps({k: v for k, v in rv.items() if k != 'sig'},
+                       sort_keys=True)
+    body2 = body + '|' + hashlib.sha256(canon.encode()).hexdigest()[:16]
+    want2 = hmac.new(key or b'', body2.encode(),
+                     hashlib.sha256).hexdigest()[:32]
+    return hmac.compare_digest(str(sig), want2)
 
 
 def check_review_completeness(ctx):
