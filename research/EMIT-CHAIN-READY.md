@@ -90,14 +90,18 @@ type scale, fonts, surface/density rhythm, accent all vary per DNA.
 - `9e237829` F1–F6 (css import, cta courier, recipe, fluid utils,
   primitive bindings, config commas, fixtures regen)
 - `9af34032` G.5/P.13 + collections → `.grid-auto`
+- `ae271a65` F7 — `assemble.py --fine` (P.18 knob-nudge round via the
+  same emitter; w4 pick drives nudges) + `ASSEMBLED.md`/`SPEC.md`
+  w7 receipts now written by `assemble.py`
+- `02844def` F8–F10 — `density` prop typed, tile `data-comp`
+  (tile↔page parity arm now fires), `tokens_json` never invents hex
+- `a9fefcf8` `bricks_translate.py` — 881 Bricksmaven payloads →
+  `.astro` bank skeletons beside payloads
 
 ## Not yet done (in EMIT-CHAIN-PLAN.md)
 
 - **F4** fixture components/instances/`dist` still hand-authored —
-  the `assemble`/contract side is byte-locked and real, the component
-  side isn't exercised by the fixture. Next fix: emit fixture
-  components via `_comp_copy`/`_instance`.
-- **F7** `assemble.py --fine` (preview/fine.html), candidates CLI,
-  `ASSEMBLED.md` receipt — planned tail, not built.
-- F8–F10 minor (Section Props doc line, tile `data-comp`,
-  `tokens_json` hex-invent guard).
+  in progress (F4FixtureProducers agent): real `_comp_copy`/`_instance`
+  + real `astro build` as fixture source; found `check_section_shell`
+  doc-comment false positive.
+- candidates CLI not wired.
