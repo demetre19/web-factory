@@ -383,8 +383,17 @@ def main():
                         for d, v in c['centroid'].items()
                         if abs(v) >= 0.25}}
              for name, c in clusters.items()}
-    json.dump(profs, open(os.path.join(
-        DATA, 'style-profiles.json'), 'w'), indent=1)
+    # curated licence rows (waives/conflicts/canon_flag — STYLE.md)
+    # survive regeneration: they are hand-authored, never recomputed
+    _sp = os.path.join(DATA, 'style-profiles.json')
+    try:
+        for _k, _v in json.load(open(_sp)).items():
+            if isinstance(_v, dict) and 'waives' in _v \
+                    and _k not in profs:
+                profs[_k] = _v
+    except Exception:
+        pass
+    json.dump(profs, open(_sp, 'w'), indent=1)
     print(f"{len(sites)} sites, {len(recs)} records -> {OUT_JSON}")
     for rid, v in rules.items():
         print(f"  {rid}: adherence {v.get('adherence')} "

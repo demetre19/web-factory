@@ -4044,7 +4044,9 @@ def _surface_of(sec):
 
 def check_surface_rhythm(ctx):
     """L.14 — alternating surfaces: no adjacent identical backgrounds;
-    every section has block padding; heading precedes content."""
+    every section has block padding; heading precedes content.
+    Chrome edges (nav/footer shells) sit outside the rhythm: L.14
+    judges content-band adjacency, not the boilerplate envelope."""
     if not _wave_ge(ctx, 'w7'):
         return []
     f = []
@@ -4053,6 +4055,8 @@ def check_surface_rhythm(ctx):
         tagged = [s for s in blocks if s.get('data-sec')]
         surfaces = [_surface_of(s) for s in tagged]
         for i in range(1, len(surfaces)):
+            if _is_chrome(tagged[i - 1]) and _is_chrome(tagged[i]):
+                continue
             if surfaces[i] == surfaces[i - 1]:
                 f.append(f'L.14 {name}: sections {i}/{i + 1} share '
                          f'surface "{surfaces[i]}" — alternate '
@@ -6190,6 +6194,31 @@ def build_contracts(ctx):
             'patterns': [f'pattern-{comp}'] if comp else [],
             'exemplar': f'templates/sections/{comp}/{camel(comp)}.astro'
                         if comp else None,
+            # render-side data-* the byte-locked page must carry:
+            # PS.11 intent, J.5 content ids, G.8 grid tracks, J.4
+            # recipe/seam + J.8 seam-shapes, SKL.1 skeleton. assemble_page
+            # is the only legal writer, so the contract is the courier.
+            'intent': r.get('intent'),
+            'content_ids': [str(x) for x in (r.get('content_ids') or [])],
+            'cols': str(r.get('columns'))
+                    if r.get('columns') not in (None, '')
+                    else (str((dmap.get('genotype') or {})
+                              .get('columns') or '')
+                          if comp in GRID_COMPS else None),
+            'recipe': r.get('recipe'),
+            'seam': r.get('seam')
+                    or (((_recipe_topo_map().get(
+                            str(r.get('recipe') or '')) or {})
+                        .get('topology') or {}).get('seam_style')),
+            'seam_shape_top': r.get('seam_shape_top')
+                    or (((_recipe_topo_map().get(
+                            str(r.get('recipe') or '')) or {})
+                        .get('topology') or {}).get('seam_shape_top')),
+            'seam_shape_bottom': r.get('seam_shape_bottom')
+                    or (((_recipe_topo_map().get(
+                            str(r.get('recipe') or '')) or {})
+                        .get('topology') or {}).get('seam_shape_bottom')),
+            'skeleton': r.get('skeleton'),
         })
     return out
 
@@ -6392,8 +6421,36 @@ def assemble_spec(ctx, slug):
     return out.getvalue()
 
 
+def _section_tag(c):
+    """One <Section> invocation from a contract — every data-* the
+    rendered block must carry (P.3/P.7, PS.11, J.4/J.8, J.5, G.8,
+    SKL.1) is a prop; only props with values are emitted."""
+    props = [
+        ('sec', c['section']), ('comp', c['composition']),
+        ('wf-ref', c['wf_ref']), ('ratio', c['media_ratio']),
+        ('disclosure', c['disclosure']), ('surface', c['surface']),
+        ('density', c['density']), ('intent', c.get('intent')),
+        ('content', ' '.join(c.get('content_ids') or [])),
+        ('cols', c.get('cols')), ('recipe', c.get('recipe')),
+        ('seam', c.get('seam')),
+        ('seam-shape-top', c.get('seam_shape_top')),
+        ('seam-shape-bottom', c.get('seam_shape_bottom')),
+        ('skeleton', c.get('skeleton')),
+    ]
+    attrs = ' '.join(f'{k}="{v}"' for k, v in props
+                     if v not in (None, '', 'none-set'))
+    return (f'<Section {attrs}>\n'
+            f'  <{camel(c["section"])} />\n'
+            f'</Section>')
+
+
 def assemble_page(ctx, slug=None):
     """SB.4 — deterministic page source from plan order.
+
+    The page renders inside BaseLayout (the document shell: head/meta,
+    theme toggle + paint-first script, landmarks — C.5/P.16/PS.9/R.1)
+    because check_assembly byte-locks this output and only the producer
+    can carry those contracts.
 
     Multi-page plans assemble every slug; assemble.py writes one file
     per slug (B F-40)."""
@@ -6402,24 +6459,23 @@ def assemble_page(ctx, slug=None):
     path, _ = page_path(ctx)
     if slug != _:
         path = os.path.join(ctx.site, 'src', 'pages', slug + '.astro')
-    imports = ["import Section from '../components/Section.astro';"]
+    site = ctx.site_block() or {}
+    title = str(site.get('name') or site.get('slug') or slug)
+    desc = str(site.get('description') or '')
+    imports = ["import BaseLayout from '../layouts/BaseLayout.astro';",
+               "import Section from '../components/Section.astro';"]
     for c in contracts:
         imports.append(f"import {camel(c['section'])} from "
                        f"'../components/sections/{camel(c['section'])}.astro';")
     h = hashlib.sha256(json.dumps(contracts, sort_keys=True)
                        .encode()).hexdigest()[:12]
-    body = []
-    for c in contracts:
-        body.append(
-            f'<Section sec="{c["section"]}" comp="{c["composition"]}" '
-            f'wf-ref="{c["wf_ref"]}" ratio="{c["media_ratio"]}" '
-            f'disclosure="{c["disclosure"]}" surface="{c["surface"]}" '
-            f'density="{c["density"]}">\n'
-            f'  <{camel(c["section"])} />\n'
-            f'</Section>')
+    body = '\n\n'.join(_section_tag(c) for c in contracts)
     txt = ('---\n// assembled: {h} — generated by assemble.py; never edit\n'
            + '\n'.join(imports) + '\n---\n\n'
-           + '\n\n'.join(body) + '\n').replace('{h}', h)
+           + f'<BaseLayout title={json.dumps(title)} '
+           + f'description={json.dumps(desc)} '
+           + f'slug={json.dumps(str(slug))}>\n'
+           + body + '\n</BaseLayout>\n').replace('{h}', h)
     return path, txt, h
 
 
@@ -10177,11 +10233,17 @@ STYLE_PROFILES = os.path.join(PATTERNS_DIR, 'data',
 
 @_lc(maxsize=1)
 def _style_profiles():
+    """{cluster: profile} — accepts {clusters: {...}} or the flat
+    {name: profile} shape sop_adherence.py writes. Licence rows
+    carry waives/conflicts/canon_flag; measured clusters carry
+    centroid/label."""
     try:
-        return (json.load(open(STYLE_PROFILES))
-                .get('clusters') or {})
+        raw = json.load(open(STYLE_PROFILES))
     except Exception:
         return {}
+    if isinstance(raw, dict):
+        return raw.get('clusters') or raw
+    return {}
 
 
 def style_licences(ctx):
@@ -11045,12 +11107,15 @@ def check_rhythm_render(ctx):
         dark = [s for s in tagged if re.search(
             r'inverse|brand|dark|endact|bg-ink',
             str(s.get('class', '')) + str(s.get('data-comp', '')) +
-            str(s.get('data-sec', '')))]
+            str(s.get('data-sec', '')) +
+            str(s.get('data-surface', '')))]
         if not dark:
             f.append(f'L.7 {name}: no contrast-moment surface '
                      'detected in rendered sections')
         dens = set()
         for s in tagged:
+            if s.get('data-density'):
+                dens.add(str(s.get('data-density')))
             for c in str(s.get('class', '')).split():
                 if re.match(r'(py-|sec-|density-|compact|regular|spacious)',
                             c):
