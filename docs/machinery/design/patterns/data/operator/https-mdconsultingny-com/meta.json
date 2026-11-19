@@ -661,7 +661,16 @@
    ],
    "overlays_suppressed": [
     "#navbar"
-   ]
+   ],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 1,
@@ -787,7 +796,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 2,
@@ -1273,7 +1291,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 3,
@@ -17617,5 +17644,91 @@
   "generator": null,
   "data_attrs": [],
   "anim_scripts": []
+ },
+ "ui_analysis_vlm": {
+  "summary_title": "A webpage with a navigation bar at the top and multiple sections below",
+  "nav": "nav pattern seen",
+  "layout": {
+   "max_content_width_px": null,
+   "sections": null
+  },
+  "colors": {
+   "bg": "#ffffff",
+   "ink": "#000000",
+   "accent": "#0000ff"
+  },
+  "typography": {
+   "display_style": "mixed"
+  },
+  "strengths": [
+   "...",
+   "...",
+   "..."
+  ],
+  "defects": [
+   "...",
+   "...",
+   "..."
+  ],
+  "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+ },
+ "collapse": {
+  "viewports": {
+   "1440": {
+    "hscroll": false,
+    "sticky_h": 72,
+    "hamburger": true,
+    "n_sections": 26
+   },
+   "768": {
+    "hscroll": false,
+    "sticky_h": 72,
+    "hamburger": true,
+    "n_sections": 26
+   },
+   "360": {
+    "hscroll": true,
+    "sticky_h": 71,
+    "hamburger": true,
+    "n_sections": 27
+   }
+  },
+  "rc7_content_loss": 0,
+  "rc8_hscroll": {
+   "1440": false,
+   "768": false,
+   "360": true
+  },
+  "rc8_violation": true,
+  "rc13_pad_collapse": 0.75,
+  "rc17_sticky_rent": 0.084,
+  "rc6_hamburger_360": true,
+  "rc2_cols_desk": 1.0,
+  "rc2_cols_mob": 1.0,
+  "rc3_text_first_share": 0.33,
+  "bo_ladder": {
+   "prose": 1,
+   "content": 0,
+   "wide": 0,
+   "bleed": 25,
+   "crop": 0,
+   "unlicensed": 0
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 23,
+  "bo9_mobile_wide": 25
+ },
+ "breakout": {
+  "bo_ladder": {
+   "prose": 1,
+   "content": 0,
+   "wide": 0,
+   "bleed": 25,
+   "crop": 0,
+   "unlicensed": 0
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 23,
+  "bo9_mobile_wide": 25
  }
 }

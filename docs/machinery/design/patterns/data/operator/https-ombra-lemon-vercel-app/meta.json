@@ -534,7 +534,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 1,
@@ -938,7 +947,16 @@
    ],
    "overlays_suppressed": [
     "div > header:nth-of-type(1)"
-   ]
+   ],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 2,
@@ -1058,7 +1076,16 @@
      }
     }
    ],
-   "overlays_suppressed": []
+   "overlays_suppressed": [],
+   "vlm": {
+    "section_type": "hero",
+    "medium": "UI screenshot",
+    "style": "corporate",
+    "summary": "The hero section showcases the brand's visual identity and messaging",
+    "trend_guess": "human-scribble",
+    "confidence": 0.8,
+    "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+   }
   },
   {
    "index": 3,
@@ -6590,5 +6617,91 @@
  },
  "choices": {
   "page_length": "medium"
+ },
+ "ui_analysis_vlm": {
+  "summary_title": "A webpage with a navigation bar at the top and multiple sections below",
+  "nav": "nav pattern seen",
+  "layout": {
+   "max_content_width_px": null,
+   "sections": null
+  },
+  "colors": {
+   "bg": "#ffffff",
+   "ink": "#000000",
+   "accent": "#0000ff"
+  },
+  "typography": {
+   "display_style": "mixed"
+  },
+  "strengths": [
+   "...",
+   "...",
+   "..."
+  ],
+  "defects": [
+   "...",
+   "...",
+   "..."
+  ],
+  "classifier_model": "mlx/qwen2.5-vl-3b-4bit"
+ },
+ "collapse": {
+  "viewports": {
+   "1440": {
+    "hscroll": false,
+    "sticky_h": 80.109375,
+    "hamburger": false,
+    "n_sections": 12
+   },
+   "768": {
+    "hscroll": false,
+    "sticky_h": 80.109375,
+    "hamburger": false,
+    "n_sections": 12
+   },
+   "360": {
+    "hscroll": false,
+    "sticky_h": 80.109375,
+    "hamburger": false,
+    "n_sections": 12
+   }
+  },
+  "rc7_content_loss": 0,
+  "rc8_hscroll": {
+   "1440": false,
+   "768": false,
+   "360": false
+  },
+  "rc8_violation": false,
+  "rc13_pad_collapse": 0.6,
+  "rc17_sticky_rent": 0.095,
+  "rc6_hamburger_360": false,
+  "rc2_cols_desk": 1.0,
+  "rc2_cols_mob": 1.0,
+  "rc3_text_first_share": 0.83,
+  "bo_ladder": {
+   "prose": 0,
+   "content": 0,
+   "wide": 0,
+   "bleed": 11,
+   "crop": 0,
+   "unlicensed": 0
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 10,
+  "bo9_mobile_wide": 11
+ },
+ "breakout": {
+  "bo_ladder": {
+   "prose": 0,
+   "content": 0,
+   "wide": 0,
+   "bleed": 11,
+   "crop": 0,
+   "unlicensed": 0
+  },
+  "bo_widest": 1440,
+  "bo5_bleed_adjacency": 10,
+  "bo9_mobile_wide": 11
  }
 }

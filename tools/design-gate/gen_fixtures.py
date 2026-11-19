@@ -1316,6 +1316,10 @@ MUT = {
  'check_rhythm_render': mut(('REPL','site/dist/home/index.html','sec-band inverse','sec-band')),
  'check_style_review': mut(('SET','GATES.json','{"w5": {"design": "d3"}}'),
     ('REPL','REVIEW.json','"style": [','"style_off": [')),
+ 'check_style_licence': mut(('REPL','DESIGN-PLAN.md',
+    'decisions:\n  - {rule_id: L.3',
+    'style_licences:\n  - {cluster: made-up-style, where: ""}\n'
+    'decisions:\n  - {rule_id: L.3')),
  'check_segment_roles': mut(('REPL','site/dist/home/index.html',
     'data-sec="macro"','data-x="macro"')),
  'check_segment_region': mut(('REPL','site/dist/home/index.html',

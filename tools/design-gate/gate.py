@@ -22,8 +22,10 @@ GATES.json via run.py, only the operator runs `run.py approve`, and
 only the reviewer writes REVIEW.json via `run.py sign-review` (P.8).
 Python 3 stdlib only.
 """
-import argparse, hashlib, hmac, html.parser, json, os, re, shutil, \
-    subprocess, sys
+import argparse, functools, hashlib, hmac, html.parser, json, os, re, \
+    shutil, subprocess, sys
+
+_lc = functools.lru_cache
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
@@ -561,8 +563,14 @@ def _oklch_to_rgb(L, C, H):
     r = +4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
     g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
     bb = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
-    return (max(0.0, min(1.0, r)), max(0.0, min(1.0, g)),
-            max(0.0, min(1.0, bb)))
+
+    def gam(c):
+        c = max(0.0, min(1.0, c))
+        # matrix output is LINEAR sRGB; _rgb consumers expect the
+        # gamma-encoded form a hex triplet carries
+        return (12.92 * c if c <= 0.0031308
+                else 1.055 * c ** (1 / 2.4) - 0.055)
+    return (gam(r), gam(g), gam(bb))
 
 
 def _rgb(hexv):
@@ -1882,6 +1890,7 @@ CANON_BAN = ('data/web', 'validation-negative', 'annotations_negative',
              'negative_sections', 'anti.json', 'quarantine')
 
 
+@_lc(maxsize=1)
 def _endorsed_sites():
     """Operator-endorsed canon lists — site domains/URLs recorded by
     the canon job under patterns/data/operator/_sources/ (one list
@@ -2816,7 +2825,9 @@ SKL_TOKEN_CLASS = re.compile(
     r'selection)(?:/[\w.%-]+)?(?:-\w+)?$')
 
 
+@_lc(maxsize=1)
 def _skl_harvest_ids():
+    # cached — check_skeleton runs this on every page/mutation run
     ids = set()
     root = os.path.join(REPO, 'templates', 'skeletons')
     for dp, _, fns in os.walk(root) if os.path.isdir(root) else []:
@@ -7160,7 +7171,13 @@ def write_receipt(ctx, relpath):
 
 
 def check_receipt(path):
-    """Validate an artifact's gate receipt — refuse unreceipted files."""
+    """Validate an artifact's gate receipt — refuse unreceipted files.
+    Refuses outright while the defect ledger has open P0/P1 rows."""
+    blockers = open_findings()
+    if blockers:
+        print(f'receipt REFUSED — {len(blockers)} open P0/P1 '
+              'finding(s); close the ledger first (gate.py findings)')
+        return 1
     ap = os.path.abspath(path)
     d = os.path.dirname(ap)
     gp = None
@@ -7636,6 +7653,58 @@ def cli_selftest():
     finally:
         gate_self.OPERATOR_HOME = saved_home
         shutil.rmtree(tmp, ignore_errors=True)
+    # STYLE-VOCAB §4.4 — a licensed style waives ONLY its enumerated
+    # rules: neo-brutal 4px border passes S.5 under licence, a bogus
+    # cluster and an unlicensed border still fail
+    tmp = tempfile.mkdtemp()
+    saved_home2 = gate_self.OPERATOR_HOME
+    try:
+        home = os.path.join(tmp, 'home')
+        os.makedirs(home)
+        gate_self.OPERATOR_HOME = os.path.join(home, '.web-factory')
+        pdir = os.path.join(tmp, 'p')
+        shutil.copytree(os.path.join(HERE, 'fixtures', '_base'), pdir,
+                        symlinks=True)
+        with open(os.path.join(pdir, 'site', 'src', 'styles',
+                               'global.css'), 'a') as fh:
+            fh.write('\n.card { border: 4px solid #000; }')
+        c = Ctx(pdir)
+        c.wave = 'w8'
+        if not gate_self.check_border_widths(c):
+            f.append('unlicensed 4px border does not trip S.5')
+        plan = open(os.path.join(pdir, 'DESIGN-PLAN.md')).read()
+        plan = plan.replace(
+            "decisions:\n  - {rule_id: L.3,",
+            "style_licences:\n"
+            "  - {cluster: neo-brutalist, where: ''}\n"
+            "decisions:\n  - {rule_id: L.3,")
+        open(os.path.join(pdir, 'DESIGN-PLAN.md'), 'w').write(plan)
+        c = Ctx(pdir)
+        c.wave = 'w8'
+        if _apply_declared_breaks(c, gate_self.check_border_widths(c)):
+            f.append('licensed neo-brutal 4px border not waived')
+        sl = gate_self.check_style_licence(c)
+        if not any('STYLE.2' in m for m in sl):
+            f.append('unrecorded licence does not trip STYLE.2')
+        dna_p = os.path.join(pdir, 'DNA.json')
+        d = json.load(open(dna_p))
+        d['style_licences'] = ['neo-brutalist']
+        json.dump(d, open(dna_p, 'w'))
+        c = Ctx(pdir)
+        c.wave = 'w8'
+        if gate_self.check_style_licence(c):
+            f.append('licensed + DNA-recorded style still fails '
+                     'STYLE checks')
+        plan = plan.replace('neo-brutalist', 'made-up-style')
+        open(os.path.join(pdir, 'DESIGN-PLAN.md'), 'w').write(plan)
+        c = Ctx(pdir)
+        c.wave = 'w8'
+        if not any('STYLE.1' in m for m in
+                   gate_self.check_style_licence(c)):
+            f.append('unknown style cluster not rejected')
+    finally:
+        gate_self.OPERATOR_HOME = saved_home2
+        shutil.rmtree(tmp, ignore_errors=True)
     return f
 
 
@@ -7671,6 +7740,11 @@ def cmd_selftest():
             if want == 1 and not got:
                 fails.append(f'{name}/fail fixture NOT caught')
     fails += cli_selftest()
+    # every redteam mutation must still FAIL — a survivor is a live
+    # bypass (recorded to FINDINGS.json as an open finding)
+    for fid, hits, _ in run_redteam():
+        if not hits:
+            fails.append(f'redteam {fid} survived — bypass still open')
     tested = [n for n in checks if os.path.isdir(os.path.join(fx, n))]
     exempt = {
             'check_astro_build',     # needs a real astro toolchain
@@ -7687,6 +7761,279 @@ def cmd_selftest():
           f'{len(tested)} checks '
           f'({len(exempt)} env-exempt: {", ".join(sorted(exempt))})')
     return 0
+
+
+# ---------------------------------------------------------------- findings + redteam
+#
+# research/FINDINGS.json is the defect ledger: every confirmed defect
+# is a row {id, severity, mutation, status, fixture}. A row closes
+# ONLY through a named fail-fixture or redteam mutation that
+# reproduces the defect and the gate FAILS it — `gate.py findings`
+# audits that promise. While any P0/P1 row is open, `gate.py round`
+# and `gate.py receipt` refuse: the machinery is untrusted until the
+# ledger is clean.
+
+FINDINGS_PATH = os.path.join(REPO, 'research', 'FINDINGS.json')
+
+
+def read_findings():
+    try:
+        d = json.load(open(FINDINGS_PATH))
+    except Exception:
+        return []
+    rows = d.get('findings') if isinstance(d, dict) else d
+    return [r for r in rows or [] if isinstance(r, dict)]
+
+
+def open_findings(severities=('P0', 'P1')):
+    return [r for r in read_findings()
+            if r.get('status') == 'open'
+            and str(r.get('severity', '')).upper() in severities]
+
+
+# redteam mutation library — every entry reproduces a confirmed
+# bypass: (finding_id, expected_fail_prefix, ops). ops = gen_fixtures
+# semantics: DEL/APPEND/SET/REPL file ops applied to a _base copy.
+# A mutation that produces NO matching failure is a SURVIVOR = the
+# hole is still open → new finding.
+REDTEAM_MUTATIONS = [
+ ('RT-M13-COMMENT', 'M.13', (
+  ('REPL', 'site/src/styles/global.css',
+   '@media (prefers-reduced-motion: reduce)',
+   '/* @media (prefers-reduced-motion: later) */ @media (min-width: 0px)'),
+  ('APPEND', 'site/dist/home/style.css',
+   '@keyframes shimmy { to { transform: translateX(1rem) } }'
+   '.shim { animation: shimmy 1s; }'))),
+ ('RT-M13-TRANSITION', 'M.13', (
+  ('DEL', 'site/src/styles/global.css'),
+  ('SET', 'site/dist/home/style.css',
+   '.card { transition: transform .3s; }'))),
+ ('RT-SKL-INNERDIV', 'SKL.', (
+  ('APPEND', 'site/dist/home/index.html',
+   '<section data-sec="proof2" data-comp="logo-wall" data-intent="proof" '
+   'data-skeleton="hyperui/marketing/logo-clouds/1" class="sec-band">'
+   '<div class="bg-blue-50 text-lg"><h3>x</h3></div></section>'),)),
+ ('RT-SKL-PY8', 'SKL.', (
+  ('APPEND', 'site/dist/home/index.html',
+   '<section data-sec="proof3" data-comp="logo-wall" data-intent="proof" '
+   'data-skeleton="hyperui/marketing/logo-clouds/1" class="py-8">'
+   '<h3>x</h3></section>'),)),
+ ('RT-INV-HEADERONLY', 'STUB', (
+  ('REPL', 'STUB.md',
+   '| Do you test? | Yes. |', '| TBD | TBD |'),)),
+ ('RT-CAND-UNSIGNED', 'CAN', (
+  ('SET', 'CANDIDATES.json',
+   '{"source":"astro-showcase","candidates":[{"url":"https://x.example",'
+   '"status":"approved","score":0.9}]}'),)),
+ ('RT-REC-UNSIGNED', 'R17', (
+  ('REPL', 'GATES.json',
+   '"sig": "5d86d223403dbfd0e0f88e5e2449bfae"', ''),)),
+ ('RT-REC-GATEPASS', 'R17', (
+  ('REPL', 'GATES.json',
+   '"gate_pass": true', '"gate_pass": false'),)),
+ ('RT-WILD-NOHIST', 'B.7', (('DEL', 'WILDCARD-HISTORY.json'),)),
+ ('RT-WILD-SEEDREUSE', 'B.7', (
+  ('REPL', 'DNA.json', '"wildcard_seed": 424242',
+   '"wildcard_seed": 117'),)),
+ ('RT-REF-ARBITRARY', 'REF', (
+  ('REPL', 'MOBBIN-REFS.md', 'https://lexingtonthemes.com',
+   'https://random-unregistered-site.example'),)),
+ ('RT-R10-MINH', 'R.10', (
+  ('REPL', 'site/dist/home/index.html',
+   'class="sec-band py-16"', 'class="sec-band py-16 min-h-screen"'),)),
+ ('RT-C3-DEADGREY', 'C.3', (
+  ('REPL', 'DESIGN-PLAN.md', 'surface: {value: "#F1EFEC"}',
+   'surface: {value: "#8A8A8A"}'),)),
+ ('RT-C5-LIGHTDARK', 'C.5', (
+  ('REPL', 'TOKENS.json', '"bg": "#14181A"',
+   '"bg": "oklch(0.5 0.01 230)"'),)),
+ ('RT-M14-LENIS', 'M.14', (
+  ('SET', 'site/dist/_astro/sm.js',
+   'import Lenis from "lenis"; new Lenis();'),)),
+ ('RT-M14-GSAP-BARE', 'M.14', (
+  ('SET', 'site/dist/_astro/an.js', 'gsap.to(".x",{y:9});'),)),
+ ('RT-PS11-MULTIVEC', 'PS.11', (
+  ('REPL', 'STUB.md',
+   '| macro | H2 What is testing? | "Testing is the thing." | — |',
+   '| macro | H2 What is testing? + H2 Why us? | "Testing." | — |'),)),
+ ('RT-WIDTH-OFFRUNG', 'A.1', (
+  ('APPEND', 'site/dist/home/index.html',
+   '<div class="width--55">x</div>'),)),
+ ('RT-STYLE-BOGUS', 'STYLE.', (
+  ('REPL', 'DESIGN-PLAN.md',
+   'decisions:\n  - {rule_id: L.3',
+   'style_licences:\n  - {cluster: made-up-style, where: ""}\n'
+   'decisions:\n  - {rule_id: L.3'),)),
+ ('RT-STYLE-UNRECORDED', 'STYLE.', (
+  ('REPL', 'DESIGN-PLAN.md',
+   'decisions:\n  - {rule_id: L.3',
+   'style_licences:\n  - {cluster: neo-brutalist, where: ""}\n'
+   'decisions:\n  - {rule_id: L.3'),)),
+]
+
+
+def _apply_ops(files, ops):
+    for op in ops:
+        kind = op[0]
+        if kind == 'DEL':
+            files.pop(op[1], None)
+        elif kind == 'APPEND':
+            files[op[1]] = files.get(op[1], '') + op[2]
+        elif kind == 'SET':
+            files[op[1]] = op[2]
+        elif kind == 'REPL':
+            if op[1] in files:
+                files[op[1]] = files[op[1]].replace(op[2], op[3])
+    return files
+
+
+def run_redteam(write_findings=True):
+    """Apply every mutation to a _base copy at w8; a mutation that no
+    check FAILs is a surviving bypass. Returns [(id, fails)] and
+    appends survivors to FINDINGS.json as open P1 defects."""
+    import tempfile as _tf
+    base = os.path.join(HERE, 'fixtures', '_base')
+    # env-bound checks can't run against a mutation dir — same
+    # exemption as cmd_selftest
+    env_exempt = {'check_astro_build', 'check_mobbin_auth'}
+    # check_wildcard is an aggregate: inside the sweep it re-runs the
+    # whole wave's checks (double cost, duplicate messages) — leaf
+    # checks already cover the surface
+    slow = {'check_canon_trace', 'check_round_gated_look',
+            'check_fine_round', 'check_scorecard'}
+    all_checks = [c for lst in WAVE_CHECKS.values() for c in lst
+                  if c.__name__ not in env_exempt
+                  and c is not check_wildcard]
+    fast_checks = [c for c in all_checks
+                   if c.__name__ not in slow]
+    slow_checks = [c for c in all_checks
+                   if c.__name__ in slow]
+    results = []
+    for fid, prefix, ops in REDTEAM_MUTATIONS:
+        tmp = _tf.mkdtemp()
+        try:
+            files = {}
+            for dp, _, fns in os.walk(base):
+                for fn in fns:
+                    fp = os.path.join(dp, fn)
+                    rel = os.path.relpath(fp, base)
+                    try:
+                        files[rel] = open(fp, encoding='utf-8',
+                                          errors='replace').read()
+                    except Exception:
+                        files[rel] = open(fp, 'rb').read()
+            files = _apply_ops(files, ops)
+            pd = os.path.join(tmp, 'p')
+            for rel, c in files.items():
+                fp = os.path.join(pd, rel)
+                os.makedirs(os.path.dirname(fp), exist_ok=True)
+                if isinstance(c, bytes):
+                    open(fp, 'wb').write(c)
+                else:
+                    open(fp, 'w').write(c)
+            ctx = Ctx(pd)
+            ctx.wave = 'w8'
+            fails = []
+            for c in fast_checks:
+                try:
+                    fails += c(ctx)
+                except Exception:
+                    pass
+            hits = [x for x in fails if prefix in x]
+            if not hits:
+                # expensive canon/round checks run only while the
+                # mutation is still unfired — they're the only
+                # catchers of REF/CANON-class mutations anyway
+                for c in slow_checks:
+                    try:
+                        fails += c(ctx)
+                    except Exception:
+                        pass
+                hits = [x for x in fails if prefix in x]
+            results.append((fid, hits, fails))
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+    survivors = [r for r in results if not r[1]]
+    if write_findings and survivors:
+        rows = read_findings()
+        known = {r.get('id') for r in rows}
+        out = {'schema': 'design-gate-findings/v1',
+               'findings': rows}
+        for fid, _, fails in survivors:
+            if fid in known:
+                continue
+            out['findings'].append(
+                {'id': fid, 'severity': 'P1',
+                 'mutation': f'redteam:{fid} survived — no check failed',
+                 'status': 'open', 'fixture': f'redteam:{fid}'})
+        if not rows:
+            os.makedirs(os.path.dirname(FINDINGS_PATH), exist_ok=True)
+        json.dump(out, open(FINDINGS_PATH, 'w'), indent=1)
+    return results
+
+
+def cmd_redteam(_a=None):
+    results = run_redteam()
+    survivors = [(f_, fs) for _, h, fs in results for f_ in [h] if not f_]
+    for fid, hits, fails in results:
+        mark = 'FAIL' if hits else 'SURVIVED'
+        got = hits[0][:80] if hits else \
+            (fails[0][:80] if fails else 'no failures at all')
+        print(f'  {mark:8} {fid}: {got}')
+    if survivors:
+        print(f'redteam: {len(survivors)} mutation(s) survived — '
+              'recorded as open findings (FINDINGS.json)')
+        return 1
+    print(f'redteam PASS: {len(results)} mutations all caught')
+    return 0
+
+
+def cmd_findings(_a=None):
+    """Audit the ledger: every closed finding's named fixture must
+    still reproduce the defect (its check fails)."""
+    rows = read_findings()
+    bad = []
+    rt = {fid: pre for fid, pre, _ in REDTEAM_MUTATIONS}
+    for r in rows:
+        if r.get('status') != 'closed':
+            continue
+        fix = str(r.get('fixture') or '')
+        if fix.startswith('redteam:'):
+            fid = fix.split(':', 1)[1]
+            if fid not in rt:
+                bad.append(f"{r.get('id')}: unknown redteam mutation "
+                           f'{fid}')
+            continue
+        # file fixture: fixtures/<check>/fail must produce failures
+        if fix.startswith('fixtures/'):
+            name = fix.split('/')[1]
+            checks = {c.__name__: c for lst in WAVE_CHECKS.values()
+                      for c in lst}
+            if name in checks and os.path.isdir(
+                    os.path.join(HERE, 'fixtures', name, 'fail')):
+                ctx = Ctx(os.path.join(HERE, 'fixtures', name, 'fail'))
+                ctx.wave = 'selftest'
+                if not checks[name](ctx):
+                    bad.append(f"{r.get('id')}: {fix} no longer fails")
+            else:
+                bad.append(f"{r.get('id')}: {fix} missing")
+    open_p = open_findings()
+    for r in rows:
+        if r.get('status') == 'open':
+            print(f"  open    {r.get('severity','?'):3} {r.get('id')}: "
+                  f"{str(r.get('mutation'))[:70]}")
+    if bad:
+        for b in bad:
+            print('  broken ', b)
+        return 1
+    if open_p:
+        print(f'findings: {len(open_p)} P0/P1 open — rounds and '
+              'receipts REFUSE until closed')
+        return 1
+    print(f'findings OK: {len(rows)} rows, '
+          f'{sum(1 for r in rows if r.get("status") == "open")} open')
+    return 0
+
 
 # ---------------------------------------------------------------- main
 
@@ -7990,6 +8337,18 @@ def check_round(path, round_no, stub=None, candidates=None):
 
 def cmd_round(a):
     """`gate.py round <picker.html> --round N [--stub STUB.md]`."""
+    blockers = open_findings()
+    if blockers:
+        print(f'round REFUSED — {len(blockers)} open P0/P1 finding(s); '
+              'close the ledger first (gate.py findings):')
+        for r in blockers:
+            print(f"  {r.get('severity')} {r.get('id')}: "
+                  f"{str(r.get('mutation'))[:70]}")
+        return 1
+    # redteam runs under `gate.py selftest`/`gate.py redteam` —
+    # survivors land in FINDINGS.json as open P1 rows, which the
+    # refusal above already blocks on. Re-running the whole library
+    # per round priced one round at minutes; the ledger is the gate.
     rd = getattr(a, 'round', None) or '1'
     fails = check_round(a.pipeline_dir, int(rd),
                         stub=open(a.stub).read()
@@ -8009,7 +8368,7 @@ def main():
                     ['coverage', 'selftest', 'consistency', 'graph',
                      'score', 'segment', 'wildcard', 'enforcement',
                      'contracts', 'section', 'dna', 'round',
-                     'receipt'])
+                     'receipt', 'findings', 'redteam'])
     ap.add_argument('pipeline_dir', nargs='?', default=None,
                     help='pipeline dir — REQUIRED for every pipeline '
                          'command (no silent cwd writes)')
@@ -8021,7 +8380,8 @@ def main():
     ap.add_argument('--round', help='picker round number (1, 2, 3)')
     a = ap.parse_args()
     if a.wave not in ('coverage', 'selftest', 'consistency', 'graph',
-                      'enforcement') and not a.pipeline_dir:
+                      'enforcement', 'findings', 'redteam') \
+            and not a.pipeline_dir:
         print(f'gate.py {a.wave}: pipeline_dir is required')
         return 2
     if a.approve:
@@ -8046,6 +8406,10 @@ def main():
         return cmd_wildcard(a)
     if a.wave == 'enforcement':
         return cmd_enforcement()
+    if a.wave == 'findings':
+        return cmd_findings()
+    if a.wave == 'redteam':
+        return cmd_redteam()
     if a.wave == 'dna':
         return cmd_dna(a.pipeline_dir)
     if a.wave == 'round':
@@ -8068,6 +8432,7 @@ def main():
 
 # ---------------------------------------------------------------- genome
 
+@_lc(maxsize=1)
 def genome_genes():
     """{gene: set(alleles)} from dna/GENOME.md headings.
 
@@ -8154,6 +8519,7 @@ COMP_ARCH = {
 }
 
 
+@_lc(maxsize=1)
 def catalog_compositions():
     """The closed composition set, read from SECTION-CATALOG §2."""
     try:
@@ -8265,6 +8631,7 @@ def check_genotype_distinct(ctx):
 TIERS = {'invariant', 'structural', 'stylistic'}
 BURST_RANGE = {0, 1, 2, 3}
 
+@_lc(maxsize=1)
 def _enforcement_rules():
     try:
         return json.load(open(ENFORCEMENT))['rules']
@@ -8391,8 +8758,56 @@ def check_declared_breaks(ctx):
             f.append(f'B.4 {n} breaks in section {sec} — max one')
     return f
 
+STYLE_PROFILES = os.path.join(PATTERNS_DIR, 'data',
+                              'style-profiles.json')
+
+
+@_lc(maxsize=1)
+def _style_profiles():
+    try:
+        return (json.load(open(STYLE_PROFILES))
+                .get('clusters') or {})
+    except Exception:
+        return {}
+
+
+def style_licences(ctx):
+    """[{cluster, where, waives}] — plan rows
+    `style_licences: [{cluster: neo-brutalist, where: hero}]` or a
+    scalar `style_licence:` on the design. The licence is what the
+    OPERATOR declared before linting; check_style_licence validates
+    it, _apply_declared_breaks honours it."""
+    plan = ctx.plan or {}
+    rows = plan.get('style_licences')
+    if rows is None:
+        single = plan.get('style_licence')
+        rows = [single] if single else []
+    if isinstance(rows, (str, dict)):
+        rows = [rows]
+    out = []
+    profiles = _style_profiles()
+    for r in rows:
+        if isinstance(r, str):
+            r = {'cluster': r}
+        if not isinstance(r, dict):
+            continue
+        cl = str(r.get('cluster') or r.get('style') or '')
+        prof = profiles.get(cl) or {}
+        out.append({'cluster': cl,
+                    'where': str(r.get('where') or '').strip(),
+                    'waives': list(prof.get('waives') or []),
+                    'conflicts': list(prof.get('conflicts') or []),
+                    'canon_flag': bool(prof.get('canon_flag')),
+                    'known': cl in profiles})
+    return out
+
+
 def skipped_rules(ctx):
-    """{rule_id: {sections}} declared structural breaks (B.4).
+    """{rule_id: {sections}} declared structural breaks (B.4) PLUS
+    style-licence waivers (STYLE-VOCAB §4.4 — style classification
+    runs BEFORE linting; a licensed style relaxes exactly the rules
+    its profile enumerates, scoped to `where`, never a tier:invariant
+    rule, never blanket).
 
     A break is scoped to the section it names — it never switches a rule
     off site-wide (B F-30)."""
@@ -8403,7 +8818,70 @@ def skipped_rules(ctx):
         if rules.get(rid, {}).get('tier') == 'structural':
             where = str(b.get('where') or '').strip()
             out.setdefault(rid, set()).add(where)
+    # style licences waive their enumerated rules (stylistic +
+    # structural only — invariants like C.5/C.7/VG.3 can never waive)
+    for lic in style_licences(ctx):
+        if not lic['known'] or lic['canon_flag']:
+            continue
+        for rid in lic['waives']:
+            if rules.get(rid, {}).get('tier') == 'invariant':
+                continue    # check_style_licence FAILs on the request
+            out.setdefault(rid, set()).add(lic['where'])
     return out
+
+
+def check_style_licence(ctx):
+    """STYLE-VOCAB §4.4 — style classification runs BEFORE linting.
+    Every declared style_licence must name a known cluster in
+    style-profiles.json; waive only the rules that profile enumerates
+    (it cannot waive what isn't listed — the licence is the profile,
+    the plan only invokes it); never a tier:invariant rule; and a
+    canon_flag cluster is banned regardless of licence. The licence
+    is recorded in the DNA (provenance requirement)."""
+    if not _wave_ge(ctx, 'w5'):
+        return []
+    f = []
+    lics = style_licences(ctx)
+    if not lics:
+        return []
+    rules = _enforcement_rules()
+    profiles = _style_profiles()
+    dna_kn = (dna_map(ctx) or {})
+    dna_txt = ctx.read('DNA.md') or json.dumps(dna_kn)
+    for lic in lics:
+        cl = lic['cluster'] or '(unnamed)'
+        if not lic['known']:
+            f.append(f'STYLE.1 style_licence "{cl}" names no cluster '
+                     'in style-profiles.json — licences are enumerated '
+                     'profiles, not ad-hoc waivers')
+            continue
+        if lic['canon_flag']:
+            f.append(f'STYLE.1 style_licence "{cl}" — this style is '
+                     'canon-flagged (generic-stock / banned signature); '
+                     'no licence expresses it')
+        # plan may only invoke the profile — waiving beyond it or an
+        # invariant is a defect
+        inv = [r for r in lic['waives']
+               if rules.get(r, {}).get('tier') == 'invariant']
+        if inv:
+            f.append(f'STYLE.1 "{cl}" profile tries to waive '
+                     f'invariant(s) {inv} — fix style-profiles.json, '
+                     'invariants are never waived')
+        # conflicts are informational warnings, surfaced as failures
+        # ONLY when the waived set actually overlaps (it cannot —
+        # conflicts are disjoint by construction) — still report the
+        # tension so the plan records it
+        for c in lic['conflicts']:
+            if c in lic['waives']:
+                f.append(f'STYLE.1 "{cl}" profile lists {c} as both '
+                         'waived and conflicted — contradiction in '
+                         'style-profiles.json')
+        # provenance: the licence must be traceable in the rendered DNA
+        if cl not in dna_txt:
+            f.append(f'STYLE.2 style_licence "{cl}" not recorded in '
+                     'DNA.md — a licence is part of the design record, '
+                     'not a plan-side note')
+    return f
 
 
 def _break_covers(scopes, msg):
@@ -8481,8 +8959,8 @@ def check_wildcard(ctx, waves=None):
     seen = set()
     for wv in waves:
         for chk in WAVE_CHECKS[wv]:
-            if chk is check_wildcard:
-                continue
+            if chk is check_wildcard or chk is check_scorecard:
+                continue        # aggregates recurse via _check_fail_map
             try:
                 msgs = chk(ctx)
             except Exception as e:
@@ -8565,6 +9043,8 @@ def _check_fail_map(ctx, waves):
     by_check, by_rule = {}, {}
     for wv in waves:
         for chk in WAVE_CHECKS[wv]:
+            if chk is check_wildcard:
+                continue        # aggregate sweep → recursion cycle
             try:
                 r = chk(ctx)
             except Exception:
@@ -9237,7 +9717,8 @@ WAVE_CHECKS = {
            check_tailwind_derivation, check_tile_is_system,
            check_no_emoji, check_neutral_tint, check_proximity,
            check_border_widths, check_reduced_motion, check_dark_mode,
-           check_dark_toggle, check_canon_trace, check_trend_vocab],
+           check_dark_toggle, check_canon_trace, check_trend_vocab,
+           check_style_licence],
     'w6': [check_components_exist, check_tile_is_system,
            check_class_subset, check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_section_shell,
