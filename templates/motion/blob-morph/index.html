@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: blob-morph — ambient border-radius blobs</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif;overflow:hidden}
+.hero{position:relative;min-height:100vh;display:grid;place-items:center;text-align:center}
+.hero .inner{position:relative;z-index:1;max-width:40ch}
+.hero h1{font-size:2.2rem;margin:0 0 10px}
+.hero p{color:var(--muted);margin:0}
+/* --- recipe ----------------------------------------------------------
+   mdconsultingny's ambient layer: oversized divs morph border-radius
+   (a multi-corner blobMorph) while a slow translate drifts them.
+   Paint-bound by nature — legal ONLY as ambient wash behind content:
+   big, blurred, low-opacity, few (≤3), behind everything. */
+.blob{position:absolute;border-radius:50%;filter:blur(60px);
+  opacity:.35;pointer-events:none;z-index:0}
+.blob-1{width:46vmin;height:46vmin;top:8%;left:6%;
+  background:var(--accent);opacity:.16;
+  animation:blobMorph1 16s ease-in-out infinite alternate,
+            blobDrift 20s ease-in-out infinite alternate}
+.blob-2{width:38vmin;height:38vmin;bottom:10%;right:8%;
+  background:var(--accent);opacity:.14;
+  animation:blobMorph2 18s ease-in-out infinite alternate,
+            blobDrift 22s ease-in-out -6s infinite alternate}
+.blob-3{width:30vmin;height:30vmin;top:55%;left:42%;
+  background:var(--muted);opacity:.12;
+  animation:blobMorph1 20s ease-in-out -3s infinite alternate,
+            blobDrift 17s ease-in-out -9s infinite alternate}
+@keyframes blobMorph1{
+  0%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}
+  50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}
+  100%{border-radius:50% 60% 60% 40%/40% 40% 60% 60%}}
+@keyframes blobMorph2{
+  0%{border-radius:40% 60% 60% 40%/60% 40% 60% 40%}
+  100%{border-radius:60% 40% 40% 60%/40% 60% 40% 60%}}
+@keyframes blobDrift{
+  0%{transform:translate(0,0) scale(1)}
+  100%{transform:translate(4vmin,-3vmin) scale(1.06)}}
+@media (prefers-reduced-motion:reduce){
+  .blob{animation:none!important} /* freeze; keep the wash */
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;z-index:2;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="blob blob-1" aria-hidden="true"></div>
+<div class="blob blob-2" aria-hidden="true"></div>
+<div class="blob blob-3" aria-hidden="true"></div>
+<header class="hero">
+  <div class="inner">
+    <h1>Calm, moving air</h1>
+    <p>Ambient blobs sit behind the hero — morph 16–20s, drift 17–22s,
+    all below 20% opacity.</p>
+  </div>
+</header>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
+</body>
+</html>

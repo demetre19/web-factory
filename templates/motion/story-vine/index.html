@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: story-vine — zigzag process illustration</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.demo{display:grid;grid-template-columns:280px 1fr;gap:56px;max-width:820px;align-items:center}
+.copy h2{margin:0 0 12px;font-size:1.6rem}
+.copy p{color:var(--muted);margin:0 0 10px;max-width:36ch}
+/* --- recipe ----------------------------------------------------------
+   mdconsultingny's service "story vine": a zigzag stem flows dashes
+   while nodes bob, rings ripple, and an accent node pulses. All five
+   loops run continuously — they ARE the illustration, not an entrance.
+   Prefix every class with a per-service id (sgr-, afe-, sel-, scp-)
+   when shipping multiple vines: each gets its own colour story. */
+.sv{width:280px;height:380px}
+.sv .stem{fill:none;stroke:var(--muted);stroke-width:1.5;
+  stroke-dasharray:5 9;stroke-linecap:round;
+  animation:sv-flow 4s linear infinite}
+@keyframes sv-flow{to{stroke-dashoffset:-56px}} /* 56 = 4*(5+9): seamless */
+.sv .node{animation:sv-bob var(--dur,7s) ease-in-out var(--d,0s) infinite alternate}
+@keyframes sv-bob{to{transform:translateY(4px)}}
+.sv .node circle{transform-box:fill-box;transform-origin:center}
+.sv .node .icon{fill:var(--ink);stroke:none}
+.sv .ripple{fill:none;stroke:var(--accent);stroke-width:1;
+  transform-box:fill-box;transform-origin:center;opacity:0;
+  animation:sv-ripple 3s ease-out var(--d,0s) infinite}
+@keyframes sv-ripple{0%{transform:scale(.5);opacity:.55}80%,100%{transform:scale(1.9);opacity:0}}
+.sv .bloom{fill:var(--accent);opacity:0;
+  animation:sv-pulse 3s ease-out infinite}
+@keyframes sv-pulse{0%,60%,100%{opacity:0}30%{opacity:.5}}
+@media (prefers-reduced-motion:reduce){
+  .sv *{animation:none!important}
+  .sv .ripple,.sv .bloom{display:none} /* frozen ripples read as debris */
+}
+/* --------------------------------------------------------------------- */
+small{display:block;margin-top:14px;color:var(--muted)}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="demo">
+  <svg class="sv" viewBox="0 0 280 380" aria-hidden="true">
+    <path class="stem" d="M70 20 Q 200 60 210 120 T 70 200 Q 30 240 100 280 Q 210 310 200 370"/>
+    <g class="node" style="--dur:7s"><circle cx="70" cy="20" r="14" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle class="icon" cx="70" cy="20" r="4"/></g>
+    <g class="node" style="--dur:6s;--d:-2s"><circle cx="210" cy="120" r="18" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle class="icon" cx="210" cy="120" r="5"/></g>
+    <g class="node" style="--dur:8s;--d:-4s"><circle cx="70" cy="200" r="14" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle class="icon" cx="70" cy="200" r="4"/></g>
+    <circle class="ripple" cx="100" cy="280" r="16"/>
+    <circle class="ripple" cx="100" cy="280" r="16" style="--d:1s"/>
+    <circle class="ripple" cx="100" cy="280" r="16" style="--d:2s"/>
+    <g class="node" style="--dur:7s;--d:-1s"><circle cx="100" cy="280" r="16" fill="none" stroke="var(--accent)" stroke-width="1.5"/><circle class="icon" cx="100" cy="280" r="5" fill="var(--accent)"/></g>
+    <circle class="bloom" cx="200" cy="370" r="10"/>
+    <g class="node" style="--dur:9s;--d:-5s"><circle cx="200" cy="370" r="12" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle class="icon" cx="200" cy="370" r="4"/></g>
+  </svg>
+  <div class="copy">
+    <h2>Every service gets a story</h2>
+    <p>The vine pairs with sticky copy: each zigzag beat lands beside a
+    paragraph as you scroll. The animation is ambient — it continues
+    while you read, never restarts.</p>
+    <small>flow 4s · bob 6–9s phased · ripple 3s ×3 · pulse 3s</small>
+  </div>
+</div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
+</body>
+</html>

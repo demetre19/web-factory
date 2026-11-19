@@ -31,11 +31,13 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
 |---|---|---|---|
 | axis-grow | staggered scaleX bars | loop | none |
 | backdrop-loops | ambient rotate + dash-flow | loop | none |
+| blob-morph | ambient border-radius blobs | loop | none |
 | blur-reveal | photo "focus" reveal | in-view | light |
 | clip-conveyor | windowed translate loop + dash ticker | loop | none |
 | dash-ticker | pulse line sweep | loop | none |
 | draw-icon-loop | looping line-draw cycle | loop | none |
 | draw-icon | SVG line-draw entrance | in-view | light |
+| leaf-sway | ambient botanical sway | loop | none |
 | line-mask-entrance | masked headline rise | load | light |
 | menu-cascade | staggered item entrance on open | active | light |
 | module-stack | staggered drop-in assembly | loop | none |
@@ -45,8 +47,10 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
 | reveal-fade | in-view fade + rise | in-view | light |
 | scan-sweep | travelling scanner + pick flash | loop | none |
 | scroll-draw | scroll-linked line + quantised steps | scroll-linked | light |
+| slide-entrance | enterView animation system | in-view | light |
 | snap-arrange | scatter-to-grid loop | loop | none |
 | stamp-check | confirm sequence (tint → draw → stamp) | loop | none |
+| story-vine | zigzag process illustration | loop | none |
 | word-cycler | handoff phrase rotation | loop | none |
 | write-lines | staggered text-write + stamp | loop | none |
 

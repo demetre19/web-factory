@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: leaf-sway — ambient botanical sway</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;--leaf-opacity:.5;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985;--leaf-opacity:.35}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985;--leaf-opacity:.35}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif;overflow:hidden}
+.panel{position:relative;width:min(720px,90vw);padding:64px 48px;border:1px solid var(--line);border-radius:20px}
+.panel h1{font-size:1.8rem;margin:0 0 8px}
+.panel p{color:var(--muted);margin:0;max-width:34ch}
+/* --- recipe ----------------------------------------------------------
+   mdconsultingny's botanical-leaf: a decorative leaf cluster slowly
+   sways (rotate, ease-in-out, ~20s, origin at the stem) behind section
+   copy. Transform-only → compositor-cheap ambient. --leaf-opacity is a
+   theme token so the flourish never fights legibility. */
+.botanical{position:absolute;width:220px;height:220px;top:-34px;right:-30px;
+  opacity:var(--leaf-opacity);pointer-events:none;z-index:0}
+.panel .inner{position:relative;z-index:1}
+.botanical .leaf{transform-box:fill-box;transform-origin:bottom left;
+  animation:leafSway 20s ease-in-out infinite alternate}
+.botanical .leaf-2{animation-duration:16s;animation-delay:-4s}
+.botanical .leaf-3{animation-duration:24s;animation-delay:-9s}
+@keyframes leafSway{
+  0%{transform:rotate(-6deg)}
+  100%{transform:rotate(7deg)}}
+@media (prefers-reduced-motion:reduce){
+  .botanical .leaf{animation:none!important}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="panel">
+  <svg class="botanical" viewBox="0 0 220 220" aria-hidden="true">
+    <g class="leaf" fill="none" stroke="var(--accent)" stroke-width="1.5">
+      <path d="M20 200 Q 60 120 110 90 Q 80 150 60 195"/>
+      <path d="M20 200 Q 60 120 110 90" stroke-dasharray="2 5"/>
+      <path d="M110 90 Q 140 60 170 58 Q 150 95 118 102 Z" fill="var(--accent)" stroke="none" opacity=".55"/>
+    </g>
+    <g class="leaf leaf-2" fill="none" stroke="var(--accent)" stroke-width="1.5">
+      <path d="M20 200 Q 90 150 140 140"/>
+      <path d="M140 140 Q 168 118 192 122 Q 174 152 146 150 Z" fill="var(--accent)" stroke="none" opacity=".45"/>
+    </g>
+    <g class="leaf leaf-3" fill="none" stroke="var(--muted)" stroke-width="1.2">
+      <path d="M20 200 Q 45 170 78 168"/>
+      <path d="M78 168 Q 100 150 118 154 Q 102 180 82 180 Z" fill="var(--muted)" stroke="none" opacity=".4"/>
+    </g>
+  </svg>
+  <div class="inner">
+    <h1>Botanical, not busy</h1>
+    <p>One leaf cluster sways at 16–24 s behind the copy — the med-spa
+    signature ambient move. Origin at the stem, ±6–7°, transform only.</p>
+  </div>
+</div>
+<script>addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme})</script>
+</body>
+</html>

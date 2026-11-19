@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: slide-entrance — enterView animation system</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+  --ease-soft:cubic-bezier(.33,1,.68,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{height:70vh;display:grid;place-items:center;color:var(--muted)}
+.grid{max-width:880px;margin:0 auto;padding:40px 24px 30vh;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{background:var(--card,#fff);border:1px solid var(--line);border-radius:14px;padding:22px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .card{background:#1c1c19}}
+[data-theme=dark] .card{background:#1c1c19}
+.card h3{margin:0 0 6px;font-size:1.05rem}
+.card p{margin:0;color:var(--muted);font-size:.92rem}
+/* --- recipe ----------------------------------------------------------
+   The WordPress/Bricks pattern (drvaesthetics + jcsignatureaesthetics):
+   elements declare an entrance effect via a marker attribute; a tiny IO
+   script adds .in once when the element enters the viewport, a
+   keyframe animation plays the declared effect. Effect, delay and
+   stagger all come from data-* → the same system serves every section. */
+[data-se]{opacity:0}
+[data-se].in{animation:se-rise .7s var(--ease-soft,cubic-bezier(.33,1,.68,1)) var(--d,0s) forwards}
+[data-se][data-se=zoom].in{animation-name:se-zoom}
+[data-se][data-se=left].in{animation-name:se-left}
+[data-se][data-se=fade].in{animation-name:se-fade}
+@keyframes se-rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes se-zoom{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes se-left{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes se-fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  [data-se]{opacity:1}
+  [data-se].in{animation:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer">scroll ↓ — cards enter when they reach the viewport</div>
+<div class="grid">
+  <div class="card" data-se><h3>Botox</h3><p>rise — the default effect</p></div>
+  <div class="card" data-se="zoom" style="--d:.12s"><h3>Fillers</h3><p>zoom + 120ms stagger</p></div>
+  <div class="card" data-se="left" style="--d:.24s"><h3>Facials</h3><p>slide-left + 240ms</p></div>
+  <div class="card" data-se="fade" style="--d:.36s"><h3>Laser</h3><p>fade-only + 360ms</p></div>
+  <div class="card" data-se><h3>Peels</h3><p>rise again — batch 2</p></div>
+  <div class="card" data-se="zoom" style="--d:.12s"><h3>Threads</h3><p>zoom + 120ms</p></div>
+</div>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS — the whole "enterView→startAnimation" system is this IO:
+// .in once, unobserve. ~14 lines = js_dependency:light.
+const io = new IntersectionObserver(es => {
+  for (const e of es) if (e.isIntersecting) {
+    e.target.classList.add('in'); io.unobserve(e.target);
+  }
+}, { threshold: 0.15 });
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches)
+  document.querySelectorAll('[data-se]').forEach(el => io.observe(el));
+else
+  document.querySelectorAll('[data-se]').forEach(el => el.classList.add('in'));
+</script>
+</body>
+</html>
