@@ -1158,6 +1158,9 @@ MUT = {
      'data-cols="3"','data-cols="4"')),
  'check_js_cost': mut(('SET','site/dist/_astro/map.js',
      'import L from "leaflet"; L.map("m");')),
+ 'check_frozen_inputs': mut(('REPL','STUB.md',
+     '## Content inventory','## Content inventory — edited')),
+ 'check_seal': mut(('SET','refs/ref-1.txt','harvested evidence'),),
  'check_wireframe_lock': mut(('REPL','DESIGN-PLAN.md','wf_ref: "cards/index.html#d1:hero"','wf_ref: "cards/index.html#d9:nope"'),('REPL','DESIGN-PLAN.md','name: hero','name: hero-x')),
  'check_section_enums': mut(('REPL','DESIGN-PLAN.md','composition: cards-n','composition: bogus-grid')),
  'check_speech_acts': mut(('REPL','DESIGN-PLAN.md','rhetoric: [promise, proof, how, act]','rhetoric: [proof, how]')),
@@ -1491,6 +1494,12 @@ def main():
                    'gate_pass': True}
             rec['sig'] = gate._sig(rec, b'fixture-key')
             _g['artifacts'][rel] = rec
+    # frozen-input hashes — the w2 wave sealed STUB.md (P.22: an
+    # input a gate consumed is frozen once that wave passed)
+    _g['w2'] = {'pass': True,
+                'inputs_sha256': {
+                    'STUB.md': hashlib.sha256(
+                        BASE['STUB.md'].encode()).hexdigest()[:16]}}
     BASE['GATES.json'] = json.dumps(_g, indent=1)
     with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
         fh.write(BASE['GATES.json'])

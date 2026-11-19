@@ -248,6 +248,30 @@ reviewer model is recorded on `REVIEW.json`; the default lane is a
 cheap VLM — Opus-class only for machinery reviews
 (`machinery_review: true`).
 
+### P.22 Frozen inputs stay frozen
+
+Every wave records the hashes of the files it consumed in
+`GATES.json[wave].inputs_sha256`. After that wave passes, those
+inputs are immutable to later waves — a downstream check recomputes
+each sealed hash and fails on any drift or deletion. `DESIGN-PLAN.md`
+is the declared exception: it legitimately evolves between waves and
+carries its own versioning checks. An input change means a new wave
+with a new receipt — never a silent edit.
+
+### P.23 Evidence is sealed
+
+Evidence directories (`refs/`, `research/`, `evidence/`, `sources/`)
+carry a `.seal-manifest.sha256` (`tools/design-gate/seal.py —
+save/stamp/verify/adopt`). Every file recomputes to its manifest
+hash: an altered sealed file is a tamper FAIL, a file missing from
+the manifest is unsealed evidence, and a populated evidence dir with
+no manifest is a seal gap (promoted to FAIL unless `--allow-warns`).
+
+Divergence from the SEO SOPs substrate: there, LLM-judgment checks
+stay warn-tier; here an LLM/VLM judgment (REVIEW quality, style
+review, novelty) is BLOCKING when recorded — warns are never the
+default for judgment, `--allow-warns` is a deliberate exception only.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

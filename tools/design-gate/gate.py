@@ -4255,6 +4255,85 @@ def check_receipts(ctx):
     return f
 
 
+
+def check_frozen_inputs(ctx):
+    """P.22 — frozen inputs are really frozen: every hash a passing
+    wave recorded in GATES.json.inputs_sha256 must still recompute
+    to the same bytes (DESIGN-PLAN.md excluded — it legitimately
+    evolves and carries its own versioning checks)."""
+    if not _wave_ge(ctx, 'w4'):
+        return []
+    g = load_gates(ctx)
+    f = []
+    upto = WAVE_SEQ.index(ctx.wave) if ctx.wave in WAVE_SEQ \
+        else len(WAVE_SEQ)
+    for wv, entry in g.items():
+        if wv not in WAVE_SEQ or WAVE_SEQ.index(wv) >= upto:
+            continue
+        if not isinstance(entry, dict) or not entry.get('pass'):
+            continue
+        for rel, sha in (entry.get('inputs_sha256') or {}).items():
+            if rel == 'DESIGN-PLAN.md' or sha is None:
+                continue
+            fp = os.path.join(ctx.dir, rel)
+            if not os.path.isfile(fp):
+                f.append(f'P.22 frozen input {rel} deleted after '
+                         f'{wv} sealed it — inputs a gate consumed '
+                         'cannot disappear downstream')
+                continue
+            cur = hashlib.sha256(open(fp, 'rb').read()).hexdigest()[:16]
+            if cur != sha:
+                f.append(f'P.22 frozen input {rel} changed after '
+                         f'{wv} passed ({sha[:8]}→{cur[:8]}) — a '
+                         'consumed input is frozen; change means a '
+                         'new wave, not an edit')
+    return f
+
+
+def check_seal(ctx):
+    """SEAL — evidence directories carry .seal-manifest.sha256 and
+    every file recomputes to its manifest hash (tools/design-gate/
+    seal.py). An altered sealed file is a tamper FAIL; a populated
+    evidence dir without a manifest warns."""
+    try:
+        import seal
+    except Exception:
+        here = os.path.dirname(os.path.abspath(__file__))
+        if os.path.isfile(os.path.join(here, 'seal.py')):
+            sys.path.insert(0, here)
+            import seal
+        else:
+            return []
+    f = []
+    for dname in ('refs', 'research', 'evidence', 'sources'):
+        d = os.path.join(ctx.dir, dname)
+        if not os.path.isdir(d):
+            continue
+        files = [fn for fn in os.listdir(d)
+                 if os.path.isfile(os.path.join(d, fn))
+                 and fn != seal.MANIFEST and not fn.startswith('.')]
+        if not files:
+            continue
+        mp = os.path.join(d, seal.MANIFEST)
+        if not os.path.isfile(mp):
+            # unsealed evidence is a warn-tier gap — strict mode
+            # promotes it; --allow-warns keeps it advisory
+            if getattr(ctx.args, 'allow_warns', False):
+                continue
+            f.append(f'P.23 {dname}/: {len(files)} evidence files, '
+                     'no seal manifest — run `seal.py adopt` to '
+                     'grandfather or re-fetch via sealed writers')
+            continue
+        altered, unsealed = seal.verify_dir(d)
+        for x in altered:
+            f.append(f'P.23 {dname}/{x}: hash != manifest — '
+                     'evidence altered after sealing')
+        for x in unsealed:
+            f.append(f'P.23 {dname}/{x}: not in manifest — '
+                     'unsealed evidence among sealed files')
+    return f
+
+
 def check_round_gated(ctx):
     """P.18 — the W3 picker is gated by gate.py round (round 1),
     in-wave — not by hand afterwards."""
@@ -9106,6 +9185,11 @@ def main():
     ap.add_argument('--approve', action='store_true')
     ap.add_argument('--sec', help='section name for `gate.py section`')
     ap.add_argument('--round', help='picker round number (1, 2, 3)')
+    ap.add_argument('--allow-warns', action='store_true',
+                    help='declared exception: advisory output stays '
+                         'advisory. STRICT BY DEFAULT — a warn is a '
+                         'real unmet obligation and promotes to FAIL '
+                         'unless this flag is passed deliberately')
     a = ap.parse_args()
     if a.wave not in ('coverage', 'selftest', 'consistency', 'graph',
                       'enforcement', 'findings', 'redteam') \
@@ -9151,12 +9235,19 @@ def main():
     ctx = Ctx(a.pipeline_dir, a)
     ctx.wave = a.wave
     fails = run_wave(ctx)
+    warns = []
     for wchk in WARN_CHECKS.get(a.wave, ()):
         try:
-            for w in wchk(ctx):
-                print('  advisory:', w)
+            warns.extend(wchk(ctx))
         except Exception:
             pass
+    if warns and not a.allow_warns:
+        # strict-by-default (SOP law): a warn is an unmet obligation
+        # — it promotes unless --allow-warns is declared deliberately
+        fails += [f'advisory→fail (strict): {w}' for w in warns]
+    else:
+        for w in warns:
+            print('  advisory:', w)
     entry = write_gate(ctx, fails, a.approve)
     status = 'PASS' if not fails else 'FAIL'
     print(f'{a.wave} {status} — {a.pipeline_dir}')
@@ -11044,7 +11135,8 @@ WAVE_CHECKS = {
            check_logo, check_accent_surfaces, check_landmarks,
            check_sticky_offset, check_footer_structure, check_meta,
            check_dark_mode, check_dark_toggle, check_astro_build,
-           check_js_cost, check_grid_tracks] \
+           check_js_cost, check_grid_tracks, check_frozen_inputs,
+           check_seal] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,
            check_style_review, check_novelty, check_review_modes,

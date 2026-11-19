@@ -1802,6 +1802,20 @@
    "threshold": "interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification",
    "tier": "invariant",
    "wave": "w7"
+  },
+  "P.22": {
+   "check": "check_frozen_inputs",
+   "mode": "script",
+   "threshold": "input file a passing wave sealed in inputs_sha256 changed or deleted downstream",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "P.23": {
+   "check": "check_seal",
+   "mode": "script",
+   "threshold": "sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal)",
+   "tier": "invariant",
+   "wave": "w7"
   }
  }
 }
