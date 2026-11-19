@@ -15,8 +15,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
 sys.path.insert(0, HERE)
 import gate  # noqa: E402  (hash helpers for the fixture DNA)
-import emit_global  # noqa: E402  (canonical emit producers — no drift)
 import ornament  # noqa: E402  (O.1 — ornaments render generate() output)
+import pipeline_emit  # noqa: E402  (the real emit chain — no drift)
 
 
 def _ornament(seed=7, density=0.4, w=320, h=240,
@@ -202,25 +202,9 @@ STUB = '''# STUB — /fixture/
 ## Per-section semantic map
 '''
 
-SPEC = '''# SPEC — /fixture/
-
-```yaml
-page: home
-sections:
-  - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "brixies/bottom-navigation-bar/bot-nav-1.topo", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123]}
-  - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1]}
-  - {name: macro, wf_ref: "cards/index.html#d1:macro", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def, c-proof, c-faq], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-  - {name: end-act, wf_ref: "cards/index.html#d1:end-act", recipe: "brixies/cta-sections/cta-1.topo", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta]}
-  - {name: footer, wf_ref: "cards/index.html#d1:footer", recipe: "hyperui/marketing/footers/1", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456]}
-```
-'''
-
-# The component layer is a canonical emit_global producer — the
-# fixture consumes the same recipe the pipeline does (no drift).
-GLOBAL_CSS_TAIL = emit_global.GLOBAL_CSS_TAIL
-
-# Bound after TOKENS below (same modes) — tailwind.config.js carries
-# every TOKENS hex verbatim (check_tailwind_derivation).
+# tailwind.config.js / global.css are emitted by pipeline_emit during
+# the _base build (emit_global producers, TOKENS.json bound above) —
+# no inline copies.
 
 KNOBS = {
     "type.ratio": 1.25, "type.base": 16, "type.display_weight": 700,
@@ -250,171 +234,15 @@ TOKENS = json.dumps({
         "roles": LIGHT,
     },
 }, indent=1)
-TAILWIND_CFG = emit_global.tailwind_config(json.loads(TOKENS))
 
-
-PAGE_HTML = '''<!doctype html><html><head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Fixture page">
-<meta property="og:title" content="Fixture">
-<meta property="og:description" content="Fixture page">
-<meta property="og:image" content="og.webp">
-<link rel="icon" href="/favicon.svg">
-<script>(function(){var s=localStorage.getItem('theme');var m=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=m;})();</script>
-</head><body>
-<a class="skip-link" href="#main">Skip to content</a>
-<button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
-<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" data-recipe="brixies/bottom-navigation-bar/bot-nav-1.topo" data-seam="tonal"
-     class="flex items-center gap-4 py-4">
-  <a class="logo h-6" href="/">Fixture Co</a>
-  <button class="burger btn-primary" aria-label="Menu">Menu</button>
-</nav>
-<main id="main">
-<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" data-recipe="brixies/banner-section/banner-1.topo" data-seam="whitespace" data-content="c-h1" class="sec-band py-16">
-  <h1 class="text-fluid-0">Testing Site</h1>
-  <p>Testing is the thing.</p>
-  <a class="btn-primary" href="/book">Book now</a>
-  <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
-''' + _ornament() + '''
-</section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" data-cols="3" data-content="c-def c-proof c-faq" class="card-grid py-24">
-  <h2 class="text-fluid-0">What is testing?</h2>
-  <p>Testing is the thing.</p>
-  <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
-  <span class="motif-hairline-numeral" data-motif="hairline-numeral" data-motif-slot="marker" aria-hidden="true"></span>
-  <svg data-motif="hairline-numeral" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" aria-hidden="true"><path d="M4 20L12 4l8 16"/></svg>
-</section>
-<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" data-recipe="brixies/cta-sections/cta-1.topo" data-seam="whitespace" data-content="c-cta" class="sec-band inverse py-24">
-  <h2 class="text-fluid-0">Book now</h2>
-  <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
-</section>
-<section data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open" data-recipe="hyperui/marketing/footers/1" class="sec-band">
-</section>
-</main>
-<footer>
-  <a href="/about">About</a>
-  <p>Fixture Co, 1 Test St — contact@fixture.test · Copyright 2026 · Privacy · Terms</p>
-</footer>
-</body></html>'''
-
-SYSTEM_ASTRO = '''---
-import NavBar from '../components/nav-bar.astro';
-import SplitMedia from '../components/split-media.astro';
-import CardsN from '../components/cards-n.astro';
-import FormPanel from '../components/form-panel.astro';
-import FooterBar from '../components/footer-bar.astro';
----
-<button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
-<NavBar /><SplitMedia /><CardsN /><FormPanel /><FooterBar />
-'''
-
-COMP_ASTRO = '<div class="sec-band"><slot /></div>\n'
-
-
-SECTIONS = {
-    'Nav.astro': '''---
-exemplar: nav-bar
----
-<nav class="flex items-center justify-between gap-fluid-s" aria-label="Primary">
-  <a class="text-fluid-0 font-bold" href="/">Fixture Co</a>
-  <a class="btn-primary" href="#book">Book</a>
-</nav>
-''',
-    'Hero.astro': '''---
-exemplar: split-media
----
-<div class="grid gap-stack md:grid-cols-2">
-  <div class="max-w-prose">
-    <h1 class="text-fluid-4">Fixture Co</h1>
-    <p class="mt-stack text-fluid-0">Testing is the thing.</p>
-  </div>
-  <figure class="ratio-portrait overflow-hidden rounded-card">
-    <img class="h-full w-full object-cover" src="/media/hero.svg" alt="hero"
-         width="900" height="1200" />
-  </figure>
-</div>
-''',
-    'Macro.astro': '''---
-exemplar: cards-n
----
-<div>
-  <h2 class="text-fluid-2">What is testing?</h2>
-  <p class="mt-stack text-fluid-0">Testing is the thing.</p>
-  <ul class="card-grid mt-fluid-l">
-    <li class="rounded-card border border-muted p-fluid-m">One</li>
-  </ul>
-</div>
-''',
-    'EndAct.astro': '''---
-exemplar: form-panel
----
-<div class="grid gap-fluid-l md:grid-cols-2">
-  <div class="max-w-prose">
-    <h2 class="text-fluid-3">Book now</h2>
-    <p class="mt-stack text-fluid-0">One action.</p>
-  </div>
-  <form class="grid gap-fluid-s" novalidate>
-    <label class="grid gap-fluid-s text-fluid--1">
-      <span>Email</span>
-      <input class="rounded-card border border-muted p-fluid-s text-fluid-0"
-             type="email" name="email" />
-    </label>
-    <button class="btn-primary" type="submit">Book now</button>
-  </form>
-</div>
-''',
-    'Footer.astro': '''---
-exemplar: footer-bar
----
-<footer class="grid gap-stack text-fluid--1 md:grid-cols-2">
-  <p>Fixture Co, 1 Test St</p>
-  <ul class="flex flex-wrap gap-fluid-m">
-    <li><a class="underline" href="/terms">Terms</a></li>
-  </ul>
-</footer>
-''',
-}
-# The composition component owns the skeleton (P.6); the section instance
-# binds the plan row's content and renders it (SB.2) — one implementation.
-COMPONENTS = {}
-for _fn, _src in SECTIONS.items():
-    _fm, _body = _src.split('---', 2)[1], _src.split('---', 2)[2]
-    _comp = _fm.strip().split('exemplar:')[1].strip()
-    COMPONENTS[_comp] = _body.lstrip('\n')
-# I.8 — cards-n ships a real lucide-astro icon (pass arm); package.json
-# declares the dependency below.
-COMPONENTS['cards-n'] = '''---
-import { Star } from 'lucide-astro';
----
-<div>
-  <h2 class="text-fluid-2">What is testing?</h2>
-  <p class="mt-stack text-fluid-0">Testing is the thing.</p>
-  <ul class="card-grid mt-fluid-l">
-    <li class="rounded-card border border-muted p-fluid-m">
-      <Star size={24} aria-hidden="true" /> One
-    </li>
-  </ul>
-</div>
-'''
-SECTIONS = {
-    _fn: ('---\n// exemplar: ' + _comp + '\nimport '
-          + ''.join(w.capitalize() for w in _comp.split('-'))
-          + " from '../" + _comp + ".astro';\n---\n<"
-          + ''.join(w.capitalize() for w in _comp.split('-')) + ' />\n')
-    for _fn, _comp in (('Nav.astro', 'nav-bar'), ('Hero.astro', 'split-media'),
-                       ('Macro.astro', 'cards-n'),
-                       ('EndAct.astro', 'form-panel'),
-                       ('Footer.astro', 'footer-bar'))
-}
-
-
-COMPONENTS_MD = '''# COMPONENTS
-nav-bar → nav-bar.astro
-split-media → split-media.astro
-cards-n → cards-n.astro
-form-panel → form-panel.astro
-footer-bar → footer-bar.astro
-'''
+MOTIF_SVG = ('<svg data-motif="hairline-numeral" data-motif-slot="marker" '
+             'width="24" height="24" viewBox="0 0 24 24" '
+             'stroke="currentColor" stroke-width="1.5" fill="none" '
+             'aria-hidden="true"><path d="M4 20L12 4l8 16"/></svg>')
+# Components, section instances, system tile, pages, contracts and the
+# rendered dist are emitted by the REAL producers (pipeline_emit →
+# gold exemplars, _instance, _system, assemble.py, astro build) inside
+# fixtures/_base at build time — never hand-authored in this file.
 
 MOBBIN = '''# MOBBIN-REFS — consulted before direction (W1) and per composition (W5)
 
@@ -843,14 +671,7 @@ CHECKLIST_W5 = '''# W5 checklist
 _REPO = os.path.dirname(os.path.dirname(HERE))
 
 
-def _read_template(rel):
-    return open(os.path.join(_REPO, rel), encoding='utf-8').read()
 
-
-# The shell + layout the pipeline scaffolds verbatim — fixture uses the
-# template files, never a drifting inline copy.
-SECTION_ASTRO = _read_template('templates/sections/Section.astro')
-LAYOUT_ASTRO = _read_template('templates/layouts/BaseLayout.astro')
 
 def dna_doc():
     doc = {
@@ -955,10 +776,7 @@ def _wild_hist():
         rec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     return json.dumps([e])
 
-def _global_css():
-    """Exactly emit_global.global_css — the fixture's global.css is the
-    pipeline producer's output, not a parallel recipe."""
-    return emit_global.global_css(json.loads(TOKENS))
+
 
 
 def _fx_sig(rec):
@@ -971,9 +789,9 @@ BASE = {
     'DESIGN-PLAN.md': PLAN,
     'cards/index.html': WIREFRAME,
     'STUB.md': STUB,
-    'PAGES/home/SPEC.md': SPEC,
+
     'TOKENS.json': TOKENS,
-    'COMPONENTS.md': COMPONENTS_MD,
+
     'MOBBIN-REFS.md': MOBBIN,
     'PREBUILD.json': json.dumps({'options': {**{
         f'd{i}': {'recipe_id': f'brixies/banner-section/banner-{i}',
@@ -1004,27 +822,14 @@ BASE = {
     'CHECKLIST/w5.md': CHECKLIST_W5,
     'audit.md': '# audit\n## Defect table\n- E.1 missing macro H2\n'
                 '## keep-list\n- logo.svg\n',
-    'site/package.json': '{"name":"fixture","scripts":{"build":"true"},'
-        '"dependencies":{"lucide-astro":"^0.4.0"}}',
-    'site/astro.config.mjs': 'export default {};\n',
-    'site/tailwind.config.js': TAILWIND_CFG,
-    'site/src/styles/global.css': _global_css(),
-    'site/src/pages/system.astro': SYSTEM_ASTRO,
-    'site/src/pages/index.astro': '',
-    **{f'site/src/components/{k}.astro': v
-       for k, v in COMPONENTS.items()},
-    'site/src/components/Section.astro': SECTION_ASTRO,
-    'site/src/components/sections/Nav.astro': SECTIONS['Nav.astro'],
-    'site/src/components/sections/Hero.astro': SECTIONS['Hero.astro'],
-    'site/src/components/sections/Macro.astro': SECTIONS['Macro.astro'],
-    'site/src/components/sections/EndAct.astro': SECTIONS['EndAct.astro'],
-    'site/src/components/sections/Footer.astro': SECTIONS['Footer.astro'],
-    'site/src/layouts/BaseLayout.astro': LAYOUT_ASTRO,
+
     'CHECKLIST/w3.md': '| Rule | Evidence |\n|---|---|\n'
                        '| T.1 font directory | Inter + Ionicons listed |\n',
     '.wave': 'w3',
     'NOVELTY.json': '{"distance": 0.44, "bound": 0.55}\n',
-    'site/dist/home/index.html': PAGE_HTML,
+    # site/dist/** is the real `astro build` of the emitted site —
+    # ingested in main() below (F4: rendered output the w7 checks
+    # read is producer output, not a hand-written page).
     'GATES.json': json.dumps({'artifacts': {}}),
     'WILDCARD-HISTORY.json': _wild_hist(),
     'CANDIDATES.json': json.dumps({'source': 'astro-showcase',
@@ -1061,7 +866,9 @@ BASE = {
     **SHOTS,
 }
 
-# check -> mutator(files dict). 'DEL x' deletes, 'APPEND x y' appends.
+# check -> mutator(files dict). 'DEL x' deletes, 'APPEND x y' appends,
+# 'REPLGLOB prefix a b' replaces inside every key under prefix (hashed
+# dist assets like site/dist/_astro/*.css have no stable name).
 def mut(*ops):
     def f(files):
         for op in ops:
@@ -1074,6 +881,12 @@ def mut(*ops):
                 files[op[1]] = op[2]
             elif kind == 'REPL':
                 files[op[1]] = files[op[1]].replace(op[2], op[3])
+            elif kind == 'REPLGLOB':
+                for k in [k for k in files if k.startswith(op[1])]:
+                    files[k] = files[k].replace(op[2], op[3])
+            elif kind == 'DELGLOB':
+                for k in [k for k in files if k.startswith(op[1])]:
+                    files.pop(k, None)
             elif kind == 'COPY':
                 files[op[1]] = files[op[2]]
         return files
@@ -1131,8 +944,9 @@ MUT = {
       'h2{text-transform:uppercase}</style><h2>A BOLD ALL CAPS TITLE '
       'HEADING</h2>')),
  'check_tile_page_parity': mut(
-     ('REPL','site/dist/home/index.html','class="sec-band py-16"',
-      'class="sec-band py-16 drift-class"')),
+     ('REPL','site/dist/home/index.html',
+      'class="sec-band surface-base density-spacious"',
+      'class="sec-band surface-base density-spacious drift-class"')),
  'check_direction_axes': mut(('REPL','DESIGN-PLAN.md','temperature: warm','temperature: hot')),
  'check_wireframe_tags': mut(('REPL','preview/layouts.html',
     'data-ratio="none" data-disclosure','data-ratio="bogus" data-disclosure')),
@@ -1171,13 +985,13 @@ MUT = {
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
  'check_components_exist': mut(('DEL','site/src/components/split-media.astro')),
  'check_tile_is_system': mut(('REPL','site/src/pages/system.astro','<SplitMedia />','')),
- 'check_class_subset': mut(('REPL','site/dist/home/index.html','class="sec-band"','class="bogus-class"')),
+ 'check_class_subset': mut(('REPL','site/dist/home/index.html','class="sec-band surface-base density-compact"','class="bogus-class"')),
  'check_no_stray_styles': mut(('REPL','site/dist/home/index.html','</head>','<style>a{color:#123456}</style></head>')),
  'check_page_data_attrs': mut(('REPL','site/dist/home/index.html','data-sec="hero"','data-x="hero"')),
  'check_heading_verbatim': mut(('REPL','site/dist/home/index.html','What is testing?','Something else?')),
  'check_viewport': mut(('REPL','site/dist/home/index.html','<meta name="viewport" content="width=device-width, initial-scale=1">','')),
  'check_tap_size': mut(('APPEND','site/dist/home/index.html','<style>a.x{min-height:20px}</style>')),
- 'check_speed_budget': mut(('REPL','site/dist/home/index.html','src="hero.webp"','src="hero.jpg"'),('APPEND','site/dist/home/index.html','<script src="https://tracker.example.com/x.js"></script>')),
+ 'check_speed_budget': mut(('REPL','site/dist/home/index.html','src="/media/placeholder.svg"','src="hero.jpg"'),('APPEND','site/dist/home/index.html','<script src="https://tracker.example.com/x.js"></script>')),
  'check_mobile_budget': mut(('APPEND','site/dist/home/index.html','<style>.w{width:1200px}</style>')),
  'check_no_emoji': mut(('APPEND','site/dist/home/index.html','<p>Done \U0001F389</p>')),
  'check_context_budget': mut(('APPEND','STUB.md',
@@ -1210,9 +1024,10 @@ MUT = {
     'refs: [mobbin-def457], vector: [{heading: "Who trusts us?", '
     'fs: "Everyone."}]}\n      - {name: end-act')),
  'check_hero_fold': mut(('REPL','site/dist/home/index.html',
-     'class="sec-band py-16"',
-     'class="sec-band py-16 min-h-screen"'),('REPL','site/dist/home/index.html',
-     '<a class="btn-primary" href="/book">Book now</a>','')),
+     'class="sec-band surface-base density-spacious"',
+     'class="sec-band surface-base density-spacious min-h-screen"'),
+     ('REPL','site/dist/home/index.html',
+     '<a class="wf-cta-button mt-stack" href="/book">Book now</a>','')),
  'check_canon_padding': mut(('SET','CANON-PADDING.json',
      '{"components":{}}'),
      ('REPL','site/dist/home/index.html','data-disclosure="open"',
@@ -1224,31 +1039,40 @@ MUT = {
      'data-dna-fit="42"></div><div data-candidate="c2" '
      'data-dna-fit="80"></div><input type="radio"></div>'),),
  'check_primary_cta': mut(('REPL','site/dist/home/index.html',
-     '<form><label','<a class="btn-primary" href="/x">Extra</a><form><label')),
+     '<form class="grid gap-fluid-s" novalidate>',
+     '<a class="btn-primary" href="/x">Extra</a>'
+     '<a class="btn-primary" href="/y">Also</a>'
+     '<form class="grid gap-fluid-s" novalidate>')),
  'check_interaction_states': mut(('REPL','site/src/styles/global.css',
      ':focus-visible',':focus'),('REPL','site/src/styles/global.css',
-     '.btn-primary:hover','')),
+     '.btn-primary:hover',''),
+     ('REPLGLOB','site/dist/_astro/',':focus-visible',':focus'),
+     ('REPLGLOB','site/dist/_astro/','.btn-primary:hover','')),
  'check_forms': mut(('REPL','site/dist/home/index.html',
-     '<form><label','<form><x-label')),
+     '<label class="grid gap-fluid-s text-fluid--1">',
+     '<x-label class="grid gap-fluid-s text-fluid--1">')),
  'check_heading_pattern': mut(('REPL','site/dist/home/index.html',
-     '<h2 class="text-fluid-0">What is testing?</h2>','')),
+     '<h2 class="text-fluid-2">What is testing?</h2>','')),
  'check_equal_cards': mut(('REPL','site/dist/home/index.html',
-     '<svg width="24"','<div class="card"></div><div class="cardx feature"></div><svg width="24"')),
+     '<svg data-motif','<div class="card"></div><div class="cardx feature"></div><svg data-motif')),
  'check_dark_media': mut(('REPL','site/src/styles/global.css',
      '.dark img { filter: brightness(.85) contrast(.92); }',''),
-     ('REPL','site/dist/home/index.html',' data-dark="dim"','')),
+     ('REPLGLOB','site/dist/_astro/',
+      '.dark img{filter:brightness(.85) contrast(.92)}','')),
  'check_logo': mut(('REPL','site/dist/home/index.html',' h-6','')),
  'check_accent_surfaces': mut(('REPL','site/dist/home/index.html',
-     'class="card-grid','class="card-grid inverse')),
+     'surface-muted','surface-inverse')),
  'check_landmarks': mut(('REPL','site/dist/home/index.html',
      '<main id="main">','<div id="main">')),
  'check_sticky_offset': mut(('REPL','site/dist/home/index.html',
-     'class="sec-band py-16"','class="sec-band py-16 sticky"',
-     'class="sec-band py-16 sticky"')),
+     'class="sec-band surface-base density-compact"',
+     'class="sec-band surface-base density-compact sticky"')),
  'check_footer_structure': mut(('REPL','site/dist/home/index.html',
-     ' · Privacy · Terms','')),
+     '<small class="text-fluid--1">&copy; 2026 Section heading'
+     '\n· <a class="underline" href="/privacy">Privacy</a>'
+     '\n· <a class="underline" href="/terms">Terms</a></small>','')),
  'check_meta': mut(('REPL','site/dist/home/index.html',
-     '<meta name="description" content="Fixture page">','')),
+     '<meta name="description" content>','')),
  'check_intent_deviation': mut(('REPL','DESIGN-PLAN.md',
      'reason: "brief asks for editorial warmth"','reason: ""')),
  'check_wildcard_random': mut(('REPL','DNA.json',
@@ -1257,10 +1081,12 @@ MUT = {
      '.card-grid { display: grid; gap: var(--space-4); }',
      '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }'),
      ('REPL','site/dist/home/index.html',
-      'class="card-grid py-24"',
-      'class="card-grid py-24 snap-x overflow-x-auto"')),
+      'class="mt-fluid-l grid-auto gap-stack"',
+      'class="mt-fluid-l grid-auto gap-stack snap-x overflow-x-auto"')),
  'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
-     'class="card-grid py-24"','class="sec-band"')),
+     'surface-muted','surface-base'),
+     ('REPL','site/dist/home/index.html',
+      'data-surface="muted"','data-surface="base"')),
  'check_intent_sections': mut(
      ('APPEND','site/dist/home/index.html',
       '<section data-sec="how" data-comp="sequence" '
@@ -1269,11 +1095,11 @@ MUT = {
      ('REPL','DESIGN-PLAN.md',
      'intent: definition,','intent: process, group: g1,'),
      ('REPL','DESIGN-PLAN.md','intent: cta,','intent: cost, group: g1,'),
-     ('REPL','site/dist/home/index.html','data-intent="definition"',
-      'data-x="definition"')),
+     ('REPL','site/dist/home/index.html','data-intent="proof"',
+      'data-x="proof"')),
  'check_breathing': mut(
      ('REPL','site/dist/home/index.html',
-      'class="card-grid py-24"','class="card-grid py-24 md:py-2"')),
+      'sec-band surface-muted density-regular','density-regular py-2')),
  'check_candidate_review': mut(('DEL','preview/candidates.html')),
  'check_picker_ux': mut(
      ('REPL','preview/layouts.html',
@@ -1327,8 +1153,8 @@ MUT = {
  'check_motion_js_budget': mut(('SET','site/dist/_astro/mo.js',
      'gsap.to(".x",{y:9});' + 'x'*5000)),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',
-     '<h2 class="text-fluid-0">What is testing?</h2>',
-     '<a class="card" href="/x"><h2 class="text-fluid-0">What is testing?</h2></a>')),
+     '<h2 class="text-fluid-2">What is testing?</h2>',
+     '<a class="card" href="/x"><h2 class="text-fluid-2">What is testing?</h2></a>')),
  'check_trend_vocab': mut(('REPL','DNA.json',
      '"variants": [',
      '"trend": [{"trend": "retro-max", "confidence": 0.9, '
@@ -1336,7 +1162,8 @@ MUT = {
  'check_component_profile': mut(('REPL','site/dist/home/index.html',
      'data-comp="cards-n"','data-comp="bogus-comp"')),
  'check_dead_columns': mut(('REPL','site/dist/home/index.html',
-     '<img src="hero.webp"','<div></div><img src="hero.webp"')),
+     '<img class="h-full w-full object-cover"',
+     '<div></div><img class="h-full w-full object-cover"')),
  'check_scaffold': mut(('DEL','site/src/styles/global.css')),
  'check_burst': mut(('REPL','DESIGN-PLAN.md',
     'name: d2, wildcard: false','name: d2, wildcard: true')),
@@ -1357,15 +1184,16 @@ MUT = {
  'check_proximity': mut(('REPL','DESIGN-PLAN.md',
     'group_gap_vs_section_gap: "≥2×"','group_gap_vs_section_gap: "≥1.2×"')),
  'check_border_widths': mut(('REPL','site/src/styles/global.css',
-    'border-top: 1px solid var(--c-line);','border-top: 3px solid var(--c-line);')),
+    'border-top: 1px solid var(--c-line);','border-top: 3px solid var(--c-line);'),
+    ('REPLGLOB','site/dist/_astro/','border-top:1px solid var(--c-line)','border-top:3px solid var(--c-line)')),
  'check_reduced_motion': mut(('REPL','site/src/styles/global.css',
     '@media (prefers-reduced-motion: reduce)','@media (min-width: 9999px)')),
  'check_copy_density': mut(('REPL','site/dist/home/index.html',
-    '<p>Testing is the thing.</p>',
-    '<p>' + 'long copy sentence ' * 20 + '</p>')),
+    '>Testing is the thing.</p>',
+    '>' + 'long copy sentence ' * 20 + '</p>')),
  'check_seo_lint': mut(('REPL','site/dist/home/index.html',
-    '<h2 class="text-fluid-0">What is testing?</h2>',
-    '<h4 class="text-fluid-0">What is testing?</h4>')),
+    '<h2 class="text-fluid-2">What is testing?</h2>',
+    '<h4 class="text-fluid-2">What is testing?</h4>')),
  'check_section_contracts': mut(('DEL','sections/01-hero.contract.json')),
  'check_dna': mut(('REPL','DNA.json','"type.ratio": 1.25','"type.ratio": 9.9')),
  'check_dna_fresh': mut(('REPL','site/src/components/sections/Hero.astro',
@@ -1380,7 +1208,7 @@ MUT = {
      ('DEL','shots/768-dark-home.png'),
      ('DEL','shots/360-dark-home.png')),
  'check_section_shell': mut(('REPL','site/src/components/split-media.astro',
-    'class="grid gap-stack md:grid-cols-2"','class="py-24 grid gap-stack md:grid-cols-2"')),
+    'class="grid gap-stack items-center md:grid-cols-2"','class="py-24 grid gap-stack items-center md:grid-cols-2"')),
  'check_section_allowed': mut(('REPL','site/src/components/cards-n.astro',
     'text-fluid-2','text-[42px]')),
  'check_section_gates': mut(('SET','sections/01-hero.gate.json',
@@ -1389,7 +1217,8 @@ MUT = {
     'exemplar: nav-bar','exemplar: bogus')),
  'check_assembly': mut(('REPL','site/src/pages/home.astro',
     '<Hero />','<Hero2 />')),
- 'check_rhythm_render': mut(('REPL','site/dist/home/index.html','sec-band inverse','sec-band')),
+ 'check_rhythm_render': mut(('REPL','site/dist/home/index.html','surface-inverse','surface-base'),
+    ('REPL','site/dist/home/index.html','data-surface="inverse"','data-surface="base"')),
  'check_style_review': mut(('SET','GATES.json','{"w5": {"design": "d3"}}'),
     ('REPL','REVIEW.json','"style": [','"style_off": [')),
  'check_style_licence': mut(('REPL','DESIGN-PLAN.md',
@@ -1399,16 +1228,16 @@ MUT = {
  'check_segment_roles': mut(('REPL','site/dist/home/index.html',
     'data-sec="macro"','data-x="macro"')),
  'check_segment_region': mut(('REPL','site/dist/home/index.html',
-    '<section data-sec="macro"','<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>\n<section data-sec="macro"')),
+    '<section class="sec-band surface-muted density-regular" data-sec="macro"',
+    '<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>\n<section class="sec-band surface-muted density-regular" data-sec="macro"')),
  'check_segment_share': mut(('REPL','site/dist/home/index.html',
-    'Fixture Co, 1 Test St — contact@fixture.test · Copyright 2026 · Privacy · Terms',
-    'Fixture Co, 1 Test St — contact@fixture.test' +
-    '<p>footer boilerplate</p>' * 20)),
+    'Terms</a></small>',
+    'Terms</a></small>' + '<p>footer boilerplate</p>' * 20)),
  'check_segment_media': mut(('REPL','site/dist/home/index.html',
-    ' alt="hero"','')),
+    'alt="Section image"','')),
  'check_segment_footer': mut(('REPL','site/dist/home/index.html',
-    'Fixture Co, 1 Test St — contact@fixture.test',
-    '<h1>Fixture Co</h1>')),
+    ' Contact the team </address>',
+    ' Contact the team </address><h1>Fixture Co</h1>')),
  'check_segment_priority': mut(('REPL','site/dist/home/index.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
  'check_checklist': mut(('SET','CHECKLIST/w3.md',
@@ -1430,25 +1259,41 @@ def main():
         mode = 'wb' if isinstance(content, bytes) else 'w'
         with open(p, mode) as fh:
             fh.write(content)
-    # section-build artefacts: contracts, per-section gates, assembled page
+    # F4 — every gated artifact is REAL producer output, emitted into
+    # _base and ingested back into BASE. pipeline_emit.main runs the
+    # exact pipeline chain: S0 scaffold (package.json/astro.config),
+    # P2 tailwind config, P3 global.css, S2/S4 shell+layout, P6 gold
+    # exemplars → src/components/, W6 instances (dna_hash/structure_
+    # hash/exemplar echoes), VG.1 system tile + COMPONENTS.md,
+    # gate.contracts + gate.section, assemble.py (home.astro, SPEC.md,
+    # PAGES/*/SPEC.md, ASSEMBLED.md).
     base_dir = os.path.join(FX, '_base')
-    # builders echo the DNA hash they built against (DM.2)
-    sl = gate.dna_slices(gate.dna_map(gate.Ctx(base_dir)))
-    h, sh = sl['core'], sl['structure']
-    for name in list(SECTIONS):
-        rel = f'site/src/components/sections/{name}'
-        body = BASE[rel].replace(
-            '---\n// exemplar:',
-            f'---\n// dna_hash: {h}\n// structure_hash: {sh}\n'
-            f'// exemplar:', 1)
-        BASE[rel] = body
-        with open(os.path.join(base_dir, rel), 'w', encoding='utf-8') as fh:
-            fh.write(body)
-    gate.cmd_contracts(base_dir)
-    gate.cmd_section(base_dir, None)
-    p, txt, _ = gate.assemble_page(gate.Ctx(base_dir))
-    with open(p, 'w', encoding='utf-8') as fh:
-        fh.write(txt)
+    rc = pipeline_emit.main(['pipeline_emit.py', base_dir,
+                             '--with-toolchain'])
+    if rc:
+        raise SystemExit(f'pipeline_emit failed ({rc}) — fixture '
+                         'sources are broken, not a fixture bug')
+    # Ornaments/motifs have no inject-producer yet (the O/BM gates read
+    # rendered markup but no emitter writes them): the fixture injects
+    # machinery-generated svg — ornament.generate() geometry + declared
+    # placements, the motif kit mark — into the emitted instances, so
+    # the O/BM pass arms exercise real rendered output, not vacuity.
+    hp = os.path.join(base_dir, 'site/src/components/sections',
+                      'Hero.astro')
+    with open(hp, 'a', encoding='utf-8') as fh:
+        fh.write(_ornament() + '\n')
+    mp = os.path.join(base_dir, 'site/src/components/sections',
+                      'Macro.astro')
+    with open(mp, 'a', encoding='utf-8') as fh:
+        fh.write(MOTIF_SVG + '\n')
+    # The w7 dist is `astro build` output of that emitted site —
+    # minified/hashed is fine; the checks read real markup.
+    r = subprocess.run(['npm', 'run', 'build'],
+                       cwd=os.path.join(base_dir, 'site'),
+                       capture_output=True, text=True, timeout=300)
+    if r.returncode:
+        tail = '\n'.join((r.stdout + r.stderr).split('\n')[-8:])
+        raise SystemExit(f'astro build failed in _base: {tail}')
     vp, vtxt, _ = gate.assemble_variants(gate.Ctx(base_dir))
     os.makedirs(os.path.dirname(vp), exist_ok=True)
     with open(vp, 'w', encoding='utf-8') as fh:
@@ -1472,29 +1317,42 @@ def main():
     fp2, ftxt, _ = gate.assemble_fine(bctx)
     with open(fp2, 'w', encoding='utf-8') as fh:
         fh.write(ftxt)
-    for rel in ('sections', 'site/src/pages/home.astro',
-                'preview/variants.html', 'preview/layouts.html',
-                'preview/candidates.html', 'preview/fine.html'):
-        full = os.path.join(base_dir, rel)
-        if os.path.isdir(full):
-            for fn in sorted(os.listdir(full)):
-                r = os.path.join(rel, fn)
-                BASE[r] = open(os.path.join(base_dir, r),
-                               encoding='utf-8').read()
-        elif os.path.isfile(full):
-            BASE[rel] = open(full, encoding='utf-8').read()
-
-    # seed artifact receipts bound to their waves (P.17)
+    # Ingest every produced artifact into BASE: components, instances,
+    # pages, contracts/gates, previews, SPEC.md/ASSEMBLED.md and the
+    # real dist (hashed _astro/*.css included). node_modules and the
+    # .astro build cache stay on disk only — not fixture content.
+    _skip = {'site/node_modules', 'site/.astro'}
+    for dp, dns, fns in os.walk(base_dir):
+        dns[:] = [d for d in dns
+                  if os.path.relpath(os.path.join(dp, d), base_dir)
+                  not in _skip]
+        for fn in fns:
+            rel = os.path.relpath(os.path.join(dp, fn),
+                                  base_dir).replace(os.sep, '/')
+            full = os.path.join(dp, fn)
+            try:
+                BASE[rel] = open(full, encoding='utf-8').read()
+            except (UnicodeDecodeError, ValueError):
+                BASE[rel] = open(full, 'rb').read()
+    # the toolchain clone is emit machinery, not fixture content —
+    # _base must not carry it (selftest copies _base per pass dir and
+    # dangling clonefile links break shutil.copytree)
+    for _gone in _skip:
+        shutil.rmtree(os.path.join(base_dir, _gone),
+                      ignore_errors=True)
     _g = json.loads(BASE.get('GATES.json', '{"artifacts":{}}'))
     _g.setdefault('artifacts', {})
     _g.setdefault('w3', {'pass': True})
     _g.setdefault('w4', {'pass': True})
     _g.setdefault('w1', {'pass': True})
+    _g.setdefault('w7', {'pass': True})
     for rel in ('preview/candidates.html', 'preview/layouts.html',
-                'preview/variants.html', 'preview/fine.html'):
+                'preview/variants.html', 'preview/fine.html',
+                'SPEC.md', 'ASSEMBLED.md'):
         if rel in BASE:
             rec = {'wave': 'w1' if 'candidates' in rel else
-                   'w3' if 'layouts' in rel else 'w4',
+                   'w3' if 'layouts' in rel else
+                   'w7' if not rel.startswith('preview') else 'w4',
                    'sha256': hashlib.sha256(
                        BASE[rel].encode()).hexdigest(),
                    'gate_pass': True}
@@ -1524,7 +1382,8 @@ def main():
     # J.* — quality rows per picker option, block-trace rows per
     # rendered block, hash equality across the rules/judgment gates
     _pg = dict(re.findall(r'data-sec="([\w-]+)"[^>]*data-recipe='
-                          r'"([^"]+)"', PAGE_HTML))
+                          r'"([^"]+)"',
+                          BASE['site/dist/home/index.html']))
     rv['quality'] = {**{
         f'd{i}': {'hero_clarity': 72 + i, 'layout_craft': 70,
                   'media_fit': 66, 'mobile': 74,
@@ -1606,14 +1465,7 @@ def main():
             gate.write_approval(
                 ctx_p, wv, design=pick_id if wv == 'w4' else None,
                 evidence='fixture approval')
-    # SPEC.md is generated, never hand-written (A F27)
-    for slug in gate.Ctx(base_dir).pages():
-        sp = os.path.join(base_dir, 'PAGES', slug, 'SPEC.md')
-        os.makedirs(os.path.dirname(sp), exist_ok=True)
-        spec = gate.assemble_spec(gate.Ctx(base_dir), slug)
-        with open(sp, 'w') as fh:
-            fh.write(spec)
-        BASE[f'PAGES/{slug}/SPEC.md'] = spec
+
     # check_tiers pass fixture (global rule → pass only, no fail dir)
     pd = os.path.join(FX, 'check_tiers', 'pass')
     os.makedirs(pd, exist_ok=True)

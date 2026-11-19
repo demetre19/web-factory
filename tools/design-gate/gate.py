@@ -865,7 +865,11 @@ def check_lucide(ctx):
                     body = t[m.end():]
                 if re.search(r"from\s+['\"]lucide-astro['\"]", fm):
                     uses_lucide = True
-                elif re.search(r'<svg\b', body) and \
+                # data-ornament/data-motif SVGs are decorative injection
+                # layers owned by the O.*/BM.* rules, not icons — the
+                # icon discipline check already exempts ornaments
+                elif re.search(r'<svg\b(?![^>]*\bdata-(?:ornament|'
+                               r'motif)\b)', body) and \
                         not fn.lower().startswith('logo'):
                     f.append(f'I.10 {rel}: literal <svg> in template '
                              '— icons import lucide-astro and render '
@@ -1120,12 +1124,19 @@ def check_ornament(ctx):
                 f.append(f'O.1 {name}: {e} — variant ∉ closed '
                          'parametric vocabulary')
                 continue
+            # markup-normalized compare: serializers differ on empty
+            # leaf tags (Astro emits </path>, generate() emits />) —
+            # geometry is what binds, not tag-sugar (F4 real-build)
+            _leaf = ('path|circle|rect|line|polyline|polygon|'
+                     'ellipse|stop|use|point')
+            def _norm(s):
+                s = re.sub(rf'</(?:{_leaf})\s*>', '', s)
+                s = re.sub(r'/\s*>', '>', s)   # xhtml self-close
+                return re.sub(r'\s+', ' ', s).strip()
             inner = re.search(r'<svg\b[^>]*>(.*)</svg>', svg, re.S)
-            inner = inner.group(1) if inner else ''
-            inner_c = re.sub(r'\s+', ' ', inner).strip()
-            canon_inner = re.search(
-                r'<svg\b[^>]*>(.*)</svg>', canon, re.S).group(1)
-            canon_inner = re.sub(r'\s+', ' ', canon_inner).strip()
+            inner_c = _norm(inner.group(1) if inner else '')
+            canon_inner = _norm(re.search(
+                r'<svg\b[^>]*>(.*)</svg>', canon, re.S).group(1))
             if inner_c != canon_inner:
                 f.append(f'O.1 {name}: ornament geometry != '
                          f'generate(seed={seed.group(1)},…) — '
@@ -6371,16 +6382,21 @@ def check_section_shell(ctx):
             continue
         inst = parts[0][1]
         for label, txt in parts:
-            if 'class:list' in txt or re.search(r'class=\{', txt):
+            # markup only — the gold exemplars carry a doc-comment that
+            # says "no <section>"; a raw substring scan false-fails on
+            # words ABOUT markup (F4: comments/frontmatter don't render)
+            markup = re.sub(r'^---.*?---', '', txt, flags=re.S)
+            markup = re.sub(r'<!--.*?-->', '', markup, flags=re.S)
+            if 'class:list' in markup or re.search(r'class=\{', markup):
                 f.append(f'SB.2 {label}: computed class expression — the '
                          'shell takes surface/density as props, not classes')
-            if '<section' in txt or '</section>' in txt:
+            if '<section' in markup or '</section>' in markup:
                 f.append(f'SB.2 {label}: renders its own <section> — the '
                          'Section shell owns the band')
-            if '<style' in txt:
+            if '<style' in markup:
                 f.append(f'SB.2 {label}: <style> block — styles live in '
                          'the shared layer')
-            body = re.sub(r'^---.*?---', '', txt, flags=re.S)
+            body = markup
             # every element in the INSTANCE (a classless wrapper with
             # py-32/bg-* on its child bypassed the old root-only check,
             # B F-25); composition skeletons only constrain their root —
@@ -9209,11 +9225,14 @@ REDTEAM_MUTATIONS = [
   ('REPL', 'site/src/styles/global.css',
    '@media (prefers-reduced-motion: reduce)',
    '/* @media (prefers-reduced-motion: later) */ @media (min-width: 0px)'),
+  ('REPLGLOB', 'site/dist/_astro/',
+   '@media(prefers-reduced-motion:reduce){', '@media(min-width:0px){'),
   ('APPEND', 'site/dist/home/style.css',
    '@keyframes shimmy { to { transform: translateX(1rem) } }'
    '.shim { animation: shimmy 1s; }'))),
  ('RT-M13-TRANSITION', 'M.13', (
   ('DEL', 'site/src/styles/global.css'),
+  ('DELGLOB', 'site/dist/_astro/'),
   ('SET', 'site/dist/home/style.css',
    '.card { transition: transform .3s; }'))),
  ('RT-SKL-INNERDIV', 'SKL.', (
@@ -9248,7 +9267,8 @@ REDTEAM_MUTATIONS = [
    'https://random-unregistered-site.example'),)),
  ('RT-R10-MINH', 'R.10', (
   ('REPL', 'site/dist/home/index.html',
-   'class="sec-band py-16"', 'class="sec-band py-16 min-h-screen"'),)),
+   'class="sec-band surface-base density-spacious"',
+   'class="sec-band surface-base density-spacious min-h-screen"'),)),
  ('RT-C3-DEADGREY', 'C.3', (
   ('REPL', 'DESIGN-PLAN.md', 'surface: {value: "#F1EFEC"}',
    'surface: {value: "#8A8A8A"}'),)),
@@ -9347,6 +9367,12 @@ def _apply_ops(files, ops):
         elif kind == 'REPL':
             if op[1] in files:
                 files[op[1]] = files[op[1]].replace(op[2], op[3])
+        elif kind == 'REPLGLOB':
+            for k in [k for k in files if k.startswith(op[1])]:
+                files[k] = files[k].replace(op[2], op[3])
+        elif kind == 'DELGLOB':
+            for k in [k for k in files if k.startswith(op[1])]:
+                files.pop(k, None)
     return files
 
 
