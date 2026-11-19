@@ -1,0 +1,85 @@
+<div class="sm:inline-flex gap-x-3">
+                            <!-- Dropdown -->
+                            <div class="mt-1 mx-1 sm:mt-1 hs-dropdown [--auto-close:inside] relative sm:inline-flex z-20">
+                              <button id="hs-dropdown-auto-close-inside" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-layer border border-layer-line text-layer-foreground shadow-2xs hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                Clickable inside
+                                <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                              </button>
+
+                              <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-dropdown border border-dropdown-line rounded-lg shadow-md mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-auto-close-inside">
+                                <div class="p-1 space-y-0.5">
+                                  <div class="flex items-center gap-x-3 py-2 px-3 rounded-lg hover:bg-dropdown-item-hover">
+                                    <input id="hs-dropdown-item-checkbox-delete" name="hs-dropdown-item-checkbox-delete" type="checkbox" class="mt-0.5 shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none" checked>
+                                    <label for="hs-dropdown-item-checkbox-delete" class="grow">
+                                      <span class="block text-sm text-foreground">Delete</span>
+                                    </label>
+                                  </div>
+                                  <div class="flex items-center gap-x-3 py-2 px-3 rounded-lg hover:bg-dropdown-item-hover">
+                                    <input id="hs-dropdown-item-checkbox-archive" name="hs-dropdown-item-checkbox-archive" type="checkbox" class="mt-0.5 shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                    <label for="hs-dropdown-item-checkbox-archive" class="grow">
+                                      <span class="block text-sm text-foreground">Archive</span>
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Dropdown -->
+
+                            <!-- Dropdown -->
+                            <div class="mt-40 mx-1 sm:mt-1 hs-dropdown [--auto-close:outside] relative sm:inline-flex z-10">
+                              <button id="hs-dropdown-auto-close-outside" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-layer border border-layer-line text-layer-foreground shadow-2xs hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                Clickable outside
+                                <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                              </button>
+
+                              <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-dropdown border border-dropdown-line rounded-lg shadow-md mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-auto-close-outside">
+                                <div class="p-1 space-y-0.5">
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Newsletter
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Purchases
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Downloads
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Team Account
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Dropdown -->
+
+                            <!-- Dropdown -->
+                            <div class="mt-60 mx-1 sm:mt-1 hs-dropdown [--auto-close:false] relative sm:inline-flex">
+                              <button id="hs-dropdown-auto-close-false" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-layer border border-layer-line text-layer-foreground shadow-2xs hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                False
+                                <svg class="hs-dropdown-open:rotate-180 size-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                              </button>
+
+                              <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden bg-dropdown border border-dropdown-line rounded-lg shadow-md mt-2" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-auto-close-false">
+                                <div class="p-1 space-y-0.5">
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Newsletter
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Purchases
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Downloads
+                                  </a>
+                                  <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-dropdown-item-foreground hover:bg-dropdown-item-hover focus:outline-hidden focus:bg-dropdown-item-focus" href="#">
+                                    Team Account
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- End Dropdown -->
+                          </div>

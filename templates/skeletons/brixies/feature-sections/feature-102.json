@@ -1,0 +1,753 @@
+{
+ "id": 18219,
+ "title": "Feature Section 102",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "feature-102",
+ "size_bytes": 11122,
+ "json": {
+  "content": [
+   {
+    "id": "pznlse",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "fkdmso"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xaqbaw"
+     ]
+    },
+    "label": "Features"
+   },
+   {
+    "id": "fkdmso",
+    "name": "container",
+    "parent": "pznlse",
+    "children": [
+     "ppzakr",
+     "ykhfez"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tcggvr"
+     ]
+    }
+   },
+   {
+    "id": "ppzakr",
+    "name": "block",
+    "parent": "fkdmso",
+    "children": [
+     "khyjai",
+     "fawrby",
+     "stewmw"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dmnnrh"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "khyjai",
+    "name": "text-basic",
+    "parent": "ppzakr",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "lpznwm"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "fawrby",
+    "name": "heading",
+    "parent": "ppzakr",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet&nbsp;",
+     "_cssGlobalClasses": [
+      "jnjecm"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "stewmw",
+    "name": "text-basic",
+    "parent": "ppzakr",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "zpivth"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "ykhfez",
+    "name": "block",
+    "parent": "fkdmso",
+    "children": [
+     "udkvdj",
+     "mzfpun",
+     "bpjatt",
+     "vnyfzd"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "cfknxr"
+     ]
+    },
+    "label": "Features list"
+   },
+   {
+    "id": "udkvdj",
+    "name": "block",
+    "parent": "ykhfez",
+    "children": [
+     "dwduza"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "bazfzm"
+     ],
+     "tag": "li"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "dwduza",
+    "name": "block",
+    "parent": "udkvdj",
+    "children": [
+     "eslshz",
+     "mhwgvr"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ndwpvj"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "6"
+     }
+    },
+    "label": "Card"
+   },
+   {
+    "id": "eslshz",
+    "name": "image",
+    "parent": "dwduza",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ejptnd"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/09/Placeholder-image-4-3.png",
+      "external": true,
+      "filename": "Placeholder-image-4-3.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": [],
+    "label": "Image"
+   },
+   {
+    "id": "mhwgvr",
+    "name": "block",
+    "parent": "dwduza",
+    "children": [
+     "tlryow",
+     "dbkzni"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yqrvow"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "tlryow",
+    "name": "heading",
+    "parent": "mhwgvr",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dkorjy",
+      "acss_import_clickable-parent"
+     ],
+     "text": "Lorem ipsum dolor sit",
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     },
+     "tag": "h3"
+    }
+   },
+   {
+    "id": "dbkzni",
+    "name": "text-basic",
+    "parent": "mhwgvr",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "bdatju"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "seegzi",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "javascriptCode": "document.addEventListener('DOMContentLoaded', () => {\n  // Selecting all available cards with the class \"card-feature-102\"\n  const cards = document.querySelectorAll('.card-feature-102');\n\n  cards.forEach((card) => {\n    // Target description text to animate\n    const text = card.querySelector('.card-feature-102__description');\n    if (!text) return;\n\n    // Open: add state class + set max-height to the real content height\n    const open = () => {\n      card.classList.add('is-open');\n      text.style.maxHeight = text.scrollHeight + 'px';\n    };\n\n    // Close: remove state class + remove inline max-height (CSS handles collapsed state)\n    const close = () => {\n      card.classList.remove('is-open');\n      text.style.removeProperty('max-height');\n    };\n\n    // Desktop hover behavior\n    card.addEventListener('mouseenter', open);\n    card.addEventListener('mouseleave', close);\n\n    // Keyboard accessibility: trigger open/close on heading link focus\n    const link = card.querySelector('.card-feature-102__heading a');\n    if (link) {\n      link.addEventListener('focus', open);\n      link.addEventListener('blur', close);\n    }\n  });\n});",
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Features\" (Section). --*/\n\n\n/* Style the element with the class \u201cis-open\u201d when JS adds it */\n.card-feature-102{\n  &.is-open\n  .card-feature-102__description{\n    margin-top: var(--space-xs);\n  }\n}",
+     "executeCode": true
+    },
+    "label": "JS & CSS Styles"
+   },
+   {
+    "id": "vnyfzd",
+    "name": "block",
+    "parent": "ykhfez",
+    "children": [
+     "ifesqq"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "bazfzm"
+     ],
+     "tag": "li"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "ifesqq",
+    "name": "block",
+    "parent": "vnyfzd",
+    "children": [
+     "boojnx",
+     "taubsk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ndwpvj"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "6"
+     }
+    },
+    "label": "Card"
+   },
+   {
+    "id": "boojnx",
+    "name": "image",
+    "parent": "ifesqq",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ejptnd"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/09/Placeholder-image-4-3.png",
+      "external": true,
+      "filename": "Placeholder-image-4-3.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": [],
+    "label": "Image"
+   },
+   {
+    "id": "taubsk",
+    "name": "block",
+    "parent": "ifesqq",
+    "children": [
+     "husvma",
+     "ykvjdf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yqrvow"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "husvma",
+    "name": "heading",
+    "parent": "taubsk",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dkorjy",
+      "acss_import_clickable-parent"
+     ],
+     "text": "Lorem ipsum dolor sit",
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     },
+     "tag": "h3"
+    }
+   },
+   {
+    "id": "ykvjdf",
+    "name": "text-basic",
+    "parent": "taubsk",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "bdatju"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "bpjatt",
+    "name": "block",
+    "parent": "ykhfez",
+    "children": [
+     "cfoysp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "bazfzm"
+     ],
+     "tag": "li"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "cfoysp",
+    "name": "block",
+    "parent": "bpjatt",
+    "children": [
+     "wiirgv",
+     "bqrpbd"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ndwpvj"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "6"
+     }
+    },
+    "label": "Card"
+   },
+   {
+    "id": "wiirgv",
+    "name": "image",
+    "parent": "cfoysp",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ejptnd"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/09/Placeholder-image-4-3.png",
+      "external": true,
+      "filename": "Placeholder-image-4-3.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": [],
+    "label": "Image"
+   },
+   {
+    "id": "bqrpbd",
+    "name": "block",
+    "parent": "cfoysp",
+    "children": [
+     "qjnegi",
+     "fiuzpk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yqrvow"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "qjnegi",
+    "name": "heading",
+    "parent": "bqrpbd",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dkorjy",
+      "acss_import_clickable-parent"
+     ],
+     "text": "Lorem ipsum dolor sit",
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     },
+     "tag": "h3"
+    }
+   },
+   {
+    "id": "fiuzpk",
+    "name": "text-basic",
+    "parent": "bqrpbd",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "bdatju"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "mzfpun",
+    "name": "block",
+    "parent": "ykhfez",
+    "children": [
+     "nqgvdo"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "bazfzm"
+     ],
+     "tag": "li"
+    },
+    "label": "Item list"
+   },
+   {
+    "id": "nqgvdo",
+    "name": "block",
+    "parent": "mzfpun",
+    "children": [
+     "fwxgti",
+     "klvdeo"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ndwpvj"
+     ],
+     "tag": "article",
+     "query": {
+      "posts_per_page": "6"
+     }
+    },
+    "label": "Card"
+   },
+   {
+    "id": "fwxgti",
+    "name": "image",
+    "parent": "nqgvdo",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ejptnd"
+     ],
+     "image": {
+      "url": "https://acss.brixies.co/wp-content/uploads/2023/09/Placeholder-image-4-3.png",
+      "external": true,
+      "filename": "Placeholder-image-4-3.png"
+     },
+     "tag": "figure"
+    },
+    "themeStyles": [],
+    "label": "Image"
+   },
+   {
+    "id": "klvdeo",
+    "name": "block",
+    "parent": "nqgvdo",
+    "children": [
+     "yzxkib",
+     "sfinon"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yqrvow"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "yzxkib",
+    "name": "heading",
+    "parent": "klvdeo",
+    "children": [],
+    "settings": {
+     "_cssGlobalClasses": [
+      "dkorjy",
+      "acss_import_clickable-parent"
+     ],
+     "text": "Lorem ipsum dolor sit",
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     },
+     "tag": "h3"
+    }
+   },
+   {
+    "id": "sfinon",
+    "name": "text-basic",
+    "parent": "klvdeo",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "bdatju"
+     ]
+    },
+    "label": "Description"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "2.1.4",
+  "globalClasses": [
+   {
+    "id": "xaqbaw",
+    "name": "feature-102",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "tcggvr",
+    "name": "feature-102__container",
+    "settings": {
+     "_rowGap": "var(--container-gap)",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "dmnnrh",
+    "name": "feature-102__container-info",
+    "settings": {
+     "_alignItems": "center",
+     "_rowGap": "var(--space-xs)",
+     "_width": "var(--width-xl)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "lpznwm",
+    "name": "feature-102__tagline",
+    "settings": {
+     "_typography": {
+      "font-weight": "600",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "jnjecm",
+    "name": "feature-102__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "zpivth",
+    "name": "feature-102__description",
+    "settings": {
+     "_typography": {
+      "text-align": "center"
+     },
+     "_width": "var(--width-m)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "cfknxr",
+    "name": "feature-102__list",
+    "settings": {
+     "_margin": {
+      "bottom": "0",
+      "top": "0"
+     },
+     "_padding": {
+      "left": "var(--space-xs)",
+      "top": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "bottom": "var(--space-xs)"
+     },
+     "_display": "grid",
+     "_gridGap": "var(--space-xs)",
+     "_gridTemplateColumns": "var(--grid-4)",
+     "_alignItemsGrid": "stretch",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)",
+     "_gridTemplateColumns:mobile_portrait": "var(--grid-1)",
+     "_gridTemplateRows": "var(--grid-1)",
+     "_background": {
+      "color": {
+       "raw": "var(--neutral-ultra-light)"
+      }
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-l)",
+       "right": "var(--radius-l)",
+       "bottom": "var(--radius-l)",
+       "left": "var(--radius-l)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "bazfzm",
+    "name": "feature-102__list-item",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "ndwpvj",
+    "name": "card-feature-102",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "flex-start",
+     "_justifyContent": "flex-end",
+     "_position": "relative",
+     "_isolation": "isolate",
+     "_aspectRatio": "3 / 4",
+     "_padding": {
+      "top": "var(--space-xs)",
+      "right": "var(--space-xs)",
+      "bottom": "var(--space-xs)",
+      "left": "var(--space-xs)"
+     },
+     "_overflow": "hidden",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "ejptnd",
+    "name": "card-feature-102__img",
+    "settings": {
+     "_width": "100%",
+     "_height": "100%",
+     "_position": "absolute",
+     "_top": "0",
+     "_right": "0",
+     "_zIndex": "-1",
+     "_objectFit": "cover",
+     "_objectPosition": "50%"
+    },
+    "_exists": false
+   },
+   {
+    "id": "yqrvow",
+    "name": "card-feature-102__container-info",
+    "settings": {
+     "_width": "100%",
+     "_width:tablet_portrait": "100%",
+     "_padding": {
+      "top": "var(--space-s)",
+      "right": "var(--space-s)",
+      "bottom": "var(--space-s)",
+      "left": "var(--space-s)"
+     },
+     "_border": {
+      "radius": {
+       "top": "var(--radius-s)",
+       "right": "var(--radius-s)",
+       "bottom": "var(--radius-s)",
+       "left": "var(--radius-s)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--white)"
+      }
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "dkorjy",
+    "name": "card-feature-102__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-m)"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "acss_import_clickable-parent",
+    "name": "clickable-parent",
+    "settings": [],
+    "category": "acss",
+    "_categoryData": {
+     "id": "acss",
+     "name": "Automatic.css"
+    }
+   },
+   {
+    "id": "bdatju",
+    "name": "card-feature-102__description",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-s)"
+     },
+     "_overflow": "hidden",
+     "_margin": {
+      "top": "0"
+     },
+     "_heightMax": "0",
+     "_cssTransition": "max-height .3s ease-out, margin-top.3s ease-out",
+     "_cssCustom": ".card-feature-102__description{\n  will-change: max-height;\n}"
+    },
+    "_exists": false
+   }
+  ]
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 11176
+}

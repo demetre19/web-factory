@@ -1,0 +1,41 @@
+<!-- Range Slider -->
+                        <div class="w-full">
+                          <label class="sr-only">Example range</label>
+                          <div class="relative">
+                            <div id="hs-range-with-charts-bar-chart-background"></div>
+                            <div class="absolute top-0 inset-s-0 size-full overflow-hidden">
+                              <div id="hs-range-with-charts-bar-chart-foreground"></div>
+                            </div>
+                          </div>
+                          <div id="hs-range-with-charts" class="mt-4 --prevent-on-load-init" data-hs-range-slider='{
+                            "start": [250, 750],
+                            "range": {
+                              "min": 0,
+                              "max": 1000
+                            },
+                            "connect": true,
+                            "formatter": "integer",
+                            "cssClasses": {
+                              "target": "relative h-2 rounded-full bg-surface",
+                              "base": "size-full relative z-1",
+                              "origin": "absolute top-0 inset-e-0 size-full origin-top-left rounded-full",
+                              "handle": "absolute top-1/2 inset-e-0 z-2 size-4.5 bg-layer border-4 border-primary rounded-full cursor-pointer translate-x-2/4 -translate-y-2/4",
+                              "connects": "relative z-0 size-full rounded-full overflow-hidden",
+                              "connect": "absolute top-0 inset-e-0 z-1 size-full origin-top-left bg-primary",
+                              "touchArea": "absolute -inset-1"
+                            }
+                          }'></div>
+
+                          <div class="mt-5">
+                            <div class="text-sm font-medium mb-2 text-foreground">Custom range:</div>
+                            <div class="flex flex-row space-x-4">
+                              <div class="basis-1/2">
+                                <input id="hs-pass-charts-values-to-inputs-min-target" class="py-2.5 sm:py-3 px-4 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" type="number" value="250">
+                              </div>
+                              <div class="basis-1/2">
+                                <input id="hs-pass-charts-values-to-inputs-max-target" class="py-2.5 sm:py-3 px-4 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" type="number" value="750">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- End Range Slider -->

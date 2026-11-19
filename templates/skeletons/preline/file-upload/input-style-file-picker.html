@@ -1,0 +1,23 @@
+<!-- File Upload -->
+                          <div data-hs-file-upload='{
+                            "url": "/upload",
+                            "maxFiles": 1,
+                            "singleton": true
+                          }'>
+                            <template data-hs-file-upload-preview>
+                              <div class="flex items-center w-full">
+                                <span class="grow-0 overflow-hidden truncate" data-hs-file-upload-file-name></span>
+                                <span class="grow-0">.</span>
+                                <span class="grow-0" data-hs-file-upload-file-ext></span>
+                              </div>
+                            </template>
+
+                            <button type="button" class="relative flex w-full bg-layer border border-layer-line text-layer-foreground shadow-2xs rounded-lg text-sm focus:outline-hidden focus:z-10 focus:border-primary-focus focus:ring-1 focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none">
+                              <span class="h-full py-3 px-4 bg-surface text-surface-foreground text-nowrap rounded-s-lg">Choose File</span>
+                              <span class="group grow flex overflow-hidden h-full py-3 px-4" data-hs-file-upload-previews>
+                                <span class="group-has-[div]:hidden">No Chosen File</span>
+                              </span>
+                              <span class="absolute top-0 start-0 size-full" data-hs-file-upload-trigger></span>
+                            </button>
+                          </div>
+                          <!-- End File Upload -->

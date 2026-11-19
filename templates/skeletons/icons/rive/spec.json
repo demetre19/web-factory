@@ -1,0 +1,32 @@
+{
+  "source": "rive.app",
+  "format": ".riv",
+  "requires_runtime": true,
+  "runtime": "Rive JS/WASM",
+  "classification": "library-required",
+  "priority": "EXCEPTION — last resort, ranked below Generative Icons",
+  "css_only": false,
+  "static_svg_export": false,
+  "heavier_than": "generative-icons (.lottie)",
+  "usage_order": [
+    "1. tamdoma CSS/SVG recipes",
+    "2. Lucide / static SVG",
+    "3. Generative Icons (.lottie + runtime)",
+    "4. Rive (.riv + JS/WASM) — heaviest, only when nothing above fits AND the interaction genuinely needs a state machine, declared in the plan"
+  ],
+  "authoring": {
+    "editor": "Rive Editor (desktop, Mac)",
+    "mcp": "http://127.0.0.1:9791/mcp",
+    "mcp_note": "requires the desktop Editor running; not a remote service"
+  },
+  "playback_note": "No clean static-SVG export. Do not treat as css-only. Do not reach for it by default.",
+  "orchestration": {
+    "tool": "rive-mcp-server-core",
+    "repo": "https://github.com/astralisone/rive-mcp-server-core",
+    "role": "optional asset orchestrator — discover/index .riv files and generate React/Vue/Stencil wrappers",
+    "not": "not authoring, not playback; does not remove the JS/WASM runtime requirement",
+    "status": "recorded only. Do not install or integrate unless we are already shipping multiple Rive animations.",
+    "classification": "same exception class as Rive itself"
+  },
+  "role": "documented exception path for complex interactive animation. Saved, not default."
+}

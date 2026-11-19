@@ -1,0 +1,32 @@
+<!-- Select -->
+                          <select id="hs-remote-data-tags" multiple data-hs-select='{
+                            "apiUrl": "https://dummyjson.com/products/search",
+                            "apiQuery": "limit=10",
+                            "apiSearchQueryKey": "q",
+                            "apiDataPart": "products",
+                            "apiFieldsMap": {
+                              "id": "id",
+                              "val": "id",
+                              "title": "title",
+                              "icon": "thumbnail",
+                              "description": "description"
+                            },
+                            "apiIconTag": "<img />",
+                            "hasSearch": true,
+                            "isSelectedOptionOnTop": true,
+                            "searchPlaceholder": "Search...",
+                            "searchClasses": "block w-full sm:text-sm bg-transparent border-layer-line rounded-lg text-foreground placeholder:text-muted-foreground-1 focus:ring-0 before:absolute before:inset-0 before:z-1 py-1.5 sm:py-2 px-3",
+                            "searchWrapperClasses": "bg-select p-2 -mx-1 sticky top-0",
+                            "placeholder": "Select option...",
+                            "mode": "tags",
+                            "wrapperClasses": "relative ps-0.5 pe-9 min-h-11.5 flex items-center flex-wrap w-full bg-layer border border-layer-line hover:bg-layer-hover rounded-lg text-start text-sm focus:bg-layer-focus",
+                            "tagsItemTemplate": "<div class=\"flex flex-nowrap items-center text-nowrap relative z-10 bg-layer border border-layer-line rounded-full p-1 m-1\"><div class=\"size-6 border border-line-2 overflow-hidden flex-none rounded-full me-1\" data-icon></div><div class=\"whitespace-nowrap text-foreground\" data-title></div><div class=\"inline-flex shrink-0 justify-center items-center size-5 ms-2 rounded-full bg-surface text-surface-foreground hover:bg-surface-hover focus:outline-hidden focus:bg-surface-focus text-sm cursor-pointer\" data-remove><svg class=\"shrink-0 size-3\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6 6 18\"/><path d=\"m6 6 12 12\"/></svg></div></div>",
+                            "tagsInputClasses": "py-3 px-2 rounded-lg order-1 bg-transparent border-transparent text-foreground placeholder:text-muted-foreground-1 focus:ring-0 text-sm outline-hidden",
+                            "dropdownClasses": "mt-2 z-50 w-full max-h-72 pb-1 px-1 space-y-0.5 bg-select border border-select-line rounded-lg shadow-xl overflow-hidden overflow-y-auto focus:outline-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+                            "optionClasses": "py-2 px-4 w-full text-sm text-select-item-foreground cursor-pointer hover:bg-select-item-hover rounded-lg focus:outline-hidden focus:bg-select-item-focus",
+                            "optionTemplate": "<div class=\"flex items-center\"><div class=\"size-8 bg-layer border border-layer-line overflow-hidden flex-none rounded-full me-2\" data-icon></div><div><div class=\"text-sm font-semibold text-foreground\" data-title></div><div class=\"text-xs text-muted-foreground-1\" data-description></div></div><div class=\"ms-auto\"><span class=\"hidden hs-selected:block\"><svg class=\"shrink-0 size-4 text-primary\" xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" fill=\"currentColor\" viewBox=\"0 0 16 16\"><path d=\"M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\"/></svg></span></div></div>",
+                            "extraMarkup": "<div class=\"absolute top-1/2 inset-e-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-muted-foreground-1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+                          }' class="hidden">
+                            <option value="">Choose</option>
+                          </select>
+                          <!-- End Select -->

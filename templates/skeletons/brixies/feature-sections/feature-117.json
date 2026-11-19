@@ -1,0 +1,1017 @@
+{
+ "id": 22627,
+ "title": "Feature Section 117",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "feature-117",
+ "size_bytes": 12577,
+ "json": {
+  "content": [
+   {
+    "id": "xpjomf",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "pujxzj"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "pibyen"
+     ]
+    },
+    "label": "Features"
+   },
+   {
+    "id": "pujxzj",
+    "name": "container",
+    "parent": "xpjomf",
+    "children": [
+     "dowkel",
+     "yhhfvk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ihzuxu"
+     ],
+     "tag": "div"
+    }
+   },
+   {
+    "id": "dowkel",
+    "name": "block",
+    "parent": "pujxzj",
+    "children": [
+     "uzfkyx",
+     "akzlkv",
+     "vkosnw"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "tcekpa"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "uzfkyx",
+    "name": "text-basic",
+    "parent": "dowkel",
+    "children": [],
+    "settings": {
+     "text": "Tagline",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "rixvpw"
+     ]
+    },
+    "label": "Tagline"
+   },
+   {
+    "id": "akzlkv",
+    "name": "heading",
+    "parent": "dowkel",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet&nbsp;",
+     "_cssGlobalClasses": [
+      "eukjau"
+     ],
+     "tag": "h2"
+    }
+   },
+   {
+    "id": "vkosnw",
+    "name": "text-basic",
+    "parent": "dowkel",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "rnpypx"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "yhhfvk",
+    "name": "block",
+    "parent": "pujxzj",
+    "children": [
+     "mvgcce",
+     "bvbicm",
+     "bxrrlf",
+     "ewmyru",
+     "vnzfqn",
+     "puekmu"
+    ],
+    "settings": {
+     "tag": "ul",
+     "_cssGlobalClasses": [
+      "yorewb"
+     ]
+    },
+    "label": "List"
+   },
+   {
+    "id": "mvgcce",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "kmwyev"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "kmwyev",
+    "name": "block",
+    "parent": "mvgcce",
+    "children": [
+     "tqoygm",
+     "jkciuy"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "xenrdc",
+    "name": "icon",
+    "parent": "tqoygm",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "jkciuy",
+    "name": "block",
+    "parent": "kmwyev",
+    "children": [
+     "kbwuej",
+     "lpfkjg"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "kbwuej",
+    "name": "heading",
+    "parent": "jkciuy",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "lpfkjg",
+    "name": "text-basic",
+    "parent": "jkciuy",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "tqoygm",
+    "name": "block",
+    "parent": "kmwyev",
+    "children": [
+     "xenrdc"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "ijapwm",
+    "name": "code",
+    "parent": 0,
+    "children": [],
+    "settings": {
+     "noRoot": true,
+     "cssCode": "/* -- The root styles must go in the element of the structure with the name \"Card\". --*/\n\n.feature-117{\n  /* Local variable to define the border color of the list and the background color representing the border of the cards */\n  --feature-117-border-color: var(--neutral-ultra-light);\n  \n  .card-feature-117{\n    /* Hover and focus link Styles  */\n    &:hover, &:focus-within{\n      transform: scale(1.1);\n      background-color: transparent;\n    }\n  }\n}",
+     "executeCode": true
+    },
+    "label": "CSS Styles"
+   },
+   {
+    "id": "vnzfqn",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "ygshvq"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "ygshvq",
+    "name": "block",
+    "parent": "vnzfqn",
+    "children": [
+     "txdzpg",
+     "whkems"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "txdzpg",
+    "name": "block",
+    "parent": "ygshvq",
+    "children": [
+     "cqonba"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "cqonba",
+    "name": "icon",
+    "parent": "txdzpg",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "whkems",
+    "name": "block",
+    "parent": "ygshvq",
+    "children": [
+     "buavym",
+     "cbssgk"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "buavym",
+    "name": "heading",
+    "parent": "whkems",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "cbssgk",
+    "name": "text-basic",
+    "parent": "whkems",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "ewmyru",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "iegsop"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "iegsop",
+    "name": "block",
+    "parent": "ewmyru",
+    "children": [
+     "wqonzq",
+     "eazcsd"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "wqonzq",
+    "name": "block",
+    "parent": "iegsop",
+    "children": [
+     "zkncws"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "zkncws",
+    "name": "icon",
+    "parent": "wqonzq",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "eazcsd",
+    "name": "block",
+    "parent": "iegsop",
+    "children": [
+     "frhbwb",
+     "hyetox"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "frhbwb",
+    "name": "heading",
+    "parent": "eazcsd",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "hyetox",
+    "name": "text-basic",
+    "parent": "eazcsd",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "bxrrlf",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "dktoqj"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "dktoqj",
+    "name": "block",
+    "parent": "bxrrlf",
+    "children": [
+     "xmksah",
+     "rfwpnh"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "xmksah",
+    "name": "block",
+    "parent": "dktoqj",
+    "children": [
+     "rmwrhf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "rmwrhf",
+    "name": "icon",
+    "parent": "xmksah",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "rfwpnh",
+    "name": "block",
+    "parent": "dktoqj",
+    "children": [
+     "caqasn",
+     "eefsrf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "caqasn",
+    "name": "heading",
+    "parent": "rfwpnh",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "eefsrf",
+    "name": "text-basic",
+    "parent": "rfwpnh",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "bvbicm",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "phgcof"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "phgcof",
+    "name": "block",
+    "parent": "bvbicm",
+    "children": [
+     "sxysvv",
+     "jsvyjm"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "sxysvv",
+    "name": "block",
+    "parent": "phgcof",
+    "children": [
+     "dkgjbs"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "dkgjbs",
+    "name": "icon",
+    "parent": "sxysvv",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "jsvyjm",
+    "name": "block",
+    "parent": "phgcof",
+    "children": [
+     "vlilro",
+     "dwyicf"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "vlilro",
+    "name": "heading",
+    "parent": "jsvyjm",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "dwyicf",
+    "name": "text-basic",
+    "parent": "jsvyjm",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "puekmu",
+    "name": "block",
+    "parent": "yhhfvk",
+    "children": [
+     "nphien"
+    ],
+    "settings": {
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "edzhal"
+     ]
+    },
+    "label": "Item"
+   },
+   {
+    "id": "nphien",
+    "name": "block",
+    "parent": "puekmu",
+    "children": [
+     "izefaf",
+     "czadit"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "orzfvu"
+     ],
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "izefaf",
+    "name": "block",
+    "parent": "nphien",
+    "children": [
+     "pxortp"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "josson"
+     ]
+    },
+    "label": "Icon wrapper"
+   },
+   {
+    "id": "pxortp",
+    "name": "icon",
+    "parent": "izefaf",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "jhkoyh"
+     ]
+    }
+   },
+   {
+    "id": "czadit",
+    "name": "block",
+    "parent": "nphien",
+    "children": [
+     "wimxjw",
+     "dhwjen"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "nweypq"
+     ]
+    },
+    "label": "Container info"
+   },
+   {
+    "id": "wimxjw",
+    "name": "heading",
+    "parent": "czadit",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor",
+     "_cssGlobalClasses": [
+      "mebcco",
+      "acss_import_clickable-parent"
+     ],
+     "link": {
+      "type": "meta",
+      "useDynamicData": "#"
+     }
+    }
+   },
+   {
+    "id": "dhwjen",
+    "name": "text-basic",
+    "parent": "czadit",
+    "children": [],
+    "settings": {
+     "text": "Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "ewjxgn"
+     ]
+    },
+    "label": "Description"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "2.4.5",
+  "globalClasses": [
+   {
+    "id": "pibyen",
+    "name": "feature-117",
+    "settings": {
+     "_overflow": "hidden"
+    },
+    "_exists": false
+   },
+   {
+    "id": "ihzuxu",
+    "name": "feature-117__container",
+    "settings": {
+     "_rowGap": "var(--container-gap)",
+     "_alignItems": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "tcekpa",
+    "name": "feature-117__container-info",
+    "settings": {
+     "_alignItems": "center",
+     "_rowGap": "var(--space-xs)",
+     "_width": "var(--width-xl)",
+     "_alignSelf": "center"
+    },
+    "_exists": false
+   },
+   {
+    "id": "rixvpw",
+    "name": "feature-117__tagline",
+    "settings": {
+     "_typography": {
+      "font-weight": "600",
+      "color": {
+       "raw": "var(--neutral)"
+      }
+     },
+     "_margin": {
+      "bottom": "0"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "eukjau",
+    "name": "feature-117__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     }
+    },
+    "_exists": false
+   },
+   {
+    "id": "rnpypx",
+    "name": "feature-117__description",
+    "settings": {
+     "_typography": {
+      "text-align": "center"
+     },
+     "_width": "var(--width-m)"
+    },
+    "_exists": false
+   },
+   {
+    "id": "yorewb",
+    "name": "feature-117__list",
+    "settings": {
+     "_margin": {
+      "top": "0",
+      "bottom": "0"
+     },
+     "_display": "grid",
+     "_gridTemplateColumns": "var(--grid-3)",
+     "_gridTemplateRows": "var(--grid-1)",
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      },
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--feature-117-border-color)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--feature-117-border-color)"
+      }
+     },
+     "_padding": {
+      "top": "0",
+      "right": "0",
+      "bottom": "0",
+      "left": "0"
+     },
+     "_gridGap": "1",
+     "_overflow": "hidden",
+     "_isolation": "isolate"
+    },
+    "_exists": false,
+    "modified": 1794325995,
+    "user_id": 3
+   },
+   {
+    "id": "edzhal",
+    "name": "feature-117__list-item",
+    "settings": [],
+    "_exists": false,
+    "modified": 1794324993,
+    "user_id": 3
+   },
+   {
+    "id": "orzfvu",
+    "name": "card-feature-117",
+    "settings": {
+     "_padding": {
+      "top": "var(--space-l)",
+      "right": "var(--space-l)",
+      "bottom": "var(--space-l)",
+      "left": "var(--space-l)"
+     },
+     "_position": "relative",
+     "_height": "100%",
+     "_flexWrap": "nowrap",
+     "_background": {
+      "color": {
+       "id": "acss_import_white",
+       "raw": "var(--white)"
+      }
+     },
+     "_cssTransition": "transform .3s ease-out, background-color.3s ease-out",
+     "_gridGap": "var(--space-l)"
+    },
+    "_exists": false,
+    "modified": 1754942870,
+    "user_id": 3
+   },
+   {
+    "id": "jhkoyh",
+    "name": "card-feature-117__icon",
+    "settings": {
+     "iconSize": "1.8rem",
+     "iconColor": {
+      "raw": "inherit"
+     }
+    },
+    "modified": 1746489045,
+    "user_id": 2,
+    "_exists": false
+   },
+   {
+    "id": "nweypq",
+    "name": "card-feature-117__container-info",
+    "settings": {
+     "_rowGap": "var(--space-xs)"
+    },
+    "_exists": false,
+    "modified": 1746489045,
+    "user_id": 2
+   },
+   {
+    "id": "mebcco",
+    "name": "card-feature-117__heading",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "acss_import_clickable-parent",
+    "name": "clickable-parent",
+    "settings": [],
+    "category": "acss",
+    "modified": 1777574388,
+    "user_id": 2,
+    "_categoryData": {
+     "id": "acss",
+     "name": "Automatic.css"
+    }
+   },
+   {
+    "id": "ewjxgn",
+    "name": "card-feature-117__description",
+    "settings": [],
+    "_exists": false
+   },
+   {
+    "id": "josson",
+    "name": "card-feature-117__icon-wrapper",
+    "settings": {
+     "_width": "4.2rem",
+     "_aspectRatio": "1",
+     "_alignItems": "center",
+     "_justifyContent": "center",
+     "_border": {
+      "radius": {
+       "top": "var(--radius-s)",
+       "right": "var(--radius-s)",
+       "bottom": "var(--radius-s)",
+       "left": "var(--radius-s)"
+      },
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "id": "acss_import_black-trans-10",
+       "raw": "var(--black-trans-10)"
+      }
+     },
+     "_background": {
+      "color": {
+       "raw": "var(--neutral-ultra-light)"
+      }
+     },
+     "_typography": {
+      "color": {
+       "id": "acss_import_neutral",
+       "raw": "var(--neutral)"
+      }
+     },
+     "_cssTransition": "all .2s ease"
+    },
+    "_exists": false
+   }
+  ]
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 12585
+}

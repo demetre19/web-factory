@@ -1,0 +1,332 @@
+{
+ "id": 1535,
+ "title": "Feature Section 2",
+ "framework": "ACSS",
+ "type": "layout",
+ "block_name": "feature-2",
+ "size_bytes": 4007,
+ "json": {
+  "content": [
+   {
+    "id": "crigvp",
+    "name": "section",
+    "parent": 0,
+    "children": [
+     "noxvvj"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "xhrbjx"
+     ]
+    },
+    "label": "Feature"
+   },
+   {
+    "id": "noxvvj",
+    "name": "container",
+    "parent": "crigvp",
+    "children": [
+     "vwazja",
+     "yzhafi"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "ixkdem"
+     ]
+    }
+   },
+   {
+    "id": "debquu",
+    "name": "heading",
+    "parent": "vwazja",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet ",
+     "tag": "h2",
+     "_cssGlobalClasses": [
+      "vntmxz"
+     ]
+    }
+   },
+   {
+    "id": "hceccc",
+    "name": "text-basic",
+    "parent": "vwazja",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate.",
+     "tag": "p",
+     "_cssGlobalClasses": [
+      "qkyqud"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "yzhafi",
+    "name": "block",
+    "parent": "noxvvj",
+    "children": [
+     "uqnxho"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "yyxadl"
+     ],
+     "tag": "ul",
+     "customTag": "li"
+    },
+    "label": "Grid"
+   },
+   {
+    "id": "odblru",
+    "name": "block",
+    "parent": "uqnxho",
+    "children": [
+     "hfylbn",
+     "eilwet",
+     "btijzt"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "hjsvuz"
+     ],
+     "query": {
+      "posts_per_page": "6"
+     },
+     "tag": "article"
+    },
+    "label": "Card"
+   },
+   {
+    "id": "hfylbn",
+    "name": "icon",
+    "parent": "odblru",
+    "children": [],
+    "settings": {
+     "icon": {
+      "library": "fontawesomeSolid",
+      "icon": "fas fa-cube"
+     },
+     "_cssGlobalClasses": [
+      "moaxqv"
+     ]
+    }
+   },
+   {
+    "id": "eilwet",
+    "name": "heading",
+    "parent": "odblru",
+    "children": [],
+    "settings": {
+     "text": "Lorem ipsum",
+     "_cssGlobalClasses": [
+      "vivpzz"
+     ],
+     "tag": "h3"
+    }
+   },
+   {
+    "id": "btijzt",
+    "name": "text",
+    "parent": "odblru",
+    "children": [],
+    "settings": {
+     "text": "<p>Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.</p>",
+     "_cssGlobalClasses": [
+      "bsifaw"
+     ]
+    },
+    "label": "Description"
+   },
+   {
+    "id": "uqnxho",
+    "name": "block",
+    "parent": "yzhafi",
+    "children": [
+     "odblru"
+    ],
+    "settings": {
+     "hasLoop": true,
+     "query": {
+      "posts_per_page": "6"
+     },
+     "tag": "li",
+     "_cssGlobalClasses": [
+      "snsviq"
+     ]
+    },
+    "label": "Card wrapper"
+   },
+   {
+    "id": "vwazja",
+    "name": "block",
+    "parent": "noxvvj",
+    "children": [
+     "debquu",
+     "hceccc"
+    ],
+    "settings": {
+     "_cssGlobalClasses": [
+      "elkfwf"
+     ]
+    },
+    "label": "Container info"
+   }
+  ],
+  "source": "bricksCopiedElements",
+  "sourceUrl": "https://acss.brixies.co",
+  "version": "1.9.9",
+  "globalClasses": [
+   {
+    "id": "xhrbjx",
+    "name": "feature-2",
+    "settings": [],
+    "modified": 1720335920,
+    "user_id": 2
+   },
+   {
+    "id": "ixkdem",
+    "name": "feature-2__container",
+    "settings": {
+     "_direction": "column",
+     "_alignItems": "center",
+     "_rowGap": "var(--container-gap)"
+    }
+   },
+   {
+    "id": "vntmxz",
+    "name": "feature-2__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-xxl)",
+      "text-align": "center"
+     },
+     "_width": "var(--width-xl)"
+    }
+   },
+   {
+    "id": "qkyqud",
+    "name": "feature-2__description",
+    "settings": {
+     "_typography": {
+      "text-align": "center",
+      "font-size": "var(--text-m)"
+     },
+     "_width": "var(--width-m)"
+    }
+   },
+   {
+    "id": "yyxadl",
+    "name": "feature-2__grid",
+    "settings": {
+     "_margin": {
+      "bottom": "0",
+      "top": "0"
+     },
+     "_display": "grid",
+     "_gridGap": "var(--grid-gap)",
+     "_gridTemplateColumns": "var(--grid-3)",
+     "_padding": {
+      "left": "0"
+     },
+     "_gridTemplateColumns:tablet_portrait": "var(--grid-2)",
+     "_gridTemplateColumns:mobile_landscape": "var(--grid-1)"
+    }
+   },
+   {
+    "id": "hjsvuz",
+    "name": "card-feature-2",
+    "settings": {
+     "_padding": {
+      "top": "var(--space-l)",
+      "right": "var(--space-l)",
+      "bottom": "var(--space-l)",
+      "left": "var(--space-l)"
+     },
+     "_border": {
+      "width": {
+       "top": "1",
+       "right": "1",
+       "bottom": "1",
+       "left": "1"
+      },
+      "style": "solid",
+      "color": {
+       "raw": "var(--neutral-trans-10)"
+      },
+      "radius": {
+       "top": "var(--radius-m)",
+       "right": "var(--radius-m)",
+       "bottom": "var(--radius-m)",
+       "left": "var(--radius-m)"
+      }
+     },
+     "_display": "flex",
+     "_direction": "column"
+    }
+   },
+   {
+    "id": "moaxqv",
+    "name": "card-feature-2__icon",
+    "settings": {
+     "iconSize": "var(--space-l)",
+     "iconColor": {
+      "id": "acss_import_primary",
+      "name": "primary",
+      "raw": "var(--primary)"
+     }
+    }
+   },
+   {
+    "id": "vivpzz",
+    "name": "card-feature-2__heading",
+    "settings": {
+     "_typography": {
+      "font-size": "var(--text-l)",
+      "font-weight": "700"
+     },
+     "_margin": {
+      "top": "var(--space-m)"
+     }
+    }
+   },
+   {
+    "id": "bsifaw",
+    "name": "card-feature-2__description",
+    "settings": {
+     "_margin": {
+      "top": "var(--space-xs)"
+     },
+     "_typography": {
+      "font-size": "var(--text-m)",
+      "color": {
+       "raw": "var(--neutral-trans-80)"
+      }
+     }
+    }
+   },
+   {
+    "id": "snsviq",
+    "name": "card-feature-2__wrapper",
+    "settings": []
+   },
+   {
+    "id": "elkfwf",
+    "name": "feature-2__container-info",
+    "settings": {
+     "_alignItems": "center",
+     "_rowGap": "var(--space-xs)"
+    }
+   }
+  ],
+  "globalElements": []
+ },
+ "conversion": {
+  "applied": false,
+  "target_version": null,
+  "warnings": [],
+  "review_required": false
+ },
+ "prepared_size_bytes": 4010
+}

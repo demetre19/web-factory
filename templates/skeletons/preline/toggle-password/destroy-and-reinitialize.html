@@ -1,0 +1,56 @@
+<div id="hs-toggle-password-to-destroy" class="space-y-5" data-hs-toggle-password-group>
+                          <!-- Form Group -->
+                          <div class="max-w-sm w-full">
+                            <label for="hs-toggle-password-destroy-np" class="block mb-2 text-sm text-foreground">New password</label>
+                            <div class="relative">
+                              <input id="hs-toggle-password-destroy-np" type="password" class="py-2.5 sm:py-3 ps-4 pe-10 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" placeholder="Enter new password">
+                              <button type="button" data-hs-toggle-password='{
+                                  "target": ["#hs-toggle-password-destroy", "#hs-toggle-password-destroy-np"]
+                                }' class="absolute inset-y-0 inset-e-0 flex items-center z-20 px-3 cursor-pointer text-muted-foreground rounded-e-md focus:outline-hidden focus:text-primary-focus">
+                                <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+                                  <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+                                  <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                                  <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"/>
+                                  <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                  <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                          <!-- End Form Group -->
+
+                          <!-- Form Group -->
+                          <div class="max-w-sm mb-5">
+                            <label for="hs-toggle-password-destroy" class="block mb-2 text-sm text-foreground">Current password</label>
+                            <div class="relative">
+                              <input id="hs-toggle-password-destroy" type="password" class="py-2.5 sm:py-3 ps-4 pe-10 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" placeholder="Enter current password" value="12345qwerty">
+                              <button type="button" data-hs-toggle-password='{
+                                  "target": ["#hs-toggle-password-destroy", "#hs-toggle-password-destroy-np"]
+                                }' class="absolute inset-y-0 inset-e-0 flex items-center z-20 px-3 cursor-pointer text-muted-foreground rounded-e-md focus:outline-hidden focus:text-primary-focus">
+                                <svg class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+                                  <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+                                  <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                                  <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"/>
+                                  <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                  <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                          <!-- End Form Group -->
+                        </div>
+ 
+                        <!-- Destroy and Reinitialize -->
+                        <div class="flex flex-wrap gap-2 mt-4">
+                          <button type="button" id="hs-destroy-toggle-password" class="py-1 px-2 inline-flex items-center gap-x-1 text-sm rounded-lg bg-layer border border-layer-line text-layer-foreground hover:bg-layer-hover disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-layer-focus">
+                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                            Destroy toggle password
+                          </button>
+                          <button type="button" id="hs-auto-init-toggle-password" class="py-1 px-2 inline-flex items-center gap-x-1 text-sm rounded-lg bg-surface border border-surface-line text-surface-foreground hover:bg-surface-hover disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-surface-focus" disabled>
+                            <svg class="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 16h5v5"></path></svg>
+                            Reinitialize toggle password
+                          </button>
+                        </div>
+                        <!-- End Destroy and Reinitialize -->

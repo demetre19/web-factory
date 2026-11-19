@@ -1,0 +1,22 @@
+<!-- Datepicker -->
+                          <input
+                          class="hs-datepicker py-3 px-4 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
+                          type="text" placeholder="Select day" 
+                          readonly
+                          data-hs-datepicker='{
+                            "applyUtilityClasses": true,
+                            "selectionDatesMode": "multiple-ranged",
+                            "dateMax": "2050-12-31",
+                            "layouts": {
+                              "default": "<div class=\"--single-month flex flex-col overflow-hidden\"><div class=\"grid grid-cols-5 items-center gap-x-3 mx-1.5 pb-3\" data-vc=\"header\"><div class=\"col-span-1\"><#CustomArrowPrev /></div><div class=\"col-span-3 flex justify-center items-center gap-x-1\"><#CustomMonth /><span class=\"text-foreground\">/</span><#CustomYear /></div><div class=\"col-span-1 flex justify-end\"><#CustomArrowNext /></div></div><div data-vc=\"wrapper\"><div data-vc=\"content\"><#Week /><#Dates /></div></div></div><#CustomTime />"
+                            },
+                            "mode": "custom-select",
+                            "inputModeOptions": {
+                              "itemsSeparator": " / "
+                            },
+                            "templates": {
+                              "arrowPrev": "<button data-vc-arrow=\"prev\"><svg class=\"shrink-0 size-4\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m15 18-6-6 6-6\"></path></svg></button>",
+                              "arrowNext": "<button data-vc-arrow=\"next\"><svg class=\"shrink-0 size-4\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m9 18 6-6-6-6\"></path></svg></button>"
+                            }
+                          }'>
+                          <!-- End Datepicker -->

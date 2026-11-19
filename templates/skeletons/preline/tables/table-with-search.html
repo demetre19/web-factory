@@ -1,0 +1,110 @@
+<!-- Table -->
+                          <div class="min-w-full">
+                            <div class="border border-table-line rounded-lg overflow-x-auto [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb">
+                              <div class="py-3 px-4 border-b border-table-line">
+                                <!-- Header -->
+                                <div class="relative max-w-xs">
+                                  <label for="hs-table-search" class="sr-only">Search</label>
+                                  <input type="text" name="hs-table-search" id="hs-table-search" class="py-1.5 sm:py-2 px-3 ps-9 block w-full bg-layer border-layer-line shadow-2xs rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:z-10 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" placeholder="Search for items">
+                                  <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-3">
+                                    <svg class="size-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- End Header -->
+
+                              <table class="min-w-full divide-y divide-table-line">
+                                <thead class="bg-muted">
+                                  <tr>
+                                    <th scope="col" class="py-3 px-4 pe-0">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-all" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-all" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-muted-foreground-1 uppercase">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-muted-foreground-1 uppercase">Age</th>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-muted-foreground-1 uppercase">Address</th>
+                                    <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-muted-foreground-1 uppercase">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody class="divide-y divide-table-line">
+                                  <tr>
+                                    <td class="py-3 ps-4">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-1" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-1" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">John Brown</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">45</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">New York No. 1 Lake Park</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                      <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg text-primary hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="py-3 ps-4">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-2" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-2" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">Jim Green</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">27</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">London No. 1 Lake Park</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                      <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg text-primary hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="py-3 ps-4">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-3" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-3" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">Joe Black</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">31</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">Sidney No. 1 Lake Park</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                      <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg text-primary hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="py-3 ps-4">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-4" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-4" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">Edward King</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">16</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">LA No. 1 Lake Park</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                      <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg text-primary hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                    </td>
+                                  </tr>
+
+                                  <tr>
+                                    <td class="py-3 ps-4">
+                                      <div class="flex items-center h-5">
+                                        <input id="hs-table-search-checkbox-5" type="checkbox" class="shrink-0 size-4 bg-transparent border-line-3 rounded-sm shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none">
+                                        <label for="hs-table-search-checkbox-5" class="sr-only">Checkbox</label>
+                                      </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">Jim Red</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">45</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-foreground">Melbourne No. 1 Lake Park</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                      <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg text-primary hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <!-- End Table -->

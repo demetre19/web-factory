@@ -1,0 +1,127 @@
+<header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full py-3 bg-navbar border-b border-navbar-line">
+                            <nav class="max-w-340 w-full mx-auto px-4 md:px-6 lg:px-8">
+                              <div class="relative sm:flex sm:items-center">
+                                <div class="flex items-center justify-between">
+                                  <a class="flex-none font-semibold text-xl text-foreground focus:outline-hidden focus:opacity-80" href="#" aria-label="Brand">Brand</a>
+                                  <div class="sm:hidden">
+                                    <button type="button" class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-x-2 rounded-lg bg-layer border border-layer-line text-layer-foreground shadow-2xs hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none" id="hs-navbar-basic-usage-collapse" aria-expanded="false" aria-controls="hs-navbar-basic-usage" aria-label="Toggle navigation" data-hs-collapse="#hs-navbar-basic-usage">
+                                      <svg class="hs-collapse-open:hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+                                      <svg class="hs-collapse-open:block hidden shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                    </button>
+                                  </div>
+                                </div>
+
+                                <div id="hs-navbar-basic-usage" class="hidden hs-collapse sm:overflow-hidden transition-all duration-300 basis-full grow sm:block" aria-labelledby="hs-navbar-basic-usage-collapse" role="region">
+                                  <div class="flex flex-col gap-y-3 sm:gap-y-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
+                                    <a class="sm:p-2 text-sm font-medium text-primary-active focus:outline-hidden" href="#" aria-current="page">Active</a>
+
+                                    <div class="hs-dropdown [--strategy:static] sm:[--strategy:absolute] [--adaptive:none] sm:[--trigger:hover] [--auto-close:inside] [--is-collapse:true] sm:[--is-collapse:false] ">
+                                      <button id="hs-mega-menu" type="button" class="hs-dropdown-toggle sm:p-2 flex items-center w-full text-sm text-navbar-nav-foreground hover:text-primary-hover focus:outline-hidden focus:text-primary-focus" aria-haspopup="menu" aria-expanded="false" aria-label="Mega Menu">
+                                        Mega Menu
+                                        <svg class="hs-dropdown-open:-rotate-180 sm:hs-dropdown-open:rotate-0 duration-300 ms-auto sm:ms-2 shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                      </button>
+
+                                      <div class="hs-dropdown-menu sm:transition-[opacity,margin] sm:ease-in-out sm:duration-150 hs-dropdown-open:opacity-100 opacity-0 w-full hidden z-10  top-full inset-s-0 min-w-60 sm:bg-dropdown sm:border sm:border-dropdown-line sm:shadow-md rounded-lg py-2 sm:px-2 before:absolute" role="menu" aria-orientation="vertical" aria-labelledby="hs-mega-menu">
+                                        <div class="flex flex-col sm:flex-row">
+                                          <select id="hs-catalog-sidebar-nav-select" class="hidden" data-hs-select='{
+                                            "placeholder": "Select option...",
+                                            "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"flex-1 text-navbar-nav-foreground hover:text-primary-hover focus:text-primary-focus\" data-title></span></button>",
+                                            "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative pe-7 flex items-center text-nowrap w-full cursor-pointer text-foreground text-start text-sm",
+                                            "wrapperClasses": "sm:hidden mb-2",
+                                            "dropdownClasses": "mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-select border border-select-line rounded-lg shadow-xl overflow-hidden overflow-y-auto focus:outline-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb",
+                                            "optionClasses": "hs-selected:bg-select-item-active py-1 px-2 w-full text-sm text-select-item-foreground cursor-pointer hover:bg-select-item-hover rounded-lg focus:outline-hidden focus:bg-select-item-focus",
+                                            "optionTemplate": "<div class=\"flex items-center\"><div class=\"me-3\" data-icon></div><div class=\"text-foreground\" data-title></div></div>",
+                                            "extraMarkup": "<div class=\"absolute top-1/2 inset-e-0 -translate-y-1/2\"><svg class=\"shrink-0 size-4 text-muted-foreground-1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m6 9 6 6 6-6\"/></svg></div>"
+                                          }'>
+                                            <option value="#mega-menu-tab-1" data-hs-select-option='{
+                                            }' selected>Tab 1</option>
+                                            <option value="#mega-menu-tab-2" data-hs-select-option='{
+                                            }'>Tab 2</option>
+                                            <option value="#mega-menu-tab-3" data-hs-select-option='{
+                                            }'>Tab 3</option>
+                                            <option value="#mega-menu-tab-4" data-hs-select-option='{
+                                            }'>Tab 4</option>
+                                            <option value="#mega-menu-tab-5" data-hs-select-option='{
+                                            }'>Tab 5</option>
+                                            <option value="#mega-menu-tab-6" data-hs-select-option='{
+                                            }'>Tab 6</option>
+                                            <option value="#mega-menu-tab-7" data-hs-select-option='{
+                                            }'>Tab 7</option>
+                                          </select>
+
+                                          <div class="hidden sm:block border-e border-line-2">
+                                            <nav class="flex flex-col space-y-2" aria-label="Tabs" role="tablist" aria-orientation="vertical" data-hs-tabs='{
+                                              "eventType": "hover",
+                                              "preventNavigationResolution": "sm"
+                                              }' data-hs-tab-select="#hs-catalog-sidebar-nav-select">
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none active" id="mega-menu-tab-item-1" aria-selected="true" data-hs-tab="#mega-menu-tab-1" aria-controls="mega-menu-tab-1">
+                                                Tab 1
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-2" aria-selected="false" data-hs-tab="#mega-menu-tab-2" aria-controls="mega-menu-tab-2">
+                                                Tab 2
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-3" aria-selected="false" data-hs-tab="#mega-menu-tab-3" aria-controls="mega-menu-tab-3">
+                                                Tab 3
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-4" aria-selected="false" data-hs-tab="#mega-menu-tab-4" aria-controls="mega-menu-tab-4">
+                                                Tab 4
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-5" aria-selected="false" data-hs-tab="#mega-menu-tab-5" aria-controls="mega-menu-tab-5">
+                                                Tab 5
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-6" aria-selected="false" data-hs-tab="#mega-menu-tab-6" aria-controls="mega-menu-tab-6">
+                                                Tab 6
+                                              </a>
+                                              <a href="#" class="hs-tab-active:border-primary-active hs-tab-active:text-primary-active py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-muted-foreground-1 hover:text-primary-hover focus:outline-hidden focus:text-primary-focus disabled:opacity-50 disabled:pointer-events-none" id="mega-menu-tab-item-7" aria-selected="false" data-hs-tab="#mega-menu-tab-7" aria-controls="mega-menu-tab-7">
+                                                Tab 7
+                                              </a>
+                                            </nav>
+                                          </div>
+
+                                          <div class="sm:ms-3 p-3 sm:p-0 border border-line-2 sm:border-transparent rounded-lg">
+                                            <div id="mega-menu-tab-1" role="tabpanel" aria-labelledby="mega-menu-tab-item-1">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">first</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-2" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-2">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">second</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-3" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-3">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">third</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-4" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-4">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">fourth</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-5" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-5">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">fifth</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-6" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-6">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">sixth</em> item's tab body.
+                                              </p>
+                                            </div>
+                                            <div id="mega-menu-tab-7" class="hidden" role="tabpanel" aria-labelledby="mega-menu-tab-item-7">
+                                              <p class="text-muted-foreground-1">
+                                                This is the <em class="font-semibold text-foreground">seventh</em> item's tab body.
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <a class="sm:p-2 text-sm text-navbar-nav-foreground hover:text-primary-hover focus:outline-hidden focus:text-primary-focus" href="#">Project</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </nav>
+                          </header>

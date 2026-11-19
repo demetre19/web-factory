@@ -1,0 +1,39 @@
+<!-- Navigation Toggle -->
+                              <div class="lg:hidden py-16 text-center">
+                                <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-x-2 text-start bg-secondary border border-secondary-line text-secondary-foreground text-sm font-medium rounded-lg shadow-2xs hover:bg-secondary-hover focus:outline-hidden focus:bg-secondary-focus" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-sidebar-empty-content" aria-label="Toggle navigation" data-hs-overlay="#hs-sidebar-empty-content">
+                                  Open
+                                </button>
+                              </div>
+                              <!-- End Navigation Toggle -->
+
+                              <!-- Sidebar -->
+                              <div id="hs-sidebar-empty-content" class="hs-overlay [--auto-close:lg] lg:block lg:translate-x-0 lg:inset-e-auto lg:bottom-0 w-64
+                              hs-overlay-open:translate-x-0
+                              -translate-x-full transition-all duration-300 transform
+                              h-full
+                              hidden
+                              
+                              fixed top-0 inset-s-0 bottom-0 z-60
+                              bg-sidebar border-e border-sidebar-line" role="dialog" tabindex="-1" aria-label="Sidebar" >
+                                <div class="relative flex flex-col h-full max-h-full ">
+                                    <!-- Header -->
+                                    <header class=" p-4 flex justify-end items-center gap-x-2">
+
+                                      <div class="lg:hidden -me-2">
+                                        <!-- Close Button -->
+                                        <button type="button" class="flex justify-center items-center gap-x-3 size-6 bg-layer border border-layer-line text-sm text-muted-foreground-2 hover:bg-layer-hover rounded-full disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-layer-focus" data-hs-overlay="#hs-sidebar-empty-content">
+                                          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                                          <span class="sr-only">Close</span>
+                                        </button>
+                                        <!-- End Close Button -->
+                                      </div>
+                                    </header>
+                                    <!-- End Header -->
+
+                                    <!-- Body -->
+                                    <nav class="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb">
+                                    </nav>
+                                    <!-- End Body -->
+                                </div>
+                              </div>
+                              <!-- End Sidebar -->

@@ -1,0 +1,698 @@
+<!-- Time Picker -->
+                          <div class="max-w-32">
+                            <div class="relative w-full">
+                              <input type="text" class="py-2.5 sm:py-3 ps-4 pe-12 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" placeholder="hh:mm aa">
+
+                              <div class="absolute inset-y-0 inset-e-0 flex items-center pe-3">
+                                <!-- Dropdown -->
+                                <div class="hs-dropdown [--auto-close:inside] relative inline-flex">
+                                  <button id="hs-custom-style-time-picker" type="button" class="hs-dropdown-toggle size-7 shrink-0 inline-flex justify-center items-center rounded-full bg-layer text-layer-foreground hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                                    <span class="sr-only">Dropdown</span>
+                                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                  </button>
+
+                                  <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-30 bg-dropdown border border-dropdown-line shadow-xl rounded-lg after:h-4 after:absolute after:-bottom-4 after:inset-s-0 after:w-full before:h-4 before:absolute before:-top-4 before:inset-s-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-custom-style-time-picker">
+                                    <div class="flex flex-row divide-x divide-dropdown-divider">
+                                      <!-- Hours -->
+                                      <div class="p-1 max-h-56 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb">
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh00" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh00" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            00
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh01" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh01" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            01
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh02" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh02" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            02
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh03" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh03" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            03
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh04" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh04" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            04
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh05" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh05" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            05
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh06" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh06" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            06
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh07" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh07" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            07
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh08" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh08" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            08
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh09" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh09" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            09
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh10" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh10" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            10
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh11" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh11" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            11
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh12" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh12" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            12
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh13" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh13" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            13
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh14" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh14" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            14
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh15" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh15" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            15
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh16" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh16" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            16
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh17" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh17" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            17
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh18" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh18" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            18
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh19" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh19" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            19
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh20" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh20" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            20
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh21" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh21" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            21
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh22" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh22" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            22
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlhh23" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlhh23" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlhh">
+                                          <span class="block">
+                                            23
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                      </div>
+                                      <!-- End Hours -->
+
+                                      <!-- Minutes -->
+                                      <div class="p-1 max-h-56 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb">
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm00" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm00" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            00
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm01" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm01" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            01
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm02" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm02" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            02
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm03" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm03" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            03
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm04" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm04" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            04
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm05" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm05" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            05
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm06" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm06" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            06
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm07" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm07" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            07
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm08" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm08" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            08
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm09" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm09" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            09
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm10" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm10" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            10
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm11" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm11" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            11
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm12" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm12" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            12
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm13" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm13" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            13
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm14" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm14" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            14
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm15" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm15" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            15
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm16" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm16" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            16
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm17" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm17" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            17
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm18" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm18" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            18
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm19" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm19" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            19
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm20" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm20" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            20
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm21" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm21" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            21
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm22" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm22" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            22
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlmm23" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlmm23" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlmm">
+                                          <span class="block">
+                                            23
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                      </div>
+                                      <!-- End Minutes -->
+
+                                      <!-- 12-Hour Clock System -->
+                                      <div class="p-1 max-h-56 overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb">
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlcsam" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlcsam" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlcs">
+                                          <span class="block">
+                                            AM
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                        <!-- Checkbox -->
+                                        <label for="hs-cbchlcspm" class="group relative flex justify-center items-center p-1.5 w-10 text-center text-sm text-foreground cursor-pointer rounded-md hover:bg-muted-hover
+                                        has-checked:bg-primary
+                                        has-checked:text-primary-foreground
+                                        has-disabled:pointer-events-none
+                                        has-disabled:opacity-50
+                                        has-disabled:text-muted-foreground">
+                                          <input type="radio" id="hs-cbchlcspm" class="hidden bg-transparent border-line-2 text-primary focus:ring-layer focus:ring-offset-0" name="hs-cbchlcs">
+                                          <span class="block">
+                                            PM
+                                          </span>
+                                        </label>
+                                        <!-- End Checkbox -->
+                                      </div>
+                                      <!-- End 12-Hour Clock System -->
+                                    </div>
+
+                                    <!-- Footer -->
+                                    <div class="py-2 px-3 flex flex-wrap justify-between items-center gap-2 border-t border-dropdown-footer">
+                                      <button type="button" class="text-[13px] font-medium rounded-md bg-layer text-layer-foreground hover:text-primary-hover disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:text-primary-focus">
+                                        Now
+                                      </button>
+                                      <button type="button" class="py-1 px-2.5 text-[13px] font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary-hover disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:bg-primary-focus">
+                                        OK
+                                      </button>
+                                    </div>
+                                    <!-- End Footer -->
+                                  </div>
+                                </div>
+                                <!-- End Dropdown -->
+                              </div>
+                            </div>
+                          </div>
+                          <!-- End Time Picker -->

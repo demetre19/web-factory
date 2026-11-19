@@ -1,0 +1,36 @@
+{
+  "source": "generativeicons.com",
+  "vendor": "LottieFiles",
+  "licence": "MIT (library icons; catalog license field is MIT on all 1161)",
+  "format": ".lottie (dotLottie)",
+  "requires_runtime": true,
+  "runtime": "@lottiefiles/generative-icons-runtime",
+  "classification": "library-required",
+  "css_only": false,
+  "animation": "JS-driven (dotLottie player). NOT CSS-animatable stroke-draw. NOT tamdoma css-only.",
+  "static_svg_export": false,
+  "static_note": "API /api/v1/icons/<id> returns snippets for javascript/react/ios/android only. No SVG path, no first-frame SVG. Static path does not exist.",
+  "catalog": "catalog.json",
+  "catalog_counts": {"icons": 1161, "categories": 57},
+  "search_fields": ["intent", "aliases", "label", "category"],
+  "api": {
+    "search": "GET https://generativeicons.com/api/v1/icons?q=",
+    "icon": "GET https://generativeicons.com/api/v1/icons/<id>",
+    "categories": "GET https://generativeicons.com/api/v1/categories",
+    "rate": "120 req/min unauthenticated"
+  },
+  "priority": "FALLBACK — last resort, do not reach for it first",
+  "usage_order": [
+    "1. tamdoma CSS/SVG recipes",
+    "2. Lucide inline SVG — default",
+    "3. CSS-animatable SVG / drawn icons",
+    "4. this library only when nothing else fits AND the icon genuinely needs animation, declared in the plan",
+    "5. Rive (.riv) ranks below this — heavier, same exception class"
+  ],
+  "usage_paths": {
+    "animated": "library-required; last resort. Same plan justification as GSAP.",
+    "static": "unavailable — no SVG export"
+  },
+  "default_icon_set": "lucide",
+  "role": "saved fallback for when an icon genuinely needs animation. Not a replacement for Lucide."
+}

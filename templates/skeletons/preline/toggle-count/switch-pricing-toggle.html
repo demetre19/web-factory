@@ -1,0 +1,68 @@
+<div id="hs-toggle-count">
+
+                            <!-- Switch Toggle -->
+                            <div class="mb-4 flex justify-center items-center gap-x-3">
+                              <label for="toggle-count" class="text-sm text-foreground">Monthly</label>
+                              <label for="toggle-count" class="relative inline-block w-11 h-6 cursor-pointer">
+                                <input type="checkbox" id="toggle-count" class="peer sr-only">
+                                <span class="absolute inset-0 bg-surface-1 rounded-full transition-colors duration-200 ease-in-out peer-checked:bg-primary-checked peer-disabled:opacity-50 peer-disabled:pointer-events-none"></span>
+                                <span class="absolute top-1/2 inset-s-0.5 -translate-y-1/2 size-5 bg-switch rounded-full shadow-sm transition-transform duration-200 ease-in-out peer-checked:translate-x-full"></span>
+                              </label>
+                              <label for="toggle-count" class="text-sm text-foreground">Annual</label>
+                            </div>
+                            <!-- End Switch Toggle -->
+
+                            <!-- Card Grid -->
+                            <div class="grid grid-cols-3 lg:items-center border border-line-2 rounded-xl">
+                              <!-- Card -->
+                              <div class="flex flex-col p-4">
+                                <h4 class="text-foreground mb-1">Startup</h4>
+                                <div class="flex gap-x-1">
+                                  <span class="text-xl font-normal text-foreground">$</span>
+                                  <p data-hs-toggle-count='{
+                                      "target": "#toggle-count",
+                                      "min": 19,
+                                      "max": 29
+                                    }' class="text-foreground font-semibold text-3xl tabular-nums">
+                                    19
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- End Card -->
+
+                              <!-- Card -->
+                              <div class="flex flex-col p-4">
+                                <div class="flex justify-between">
+                                  <h4 class="text-foreground mb-1">Team</h4>
+                                </div>
+                                <div class="flex gap-x-1">
+                                  <span class="text-xl font-normal text-foreground">$</span>
+                                  <p data-hs-toggle-count='{
+                                      "target": "#toggle-count",
+                                      "min": 89,
+                                      "max": 99
+                                    }' class="text-foreground font-semibold text-3xl tabular-nums">
+                                    89
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- End Card -->
+
+                              <!-- Card -->
+                              <div class="flex flex-col p-4">
+                                <h4 class="text-foreground mb-1">Enterprise</h4>
+                                <div class="flex gap-x-1">
+                                  <span class="text-xl font-normal text-foreground">$</span>
+                                  <p data-hs-toggle-count='{
+                                      "target": "#toggle-count",
+                                      "min": 129,
+                                      "max": 149
+                                    }' class="text-foreground font-semibold text-3xl tabular-nums">
+                                    129
+                                  </p>
+                                </div>
+                              </div>
+                              <!-- End Card -->
+                            </div>
+                            <!-- End Card Grid -->
+                          </div>

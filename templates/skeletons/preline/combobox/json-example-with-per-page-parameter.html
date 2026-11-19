@@ -1,0 +1,29 @@
+<!-- End Combobox -->
+                        <div id="hs-combobox-json-example-with-per-page-parameter" class="relative" data-hs-combo-box='{
+                          "apiUrl": "https://api.worldbank.org/v2/country",
+                          "apiQuery": "format=json&amp;per_page=10",
+                          "apiDataPart": 1,
+                          "outputItemTemplate": "<div class=\"cursor-pointer py-2 px-4 w-full text-sm text-select-item-foreground hover:bg-select-item-hover rounded-lg focus:outline-hidden focus:bg-select-item-focus\" data-hs-combo-box-output-item><div class=\"flex justify-between items-center w-full\"><div><div class=\"hidden\" data-hs-combo-box-output-item-field=\"numericCode\"></div><div data-hs-combo-box-output-item-field=\"name\" data-hs-combo-box-search-text data-hs-combo-box-value></div></div><span class=\"hidden hs-combo-box-selected:block\"><svg class=\"shrink-0 size-3.5 text-primary\" xmlns=\"http:.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"20 6 9 17 4 12\"></polyline></svg></span></div></div>"
+                        }'>
+                          <div class="relative">
+                            <input class="py-2.5 sm:py-3 ps-4 pe-9 block w-full bg-layer border-layer-line rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none" type="text" role="combobox" aria-expanded="false" value="Argentina" data-hs-combo-box-input>
+                            <div class="absolute top-1/2 inset-e-3 -translate-y-1/2" aria-expanded="false" role="button" data-hs-combo-box-toggle>
+                              <svg class="shrink-0 size-3.5 text-muted-foreground-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg>
+                            </div>
+                          </div>
+                          <div class="absolute z-50 w-full max-h-72 p-1 bg-select border border-select-line rounded-lg shadow-xl overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-none [&::-webkit-scrollbar-track]:bg-scrollbar-track [&::-webkit-scrollbar-thumb]:bg-scrollbar-thumb" style="display: none;" role="listbox" data-hs-combo-box-output></div>
+                        </div>
+                        <!-- End Combobox -->
+
+                        <!-- Log Selected -->
+                        <div class="mt-5 pt-5 border-t border-line-2">
+                          <div class="hs-tooltip [--placement:auto] inline-block">
+                            <button id="hs-log-combobox-json-example-with-per-page-parameter-current-data" type="button" class="hs-tooltip-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-layer border border-layer-line text-layer-foreground shadow-2xs hover:bg-layer-hover focus:outline-hidden focus:bg-layer-focus disabled:opacity-50 disabled:pointer-events-none">
+                              Log Selected
+                              <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block max-w-50 absolute invisible z-10 py-1 px-2 bg-tooltip border border-tooltip-line text-xs font-medium text-tooltip-foreground rounded-md shadow-2xs" role="tooltip">
+                                Click and open the developer console to see the current state of the component.
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                        <!-- End Log Selected -->

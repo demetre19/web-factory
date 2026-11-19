@@ -23,7 +23,8 @@ UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, '..', '..'))
 OUT = os.path.join(ROOT, 'templates', 'skeletons', 'brixies')
-RATE = 0.8
+RATE = 8.0  # ~450/hr, rides just under the measured ~434 ceiling
+
 
 
 def slugify(t):
@@ -34,9 +35,10 @@ class KeyRevoked(Exception):
     pass
 
 
-def get(path, params=None, tries=4):
-    """Sequential fetch. 401 aborts the whole run (dead key — never
-    hammer). 429/5xx retry with backoff."""
+def get(path, params=None, tries=30):
+    """Sequential fetch, paced under the 300 req/hour account cap.
+    401 aborts the run (dead key — never hammer). 429 waits minutes
+    and retries; the cap resets on a rolling hour."""
     url = BASE + path
     if params:
         url += '?' + urllib.parse.urlencode(params)
@@ -51,7 +53,11 @@ def get(path, params=None, tries=4):
             if e.code == 401:
                 raise KeyRevoked(url)
             if e.code == 429 or e.code >= 500:
-                time.sleep(4 * (a + 1))
+                # rolling-hour cap: 180s x 30 = up to 90min, outlasts the window
+                wait = 180 if e.code == 429 else 4 * (a + 1)
+                print(f'  HTTP {e.code}, retry {a + 1}/{tries} in {wait}s',
+                      flush=True)
+                time.sleep(wait)
                 continue
             print(f'  HTTP {e.code} {url}', flush=True)
             return None
@@ -78,6 +84,14 @@ def fetch_batch(jobs):
     return out
 
 
+PRIORITY = ['Feature Sections', 'Cards', 'Hero Sections',
+            'Content Sections', 'FAQ Sections', 'Testimonial Sections',
+            'Pricing Sections', 'Contact Sections', 'Gallery Sections',
+            'Process Sections', 'Timeline Sections', 'Team Sections',
+            'Logo Sections', 'Forms', 'Headers', 'Footers', 'Sliders',
+            'Tables', 'Counters', 'Social Proofs']
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     try:
@@ -85,50 +99,38 @@ def main():
     except KeyRevoked:
         print('ABORT: key 401 on /categories — not hammering', flush=True)
         return
-    print(f'{len(cats)} categories', flush=True)
-    # pass 1: count (search pages only, no /json pulls)
+    if not cats:
+        print('ABORT: /categories returned nothing', flush=True)
+        return
+    # priority categories first, then the remainder
+    ordered = [c for c in PRIORITY if c in cats]
+    ordered += [c for c in cats if c not in ordered]
+    print(f'{len(cats)} categories, priority-ordered', flush=True)
+    # harvest-direct: paginate search, pull /json for each id at once
+    n_new = 0
     catalog = {}
     try:
-        for cat in cats:
-            items, page = [], 1
+        for cat in ordered:
+            cdir = os.path.join(OUT, slugify(cat))
+            os.makedirs(cdir, exist_ok=True)
+            got, page = 0, 1
             while True:
                 d = get('/search', {'framework': 'ACSS',
                                     'category': cat, 'page': page})
                 if not d or not d.get('items'):
                     break
-                items += [it for it in d['items']
-                          if it['framework'] == 'ACSS']
-                if page >= d.get('pages', 1):
-                    break
-                page += 1
-            catalog[cat] = items
-            print(f'  count {cat}: {len(items)}', flush=True)
-    except KeyRevoked as e:
-        print(f'ABORT: key 401 during count ({e})', flush=True)
-        return
-    total = sum(len(v) for v in catalog.values())
-    print(f'COUNT total {total} ACSS items across {len(cats)} cats',
-          flush=True)
-    # pass 2: pull /json in batches, skip files already on disk
-    n_new = 0
-    try:
-        for cat, items in catalog.items():
-            cdir = os.path.join(OUT, slugify(cat))
-            os.makedirs(cdir, exist_ok=True)
-            pending = []
-            for it in items:
-                slug = slugify(it.get('block_name') or it['title'])
-                if os.path.exists(os.path.join(cdir, slug + '.json')):
-                    continue
-                pending.append(it)
-            for i in range(0, len(pending), BATCH):
-                for it in pending[i:i + BATCH]:
+                for it in d['items']:
+                    if it.get('framework') != 'ACSS':
+                        continue
                     slug = slugify(it.get('block_name') or it['title'])
+                    raw_p = os.path.join(cdir, slug + '.json')
+                    if os.path.exists(raw_p):
+                        got += 1
+                        continue
                     doc = get('/json/' + str(it['id']))
                     if not doc:
                         continue
-                    json.dump(doc, open(os.path.join(
-                        cdir, slug + '.json'), 'w'), indent=1)
+                    json.dump(doc, open(raw_p, 'w'), indent=1)
                     json.dump({
                         'id': it['id'], 'title': it['title'],
                         'type': it.get('type'),
@@ -145,21 +147,20 @@ def main():
                         open(os.path.join(cdir, slug + '.spec.json'), 'w'),
                         indent=1)
                     n_new += 1
-                if i + BATCH < len(pending):
-                    time.sleep(BATCH_PAUSE)
-            print(f'{cat}: {len(items)} items, {len(pending)} fetched',
-                  flush=True)
+                    got += 1
+                if page >= d.get('pages', 1):
+                    break
+                page += 1
+            catalog[cat] = got
+            print(f'{cat}: {got} items ({n_new} new total)', flush=True)
     except KeyRevoked as e:
-        print(f'ABORT: key 401 mid-pull ({e}); {n_new} saved, '
-              f'resume-safe', flush=True)
-    index = {c: sorted({it['id'] for it in v})
-             for c, v in catalog.items()}
+        print(f'ABORT: key 401 ({e}); {n_new} saved, resume-safe',
+              flush=True)
     json.dump({'fetched_at': time.strftime('%Y-%m-%dT%H:%M:%SZ',
                                            time.gmtime()),
-               'framework': 'ACSS', 'total_items': total,
-               'categories': index},
+               'framework': 'ACSS', 'categories': catalog},
               open(os.path.join(OUT, 'index.json'), 'w'), indent=1)
-    print(f'DONE {n_new} new, {total} catalogued', flush=True)
+    print(f'DONE {n_new} new this run', flush=True)
 
 
 if __name__ == '__main__':
