@@ -24,8 +24,8 @@ const {
 
 <div>
   <div class="bm-footer-21__cta-container">
-    <h2 class="bm-footer-21__heading">Helping business owners grow their teams</h2>
-    <p class="bm-footer-21__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <h2 class="bm-footer-21__heading">{heading}</h2>
+    <p class="bm-footer-21__subheading">{fs}</p>
     <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
   </div>
   <div class="bm-footer-21__footer-container">
@@ -104,7 +104,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-21 {
     background: var(--bg-canvas);
     row-gap: var(--space-s);
@@ -281,5 +281,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

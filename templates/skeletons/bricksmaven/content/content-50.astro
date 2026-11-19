@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-content-50__container">
     <div class="bm-content-50__content">
-      <h2 class="bm-content-50__heading">Long headline to turn your visitors into customers</h2>
-      <p class="bm-content-50__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      <h2 class="bm-content-50__heading">{heading}</h2>
+      <p class="bm-content-50__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-content-50__media list--none">
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-50 {
     padding: var(--section-space-l) 0 0 0;
   }
@@ -122,5 +122,4 @@ const {
     }
   
   }
-}
 </style>

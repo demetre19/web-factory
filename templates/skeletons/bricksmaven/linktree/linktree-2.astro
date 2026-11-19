@@ -32,7 +32,7 @@ const {
             <p class="bm-linktree-2-bio__name">John Smith</p>
             <p class="bm-linktree-2-bio__title">Add your title</p>
           </div>
-          <p class="bm-linktree-2-bio__short-biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="bm-linktree-2-bio__short-biography">{fs}</p>
         </div>
       </div>
       <div class="bm-linktree-2__links">
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-linktree-2 {
     background: var(--bg-subtle);
     height: 100vh;
@@ -141,5 +141,4 @@ const {
   .bm-social-share--left {
     justify-content: flex-start;
   }
-}
 </style>

@@ -26,10 +26,10 @@ const {
   <div class="bm-content-55__container">
     <div class="bm-content-55__intro">
       <div class="bm-content-55__column">
-        <h2 class="bm-content-55__heading">Long headline to turn your visitors into customers</h2>
+        <h2 class="bm-content-55__heading">{heading}</h2>
         <p class="accent-h">Accent heading</p>
       </div>
-      <p class="bm-content-55__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-content-55__text">{fs}</p>
     </div>
     <div class="bm-content-55__content">
       <div class="bm-content-55-card">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-55 {
     background: var(--bg-subtle);
   }
@@ -74,5 +74,4 @@ const {
   .bm-content-55-card {
     row-gap: var(--flow-spacing);
   }
-}
 </style>

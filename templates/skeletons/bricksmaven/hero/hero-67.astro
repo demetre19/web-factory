@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-hero-67__container">
     <div class="bm-hero-67__intro">
-      <h1 class="bm-hero-67__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-67__heading">{heading}</h1>
       <p class="accent-h">Accent Heading</p>
-      <p class="bm-hero-67__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-hero-67__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary btn--white" href="#">Call to action</a>
         <a class="btn--link bm-hero-67__link" href="#">Secondary action →</a>
@@ -67,7 +67,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-67 {
     background: var(--text-secondary);
     overflow: hidden;
@@ -201,5 +201,4 @@ const {
   .bm-hero-67-slide:hover {
   	box-shadow: 0 0 2rem 0 rgb(0,0,0,0.2);
   }
-}
 </style>

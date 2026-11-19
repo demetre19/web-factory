@@ -26,7 +26,7 @@ const {
   <div class="bm-grid-35__container">
     <div class="bm-grid-35__grid">
       <div class="bm-grid-35__content">
-        <h2 class="bm-grid-35__heading">Long headline to turn your visitors into customers</h2>
+        <h2 class="bm-grid-35__heading">{heading}</h2>
         <div class="list--none bm-grid-35-list">
           {items.map((it) => (
             <div class="bm-grid-35-card">
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-grid-35__grid {
     display: grid;
     grid-template-columns: calc(100% * 3 / 1);
@@ -104,5 +104,4 @@ const {
   }
     
   }
-}
 </style>

@@ -26,7 +26,7 @@ const {
   <div class="bm-testimonial-57-slider__container">
     <div class="bm-testimonial-57-slider__content">
       <div class="bm-testimonial-57-slider__inner">
-        <h2 class="bm-testimonial-57-slider__heading">Bricks maven</h2>
+        <h2 class="bm-testimonial-57-slider__heading">{heading}</h2>
         <p class="bm-testimonial-57-slider__text">What others are saying about</p>
       </div>
       <figure class="bm-testimonial-57-slider__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-57-slider__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
@@ -161,5 +161,4 @@ const {
       display:none;
     }
   }
-}
 </style>

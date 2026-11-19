@@ -25,9 +25,9 @@ const {
 <div>
   <div class="header-page-7-container">
     <div class="header-page-7__content">
-      <h1 class="header-page__title">Short heading here</h1>
+      <h1 class="header-page__title">{heading}</h1>
       <p class="accent-h">Accent Heading</p>
-      <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <p class="header-page__desc">{fs}</p>
     </div>
     <div class="header-page-btn">
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-7-container {
     display: flex;
     flex-direction: column;
@@ -68,5 +68,4 @@ const {
     border-bottom: .1rem solid var(--action-primary);
     border-left: .1rem solid var(--action-primary);
   }
-}
 </style>

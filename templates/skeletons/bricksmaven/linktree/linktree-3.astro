@@ -31,7 +31,7 @@ const {
             <p class="bm-linktree-3-bio__name">John Smith</p>
             <p class="bm-linktree-3-bio__title">Add your title</p>
           </div>
-          <p class="bm-linktree-3-bio__short-biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="bm-linktree-3-bio__short-biography">{fs}</p>
         </div>
         <div class="bm-linktree-3-bio__media">
           <figure class="bm-linktree-3-bio__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-linktree-3 {
     background: var(--bg-subtle);
   }
@@ -128,5 +128,4 @@ const {
     background: var(--text-secondary);
     position: relative;
   }
-}
 </style>

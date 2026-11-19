@@ -27,11 +27,11 @@ const {
     <div class="bm-content-43__main">
       <div class="bm-content-43__column bm-content-43__column--alt">
         <div class="bm-content-43__top">
-          <h2 class="bm-content-43__heading">Long headline to turn your visitors into customers</h2>
+          <h2 class="bm-content-43__heading">{heading}</h2>
           <p class="accent-h">Accent heading</p>
         </div>
         <div class="bm-content-43__media">
-          <p class="bm-content-43__text">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+          <p class="bm-content-43__text">{fs}</p>
           <figure class="bm-content-43__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-43 {
     display: flex;
   }
@@ -92,5 +92,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

@@ -26,10 +26,10 @@ const {
   <div class="error-12-container">
     <div class="intro pad--m">
       <div class="intro__top">
-        <h2 class="intro__heading text--primary">404 error</h2>
+        <h2 class="intro__heading text--primary">{heading}</h2>
         <p class="intro__subheading intro__subheading--alt">Oops the page is gone</p>
       </div>
-      <p class="intro__subheading">Sorry, the page you are looking for doesn't exist.</p>
+      <p class="intro__subheading">{fs}</p>
       <div class="error-1-box__search"></div>
       <p class="intro__link">← Go back home</p>
     </div>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .error-12 {
     background: var(--bg-subtle);
     padding: 0 0 0 0;
@@ -106,5 +106,4 @@ const {
     position: static!important;
     width: auto;
   }
-}
 </style>

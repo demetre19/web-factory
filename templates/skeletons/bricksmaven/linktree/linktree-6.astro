@@ -34,7 +34,7 @@ const {
           <div class="bm-linktree-5-bio-card__media">
             <figure class="bm-linktree-5-bio-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <p class="bm-linktree-5-bio-card__short-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="bm-linktree-5-bio-card__short-bio">{fs}</p>
         </div>
       </div>
       <div class="bm-linktree-6__social">
@@ -60,7 +60,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-linktree-6 {
     padding: var(--section-space-l) 0 0 0;
     height: 100vh;
@@ -154,5 +154,4 @@ const {
     background: var(--text-secondary);
     position: relative;
   }
-}
 </style>

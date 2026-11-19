@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="cta-6-container">
-    <h2 class="cta-6__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
+    <h2 class="cta-6__heading">{heading}</h2>
     <div class="hero-1__cta">
       <a class="btn--primary hero-1-wrapper__cta--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       <a class="btn--primary btn--outline hero-1-wrapper__cta--outline" href={cta.href}>{cta.label}</a>
@@ -33,7 +33,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-6-container {
     display: flex;
     flex-direction: column;
@@ -64,5 +64,4 @@ const {
     border-bottom: .1rem solid var(--action-primary);
     border-left: .1rem solid var(--action-primary);
   }
-}
 </style>

@@ -26,7 +26,7 @@ const {
   <div class="bm-content-60__container">
     <div class="bm-content-60__intro">
       <div class="bm-content-60__wrapper">
-        <h2 class="bm-content-60__heading">Short heading to grab your users attention</h2>
+        <h2 class="bm-content-60__heading">{heading}</h2>
         <p class="accent-h accent-h--alt">Accent heading</p>
       </div>
       <figure class="bm-content-60__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -36,7 +36,7 @@ const {
         <h2 class="bm-content-60__top-heading">Paragraph headline to grab the readers attention. This headline can be as short or as long as needed.</h2>
       </div>
       <div class="bm-content-60__text-wrapper">
-        <p class="bm-content-60__text bm-content-60__columns">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <p class="bm-content-60__text bm-content-60__columns">{fs}</p>
       </div>
       <div class="bm-content-60__footer">
         <p class="bm-content-60__text">Connect with us on social media to stay in the loop with all things related to our brand:</p>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-60 {
     overflow: hidden;
   }
@@ -123,5 +123,4 @@ const {
   }
   
   }
-}
 </style>

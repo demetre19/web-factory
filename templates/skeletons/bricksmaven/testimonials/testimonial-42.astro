@@ -26,8 +26,8 @@ const {
   <div class="bm-testimonial-42__container">
     <div class="bm-testimonial-42__intro">
       <div class="bm-testimonial-42__content">
-        <h1 class="bm-testimonial-42__heading">ACSS + Bricksmaven will speed up your building process!</h1>
-        <p class="bm-testimonial-42__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-testimonial-42__heading">{heading}</h1>
+        <p class="bm-testimonial-42__text">{fs}</p>
         <a class="bm-testimonial-42__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
     </div>
@@ -73,7 +73,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-42 {
     background: var(--bg-subtle);
   }
@@ -148,5 +148,4 @@ const {
   .testimonial-36-card__client-title {
     font-size: var(--fs-0);
   }
-}
 </style>

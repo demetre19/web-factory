@@ -26,7 +26,7 @@ const {
   <div class="footer-1-container">
     <div class="footer-column-left">
       <img class="footer-1__logo"></img>
-      <p class="footer-1__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="footer-1__desc">{fs}</p>
       <div class="footer-1__social"></div>
     </div>
     <div class="footer-column-mid">
@@ -39,7 +39,7 @@ const {
       </div>
     </div>
     <div class="footer-column-right">
-      <h2 class="footer-1__title">Alpha</h2>
+      <h2 class="footer-1__title">{heading}</h2>
       <p class="footer-1__address">2100 Deurne, Belgium Tel: +354 587 9999 info@bricksmaven.com</p>
     </div>
   </div>
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-1 {
     justify-content: center;
     row-gap: var(--space-s);
@@ -150,5 +150,4 @@ const {
   .footer-1__link {
   	color: var(--text-primary);
   }
-}
 </style>

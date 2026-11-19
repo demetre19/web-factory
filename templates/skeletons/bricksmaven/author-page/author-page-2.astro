@@ -47,7 +47,7 @@ const {
       </div>
     </div>
     <div class="bm-author-page-2__post-container">
-      <h2 class="bm-author-page-2__heading">All Posts By {author_name}</h2>
+      <h2 class="bm-author-page-2__heading">{heading}</h2>
       <div class="bm-author-page-2-post-list">
         <div class="bm-blog-archive-6-card">
           <div class="bm-blog-archive-6-card__media">
@@ -65,7 +65,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-author-page-2__container {
     width: 100%;
     row-gap: var(--space-s);
@@ -169,5 +169,4 @@ const {
   .bm-blog-archive-6-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

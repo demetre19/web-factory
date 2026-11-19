@@ -30,7 +30,7 @@ const {
           <figure class="bm-author-card-3__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
         <div class="bm-author-card-3__content">
-          <h1 class="bm-author-card-3__heading">Author: {author_name}</h1>
+          <h1 class="bm-author-card-3__heading">{heading}</h1>
           <p class="bm-author-card-3__text-basic">{author_bio}</p>
         </div>
       </div>
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-author-page-3 {
     padding: 0 0 0 0;
     row-gap: var(--space-s);
@@ -150,5 +150,4 @@ const {
   .bm-blog-section-22-card__date {
     font-size: var(--fs-0);
   }
-}
 </style>

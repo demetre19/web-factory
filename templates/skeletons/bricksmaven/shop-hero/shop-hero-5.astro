@@ -26,9 +26,9 @@ const {
   <div class="bm-shop-hero-5__container">
     <div class="bm-shop-hero-5__intro">
       <div class="bm-shop-hero-5__top">
-        <h1 class="bm-shop-hero-5__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-shop-hero-5__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
-        <p class="bm-shop-hero-5__text-basic">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-shop-hero-5__text-basic">{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
@@ -67,7 +67,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-shop-hero-5__container {
     display: grid;
     gap: var(--space-m);
@@ -196,5 +196,4 @@ const {
     aspect-ratio: 6/4;
   }
   }
-}
 </style>

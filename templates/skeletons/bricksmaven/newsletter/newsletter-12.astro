@@ -26,8 +26,8 @@ const {
   <div class="bm-newsletter-12__container">
     <div class="bm-newsletter-12__content">
       <div class="bm-newsletter-12__top">
-        <h2 class="bm-newsletter-12__heading">Build, Grow & Earn your keep</h2>
-        <p class="bm-newsletter-12__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="bm-newsletter-12__heading">{heading}</h2>
+        <p class="bm-newsletter-12__text">{fs}</p>
       </div>
       <div class="bm-newsletter-12__footer">
         <div class="bm-author-card">
@@ -69,7 +69,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-newsletter-12 {
     background: var(--bg-subtle);
     row-gap: var(--space-s);
@@ -230,5 +230,4 @@ const {
   .bm-team-media:first-child {
   	margin-inline-start: 0px;
   }
-}
 </style>

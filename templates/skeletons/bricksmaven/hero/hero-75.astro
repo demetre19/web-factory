@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-75__container">
     <div class="bm-hero-75__top">
       <div class="bm-hero-75__content">
-        <h1 class="bm-hero-75__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-75__heading">{heading}</h1>
         <p class="bm-accent-heading">Accent heading</p>
-        <p class="bm-hero-75__text">Hello, I'm Ryan, a creative and forward-thinking videographer with more than 10 years of experience. My passion for visual storytelling and cutting-edge technology has shaped my journey, blending art and innovation to capture compelling visuals</p>
+        <p class="bm-hero-75__text">{fs}</p>
       </div>
       <div class="bm-hero-75__cta">
         <a class="bm-hero-75__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-75__container {
     row-gap: var(--space-s);
   }
@@ -127,5 +127,4 @@ const {
   .bm-hero-75-image-wrapper:last-child .bm-hero-75-image-wrapper__image {
     border-top-right-radius: var(--acss-image-radius);
   }
-}
 </style>

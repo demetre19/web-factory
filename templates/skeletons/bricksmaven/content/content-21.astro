@@ -25,8 +25,8 @@ const {
 <div>
   <div class="content-21-container">
     <div class="content-21__content">
-      <h2 class="content-21__heading">What is Lorem Ipsum?</h2>
-      <p class="content-21__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      <h2 class="content-21__heading">{heading}</h2>
+      <p class="content-21__text">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="content-21__media">
@@ -36,7 +36,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-21 {
     background: var(--bg-subtle);
     position: relative;
@@ -74,5 +74,4 @@ const {
     left:0;
     bottom:0;
   }
-}
 </style>

@@ -25,13 +25,13 @@ const {
 <div>
   <div class="cart-page-1__container">
     <div class="cart-page-1__intro">
-      <h2 class="cart-page-1__heading">Cart</h2>
+      <h2 class="cart-page-1__heading">{heading}</h2>
     </div>
     <div class="bm-woo-notice-container">
       <div class="bm-woo-notice"></div>
     </div>
     <div>
-      <p>{do_action:woocommerce_before_cart}</p>
+      <p>{fs}</p>
     </div>
     <div class="cart-page-1__cart-container">
       <div class="cart-page-1__cart-items-container">
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cart-page-1__intro {
     align-items: center;
     text-align: center;
@@ -217,5 +217,4 @@ const {
         	font-size: var(--fs-2);
     	}
   }
-}
 </style>

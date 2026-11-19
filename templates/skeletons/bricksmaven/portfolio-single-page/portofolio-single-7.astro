@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-portfolio-single-7__container">
     <div class="bm-portfolio-single-7__intro">
-      <h1 class="bm-portfolio-single-7__intro-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <h1 class="bm-portfolio-single-7__intro-heading">{heading}</h1>
       <div class="bm-portfolio-single-meta-data-1 bm-portfolio-single-meta-data-1--inline bm-portfolio-single-meta-data-1--order">
         {items.map((it) => (
           <div class="bm-portfolio-single-meta-data-item-2">
@@ -41,7 +41,7 @@ const {
     <div class="bm-portfolio-single-7__content-container">
       <div class="bm-portfolio-single-7__content">
         <h2 class="bm-portfolio-single-7__heading">Project overview</h2>
-        <p class="bm-portfolio-single-7__text">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases. EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+        <p class="bm-portfolio-single-7__text">{fs}</p>
         <a class="bm-live-website-link" href="#">View website</a>
       </div>
       <div class="bm-portfolio-single-7__media">
@@ -85,7 +85,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-single-7 {
     row-gap: var(--space-s);
   }
@@ -312,5 +312,4 @@ const {
     position: absolute;
     right: calc(-1 * (var(--flow-spacing) / 1.4));
   }
-}
 </style>

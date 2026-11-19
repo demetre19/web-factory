@@ -25,15 +25,15 @@ const {
 <div>
   <div class="gallery-2-container">
     <div class="gallery-2-row">
-      <h2 class="gallery-2-title">Our Gallery</h2>
-      <p class="gallery-2-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-2-title">{heading}</h2>
+      <p class="gallery-2-desc">{fs}</p>
     </div>
     <div class="gallery-2-img"></div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-2-container {
     display: flex;
     flex-direction: column;
@@ -93,5 +93,4 @@ const {
   .gallery-2-img li:nth-child(8) {
   	grid-area: 2 / 10 / 4 / 13;
   }
-}
 </style>

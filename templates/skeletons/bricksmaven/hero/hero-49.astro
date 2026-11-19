@@ -47,8 +47,8 @@ const {
   </div>
   <div class="hero-49__overlay"></div>
   <div class="hero-49-container">
-    <h1 class="hero-49__heading">Medium length hero heading goes here</h1>
-    <p class="hero-49__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+    <h1 class="hero-49__heading">{heading}</h1>
+    <p class="hero-49__text">{fs}</p>
     <div class="cta-combo">
       <a class="btn--black" href={cta.href}>{cta.label}</a>
       <a class="btn--link" href="#">Secondary action →</a>
@@ -57,7 +57,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-49 {
     padding: 0 0 0 0;
     height: 100vh;
@@ -175,5 +175,4 @@ const {
       transform: translateY(0%);
     }
   }
-}
 </style>

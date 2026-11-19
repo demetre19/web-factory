@@ -27,8 +27,8 @@ const {
     <div class="blog-section-10-wrapper">
       <div class="blog-section-10-head">
         <p class="accent-h">Latest</p>
-        <h2 class="blog-section-10-head__title">Maven talk</h2>
-        <p class="blog-section-10-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut no</p>
+        <h2 class="blog-section-10-head__title">{heading}</h2>
+        <p class="blog-section-10-head__desc">{fs}</p>
         <a class="blog-section-10-head__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="blog-section-10-body list--none">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-section-10-wrapper {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -144,5 +144,4 @@ const {
   	color: var(--bg-canvas);
     font-weight: 700;
   }
-}
 </style>

@@ -34,7 +34,7 @@ const {
           <div class="bm-linktree-5-bio-card__media">
             <figure class="bm-linktree-5-bio-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <p class="bm-linktree-5-bio-card__short-bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="bm-linktree-5-bio-card__short-bio">{fs}</p>
           <div class="bm-social-share list--none bm-social-share--left">
             {items.map((it) => (
               <div class="bm-social-share__icon-wrapper">
@@ -57,7 +57,7 @@ const {
         <div class="bm-linktree-5-newsletter-card">
           <div class="bm-linktree-5-newsletter-card__content">
             <div class="bm-linktree-5-newsletter-card__top">
-              <h2 class="bm-linktree-5-newsletter-card__heading">Subscribe for tech updates</h2>
+              <h2 class="bm-linktree-5-newsletter-card__heading">{heading}</h2>
               <p class="bm-linktree-5-newsletter-card__text">Stay up to date with Bricksmaven latest blogs and events.</p>
             </div>
             <div class="bm-linktree-5-newsletter-card__form-wrapper">
@@ -76,7 +76,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-linktree-5 {
     background: var(--bg-subtle);
     padding: var(--section-space-l) 0 0 0;
@@ -224,5 +224,4 @@ const {
   .bm-form-widget .submit-button-wrapper {
       height: 100% !important;
   }
-}
 </style>

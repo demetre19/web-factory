@@ -25,8 +25,8 @@ const {
 <div>
   <div class="newsletter-6-container">
     <div class="newsletter-6__content">
-      <h2 class="newsletter-6__heading">Join 10k+ subscribers</h2>
-      <p class="newsletter-6__text">Stay in the loop with everything you need to know.</p>
+      <h2 class="newsletter-6__heading">{heading}</h2>
+      <p class="newsletter-6__text">{fs}</p>
       <div class="bm-form">
         <form class="bm-form-widget" novalidate>
         </form>
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-6__content {
     display: flex;
     flex-direction: column;
@@ -69,5 +69,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

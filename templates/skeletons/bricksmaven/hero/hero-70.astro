@@ -26,11 +26,11 @@ const {
   <div class="bm-hero-70__container">
     <div class="intro intro--split">
       <div class="intro__left-column">
-        <h1 class="intro__heading bm-hero-70__heading">Long headline to turn your visitors into users</h1>
+        <h1 class="intro__heading bm-hero-70__heading">{heading}</h1>
         <p class="intro__accent-heading">Tagline</p>
       </div>
       <div class="intro__right-column">
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__subheading">{fs}</p>
         <a class="btn--primary" href="#">Call to action</a>
       </div>
     </div>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-70 {
     overflow: hidden;
   }
@@ -257,5 +257,4 @@ const {
   
     
   }
-}
 </style>

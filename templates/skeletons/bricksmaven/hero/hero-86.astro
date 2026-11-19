@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-86__container">
     <div class="bm-hero-86__content">
       <div class="bm-hero-86__top">
-        <h1 class="bm-hero-86__heading">Long headline to turn your visitors into customers</h1>
-        <p class="bm-hero-86__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <h1 class="bm-hero-86__heading">{heading}</h1>
+        <p class="bm-hero-86__text">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-hero-86__footer">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-86 {
     background: var(--bg-subtle);
     overflow: clip;
@@ -175,5 +175,4 @@ const {
     border-start-end-radius: 100%;
     border-end-end-radius: 100%;
   }
-}
 </style>

@@ -26,9 +26,9 @@ const {
   <div class="portfolio-section-6__container">
     <div class="portfolio-section-6__content">
       <div class="portfolio-section-6__intro">
-        <h2 class="portfolio-section-6__intro-heading">This is a medium headline to grab the users attention</h2>
+        <h2 class="portfolio-section-6__intro-heading">{heading}</h2>
         <p class="portfolio-section-6__intro-accent-heading">Accent heading</p>
-        <p class="portfolio-section-6__intro-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+        <p class="portfolio-section-6__intro-text">{fs}</p>
       </div>
       <div class="portfolio-section-6__footer">
         <div class="portfolio-section-6__account-manager">
@@ -69,7 +69,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .portfolio-section-6__container {
     padding: 0 0 var(--section-space-xxl) 0;
     display: grid;
@@ -240,5 +240,4 @@ const {
   }
   
   }
-}
 </style>

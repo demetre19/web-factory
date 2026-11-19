@@ -26,8 +26,8 @@ const {
   <div class="product-list-6__container">
     <div class="product-list-6__list">
       <div class="intro">
-        <h2 class="intro__heading">Featured products</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
       </div>
       <div class="product-list-6-card__container list--none">
         <div class="product-list-6-card">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .product-list-6__container {
     flex-direction: column;
     align-items: center;
@@ -211,5 +211,4 @@ const {
   
       width: 100%;
   }
-}
 </style>

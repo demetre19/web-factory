@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-portfolio-single-3__container">
     <div class="bm-portfolio-single-3__intro">
-      <h1 class="bm-portfolio-single-3__intro-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <h1 class="bm-portfolio-single-3__intro-heading">{heading}</h1>
       <p class="bm-portfolio-single-3__terms">Category</p>
-      <p class="bm-portfolio-single-3__intro-text">EcoEssentials – An online retailer specializing in sustainable and eco-friendly household products.. Corem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.</p>
+      <p class="bm-portfolio-single-3__intro-text">{fs}</p>
       <div class="bm-live-website-btn">
         <div class="bm-live-website-btn__dot"></div>
         <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
@@ -179,7 +179,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-single-3 {
     position: relative;
     overflow: hidden;
@@ -575,5 +575,4 @@ const {
     left: calc(-1 * (var(--space-xs) / 1.4));
     
   }
-}
 </style>

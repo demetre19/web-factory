@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-hero-94__container">
     <div class="bm-hero-94__content">
-      <h1 class="bm-hero-94__heading">Long headline to turn your visitors into customers</h1>
-      <p class="bm-hero-94__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="bm-hero-94__heading">{heading}</h1>
+      <p class="bm-hero-94__subheading">{fs}</p>
       <div class="cta-combo bm-hero-94__cta">
         <a class="btn--primary bm-hero-94__button wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="link--black bm-hero-94__text-link" href="#">Secondary action →</a>
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-94 {
     background: var(--acss-background-color);
     position: relative;
@@ -213,5 +213,4 @@ const {
     position: absolute;
     left: 0;
   }
-}
 </style>

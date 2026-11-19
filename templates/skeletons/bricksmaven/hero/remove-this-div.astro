@@ -26,8 +26,8 @@ const {
   <div>
     <div class="hero-57__container">
       <div class="hero-57__content">
-        <h1 class="hero-57__heading">The life you dream of is nearer than you imagine.</h1>
-        <p class="hero-57__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+        <h1 class="hero-57__heading">{heading}</h1>
+        <p class="hero-57__subheading">{fs}</p>
       </div>
       <figure class="hero-57__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-57 {
     height: 70vh;
     position: relative;
@@ -145,5 +145,4 @@ const {
   .bm-logo-carousel-list :where(.splide__list, .splide__slide){
     transition-timing-function: linear !important;
   }
-}
 </style>

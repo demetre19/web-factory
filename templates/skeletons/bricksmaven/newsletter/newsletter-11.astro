@@ -26,8 +26,8 @@ const {
   <div class="bm-newsletter-11__container">
     <div class="bm-newsletter-11__newsletter">
       <div class="bm-newsletter-11__top">
-        <h2 class="bm-newsletter-11__heading">Join the&nbspRapid Dev Newsletter Today</h2>
-        <p class="bm-newsletter-11__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="bm-newsletter-11__heading">{heading}</h2>
+        <p class="bm-newsletter-11__text">{fs}</p>
       </div>
       <form class="bm-form-widget bm-form-widget--width" novalidate>
       </form>
@@ -73,7 +73,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-newsletter-11__container {
     row-gap: var(--space-s);
   }
@@ -249,5 +249,4 @@ const {
   .bm-testimonial-40-card--alt:last-child {
     border-bottom: none;
   }
-}
 </style>

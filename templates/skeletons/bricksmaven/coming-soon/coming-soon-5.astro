@@ -29,8 +29,8 @@ const {
         <svg class="coming-soon-2__logo"></svg>
       </div>
       <div class="bm-coming-soon-5__intro">
-        <h1 class="bm-coming-soon-5__heading">Coming soon</h1>
-        <p class="bm-coming-soon-5__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-coming-soon-5__heading">{heading}</h1>
+        <p class="bm-coming-soon-5__text">{fs}</p>
         <div class="bm-form">
           <h2 class="bm-coming-soon__heading-form">Drop your email to get notified!</h2>
           <form class="bm-form-widget" novalidate>
@@ -64,7 +64,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .coming-soon-5__container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 2);
@@ -166,5 +166,4 @@ const {
   .bm-form-widget .submit-button-wrapper {
       height: 100% !important;
   }
-}
 </style>

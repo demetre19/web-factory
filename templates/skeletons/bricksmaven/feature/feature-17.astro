@@ -26,8 +26,8 @@ const {
   <div class="feature-17-container">
     <div class="feature-17-wrapper-sticky-scroll">
       <div class="feature-17-sticky">
-        <h2>Get ACSS and Bricksmaven Now!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+        <h2>{heading}</h2>
+        <p>{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="feature-17-scroll list--none">
@@ -49,7 +49,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-17 {
     row-gap: var(--space-l);
   }
@@ -122,5 +122,4 @@ const {
   }
   
   }
-}
 </style>

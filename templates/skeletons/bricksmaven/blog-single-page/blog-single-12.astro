@@ -61,8 +61,8 @@ const {
     <div class="bm-blog-single-12__post-content"></div>
     <div class="bm-newsletter-widget-card-2">
       <div class="bm-newsletter-widget-card-2__top">
-        <h3 class="bm-newsletter-widget-card-2__heading">Subscribe for tech updates</h3>
-        <p class="bm-newsletter-widget-card-2__text">Stay up to date with Bricksmnaven latest blogs and events.</p>
+        <h3 class="bm-newsletter-widget-card-2__heading">{heading}</h3>
+        <p class="bm-newsletter-widget-card-2__text">{fs}</p>
         <form class="bm-form-widget" novalidate>
         </form>
       </div>
@@ -85,7 +85,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-blog-single-12 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -289,5 +289,4 @@ const {
   .bm-team-media:first-child {
   	margin-inline-start: 0px;
   }
-}
 </style>

@@ -27,10 +27,10 @@ const {
     <div class="error-14__content">
       <div class="intro">
         <div class="intro__top">
-          <h2 class="intro__heading text--primary">404 error</h2>
+          <h2 class="intro__heading text--primary">{heading}</h2>
           <p class="intro__subheading intro__subheading--alt">Page not found.</p>
         </div>
-        <p class="intro__subheading">Sorry, the page you are looking for doesn't exist.</p>
+        <p class="intro__subheading">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="list--none bm-meta-list">
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .error-14-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -110,5 +110,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

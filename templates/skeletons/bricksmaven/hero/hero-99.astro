@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-99__container">
     <div class="bm-hero-99__content">
       <div class="bm-hero-99__column">
-        <h1 class="bm-hero-99__heading">Creative, Fast & Effective</h1>
-        <p class="bm-hero-99__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        <h1 class="bm-hero-99__heading">{heading}</h1>
+        <p class="bm-hero-99__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
           <a class="link--white" href="#">Secondary action →</a>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-99 {
     position: relative;
     justify-content: flex-end;
@@ -98,5 +98,4 @@ const {
     width: 100%;
     object-fit: cover;
   }
-}
 </style>

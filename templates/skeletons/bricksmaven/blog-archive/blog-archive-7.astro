@@ -25,7 +25,7 @@ const {
 <div>
   <div class="blog-archive-7-container">
     <div class="blog-archive-7-head">
-      <h1 class="blog-archive-7-head__title">Our Articles</h1>
+      <h1 class="blog-archive-7-head__title">{heading}</h1>
     </div>
     <div class="blog-archive-7-body">
       <div class="blog-archive-7-wrapper list--none">
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-7-container {
     row-gap: var(--space-s);
   }
@@ -152,5 +152,4 @@ const {
   .blog-archive-7-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

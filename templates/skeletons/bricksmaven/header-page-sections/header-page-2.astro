@@ -26,9 +26,9 @@ const {
   <div class="header-page-2-container">
     <div class="header-page-2__content">
       <div class="header-page__intro">
-        <h1 class="header-page__title">Short heading here</h1>
+        <h1 class="header-page__title">{heading}</h1>
         <p class="accent-h">Accent Heading</p>
-        <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <p class="header-page__desc">{fs}</p>
       </div>
       <form class="header-page-form" novalidate>
       </form>
@@ -38,7 +38,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-2 {
     background: var(--bg-subtle);
   }
@@ -68,5 +68,4 @@ const {
     gap: var(--space-s);
     align-items: center;
   }
-}
 </style>

@@ -25,18 +25,17 @@ const {
 <div>
   <div class="header-page-3-container">
     <div class="header-page-3__content">
-      <h1 class="header-page__title">Short heading here</h1>
-      <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h1 class="header-page__title">{heading}</h1>
+      <p class="header-page__desc">{fs}</p>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-3__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);
   }
-}
 </style>

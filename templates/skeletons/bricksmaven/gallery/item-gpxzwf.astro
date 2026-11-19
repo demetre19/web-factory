@@ -25,15 +25,15 @@ const {
 <div>
   <div class="gallery-6-container">
     <div class="gallery-6-row">
-      <h2 class="gallery-6-title">Our Gallery</h2>
-      <p class="gallery-6-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-6-title">{heading}</h2>
+      <p class="gallery-6-desc">{fs}</p>
     </div>
     <div class="gallery-6-card"></div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-6-container {
     display: flex;
     flex-direction: column;
@@ -57,5 +57,4 @@ const {
   .gallery-6-card {
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
   }
-}
 </style>

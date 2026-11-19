@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-cta-27__container">
     <div class="bm-contact-widget-4">
-      <h2 class="bm-contact-widget-4__heading">Ready to start a project?</h2>
+      <h2 class="bm-contact-widget-4__heading">{heading}</h2>
       <div class="bm-contact-widget-4__manager-data">
         <div class="bm-contact-widget-4__media">
           <figure class="bm-contact-widget-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -60,7 +60,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-widget-4 {
     row-gap: var(--flow-spacing);
     flex-direction: column;
@@ -194,5 +194,4 @@ const {
     --link-color: var(--bg-canvas);
     --link-color-hover: var(--color-line-default);
   }
-}
 </style>

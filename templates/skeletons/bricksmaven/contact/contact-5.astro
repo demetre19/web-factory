@@ -27,8 +27,8 @@ const {
     <div class="contact-left-box">
       <div class="contact-left-box__top-row">
         <p class="contact-left-box__accent-heading">Have a question?</p>
-        <h2 class="contact-left-box__heading">Contact with us</h2>
-        <p class="contact-left-box__desc">Donec quam folis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+        <h2 class="contact-left-box__heading">{heading}</h2>
+        <p class="contact-left-box__desc">{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-5-container {
     display: grid;
     gap: var(--section-space-xxl);
@@ -92,5 +92,4 @@ const {
     width: 100%;
     object-fit: cover;
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="product-list-10__container">
     <div class="product-list-10__list">
       <div class="product-list-10__content">
-        <h2 class="product-list-10__heading">Category name</h2>
-        <p class="product-list-10__headline">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+        <h2 class="product-list-10__heading">{heading}</h2>
+        <p class="product-list-10__headline">{fs}</p>
         <a class="product-list-10__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="product-list-10__slider">
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .product-list-10 {
     gap: calc( var(--space-m) / 2 );
     padding: 0 0 var(--section-space-xl) 0;
@@ -199,5 +199,4 @@ const {
   
       width: 100%;
   }
-}
 </style>

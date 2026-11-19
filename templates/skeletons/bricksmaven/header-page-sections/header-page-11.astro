@@ -26,10 +26,10 @@ const {
   <div class="bm-header-page-11__container">
     <div class="bm-header-page-11__intro">
       <div class="bm-header-page-11__top">
-        <h1 class="bm-header-page-11__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-header-page-11__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
       </div>
-      <p class="bm-header-page-11__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-header-page-11__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
         <a class="bm-link" href="#">Secondary action →</a>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-header-page-11__container {
     display: grid;
     gap: var(--space-m);
@@ -92,5 +92,4 @@ const {
     background-color: var(--bg-subtle);
     z-index: -1;
   }
-}
 </style>

@@ -26,11 +26,11 @@ const {
   <div class="bm-portfolio-section-25__container">
     <div class="intro intro--split">
       <div class="intro__left-column">
-        <h2 class="intro__heading">Recent work we did for awesome brands</h2>
+        <h2 class="intro__heading">{heading}</h2>
         <p class="bm-accent-heading">Work</p>
       </div>
       <div class="intro__right-column">
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__subheading">{fs}</p>
         <a class="btn--white" href={cta.href}>{cta.label}</a>
       </div>
     </div>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-section-25__container {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
@@ -198,5 +198,4 @@ const {
     font-size: var(--fs-0);
     font-weight: 400;
   }
-}
 </style>

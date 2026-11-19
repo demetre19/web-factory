@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-hero-98__container">
     <div class="bm-hero-98__intro">
-      <h1 class="bm-hero-98__heading">Long headline to turn the heads of your customers</h1>
+      <h1 class="bm-hero-98__heading">{heading}</h1>
       <div class="bm-hero-98__social-proof">
         <div class="bm-team-list list--none">
           {items.map((it) => (
@@ -45,7 +45,7 @@ const {
           <p class="bm-testimonial-38__meta-text">Rated 5 Stars on TrustPilot</p>
         </div>
       </div>
-      <p class="bm-hero-98__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-hero-98__subheading">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-hero-98-media-list list--none">
@@ -59,7 +59,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-98 {
     overflow: clip;
     padding: 0 0 0 0;
@@ -182,5 +182,4 @@ const {
     grid-column:19/ -1;
     grid-row:1/-1;
   }
-}
 </style>

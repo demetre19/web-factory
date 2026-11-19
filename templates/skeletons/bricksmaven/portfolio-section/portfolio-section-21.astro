@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-portfolio-section-21__container">
     <div class="bm-portfolio-section-21__content">
-      <h2 class="bm-portfolio-section-21__heading">Results we have got for our clients</h2>
+      <h2 class="bm-portfolio-section-21__heading">{heading}</h2>
       <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-portfolio-section-21__text">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit</p>
+      <p class="bm-portfolio-section-21__text">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-portfolio-section-21__portfolio-wrapper">
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-section-21 {
     position: relative;
     height: 80vh;
@@ -224,5 +224,4 @@ const {
       margin-block-start: var(--acss-keyframe-brand-end);
     }
   }
-}
 </style>

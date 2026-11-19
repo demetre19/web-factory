@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-call-to-action-24__container">
     <div class="bm-call-to-action-24-testimonial">
-      <p class="bm-call-to-action-24-testimonial__review">“Using Bricksmaven made it easy to experiment with different layouts and design combinations. Within minutes, we were building a production-ready site.”</p>
+      <p class="bm-call-to-action-24-testimonial__review">{fs}</p>
       <div class="bm-call-to-action-24-testimonial__customer-bio">
         <div class="bm-call-to-action-24-testimonial__media">
           <figure class="bm-call-to-action-24-testimonial__thumbnail"><img src="/media/placeholder.svg" alt="Thumbnail" loading="lazy" width="900" height="600" /></figure>
@@ -38,7 +38,7 @@ const {
     </div>
     <div class="bm-call-to-action-24-cta-card">
       <div class="bm-call-to-action-24-cta-card__content">
-        <h2 class="bm-call-to-action-24-cta-card__heading">Start building today!</h2>
+        <h2 class="bm-call-to-action-24-cta-card__heading">{heading}</h2>
         <p class="bm-call-to-action-24-cta-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         <a class="bm-call-to-action-24-cta-card__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-call-to-action-24 {
     background: var(--bg-subtle);
   }
@@ -124,5 +124,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

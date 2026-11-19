@@ -26,8 +26,8 @@ const {
   <div class="hero-13-container">
     <div class="hero-13__content">
       <p class="hero-13__tag">TAGLINE</p>
-      <h1 class="hero-13__title">Long headline to turn your visitors into customers</h1>
-      <p class="hero-13__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="hero-13__title">{heading}</h1>
+      <p class="hero-13__desc">{fs}</p>
       <a class="hero-13__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <figure class="hero-13-media"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -35,7 +35,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-13-container {
     position: relative;
   }
@@ -67,5 +67,4 @@ const {
     height: 100%;
     z-index: -1;
   }
-}
 </style>

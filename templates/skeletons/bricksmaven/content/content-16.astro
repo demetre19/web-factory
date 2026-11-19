@@ -25,8 +25,8 @@ const {
 <div>
   <div class="content-16-container">
     <div class="content-16__box">
-      <h2 class="content-16__heading">Long headline to turn your visitors into users</h2>
-      <p class="content-16__desc">Separated they live in Bookmarks right at the coast of the famous Semantics, large language ocean Separated they live in Bookmarks right at the coast</p>
+      <h2 class="content-16__heading">{heading}</h2>
+      <p class="content-16__desc">{fs}</p>
       <div class="bm-list">
         {items.map((it) => (
           <div class="bm-list__item">
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-16-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -102,5 +102,4 @@ const {
     width: 100%;
     object-fit: cover;
   }
-}
 </style>

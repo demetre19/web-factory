@@ -37,7 +37,7 @@ const {
         <p class="blog-single-10__meta-date">{post_date}</p>
       </div>
       <div class="blog-single-10__social">
-        <h4 class="blog-single-10__social-label">Follow us:</h4>
+        <h4 class="blog-single-10__social-label">{heading}</h4>
         <div class="blog-single-10__social-item"></div>
       </div>
     </div>
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-10 {
     overflow: hidden;
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
@@ -280,5 +280,4 @@ const {
   .blog-single-10-footer__adjacent-post a .title {
   	white-space: normal;
   }
-}
 </style>

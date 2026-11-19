@@ -52,7 +52,7 @@ const {
               </div>
             </div>
             <div class="login-1__logged-in-heading-wrapper">
-              <h1 class="login-1__logged-in-heading">You are logged in.</h1>
+              <h1 class="login-1__logged-in-heading">{heading}</h1>
               <div class="login-footer list--none">
                 <div class="login-footer__li">
                   <a class="login-footer__link" href="#">Back to home</a>
@@ -78,7 +78,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .login-2 {
     background: var(--bg-subtle);
     position: relative;
@@ -172,5 +172,4 @@ const {
   .login-form .form-group:nth-child(4) {
       align-items: end;
   }
-}
 </style>

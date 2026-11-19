@@ -36,7 +36,7 @@ const {
       <div class="blog-single-9__post-content-wrapper">
         <div class="table-of-content-1">
           <div class="table-of-content-1__intro">
-            <h2 class="table-of-content-1__heading">Table of contents</h2>
+            <h2 class="table-of-content-1__heading">{heading}</h2>
           </div>
           <div class="table-of-content-1-ol">
             <div class="table-of-content-1-li">
@@ -75,7 +75,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-9 {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }
@@ -243,5 +243,4 @@ const {
   .blog-single-9-share__item svg {
   	height: 2.5rem;
   }
-}
 </style>

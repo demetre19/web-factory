@@ -25,9 +25,9 @@ const {
 <div>
   <div class="content-2-container">
     <div class="content-2__box">
-      <h2 class="content-2__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="content-2__heading">{heading}</h2>
       <p class="accent-h">Tagline</p>
-      <p class="content-2__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      <p class="content-2__desc">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-2-container {
     display: grid;
     gap: var(--space-xl);
@@ -96,5 +96,4 @@ const {
     right: -2rem;
     width: 75%;
   }
-}
 </style>

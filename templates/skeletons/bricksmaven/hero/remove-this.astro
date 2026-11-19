@@ -26,8 +26,8 @@ const {
   <div>
     <div class="hero-21-container">
       <div class="hero-21-content__wrapper">
-        <h1 class="hero-21-content__heading">Long headline to turn your visitors into customers</h1>
-        <p class="hero-21-content__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="hero-21-content__heading">{heading}</h1>
+        <p class="hero-21-content__desc">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <p class="hero-21-content__accent-heading">Tagline</p>
         <figure class="hero-21-content__background"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -49,7 +49,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-21 {
     position: relative;
     height: 80vh;
@@ -125,5 +125,4 @@ const {
     justify-content: center;
     align-items: center;
   }
-}
 </style>

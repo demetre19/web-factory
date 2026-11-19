@@ -39,8 +39,8 @@ const {
             <figure class="bm-hworks-6__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
           <div class="bm-hworks-6__pane-content">
-            <h2 class="bm-hworks-6-pane__title">The product</h2>
-            <p class="bm-hworks-6-pane__desc">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam cons equat sunt nostrud met. Amet minim mollit non deser ullamco est.</p>
+            <h2 class="bm-hworks-6-pane__title">{heading}</h2>
+            <p class="bm-hworks-6-pane__desc">{fs}</p>
           </div>
         </div>
         <div class="bm-hworks-6__pane">
@@ -76,7 +76,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hworks-6-tabs {
     display: flex;
     gap: var(--space-xl);
@@ -126,5 +126,4 @@ const {
   	display:grid !important;
     
   }
-}
 </style>

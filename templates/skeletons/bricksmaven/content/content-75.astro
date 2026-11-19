@@ -26,11 +26,11 @@ const {
   <div class="bm-content-75__container">
     <div class="bm-content-75__intro">
       <div class="bm-content-75__top">
-        <h2 class="bm-content-75__heading">Long headline to grab the users attention</h2>
+        <h2 class="bm-content-75__heading">{heading}</h2>
       </div>
       <div class="bm-content-75__content">
         <div class="bm-content-75__content-intro">
-          <p class="bm-content-75__text">Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+          <p class="bm-content-75__text">{fs}</p>
           <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         </div>
         <div class="bm-content-75-media-list">
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-75 {
     position: relative;
   }
@@ -135,5 +135,4 @@ const {
     --psuedo-height: 40%;
   }
   }
-}
 </style>

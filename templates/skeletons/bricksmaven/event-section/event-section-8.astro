@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-event-section-8__container">
     <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">New events in your city</h2>
+      <h2 class="bm-event-section__heading">{heading}</h2>
       <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-event-section-8__event-list">
@@ -84,7 +84,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-section-8__container {
     row-gap: var(--space-s);
   }
@@ -253,5 +253,4 @@ const {
   .bm-event-section-8-slider .splide__slide {
       height: 560px !important;
   }
-}
 </style>

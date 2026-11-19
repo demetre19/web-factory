@@ -26,8 +26,8 @@ const {
   <div class="blog-section-1-container">
     <div class="blog-section-1-head">
       <div class="blog-section-1-heading">
-        <h2 class="blog-section-1__heading__title">Blog section</h2>
-        <p class="blog-section-1__heading__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut non</p>
+        <h2 class="blog-section-1__heading__title">{heading}</h2>
+        <p class="blog-section-1__heading__desc">{fs}</p>
       </div>
       <form class="blog-section-1-subs" novalidate>
       </form>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-section-1-container {
     display: flex;
     flex-direction: column;
@@ -98,5 +98,4 @@ const {
     background-color: var(--action-primary);
     color: var(--bg-canvas);;
   }
-}
 </style>

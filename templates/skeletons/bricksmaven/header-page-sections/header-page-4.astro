@@ -26,10 +26,10 @@ const {
   <div class="header-page-4-container">
     <div class="header-page-4__top">
       <p class="accent-h">Accent Heading</p>
-      <h1 class="header-page__title">Short heading here</h1>
+      <h1 class="header-page__title">{heading}</h1>
     </div>
     <div class="header-page-4__cta-text">
-      <p class="header-page__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <p class="header-page__desc">{fs}</p>
       <div class="header-page-btn">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-4-container {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -74,5 +74,4 @@ const {
     border-bottom: .1rem solid var(--action-primary);
     border-left: .1rem solid var(--action-primary);
   }
-}
 </style>

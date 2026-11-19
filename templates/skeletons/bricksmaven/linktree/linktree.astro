@@ -27,7 +27,7 @@ const {
     <div class="linktree__content">
       <div class="linktree__brand">
         <img class="linktree__logo"></img>
-        <p class="linktree__desc">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+        <p class="linktree__desc">{fs}</p>
       </div>
       <div class="linktree-list list--none">
         {items.map((it) => (
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .linktree-container {
     display: flex;
     flex-direction: column;
@@ -86,5 +86,4 @@ const {
     column-gap: var(--flow-spacing);
     justify-content: center;
   }
-}
 </style>

@@ -26,7 +26,7 @@ const {
   <div class="bm-testimonial-50__container">
     <div class="bm-testimonial-50-testimonial-card">
       <div class="bm-testimonial-50-testimonial-card__testimonial-content">
-        <p class="bm-testimonial-50-testimonial-card__testimonial-review">" Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+        <p class="bm-testimonial-50-testimonial-card__testimonial-review">{fs}</p>
         <div class="bm-testimonial-50-testimonial-card__testimonial-footer">
           <div class="bm-testimonial-50-testimonial-card__testimonial-client">
             <figure class="bm-testimonial-50-testimonial-card__testimonial-image"><img src="/media/placeholder.svg" alt="Testimonial Image" loading="lazy" width="900" height="600" /></figure>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-50-testimonial-card {
     display: grid;
     grid-template-columns: calc(100% * 3 / 1);
@@ -97,5 +97,4 @@ const {
     block-size: 48px;
     border-radius: var(--r-card);
   }
-}
 </style>

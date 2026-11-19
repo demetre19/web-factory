@@ -26,10 +26,10 @@ const {
   <div class="bm-content-59__container">
     <div class="bm-content-59__row">
       <div class="bm-content-59__intro">
-        <h2 class="bm-content-59__heading">About</h2>
+        <h2 class="bm-content-59__heading">{heading}</h2>
       </div>
       <div class="bm-content-59__content">
-        <p class="bm-content-59__text-large">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
+        <p class="bm-content-59__text-large">{fs}</p>
       </div>
     </div>
     <div class="bm-content-59__row">
@@ -64,7 +64,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-59__container {
     row-gap: var(--space-s);
   }
@@ -114,5 +114,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

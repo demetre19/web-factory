@@ -26,8 +26,8 @@ const {
   <div class="contact-22-container">
     <div class="contact-22-content">
       <div class="intro contact-22-content__intro">
-        <h2 class="intro__heading">Visit Our Stores</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
         <p class="intro__accent-heading">Contact Us</p>
       </div>
       <div class="contact-22-content__form">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-22 {
     position: relative;
   }
@@ -97,5 +97,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

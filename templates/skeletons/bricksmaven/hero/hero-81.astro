@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-hero-81__container">
     <div class="bm-hero-81__intro">
-      <h1 class="bm-hero-81__heading">Bricksmaven</h1>
+      <h1 class="bm-hero-81__heading">{heading}</h1>
       <p class="bm-hero-81__accent-heading">Your go-to pattern library</p>
     </div>
     <div class="bm-media-group-2 list--none">
@@ -36,7 +36,7 @@ const {
       ))}
     </div>
     <div class="bm-hero-81__footer">
-      <p class="bm-hero-81__text">Lorem ipsum dolor sit amet. Ab magnam dolor et libero sequi quo officiis laboriosam et sunt voluptas qui voluptatem explicabo ab harum ipsa et tempore culpa.</p>
+      <p class="bm-hero-81__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-81__container {
     row-gap: var(--space-s);
   }
@@ -112,5 +112,4 @@ const {
     grid-row:1/-1;
     transform: rotate(5deg);
   }
-}
 </style>

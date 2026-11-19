@@ -25,7 +25,7 @@ const {
 <div>
   <div class="checkout-page-1__container">
     <div class="intro intro--left">
-      <h1 class="intro__heading">Checkout</h1>
+      <h1 class="intro__heading">{heading}</h1>
       <p class="intro__accent-heading">Accent heading</p>
     </div>
     <div class="bm-woo-notice-container">
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .checkout-page-1 {
     row-gap: var(--space-s);
   }
@@ -308,5 +308,4 @@ const {
       }
   
   }
-}
 </style>

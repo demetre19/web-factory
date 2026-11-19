@@ -27,7 +27,7 @@ const {
     <div class="bm-feature-68-lijst">
       <div class="bm-feature-68-intro">
         <div class="bm-feature-68-intro__top">
-          <h2 class="bm-feature-68-intro__heading">This is how we can help you</h2>
+          <h2 class="bm-feature-68-intro__heading">{heading}</h2>
         </div>
       </div>
       {items.map((it) => (
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-feature-68 {
     position: relative;
     background: var(--fs-0);
@@ -145,5 +145,4 @@ const {
   }
     
   }
-}
 </style>

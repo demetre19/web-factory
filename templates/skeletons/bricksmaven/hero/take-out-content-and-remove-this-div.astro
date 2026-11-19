@@ -26,9 +26,9 @@ const {
   <div>
     <div class="hero-53__container">
       <div class="hero-53__content">
-        <h1 class="hero-53__heading">Large headline to grab the users attention</h1>
+        <h1 class="hero-53__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
-        <p class="hero-53__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <p class="hero-53__text">{fs}</p>
         <a class="hero-53__btn btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="hero-53__media">
@@ -60,7 +60,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-53 {
     position: relative;
     height: 75vh;
@@ -195,5 +195,4 @@ const {
   .hero-53-testimonial-review-rating {
   	list-style-type:none;
   }
-}
 </style>

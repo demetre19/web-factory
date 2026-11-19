@@ -25,9 +25,9 @@ const {
 <div>
   <div class="hero-55__container">
     <div class="hero-55__content">
-      <h2 class="hero-55__heading">Large headline to grab the users attention</h2>
+      <h2 class="hero-55__heading">{heading}</h2>
       <p class="accent-h">Accent heading</p>
-      <p class="hero-55__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p class="hero-55__text">{fs}</p>
       <a class="hero-55__btn btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-55__media">
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-55 {
     overflow: hidden;
     padding: 0 0 0 0;
@@ -110,5 +110,4 @@ const {
     	grid-template-columns: repeat(1, minmax(0, 1fr));
     }
   }
-}
 </style>

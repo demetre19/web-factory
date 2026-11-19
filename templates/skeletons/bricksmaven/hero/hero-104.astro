@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-hero-104__container">
     <div class="bm-hero-104__intro">
-      <h1 class="bm-hero-104__heading">Bricks Maven</h1>
-      <p class="bm-hero-104__text">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p>
+      <h1 class="bm-hero-104__heading">{heading}</h1>
+      <p class="bm-hero-104__text">{fs}</p>
       <div class="bm-hero-104-owner">
         <div class="bm-hero-104-owner__avatar-cover">
           <figure class="bm-hero-104-owner__avatar"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
@@ -87,7 +87,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-104__container {
     row-gap: var(--space-s);
     align-items: center;
@@ -259,5 +259,4 @@ const {
       block-size: 420px;
     }
   }
-}
 </style>

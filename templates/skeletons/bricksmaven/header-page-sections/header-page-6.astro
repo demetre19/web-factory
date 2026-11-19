@@ -25,9 +25,9 @@ const {
 <div>
   <div class="header-page-6-container">
     <div class="header-page-6__content">
-      <h1 class="header-page__title--alt">Short heading here</h1>
+      <h1 class="header-page__title--alt">{heading}</h1>
       <p class="accent-h">Accent Heading</p>
-      <p class="header-page__desc--alt">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <p class="header-page__desc--alt">{fs}</p>
     </div>
     <div class="header-page-btn">
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -38,7 +38,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-6 {
     position: relative;
     background: color-mix(in srgb, var(--fs-0) 60%, transparent);
@@ -82,5 +82,4 @@ const {
     z-index: -10;
     object-fit: cover;
   }
-}
 </style>

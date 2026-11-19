@@ -25,15 +25,15 @@ const {
 <div>
   <div class="gallery-9-container">
     <div class="gallery-9-row">
-      <h2 class="gallery-9-title">Our Gallery</h2>
-      <p class="gallery-9-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-9-title">{heading}</h2>
+      <p class="gallery-9-desc">{fs}</p>
     </div>
     <div class="gallery-9-card"></div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-9-container {
     display: flex;
     flex-direction: column;
@@ -106,5 +106,4 @@ const {
       
     }
   }
-}
 </style>

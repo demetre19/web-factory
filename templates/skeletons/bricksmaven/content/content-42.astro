@@ -27,8 +27,8 @@ const {
     <div class="bm-content-42__main">
       <div class="bm-content-42__content">
         <div class="bm-content-42__top">
-          <h2 class="bm-content-42__heading">Long headline to turn your visitors into users</h2>
-          <p class="bm-content-42__label">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+          <h2 class="bm-content-42__heading">{heading}</h2>
+          <p class="bm-content-42__label">{fs}</p>
         </div>
         <div class="list--none bm-content-42-data">
           {items.map((it) => (
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-42__main {
     display: grid;
     gap: var(--space-m);
@@ -90,5 +90,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

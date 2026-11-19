@@ -26,7 +26,7 @@ const {
   <div class="bm-cta-31__container">
     <div class="bm-testimonial-card-cta">
       <div class="bm-testimonial-card-cta__content">
-        <p class="bm-testimonial-card-cta__review">"We’ve never seen so many trial visitors turn into members this quickly. The new flows feel personal and keep people coming back."</p>
+        <p class="bm-testimonial-card-cta__review">{fs}</p>
         <div class="bm-testimonial-card-cta__icon-wrapper">
           <span class="bm-testimonial-card-cta__icon" data-icon="lucide" aria-hidden="true"></span>
         </div>
@@ -38,7 +38,7 @@ const {
     </div>
     <div class="bm-cta-31__content">
       <div class="bm-cta-31__top">
-        <h2 class="bm-cta-31__heading">Join over 50 founders who supercharged their email marketing</h2>
+        <h2 class="bm-cta-31__heading">{heading}</h2>
         <div class="bm-avatar-list-2 bm-cta-31__avatar-list">
           {items.map((it) => (
             <div class="bm-avatar-item-2">
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-31__container {
     display: grid;
     gap: var(--space-m);
@@ -147,5 +147,4 @@ const {
   .bm-avatar-item-2:nth-child(even) {
     transform: rotate(10deg);
   }
-}
 </style>

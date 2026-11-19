@@ -37,7 +37,7 @@ const {
       <div class="bm-footer-20__left">
         <div class="bm-footer-20__left-top">
           <a class="bm-footer-20__link" href="#">(000) 345 4590</a>
-          <p class="bm-footer-20__address">2345 Eran Mill, Boston WA 04292, United States</p>
+          <p class="bm-footer-20__address">{fs}</p>
           <p class="bm-footer-20__text">Monday to Friday: 10am - 9pm Saturday to Sunday: 9am - 10pm</p>
         </div>
         <div class="bm-footer-20__link-wrapper">
@@ -45,7 +45,7 @@ const {
           <p class="bm-footer-20__text">Write to Our Corporate Mail.</p>
         </div>
         <div class="bm-footer-20__social-wrapper">
-          <h2 class="bm-footer-20__heading">Get Social</h2>
+          <h2 class="bm-footer-20__heading">{heading}</h2>
           <div class="bm-social-share list--none bm-social-share--left">
             {items.map((it) => (
               <div class="bm-social-share__icon-wrapper">
@@ -98,7 +98,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-20 {
     background: var(--bg-subtle);
   }
@@ -218,5 +218,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

@@ -25,11 +25,11 @@ const {
 <div>
   <div class="testimonial-27-container">
     <div class="testimonial-27-quote">
-      <p class="testimonial-27-quote__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+      <p class="testimonial-27-quote__text">{fs}</p>
     </div>
     <div class="testimonial-27-content">
       <div class="testimonial-27-content__wrapper">
-        <h2>Medium title placeholder text</h2>
+        <h2>{heading}</h2>
         <div class="testimonial-27-content__list">
           {items.map((it) => (
             <div class="testimonial-27-content__item">
@@ -59,7 +59,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-27 {
     padding: 0 0 0 0;
   }
@@ -190,5 +190,4 @@ const {
   .testimonial-27-content__item {
   	border: none !important;
   }
-}
 </style>

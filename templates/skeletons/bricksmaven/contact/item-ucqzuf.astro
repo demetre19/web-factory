@@ -25,8 +25,8 @@ const {
 <div>
   <div class="contact-4-container">
     <div class="contact-4-details">
-      <h2 class="contact-4-details__heading">Contact with us</h2>
-      <p class="contact-4-details__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+      <h2 class="contact-4-details__heading">{heading}</h2>
+      <p class="contact-4-details__desc">{fs}</p>
       <div class="contact-4-tel-email">
         <div class="contact-4-tel-email-btn">
           <span class="contact-4-tel-email-btn__icon" data-icon="lucide" aria-hidden="true"></span>
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-4-container {
     display: flex;
     row-gap: var(--space-l);
@@ -107,5 +107,4 @@ const {
     width: 54rem;
     object-fit: cover;
   }
-}
 </style>

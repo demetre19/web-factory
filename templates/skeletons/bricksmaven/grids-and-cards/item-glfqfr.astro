@@ -35,8 +35,8 @@ const {
     </div>
     <div class="gridcard-11-wrapper">
       <div class="gridcard-11-heading">
-        <h2 class="gridcard-11-heading__title">What is lorem ipsum?</h2>
-        <p class="gridcard-11-heading__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text</p>
+        <h2 class="gridcard-11-heading__title">{heading}</h2>
+        <p class="gridcard-11-heading__desc">{fs}</p>
         <a class="gridcard-11-heading__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="gridcard-11-profile">
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-11-wrapper {
     display: grid;
     gap: 2rem;
@@ -131,5 +131,4 @@ const {
   .gridcard-11-container {
   	row-gap: 5rem;
   }
-}
 </style>

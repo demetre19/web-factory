@@ -23,7 +23,7 @@ const {
 ---
 
 <div>
-  <h1 class="checkout-page-3__heading">Checkout</h1>
+  <h1 class="checkout-page-3__heading">{heading}</h1>
   <div class="checkout-page-3__container">
     <div class="bm-woo-notice-container">
       <div class="bm-woo-notice"></div>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .checkout-page-3__heading {
     display: flex;
     flex-direction: column;
@@ -328,5 +328,4 @@ const {
       }
   
   }
-}
 </style>

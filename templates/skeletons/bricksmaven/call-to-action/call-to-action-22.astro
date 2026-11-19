@@ -26,12 +26,12 @@ const {
   <div class="bm-cta-22__container">
     <div class="bm-cta-22-widget">
       <div class="bm-cta-22-widget__content">
-        <h2 class="bm-cta-22-widget__heading">Start building your next project with Bricksmaven</h2>
+        <h2 class="bm-cta-22-widget__heading">{heading}</h2>
         <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-cta-22-review-card">
         <div class="bm-cta-22-review-card__content">
-          <p class="bm-cta-22-review-card__review">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."</p>
+          <p class="bm-cta-22-review-card__review">{fs}</p>
         </div>
         <div class="bm-user-card">
           <div class="bm-user-card__media">
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-22-widget {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
@@ -95,5 +95,4 @@ const {
   .bm-user-card__title {
     font-size: var(--fs-0);
   }
-}
 </style>

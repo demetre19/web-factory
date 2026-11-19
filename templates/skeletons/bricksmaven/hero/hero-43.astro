@@ -25,7 +25,7 @@ const {
 <div>
   <div class="hero-43-container-top">
     <div class="hero-43__intro">
-      <h1 class="hero-43__intro-heading">Build faster in Bricksbuilder</h1>
+      <h1 class="hero-43__intro-heading">{heading}</h1>
     </div>
   </div>
   <div class="hero-43-container-footer">
@@ -33,7 +33,7 @@ const {
       <figure class="hero-43__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
     <div class="hero-43__subtitle-wrapper">
-      <p class="hero-43__subtitle">Alpha template by Bricksmaven helps you accelerate your design & development workflow and decrease your development time.</p>
+      <p class="hero-43__subtitle">{fs}</p>
     </div>
     <div class="hero-43__cta">
       <div class="hero-43__cta-wrapper">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-43 {
     height: 100vh;
     row-gap: var(--space-s);
@@ -96,5 +96,4 @@ const {
   .hero-43__cta-micro {
     font-size: var(--fs-0);
   }
-}
 </style>

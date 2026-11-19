@@ -29,7 +29,7 @@ const {
     </div>
     <div class="footer-nav-wrapper footer-nav-wrapper-6">
       <div class="footer-nav-column">
-        <h3 class="footer-nav-heading">1st column</h3>
+        <h3 class="footer-nav-heading">{heading}</h3>
         <div class="footer-menu list--none">
           {items.map((it) => (
             <div class="footer-menu__link">
@@ -51,7 +51,7 @@ const {
     </div>
     <div class="footer-6-delta">
       <h4 class="text--m text--700 footer-6__title">Subscribe</h4>
-      <p class="footer-6__desc">Join our newsletter to stay up to date on features and releases</p>
+      <p class="footer-6__desc">{fs}</p>
       <form class="footer-6__newsletter" novalidate>
       </form>
     </div>
@@ -76,7 +76,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-6-container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 6);
@@ -171,5 +171,4 @@ const {
   .footer-6__social a:hover {
     color: var(--action-primary);
   }
-}
 </style>

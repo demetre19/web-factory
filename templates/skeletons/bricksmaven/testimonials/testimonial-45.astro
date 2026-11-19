@@ -26,7 +26,7 @@ const {
   <div class="bm-testimonial-45__container">
     <div class="bm-testimonial-45__content">
       <div class="bm-testimonial-45__top">
-        <h2 class="bm-testimonial-45__heading">Agency's and freelancers use Bricksmaven to create stunning websites</h2>
+        <h2 class="bm-testimonial-45__heading">{heading}</h2>
         <p class="bm-testimonial-45__accent">Accent heading</p>
       </div>
       <div class="bm-testimonial-45__customer-list">
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-45__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
@@ -132,5 +132,4 @@ const {
   .bm-testimonial-45-card__image {
     object-fit: cover;
   }
-}
 </style>

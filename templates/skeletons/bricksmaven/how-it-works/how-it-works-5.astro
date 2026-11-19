@@ -26,8 +26,8 @@ const {
   <div class="hworks-5-container">
     <div class="hworks-5-content">
       <div class="hworks-intro hworks-intro--alt">
-        <h2 class="hworks-intro__heading">How to spend money on designs sets with Oxymaven</h2>
-        <p class="hworks-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="hworks-intro__heading">{heading}</h2>
+        <p class="hworks-intro__desc">{fs}</p>
       </div>
       <div class="hworks-5-list list--none">
         {items.map((it) => (
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hworks-5-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -124,5 +124,4 @@ const {
     color:var(--action-primary);
   
   }
-}
 </style>

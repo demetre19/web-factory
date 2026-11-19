@@ -25,8 +25,8 @@ const {
 <div>
   <div class="counter-5-container">
     <div class="intro">
-      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="intro__accent-heading">Tagline</p>
     </div>
     <div class="counter-5-grid-ul list--none">
@@ -49,7 +49,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .intro {
     text-align: center;
     flex-direction: column;
@@ -111,5 +111,4 @@ const {
   .counter-5-card__label {
     font-weight: 700;
   }
-}
 </style>

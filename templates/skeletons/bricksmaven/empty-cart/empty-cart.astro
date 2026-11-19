@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-empty-cart__container">
     <div class="bm-empty-cart__content">
-      <h1 class="bm-empty-cart__heading">You cart is empty!</h1>
+      <h1 class="bm-empty-cart__heading">{heading}</h1>
       <span class="bm-empty-cart__icon" data-icon="lucide" aria-hidden="true"></span>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -36,7 +36,7 @@ const {
   <div class="bm-product-list-1__container">
     <div class="intro">
       <h2 class="intro__heading">Check ouw our new range</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="intro__subheading">{fs}</p>
     </div>
     <div class="bm-product-list-1__list list--none">
       <div class="bm-product-list-1-card">
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-empty-cart {
     padding: 0 0 0 0;
     row-gap: var(--space-s);
@@ -214,5 +214,4 @@ const {
   
       width: 100%;
   }
-}
 </style>

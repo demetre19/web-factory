@@ -26,9 +26,9 @@ const {
   <div class="content-6-container">
     <div class="content-6__box">
       <div class="content-6__wrapper">
-        <h2 class="content-6__heading">Long headline to turn your visitors into customers</h2>
+        <h2 class="content-6__heading">{heading}</h2>
         <p class="accent-h">Tagline</p>
-        <p class="content-6__desc">It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <p class="content-6__desc">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         </div>
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-6 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -97,5 +97,4 @@ const {
     width: 100%;
     margin: 0 auto 0 0;
   }
-}
 </style>

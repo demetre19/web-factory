@@ -26,8 +26,8 @@ const {
   <div class="bm-banner-6__container">
     <div class="bm-banner-inline-content">
       <div class="bm-banner-inline-content__info bm-banner-inline-content__info--alt">
-        <h2 class="bm-banner-inline-content__heading">Short headline to grab attention</h2>
-        <p class="bm-banner-inline-content__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h2 class="bm-banner-inline-content__heading">{heading}</h2>
+        <p class="bm-banner-inline-content__text">{fs}</p>
       </div>
     </div>
     <div class="bm-banner__form-wrapper">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-banner-6 {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     background: transparent;
@@ -111,5 +111,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

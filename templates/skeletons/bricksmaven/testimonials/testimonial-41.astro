@@ -26,11 +26,11 @@ const {
   <div class="bm-testimonial-41__container">
     <div class="bm-testimonial-41__content">
       <div class="bm-testimonial-41__top">
-        <h2 class="bm-testimonial-41__heading">John Smith</h2>
+        <h2 class="bm-testimonial-41__heading">{heading}</h2>
         <p class="bm-testimonial-41__text">CEO and Product owner</p>
       </div>
       <div class="bm-testimonial-41__review-wrapper">
-        <p class="bm-testimonial-41__review-text">“Numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam quis nostrum exercitationem. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.”</p>
+        <p class="bm-testimonial-41__review-text">{fs}</p>
       </div>
       <div class="bm-testimonial-41__footer">
         <p class="bm-testimonial-41__footer-text">Don’t miss out on this opportunity to be a part of something extraordinary.</p>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-41 {
     background: var(--bg-subtle);
     padding: 0 0 0 0;
@@ -108,5 +108,4 @@ const {
     left: calc(-1 * var(--space-xs));
     font-size: calc(var(--fs-4) * 4);
   }
-}
 </style>

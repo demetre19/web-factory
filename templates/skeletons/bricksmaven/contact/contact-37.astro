@@ -29,9 +29,9 @@ const {
   <div class="bm-contact-37__content-container">
     <div class="bm-contact-37__content">
       <div class="bm-contact-37__intro">
-        <h1 class="bm-contact-37__heading">Need Answers? Get in Touch. We’ll Respond Shortly</h1>
+        <h1 class="bm-contact-37__heading">{heading}</h1>
         <p class="bm-accent-heading">Accent heading</p>
-        <p class="bm-contact-37__text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+        <p class="bm-contact-37__text">{fs}</p>
       </div>
       <div class="bm-contact-25-side-list-ul">
         <div class="bm-contact-25-side-list-item">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-37 {
     row-gap: 0;
     padding: 0 0 0 0;
@@ -148,5 +148,4 @@ const {
     /* bm: box-shadow omitted — token layer owns elevation */
     row-gap: var(--flow-spacing);
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="feature-20-container">
     <div class="list--none feature-20-content">
       <div class="feature-20-content__intro">
-        <h2 class="feature-20-content__heading">Sky rocket your next build with ACSS + Bricksmaven!</h2>
-        <p class="feature-20-content__desc">This is a block of text. Double-click this text to edit it.</p>
+        <h2 class="feature-20-content__heading">{heading}</h2>
+        <p class="feature-20-content__desc">{fs}</p>
       </div>
       {items.map((it) => (
         <div class="feature-20-card">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-20 {
     background: var(--action-primary);
   }
@@ -91,5 +91,4 @@ const {
     position: absolute;
     top: -4rem;
   }
-}
 </style>

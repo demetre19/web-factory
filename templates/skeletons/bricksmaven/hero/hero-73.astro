@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-73__container">
     <div class="bm-hero-73__content">
       <div class="bm-hero-73__top">
-        <h1 class="bm-hero-73__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-73__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p>{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-73__container {
     display: grid;
     gap: var(--space-m);
@@ -74,5 +74,4 @@ const {
     gap: var(--space-m);
     grid-template-columns: calc(100% * 1 / 3);
   }
-}
 </style>

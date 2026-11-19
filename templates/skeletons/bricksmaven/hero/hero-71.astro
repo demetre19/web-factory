@@ -26,11 +26,11 @@ const {
   <div class="bm-hero-71__container">
     <div class="bm-hero-71__content">
       <div class="bm-hero-71__top">
-        <h1 class="bm-hero-71__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-71__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
       </div>
       <div class="bm-hero-71__footer">
-        <p class="bm-hero-71__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-71__text">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary" href="#">Call to action</a>
           <a class="btn--link" href="#">Secondary action →</a>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-71 {
     overflow: hidden;
   }
@@ -109,5 +109,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

@@ -49,7 +49,7 @@ const {
         ))}
       </div>
       <div class="bm-footer-17__copyright-wrapper">
-        <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+        <p class="footer-copyright">{fs}</p>
       </div>
       <div class="bm-footer-17__payment-option-wrapper">
         <div class="bm-footer-payment-options list--none">
@@ -65,7 +65,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-17__container {
     row-gap: var(--space-s);
   }
@@ -175,5 +175,4 @@ const {
   }
     
   }
-}
 </style>

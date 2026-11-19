@@ -25,8 +25,8 @@ const {
 <div>
   <div class="cta-16-container">
     <div class="cta-16__box">
-      <h2 class="cta-16__heading">Bricksmaven is the way!</h2>
-      <p class="cta-16__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <h2 class="cta-16__heading">{heading}</h2>
+      <p class="cta-16__desc">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="cta-16__media">
@@ -36,7 +36,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-16 {
     overflow: hidden;
     position: relative;
@@ -91,5 +91,4 @@ const {
   	clip-path: polygon(0% 0, 80% 0, 100% 100%, 0 100%);
     	-webkit-clip-path: polygon(0% 0, 80% 0, 100% 100%, 0 100%);
   }
-}
 </style>

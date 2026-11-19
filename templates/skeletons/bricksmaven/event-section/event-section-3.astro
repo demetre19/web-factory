@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-event-secton-3__container">
     <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">New events in your city</h2>
+      <h2 class="bm-event-section__heading">{heading}</h2>
       <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-event-secton-3__slider-wrapper">
@@ -73,7 +73,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-secton-3__container {
     row-gap: var(--space-s);
   }
@@ -191,5 +191,4 @@ const {
     left: 0;
     height: 100%;
   }
-}
 </style>

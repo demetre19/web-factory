@@ -25,8 +25,8 @@ const {
 <div>
   <div class="team-13-container">
     <div class="team-13__content">
-      <h2 class="team-13__heading">About</h2>
-      <p class="team-13__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <h2 class="team-13__heading">{heading}</h2>
+      <p class="team-13__text">{fs}</p>
     </div>
     <div class="team-13__content">
       <h2 class="team-13__heading">Our Mission</h2>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .team-13 {
     row-gap: var(--space-s);
   }
@@ -115,5 +115,4 @@ const {
   	margin-block-start: unset;
   }
   }
-}
 </style>

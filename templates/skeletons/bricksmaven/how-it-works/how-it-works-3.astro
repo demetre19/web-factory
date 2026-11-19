@@ -25,7 +25,7 @@ const {
 <div>
   <div class="hworks-3-container">
     <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">Build your business website in minutes</h2>
+      <h2 class="hworks-intro__heading">{heading}</h2>
       <p class="hworks-intro__accent-heading">HOW IT WORKS</p>
     </div>
     <div class="hworks-3-grid-ul list--none">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hworks-3-container {
     display: flex;
     flex-direction: column;
@@ -110,5 +110,4 @@ const {
   }
   
   }
-}
 </style>

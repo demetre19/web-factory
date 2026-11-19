@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-84__container">
     <div class="bm-hero-84__intro">
       <div class="bm-hero-84__intro-top">
-        <h1 class="bm-hero-84__heading">Long headline to turn your visitors into customers</h1>
-        <p class="bm-hero-84__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-hero-84__heading">{heading}</h1>
+        <p class="bm-hero-84__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary" href="#">Call to action</a>
           <a class="link--black" href="#">Secondary action →</a>
@@ -77,7 +77,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-84__container {
     display: grid;
     gap: var(--space-m);
@@ -224,5 +224,4 @@ const {
     height: 420px;
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
   }
-}
 </style>

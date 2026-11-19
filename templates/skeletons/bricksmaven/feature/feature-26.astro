@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="feature-26-container">
-    <h2 class="feature-26__heading">Long headline to turn your visitors into users</h2>
+    <h2 class="feature-26__heading">{heading}</h2>
     <div class="bm-omega-feature-list-ul list--none">
       {items.map((it) => (
         <div class="bm-omega-feature-list-card">
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-26 {
     position: relative;
   }
@@ -87,5 +87,4 @@ const {
     bottom:0;
     
   }
-}
 </style>

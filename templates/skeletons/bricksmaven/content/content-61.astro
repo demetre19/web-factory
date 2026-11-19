@@ -27,11 +27,11 @@ const {
     <div class="bm-content-61__inner">
       <div class="bm-content-61__intro">
         <div class="bm-content-61__top">
-          <h2 class="bm-content-61__heading">Long headline to turn your visitors into customers</h2>
+          <h2 class="bm-content-61__heading">{heading}</h2>
           <p class="accent-h accent-h--alt">Accent heading</p>
         </div>
         <div class="bm-content-61__mid">
-          <p class="bm-content-61__text">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p class="bm-content-61__text">{fs}</p>
           <p class="bm-content-61__text bm-content-61__text-beta">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
         </div>
       </div>
@@ -57,7 +57,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-61 {
     position: relative;
   }
@@ -132,5 +132,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

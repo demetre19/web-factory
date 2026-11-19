@@ -29,8 +29,8 @@ const {
         <svg class="coming-soon__logo"></svg>
       </div>
       <div class="bm-coming-soon-1__intro">
-        <h1 class="bm-coming-soon-1__heading">Coming Soon</h1>
-        <p class="bm-coming-soon-1__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-coming-soon-1__heading">{heading}</h1>
+        <p class="bm-coming-soon-1__text">{fs}</p>
       </div>
       <div class="coming-soon__countdown-wrapper">
         <div class="coming-soon-countdown text--light"></div>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-coming-soon-1 {
     position: relative;
     height: 100vh;
@@ -124,5 +124,4 @@ const {
   .coming-soon-countdown {
   	gap: var(--flow-spacing);
   }
-}
 </style>

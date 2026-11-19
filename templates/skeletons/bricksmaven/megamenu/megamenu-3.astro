@@ -35,7 +35,7 @@ const {
           <div class="megamenu-3__dropdown">
             <div class="megamenu-3__content">
               <div class="megamenu-3__column">
-                <h2 class="megamenu-3__column-heading">Group heading</h2>
+                <h2 class="megamenu-3__column-heading">{heading}</h2>
                 <div class="list--none megamenu-3__card-wrapper">
                   {items.map((it) => (
                     <div class="megamenu-card-link">
@@ -75,7 +75,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-header-1 {
     padding: var(--space-xs) 0 var(--space-xs) 0;
     position: relative;
@@ -164,5 +164,4 @@ const {
      left: unset !important;
   }
   }
-}
 </style>

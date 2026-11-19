@@ -26,8 +26,8 @@ const {
   <div class="counter-4-container">
     <div class="counter-4-right-box">
       <p class="counter-4-right-box__accent-heading">AWESOME TAGLINE</p>
-      <h2 class="counter-4-right-box__heading">What is lorem ipsum</h2>
-      <p class="counter-4-right-box__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+      <h2 class="counter-4-right-box__heading">{heading}</h2>
+      <p class="counter-4-right-box__desc">{fs}</p>
       <div class="counter-4-list list--none">
         {items.map((it) => (
           <div class="counter-4-list-card">
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .counter-4-container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 2);
@@ -95,5 +95,4 @@ const {
   .counter-4-list-card:first-child {
   	padding-left: 0px;
   }
-}
 </style>

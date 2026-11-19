@@ -26,8 +26,8 @@ const {
   <div class="grid--2 logo-9-container grid--l-1 width--full">
     <div class="flex--col logo-9-col gap--xl">
       <div class="gap--m flex--col logo-9-heading">
-        <h2 class="logo-9-title">Tired of building from scratch? Get Bricksmaven today!</h2>
-        <p class="logo-9-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue.</p>
+        <h2 class="logo-9-title">{heading}</h2>
+        <p class="logo-9-desc">{fs}</p>
         <div class="flex--row gap--s logo-9-btn">
           <a class="logo-9-btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
         </div>
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .logo-9-col {
     padding: var(--space-xl) var(--space-xl) var(--section-space-xxl) var(--section-space-xxl);
   }
@@ -77,5 +77,4 @@ const {
   		background-size: contain!important;
     	transition: all .2s ease-in-out;
   }
-}
 </style>

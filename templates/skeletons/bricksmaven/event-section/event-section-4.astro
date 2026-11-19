@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-event-section-4__container">
     <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">New events in your city</h2>
+      <h2 class="bm-event-section__heading">{heading}</h2>
       <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-event-section-4-list list--none">
@@ -78,7 +78,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-section-4__container {
     row-gap: var(--space-s);
   }
@@ -209,5 +209,4 @@ const {
   .bm-event-speaker-card:not(:first-child) {
     margin-inline-start: calc(-1 * (var(--space-xs) / 3));
   }
-}
 </style>

@@ -45,12 +45,12 @@ const {
       </div>
       <div class="blog-single-2__body-sidebar">
         <div class="blog-single-2-search">
-          <h2 class="blog-single-2-aside__title">Search</h2>
+          <h2 class="blog-single-2-aside__title">{heading}</h2>
           <div class="blog-single-2-search__form"></div>
         </div>
         <div class="blog-single-2-newsletter">
           <h2 class="blog-single-2-aside__title">Weekly Newsletter</h2>
-          <p class="blog-single-2-newsletter__desc">No spam. Just the latest releases and tips, interesting articles, and exclusive interviews in your inbox every week.</p>
+          <p class="blog-single-2-newsletter__desc">{fs}</p>
           <form class="blog-single-2-newsletter__form" novalidate>
           </form>
           <p class="blog-single-2-newsletter__policy">Your information is protected by us. Read our privacy policy</p>
@@ -70,7 +70,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-6 {
     padding: 0 0 0 0;
   }
@@ -239,5 +239,4 @@ const {
   .blog-single-6-footer__adjacent-post a .title {
   	white-space: normal;
   }
-}
 </style>

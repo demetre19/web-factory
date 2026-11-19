@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-89__container">
     <div class="bm-hero-89__content">
       <div class="bm-hero-89__intro">
-        <h1 class="bm-hero-89__heading">Long headline to turn your visitors into customers</h1>
-        <p class="bm-hero-89__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-hero-89__heading">{heading}</h1>
+        <p class="bm-hero-89__subheading">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-hero-89__case-container">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-89__container {
     display: grid;
     gap: var(--space-m);
@@ -200,5 +200,4 @@ const {
   .bm-hero-89-case:hover .bm-hero-89-case__image {
     scale: 1.4;
   }
-}
 </style>

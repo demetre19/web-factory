@@ -25,12 +25,12 @@ const {
 <div>
   <div class="bm-content-44__container">
     <div class="intro intro--left">
-      <h2 class="intro__heading bm-content-44__heading">Long headline to turn your visitors into users</h2>
+      <h2 class="intro__heading bm-content-44__heading">{heading}</h2>
       <p class="intro__accent-heading">Accent heading</p>
     </div>
     <div class="bm-content-44__main">
       <div class="bm-content-44__column">
-        <p class="bm-content-44__subheading">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+        <p class="bm-content-44__subheading">{fs}</p>
         <div class="bm-content-44-card">
           <div class="bm-content-44-card__media">
             <figure class="bm-content-44-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -49,7 +49,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-44__container {
     row-gap: var(--space-s);
   }
@@ -125,5 +125,4 @@ const {
     columns: 2;
   }
   }
-}
 </style>

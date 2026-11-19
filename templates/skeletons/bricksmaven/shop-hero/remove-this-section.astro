@@ -28,7 +28,7 @@ const {
       <div class="shop-hero-3-category-slider__slider">
         <div class="shop-hero-3-category-slider__slide">
           <div class="shop-hero-3-category-slider__content">
-            <h2 class="shop-hero-3-category-slider__content">{term_name}</h2>
+            <h2 class="shop-hero-3-category-slider__content">{heading}</h2>
             <a class="shop-hero-3-category-slider__link" href="#">View all</a>
           </div>
           <div class="shop-hero-3-category-slider__media">
@@ -75,7 +75,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .shop-hero-3-category-slider {
     padding: var(--section-space-xs) 0 var(--section-space-xs) 0;
     background: color-mix(in srgb, var(--color-line-default) 10%, transparent);
@@ -209,5 +209,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

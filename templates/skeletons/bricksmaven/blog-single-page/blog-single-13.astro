@@ -62,8 +62,8 @@ const {
       <div class="bm-blog-single-13__aside-sticky">
         <div class="bm-blog-single-13__aside-column">
           <div class="bm-newsletter-widget-card-3">
-            <h3 class="bm-newsletter-widget-card-3__heading">Subscribe for tech updates</h3>
-            <p class="bm-newsletter-widget-card-3__text">Stay up to date with Bricksmnaven latest blogs and events.</p>
+            <h3 class="bm-newsletter-widget-card-3__heading">{heading}</h3>
+            <p class="bm-newsletter-widget-card-3__text">{fs}</p>
             <form class="bm-form-widget bm-form-widget--stacked" novalidate>
             </form>
             <p class="bm-newsletter-widget-card-3__micro-copy">Join 3k+ users growing their skills</p>
@@ -85,7 +85,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-blog-single-13 {
     padding: 0 0 0 0;
     row-gap: var(--space-s);
@@ -275,5 +275,4 @@ const {
   .bm-form-widget .submit-button-wrapper {
       height: 100% !important;
   }
-}
 </style>

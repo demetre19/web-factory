@@ -25,8 +25,8 @@ const {
 <div>
   <div class="newsletter-5-container">
     <div class="newsletter-5__content">
-      <h2 class="newsletter-5__heading">Join 10k+ subscribers</h2>
-      <p class="newsletter-5__desc">Stay in the loop with everything you need to know.</p>
+      <h2 class="newsletter-5__heading">{heading}</h2>
+      <p class="newsletter-5__desc">{fs}</p>
     </div>
     <div class="newsletter-5__right-box">
       <div class="bm-form">
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-5-container {
     grid-template-columns: 2fr 3fr;
     display: grid;
@@ -80,5 +80,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

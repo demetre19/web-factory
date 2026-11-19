@@ -26,7 +26,7 @@ const {
   <div class="checkout-page-2__container">
     <div class="checkout-page-2__details">
       <div class="intro intro--left">
-        <h1 class="intro__heading">Checkout</h1>
+        <h1 class="intro__heading">{heading}</h1>
         <p class="intro__accent-heading">Accent heading</p>
       </div>
       <div class="bm-woo-notice-container">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .checkout-page-2__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
@@ -309,5 +309,4 @@ const {
       }
   
   }
-}
 </style>

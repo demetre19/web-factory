@@ -26,11 +26,11 @@ const {
   <div class="counter-10-container">
     <div class="counter-10-box">
       <p class="counter-10-box__accent-heading">YOUR TAGLINE</p>
-      <h2 class="counter-10-box__heading">Neque porro quisquam est qui dolorem</h2>
+      <h2 class="counter-10-box__heading">{heading}</h2>
       <div class="counter-10-box__media">
         <figure class="counter-10-box__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <p class="counter-10-box__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+      <p class="counter-10-box__desc">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="counter-10-grid-ul list--none">
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .counter-10-container {
     display: grid;
     gap: var(--space-m);
@@ -105,5 +105,4 @@ const {
       -webkit-text-stroke: 0.1rem var(--bg-subtle);
       -webkit-text-fill-color: transparent;
   }
-}
 </style>

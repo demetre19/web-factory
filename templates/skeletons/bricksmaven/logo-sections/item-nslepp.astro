@@ -28,8 +28,8 @@ const {
       <div class="logo-8-list-item"></div>
     </div>
     <div class="gap--m flex--col logo-8-heading">
-      <h2 class="logo-8-title">Tired of building from scratch? Get Bricksmaven today!</h2>
-      <p class="logo-8-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue.</p>
+      <h2 class="logo-8-title">{heading}</h2>
+      <p class="logo-8-desc">{fs}</p>
       <div class="flex--row gap--s logo-8-btn">
         <a class="btn--primary logo-8-btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="btn--primary btn--outline logo-8-btn--outline" href={cta.href}>{cta.label}</a>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .logo-8-list-item {
     border-top: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
     border-right: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
@@ -75,5 +75,4 @@ const {
   .logo-8-list-item li div {
   background-size: contain!important;
   }
-}
 </style>

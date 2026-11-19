@@ -27,8 +27,8 @@ const {
     <div class="bm-call-to-action-25__cta-block">
       <div class="bm-call-to-action-25__content">
         <div class="bm-call-to-action-25__content-inner">
-          <h2 class="bm-call-to-action-25__content-heading">Get a free demo today!</h2>
-          <p class="bm-call-to-action-25__content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <h2 class="bm-call-to-action-25__content-heading">{heading}</h2>
+          <p class="bm-call-to-action-25__content-text">{fs}</p>
           <div class="bm-list list--none">
             {items.map((it) => (
               <div class="bm-list-item">
@@ -71,7 +71,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-call-to-action-25__cta-block {
     display: grid;
     gap: var(--space-m);
@@ -178,5 +178,4 @@ const {
   .bm-team-media:first-child {
   	margin-inline-start: 0px;
   }
-}
 </style>

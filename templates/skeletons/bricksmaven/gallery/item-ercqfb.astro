@@ -25,15 +25,15 @@ const {
 <div>
   <div class="gallery-10-container">
     <div class="gallery-10-row">
-      <h2 class="gallery-10-title">Our Gallery</h2>
-      <p class="gallery-10-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-10-title">{heading}</h2>
+      <p class="gallery-10-desc">{fs}</p>
     </div>
     <div class="gallery-10-card"></div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-10-container {
     display: flex;
     flex-direction: column;
@@ -91,5 +91,4 @@ const {
   .gallery-10-card li:nth-child(5){
     grid-area: 2 / 4 / 3 / 5; 
   }
-}
 </style>

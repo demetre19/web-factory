@@ -25,15 +25,15 @@ const {
 <div>
   <div class="gallery-3-container">
     <div class="gallery-3-row">
-      <h2 class="gallery-3-title">Our Gallery</h2>
-      <p class="gallery-3-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-3-title">{heading}</h2>
+      <p class="gallery-3-desc">{fs}</p>
     </div>
     <figure class="gallery-3-img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-3-container {
     display: flex;
     flex-direction: column;
@@ -60,5 +60,4 @@ const {
     width: 100%;
     border-radius: 1.5rem 1.5rem 1.5rem 1.5rem;
   }
-}
 </style>

@@ -25,12 +25,12 @@ const {
 <div>
   <div class="bm-contact-41__container">
     <div class="bm-contact-41__content">
-      <h2 class="bm-contact-41__contact-heading">Don't hesitate to contact us</h2>
+      <h2 class="bm-contact-41__contact-heading">{heading}</h2>
       <div class="bm-contact-41__contact">
         <div class="bm-contact-41__contact-data">
           <h2 class="bm-contact-41__heading">Contact</h2>
           <div class="bm-contact-41__column">
-            <p class="bm-contact-41__address">Bricksmaven Streetname 12345 HG City name</p>
+            <p class="bm-contact-41__address">{fs}</p>
             <p class="bm-contact-41__links">+31 234 456 78 info@bricksmaven.com</p>
           </div>
         </div>
@@ -87,7 +87,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-41 {
     position: relative;
     overflow: clip;
@@ -225,5 +225,4 @@ const {
   .bm-contact-41-contact-card:not(:last-child) {
     border-block-end: 1px solid var(--fs-0);
   }
-}
 </style>

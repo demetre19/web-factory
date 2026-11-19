@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-content-64__container">
     <div class="bm-content-64__content">
-      <h2 class="bm-content-64__heading">Long headline to turn your visitors into customers</h2>
-      <p class="bm-content-64__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+      <h2 class="bm-content-64__heading">{heading}</h2>
+      <p class="bm-content-64__text">{fs}</p>
       <div class="bm-feature-list-beta">
         <div class="bm-feature-list-item">
           <p class="bm-feature-list-item__list-text">Add a helpful benefit for the consumer</p>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-64__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
@@ -129,5 +129,4 @@ const {
     line-height: 1;
       
   }
-}
 </style>

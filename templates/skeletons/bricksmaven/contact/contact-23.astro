@@ -26,8 +26,8 @@ const {
   <div class="contact-23-container">
     <div class="contact-23-content">
       <div class="intro contact-23-content__intro">
-        <h2 class="intro__heading">Lorem ipsum dolor sit amet consectetur.</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
       </div>
       <div class="contact-23-list-ul list--none">
         {items.map((it) => (
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-23 {
     background: var(--action-primary);
   }
@@ -121,5 +121,4 @@ const {
   .contact-23-content__intro h2 {
   	font-size: var(--fs-4);
   }
-}
 </style>

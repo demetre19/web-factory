@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-portfolio-single-1__container">
     <div class="bm-portfolio-single-1__aside">
-      <h1 class="bm-portfolio-single-1__heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
+      <h1 class="bm-portfolio-single-1__heading">{heading}</h1>
       <div class="bm-live-website-btn">
         <div class="bm-live-website-btn__dot"></div>
         <p class="bm-live-website-btn__text clickable-parent">Visit website</p>
@@ -39,7 +39,7 @@ const {
         ))}
       </div>
       <div class="bm-portfolio-single-1__story-content">
-        <p class="bm-portfolio-single-1__story">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility. Despite offering high-quality, ethically sourced products, their website traffic was minimal, bounce rates were high, and conversion rates lagged significantly behind industry averages. They needed a strategic intervention to connect with their target audience and translate interest into purchases.</p>
+        <p class="bm-portfolio-single-1__story">{fs}</p>
       </div>
       <div class="bm-contact-widget-2">
         <h2 class="bm-contact-widget-2__heading">Ready to start a project?</h2>
@@ -125,7 +125,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-single-1 {
     row-gap: var(--space-s);
   }
@@ -348,5 +348,4 @@ const {
   .bm-portfolio-related-card {
     aspect-ratio: 4/3;
   }
-}
 </style>

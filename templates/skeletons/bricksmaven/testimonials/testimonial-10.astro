@@ -25,10 +25,10 @@ const {
 <div>
   <div class="testimonial-10__container">
     <div class="testimonial-10__content">
-      <p class="testimonial-10-content__desc text--xl">We've been using Alpha to kick start every project and can't imagine working without it</p>
+      <p class="testimonial-10-content__desc text--xl">{fs}</p>
       <div class="testimonial-10-content__stars text--l"></div>
       <div class="testimonial-10-content__profile gap--xs flex--col">
-        <h4 class="testimonial-10-content__name text--primary">John Smith</h4>
+        <h4 class="testimonial-10-content__name text--primary">{heading}</h4>
         <p class="testimonial-10-content__title text--s">Product Designer, Bricksmaven</p>
       </div>
     </div>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-10__container {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
@@ -75,5 +75,4 @@ const {
   .testimonial-10-photo__img {
   	--breakout-height: var(--space-m);
   }
-}
 </style>

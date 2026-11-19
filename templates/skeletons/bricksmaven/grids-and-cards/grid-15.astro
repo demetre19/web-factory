@@ -25,8 +25,8 @@ const {
 <div>
   <div class="gridcard-15-container">
     <div class="gridcard-15-head">
-      <h2 class="gridcard-15-head__title">You and I, know that ACSS is the plug!</h2>
-      <p class="gridcard-15-head__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+      <h2 class="gridcard-15-head__title">{heading}</h2>
+      <p class="gridcard-15-head__desc">{fs}</p>
     </div>
     <div class="gridcard-15-articles list--none">
       {items.map((it) => (
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-15-container {
     row-gap: var(--space-s);
   }
@@ -114,5 +114,4 @@ const {
   .gridcard-15-card:hover .gridcard-15-card__title {
   	color: var(--action-primary); 
   }
-}
 </style>

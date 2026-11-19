@@ -27,7 +27,7 @@ const {
     <div class="bm-testimonial-37__wrapper">
       <div class="bm-testimonial-37__content">
         <div class="bm-testimonial-37__top">
-          <h2 class="bm-testimonial-37__heading">Long headline to turn your visitors into customers</h2>
+          <h2 class="bm-testimonial-37__heading">{heading}</h2>
           <p class="accent-h">Accent heading</p>
         </div>
         <div class="bm-testimonial-37__ratings">
@@ -57,7 +57,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-37__wrapper {
     display: grid;
     gap: var(--space-m);
@@ -124,5 +124,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

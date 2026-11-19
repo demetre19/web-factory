@@ -26,8 +26,8 @@ const {
   <div class="bm-event-section-10__container">
     <div class="bm-event-section-10__intro">
       <div class="bm-event-section-10__column">
-        <h2 class="bm-event-section-10__heading">Upcoming events</h2>
-        <p class="bm-event-section-10__text">This annual event brings together top musicians from around the world to perform in front of a passionate crowd of music lovers.</p>
+        <h2 class="bm-event-section-10__heading">{heading}</h2>
+        <p class="bm-event-section-10__text">{fs}</p>
       </div>
       <div class="bm-event-section-10__cta">
         <a class="bm-event-section-10__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -67,7 +67,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-section-10 {
     overflow: hidden;
   }
@@ -156,5 +156,4 @@ const {
   .bm-event-section-10-card__footer {
     row-gap: var(--flow-spacing);
   }
-}
 </style>

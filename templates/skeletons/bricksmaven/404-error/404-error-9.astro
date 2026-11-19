@@ -26,9 +26,9 @@ const {
   <div class="error-9-container">
     <div class="error-9-left-box">
       <div class="error-9-heading-wrapper">
-        <h1 class="error-9-left-box__heading">404 ERROR</h1>
+        <h1 class="error-9-left-box__heading">{heading}</h1>
         <p class="error-9-left-box__subheading">Page not found.</p>
-        <p class="error-9-left-box__desc">Sorry, the page you are looking for doesn't exist.</p>
+        <p class="error-9-left-box__desc">{fs}</p>
       </div>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .error-9-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -92,5 +92,4 @@ const {
     padding: 0 0 0 0;
     justify-content: flex-start;
   }
-}
 </style>

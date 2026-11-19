@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-pricing-16__container">
     <div class="bm-pricing-16__intro">
-      <h2 class="bm-pricing-16__heading">Get access to the Alpha library today!</h2>
+      <h2 class="bm-pricing-16__heading">{heading}</h2>
       <p class="accent-h">Accent heading</p>
-      <p class="bm-pricing-16__text">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <p class="bm-pricing-16__text">{fs}</p>
     </div>
     <div class="bm-pricing-16__price-wrapper list--none">
       <div class="bm-pricing-13-card">
@@ -81,7 +81,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-pricing-16__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
@@ -182,5 +182,4 @@ const {
   .bm-list-item {
   	--circle-size: var(--fs-0);
   }
-}
 </style>

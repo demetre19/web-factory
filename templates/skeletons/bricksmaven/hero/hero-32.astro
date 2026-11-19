@@ -26,8 +26,8 @@ const {
   <div class="hero-32-container">
     <div class="hero-32__content">
       <div class="intro intro--left">
-        <h1 class="intro__heading">Long headline to turn your visitors into customers</h1>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="intro__heading">{heading}</h1>
+        <p class="intro__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         </div>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-32 {
     padding: 0 0 0 0;
   }
@@ -139,5 +139,4 @@ const {
   }
   
   }
-}
 </style>

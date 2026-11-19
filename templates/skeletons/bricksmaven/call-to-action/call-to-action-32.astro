@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-cta-32__container">
     <div class="bm-cta-32__intro">
-      <h2 class="bm-cta-32__heading">Do you recognize this?</h2>
+      <h2 class="bm-cta-32__heading">{heading}</h2>
       <p class="bm-accent-heading">Time for a change</p>
     </div>
     <div class="bm-cta-ul-list list--none">
@@ -36,14 +36,14 @@ const {
       ))}
     </div>
     <div class="bm-cta-32__footer">
-      <p class="bm-cta-32__footer-text">Taking action will bring you the desired results. Contact us today.</p>
+      <p class="bm-cta-32__footer-text">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-32__container {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
     background: var(--fs-0);
@@ -98,5 +98,4 @@ const {
     color:var(--fs-0);
     font-size: var(--fs-0);
   }
-}
 </style>

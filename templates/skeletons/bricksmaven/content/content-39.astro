@@ -24,10 +24,10 @@ const {
 
 <div>
   <div class="bm-content-39__container">
-    <h2 class="bm-content-39__heading">Long headline to turn your visitors into customers</h2>
+    <h2 class="bm-content-39__heading">{heading}</h2>
     <div class="bm-content-39__content">
       <div class="bm-content-39__center">
-        <p class="bm-content-39__text-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        <p class="bm-content-39__text-bold">{fs}</p>
         <p class="bm-content-39__text">Irony mumblecore disrupt fam pinterest la croix bicycle rights flannel vaporware retro normcore knausgaard migas taiyaki banjo. Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Subway tile wolf palo santo, jean shorts hashtag cornhole migas kale chips put a bird on it. Distillery offal ramps adaptogen.</p>
       </div>
     </div>
@@ -38,7 +38,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-39__heading {
     width: var(--content-width);
   }
@@ -61,5 +61,4 @@ const {
     width: 100%;
     height: 64rem;
   }
-}
 </style>

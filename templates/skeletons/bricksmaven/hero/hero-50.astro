@@ -25,9 +25,9 @@ const {
 <div>
   <div class="hero-50__container">
     <div class="hero-50__content">
-      <h1 class="hero-50__heading">Medium length hero heading goes here</h1>
+      <h1 class="hero-50__heading">{heading}</h1>
       <p class="accent-h">Accent heading</p>
-      <p class="hero-50__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+      <p class="hero-50__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--black" href={cta.href}>{cta.label}</a>
         <a class="btn--link" href="#">Secondary action →</a>
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-50 {
     flex-direction: row;
     padding: 0 0 0 0;
@@ -109,5 +109,4 @@ const {
   }
     
   }
-}
 </style>

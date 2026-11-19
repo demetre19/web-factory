@@ -26,7 +26,7 @@ const {
   <div class="testimonial-36__container">
     <div class="testimonial-36__content">
       <div class="testimonial-36__content-head">
-        <h2 class="testimonial-36__heading">The standard Lorem Ipsum passage, used since the 1500s</h2>
+        <h2 class="testimonial-36__heading">{heading}</h2>
         <p class="testimonial-36__accent-heading">Accent heading</p>
       </div>
       <div class="bm-content-feature-list">
@@ -90,7 +90,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-36 {
     padding: 0 0 0 0;
   }
@@ -228,5 +228,4 @@ const {
     background: linear-gradient( transparent, var(--bg-canvas));
     z-index: 99;
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="product-list-5__container">
     <div class="product-list-5__list">
       <div class="intro">
-        <h2 class="intro__heading">Featured Products</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
       </div>
       <div class="product-list-5-card__group list--none">
         {items.map((it) => (
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .product-list-5__list {
     display: grid;
     gap: calc( var(--space-m) * 2 );
@@ -199,5 +199,4 @@ const {
   .product-list-4__star-rating .star-rating:before {
     	color: var(--color-line-default);
   }
-}
 </style>

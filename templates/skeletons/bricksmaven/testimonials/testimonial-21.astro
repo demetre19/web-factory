@@ -25,7 +25,7 @@ const {
 <div>
   <div class="testimonial-21-container">
     <div class="testimonial-21-content">
-      <h2 class="testimonial-21-content__title">Medium title placeholder text</h2>
+      <h2 class="testimonial-21-content__title">{heading}</h2>
       <div class="testimonial-21-content__list">
         {items.map((it) => (
           <div class="testimonial-21-content__item">
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-21-container {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -165,5 +165,4 @@ const {
   	text-decoration-color: var(--action-primary) !important;
     text-decoration-thickness: .2rem !important;
   }
-}
 </style>

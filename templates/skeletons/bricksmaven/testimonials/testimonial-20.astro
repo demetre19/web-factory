@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="testimonial-20-container">
-    <h2 class="testimonial-20-content__title">Medium title placeholder text</h2>
+    <h2 class="testimonial-20-content__title">{heading}</h2>
     <div class="testimonial-20-content">
       {items.map((it) => (
         <div class="testimonial-20-content__slide">
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-20-container {
     flex-direction: column;
     row-gap: 5rem;
@@ -78,5 +78,4 @@ const {
     width: 100%;
     height: 40rem;
   }
-}
 </style>

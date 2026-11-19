@@ -44,7 +44,7 @@ const {
     </div>
     <div class="bm-linktree-9__links">
       <div class="bm-linktree-9__link-row">
-        <h2 class="bm-linktree-9__links-heading">Subject heading</h2>
+        <h2 class="bm-linktree-9__links-heading">{heading}</h2>
         <div class="bm-linktree-list list--none">
           {items.map((it) => (
             <div class="bm-linktree-card">
@@ -68,7 +68,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-linktree-9 {
     position: relative;
     padding: 0 0 0 0;
@@ -153,5 +153,4 @@ const {
     background: var(--text-secondary);
     position: relative;
   }
-}
 </style>

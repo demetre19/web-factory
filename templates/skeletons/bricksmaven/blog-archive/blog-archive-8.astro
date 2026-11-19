@@ -26,9 +26,9 @@ const {
   <div class="blog-archive-8-container">
     <div class="blog-archive-8-head">
       <div class="blog-archive-8-head__intro">
-        <h1 class="blog-archive-8-head__title">Fresh from the blog</h1>
+        <h1 class="blog-archive-8-head__title">{heading}</h1>
         <p class="accent-h">Latest</p>
-        <p class="blog-archive-8-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut no</p>
+        <p class="blog-archive-8-head__desc">{fs}</p>
       </div>
       <div class="blog-archive-8-head__search-wrapper">
         <div class="blog-archive-8-head__form"></div>
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-8-container {
     grid-template-columns: calc(100% * 1 / 6);
     gap: var(--space-m);
@@ -241,5 +241,4 @@ const {
   .blog-archive-8-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

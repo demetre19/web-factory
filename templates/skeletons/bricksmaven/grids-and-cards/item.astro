@@ -26,7 +26,7 @@ const {
   <div class="gridcard-12-container">
     <div class="gridcard-12-ct">
       <p class="gridcard-12-ct__tag">Awesome Tagline</p>
-      <h2 class="gridcard-12-ct__title">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h2>
+      <h2 class="gridcard-12-ct__title">{heading}</h2>
       <a class="gridcard-12-ct__cta" href={cta.href}>{cta.label}</a>
     </div>
     <div class="gridcard-12-media">
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-12-container {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -117,5 +117,4 @@ const {
     align-items: flex-start;
     background: var(--action-primary);
   }
-}
 </style>

@@ -25,7 +25,7 @@ const {
 <div>
   <div class="feature-12-container">
     <div class="feature-12-content">
-      <h2 class="feature-12__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="feature-12__heading">{heading}</h2>
     </div>
   </div>
   <figure class="feature-12__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-12 {
     height: 100%;
     position: relative;
@@ -108,5 +108,4 @@ const {
   .feature-12-column-item {
   	box-shadow: var(--shadow-card);
   }
-}
 </style>

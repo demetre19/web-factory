@@ -26,8 +26,8 @@ const {
   <div class="hero-44-container">
     <div class="hero-44__content">
       <div class="hero-44__intro">
-        <h1 class="hero-44__heading">Cut your design & development time in half</h1>
-        <p class="hero-44__text">Alpha template by Bricksmaven helps you accelerate your design & development workflow and decrease your development time.</p>
+        <h1 class="hero-44__heading">{heading}</h1>
+        <p class="hero-44__text">{fs}</p>
       </div>
       <div class="hero-44__media-big">
         <figure class="hero-44__image-big"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-44 {
     height: 100%;
   }
@@ -140,5 +140,4 @@ const {
   	background-color: var(--action-primary);
     cursor: pointer;
   }
-}
 </style>

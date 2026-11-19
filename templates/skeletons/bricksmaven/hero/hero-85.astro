@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-85__container">
     <div class="bm-hero-85__content">
       <div class="bm-hero-85__top">
-        <h1 class="bm-hero-85__heading">Tired of building from scratch? Get Bricksmaven today!</h1>
+        <h1 class="bm-hero-85__heading">{heading}</h1>
         <p class="bm-accent-heading bm-hero-85__accent">Accent heading</p>
-        <p class="bm-hero-85__subheading">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="bm-hero-85__subheading">{fs}</p>
         <a class="bm-hero-85__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-hero-85-testimonial">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-85 {
     background: var(--bg-subtle);
   }
@@ -116,5 +116,4 @@ const {
     /* bm: box-shadow omitted — token layer owns elevation */
     row-gap: var(--flow-spacing);
   }
-}
 </style>

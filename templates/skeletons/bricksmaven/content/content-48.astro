@@ -26,8 +26,8 @@ const {
   <div class="bm-content-48__container">
     <div class="bm-content-48__content">
       <div class="intro intro--left">
-        <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
         <p class="intro__accent-heading">Accent heading</p>
       </div>
       <figure class="bm-content-48__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-48__container {
     display: grid;
     gap: var(--space-m);
@@ -78,5 +78,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

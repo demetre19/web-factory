@@ -25,8 +25,8 @@ const {
 <div>
   <div class="contact-25-container">
     <div class="intro">
-      <h1 class="intro__heading">Contact with us</h1>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+      <h1 class="intro__heading">{heading}</h1>
+      <p class="intro__subheading">{fs}</p>
     </div>
     <div class="contact-25-content">
       <div class="contact-25-side">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-25-container {
     row-gap: var(--space-l);
   }
@@ -181,5 +181,4 @@ const {
   .contact-25-media__image {
   	grid-column: 2/12;
   }
-}
 </style>

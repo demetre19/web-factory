@@ -25,14 +25,14 @@ const {
 <div>
   <div class="logo-2-container">
     <div class="width--full logo-2-row center--all gap--l">
-      <h2 class="logo-2-title">Tired of building from scratch?</h2>
+      <h2 class="logo-2-title">{heading}</h2>
       <div class="logo-2-list-item"></div>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   /* bm-custom */
   .logo-2-list-item li {
   	padding-left: var(--space-xs);
@@ -41,5 +41,4 @@ const {
   .logo-2-list-item li div {
   	background-size: contain!important;
   }
-}
 </style>

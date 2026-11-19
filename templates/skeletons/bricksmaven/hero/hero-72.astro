@@ -26,14 +26,14 @@ const {
   <div class="bm-hero-72__container">
     <div class="bm-hero-72__hero">
       <div class="bm-hero-72__content">
-        <h1 class="bm-hero-72__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-72__heading">{heading}</h1>
         <p class="accent-h accent-h--alt">Accent heading</p>
         <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <figure class="bm-hero-72__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       <div class="bm-hero-72__overlay">
         <h2 class="bm-hero-72__overlay-heading">Short headline</h2>
-        <p class="bm-hero-72__overlay-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-72__overlay-text">{fs}</p>
         <a class="bm-hero-72__overlay-link" href="#">Secondary link</a>
       </div>
     </div>
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-72__hero {
     position: relative;
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
@@ -145,5 +145,4 @@ const {
   .logo-12-list :where(.splide__list, .splide__slide){
     transition-timing-function: linear !important;
   }
-}
 </style>

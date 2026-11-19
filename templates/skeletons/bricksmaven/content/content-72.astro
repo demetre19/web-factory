@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-72__container">
     <div class="bm-content-72__content">
-      <h2 class="bm-content-72__heading">I’m dedicated to building exceptional websites that not only reflect your brand but also drive conversions and attract clients effectively.</h2>
+      <h2 class="bm-content-72__heading">{heading}</h2>
       <p class="bm-content-72__accent-heading">Hey, I'm Charles Edward</p>
       <div class="bm-content-72-achievement-list list--none">
         {items.map((it) => (
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-72 {
     row-gap: var(--space-s);
     position: relative;
@@ -193,5 +193,4 @@ const {
   }
     
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="bm-testimonial-40__container">
     <div class="bm-testimonial-40__intro-wrapper">
       <div class="intro intro--left">
-        <h2 class="intro__heading">What our members are saying about our awesome product</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
         <p class="accent-h">Accent heading</p>
       </div>
       <div class="cta-combo">
@@ -84,7 +84,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-40__container {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
@@ -171,5 +171,4 @@ const {
   .bm-testimonial-40-card:last-child {
     border: none;
   }
-}
 </style>

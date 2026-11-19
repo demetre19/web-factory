@@ -25,8 +25,8 @@ const {
 <div>
   <div class="hworks-10-container">
     <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">We provide the best</h2>
-      <p class="hworks-10-desc hworks-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h2 class="hworks-intro__heading">{heading}</h2>
+      <p class="hworks-10-desc hworks-intro__desc">{fs}</p>
     </div>
     <div class="hworks-10-grid-ul list--none">
       {items.map((it) => (
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hworks-10 {
     background: color-mix(in srgb, var(--bg-subtle) 20%, transparent);
   }
@@ -97,5 +97,4 @@ const {
     border-radius: 100%;
     font-size: var(--fs-3);
   }
-}
 </style>

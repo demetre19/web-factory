@@ -26,11 +26,11 @@ const {
   <div class="grid-27-container">
     <div class="intro-3col">
       <div class="intro__left">
-        <h2 class="intro__heading">How can we serve you today?</h2>
+        <h2 class="intro__heading">{heading}</h2>
         <p class="accent-h">Accent heading</p>
       </div>
       <div class="intro__mid">
-        <p class="intro__subheading">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
+        <p class="intro__subheading">{fs}</p>
       </div>
       <div class="intro__right">
         <a class="intro__link btn--black" href="#">More Services</a>
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .grid-27-container {
     row-gap: var(--space-s);
   }
@@ -135,5 +135,4 @@ const {
     	grid-column: span 1;
     }
   }
-}
 </style>

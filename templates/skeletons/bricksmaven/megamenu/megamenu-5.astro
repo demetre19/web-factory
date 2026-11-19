@@ -50,7 +50,7 @@ const {
                 </div>
               </div>
               <div class="megamenu-5__article-wrapper">
-                <h2 class="megamenu-5__group-heading">Heading</h2>
+                <h2 class="megamenu-5__group-heading">{heading}</h2>
                 <div class="megamenu-article-list list--none">
                   <div class="megamenu-article-card">
                     <div class="megamenu-article-card__content">
@@ -58,7 +58,7 @@ const {
                         <h4 class="megamenu-article-card__heading clickable-parent">Link Group Heading</h4>
                         <p class="megamenu-article-card__date">October 17, 2024</p>
                       </div>
-                      <p class="megamenu-article-card__excerpt">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                      <p class="megamenu-article-card__excerpt">{fs}</p>
                     </div>
                     <div class="megamenu-article-card__media">
                       <figure class="megamenu-article-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -94,7 +94,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-header-1 {
     padding: var(--space-xs) 0 var(--space-xs) 0;
     position: relative;
@@ -223,5 +223,4 @@ const {
   .megamenu-card-link-3:hover, .megamenu-card-link-3:focus-within {
     background-color: var(--bg-subtle);
   }
-}
 </style>

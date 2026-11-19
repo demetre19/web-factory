@@ -26,8 +26,8 @@ const {
   <div class="blog-section-7-container">
     <div class="blog-section-7-head">
       <p class="accent-h">Our blog</p>
-      <h2 class="blog-section-7-head__title">Lastest blog posts</h2>
-      <p class="blog-section-7-head__desc">Tool and strategies modern teams need to help their companies grow.</p>
+      <h2 class="blog-section-7-head__title">{heading}</h2>
+      <p class="blog-section-7-head__desc">{fs}</p>
     </div>
     <div class="blog-section-7-body">
       <div class="blog-section-7-wrapper list--none">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-section-7-container {
     row-gap: var(--space-s);
   }
@@ -138,5 +138,4 @@ const {
   .blog-section-7-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

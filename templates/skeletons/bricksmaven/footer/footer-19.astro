@@ -55,12 +55,12 @@ const {
     </div>
   </div>
   <div class="bm-footer-19__footer">
-    <p class="footer-copyright">© {current_date:Y} Alpha. All right reserved.</p>
+    <p class="footer-copyright">{fs}</p>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-19 {
     row-gap: var(--space-s);
     overflow: hidden;
@@ -148,5 +148,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

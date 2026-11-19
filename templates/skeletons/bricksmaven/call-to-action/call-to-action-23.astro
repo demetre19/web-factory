@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-cta-23__container">
     <div class="bm-cta-23__content">
-      <h2 class="bm-cta-23__heading">Think. Action. Results.</h2>
-      <p class="bm-cta-23__text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      <h2 class="bm-cta-23__heading">{heading}</h2>
+      <p class="bm-cta-23__text">{fs}</p>
       <a class="btn--primary btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-cta-23__image-list list--none">
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-23 {
     position: relative;
     padding: 0 0 0 0;
@@ -99,5 +99,4 @@ const {
   .bm-cta-23__container {
     --viewport-height: 300vh;
   }
-}
 </style>

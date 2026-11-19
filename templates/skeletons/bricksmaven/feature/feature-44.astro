@@ -28,11 +28,11 @@ const {
       <div class="feature-44-card">
         <div class="feature-44-card__content">
           <div class="feature-44-card__intro">
-            <h2 class="feature-44-card__heading">Long headline to turn your visitors into customers</h2>
+            <h2 class="feature-44-card__heading">{heading}</h2>
             <p class="accent-h feature-44-card__accent">Accent heading</p>
           </div>
           <div class="feature-44-card__footer">
-            <p class="feature-44-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="feature-44-card__text">{fs}</p>
             <a class="feature-44-card__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
           </div>
         </div>
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-44 {
     background: var(--text-secondary);
     padding: 0 0 var(--section-space-xl) 0;
@@ -121,5 +121,4 @@ const {
     bottom: 0;
     left: 0;
   }
-}
 </style>

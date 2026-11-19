@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-65__container">
     <div class="bm-hero-65__content">
       <div class="bm-hero-65__top">
-        <h1 class="bm-hero-65__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-65__heading">{heading}</h1>
         <p class="accent-h accent-h--alt">Accent heading</p>
-        <p class="bm-hero-65__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+        <p class="bm-hero-65__subheading">{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--white" href="#">Call to action</a>
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-65 {
     height: 1020;
     position: relative;
@@ -180,5 +180,4 @@ const {
     border-left: 1px solid var(--bg-subtle);
     border-right: 1px solid var(--bg-subtle);
   }
-}
 </style>

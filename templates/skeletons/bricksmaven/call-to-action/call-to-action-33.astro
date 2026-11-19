@@ -29,8 +29,8 @@ const {
         <div class="bm-project-status">
           <p class="bm-project-status__label">Available for new projects</p>
         </div>
-        <h2 class="bm-cta-33__heading">Ready for a website that actually works?</h2>
-        <p class="bm-cta-33__text">If your site isn’t helping you grow, I’ll help you build one that looks sharp, builds trust, and converts better.</p>
+        <h2 class="bm-cta-33__heading">{heading}</h2>
+        <p class="bm-cta-33__text">{fs}</p>
       </div>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-33__container {
     display: grid;
     gap: var(--space-m);
@@ -132,5 +132,4 @@ const {
       filter: blur(3px);
     }
   }
-}
 </style>

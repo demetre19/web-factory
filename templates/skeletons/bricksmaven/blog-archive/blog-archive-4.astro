@@ -26,9 +26,9 @@ const {
   <div class="gap--xl ba-4-container">
     <div class="blog-archive-4-head">
       <div class="blog-archive-4-head__intro">
-        <h1 class="blog-archive-4-head__title">Grow in knowledge</h1>
+        <h1 class="blog-archive-4-head__title">{heading}</h1>
         <p class="accent-h">Our blog</p>
-        <p class="blog-archive-4-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut non Rem sit Quia earum aut error</p>
+        <p class="blog-archive-4-head__desc">{fs}</p>
       </div>
       <div class="ba-4-head__search-wrapper">
         <div class="blog-archive-4-head__form"></div>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-4-head {
     grid-template-columns: calc(100% * 1 / 5);
     gap: var(--space-m);
@@ -192,5 +192,4 @@ const {
   .blog-archive-4-card__excerpt p {
   	max-width: 100%;
   }
-}
 </style>

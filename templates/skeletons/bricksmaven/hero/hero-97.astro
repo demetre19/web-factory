@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-97__container">
     <div class="bm-hero-97__content">
       <div class="bm-hero-97__top">
-        <h1 class="bm-hero-97__heading">Long headline to turn your customers head</h1>
-        <p class="bm-hero-97__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-hero-97__heading">{heading}</h1>
+        <p class="bm-hero-97__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
           <a class="link--white" href="#">Secondary action →</a>
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-97 {
     position: relative;
   }
@@ -118,5 +118,4 @@ const {
     background-color: var(--text-secondary);
     z-index: -1;
   }
-}
 </style>

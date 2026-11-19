@@ -26,8 +26,8 @@ const {
   <div class="hero-10-container overlay--black-trans-40">
     <div class="hero-10__content">
       <p class="hero-11__tag">TAGLINE</p>
-      <h1 class="hero-11__title">Long headline to turn your visitors into customers</h1>
-      <p class="hero-11__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="hero-11__title">{heading}</h1>
+      <p class="hero-11__desc">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <figure class="hero-10__section-bg-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -35,7 +35,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-10 {
     padding: 0 0 0 0;
     height: 100vh;
@@ -70,5 +70,4 @@ const {
     z-index: -10;
     object-fit: cover;
   }
-}
 </style>

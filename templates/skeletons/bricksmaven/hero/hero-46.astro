@@ -25,8 +25,8 @@ const {
 <div>
   <div class="hero-46-container">
     <div class="hero-46__content">
-      <h1 class="hero-46__heading">Long headline to turn your visitors into users</h1>
-      <p class="hero-46__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="hero-46__heading">{heading}</h1>
+      <p class="hero-46__subheading">{fs}</p>
       <p class="accent-h">Accent heading</p>
       <div class="cta-combo">
         <a class="btn--black" href={cta.href}>{cta.label}</a>
@@ -57,7 +57,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-46 {
     padding: 0 0 0 0;
     height: 100vh;
@@ -164,5 +164,4 @@ const {
       transform: translateY(0%);
     }
   }
-}
 </style>

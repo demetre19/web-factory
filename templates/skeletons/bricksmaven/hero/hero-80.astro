@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-hero-80__container">
     <div class="bm-hero-80__intro">
-      <h1 class="bm-hero-80__heading">For 15 years we have been helping service-based businesses grow online</h1>
-      <p class="bm-hero-80__text">Lorem ipsum dolor sit amet. At eaque fugiat id autem voluptatum ea earum illo. Non excepturi similique qui quia nihil eos suscipit nihil aut dignissimos blanditiis et sunt aliquid aut nemo inventore est sequi aliquam?</p>
+      <h1 class="bm-hero-80__heading">{heading}</h1>
+      <p class="bm-hero-80__text">{fs}</p>
     </div>
   </div>
   <div class="bm-hero-80__bottom-container">
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-80 {
     row-gap: var(--space-s);
     background: var(--bg-subtle);
@@ -120,5 +120,4 @@ const {
   .bm-hero-80-data-card__meta {
     font-size: var(--fs-2);
   }
-}
 </style>

@@ -26,13 +26,13 @@ const {
   <div class="footer-4-container">
     <div class="footer-4-alpha">
       <img class="footer-4__logo"></img>
-      <p class="footer-4__desc">Join our newsletter to stay up to date on features and releases</p>
+      <p class="footer-4__desc">{fs}</p>
       <form class="footer-newsletter__form" novalidate>
       </form>
     </div>
     <div class="footer-nav-wrapper footer-nav-wrapper-4">
       <div class="footer-nav-column">
-        <h3 class="footer-nav-heading">1st column</h3>
+        <h3 class="footer-nav-heading">{heading}</h3>
         <div class="footer-menu list--none">
           {items.map((it) => (
             <div class="footer-menu__link">
@@ -76,7 +76,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-4 {
     row-gap: var(--space-s);
   }
@@ -173,5 +173,4 @@ const {
   .footer-4__link {
   	color: var(--text-primary);
   }
-}
 </style>

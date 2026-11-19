@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-hero-100__container">
     <div class="bm-hero-100__intro">
-      <h1 class="bm-hero-100__heading">Long headline to turn your customers head</h1>
+      <h1 class="bm-hero-100__heading">{heading}</h1>
       <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-hero-100__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="bm-hero-100__subheading">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-hero-100__media">
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-100__container {
     row-gap: var(--space-s);
     align-items: center;
@@ -99,5 +99,4 @@ const {
     --image-height: calc(50rem / 1.5);
   }
   }
-}
 </style>

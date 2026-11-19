@@ -25,8 +25,8 @@ const {
 <div>
   <div class="feature-30-container">
     <div class="feature-30__content">
-      <h2 class="feature-30__heading">What is Lorem Ipsum?</h2>
-      <p class="feature-30__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+      <h2 class="feature-30__heading">{heading}</h2>
+      <p class="feature-30__text">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="feature-30__feature-wrapper">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-30 {
     position: relative;
   }
@@ -132,5 +132,4 @@ const {
     left:0;
   }
   }
-}
 </style>

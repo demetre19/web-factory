@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-gallery-20__container">
     <div class="bm-intro-center">
-      <h2 class="bm-intro-center__heading">Add your titel here</h2>
+      <h2 class="bm-intro-center__heading">{heading}</h2>
       <p class="bm-accent-heading">Ontdek meer video's</p>
     </div>
     <div class="bm-gallery-20__cover">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-gallery-20 {
     background: var(--fs-0);
     overflow: clip;
@@ -137,5 +137,4 @@ const {
   
   
   }
-}
 </style>

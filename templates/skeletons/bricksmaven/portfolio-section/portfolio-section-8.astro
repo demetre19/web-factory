@@ -26,11 +26,11 @@ const {
   <div class="portfolio-section-8__container">
     <div class="intro intro--split intro--split-alt">
       <div class="intro__left-column">
-        <h2 class="intro__heading intro__heading--alt">Recent work</h2>
+        <h2 class="intro__heading intro__heading--alt">{heading}</h2>
         <p class="intro__accent-heading intro__accent-heading--alt">Tagline</p>
       </div>
       <div class="intro__right-column">
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro__subheading">{fs}</p>
         <a class="btn--white" href="#">Call to action</a>
       </div>
     </div>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .portfolio-section-8 {
     background: var(--text-secondary);
   }
@@ -112,5 +112,4 @@ const {
   .portfolio-section-8-card__image {
     object-fit: cover;
   }
-}
 </style>

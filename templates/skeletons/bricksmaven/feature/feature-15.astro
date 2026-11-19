@@ -26,8 +26,8 @@ const {
   <div class="feature-15-container">
     <div class="feature-15-content">
       <div class="feature-15__intro">
-        <h2 class="feature-15__heading">No digital strategy is killing your startup</h2>
-        <p class="feature-15__desc">What’s getting in the way of your customers getting what they want?</p>
+        <h2 class="feature-15__heading">{heading}</h2>
+        <p class="feature-15__desc">{fs}</p>
       </div>
       <div class="feature-15-card">
         <h2 class="feature-15-card__heading">No visibility, no clients</h2>
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-15-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -80,5 +80,4 @@ const {
     border-bottom: .1rem solid var(--bg-subtle);
     border-left: .1rem solid var(--bg-subtle);
   }
-}
 </style>

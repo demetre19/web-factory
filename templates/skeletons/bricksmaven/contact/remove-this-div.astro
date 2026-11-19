@@ -27,7 +27,7 @@ const {
     <div class="bm-contact-27__container">
       <div class="bm-contact-27__intro">
         <div class="bm-contact-27__head">
-          <h2 class="bm-contact-27__heading">Hello, Can we help you?</h2>
+          <h2 class="bm-contact-27__heading">{heading}</h2>
           <p class="accent-h">Accent Heading</p>
         </div>
         <div class="bm-contact-27__contact-details list--none">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-27 {
     row-gap: var(--space-s);
     position: relative;
@@ -120,5 +120,4 @@ const {
     position: absolute;
     bottom: 2rem;
   }
-}
 </style>

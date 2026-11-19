@@ -26,7 +26,7 @@ const {
   <div class="gridcard-18-container">
     <div class="intro">
       <p class="intro__subheading">Lorem ipsum set dolor amet</p>
-      <h2 class="intro__heading">This is a service block</h2>
+      <h2 class="intro__heading">{heading}</h2>
     </div>
     <div class="gridcard-18-ct list--none">
       {items.map((it) => (
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-18-container {
     row-gap: var(--space-s);
   }
@@ -132,5 +132,4 @@ const {
   .gridcard-18-article__title > a::after {
   	z-index: 1;
   }
-}
 </style>

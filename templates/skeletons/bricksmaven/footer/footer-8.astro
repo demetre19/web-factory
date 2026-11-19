@@ -56,7 +56,7 @@ const {
           <img class="footer-brand__logo"></img>
         </div>
         <div class="footer-bottom__copyright">
-          <p class="footer-copyright">© 2022 Alpha. All right reserved.</p>
+          <p class="footer-copyright">{fs}</p>
         </div>
       </div>
       <div class="footer-nav-legal">
@@ -77,7 +77,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-8 {
     position: relative;
     row-gap: var(--space-s);
@@ -212,5 +212,4 @@ const {
   .footer-social {
   	justify-content: center;
   }
-}
 </style>

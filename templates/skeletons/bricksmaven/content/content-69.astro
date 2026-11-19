@@ -26,9 +26,9 @@ const {
   <div class="bm-content-69__container">
     <div class="bm-content-69__wrapper">
       <div class="bm-content-69__content">
-        <h2 class="bm-content-69__heading">Accelerate your development process</h2>
+        <h2 class="bm-content-69__heading">{heading}</h2>
         <p class="bm-accent-heading bm-content-69__accent-heading">Accent heading</p>
-        <p class="bm-content-69__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="bm-content-69__text">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-content-69__media-wrapper">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-69__container {
     width: 100%;
   }
@@ -107,5 +107,4 @@ const {
     margin-inline-start: var(--space-xl);
     z-index: 1;
   }
-}
 </style>

@@ -25,9 +25,9 @@ const {
 <div>
   <div class="hero-42__container">
     <div class="hero-42__content">
-      <h1 class="hero-42__heading">Get the Alpha template now</h1>
+      <h1 class="hero-42__heading">{heading}</h1>
       <p class="accent-h">Accent heading</p>
-      <p class="hero-42__text">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+      <p class="hero-42__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-42__image-left">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-42 {
     height: 80vh;
     padding: 0 0 0 0;
@@ -75,5 +75,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

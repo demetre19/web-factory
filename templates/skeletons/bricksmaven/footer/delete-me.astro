@@ -25,8 +25,8 @@ const {
 <div>
   <div class="footer-cta-container">
     <div class="footer-cta__content">
-      <h2 class="footer-cta__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
-      <p class="footer-cta__text">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <h2 class="footer-cta__heading">{heading}</h2>
+      <p class="footer-cta__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="footer-cta__media">
@@ -71,7 +71,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-cta {
     padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
     margin: 0 0 calc(var(--section-space-xs) * -1 ) 0;
@@ -163,5 +163,4 @@ const {
     row-gap: var(--space-s);
     background: var(--bg-subtle);
   }
-}
 </style>

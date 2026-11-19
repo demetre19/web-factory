@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-event-section-11__container">
     <div class="intro">
-      <h2 class="intro__heading">Upcoming events in your city</h2>
+      <h2 class="intro__heading">{heading}</h2>
       <p class="intro__accent-heading">Accent heading</p>
-      <p class="intro__subheading">This annual event brings together top musicians from around the world to perform in front of a passionate crowd of music lovers.</p>
+      <p class="intro__subheading">{fs}</p>
     </div>
     <div class="bm-event-section-11-list list--none">
       <div class="bm-event-section-11-card">
@@ -95,7 +95,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-section-11 {
     overflow: hidden;
   }
@@ -171,5 +171,4 @@ const {
   }
     
   }
-}
 </style>

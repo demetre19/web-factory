@@ -26,7 +26,7 @@ const {
   <div class="bm-content-73__container">
     <div class="bm-content-73__content">
       <div class="bm-content-73__top">
-        <h2 class="bm-content-73__heading">We elevate businesses with custom software, product design, question answer, and business consulting.</h2>
+        <h2 class="bm-content-73__heading">{heading}</h2>
         <p class="bm-accent-heading">Accent Heading</p>
       </div>
       <div class="bm-content-73__footer">
@@ -56,7 +56,7 @@ const {
       <div class="bm-content-73-data-list list--none">
         <div class="bm-content-73-data-card">
           <span class="bm-content-73-data-card__counter"></span>
-          <p class="bm-content-73-data-card__text">Satisfaction and stellar ratings.</p>
+          <p class="bm-content-73-data-card__text">{fs}</p>
         </div>
         <div class="bm-content-73-data-card">
           <span class="bm-content-73-data-card__counter"></span>
@@ -82,7 +82,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-73 {
     row-gap: var(--space-s);
   }
@@ -267,5 +267,4 @@ const {
       animation: none;
     }
   }
-}
 </style>

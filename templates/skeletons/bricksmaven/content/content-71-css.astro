@@ -25,15 +25,15 @@ const {
 <div>
   <div class="bm-content-71__container">
     <div class="bm-content-71__content">
-      <h2 class="bm-content-71__heading">Le passage de Lorem Ipsum standard, utilisé depuis 1500</h2>
-      <p class="bm-content-71__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2 class="bm-content-71__heading">{heading}</h2>
+      <p class="bm-content-71__text">{fs}</p>
     </div>
     <figure class="bm-content-71__background-image"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-71 {
     position: relative;
     height: 70vh;
@@ -95,5 +95,4 @@ const {
     height: var(--acss-gradient-height);
     z-index: 1;
   }
-}
 </style>

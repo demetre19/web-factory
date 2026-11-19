@@ -26,8 +26,8 @@ const {
   <div class="gap--l pricing-8-container">
     <div class="width--l self--center flex--col center--all gap--xs pricing-8-heading">
       <p class="text--primary pricing-8-heading__tag">Pricing tagline</p>
-      <h2 class="pricing-8-heading__title">Get access to the Alpha library today!</h2>
-      <p class="pricing-8-heading__desc">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <h2 class="pricing-8-heading__title">{heading}</h2>
+      <p class="pricing-8-heading__desc">{fs}</p>
       <div class="pricing-8-heading__cta flex--row gap--xs align-items--center">
         <a class="pricing-8-heading__cta--primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="pricing-8-heading__cta--outline btn--primary btn--outline" href={cta.href}>{cta.label}</a>
@@ -60,7 +60,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .btn--primary {
     padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
     width: auto;
@@ -77,5 +77,4 @@ const {
   .pricing-8-box__price span {
   	font-size: var(--fs-2);
   }
-}
 </style>

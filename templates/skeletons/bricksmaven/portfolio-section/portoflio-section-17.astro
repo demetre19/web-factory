@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-portoflio-section-17__container">
     <div class="intro">
-      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
   </div>
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portoflio-section-17 {
     row-gap: var(--space-s);
     overflow: clip;
@@ -176,5 +176,4 @@ const {
   .bm-portfolio-section-17-case-container__slide:hover .bm-portfolio-section-17-case-container__text {
     margin-block-start: -30px;
   }
-}
 </style>

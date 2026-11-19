@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-hero-78__container">
     <div class="bm-hero-78__intro">
-      <h1 class="bm-hero-78__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-78__heading">{heading}</h1>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
     <div class="bm-hero-78-media-grid list--none">
@@ -36,7 +36,7 @@ const {
       ))}
     </div>
     <div class="bm-hero-78__footer">
-      <p class="bm-hero-78__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-hero-78__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
         <a class="link--black" href="#">Secondary action →</a>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-78__container {
     row-gap: var(--space-s);
   }
@@ -89,5 +89,4 @@ const {
     align-items: center;
     column-gap: calc(var(--flow-spacing) / 2);
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="contact-3-container">
     <div class="contact-3-grid-ul list--none">
       <div class="contact-3-card">
-        <h2 class="contact-3-card__heading">Chat with us</h2>
-        <p class="contact-3-card__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="contact-3-card__heading">{heading}</h2>
+        <p class="contact-3-card__desc">{fs}</p>
       </div>
       {items.map((it) => (
         <div class="contact-3-card contact-3-card--alt">
@@ -57,7 +57,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-3-container {
     display: flex;
     row-gap: var(--space-xl);
@@ -135,5 +135,4 @@ const {
   .contact-3-form__field textarea:focus {
   outline-offset: 0;
   }
-}
 </style>

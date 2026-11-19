@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-contact-35__container">
     <div class="bm-contact-35__content">
-      <h2 class="bm-contact-35__heading">Leave Us a Message</h2>
-      <p class="bm-contact-35__text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+      <h2 class="bm-contact-35__heading">{heading}</h2>
+      <p class="bm-contact-35__text">{fs}</p>
       <div class="bm-contact-widget bm-contact-widget--inline">
         <div class="bm-contact-widget__avatar-wrapper">
           <figure class="bm-contact-widget__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -90,7 +90,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-35__container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 2);
@@ -268,5 +268,4 @@ const {
   .accordion-4-item.brx-open .accordion-4-head__title {
   	color: var(--action-primary);
   }
-}
 </style>

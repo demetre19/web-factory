@@ -27,7 +27,7 @@ const {
     <div class="content-41__main">
       <div class="content-41__column">
         <div class="content-41__top">
-          <h2 class="content-41__heading">Long headline to turn your visitors into customers</h2>
+          <h2 class="content-41__heading">{heading}</h2>
           <p class="accent-h">Accent heading</p>
         </div>
         <div class="content-41__media">
@@ -35,7 +35,7 @@ const {
         </div>
       </div>
       <div class="content-41__column">
-        <p class="content-41__text">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <p class="content-41__text">{fs}</p>
         <div class="content-41__media--alt">
           <figure class="content-41__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-41__main {
     display: grid;
     gap: calc(var(--space-m) * 4);
@@ -77,5 +77,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

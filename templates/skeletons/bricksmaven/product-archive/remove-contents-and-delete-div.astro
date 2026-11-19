@@ -26,9 +26,9 @@ const {
   <div>
     <div class="bm-product-archive-1__header-page">
       <div class="bm-product-archive-1__content">
-        <h1 class="bm-product-archive-1__heading">{archive_title}</h1>
+        <h1 class="bm-product-archive-1__heading">{heading}</h1>
         <div class="bm-breadcrumd-woo-1"></div>
-        <p>{do_action:woocommerce_archive_description}</p>
+        <p>{fs}</p>
         <p class="bm-product-archive-1__archive-description">{archive_description}</p>
       </div>
       <figure class="bm-product-archive-1__header-page-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -125,7 +125,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-product-archive-1-top {
     overflow: hidden;
     padding: 0 0 0 0;
@@ -413,5 +413,4 @@ const {
   
       width: 100%;
   }
-}
 </style>

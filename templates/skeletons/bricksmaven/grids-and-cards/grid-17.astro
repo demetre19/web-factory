@@ -26,7 +26,7 @@ const {
   <div class="gridcard-17-container">
     <div class="intro">
       <p class="intro__subheading">Lorem ipsum set dolor amet</p>
-      <h2 class="intro__heading">You and I, know that ACSS is the plug!</h2>
+      <h2 class="intro__heading">{heading}</h2>
     </div>
     <div class="gridcard-17-list list--none">
       {items.map((it) => (
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-17-container {
     row-gap: var(--space-s);
   }
@@ -107,5 +107,4 @@ const {
   .gridcard-17-article__title > a::after {
   	z-index: 1;
   }
-}
 </style>

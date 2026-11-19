@@ -25,8 +25,8 @@ const {
 <div>
   <div class="gallery-8-container">
     <div class="gallery-8-row">
-      <h2 class="gallery-8-title">Our Gallery</h2>
-      <p class="gallery-8-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+      <h2 class="gallery-8-title">{heading}</h2>
+      <p class="gallery-8-desc">{fs}</p>
     </div>
     <div class="gallery-8-card">
       <figure class="gallery-8-img-1"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -38,7 +38,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gallery-8-container {
     display: flex;
     flex-direction: column;
@@ -85,5 +85,4 @@ const {
   .gallery-8-img-1 img {
     border-radius: var(--r-card);
   }
-}
 </style>

@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-contact-39__container">
     <div class="bm-contact-39__top">
-      <h1 class="bm-contact-39__heading">Contact us</h1>
-      <p class="bm-contact-39__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h1 class="bm-contact-39__heading">{heading}</h1>
+      <p class="bm-contact-39__text">{fs}</p>
     </div>
     <div class="bm-contact-39__footer">
       <div class="bm-contact-39__form-absolute">
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-39 {
     position: relative;
     background: var(--bg-subtle);
@@ -122,5 +122,4 @@ const {
   }
   
   }
-}
 </style>

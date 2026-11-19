@@ -25,8 +25,8 @@ const {
 <div>
   <div class="hero-23-container">
     <div class="hero-23__content">
-      <h2 class="hero-23__heading">Long headline to turn your visitors into customers</h2>
-      <p class="hero-23__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="hero-23__heading">{heading}</h2>
+      <p class="hero-23__desc">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-23__media-wrapper">
@@ -36,7 +36,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-23 {
     padding: 0 0 0 0;
   }
@@ -70,5 +70,4 @@ const {
     object-fit: cover;
     height: 740;
   }
-}
 </style>

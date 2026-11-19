@@ -25,8 +25,8 @@ const {
 <div>
   <div>
     <div class="bm-product-archive-4__header-container">
-      <h1 class="bm-product-archive-4__heading">{archive_title}</h1>
-      <p>{do_action:woocommerce_archive_description}</p>
+      <h1 class="bm-product-archive-4__heading">{heading}</h1>
+      <p>{fs}</p>
       <div class="bm-product-archive-4__breadcrumb-wrapper">
         <div class="bm-breadcrumd-woo-1"></div>
       </div>
@@ -104,7 +104,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-product-archive-4__header-page {
     padding: var(--section-space-xs) 0 var(--section-space-xs) 0;
     border-bottom: 1 solid var(--bg-subtle);
@@ -361,5 +361,4 @@ const {
   
       width: 100%;
   }
-}
 </style>

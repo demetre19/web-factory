@@ -26,8 +26,8 @@ const {
   <div class="bm-banner-4__container">
     <div class="bm-banner-inline-content bm-banner-inline-content--alt">
       <div class="bm-banner-inline-content__info bm-banner-inline-content__info--alt">
-        <h2 class="bm-banner-inline-content__heading">Short headline to grab attention</h2>
-        <p class="bm-banner-inline-content__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h2 class="bm-banner-inline-content__heading">{heading}</h2>
+        <p class="bm-banner-inline-content__text">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
     </div>
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-banner-4 {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     background: transparent;
@@ -96,5 +96,4 @@ const {
     text-decoration: underline;
     font-weight: 700;
   }
-}
 </style>

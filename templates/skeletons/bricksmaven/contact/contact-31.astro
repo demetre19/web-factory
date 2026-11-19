@@ -26,10 +26,10 @@ const {
   <div class="bm-contact-31__container">
     <div class="bm-contact-31__content">
       <div class="bm-contact-31__top">
-        <h1 class="bm-contact-31__heading">Need Answers? Get in Touch. We’ll Respond Shortly</h1>
+        <h1 class="bm-contact-31__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
       </div>
-      <p class="bm-contact-31__text">If you have any specific questions or inquiries, feel free to fill out the contact form, and we’ll get back to you as soon as possible.</p>
+      <p class="bm-contact-31__text">{fs}</p>
       <div class="bm-contact-31-list list--none">
         {items.map((it) => (
           <div class="bm-contact-31-card">
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-31__container {
     display: grid;
     gap: calc(var(--space-m) * 4);
@@ -131,5 +131,4 @@ const {
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
   }
-}
 </style>

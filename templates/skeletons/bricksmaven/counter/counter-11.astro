@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-counter-11__container">
     <div class="bm-counter-11__intro">
-      <h2 class="bm-counter-11__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="bm-counter-11__heading">{heading}</h2>
       <p class="accent-h">Accent heading</p>
-      <p class="bm-counter-11__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+      <p class="bm-counter-11__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-counter-11-list list--none">
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-counter-11__container {
     row-gap: var(--space-s);
   }
@@ -79,5 +79,4 @@ const {
   .bm-counter-11-card__text {
     margin: auto 0 0 0;
   }
-}
 </style>

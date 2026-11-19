@@ -25,8 +25,8 @@ const {
 <div>
   <div class="contact-24-container">
     <div class="intro">
-      <h1 class="intro__heading">We’d love to hear from you</h1>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h1 class="intro__heading">{heading}</h1>
+      <p class="intro__subheading">{fs}</p>
       <p class="intro__accent-heading">Contact Us</p>
     </div>
     <div class="contact-24-list-ul list--none">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-24-container {
     row-gap: var(--space-l);
   }
@@ -101,5 +101,4 @@ const {
   .contact-24-list-card:nth-child(2) {
   	grid-column: span 6;
   }
-}
 </style>

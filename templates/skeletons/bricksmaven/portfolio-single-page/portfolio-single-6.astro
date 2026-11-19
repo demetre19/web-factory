@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-portfolio-single-6__container">
     <div class="bm-portfolio-single-6__intro">
-      <h1 class="bm-portfolio-single-6__intro-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
-      <p class="bm-portfolio-single-6__intro-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <h1 class="bm-portfolio-single-6__intro-heading">{heading}</h1>
+      <p class="bm-portfolio-single-6__intro-text">{fs}</p>
       <div class="bm-portfolio-single-6-breadcrumbs"></div>
       <div class="bm-portfolio-single-6-expertise-list list--none">
         {items.map((it) => (
@@ -117,7 +117,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-single-6 {
     row-gap: var(--space-s);
   }
@@ -456,5 +456,4 @@ const {
   }
     
   }
-}
 </style>

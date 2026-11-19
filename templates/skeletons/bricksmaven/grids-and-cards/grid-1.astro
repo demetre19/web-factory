@@ -26,8 +26,8 @@ const {
   <div class="gridcard-1-container">
     <div class="gridcard-1-grid-ul list--none">
       <div class="gridcard-1-card">
-        <h2 class="gridcard-1-card__heading">Medium length headline</h2>
-        <p class="gridcard-1-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <h2 class="gridcard-1-card__heading">{heading}</h2>
+        <p class="gridcard-1-card__desc">{fs}</p>
         <span class="gridcard-1-card__icon" data-icon="lucide" aria-hidden="true"></span>
       </div>
       <div class="gridcard-1-card">
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-1-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -60,5 +60,4 @@ const {
   	border-right: 1px solid var(--bg-subtle);
     
   }
-}
 </style>

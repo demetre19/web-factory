@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-76__container">
     <div class="bm-content-76__content">
-      <h2 class="bm-content-76__heading">Why should you choose us?</h2>
+      <h2 class="bm-content-76__heading">{heading}</h2>
       <div class="bm-content-76-core-list list--none">
         {items.map((it) => (
           <div class="bm-content-76-core-item">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-76__container {
     display: grid;
     gap: var(--space-m);
@@ -86,5 +86,4 @@ const {
   .bm-content-76-core-item .bm-content-76-core-item__heading {
     flex-shrink:0;
   }
-}
 </style>

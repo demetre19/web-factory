@@ -25,8 +25,8 @@ const {
 <div>
   <div class="hero-56__container">
     <div class="hero-55__introduction">
-      <h1 class="hero-56__heading">Ryan Smith</h1>
-      <p class="hero-55__subheading">I'm a passionate graphic designer with over 10 years of experience, driven by a love for visual arts and creating impactful designs.</p>
+      <h1 class="hero-56__heading">{heading}</h1>
+      <p class="hero-55__subheading">{fs}</p>
     </div>
     <div class="hero-57__media">
       <figure class="hero-55__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-56 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -154,5 +154,4 @@ const {
   .bm-gallery__slider :where(.splide__list, .splide__slide){
     transition-timing-function: linear !important;
   }
-}
 </style>

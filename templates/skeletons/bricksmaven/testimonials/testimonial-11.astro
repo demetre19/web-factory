@@ -25,10 +25,10 @@ const {
 <div>
   <div class="testimonial-11-container">
     <div class="testimonial-11-title">
-      <h2 class="testimonial-11-title__heading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</h2>
+      <h2 class="testimonial-11-title__heading">{heading}</h2>
     </div>
     <div class="testimonial-11-content">
-      <p class="testimonial-11-content__desc">"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus".</p>
+      <p class="testimonial-11-content__desc">{fs}</p>
       <div class="testimonial-11-content__profile">
         <div class="testimonial-11-content__bio">
           <h4 class="testimonial-11-content__name">John Smith,</h4>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-11-container {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -88,5 +88,4 @@ const {
     top: 0rem;
     left: 3rem;
   }
-}
 </style>

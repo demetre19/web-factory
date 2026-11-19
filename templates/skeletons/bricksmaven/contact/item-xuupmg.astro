@@ -26,8 +26,8 @@ const {
   <div class="contact-8-container">
     <div class="contact-8-intro">
       <p class="contact-8-intro__accent-heading">We are here for you!</p>
-      <h2 class="contact-8-intro__heading">Get in touch</h2>
-      <p class="contact-8-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h2 class="contact-8-intro__heading">{heading}</h2>
+      <p class="contact-8-intro__desc">{fs}</p>
     </div>
     <div class="contact-8-grid-ul list--none">
       <div class="contact-8-card">
@@ -68,7 +68,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-8-container {
     display: flex;
     row-gap: var(--space-l);
@@ -115,5 +115,4 @@ const {
     height: 100%;
     object-fit: cover;
   }
-}
 </style>

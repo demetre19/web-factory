@@ -25,8 +25,8 @@ const {
 <div>
   <div class="team-2-container">
     <div class="team-2-intro">
-      <h2 class="team-2-intro__title">Meet our leadership</h2>
-      <p class="team-2-intro__desc">Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper suspendisse. Vivamus fringilla.</p>
+      <h2 class="team-2-intro__title">{heading}</h2>
+      <p class="team-2-intro__desc">{fs}</p>
     </div>
     <div class="team-2-list list--none">
       {items.map((it) => (
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .team-2-container {
     display: grid;
     gap: var(--space-l);
@@ -90,5 +90,4 @@ const {
   .team-2-profile__img {
   	aspect-ratio: 1/1;
   }
-}
 </style>

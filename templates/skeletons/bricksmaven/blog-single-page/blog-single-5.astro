@@ -39,7 +39,7 @@ const {
           <p class="blog-single-5__date">{post_date}</p>
         </div>
       </div>
-      <p class="blog-single-5__subtitle">This is a static text. Maybe you want to add a tagline or short message here?</p>
+      <p class="blog-single-5__subtitle">{fs}</p>
       <div class="blog-single-5__featured-image-wrapper">
         <figure class="blog-single-5__featured-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
@@ -50,7 +50,7 @@ const {
       </div>
       <div class="blog-single-2__body-sidebar">
         <div class="blog-single-2-search">
-          <h2 class="blog-single-2-aside__title">Search</h2>
+          <h2 class="blog-single-2-aside__title">{heading}</h2>
           <div class="blog-single-2-search__form"></div>
         </div>
         <div class="blog-single-2-newsletter">
@@ -75,7 +75,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-5 {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }
@@ -283,5 +283,4 @@ const {
   .blog-single-5-footer__adjacent-post a .title {
   	white-space: normal;
   }
-}
 </style>

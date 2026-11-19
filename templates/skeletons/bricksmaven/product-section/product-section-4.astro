@@ -25,8 +25,8 @@ const {
 <div>
   <div class="product-list-4__container">
     <div class="intro intro--left">
-      <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="intro__accent-heading">Tagline</p>
     </div>
     <div class="product-list-4__list list--none">
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .product-list-4__container {
     flex-direction: column;
     align-items: center;
@@ -168,5 +168,4 @@ const {
     	text-decoration: none;
     	border-bottom: 0;
   }
-}
 </style>

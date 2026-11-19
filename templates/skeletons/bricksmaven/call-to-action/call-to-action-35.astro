@@ -30,8 +30,8 @@ const {
           <div class="bm-project-status">
             <p class="bm-project-status__label">Discover the possibilities</p>
           </div>
-          <h2 class="cta-35__heading">Request your free website scan today!</h2>
-          <p class="cta-35__text">Fill in your website and recieve within seconds which processes you need to automate and how much time you can save.</p>
+          <h2 class="cta-35__heading">{heading}</h2>
+          <p class="cta-35__text">{fs}</p>
         </div>
         <a class="btn--primary cta-35__cta wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
@@ -53,7 +53,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-35__cover {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
@@ -149,5 +149,4 @@ const {
       filter: blur(3px);
     }
   }
-}
 </style>

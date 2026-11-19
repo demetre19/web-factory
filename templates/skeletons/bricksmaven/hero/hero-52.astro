@@ -25,9 +25,9 @@ const {
 <div>
   <div class="hero-52__container">
     <div class="hero-52__content">
-      <h1 class="hero-52__heading">Medium length hero heading goes here</h1>
+      <h1 class="hero-52__heading">{heading}</h1>
       <p class="hero-52__accent-heading">Accent heading</p>
-      <p class="hero-52__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p class="hero-52__text">{fs}</p>
       <div class="hero-52__usp-list">
         <div class="hero-52__usp-list-item">
           <span class="hero-52__usp-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-52 {
     position: relative;
     padding: 0 0 var(--acss-image-overlap) 0;
@@ -148,5 +148,4 @@ const {
     clip-path: polygon(0 40%, 100% 10%, 100% 100%, 0 100%);
     z-index:-1;
   }
-}
 </style>

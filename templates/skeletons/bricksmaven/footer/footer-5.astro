@@ -26,7 +26,7 @@ const {
   <div class="footer-5-container">
     <div class="footer-5-alpha">
       <img class="footer-5__logo"></img>
-      <p class="footer-5__address">Alpha 2100 Deurne, Belgium Tel: +354 587 9999 info@bricksmaven.com</p>
+      <p class="footer-5__address">{fs}</p>
       <div class="footer-5__social"></div>
     </div>
     <div class="footer-nav-wrapper footer-nav-wrapper-5">
@@ -44,7 +44,7 @@ const {
       ))}
     </div>
     <div class="footer-5-epsilon">
-      <h4 class="footer-5__title">Mobile Apps</h4>
+      <h4 class="footer-5__title">{heading}</h4>
       <div class="footer-5__apps">
         <div class="footer-5__apps-btn">
           <span class="footer-5__apps-ic" data-icon="lucide" aria-hidden="true"></span>
@@ -82,7 +82,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-5 {
     display: flex;
     flex-direction: column;
@@ -205,5 +205,4 @@ const {
   .footer-5__address a:hover {
   	color: var(--action-primary);
   }
-}
 </style>

@@ -25,8 +25,8 @@ const {
 <div>
   <div class="logo-6-container gap--xxl">
     <div class="width--full center--all gap--s logo-6-row">
-      <h2 class="logo-6-title text--white">Tired of building from scratch? Get Bricksmaven today!</h2>
-      <p class="logo-6-desc width--l text--white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et, egestas tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim et fermentum, augue.</p>
+      <h2 class="logo-6-title text--white">{heading}</h2>
+      <p class="logo-6-desc width--l text--white">{fs}</p>
       <div class="logo-6-cta flex--row align-items--center gap--s">
         <a class="logo-6-cta__primary btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="logo-6-cta__outline btn--white btn--outline" href={cta.href}>{cta.label}</a>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .btn--primary {
     padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
     width: auto;
@@ -66,5 +66,4 @@ const {
   .logo-6-list-item li div {
   background-size: contain!important;
   }
-}
 </style>

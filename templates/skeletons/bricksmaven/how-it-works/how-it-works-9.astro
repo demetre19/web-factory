@@ -25,7 +25,7 @@ const {
 <div>
   <div class="hworks-9-container">
     <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">How It Works</h2>
+      <h2 class="hworks-intro__heading">{heading}</h2>
       <p class="hworks-intro__accent-heading">AWESOME TAGLINE</p>
     </div>
     <div class="hworks-9-grid-ul list--none">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hworks-9-container {
     width: 64.5rem;
     align-items: center;
@@ -115,5 +115,4 @@ const {
     left: -10px;
     top: 60%;
   }
-}
 </style>

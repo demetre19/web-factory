@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-event-section-5__container">
     <div class="bm-event-section__intro">
-      <h2 class="bm-event-section__heading">Event Schedule</h2>
+      <h2 class="bm-event-section__heading">{heading}</h2>
       <a class="btn--primary bm-event-section__cta wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="bm-event-section-5__event-wrapper">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-event-section-5__container {
     row-gap: var(--space-s);
   }
@@ -138,5 +138,4 @@ const {
   .bm-event-section-5-accordion .bm-event-section-5-accordion__title[aria-expanded="true"] .bm-event-section-5-accordion__icon {
     transform: rotate(90deg);
   }
-}
 </style>

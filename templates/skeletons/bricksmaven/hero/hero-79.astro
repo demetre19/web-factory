@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-hero-79__container">
     <div class="bm-hero-79__intro">
-      <h1 class="bm-hero-79__heading">Long headline to turn your visitors into customers</h1>
-      <p class="bm-hero-79__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="bm-hero-79__heading">{heading}</h1>
+      <p class="bm-hero-79__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
         <a class="link--black" href="#">Secondary action →</a>
@@ -60,7 +60,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-79 {
     position: relative;
   }
@@ -190,5 +190,4 @@ const {
     aspect-ratio: 4/3;
   }
   }
-}
 </style>

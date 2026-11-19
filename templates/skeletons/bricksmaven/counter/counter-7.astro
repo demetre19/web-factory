@@ -25,8 +25,8 @@ const {
 <div>
   <div class="counter-7-container">
     <div class="intro">
-      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="intro__accent-heading">Tagline</p>
     </div>
   </div>
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .counter-7 {
     row-gap: var(--space-s);
     overflow: hidden;
@@ -106,5 +106,4 @@ const {
   .counter-7-card__label {
     font-weight: 700;
   }
-}
 </style>

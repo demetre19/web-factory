@@ -35,7 +35,7 @@ const {
           <div class="megamenu-2__dropdown">
             <div class="megamenu-2__content">
               <div class="megamenu-2__column">
-                <h2 class="megamenu-2__column-heading">Group heading</h2>
+                <h2 class="megamenu-2__column-heading">{heading}</h2>
                 <div class="megamenu-2__card-container">
                   <div class="megamenu-2__card-wrapper list--none">
                     {items.map((it) => (
@@ -70,7 +70,7 @@ const {
                 <div class="megamenu-2-card">
                   <div class="megamenu-2-card__content">
                     <h4 class="megamenu-2-card__heading clickable-parent">Link Group Heading</h4>
-                    <p class="megamenu-2-card__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="megamenu-2-card__text">{fs}</p>
                     <a class="btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
                   </div>
                   <div class="megamenu-2-card__media">
@@ -94,7 +94,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-header-1 {
     padding: var(--space-xs) 0 var(--space-xs) 0;
     position: relative;
@@ -187,5 +187,4 @@ const {
   }
     
     }
-}
 </style>

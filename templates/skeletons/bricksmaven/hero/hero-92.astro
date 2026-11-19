@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-92__container">
     <div class="bm-hero-92__intro">
       <div class="bm-hero-92__top">
-        <h1 class="bm-hero-92__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-92__heading">{heading}</h1>
         <p class="bm-accent-heading">Accent heading</p>
-        <p class="bm-hero-92__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-92__subheading">{fs}</p>
       </div>
       <div class="bm-hero-92__case-cover">
         <div class="bm-hero-90-slide bm-hero-92__case-card">
@@ -72,7 +72,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-92 {
     height: var(--acss-section-height);
     padding: 0 0 0 0;
@@ -261,5 +261,4 @@ const {
   .bm-hero-90-case:hover .bm-hero-90-case__image {
     transform: scale(1.4); 
   }
-}
 </style>

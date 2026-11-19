@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-57__container">
     <div class="bm-content-57__intro">
-      <h2 class="bm-content-57__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="bm-content-57__heading">{heading}</h2>
     </div>
     <div class="bm-content-57__footer">
       {items.map((it) => (
@@ -39,7 +39,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-57 {
     position: relative;
   }
@@ -78,5 +78,4 @@ const {
     z-index: -1;
     height: 100%;
   }
-}
 </style>

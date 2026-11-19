@@ -26,8 +26,8 @@ const {
   <div class="bm-hero-83__container">
     <div class="bm-hero-83__intro">
       <div class="bm-hero-83__intro-top">
-        <h1 class="bm-hero-83__heading">Long headline to turn your visitors into customers</h1>
-        <p class="bm-hero-83__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-hero-83__heading">{heading}</h1>
+        <p class="bm-hero-83__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary" href="#">Call to action</a>
           <a class="link--black" href="#">Secondary action →</a>
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-83__container {
     display: grid;
     gap: var(--space-m);
@@ -164,5 +164,4 @@ const {
   .testimonial-36-card__client-title {
     font-size: var(--fs-0);
   }
-}
 </style>

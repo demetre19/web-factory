@@ -29,8 +29,8 @@ const {
     </div>
     <div class="bm-banner-inline-content">
       <div class="bm-banner-inline-content__info">
-        <h2 class="bm-banner-inline-content__heading">Short headline to grab attention</h2>
-        <p class="bm-banner-inline-content__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <h2 class="bm-banner-inline-content__heading">{heading}</h2>
+        <p class="bm-banner-inline-content__text">{fs}</p>
         <a class="bm-banner-inline-content__link" href="#">Link</a>
       </div>
     </div>
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-banner-7 {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     background: transparent;
@@ -117,5 +117,4 @@ const {
     text-decoration: underline;
     font-weight: 700;
   }
-}
 </style>

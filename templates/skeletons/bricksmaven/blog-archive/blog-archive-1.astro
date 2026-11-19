@@ -26,9 +26,9 @@ const {
   <div class="blog-archive-1-container">
     <div class="blog-archive-1-intro">
       <div class="blog-archive-1-intro__body">
-        <h1 class="blog-archive-1-intro__heading">Grow in knowledge</h1>
+        <h1 class="blog-archive-1-intro__heading">{heading}</h1>
         <p class="accent-h">Our blog</p>
-        <p class="blog-archive-1-intro__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut non Rem sit Quia earum aut error</p>
+        <p class="blog-archive-1-intro__desc">{fs}</p>
       </div>
       <div class="blog-archive-1-intro__search">
         <div class="blog-archive-1-intro__form"></div>
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-1-container {
     row-gap: var(--space-xl);
     display: flex;
@@ -223,5 +223,4 @@ const {
   .blog-archive-1-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

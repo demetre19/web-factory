@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-testimonial-47__container">
     <div class="bm-testimonial-47__intro">
-      <h2 class="bm-testimonial-47__heading">Discover Why Our Customers Love Us!</h2>
+      <h2 class="bm-testimonial-47__heading">{heading}</h2>
       <p class="bm-accent-heading">Accent heading</p>
-      <p class="bm-testimonial-47__subheading">Here’s what our valued clients have to say about us.</p>
+      <p class="bm-testimonial-47__subheading">{fs}</p>
     </div>
     <div class="bm-testimonial-47__review-cover">
       <div class="bm-testimonial-47__review-slider">
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-47__container {
     row-gap: var(--space-s);
     align-items: center;
@@ -115,5 +115,4 @@ const {
     inset-inline-start: calc(-1 * var(--space-xs));
     inset-block-start: calc(-1 * var(--space-l));
   }
-}
 </style>

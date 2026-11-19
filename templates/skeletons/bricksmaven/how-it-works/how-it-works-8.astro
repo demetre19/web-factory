@@ -25,7 +25,7 @@ const {
 <div>
   <div class="hworks-8-container center--all gap--xl width--l">
     <div class="hworks-intro">
-      <h2 class="hworks-intro__heading">How It Works</h2>
+      <h2 class="hworks-intro__heading">{heading}</h2>
       <p class="hworks-intro__accent-heading">AWESOME TAGLINE</p>
     </div>
     <div class="hworks-8-grid-ul list--none">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hworks-intro {
     display: flex;
     flex-direction: column;
@@ -103,5 +103,4 @@ const {
     font-weight: 700;
     position: relative;
   }
-}
 </style>

@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-portfolio-single-10__hero-container">
     <div class="bm-portfolio-single-10__hero-content">
-      <h1 class="bm-portfolio-single-10__hero-heading">Sparking a 45% Sales Surge for EcoEssentials</h1>
-      <p class="bm-portfolio-single-10__subheading">EcoEssentials, while passionate about its mission, faced a common e-commerce hurdle: stagnant online sales and low brand visibility.</p>
+      <h1 class="bm-portfolio-single-10__hero-heading">{heading}</h1>
+      <p class="bm-portfolio-single-10__subheading">{fs}</p>
       <a class="bm-live-website-link" href="#">View website</a>
     </div>
     <div class="bm-portfolio-single-media-hero list--none">
@@ -120,7 +120,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-portfolio-single-10 {
     row-gap: var(--space-s);
     overflow: hidden;
@@ -391,5 +391,4 @@ const {
   .bm-portfolio-8-related-card:hover .bm-portfolio-8-related-card__image, .bm-portfolio-8-related-card:focus-within .bm-portfolio-8-related-card__image {
     scale: 1.4;
   }
-}
 </style>

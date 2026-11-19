@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-67__container">
     <div class="bm-content-67__intro">
-      <h2 class="bm-content-67__heading">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting.</h2>
+      <h2 class="bm-content-67__heading">{heading}</h2>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
     <div class="bm-content-67-media-grid list--none">
@@ -36,7 +36,7 @@ const {
       ))}
     </div>
     <div class="bm-content-67__footer">
-      <p class="bm-content-67__text">Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Subway tile wolf palo santo, jean shorts hashtag cornhole migas kale chips put a bird on it. Distillery offal ramps adaptogen.</p>
+      <p class="bm-content-67__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
         <a class="btn--primary btn--outline" href="#">Secondary action →</a>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-67__container {
     align-items: center;
     row-gap: var(--space-s);
@@ -149,5 +149,4 @@ const {
   }
   
   }
-}
 </style>

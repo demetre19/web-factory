@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-58__container">
     <div class="bm-content-58__top">
-      <h2 class="bm-content-58__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="bm-content-58__heading">{heading}</h2>
       <p class="accent-h">Accent heading</p>
     </div>
     <div class="bm-content-58__media">
@@ -47,7 +47,7 @@ const {
           </div>
         </div>
         <div class="bm-content-58__social">
-          <p class="bm-content-58__column-text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+          <p class="bm-content-58__column-text">{fs}</p>
           <div class="bm-social-share list--none bm-social-share--left">
             {items.map((it) => (
               <div class="bm-social-share__icon-wrapper">
@@ -66,7 +66,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-58__container {
     row-gap: var(--space-s);
   }
@@ -137,5 +137,4 @@ const {
   }
     
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <div class="bm-content-62__container">
     <div class="bm-content-62__intro">
       <div class="bm-content-62__content">
-        <h2 class="bm-content-62__heading">Short headline</h2>
-        <p class="bm-content-62__content-text">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <h2 class="bm-content-62__heading">{heading}</h2>
+        <p class="bm-content-62__content-text">{fs}</p>
       </div>
       <div class="bm-content-62__media">
         <figure class="bm-content-62__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-62__container {
     row-gap: var(--space-s);
   }
@@ -69,5 +69,4 @@ const {
     font-size: var(--fs-3);
     align-self: center;
   }
-}
 </style>

@@ -38,8 +38,8 @@ const {
     </div>
     <div class="coming-soon-4__content">
       <div class="bm-coming-soon-4__intro">
-        <h1 class="bm-coming-soon-4__heading">Coming soon</h1>
-        <p class="bm-coming-soon-4__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-coming-soon-4__heading">{heading}</h1>
+        <p class="bm-coming-soon-4__text">{fs}</p>
         <div class="bm-form">
           <h2 class="bm-coming-soon__heading-form">Drop your email to get notified!</h2>
           <form class="bm-form-widget" novalidate>
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .coming-soon-4 {
     padding: var(--section-space-xl) 0 var(--section-space-xl) 0;
   }
@@ -138,5 +138,4 @@ const {
   .bm-form-widget .submit-button-wrapper {
       height: 100% !important;
   }
-}
 </style>

@@ -25,8 +25,8 @@ const {
 <div>
   <div class="header-page-9-container">
     <div class="header-page-9__content">
-      <h1 class="header-page__title--alt">Short heading here</h1>
-      <p class="header-page__desc--alt">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h1 class="header-page__title--alt">{heading}</h1>
+      <p class="header-page__desc--alt">{fs}</p>
     </div>
     <div class="header-page-9__media">
       <figure class="header-page-9__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -35,7 +35,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-9 {
     padding: 0 0 0 0;
     background: var(--action-primary);
@@ -57,5 +57,4 @@ const {
     height: 51.5rem;
     object-fit: cover;
   }
-}
 </style>

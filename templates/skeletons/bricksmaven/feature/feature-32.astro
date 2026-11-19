@@ -26,8 +26,8 @@ const {
   <div class="feature-32-container">
     <div class="feature-32__content">
       <div class="feature-32__top">
-        <h2 class="feature-32__heading">What is Lorem Ipsum?</h2>
-        <p class="feature-32__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        <h2 class="feature-32__heading">{heading}</h2>
+        <p class="feature-32__text">{fs}</p>
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="feature-32__media">
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-32 {
     position: relative;
   }
@@ -172,5 +172,4 @@ const {
   .bm-beta-feature-list-card__icon {
   	box-shadow: var(--shadow-card);
   }
-}
 </style>

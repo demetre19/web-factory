@@ -30,7 +30,7 @@ const {
         <p class="blog-single-1-head__term">{post_terms_category}</p>
         <p class="blog-single-1__date">{post_date}</p>
       </div>
-      <p class="blog-single-1__subtitle">This is a static text. Maybe you want to add a tagline or short message here?</p>
+      <p class="blog-single-1__subtitle">{fs}</p>
       <div class="blog-single-1__media">
         <figure class="blog-single-1__thumb"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-1 {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }
@@ -171,5 +171,4 @@ const {
     width: 4rem;
     height: 4rem;
   }
-}
 </style>

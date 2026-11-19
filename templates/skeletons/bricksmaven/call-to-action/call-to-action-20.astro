@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-cta-20__container">
     <div class="bm-cta-20__content">
-      <h2 class="bm-cta-20__heading">Tired of building from scratch? Get Bricksmaven today!</h2>
-      <p class="bm-cta-20__text">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <h2 class="bm-cta-20__heading">{heading}</h2>
+      <p class="bm-cta-20__text">{fs}</p>
       <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       <div class="bm-cta-20__footer">
         <h2 class="bm-cta-20__footer-heading">Or shoot us a message</h2>
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-20__container {
     display: grid;
     gap: var(--space-m);
@@ -88,5 +88,4 @@ const {
     height: calc(100% + (var(--space-l) * 2));
     width: 100%;
   }
-}
 </style>

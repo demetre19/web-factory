@@ -25,7 +25,7 @@ const {
 <div>
   <div class="blog-archive-12-container">
     <div class="blog-archive-12-tabs">
-      <h1 class="blog-archive-12-tab-menu__heading">Blog Post</h1>
+      <h1 class="blog-archive-12-tab-menu__heading">{heading}</h1>
       <div class="blog-archive-12-tab-menu">
         {items.map((it) => (
           <div class="blog-archive-12-tab-menu__btn">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-12-tabs {
     position: relative;
   }
@@ -216,5 +216,4 @@ const {
   }
   
   }
-}
 </style>

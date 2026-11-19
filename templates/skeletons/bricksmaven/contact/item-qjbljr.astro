@@ -26,7 +26,7 @@ const {
   <div class="contact-6-container">
     <div class="contact-6-details">
       <p class="contact-6-details__accent-heading">Have a question?</p>
-      <h2 class="contact-6-details__heading">Let’s talk!</h2>
+      <h2 class="contact-6-details__heading">{heading}</h2>
       <div class="contact-6-ul-list list--none">
         {items.map((it) => (
           <div class="contact-6-list">
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-6-container {
     display: grid;
     grid-template-columns: 2fr 3fr;
@@ -104,5 +104,4 @@ const {
   .contact-6-form__field textarea:focus {
   outline-offset: 0;
   }
-}
 </style>

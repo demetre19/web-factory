@@ -27,8 +27,8 @@ const {
     <div class="blog-section-9-wrapper">
       <div class="blog-section-9-head">
         <p class="blog-section-9-head__tag text--s text--primary">Latest</p>
-        <h2 class="blog-section-9-head__title">Fresh from the blog</h2>
-        <p class="blog-section-9-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut no</p>
+        <h2 class="blog-section-9-head__title">{heading}</h2>
+        <p class="blog-section-9-head__desc">{fs}</p>
         <a class="blog-section-9-head__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="blog-section-9-body list--none">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-section-9-wrapper {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -148,5 +148,4 @@ const {
   .blog-section-9-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

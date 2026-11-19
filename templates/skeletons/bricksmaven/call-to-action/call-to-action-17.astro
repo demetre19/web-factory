@@ -25,8 +25,8 @@ const {
 <div>
   <div class="cta-17-container">
     <div class="cta-17__box">
-      <h2 class="cta-17__heading">Get your projects done quicker with ACSS + Bricksmaven now!</h2>
-      <p class="cta-17__desc">Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla nec.</p>
+      <h2 class="cta-17__heading">{heading}</h2>
+      <p class="cta-17__desc">{fs}</p>
       <div class="bm-list">
         {items.map((it) => (
           <div class="bm-list__item">
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-17 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -109,5 +109,4 @@ const {
     height: 100%;
     width: 50vw;
   }
-}
 </style>

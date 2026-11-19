@@ -36,8 +36,8 @@ const {
         ))}
       </div>
       <div class="bm-coming-soon-6__content">
-        <h1 class="bm-coming-soon-6__heading">Coming Soon</h1>
-        <p class="bm-coming-soon-6__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="bm-coming-soon-6__heading">{heading}</h1>
+        <p class="bm-coming-soon-6__text">{fs}</p>
         <div class="coming-soon__countdown-wrapper">
           <div class="coming-soon-countdown"></div>
         </div>
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-coming-soon-6__container {
     align-items: center;
     row-gap: var(--space-s);
@@ -121,5 +121,4 @@ const {
   .coming-soon-countdown .field:not(:last-of-type) {
   	margin-inline-end: var(--space-m) !important;
   }
-}
 </style>

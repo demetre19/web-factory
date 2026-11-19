@@ -25,8 +25,8 @@ const {
 <div>
   <div class="feature-29-conatiner">
     <div class="intro">
-      <h2 class="intro__heading">Build websites 10x faster with Bricksmaven</h2>
-      <p class="intro__subheading">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="intro__accent-heading">Tagline</p>
     </div>
     <div class="bm-gamma-feature-list-ul list--none">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-29-conatiner {
     display: flex;
     flex-direction: column;
@@ -89,5 +89,4 @@ const {
     transform: translateY(0rem);
   }
   }
-}
 </style>

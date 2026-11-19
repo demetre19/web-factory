@@ -26,7 +26,7 @@ const {
   <div class="bm-testimonial-51__container">
     <div class="bm-testimonial-51-testimonial-card">
       <div class="bm-testimonial-51-testimonial-card__testimonial-content">
-        <p class="bm-testimonial-51-testimonial-card__testimonial-review">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-testimonial-51-testimonial-card__testimonial-review">{fs}</p>
         <a class="bm-testimonial-51-testimonial-card__testimonial-link link--white" href="#">Read the case</a>
       </div>
       <div class="bm-testimonial-51-testimonial-card__testimonial-media">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-51-testimonial-card {
     display: flex;
     flex-direction: row;
@@ -91,5 +91,4 @@ const {
   .bm-testimonial-51-testimonial-card__title {
     font-size: var(--fs-0);
   }
-}
 </style>

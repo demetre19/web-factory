@@ -24,12 +24,12 @@ const {
 
 <div>
   <div class="bm-content-65__container">
-    <h2 class="bm-content-65__heading">They needed a strategic intervention to connect with their target audience and translate interest into purchases.</h2>
+    <h2 class="bm-content-65__heading">{heading}</h2>
     <div class="bm-content-65__content">
       <div class="bm-content-65__inner">
         <div class="bm-content-column-wrapper list--none">
           <div class="bm-content-column">
-            <p class="bm-content-column__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+            <p class="bm-content-column__text">{fs}</p>
           </div>
           <div class="bm-content-column">
             <p class="bm-content-column__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-65__container {
     row-gap: var(--space-s);
   }
@@ -76,5 +76,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

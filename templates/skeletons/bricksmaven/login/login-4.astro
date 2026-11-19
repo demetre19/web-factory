@@ -26,7 +26,7 @@ const {
   <div class="bm-login-4__container">
     <div class="bm-login-4__login">
       <div class="login-form-wrapper login-form-wrapper--alt">
-        <h1 class="login-3__heading">Login</h1>
+        <h1 class="login-3__heading">{heading}</h1>
         <form class="login-form" novalidate>
         </form>
         <div class="login-footer list--none">
@@ -53,7 +53,7 @@ const {
     <div class="bm-login-4__content">
       <div class="bm-login-4__content-intro">
         <h2 class="bm-login-4__heading">Short headline</h2>
-        <p class="bm-login-4__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <p class="bm-login-4__text">{fs}</p>
       </div>
       <figure class="bm-login-4__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
@@ -62,7 +62,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-login-4 {
     overflow: hidden;
   }
@@ -165,5 +165,4 @@ const {
       }
       
     }
-}
 </style>

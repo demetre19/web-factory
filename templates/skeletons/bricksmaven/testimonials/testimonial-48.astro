@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-testimonial-48__container">
     <div class="bm-testimonial-48__intro">
-      <h2 class="bm-testimonial-48__heading">Discover why our customers love us!</h2>
-      <p class="bm-testimonial-48__text">Here’s what our valued clients have to say about us.</p>
+      <h2 class="bm-testimonial-48__heading">{heading}</h2>
+      <p class="bm-testimonial-48__text">{fs}</p>
     </div>
     <div class="bm-testimonial-48__list">
       <div class="bm-testimonial-48__slider">
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-48 {
     overflow: clip;
   }
@@ -148,5 +148,4 @@ const {
   .bm-testimonial-48-card:hover {
     box-shadow: var(--shadow-card);
   }
-}
 </style>

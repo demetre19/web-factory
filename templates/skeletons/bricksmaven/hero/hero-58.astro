@@ -26,9 +26,9 @@ const {
   <div class="hero-58__container">
     <div class="hero-58__content">
       <div class="hero-58__top">
-        <h1 class="hero-58__heading">The life you dream of is nearer than you imagine.</h1>
+        <h1 class="hero-58__heading">{heading}</h1>
         <p class="accent-h accent-h--alt">Accent heading</p>
-        <p class="hero-58__subheading">Unlock your potential and take the next step toward your dreams. Every small action brings you closer to the life you’ve always envisioned</p>
+        <p class="hero-58__subheading">{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--white" href="#">Call to action</a>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-58 {
     height: 100vh;
     position: relative;
@@ -88,5 +88,4 @@ const {
     height: 100%;
     width: 100%;
   }
-}
 </style>

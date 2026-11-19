@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-contact-40__container">
     <div class="bm-contact-40__content">
-      <h2 class="bm-contact-40__heading">Tell us your challenges and we will help you further</h2>
+      <h2 class="bm-contact-40__heading">{heading}</h2>
       <div class="bm-contact-40-media-card">
         <figure class="bm-contact-40-media-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         <div class="list--none bm-contact-40-contact-list">
@@ -76,7 +76,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-40 {
     row-gap: calc(var(--space-s) * 2);
     position: relative;
@@ -210,5 +210,4 @@ const {
   .bm-contact-40__slider-visible .splide__track {
     overflow: visible;
   }
-}
 </style>

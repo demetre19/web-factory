@@ -26,10 +26,10 @@ const {
   <div class="bm-contact-32__container">
     <div class="bm-contact-32__content">
       <div class="bm-contact-32__top">
-        <h1 class="bm-contact-32__heading">Need Answers? Get in Touch. We’ll Respond Shortly</h1>
+        <h1 class="bm-contact-32__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
       </div>
-      <p class="bm-contact-32__text">If you have any questions or concerns about our services, please feel free to contact us using the information provided below.</p>
+      <p class="bm-contact-32__text">{fs}</p>
       <div class="bm-accordion-clean">
         {items.map((it) => (
           <div class="bm-accordion-clean-card">
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-32__container {
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
     background: var(--bg-subtle);
@@ -113,5 +113,4 @@ const {
   .bm-accordion-clean-card .bm-accordion-clean-card__title[aria-expanded="true"] .bm-accordion-clean-card__icon--open {
     transform: rotate(0deg) !important;
   }
-}
 </style>

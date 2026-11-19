@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-feature-65__container">
     <div class="bm-feature-65__column">
-      <h2 class="bm-feature-65__heading">Accelerate your development process</h2>
+      <h2 class="bm-feature-65__heading">{heading}</h2>
       <div class="bm-feature-65__slider-media">
         <figure class="bm-feature-65__slider-image"><img src="/media/placeholder.svg" alt="Slider Image" loading="lazy" width="900" height="600" /></figure>
         <div class="bm-feature-slider">
@@ -45,14 +45,14 @@ const {
       <div class="bm-feature-65__media">
         <figure class="bm-feature-65__image-beta"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <p class="bm-feature-65__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p class="bm-feature-65__text">{fs}</p>
       <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-feature-65__container {
     display: grid;
     gap: var(--space-m);
@@ -157,5 +157,4 @@ const {
     align-items: start !important;
     
   }
-}
 </style>

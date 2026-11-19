@@ -46,7 +46,7 @@ const {
                 <div class="megamenu-1__footer list--none">
                   <div class="megamenu-card">
                     <a class="megamenu-card__link clickable-parent" href="#">Submenu Link 7</a>
-                    <p class="megamenu-card__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                    <p class="megamenu-card__description">{fs}</p>
                   </div>
                 </div>
               </div>
@@ -66,7 +66,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-header-1 {
     padding: var(--space-xs) 0 var(--space-xs) 0;
     position: relative;
@@ -137,5 +137,4 @@ const {
      align-self: center;
      left: unset !important;
   }
-}
 </style>

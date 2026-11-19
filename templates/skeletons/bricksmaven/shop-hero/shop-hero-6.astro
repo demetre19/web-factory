@@ -26,9 +26,9 @@ const {
   <div class="bm-shop-hero-6__container">
     <div class="bm-shop-hero-6__content">
       <div class="bm-shop-hero-6__intro">
-        <h1 class="bm-shop-hero-6__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-shop-hero-6__heading">{heading}</h1>
         <p class="accent-h">Accent heading</p>
-        <p class="bm-shop-hero-6__subheading">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+        <p class="bm-shop-hero-6__subheading">{fs}</p>
       </div>
       <a class="btn--white bm-shop-hero-6__btn wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-shop-hero-6 {
     position: relative;
     height: var(--acss-section-height);
@@ -111,5 +111,4 @@ const {
     inset: 0;
    	z-index: -1;
   }
-}
 </style>

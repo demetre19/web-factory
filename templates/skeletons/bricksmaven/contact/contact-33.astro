@@ -28,7 +28,7 @@ const {
       <div class="bm-contact-33__avatar-wrapper">
         <figure class="bm-contact-33__avatar"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <h2 class="bm-contact-33__heading">Leave us a message</h2>
+      <h2 class="bm-contact-33__heading">{heading}</h2>
       <div class="bm-contact-25-side-list-ul">
         {items.map((it) => (
           <div class="bm-contact-25-side-list-item">
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-33 {
     position: relative;
   }
@@ -129,5 +129,4 @@ const {
     width: 100%;
     object-fit: cover;
   }
-}
 </style>

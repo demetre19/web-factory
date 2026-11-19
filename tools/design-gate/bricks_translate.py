@@ -296,6 +296,8 @@ def translate(payload, stem):
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
     rules, raw_css = classes_css(payload, unmapped)
+    seen = {'h': False, 'p': False}   # first heading→{heading},
+                                    # first paragraph→{fs}
 
     def cls(el):
         names = [gc_names.get(i) for i in _classes_of(el)]
@@ -376,6 +378,13 @@ def translate(payload, stem):
             if ivar:
                 txt = (f'{{{ivar}.title}}' if name == 'heading'
                        else f'{{{ivar}.text}}')
+            elif name == 'heading' and not seen['h'] and txt:
+                txt = '{heading}'
+                seen['h'] = True
+            elif name in ('text-basic', 'text') and \
+                    not seen['p'] and txt and len(txt) > 30:
+                txt = '{fs}'
+                seen['p'] = True
             href = ' href="#"' if name == 'text-link' else ''
             return f'{pad}<{tag}{cattr}{href}>{txt}</{tag}>\n'
         if name == 'icon':
@@ -415,12 +424,16 @@ def translate(payload, stem):
                 lines.append(f'    {prop}: {val};' if val is not None
                              else f'    {prop}')
             decl.append(f'  .{name} {{\n' + '\n'.join(lines) + '\n  }')
-        # _cssCustom blocks land verbatim at layer top level —
-        # they carry their own selectors/keyframes
+        # _cssCustom blocks land verbatim at top level — they carry
+        # their own selectors/keyframes. NO @layer wrapper: Astro
+        # PostCSS-processes is:global as its own stylesheet and
+        # `@layer components` errors without a @tailwind directive
+        # in the same file.
         decl += ['  /* bm-custom */\n  ' + r.strip().replace(
                  '\n', '\n  ') for r in raw_css if r.strip()]
-        style = ('<style is:global>\n@layer components {\n'
-                 + '\n\n'.join(decl) + '\n}\n</style>\n')
+        style = ('<style is:global>\n/* bm: components layer '
+                 '(unlayered — see bricks_translate) */\n'
+                 + '\n\n'.join(decl) + '\n</style>\n')
 
     comp = camel('bm-' + stem)
     src = (f'---\n/**\n * bm-{stem} — TRANSLATED Bricksmaven skeleton.\n'

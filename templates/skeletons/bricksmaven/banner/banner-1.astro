@@ -26,8 +26,8 @@ const {
   <div class="bm-banner-1__container">
     <div class="bm-banner-content">
       <div class="bm-banner-content__info">
-        <h2 class="bm-banner-content__heading">Short headline to grab attention</h2>
-        <p class="bm-banner-content__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+        <h2 class="bm-banner-content__heading">{heading}</h2>
+        <p class="bm-banner-content__text">{fs}</p>
       </div>
       <div class="bm-banner-content__icon-wrapper">
         <span class="bm-banner-content__icon" data-icon="lucide" aria-hidden="true"></span>
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-banner-1 {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     background: transparent;
@@ -100,5 +100,4 @@ const {
     box-shadow: var(--shadow-card);
     
   }
-}
 </style>

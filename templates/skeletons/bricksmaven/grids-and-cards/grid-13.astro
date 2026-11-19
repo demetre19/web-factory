@@ -27,8 +27,8 @@ const {
     <div class="gridcard-13-ct">
       <div class="gridcard-13-ct__detail">
         <p class="gridcard-13-ct__tag">Awesome Tagline</p>
-        <h2 class="gridcard-13-ct__title">What is lorem ipsum?</h2>
-        <p class="gridcard-13-ct__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <h2 class="gridcard-13-ct__title">{heading}</h2>
+        <p class="gridcard-13-ct__desc">{fs}</p>
       </div>
       <div class="gridcard-13-ct__media">
         <figure class="gridcard-13-ct__img"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-13-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -93,5 +93,4 @@ const {
   .gridcard-13-ct:nth-child(even) .gridcard-13-ct__detail {
   	order: 1;
   }
-}
 </style>

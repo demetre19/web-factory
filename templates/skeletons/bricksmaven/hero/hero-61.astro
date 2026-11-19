@@ -25,12 +25,12 @@ const {
 <div>
   <div class="bm-hero-61__container">
     <div class="bm-hero-61__top">
-      <h1 class="bm-hero-61__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-61__heading">{heading}</h1>
     </div>
     <div class="bm-hero-61__main">
       <div class="bm-hero-61__content">
         <span class="bm-hero-61__icon" data-icon="lucide" aria-hidden="true"></span>
-        <p class="bm-hero-61__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-61__text">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary" href="#">Call to action</a>
           <a class="btn--link" href="#">Secondary action →</a>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-61__container {
     height: 100%;
     row-gap: var(--space-s);
@@ -93,5 +93,4 @@ const {
     width: 50vw;
     height: 864;
   }
-}
 </style>

@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-74__container">
     <div class="bm-hero-74__content">
       <div class="bm-hero-74__top">
-        <h1 class="bm-hero-74__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-74__heading">{heading}</h1>
         <p class="bm-accent-heading">Accent Heading</p>
-        <p class="bm-hero-74__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-74__text">{fs}</p>
         <a class="bm-hero-74__button btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-hero-74__footer">
@@ -64,7 +64,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-74__container {
     display: grid;
     gap: var(--space-m);
@@ -157,5 +157,4 @@ const {
   .bm-media-group__image-wrapper:first-child {
     grid-column: span 2;
   }
-}
 </style>

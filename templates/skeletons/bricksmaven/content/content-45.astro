@@ -26,13 +26,13 @@ const {
   <div class="bm-content-45__container">
     <div class="bm-content-45__intro">
       <div class="bm-content-45__intro-top">
-        <h2 class="bm-content-45__intro-heading">Put your introduction heading here</h2>
+        <h2 class="bm-content-45__intro-heading">{heading}</h2>
         <p class="bm-content-45__intro-text accent-h">Accent heading</p>
       </div>
       <div class="bm-content-45__columns list--none">
         <div class="bm-content-45__column">
           <h2 class="bm-content-45__column-heading">Content heading</h2>
-          <p class="bm-content-45__column-text">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur vel illum qui dolorem eum fugiat quo voluptas. Lure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur vel illum qui dolorem eum fugiat quo voluptas.</p>
+          <p class="bm-content-45__column-text">{fs}</p>
         </div>
         <div class="bm-content-45__column">
           <h2 class="bm-content-45__column-heading">Content heading</h2>
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-45__container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 1);
@@ -100,5 +100,4 @@ const {
   .bm-content-45__content-image {
     object-fit: cover;
   }
-}
 </style>

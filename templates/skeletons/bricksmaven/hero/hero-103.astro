@@ -26,11 +26,11 @@ const {
   <div class="bm-hero-103__container">
     <div class="bm-hero-103__intro">
       <div class="bm-hero-103__column">
-        <h1 class="bm-hero-103__heading">Short headling to grab the customers attention</h1>
+        <h1 class="bm-hero-103__heading">{heading}</h1>
         <p class="bm-accent-heading">Accent heading</p>
       </div>
       <div class="bm-hero-103__column">
-        <p class="bm-hero-103__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p class="bm-hero-103__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
           <a class="link--white" href="#">Secondary action →</a>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-103 {
     position: relative;
     overflow: clip;
@@ -105,5 +105,4 @@ const {
     background-color: var(--acss-psuedo-bg-color);
     z-index: -1;
   }
-}
 </style>

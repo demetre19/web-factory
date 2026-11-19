@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-88__container">
     <div class="bm-hero-88__content">
       <div class="bm-hero-88__top">
-        <h1 class="bm-hero-88__heading">Long headline to turn your visitors into customers</h1>
+        <h1 class="bm-hero-88__heading">{heading}</h1>
         <p class="bm-accent-heading bm-hero-88__accent-heading">Accent heading</p>
-        <p class="bm-hero-88__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-88__subheading">{fs}</p>
       </div>
       <a class="btn--primary bm-hero-88__button wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-88 {
     overflow: clip;
   }
@@ -116,5 +116,4 @@ const {
     block-size: var(--acss-mask-height);
     z-index: 99;
   }
-}
 </style>

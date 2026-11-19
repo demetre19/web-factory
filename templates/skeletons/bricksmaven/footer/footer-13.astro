@@ -40,7 +40,7 @@ const {
     </div>
     <div class="footer-13__content">
       <img></img>
-      <p>Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+      <p>{fs}</p>
       <form class="footer-newsletter__form" novalidate>
       </form>
     </div>
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-13 {
     row-gap: var(--flow-spacing);
   }
@@ -145,5 +145,4 @@ const {
   .footer-social {
   	justify-content: center;
   }
-}
 </style>

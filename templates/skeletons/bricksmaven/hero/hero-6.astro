@@ -26,8 +26,8 @@ const {
   <div class="hero-6-container">
     <div class="hero-6-wrapper__content hero-6__content">
       <p class="hero-6-wrapper__tag hero-6__accent">TAGLINE</p>
-      <h1 class="herhero-6-wrapper__title hero-6__heading">Long headline to turn your visitors into customers</h1>
-      <p class="hero-6-wrapper__desc hero-6__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="herhero-6-wrapper__title hero-6__heading">{heading}</h1>
+      <p class="hero-6-wrapper__desc hero-6__text">{fs}</p>
       <a class="btn--primary hero-6-wrapper__cta--primary hero-6__button wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-6-wrapper__thumb hero-6__media">
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-6-container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 2);
@@ -63,5 +63,4 @@ const {
     object-fit: cover;
     width: 100%;
   }
-}
 </style>

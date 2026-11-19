@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-hero-77__container">
     <div class="bm-hero-77__intro">
-      <h1 class="bm-hero-77__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-77__heading">{heading}</h1>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
     <div class="bm-hero-77-media-grid list--none">
@@ -36,7 +36,7 @@ const {
       ))}
     </div>
     <div class="bm-hero-77__footer">
-      <p class="bm-hero-77__text">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
+      <p class="bm-hero-77__text">{fs}</p>
       <div class="cta-combo">
         <a class="btn--primary" href="#">Call to action</a>
         <a class="link--black" href="#">Secondary action →</a>
@@ -46,7 +46,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-77__container {
     align-items: center;
     row-gap: var(--space-s);
@@ -172,5 +172,4 @@ const {
       grid-row:11/-1;
     }
   }
-}
 </style>

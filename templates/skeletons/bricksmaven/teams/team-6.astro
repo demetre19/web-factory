@@ -26,8 +26,8 @@ const {
   <div class="team-6-container grid--3 gap--m grid--m-1">
     <div class="team-6-heading gap--xs flex--col">
       <p class="team-6-heading__tag text--primary">We're hiring!</p>
-      <h2 class="team-6-heading__title">Meet our team</h2>
-      <p class="team-6-heading__desc">Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper suspendisse. Vivamus fringilla.</p>
+      <h2 class="team-6-heading__title">{heading}</h2>
+      <p class="team-6-heading__desc">{fs}</p>
     </div>
     <div class="team-6-content col-span--2">
       <div class="team-6-slide">
@@ -44,10 +44,9 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .team-6-slide-item__img {
     height: 100%;
     object-fit: cover;
   }
-}
 </style>

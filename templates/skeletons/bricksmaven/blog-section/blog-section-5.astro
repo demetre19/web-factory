@@ -27,8 +27,8 @@ const {
     <div class="blog-section-5-head">
       <div class="blog-section-5-intro">
         <p class="bs-5-head__tag text--s text--primary">Our blog</p>
-        <h2 class="bs-5-head__title">From the blog</h2>
-        <p class="bs-5-head__desc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.</p>
+        <h2 class="bs-5-head__title">{heading}</h2>
+        <p class="bs-5-head__desc">{fs}</p>
       </div>
       <div class="blog-section-5-cta">
         <a class="blog-section-5-head__cta btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-section-5-container {
     row-gap: var(--space-s);
   }
@@ -156,5 +156,4 @@ const {
   .blog-section-5-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

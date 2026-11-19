@@ -25,8 +25,8 @@ const {
 <div>
   <div class="content-63__container">
     <div class="content-63__content">
-      <h2 class="content-63__heading">About us</h2>
-      <p class="content-63__text">I firmly believe that personal growth and self-discovery are the catalysts for achieving greatness. With a focus on mindset, resilience, and goal-setting, I empower individuals to break free from limiting beliefs and embrace a life of purpose and fulfillment.</p>
+      <h2 class="content-63__heading">{heading}</h2>
+      <p class="content-63__text">{fs}</p>
     </div>
     <div class="content-63__media">
       <figure class="content-63__image-alpha"><img src="/media/placeholder.svg" alt="Image alpha" loading="lazy" width="900" height="600" /></figure>
@@ -36,7 +36,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-63__container {
     row-gap: var(--flow-spacing);
   }
@@ -82,5 +82,4 @@ const {
   }
     
   }
-}
 </style>

@@ -26,14 +26,14 @@ const {
   <div class="bm-cta-30__container">
     <div class="bm-cta-30-card">
       <div class="bm-cta-30-card__content">
-        <h2 class="bm-cta-30-card__heading">Ready to elevate your coaching game with stunning web design?</h2>
+        <h2 class="bm-cta-30-card__heading">{heading}</h2>
         <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="bm-cta-30-contact-card">
         <div class="bm-cta-30-contact-card__top">
           <div class="bm-cta-30-contact-card__content">
             <h2 class="bm-cta-30-contact-card__heading">Curious of what we can do for you?</h2>
-            <p class="bm-cta-30-contact-card__text">Contact us today and asked one of our consultants</p>
+            <p class="bm-cta-30-contact-card__text">{fs}</p>
           </div>
           <div class="bm-cta-30-contact-card__media">
             <figure class="bm-cta-30-contact-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-30-card {
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
     background: var(--fs-0);
@@ -113,5 +113,4 @@ const {
     display: flex;
     flex-direction: row;
   }
-}
 </style>

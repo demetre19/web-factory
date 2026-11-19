@@ -26,11 +26,11 @@ const {
   <div class="hero-25-container">
     <div class="intro-horizontal">
       <div class="intro-horizontal__left-box">
-        <h2 class="intro-horizontal__heading">Long headline to turn your visitors into customers</h2>
+        <h2 class="intro-horizontal__heading">{heading}</h2>
         <p class="intro-horizontal__accent-heading">Accent heading</p>
       </div>
       <div class="intro-horizontal__right-box">
-        <p class="intro-horizontal__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="intro-horizontal__desc">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
           <a class="btn--link wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-25-container {
     display: flex;
     flex-direction: column;
@@ -95,5 +95,4 @@ const {
     object-fit: cover;
     height: 64rem;
   }
-}
 </style>

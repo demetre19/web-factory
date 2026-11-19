@@ -26,7 +26,7 @@ const {
   <div class="content-4-container">
     <div class="content-4__box">
       <div class="content-4__intro">
-        <h2 class="content-4__heading">Long headline to turn your visitors into customers</h2>
+        <h2 class="content-4__heading">{heading}</h2>
         <p class="accent-h">Tagline</p>
       </div>
       <div class="cta-combo">
@@ -34,13 +34,13 @@ const {
       </div>
     </div>
     <div class="content-4__two-column-text">
-      <p class="content-4__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p class="content-4__text">{fs}</p>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-4-container {
     display: flex;
     row-gap: var(--space-l);
@@ -72,5 +72,4 @@ const {
   	columns: 1;
   }
   }
-}
 </style>

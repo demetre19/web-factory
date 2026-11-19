@@ -26,7 +26,7 @@ const {
   <div class="bm-testimonial-58__container">
     <div class="bm-testimonial-58-card">
       <div class="bm-testimonial-58-card__review-cover">
-        <h2 class="bm-testimonial-58-card__heading">"Bricksmaven analyzes your full content library, adapting to your voice, style, and what's performed best for you in the past."</h2>
+        <h2 class="bm-testimonial-58-card__heading">{heading}</h2>
         <p class="bm-accent-heading bm-testimonial-58-card__accent-heading">Customer Stories</p>
       </div>
       <div class="bm-testimonial-58-card__footer">
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-testimonial-58 {
     position: relative;
     height: 80vh;
@@ -121,5 +121,4 @@ const {
   .bm-testimonial-58-card:hover .bm-testimonial-58-card__overlay {
     opacity:1;
   }
-}
 </style>

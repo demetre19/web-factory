@@ -26,8 +26,8 @@ const {
   <div class="bm-cta-34__container">
     <div class="bm-cta-34__content">
       <div class="bm-cta-34__top">
-        <h2 class="bm-cta-34__heading">Dolor sit amet adipiscing</h2>
-        <p class="bm-cta-34__text">Lorem ipsum aenean fringilla viverra felis mauris etiam maecenas tristique nibh egestas feugiat volutpat eget nec id elementum iaculis non ipsum in facilisis eget condimentum viverra id risus fermentum enim ac sit morbi vulputate in nunc ultrices.</p>
+        <h2 class="bm-cta-34__heading">{heading}</h2>
+        <p class="bm-cta-34__text">{fs}</p>
       </div>
       <div class="bm-cta-34__footer">
         <div class="bm-btn-cta">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-34 {
     background: var(--bg-subtle);
   }
@@ -236,5 +236,4 @@ const {
   .bm-btn-cta[data-design='red'] .bm-btn-cta__icon {
     color: var(--text-primary);
   }
-}
 </style>

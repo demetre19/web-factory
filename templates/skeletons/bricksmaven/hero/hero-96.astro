@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-hero-96__container">
     <div class="bm-hero-96__intro">
-      <h1 class="bm-hero-96__heading">Designing digital experiences that connect, excite and convert</h1>
+      <h1 class="bm-hero-96__heading">{heading}</h1>
       <p class="bm-hero-96__accent-heading">Hey I’m Ryan!</p>
     </div>
   </div>
@@ -42,7 +42,7 @@ const {
   <div>
     <div class="bm-hero-96__footer">
       <div class="bm-hero-96__column">
-        <p class="bm-hero-96__subheading">I’m dedicated to building exceptional websites that not only reflect your brand but also drive conversions and attract clients effectively.</p>
+        <p class="bm-hero-96__subheading">{fs}</p>
       </div>
       <div class="bm-hero-96__column-right">
         <div class="cta-combo">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-96 {
     row-gap: var(--space-s);
   }
@@ -171,5 +171,4 @@ const {
       animation: none;
     }
   }
-}
 </style>

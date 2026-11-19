@@ -26,8 +26,8 @@ const {
   <div class="bm-footer-18__container">
     <div class="bm-footer-18__newsletter-block">
       <div class="bm-footer-18__newsletter-intro">
-        <h2 class="bm-footer-18__newsletter-heading">Subscribe to newsletter</h2>
-        <p class="bm-footer-18__newsletter-text">Subscribe and be aware of the latest news.</p>
+        <h2 class="bm-footer-18__newsletter-heading">{heading}</h2>
+        <p class="bm-footer-18__newsletter-text">{fs}</p>
       </div>
       <div class="bm-footer-18__newsletter-form">
         <form class="footer-newsletter__form" novalidate>
@@ -80,7 +80,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-18__container {
     row-gap: var(--space-s);
   }
@@ -201,5 +201,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

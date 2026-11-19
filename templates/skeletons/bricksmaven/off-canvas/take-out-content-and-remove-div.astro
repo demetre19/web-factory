@@ -28,7 +28,7 @@ const {
     <div class="bm-off-canvas-6">
       <div class="bm-off-canvas-6__content">
         <div class="bm-off-canvas-6__close"></div>
-        <h2 class="bm-off-canvas-6__heading">Menu</h2>
+        <h2 class="bm-off-canvas-6__heading">{heading}</h2>
         <div class="bm-off-canvas-nav-ul list--none">
           {items.map((it) => (
             <div class="bm-off-canvas-nav-li">
@@ -52,7 +52,7 @@ const {
               <a class="bm-off-canvas-contact-item__link" href="#">+32 456 78 3456</a>
             </div>
           </div>
-          <p class="bm-off-canvas-6__contact-address">10333 Freeman Ave Ste 1000, Boston TX 34542, USA</p>
+          <p class="bm-off-canvas-6__contact-address">{fs}</p>
         </div>
         <div class="bm-off-canvas-6__socials">
           <div class="bm-social-share list--none bm-social-share--column">
@@ -71,7 +71,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-off-canvas-6 {
     position: relative;
   }
@@ -162,5 +162,4 @@ const {
   	writing-mode: vertical-lr;
     transform: rotate(180deg);
   }
-}
 </style>

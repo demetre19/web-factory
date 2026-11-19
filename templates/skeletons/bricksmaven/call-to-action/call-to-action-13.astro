@@ -25,8 +25,8 @@ const {
 <div>
   <div class="cta-13-container">
     <div class="cta-13__box">
-      <h2 class="cta-13__heading">Get your projects done quicker with ACSS + Bricksmaven now!</h2>
-      <p class="cta-13__desc">Get the ultimate building tool for freelance devs,</p>
+      <h2 class="cta-13__heading">{heading}</h2>
+      <p class="cta-13__desc">{fs}</p>
     </div>
     <div class="cta-13__call-to-action">
       <div class="cta-combo">
@@ -38,7 +38,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-13 {
     /* bm: box-shadow omitted — token layer owns elevation */
   }
@@ -82,5 +82,4 @@ const {
     border-bottom: .1rem solid var(--action-primary);
     border-left: .1rem solid var(--action-primary);
   }
-}
 </style>

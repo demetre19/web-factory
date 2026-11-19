@@ -25,20 +25,19 @@ const {
 <div>
   <div class="header-page-5-container">
     <div class="header-page-5__left">
-      <h1 class="header-page__title">Short heading here</h1>
+      <h1 class="header-page__title">{heading}</h1>
     </div>
     <div class="header-page-5__right">
-      <p class="header-page-5__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <p class="header-page-5__desc">{fs}</p>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .header-page-5-container {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--section-space-xxl);
   }
-}
 </style>

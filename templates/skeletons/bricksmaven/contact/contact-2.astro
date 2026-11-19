@@ -26,8 +26,8 @@ const {
   <div class="contact-2-container">
     <div class="contact-2-content">
       <div class="contact-content__intro">
-        <h2 class="contact-content__heading">Contact Us Today!</h2>
-        <p class="contact-content__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="contact-content__heading">{heading}</h2>
+        <p class="contact-content__desc">{fs}</p>
       </div>
       <div class="contact-2-sales-grid-ul list--none">
         <div class="contact-2-sales-card">
@@ -74,7 +74,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-2-container {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -181,5 +181,4 @@ const {
   .contact-form__fields textarea:focus {
   outline-offset: 0;
   }
-}
 </style>

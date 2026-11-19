@@ -25,14 +25,14 @@ const {
 <div>
   <div class="logo-5-container">
     <div class="center--all pad--m width--full align-items--center flex--col logo-5-row gap--xl">
-      <h2 class="logo-5-title">ACSS + Bricksmaven used by top design teams and whole lot of designers</h2>
+      <h2 class="logo-5-title">{heading}</h2>
       <div class="logo-5-list-item"></div>
     </div>
   </div>
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   /* bm-custom */
   .logo-5-list-item li {
   	border: 1px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
@@ -47,5 +47,4 @@ const {
   .logo-5-list-item li div {
   	background-size: contain!important;
   }
-}
 </style>

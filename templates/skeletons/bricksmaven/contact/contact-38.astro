@@ -25,10 +25,10 @@ const {
 <div>
   <div class="bm-contact-38__container">
     <div class="bm-contact-38__intro">
-      <h1 class="bm-contact-38__heading">Location and Contact</h1>
+      <h1 class="bm-contact-38__heading">{heading}</h1>
       <div class="bm-content-column-wrapper list--none">
         <div class="bm-content-column">
-          <p class="bm-content-column__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+          <p class="bm-content-column__text">{fs}</p>
         </div>
         <div class="bm-content-column">
           <p class="bm-content-column__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-contact-38__container {
     row-gap: var(--space-s);
   }
@@ -87,5 +87,4 @@ const {
     flex-direction: row;
     column-gap: var(--space-xs);
   }
-}
 </style>

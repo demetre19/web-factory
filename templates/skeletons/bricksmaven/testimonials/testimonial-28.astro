@@ -26,7 +26,7 @@ const {
   <div class="testimonial-28-container">
     <div class="testimonial-28-content">
       <div class="testimonial-28-content__wrapper">
-        <h2 class="testimonial-28-content__title">Medium title placeholder text</h2>
+        <h2 class="testimonial-28-content__title">{heading}</h2>
         <div class="testimonial-28-content__list">
           {items.map((it) => (
             <div class="testimonial-28-content__item">
@@ -56,7 +56,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-28-container {
     width: 100%;
     display: grid;
@@ -152,5 +152,4 @@ const {
   .testimonial-28-content__item {
   	border: none !important;
   }
-}
 </style>

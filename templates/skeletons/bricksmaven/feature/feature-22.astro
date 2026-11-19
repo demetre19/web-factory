@@ -25,7 +25,7 @@ const {
 <div>
   <div class="feature-22-container">
     <div class="intro">
-      <h2 class="intro__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="intro__heading">{heading}</h2>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <a class="btn--primary btn--outline" href={cta.href}>{cta.label}</a>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-22-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
@@ -90,5 +90,4 @@ const {
     flex-direction: column;
     row-gap: var(--space-s);
   }
-}
 </style>

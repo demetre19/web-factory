@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="testimonial-18-container">
-    <p class="testimonial-18-subtitle">Trusted by more than 500,000 designers and product managers across the globe</p>
+    <p class="testimonial-18-subtitle">{fs}</p>
     <div class="testimonial-18-list">
       {items.map((it) => (
         <div class="testimonial-18-list__slide">
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .testimonial-18-container {
     flex-direction: column;
     row-gap: 3rem;
@@ -89,5 +89,4 @@ const {
     overflow: hidden;
     border-radius: 50% 50% 50% 50%;
   }
-}
 </style>

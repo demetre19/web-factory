@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-content-70__container">
     <div class="bm-content-70__content">
-      <h2 class="bm-content-70__heading">Alpha template is a set of bare bones blocks built for Bricksbuilder which significantly enhances and speeds up your design & development workflow. Bricksmaven helps you accelerate your design & development workflow and decrease your development time.</h2>
+      <h2 class="bm-content-70__heading">{heading}</h2>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
     <div class="list--none bm-content-70-usp-list">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-70__container {
     row-gap: var(--space-s);
     align-items: center;
@@ -90,5 +90,4 @@ const {
   .bm-content-70-card__icon-wrapper {
     --icon-circle-size: 48px;
   }
-}
 </style>

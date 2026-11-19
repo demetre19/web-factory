@@ -26,9 +26,9 @@ const {
   <div class="bm-hero-95__container">
     <div class="bm-hero-95__content">
       <div class="bm-hero-95__top">
-        <h1 class="bm-hero-95__heading">Helping coaches attract & convert clients</h1>
+        <h1 class="bm-hero-95__heading">{heading}</h1>
         <p class="bm-accent-heading bm-hero-95__accent-heading">Accent heading</p>
-        <p class="bm-hero-95__subheading">I’m dedicated to building exceptional websites that not only reflect your brand but also drive conversions and attract clients effectively.</p>
+        <p class="bm-hero-95__subheading">{fs}</p>
       </div>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-95__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
@@ -114,5 +114,4 @@ const {
     object-fit: cover;
     border-radius: var(--r-card) var(--r-card) var(--r-card) var(--r-card);
   }
-}
 </style>

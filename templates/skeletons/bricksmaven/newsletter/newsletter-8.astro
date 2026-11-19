@@ -25,10 +25,10 @@ const {
 <div>
   <div class="newsletter-8-container">
     <div class="newsletter-8__intro">
-      <h2 class="newsletter-8__heading">For a more efficient internet marketing campaign</h2>
+      <h2 class="newsletter-8__heading">{heading}</h2>
     </div>
     <div class="newsletter-8-form-container">
-      <p class="newsletter-8-form-container__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      <p class="newsletter-8-form-container__desc">{fs}</p>
       <div class="bm-form">
         <form class="bm-form-widget" novalidate>
         </form>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-8 {
     position: relative;
   }
@@ -116,5 +116,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

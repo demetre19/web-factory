@@ -26,10 +26,10 @@ const {
   <div class="error-10-container">
     <div class="error-10-intro">
       <div class="error-10-intro__heading-wrapper">
-        <h1 class="error-10-intro__heading">404 ERROR</h1>
+        <h1 class="error-10-intro__heading">{heading}</h1>
         <p class="error-10-intro__subheading">Oops the page is gone</p>
       </div>
-      <p class="error-10-intro__desc">Sorry, the page you are looking for doesn't exist.</p>
+      <p class="error-10-intro__desc">{fs}</p>
       <a class="error-10-intro-btn wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .error-10 {
     display: flex;
     flex-direction: column;
@@ -80,5 +80,4 @@ const {
     left: 0;
     object-fit: cover;
   }
-}
 </style>

@@ -25,8 +25,8 @@ const {
 <div>
   <div class="newsletter-4-container">
     <div class="newsletter-4__content">
-      <h2 class="newsletter-4__heading">Convise your audience to sign up</h2>
-      <p class="newsletter-4__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+      <h2 class="newsletter-4__heading">{heading}</h2>
+      <p class="newsletter-4__desc">{fs}</p>
       <div class="bm-list">
         {items.map((it) => (
           <div class="bm-list__item">
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-4 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -114,5 +114,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

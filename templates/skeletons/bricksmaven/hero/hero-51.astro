@@ -28,9 +28,9 @@ const {
       <figure class="hero-51__image"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
     </div>
     <div class="hero-51__content">
-      <h1 class="hero-51__heading">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet</h1>
+      <h1 class="hero-51__heading">{heading}</h1>
       <p class="hero-51__accent-heading">Accent Heading</p>
-      <p class="hero-51__text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+      <p class="hero-51__text">{fs}</p>
       <a class="btn--black hero-51__button wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-51__media-right">
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-51 {
     overflow: hidden;
   }
@@ -85,5 +85,4 @@ const {
     object-fit: cover;
     height: 72rem;
   }
-}
 </style>

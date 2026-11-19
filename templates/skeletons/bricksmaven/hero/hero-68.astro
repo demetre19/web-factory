@@ -25,9 +25,9 @@ const {
 <div>
   <div class="bm-hero-68__container">
     <div class="bm-hero-68__content">
-      <h1 class="bm-hero-68__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-68__heading">{heading}</h1>
       <p class="accent-h accent-h--alt">Accent Heading</p>
-      <p class="bm-hero-68__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p class="bm-hero-68__text">{fs}</p>
       <div class="cta-combo cta-combo--alt">
         <a class="btn--white btn--black" href="#">Call to action</a>
         <a class="btn--outline btn--white" href="#">Secondary action →</a>
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-68 {
     justify-content: center;
     height: 100vh;
@@ -113,5 +113,4 @@ const {
   .bm-hero-68__slider :where(.splide__list, .splide__slide){
     transition-timing-function: linear !important;
   }
-}
 </style>

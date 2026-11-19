@@ -25,7 +25,7 @@ const {
 <div>
   <div class="feature-27-container">
     <div class="feature-27-intro">
-      <h2 class="feature-27__heading">Long headline to turn your visitors into users</h2>
+      <h2 class="feature-27__heading">{heading}</h2>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
         <p class="cta-combo__text">OR</p>
@@ -47,7 +47,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-27-container {
     display: flex;
     flex-direction: column;
@@ -93,5 +93,4 @@ const {
     flex-direction: column;
     row-gap: var(--space-s);
   }
-}
 </style>

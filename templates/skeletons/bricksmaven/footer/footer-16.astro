@@ -28,7 +28,7 @@ const {
       <div class="bm-footer-16__media">
         <svg class="bm-footer-16__logo"></svg>
       </div>
-      <p class="bm-footer-16__intro-text">Save the clock tower. Damn. I'm late for school. No, I refuse to accept the responsibility. Listen, woh. Hello, uh excuse me.</p>
+      <p class="bm-footer-16__intro-text">{fs}</p>
     </div>
     <div class="bm-footer-16__content">
       {items.map((it) => (
@@ -65,7 +65,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-16 {
     background: var(--bg-subtle);
   }
@@ -157,5 +157,4 @@ const {
   .footer-copyright {
     font-size: var(--fs-0);
   }
-}
 </style>

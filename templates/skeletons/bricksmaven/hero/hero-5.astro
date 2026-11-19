@@ -26,8 +26,8 @@ const {
   <div class="hero-5-container">
     <div class="hero-5-wrapper__content hero-5__content">
       <p class="hero-5-wrapper__tag hero-5__accent">TAGLINE</p>
-      <h1 class="hero-5-wrapper__title hero-5__heading">Long headline to turn your visitors into customers</h1>
-      <p class="hero-5-wrapper__desc hero-5__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="hero-5-wrapper__title hero-5__heading">{heading}</h1>
+      <p class="hero-5-wrapper__desc hero-5__text">{fs}</p>
       <a class="hero-5-wrapper__cta--primary btn--primary hero-5__button wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="hero-5-wrapper__thumb hero-5__media">
@@ -37,7 +37,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-5-container {
     display: grid;
     grid-template-columns: calc(100% * 1 / 2);
@@ -65,5 +65,4 @@ const {
     height: 100%;
     object-fit: cover;
   }
-}
 </style>

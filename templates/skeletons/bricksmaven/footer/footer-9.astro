@@ -40,7 +40,7 @@ const {
     </div>
     <div class="footer-9__contact">
       <div class="footer-9__header">
-        <h2 class="footer-9__heading">Let's Talk</h2>
+        <h2 class="footer-9__heading">{heading}</h2>
         <span class="footer-9__icon" data-icon="lucide" aria-hidden="true"></span>
       </div>
       <div class="footer-9__contact-list list--none">
@@ -71,7 +71,7 @@ const {
         <img class="footer-brand__logo"></img>
       </div>
       <div class="footer-bottom__copyright">
-        <p class="footer-copyright">© 2022 Alpha. All right reserved.</p>
+        <p class="footer-copyright">{fs}</p>
       </div>
     </div>
     <div class="footer-nav-legal">
@@ -87,7 +87,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .footer-9 {
     row-gap: var(--space-s);
   }
@@ -193,5 +193,4 @@ const {
   .footer-legal__link-text {
     font-size: var(--fs-0);
   }
-}
 </style>

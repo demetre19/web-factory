@@ -61,8 +61,8 @@ const {
       </div>
       <div class="blog-single__newsletter">
         <span class="blog-single-newsletter__icon" data-icon="lucide" aria-hidden="true"></span>
-        <h2 class="blog-single-newsletter__title">Weekly Newsletter</h2>
-        <p class="blog-single-newsletter__desc">No spam. Just the latest releases and tips, interesting articles, and exclusive interviews in your inbox every week.</p>
+        <h2 class="blog-single-newsletter__title">{heading}</h2>
+        <p class="blog-single-newsletter__desc">{fs}</p>
         <form class="blog-single-newsletter__form" novalidate>
         </form>
         <p class="blog-single-newsletter__policy">Your information is protected by us. Read our privacy policy</p>
@@ -81,7 +81,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-single-4 {
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }
@@ -271,5 +271,4 @@ const {
   .blog-single-4__footer-adjacent-post a .title {
   	white-space: normal;
   }
-}
 </style>

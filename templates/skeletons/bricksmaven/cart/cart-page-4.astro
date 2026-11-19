@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="cart-page-4__container-top">
-    <h1 class="cart-page-4__heading">Cart</h1>
+    <h1 class="cart-page-4__heading">{heading}</h1>
     <p class="cart-page-4__breadcrumb">Home / Cart</p>
   </div>
   <div class="cart-page-4__container">
@@ -32,7 +32,7 @@ const {
       <div class="bm-woo-notice"></div>
     </div>
     <div>
-      <p>{do_action:woocommerce_before_cart}</p>
+      <p>{fs}</p>
     </div>
     <div class="cart-page-4__cart-container">
       <div class="cart-page-4__cart-items-container">
@@ -75,7 +75,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cart-page-4 {
     row-gap: var(--space-s);
   }
@@ -325,5 +325,4 @@ const {
         	font-size: var(--fs-2);
     	}
   }
-}
 </style>

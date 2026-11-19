@@ -25,8 +25,8 @@ const {
 <div>
   <div class="contact-7-container gap--l">
     <div class="contact-content__intro">
-      <h2 class="contact-content__heading">Contact Us Today!</h2>
-      <p class="contact-content__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h2 class="contact-content__heading">{heading}</h2>
+      <p class="contact-content__desc">{fs}</p>
     </div>
     <div class="contact-7-content">
       <div class="contact-form">
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-content__intro {
     display: flex;
     flex-direction: column;
@@ -116,5 +116,4 @@ const {
   .contact-form__fields textarea:focus {
   outline-offset: 0;
   }
-}
 </style>

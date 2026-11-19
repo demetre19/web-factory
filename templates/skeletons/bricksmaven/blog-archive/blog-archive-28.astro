@@ -25,7 +25,7 @@ const {
 <div>
   <div class="blog-archive-28__container">
     <div class="blog-archive-28__intro">
-      <h1 class="blog-archive-28__heading">Latest Articles</h1>
+      <h1 class="blog-archive-28__heading">{heading}</h1>
     </div>
     <div class="blog-archive-28__archive-articles">
       <div class="blog-archive-28-list list--none">
@@ -70,7 +70,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-28__container {
     row-gap: var(--space-s);
   }
@@ -231,5 +231,4 @@ const {
     inset:0;
     cursor: pointer !important;
   }
-}
 </style>

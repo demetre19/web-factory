@@ -31,7 +31,7 @@ const {
   <div class="bm-product-single-2__container">
     <div class="bm-product-single-2__breadcrumb-wrapper">
       <div class="bm-product-single__breadcrumb"></div>
-      <p>{do_action:before_single_product}</p>
+      <p>{fs}</p>
     </div>
     <div class="bm-product-single-2__main">
       <div class="bm-product-single-2__content">
@@ -82,7 +82,7 @@ const {
           <div class="bm-product-single__additional-information"></div>
         </div>
         <div class="bm-product-single-2__column">
-          <h2 class="bm-product-single-2__heading">Details</h2>
+          <h2 class="bm-product-single-2__heading">{heading}</h2>
           <div class="bm-product-single__product-content"></div>
         </div>
       </div>
@@ -126,7 +126,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-product-single-2 {
     row-gap: 0;
   }
@@ -437,5 +437,4 @@ const {
     	text-decoration: none;
     	border-bottom: 0;
   }
-}
 </style>

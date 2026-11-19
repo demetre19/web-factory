@@ -25,12 +25,12 @@ const {
 <div>
   <div class="newsletter-9-container">
     <div class="newsletter-9__intro">
-      <h2 class="newsletter-9__intro__heading">[Name of the book] "What is this book and why should they care"</h2>
+      <h2 class="newsletter-9__intro__heading">{heading}</h2>
     </div>
     <div class="newsletter-9__content">
       <div class="newsletter-9__box">
         <h2 class="newsletter-9__box__heading">Tell them what happens when they leave their email address</h2>
-        <p class="newsletter-9__box__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        <p class="newsletter-9__box__desc">{fs}</p>
         <div class="bm-form">
           <form class="bm-form-widget" novalidate>
           </form>
@@ -45,7 +45,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-9-container {
     row-gap: var(--space-l);
     display: flex;
@@ -106,5 +106,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

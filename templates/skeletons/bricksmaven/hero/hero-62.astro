@@ -25,14 +25,14 @@ const {
 <div>
   <div class="bm-hero-62__container">
     <div class="bm-hero-62__top">
-      <h1 class="bm-hero-62__heading">Long headline to turn your visitors into customers</h1>
+      <h1 class="bm-hero-62__heading">{heading}</h1>
     </div>
   </div>
   <div class="bm-hero-62__container-foot">
     <figure class="bm-hero-62__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     <div class="bm-hero-62__content">
       <div class="bm-hero-62__inner-block">
-        <p class="bm-hero-62__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-hero-62__subheading">{fs}</p>
         <div class="cta-combo">
           <a class="btn--primary" href="#">Call to action</a>
           <a class="btn--link" href="#">Secondary action →</a>
@@ -43,7 +43,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-hero-62 {
     overflow: hidden;
     height: 100vh;
@@ -102,5 +102,4 @@ const {
     background: transparent;
     padding: 0 0 0 0;
   }
-}
 </style>

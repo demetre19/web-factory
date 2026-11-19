@@ -34,7 +34,7 @@ const {
           ))}
         </div>
         <span class="bm-cta-21-card__counter"></span>
-        <p class="bm-cta-21-card__text">We are creating a UI patterns community, be part of it</p>
+        <p class="bm-cta-21-card__text">{fs}</p>
       </div>
       <div class="bm-cta-21-card__right">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-cta-21-card {
     background: var(--bg-subtle);
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
@@ -90,5 +90,4 @@ const {
   .bm-team-media:first-child {
   	margin-inline-start: 0px;
   }
-}
 </style>

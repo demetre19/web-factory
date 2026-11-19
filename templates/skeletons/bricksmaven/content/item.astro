@@ -25,11 +25,11 @@ const {
 <div>
   <div class="content-20-container">
     <div class="content-20__content">
-      <h2 class="content-20__heading">What is Lorem Ipsum?</h2>
+      <h2 class="content-20__heading">{heading}</h2>
       <div class="content-20-list-ul list--none">
         <div class="content-20-list-card">
           <h2 class="content-20-list-card__heading">Feature One</h2>
-          <p class="content-20-list-card__text">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+          <p class="content-20-list-card__text">{fs}</p>
           <span class="content-20-list-card__icon" data-icon="lucide" aria-hidden="true"></span>
         </div>
         <div class="content-20-list-card">
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-20 {
     position: relative;
   }
@@ -122,5 +122,4 @@ const {
     height:30%;
   }
   }
-}
 </style>

@@ -27,8 +27,8 @@ const {
     <div class="content-26__content-intro">
       <div class="content-26__content">
         <div class="intro intro--left">
-          <h2 class="intro__heading">Long headline to turn your visitors into users</h2>
-          <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <h2 class="intro__heading">{heading}</h2>
+          <p class="intro__subheading">{fs}</p>
           <p class="intro__accent-heading">Tagline</p>
         </div>
       </div>
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-26 {
     padding: 0 0 0 0;
   }
@@ -122,5 +122,4 @@ const {
   .content-26-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
-}
 </style>

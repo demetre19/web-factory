@@ -26,8 +26,8 @@ const {
   <div class="gridcard-10-container">
     <div class="gridcard-10-grid-ul list--none">
       <div class="gridcard-10-card">
-        <h2 class="gridcard-10-card__heading">Feature headline</h2>
-        <p class="gridcard-10-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <h2 class="gridcard-10-card__heading">{heading}</h2>
+        <p class="gridcard-10-card__desc">{fs}</p>
         <div class="gridcard-10-card__media">
           <figure class="gridcard-10-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
@@ -44,7 +44,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-10-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -65,5 +65,4 @@ const {
     /* bm: box-shadow omitted — token layer owns elevation */
     object-fit: cover;
   }
-}
 </style>

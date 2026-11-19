@@ -25,9 +25,9 @@ const {
 <div>
   <div class="feature-18-container">
     <div class="feature-18-content">
-      <h2 class="feature-18-content__heading">Your services list here</h2>
+      <h2 class="feature-18-content__heading">{heading}</h2>
       <p class="accent-h">Accent heading</p>
-      <p class="feature-18-content__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      <p class="feature-18-content__text">{fs}</p>
     </div>
     <div class="feature-18-list-wrapper">
       <div class="feature-18-list-ul list--none">
@@ -48,7 +48,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-18-container {
     display: grid;
     grid-template-columns: repeat(24, minmax(0, 1fr));
@@ -115,5 +115,4 @@ const {
   .feature-18-list-item__image {
   	aspect-ratio: 6 / 5;
   }
-}
 </style>

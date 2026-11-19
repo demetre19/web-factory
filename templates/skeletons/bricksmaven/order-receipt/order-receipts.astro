@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-order-receipts__container">
     <div class="intro intro--left">
-      <h2 class="intro__heading">Get back to your order</h2>
-      <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h2 class="intro__heading">{heading}</h2>
+      <p class="intro__subheading">{fs}</p>
       <p class="bm-accent-heading">Tagline</p>
     </div>
     <div class="bm-order-receipts__content">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-order-receipts__container {
     display: grid;
     gap: var(--space-m);
@@ -78,5 +78,4 @@ const {
     flex-direction: column;
     row-gap: calc(var(--flow-spacing) / 4);
   }
-}
 </style>

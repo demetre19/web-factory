@@ -25,8 +25,8 @@ const {
 <div>
   <div class="bm-content-66__container">
     <div class="bm-content-66__intro">
-      <h2 class="bm-content-66__heading">Our Exquisite rooms</h2>
-      <p class="bm-content-66__text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+      <h2 class="bm-content-66__heading">{heading}</h2>
+      <p class="bm-content-66__text">{fs}</p>
     </div>
     <div class="bm-content-66__inner-container">
       <div class="bm-content-66__content">
@@ -50,7 +50,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-66__container {
     row-gap: var(--space-s);
   }
@@ -95,5 +95,4 @@ const {
   }
   
   }
-}
 </style>

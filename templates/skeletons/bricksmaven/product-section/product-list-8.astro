@@ -26,7 +26,7 @@ const {
   <div class="product-list-8__container">
     <div class="product-list-8__product-category">
       <div class="product-list-8__product-category-intro">
-        <h2 class="product-list-8__arrivals">New Arrivals</h2>
+        <h2 class="product-list-8__arrivals">{heading}</h2>
         <a class="product-list-8__content-button btn--black" href={cta.href}>{cta.label}</a>
       </div>
       <div class="product-list-8__slider">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .product-list-8__product-category {
     row-gap: var(--space-s);
   }
@@ -159,5 +159,4 @@ const {
     	text-decoration: none;
     	border-bottom: 0;
   }
-}
 </style>

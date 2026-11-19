@@ -25,7 +25,7 @@ const {
 <div>
   <div class="shop-hero-1__top-container">
     <div class="shop-hero-1__top">
-      <h1 class="shop-hero-1__heading">Long headline to catch the users attention</h1>
+      <h1 class="shop-hero-1__heading">{heading}</h1>
     </div>
   </div>
   <div class="shop-hero-1__container">
@@ -63,7 +63,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .shop-hero-1__top-container {
     align-items: center;
   }
@@ -139,5 +139,4 @@ const {
   .shop-hero-1-usp-card__text {
     font-weight: 700;
   }
-}
 </style>

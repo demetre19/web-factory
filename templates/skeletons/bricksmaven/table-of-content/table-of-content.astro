@@ -25,7 +25,7 @@ const {
 <div>
   <div class="table-of-content-1">
     <div class="table-of-content-1__intro">
-      <h2 class="table-of-content-1__heading">Table of contents</h2>
+      <h2 class="table-of-content-1__heading">{heading}</h2>
     </div>
     <div class="table-of-content-1-ol">
       <div class="table-of-content-1-li">
@@ -42,7 +42,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .table-of-content-1 {
     padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
     border-top: .1rem solid var(--bg-subtle);
@@ -64,5 +64,4 @@ const {
   .table-of-content-1-li {
   	    display: list-item;
   }
-}
 </style>

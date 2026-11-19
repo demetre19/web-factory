@@ -26,8 +26,8 @@ const {
   <div class="gridcard-2-container">
     <div class="gridcard-2-grid-ul list--none">
       <div class="gridcard-2-card">
-        <h2 class="gridcard-2-card__heading">Feature One</h2>
-        <p class="gridcard-2-card__desc">Lorem ipsum dolor sit amet elit. Aliquam odio dolor, id luctus erat sagittis non. Ut blandit semper pretium.</p>
+        <h2 class="gridcard-2-card__heading">{heading}</h2>
+        <p class="gridcard-2-card__desc">{fs}</p>
         <a class="gridcard-2-card-btn wf-cta-button" href={cta.href}>{cta.label}</a>
       </div>
       <div class="gridcard-2-card">
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .gridcard-2-grid-ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -65,5 +65,4 @@ const {
   	border-right: 1px solid var(--bg-subtle);
   
   }
-}
 </style>

@@ -29,7 +29,7 @@ const {
         <div class="bm-delta-feature-list-card">
           <div class="bm-delta-feature-list-card__content">
             <p class="bm-delta-feature-list-card__number">01</p>
-            <p class="bm-delta-feature-list-card__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            <p class="bm-delta-feature-list-card__text">{fs}</p>
           </div>
           <div class="bm-delta-feature-list-card__media">
             <figure class="bm-delta-feature-list-card__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -47,7 +47,7 @@ const {
       </div>
     </div>
     <div class="feature-31__content">
-      <h2 class="feature-31__heading">What is Lorem Ipsum?</h2>
+      <h2 class="feature-31__heading">{heading}</h2>
       <p class="feature-31__text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-31 {
     position: relative;
   }
@@ -136,5 +136,4 @@ const {
   }
    
   }
-}
 </style>

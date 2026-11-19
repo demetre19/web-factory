@@ -24,7 +24,7 @@ const {
 
 <div>
   <div class="hero-45-container">
-    <h1 class="hero-45__heading">Build faster in Bricksbuilder</h1>
+    <h1 class="hero-45__heading">{heading}</h1>
     <div class="hero-45__media">
       <figure class="hero-45__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
@@ -41,7 +41,7 @@ const {
       </div>
       <div class="hero-45__statement-wrapper">
         <div class="hero-45__statement">
-          <p class="hero-45__statement-text">Alpha template by Bricksmaven helps you accelerate your design & development workflow and decrease your development time.</p>
+          <p class="hero-45__statement-text">{fs}</p>
         </div>
         <div class="hero-45__team-cta">
           <div class="bm-team-list list--none">
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-45-container {
     row-gap: var(--space-s);
   }
@@ -139,5 +139,4 @@ const {
   .bm-team-media:first-child {
   	margin-inline-start: 0px;
   }
-}
 </style>

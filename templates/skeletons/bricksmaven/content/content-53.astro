@@ -26,7 +26,7 @@ const {
   <div class="bm-content-53__container">
     <div class="bm-content-53__content">
       <div class="bm-content-53__top">
-        <h2 class="bm-content-53__heading">Long headline to grab your users attention</h2>
+        <h2 class="bm-content-53__heading">{heading}</h2>
         <p class="accent-h">Accent heading</p>
       </div>
       <div class="bm-content-53-list">
@@ -52,7 +52,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-53__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
@@ -106,5 +106,4 @@ const {
   .bm-content-53__media {
     --offset-height: 10rem;
   }
-}
 </style>

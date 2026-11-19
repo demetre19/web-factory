@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-footer-22__top-container">
     <div class="bm-footer-22__top">
-      <h2 class="bm-footer-22__top-heading">Let's discuss your project and ideas. Don't worry if you're not fully prepared yet. I can determine the potential of our partnership</h2>
+      <h2 class="bm-footer-22__top-heading">{heading}</h2>
       <a class="bm-footer-22__top-link" href="#">hello@bricksmaven.com</a>
     </div>
     <div class="bm-footer-22__social">
@@ -70,7 +70,7 @@ const {
     <div class="bm-footer-22__end">
       <div class="bm-footer-22__newsletter">
         <h2 class="bm-footer-22__footer-heading">Subscribe</h2>
-        <p>Join our newsletter to stay up to date on features and releases</p>
+        <p>{fs}</p>
         <form class="footer-newsletter__form" novalidate>
         </form>
       </div>
@@ -95,7 +95,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-footer-22__top-container {
     row-gap: var(--flow-spacing);
     padding: 0 0 var(--space-m) 0;
@@ -224,5 +224,4 @@ const {
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

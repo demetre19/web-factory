@@ -26,8 +26,8 @@ const {
   <div class="hero-7-container">
     <div class="hero-7__content">
       <p class="hero-7__tag">TAGLINE</p>
-      <h1 class="hero-7__title">Long headline to turn your visitors into customers</h1>
-      <p class="hero-7__desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <h1 class="hero-7__title">{heading}</h1>
+      <p class="hero-7__desc">{fs}</p>
       <a class="btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
   </div>
@@ -35,7 +35,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .hero-7 {
     height: 100vh;
     display: flex;
@@ -62,5 +62,4 @@ const {
     left: 0;
     z-index: -10;
   }
-}
 </style>

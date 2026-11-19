@@ -25,7 +25,7 @@ const {
 <div>
   <div class="bm-feature-47__top-container">
     <div class="bm-feature-47__head">
-      <h2 class="bm-feature-47__heading">Long headline to turn your visitors into customers</h2>
+      <h2 class="bm-feature-47__heading">{heading}</h2>
       <a class="bm-feature-47__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <figure class="bm-feature-47__background-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -34,7 +34,7 @@ const {
     <div class="bm-feature-47__services">
       <div class="bm-feature-47__content">
         <h2 class="bm-feature-47__content-heading">Short headline that introduces your services</h2>
-        <p class="bm-feature-47__content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p class="bm-feature-47__content-text">{fs}</p>
         <a class="bm-feature-47__content-link btn--primary" href="#">Secondary action</a>
       </div>
       <div class="list--none bm-feature-47-grid-ul">
@@ -55,7 +55,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-feature-47 {
     padding: 0 0 0 0;
     overflow: hidden;
@@ -135,5 +135,4 @@ const {
   .bm-content-26-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
   }
-}
 </style>

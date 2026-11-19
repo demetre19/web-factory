@@ -25,8 +25,8 @@ const {
 <div>
   <div class="content-37__container">
     <div class="content-37__content">
-      <h2 class="content-37__heading">Lorem Ipsum is simply dummy text of the printing and typesetting industry</h2>
-      <p class="content-37__text">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.</p>
+      <h2 class="content-37__heading">{heading}</h2>
+      <p class="content-37__text">{fs}</p>
       <a class="content-37__cta btn--black wf-cta-button" href={cta.href}>{cta.label}</a>
     </div>
     <div class="content-37__media">
@@ -36,7 +36,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .content-37 {
     padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
     overflow: hidden;
@@ -79,5 +79,4 @@ const {
     width:calc(50vw + ((var(--content-width) / 12) * 6));
     z-index:-1;
   }
-}
 </style>

@@ -26,11 +26,11 @@ const {
   <div class="blog-archive-6-container">
     <div class="blog-archive-6-head">
       <div class="blog-archive-6-head__intro">
-        <h2 class="blog-archive-6-head__title">Fresh from the blog</h2>
+        <h2 class="blog-archive-6-head__title">{heading}</h2>
         <p class="accent-h">Articles</p>
       </div>
       <div class="blog-archive-6-head__search-wrapper">
-        <p class="blog-archive-6-head__desc">Sapiente fugit aspernatur quam Ipsam debitis maxime ut non Rem sit Quia earum aut error</p>
+        <p class="blog-archive-6-head__desc">{fs}</p>
         <div class="blog-archive-6-head__form"></div>
       </div>
     </div>
@@ -54,7 +54,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .blog-archive-6-container {
     row-gap: var(--space-s);
   }
@@ -161,5 +161,4 @@ const {
   .blog-archive-6-card__term a {
   	color: var(--fs-0);
   }
-}
 </style>

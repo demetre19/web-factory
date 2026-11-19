@@ -26,7 +26,7 @@ const {
   <div class="cta-10-container">
     <div class="cta-10-content">
       <div class="cta-10-heading">
-        <h2 class="cta-10__title">Ready to dive in?</h2>
+        <h2 class="cta-10__title">{heading}</h2>
         <p class="cta-10__sub-heading">Start your free trial today.</p>
       </div>
       <div class="hero-1__cta">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-10 {
     padding: 0 0 0 0;
     width: 100%;
@@ -106,5 +106,4 @@ const {
   clip-path: polygon(12% 0%, 100% 0, 100% 100%, 0% 100%);
   
   }
-}
 </style>

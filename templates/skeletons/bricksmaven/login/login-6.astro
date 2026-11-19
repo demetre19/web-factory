@@ -30,7 +30,7 @@ const {
     </div>
     <div class="bm-login-6__login-wrapper">
       <div class="login-form-wrapper login-form-wrapper--alt">
-        <h1 class="login-3__heading">Login</h1>
+        <h1 class="login-3__heading">{heading}</h1>
         <form class="login-form" novalidate>
         </form>
         <div class="login-footer list--none">
@@ -61,7 +61,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-login-6 {
     position: relative;
     height: 100vh;
@@ -163,5 +163,4 @@ const {
   .login-form .form-group:nth-child(4) {
       align-items: end;
   }
-}
 </style>

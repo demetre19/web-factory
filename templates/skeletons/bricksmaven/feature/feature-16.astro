@@ -26,8 +26,8 @@ const {
   <div class="feature-16-container">
     <div class="feature-16-content list--none">
       <div class="feature-16-content__intro">
-        <h3 class="feature-16-content__heading">Sky rocket your next build with ACSS + Bricksmaven!</h3>
-        <p class="feature-16-content__desc">This is a block of text. Double-click this text to edit it.</p>
+        <h3 class="feature-16-content__heading">{heading}</h3>
+        <p class="feature-16-content__desc">{fs}</p>
       </div>
       {items.map((it) => (
         <div class="feature-16-card">
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .feature-16-container {
     display: flex;
     flex-direction: column;
@@ -104,5 +104,4 @@ const {
   	margin-block-start:0rem;
   }
   }
-}
 </style>

@@ -25,12 +25,12 @@ const {
 <div>
   <div class="bm-content-68__container">
     <div class="bm-content-68__intro">
-      <h2 class="bm-content-68__heading">They needed a strategic intervention to connect with their target audience and translate interest into purchases.</h2>
+      <h2 class="bm-content-68__heading">{heading}</h2>
       <p class="bm-accent-heading">Accent heading</p>
     </div>
     <div class="bm-content-68__content">
       <div class="bm-content-68__text-wrapper">
-        <p class="bm-content-68__text">Truffaut heirloom chambray adaptogen gastropub direct trade. Hell of chicharrones kogi wolf intelligentsia. Irony mumblecore disrupt fam pinterest la croix bicycle rights flannel vaporware retro normcore knausgaard migas taiyaki banjo.</p>
+        <p class="bm-content-68__text">{fs}</p>
       </div>
       <div class="bm-content-68__media">
         <figure class="bm-content-68__image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-content-68__container {
     row-gap: var(--space-s);
   }
@@ -68,5 +68,4 @@ const {
     width: 100%;
     height: 100%;
   }
-}
 </style>

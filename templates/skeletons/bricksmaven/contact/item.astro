@@ -30,8 +30,8 @@ const {
     <div class="contact-10-content">
       <div class="contact-10-intro">
         <p class="contact-10-intro__accent-heading">Contact us</p>
-        <h2 class="contact-10-intro__heading">Visit our stores</h2>
-        <p class="contact-10-intro__desc">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="contact-10-intro__heading">{heading}</h2>
+        <p class="contact-10-intro__desc">{fs}</p>
       </div>
       <div class="contact-10-information-grid-ul list--none">
         {items.map((it) => (
@@ -58,7 +58,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-10-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -120,5 +120,4 @@ const {
   .contact-10-info-card__icon {
     width: 12%;
   }
-}
 </style>

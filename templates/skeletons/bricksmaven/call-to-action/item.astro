@@ -25,8 +25,8 @@ const {
 <div>
   <div class="cta-18-container">
     <div class="cta-18__box">
-      <h2 class="cta-18__heading">Start your 30-day free trial</h2>
-      <p class="cta-18__desc">For $8 dollars per month billed annually you get access to an ever growing library of premium blocks built with your favorite builder</p>
+      <h2 class="cta-18__heading">{heading}</h2>
+      <p class="cta-18__desc">{fs}</p>
       <p class="accent-h">Get started</p>
       <div class="cta-combo">
         <a class="btn--primary wf-cta-button" href={cta.href}>{cta.label}</a>
@@ -40,7 +40,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .cta-18-container {
     display: flex;
     flex-direction: column;
@@ -78,5 +78,4 @@ const {
     object-fit: cover;
     width: 100%;
   }
-}
 </style>

@@ -26,8 +26,8 @@ const {
   <figure class="newsletter-10__bg-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
   <div class="newsletter-10-container">
     <div class="newsletter-10__intro">
-      <h2 class="newsletter-10__intro__heading">Join 10k+ subscribers</h2>
-      <p class="newsletter-10__intro__desc">Stay in the loop with everything you need to know.</p>
+      <h2 class="newsletter-10__intro__heading">{heading}</h2>
+      <p class="newsletter-10__intro__desc">{fs}</p>
     </div>
     <div class="newsletter-10__form-container">
       <p class="newsletter-10__form-container__desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
@@ -41,7 +41,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .newsletter-10 {
     position: relative;
   }
@@ -100,5 +100,4 @@ const {
   .bm-form-widget input:focus {
   	outline-offset: 0;
   }
-}
 </style>

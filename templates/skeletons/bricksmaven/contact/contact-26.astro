@@ -26,8 +26,8 @@ const {
   <div class="contact-26-container">
     <div class="contact-26-content">
       <div class="intro contact-26-content__intro">
-        <h2 class="intro__heading">Leave us a Message</h2>
-        <p class="intro__subheading">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.</p>
+        <h2 class="intro__heading">{heading}</h2>
+        <p class="intro__subheading">{fs}</p>
         <p class="intro__accent-heading">Contact Us</p>
       </div>
       <div class="contact-26-content-list-ul list--none">
@@ -51,7 +51,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .contact-26-container {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -126,5 +126,4 @@ const {
     padding: 3rem 0 3rem 0;
     background: var(--bg-subtle);
   }
-}
 </style>

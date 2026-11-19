@@ -40,8 +40,8 @@ const {
   </div>
   <div class="bm-shop-footer-1__container">
     <div class="bm-shop-footer-1__content">
-      <h2 class="bm-shop-footer-1__heading">Stay in the know</h2>
-      <p class="bm-shop-footer-1__text">Sign up for our newsletter and receive 10% off your first order!</p>
+      <h2 class="bm-shop-footer-1__heading">{heading}</h2>
+      <p class="bm-shop-footer-1__text">{fs}</p>
       <form class="bm-footer-newsletter__form" novalidate>
       </form>
     </div>
@@ -86,7 +86,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .bm-shop-footer-1__usp-container {
     padding: var(--space-xl) var(--section-space-s) var(--space-xl) var(--section-space-s);
     border-top: 1 solid var(--color-line-default);
@@ -231,5 +231,4 @@ const {
   .bm-footer-newsletter__form [type="submit"] {
   	height: 100%;
   }
-}
 </style>

@@ -25,7 +25,7 @@ const {
 <div>
   <div class="shop-hero-4__top-container">
     <div class="shop-hero-4__navigation">
-      <h2 class="shop-hero-4__nav-heading">Categories</h2>
+      <h2 class="shop-hero-4__nav-heading">{heading}</h2>
       <div class="shop-hero-4__nav">
         <div class="shop-hero-4__nav-items">
           <a class="shop-hero-4__nav-link" href="#">Category</a>
@@ -86,7 +86,7 @@ const {
       <div class="shop-hero-4__wrapper">
         <div class="shop-hero-4__wrapper-content">
           <h1 class="shop-hero-4__heading">Enter your headline here</h1>
-          <p class="shop-hero-4__subheading">Here goes your text ... Select any part of your text to access the formatting toolbar.</p>
+          <p class="shop-hero-4__subheading">{fs}</p>
           <a class="shop-hero-4__cta btn--white wf-cta-button" href={cta.href}>{cta.label}</a>
         </div>
         <figure class="shop-hero-4__hero-image"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
@@ -109,7 +109,7 @@ const {
 </div>
 
 <style is:global>
-@layer components {
+/* bm: components layer (unlayered — see bricks_translate) */
   .shop-hero-4__top-container {
     display: grid;
     gap: var(--space-m);
@@ -234,5 +234,4 @@ const {
   
       width: 100%;
   }
-}
 </style>
