@@ -3691,8 +3691,18 @@ def dna_map(ctx):
 # addition in a later wave cannot void an earlier operator approval.
 STRUCTURE_GENES = ('layout-archetype', 'page-macro-structure',
                    'density-tier', 'image-led-ratio')
-CORE_FIELDS = ('version', 'site', 'vertical_profile', 'knobs', 'modes',
+CORE_FIELDS = ('site', 'vertical_profile', 'knobs', 'modes',
                'invariants', 'constraints', 'vector_targets', 'provenance')
+# 'version' is deliberately OUT of the core hash — the W4 lock writes
+# version:1 and must never stale earlier approvals (B F-05).
+
+# The DNA slice each wave is gated against — a wave's recorded dna and
+# its approval bind ONLY this kind, so writes to another slice never
+# void it (structure locks at W3, look at W4).
+WAVE_DNA_KIND = {'w0': 'core', 'w1': 'core', 'w2': 'core',
+                 'w3': 'structure', 'w4': 'core', 'w5': 'structure',
+                 'w6': 'structure', 'w7': 'structure',
+                 'w8': 'all'}
 LOOK_GENES = None           # filled at import: genotype minus STRUCTURE_GENES
 
 
@@ -4909,8 +4919,10 @@ def approval_state(ctx, wave):
     sl = dna_slices(dna_map(ctx) or {})
     if rec.get('inputs') != _h(input_hashes_for(ctx, wave)):
         return 'stale'
-    if rec.get('dna') != {'core': sl.get('core'),
-                          'structure': sl.get('structure')}:
+    kinds = ('core', 'structure') if WAVE_DNA_KIND.get(wave) == 'all' \
+        else (WAVE_DNA_KIND.get(wave) or 'core',)
+    cur = {k: sl.get(k) for k in kinds}
+    if {k: (rec.get('dna') or {}).get(k) for k in kinds} != cur:
         return 'stale'
     return 'ok'
 

@@ -176,7 +176,8 @@ def main():
         rec = (g.get(w) or {}).get('dna') or {}
         if not isinstance(rec, dict):
             continue
-        kind = 'structure' if ORDER.index(w) >= ORDER.index('w5') else 'core'
+        kind = G.WAVE_DNA_KIND.get(w, 'core')
+        kind = ('core' if kind == 'all' else kind)
         if rec.get(kind) and sl.get(kind) and rec[kind] != sl[kind]:
             restart = w
             break
