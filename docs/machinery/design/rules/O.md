@@ -78,6 +78,18 @@ static; expressive DNAs get the full palette. A declared placement
 outside the budget FAILs — the look round never offers a choice the
 DNA already ruled incoherent.
 
+### O.9 A motif is one primitive, never an illustration
+
+A motif is a logo-level mark: ONE geometric form (≤2 primitives),
+readable at 24px and at 400px ghosted. Anything that needs
+rings+ticks+labels+multiple elements to be understood is an
+illustration — rejected. The same single mark serves every motif
+job (bullet marker, ghost background, badge frame, divider); a
+motif too complex to scale across all four isn't a motif.
+`data-motif` svgs with >2 geometric elements or text/image detail
+FAIL.
+DNA already ruled incoherent.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
@@ -92,3 +104,4 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 | O.6 | stylistic | script | `check_ornament` | intensity ∉ band set or opacity outside the band | w7 |
 | O.7 | invariant | script | `check_ornament` | motion ∉ closed set; non-static motion without .ornament-* CSS or reduced-motion disable | w7 |
 | O.8 | structural | script | `check_ornament` | declared placement outside the DNA's layer/intensity/motion budget | w7 |
+| O.9 | invariant | script | `check_brand_motif` | data-motif svg >2 primitives or text/image detail elements | w7 |

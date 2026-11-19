@@ -1133,6 +1133,123 @@ def check_ornament(ctx):
                          'deterministic; hand-drawn geometry fails')
     return f
 
+# BM — the neutral decoration vocabulary: shapes that need no brand
+# derivation (hairlines, dot grids, keylines). Anything else must
+# trace to the extracted motif kit (motif.py) or FAIL.
+NEUTRAL_PRIMITIVES = {'hairline', 'dot-grid', 'keyline', 'divider',
+                      'underline', 'rule', 'none'}
+MOTIF_SLOTS = {'background', 'accent', 'frame', 'divider',
+               'marker', 'quote', 'corner'}
+
+
+def check_brand_motif(ctx):
+    """BM.1–BM.3 — decorations trace to the brand-motif kit:
+    BM.1 dna.brand_motif {motif_source: logo-extracted|declared|none,
+        motif_family: [...], usage: background|accents|frames|
+        dividers|all} — a declared/logo-extracted source must carry a
+        non-empty family;
+    BM.2 every decoration (data-motif="X" / class motif-X) names a
+        kit primitive (primary_mark, curve_family, negative_shape,
+        angle, geometric_seed, primitives[]) or a neutral primitive
+        — an unrelated shape is a coherence fail;
+    BM.3 motif usage stays inside the declared slots
+        (data-motif-slot ∈ usage set, or 'all')."""
+    f = []
+    dna = dna_map(ctx) or {}
+    bm = dna.get('brand_motif')
+    family = set()
+    usage = set()
+    if bm is not None:
+        if not isinstance(bm, dict):
+            f.append('BM.1 brand_motif must be a map '
+                     '{motif_source, motif_family, usage}')
+            bm = {}
+        src = bm.get('motif_source')
+        if src not in ('logo-extracted', 'declared', 'none'):
+            f.append(f'BM.1 motif_source {src!r} ∉ '
+                     'logo-extracted|declared|none')
+        fam = bm.get('motif_family')
+        if src in ('logo-extracted', 'declared'):
+            if not fam:
+                f.append('BM.1 motif_source ' + str(src) +
+                         ' declares a kit but motif_family is '
+                         'empty — extraction must produce the '
+                         'primitives before use')
+            elif not isinstance(fam, list):
+                f.append('BM.1 motif_family must be a list of kit '
+                         'primitives')
+        if isinstance(fam, list):
+            family = {str(x) for x in fam}
+        u = bm.get('usage')
+        if isinstance(u, str):
+            usage = {u}
+        elif isinstance(u, list):
+            usage = {str(x) for x in u}
+    kit = family | NEUTRAL_PRIMITIVES | {'mark', 'curve',
+                                         'counter', 'angle', 'seed'}
+    for p, t in ctx.page_htmls():
+        name = os.path.basename(p)
+        # O.9 — a motif is a logo-level PRIMITIVE: one form, ≤2
+        # geometric elements, no text/labels/shading. Anything that
+        # needs detail to parse is an illustration, not a motif —
+        # it must read at 24px and at 400px ghosted.
+        for m in re.finditer(
+                r'<svg\b[^>]*data-motif[^>]*>(.*?)</svg>', t, re.S):
+            inner = m.group(1)
+            els = len(re.findall(
+                r'<(?:path|circle|rect|line|polyline|polygon|ellipse)'
+                r'\b', inner))
+            if els > 2:
+                f.append(f'O.9 {name}: motif svg uses {els} '
+                         'primitives (>2) — a motif is ONE '
+                         'geometric mark that reads at 24px and '
+                         'ghosted; this is an illustration')
+            if re.search(r'<text\b|<tspan\b|<image\b', inner):
+                f.append(f'O.9 {name}: motif svg carries '
+                         'text/image detail elements — a mark '
+                         'that needs labels is a scene, not a '
+                         'motif')
+        for m in re.finditer(r'data-motif="([^"]+)"', t):
+            prim = m.group(1)
+            if not family and prim not in NEUTRAL_PRIMITIVES:
+                f.append(f'BM.2 {name}: motif "{prim}" used with '
+                         'no motif kit — decorations trace to the '
+                         'extracted mark or a neutral primitive')
+            elif family and prim not in kit:
+                f.append(f'BM.2 {name}: motif "{prim}" not in '
+                         f'the kit {sorted(family)[:6]} nor a '
+                         'neutral primitive — random stock shapes '
+                         'fail coherence')
+        for m in re.finditer(r'\bmotif-([a-z0-9-]+)', t):
+            prim = m.group(1)
+            if prim == 'slot':
+                continue  # data-motif-slot is metadata, not a motif
+            if not family and prim not in NEUTRAL_PRIMITIVES:
+                f.append(f'BM.2 {name}: motif-{prim} used with no '
+                         'motif kit — decorations trace to the '
+                         'extracted mark or a neutral primitive')
+                continue
+            if prim not in kit:
+                f.append(f'BM.2 {name}: motif-{prim} not in the '
+                         f'motif kit {sorted(family)[:6]} nor a '
+                         'neutral primitive — random stock shapes '
+                         'fail coherence')
+        for m in re.finditer(r'data-motif-slot="([^"]+)"', t):
+            slot = m.group(1)
+            if usage and 'all' not in usage and slot not in usage:
+                f.append(f'BM.3 {name}: motif slot {slot} ∉ '
+                         f'declared usage {sorted(usage)}')
+            elif not usage and slot not in MOTIF_SLOTS:
+                f.append(f'BM.3 {name}: motif slot {slot} not a '
+                         f'known slot {sorted(MOTIF_SLOTS)}')
+    # O.2 coupling: logo-motif ornaments need a kit to draw from
+    gt = dna.get('genotype') or {}
+    if gt.get('ornament') == 'logo-motif' and not family:
+        f.append('BM.2 genotype ornament=logo-motif but the '
+                 'brand_motif kit is empty — extract the mark '
+                 'first (motif.py), then inject')
+    return f
+
 
 IMG_EXT = ('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg', '.avif')
 IMG_DIRS = ('discovery', 'INTAKE', 'assets', 'images', 'media')
@@ -11438,6 +11555,7 @@ WAVE_CHECKS = {
            check_heading_verbatim, check_class_subset,
            check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_lucide, check_ornament,
+           check_brand_motif,
            check_speed_budget,
            check_motion_recipes, check_motion_js_budget,
            check_skeleton,

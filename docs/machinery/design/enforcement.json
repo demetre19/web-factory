@@ -1879,6 +1879,34 @@
    "threshold": "declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget)",
    "tier": "structural",
    "wave": "w7"
+  },
+  "BM.1": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "motif_source \u2209 {logo-extracted,declared,none} or extracted/declared source with empty motif_family",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "BM.2": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif/motif-* decoration outside motif_family + neutral primitives, or ornament=logo-motif with empty kit",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "BM.3": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif-slot \u2209 declared usage or unknown slot vocabulary",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.9": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements \u2014 illustration, not motif",
+   "tier": "invariant",
+   "wave": "w7"
   }
  }
 }

@@ -343,6 +343,8 @@ PAGE_HTML = '''<!doctype html><html><head>
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
+  <span class="motif-hairline-numeral" data-motif="hairline-numeral" data-motif-slot="marker" aria-hidden="true"></span>
+  <svg data-motif="hairline-numeral" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none" aria-hidden="true"><path d="M4 20L12 4l8 16"/></svg>
 </section>
 <section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" data-recipe="brixies/cta-sections/cta-1.topo" data-seam="whitespace" data-content="c-cta" class="sec-band inverse py-24">
   <h2 class="text-fluid-0">Book now</h2>
@@ -947,6 +949,9 @@ def dna_doc():
             {"target": "hero.bg", "layer": "technical",
              "variant": "crosshair-grid+registration-marks",
              "intensity": "ghost", "motion": "static"}],
+        "brand_motif": {"motif_source": "declared",
+            "motif_family": ["hairline-numeral", "counter"],
+            "usage": ["accent", "marker", "divider"]},
         "knobs": KNOBS,
         "modes": {"light": LIGHT, "dark": DARK},
         "invariants": {"accent": "#0055AA", "logo": "wordmark",
@@ -1245,6 +1250,8 @@ MUT = {
  'check_ornament': mut(('REPL','site/dist/home/index.html',
      'data-ornament-variant="crosshair-grid+registration-marks"',
      'data-ornament-variant="compass"'),),
+ 'check_brand_motif': mut(('REPL','site/dist/home/index.html',
+     'data-motif="hairline-numeral"','data-motif="swirl-blob"'),),
  'check_review_completeness': mut(('REPL','REVIEW.json','"pi-default-vlm"','"swe-2"')),
  'check_parallel_build': mut(('SET','BUILD-PLAN.json',
     '{"lanes":[{"id":"sec-macro","kind":"section",'
