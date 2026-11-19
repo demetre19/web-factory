@@ -362,9 +362,9 @@ def ingest_url(url, note='', site_type='general', page_type='home',
                  'geometry': {'left': 0, 'top': y0,
                               'width': W, 'height': y1 - y0},
                  'bandFallback': True}
+                for edges in [band_edges(im, W, H)]
                 for y0, y1 in zip(edges, edges[1:])
-                if y1 - y0 >= 80
-                for edges in [band_edges(im, W, H)]]
+                if y1 - y0 >= 80]
             if desk['sections']:
                 meta['capture_engine'] = 'ingest_good/band-fallback'
     if 'error' in desk or not desk.get('sections'):

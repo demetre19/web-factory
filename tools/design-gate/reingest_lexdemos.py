@@ -228,6 +228,10 @@ def main():
             todo = ([] if '--skip-home' in sys.argv
                     else [('home', demo)])
             todo += list(sorted(pages.items()))[:MAX_PAGES - 1]
+            # skip dirs already ingested (resume-safe)
+            todo = [(pt, u) for pt, u in todo if not os.path.exists(
+                os.path.join(OPERATOR, ingest_good.slugify(u),
+                             'meta.json'))]
             for ptype, url in todo:
                 try:
                     slug, meta, secs = ingest_demo(
