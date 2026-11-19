@@ -283,6 +283,32 @@ formula wearing a costume; the recorded call IS the grader
 (`tools/design-gate/vlm.py` — default lane
 `mlx-community/Qwen2.5-VL-3B-Instruct-4bit`, local MLX).
 
+### P.25 The VLM tail is cached, parallel and shot-budgeted
+
+Judgment cost is bounded by four levers, in this order:
+
+1. **Cache (mandatory).** `vlm_evidence` is already hash-bound, so
+   verdicts are stored keyed `(image_sha256, prompt_sha256, model)`
+   in `tools/design-gate/.vlm-cache.json`. A re-run or a retry loop
+   only judges changed pixels; a cache hit returns the stored real
+   invocation record marked `cached: true`. Re-judging an identical
+   shot is waste, not rigor.
+2. **Parallel.** Independent options judge through 2–3 workers
+   (thread pool over subprocess calls) — ten options cost ~2–3× one
+   call, not ten.
+3. **Prefill.** The rubric prompt is fixed per run, so the MLX
+   prefix/KV cache is reused instead of re-prefilled.
+4. **Shot budget.** Two viewports (desktop + 375) per option; a
+   third only when a rule requires that viewport.
+
+The reviewer model may point at a hosted judge for time-limited
+runs, but the pipeline never *depends* on a remote call — local MLX
+stays the default (offline, deterministic).
+
+**Enforcement** — script `check_vlm_evidence` (w8) validates the
+record; cache/parallelism are the lane's contract in `vlm.py`
+(`use_cache`, `_cache_key`, `WF_VLM_CACHE` override).
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
@@ -297,6 +323,8 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 | P.14 | invariant | script | `check_mobbin_refs` | MOBBIN-REFS.md ≥1 ref per composition + W1: schema-valid discovery/<domain>/meta.json (meta.schema.json) with capture_status ok; images exist ⇒ DNA inferred.image_set | w1 |
 | P.15 | invariant | script | `check_spec_verbatim` | SPEC sections[] == plan rows verbatim | w7 |
 | P.2 | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
+| P.24 | invariant | script | `check_vlm_evidence` | vlm_calls>0 without the hashed invocation record, drifted image, or evidence model != reviewer_model | w8 |
+| P.25 | structural | script | `check_vlm_evidence` | identical (image,prompt,model) re-judged instead of cache-hit, or >2 viewports without a rule | w8 |
 | P.3 | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w3 |
 | P.4 | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w3 |
 | P.5 | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w5 |

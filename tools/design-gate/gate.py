@@ -10011,10 +10011,10 @@ def check_three_layers(ctx):
         {ornament, motif, icon} — the taxonomy is closed;
     TL.2 each candidate carries data-dna-fit ∈ [0,100] and rendered
         cards are ≥50 (picker never shows a weak fit);
-    TL.3 each candidate carries data-seed-chain (word-seed chain —
-        brand→verb→essence→geometry) so candidates are provably
-        seed-branched, not one association;
-    TL.4 multi-select is checkbox semantics — a layer block with
+    TL.3 each candidate card carries data-seed-chain (word-seed
+        chain — brand→verb→essence→geometry) so candidates are
+        provably seed-branched, not one association;
+    TL.4 multi-select is checkbox semantics — a surface with
         ≥2 candidates must expose checkbox inputs, not radio."""
     f = []
     fp = ctx.find(os.path.join('preview', 'variants.html'))
@@ -10034,24 +10034,21 @@ def check_three_layers(ctx):
             f.append(f'TL.2 candidate rendered with dna-fit {v} '
                      '< 50 — the picker renders strong/works fits '
                      'only')
-    # seed chains + multi-select: candidates inside layer blocks need
-    # them. A block runs from its data-tl-layer attr to the next
-    # layer block (candidates may nest — no naive </div> cut).
-    marks = list(re.finditer(r'data-tl-layer="[^"]+"', t))
-    for i, lm in enumerate(marks):
-        block = t[lm.end():marks[i + 1].start() if i + 1 <
-                  len(marks) else len(t)]
-        cands = re.findall(r'data-candidate="([^"]+)"', block)
-        chains = re.findall(r'data-seed-chain="([^"]+)"', block)
-        if cands and len(chains) < len(cands):
-            f.append('TL.3 layer block has '
-                     f'{len(cands)} candidates but '
-                     f'{len(chains)} seed chains — each candidate '
-                     'names its word-seed chain')
-        if len(cands) >= 2 and 'type="checkbox"' not in block and \
-                'type="radio"' in block:
-            f.append('TL.4 layer block uses radio inputs — '
-                     'multi-select is checkbox semantics')
+    # TL.3 — every emitted candidate card carries its chain ON THE
+    # CARD (the article tag), whatever layer it belongs to.
+    cands = list(re.finditer(
+        r'<[^>]*data-candidate="([^"]+)"[^>]*>', t))
+    for m in cands:
+        if 'data-seed-chain=' not in m.group(0):
+            f.append(f'TL.3 candidate {m.group(1)} carries no '
+                     'data-seed-chain — every generated candidate '
+                     'records the chain it branched from')
+    # TL.4 — a surface offering ≥2 candidates is multi-select:
+    # checkbox semantics, never radio.
+    if len(cands) >= 2 and 'type="checkbox"' not in t and \
+            'type="radio"' in t:
+        f.append('TL.4 candidate surface uses radio inputs — '
+                 'multi-select is checkbox semantics')
     return f
 
 def burst_level(plan):

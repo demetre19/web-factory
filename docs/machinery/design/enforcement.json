@@ -293,6 +293,10 @@
   "check_viewport": [
    "R.8"
   ],
+  "check_vlm_evidence": [
+   "P.24",
+   "P.25"
+  ],
   "check_wildcard": [
    "B.1",
    "B.2",
@@ -1933,6 +1937,13 @@
    "tier": "invariant",
    "wave": "w8"
   },
+  "P.25": {
+   "check": "check_vlm_evidence",
+   "mode": "script",
+   "threshold": "a re-judged shot whose (image,prompt,model) hash was already recorded — the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third",
+   "tier": "structural",
+   "wave": "w8"
+  },
   "SC.1": {
    "check": "check_sop_constants",
    "mode": "script",
@@ -1971,7 +1982,7 @@
   "TL.4": {
    "check": "check_three_layers",
    "mode": "script",
-   "threshold": "layer block with ≥2 candidates using radio inputs instead of checkboxes",
+   "threshold": "candidate surface with ≥2 candidates using radio inputs instead of checkboxes",
    "tier": "invariant",
    "wave": "w5"
   }

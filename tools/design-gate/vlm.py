@@ -21,9 +21,11 @@ import os
 import shutil
 import subprocess
 import sys
+import threading
 import time
 
 DEFAULT_MODEL = 'mlx-community/Qwen2.5-VL-3B-Instruct-4bit'
+_LOCK = threading.Lock()
 
 # the mechanical rubric mirrors the quality formula — the VLM is
 # asked for the SAME dims so judgment output and mechanical score
@@ -58,12 +60,53 @@ def _sha(path):
     return hashlib.sha256(open(path, 'rb').read()).hexdigest()[:16]
 
 
+def _cache_path():
+    """Verdict cache — keyed (image hashes, prompt hash, model).
+    Every entry IS a prior real invocation record; a hit skips the
+    model but keeps the evidence and marks itself cached."""
+    return os.environ.get('WF_VLM_CACHE') or os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), '.vlm-cache.json')
+
+
+def _cache_key(imgs, prompt, model):
+    return '|'.join([model,
+                     hashlib.sha256(prompt.encode()).hexdigest()[:16],
+                     ','.join(f'{k}={v}' for k, v in sorted(
+                         imgs.items()))])
+
+
+def _cache_load():
+    try:
+        return json.load(open(_cache_path()))
+    except (OSError, ValueError):
+        return {}
+
+
+def _cache_save(c):
+    try:
+        tmp = _cache_path() + '.tmp'
+        with open(tmp, 'w') as fh:
+            json.dump(c, fh, indent=0)
+        os.replace(tmp, _cache_path())
+    except OSError:
+        pass
+
+
 def judge(images, prompt=RUBRIC, model=None, max_tokens=200,
-          timeout=600):
+          timeout=600, use_cache=True):
     """One bounded VLM call. Returns the evidence record —
     caller stores it under REVIEW.json.vlm_evidence (P.24)."""
     run = _runner()
     model = model or DEFAULT_MODEL
+    img_h = {os.path.basename(i): _sha(i) for i in images}
+    key = _cache_key(img_h, prompt, model)
+    if use_cache:
+        hit = _cache_load().get(key)
+        if hit and hit.get('parsed'):
+            rec = dict(hit)
+            rec['cached'] = True
+            rec['cache_key'] = key[:24]
+            return rec
     cmd = [run, '--model', model, '--max-tokens', str(max_tokens),
            '--prompt', prompt]
     for img in images:
@@ -84,12 +127,11 @@ def judge(images, prompt=RUBRIC, model=None, max_tokens=200,
             parsed = j
     except (ValueError, json.JSONDecodeError):
         pass
-    return {
+    rec = {
         'model': model,
         'command': ' '.join(os.path.basename(c) if i == 0 else c
                             for i, c in enumerate(cmd)),
-        'image_sha256': {os.path.basename(i): _sha(i)
-                         for i in images},
+        'image_sha256': img_h,
         'prompt_sha256': hashlib.sha256(
             prompt.encode()).hexdigest()[:16],
         'output_sha256': hashlib.sha256(
@@ -98,6 +140,12 @@ def judge(images, prompt=RUBRIC, model=None, max_tokens=200,
         'parsed': parsed,
         'raw': raw[:4000],
     }
+    if use_cache and parsed:
+        with _LOCK:
+            c = _cache_load()
+            c[key] = {k: v for k, v in rec.items() if k != 'cached'}
+            _cache_save(c)
+    return rec
 
 
 def available():

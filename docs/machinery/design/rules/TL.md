@@ -50,9 +50,9 @@ deterministic, each sibling independently selectable.
 
 ### TL.4 Layers multi-select; a pick is per-layer
 
-A layer block with ≥2 candidates uses **checkbox** semantics — the
-operator may want ghost pattern AND accent ticks, or none. Radio
-(single-select) inside a multi-candidate layer block FAILs.
+Any selection surface offering **≥2 candidates** uses **checkbox**
+semantics — the operator may want ghost pattern AND accent ticks, or
+none. Radio (single-select) on a multi-candidate surface FAILs.
 Cross-layer selections are independent: picking a motif does not
 consume the ornament slot.
 
@@ -65,7 +65,7 @@ Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, nev
 | TL.1 | invariant | script | `check_three_layers` | data-tl-layer outside {ornament, motif, icon} | w5 |
 | TL.2 | invariant | script | `check_three_layers` | dna-fit outside 0–100 or rendered below 50 | w5 |
 | TL.3 | invariant | script | `check_three_layers` | candidate without data-seed-chain provenance | w5 |
-| TL.4 | invariant | script | `check_three_layers` | multi-candidate layer using radio, not checkbox | w5 |
+| TL.4 | invariant | script | `check_three_layers` | multi-candidate surface using radio, not checkbox | w5 |
 
 ## Links
 
