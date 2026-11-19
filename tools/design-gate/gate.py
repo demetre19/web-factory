@@ -8447,7 +8447,20 @@ def _picker_ux_fails(txt, label):
         vis = re.sub(r'<div[^>]*variant-pickrow[^>]*>.*?</div>', '',
                      vis, flags=re.S)
         vis = re.sub(r'data-[\w-]+="[^"]*"', '', vis)
-        if meta_rx.search(vis):
+        # chrome contexts only — a meta word counts inside class
+        # names or machinery markup (<code>/<table>/<dl>/<aside>),
+        # or in text shaped like a label ("score 0.9", "refs: x").
+        # Prose ("a bond review", alt="Google review screenshot",
+        # src="media/review.webp") is page copy, not metadata.
+        chrome = ' '.join(re.findall(r'class="([^"]*)"', vis))
+        chrome += ' ' + ' '.join(re.findall(
+            r'<(?:code|table|dl|aside)\b[^>]*>(.*?)'
+            r'</(?:code|table|dl|aside)>', vis, flags=re.S))
+        text = re.sub(r'<[^>]*>', ' ', vis)
+        lab_rx = re.compile(
+            r'(?<![-\w])(?:score|refs?|knobs?|breaks?|vector|'
+            r'verdict|review)(?![-\w])\s*(?:[:=·]\s*\S|\s[\d.]+%?)')
+        if meta_rx.search(chrome) or lab_rx.search(text):
             f.append(f'VG.7 {label}: option {oid} exposes machinery '
                      'metadata outside a collapsed <details> '
                      '(score/refs/knobs must sit below the render, '
