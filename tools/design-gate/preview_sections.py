@@ -78,19 +78,15 @@ def build(vibes=None, dna=None):
     for vi, v in enumerate(vibes):
         path, meta = page_for(v, dna, bank, vibe_idx=vi)
         rel = os.path.relpath(path, OUT)
-        # picker card: swatches + the topologies this vibe drew
+        # picker card: the ACTUAL rendered page in a scaled iframe —
+        # real sections, not swatches. Click-through opens full.
         topos = ' · '.join(f'{st}:{meta[st]}' for st in SEQUENCE)
         tile = (
             f'<a href="{rel}" target="_blank" class="pv-link">'
-            '<div class="pv-swatches">'
-            + ''.join(
-                f'<span style="flex:1;background:{c}"></span>'
-                for c in (VIBES[v]['surface'], VIBES[v]['soft'],
-                          VIBES[v]['accent'], VIBES[v]['heading']))
-            + '</div>'
+            f'<iframe src="{rel}" class="pv-frame" scrolling="no" '
+            'tabindex="-1"></iframe>'
             f'<div class="pv-name">{v}</div>'
-            f'<div class="pv-topos">{topos or "canonical structures"}'
-            '</div></a>')
+            f'<div class="pv-topos">{topos}</div></a>')
         items.append(picker.PickerItem(
             id=v, name=v, subtitle='open full page →',
             preview_html=tile, scope_vars={},
@@ -103,12 +99,13 @@ def build(vibes=None, dna=None):
         intro='each card opens a standalone themed page',
         extra_css=(
             '.pv-link{display:block;text-decoration:none;'
-            'background:#0e0e0e;min-height:180px;display:flex;'
-            'flex-direction:column;justify-content:flex-end}'
-            '.pv-swatches{display:flex;height:110px}'
-            '.pv-name{padding:12px 16px 4px;color:#eee;font:600 '
+            'background:#0e0e0e}'
+            '.pv-frame{width:1200px;height:760px;border:0;'
+            'transform:scale(0.32);transform-origin:top left;'
+            'pointer-events:none;display:block}'
+            '.pv-name{padding:10px 16px 2px;color:#eee;font:600 '
             '15px system-ui;text-transform:capitalize}'
-            '.pv-topos{padding:0 16px 14px;color:#888;font:11px '
+            '.pv-topos{padding:0 16px 12px;color:#888;font:11px '
             'monospace}')))
     return idx
 
