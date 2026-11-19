@@ -1542,11 +1542,46 @@ CANON_BAN = ('data/web', 'validation-negative', 'annotations_negative',
              'negative_sections', 'anti.json', 'quarantine')
 
 
-def _canon_ref_ok(ref):
-    """A canonical ref is a Mobbin screen/section id or URL, or an
-    operator-supplied site URL (literal http(s)://). The web corpus and
-    the anti/negatives layer are removed from canon — any ref into
-    data/web, validation-negatives or the quarantine is never valid."""
+def _endorsed_sites():
+    """Operator-endorsed canon lists — site domains/URLs recorded by
+    PatternMiner under patterns/data/operator/_sources/ (one list file
+    per endorsed source, e.g. the eleken.co best-website-design-examples
+    list). Tier order: operator direct > endorsed list > Mobbin."""
+    root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator',
+                        '_sources')
+    out = set()
+    if not os.path.isdir(root):
+        return out
+    for dp, _, fns in os.walk(root):
+        for fn in fns:
+            p = os.path.join(dp, fn)
+            try:
+                txt = open(p, encoding='utf-8', errors='replace').read()
+            except Exception:
+                continue
+            for u in re.findall(r'https?://[^\s\)\]>"\']+', txt):
+                out.add(u.rstrip('.,;/').lower())
+                m = re.match(r'https?://([^/?#]+)', u)
+                if m:
+                    out.add(m.group(1).lower())
+            for d in re.findall(r'\b([\w-]+\.[a-z]{2,}(?:\.[a-z]{2})?'
+                                r'(?:/[\w-]*)?)\b', txt.lower()):
+                if '.' in d and ' ' not in d:
+                    out.add(d.rstrip('.,;/'))
+    return out
+
+
+_ENDORSED = None
+
+
+def _canon_ref_ok(ref, endorsed=None):
+    """A canonical ref is (tier 1) an operator-supplied site URL,
+    (tier 2) a site recorded in an operator-endorsed list
+    (patterns/data/operator/_sources/), (tier 3) a Mobbin screen or
+    section id/URL. The web corpus and the anti/negatives layer are
+    removed from canon — any ref into data/web, validation-negatives
+    or the quarantine is never valid."""
+    global _ENDORSED
     r = str(ref).strip().lower()
     if not r or r == 'none':
         return False
@@ -1557,7 +1592,17 @@ def _canon_ref_ok(ref):
         return False
     if r.startswith('mobbin') or 'mobbin.com' in r:
         return True
-    return r.startswith(('http://', 'https://'))
+    if r.startswith(('http://', 'https://')):
+        return True
+    if endorsed is None:
+        if _ENDORSED is None:
+            _ENDORSED = _endorsed_sites()
+        endorsed = _ENDORSED
+    for e in endorsed:
+        if r == e or r.startswith(e + '/') or ('://' + e) in r \
+                or r.startswith(e):
+            return True
+    return False
 
 
 def _canon_rows(ctx):
@@ -2510,20 +2555,36 @@ def check_wireframe_lock(ctx):
         return ['P.4 chosen card carries no data-* sections — card '
                 'cannot be locked (P.3)']
     f = []
-    rows = ctx.rows()
-    if not rows:
+    if not ctx.rows():
         return ['P.4 plan has no pages.<slug>.sections[] rows']
-    plan_rows = [r for _, r in rows]
-    for i, r in enumerate(plan_rows):
-        if not r.get('wf_ref'):
-            f.append(f'P.4 row {i} ({r.get("name","?")}) missing wf_ref')
-    wf_names = [s['sec'] for s in secs]
-    row_names = [str(r.get('name') or '') for r in plan_rows]
-    # tolerate nav/footer as row names matching data-sec slugs
-    if row_names != wf_names:
-        f.append(f'P.4 row order {row_names} != wireframe {wf_names}')
-    else:
-        for s, r in zip(secs, plan_rows):
+    # Per-page matching (F-16): every page's rows lock to the picked
+    # card — a row resolves the card section its own wf_ref names and
+    # the page's row order must follow card order, not a global zip.
+    by_name = {}
+    for i, ssec in enumerate(secs):
+        by_name.setdefault(ssec['sec'], []).append(i)
+    used = set()
+    for slug in ctx.pages():
+        rows = [r for _, r in ctx.rows(slug)]
+        cursor = 0
+        for i, r in enumerate(rows):
+            if not r.get('wf_ref'):
+                f.append(f'P.4 {slug} row {i} '
+                         f'({r.get("name", "?")}) missing wf_ref')
+            want = str(r.get('name') or '')
+            anchor = str(r.get('wf_ref') or '')
+            if ':' in anchor:
+                want = anchor.rsplit(':', 1)[-1] or want
+            found = next((j for j in by_name.get(want, [])
+                          if j >= cursor and j not in used), None)
+            if found is None:
+                f.append(f'P.4 {slug} row {i} "{want}": no card '
+                         'section in order — the plan row has no '
+                         'locked wireframe slot')
+                continue
+            used.add(found)
+            cursor = found + 1
+            s = secs[found]
             if str(r.get('composition')) != s['comp']:
                 f.append(f'P.4 {s["sec"]}: composition '
                          f'{r.get("composition")} != card {s["comp"]}')
@@ -3645,7 +3706,7 @@ def page_path(ctx):
 def assemble_spec(ctx, slug):
     """PAGES/<slug>/SPEC.md generated from plan rows (A F27 — the spec
     is a projection, never hand-written)."""
-    rows = [r for _, r in ctx.rows() if str(r.get('page')) == slug]
+    rows = [r for _, r in ctx.rows(slug)]
     if not rows:
         rows = [r for _, r in ctx.rows()]
     import io

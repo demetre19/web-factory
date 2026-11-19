@@ -10,21 +10,27 @@ links:
 # REF — Canon references (LAW.REF)
 
 **GOLDEN RULE: every design decision traces to a canon reference.**
-Canon positives are **Mobbin screens/sections and operator-supplied
-sites only** — the web corpus, the negatives/anti layer, and banked
-site captures are removed from canon (operator ruling). Canon is the
-highest design authority after the copy contract and brand
-invariants. Canon overrides generated defaults — including the ACSS
+Canon positives, in ranking order:
+1. **Operator-supplied sites** — highest authority
+2. **Operator-endorsed lists** — sites recorded by PatternMiner under
+   `patterns/data/operator/_sources/` (first list: eleken.co
+   best-website-design-examples)
+3. **Mobbin screens/sections**
+
+The web corpus, the negatives/anti layer, and banked site captures are
+removed from canon (operator ruling). Canon is the highest design
+authority after the copy contract and brand invariants. Canon overrides generated defaults — including the ACSS
 baseline (`ACSS-BASELINE.md`) — wherever they conflict; ACSS fills only
 what canon does not specify.
 
 ### REF.1 Every choice traces to canon
 
 Every composition, hero archetype, section rhythm and look-knob choice
-carries ≥1 canon reference — a **Mobbin screen/section id or URL**
-(`mobbin-*`, `mobbin.com/...`) or an **operator site URL**
-(`http(s)://`) — recorded in the plan row (`refs:`) and in the
-picker option's `data-refs` metadata. Any ref into `data/web`,
+carries ≥1 canon reference — an **operator site URL**, a site or
+domain **recorded in an endorsed `_sources` list**, or a **Mobbin
+screen/section id or URL** (`mobbin-*`, `mobbin.com/...`) — recorded
+in the plan row (`refs:`) and in the picker option's `data-refs`
+metadata. Any ref into `data/web`,
 `validation-negatives`, the quarantine, or the removed anti layer, and
 any non-canonical id (`pattern-*`, `web-*`, `https-<slug>` bank slugs),
 FAILS.
