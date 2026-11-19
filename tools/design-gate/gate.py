@@ -6228,9 +6228,13 @@ def check_genotype(ctx):
     return f
 
 def check_genotype_distinct(ctx):
-    """D.3 — W2 options block lists ≥2 distinct genotype vectors."""
+    """D.3 — options block lists ≥3 distinct vectors derived from the
+    locked genotype/knob space: every key is a direction axis or a
+    gene slug, every value is a member of that closed set (F-13)."""
     txt = ctx.plan_text
     m = re.search(r'^options:\s*\n((?:\s*-\s.*\n)+)', txt, re.M)
+    genes = genome_genes()
+    f = []
     vectors = []
     if m:
         for chunk in re.split(r'^\s*-\s', m.group(1), flags=re.M):
@@ -6238,13 +6242,31 @@ def check_genotype_distinct(ctx):
                 r'([a-z][a-z0-9-]*):\s*([a-z][\w./-]*)', chunk))
             for meta in ('name', 'wildcard', 'profile', 'mutates'):
                 pairs.pop(meta, None)
+            name = re.search(r'name:\s*(\w+)', chunk)
+            label = name.group(1) if name else '?'
+            for k, v in pairs.items():
+                if k in AXES:
+                    if v not in AXES[k]:
+                        f.append(f'D.3 option {label}: axis {k}={v} '
+                                 f'∉ {sorted(AXES[k])}')
+                elif k in genes:
+                    if v not in genes[k]:
+                        f.append(f'D.3 option {label}: {k}={v} not an '
+                                 'allele (options are genotype/knob '
+                                 'vectors, derived from DNA — not '
+                                 'free text)')
+                else:
+                    f.append(f'D.3 option {label}: "{k}" is neither a '
+                             'direction axis nor a genome gene — '
+                             'option vectors are derived from the '
+                             'locked space (F-13)')
             if pairs:
                 vectors.append(tuple(sorted(pairs.items())))
     vectors = list(dict.fromkeys(vectors))
-    if len(vectors) < 2:
-        return [f'D.3 W2 options: {len(vectors)} distinct genotype '
-                'vector(s) — need ≥2']
-    return []
+    if len(vectors) < 3:
+        f.append(f'D.3 options: {len(vectors)} distinct genotype '
+                 'vector(s) — the look round is exactly 3')
+    return f
 
 # ---------------------------------------------------------------- burst
 
