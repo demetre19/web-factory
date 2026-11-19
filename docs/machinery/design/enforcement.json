@@ -56,6 +56,9 @@
     "check_content_inventory": [
       "P.4"
     ],
+    "check_content_map": [
+      "J.5"
+    ],
     "check_copy_density": [
       "R.4"
     ],
@@ -173,6 +176,9 @@
     "check_novelty": [
       "B.6"
     ],
+    "check_page_family": [
+      "J.6"
+    ],
     "check_picker_ux": [
       "VG.7"
     ],
@@ -210,7 +216,8 @@
       "L.7"
     ],
     "check_round_gated": [
-      "P.18"
+      "P.18",
+      "R.12"
     ],
     "check_round_gated_look": [
       "P.18"
@@ -764,6 +771,20 @@
       "tier": "invariant",
       "wave": "w7"
     },
+    "J.5": {
+      "check": "check_content_map",
+      "mode": "script",
+      "threshold": "inventoried content_id unmapped, unserved/orphan section row, rendered block without data-content, or un-inventoried rendered id",
+      "tier": "invariant",
+      "wave": "w3"
+    },
+    "J.6": {
+      "check": "check_page_family",
+      "mode": "script",
+      "threshold": "page without page_type, layout_family != the type’s family, or PREBUILD family outside page families",
+      "tier": "invariant",
+      "wave": "w3"
+    },
     "L.1": {
       "check": "check_schema_fields",
       "mode": "script",
@@ -1226,6 +1247,13 @@
       "threshold": "sticky header without scroll-margin anchors",
       "tier": "structural",
       "wave": "w7"
+    },
+    "R.12": {
+      "check": "check_round_gated",
+      "mode": "script",
+      "threshold": "literal px padding in a picker render — fluid clamp()/ACSS section-space-* only",
+      "tier": "structural",
+      "wave": "w3"
     },
     "R.2": {
       "check": "check_spacing_scale",

@@ -104,13 +104,14 @@ decisions:
 pages:
   home:
     page_class: money
-    idea: A fixture page that proves the gates.
+    page_type: service-page
+    layout_family: conversion
     rhetoric: [promise, proof, how, act]
     sections:
       - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123]}
-      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125]}
-      - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123]}
+      - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1]}
+      - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def, c-proof, c-faq], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta]}
       - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456]}
 ```
 '''
@@ -142,19 +143,19 @@ STUB = '''# STUB — /fixture/
 
 | Zone | Heading | First sentence / FS (write this) | Link slot |
 |---|---|---|---|
-| macro | H2 What is testing? | "Testing is the thing." | — |
+| macro | H2 What is testing? | "Testing is the thing." | — | c-def |
 
 ## Content inventory
 
 ### Proof items
 | Item | Type |
 |---|---|
-| "12,000 cleans done" | stat |
+| "12,000 cleans done" | stat | c-proof |
 
 ### FAQ Q&A pairs
 | Q | A |
 |---|---|
-| Do you test? | Yes. |
+| Do you test? | Yes. | c-faq |
 
 ### Media inventory
 | Section | Asset | Ratio |
@@ -164,7 +165,7 @@ STUB = '''# STUB — /fixture/
 ### CTAs
 | Label | Target |
 |---|---|
-| Book now | /book |
+| Book now | /book | c-cta |
 
 ### Contact facts
 | Field | Value |
@@ -180,9 +181,9 @@ SPEC = '''# SPEC — /fixture/
 page: home
 sections:
   - {name: nav, wf_ref: "cards/index.html#d1:nav", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123]}
-  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125]}
-  - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-  - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123]}
+  - {name: hero, wf_ref: "cards/index.html#d1:hero", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1]}
+  - {name: macro, wf_ref: "cards/index.html#d1:macro", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def, c-proof, c-faq], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+  - {name: end-act, wf_ref: "cards/index.html#d1:end-act", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta]}
   - {name: footer, wf_ref: "cards/index.html#d1:footer", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456]}
 ```
 '''
@@ -302,24 +303,24 @@ PAGE_HTML = '''<!doctype html><html><head>
 </head><body>
 <a class="skip-link" href="#main">Skip to content</a>
 <button data-theme-toggle aria-label="Light or dark">Light/Dark</button>
-<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" data-recipe="brixies/bottom-navigation-bar/bot-nav-1"
+<nav data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open" data-recipe="brixies/bottom-navigation-bar/bot-nav-1.topo" data-seam="tonal"
      class="flex items-center gap-4 py-4">
   <a class="logo h-6" href="/">Fixture Co</a>
   <button class="burger btn-primary" aria-label="Menu">Menu</button>
 </nav>
 <main id="main">
-<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" data-recipe="brixies/banner-section/banner-1" class="sec-band py-16">
+<section data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open" data-intent="hero" data-recipe="brixies/banner-section/banner-1.topo" data-seam="whitespace" data-content="c-h1" class="sec-band py-16">
   <h1 class="text-fluid-0">Testing Site</h1>
   <p>Testing is the thing.</p>
   <a class="btn-primary" href="/book">Book now</a>
   <picture><img src="hero.webp" width="800" height="600" loading="eager" fetchpriority="high" alt="hero" data-dark="dim"></picture>
 </section>
-<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" class="card-grid py-24">
+<section data-sec="macro" data-comp="cards-n" data-ratio="none" data-disclosure="open" data-intent="proof" data-recipe="hyperui/marketing/feature-grids/1" data-content="c-def c-proof c-faq" class="card-grid py-24">
   <h2 class="text-fluid-0">What is testing?</h2>
   <p>Testing is the thing.</p>
   <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/></svg>
 </section>
-<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" data-recipe="brixies/cta-sections/cta-1" class="sec-band inverse py-24">
+<section data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open" data-intent="act" data-recipe="brixies/cta-sections/cta-1.topo" data-seam="whitespace" data-content="c-cta" class="sec-band inverse py-24">
   <h2 class="text-fluid-0">Book now</h2>
   <form><label for="ph">Phone</label><input id="ph" required aria-required="true"><span class="helper">We call you back.</span><button class="btn-primary">Book now</button></form>
 </section>
@@ -1258,7 +1259,7 @@ MUT = {
      ('DEL','PREBUILD.json')),
  'check_block_trace': mut(
      ('REPL','REVIEW.json',
-      '"recipe_id": "brixies/banner-section/banner-1"',
+      '"recipe_id": "brixies/banner-section/banner-1.topo"',
       '"recipe_id": "brixies/made-up/thing-9"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
@@ -1278,6 +1279,9 @@ MUT = {
      '@keyframes unregistered-spin { from { transform: rotate(0); '
      'width: 10px; } to { transform: rotate(1turn); width: 20px; } } '
      '.spin { animation: unregistered-spin 2s infinite; }')),
+ 'check_content_map': mut(
+     ('REPL','DESIGN-PLAN.md','content_ids: [c-cta]',
+      'content_ids: [c-cta, c-invented]')),
  'check_skeleton': mut(
      ('APPEND','site/dist/home/index.html',
       '<section data-sec="proof" data-comp="logo-wall" '
@@ -1287,6 +1291,9 @@ MUT = {
       '<h3>Trusted</h3><svg viewBox="0 0 24 24"/></section>'),
      ('REPL','MOBBIN-REFS.md','| mobbin-def456 |',
       '| hyperui/marketing/faqs/1 |')),
+ 'check_page_family': mut(
+     ('REPL','DESIGN-PLAN.md','layout_family: conversion',
+      'layout_family: editorial')),
  'check_motion_js_budget': mut(('SET','site/dist/_astro/mo.js',
      'gsap.to(".x",{y:9});' + 'x'*5000)),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',

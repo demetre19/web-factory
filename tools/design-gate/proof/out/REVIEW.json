@@ -1,0 +1,137 @@
+{
+ "reviewer_model": "pi-default-vlm",
+ "vlm_calls": 1,
+ "viewports": [
+  1280,
+  768,
+  360
+ ],
+ "quality": {
+  "services": {
+   "hero_clarity": 100,
+   "layout_craft": 77,
+   "media_fit": 62,
+   "mobile": 83,
+   "distinctness": 62,
+   "topology_dist": 100,
+   "visual_diff": 24,
+   "composite": 80,
+   "judged_by": "pi-default-vlm"
+  },
+  "luxury-goods": {
+   "hero_clarity": 100,
+   "layout_craft": 77,
+   "media_fit": 62,
+   "mobile": 83,
+   "distinctness": 62,
+   "topology_dist": 100,
+   "visual_diff": 24,
+   "composite": 80,
+   "judged_by": "pi-default-vlm"
+  },
+  "finance": {
+   "hero_clarity": 100,
+   "layout_craft": 69,
+   "media_fit": 62,
+   "mobile": 83,
+   "distinctness": 51,
+   "topology_dist": 77,
+   "visual_diff": 24,
+   "composite": 76,
+   "judged_by": "pi-default-vlm"
+  }
+ },
+ "quality_retries": [
+  {
+   "option": "healthcare",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "saas",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  }
+ ],
+ "dropped_below_floor": [
+  "healthcare",
+  "saas"
+ ],
+ "rules_pass_hash": "99827e445b971a94",
+ "judgment_pass_hash": "99827e445b971a94",
+ "blocks": [
+  {
+   "block_id": "proof:services",
+   "dna_knobs_used": [
+    "--accent",
+    "--accent-ink",
+    "--bg",
+    "--btn-pad",
+    "--f-body",
+    "--f-display",
+    "--gap",
+    "--ink",
+    "--line",
+    "--muted",
+    "--pad-block",
+    "--radius",
+    "--shadow",
+    "--surface",
+    "--track"
+   ],
+   "plan_slot": "cta",
+   "recipe_id": "brixies/cta-sections/cta-1.topo",
+   "vector_deviation": "none"
+  },
+  {
+   "block_id": "proof:luxury-goods",
+   "dna_knobs_used": [
+    "--accent",
+    "--accent-ink",
+    "--bg",
+    "--btn-pad",
+    "--f-body",
+    "--f-display",
+    "--gap",
+    "--ink",
+    "--line",
+    "--muted",
+    "--pad-block",
+    "--radius",
+    "--shadow",
+    "--surface",
+    "--track"
+   ],
+   "plan_slot": "cta",
+   "recipe_id": "brixies/cta-sections/cta-1.topo",
+   "vector_deviation": "none"
+  },
+  {
+   "block_id": "proof:finance",
+   "dna_knobs_used": [
+    "--accent",
+    "--accent-ink",
+    "--bg",
+    "--btn-pad",
+    "--f-body",
+    "--f-display",
+    "--gap",
+    "--ink",
+    "--line",
+    "--muted",
+    "--pad-block",
+    "--radius",
+    "--shadow",
+    "--surface",
+    "--track"
+   ],
+   "plan_slot": "cta",
+   "recipe_id": "brixies/cta-sections/cta-1.topo",
+   "vector_deviation": "none"
+  }
+ ]
+}

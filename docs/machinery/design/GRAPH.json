@@ -1510,6 +1510,16 @@
    "type": "rule",
    "file": "rules/J.md"
   },
+  "J.5": {
+   "id": "J.5",
+   "type": "rule",
+   "file": "rules/J.md"
+  },
+  "J.6": {
+   "id": "J.6",
+   "type": "rule",
+   "file": "rules/J.md"
+  },
   "SKL.1": {
    "id": "SKL.1",
    "type": "rule",
@@ -1577,6 +1587,11 @@
   },
   "R.11": {
    "id": "R.11",
+   "type": "rule",
+   "file": "rules/R.md"
+  },
+  "R.12": {
+   "id": "R.12",
    "type": "rule",
    "file": "rules/R.md"
   },
@@ -2006,6 +2021,14 @@
   },
   "check_block_trace": {
    "id": "check_block_trace",
+   "type": "check"
+  },
+  "check_content_map": {
+   "id": "check_content_map",
+   "type": "check"
+  },
+  "check_page_family": {
+   "id": "check_page_family",
    "type": "check"
   },
   "check_schema_fields": {
@@ -18051,6 +18074,16 @@
    "type": "contains"
   },
   {
+   "from": "rules-J",
+   "to": "J.5",
+   "type": "contains"
+  },
+  {
+   "from": "rules-J",
+   "to": "J.6",
+   "type": "contains"
+  },
+  {
    "from": "design-index",
    "to": "rules-SKL",
    "type": "rules"
@@ -18128,6 +18161,11 @@
   {
    "from": "rules-R",
    "to": "R.11",
+   "type": "contains"
+  },
+  {
+   "from": "rules-R",
+   "to": "R.12",
    "type": "contains"
   },
   {
@@ -18966,6 +19004,26 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_content_map",
+   "to": "J.5",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "J.5",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_page_family",
+   "to": "J.6",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "J.6",
+   "type": "enforces_at"
+  },
+  {
    "from": "check_schema_fields",
    "to": "L.1",
    "type": "enforces"
@@ -19613,6 +19671,16 @@
   {
    "from": "w7",
    "to": "R.11",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_round_gated",
+   "to": "R.12",
+   "type": "enforces"
+  },
+  {
+   "from": "w3",
+   "to": "R.12",
    "type": "enforces_at"
   },
   {
@@ -20367,42 +20435,7 @@
   },
   {
    "from": "card-w7",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "L.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "M.6",
+   "to": "E.3",
    "type": "loads"
   },
   {
@@ -20412,12 +20445,27 @@
   },
   {
    "from": "card-w7",
-   "to": "PS.6",
+   "to": "E.1",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "E.1",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.6",
    "type": "loads"
   },
   {
@@ -20432,7 +20480,27 @@
   },
   {
    "from": "card-w7",
-   "to": "E.3",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -20742,6 +20810,11 @@
   },
   {
    "from": "w7",
+   "to": "check_content_map",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -20762,32 +20835,7 @@
   },
   {
    "from": "card-w5",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.6",
+   "to": "V.2",
    "type": "loads"
   },
   {
@@ -20797,32 +20845,7 @@
   },
   {
    "from": "card-w5",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.3",
+   "to": "C.4",
    "type": "loads"
   },
   {
@@ -20832,7 +20855,57 @@
   },
   {
    "from": "card-w5",
-   "to": "R.3",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.2",
    "type": "loads"
   },
   {
@@ -20842,22 +20915,42 @@
   },
   {
    "from": "card-w5",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "S.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
    "to": "M.6",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "W.2",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "G.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -20872,47 +20965,27 @@
   },
   {
    "from": "card-w5",
-   "to": "V.2",
+   "to": "S.1",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "L.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "E.2",
+   "to": "G.1",
    "type": "loads"
   },
   {
    "from": "card-w5",
    "to": "R.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.3",
    "type": "loads"
   },
   {
@@ -21072,7 +21145,17 @@
   },
   {
    "from": "card-w4",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
    "to": "M.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w4",
+   "to": "G.3",
    "type": "loads"
   },
   {
@@ -21083,16 +21166,6 @@
   {
    "from": "card-w4",
    "to": "C.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "G.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w4",
-   "to": "C.5",
    "type": "loads"
   },
   {
@@ -21192,6 +21265,11 @@
   },
   {
    "from": "w4",
+   "to": "check_page_family",
+   "type": "gated_by"
+  },
+  {
+   "from": "w4",
    "to": "check_checklist",
    "type": "gated_by"
   },
@@ -21212,12 +21290,17 @@
   },
   {
    "from": "card-w1",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w1",
    "to": "E.4",
    "type": "loads"
   },
   {
    "from": "card-w1",
-   "to": "V.6",
+   "to": "T.8",
    "type": "loads"
   },
   {
@@ -21227,12 +21310,7 @@
   },
   {
    "from": "card-w1",
-   "to": "E.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w1",
-   "to": "T.8",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -21327,27 +21405,12 @@
   },
   {
    "from": "card-w2",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
    "to": "W.2",
    "type": "loads"
   },
   {
    "from": "card-w2",
-   "to": "W.6",
+   "to": "W.7",
    "type": "loads"
   },
   {
@@ -21357,12 +21420,27 @@
   },
   {
    "from": "card-w2",
-   "to": "E.2",
+   "to": "W.8",
    "type": "loads"
   },
   {
    "from": "card-w2",
    "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "W.1",
    "type": "loads"
   },
   {
@@ -21402,37 +21480,7 @@
   },
   {
    "from": "card-w6",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "R.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "I.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "C.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "V.3",
+   "to": "I.1",
    "type": "loads"
   },
   {
@@ -21442,12 +21490,12 @@
   },
   {
    "from": "card-w6",
-   "to": "R.5",
+   "to": "W.2",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "G.1",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -21457,7 +21505,27 @@
   },
   {
    "from": "card-w6",
-   "to": "W.2",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "G.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -21467,12 +21535,22 @@
   },
   {
    "from": "card-w6",
-   "to": "W.4",
+   "to": "V.3",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "I.1",
+   "to": "S.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "I.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.4",
    "type": "loads"
   },
   {
@@ -21572,37 +21650,12 @@
   },
   {
    "from": "card-w8",
-   "to": "W.7",
+   "to": "V.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "R.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.7",
+   "to": "T.0",
    "type": "loads"
   },
   {
@@ -21612,22 +21665,17 @@
   },
   {
    "from": "card-w8",
-   "to": "V.7",
+   "to": "L.9",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "S.5",
+   "to": "C.4",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "L.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.1",
+   "to": "S.7",
    "type": "loads"
   },
   {
@@ -21637,7 +21685,132 @@
   },
   {
    "from": "card-w8",
+   "to": "V.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
    "type": "loads"
   },
   {
@@ -21652,12 +21825,12 @@
   },
   {
    "from": "card-w8",
-   "to": "I.4",
+   "to": "V.7",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.4",
+   "to": "W.9",
    "type": "loads"
   },
   {
@@ -21667,47 +21840,7 @@
   },
   {
    "from": "card-w8",
-   "to": "L.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.8",
+   "to": "T.1",
    "type": "loads"
   },
   {
@@ -21722,57 +21855,7 @@
   },
   {
    "from": "card-w8",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
+   "to": "M.5",
    "type": "loads"
   },
   {
@@ -21782,42 +21865,12 @@
   },
   {
    "from": "card-w8",
-   "to": "S.6",
+   "to": "L.3",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "V.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.1",
+   "to": "W.1",
    "type": "loads"
   },
   {
@@ -21827,7 +21880,32 @@
   },
   {
    "from": "card-w8",
-   "to": "L.4",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.6",
    "type": "loads"
   },
   {
@@ -21907,31 +21985,6 @@
   },
   {
    "from": "card-w3",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "W.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
    "to": "W.2",
    "type": "loads"
   },
@@ -21942,7 +21995,32 @@
   },
   {
    "from": "card-w3",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "L.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "W.4",
    "type": "loads"
   },
   {
@@ -22068,6 +22146,16 @@
   {
    "from": "w3",
    "to": "check_picker_ux",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_content_map",
+   "type": "gated_by"
+  },
+  {
+   "from": "w3",
+   "to": "check_page_family",
    "type": "gated_by"
   },
   {

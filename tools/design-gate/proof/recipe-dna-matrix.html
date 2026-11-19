@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recipe × DNA matrix — machinery proof</title>
+<style>
+/* ============================================================
+   DNA PROFILES — the same knob vector the gate consumes.
+   Only values differ between profiles; every block below is
+   styled exclusively through these vars (BLOCK-TRACE: dna_knobs).
+   ============================================================ */
+[data-dna="services"] {
+  --bg: #F7F5F2; --surface: #FFFFFF; --ink: #26221D; --muted: #6E675E;
+  --accent: #2F7D5B; --accent-ink: #FFFFFF; --line: #E5E0D8;
+  --radius: 14px; --gap: clamp(1.5rem, 3.5cqi, 2.5rem);
+  --pad-block: clamp(3rem, 8cqi, 6rem); --pad-inline: clamp(1.5rem, 4cqi, 3rem);
+  --f-display: clamp(2rem, 4.5cqi, 3.2rem); --f-body: clamp(1rem, 1.4cqi, 1.15rem);
+  --track: -0.015em; --shadow: 0 12px 40px rgba(38, 34, 29, 0.08);
+  --btn-pad: 0.9rem 1.8rem; --measure: 60ch; --density: spacious;
+}
+[data-dna="luxury-goods"] {
+  --bg: #121110; --surface: #1C1A19; --ink: #EDE8E0; --muted: #9C948A;
+  --accent: #C6A15B; --accent-ink: #121110; --line: #332F2B;
+  --radius: 2px; --gap: clamp(1rem, 2.5cqi, 1.75rem);
+  --pad-block: clamp(4rem, 10cqi, 8rem); --pad-inline: clamp(1.75rem, 5cqi, 4rem);
+  --f-display: clamp(2.4rem, 5.5cqi, 4rem); --f-body: clamp(0.95rem, 1.3cqi, 1.05rem);
+  --track: 0.02em; --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --btn-pad: 1rem 2.2rem; --measure: 52ch; --density: spacious;
+}
+[data-dna="finance"] {
+  --bg: #F4F6F8; --surface: #FFFFFF; --ink: #16212E; --muted: #4E5C6C;
+  --accent: #17457C; --accent-ink: #FFFFFF; --line: #D5DDE4;
+  --radius: 6px; --gap: clamp(0.75rem, 1.5cqi, 1.25rem);
+  --pad-block: clamp(1.5rem, 4cqi, 3rem); --pad-inline: clamp(1rem, 3cqi, 2rem);
+  --f-display: clamp(1.6rem, 3.2cqi, 2.4rem); --f-body: clamp(0.9rem, 1.2cqi, 1rem);
+  --track: 0; --shadow: 0 4px 16px rgba(22, 33, 46, 0.08);
+  --btn-pad: 0.6rem 1.2rem; --measure: 68ch; --density: compact;
+}
+
+/* ---- shared structure (topology), styled only by DNA vars ---- */
+* { box-sizing: border-box; margin: 0; }
+body { font-family: ui-sans-serif, system-ui, sans-serif; background: #FFF; }
+h1 { font-size: clamp(1.6rem, 4cqi, 2.4rem); padding: 2rem 1.5rem 0; }
+.axis-label { padding: 1.5rem 1.5rem 0; font-size: 0.85rem; color: #666; }
+.axis-label b { color: #222; }
+.block {
+  container-type: inline-size;
+  background: var(--bg); color: var(--ink);
+  padding: var(--pad-block) var(--pad-inline);
+  border-bottom: 8px solid #FFF;
+}
+.inner { max-width: 72rem; margin-inline: auto; display: flex;
+         flex-direction: column; gap: var(--gap); }
+.b-h { font-size: var(--f-display); letter-spacing: var(--track);
+       line-height: 1.08; font-weight: 700; }
+.b-lead { font-size: var(--f-body); color: var(--muted);
+          max-width: var(--measure); line-height: 1.5; }
+.b-cta { display: inline-flex; align-items: center; gap: 0.5rem;
+         padding: var(--btn-pad); border-radius: var(--radius);
+         background: var(--accent); color: var(--accent-ink);
+         font-size: var(--f-body); font-weight: 600;
+         text-decoration: none; width: fit-content; }
+.b-cta--ghost { background: transparent; color: var(--accent);
+                border: 1px solid var(--accent); }
+.b-label { font: 600 0.72rem/1.4 ui-monospace, monospace; color: var(--muted);
+           letter-spacing: 0.08em; text-transform: uppercase; }
+.card { background: var(--surface); border-radius: var(--radius);
+        padding: var(--gap); box-shadow: var(--shadow);
+        border: 1px solid var(--line); }
+.card h3 { font-size: clamp(1.1rem, 2cqi, 1.4rem); margin-bottom: 0.5rem; }
+.card p { font-size: var(--f-body); color: var(--muted); line-height: 1.5; }
+.card .tag { font: 600 0.7rem ui-monospace, monospace; color: var(--accent);
+             text-transform: uppercase; letter-spacing: 0.1em;
+             margin-bottom: 0.75rem; display: block; }
+
+/* topology: form-centered — centred single column, action under copy */
+.topo-form-centered .inner { align-items: center; text-align: center; }
+/* topology: grid-3col-uniform — uniform card grid, tonal seam */
+.topo-grid-3col .inner { display: grid;
+  grid-template-columns: repeat(3, 1fr); }
+.topo-grid-3col .b-head { grid-column: 1 / -1; display: flex;
+  flex-direction: column; gap: var(--gap); }
+@media (max-width: 800px) { .topo-grid-3col .inner {
+  grid-template-columns: 1fr; } }
+/* topology: hero-media-bg — full-bleed media field, text scrim */
+.topo-hero-media { position: relative; overflow: hidden;
+  min-height: clamp(20rem, 50cqi, 32rem); }
+.topo-hero-media .media { position: absolute; inset: 0;
+  background:
+    linear-gradient(115deg, var(--ink) 8%, transparent 65%),
+    repeating-linear-gradient(45deg, var(--surface) 0 24px,
+      var(--line) 24px 25px); opacity: 0.9; }
+.topo-hero-media .inner { position: relative; justify-content: flex-end;
+  min-height: inherit; color: var(--accent-ink); }
+.topo-hero-media .b-h, .topo-hero-media .b-lead {
+  color: var(--accent-ink); }
+.topo-hero-media .b-lead { opacity: 0.85; }
+/* topology: list-vertical-rows — hairline-separated stacked rows */
+.rows { display: flex; flex-direction: column; }
+.row { display: flex; justify-content: space-between; gap: var(--gap);
+       padding: var(--gap) 0; border-top: 1px solid var(--line);
+       font-size: var(--f-body); }
+.row:last-child { border-bottom: 1px solid var(--line); }
+.row summary { font-weight: 600; cursor: pointer; }
+</style>
+</head>
+<body>
+<h1>Recipe × DNA — topology bank + knob vector proof</h1>
+
+<!-- ============================================================
+     AXIS 1 — three DIFFERENT topology_ids, ONE DNA (services).
+     Same style, visibly different structure per recipe.
+     ============================================================ -->
+<p class="axis-label"><b>AXIS 1 — topology varies, DNA fixed
+  (services)</b>: form-centered CTA · grid-3col-uniform blog cards ·
+  hero-media-bg banner · list-vertical-rows accordion</p>
+
+<section class="block topo-form-centered" data-dna="services"
+  data-recipe="brixies/cta-sections/cta-1.topo"
+  data-topology="form-centered" data-seam="whitespace"
+  data-block-id="proof:axis1-cta" data-content="c-cta">
+  <div class="inner">
+    <span class="b-label">brixies/cta-sections/cta-1.topo ·
+      form-centered · seam whitespace · dna services</span>
+    <h2 class="b-h">Book your walkthrough</h2>
+    <p class="b-lead">Tell us the site and the scope — we confirm the
+      quote inside one business day.</p>
+    <a class="b-cta" href="#book">Get a quote</a>
+    <a class="b-cta b-cta--ghost" href="#call">Call instead</a>
+  </div>
+</section>
+
+<section class="block topo-grid-3col" data-dna="services"
+  data-recipe="brixies/blog-sections/blog-1.topo"
+  data-topology="grid-3col-uniform" data-seam="tonal"
+  data-block-id="proof:axis1-blog" data-content="c-proof">
+  <div class="inner">
+    <div class="b-head">
+      <span class="b-label">brixies/blog-sections/blog-1.topo ·
+        grid-3col-uniform · seam tonal · dna services</span>
+      <h2 class="b-h">Recent jobs</h2>
+    </div>
+    <article class="card"><span class="tag">Strata</span>
+      <h3>Common-area clean</h3><p>Weekly schedule, body-corp
+      reporting, photo log per visit.</p></article>
+    <article class="card"><span class="tag">Office</span>
+      <h3>Nightly reset</h3><p>Desk, kitchen and amenities — SLA
+      checklist closed out nightly.</p></article>
+    <article class="card"><span class="tag">Medical</span>
+      <h3>Clinical turnover</h3><p>Infection-control zoning,
+      documented dwell times.</p></article>
+  </div>
+</section>
+
+<section class="block topo-hero-media" data-dna="services"
+  data-recipe="brixies/banner-section/banner-1.topo"
+  data-topology="hero-media-bg" data-seam="whitespace"
+  data-block-id="proof:axis1-banner" data-content="c-h1">
+  <div class="media" role="img" aria-label="site photo"></div>
+  <div class="inner">
+    <span class="b-label">brixies/banner-section/banner-1.topo ·
+      hero-media-bg · seam whitespace · dna services</span>
+    <h2 class="b-h">Cleaner sites, zero chasing</h2>
+    <p class="b-lead">One contract, every site, reported per visit.
+    </p>
+    <a class="b-cta" href="#book">Start a contract</a>
+  </div>
+</section>
+
+<section class="block topo-rows" data-dna="services"
+  data-recipe="brixies/accordions/accordion-1.topo"
+  data-topology="list-vertical-rows" data-seam="hairline"
+  data-block-id="proof:axis1-faq" data-content="c-faq">
+  <div class="inner">
+    <span class="b-label">brixies/accordions/accordion-1.topo ·
+      list-vertical-rows · seam hairline · dna services</span>
+    <h2 class="b-h">Questions</h2>
+    <div class="rows">
+      <details class="row"><summary>Do you bring your own kit?</summary>
+        <p>Yes — chemicals, consumables and equipment are ours.</p>
+      </details>
+      <details class="row"><summary>Lock-in contracts?</summary>
+        <p>No — rolling monthly, 30-day notice.</p></details>
+      <details class="row"><summary>Which suburbs?</summary>
+        <p>All Melbourne metro; see the coverage map.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     AXIS 2 — ONE recipe (cta-1 / form-centered), THREE DNAs.
+     Same bones, visibly different style per profile.
+     ============================================================ -->
+<p class="axis-label"><b>AXIS 2 — DNA varies, topology fixed
+  (brixies/cta-sections/cta-1.topo)</b>: services soft/open ·
+  luxury-goods dark/square · finance compact</p>
+
+<section class="block topo-form-centered" data-dna="services"
+  data-recipe="brixies/cta-sections/cta-1.topo"
+  data-topology="form-centered" data-seam="whitespace"
+  data-block-id="proof:axis2-services" data-content="c-cta">
+  <div class="inner">
+    <span class="b-label">cta-1.topo · form-centered ·
+      dna services</span>
+    <h2 class="b-h">Book your walkthrough</h2>
+    <p class="b-lead">Tell us the site and the scope — we confirm the
+      quote inside one business day.</p>
+    <a class="b-cta" href="#book">Get a quote</a>
+  </div>
+</section>
+
+<section class="block topo-form-centered" data-dna="luxury-goods"
+  data-recipe="brixies/cta-sections/cta-1.topo"
+  data-topology="form-centered" data-seam="whitespace"
+  data-block-id="proof:axis2-luxury" data-content="c-cta">
+  <div class="inner">
+    <span class="b-label">cta-1.topo · form-centered ·
+      dna luxury-goods</span>
+    <h2 class="b-h">Reserve the atelier</h2>
+    <p class="b-lead">Private viewings by appointment — a single
+      specialist per client.</p>
+    <a class="b-cta" href="#reserve">Request a viewing</a>
+  </div>
+</section>
+
+<section class="block topo-form-centered" data-dna="finance"
+  data-recipe="brixies/cta-sections/cta-1.topo"
+  data-topology="form-centered" data-seam="whitespace"
+  data-block-id="proof:axis2-finance" data-content="c-cta">
+  <div class="inner">
+    <span class="b-label">cta-1.topo · form-centered ·
+      dna finance</span>
+    <h2 class="b-h">Open an account</h2>
+    <p class="b-lead">Online onboarding in under five minutes —
+      identity verified in-line.</p>
+    <a class="b-cta" href="#open">Start now</a>
+    <a class="b-cta b-cta--ghost" href="#rates">Compare rates</a>
+  </div>
+</section>
+
+<p class="axis-label">BLOCK-TRACE: every section carries
+  {data-block-id, data-recipe (bank-resolved), data-topology,
+  data-seam, data-content}; style = DNA knobs only
+  (--radius, --surface, --density, --f-*, --accent, --pad-*).</p>
+</body>
+</html>

@@ -62,6 +62,8 @@ closed set.
 | J.2 | PRESENT-ORDER | invariant | script | `check_present_order` | picker option without quality receipt, or rules_pass_hash != judgment_pass_hash | w7 |
 | J.3 | PRE-BUILD VALIDATION | invariant | script | `check_prebuild_receipt` | pickers without PREBUILD.json; recipe_id not in topology bank; unjustified exception; missing field; plan_vector_dist <0.3 | w4 |
 | J.4 | BLOCK-TRACE | invariant | script | `check_block_trace` | rendered block without data-recipe, recipe not in bank, missing receipt row, empty field, or receipt/render recipe mismatch | w7 |
+| J.5 | CONTENT-MAP | invariant | script | `check_content_map` | inventoried content_id unmapped, unserved/orphan section row, rendered block without data-content, or un-inventoried rendered id | w3 |
+| J.6 | PAGE-FAMILY | invariant | script | `check_page_family` | page without page_type, layout_family != the type’s family, or PREBUILD family outside page families | w3 |
 | L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
 | L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1280px | w5 |
@@ -128,6 +130,7 @@ closed set.
 | R.1 | The closed breakpoint set | structural | script | `check_breakpoints` | breakpoint ∉ {360,640,768,1024,1280,1440,1920} or max-width only | w5 |
 | R.10 | Hero fold | invariant | script | `check_hero_fold` | hero CTA outside first viewport / top pad > section-space-s | w7 |
 | R.11 | Sticky header ↔ anchor offset | structural | script | `check_sticky_offset` | sticky header without scroll-margin anchors | w7 |
+| R.12 | Fluid rhythm | structural | script | `check_round_gated` | literal px padding in a picker render — fluid clamp()/ACSS section-space-* only | w3 |
 | R.2 | Container geometry | stylistic | script | `check_spacing_scale` | edge_padding ∈ {16,24,32,40,48} | w5 |
 | R.3 | Collapse rules | structural | script | `check_schema_fields` | stack text-first; collapse declared per row | w3 |
 | R.4 | Copy density budgets | structural | script | `check_copy_density` | section paragraph ≤240 chars; prose ≤500 | w7 |
@@ -199,4 +202,4 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
-189 rules — script 158, reviewer 30, operator 1; invariant 62, structural 50, stylistic 77.
+192 rules — script 161, reviewer 30, operator 1; invariant 64, structural 51, stylistic 77.

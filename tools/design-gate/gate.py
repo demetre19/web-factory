@@ -464,6 +464,7 @@ class Ctx:
             if len(cells) < 3:
                 continue
             zone, heading, fs = cells[0], cells[1], cells[2]
+            cid = cells[4] if len(cells) > 4 else ''
             hm = re.match(r'H(\d)\s+(.*)', heading)
             tag = 'h' + hm.group(1) if hm else 'p'
             htext = hm.group(2) if hm else heading
@@ -475,7 +476,8 @@ class Ctx:
                 fs_txt = None
             self._stub_rows.append({'zone': zone.lower(), 'tag': tag,
                                     'heading': htext.strip(),
-                                    'fs': fs_txt, 'h1': h1})
+                                    'fs': fs_txt, 'h1': h1,
+                                    'cid': cid})
         return self._stub_rows
 
     def page_htmls(self):
@@ -2885,6 +2887,40 @@ def _skl_harvest_ids():
                     if len(parts) > 1 else
                     '/'.join(parts + [block]))
     return ids
+
+
+@_lc(maxsize=1)
+def _recipe_topo_map():
+    """{recipe_id: bank_json} — resolves a harvest id back to its
+    skeleton payload; the .topo sidecar carries the seam +
+    direction the glue checks bind to."""
+    out = {}
+    root = os.path.join(REPO, 'templates', 'skeletons')
+    for dp, _, fns in os.walk(root) if os.path.isdir(root) else []:
+        for fn in fns:
+            if not fn.endswith('.json'):
+                continue
+            try:
+                v = json.load(open(os.path.join(dp, fn)))
+            except Exception:
+                continue
+            if isinstance(v, list):
+                v = v[0] if v else {}
+            if not isinstance(v, dict):
+                continue
+            vid = v.get('id')
+            if isinstance(vid, str) and '/' in vid:
+                out[vid] = v
+                continue
+            rel_dir = os.path.relpath(dp, root)
+            if rel_dir == '.' or fn.endswith('.spec.json'):
+                continue
+            parts = rel_dir.split(os.sep)
+            block = v.get('block_name') or os.path.splitext(fn)[0]
+            out['/'.join(parts[:2] + [block])
+                if len(parts) > 1 else
+                '/'.join(parts + [block])] = v
+    return out
 
 
 def check_candidate_review(ctx):
@@ -8112,6 +8148,24 @@ REDTEAM_MUTATIONS = [
    'decisions:\n  - {rule_id: L.3',
    'style_licences:\n  - {cluster: neo-brutalist, where: ""}\n'
    'decisions:\n  - {rule_id: L.3'),)),
+ ('RT-R12-FIXPAD', 'R.12', (
+  ('APPEND', 'preview/layouts.html',
+   '<style>.adlib{padding:12px}</style>'),)),
+ ('RT-PICKER-STACKED', 'VG.7', (
+  ('REPL', 'preview/layouts.html',
+   '.picker-opt{display:none}', '.picker-opt{display:block}'),
+  ('REPL', 'preview/layouts.html',
+   'data-tab="', 'data-nope="'),
+  ('REPL', 'preview/layouts.html',
+   'data-switch="', 'data-noswitch="'),
+  ('REPL', 'preview/layouts.html',
+   'data-goto="', 'data-nogoto="'),)),
+ ('RT-PICKER-META', 'VG.7', (
+  ('REPL', 'preview/layouts.html',
+   '<details class="variant-data"><summary>Design machinery '
+   '(refs, score, review)</summary>',
+   '<p class="variant-meta">Design machinery '
+   '(refs, score, review):'),)),
 ]
 
 
@@ -8598,6 +8652,12 @@ def check_round(path, round_no, stub=None, candidates=None):
                          r'(\d+)(?:px|rem)', txt):
         if int(m.group(1)) < 16:
             f.append(f'T.6 body text below 16px ({m.group(1)})')
+            break
+    for m in re.finditer(r'padding(?:-[a-z]+)?:\s*([^;}"]+)', txt):
+        if re.search(r'\dpx', m.group(1)):
+            f.append(f'R.12 fixed px padding "{m.group(1).strip()}" '
+                     '— section rhythm is fluid: clamp()/ACSS '
+                     'section-space-* tokens, never literal px')
             break
     # contrast in both modes: pull hex role pairs from mode scopes
     mode_blocks = re.findall(r'data-mode="(light|dark)"[^>]*\{([^}]*)\}',
@@ -9588,6 +9648,24 @@ def check_block_trace(ctx):
         if rid not in bank:
             f.append(f'J.4 block {sec}: recipe {rid!r} resolves to '
                      'no topology-bank entry')
+        else:
+            # J.6 seam law — a bank recipe declaring a seam binds the
+            # rendered block: data-seam must echo the topo seam_style.
+            # Order is free; glue is by seam, never by template slot.
+            topo = (_recipe_topo_map().get(rid) or {}).get(
+                'topology') or {}
+            want_seam = topo.get('seam_style')
+            if want_seam:
+                sm = re.search(r'data-seam="([^"]+)"', attrs)
+                if not sm:
+                    f.append(f'J.4 block {sec}: recipe {rid} '
+                             f'declares seam {want_seam} but the '
+                             'render carries no data-seam — '
+                             'seam-joined assembly needs it')
+                elif sm.group(1) != want_seam:
+                    f.append(f'J.4 block {sec}: data-seam '
+                             f'{sm.group(1)} != recipe seam '
+                             f'{want_seam}')
         bid = f'home:{sec}'
         row = blocks.get(bid)
         if not row:
@@ -9607,7 +9685,142 @@ def check_block_trace(ctx):
     return f
 
 
+CHROME_COMPS = ('nav-bar', 'footer-bar')
 
+
+def _content_ids(ctx):
+    """Inventoried content_ids: H1 'c-h1' + heading-vector cid
+    column + any c-<slug> tokens declared in the STUB's Content
+    inventory block."""
+    ids = {'c-h1'}
+    for v in ctx.stub_vector():
+        if v.get('cid'):
+            ids.add(v['cid'])
+    p = ctx.stub_path()
+    if p and os.path.isfile(p):
+        txt = open(p, encoding='utf-8', errors='replace').read()
+        m = re.search(r'## Content inventory\s*\n(.*?)(?=\n## |\Z)',
+                      txt, re.S)
+        if m:
+            ids.update(re.findall(r'\b(c-[a-z][\w-]*)\b', m.group(1)))
+    return ids
+
+
+def check_content_map(ctx):
+    """J.5 CONTENT-MAP — sections come from content, grouped
+    semantically. The W2 inventory's content_ids map to exactly one
+    sections[] row each (no dropped content), every non-chrome row
+    names the content_ids it serves (no orphan/ad-libbed sections),
+    and the render carries data-content through: every inventoried
+    id rendered, no rendered block without one."""
+    cids = _content_ids(ctx)
+    f = []
+    rows = [r for _, r in ctx.rows()]
+    served = {}
+    for r in rows:
+        comp = str(r.get('composition') or '')
+        rc = [str(x) for x in (r.get('content_ids') or [])]
+        if comp in CHROME_COMPS:
+            continue  # chrome serves chrome, not content
+        if not rc:
+            f.append(f'J.5 plan row {r.get("name", "?")} names no '
+                     'content_ids — an unserved section is ad-libbed')
+        for c in rc:
+            served.setdefault(c, []).append(str(r.get('name') or '?'))
+    for c, owners in served.items():
+        if len(owners) > 1:
+            f.append(f'J.5 content {c} served by {owners} — exactly '
+                     'one section per content_id')
+        if c not in cids:
+            f.append(f'J.5 {c} served but never inventoried — '
+                     'invented content has no W2 slot')
+    for c in sorted(cids - set(served)):
+        if rows:
+            f.append(f'J.5 inventoried content {c} maps to no '
+                     'sections[] row — dropped content')
+    seen = set()
+    pages = list(ctx.page_htmls())
+    for p, txt in pages:
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<(?:section|nav)[^>]*data-sec="([^"]+)"([^>]*)>',
+                txt):
+            sec, attrs = m.groups()
+            comp = re.search(r'data-comp="([^"]+)"', attrs)
+            if comp and comp.group(1) in CHROME_COMPS:
+                continue
+            cm = re.search(r'data-content="([^"]+)"', attrs)
+            if not cm:
+                f.append(f'J.5 {name} block {sec}: no data-content '
+                         '— a rendered block with no content_id is '
+                         'ad-libbed')
+                continue
+            for c in cm.group(1).split():
+                seen.add(c)
+                if c not in cids:
+                    f.append(f'J.5 {name} block {sec}: data-content '
+                             f'{c} not in the W2 inventory')
+    if pages:
+        for c in sorted(cids - seen):
+            f.append(f'J.5 inventoried content {c} never rendered')
+    return f
+
+
+
+
+
+PAGE_FAMILIES = {
+    'service-page': 'conversion',
+    'guide': 'editorial', 'blog': 'editorial',
+    'product-profile': 'entity-profile',
+    'near-me': 'local-service',
+    'hub': 'service-grid', 'index': 'service-grid',
+    'support': 'support', 'utility': 'support',
+    'gallery': 'gallery', 'before-after': 'gallery',
+    'tool': 'tool', 'interactive': 'tool',
+}
+
+
+def check_page_family(ctx):
+    """J.6 PAGE-FAMILY — the importer's page_type selects the layout
+    family; W3 options + the plan render inside it. A guide page on
+    a conversion layout (or vice versa) is a cross-family defect."""
+    f = []
+    pages = ctx.pages()
+    fams = set()
+    for slug, pg in pages.items():
+        if not isinstance(pg, dict):
+            continue
+        pt = str(pg.get('page_type') or '')
+        fam = str(pg.get('layout_family') or '')
+        if not pt:
+            f.append(f'J.6 page {slug}: no page_type — the W2 '
+                     'importer classifies every page')
+            continue
+        want = PAGE_FAMILIES.get(pt)
+        if not want:
+            f.append(f'J.6 page {slug}: page_type {pt!r} outside '
+                     f'the {sorted(set(PAGE_FAMILIES))} families')
+            continue
+        if fam != want:
+            f.append(f'J.6 page {slug}: layout_family {fam or "—"!r} '
+                     f'!= {want} for a {pt} — cross-family selection '
+                     'is banned')
+        fams.add(fam or want)
+    pb = ctx.read('PREBUILD.json')
+    if pb:
+        try:
+            pbj = json.loads(pb)
+        except Exception:
+            pbj = {}
+        if isinstance(pbj, dict):
+            pf = str(pbj.get('layout_family') or '')
+            if pf and fams and pf not in fams:
+                f.append(f'J.6 PREBUILD layout_family {pf!r} outside '
+                         f'the page families {sorted(fams)} — the '
+                         'validated recipes belong to another '
+                         'family')
+    return f
 
 def check_wildcard(ctx, waves=None):
     """B.* aggregate — the burst gate. Inside a wave it sweeps THAT wave
@@ -10444,6 +10657,10 @@ WAVE_CHECKS['w7'].append(check_present_order)
 WAVE_CHECKS['w7'].append(check_block_trace)
 WAVE_CHECKS['w8'].append(check_quality_floor)
 WAVE_CHECKS['w8'].append(check_present_order)
+WAVE_CHECKS['w3'].append(check_content_map)
+WAVE_CHECKS['w7'].append(check_content_map)
+WAVE_CHECKS['w3'].append(check_page_family)
+WAVE_CHECKS['w4'].append(check_page_family)
 
 WAVE_INPUTS = {
     'w0': ['site/package.json', 'site/astro.config.mjs',

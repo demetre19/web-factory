@@ -132,9 +132,9 @@
   {
    "id": "RV3-FINE-OFFPICK",
    "severity": "P1",
-   "mutation": "w4 fine options not the picked design ± a knob nudge",
+   "mutation": "w4 fine options not the picked design \u00b1 a knob nudge",
    "status": "closed",
-   "fixture": "check_round pick±nudge vs approvals.w4.design",
+   "fixture": "check_round pick\u00b1nudge vs approvals.w4.design",
    "scope": "machinery"
   },
   {
@@ -148,7 +148,7 @@
   {
    "id": "COL-DARK-MAX-L",
    "severity": "P1",
-   "mutation": "DARK_MAX_L 20% WCAG-Y ≈15× more permissive than C.5 HSL L 7–10%",
+   "mutation": "DARK_MAX_L 20% WCAG-Y \u224815\u00d7 more permissive than C.5 HSL L 7\u201310%",
    "status": "closed",
    "fixture": "redteam:RT-C5-LIGHTDARK (OKLCH L cap 0.24)",
    "scope": "machinery"
@@ -156,7 +156,7 @@
   {
    "id": "COL-OKLCH-BYPASS",
    "severity": "P0",
-   "mutation": "oklch() role tokens skip _rgb → check_contrast silently passes",
+   "mutation": "oklch() role tokens skip _rgb \u2192 check_contrast silently passes",
    "status": "closed",
    "fixture": "_rgb parses oklch(L C H); _modes/_color_str accept it",
    "scope": "machinery"
@@ -172,7 +172,7 @@
   {
    "id": "COL-SURFACE-KNOB-UNIT",
    "severity": "P2",
-   "mutation": "color.surface_contrast knob 0.02–0.08 unstated unit vs C.1 ratio floor",
+   "mutation": "color.surface_contrast knob 0.02\u20130.08 unstated unit vs C.1 ratio floor",
    "status": "closed",
    "fixture": "knobs.json documents luminance-difference fraction",
    "scope": "machinery"
@@ -212,7 +212,7 @@
   {
    "id": "STYLE-AXES-CORPUS",
    "severity": "P2",
-   "mutation": "no colour/style axes in report.json corpus; COLOUR-RULES §3 + STYLE-VOCAB deviation signatures unmeasured",
+   "mutation": "no colour/style axes in report.json corpus; COLOUR-RULES \u00a73 + STYLE-VOCAB deviation signatures unmeasured",
    "status": "open",
    "fixture": "pending extractor",
    "scope": "machinery"
@@ -244,7 +244,7 @@
   {
    "id": "RT-INV-HEADERONLY",
    "severity": "P1",
-   "mutation": "redteam:RT-INV-HEADERONLY survived — no check failed",
+   "mutation": "redteam:RT-INV-HEADERONLY survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-INV-HEADERONLY",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -252,7 +252,7 @@
   {
    "id": "RT-REC-UNSIGNED",
    "severity": "P1",
-   "mutation": "redteam:RT-REC-UNSIGNED survived — no check failed",
+   "mutation": "redteam:RT-REC-UNSIGNED survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-REC-UNSIGNED",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -260,7 +260,7 @@
   {
    "id": "RT-REC-GATEPASS",
    "severity": "P1",
-   "mutation": "redteam:RT-REC-GATEPASS survived — no check failed",
+   "mutation": "redteam:RT-REC-GATEPASS survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-REC-GATEPASS",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -268,7 +268,7 @@
   {
    "id": "RT-WILD-NOHIST",
    "severity": "P1",
-   "mutation": "redteam:RT-WILD-NOHIST survived — no check failed",
+   "mutation": "redteam:RT-WILD-NOHIST survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-WILD-NOHIST",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -276,7 +276,7 @@
   {
    "id": "RT-WILD-SEEDREUSE",
    "severity": "P1",
-   "mutation": "redteam:RT-WILD-SEEDREUSE survived — no check failed",
+   "mutation": "redteam:RT-WILD-SEEDREUSE survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-WILD-SEEDREUSE",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -284,7 +284,7 @@
   {
    "id": "RT-PS11-MULTIVEC",
    "severity": "P1",
-   "mutation": "redteam:RT-PS11-MULTIVEC survived — no check failed",
+   "mutation": "redteam:RT-PS11-MULTIVEC survived \u2014 no check failed",
    "status": "closed",
    "fixture": "redteam:RT-PS11-MULTIVEC",
    "resolution": "redteam PASS 20/20 after check_picker_ux + unsigned-decision verification (2026-11-19)"
@@ -292,7 +292,7 @@
   {
    "id": "RT-CAND-UNSIGNED",
    "severity": "P1",
-   "mutation": "redteam:RT-CAND-UNSIGNED survived — no check failed",
+   "mutation": "redteam:RT-CAND-UNSIGNED survived \u2014 no check failed",
    "status": "closed",
    "scope": "machinery",
    "fixture": "redteam:RT-CAND-UNSIGNED",

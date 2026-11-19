@@ -114,6 +114,71 @@ rendered recipe (the receipt names what actually shipped).
 `data-recipe`, unresolvable recipe, missing receipt row, empty
 field, or receipt/render recipe mismatch FAILs.
 
+### J.5 CONTENT-MAP — sections come from content
+
+The W2 importer emits a typed content inventory — every block
+(heading-vector row, FS answer, body block, inventory item) carries
+a stable `content_id` and a semantic type (definition / scope-list /
+steps / reporting / pricing / schedule / related-links / coverage /
+faq / cta). Sections are content, grouped semantically:
+
+- every inventoried `content_id` maps to exactly one `sections[]`
+  row — no dropped content;
+- every non-chrome `sections[]` row names the `content_ids` it
+  serves — an unserved section is ad-libbed;
+- the render carries `data-content` through: every inventoried id
+  rendered, no rendered block without one.
+
+The semantic type drives recipe selection (list→grid, steps→
+sequence, locations→map, questions→faq, links→link-grid) — recipe
+choice comes from content shape + business type, never builder
+choice.
+
+**Enforcement** — script `check_content_map` (w3 + w7): unmapped
+content, unserved/invented/orphan rows, missing `data-content`, or
+an un-inventoried rendered id FAILs. Receipts record
+`content_coverage` per wave.
+
+### J.6 PAGE-FAMILY — page type names a vocabulary, not a skeleton
+
+The W2 importer classifies `page_type` from front matter + heading
+vector + block composition: `service-page` (conversion),
+`guide/blog` (editorial), `product-profile` (entity),
+`near-me` (local-service), `hub/index` (service-grid),
+`gallery`/`before-after` (comparison grid, filterable),
+`tool`/`interactive` (a shell around one interactive unit),
+`support/utility` (form-led / profile / accordion / confirmation).
+
+The type selects the LAYOUT FAMILY — a vocabulary constraint on the
+recipe pool, NOT a page skeleton. A page is a container: sections
+are glued in whatever order the content demands. Coverage may
+precede pricing; a gallery may sit mid-page. There is no canonical
+sequence to validate against.
+
+What IS enforced, per section, independent of position:
+
+- each section's content_ids, recipe, knobs and seam are validated
+  on their own (J.3–J.5);
+- recipe choice is per-section from THAT section's content type — a
+  page mixes any combination in any arrangement;
+- assembly composes neighbours by **seam compatibility** (each
+  recipe's topology vector carries `seam` + `direction`); glue
+  checks verify seam continuity between adjacent sections in
+  whatever order they sit, never position against a template;
+- a recipe whose bank family ≠ the page's declared family is a
+  cross-family FAIL.
+
+Tail rhythm is a **per-vertical** warn-level prior only (cleaning
+ends related→coverage→faq→cta; insurance-work ends insurance→
+worth-it→faq): unusual order warns, never fails.
+
+**Enforcement** — `page_type` + `layout_family` recorded in
+DESIGN-PLAN; `check_page_family` (w3/w4) FAILs a missing type,
+an unknown type, a declared family ≠ the type's family, or a
+PREBUILD recipe family outside the page's families; seam continuity
+rides the glue/block-trace checks; the tail prior rides the
+advisory channel.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.

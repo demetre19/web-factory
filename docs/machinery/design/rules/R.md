@@ -191,6 +191,18 @@ H1/lead/CTA gaps come from `space-*` tokens only.
 A sticky/fixed header pairs with `scroll-margin`/`scroll-padding` on
 anchored targets; sections must not slide under the bar.
 
+### R.12 Fluid rhythm — never literal px padding
+
+Section rhythm (block padding, inner gaps, gutters) is fluid:
+`clamp(min, cqi, max)` or ACSS `section-space-*`/`--space-*` tokens.
+A literal `px` padding anywhere in a picker render or page — the
+fixed-gap accordion the model threw together at mobile — is a hard
+FAIL. `rem`-scaled Tailwind steps are fine (they follow the root
+scale); `px` never does.
+
+**Enforcement** — script `check_round` battery (every picker
+render): `padding(-*): <N>px` in any render FAILs.
+
 ## Enforcement
 
 Generated from `enforcement.json` (`gate.py enforcement`) — edit the JSON, never this table.
