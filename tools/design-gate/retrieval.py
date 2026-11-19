@@ -360,8 +360,9 @@ def text_vector(text):
 # ------------------------------------------------------ section bank
 # The REAL bank: 10k classified section crops — each a real site
 # section with a topology_id, style_tags, vibe. Retrieval returns a
-# structure variant (topology_id) + the crop as visual evidence;
-# section_emit binds vars onto that topology. First-class primitive.
+# structure variant (topology_id) + the crop as visual evidence; the
+# composition component is built by adapting the contract's gold
+# exemplar (SB.5), never by free emission. First-class primitive.
 SECTION_VECTORS = os.path.join(DATA, 'section-bank')
 
 
@@ -369,7 +370,7 @@ class SectionBank:
     """docs/.../data/section-bank — crops + 512-d CLIP vectors.
     Rows carry section_type, style_tags.style, topo.topology_id,
     vibe.*. Retrieval = filter by section_type → CLIP rank → the
-    winning topology_id drives section_emit structure."""
+    winning topology_id selects the exemplar composition."""
 
     def __init__(self):
         meta_p = os.path.join(SECTION_VECTORS, 'index.json')
