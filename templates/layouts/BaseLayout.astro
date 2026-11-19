@@ -23,6 +23,9 @@ const {
   lang = 'en',
   slug = '',
 } = Astro.props;
+// F3 fix — applyBaseStyles:false means nothing styles the page unless
+// the layout imports the shared layer itself (the starter does).
+import '../styles/global.css';
 ---
 <!doctype html>
 <html lang={lang} dir="ltr">

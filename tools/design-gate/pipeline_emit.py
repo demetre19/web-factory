@@ -136,10 +136,13 @@ def _instance(ctx, contract, row):
         v = h1_text if (k == 'heading' and h1_text) else c.get(k)
         if v:
             props.append(f'{k}={json.dumps(str(v))}')
-    for k in ('cta', 'items', 'image'):
-        v = row.get(k)
-        if v:
-            props.append(f'{k}={{({json.dumps(v)})}}')
+    # F1 fix — cta rides the contract (stub inventory couriered at
+    # build_contracts); items/image still come from the plan row.
+    for k, src in (('cta', c.get('cta') or row.get('cta')),
+                   ('items', row.get('items')),
+                   ('image', row.get('image'))):
+        if src:
+            props.append(f'{k}={{({json.dumps(src)})}}')
     if h1_text:
         props.append('h1={true}')
     body = (f'<{camel} ' + ' '.join(props) + ' />'
@@ -158,13 +161,17 @@ def _instance(ctx, contract, row):
 
 
 def _system(ctx, comps):
-    """VG.1 — the system tile renders every composition + the toggle."""
+    """VG.1 — the system tile renders every composition + the toggle.
+    It bypasses BaseLayout, so it imports the shared layer itself
+    (same F3 fix: applyBaseStyles:false ships no CSS otherwise)."""
     imps = '\n'.join(
         f"import {gate.camel(c)} from '../components/{c}.astro';"
         for c in comps)
     tags = ''.join(f'<{gate.camel(c)} />' for c in comps)
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
-       '---\n' + imps + '\n---\n'
+       '---\n'
+       "import '../styles/global.css';\n"
+       + imps + '\n---\n'
        '<button data-theme-toggle aria-label="Light or dark">'
        'Light/Dark</button>\n' + tags + '\n')
 

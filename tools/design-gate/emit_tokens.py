@@ -125,8 +125,29 @@ def emit(tokens):
         A(f'  --primitive-section-space-{rung}:'
           f' var(--section-space-{rung});')
     A(f'  --primitive-radius: {rad}rem;')
-    A('  --primitive-font-display: var(--font-display);')
-    A('  --primitive-font-body: var(--font-body);')
+    # knobs.type.font_display/font_body carry the DNA display-face CSS
+    # stack (dna_tokens._finish); a bare TOKENS.json falls back to
+    # the system sans stack.
+    _def_stack = ('ui-sans-serif, system-ui, -apple-system, '
+                  '"Segoe UI", Roboto, Helvetica, Arial, sans-serif')
+    _fd = str(knobs.get('type.font_display') or _def_stack)
+    _fb = str(knobs.get('type.font_body') or _fd)
+    # a stack stays one var VALUE — quoted, or the minifier splits it
+    # on commas and the css pipeline can't recover.
+    A(f"  --primitive-font-display: '{_fd}';")
+    A(f"  --primitive-font-body: '{_fb}';")
+    # grid.gutter names the gap rung; only real rungs bind.
+    _gut = str(knobs.get('grid.gutter') or 'space-m')
+    if _gut not in ('space-xs', 'space-s', 'space-m', 'space-l',
+                    'space-xl', 'space-2xl'):
+        _gut = 'space-m'
+    A(f'  --primitive-gutter: var(--{_gut});')
+    # the fs scale is sequential idx -1..+5 around the knob base —
+    # emitted per step so --fs-* stays a pure binding, never a copy.
+    for n in (-1, 0, 1, 2, 3, 4, 5):
+        _nm = f'neg{-n}' if n < 0 else str(n)
+        A(f'  --primitive-text-{_nm}:'
+          f' {round(base_px * ratio ** n, 2) / 16:.3f}rem;')
     for step in TYPE_SCALE_STEPS:
         A(f'  --primitive-text-{step}:'
           f' {sizes[step] / 16:.3f}rem;')

@@ -42,16 +42,17 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --text-wrap-body: pretty;
   --flow-spacing: var(--space-4);
 
-  /* ACSS rungs — the primitives every check gates on. The emitted
-     @theme block binds --primitive-* names to these; they live in the
-     tail (not TOKENS.json) because they are machinery, not DNA. */
-  --fs--1: clamp(0.8335rem, 0.7621rem + 0.3571vi, 1.0128rem);
-  --fs-0: clamp(1rem, 0.913rem + 0.4348vi, 1.1875rem);
-  --fs-1: clamp(1.2rem, 1.0924rem + 0.538vi, 1.3906rem);
-  --fs-2: clamp(1.44rem, 1.3064rem + 0.668vi, 1.6289rem);
-  --fs-3: clamp(1.728rem, 1.5607rem + 0.8365vi, 1.9066rem);
-  --fs-4: clamp(2.0736rem, 1.8629rem + 1.0535vi, 2.2305rem);
-  --fs-5: clamp(2.4883rem, 2.2192rem + 1.3455vi, 2.6061rem);
+  /* ACSS rungs — the primitives every check gates on. Every
+     --primitive-* value is derived from TOKENS.json knobs by
+     emit_tokens (type.ratio/type.base/radius/gutter/fonts); this
+     block only binds semantic names to primitives — never copies. */
+  --fs--1: var(--primitive-text-neg1);
+  --fs-0: var(--primitive-text-0);
+  --fs-1: var(--primitive-text-1);
+  --fs-2: var(--primitive-text-2);
+  --fs-3: var(--primitive-text-3);
+  --fs-4: var(--primitive-text-4);
+  --fs-5: var(--primitive-text-5);
   --lh--1: 1.5;
   --lh-0: 1.6;
   --lh-1: 1.5;
@@ -72,16 +73,15 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --section-space-l: clamp(6rem, 4rem + 10vi, 8rem);
   --section-space-xl: clamp(8rem, 5rem + 15vi, 10rem);
   --section-space-xxl: clamp(10rem, 6rem + 20vi, 12rem);
-  --gutter: var(--space-m);
+  --gutter: var(--primitive-gutter);
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
   --measure: 60ch;
-  --r-card: 0.5rem;
+  --r-card: var(--primitive-radius);
   --tap: 2.75rem;
-  --font-display: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, Helvetica, Arial, sans-serif;
-  --font-body: var(--font-display);
+  --font-display: var(--primitive-font-display);
+  --font-body: var(--primitive-font-body);
   --input-border: var(--border-default);
   --input-py: 0.5rem;
   --input-px: 0.75rem;
@@ -112,6 +112,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 }
 
 @layer components {
+  /* fluid utilities — the exemplars' spacing/type vocabulary; the
+     names match TAIL_UTIL, the VALUES come from the rungs, so P.2
+     must find real rules here, not rely on the prefix regex. */
+  .text-fluid--1 { font-size: var(--fs--1); }
+  .text-fluid-0 { font-size: var(--fs-0); }
+  .text-fluid-1 { font-size: var(--fs-1); }
+  .text-fluid-2 { font-size: var(--fs-2); }
+  .text-fluid-3 { font-size: var(--fs-3); }
+  .text-fluid-4 { font-size: var(--fs-4); }
+  .mt-stack { margin-block-start: var(--space-4); }
+  .mt-fluid-s { margin-block-start: var(--space-s); }
+  .mt-fluid-m { margin-block-start: var(--space-m); }
+  .mt-fluid-l { margin-block-start: var(--space-l); }
+  .pt-fluid-m { padding-block-start: var(--space-m); }
+  .pb-fluid-s { padding-block-end: var(--space-s); }
+  .p-fluid-s { padding: var(--space-s); }
+  .p-fluid-m { padding: var(--space-m); }
+  .gap-stack { gap: var(--space-4); }
+  .gap-fluid-s { gap: var(--space-s); }
+  .gap-fluid-m { gap: var(--space-m); }
+  .gap-fluid-l { gap: var(--space-l); }
   .sec-band { padding-block: var(--sec-pad, var(--section-space-m));
               background: var(--sec-bg, var(--bg-canvas));
               color: var(--sec-fg, var(--text-primary)); }
@@ -228,7 +249,10 @@ def tailwind_config(tokens):
     for i in range(0, len(pairs), 6):
         chunk = pairs[i:i + 6]
         colour_lines += '\n      ' + ', '.join(
-            f"{k}: '{v.lower()}'" for k, v in chunk)
+            f"{k}: '{v.lower()}'" for k, v in chunk) + ','
+    # every pair line ends with a comma — the last is legal JS
+    # (trailing comma) and keeps sucrase from reading the next
+    # key as an expression continuation.
     colour_lines = colour_lines.rstrip() + '\n   '
     return f'''/** generated from TOKENS.json — emit_global.tailwind_config */
 export default {{

@@ -6177,6 +6177,15 @@ def build_contracts(ctx):
                      and not _chrome(r)),
                     next((i for i, (_, r) in enumerate(rows)
                           if not _chrome(r)), -1))
+    # F1 fix — J.5/R.10: the STUB's CTA inventory is parsed at W2 then
+    # discarded; the contract is the courier that must carry it to the
+    # component ({cta && …} renders nothing otherwise). Row's own cta
+    # wins; the inventory supplies the first labelled CTA otherwise.
+    inv = ctx.stub_inventory() if hasattr(ctx, 'stub_inventory') \
+        else {}
+    _cta_rows = inv.get('ctas') or []
+    _stub_cta = ({'label': _cta_rows[0][0], 'href': _cta_rows[0][1]}
+                 if _cta_rows and len(_cta_rows[0]) >= 2 else None)
     for i, (slug, r) in enumerate(rows):
         name = r.get('name')
         st = _stub_for(ctx, name, i)
@@ -6218,6 +6227,12 @@ def build_contracts(ctx):
                 'body': r.get('body'),
                 'h1': bool(st.get('h1')),
                 'h1_text': page_h1 if i == h1_owner else '',
+                'cta': r.get('cta')
+                       or (_stub_cta
+                           if str(r.get('intent') or '') in
+                           ('hero', 'cta', 'act') or
+                           'act' in (r.get('speech_act') or [])
+                           else None),
             },
             'neighbours': {
                 'prev': {'surface': prev.get('surface'),

@@ -84,6 +84,14 @@ _FONT = {  # display-face allele → rasteriser path
     'mixed': _FONTS + '/Supplemental/Avenir Next.ttc'}
 _FONT_LABEL = {'sans': 'Helvetica', 'serif': 'Georgia',
                'mono': 'Menlo', 'mixed': 'Avenir Next'}
+# display-face allele → the CSS stack emitted as type.font_* knobs
+_FONT_STACK = {
+    'sans': 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", '
+            'Roboto, Helvetica, Arial, sans-serif',
+    'serif': 'ui-serif, Georgia, "Times New Roman", Times, serif',
+    'mono': 'ui-monospace, Menlo, Monaco, "Courier New", monospace',
+    'mixed': 'ui-sans-serif, "Avenir Next", Avenir, -apple-system, '
+             'sans-serif'}
 
 # ---- genotype → knobs (the explicit map; every value snaps inside
 # knobs.json ranges/steps before emission) ---------------------------
@@ -331,6 +339,10 @@ def _finish(geno, genes, site_type, seed, declared, wild=(),
             moves=None, profile_n=0):
     """Shared tail: genotype → knobs → vars + record fields."""
     knobs, prov = knobs_for(geno, genes, profile_n)
+    # the CSS font stacks ride as knobs so emit_tokens' primitives
+    # can bind --font-display/--font-body from DNA (F6 fix).
+    knobs['type.font_display'] = _FONT_STACK[geno['display-face']]
+    knobs['type.font_body'] = _FONT_STACK[geno['display-face']]
     for g, m in (moves or {}).items():
         prov[g] = {'source': 'rule-retry', 'sample_n': profile_n,
                    'move': m}
