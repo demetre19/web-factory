@@ -258,6 +258,13 @@
   ],
   "check_motion_js_budget": [
    "M.14"
+  ],
+  "check_skeleton": [
+   "SKL.1",
+   "SKL.2"
+  ],
+  "check_trend_vocab": [
+   "DM.1"
   ]
  },
  "graph": {
@@ -1586,6 +1593,20 @@
    "wave": "w7",
    "check": "check_motion_js_budget",
    "threshold": "animation JS \u22644KB and no animation library unless licensed in DESIGN-PLAN"
+  },
+  "SKL.1": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_skeleton",
+   "threshold": "data-skeleton sections carry structure classes only \u2014 raw visual utilities FAIL"
+  },
+  "SKL.2": {
+   "mode": "script",
+   "tier": "structural",
+   "wave": "w7",
+   "check": "check_skeleton",
+   "threshold": "skeleton ids never appear as canon refs"
   }
  }
 }

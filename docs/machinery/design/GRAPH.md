@@ -84,6 +84,7 @@
 - ← comp-proof-band [see_also]
 - ← comp-hero-act-merge [see_also]
 - ← rules-REF [see_also]
+- ← rules-SKL [see_also]
 - ← rules-A [see_also]
 
 ## C.1 (rule)
@@ -722,22 +723,27 @@
 - ← card-w4 [loads]
 
 ## M.10 (rule)
+- ← rules-M [contains]
 - ← check_motion_recipes [enforces]
 - ← w7 [enforces_at]
 
 ## M.11 (rule)
+- ← rules-M [contains]
 - ← check_motion_recipes [enforces]
 - ← w7 [enforces_at]
 
 ## M.12 (rule)
+- ← rules-M [contains]
 - ← check_motion_recipes [enforces]
 - ← w7 [enforces_at]
 
 ## M.13 (rule)
+- ← rules-M [contains]
 - ← check_motion_recipes [enforces]
 - ← w7 [enforces_at]
 
 ## M.14 (rule)
+- ← rules-M [contains]
 - ← check_motion_js_budget [enforces]
 - ← w7 [enforces_at]
 
@@ -788,6 +794,7 @@
 - ← card-w8 [loads]
 
 ## M.9 (rule)
+- ← rules-M [contains]
 - ← check_motion_recipes [enforces]
 - ← w7 [enforces_at]
 
@@ -1098,6 +1105,16 @@
 - ← rules-SB [contains]
 - ← check_scorecard [enforces]
 - ← w8 [enforces_at]
+
+## SKL.1 (rule)
+- ← rules-SKL [contains]
+- ← check_skeleton [enforces]
+- ← w7 [enforces_at]
+
+## SKL.2 (rule)
+- ← rules-SKL [contains]
+- ← check_skeleton [enforces]
+- ← w7 [enforces_at]
 
 ## T.0 (rule)
 - → type-restraint [scored_by]
@@ -1591,166 +1608,166 @@
 - ← w0 [has_card]
 
 ## card-w1 (card)
-- → T.8 [loads]
 - → V.6 [loads]
+- → T.8 [loads]
 - → PS.1 [loads]
-- → E.4 [loads]
 - → E.1 [loads]
+- → E.4 [loads]
 - ← w1 [has_card]
 
 ## card-w2 (card)
 - → W.7 [loads]
-- → W.10 [loads]
-- → W.8 [loads]
-- → W.2 [loads]
-- → E.2 [loads]
-- → W.6 [loads]
 - → W.1 [loads]
 - → E.1 [loads]
+- → W.10 [loads]
+- → E.2 [loads]
+- → W.2 [loads]
+- → W.6 [loads]
+- → W.8 [loads]
 - ← w2 [has_card]
 
 ## card-w3 (card)
-- → R.3 [loads]
-- → L.1 [loads]
 - → W.2 [loads]
 - → E.2 [loads]
+- → R.3 [loads]
 - → W.4 [loads]
+- → L.7 [loads]
+- → L.1 [loads]
 - → E.1 [loads]
 - → V.3 [loads]
-- → L.7 [loads]
 - ← w3 [has_card]
 
 ## card-w4 (card)
 - → G.3 [loads]
-- → C.2 [loads]
 - → C.5 [loads]
-- → M.1 [loads]
 - → S.1 [loads]
+- → M.1 [loads]
+- → C.2 [loads]
 - → T.3 [loads]
 - ← w4 [has_card]
 
 ## card-w5 (card)
-- → C.2 [loads]
-- → W.2 [loads]
-- → T.6 [loads]
-- → E.2 [loads]
-- → G.1 [loads]
-- → R.1 [loads]
-- → C.7 [loads]
-- → V.2 [loads]
-- → L.11 [loads]
 - → I.3 [loads]
-- → C.4 [loads]
-- → I.2 [loads]
-- → C.5 [loads]
-- → M.1 [loads]
-- → S.2 [loads]
-- → M.6 [loads]
-- → T.3 [loads]
 - → G.3 [loads]
+- → T.6 [loads]
+- → C.2 [loads]
+- → R.2 [loads]
+- → W.2 [loads]
+- → I.1 [loads]
+- → G.1 [loads]
+- → S.2 [loads]
+- → C.4 [loads]
+- → M.1 [loads]
+- → E.2 [loads]
+- → V.6 [loads]
+- → L.11 [loads]
+- → C.7 [loads]
+- → T.4 [loads]
+- → M.6 [loads]
+- → C.3 [loads]
+- → C.5 [loads]
+- → S.7 [loads]
+- → V.2 [loads]
 - → R.3 [loads]
 - → G.2 [loads]
-- → R.2 [loads]
-- → W.8 [loads]
-- → S.7 [loads]
-- → C.1 [loads]
 - → S.5 [loads]
-- → T.4 [loads]
+- → I.2 [loads]
+- → T.3 [loads]
+- → C.1 [loads]
 - → M.2 [loads]
-- → V.6 [loads]
-- → I.1 [loads]
+- → R.1 [loads]
 - → S.1 [loads]
-- → C.3 [loads]
+- → W.8 [loads]
 - ← w5 [has_card]
 
 ## card-w6 (card)
-- → R.3 [loads]
 - → I.3 [loads]
-- → V.4 [loads]
-- → M.2 [loads]
+- → M.6 [loads]
 - → W.2 [loads]
-- → C.1 [loads]
+- → R.3 [loads]
+- → W.4 [loads]
+- → R.5 [loads]
 - → G.1 [loads]
 - → S.4 [loads]
 - → R.6 [loads]
-- → S.2 [loads]
-- → W.4 [loads]
 - → I.1 [loads]
-- → M.6 [loads]
-- → R.5 [loads]
+- → S.2 [loads]
+- → C.1 [loads]
+- → M.2 [loads]
+- → V.4 [loads]
 - → V.3 [loads]
 - ← w6 [has_card]
 
 ## card-w7 (card)
 - → W.7 [loads]
-- → R.3 [loads]
-- → E.3 [loads]
-- → V.6 [loads]
-- → E.2 [loads]
 - → R.1 [loads]
-- → PS.1 [loads]
-- → PS.6 [loads]
 - → R.6 [loads]
-- → M.6 [loads]
-- → E.1 [loads]
+- → E.2 [loads]
+- → V.6 [loads]
+- → R.3 [loads]
 - → R.5 [loads]
-- → V.3 [loads]
+- → PS.6 [loads]
 - → L.7 [loads]
+- → PS.1 [loads]
+- → E.1 [loads]
+- → M.6 [loads]
+- → V.3 [loads]
+- → E.3 [loads]
 - ← w7 [has_card]
 
 ## card-w8 (card)
-- → W.10 [loads]
-- → W.3 [loads]
-- → T.11 [loads]
-- → T.1 [loads]
-- → E.3 [loads]
-- → L.4 [loads]
-- → E.2 [loads]
-- → M.4 [loads]
-- → L.5 [loads]
-- → V.0 [loads]
-- → W.9 [loads]
-- → M.5 [loads]
-- → C.7 [loads]
-- → W.7 [loads]
-- → C.4 [loads]
-- → L.6 [loads]
-- → M.8 [loads]
-- → S.3 [loads]
-- → M.6 [loads]
-- → T.10 [loads]
-- → T.0 [loads]
-- → W.5 [loads]
-- → V.7 [loads]
-- → G.2 [loads]
-- → C.6 [loads]
-- → I.7 [loads]
-- → S.7 [loads]
-- → V.4 [loads]
-- → T.9 [loads]
-- → W.6 [loads]
-- → I.4 [loads]
-- → W.1 [loads]
 - → V.5 [loads]
-- → S.4 [loads]
-- → T.7 [loads]
-- → L.3 [loads]
-- → S.5 [loads]
-- → M.3 [loads]
-- → V.8 [loads]
-- → R.7 [loads]
-- → M.2 [loads]
-- → V.1 [loads]
-- → G.4 [loads]
-- → V.6 [loads]
-- → R.4 [loads]
 - → L.9 [loads]
 - → S.8 [loads]
+- → M.3 [loads]
+- → M.5 [loads]
+- → V.1 [loads]
+- → W.9 [loads]
+- → L.4 [loads]
+- → C.4 [loads]
+- → T.9 [loads]
+- → V.6 [loads]
+- → R.4 [loads]
+- → E.2 [loads]
+- → S.4 [loads]
+- → V.8 [loads]
 - → I.6 [loads]
-- → T.5 [loads]
-- → S.6 [loads]
-- → R.5 [loads]
+- → C.7 [loads]
+- → L.3 [loads]
+- → L.5 [loads]
+- → M.6 [loads]
+- → T.0 [loads]
+- → R.7 [loads]
 - → C.3 [loads]
+- → M.8 [loads]
+- → S.7 [loads]
+- → W.7 [loads]
+- → W.10 [loads]
+- → G.2 [loads]
+- → R.5 [loads]
+- → S.3 [loads]
+- → T.7 [loads]
+- → S.5 [loads]
+- → W.5 [loads]
+- → W.3 [loads]
+- → T.10 [loads]
+- → T.11 [loads]
+- → T.5 [loads]
+- → M.2 [loads]
+- → V.4 [loads]
+- → I.4 [loads]
+- → G.4 [loads]
+- → E.3 [loads]
+- → V.0 [loads]
+- → W.1 [loads]
+- → L.6 [loads]
+- → C.6 [loads]
+- → M.4 [loads]
+- → T.1 [loads]
+- → V.7 [loads]
+- → I.7 [loads]
+- → W.6 [loads]
+- → S.6 [loads]
 - ← w8 [has_card]
 
 ## check_accent_surfaces (check)
@@ -2425,6 +2442,11 @@
 - → E.3 [enforces]
 - ← w7 [gated_by]
 
+## check_skeleton (check)
+- → SKL.1 [enforces]
+- → SKL.2 [enforces]
+- ← w7 [gated_by]
+
 ## check_spacing_scale (check)
 - → G.1 [enforces]
 - → R.2 [enforces]
@@ -2730,6 +2752,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-empty-states [provides_structure]
 
 ## comp-capture-form (component-profile)
 - → design-index [index]
@@ -2741,6 +2764,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-newsletter-signup [provides_structure]
 
 ## comp-cards-n (component-profile)
 - → design-index [index]
@@ -2752,6 +2776,12 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-blog-cards [provides_structure]
+- ← skeleton-hyperui-cards [provides_structure]
+- ← skeleton-hyperui-feature-grids [provides_structure]
+- ← skeleton-hyperui-grids [provides_structure]
+- ← skeleton-hyperui-product-cards [provides_structure]
+- ← skeleton-hyperui-team-sections [provides_structure]
 
 ## comp-comparison (component-profile)
 - → design-index [index]
@@ -2763,6 +2793,8 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-pricing [provides_structure]
+- ← skeleton-hyperui-tables [provides_structure]
 
 ## comp-editorial (component-profile)
 - → design-index [index]
@@ -2774,6 +2806,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-details-list [provides_structure]
 
 ## comp-faq (component-profile)
 - → design-index [index]
@@ -2785,6 +2818,8 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-accordions [provides_structure]
+- ← skeleton-hyperui-faqs [provides_structure]
 
 ## comp-footer-bar (component-profile)
 - → design-index [index]
@@ -2807,6 +2842,15 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-checkboxes [provides_structure]
+- ← skeleton-hyperui-contact-forms [provides_structure]
+- ← skeleton-hyperui-file-uploaders [provides_structure]
+- ← skeleton-hyperui-inputs [provides_structure]
+- ← skeleton-hyperui-quantity-inputs [provides_structure]
+- ← skeleton-hyperui-radio-groups [provides_structure]
+- ← skeleton-hyperui-range-inputs [provides_structure]
+- ← skeleton-hyperui-selects [provides_structure]
+- ← skeleton-hyperui-textareas [provides_structure]
 
 ## comp-full-bleed (component-profile)
 - → design-index [index]
@@ -2818,6 +2862,8 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-banners [provides_structure]
+- ← skeleton-hyperui-ctas [provides_structure]
 
 ## comp-hero-act-merge (component-profile)
 - → design-index [index]
@@ -2851,6 +2897,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-logo-clouds [provides_structure]
 
 ## comp-map-finder (component-profile)
 - → design-index [index]
@@ -2873,6 +2920,8 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-media [provides_structure]
+- ← skeleton-hyperui-product-collections [provides_structure]
 
 ## comp-nav-bar (component-profile)
 - → design-index [index]
@@ -2906,6 +2955,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-testimonials [provides_structure]
 
 ## comp-sequence (component-profile)
 - → design-index [index]
@@ -2917,6 +2967,8 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-steps [provides_structure]
+- ← skeleton-hyperui-timelines [provides_structure]
 
 ## comp-split-media (component-profile)
 - → design-index [index]
@@ -2928,6 +2980,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-sections [provides_structure]
 
 ## comp-stacked-hero (component-profile)
 - → design-index [index]
@@ -2950,6 +3003,7 @@
 - → w6 [used_in]
 - → w7 [used_in]
 - ← design-index [contains]
+- ← skeleton-hyperui-stats [provides_structure]
 
 ## comp-text-index (component-profile)
 - → design-index [index]
@@ -3090,6 +3144,8 @@
 - → recipe-stamp-check [contains]
 - → recipe-word-cycler [contains]
 - → recipe-write-lines [contains]
+- → skeletons-index [contains]
+- → skeleton-hyperui [contains]
 - → rules-T [rules]
 - → rules-C [rules]
 - → rules-L [rules]
@@ -3126,6 +3182,7 @@
 - → rules-M [rules]
 - → rules-I [rules]
 - → rules-V [rules]
+- → rules-SKL [rules]
 - → rules-R [rules]
 - → rules-S [rules]
 - → rules-VG [rules]
@@ -3164,6 +3221,7 @@
 - → recipe-stamp-check [templates]
 - → recipe-word-cycler [templates]
 - → recipe-write-lines [templates]
+- → skeleton-hyperui [templates]
 - → template-wireframe-cards [templates]
 - → template-system-tile [templates]
 - → template-astro [templates]
@@ -3178,6 +3236,7 @@
 - ← design-index [index]
 - ← scorer-patterns [index]
 - ← patterns-index [index]
+- ← skeletons-index [index]
 - ← comp-editorial [index]
 - ← comp-badge-center [index]
 - ← comp-map-finder [index]
@@ -3203,6 +3262,7 @@
 - ← comp-hero-act-merge [index]
 - ← rules-REF [index]
 - ← rules-B [index]
+- ← rules-SKL [index]
 - ← rules-VG [index]
 - ← rules-SB [index]
 - ← rules-DNA [index]
@@ -7445,6 +7505,12 @@
 - → M.5 [contains]
 - → M.6 [contains]
 - → M.7 [contains]
+- → M.9 [contains]
+- → M.10 [contains]
+- → M.11 [contains]
+- → M.12 [contains]
+- → M.13 [contains]
+- → M.14 [contains]
 - → M.8 [contains]
 - ← design-index [rules]
 - ← LAW.DNA [depends_on]
@@ -7557,6 +7623,7 @@
 - ← comp-footer-bar [see_also]
 - ← comp-proof-band [see_also]
 - ← comp-hero-act-merge [see_also]
+- ← rules-SKL [see_also]
 - ← rules-A [see_also]
 - ← design-index [rules]
 
@@ -7600,6 +7667,17 @@
 - ← design-index [rules]
 - ← rules-VG [see_also]
 - ← rules-DM [see_also]
+- ← design-index [rules]
+
+## rules-SKL (rulebook)
+- → design-index [index]
+- → rules-REF [see_also]
+- → section-catalog [see_also]
+- → BASE.ACSS [see_also]
+- → w7 [used_in]
+- → SKL.1 [contains]
+- → SKL.2 [contains]
+- ← skeletons-index [see_also]
 - ← design-index [rules]
 
 ## rules-T (rules)
@@ -7713,6 +7791,7 @@
 - ← rules-SB [see_also]
 
 ## section-catalog (doc)
+- → skeleton-hyperui [see_also]
 - → section-catalog#split-media [contains]
 - → section-catalog#stacked-hero [contains]
 - → section-catalog#proof-band [contains]
@@ -7816,6 +7895,7 @@
 - ← pattern-services-service-detail-pricing-cards-n [composition]
 - ← pattern-media-blog-content-editorial [composition]
 - ← pattern-media-home-hero-stacked-hero [composition]
+- ← skeletons-index [see_also]
 - ← comp-editorial [see_also]
 - ← comp-badge-center [see_also]
 - ← comp-map-finder [see_also]
@@ -7839,6 +7919,7 @@
 - ← comp-footer-bar [see_also]
 - ← comp-proof-band [see_also]
 - ← comp-hero-act-merge [see_also]
+- ← rules-SKL [see_also]
 - ← rules-A [see_also]
 - ← design-index [contains]
 
@@ -7916,6 +7997,179 @@
 
 ## sizing-modes (rubric)
 - ← R.7 [scored_by]
+
+## skeleton-hyperui (skeleton-source)
+- → skeleton-hyperui-accordions [contains]
+- → skeleton-hyperui-banners [contains]
+- → skeleton-hyperui-blog-cards [contains]
+- → skeleton-hyperui-cards [contains]
+- → skeleton-hyperui-checkboxes [contains]
+- → skeleton-hyperui-contact-forms [contains]
+- → skeleton-hyperui-ctas [contains]
+- → skeleton-hyperui-details-list [contains]
+- → skeleton-hyperui-empty-states [contains]
+- → skeleton-hyperui-faqs [contains]
+- → skeleton-hyperui-feature-grids [contains]
+- → skeleton-hyperui-file-uploaders [contains]
+- → skeleton-hyperui-grids [contains]
+- → skeleton-hyperui-inputs [contains]
+- → skeleton-hyperui-logo-clouds [contains]
+- → skeleton-hyperui-media [contains]
+- → skeleton-hyperui-newsletter-signup [contains]
+- → skeleton-hyperui-pricing [contains]
+- → skeleton-hyperui-product-cards [contains]
+- → skeleton-hyperui-product-collections [contains]
+- → skeleton-hyperui-quantity-inputs [contains]
+- → skeleton-hyperui-radio-groups [contains]
+- → skeleton-hyperui-range-inputs [contains]
+- → skeleton-hyperui-sections [contains]
+- → skeleton-hyperui-selects [contains]
+- → skeleton-hyperui-stats [contains]
+- → skeleton-hyperui-steps [contains]
+- → skeleton-hyperui-tables [contains]
+- → skeleton-hyperui-team-sections [contains]
+- → skeleton-hyperui-testimonials [contains]
+- → skeleton-hyperui-textareas [contains]
+- → skeleton-hyperui-timelines [contains]
+- ← design-index [contains]
+- ← skeletons-index [contains]
+- ← design-index [templates]
+- ← section-catalog [see_also]
+
+## skeleton-hyperui-accordions (skeleton-family)
+- → comp-faq [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-banners (skeleton-family)
+- → comp-full-bleed [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-blog-cards (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-cards (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-checkboxes (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-contact-forms (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-ctas (skeleton-family)
+- → comp-full-bleed [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-details-list (skeleton-family)
+- → comp-editorial [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-empty-states (skeleton-family)
+- → comp-badge-center [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-faqs (skeleton-family)
+- → comp-faq [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-feature-grids (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-file-uploaders (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-grids (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-inputs (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-logo-clouds (skeleton-family)
+- → comp-logo-wall [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-media (skeleton-family)
+- → comp-media-gallery [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-newsletter-signup (skeleton-family)
+- → comp-capture-form [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-pricing (skeleton-family)
+- → comp-comparison [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-product-cards (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-product-collections (skeleton-family)
+- → comp-media-gallery [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-quantity-inputs (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-radio-groups (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-range-inputs (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-sections (skeleton-family)
+- → comp-split-media [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-selects (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-stats (skeleton-family)
+- → comp-stat-band [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-steps (skeleton-family)
+- → comp-sequence [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-tables (skeleton-family)
+- → comp-comparison [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-team-sections (skeleton-family)
+- → comp-cards-n [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-testimonials (skeleton-family)
+- → comp-quote-grid [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-textareas (skeleton-family)
+- → comp-form-panel [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeleton-hyperui-timelines (skeleton-family)
+- → comp-sequence [provides_structure]
+- ← skeleton-hyperui [contains]
+
+## skeletons-index (index)
+- → design-index [index]
+- → section-catalog [see_also]
+- → rules-SKL [see_also]
+- → skeleton-hyperui [contains]
+- ← design-index [contains]
 
 ## template-astro (template)
 - ← design-index [templates]
@@ -8689,6 +8943,8 @@
 - → M.12 [enforces_at]
 - → M.13 [enforces_at]
 - → M.14 [enforces_at]
+- → SKL.1 [enforces_at]
+- → SKL.2 [enforces_at]
 - → card-w7 [has_card]
 - → checklist-w7 [has_checklist]
 - → check_assembly [gated_by]
@@ -8702,6 +8958,7 @@
 - → check_speed_budget [gated_by]
 - → check_motion_recipes [gated_by]
 - → check_motion_js_budget [gated_by]
+- → check_skeleton [gated_by]
 - → check_mobile_budget [gated_by]
 - → check_viewport [gated_by]
 - → check_tap_size [gated_by]
@@ -8778,6 +9035,7 @@
 - ← rules-PS [used_in]
 - ← rules-P [used_in]
 - ← rules-M [used_in]
+- ← rules-SKL [used_in]
 - ← rules-R [used_in]
 - ← rules-SB [used_in]
 - ← rules-DM [used_in]

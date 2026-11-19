@@ -3,7 +3,7 @@ id: design-index
 type: index
 links:
   sequences: [w0, w1, w2, w3, w4, w5, w6, w7, w8]
-  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS, comp-app-band, comp-badge-center, comp-capture-form, comp-cards-n, comp-comparison, comp-faq, comp-footer-bar, comp-form-panel, comp-full-bleed, comp-hero-act-merge, comp-link-grid, comp-logo-wall, comp-map-finder, comp-media-gallery, comp-nav-bar, comp-quote-grid, comp-sequence, comp-split-media, comp-stacked-hero, comp-stat-band, comp-text-index, comp-editorial, comp-proof-band, motion-taxonomy, motion-classifier, recipe-axis-grow, recipe-backdrop-loops, recipe-blur-reveal, recipe-clip-conveyor, recipe-dash-ticker, recipe-draw-icon, recipe-draw-icon-loop, recipe-line-mask-entrance, recipe-menu-cascade, recipe-module-stack, recipe-pop-scan, recipe-progress-rig, recipe-radar-pulse, recipe-reveal-fade, recipe-scan-sweep, recipe-scroll-draw, recipe-snap-arrange, recipe-stamp-check, recipe-word-cycler, recipe-write-lines]
+  contains: [enforcement, section-catalog, primitives, patterns-index, design-genome, dna-map, knobs, score-vectors, BASE.ACSS, comp-app-band, comp-badge-center, comp-capture-form, comp-cards-n, comp-comparison, comp-faq, comp-footer-bar, comp-form-panel, comp-full-bleed, comp-hero-act-merge, comp-link-grid, comp-logo-wall, comp-map-finder, comp-media-gallery, comp-nav-bar, comp-quote-grid, comp-sequence, comp-split-media, comp-stacked-hero, comp-stat-band, comp-text-index, comp-editorial, comp-proof-band, motion-taxonomy, motion-classifier, recipe-axis-grow, recipe-backdrop-loops, recipe-blur-reveal, recipe-clip-conveyor, recipe-dash-ticker, recipe-draw-icon, recipe-draw-icon-loop, recipe-line-mask-entrance, recipe-menu-cascade, recipe-module-stack, recipe-pop-scan, recipe-progress-rig, recipe-radar-pulse, recipe-reveal-fade, recipe-scan-sweep, recipe-scroll-draw, recipe-snap-arrange, recipe-stamp-check, recipe-word-cycler, recipe-write-lines, skeletons-index, skeleton-hyperui]
   rules: [rules-T, rules-C, rules-L, rules-G, rules-S, rules-I, rules-V, rules-M, rules-R, rules-W, rules-E, rules-P, rules-PS, rules-DNA, rules-B, rules-SB, rules-DM, rules-VG, rules-REF, rules-A]
   contains_also: [section-build]
   templates: [template-astro, template-wireframe-cards, template-system-tile]
@@ -30,6 +30,9 @@ the option's metadata; retrieval is complete (nothing silently dropped;
 a skipped high-similarity ref is logged in `ignored`); operator sites
 rank above Mobbin; canon overrides generated defaults (incl. the ACSS
 baseline) wherever they conflict — ACSS only fills what canon does not
+specify. **Skeleton sources** (`templates/skeletons/**`) are a
+structure-only tier below canon: markup shape + a11y attributes only —
+never canon refs, never visual decisions (rules/SKL.md)
 specify. Every
 **preview / choosing** artefact — the W3 layout picker, the W4 look
 picker, the W5 system sheet — is quick self-contained HTML under

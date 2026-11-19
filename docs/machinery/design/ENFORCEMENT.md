@@ -177,11 +177,13 @@ closed set.
 | A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w7 |
 | A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w7 |
 | A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w7 |
-| M.9 |  | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
-| M.10 |  | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
-| M.11 |  | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
-| M.12 |  | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
-| M.13 |  | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
-| M.14 |  | structural | script | `check_motion_js_budget` | animation JS ≤4KB and no animation library unless licensed in DESIGN-PLAN | w7 |
+| M.9 | Recipe membership | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
+| M.10 | No dead keyframes | structural | script | `check_motion_recipes` | every animation-name resolves to a defined @keyframes — dead names are defects | w7 |
+| M.11 | Property budget | stylistic | script | `check_motion_recipes` | animated properties ⊆ {transform,opacity,stroke-*,fill-opacity,color} unless the owning recipe is budget:layout-risk | w7 |
+| M.12 | Loop licensing | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
+| M.13 | Reduced-motion parity | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
+| M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | animation JS ≤4KB and no animation library unless licensed in DESIGN-PLAN | w7 |
+| SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
+| SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
 
-174 rules — script 143, reviewer 30, operator 1; invariant 50, structural 48, stylistic 76.
+176 rules — script 145, reviewer 30, operator 1; invariant 50, structural 50, stylistic 76.

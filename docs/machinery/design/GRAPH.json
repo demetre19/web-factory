@@ -525,6 +525,11 @@
    "type": "spec",
    "file": "motion/CLASSIFY-MOTION.md"
   },
+  "skeletons-index": {
+   "id": "skeletons-index",
+   "type": "index",
+   "file": "skeletons/README.md"
+  },
   "comp-editorial": {
    "id": "comp-editorial",
    "type": "component-profile",
@@ -694,6 +699,11 @@
    "id": "rules-V",
    "type": "rules",
    "file": "rules/V.md"
+  },
+  "rules-SKL": {
+   "id": "rules-SKL",
+   "type": "rulebook",
+   "file": "rules/SKL.md"
   },
   "rules-R": {
    "id": "rules-R",
@@ -1310,6 +1320,36 @@
    "type": "rule",
    "file": "rules/M.md"
   },
+  "M.9": {
+   "id": "M.9",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
+  "M.10": {
+   "id": "M.10",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
+  "M.11": {
+   "id": "M.11",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
+  "M.12": {
+   "id": "M.12",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
+  "M.13": {
+   "id": "M.13",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
+  "M.14": {
+   "id": "M.14",
+   "type": "rule",
+   "file": "rules/M.md"
+  },
   "M.8": {
    "id": "M.8",
    "type": "rule",
@@ -1409,6 +1449,16 @@
    "id": "V.9",
    "type": "rule",
    "file": "rules/V.md"
+  },
+  "SKL.1": {
+   "id": "SKL.1",
+   "type": "rule",
+   "file": "rules/SKL.md"
+  },
+  "SKL.2": {
+   "id": "SKL.2",
+   "type": "rule",
+   "file": "rules/SKL.md"
   },
   "R.1": {
    "id": "R.1",
@@ -2162,36 +2212,16 @@
    "id": "check_component_profile",
    "type": "check"
   },
-  "M.9": {
-   "id": "M.9",
-   "type": "rule"
-  },
   "check_motion_recipes": {
    "id": "check_motion_recipes",
    "type": "check"
   },
-  "M.10": {
-   "id": "M.10",
-   "type": "rule"
-  },
-  "M.11": {
-   "id": "M.11",
-   "type": "rule"
-  },
-  "M.12": {
-   "id": "M.12",
-   "type": "rule"
-  },
-  "M.13": {
-   "id": "M.13",
-   "type": "rule"
-  },
-  "M.14": {
-   "id": "M.14",
-   "type": "rule"
-  },
   "check_motion_js_budget": {
    "id": "check_motion_js_budget",
+   "type": "check"
+  },
+  "check_skeleton": {
+   "id": "check_skeleton",
    "type": "check"
   },
   "w0": {
@@ -2493,6 +2523,171 @@
    "id": "recipe-write-lines",
    "type": "motion-recipe",
    "file": "templates/motion/write-lines/recipe.md"
+  },
+  "skeleton-hyperui": {
+   "id": "skeleton-hyperui",
+   "type": "skeleton-source",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-accordions": {
+   "id": "skeleton-hyperui-accordions",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-banners": {
+   "id": "skeleton-hyperui-banners",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-blog-cards": {
+   "id": "skeleton-hyperui-blog-cards",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-cards": {
+   "id": "skeleton-hyperui-cards",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-checkboxes": {
+   "id": "skeleton-hyperui-checkboxes",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-contact-forms": {
+   "id": "skeleton-hyperui-contact-forms",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-ctas": {
+   "id": "skeleton-hyperui-ctas",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-details-list": {
+   "id": "skeleton-hyperui-details-list",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-empty-states": {
+   "id": "skeleton-hyperui-empty-states",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-faqs": {
+   "id": "skeleton-hyperui-faqs",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-feature-grids": {
+   "id": "skeleton-hyperui-feature-grids",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-file-uploaders": {
+   "id": "skeleton-hyperui-file-uploaders",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-grids": {
+   "id": "skeleton-hyperui-grids",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-inputs": {
+   "id": "skeleton-hyperui-inputs",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-logo-clouds": {
+   "id": "skeleton-hyperui-logo-clouds",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-media": {
+   "id": "skeleton-hyperui-media",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-newsletter-signup": {
+   "id": "skeleton-hyperui-newsletter-signup",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-pricing": {
+   "id": "skeleton-hyperui-pricing",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-product-cards": {
+   "id": "skeleton-hyperui-product-cards",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-product-collections": {
+   "id": "skeleton-hyperui-product-collections",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-quantity-inputs": {
+   "id": "skeleton-hyperui-quantity-inputs",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-radio-groups": {
+   "id": "skeleton-hyperui-radio-groups",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-range-inputs": {
+   "id": "skeleton-hyperui-range-inputs",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-sections": {
+   "id": "skeleton-hyperui-sections",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-selects": {
+   "id": "skeleton-hyperui-selects",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-stats": {
+   "id": "skeleton-hyperui-stats",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-steps": {
+   "id": "skeleton-hyperui-steps",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-tables": {
+   "id": "skeleton-hyperui-tables",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-team-sections": {
+   "id": "skeleton-hyperui-team-sections",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-testimonials": {
+   "id": "skeleton-hyperui-testimonials",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-textareas": {
+   "id": "skeleton-hyperui-textareas",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
+  },
+  "skeleton-hyperui-timelines": {
+   "id": "skeleton-hyperui-timelines",
+   "type": "skeleton-family",
+   "file": "templates/skeletons/hyperui"
   },
   "template-wireframe-cards": {
    "id": "template-wireframe-cards",
@@ -3293,6 +3488,16 @@
   {
    "from": "design-index",
    "to": "recipe-write-lines",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
+   "to": "skeletons-index",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
+   "to": "skeleton-hyperui",
    "type": "contains"
   },
   {
@@ -11996,6 +12201,26 @@
    "type": "used_in"
   },
   {
+   "from": "skeletons-index",
+   "to": "design-index",
+   "type": "index"
+  },
+  {
+   "from": "skeletons-index",
+   "to": "section-catalog",
+   "type": "see_also"
+  },
+  {
+   "from": "skeletons-index",
+   "to": "rules-SKL",
+   "type": "see_also"
+  },
+  {
+   "from": "skeletons-index",
+   "to": "skeleton-hyperui",
+   "type": "contains"
+  },
+  {
    "from": "comp-editorial",
    "to": "design-index",
    "type": "index"
@@ -13143,6 +13368,31 @@
   {
    "from": "rules-V",
    "to": "w8",
+   "type": "used_in"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "design-index",
+   "type": "index"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "rules-REF",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "section-catalog",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "BASE.ACSS",
+   "type": "see_also"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "w7",
    "type": "used_in"
   },
   {
@@ -17217,6 +17467,36 @@
   },
   {
    "from": "rules-M",
+   "to": "M.9",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
+   "to": "M.10",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
+   "to": "M.11",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
+   "to": "M.12",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
+   "to": "M.13",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
+   "to": "M.14",
+   "type": "contains"
+  },
+  {
+   "from": "rules-M",
    "to": "M.8",
    "type": "contains"
   },
@@ -17323,6 +17603,21 @@
   {
    "from": "rules-V",
    "to": "V.9",
+   "type": "contains"
+  },
+  {
+   "from": "design-index",
+   "to": "rules-SKL",
+   "type": "rules"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "SKL.1",
+   "type": "contains"
+  },
+  {
+   "from": "rules-SKL",
+   "to": "SKL.2",
    "type": "contains"
   },
   {
@@ -19401,6 +19696,26 @@
    "type": "enforces_at"
   },
   {
+   "from": "check_skeleton",
+   "to": "SKL.1",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "SKL.1",
+   "type": "enforces_at"
+  },
+  {
+   "from": "check_skeleton",
+   "to": "SKL.2",
+   "type": "enforces"
+  },
+  {
+   "from": "w7",
+   "to": "SKL.2",
+   "type": "enforces_at"
+  },
+  {
    "from": "design-index",
    "to": "w0",
    "type": "sequences"
@@ -19457,37 +19772,7 @@
   },
   {
    "from": "card-w7",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
    "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w7",
-   "to": "PS.6",
    "type": "loads"
   },
   {
@@ -19497,12 +19782,17 @@
   },
   {
    "from": "card-w7",
-   "to": "M.6",
+   "to": "E.2",
    "type": "loads"
   },
   {
    "from": "card-w7",
-   "to": "E.1",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "R.3",
    "type": "loads"
   },
   {
@@ -19512,12 +19802,37 @@
   },
   {
    "from": "card-w7",
-   "to": "V.3",
+   "to": "PS.6",
    "type": "loads"
   },
   {
    "from": "card-w7",
    "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "PS.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "V.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w7",
+   "to": "E.3",
    "type": "loads"
   },
   {
@@ -19578,6 +19893,11 @@
   {
    "from": "w7",
    "to": "check_motion_js_budget",
+   "type": "gated_by"
+  },
+  {
+   "from": "w7",
+   "to": "check_skeleton",
    "type": "gated_by"
   },
   {
@@ -19807,12 +20127,12 @@
   },
   {
    "from": "card-w5",
-   "to": "C.2",
+   "to": "I.3",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "W.2",
+   "to": "G.3",
    "type": "loads"
   },
   {
@@ -19822,7 +20142,22 @@
   },
   {
    "from": "card-w5",
-   "to": "E.2",
+   "to": "C.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "R.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "I.1",
    "type": "loads"
   },
   {
@@ -19832,27 +20167,7 @@
   },
   {
    "from": "card-w5",
-   "to": "R.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "V.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "L.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.3",
+   "to": "S.2",
    "type": "loads"
   },
   {
@@ -19862,22 +20177,32 @@
   },
   {
    "from": "card-w5",
-   "to": "I.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "C.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
    "to": "M.1",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "S.2",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "L.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "C.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "T.4",
    "type": "loads"
   },
   {
@@ -19887,12 +20212,22 @@
   },
   {
    "from": "card-w5",
-   "to": "T.3",
+   "to": "C.3",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "G.3",
+   "to": "C.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w5",
+   "to": "V.2",
    "type": "loads"
   },
   {
@@ -19907,17 +20242,17 @@
   },
   {
    "from": "card-w5",
-   "to": "R.2",
+   "to": "S.5",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "W.8",
+   "to": "I.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "S.7",
+   "to": "T.3",
    "type": "loads"
   },
   {
@@ -19927,27 +20262,12 @@
   },
   {
    "from": "card-w5",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "T.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
    "to": "M.2",
    "type": "loads"
   },
   {
    "from": "card-w5",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w5",
-   "to": "I.1",
+   "to": "R.1",
    "type": "loads"
   },
   {
@@ -19957,7 +20277,7 @@
   },
   {
    "from": "card-w5",
-   "to": "C.3",
+   "to": "W.8",
    "type": "loads"
   },
   {
@@ -20107,12 +20427,12 @@
   },
   {
    "from": "card-w4",
-   "to": "C.2",
+   "to": "C.5",
    "type": "loads"
   },
   {
    "from": "card-w4",
-   "to": "C.5",
+   "to": "S.1",
    "type": "loads"
   },
   {
@@ -20122,7 +20442,7 @@
   },
   {
    "from": "card-w4",
-   "to": "S.1",
+   "to": "C.2",
    "type": "loads"
   },
   {
@@ -20222,12 +20542,12 @@
   },
   {
    "from": "card-w1",
-   "to": "T.8",
+   "to": "V.6",
    "type": "loads"
   },
   {
    "from": "card-w1",
-   "to": "V.6",
+   "to": "T.8",
    "type": "loads"
   },
   {
@@ -20237,12 +20557,12 @@
   },
   {
    "from": "card-w1",
-   "to": "E.4",
+   "to": "E.1",
    "type": "loads"
   },
   {
    "from": "card-w1",
-   "to": "E.1",
+   "to": "E.4",
    "type": "loads"
   },
   {
@@ -20327,17 +20647,17 @@
   },
   {
    "from": "card-w2",
+   "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
+   "to": "E.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
    "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "W.2",
    "type": "loads"
   },
   {
@@ -20347,17 +20667,17 @@
   },
   {
    "from": "card-w2",
+   "to": "W.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w2",
    "to": "W.6",
    "type": "loads"
   },
   {
    "from": "card-w2",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w2",
-   "to": "E.1",
+   "to": "W.8",
    "type": "loads"
   },
   {
@@ -20392,22 +20712,12 @@
   },
   {
    "from": "card-w6",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
    "to": "I.3",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "V.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "M.2",
+   "to": "M.6",
    "type": "loads"
   },
   {
@@ -20417,7 +20727,17 @@
   },
   {
    "from": "card-w6",
-   "to": "C.1",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "R.5",
    "type": "loads"
   },
   {
@@ -20437,27 +20757,27 @@
   },
   {
    "from": "card-w6",
-   "to": "S.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
-   "to": "W.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w6",
    "to": "I.1",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "M.6",
+   "to": "S.2",
    "type": "loads"
   },
   {
    "from": "card-w6",
-   "to": "R.5",
+   "to": "C.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w6",
+   "to": "V.4",
    "type": "loads"
   },
   {
@@ -20552,227 +20872,7 @@
   },
   {
    "from": "card-w8",
-   "to": "W.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.11",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "E.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.10",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.0",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "C.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.9",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "I.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "W.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
    "to": "V.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "T.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "L.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "S.5",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.8",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.7",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "M.2",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "G.4",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "V.6",
-   "type": "loads"
-  },
-  {
-   "from": "card-w8",
-   "to": "R.4",
    "type": "loads"
   },
   {
@@ -20787,17 +20887,127 @@
   },
   {
    "from": "card-w8",
+   "to": "M.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.9",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
    "to": "I.6",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "T.5",
+   "to": "C.7",
    "type": "loads"
   },
   {
    "from": "card-w8",
-   "to": "S.6",
+   "to": "L.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "R.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.8",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.2",
    "type": "loads"
   },
   {
@@ -20807,7 +21017,117 @@
   },
   {
    "from": "card-w8",
-   "to": "C.3",
+   "to": "S.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.10",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.11",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.5",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.2",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "G.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "E.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.0",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "L.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "C.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "M.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "T.1",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "V.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "I.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "W.6",
+   "type": "loads"
+  },
+  {
+   "from": "card-w8",
+   "to": "S.6",
    "type": "loads"
   },
   {
@@ -20867,16 +21187,6 @@
   },
   {
    "from": "card-w3",
-   "to": "R.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.1",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
    "to": "W.2",
    "type": "loads"
   },
@@ -20887,7 +21197,22 @@
   },
   {
    "from": "card-w3",
+   "to": "R.3",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
    "to": "W.4",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "L.7",
+   "type": "loads"
+  },
+  {
+   "from": "card-w3",
+   "to": "L.1",
    "type": "loads"
   },
   {
@@ -20898,11 +21223,6 @@
   {
    "from": "card-w3",
    "to": "V.3",
-   "type": "loads"
-  },
-  {
-   "from": "card-w3",
-   "to": "L.7",
    "type": "loads"
   },
   {
@@ -21224,6 +21544,336 @@
    "from": "recipe-write-lines",
    "to": "motion-taxonomy",
    "type": "consumes"
+  },
+  {
+   "from": "design-index",
+   "to": "skeleton-hyperui",
+   "type": "templates"
+  },
+  {
+   "from": "section-catalog",
+   "to": "skeleton-hyperui",
+   "type": "see_also"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-accordions",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-accordions",
+   "to": "comp-faq",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-banners",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-banners",
+   "to": "comp-full-bleed",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-blog-cards",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-blog-cards",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-cards",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-cards",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-checkboxes",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-checkboxes",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-contact-forms",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-contact-forms",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-ctas",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-ctas",
+   "to": "comp-full-bleed",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-details-list",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-details-list",
+   "to": "comp-editorial",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-empty-states",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-empty-states",
+   "to": "comp-badge-center",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-faqs",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-faqs",
+   "to": "comp-faq",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-feature-grids",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-feature-grids",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-file-uploaders",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-file-uploaders",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-grids",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-grids",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-inputs",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-inputs",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-logo-clouds",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-logo-clouds",
+   "to": "comp-logo-wall",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-media",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-media",
+   "to": "comp-media-gallery",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-newsletter-signup",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-newsletter-signup",
+   "to": "comp-capture-form",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-pricing",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-pricing",
+   "to": "comp-comparison",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-product-cards",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-product-cards",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-product-collections",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-product-collections",
+   "to": "comp-media-gallery",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-quantity-inputs",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-quantity-inputs",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-radio-groups",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-radio-groups",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-range-inputs",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-range-inputs",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-sections",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-sections",
+   "to": "comp-split-media",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-selects",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-selects",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-stats",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-stats",
+   "to": "comp-stat-band",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-steps",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-steps",
+   "to": "comp-sequence",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-tables",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-tables",
+   "to": "comp-comparison",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-team-sections",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-team-sections",
+   "to": "comp-cards-n",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-testimonials",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-testimonials",
+   "to": "comp-quote-grid",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-textareas",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-textareas",
+   "to": "comp-form-panel",
+   "type": "provides_structure"
+  },
+  {
+   "from": "skeleton-hyperui",
+   "to": "skeleton-hyperui-timelines",
+   "type": "contains"
+  },
+  {
+   "from": "skeleton-hyperui-timelines",
+   "to": "comp-sequence",
+   "type": "provides_structure"
   },
   {
    "from": "design-index",

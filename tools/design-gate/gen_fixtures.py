@@ -1202,6 +1202,15 @@ MUT = {
      '@keyframes unregistered-spin { from { transform: rotate(0); '
      'width: 10px; } to { transform: rotate(1turn); width: 20px; } } '
      '.spin { animation: unregistered-spin 2s infinite; }')),
+ 'check_skeleton': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<section data-sec="proof" data-comp="logo-wall" '
+      'data-intent="proof" data-skeleton="hyperui/marketing/'
+      'logo-clouds/1" class="sec-band grid grid-cols-2 '
+      'bg-blue-50 text-lg">'
+      '<h3>Trusted</h3><svg viewBox="0 0 24 24"/></section>'),
+     ('REPL','MOBBIN-REFS.md','| mobbin-def456 |',
+      '| hyperui/marketing/faqs/1 |')),
  'check_motion_js_budget': mut(('SET','site/dist/_astro/mo.js',
      'gsap.to(".x",{y:9});' + 'x'*5000)),
  'check_card_contract': mut(('REPL','site/dist/home/index.html',

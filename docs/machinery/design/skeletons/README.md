@@ -1,3 +1,12 @@
+---
+id: skeletons-index
+type: index
+links:
+  index: design-index
+  see_also: [section-catalog, rules-SKL]
+  contains: [skeleton-hyperui]
+---
+
 # SKELETONS — structure-only markup sources
 
 Harvested component markup that builders may **adapt for structure** —

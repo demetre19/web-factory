@@ -2336,6 +2336,105 @@ def check_motion_recipes(ctx):
     return f
 
 
+SKL_STRUCTURE = re.compile(
+    r'^(?:sr-only|group|peer|col-(?:span|start|end)-\d+|row-(?:span|'
+    r'start|end)-\d+|order-(?:first|last|none|\d+)|grid|flex|inline-'
+    r'(?:flex|block|grid)|block|hidden|contents|grid-cols-\d+|grid-'
+    r'rows-\d+|items-(?:start|end|center|baseline|stretch)|'
+    r'justify-(?:start|end|center|between|around|evenly)|self-\w+|'
+    r'place-(?:items|content|self)-\w+|aspect-(?:square|video|auto)|'
+    r'\[data-[\w"-]+\]|sec-band|sec-inner|wf-container|card-grid|'
+    r'flow)$')
+SKL_RAW_VISUAL = re.compile(
+    r'^(?:bg-|text-(?!(?:wrap|balance|pretty)\b)|font-|leading-|'
+    r'tracking-|border(?:-[trblxyse])?(?!\s)|ring-|from-|via-|to-|'
+    r'fill-|stroke-|p[trblxyse]?-|m[trblxyse]?-|gap-|space-[xy]-|'
+    r'py-|px-|pt-|pb-|pl-|pr-|mt-|mb-|ml-|mr-|rounded|shadow|w-(?!full\b)'
+    r'|h-|min-h-|max-w-|opacity-|outline-|divide-|placeholder-|accent-)')
+SKL_ID = re.compile(
+    r'(?:skeleton[\w/-]*|hyperui/[\w/.-]+|templates/skeletons/[\w/.-]+)')
+
+
+def _skl_harvest_ids():
+    ids = set()
+    root = os.path.join(REPO, 'templates', 'skeletons')
+    for dp, _, fns in os.walk(root) if os.path.isdir(root) else []:
+        for fn in fns:
+            if not fn.endswith('.json'):
+                continue
+            try:
+                v = json.load(open(os.path.join(dp, fn)))
+                if v.get('id'):
+                    ids.add(str(v['id']))
+            except Exception:
+                pass
+    return ids
+
+
+def check_skeleton(ctx):
+    """SKL — skeleton sources are structure-only: a data-skeleton
+    section carries structure classes (grid/flex geometry, spans,
+    order, a11y, ACSS token classes) never raw visual utilities; a
+    `skeleton:` provenance on plan rows or markup must name an id in
+    the harvest; skeleton ids never appear as canon refs."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    harvest = _skl_harvest_ids()
+    # SKL.2 — skeleton ids never cited as canon
+    plan_t = ctx.read('DESIGN-PLAN.md') or ''
+    for m in re.finditer(
+            r'(?:refs?:\s*\[([^\]]*)\]|data-(?:refs|canon)="([^"]*)")',
+            plan_t):
+        toks = (m.group(1) or m.group(2) or '')
+        bad = [t for t in re.findall(SKL_ID, toks)]
+        if bad:
+            f.append(f'SKL.2 skeleton {bad[:3]} cited as canon — '
+                     'structure sources never supply visual canon '
+                     '(operator > endorsed > Mobbin only)')
+    mr = ctx.read('MOBBIN-REFS.md') or ''
+    for m in re.finditer(r'\|\s*(\S+)\s*\|', mr):
+        if SKL_ID.fullmatch(m.group(1)):
+            f.append(f'SKL.2 MOBBIN-REFS cites skeleton '
+                     f'{m.group(1)} — canon refs are Mobbin/operator '
+                     'sites only')
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<section\b[^>]*data-skeleton="([^"]*)"([^>]*)>',
+                txt):
+            skel, tag = m.group(1), m.group(0)
+            if harvest and skel not in harvest:
+                f.append(f'SKL.1 {name}: data-skeleton "{skel}" is '
+                         'not a harvest id — provenance names '
+                         'templates/skeletons/<src>/<file> ids')
+            cls = re.search(r'class="([^"]*)"', tag)
+            raw = [c for c in (cls.group(1).split() if cls else [])
+                   for c in [c.split(':')[-1]]
+                   if SKL_RAW_VISUAL.match(c) and
+                   not SKL_STRUCTURE.match(c)]
+            if raw:
+                f.append(f'SKL.1 {name} sec {skel}: raw visual '
+                         f'utilit{"y" if len(raw)==1 else "ies"} '
+                         f'{raw[:5]} on a skeleton-derived section — '
+                         'skeletons supply structure only; visuals '
+                         'come from surfaces + ACSS tokens')
+    # plan-row skeleton provenance must resolve to the harvest
+    for slug, r in ctx.rows():
+        sk = r.get('skeleton')
+        if sk:
+            if harvest and str(sk) not in harvest:
+                f.append(f'SKL.1 {slug}:{r.get("name")} skeleton '
+                         f'"{sk}" not in the harvest — record a real '
+                         'templates/skeletons id')
+            for t in re.findall(SKL_ID, ' '.join(
+                    str(x) for x in (r.get('refs') or []))):
+                f.append(f'SKL.2 {slug}:{r.get("name")} cites '
+                         f'{t} in refs — skeletons are structure '
+                         'provenance, never canon')
+    return f
+
+
 def check_motion_js_budget(ctx):
     """M.14 — animation-related JS ≤4KB and no animation library
     (gsap/anime/lottie) unless the plan licenses it."""
@@ -7735,6 +7834,37 @@ def build_graph():
             edges.append((rid, 'motion-taxonomy', 'consumes'))
             for wv in (fm.get('used_in') or []):
                 edges.append((rid, str(wv), 'used_in'))
+    skl_root = os.path.join(REPO, 'templates', 'skeletons')
+    if os.path.isdir(skl_root):
+        for src in sorted(os.listdir(skl_root)):
+            sdir = os.path.join(skl_root, src)
+            if not os.path.isdir(sdir):
+                continue
+            sid = 'skeleton-' + src
+            nodes[sid] = {'id': sid, 'type': 'skeleton-source',
+                          'file': f'templates/skeletons/{src}'}
+            edges.append(('design-index', sid, 'templates'))
+            edges.append(('section-catalog', sid, 'see_also'))
+            fam = {}
+            for dp, _, fns in os.walk(sdir):
+                for fn in fns:
+                    if not fn.endswith('.json') or                             fn.startswith('_'):
+                        continue
+                    try:
+                        v = json.load(open(os.path.join(dp, fn)))
+                    except Exception:
+                        continue
+                    comp = v.get('wf_composition')
+                    if v.get('family') and comp:
+                        fam.setdefault(v['family'], set()).add(comp)
+            for fm_, comps in sorted(fam.items()):
+                fid = f'{sid}-{fm_}'
+                nodes[fid] = {'id': fid, 'type': 'skeleton-family',
+                              'file': f'templates/skeletons/{src}'}
+                edges.append((sid, fid, 'contains'))
+                for comp in sorted(comps):
+                    edges.append((fid, 'comp-' + comp,
+                                  'provides_structure'))
     for tid, path in [('template-wireframe-cards',
                        'templates/wireframe-cards'),
                       ('template-system-tile', 'templates/system-tile'),
@@ -8055,6 +8185,7 @@ WAVE_CHECKS = {
            check_no_stray_styles, check_no_emoji,
            check_icon_discipline, check_speed_budget,
            check_motion_recipes, check_motion_js_budget,
+           check_skeleton,
            check_mobile_budget, check_viewport, check_tap_size,
            check_tile_page_parity, check_rhythm_render, check_copy_density,
            check_seo_lint, check_mobile_cta, check_measurable,
