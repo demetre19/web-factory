@@ -5999,8 +5999,10 @@ def check_seo_lint(ctx):
 # slices} with a key that only that command creates. Gates re-verify the
 # signature against the CURRENT inputs; a changed input voids the approval.
 
-OPERATOR_HOME = os.environ.get(
-    'WEB_FACTORY_OPERATOR_HOME', os.path.expanduser('~/.web-factory'))
+# operator home is fixed in production — the env override exists only
+# for the fixture/selftest harness (isolated key + approval dir)
+OPERATOR_HOME = os.path.expanduser(
+    os.environ.get('WF_SELFTEST_OPERATOR_HOME', '~/.web-factory'))
 
 
 def op_key(create=False):
@@ -6101,6 +6103,24 @@ def approval_state(ctx, wave):
             return 'ok'
         return 'stale'
     return 'ok'
+
+
+def lock_dna_map(ctx):
+    """The ONE lock point: approving w4 (via a consumed service nonce)
+    locks the DNA map to v1 — the look lock (DNA LAW). Called only
+    from approve_service.record_approval."""
+    m = dna_map(ctx)
+    if m is None:
+        return False
+    if isinstance(m.get('version'), int) and m['version'] >= 1:
+        return False
+    m['version'] = 1
+    m['hashes'] = dna_slices(m)
+    with open(os.path.join(ctx.dir, 'DNA.json'), 'w') as fh:
+        json.dump(m, fh, indent=1, sort_keys=True)
+    with open(os.path.join(ctx.dir, 'DNA.md'), 'w', encoding='utf-8')             as fh:
+        fh.write(render_dna_md(m))
+    return True
 
 
 def write_approval(ctx, wave, by='operator-service', design=None,
@@ -6455,9 +6475,9 @@ def cli_selftest():
         with open(os.path.join(home, '.web-factory', 'operator.key'),
                   'w') as fh:
             fh.write('fixture-key')
-        os.environ['WEB_FACTORY_OPERATOR_HOME'] = \
+        os.environ['WF_SELFTEST_OPERATOR_HOME'] = \
             os.path.join(home, '.web-factory')
-        gate_self.OPERATOR_HOME = os.environ['WEB_FACTORY_OPERATOR_HOME']
+        gate_self.OPERATOR_HOME = os.environ['WF_SELFTEST_OPERATOR_HOME']
         pd_ = os.path.join(tmpd, 'p')
         fxd = os.path.join(HERE, 'fixtures')
         shutil.copytree(os.path.join(fxd, '_base'), pd_, symlinks=True)
@@ -6638,9 +6658,9 @@ def cli_selftest():
             json.dump({'w0': {'pass': True, 'dna': None},
                        'w1': {'pass': True, 'approved': True,
                               'inputs_sha256': input_hashes(c1)}}, fh)
-        os.environ['WEB_FACTORY_OPERATOR_HOME'] = \
+        os.environ['WF_SELFTEST_OPERATOR_HOME'] = \
             os.path.join(home, '.web-factory')
-        env = dict(os.environ, HOME=home)
+        env = dict(os.environ, HOME=home, WF_SELFTEST_OPERATOR_HOME=os.path.join(home, '.web-factory'))
         rp = os.path.join(HERE, 'run.py')
         r = subprocess.run([sys.executable, rp, 'w2', pdir],
                            capture_output=True, text=True, env=env)

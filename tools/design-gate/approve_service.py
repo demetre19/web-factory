@@ -50,7 +50,13 @@ def issue_nonce(pipeline, wave):
     ctx = G.Ctx(pd)
     ih = G._h(G.input_hashes_for(ctx, wave))
     rec = {'wave': wave, 'pipeline': pd, 'inputs': ih, 'used': False,
-           'ts': datetime.datetime.now().isoformat(timespec='seconds')}
+           'ts': datetime.datetime.now().isoformat(timespec='seconds'),
+           'expires': (datetime.datetime.now() +
+                       datetime.timedelta(minutes=30)).isoformat(
+                           timespec='seconds')}
+    # the service signs what it issues — a nonce file the service did
+    # not mint is forged and refused at consume time
+    rec['sig'] = G._sig(rec, G.op_key(create=True))
     nonce = secrets.token_hex(16)
     os.makedirs(_nonces_dir(), exist_ok=True)
     p = _nonce_file(nonce)
@@ -71,6 +77,14 @@ def consume_nonce(nonce):
         return None, 'corrupt nonce'
     if rec.get('used'):
         return None, 'nonce already used'
+    key = G.op_key()
+    if not key or rec.get('sig') != G._sig(
+            {k: v for k, v in rec.items() if k != 'sig'}, key):
+        return None, 'nonce not service-issued (bad signature — the '                      'registry only honours its own)'
+    exp = rec.get('expires')
+    if exp and datetime.datetime.now() > \
+            datetime.datetime.fromisoformat(exp):
+        return None, 'nonce expired (30 min) — mint a fresh one'
     rec['used'] = True
     with open(p, 'w') as fh:
         json.dump(rec, fh)
@@ -87,6 +101,11 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     if wave not in G.APPROVABLE:
         return 2, (f'{wave} is not an approval point '
                    f'(approvable: {sorted(G.APPROVABLE)})')
+    if wave == 'w4' and not nonce:
+        return 1, ('approve REFUSED: w4 is the DNA v1 lock — it '
+                   'approves only via a consumed service nonce '
+                   '(run.py nonce w4 <dir>, then the picker/chat '
+                   'route). THE lock point, one documented channel.')
     nrec = None
     if nonce:
         nrec, err = consume_nonce(nonce)
@@ -106,10 +125,14 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     g = G.load_gates(ctx)
     if not (g.get(wave) or {}).get('pass'):
         return 1, f'approve REFUSED: {wave} has not passed'
+    if wave == 'w4' and G.lock_dna_map(ctx):
+        pass  # the DNA map is now v1 — the look lock, once, here
     rec = G.write_approval(ctx, wave, by=by, design=design,
                            nonce=nonce, chat=chat)
     extra = f' · design {design}' if design else ''
-    return 0, (f'approved {wave} · {rec["inputs"]} · {rec["dna"]}{extra}')
+    locked = ' · DNA locked to v1' if wave == 'w4' else ''
+    return 0, (f'approved {wave} · {rec["inputs"]} · {rec["dna"]}'
+               f'{extra}{locked}')
 
 
 def _handler():

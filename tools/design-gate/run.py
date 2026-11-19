@@ -21,22 +21,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ORDER = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
 
 
-def lock_dna(ctx, G):
-    """W3 approval is the look lock: the map becomes v1 (DNA LAW)."""
-    m = G.dna_map(ctx)
-    if m is None:
-        return False
-    if isinstance(m.get('version'), int) and m['version'] >= 1:
-        return False
-    m['version'] = 1
-    m['hashes'] = G.dna_slices(m)
-    with open(os.path.join(ctx.dir, 'DNA.json'), 'w') as fh:
-        json.dump(m, fh, indent=1, sort_keys=True)
-    with open(os.path.join(ctx.dir, 'DNA.md'), 'w', encoding='utf-8') as fh:
-        fh.write(G.render_dna_md(m))
-    return True
-
-
 def approve(wave, pdir, G, nonce=None, design=None, chat=None):
     """Record an operator approval.
 
@@ -55,6 +39,12 @@ def approve(wave, pdir, G, nonce=None, design=None, chat=None):
               'mechanical')
         return 2
     tty = sys.stdin.isatty()
+    if wave == 'w4' and not nonce:
+        print('run.py approve w4 REFUSED: w4 is the DNA v1 lock — '
+              'service-nonce channel only. Mint one: '
+              'python3 run.py nonce w4 <dir> then approve with '
+              '--nonce (THE lock point).')
+        return 1
     if not tty and not nonce:
         print('run.py approve REFUSED: no interactive terminal and no '
               '--nonce. Mint one: python3 run.py nonce <wave> <dir> '
@@ -90,8 +80,6 @@ def approve(wave, pdir, G, nonce=None, design=None, chat=None):
         if ans.strip() != f'APPROVE {wave}':
             print('not approved')
             return 1
-    if wave == 'w4' and lock_dna(ctx, G):
-        print('DNA map locked to v1 (look lock)')
     rec = G.write_approval(ctx, wave, by='operator-tty', design=design)
     print(f'approved {wave} · {rec["inputs"]} · {rec["dna"]}')
     return 0
