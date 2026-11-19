@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
+
 :root {
+  --text-wrap-heading: balance;
+  --text-wrap-body: pretty;
+  --flow-spacing: var(--space-4);
+}
+.flow > * + * { margin-block-start: var(--flow-spacing); }
+h1, h2 { text-wrap: var(--text-wrap-heading); }
+p { text-wrap: var(--text-wrap-body); }
+img { object-fit: cover; }
+input { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
   --c-ink: #111111;
   --c-paper: #ffffff;
 }

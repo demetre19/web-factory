@@ -402,6 +402,35 @@ class Ctx:
                 return p if os.path.isabs(p) else os.path.join(self.dir, p)
         return None
 
+    def stub_inventory(self):
+        """{'proof': [rows], 'faq': [rows], 'media': [rows],
+        'ctas': [rows], 'contact': [rows]} from the STUB's
+        `## Content inventory` tables (F-15/F-22)."""
+        out = {}
+        p = self.stub_path()
+        if not p or not os.path.isfile(p):
+            return out
+        txt = open(p, encoding='utf-8', errors='replace').read()
+        for sec, key in ((r'proof\s*items?', 'proof'),
+                         (r'faq\s*q\s*&?\s*a', 'faq'),
+                         (r'media\s*inventory', 'media'),
+                         (r'ctas?\b', 'ctas'),
+                         (r'contact\s*facts?', 'contact')):
+            m = re.search(r'###\s+' + sec + r'[^\n]*\n(.*?)(?=\n#|\Z)',
+                          txt, re.S | re.I)
+            rows = []
+            if m:
+                for ln in m.group(1).split('\n'):
+                    if ln.strip().startswith('|') and '---' not in ln \
+                            and len([c for c in ln.split('|')
+                                     if c.strip()]) > 1:
+                        rows.append([c.strip() for c in
+                                     ln.strip().strip('|').split('|')])
+            if rows and not all('---' in c or not c
+                                for r_ in rows for c in r_):
+                out[key] = rows[1:] if len(rows) > 1 else rows
+        return out
+
     def stub_vector(self):
         """[(zone, heading, fs)] from the STUB's Heading vector table."""
         if self._stub_rows is not None:
@@ -950,6 +979,30 @@ def check_content_inventory(ctx):
         if not str(copyf.get(fld) or '').strip():
             f.append(f'W2: plan copy.{fld} missing — the STUBs copy '
                      'fields feed the layout round')
+    # F-15/F-22 — the content inventory carries what the compositions
+    # will need: proof items for proof comps, Q&A pairs for faq, a
+    # media row for every ratio-bearing composition, a CTA for act
+    # comps, contact facts for footer/contact forms.
+    inv = ctx.stub_inventory()
+    need = set()
+    for _, r in ctx.rows():
+        comp = str(r.get('composition') or '')
+        if comp in ('cards-n', 'quote-grid', 'logo-wall', 'stat-band',
+                    'badge-center'):
+            need.add('proof')
+        if comp == 'faq':
+            need.add('faq')
+        if str(r.get('media_ratio') or 'none') != 'none':
+            need.add('media')
+        if 'act' in (r.get('speech_act') or []) or comp in (
+                'form-panel', 'capture-form', 'cta'):
+            need.add('ctas')
+        if comp in ('footer-bar', 'form-panel', 'map-finder'):
+            need.add('contact')
+    for k in sorted(need):
+        if not inv.get(k):
+            f.append(f'W2: content inventory has no "{k}" rows — the '
+                     'plan needs it (composition-driven, F-15/F-22)')
     return f
 
 
@@ -1707,14 +1760,93 @@ def _endorsed_sites():
                 m = re.match(r'https?://([^/?#]+)', u)
                 if m:
                     out.add(m.group(1).lower())
-            for d in re.findall(r'\b([\w-]+\.[a-z]{2,}(?:\.[a-z]{2})?'
-                                r'(?:/[\w-]*)?)\b', txt.lower()):
-                if '.' in d and ' ' not in d:
+            for d in re.findall(
+                    r'\b([a-z0-9](?:[a-z0-9-]*[a-z0-9])?'
+                    r'(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+'
+                    r'(?:/[\w.-]*)?)\b', txt.lower()):
+                # a bare domain needs a real TLD-ish suffix — skip
+                # filenames, hashes and truncated host labels
+                host = d.split('/')[0]
+                tld = host.rsplit('.', 1)[-1]
+                if len(tld) >= 2 and tld.isalpha() \
+                        and len(host.split('.')) >= 2 \
+                        and '.' in d and ' ' not in d:
                     out.add(d.rstrip('.,;/'))
     return out
 
 
 _ENDORSED = None
+_ENDORSED_EXEMPLARS = None
+
+
+def _endorsed_exemplars():
+    """{label: [site urls/domains]} — exemplar-marked sites inside the
+    endorsed lists (details.so: section labels like hero/footer/
+    navigation with exemplar: true). Within the endorsed tier these
+    rank highest for their composition."""
+    global _ENDORSED_EXEMPLARS
+    if _ENDORSED_EXEMPLARS is not None:
+        return _ENDORSED_EXEMPLARS
+    out = {}
+    root = os.path.join(DESIGN_DIR, 'patterns', 'data', 'operator',
+                        '_sources')
+    if os.path.isdir(root):
+        for dp, _, fns in os.walk(root):
+            for fn in fns:
+                p = os.path.join(dp, fn)
+                try:
+                    d = json.load(open(p))
+                except Exception:
+                    continue
+                for site in d.get('sites') or []:
+                    if not isinstance(site, dict):
+                        continue
+                    url = str(site.get('url') or site.get('site')
+                              or site.get('domain') or '')
+                    host = url and re.match(r'https?://([^/?#]+)',
+                                            url)
+                    key = url or (host.group(1) if host else '')
+                    if not key:
+                        continue
+                    if host:
+                        key = host.group(1)
+                    secs = site.get('sections') or []
+                    if isinstance(secs, dict):
+                        secs = [{'label': k, **(
+                            v if isinstance(v, dict)
+                            else {'exemplar': bool(v)})}
+                                for k, v in secs.items()]
+                    if site.get('exemplar') and site.get('label'):
+                        secs = list(secs) + [
+                            {'label': site.get('label'),
+                             'exemplar': True}]
+                    for sec in secs:
+                        if not isinstance(sec, dict):
+                            continue
+                        if not sec.get('exemplar'):
+                            continue
+                        lab = str(sec.get('label') or '')
+                        if lab:
+                            out.setdefault(lab.lower(),
+                                           []).append(key)
+    _ENDORSED_EXEMPLARS = out
+    return out
+
+
+EXEMPLAR_COMP = {
+    'hero': {'split-media', 'stacked-hero', 'full-bleed',
+             'hero-act-merge'},
+    'navigation': {'nav-bar'}, 'nav': {'nav-bar'},
+    'footer': {'footer-bar'}, 'cards': {'cards-n'},
+    'features': {'cards-n', 'sequence'}, 'faq': {'faq'},
+    'form': {'form-panel', 'capture-form'},
+    'testimonials': {'quote-grid'}, 'logos': {'logo-wall'},
+    'stats': {'stat-band'}, 'gallery': {'media-gallery'},
+}
+
+
+def _exemplar_comps(lab):
+    return EXEMPLAR_COMP.get(lab.lower(), {lab.lower()})
 
 
 def _canon_ref_ok(ref, endorsed=None):
@@ -1823,6 +1955,20 @@ def check_canon_trace(ctx):
                     f.append(f'LAW.REF {slug}:{r.get("name")} has no canon '
                              'ref — the composition traces to nothing')
                 else:
+                    ex = set()
+                    for lab, urls in _endorsed_exemplars().items():
+                        if str(r.get('composition') or '') in \
+                                _exemplar_comps(lab):
+                            ex.update(urls)
+                    if ex and not any(
+                            any(str(ref).lower().startswith(u)
+                                for u in ex) for ref in refs):
+                        f.append(f'LAW.REF {slug}:{r.get("name")}: an '
+                                 'endorsed exemplar exists for this '
+                                 'composition (details.so _sources) '
+                                 'but the row cites none — within the '
+                                 'endorsed tier, exemplars rank '
+                                 'highest')
                     for ref in refs:
                         if not _canon_ref_ok(ref):
                             f.append(f'LAW.REF {slug}:{r.get("name")} '
@@ -2583,6 +2729,48 @@ def check_acss_conventions(ctx):
         for fn in fns:
             if fn.endswith('.css'):
                 css_files.append(os.path.join(dp, fn))
+    all_css = ''
+    for p in css_files:
+        css = open(p, encoding='utf-8', errors='replace').read()
+        all_css += '\n' + css
+    if css_files:
+        # A1 — text-wrap is a token (--text-wrap-*) on headings/body,
+        # balance headings / pretty body (T.8 values, token plumbing)
+        if 'text-wrap' not in all_css:
+            f.append('A.1 text-wrap absent — headings --text-wrap-'
+                     'heading: balance, body --text-wrap-body: pretty '
+                     'as tokens')
+        elif '--text-wrap' not in all_css:
+            f.append('A.1 text-wrap set without a --text-wrap-* token '
+                     '— wraps bind tokens, not literals')
+        # smart spacing: margins reset + flow/sibling rule; first and
+        # last child carry no outer margin (A11)
+        if not re.search(r'(?:h[1-6]|p|ul|ol|figure|blockquote)'
+                         r'[^{}]*\{[^}]*margin:\s*0', all_css) \
+                and 'margin:0' not in all_css.replace(' ', ''):
+            f.append('A.1 no margin reset on h/p/list blocks — smart '
+                     'spacing resets element margins, spacing lives in '
+                     'gaps + flow')
+        if not re.search(r'\*\s*\+\s*\*|\.flow\b', all_css):
+            f.append('A.1 no flow sibling rule (`.flow > * + *` or '
+                     'owl selector) — re-space adjacent siblings, '
+                     'never outer edges')
+        # forms bind shared --input-* tokens
+        if re.search(r'\binput\b[^{}]*\{', all_css) \
+                and '--input-' not in all_css:
+            f.append('A.1 input styles without --input-* tokens — '
+                     'border/padding/radius share one token set')
+        # media inside its box covers
+        if re.search(r'<img\b', ''.join(
+                t for _, t in ctx.page_htmls())) \
+                and 'object-fit' not in all_css:
+            f.append('A.1 no object-fit rule — images cover their '
+                     'box by default (V.3 ratio invariant)')
+        # buttons pad in em so size tracks type
+        for m in re.finditer(r'\.(?:btn|button)\w*[^{}]*\{[^}]*'
+                             r'padding:\s*\d+(?:\.\d+)?px', all_css):
+            f.append('A.1 button padding in px — buttons pad in em '
+                     '(size follows type rank)')
     for p in css_files:
         css = open(p, encoding='utf-8', errors='replace').read()
         name = os.path.basename(p)
@@ -2610,10 +2798,30 @@ def check_acss_conventions(ctx):
                          'accessible name (.sr-only or aria-label)')
         for m in re.finditer(
                 r'<a[^>]*target="_blank"[^>]*>', txt):
-            if 'rel=' not in m.group(0):
+            tag = m.group(0)
+            href = re.search(r'href="([^"]*)"', tag)
+            internal = href and not re.match(
+                r'https?://', href.group(1))
+            if internal:
+                f.append(f'A.1 {name}: internal link '
+                         f'{href.group(1)[:40]} opens a new tab — '
+                         'only external links do (visual + SR cue)')
+            elif 'rel=' not in tag:
                 f.append(f'A.1 {name}: target=_blank without '
                          'rel="noopener" — external links announce '
                          'themselves (visual + SR cue)')
+        # alternating splits place text before media at mobile; the
+        # visual flip is >=lg only
+        for m in re.finditer(
+                r'<section[^>]*data-comp="split-media"[^>]*>(.*?)'
+                r'</section>', txt, re.S):
+            body = m.group(1)
+            im = re.search(r'<(?:img|video|picture)\b', body)
+            tm = re.search(r'<(?:h[12]|p)\b', body)
+            if im and tm and im.start() < tm.start():
+                f.append(f'A.1 {name}: split-media puts media before '
+                         'text — mobile stacks text-first (image '
+                         'first is a >=lg alternation only)')
     return f
 
 

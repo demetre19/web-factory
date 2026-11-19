@@ -144,6 +144,33 @@ STUB = '''# STUB — /fixture/
 |---|---|---|---|
 | macro | H2 What is testing? | "Testing is the thing." | — |
 
+## Content inventory
+
+### Proof items
+| Item | Type |
+|---|---|
+| "12,000 cleans done" | stat |
+
+### FAQ Q&A pairs
+| Q | A |
+|---|---|
+| Do you test? | Yes. |
+
+### Media inventory
+| Section | Asset | Ratio |
+|---|---|---|
+| hero | hero.webp | 16:9 |
+
+### CTAs
+| Label | Target |
+|---|---|
+| Book now | /book |
+
+### Contact facts
+| Field | Value |
+|---|---|
+| phone | 555-0100 |
+
 ## Per-section semantic map
 '''
 
@@ -164,7 +191,18 @@ GLOBAL_CSS = '''@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
+
 :root {
+  --text-wrap-heading: balance;
+  --text-wrap-body: pretty;
+  --flow-spacing: var(--space-4);
+}
+.flow > * + * { margin-block-start: var(--flow-spacing); }
+h1, h2 { text-wrap: var(--text-wrap-heading); }
+p { text-wrap: var(--text-wrap-body); }
+img { object-fit: cover; }
+input { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
   --c-ink: #111111;
   --c-paper: #ffffff;
 }
