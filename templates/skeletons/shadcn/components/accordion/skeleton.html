@@ -1,0 +1,27 @@
+<!--
+  shadcn/ui · accordion (components)
+  Source: https://ui.shadcn.com/docs/components/accordion
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/accordion.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Accordion ── -->
+<div data-state="closed" data-orientation="vertical" data-slot="accordion"></div>
+
+<!-- ── AccordionItem ── -->
+<div data-state="closed" data-orientation="vertical" data-slot="accordion-item" class="border-b last:border-b-0 {class}"></div>
+
+<!-- ── AccordionTrigger ── -->
+<h3 class="flex">
+      <button type="button" aria-expanded="false" aria-controls="{content-id}" data-state="closed" data-slot="accordion-trigger" class="flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180 {class}">
+        {children}
+        <svg aria-hidden="true" data-icon="ChevronDownIcon" class="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200"></svg>
+      </button>
+    </h3>
+
+<!-- ── AccordionContent ── -->
+<div role="region" data-state="closed" hidden data-slot="accordion-content" class="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+      <div class="pt-0 pb-4 {class}">{children}</div>
+    </div>

@@ -4,7 +4,7 @@ type: index
 links:
   index: design-index
   see_also: [section-catalog, rules-SKL]
-  contains: [skeleton-hyperui]
+  contains: [skeleton-hyperui, skeleton-shadcn]
 ---
 
 # SKELETONS — structure-only markup sources
@@ -13,16 +13,22 @@ Harvested component markup that builders may **adapt for structure** —
 semantic elements, a11y attributes, responsive grid/flex patterns,
 interaction scaffolding — and nothing else.
 
-Current source: **HyperUI** (`templates/skeletons/hyperui/`),
-harvested 2026-11-19 from `github.com/markmead/hyperui` @ `main`
-(also live at https://hyperui.dev). License: **MIT**, © Mark Mead —
-permissive; attribution is retained as a comment header inside every
-`.html` skeleton file and in each `.json` metadata file. Do not strip it.
+Current sources:
 
-## What a skeleton is — and is not
+- **HyperUI** (`templates/skeletons/hyperui/`), harvested 2026-11-19
+  from `github.com/markmead/hyperui` @ `main` (https://hyperui.dev).
+  License: **MIT**, © Mark Mead.
+- **shadcn/ui** (`templates/skeletons/shadcn/`), harvested 2026-11-19
+  from `github.com/shadcn-ui/ui` @ `main`, `new-york-v4` registry
+  (Radix base; https://ui.shadcn.com). License: **MIT**, © shadcn.
+  **Two tiers in one source:** the markup is a structure-only skeleton
+  like everything else here, but shadcn's *component-level* visual
+  system is **operator-endorsed** as a component-tier reference —
+  see §"shadcn component tier" below. Section/page canon is unchanged.
 
-A skeleton answers "what does the markup look like?" It does **not**
-answer "what does it look like *visually*?"
+Attribution is retained as a comment header inside every skeleton file
+and in each `.json`/`spec.json` metadata file; full license texts are
+vendored next to each source root. Do not strip them.
 
 - **Structure-only.** Keep: element choice (`details`/`summary`,
   `nav`/`ul`, `dl`, `table`, `form`/`fieldset`), heading levels, ARIA
@@ -78,7 +84,58 @@ Collections: `marketing` (site sections), `application` (UI primitives),
 `neobrutalism` (application equivalents under a distinct visual
 treatment — harvest structure only), `templates` (full pages).
 
+```
+templates/skeletons/shadcn/components/<name>/<name>.tsx        # verbatim registry source (React/Radix)
+templates/skeletons/shadcn/components/<name>/skeleton.html     # Astro/HTML-portable structure
+templates/skeletons/shadcn/components/<name>/spec.json         # metadata + visual spec + a11y contract
+templates/skeletons/shadcn/blocks/<name>/src/**                # full-page block source (React)
+templates/skeletons/shadcn/blocks/<name>/spec.json
+templates/skeletons/shadcn/tokens/{theme-light,theme-dark,theme-map}.css, tokens.json
+templates/skeletons/shadcn/lib/behaviors.js                    # vanilla-JS Radix-contract behaviours
+templates/skeletons/shadcn/_harvest-stats.json
+```
+
+### shadcn component tier (operator-endorsed)
+
+shadcn skeleton files keep the registry's own class strings — which
+are themselves **CSS-variable tokens** (`bg-primary`, `ring/50`,
+`text-muted-foreground`, `h-9`, `rounded-md` → `--radius` ladder).
+The operator endorses shadcn's component visuals, so:
+
+- **`spec.json` is the endorsed component-tier reference** for that
+  component type — cva variant tables, part classes, heights/paddings/
+  font sizes, the `focus-visible:ring-[3px] ring-ring/50` focus spec,
+  `aria-invalid` treatment. When a DNA component profile leaves a
+  component-level value open, the shadcn spec is a legitimate source;
+  DNA/profile values still win where they exist.
+- **Tokens** (`tokens/tokens.json`, `theme-light.css`, `theme-dark.css`,
+  `theme-map.css`): the `--background/--foreground/--primary/…` role
+  model + radius ladder + utility→var mapping, as machine-readable
+  reference for mapping DNA vars 1:1 (ours is a superset surface).
+- **Not section/page canon.** A shadcn block is React source kept for
+  structure/composition reference only (`blocks/<name>/src/`); its
+  layout rhythm is not endorsed at page level. Section canon stays
+  operator > endorsed sites > Mobbin.
+- **Interaction**: interactive components list a WAI-ARIA APG/Radix
+  keyboard contract in `spec.json.behavior.contract`; the matching
+  vanilla JS ships in `lib/behaviors.js` (drop-in, `data-slot` keyed).
+  Astro ports: use `skeleton.html` markup + the one script include.
+
 ### Metadata fields (per variant `.json`)
+
+### Metadata fields (per shadcn `spec.json`)
+
+`id`, `name`, `collection`, `source_url`, `source_repo_path`,
+`license{spdx,copyright,url}`, `tier{structure,visual}` (skeleton +
+component-endorsed), `wf_category`, `wf_composition`,
+`wf_profile_type`, `component_type`, `exports`, `parts` (data-slot
+names), `radix_primitives`, `imports`, `requires_js`,
+`behavior{implemented_in,contract,radix_docs}` (APG pattern, key map,
+ARIA notes), `variants` (cva tables verbatim), `tokens_used` (CSS-var
+utility classes), `dark_mode{supported,mechanism}`,
+`a11y{semantic_elements,aria_in_skeleton,keyboard_contract,
+sr_only_labels,focus_ring_spec}`. Blocks add `ui_components_used` +
+`files`.
 
 `id`, `family`, `variant{index,title}`, `collection`, `source_url`,
 `source_repo_path`, `license{spdx,copyright,url}`, `wf_category`
@@ -201,3 +258,86 @@ per-section, not whole-page.
 | saas-landing-page | 1 | hero | — | — |
 | storefront | 2 | product-archive | — | — |
 | support-inbox | 2 | ui-elements | — | — |
+
+### shadcn components — `templates/skeletons/shadcn/components/`
+
+`js` = `requires_js` (APG contract in spec; vanilla impl in
+`lib/behaviors.js`). All 61 are component-tier endorsed visual
+references in addition to structure skeletons.
+
+| component | wf_category | wf_composition | wf_profile_type | js |
+|---|---|---|---|---|
+| accordion | ui-elements | faq | faq | js |
+| alert-dialog | ui-elements | — | — | js |
+| alert | ui-elements | — | — | — |
+| aspect-ratio | ui-elements | — | — | — |
+| attachment | ui-elements | — | — | — |
+| avatar | ui-elements | — | — | — |
+| badge | ui-elements | badge-center | badge-center | — |
+| breadcrumb | ui-elements | — | — | — |
+| bubble | ui-elements | — | — | — |
+| button-group | ui-elements | — | — | — |
+| button | ui-elements | — | — | — |
+| calendar | ui-elements | — | — | js |
+| card | ui-elements | cards-n | cards-n | — |
+| carousel | ui-elements | — | — | js |
+| chart | ui-elements | — | — | js |
+| checkbox | ui-elements | form-panel | form-panel | js |
+| collapsible | ui-elements | faq | faq | js |
+| combobox | ui-elements | form-panel | form-panel | js |
+| command | ui-elements | — | — | js |
+| context-menu | ui-elements | — | — | js |
+| dialog | ui-elements | — | — | js |
+| direction | ui-elements | — | — | js |
+| drawer | ui-elements | — | — | js |
+| dropdown-menu | ui-elements | — | — | js |
+| empty | ui-elements | badge-center | badge-center | — |
+| field | ui-elements | form-panel | form-panel | — |
+| form | ui-elements | form-panel | form-panel | js |
+| hover-card | ui-elements | — | — | js |
+| input-group | ui-elements | form-panel | form-panel | — |
+| input-otp | ui-elements | form-panel | form-panel | js |
+| input | ui-elements | form-panel | form-panel | — |
+| item | ui-elements | — | — | — |
+| kbd | ui-elements | — | — | — |
+| label | ui-elements | form-panel | form-panel | — |
+| marker | ui-elements | — | — | — |
+| menubar | ui-elements | — | nav-bar | js |
+| message-scroller | ui-elements | — | — | js |
+| message | ui-elements | — | — | — |
+| native-select | ui-elements | form-panel | form-panel | — |
+| navigation-menu | ui-elements | — | nav-bar | js |
+| pagination | ui-elements | — | — | — |
+| popover | ui-elements | — | — | js |
+| progress | ui-elements | — | — | js |
+| radio-group | ui-elements | form-panel | form-panel | js |
+| resizable | ui-elements | — | — | js |
+| scroll-area | ui-elements | — | — | js |
+| select | ui-elements | form-panel | form-panel | js |
+| separator | ui-elements | — | — | — |
+| sheet | ui-elements | — | — | js |
+| sidebar | ui-elements | — | nav-bar | js |
+| skeleton | ui-elements | — | — | — |
+| slider | ui-elements | form-panel | form-panel | js |
+| sonner | ui-elements | — | — | js |
+| spinner | ui-elements | — | — | — |
+| switch | ui-elements | form-panel | form-panel | js |
+| table | table | comparison | comparison | — |
+| tabs | ui-elements | — | — | js |
+| textarea | ui-elements | form-panel | form-panel | — |
+| toggle-group | ui-elements | — | — | js |
+| toggle | ui-elements | — | — | js |
+| tooltip | ui-elements | — | — | js |
+
+### shadcn blocks — `templates/skeletons/shadcn/blocks/`
+
+Full-page React sources under `blocks/<name>/src/`; component-tier
+endorsement applies to their component parts only, not page layout.
+
+| block | files | wf_category | wf_profile_type |
+|---|---|---|---|
+| dashboard-01 | 11 | ui-elements | — |
+| login-01..05 | 2 ea | login | — |
+| signup-01..05 | 2 ea | login | — |
+| sidebar-01..16 | 2–11 ea | ui-elements | nav-bar |
+

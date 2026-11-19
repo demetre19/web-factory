@@ -1,0 +1,38 @@
+<!--
+  shadcn/ui · pagination (components)
+  Source: https://ui.shadcn.com/docs/components/pagination
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/pagination.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Pagination ── -->
+<nav role="navigation" aria-label="pagination" data-slot="pagination" class="mx-auto flex w-full justify-center {class}"></nav>
+
+<!-- ── PaginationContent ── -->
+<ul data-slot="pagination-content" class="flex flex-row items-center gap-1 {class}"></ul>
+
+<!-- ── PaginationItem ── -->
+<li data-slot="pagination-item"></li>
+
+<!-- ── PaginationLink ── -->
+<a aria-current="{isActive ? "page" : undefined}" data-slot="pagination-link" data-active="{isActive}" class="{…buttonVariants(…)} {class}"></a>
+
+<!-- ── PaginationPrevious ── -->
+<a aria-current="{isActive ? "page" : undefined}" data-slot="pagination-link" data-active="{isActive}" class="gap-1 px-2.5 sm:pl-2.5 {class} {…buttonVariants(…)} {class}"></a>
+<!-- call-site children -->
+      <svg aria-hidden="true" data-icon="ChevronLeftIcon"></svg>
+      <span class="hidden sm:block">Previous</span>
+
+<!-- ── PaginationNext ── -->
+<a aria-current="{isActive ? "page" : undefined}" data-slot="pagination-link" data-active="{isActive}" class="gap-1 px-2.5 sm:pr-2.5 {class} {…buttonVariants(…)} {class}"></a>
+<!-- call-site children -->
+      <span class="hidden sm:block">Next</span>
+      <svg aria-hidden="true" data-icon="ChevronRightIcon"></svg>
+
+<!-- ── PaginationEllipsis ── -->
+<span aria-hidden data-slot="pagination-ellipsis" class="flex size-9 items-center justify-center {class}">
+      <svg aria-hidden="true" data-icon="MoreHorizontalIcon" class="size-4"></svg>
+      <span class="sr-only">More pages</span>
+    </span>

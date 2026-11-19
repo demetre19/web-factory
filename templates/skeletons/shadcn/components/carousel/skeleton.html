@@ -1,0 +1,35 @@
+<!--
+  shadcn/ui · carousel (components)
+  Source: https://ui.shadcn.com/docs/components/carousel
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/carousel.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Carousel ── -->
+<!-- CarouselContext.Provider -->
+      <div class="relative {class}" role="region" aria-roledescription="carousel" data-slot="carousel">
+        {children}
+      </div>
+    <!-- /CarouselContext.Provider -->
+
+<!-- ── CarouselContent ── -->
+<div ref="{carouselRef}" data-slot="carousel-content" class="overflow-hidden">
+      <div class="flex {horizontal|-ml-4|-mt-4 flex-col} {class}"></div>
+    </div>
+
+<!-- ── CarouselItem ── -->
+<div role="group" aria-roledescription="slide" data-slot="carousel-item" class="min-w-0 shrink-0 grow-0 basis-full {horizontal|pl-4|pt-4} {class}"></div>
+
+<!-- ── CarouselPrevious ── -->
+<button data-slot="button" data-variant="{variant}" data-size="{size}" class="absolute size-8 rounded-full {horizontal|top-1/2 -left-12 -translate-y-1/2|-top-12 left-1/2 -translate-x-1/2 rotate-90} {class} inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3"></button>
+<!-- call-site children -->
+      <!-- <ArrowLeft > external component --><!-- </ArrowLeft> -->
+      <span class="sr-only">Previous slide</span>
+
+<!-- ── CarouselNext ── -->
+<button data-slot="button" data-variant="{variant}" data-size="{size}" class="absolute size-8 rounded-full {horizontal|top-1/2 -right-12 -translate-y-1/2|-bottom-12 left-1/2 -translate-x-1/2 rotate-90} {class} inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3"></button>
+<!-- call-site children -->
+      <!-- <ArrowRight > external component --><!-- </ArrowRight> -->
+      <span class="sr-only">Next slide</span>

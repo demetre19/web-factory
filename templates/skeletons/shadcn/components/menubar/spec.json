@@ -1,0 +1,140 @@
+{
+  "id": "shadcn/components/menubar",
+  "name": "menubar",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/menubar",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/menubar.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": "nav-bar",
+  "component_type": "menubar",
+  "exports": [
+    "Menubar",
+    "MenubarMenu",
+    "MenubarGroup",
+    "MenubarPortal",
+    "MenubarRadioGroup",
+    "MenubarTrigger",
+    "MenubarContent",
+    "MenubarItem",
+    "MenubarCheckboxItem",
+    "MenubarRadioItem",
+    "MenubarLabel",
+    "MenubarSeparator",
+    "MenubarShortcut",
+    "MenubarSub",
+    "MenubarSubTrigger",
+    "MenubarSubContent"
+  ],
+  "parts": [
+    "menubar",
+    "menubar-checkbox-item",
+    "menubar-content",
+    "menubar-group",
+    "menubar-item",
+    "menubar-label",
+    "menubar-menu",
+    "menubar-portal",
+    "menubar-radio-group",
+    "menubar-radio-item",
+    "menubar-separator",
+    "menubar-shortcut",
+    "menubar-sub",
+    "menubar-sub-content",
+    "menubar-sub-trigger",
+    "menubar-trigger"
+  ],
+  "radix_primitives": [
+    "Menubar.CheckboxItem",
+    "Menubar.Content",
+    "Menubar.Group",
+    "Menubar.Item",
+    "Menubar.ItemIndicator",
+    "Menubar.Label",
+    "Menubar.Menu",
+    "Menubar.Portal",
+    "Menubar.RadioGroup",
+    "Menubar.RadioItem",
+    "Menubar.Root",
+    "Menubar.Separator",
+    "Menubar.Sub",
+    "Menubar.SubContent",
+    "Menubar.SubTrigger",
+    "Menubar.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "lucide-react",
+    "radix-ui"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG menubar",
+      "keys": [
+        "ArrowLeft/Right across triggers",
+        "ArrowDown opens",
+        "roving in menu",
+        "Esc"
+      ],
+      "notes": "role=menubar; triggers role=menuitem aria-haspopup"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/menubar"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-accent",
+    "bg-background",
+    "bg-border",
+    "bg-destructive/10",
+    "bg-destructive/20",
+    "bg-popover",
+    "text-accent-foreground",
+    "text-destructive",
+    "text-muted-foreground",
+    "text-popover-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "span",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-checked",
+      "aria-expanded",
+      "aria-haspopup",
+      "aria-hidden",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG menubar",
+      "keys": [
+        "ArrowLeft/Right across triggers",
+        "ArrowDown opens",
+        "roving in menu",
+        "Esc"
+      ],
+      "notes": "role=menubar; triggers role=menuitem aria-haspopup"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

@@ -1,0 +1,34 @@
+<!--
+  shadcn/ui · table (components)
+  Source: https://ui.shadcn.com/docs/components/table
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/table.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Table ── -->
+<div data-slot="table-container" class="relative w-full overflow-x-auto">
+      <table data-slot="table" class="w-full caption-bottom text-sm {class}"></table>
+    </div>
+
+<!-- ── TableHeader ── -->
+<thead data-slot="table-header" class="[&_tr]:border-b {class}"></thead>
+
+<!-- ── TableBody ── -->
+<tbody data-slot="table-body" class="[&_tr:last-child]:border-0 {class}"></tbody>
+
+<!-- ── TableFooter ── -->
+<tfoot data-slot="table-footer" class="border-t bg-muted/50 font-medium [&>tr]:last:border-b-0 {class}"></tfoot>
+
+<!-- ── TableRow ── -->
+<tr data-slot="table-row" class="border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted {class}"></tr>
+
+<!-- ── TableHead ── -->
+<th data-slot="table-head" class="h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] {class}"></th>
+
+<!-- ── TableCell ── -->
+<td data-slot="table-cell" class="p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] {class}"></td>
+
+<!-- ── TableCaption ── -->
+<caption data-slot="table-caption" class="mt-4 text-sm text-muted-foreground {class}"></caption>

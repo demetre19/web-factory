@@ -1,0 +1,13 @@
+<!--
+  shadcn/ui · progress (components)
+  Source: https://ui.shadcn.com/docs/components/progress
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/progress.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Progress ── -->
+<div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{value}" data-slot="progress" class="relative h-2 w-full overflow-hidden rounded-full bg-primary/20 {class}">
+      <div data-state="in-progress" data-slot="progress-indicator" style="{{ transform: `translateX(-${100 - (value}" class="h-full w-full flex-1 bg-primary transition-all"></div>
+    </div>

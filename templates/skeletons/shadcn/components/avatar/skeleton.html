@@ -1,0 +1,26 @@
+<!--
+  shadcn/ui · avatar (components)
+  Source: https://ui.shadcn.com/docs/components/avatar
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/avatar.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Avatar ── -->
+<span data-slot="avatar" data-size="{size}" class="group/avatar relative flex size-8 shrink-0 overflow-hidden rounded-full select-none data-[size=lg]:size-10 data-[size=sm]:size-6 {class}"></span>
+
+<!-- ── AvatarImage ── -->
+<img alt="{name}" data-slot="avatar-image" class="aspect-square size-full {class}">
+
+<!-- ── AvatarFallback ── -->
+<span aria-hidden="true" data-slot="avatar-fallback" class="flex size-full items-center justify-center rounded-full bg-muted text-sm text-muted-foreground group-data-[size=sm]/avatar:text-xs {class}"></span>
+
+<!-- ── AvatarBadge ── -->
+<span data-slot="avatar-badge" class="absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground ring-2 ring-background select-none group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden group-data-[size=default]/avatar:size-2.5 group-data-[size=default]/avatar:[&>svg]:size-2 group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2 {class}"></span>
+
+<!-- ── AvatarGroup ── -->
+<div data-slot="avatar-group" class="group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background {class}"></div>
+
+<!-- ── AvatarGroupCount ── -->
+<div data-slot="avatar-group-count" class="relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3 {class}"></div>

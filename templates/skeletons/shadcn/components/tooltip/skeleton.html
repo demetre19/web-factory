@@ -1,0 +1,17 @@
+<!--
+  shadcn/ui · tooltip (components)
+  Source: https://ui.shadcn.com/docs/components/tooltip
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/tooltip.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── TooltipTrigger ── -->
+<button type="button" aria-describedby="{tooltip-id}" data-state="closed" data-slot="tooltip-trigger"></button>
+
+<!-- ── TooltipContent ── -->
+<div role="tooltip" data-state="open" data-slot="tooltip-content" sideOffset="{sideOffset}" class="z-50 w-fit origin-(--radix-tooltip-content-transform-origin) animate-in rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 {class}">
+        {children}
+        <span aria-hidden="true" class="z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground"></span>
+      </div>

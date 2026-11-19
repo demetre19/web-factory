@@ -1,0 +1,45 @@
+<!--
+  shadcn/ui · field (components)
+  Source: https://ui.shadcn.com/docs/components/field
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/field.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── FieldSet ── -->
+<fieldset data-slot="field-set" class="flex flex-col gap-6 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3 {class}"></fieldset>
+
+<!-- ── FieldLegend ── -->
+<legend data-slot="field-legend" data-variant="{variant}" class="mb-3 font-medium data-[variant=legend]:text-base data-[variant=label]:text-sm {class}"></legend>
+
+<!-- ── FieldGroup ── -->
+<div data-slot="field-group" class="group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4 {class}"></div>
+
+<!-- ── Field ── -->
+<div role="group" data-slot="field" data-orientation="{orientation}" class="group/field flex w-full gap-3 data-[invalid=true]:text-destructive {class}"></div>
+
+<!-- ── FieldContent ── -->
+<div data-slot="field-content" class="group/field-content flex flex-1 flex-col gap-1.5 leading-snug {class}"></div>
+
+<!-- ── FieldLabel ── -->
+<label for="{control-id}" data-slot="label" class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4 has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5 dark:has-data-[state=checked]:bg-primary/10 {class} flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 {class}"></label>
+
+<!-- ── FieldTitle ── -->
+<div data-slot="field-label" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium group-data-[disabled=true]/field:opacity-50 {class}"></div>
+
+<!-- ── FieldDescription ── -->
+<p data-slot="field-description" class="text-sm leading-normal font-normal text-muted-foreground group-has-[[data-orientation=horizontal]]/field:text-balance last:mt-0 nth-last-2:-mt-1 [[data-variant=legend]+&]:-mt-1.5 [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary {class}"></p>
+
+<!-- ── FieldSeparator ── -->
+<div data-slot="field-separator" data-content="{!!children}" class="relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2 {class}">
+      <div role="separator" data-orientation="horizontal" data-slot="separator" decorative="{decorative}" orientation="{orientation}" class="absolute inset-0 top-1/2 shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px {class}"></div>
+      <!-- when children --><span data-slot="field-separator-content" class="relative mx-auto block w-fit bg-background px-2 text-muted-foreground">
+          {children}
+        </span><!-- /when -->
+    </div>
+
+<!-- ── FieldError ── -->
+<div role="alert" data-slot="field-error" class="text-sm font-normal text-destructive {class}">
+      {content}
+    </div>

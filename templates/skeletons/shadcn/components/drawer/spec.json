@@ -1,0 +1,111 @@
+{
+  "id": "shadcn/components/drawer",
+  "name": "drawer",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/drawer",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/drawer.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "drawer",
+  "exports": [
+    "Drawer",
+    "DrawerTrigger",
+    "DrawerPortal",
+    "DrawerClose",
+    "DrawerOverlay",
+    "DrawerContent",
+    "DrawerHeader",
+    "DrawerFooter",
+    "DrawerTitle",
+    "DrawerDescription"
+  ],
+  "parts": [
+    "drawer",
+    "drawer-close",
+    "drawer-content",
+    "drawer-description",
+    "drawer-footer",
+    "drawer-header",
+    "drawer-overlay",
+    "drawer-portal",
+    "drawer-title",
+    "drawer-trigger"
+  ],
+  "radix_primitives": [
+    "Drawer.Close",
+    "Drawer.Content",
+    "Drawer.Description",
+    "Drawer.Overlay",
+    "Drawer.Portal",
+    "Drawer.Root",
+    "Drawer.Title",
+    "Drawer.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "vaul"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG modal dialog (edge)",
+      "keys": [
+        "Esc close",
+        "Tab trapped",
+        "drag/swipe to dismiss"
+      ],
+      "notes": "vaul: role=dialog aria-modal"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/drawer"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-background",
+    "bg-muted",
+    "text-foreground",
+    "text-muted-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "div",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-describedby",
+      "aria-haspopup",
+      "aria-labelledby",
+      "aria-modal",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG modal dialog (edge)",
+      "keys": [
+        "Esc close",
+        "Tab trapped",
+        "drag/swipe to dismiss"
+      ],
+      "notes": "vaul: role=dialog aria-modal"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

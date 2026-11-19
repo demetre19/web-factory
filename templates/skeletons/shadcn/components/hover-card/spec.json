@@ -1,0 +1,85 @@
+{
+  "id": "shadcn/components/hover-card",
+  "name": "hover-card",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/hover-card",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/hover-card.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "hover-card",
+  "exports": [
+    "HoverCard",
+    "HoverCardTrigger",
+    "HoverCardContent"
+  ],
+  "parts": [
+    "hover-card",
+    "hover-card-content",
+    "hover-card-portal",
+    "hover-card-trigger"
+  ],
+  "radix_primitives": [
+    "HoverCard.Content",
+    "HoverCard.Portal",
+    "HoverCard.Root",
+    "HoverCard.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "radix-ui"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG tooltip-ish popover",
+      "keys": [
+        "focus shows",
+        "blur/Esc hides",
+        "pointer hover delays"
+      ],
+      "notes": "non-modal; content not keyboard-focusable by default"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/hover-card"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-popover",
+    "text-popover-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "typeof"
+    ],
+    "aria_in_skeleton": [],
+    "keyboard_contract": {
+      "pattern": "APG tooltip-ish popover",
+      "keys": [
+        "focus shows",
+        "blur/Esc hides",
+        "pointer hover delays"
+      ],
+      "notes": "non-modal; content not keyboard-focusable by default"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

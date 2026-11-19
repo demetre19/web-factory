@@ -1,0 +1,26 @@
+<!--
+  shadcn/ui · message (components)
+  Source: https://ui.shadcn.com/docs/components/message
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/message.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── MessageGroup ── -->
+<div data-slot="message-group" class="flex min-w-0 flex-col gap-2 {class}"></div>
+
+<!-- ── Message ── -->
+<div data-slot="message" data-align="{align}" class="group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse {class}"></div>
+
+<!-- ── MessageAvatar ── -->
+<div data-slot="message-avatar" class="flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8 {class}"></div>
+
+<!-- ── MessageContent ── -->
+<div data-slot="message-content" class="flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:*:data-slot:self-end {class}"></div>
+
+<!-- ── MessageHeader ── -->
+<div data-slot="message-header" class="flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0 {class}"></div>
+
+<!-- ── MessageFooter ── -->
+<div data-slot="message-footer" class="flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0 group-data-[align=end]/message:justify-end {class}"></div>

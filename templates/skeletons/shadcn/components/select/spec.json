@@ -1,0 +1,133 @@
+{
+  "id": "shadcn/components/select",
+  "name": "select",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/select",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/select.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": "form-panel",
+  "wf_profile_type": "form-panel",
+  "component_type": "select",
+  "exports": [
+    "Select",
+    "SelectGroup",
+    "SelectValue",
+    "SelectTrigger",
+    "SelectContent",
+    "SelectLabel",
+    "SelectItem",
+    "SelectSeparator",
+    "SelectScrollUpButton",
+    "SelectScrollDownButton"
+  ],
+  "parts": [
+    "select",
+    "select-content",
+    "select-group",
+    "select-item",
+    "select-item-indicator",
+    "select-label",
+    "select-scroll-down-button",
+    "select-scroll-up-button",
+    "select-separator",
+    "select-trigger",
+    "select-value"
+  ],
+  "radix_primitives": [
+    "Select.Content",
+    "Select.Group",
+    "Select.Icon",
+    "Select.Item",
+    "Select.ItemIndicator",
+    "Select.ItemText",
+    "Select.Label",
+    "Select.Portal",
+    "Select.Root",
+    "Select.ScrollDownButton",
+    "Select.ScrollUpButton",
+    "Select.Separator",
+    "Select.Trigger",
+    "Select.Value",
+    "Select.Viewport"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "lucide-react",
+    "radix-ui"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG listbox button (select-only combobox)",
+      "keys": [
+        "Enter/Space/ArrowDown opens",
+        "typeahead",
+        "Enter select",
+        "Esc close+refocus"
+      ],
+      "notes": "trigger role=combobox aria-expanded; listbox role=listbox options aria-selected"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/select"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-accent",
+    "bg-border",
+    "bg-input/30",
+    "bg-input/50",
+    "bg-popover",
+    "border-destructive",
+    "border-input",
+    "border-ring",
+    "ring-destructive/20",
+    "ring-destructive/40",
+    "ring-ring/50",
+    "text-accent-foreground",
+    "text-muted-foreground",
+    "text-popover-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "span",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-controls",
+      "aria-expanded",
+      "aria-hidden",
+      "aria-invalid",
+      "aria-selected",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG listbox button (select-only combobox)",
+      "keys": [
+        "Enter/Space/ArrowDown opens",
+        "typeahead",
+        "Enter select",
+        "Esc close+refocus"
+      ],
+      "notes": "trigger role=combobox aria-expanded; listbox role=listbox options aria-selected"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": "focus-visible:ring-[3px] focus-visible:ring-ring/50"
+  }
+}

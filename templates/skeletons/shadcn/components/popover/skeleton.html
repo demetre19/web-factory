@@ -1,0 +1,23 @@
+<!--
+  shadcn/ui · popover (components)
+  Source: https://ui.shadcn.com/docs/components/popover
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/popover.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── PopoverTrigger ── -->
+<button type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed" data-slot="popover-trigger"></button>
+
+<!-- ── PopoverContent ── -->
+<div data-state="open" tabindex="-1" data-slot="popover-content" align="{align}" sideOffset="{sideOffset}" class="z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 {class}"></div>
+
+<!-- ── PopoverHeader ── -->
+<div data-slot="popover-header" class="flex flex-col gap-1 text-sm {class}"></div>
+
+<!-- ── PopoverTitle ── -->
+<div data-slot="popover-title" class="font-medium {class}"></div>
+
+<!-- ── PopoverDescription ── -->
+<p data-slot="popover-description" class="text-muted-foreground {class}"></p>

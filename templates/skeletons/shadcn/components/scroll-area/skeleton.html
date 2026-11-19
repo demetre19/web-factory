@@ -1,0 +1,26 @@
+<!--
+  shadcn/ui · scroll-area (components)
+  Source: https://ui.shadcn.com/docs/components/scroll-area
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/scroll-area.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── ScrollArea ── -->
+<div data-state="visible" data-slot="scroll-area" class="relative {class}">
+      <div role="region" tabindex="0" data-slot="scroll-area-viewport" class="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1">
+        {children}
+      </div>
+      <div data-state="visible" data-orientation="vertical" data-slot="scroll-area-scrollbar" orientation="{orientation}" class="flex touch-none p-px transition-colors select-none {orientation === "vertical" &&
+} {orientation === "horizontal" &} {class}">
+      <div data-state="visible" data-slot="scroll-area-thumb" class="relative flex-1 rounded-full bg-border"></div>
+    </div>
+      <div></div>
+    </div>
+
+<!-- ── ScrollBar ── -->
+<div data-state="visible" data-orientation="vertical" data-slot="scroll-area-scrollbar" orientation="{orientation}" class="flex touch-none p-px transition-colors select-none {orientation === "vertical" &&
+} {orientation === "horizontal" &} {class}">
+      <div data-state="visible" data-slot="scroll-area-thumb" class="relative flex-1 rounded-full bg-border"></div>
+    </div>

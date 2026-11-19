@@ -1,0 +1,117 @@
+{
+  "id": "shadcn/components/alert-dialog",
+  "name": "alert-dialog",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/alert-dialog",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/alert-dialog.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "alert-dialog",
+  "exports": [
+    "AlertDialog",
+    "AlertDialogTrigger",
+    "AlertDialogPortal",
+    "AlertDialogOverlay",
+    "AlertDialogContent",
+    "AlertDialogHeader",
+    "AlertDialogFooter",
+    "AlertDialogTitle",
+    "AlertDialogDescription",
+    "AlertDialogMedia",
+    "AlertDialogAction",
+    "AlertDialogCancel"
+  ],
+  "parts": [
+    "alert-dialog",
+    "alert-dialog-action",
+    "alert-dialog-cancel",
+    "alert-dialog-content",
+    "alert-dialog-description",
+    "alert-dialog-footer",
+    "alert-dialog-header",
+    "alert-dialog-media",
+    "alert-dialog-overlay",
+    "alert-dialog-portal",
+    "alert-dialog-title",
+    "alert-dialog-trigger"
+  ],
+  "radix_primitives": [
+    "AlertDialog.Action",
+    "AlertDialog.Cancel",
+    "AlertDialog.Content",
+    "AlertDialog.Description",
+    "AlertDialog.Overlay",
+    "AlertDialog.Portal",
+    "AlertDialog.Root",
+    "AlertDialog.Title",
+    "AlertDialog.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "radix-ui",
+    "@/registry/new-york-v4/ui/button"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG alertdialog",
+      "keys": [
+        "Tab/Shift+Tab trapped",
+        "Esc cancelled-preferred",
+        "focus\u2192first focusable / cancel"
+      ],
+      "notes": "role=alertdialog aria-modal, labelledby title describedby description; focus returns to trigger"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/alert-dialog"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-background",
+    "bg-muted",
+    "text-muted-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "div",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-describedby",
+      "aria-haspopup",
+      "aria-invalid",
+      "aria-labelledby",
+      "aria-modal",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG alertdialog",
+      "keys": [
+        "Tab/Shift+Tab trapped",
+        "Esc cancelled-preferred",
+        "focus\u2192first focusable / cancel"
+      ],
+      "notes": "role=alertdialog aria-modal, labelledby title describedby description; focus returns to trigger"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

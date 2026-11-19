@@ -1,0 +1,86 @@
+{
+  "id": "shadcn/components/bubble",
+  "name": "bubble",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/bubble",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/bubble.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "bubble",
+  "exports": [
+    "BubbleGroup",
+    "Bubble",
+    "BubbleContent",
+    "BubbleReactions"
+  ],
+  "parts": [
+    "bubble",
+    "bubble-content",
+    "bubble-group",
+    "bubble-reactions"
+  ],
+  "radix_primitives": [],
+  "imports": [
+    "react",
+    "class-variance-authority",
+    "cn",
+    "radix-ui"
+  ],
+  "requires_js": false,
+  "behavior": {
+    "implemented_in": null,
+    "contract": null,
+    "radix_docs": null
+  },
+  "variants": {
+    "bubbleVariants": "\n  \"group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1 group-data-[align=end]/message:self-end data-[align=end]:self-end data-[variant=ghost]:max-w-full\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"*:data-[slot=bubble-content]:bg-primary *:data-[slot=bubble-content]:text-primary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-primary/80\",\n        secondary:\n          \"*:data-[slot=bubble-content]:bg-secondary *:data-[slot=bubble-content]:text-secondary-foreground [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]\",\n        muted:\n          \"*:data-[slot=bubble-content]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)]\",\n        tinted:\n          \"*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)] *:data-[slot=bubble-content]:text-foreground dark:*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.3_calc(c*0.4)_h)] [&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.88_calc(c*0.5)_h)] dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.35_calc(c*0.5)_h)]\",\n        outline:\n          \"*:data-[slot=bubble-content]:border-border *:data-[slot=bubble-content]:bg-background [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-input/30\",\n        ghost:\n          \"border-none *:data-[slot=bubble-content]:rounded-none *:data-[slot=bubble-content]:bg-transparent *:data-[slot=bubble-content]:p-0 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted [&>[data-slot=bubble-content]:is(button,a):hover]:text-foreground dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50\",\n        destructive:\n          \"*:data-[slot=bubble-content]:bg-destructive/10 *:data-[slot=bubble-content]:text-destructive dark:*:data-[slot=bubble-content]:bg-destructive/20 [&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/20 dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/30\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n",
+    "bubbleReactionsVariants": "\n  \"absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 text-sm ring-3 ring-card has-[button]:p-0\",\n  {\n    variants: {\n      side: {\n        top: \"top-0 -translate-y-3/4\",\n        bottom: \"bottom-0 translate-y-3/4\",\n      },\n      align: {\n        start: \"left-3\",\n        end: \"right-3\",\n      },\n    },\n    defaultVariants: {\n      side: \"bottom\",\n      align: \"end\",\n    },\n  }\n"
+  },
+  "tokens_used": [
+    "bg-background",
+    "bg-destructive/10",
+    "bg-destructive/20",
+    "bg-destructive/30",
+    "bg-input/30",
+    "bg-muted",
+    "bg-muted/50",
+    "bg-primary",
+    "bg-primary/80",
+    "bg-secondary",
+    "border-border",
+    "border-ring",
+    "ring-card",
+    "ring-ring/50",
+    "text-destructive",
+    "text-foreground",
+    "text-primary-foreground",
+    "text-secondary-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "div",
+      "typeof"
+    ],
+    "aria_in_skeleton": [],
+    "keyboard_contract": null,
+    "sr_only_labels": false,
+    "focus_ring_spec": "focus-visible:ring-[3px] focus-visible:ring-ring/50"
+  }
+}

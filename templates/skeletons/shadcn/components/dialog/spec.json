@@ -1,0 +1,116 @@
+{
+  "id": "shadcn/components/dialog",
+  "name": "dialog",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/dialog",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/dialog.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "dialog",
+  "exports": [
+    "Dialog",
+    "DialogTrigger",
+    "DialogPortal",
+    "DialogClose",
+    "DialogOverlay",
+    "DialogContent",
+    "DialogHeader",
+    "DialogFooter",
+    "DialogTitle",
+    "DialogDescription"
+  ],
+  "parts": [
+    "dialog",
+    "dialog-close",
+    "dialog-content",
+    "dialog-description",
+    "dialog-footer",
+    "dialog-header",
+    "dialog-overlay",
+    "dialog-portal",
+    "dialog-title",
+    "dialog-trigger"
+  ],
+  "radix_primitives": [
+    "Dialog.Close",
+    "Dialog.Content",
+    "Dialog.Description",
+    "Dialog.Overlay",
+    "Dialog.Portal",
+    "Dialog.Root",
+    "Dialog.Title",
+    "Dialog.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "lucide-react",
+    "radix-ui",
+    "@/registry/new-york-v4/ui/button"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG modal dialog",
+      "keys": [
+        "Tab/Shift+Tab trapped",
+        "Esc close",
+        "focus\u2192content first"
+      ],
+      "notes": "role=dialog aria-modal labelledby/describedby; focus returns to trigger"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/dialog"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-accent",
+    "bg-background",
+    "ring-ring",
+    "text-muted-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "div",
+      "span",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-describedby",
+      "aria-haspopup",
+      "aria-hidden",
+      "aria-invalid",
+      "aria-labelledby",
+      "aria-modal",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG modal dialog",
+      "keys": [
+        "Tab/Shift+Tab trapped",
+        "Esc close",
+        "focus\u2192content first"
+      ],
+      "notes": "role=dialog aria-modal labelledby/describedby; focus returns to trigger"
+    },
+    "sr_only_labels": true,
+    "focus_ring_spec": null
+  }
+}

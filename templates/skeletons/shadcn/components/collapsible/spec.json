@@ -1,0 +1,74 @@
+{
+  "id": "shadcn/components/collapsible",
+  "name": "collapsible",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/collapsible",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/collapsible.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": "faq",
+  "wf_profile_type": "faq",
+  "component_type": "collapsible",
+  "exports": [
+    "Collapsible",
+    "CollapsibleTrigger",
+    "CollapsibleContent"
+  ],
+  "parts": [
+    "collapsible",
+    "collapsible-content",
+    "collapsible-trigger"
+  ],
+  "radix_primitives": [
+    "Collapsible.CollapsibleContent",
+    "Collapsible.CollapsibleTrigger",
+    "Collapsible.Root"
+  ],
+  "imports": [
+    "radix-ui"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG disclosure",
+      "keys": [
+        "Enter/Space toggle"
+      ],
+      "notes": "aria-expanded + aria-controls; content hidden when closed"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/collapsible"
+  },
+  "variants": {},
+  "tokens_used": [],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "typeof"
+    ],
+    "aria_in_skeleton": [],
+    "keyboard_contract": {
+      "pattern": "APG disclosure",
+      "keys": [
+        "Enter/Space toggle"
+      ],
+      "notes": "aria-expanded + aria-controls; content hidden when closed"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

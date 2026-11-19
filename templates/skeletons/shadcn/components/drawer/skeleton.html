@@ -1,0 +1,36 @@
+<!--
+  shadcn/ui · drawer (components)
+  Source: https://ui.shadcn.com/docs/components/drawer
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/drawer.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── DrawerTrigger ── -->
+<button type="button" aria-haspopup="dialog" data-slot="drawer-trigger"></button>
+
+<!-- ── DrawerClose ── -->
+<button type="button" data-slot="drawer-close"></button>
+
+<!-- ── DrawerOverlay ── -->
+<div data-state="open" data-slot="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 {class}"></div>
+
+<!-- ── DrawerContent ── -->
+<div data-state="open" data-slot="drawer-overlay" class="fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 {class}"></div>
+      <div role="dialog" aria-modal="true" aria-labelledby="{title-id}" aria-describedby="{description-id}" data-state="open" tabindex="-1" data-slot="drawer-content" class="group/drawer-content fixed z-50 flex h-auto flex-col bg-background data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-lg data-[vaul-drawer-direction=top]:border-b data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-lg data-[vaul-drawer-direction=bottom]:border-t data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=right]:sm:max-w-sm data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=left]:sm:max-w-sm {class}">
+        <div class="mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block"></div>
+        {children}
+      </div>
+
+<!-- ── DrawerHeader ── -->
+<div data-slot="drawer-header" class="flex flex-col gap-0.5 p-4 group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center group-data-[vaul-drawer-direction=top]/drawer-content:text-center md:gap-1.5 md:text-left {class}"></div>
+
+<!-- ── DrawerFooter ── -->
+<div data-slot="drawer-footer" class="mt-auto flex flex-col gap-2 p-4 {class}"></div>
+
+<!-- ── DrawerTitle ── -->
+<h2 data-slot="drawer-title" class="font-semibold text-foreground {class}"></h2>
+
+<!-- ── DrawerDescription ── -->
+<p data-slot="drawer-description" class="text-sm text-muted-foreground {class}"></p>

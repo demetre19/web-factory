@@ -1,0 +1,27 @@
+<!--
+  shadcn/ui · input-otp (components)
+  Source: https://ui.shadcn.com/docs/components/input-otp
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/input-otp.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── InputOTP ── -->
+<!-- <OTPInput data-slot="input-otp" containerClassName="{cn( "flex items-center gap-2 has-disable}" class="disabled:cursor-not-allowed {class}"> external component --><!-- </OTPInput> -->
+
+<!-- ── InputOTPGroup ── -->
+<div data-slot="input-otp-group" class="flex items-center {class}"></div>
+
+<!-- ── InputOTPSlot ── -->
+<div data-slot="input-otp-slot" data-active="{isActive}" class="relative flex h-9 w-9 items-center justify-center border-y border-r border-input text-sm shadow-xs transition-all outline-none first:rounded-l-md first:border-l last:rounded-r-md aria-invalid:border-destructive data-[active=true]:z-10 data-[active=true]:border-ring data-[active=true]:ring-[3px] data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:border-destructive data-[active=true]:aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[active=true]:aria-invalid:ring-destructive/40 {class}">
+      {char}
+      <!-- when hasFakeCaret --><div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div class="h-4 w-px animate-caret-blink bg-foreground duration-1000"></div>
+        </div><!-- /when -->
+    </div>
+
+<!-- ── InputOTPSeparator ── -->
+<div data-slot="input-otp-separator" role="separator">
+      <svg aria-hidden="true" data-icon="MinusIcon"></svg>
+    </div>

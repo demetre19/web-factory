@@ -1,0 +1,18 @@
+<!--
+  shadcn/ui · slider (components)
+  Source: https://ui.shadcn.com/docs/components/slider
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/slider.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Slider ── -->
+<span data-orientation="horizontal" data-slot="slider" defaultValue="{defaultValue}" value="{value}" min="{min}" max="{max}" class="relative flex w-full touch-none items-center select-none data-[disabled]:opacity-50 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col {class}">
+      <span data-orientation="horizontal" data-slot="slider-track" class="relative grow overflow-hidden rounded-full bg-muted data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-1.5">
+        <span data-orientation="horizontal" data-slot="slider-range" class="absolute bg-primary data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"></span>
+      </span>
+      Array.from({length: _values.length}, (_, index) => (
+        <span role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{value}" aria-orientation="horizontal" tabindex="0" data-slot="slider-thumb" key="{index}" class="block size-4 shrink-0 rounded-full border border-primary bg-white shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"></span>
+      ))
+    </span>

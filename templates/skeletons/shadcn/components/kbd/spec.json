@@ -1,0 +1,62 @@
+{
+  "id": "shadcn/components/kbd",
+  "name": "kbd",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/kbd",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/kbd.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "kbd",
+  "exports": [
+    "Kbd",
+    "KbdGroup"
+  ],
+  "parts": [
+    "kbd",
+    "kbd-group"
+  ],
+  "radix_primitives": [],
+  "imports": [
+    "cn"
+  ],
+  "requires_js": false,
+  "behavior": {
+    "implemented_in": null,
+    "contract": null,
+    "radix_docs": null
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-background/10",
+    "bg-background/20",
+    "bg-muted",
+    "text-background",
+    "text-muted-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "kbd"
+    ],
+    "aria_in_skeleton": [],
+    "keyboard_contract": null,
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

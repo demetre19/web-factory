@@ -1,0 +1,80 @@
+{
+  "id": "shadcn/components/native-select",
+  "name": "native-select",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/native-select",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/native-select.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": "form-panel",
+  "wf_profile_type": "form-panel",
+  "component_type": "native-select",
+  "exports": [
+    "NativeSelect",
+    "NativeSelectOption",
+    "NativeSelectOptGroup"
+  ],
+  "parts": [
+    "native-select",
+    "native-select-icon",
+    "native-select-optgroup",
+    "native-select-option",
+    "native-select-wrapper"
+  ],
+  "radix_primitives": [],
+  "imports": [
+    "react",
+    "cn",
+    "lucide-react"
+  ],
+  "requires_js": false,
+  "behavior": {
+    "implemented_in": null,
+    "contract": null,
+    "radix_docs": null
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-input/30",
+    "bg-input/50",
+    "bg-primary",
+    "border-destructive",
+    "border-input",
+    "border-ring",
+    "ring-destructive/20",
+    "ring-destructive/40",
+    "ring-ring/50",
+    "text-muted-foreground",
+    "text-primary-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "div",
+      "optgroup",
+      "option",
+      "select"
+    ],
+    "aria_in_skeleton": [
+      "aria-hidden",
+      "aria-invalid"
+    ],
+    "keyboard_contract": null,
+    "sr_only_labels": false,
+    "focus_ring_spec": "focus-visible:ring-[3px] focus-visible:ring-ring/50"
+  }
+}

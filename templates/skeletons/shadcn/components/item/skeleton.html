@@ -1,0 +1,38 @@
+<!--
+  shadcn/ui · item (components)
+  Source: https://ui.shadcn.com/docs/components/item
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/item.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── ItemGroup ── -->
+<div role="list" data-slot="item-group" class="group/item-group flex flex-col {class}"></div>
+
+<!-- ── ItemSeparator ── -->
+<div role="separator" data-orientation="horizontal" data-slot="separator" decorative="{decorative}" orientation="{orientation}" class="my-0 {class} shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px {class}"></div>
+
+<!-- ── Item ── -->
+<div data-slot="item" data-variant="{variant}" data-size="{size}" class="group/item flex flex-wrap items-center rounded-md border border-transparent text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-accent/50 bg-transparent gap-4 p-4"></div>
+
+<!-- ── ItemMedia ── -->
+<div data-slot="item-media" data-variant="{variant}" class="flex shrink-0 items-center justify-center gap-2 group-has-[[data-slot=item-description]]/item:translate-y-0.5 group-has-[[data-slot=item-description]]/item:self-start [&_svg]:pointer-events-none bg-transparent"></div>
+
+<!-- ── ItemContent ── -->
+<div data-slot="item-content" class="flex flex-1 flex-col gap-1 [&+[data-slot=item-content]]:flex-none {class}"></div>
+
+<!-- ── ItemTitle ── -->
+<div data-slot="item-title" class="flex w-fit items-center gap-2 text-sm leading-snug font-medium {class}"></div>
+
+<!-- ── ItemDescription ── -->
+<p data-slot="item-description" class="line-clamp-2 text-sm leading-normal font-normal text-balance text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary {class}"></p>
+
+<!-- ── ItemActions ── -->
+<div data-slot="item-actions" class="flex items-center gap-2 {class}"></div>
+
+<!-- ── ItemHeader ── -->
+<div data-slot="item-header" class="flex basis-full items-center justify-between gap-2 {class}"></div>
+
+<!-- ── ItemFooter ── -->
+<div data-slot="item-footer" class="flex basis-full items-center justify-between gap-2 {class}"></div>

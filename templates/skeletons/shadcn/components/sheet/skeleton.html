@@ -1,0 +1,40 @@
+<!--
+  shadcn/ui · sheet (components)
+  Source: https://ui.shadcn.com/docs/components/sheet
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/sheet.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── SheetTrigger ── -->
+<button type="button" aria-haspopup="dialog" data-slot="sheet-trigger"></button>
+
+<!-- ── SheetClose ── -->
+<button type="button" data-slot="sheet-close"></button>
+
+<!-- ── SheetContent ── -->
+<div data-state="open" data-slot="sheet-overlay" class="fixed inset-0 z-50 bg-black/50 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 {class}"></div>
+      <div role="dialog" aria-modal="true" aria-labelledby="{title-id}" aria-describedby="{description-id}" data-state="open" tabindex="-1" data-slot="sheet-content" class="fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500 {side === "right" &&
+          } {side === "left" &&
+           } {side === "top" &&
+            } {side === "bottom" &&
+         } {class}">
+        {children}
+        <!-- when showCloseButton --><button type="button" class="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary">
+            <svg aria-hidden="true" data-icon="XIcon" class="size-4"></svg>
+            <span class="sr-only">Close</span>
+          </button><!-- /when -->
+      </div>
+
+<!-- ── SheetHeader ── -->
+<div data-slot="sheet-header" class="flex flex-col gap-1.5 p-4 {class}"></div>
+
+<!-- ── SheetFooter ── -->
+<div data-slot="sheet-footer" class="mt-auto flex flex-col gap-2 p-4 {class}"></div>
+
+<!-- ── SheetTitle ── -->
+<h2 data-slot="sheet-title" class="font-semibold text-foreground {class}"></h2>
+
+<!-- ── SheetDescription ── -->
+<p data-slot="sheet-description" class="text-sm text-muted-foreground {class}"></p>

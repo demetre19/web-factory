@@ -1,0 +1,43 @@
+<!--
+  shadcn/ui · chart (components)
+  Source: https://ui.shadcn.com/docs/components/chart
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/chart.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── ChartTooltipContent ── -->
+<div key="{index}" class="flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground {indicator === "dot" && "items-}">
+                <!-- when formatter -->item?.value !== undefined && item.name ? (
+                  formatter(item.value, item.name, item, index, item.payload)
+                ) : (
+                  
+                    <!-- when itemConfig?.icon ? (
+                    --><div class="shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg) {{
+                            }" style="{ { "--color-bg": indicatorColor, "--colo}"></div>
+                      )<!-- /when -->
+                    <div class="flex flex-1 justify-between leading-none {items-end|items-center}">
+                      <div class="grid gap-1.5">
+                        {conditional: nestLabel ? tooltipLabel : null}
+                        <span class="text-muted-foreground">
+                          {itemConfig?.label ?? item.name}
+                        </span>
+                      </div>
+                      <!-- when item.value != null --><span class="font-mono font-medium text-foreground tabular-nums">
+                          {conditional: typeof item.value === "number" ? item.value.toLoca}
+                        </span><!-- /when -->
+                    </div>
+                  
+                )<!-- /when -->
+              </div>
+
+<!-- ── ChartLegendContent ── -->
+<div key="{index}" class="flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground">
+              <!-- when itemConfig?.icon -->!hideIcon ? (
+                <!-- itemConfig.icon --><!-- /itemConfig.icon -->
+              ) : (
+                <div style="{{ backgroundColor: item.color, }}" class="h-2 w-2 shrink-0 rounded-[2px]"></div>
+              )<!-- /when -->
+              {itemConfig?.label}
+            </div>

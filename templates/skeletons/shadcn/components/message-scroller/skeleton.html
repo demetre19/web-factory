@@ -1,0 +1,32 @@
+<!--
+  shadcn/ui · message-scroller (components)
+  Source: https://ui.shadcn.com/docs/components/message-scroller
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/message-scroller.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── MessageScroller ── -->
+<div data-slot="message-scroller" class="group/message-scroller relative flex size-full min-h-0 flex-col overflow-hidden {class}"></div>
+
+<!-- ── MessageScrollerViewport ── -->
+<div role="log" aria-live="polite" data-slot="message-scroller-viewport" class="size-full min-h-0 min-w-0 scroll-fade-b scrollbar-thin scrollbar-gutter-stable overflow-y-auto overscroll-contain contain-content data-autoscrolling:scrollbar-none data-pending-scroll:invisible {class}"></div>
+
+<!-- ── MessageScrollerContent ── -->
+<div data-slot="message-scroller-content" class="flex h-max min-h-full flex-col gap-8 {class}"></div>
+
+<!-- ── MessageScrollerItem ── -->
+<div data-slot="message-scroller-item" scrollAnchor="{scrollAnchor}" class="min-w-0 shrink-0 [contain-intrinsic-size:auto_10rem] [content-visibility:auto] {class}"></div>
+
+<!-- ── MessageScrollerButton ── -->
+<button type="button" data-slot="message-scroller-button" data-direction="{direction}" data-variant="{variant}" data-size="{size}" direction="{direction}" class="absolute inset-s-1/2 -translate-x-1/2 border-border bg-background text-foreground transition-[translate,scale,opacity] duration-200 hover:bg-muted hover:text-foreground data-[active=false]:pointer-events-none data-[active=false]:scale-95 data-[active=false]:opacity-0 data-[active=false]:duration-400 data-[active=false]:ease-[cubic-bezier(0.7,0,0.84,0)] data-[active=true]:translate-y-0 data-[active=true]:scale-100 data-[active=true]:opacity-100 data-[active=true]:ease-[cubic-bezier(0.23,1,0.32,1)] data-[direction=end]:bottom-4 data-[direction=end]:data-[active=false]:translate-y-full data-[direction=start]:top-4 data-[direction=start]:data-[active=false]:-translate-y-full rtl:translate-x-1/2 data-[direction=start]:[&_svg]:rotate-180 {class}" data-render="{component}">
+      children ?? (
+        
+          <svg aria-hidden="true" data-icon="ArrowDownIcon"></svg>
+          <span class="sr-only">
+            {conditional: direction === "end" ? "Scroll to end" : "Scroll to}
+          </span>
+        
+      )
+    </button>

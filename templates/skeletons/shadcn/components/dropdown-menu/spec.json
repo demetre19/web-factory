@@ -1,0 +1,136 @@
+{
+  "id": "shadcn/components/dropdown-menu",
+  "name": "dropdown-menu",
+  "collection": "components",
+  "source_url": "https://ui.shadcn.com/docs/components/dropdown-menu",
+  "source_repo": "https://github.com/shadcn-ui/ui",
+  "source_repo_path": "apps/v4/registry/new-york-v4/ui/dropdown-menu.tsx",
+  "registry_style": "new-york-v4 (radix base)",
+  "license": {
+    "spdx": "MIT",
+    "copyright": "shadcn",
+    "url": "https://github.com/shadcn-ui/ui/blob/main/LICENSE.md",
+    "attribution": "header comment retained in skeleton/spec files"
+  },
+  "tier": {
+    "structure": "skeleton (structure-only, same law as hyperui)",
+    "visual": "component-endorsed (operator-endorsed component-tier reference; NOT page/section canon)"
+  },
+  "wf_category": "ui-elements",
+  "wf_composition": null,
+  "wf_profile_type": null,
+  "component_type": "dropdown-menu",
+  "exports": [
+    "DropdownMenu",
+    "DropdownMenuPortal",
+    "DropdownMenuTrigger",
+    "DropdownMenuContent",
+    "DropdownMenuGroup",
+    "DropdownMenuItem",
+    "DropdownMenuCheckboxItem",
+    "DropdownMenuRadioGroup",
+    "DropdownMenuRadioItem",
+    "DropdownMenuLabel",
+    "DropdownMenuSeparator",
+    "DropdownMenuShortcut",
+    "DropdownMenuSub",
+    "DropdownMenuSubTrigger",
+    "DropdownMenuSubContent"
+  ],
+  "parts": [
+    "dropdown-menu",
+    "dropdown-menu-checkbox-item",
+    "dropdown-menu-content",
+    "dropdown-menu-group",
+    "dropdown-menu-item",
+    "dropdown-menu-label",
+    "dropdown-menu-portal",
+    "dropdown-menu-radio-group",
+    "dropdown-menu-radio-item",
+    "dropdown-menu-separator",
+    "dropdown-menu-shortcut",
+    "dropdown-menu-sub",
+    "dropdown-menu-sub-content",
+    "dropdown-menu-sub-trigger",
+    "dropdown-menu-trigger"
+  ],
+  "radix_primitives": [
+    "DropdownMenu.CheckboxItem",
+    "DropdownMenu.Content",
+    "DropdownMenu.Group",
+    "DropdownMenu.Item",
+    "DropdownMenu.ItemIndicator",
+    "DropdownMenu.Label",
+    "DropdownMenu.Portal",
+    "DropdownMenu.RadioGroup",
+    "DropdownMenu.RadioItem",
+    "DropdownMenu.Root",
+    "DropdownMenu.Separator",
+    "DropdownMenu.Sub",
+    "DropdownMenu.SubContent",
+    "DropdownMenu.SubTrigger",
+    "DropdownMenu.Trigger"
+  ],
+  "imports": [
+    "react",
+    "cn",
+    "lucide-react",
+    "radix-ui"
+  ],
+  "requires_js": true,
+  "behavior": {
+    "implemented_in": "lib/behaviors.js",
+    "contract": {
+      "pattern": "APG menu button",
+      "keys": [
+        "Enter/Space/ArrowDown opens",
+        "roving focus items",
+        "ArrowRight submenu",
+        "Esc close+refocus"
+      ],
+      "notes": "trigger aria-haspopup=menu; items menuitem/checkbox/radio roles"
+    },
+    "radix_docs": "https://www.radix-ui.com/primitives/docs/components/dropdown-menu"
+  },
+  "variants": {},
+  "tokens_used": [
+    "bg-accent",
+    "bg-border",
+    "bg-destructive/10",
+    "bg-destructive/20",
+    "bg-popover",
+    "text-accent-foreground",
+    "text-destructive",
+    "text-muted-foreground",
+    "text-popover-foreground"
+  ],
+  "dark_mode": {
+    "supported": true,
+    "mechanism": "CSS-var token classes; dark values live in tokens/theme-dark.css (.dark scope)"
+  },
+  "a11y": {
+    "semantic_elements": [
+      "span",
+      "typeof"
+    ],
+    "aria_in_skeleton": [
+      "aria-checked",
+      "aria-expanded",
+      "aria-haspopup",
+      "aria-hidden",
+      "role"
+    ],
+    "keyboard_contract": {
+      "pattern": "APG menu button",
+      "keys": [
+        "Enter/Space/ArrowDown opens",
+        "roving focus items",
+        "ArrowRight submenu",
+        "Esc close+refocus"
+      ],
+      "notes": "trigger aria-haspopup=menu; items menuitem/checkbox/radio roles"
+    },
+    "sr_only_labels": false,
+    "focus_ring_spec": null
+  }
+}

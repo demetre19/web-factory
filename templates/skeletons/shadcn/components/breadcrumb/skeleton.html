@@ -1,0 +1,34 @@
+<!--
+  shadcn/ui · breadcrumb (components)
+  Source: https://ui.shadcn.com/docs/components/breadcrumb
+  Repo:   github.com/shadcn-ui/ui · apps/v4/registry/new-york-v4/ui/breadcrumb.tsx
+  License: MIT (c) shadcn — attribution required
+  TIER: skeleton=structure / component-visuals=operator-ENDORSED reference
+  Class values keep shadcn CSS-var tokens (bg-primary, ring/50, h-9…):
+  map tokens to DNA vars per tokens/tokens.json; specs in spec.json.
+-->
+<!-- ── Breadcrumb ── -->
+<nav aria-label="breadcrumb" data-slot="breadcrumb"></nav>
+
+<!-- ── BreadcrumbList ── -->
+<ol data-slot="breadcrumb-list" class="flex flex-wrap items-center gap-1.5 text-sm break-words text-muted-foreground sm:gap-2.5 {class}"></ol>
+
+<!-- ── BreadcrumbItem ── -->
+<li data-slot="breadcrumb-item" class="inline-flex items-center gap-1.5 {class}"></li>
+
+<!-- ── BreadcrumbLink ── -->
+<a data-slot="breadcrumb-link" class="transition-colors hover:text-foreground {class}"></a>
+
+<!-- ── BreadcrumbPage ── -->
+<span data-slot="breadcrumb-page" role="link" aria-disabled="true" aria-current="page" class="font-normal text-foreground {class}"></span>
+
+<!-- ── BreadcrumbSeparator ── -->
+<li data-slot="breadcrumb-separator" role="presentation" aria-hidden="true" class="[&>svg]:size-3.5 {class}">
+      children ?? <svg aria-hidden="true" data-icon="ChevronRight"></svg>
+    </li>
+
+<!-- ── BreadcrumbEllipsis ── -->
+<span data-slot="breadcrumb-ellipsis" role="presentation" aria-hidden="true" class="flex size-9 items-center justify-center {class}">
+      <!-- <MoreHorizontal class="size-4"> external component --><!-- </MoreHorizontal> -->
+      <span class="sr-only">More</span>
+    </span>
