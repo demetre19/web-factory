@@ -1,0 +1,286 @@
+#!/usr/bin/env python3
+"""pipeline_emit.py — the emit chain (S0–P6/B1–B3).
+
+Given a pipeline dir holding DESIGN-PLAN.md + DNA.json (+ TOKENS.json
+if the wave wrote it), emit everything the gate's W6/W7 checks judge:
+
+  site/package.json + astro.config.mjs        scaffold (S0)
+  TOKENS.json                                 DNA → knobs+modes (P1)
+  site/tailwind.config.js                     darkMode + every hex (P2)
+  site/src/styles/global.css                  emit_tokens + tail (P3)
+  site/src/components/Section.astro           shell (S2)
+  site/src/layouts/BaseLayout.astro           document shell (S4)
+  site/src/components/<comp>.astro            gold-exemplar copy (P6)
+  site/src/components/sections/<Sec>.astro    instance per contract (W6)
+  site/src/pages/system.astro + index.astro   system tile (VG.1)
+  COMPONENTS.md                               comp → file map
+  sections/*.contract.json + *.gate.json      gate.py contracts+section
+  site/src/pages/<slug>.astro + PAGES SPEC    assemble.py (B1)
+
+Then (optionally) clone the vendored toolchain and `astro build` for a
+real dist tree the w7 checks can open.
+
+Usage: pipeline_emit.py <pipeline-dir> [--with-toolchain] [--build]
+       --with-toolchain  clonefile templates/astro/node_modules
+       --build           implies --with-toolchain; runs npm run build
+"""
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(0, HERE)
+
+import gate          # noqa: E402  (the ONE judge — producers call it)
+import emit_global   # noqa: E402  (the canonical emit recipes)
+
+TEMPLATES = os.path.join(REPO, 'templates')
+STARTER = os.path.join(TEMPLATES, 'astro')
+
+# vendored toolchain versions — pinned to templates/astro/package.json
+PKG_DEPS = {
+    'astro': '5.18.2',
+    '@astrojs/tailwind': '6.0.2',
+    'tailwindcss': '3.4.19',
+}
+
+
+def _w(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as fh:
+        fh.write(text)
+    return path
+
+
+def _read(path):
+    return open(path, encoding='utf-8').read()
+
+
+def _slug(ctx):
+    site = ctx.site_block() or {}
+    return str(site.get('slug') or os.path.basename(ctx.dir.rstrip('/'))
+               or 'site')
+
+
+def _scaffold(ctx, comps):
+    """S0 — package.json + astro.config.mjs + favicon + empty index."""
+    site = ctx.site
+    deps = dict(PKG_DEPS)
+    if any('lucide-astro' in (_read(p) if os.path.isfile(p) else '')
+           for p in _exemplar_paths(comps)):
+        deps['lucide-astro'] = '^0.4.0'
+    _w(os.path.join(site, 'package.json'), json.dumps({
+        'name': _slug(ctx), 'version': '1.0.0', 'private': True,
+        'type': 'module',
+        'scripts': {'dev': 'astro dev', 'build': 'astro build',
+                    'preview': 'astro preview'},
+        'engines': {'node': '>=20.0.0'},
+        'dependencies': deps}, indent=2) + '\n')
+    _w(os.path.join(site, 'astro.config.mjs'),
+       "import { defineConfig } from 'astro/config';\n"
+       "import tailwind from '@astrojs/tailwind';\n\n"
+       'export default defineConfig({\n'
+       '  output: "static",\n'
+       '  integrations: [tailwind({ applyBaseStyles: false })],\n'
+       '});\n')
+    _w(os.path.join(site, 'public', 'favicon.svg'),
+       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">'
+       '<rect width="16" height="16" rx="3"/></svg>\n')
+    _w(os.path.join(site, 'src', 'pages', 'index.astro'), '')
+
+
+def _exemplar_paths(comps):
+    return [os.path.join(TEMPLATES, 'sections', c,
+                         gate.camel(c) + '.astro') for c in comps]
+
+
+def _tokens(ctx, dna):
+    """P1 — TOKENS.json: keep the operator's if the wave wrote it, else
+    derive from DNA (knobs + modes both ride the map)."""
+    p = os.path.join(ctx.dir, 'TOKENS.json')
+    if os.path.isfile(p):
+        return json.loads(_read(p)), False
+    rec = emit_global.tokens_json(dna)
+    _w(p, json.dumps(rec, indent=1))
+    return rec, True
+
+
+def _comp_copy(ctx, comp):
+    """P6/W6 — the composition skeleton IS the gold exemplar, copied
+    verbatim into src/components/. Contract content binds via props on
+    the instance, never by editing the skeleton's outer classes."""
+    src = os.path.join(TEMPLATES, 'sections', comp,
+                       gate.camel(comp) + '.astro')
+    if not os.path.isfile(src):
+        raise SystemExit(f'P6 no gold exemplar for "{comp}" at '
+                         f'{os.path.relpath(src, REPO)}')
+    dst = os.path.join(ctx.site, 'src', 'components', comp + '.astro')
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copyfile(src, dst)
+
+
+def _instance(ctx, contract, row):
+    """W6 — the section instance: frontmatter contract + import + render.
+    Copy/props come from the contract content + plan row (cta/items/
+    image); the component owns the skeleton (P.6)."""
+    comp = contract['composition']
+    camel = gate.camel(comp)
+    c = contract['content'] or {}
+    props = []
+    h1_text = c.get('h1_text')
+    for k in ('heading', 'fs', 'body'):
+        v = h1_text if (k == 'heading' and h1_text) else c.get(k)
+        if v:
+            props.append(f'{k}={json.dumps(str(v))}')
+    for k in ('cta', 'items', 'image'):
+        v = row.get(k)
+        if v:
+            props.append(f'{k}={{({json.dumps(v)})}}')
+    if h1_text:
+        props.append('h1={true}')
+    body = (f'<{camel} ' + ' '.join(props) + ' />'
+            if props else f'<{camel} />')
+    txt = ('---\n'
+           '// contract echoes (frontmatter is JS; the gate reads\n'
+           '// dna_hash:/structure_hash:/exemplar: via regex):\n'
+           f"// dna_hash: {contract['dna_hash']}\n"
+           f"// structure_hash: {contract['structure_hash']}\n"
+           f'// exemplar: {comp}\n'
+           f"import {camel} from '../{comp}.astro';\n"
+           '---\n'
+           f'{body}\n')
+    _w(os.path.join(ctx.site, 'src', 'components', 'sections',
+                    gate.camel(contract['section']) + '.astro'), txt)
+
+
+def _system(ctx, comps):
+    """VG.1 — the system tile renders every composition + the toggle."""
+    imps = '\n'.join(
+        f"import {gate.camel(c)} from '../components/{c}.astro';"
+        for c in comps)
+    tags = ''.join(f'<{gate.camel(c)} />' for c in comps)
+    _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
+       '---\n' + imps + '\n---\n'
+       '<button data-theme-toggle aria-label="Light or dark">'
+       'Light/Dark</button>\n' + tags + '\n')
+
+
+def _toolchain(ctx):
+    """Clone the vendored node_modules (APFS clonefile when possible)
+    so `astro build` runs without a network install."""
+    src = os.path.join(STARTER, 'node_modules')
+    dst = os.path.join(ctx.site, 'node_modules')
+    if os.path.isdir(dst):
+        return True
+    if not os.path.isdir(src):
+        print(f'  ! no vendored node_modules at '
+              f'{os.path.relpath(src, REPO)} — npm ci needed')
+        return False
+    r = subprocess.run(['cp', '-Rc', src, dst], capture_output=True)
+    if r.returncode != 0:
+        shutil.copytree(src, dst)
+    return True
+
+
+def main(argv):
+    args = [a for a in argv[1:] if not a.startswith('--')]
+    flags = {a for a in argv[1:] if a.startswith('--')}
+    if len(args) != 1 or flags - {'--with-toolchain', '--build'}:
+        print('usage: pipeline_emit.py <pipeline-dir> '
+              '[--with-toolchain] [--build]')
+        return 2
+    ctx = gate.Ctx(args[0])
+    for req in ('DESIGN-PLAN.md', 'DNA.json'):
+        if not os.path.isfile(os.path.join(ctx.dir, req)):
+            print(f'pipeline_emit: {req} missing in {ctx.dir}')
+            return 2
+    dna = gate.dna_map(ctx) or {}
+    rows = ctx.rows() or []
+    if not rows:
+        print('pipeline_emit: no plan rows (pages.*.sections) in '
+              'DESIGN-PLAN.md')
+        return 2
+
+    print(f'emit → {ctx.dir}')
+    # P1 — TOKENS.json (operator's wins; DNA derives otherwise)
+    tokens, wrote = _tokens(ctx, dna)
+    print(f'  TOKENS.json {"written" if wrote else "kept"} '
+          f'({len((tokens.get("knobs") or {}))} knobs)')
+
+    contracts = gate.build_contracts(ctx)
+    comps = sorted({c['composition'] for c in contracts
+                    if c['composition']})
+    by_name = {str(r.get('name')): r for _, r in rows}
+
+    # S0 — scaffold
+    _scaffold(ctx, comps)
+    print('  scaffold: package.json, astro.config.mjs, favicon, index')
+
+    # P2 — tailwind config (every TOKENS hex verbatim)
+    _w(os.path.join(ctx.site, 'tailwind.config.js'),
+       emit_global.tailwind_config(tokens))
+    print('  tailwind.config.js')
+
+    # P3 — global.css (emit_tokens five layers + component tail)
+    _w(os.path.join(ctx.site, 'src', 'styles', 'global.css'),
+       emit_global.global_css(tokens))
+    print('  src/styles/global.css')
+
+    # S2/S4 — shell + document layout (template files, verbatim)
+    _w(os.path.join(ctx.site, 'src', 'components', 'Section.astro'),
+       _read(os.path.join(TEMPLATES, 'sections', 'Section.astro')))
+    _w(os.path.join(ctx.site, 'src', 'layouts', 'BaseLayout.astro'),
+       _read(os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro')))
+    print('  Section.astro + BaseLayout.astro')
+
+    # P6/W6 — component skeleton + instance per contract
+    for comp in comps:
+        _comp_copy(ctx, comp)
+    for c in contracts:
+        _instance(ctx, c, by_name.get(str(c['section'])) or {})
+    print(f'  {len(comps)} components + {len(contracts)} instances')
+
+    # VG.1 — system tile + comp map
+    _system(ctx, comps)
+    _w(os.path.join(ctx.dir, 'COMPONENTS.md'),
+       '# COMPONENTS\n' + ''.join(
+           f'{c} → {c}.astro\n' for c in comps))
+    print('  system.astro + COMPONENTS.md')
+
+    # B1–B3 — the gate produces; the emitter only invokes it
+    rc = 0
+    print('  gate.py contracts …')
+    rc |= gate.cmd_contracts(ctx.dir)
+    ctx2 = gate.Ctx(ctx.dir)   # contracts now on disk
+    print('  gate.py section (per contract) …')
+    rc |= gate.cmd_section(ctx.dir, None)
+    print('  assemble.py …')
+    asm = subprocess.run(
+        [sys.executable, os.path.join(HERE, 'assemble.py'), ctx.dir],
+        capture_output=True, text=True)
+    print('  ' + asm.stdout.strip().replace('\n', '\n  '))
+    if asm.returncode:
+        print(asm.stderr.strip())
+        rc |= asm.returncode
+
+    if flags & {'--with-toolchain', '--build'}:
+        ok = _toolchain(ctx)
+        print(f'  toolchain: {"cloned" if ok else "missing"}')
+        if '--build' in flags and ok:
+            r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+                               capture_output=True, text=True,
+                               timeout=300)
+            tail = '\n'.join(
+                (r.stdout + r.stderr).strip().split('\n')[-6:])
+            print(f'  astro build exit {r.returncode}\n  {tail}')
+            rc |= r.returncode
+    print(f'emit done (exit {rc})')
+    return rc
+
+
+if __name__ == '__main__':
+    raise SystemExit(main(sys.argv))

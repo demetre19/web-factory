@@ -20,7 +20,16 @@ const {
 ---
 
 <footer class="grid gap-stack text-fluid--1 md:grid-cols-2">
-  <p>{heading}</p>
+  <div>
+    <small class="text-fluid--1">{heading}</small>
+    <address class="text-fluid--1">
+      {fs !== 'The first sentence a reader needs.'
+        ? fs : 'Contact the team'}
+    </address>
+    <small class="text-fluid--1">&copy; {new Date().getFullYear()} {heading}
+      · <a class="underline" href="/privacy">Privacy</a>
+      · <a class="underline" href="/terms">Terms</a></small>
+  </div>
   <ul class="flex flex-wrap gap-fluid-m">
     {items.map((it) => (
       <li><a class="underline" href={it.href ?? '#'}>{it.label}</a></li>

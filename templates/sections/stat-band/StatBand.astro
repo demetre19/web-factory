@@ -12,15 +12,16 @@ interface Props {
   items?: { title?: string; text?: string; value?: string;
              label?: string; href?: string; quote?: string }[];
   image?: { src: string; alt: string };
+  h1?: boolean;
 }
 const {
   heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image,
+  body = '', cta, items = [], image, h1,
 } = Astro.props;
 ---
 
 <div>
-  <h2 class="text-fluid-1">{heading}</h2>
+  {h1 ? <h1 class="text-fluid-1">{heading}</h1> : <h2 class="text-fluid-1">{heading}</h2>}
   <dl class="mt-stack grid grid-cols-2 gap-stack md:grid-cols-4">
     {items.map((it) => (
       <div>

@@ -397,7 +397,7 @@ import { Star } from 'lucide-astro';
 </div>
 '''
 SECTIONS = {
-    _fn: ('---\nexemplar: ' + _comp + '\nimport '
+    _fn: ('---\n// exemplar: ' + _comp + '\nimport '
           + ''.join(w.capitalize() for w in _comp.split('-'))
           + " from '../" + _comp + ".astro';\n---\n<"
           + ''.join(w.capitalize() for w in _comp.split('-')) + ' />\n')
@@ -1438,8 +1438,9 @@ def main():
     for name in list(SECTIONS):
         rel = f'site/src/components/sections/{name}'
         body = BASE[rel].replace(
-            '---\nexemplar:',
-            f'---\ndna_hash: {h}\nstructure_hash: {sh}\nexemplar:', 1)
+            '---\n// exemplar:',
+            f'---\n// dna_hash: {h}\n// structure_hash: {sh}\n'
+            f'// exemplar:', 1)
         BASE[rel] = body
         with open(os.path.join(base_dir, rel), 'w', encoding='utf-8') as fh:
             fh.write(body)

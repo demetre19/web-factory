@@ -20,11 +20,13 @@ const {
 ---
 
 <nav class="flex items-center justify-between gap-fluid-s" aria-label="Primary">
-  <a class="text-fluid-0 font-bold" href="/">{heading}</a>
+  <a class="logo h-6 text-fluid-0 font-bold" href="/">{heading}</a>
   <ul class="hidden items-center gap-fluid-m text-fluid-0 md:flex">
     {items.map((it) => (
       <li><a class="underline" href={it.href ?? '#'}>{it.label}</a></li>
     ))}
   </ul>
+  <button class="burger btn-primary md:hidden" type="button"
+          aria-label="Menu">Menu</button>
   {cta && <a class="wf-cta-button" href={cta.href}>{cta.label}</a>}
 </nav>

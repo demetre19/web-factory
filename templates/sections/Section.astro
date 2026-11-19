@@ -8,7 +8,7 @@
  * assemble.py emits one <Section> per plan row, with the row's surface,
  * density, wireframe ref and data-* contract. Surface/density are
  * attribute scopes in the shared layer, so a section restyles by
- * changing one attribute — never by adding bg-*/py-* classes.
+ * changing one attribute — never by adding its own bg- or py- classes.
  */
 interface Props {
   sec: string;
@@ -34,7 +34,7 @@ const {
 } = Astro.props;
 ---
 <section
-  class="sec-band surface-{surface} density-{density}"
+  class={`sec-band surface-${surface} density-${density}`}
   data-sec={sec}
   data-comp={comp}
   data-ratio={ratio}

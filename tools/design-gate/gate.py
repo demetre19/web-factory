@@ -1599,9 +1599,10 @@ def check_measurable(ctx):
             if hm:
                 top = int(hm.group(1))
                 sm = re.findall(r'<p[^>]*text-fluid-(\d+)', body)
-                if sm and min(int(x) for x in sm) <= max(0, top - 1):
+                if sm and max(int(x) for x in sm) >= top - 1:
                     f.append(f'T.7 {name}: hero subhead at '
-                             f'text-fluid-{min(sm)} — within one rank '
+                             f'text-fluid-{max(int(x) for x in sm)} — '
+                             'within one rank '
                              'of display; the subhead reads 50–60% of '
                              'the H1')
         # V.4 — a text block sitting on media needs a scrim
@@ -4053,10 +4054,14 @@ def check_surface_rhythm(ctx):
     for p, txt, parsed, blocks in _segmented(ctx):
         name = os.path.basename(p)
         tagged = [s for s in blocks if s.get('data-sec')]
-        surfaces = [_surface_of(s) for s in tagged]
+        surfaces = [
+            'chrome:' + str(s.get('data-comp') or s.get('data-sec'))
+            if _is_chrome(s) else _surface_of(s) for s in tagged]
         for i in range(1, len(surfaces)):
-            if _is_chrome(tagged[i - 1]) and _is_chrome(tagged[i]):
-                continue
+            # chrome edges key on their comp, so nav/footer never
+            # collide with a content band — and two adjacent same-comp
+            # chrome shells still flag. Two CONTENT bands are never
+            # exempted.
             if surfaces[i] == surfaces[i - 1]:
                 f.append(f'L.14 {name}: sections {i}/{i + 1} share '
                          f'surface "{surfaces[i]}" — alternate '
@@ -5119,14 +5124,12 @@ def check_trend_vocab(ctx):
     return f
 
 
-def check_component_profile(ctx):
-    """A.3 — every rendered component instance is classified to a
-    profile (docs/machinery/design/components/<data-comp>.md); unknown
-    type = FAIL."""
-    if not _wave_ge(ctx, 'w7'):
-        return []
-    pdir = os.path.join(DESIGN_DIR, 'components')
+def _comp_profiles():
+    """{comp: {field: value}} parsed from docs/machinery/design/
+    components/<comp>.md profile tables — shared by A.3 (judge) and
+    build_contracts (producer maps plan intent → profile intent)."""
     profiles = {}
+    pdir = os.path.join(DESIGN_DIR, 'components')
     if os.path.isdir(pdir):
         for fn in os.listdir(pdir):
             if not fn.endswith('.md'):
@@ -5138,6 +5141,34 @@ def check_component_profile(ctx):
                               r'^\|\s*([\w-]+)\s*\|\s*([^|]+)\|',
                               t, re.M))
             profiles[os.path.splitext(fn)[0]] = fields
+    return profiles
+
+
+def _render_intent(comp, plan_intent):
+    """data-intent the built <section> carries: the plan's PS.11 intent
+    when the component profile allows it, else the profile's first
+    intent — the rendered vocabulary is the profile's, not the
+    plan's (fixture evidence: definition→proof on cards-n, cta→act
+    on form-panel)."""
+    intent = str(plan_intent or '')
+    prof = _comp_profiles().get(str(comp or '')) or {}
+    allowed = [w.strip() for w in
+               str(prof.get('intent') or '').lower().split('/')
+               if w.strip()]
+    if not allowed:
+        return intent or None
+    if intent and intent.lower() in allowed:
+        return intent
+    return allowed[0]
+
+
+def check_component_profile(ctx):
+    """A.3 — every rendered component instance is classified to a
+    profile (docs/machinery/design/components/<data-comp>.md); unknown
+    type = FAIL."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    profiles = _comp_profiles()
     f = []
     for p, txt, parsed, blocks in _segmented(ctx):
         name = os.path.basename(p)
@@ -6130,6 +6161,22 @@ def build_contracts(ctx):
     sl = dna_slices(dmap) if dmap else {}
     dh = sl.get('core', '')
     out = []
+    # the page H1 belongs to ONE section: the hero-intent row, else the
+    # first non-chrome row. h1_text is the STUB's page-level H1 verbatim
+    # (E.1 locks it into the built page).
+    page_h1 = ''
+    for _st in (ctx.stub_vector() or []):
+        if _st.get('h1'):
+            page_h1 = _st['h1']
+            break
+    _chrome = lambda r: (
+        'chrome' in (r.get('speech_act') or []) or
+        str(r.get('composition') or '') in ('nav-bar', 'footer-bar'))
+    h1_owner = next((i for i, (_, r) in enumerate(rows)
+                     if str(r.get('intent') or '') == 'hero'
+                     and not _chrome(r)),
+                    next((i for i, (_, r) in enumerate(rows)
+                          if not _chrome(r)), -1))
     for i, (slug, r) in enumerate(rows):
         name = r.get('name')
         st = _stub_for(ctx, name, i)
@@ -6170,6 +6217,7 @@ def build_contracts(ctx):
                 'fs': st.get('fs') or r.get('fs'),
                 'body': r.get('body'),
                 'h1': bool(st.get('h1')),
+                'h1_text': page_h1 if i == h1_owner else '',
             },
             'neighbours': {
                 'prev': {'surface': prev.get('surface'),
@@ -6198,7 +6246,11 @@ def build_contracts(ctx):
             # PS.11 intent, J.5 content ids, G.8 grid tracks, J.4
             # recipe/seam + J.8 seam-shapes, SKL.1 skeleton. assemble_page
             # is the only legal writer, so the contract is the courier.
-            'intent': r.get('intent'),
+            # data-intent is the RENDERED intent — the component
+            # profile's vocabulary, not the plan's (A.3 binds profile
+            # values). plan_intent keeps the PS.11 row value for trace.
+            'intent': _render_intent(comp, r.get('intent')),
+            'plan_intent': r.get('intent'),
             'content_ids': [str(x) for x in (r.get('content_ids') or [])],
             'cols': str(r.get('columns'))
                     if r.get('columns') not in (None, '')
@@ -6389,7 +6441,7 @@ def check_exemplars(ctx):
                      f'({os.path.relpath(d, REPO)}/)')
     for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
-        m = re.search(r'^exemplar:\s*(\S+)', txt, re.M)
+        m = re.search(r'^\s*(?://\s*)?exemplar:\s*"?([\w-]+)', txt, re.M)
         if not m:
             f.append(f'SB.5 {fn}: no exemplar: frontmatter')
         elif m.group(1) not in comps:
@@ -7019,14 +7071,15 @@ def check_dna_fresh(ctx):
                          'structure lock moved; regenerate contracts')
     for fn, p in (_section_files(ctx) if _wave_ge(ctx, 'w6') else []):
         txt = open(p, encoding='utf-8', errors='replace').read()
-        mm = re.search(r'^dna_hash:\s*(\S+)', txt, re.M)
+        mm = re.search(r'^\s*(?://\s*)?dna_hash:\s*"?(\w+)', txt, re.M)
         if not mm:
             f.append(f'DM.2 {fn}: no dna_hash: frontmatter — builders echo '
                      'the look hash they built against')
         elif mm.group(1) != core:
             f.append(f'DM.2 {fn}: dna_hash {mm.group(1)} != {core} — '
                      'rebuild this section against the current look')
-        sm = re.search(r'^structure_hash:\s*(\S+)', txt, re.M)
+        sm = re.search(r'^\s*(?://\s*)?structure_hash:\s*"?(\w+)', txt,
+                       re.M)
         if _wave_ge(ctx, 'w6') and sm and sm.group(1) != struct:
             f.append(f'DM.2 {fn}: structure_hash {sm.group(1)} != {struct} '
                      '— the wireframe lock moved; rebuild this section')

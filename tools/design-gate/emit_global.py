@@ -160,6 +160,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-density="compact"] { --sec-pad: var(--section-space-s); }
   [data-density="regular"] { --sec-pad: var(--section-space-m); }
   [data-density="spacious"] { --sec-pad: var(--section-space-l); }
+  .site-foot { border-top: 1px solid var(--c-line);
+               padding-block: var(--space-m); }
 }
 .dark img { filter: brightness(.85) contrast(.92); }
 '''
@@ -183,14 +185,17 @@ def tokens_json(dna):
         if not knobs:
             knobs = dict(rec.get('knobs') or {})
         modes = rec.get('modes') or modes
+    def _roles(mode):
+        m = modes.get(mode) or {}
+        return dict(m.get('roles') or m)  # tolerate {light:{roles}} shape
     return {
         'knobs': knobs,
         'color': {
             'modes': {
-                'light': {'roles': dict(modes.get('light') or {})},
-                'dark': {'roles': dict(modes.get('dark') or {})},
+                'light': {'roles': _roles('light')},
+                'dark': {'roles': _roles('dark')},
             },
-            'roles': dict(modes.get('light') or {}),
+            'roles': _roles('light'),
         },
     }
 

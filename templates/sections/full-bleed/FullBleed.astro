@@ -12,15 +12,16 @@ interface Props {
   items?: { title?: string; text?: string; value?: string;
              label?: string; href?: string; quote?: string }[];
   image?: { src: string; alt: string };
+  h1?: boolean;
 }
 const {
   heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image,
+  body = '', cta, items = [], image, h1,
 } = Astro.props;
 ---
 
 <div class="text-center">
-  <h2 class="text-fluid-4">{heading}</h2>
+  {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-4">{heading}</h2>}
   <p class="mx-auto mt-stack max-w-prose text-fluid-1">{fs}</p>
   {cta && <a class="wf-cta-button mt-fluid-l" href={cta.href}>{cta.label}</a>}
 </div>
