@@ -96,6 +96,30 @@ VIBES = {
         border='#2a2f4a', radius='1rem',
         font_display='"Inter",system-ui,sans-serif',
         font_body='"Inter",system-ui,sans-serif'),
+    'corporate': dict(
+        surface='#ffffff', soft='#f1f5f9', fg='#334155',
+        heading='#0f172a', accent='#2563eb', accent_fg='#ffffff',
+        border='#e2e8f0', radius='0.375rem',
+        font_display='system-ui,sans-serif',
+        font_body='system-ui,sans-serif'),
+    'pastel': dict(
+        surface='#fdf6f0', soft='#fae8de', fg='#6b5d54',
+        heading='#4a3f36', accent='#e88a9c', accent_fg='#ffffff',
+        border='#f0d9cf', radius='1.25rem',
+        font_display='"Quicksand",system-ui,sans-serif',
+        font_body='"Quicksand",system-ui,sans-serif'),
+    'forest': dict(
+        surface='#10201a', soft='#18312a', fg='#bcd3c7',
+        heading='#eef7f0', accent='#3fa66b', accent_fg='#0e1a14',
+        border='#2a4439', radius='0.5rem',
+        font_display='"Georgia",serif',
+        font_body='system-ui,sans-serif'),
+    'cyber': dict(
+        surface='#000000', soft='#0d0d0d', fg='#b8ff4d',
+        heading='#e6ff9e', accent='#39ff14', accent_fg='#000000',
+        border='#1f3a00', radius='0rem',
+        font_display='"Courier New",monospace',
+        font_body='"Courier New",monospace'),
 }
 
 if __name__ == '__main__':
