@@ -43,13 +43,16 @@ def _cqi(val, W, default):
     Without this the mobile shot is a scaled-down desktop and every
     mobile judgment is fiction."""
     m = re.search(
-        r'clamp\(\s*([\d.]+)(rem|px)\s*,\s*([\d.]+)cqi\s*,\s*'
+        r'clamp\(\s*([\d.]+)(rem|px)\s*,\s*'
+        r'(?:([\d.]+)(rem|px)\s*\+\s*)?([\d.]+)cqi\s*,\s*'
         r'([\d.]+)(rem|px)\s*\)', str(val))
     if m:
         u = {'rem': 16, 'px': 1}
         lo = float(m.group(1)) * u[m.group(2)]
-        mid = float(m.group(3)) * W / 100
-        hi = float(m.group(4)) * u[m.group(5)]
+        off = (float(m.group(3)) * u[m.group(4)]
+               if m.group(3) else 0.0)
+        mid = off + float(m.group(5)) * W / 100
+        hi = float(m.group(6)) * u[m.group(7)]
         return max(lo, min(mid, hi))
     return _clamp_px(val, default)
 

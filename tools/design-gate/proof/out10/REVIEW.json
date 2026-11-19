@@ -7,51 +7,51 @@
   "calls": 10,
   "aggregate": true,
   "image_sha256": {
-   "out10/shots/trades.png": "2f77744003b34b6a",
-   "out10/shots/trades-m.png": "346ba71fe143679c",
-   "out10/shots/luxury.png": "9661e6dc2de8e30a",
-   "out10/shots/luxury-m.png": "043903485d1e7193",
-   "out10/shots/finance.png": "0545ba2fa1ceb0c6",
-   "out10/shots/finance-m.png": "8d533adc9785c689",
-   "out10/shots/clinic.png": "edce67e0baddf9f9",
-   "out10/shots/clinic-m.png": "7b5cc53c4cee5ec0",
-   "out10/shots/saas.png": "32ba077e0c4daf4a",
-   "out10/shots/saas-m.png": "011ca160fc7b2e04",
-   "out10/shots/table.png": "6238142f6668f244",
-   "out10/shots/table-m.png": "d09768865a774453",
-   "out10/shots/editorial.png": "bf1187a65255061c",
-   "out10/shots/editorial-m.png": "17b26988cd2fd8ca",
-   "out10/shots/nonprofit.png": "076c4859e7951790",
-   "out10/shots/nonprofit-m.png": "adfc535c50856c30",
-   "out10/shots/industrial.png": "703e15255ddfe46f",
-   "out10/shots/industrial-m.png": "d4b6c9f9c88a7925",
-   "out10/shots/agency.png": "c4ce526ff5190207",
-   "out10/shots/agency-m.png": "0b0d8e903887882a"
+   "out10/shots/trades.png": "6a52f3577e5533c5",
+   "out10/shots/trades-m.png": "8379caa330d44a55",
+   "out10/shots/luxury.png": "29a74c3c36ac4f16",
+   "out10/shots/luxury-m.png": "d404834bd7a90438",
+   "out10/shots/finance.png": "66dfd2f9db7c790d",
+   "out10/shots/finance-m.png": "085561e0a56df2bd",
+   "out10/shots/clinic.png": "a846f26da430ec4f",
+   "out10/shots/clinic-m.png": "cdb721bc6fd4e1e0",
+   "out10/shots/saas.png": "f73f233514e77afb",
+   "out10/shots/saas-m.png": "11032415393e7c8a",
+   "out10/shots/table.png": "e72bc9b4054c62ff",
+   "out10/shots/table-m.png": "360dd351f00d11db",
+   "out10/shots/editorial.png": "d75ed3fe16b5bc67",
+   "out10/shots/editorial-m.png": "2c7cab44ffbddf0d",
+   "out10/shots/nonprofit.png": "bbfbd78c9895e72a",
+   "out10/shots/nonprofit-m.png": "d8006d05f1733697",
+   "out10/shots/industrial.png": "0feb466d531bc5da",
+   "out10/shots/industrial-m.png": "c77e838c4ef0a2e3",
+   "out10/shots/agency.png": "970bd01fac26ffbe",
+   "out10/shots/agency-m.png": "22b13e6a85e250d9"
   },
   "prompt_sha256": "9bc516a612aef49c",
-  "output_sha256": "8ef5acec1deaaa9d",
-  "latency_s": 234.1
+  "output_sha256": "682a863cb1b72b2e",
+  "latency_s": 1663.4
  },
  "vlm_per_option": {
   "trades": {
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/trades.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/trades-m.png",
    "image_sha256": {
-    "out10/shots/trades.png": "2f77744003b34b6a",
-    "out10/shots/trades-m.png": "346ba71fe143679c"
+    "out10/shots/trades.png": "6a52f3577e5533c5",
+    "out10/shots/trades-m.png": "8379caa330d44a55"
    },
    "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "2cd3263a5fa8b4ab",
-   "latency_s": 33.2,
+   "output_sha256": "6d05a6e3eeb0ac69",
+   "latency_s": 591.2,
    "parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
     "media_fit": 60,
-    "mobile": 80,
-    "distinctness": 70,
+    "mobile": 75,
+    "distinctness": 85,
     "verdict": "pass"
    },
-   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 80,\n  \"distinctness\": 70,\n  \"verdict\": \"pass\"\n}\n```",
+   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 75,\n  \"distinctness\": 85,\n  \"verdict\": \"pass\"\n}\n```",
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
@@ -59,21 +59,21 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/luxury.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/luxury-m.png",
    "image_sha256": {
-    "out10/shots/luxury.png": "9661e6dc2de8e30a",
-    "out10/shots/luxury-m.png": "043903485d1e7193"
+    "out10/shots/luxury.png": "29a74c3c36ac4f16",
+    "out10/shots/luxury-m.png": "d404834bd7a90438"
    },
    "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "990f68faf90e507a",
-   "latency_s": 34.0,
+   "output_sha256": "aa554c00f25a2192",
+   "latency_s": 406.1,
    "parsed": {
-    "hero_clarity": 80,
-    "layout_craft": 90,
-    "media_fit": 70,
-    "mobile": 60,
-    "distinctness": 85,
+    "hero_clarity": 70,
+    "layout_craft": 80,
+    "media_fit": 60,
+    "mobile": 70,
+    "distinctness": 80,
     "verdict": "pass"
    },
-   "raw": "```json\n{\n  \"hero_clarity\": 80,\n  \"layout_craft\": 90,\n  \"media_fit\": 70,\n  \"mobile\": 60,\n  \"distinctness\": 85,\n  \"verdict\": \"pass\"\n}\n```",
+   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 70,\n  \"distinctness\": 80,\n  \"verdict\": \"pass\"\n}\n```",
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
@@ -81,12 +81,12 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/finance.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/finance-m.png",
    "image_sha256": {
-    "out10/shots/finance.png": "0545ba2fa1ceb0c6",
-    "out10/shots/finance-m.png": "8d533adc9785c689"
+    "out10/shots/finance.png": "66dfd2f9db7c790d",
+    "out10/shots/finance-m.png": "085561e0a56df2bd"
    },
    "prompt_sha256": "9bc516a612aef49c",
    "output_sha256": "63487c055cc8d737",
-   "latency_s": 17.4,
+   "latency_s": 406.2,
    "parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
@@ -103,21 +103,21 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/clinic.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/clinic-m.png",
    "image_sha256": {
-    "out10/shots/clinic.png": "edce67e0baddf9f9",
-    "out10/shots/clinic-m.png": "7b5cc53c4cee5ec0"
+    "out10/shots/clinic.png": "a846f26da430ec4f",
+    "out10/shots/clinic-m.png": "cdb721bc6fd4e1e0"
    },
    "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "f3a1726c3d4cf5cc",
-   "latency_s": 15.1,
+   "output_sha256": "0b6382cfd7f2aaf9",
+   "latency_s": 49.5,
    "parsed": {
     "hero_clarity": 80,
-    "layout_craft": 75,
-    "media_fit": 85,
-    "mobile": 90,
-    "distinctness": 70,
+    "layout_craft": 90,
+    "media_fit": 70,
+    "mobile": 95,
+    "distinctness": 85,
     "verdict": "pass"
    },
-   "raw": "```json\n{\n  \"hero_clarity\": 80,\n  \"layout_craft\": 75,\n  \"media_fit\": 85,\n  \"mobile\": 90,\n  \"distinctness\": 70,\n  \"verdict\": \"pass\"\n}\n```",
+   "raw": "```json\n{\n  \"hero_clarity\": 80,\n  \"layout_craft\": 90,\n  \"media_fit\": 70,\n  \"mobile\": 95,\n  \"distinctness\": 85,\n  \"verdict\": \"pass\"\n}\n```",
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
@@ -125,21 +125,21 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/saas.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/saas-m.png",
    "image_sha256": {
-    "out10/shots/saas.png": "32ba077e0c4daf4a",
-    "out10/shots/saas-m.png": "011ca160fc7b2e04"
+    "out10/shots/saas.png": "f73f233514e77afb",
+    "out10/shots/saas-m.png": "11032415393e7c8a"
    },
    "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "63487c055cc8d737",
-   "latency_s": 32.4,
+   "output_sha256": "5841b53618093ee2",
+   "latency_s": 39.1,
    "parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
     "media_fit": 60,
-    "mobile": 90,
+    "mobile": 85,
     "distinctness": 75,
     "verdict": "pass"
    },
-   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 90,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
+   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 85,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
@@ -147,12 +147,56 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/table.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/table-m.png",
    "image_sha256": {
-    "out10/shots/table.png": "6238142f6668f244",
-    "out10/shots/table-m.png": "d09768865a774453"
+    "out10/shots/table.png": "e72bc9b4054c62ff",
+    "out10/shots/table-m.png": "360dd351f00d11db"
+   },
+   "prompt_sha256": "9bc516a612aef49c",
+   "output_sha256": "acd81d7f8beb191e",
+   "latency_s": 64.6,
+   "parsed": {
+    "hero_clarity": 80,
+    "layout_craft": 90,
+    "media_fit": 70,
+    "mobile": 85,
+    "distinctness": 75,
+    "verdict": "pass"
+   },
+   "raw": "```json\n{\n  \"hero_clarity\": 80,\n  \"layout_craft\": 90,\n  \"media_fit\": 70,\n  \"mobile\": 85,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
+   "cached": true,
+   "cache_key": "mlx-community/Qwen2.5-VL"
+  },
+  "editorial": {
+   "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/editorial.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/editorial-m.png",
+   "image_sha256": {
+    "out10/shots/editorial.png": "d75ed3fe16b5bc67",
+    "out10/shots/editorial-m.png": "2c7cab44ffbddf0d"
+   },
+   "prompt_sha256": "9bc516a612aef49c",
+   "output_sha256": "8af4dfdb42f16a60",
+   "latency_s": 20.6,
+   "parsed": {
+    "hero_clarity": 50,
+    "layout_craft": 70,
+    "media_fit": 60,
+    "mobile": 80,
+    "distinctness": 65,
+    "verdict": "pass"
+   },
+   "raw": "```json\n{\n  \"hero_clarity\": 50,\n  \"layout_craft\": 70,\n  \"media_fit\": 60,\n  \"mobile\": 80,\n  \"distinctness\": 65,\n  \"verdict\": \"pass\"\n}\n```",
+   "cached": true,
+   "cache_key": "mlx-community/Qwen2.5-VL"
+  },
+  "nonprofit": {
+   "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/nonprofit.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/nonprofit-m.png",
+   "image_sha256": {
+    "out10/shots/nonprofit.png": "bbfbd78c9895e72a",
+    "out10/shots/nonprofit-m.png": "d8006d05f1733697"
    },
    "prompt_sha256": "9bc516a612aef49c",
    "output_sha256": "6d05a6e3eeb0ac69",
-   "latency_s": 16.0,
+   "latency_s": 28.5,
    "parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
@@ -165,69 +209,25 @@
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
-  "editorial": {
-   "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/editorial.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/editorial-m.png",
-   "image_sha256": {
-    "out10/shots/editorial.png": "bf1187a65255061c",
-    "out10/shots/editorial-m.png": "17b26988cd2fd8ca"
-   },
-   "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "10e84d1facb3f644",
-   "latency_s": 31.8,
-   "parsed": {
-    "hero_clarity": 70,
-    "layout_craft": 80,
-    "media_fit": 60,
-    "mobile": 50,
-    "distinctness": 75,
-    "verdict": "pass"
-   },
-   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 50,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
-   "cached": true,
-   "cache_key": "mlx-community/Qwen2.5-VL"
-  },
-  "nonprofit": {
-   "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/nonprofit.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/nonprofit-m.png",
-   "image_sha256": {
-    "out10/shots/nonprofit.png": "076c4859e7951790",
-    "out10/shots/nonprofit-m.png": "adfc535c50856c30"
-   },
-   "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "2ce9bfad2cf12f43",
-   "latency_s": 15.5,
-   "parsed": {
-    "hero_clarity": 70,
-    "layout_craft": 80,
-    "media_fit": 60,
-    "mobile": 75,
-    "distinctness": 65,
-    "verdict": "pass"
-   },
-   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 75,\n  \"distinctness\": 65,\n  \"verdict\": \"pass\"\n}\n```",
-   "cached": true,
-   "cache_key": "mlx-community/Qwen2.5-VL"
-  },
   "industrial": {
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/industrial.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/industrial-m.png",
    "image_sha256": {
-    "out10/shots/industrial.png": "703e15255ddfe46f",
-    "out10/shots/industrial-m.png": "d4b6c9f9c88a7925"
+    "out10/shots/industrial.png": "0feb466d531bc5da",
+    "out10/shots/industrial-m.png": "c77e838c4ef0a2e3"
    },
    "prompt_sha256": "9bc516a612aef49c",
-   "output_sha256": "27095cd59170fbe2",
-   "latency_s": 16.6,
+   "output_sha256": "5841b53618093ee2",
+   "latency_s": 31.7,
    "parsed": {
-    "hero_clarity": 50,
-    "layout_craft": 70,
-    "media_fit": 80,
-    "mobile": 60,
+    "hero_clarity": 70,
+    "layout_craft": 80,
+    "media_fit": 60,
+    "mobile": 85,
     "distinctness": 75,
     "verdict": "pass"
    },
-   "raw": "```json\n{\n  \"hero_clarity\": 50,\n  \"layout_craft\": 70,\n  \"media_fit\": 80,\n  \"mobile\": 60,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
+   "raw": "```json\n{\n  \"hero_clarity\": 70,\n  \"layout_craft\": 80,\n  \"media_fit\": 60,\n  \"mobile\": 85,\n  \"distinctness\": 75,\n  \"verdict\": \"pass\"\n}\n```",
    "cached": true,
    "cache_key": "mlx-community/Qwen2.5-VL"
   },
@@ -235,12 +235,12 @@
    "model": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "command": "mlx_vlm.generate --model mlx-community/Qwen2.5-VL-3B-Instruct-4bit --max-tokens 300 --prompt You are a design-review model. Score this rendered design\noption on five dimensions, 0-100 integers:\nhero_clarity, layout_craft, media_fit, mobile, distinctness.\nReply with ONLY a JSON object \u2014 no prose:\n{\"hero_clarity\": N, \"layout_craft\": N, \"media_fit\": N,\n \"mobile\": N, \"distinctness\": N, \"verdict\": \"pass\"|\"fail\"} --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/agency.png --image /Users/apple/Documents/DEV-WORK/Web Factory/tools/design-gate/proof/out10/shots/agency-m.png",
    "image_sha256": {
-    "out10/shots/agency.png": "c4ce526ff5190207",
-    "out10/shots/agency-m.png": "0b0d8e903887882a"
+    "out10/shots/agency.png": "970bd01fac26ffbe",
+    "out10/shots/agency-m.png": "22b13e6a85e250d9"
    },
    "prompt_sha256": "9bc516a612aef49c",
    "output_sha256": "acd81d7f8beb191e",
-   "latency_s": 22.1,
+   "latency_s": 25.9,
    "parsed": {
     "hero_clarity": 80,
     "layout_craft": 90,
@@ -263,140 +263,10 @@
    "hero_clarity": 70,
    "layout_craft": 80,
    "media_fit": 60,
-   "mobile": 80,
-   "distinctness": 70,
-   "topology_dist": 84,
-   "visual_diff": 73,
-   "composite": 73,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 70,
-    "layout_craft": 80,
-    "media_fit": 60,
-    "mobile": 80,
-    "distinctness": 70,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 73,
-    "media_fit": 62,
-    "mobile": 79,
-    "distinctness": 79
-   }
-  },
-  "luxury": {
-   "hero_clarity": 80,
-   "layout_craft": 90,
-   "media_fit": 70,
-   "mobile": 60,
-   "distinctness": 85,
-   "topology_dist": 88,
-   "visual_diff": 79,
-   "composite": 79,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 80,
-    "layout_craft": 90,
-    "media_fit": 70,
-    "mobile": 60,
-    "distinctness": 85,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 83,
-    "media_fit": 88,
-    "mobile": 79,
-    "distinctness": 84
-   }
-  },
-  "finance": {
-   "hero_clarity": 70,
-   "layout_craft": 80,
-   "media_fit": 60,
-   "mobile": 90,
-   "distinctness": 75,
-   "topology_dist": 93,
-   "visual_diff": 79,
-   "composite": 75,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 70,
-    "layout_craft": 80,
-    "media_fit": 60,
-    "mobile": 90,
-    "distinctness": 75,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 83,
-    "media_fit": 62,
-    "mobile": 79,
-    "distinctness": 86
-   }
-  },
-  "clinic": {
-   "hero_clarity": 80,
-   "layout_craft": 75,
-   "media_fit": 85,
-   "mobile": 90,
-   "distinctness": 70,
-   "topology_dist": 71,
-   "visual_diff": 73,
-   "composite": 79,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 80,
-    "layout_craft": 75,
-    "media_fit": 85,
-    "mobile": 90,
-    "distinctness": 70,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 65,
-    "media_fit": 62,
-    "mobile": 79,
-    "distinctness": 72
-   }
-  },
-  "saas": {
-   "hero_clarity": 70,
-   "layout_craft": 80,
-   "media_fit": 60,
-   "mobile": 90,
-   "distinctness": 75,
-   "topology_dist": 80,
-   "visual_diff": 79,
-   "composite": 75,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 70,
-    "layout_craft": 80,
-    "media_fit": 60,
-    "mobile": 90,
-    "distinctness": 75,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 79,
-    "media_fit": 62,
-    "mobile": 79,
-    "distinctness": 80
-   }
-  },
-  "table": {
-   "hero_clarity": 70,
-   "layout_craft": 80,
-   "media_fit": 60,
    "mobile": 75,
    "distinctness": 85,
-   "topology_dist": 92,
-   "visual_diff": 73,
+   "topology_dist": 54,
+   "visual_diff": 51,
    "composite": 74,
    "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "vlm_parsed": {
@@ -409,28 +279,80 @@
    },
    "mechanical": {
     "hero_clarity": 100,
-    "layout_craft": 69,
-    "media_fit": 88,
+    "layout_craft": 73,
+    "media_fit": 62,
     "mobile": 79,
-    "distinctness": 82
+    "distinctness": 53
    }
   },
-  "editorial": {
+  "luxury": {
    "hero_clarity": 70,
    "layout_craft": 80,
    "media_fit": 60,
-   "mobile": 50,
-   "distinctness": 75,
-   "topology_dist": 100,
-   "visual_diff": 72,
-   "composite": 69,
+   "mobile": 70,
+   "distinctness": 80,
+   "topology_dist": 73,
+   "visual_diff": 65,
+   "composite": 73,
    "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "vlm_parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
     "media_fit": 60,
-    "mobile": 50,
+    "mobile": 70,
+    "distinctness": 80,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
+    "media_fit": 62,
+    "mobile": 79,
+    "distinctness": 69
+   }
+  },
+  "finance": {
+   "hero_clarity": 70,
+   "layout_craft": 80,
+   "media_fit": 60,
+   "mobile": 90,
+   "distinctness": 75,
+   "topology_dist": 100,
+   "visual_diff": 40,
+   "composite": 75,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 70,
+    "layout_craft": 80,
+    "media_fit": 60,
+    "mobile": 90,
     "distinctness": 75,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
+    "media_fit": 62,
+    "mobile": 79,
+    "distinctness": 70
+   }
+  },
+  "clinic": {
+   "hero_clarity": 80,
+   "layout_craft": 90,
+   "media_fit": 70,
+   "mobile": 95,
+   "distinctness": 85,
+   "topology_dist": 70,
+   "visual_diff": 38,
+   "composite": 84,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 80,
+    "layout_craft": 90,
+    "media_fit": 70,
+    "mobile": 95,
+    "distinctness": 85,
     "verdict": "pass"
    },
    "mechanical": {
@@ -438,69 +360,43 @@
     "layout_craft": 73,
     "media_fit": 88,
     "mobile": 79,
-    "distinctness": 86
+    "distinctness": 54
    }
   },
-  "nonprofit": {
+  "saas": {
    "hero_clarity": 70,
    "layout_craft": 80,
    "media_fit": 60,
-   "mobile": 75,
-   "distinctness": 65,
-   "topology_dist": 70,
-   "visual_diff": 75,
-   "composite": 71,
+   "mobile": 85,
+   "distinctness": 75,
+   "topology_dist": 78,
+   "visual_diff": 39,
+   "composite": 74,
    "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "vlm_parsed": {
     "hero_clarity": 70,
     "layout_craft": 80,
     "media_fit": 60,
-    "mobile": 75,
-    "distinctness": 65,
-    "verdict": "pass"
-   },
-   "mechanical": {
-    "hero_clarity": 100,
-    "layout_craft": 65,
-    "media_fit": 74,
-    "mobile": 79,
-    "distinctness": 72
-   }
-  },
-  "industrial": {
-   "hero_clarity": 50,
-   "layout_craft": 70,
-   "media_fit": 80,
-   "mobile": 60,
-   "distinctness": 75,
-   "topology_dist": 91,
-   "visual_diff": 77,
-   "composite": 65,
-   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
-   "vlm_parsed": {
-    "hero_clarity": 50,
-    "layout_craft": 70,
-    "media_fit": 80,
-    "mobile": 60,
+    "mobile": 85,
     "distinctness": 75,
     "verdict": "pass"
    },
    "mechanical": {
     "hero_clarity": 100,
-    "layout_craft": 83,
-    "media_fit": 74,
+    "layout_craft": 73,
+    "media_fit": 62,
     "mobile": 79,
-    "distinctness": 84
+    "distinctness": 59
    }
   },
-  "agency": {
+  "table": {
    "hero_clarity": 80,
    "layout_craft": 90,
    "media_fit": 70,
    "mobile": 85,
    "distinctness": 75,
-   "topology_dist": 100,
-   "visual_diff": 79,
+   "topology_dist": 76,
+   "visual_diff": 47,
    "composite": 81,
    "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
    "vlm_parsed": {
@@ -513,14 +409,189 @@
    },
    "mechanical": {
     "hero_clarity": 100,
-    "layout_craft": 83,
+    "layout_craft": 73,
+    "media_fit": 62,
+    "mobile": 79,
+    "distinctness": 61
+   }
+  },
+  "editorial": {
+   "hero_clarity": 50,
+   "layout_craft": 70,
+   "media_fit": 60,
+   "mobile": 80,
+   "distinctness": 65,
+   "topology_dist": 59,
+   "visual_diff": 44,
+   "composite": 64,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 50,
+    "layout_craft": 70,
+    "media_fit": 60,
+    "mobile": 80,
+    "distinctness": 65,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
     "media_fit": 88,
     "mobile": 79,
-    "distinctness": 90
+    "distinctness": 51
+   }
+  },
+  "nonprofit": {
+   "hero_clarity": 70,
+   "layout_craft": 80,
+   "media_fit": 60,
+   "mobile": 75,
+   "distinctness": 85,
+   "topology_dist": 83,
+   "visual_diff": 59,
+   "composite": 74,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 70,
+    "layout_craft": 80,
+    "media_fit": 60,
+    "mobile": 75,
+    "distinctness": 85,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
+    "media_fit": 74,
+    "mobile": 79,
+    "distinctness": 71
+   }
+  },
+  "industrial": {
+   "hero_clarity": 70,
+   "layout_craft": 80,
+   "media_fit": 60,
+   "mobile": 85,
+   "distinctness": 75,
+   "topology_dist": 64,
+   "visual_diff": 40,
+   "composite": 74,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 70,
+    "layout_craft": 80,
+    "media_fit": 60,
+    "mobile": 85,
+    "distinctness": 75,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
+    "media_fit": 62,
+    "mobile": 79,
+    "distinctness": 52
+   }
+  },
+  "agency": {
+   "hero_clarity": 80,
+   "layout_craft": 90,
+   "media_fit": 70,
+   "mobile": 85,
+   "distinctness": 75,
+   "topology_dist": 78,
+   "visual_diff": 45,
+   "composite": 81,
+   "judged_by": "mlx-community/Qwen2.5-VL-3B-Instruct-4bit",
+   "vlm_parsed": {
+    "hero_clarity": 80,
+    "layout_craft": 90,
+    "media_fit": 70,
+    "mobile": 85,
+    "distinctness": 75,
+    "verdict": "pass"
+   },
+   "mechanical": {
+    "hero_clarity": 100,
+    "layout_craft": 73,
+    "media_fit": 62,
+    "mobile": 79,
+    "distinctness": 61
    }
   }
  },
- "quality_retries": [],
+ "quality_retries": [
+  {
+   "option": "trades",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "luxury",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "finance",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "clinic",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "saas",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "table",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "editorial",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "nonprofit",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "industrial",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  },
+  {
+   "option": "agency",
+   "dims_below": [
+    "distinctness"
+   ],
+   "reason": "one-retry knob nudge"
+  }
+ ],
  "dropped_below_floor": [],
  "declared": {
   "trades": {
@@ -564,12 +635,12 @@
    "site_type": "creative agency"
   }
  },
- "rules_pass_hash": "16e0eb973c61f8cd",
- "judgment_pass_hash": "16e0eb973c61f8cd",
+ "rules_pass_hash": "61bb114d29eb15e1",
+ "judgment_pass_hash": "61bb114d29eb15e1",
  "receipts": {
-  "rules_sha": "f1070ded5cb67076",
-  "build_sha": "16e0eb973c61f8cd",
-  "judge_sha": "5abba3fd6970aa9b"
+  "rules_sha": "ddad48389c92a976",
+  "build_sha": "61bb114d29eb15e1",
+  "judge_sha": "ec6ec803769faf95"
  },
  "blocks": [
   {
@@ -579,8 +650,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -589,7 +663,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-41.topo",
@@ -605,8 +680,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -615,7 +693,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-21.topo",
@@ -631,8 +710,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -641,7 +723,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-43.topo",
@@ -657,8 +740,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -667,7 +753,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-39.topo",
@@ -683,8 +770,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -693,7 +783,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-1.topo",
@@ -709,8 +800,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -719,7 +813,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-47.topo",
@@ -735,8 +830,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -745,7 +843,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-40.topo",
@@ -761,8 +860,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -771,7 +873,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/blog-sections/blog-40.topo",
@@ -787,8 +890,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -797,7 +903,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-28.topo",
@@ -813,8 +920,11 @@
     "--accent-ink",
     "--bg",
     "--btn-pad",
+    "--display-weight",
     "--f-body",
     "--f-display",
+    "--font-body",
+    "--font-display",
     "--gap",
     "--ink",
     "--line",
@@ -823,7 +933,8 @@
     "--radius",
     "--shadow",
     "--surface",
-    "--track"
+    "--track",
+    "--type-ratio"
    ],
    "plan_slot": "cta",
    "recipe_id": "brixies/cta-sections/cta-44.topo",

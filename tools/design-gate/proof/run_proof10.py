@@ -29,6 +29,7 @@ import gate  # noqa: E402
 import vlm  # noqa: E402
 import chains  # noqa: E402
 import picker  # noqa: E402
+import dna_tokens  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, 'out10')
@@ -40,219 +41,118 @@ SHOT_RENDERER = os.path.join(HERE, 'shot_render.py')
 S = '/System/Library/Fonts/'
 SU = S + 'Supplemental/'
 
-# ---- the 10 DNAs — knob vectors over the same closed set ----------
-DNAS = {
+# ---- the 10 site types — DECLARED content only. Every design
+# token is derived by dna_tokens from the vertical's genome profile
+# (dominant allele + seeded tail-sampling); nothing below is a
+# hand-typed hex/clamp — that would bypass the machinery.
+SITES = {
  'trades': {
   'vibe': 'Heritage trade', 'site_type': 'trade contractor',
-  'vertical': 'services',
+  'vertical': 'services', 'seed': 11,
+  'accent': '#2F7D5B',
   'recipe': 'brixies/cta-sections/cta-41.topo',   # avatar
   'copy': ('Book your walkthrough',
            'Tell us the site and the scope — we confirm the quote '
            'inside one business day.'),
-  'cta': 'Get a quote', 'font': S + 'Helvetica.ttc',
-  'tracking': -0.01, 'layout': 'center', 'seam': 'hairline',
-  'ornament': 'none', 'media_weight': 'none',
-  'vars': {'--bg': '#F7F5F2', '--surface': '#FFF', '--ink': '#26221D',
-           '--muted': '#6E675E', '--accent': '#2F7D5B',
-           '--accent-ink': '#FFF', '--line': '#E5E0D8',
-           '--radius': '14px',
-           '--gap': 'clamp(1.5rem,3.5cqi,2.5rem)',
-           '--pad-block': 'clamp(3rem,8cqi,6rem)',
-           '--f-display': 'clamp(2rem,4.5cqi,3.2rem)',
-           '--f-body': 'clamp(1rem,1.4cqi,1.15rem)',
-           '--track': '-0.015em',
-           '--shadow': '0 12px 40px rgba(38,34,29,.08)',
-           '--btn-pad': '.9rem 1.8rem'}},
+  'cta': 'Get a quote'},
  'luxury': {
   'vibe': 'Atelier restraint', 'site_type': 'luxury skincare e-comm',
-  'vertical': 'luxury-goods',
+  'vertical': 'luxury-goods', 'seed': 23,
+  'accent': '#C6A15B',
   'recipe': 'brixies/cta-sections/cta-21.topo',   # image
   'copy': ('Reserve the atelier',
            'Private viewings by appointment — a single specialist '
            'per client.'),
-  'cta': 'Reserve', 'font': SU + 'Didot.ttc',
-  'tracking': 0.06, 'layout': 'split', 'seam': 'diagonal',
-  'ornament': 'dimension', 'media_weight': 'hero',
-  'vars': {'--bg': '#121110', '--surface': '#1C1A19',
-           '--ink': '#EDE8E0', '--muted': '#9C948A',
-           '--accent': '#C6A15B', '--accent-ink': '#121110',
-           '--line': '#332F2B', '--radius': '2px',
-           '--gap': 'clamp(1rem,2.5cqi,1.75rem)',
-           '--pad-block': 'clamp(4rem,10cqi,8rem)',
-           '--f-display': 'clamp(2.8rem,6cqi,4.5rem)',
-           '--f-body': 'clamp(.9rem,1.2cqi,1rem)',
-           '--track': '.06em',
-           '--shadow': '0 20px 60px rgba(0,0,0,.5)',
-           '--btn-pad': '1.1rem 2.6rem'}},
+  'cta': 'Reserve'},
  'finance': {
   'vibe': 'Ledger authority', 'site_type': 'boutique wealth firm',
-  'vertical': 'finance',
+  'vertical': 'finance', 'seed': 37,
+  'accent': '#17457C',
   'recipe': 'brixies/cta-sections/cta-43.topo',   # logo+number
   'copy': ('Open an account',
            'Onboarding in under five minutes — identity verified '
            'in-line.'),
-  'cta': 'Open account', 'font': SU + 'Futura.ttc',
-  'tracking': 0.04, 'layout': 'left', 'seam': 'double',
-  'ornament': 'ticks', 'media_weight': 'none',
-  'vars': {'--bg': '#F4F6F8', '--surface': '#FFF', '--ink': '#16212E',
-           '--muted': '#4E5C6C', '--accent': '#17457C',
-           '--accent-ink': '#FFF', '--line': '#D5DDE4',
-           '--radius': '4px',
-           '--gap': 'clamp(.75rem,1.5cqi,1.25rem)',
-           '--pad-block': 'clamp(1.5rem,4cqi,3rem)',
-           '--f-display': 'clamp(1.6rem,3.4cqi,2.5rem)',
-           '--f-body': 'clamp(.85rem,1.15cqi,.95rem)',
-           '--track': '.04em',
-           '--shadow': '0 4px 16px rgba(22,33,46,.08)',
-           '--btn-pad': '.6rem 1.4rem'}},
+  'cta': 'Open account'},
  'clinic': {
   'vibe': 'Clinic clean', 'site_type': 'community dental',
-  'vertical': 'healthcare',
+  'vertical': 'healthcare', 'seed': 41,
+  'accent': '#0E7C86',
   'recipe': 'brixies/cta-sections/cta-39.topo',   # icon
   'copy': ('Book a check-up',
            'Same-week appointments at every clinic — results '
            'online within 48 hours.'),
-  'cta': 'Book now', 'font': S + 'Avenir Next.ttc',
-  'tracking': 0, 'layout': 'center', 'seam': 'hairline',
-  'ornament': 'none', 'media_weight': 'none',
-  'vars': {'--bg': '#F2F8F7', '--surface': '#FFF', '--ink': '#173B3A',
-           '--muted': '#52706F', '--accent': '#0E7C86',
-           '--accent-ink': '#FFF', '--line': '#D2E5E3',
-           '--radius': '10px',
-           '--gap': 'clamp(1.25rem,3cqi,2rem)',
-           '--pad-block': 'clamp(2.5rem,6cqi,4.5rem)',
-           '--f-display': 'clamp(1.9rem,4cqi,3rem)',
-           '--f-body': 'clamp(1rem,1.35cqi,1.1rem)',
-           '--track': '0',
-           '--shadow': '0 8px 28px rgba(14,124,134,.10)',
-           '--btn-pad': '.8rem 1.6rem'}},
+  'cta': 'Book now'},
  'saas': {
   'vibe': 'Console minimal', 'site_type': 'dev-tool SaaS',
-  'vertical': 'saas',
+  'vertical': 'saas', 'seed': 53,
+  'accent': '#5B7CFF',
   'recipe': 'brixies/cta-sections/cta-1.topo',    # text
   'copy': ('Start your workspace',
            'Spin up a team space in ninety seconds — free for the '
            'first ten seats.'),
-  'cta': 'Start free', 'font': S + 'Menlo.ttc',
-  'tracking': -0.02, 'layout': 'center', 'seam': 'none',
-  'ornament': 'grid', 'media_weight': 'none',
-  'vars': {'--bg': '#0B0D12', '--surface': '#151924',
-           '--ink': '#E8ECF5', '--muted': '#8B93A8',
-           '--accent': '#5B7CFF', '--accent-ink': '#0B0D12',
-           '--line': '#242B3D', '--radius': '12px',
-           '--gap': 'clamp(.875rem,2cqi,1.5rem)',
-           '--pad-block': 'clamp(2rem,5cqi,3.5rem)',
-           '--f-display': 'clamp(1.8rem,4cqi,2.8rem)',
-           '--f-body': 'clamp(.9rem,1.25cqi,1rem)',
-           '--track': '-0.02em',
-           '--shadow': '0 16px 48px rgba(91,124,255,.18)',
-           '--btn-pad': '.7rem 1.5rem'}},
+  'cta': 'Start free'},
  'table': {
   'vibe': 'Table warm', 'site_type': 'restaurant hospitality',
-  'vertical': 'hospitality',
+  'vertical': 'hospitality', 'seed': 59,
+  'accent': '#A8502A',
   'recipe': 'brixies/cta-sections/cta-47.topo',   # image
   'copy': ('Reserve a table',
            'Chef counter seats release each morning — walk-ins '
            'always welcome at the bar.'),
-  'cta': 'Reserve', 'font': SU + 'Georgia.ttf',
-  'tracking': 0, 'layout': 'center', 'seam': 'arc',
-  'ornament': 'none', 'media_weight': 'hero',
-  'vars': {'--bg': '#FBF4EC', '--surface': '#FFF', '--ink': '#3B2417',
-           '--muted': '#7A5C48', '--accent': '#A8502A',
-           '--accent-ink': '#FFF', '--line': '#E8D7C6',
-           '--radius': '18px',
-           '--gap': 'clamp(1.25rem,3cqi,2rem)',
-           '--pad-block': 'clamp(3rem,7cqi,5.5rem)',
-           '--f-display': 'clamp(2.2rem,5cqi,3.6rem)',
-           '--f-body': 'clamp(1rem,1.4cqi,1.1rem)',
-           '--track': '0',
-           '--shadow': '0 12px 36px rgba(59,36,23,.14)',
-           '--btn-pad': '.95rem 2rem'}},
+  'cta': 'Reserve'},
  'editorial': {
   'vibe': 'Editorial couture', 'site_type': 'fashion magazine',
-  'vertical': 'fashion',
+  'vertical': 'fashion', 'seed': 67,
+  'accent': '#111111',
   'recipe': 'brixies/cta-sections/cta-40.topo',   # image
   'copy': ('Subscribe to the issue',
            'Four print editions a year — styling, ateliers and the '
            'industry in long form.'),
-  'cta': 'Subscribe', 'font': SU + 'Bodoni 72.ttc',
-  'tracking': 0.08, 'layout': 'split', 'seam': 'none',
-  'ornament': 'none', 'media_weight': 'hero',
-  'vars': {'--bg': '#FAFAF8', '--surface': '#FFF', '--ink': '#111',
-           '--muted': '#666', '--accent': '#111',
-           '--accent-ink': '#FAFAF8', '--line': '#E0E0DC',
-           '--radius': '0px',
-           '--gap': 'clamp(2rem,4cqi,3rem)',
-           '--pad-block': 'clamp(4rem,9cqi,7rem)',
-           '--f-display': 'clamp(3rem,7cqi,5rem)',
-           '--f-body': 'clamp(.95rem,1.3cqi,1.05rem)',
-           '--track': '.08em',
-           '--shadow': 'none',
-           '--btn-pad': '1rem 2.4rem'}},
+  'cta': 'Subscribe'},
  'nonprofit': {
   'vibe': 'Open hands', 'site_type': 'community nonprofit',
-  'vertical': 'nonprofit',
+  'vertical': 'nonprofit', 'seed': 71,
+  'accent': '#3E7C4F',
   'recipe': 'brixies/blog-sections/blog-40.topo',  # icon+image
   'copy': ('Give this month',
            'Every gift pairs a family with a caseworker — '
            'ninety-two cents of each dollar reaches the programme.'),
-  'cta': 'Donate', 'font': S + 'Palatino.ttc',
-  'tracking': 0, 'layout': 'left', 'seam': 'hairline',
-  'ornament': 'none', 'media_weight': 'thumb',
-  'vars': {'--bg': '#F6F4EE', '--surface': '#FFF', '--ink': '#2C3A2C',
-           '--muted': '#5F6B5F', '--accent': '#3E7C4F',
-           '--accent-ink': '#FFF', '--line': '#DCD8CC',
-           '--radius': '8px',
-           '--gap': 'clamp(1rem,2.5cqi,1.75rem)',
-           '--pad-block': 'clamp(2.5rem,6cqi,4.5rem)',
-           '--f-display': 'clamp(2rem,4.5cqi,3.2rem)',
-           '--f-body': 'clamp(1rem,1.35cqi,1.1rem)',
-           '--track': '0',
-           '--shadow': '0 8px 24px rgba(44,58,44,.10)',
-           '--btn-pad': '.85rem 1.7rem'}},
+  'cta': 'Donate'},
  'industrial': {
   'vibe': 'Brutalist ledger', 'site_type': 'industrial machinery',
-  'vertical': 'services',
+  'vertical': 'services', 'seed': 83,
+  'accent': '#C44400',
   'recipe': 'brixies/cta-sections/cta-28.topo',   # avatar+image
   'copy': ('Spec the machine',
            'Tonnage, feed rate and footprint in the first reply — '
            'engineers answer, not sales.'),
-  'cta': 'Spec it', 'font': S + 'Courier.ttc',
-  'tracking': 0.02, 'layout': 'left', 'seam': 'double',
-  'ornament': 'dimension', 'media_weight': 'thumb',
-  'vars': {'--bg': '#F0EDE8', '--surface': '#FFF', '--ink': '#1A1A1A',
-           '--muted': '#555', '--accent': '#C44400',
-           '--accent-ink': '#FFF', '--line': '#8A877F',
-           '--radius': '0px',
-           '--gap': 'clamp(1rem,2.5cqi,1.75rem)',
-           '--pad-block': 'clamp(3rem,7cqi,5.5rem)',
-           '--f-display': 'clamp(2.4rem,5.5cqi,4rem)',
-           '--f-body': 'clamp(.95rem,1.3cqi,1.05rem)',
-           '--track': '.02em',
-           '--shadow': 'none',
-           '--btn-pad': '.9rem 1.9rem'}},
+  'cta': 'Spec it'},
  'agency': {
   'vibe': 'Studio kinetic', 'site_type': 'creative agency',
-  'vertical': 'agency-portfolio',
+  'vertical': 'agency-portfolio', 'seed': 97,
+  'accent': '#E8FF00',
   'recipe': 'brixies/cta-sections/cta-44.topo',   # image
   'copy': ('Start a brief',
            'Name the brand and the problem — a partner replies '
            'inside the hour.'),
-  'cta': 'Start brief', 'font': SU + 'Impact.ttf',
-  'tracking': 0.04, 'layout': 'split', 'seam': 'diagonal',
-  'ornament': 'ticks', 'media_weight': 'hero',
-  'vars': {'--bg': '#0D0D0D', '--surface': '#1A1A1A',
-           '--ink': '#F2F2F2', '--muted': '#9A9A9A',
-           '--accent': '#E8FF00', '--accent-ink': '#0D0D0D',
-           '--line': '#2E2E2E', '--radius': '22px',
-           '--gap': 'clamp(1.5rem,3.5cqi,2.5rem)',
-           '--pad-block': 'clamp(3rem,8cqi,6rem)',
-           '--f-display': 'clamp(2.6rem,6cqi,4.4rem)',
-           '--f-body': 'clamp(.9rem,1.25cqi,1rem)',
-           '--track': '.04em',
-           '--shadow': 'none',
-           '--btn-pad': '1rem 2.2rem'}},
+  'cta': 'Start brief'},
 }
+
+
+def derive_all(sites):
+    """site_type + seed → derived DNA per option via dna_tokens —
+    the machinery, not hand-typed vars."""
+    out = {}
+    for name, spec in sites.items():
+        declared = {k: spec[k] for k in
+                    ('vibe', 'site_type', 'recipe', 'copy', 'cta',
+                     'accent')}
+        d = dna_tokens.derive(spec['vertical'], seed=spec['seed'],
+                              declared=declared)
+        d['name'] = name
+        out[name] = d
+    return out
+
 
 JUDGED_BY = vlm.DEFAULT_MODEL
 
@@ -270,16 +170,39 @@ def _lum(hx):
 
 
 def _knobvec(v):
-    rad = {'0px': 0, '2px': .1, '4px': .2, '8px': .4, '10px': .5,
-           '12px': .6, '14px': .7, '18px': .85, '22px': 1}.get(
-        v['--radius'], .5)
-    m = re.search(r'([\d.]+)rem', v['--gap'])
-    gap = float(m.group(1)) if m else 1.5
-    fd = re.search(r'([\d.]+)rem', v['--f-display'])
-    disp = float(fd.group(1)) if fd else 2.5
+    def _px(s, default):
+        s = str(s)
+        m = re.search(r'([\d.]+)rem', s)
+        if m:
+            return float(m.group(1)) * 16
+        m = re.search(r'([\d.]+)px', s)
+        if m:
+            return float(m.group(1))
+        m = re.search(r'([\d.]+)', s)
+        return float(m.group(1)) * 16 if m else default
+
+    def _cqi(s, default):
+        # evaluate canonical clamp at the 1200px design width —
+        # the knobvec compares what a desktop reviewer sees
+        m = re.search(
+            r'clamp\(\s*([\d.]+)(rem|px)\s*,\s*'
+            r'(?:([\d.]+)(rem|px)\s*\+\s*)?([\d.]+)cqi\s*,\s*'
+            r'([\d.]+)(rem|px)\s*\)', str(s))
+        if not m:
+            return _px(s, default)
+        u = {'rem': 16, 'px': 1}
+        lo = float(m.group(1)) * u[m.group(2)]
+        off = (float(m.group(3)) * u[m.group(4)]
+               if m.group(3) else 0.0)
+        mid = off + float(m.group(5)) * 1200 / 100
+        hi = float(m.group(6)) * u[m.group(7)]
+        return max(lo, min(mid, hi))
+
+    rad = min(1.0, _px(v['--radius'], 8) / 22.0)
     return ((_lum(v['--bg']) or 0), (_lum(v['--ink']) or 0),
-            (_lum(v['--accent']) or 0), rad, min(1, gap / 2.5),
-            min(1, disp / 5))
+            (_lum(v['--accent']) or 0), rad,
+            min(1, _cqi(v['--gap'], 24) / 40),
+            min(1, _cqi(v['--f-display'], 40) / 80))
 
 
 def judge(name, dna, siblings):
@@ -354,12 +277,15 @@ def _element_dom(dna):
     return ''.join(out)
 
 
-def _section_html(name, dna):
-    """The option section block — the same DOM the VLM judges."""
+def _section_html(name, dna, scope=None):
+    """The option section block — the same DOM the VLM judges.
+    scope=None keeps the caller's inline vars binding (siblings);
+    scope=name pins the emitted [data-dna] token block."""
     al = 'center' if dna['layout'] == 'center' else 'flex-start'
     h, lead = dna['copy']
+    sc = f' data-dna="{scope}"' if scope else ''
     return (
-        f'<section class="block" data-dna="{name}"'
+        f'<section class="block"{sc}'
         f' data-orn="{dna["ornament"]}">'
         f'<div class="inner" style="align-items:{al};'
         f'text-align:{"center" if al == "center" else "left"}">'
@@ -371,25 +297,25 @@ def _section_html(name, dna):
 
 
 def _siblings(name, dna):
-    """'More like this' — seeded DNA-nudge REAL mini-renders of the
-    same section: small knob perturbations that show the vibe
-    range. Each sibling carries its nudged scope vars + the SAME
-    section block, so the mini is a true render, not a swatch."""
+    """'More like this' — REAL genotype siblings: seeded tail
+    alleles on the same profile via mutate_genotype, vars
+    recomputed by from_genotype. A sibling is an allele move with
+    provenance, never a hand knob tweak."""
     chain = chains.chains_for(dna['vibe'].split()[0].lower(), seed=1)
+    prof = dna_tokens.profile(dna['vertical'])
     sibs = []
-    knobs = [
-        ({'--radius': '0px', '--track': '.04em'}, 'harder edges'),
-        ({'--radius': '20px', '--track': '-0.02em'}, 'softer, tighter'),
-        ({'--f-display': 'clamp(1.5rem,3cqi,2rem)',
-          '--pad-block': 'clamp(2rem,5cqi,3.5rem)'}, 'compressed'),
-        ({'--f-display': 'clamp(3rem,7cqi,5rem)',
-          '--pad-block': 'clamp(4rem,9cqi,7rem)'}, 'expanded'),
-    ]
-    for i, (nudge, label) in enumerate(knobs[:3]):
-        nv = dict(dna['vars'])
-        nv.update(nudge)
-        sibs.append({'label': label, 'scope_vars': nv,
-                     'preview_html': _section_html(name, dna),
+    for i in range(3):
+        g2, moves, _ = dna_tokens.mutate_genotype(
+            dna['genotype'], prof['genes'], seed=dna['seed'] + i + 1,
+            burst=1)
+        rec = dna_tokens.from_genotype(
+            g2, dna['vertical'], dna['declared'],
+            seed=dna['seed'] + i + 1)
+        label = '; '.join(f"{m['gene']} {m['from']}→{m['to']}"
+                          for m in moves) or 'dominant'
+        sibs.append({'label': label, 'scope_vars': rec['vars'],
+                     'preview_html': _section_html(name, rec),
+                     'genotype': g2, 'moves': moves,
                      'chain': chain[i % len(chain)] if chain else ''})
     return sibs
 
@@ -430,6 +356,15 @@ ART_CSS = (
     'color:var(--muted);margin-left:.75rem}')
 
 
+def _section_type(rid):
+    """Recipe bank path -> human section kind (CTA, Hero, Blog…)."""
+    parts = rid.split('/')
+    if len(parts) < 2:
+        return ''
+    fam = parts[1].replace('-sections', '').replace('-', ' ')
+    return fam.upper() if len(fam) <= 3 else fam.title()
+
+
 def build_picker(dnas, quality):
     """10-vibe proof picker via the canonical render_picker
     template — 3-col grid, viewport-proportioned scaled frames,
@@ -443,7 +378,7 @@ def build_picker(dnas, quality):
         sibs = _siblings(name, dna)
         items.append(picker.PickerItem(
             id=name, name=dna['vibe'], subtitle=dna['site_type'],
-            preview_html=_section_html(name, dna),
+            preview_html=_section_html(name, dna, scope=name),
             scope_vars=dna['vars'], scope=f'data-dna="{name}"',
             chain=sibs[0]['chain'], fit=max(50, q['composite']),
             dims={d: q[d] for d in gate.J_QUALITY_DIMS},
@@ -460,13 +395,61 @@ def build_picker(dnas, quality):
                    'data-score': f'{q["composite"] / 100:.2f}',
                    'data-score100': str(q['composite']),
                    'data-refs': 'none', 'data-review': 'judged'},
-            selected=False))
+            selected=False,
+            section_type=_section_type(rid)))
     return picker.render_picker(
         items, title='10-vibe element proof',
         intro=('Ten DNAs — one card each through RULES→BUILD→JUDGE→'
                'RECHECK. Declared vibe + site type label each card; '
                'select with the checkbox, review opens the modal.'),
         extra_css=ART_CSS)
+
+
+# Rotated allele palettes for the one-retry lane — machinery-legal
+# overrides (genome.ALLELES), provenance-tagged 'rule-retry'. Each
+# failing option draws a different move set so retries diverge the
+# SET, never converge it.
+_RETRY_MOVES = [
+    {'display-face': 'serif', 'radius-personality': 'pill',
+     'whitespace-band': 'airy'},
+    {'display-face': 'mono', 'radius-personality': 'sharp',
+     'density-tier': 'compact'},
+    {'display-face': 'sans', 'radius-personality': 'sharp',
+     'type-contrast': 'extreme'},
+    {'surface-rhythm': 'dark-dominant', 'radius-personality': 'sharp',
+     'type-contrast': 'high'},
+    {'display-face': 'serif', 'density-tier': 'spacious',
+     'whitespace-band': 'tight'},
+    {'radius-personality': 'sharp', 'motion-tier': 'expressive',
+     'type-contrast': 'extreme'},
+    {'display-face': 'serif', 'image-led-ratio': 'image-led',
+     'whitespace-band': 'airy'},
+    {'display-face': 'mono', 'density-tier': 'compact',
+     'radius-personality': 'pill'},
+    {'surface-rhythm': 'dark-dominant', 'display-face': 'serif',
+     'whitespace-band': 'airy'},
+    {'display-face': 'sans', 'radius-personality': 'sharp',
+     'density-tier': 'spacious'},
+]
+
+
+def _retry_derive(n, dna, bad, phase):
+    """One machinery retry: seed+1 re-sample + a rotated palette
+    of legal allele moves, tagged rule-retry in provenance."""
+    sp = SITES[n]
+    force = dict(_RETRY_MOVES[list(SITES).index(n)
+                            % len(_RETRY_MOVES)])
+    if 'mobile' in bad:
+        force['density-tier'] = 'compact'
+        force['whitespace-band'] = 'tight'
+    if 'hero_clarity' in bad:
+        force['type-contrast'] = 'extreme'
+    out = dna_tokens.derive(
+        sp['vertical'], seed=sp['seed'] + 1,
+        declared=dna['declared'], force_genes=force)
+    out['name'] = n
+    out['retry_phase'] = phase
+    return out
 
 
 def _sha16(b):
@@ -477,7 +460,7 @@ def _sha16(b):
 def main():
     os.makedirs(OUT, exist_ok=True)
     os.makedirs(SHOTS, exist_ok=True)
-    dnas = dict(DNAS)
+    dnas = derive_all(SITES)
     quality = {n: judge(n, d, dnas) for n, d in dnas.items()}
 
     # J.1 one-retry law: below-floor options get one knob nudge and
@@ -490,9 +473,8 @@ def main():
             continue
         retries.append({'option': n, 'dims_below': bad,
                         'reason': 'one-retry knob nudge'})
-        vv = dnas[n]['vars']
-        vv['--gap'] = 'clamp(1.1rem,2.4cqi,1.9rem)'
-        vv['--f-display'] = 'clamp(1.9rem,4.5cqi,3rem)'
+        dnas[n] = _retry_derive(n, dnas[n], bad,
+                                phase='mechanical')
         quality[n] = judge(n, dnas[n], dnas)
     dropped = [n for n, q in quality.items()
                if any(q[d] < 50 for d in gate.J_QUALITY_DIMS) or
@@ -587,21 +569,8 @@ def main():
         retries.append({'option': n, 'dims_below': bad,
                         'phase': 'post-judgment',
                         'reason': 'one-retry knob nudge'})
-        vv = dnas[n]['vars']
-        if 'mobile' in bad:
-            # mobile verdict: body size up, block padding down — the
-            # 375 render must keep ≥16px body and show more content
-            vv['--f-body'] = 'clamp(1.05rem,1.6cqi,1.2rem)'
-            vv['--pad-block'] = 'clamp(2rem,5cqi,3.5rem)'
-            vv['--f-display'] = 'clamp(1.8rem,5cqi,2.6rem)'
-        if 'distinctness' in bad:
-            # distinctness: widen the axis — a different face and
-            # composition, not a colour tweak
-            dnas[n]['font'] = SU + 'Georgia.ttf'
-            dnas[n]['layout'] = 'left'
-        if 'hero_clarity' in bad:
-            vv['--f-display'] = 'clamp(2.4rem,5.5cqi,3.6rem)'
-        vv['--gap'] = 'clamp(1.1rem,2.4cqi,1.9rem)'
+        dnas[n] = _retry_derive(n, dnas[n], bad,
+                                phase='post-judgment')
         shot_map[n] = _render(n, dnas[n])
         calls[n] = _call(n)
         _apply(n)
@@ -625,6 +594,8 @@ def main():
     rules_sha = _sha16(json.dumps(
         {n: {'vibe': d['vibe'], 'site_type': d['site_type'],
              'vertical': d['vertical'], 'recipe': d['recipe'],
+             'seed': d['seed'], 'genotype': d['genotype'],
+             'knobs': d['knobs'],
              'vars': d['vars'], 'font': d['font'],
              'tracking': d['tracking'], 'layout': d['layout'],
              'seam': d['seam'], 'ornament': d['ornament'],
@@ -679,6 +650,14 @@ def main():
                          for n in dnas]}
     open(os.path.join(OUT, 'REVIEW.json'), 'w').write(
         json.dumps(review, indent=1))
+    # derivation chain: a DNA.json per option — genotype + knobs +
+    # modes + provenance, so the receipt shows design came from the
+    # sampled space, never hand-typed vars.
+    os.makedirs(os.path.join(OUT, 'dna'), exist_ok=True)
+    for n in dnas:
+        open(os.path.join(OUT, 'dna', n + '.json'), 'w').write(
+            json.dumps(dna_tokens.dna_json(dnas[n], site=n),
+                       indent=1))
     prebuild = {'layout_family': 'conversion', 'options': {
         n: {'recipe_id': dnas[n]['recipe'],
             'element_variant': gate._element_variant_name(
@@ -697,6 +676,8 @@ def main():
     recheck['rules_sha'] = _sha16(json.dumps(
         {n: {'vibe': d['vibe'], 'site_type': d['site_type'],
              'vertical': d['vertical'], 'recipe': d['recipe'],
+             'seed': d['seed'], 'genotype': d['genotype'],
+             'knobs': d['knobs'],
              'vars': d['vars'], 'font': d['font'],
              'tracking': d['tracking'], 'layout': d['layout'],
              'seam': d['seam'], 'ornament': d['ornament'],
@@ -824,6 +805,14 @@ def main():
                 fails.append(f'J.7 {n} text-only under media canon')
     out = {'picker': pp, 'n_options': len(dnas),
            'declared': review['declared'],
+           'dna': {n: {'profile': dnas[n]['profile'],
+                       'seed': dnas[n]['seed'],
+                       'genotype': dnas[n]['genotype'],
+                       'wildcard': dnas[n]['wildcard'],
+                       'novelty': dnas[n]['novelty'],
+                       'knobs': dnas[n]['knobs'],
+                       'provenance': dnas[n]['knob_provenance']}
+                   for n in dnas},
            'recipes': {n: dnas[n]['recipe'] for n in dnas},
            'scores': {n: quality[n]['composite'] for n in dnas},
            'dims': {n: {d: quality[n][d]

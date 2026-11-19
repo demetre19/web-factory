@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """picker.py — the canonical selection-surface template. THE ONLY
-picker markup in the system: card grid + viewport-proportioned scaled
-frames + modal close-up + checkbox select + real-variant siblings +
+picker markup in the system: one page-framed whole-section preview per
+option (nav + the ENTIRE section once, full-bleed + footer, 1:1) +
+modal close-up + checkbox select + real-variant siblings +
 machinery behind <details>. Callers hand over content; chrome,
 neutral palette, modal contract and accordion contract live HERE.
 
@@ -42,95 +43,209 @@ import html as _h
 
 DESIGN_W = 1200
 
-CSS = '''\
-:root{--chrome-ink:#222;--chrome-mut:#777;--chrome-line:#ddd;
---chrome-bg:#f6f6f5;--chrome-panel:#fff;--chrome-sel:#111}
+CSS = '''/* PICKER CHROME — a designed surface, not ad-hoc CSS. Every chrome
+   value binds a token from CHROME_TOKENS below: the machinery's own
+   vocabulary (utopia type scale, ACSS space/section-space rungs,
+   emit_tokens semantic colour names, radius ladder, motion/z tokens).
+   Neutral by law (VG.9): the palette is the canonical neutral sheet —
+   accent lives only inside artwork scopes. */
+
+:root {
+  /* utopia type scale (templates/astro global.css, 320→1240, 16→19px,
+     ratio 1.2→1.25) — chrome typography binds only these steps. */
+  --fs--1: clamp(0.8335rem, 0.7621rem + 0.3571vi, 1.0128rem);
+  --fs-0: clamp(1rem, 0.913rem + 0.4348vi, 1.1875rem);
+  --fs-1: clamp(1.2rem, 1.0924rem + 0.538vi, 1.3906rem);
+  --fs-2: clamp(1.44rem, 1.3064rem + 0.668vi, 1.6289rem);
+  --fs-3: clamp(1.728rem, 1.5607rem + 0.8365vi, 1.9066rem);
+  --lh--1: 1.5; --lh-0: 1.6; --lh-1: 1.5; --lh-3: 1.25;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --track-tight: -0.01em; --track-caps: 0.08em;
+
+  /* ACSS spacing rungs (canon clamps) + layout tokens. */
+  --space-xs: clamp(0.5rem, 0.4rem + 0.5vi, 1rem);
+  --space-s: clamp(0.75rem, 0.55rem + 1vi, 1.5rem);
+  --space-m: clamp(1rem, 0.65rem + 1.75vi, 2rem);
+  --space-l: clamp(1.5rem, 1rem + 2.5vi, 3rem);
+  --space-xl: clamp(2rem, 1.3rem + 3.5vi, 4rem);
+  --section-space-xs: clamp(2rem, 1.5rem + 2.5vi, 4rem);
+  --gutter: var(--space-m);
+  --content-width: 80rem;
+  --measure: 60ch;
+  --grid-gap: var(--space-l);
+
+  /* emit_tokens semantic colour layer — NEUTRAL sheet (VG.9).
+     Same names a page binds; accent slots deliberately absent. */
+  --bg-canvas: #ffffff; --bg-surface: #f6f6f5; --bg-elevated: #ffffff;
+  --bg-subtle: #fafaf9; --bg-inverse: #111111;
+  --text-primary: #222222; --text-secondary: #6f6f6f;
+  --text-muted: #8f8f8f;
+  --border-default: #dcdcdc; --border-strong: #bababa;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 6%), 0 8px 24px rgb(0 0 0 / 7%);
+  --shadow-pop: 0 4px 16px rgb(0 0 0 / 10%), 0 12px 40px rgb(0 0 0 / 9%);
+
+  /* radius ladder (emit_tokens personality map: p1 .125 p2 .25
+     p3 .5 p4 .75) + motion/z + the design-width constant the JS
+     fit maths read — one source for 'real size'. */
+  --radius-badge: 0.125rem; --radius-btn: 0.25rem;
+  --radius-card: 0.625rem;
+  --duration-fast: 150ms;
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --z-overlay: 50;
+  --pk-design-w: 1200px;
+}
+
 *{box-sizing:border-box;margin:0}
-body{font-family:ui-sans-serif,system-ui,sans-serif;background:#fff;
-color:var(--chrome-ink);padding:2rem clamp(1rem,4vw,3rem)}
-.pk-head{max-width:80rem;margin:0 auto 1.5rem}
-.pk-head h1{font-size:1.4rem;letter-spacing:-.01em}
-.pk-head p{color:var(--chrome-mut);margin-top:.35rem;max-width:70ch}
-.pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;
-max-width:80rem;margin:0 auto}
-@media (max-width:1100px){.pk-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:760px){.pk-grid{grid-template-columns:1fr}}
-.pk-card{border:1px solid var(--chrome-line);border-radius:10px;
-background:var(--chrome-panel);display:flex;flex-direction:column;
-overflow:hidden}
-.pk-card[aria-checked="true"]{outline:2px solid var(--chrome-sel);
+body{font-family:var(--font-sans);font-size:var(--fs-0);
+line-height:var(--lh-0);background:var(--bg-canvas);
+color:var(--text-primary);
+padding:var(--section-space-xs) var(--gutter)}
+
+/* proof-sheet header: kicker · title · one-line description · rule */
+.pk-head{max-width:var(--pk-design-w);margin:0 auto var(--space-l);
+padding-bottom:var(--space-m);
+border-bottom:1px solid var(--border-strong)}
+.pk-kicker{font-size:var(--fs--1);text-transform:uppercase;
+letter-spacing:var(--track-caps);color:var(--text-muted)}
+.pk-head h1{font-size:var(--fs-3);line-height:var(--lh-3);
+letter-spacing:var(--track-tight);margin-top:var(--space-xs)}
+.pk-head p{color:var(--text-secondary);margin-top:var(--space-xs);
+max-width:var(--measure);font-size:var(--fs-0)}
+
+.pk-grid{display:grid;grid-template-columns:1fr;gap:var(--grid-gap);
+max-width:var(--pk-design-w);margin:0 auto}
+.pk-card{border:1px solid var(--border-default);
+border-radius:var(--radius-card);background:var(--bg-elevated);
+display:flex;flex-direction:column;overflow:hidden;
+box-shadow:var(--shadow-card)}
+.pk-card[aria-checked="true"]{outline:2px solid var(--text-primary);
 outline-offset:-2px}
-.pk-frame{position:relative;overflow:hidden;background:#fff;
-border-bottom:1px solid var(--chrome-line);width:100%}
-.pk-frame .pk-scale{width:1200px;transform-origin:top left}
+.pk-frame{position:relative;overflow:hidden;background:var(--bg-canvas);
+border-bottom:1px solid var(--border-default);width:100%}
+.pk-frame .pk-scale{width:var(--pk-design-w);transform-origin:top left;
+will-change:transform}
 .pk-frame.flow .pk-scale{width:100%;transform:none}
-.pk-page{min-height:300px;display:flex;flex-direction:column}
+.pk-page{min-height:calc(var(--pk-design-w)/4);display:flex;
+flex-direction:column}
 .pk-nav{display:flex;justify-content:space-between;align-items:center;
-padding:.55rem 1.1rem;border-bottom:1px solid var(--chrome-line);
-background:var(--chrome-bg);color:var(--chrome-mut);font-size:.72rem;
-letter-spacing:.06em;text-transform:uppercase;flex:none}
-.pk-foot{margin-top:auto;padding:.4rem 1.1rem;border-top:1px solid
-var(--chrome-line);background:var(--chrome-bg);color:var(--chrome-mut);
-font-size:.7rem;flex:none}
-.pk-cap{padding:.7rem .9rem .2rem}
-.pk-name{font-weight:650;font-size:.95rem}
-.pk-sub{color:var(--chrome-mut);font-size:.8rem;margin-top:.1rem}
-.pk-row{display:flex;gap:.5rem;align-items:center;padding:.6rem .9rem}
-.pk-sel{display:inline-flex;align-items:center;gap:.35rem;
-cursor:pointer;padding:.32rem .7rem;border:1px solid var(--chrome-line);
-border-radius:6px;font:inherit;font-size:.82rem;background:#fff;
-color:var(--chrome-ink)}
-.pk-sel:has(input:checked){outline:2px solid var(--chrome-sel);
+padding:var(--space-xs) var(--space-s);
+border-bottom:1px solid var(--border-default);
+background:var(--bg-subtle);color:var(--text-secondary);
+font-size:var(--fs--1);letter-spacing:var(--track-caps);
+text-transform:uppercase;flex:none}
+.pk-foot{margin-top:auto;padding:var(--space-xs) var(--space-s);
+border-top:1px solid var(--border-default);
+background:var(--bg-subtle);color:var(--text-muted);
+font-size:var(--fs--1);flex:none}
+
+/* caption row — the proof label: badge · name · site-type */
+.pk-cap{padding:var(--space-s) var(--space-m)
+calc(var(--space-xs)/2)}
+.pk-type{font-size:calc(var(--fs--1)*0.85);font-weight:700;
+letter-spacing:var(--track-caps);text-transform:uppercase;
+padding:calc(var(--space-xs)/4) calc(var(--space-xs)/2);
+border:1px solid var(--border-default);
+border-radius:var(--radius-badge);color:var(--text-secondary);
+background:var(--bg-subtle);margin-right:calc(var(--space-xs)/2)}
+.pk-name{font-weight:650;font-size:var(--fs-0)}
+.pk-sub{display:block;color:var(--text-secondary);
+font-size:var(--fs--1);margin-top:calc(var(--space-xs)/4)}
+
+.pk-row{display:flex;gap:var(--space-xs);align-items:center;
+padding:var(--space-xs) var(--space-m)}
+.pk-sel{display:inline-flex;align-items:center;
+gap:calc(var(--space-xs)/2);cursor:pointer;
+padding:calc(var(--space-xs)/2) var(--space-xs);
+border:1px solid var(--border-default);
+border-radius:var(--radius-btn);font:inherit;
+font-size:var(--fs--1);background:var(--bg-canvas);
+color:var(--text-primary)}
+.pk-sel:has(input:checked){outline:2px solid var(--text-primary);
 outline-offset:-2px}
-.pk-open{padding:.32rem .7rem;border:1px solid var(--chrome-line);
-background:#fff;color:var(--chrome-ink);cursor:pointer;
-border-radius:6px;font:inherit;font-size:.82rem}
- .pk-sibs{border-top:1px solid var(--chrome-line);padding:.55rem .9rem;
- background:var(--chrome-bg)}
-.pk-sibs>span{font-size:.68rem;text-transform:uppercase;
-letter-spacing:.08em;color:var(--chrome-mut);display:block;
-margin-bottom:.4rem}
-.pk-sibrow{display:flex;gap:.5rem;flex-wrap:wrap}
-.pk-sib{width:32%;min-width:7rem;border:1px solid var(--chrome-line);
-border-radius:6px;overflow:hidden;background:#fff;cursor:pointer}
- .pk-sib .pk-frame{border-bottom:0;aspect-ratio:4/3}
-.pk-sib-l{font-size:.66rem;padding:.25rem .4rem;color:var(--chrome-mut);
-display:block}
-.pk-data{border-top:1px solid var(--chrome-line);padding:.4rem .9rem;
-color:var(--chrome-mut);background:var(--chrome-panel)}
-.pk-data summary{cursor:pointer;font-size:.78rem}
-.pk-data code{display:block;font-size:.74rem;padding:.35rem 0;
+.pk-open{padding:calc(var(--space-xs)/2) var(--space-xs);
+border:1px solid var(--border-default);background:var(--bg-canvas);
+color:var(--text-primary);cursor:pointer;
+border-radius:var(--radius-btn);font:inherit;font-size:var(--fs--1);
+transition:border-color var(--duration-fast) var(--ease)}
+.pk-sibs{border-top:1px solid var(--border-default);
+padding:var(--space-xs) var(--space-m);background:var(--bg-subtle)}
+.pk-sibs>span{font-size:var(--fs--1);text-transform:uppercase;
+letter-spacing:var(--track-caps);color:var(--text-muted);
+display:block;margin-bottom:var(--space-xs)}
+.pk-sibrow{display:flex;gap:var(--space-xs);flex-wrap:wrap}
+.pk-sib{width:32%;min-width:calc(var(--pk-design-w)/10.7);
+border:1px solid var(--border-default);
+border-radius:var(--radius-btn);overflow:hidden;
+background:var(--bg-canvas);cursor:pointer}
+.pk-sib .pk-frame{border-bottom:0}
+.pk-sib-l{font-size:var(--fs--1);padding:calc(var(--space-xs)/2)
+calc(var(--space-xs)/2);color:var(--text-muted);display:block}
+.pk-data{border-top:1px solid var(--border-default);
+padding:var(--space-xs) var(--space-m);color:var(--text-secondary);
+background:var(--bg-elevated)}
+.pk-data summary{cursor:pointer;font-size:var(--fs--1)}
+.pk-data code{display:block;font-family:var(--font-mono);
+font-size:var(--fs--1);padding:calc(var(--space-xs)/2) 0;
 white-space:pre-wrap}
-.pk-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.74);
-z-index:40;align-items:center;justify-content:center;
-flex-direction:column;gap:.75rem}
+
+.pk-modal{display:none;position:fixed;inset:0;
+background:rgb(0 0 0 / 74%);z-index:var(--z-overlay);
+align-items:center;justify-content:center;flex-direction:column;
+gap:var(--space-xs)}
 .pk-modal.open{display:flex}
-.pk-mframe{background:#fff;width:min(82vw,1180px);max-height:78vh;
-overflow:auto;border-radius:8px}
-.pk-mframe .pk-page{min-height:420px}
-.pk-cap2{color:#fff;font-size:.85rem;display:flex;gap:1rem;
-align-items:center}
-.pk-tick{font-size:1.1rem;visibility:hidden}
+.pk-mframe{background:var(--bg-canvas);width:min(82vw,1180px);
+max-height:78dvh;overflow:auto;border-radius:var(--radius-card);
+box-shadow:var(--shadow-pop)}
+.pk-mframe .pk-page{min-height:calc(var(--pk-design-w)/3)}
+.pk-cap2{color:#fff;font-size:var(--fs--1);display:flex;
+gap:var(--space-m);align-items:center}
+.pk-tick{font-size:var(--fs-0);visibility:hidden}
 .pk-tick.on{visibility:visible}'''
 
 JS = '''\
 <script>(function(){
-var cards=[].slice.call(document.querySelectorAll(".pk-card")),cur=0,
+var DW=1200,cards=[].slice.call(document.querySelectorAll(".pk-card")),cur=0,varIdx=0,
 modal=document.getElementById("pk-modal"),
 mf=document.getElementById("pk-mframe"),
 mn=document.getElementById("pk-mname"),
 mc=document.getElementById("pk-mcount"),
 tk=document.querySelector(".pk-cap2 .pk-tick");
 function box(i){return cards[i].querySelector("input.pk-check")}
-function draw(){var o=cards[cur];
-mf.innerHTML="";mf.appendChild(o.querySelector(".pk-frame")
-.cloneNode(true));
-mf.querySelector(".pk-frame").style.aspectRatio="auto";
-mf.querySelector(".pk-frame").style.height="auto";
-mf.querySelector(".pk-scale").style.transform="none";
-mf.querySelector(".pk-scale").style.width="100%";
-mn.textContent=o.dataset.name+" — "+o.dataset.subtitle;
-mc.textContent=(cur+1)+"/"+cards.length;
+function fitFrame(f){var sc=f.querySelector(".pk-scale");if(!sc)return;
+var w=parseFloat(sc.style.width)||DW;
+var s=Math.min(1,f.clientWidth/w);
+sc.style.transform="scale("+s+")";
+f.style.height=(sc.offsetHeight*s)+"px"}
+function fitAll(){document.querySelectorAll(
+'.pk-frame[data-frame="scale"]').forEach(fitFrame)}
+window.addEventListener("resize",fitAll);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+setTimeout(fitAll,60);setTimeout(fitAll,400);
+function variantsOf(card){
+var out=[];
+var main=card.querySelector('.pk-frame[data-frame="scale"] .pk-scale');
+if(main)out.push({el:main,label:'main design'});
+card.querySelectorAll('.pk-sib').forEach(function(sb){
+var sc=sb.querySelector('.pk-scale');
+if(sc)out.push({el:sc,label:(sb.querySelector('.pk-sib-l')||{}).textContent||'variant'})});
+return out}
+function draw(){var card=cards[cur],vs=variantsOf(card);
+if(varIdx>=vs.length)varIdx=0;
+var v=vs[varIdx];
+mf.innerHTML="";var wrap=document.createElement("div");
+wrap.className="pk-frame";wrap.setAttribute("data-frame","scale");
+wrap.style.borderBottom="0";
+var sc=v.el.cloneNode(true);sc.style.width=DW+"px";
+sc.style.transform="none";
+wrap.appendChild(sc);mf.appendChild(wrap);
+mf.style.width=Math.min(DW,Math.floor(window.innerWidth*0.92))+"px";
+var s=Math.min(1,mf.clientWidth/DW);
+sc.style.transform="scale("+s+")";
+wrap.style.height=(sc.offsetHeight*s)+"px";
+mn.textContent=card.dataset.name+" — "+card.dataset.subtitle;
+mc.textContent="variant "+(varIdx+1)+"/"+vs.length+" · "+v.label;
 tk.classList.toggle("on",box(cur)&&box(cur).checked)}
 function open(){modal.classList.add("open");draw()}
 cards.forEach(function(c,i){
@@ -139,18 +254,23 @@ if(lbl&&inp){lbl.addEventListener("click",function(e){
 e.stopPropagation()})}
 var btn=c.querySelector(".pk-open");
 if(btn){btn.addEventListener("click",function(){
-cur=cards.indexOf(c);open()})}
+cur=cards.indexOf(c);varIdx=0;open()})}
 c.querySelectorAll(".pk-sib").forEach(function(s){
 s.addEventListener("click",function(){
 cur=cards.indexOf(c);open()})});
 c.addEventListener("click",function(e){
 if(e.target.closest("details,.pk-sel,.pk-open,.pk-sib"))return;
-cur=cards.indexOf(c);open()})});
+cur=cards.indexOf(c);varIdx=0;open()})});
 document.addEventListener("keydown",function(e){
 if(!modal.classList.contains("open"))return;
 if(e.key==="Escape")modal.classList.remove("open");
-if(e.key==="ArrowLeft"){cur=(cur-1+cards.length)%cards.length;draw()}
-if(e.key==="ArrowRight"){cur=(cur+1)%cards.length;draw()}
+if(e.key==="ArrowLeft"){var n=variantsOf(cards[cur]).length;
+varIdx=(varIdx-1+n)%n;draw()}
+if(e.key==="ArrowRight"){var n=variantsOf(cards[cur]).length;
+varIdx=(varIdx+1)%n;draw()}
+if(e.key==="ArrowUp"){cur=(cur-1+cards.length)%cards.length;
+varIdx=0;draw()}
+if(e.key==="ArrowDown"){cur=(cur+1)%cards.length;varIdx=0;draw()}
 if(e.code==="Space"||e.key===" "){e.preventDefault();
 var b=box(cur);if(b)b.checked=!b.checked;draw()}});
 if(location.hash){var k=cards.findIndex(function(o){
@@ -168,7 +288,7 @@ class PickerItem:
                  scope='', select_kind='checkbox', chain='',
                  fit=None, dims=None, score=None,
                  siblings=(), attrs=None, selected=False,
-                 frame_mode='scale'):
+                 frame_mode='scale', section_type=''):
         self.id = id
         self.name = name
         self.subtitle = subtitle
@@ -184,6 +304,7 @@ class PickerItem:
         self.attrs = attrs or {}
         self.selected = selected
         self.frame_mode = frame_mode
+        self.section_type = section_type
 
 
 def _esc(v):
@@ -196,7 +317,9 @@ def _vars_css(scope_vars):
 
 
 def _page_frame(inner_html):
-    """Neutral page context: nav strip + option + footer sliver."""
+    """Page context: nav strip + the WHOLE option section, once,
+    full-bleed + footer sliver. The preview shows the entire section
+    exactly as it would appear on the page."""
     return ('<div class="pk-page">'
             '<div class="pk-nav"><span>brand</span>'
             '<span>work · studio · contact</span></div>'
@@ -238,10 +361,9 @@ def _sibs(item):
         chips.append(
             '<div class="pk-sib" role="button" tabindex="0"'
             f' aria-label="more like this: {_esc(s.get("label", ""))}">'
-            '<div class="pk-frame" data-frame="scale" '
-            'style="background:#fff">'
-            f'<div class="pk-scale" style="width:1200px;'
-            'transform:scale(0.26);transform-origin:top left;'
+            '<div class="pk-frame" data-frame="scale" style="background:var(--bg-canvas)">'
+            f'<div class="pk-scale" style="width:400px;'
+            'transform-origin:top left;'
             f'{_vars_css(s.get("scope_vars", {}))}">'
             + s.get('preview_html', '') + '</div></div>'
             f'<span class="pk-sib-l">{_esc(s.get("label", ""))}'
@@ -285,32 +407,26 @@ def render_picker(items, title='picker', intro='', extra_css='',
             f'  <div class="variant-panes"><div data-pane="page"'
             f' class="variant-stage">{framed}</div></div>\n'
             f'  <div class="variant-pickrow pk-cap">'
-            f'<span class="variant-name pk-name">{_esc(it.name)}</span>'
+            + (f'<span class="pk-type">{_esc(it.section_type)}</span>'
+               if it.section_type else '')
+            + f'<span class="variant-name pk-name">{_esc(it.name)}</span>'
             f'<span class="pk-sub">{_esc(it.subtitle)}</span></div>\n'
             f'  <div class="pk-row">'
             f'<label class="pick pk-sel">{sel}select</label>'
             f'<button class="pk-open modal-open" data-d="{_esc(it.id)}">'
             f'review</button></div>\n'
             + _sibs(it) + _details(it) + '\n</article>')
-    scale = ('width:%dpx;transform:scale(%.4f);'
-             'transform-origin:top left;min-height:%dpx' %
-             (design_w, frame_h / design_w * 0 + 0.3, frame_h))
-    # frame width is fluid; scale by container via CSS var set per
-    # card at runtime — fixed 0.3 factor keeps type proportions true
-    # at the 360px card width of the 3-col grid
     return ('<!doctype html><html><head><meta charset="utf-8">'
             '<meta name="viewport" content="width=device-width,'
             'initial-scale=1"><title>' + _esc(title) + '</title>'
             '<style>' + CSS +
-            '\n.pk-frame{aspect-ratio:4/2.5}'
-            '\n.pk-frame .pk-scale{' + scale + '}'
             '\n' + '\n'.join(scopes) + extra_css + '</style></head><body>'
-            '<header class="pk-head"><h1>' + _esc(title) + '</h1>'
+            '<header class="pk-head"><div class="pk-kicker">design proof · canonical picker</div><h1>' + _esc(title) + '</h1>'
             + (f'<p>{_esc(intro)}</p>' if intro else '') + '</header>'
             '<main class="pk-grid">' + '\n'.join(cards) + '</main>'
             '\n<div class="pk-modal" id="pk-modal" data-modal>'
             '<div class="pk-cap2 pk-cap"><span class="pk-tick">✓</span>'
             '<span id="pk-mname"></span><span id="pk-mcount"></span>'
-            '<span>←/→ cycle · space select · esc close</span></div>'
+            '<span>←/→ variants · ↑/↓ designs · space select · esc close</span></div>'
             '<div class="pk-mframe" id="pk-mframe"></div></div>' + JS +
             '</body></html>')
