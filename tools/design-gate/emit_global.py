@@ -303,6 +303,84 @@ def _density_css(tokens):
     return '\n'.join(out)
 
 
+def _base_css(tokens):
+    """The good-defaults floor: raw h1–h6/p/a/img/button bound to the
+    type scale. Without it every element renders in browser defaults —
+    bank markup and hand-authored markup alike. Layered `base` so any
+    unlayered component rule wins."""
+    k = tokens.get('knobs') or {}
+    try:
+        dw = int(float(k.get('type.display_weight') or 700))
+    except (TypeError, ValueError):
+        dw = 700
+    try:
+        tr = f"{float(k.get('type.tracking_display')):.3f}em"
+    except (TypeError, ValueError):
+        tr = '-0.020em'
+    return '\n'.join([
+        '@layer base {',
+        '  :root {',
+        f'    --display-weight: {dw};',
+        f'    --tracking-display: {tr};',
+        '  }',
+        '  *, *::before, *::after { box-sizing: border-box; }',
+        '  html { -webkit-text-size-adjust: 100%; }',
+        '  body {',
+        '    margin: 0;',
+        '    font-family: var(--font-body);',
+        '    font-size: var(--fs-0);',
+        '    line-height: var(--lh-0);',
+        '    color: var(--text-primary);',
+        '    background-color: var(--bg-canvas);',
+        '    -webkit-font-smoothing: antialiased;',
+        '    -moz-osx-font-smoothing: grayscale;',
+        '  }',
+        '  h1, h2, h3, h4, h5 {',
+        '    font-family: var(--font-display);',
+        '    font-weight: var(--display-weight);',
+        '    letter-spacing: var(--tracking-display);',
+        '  }',
+        '  h1 { font-size: var(--fs-5); line-height: var(--lh-5); }',
+        '  h2 { font-size: var(--fs-4); line-height: var(--lh-4); }',
+        '  h3 { font-size: var(--fs-3); line-height: var(--lh-3); }',
+        '  h4 { font-size: var(--fs-2); line-height: var(--lh-2); }',
+        '  h5 { font-size: var(--fs-1); line-height: var(--lh-1); }',
+        '  h6 {',
+        '    font-size: var(--fs-0); line-height: var(--lh-1);',
+        '    font-weight: 600; text-transform: uppercase;',
+        '    letter-spacing: 0.08em;',
+        '  }',
+        '  p { line-height: var(--lh-0); max-width: var(--measure); }',
+        '  p + p { margin-top: var(--flow-spacing); }',
+        '  a {',
+        '    color: inherit;',
+        '    text-decoration-color: color-mix(in oklch,',
+        '      currentColor 35%, transparent);',
+        '    text-underline-offset: 0.18em;',
+        '  }',
+        '  a:hover { text-decoration-color: currentColor; }',
+        '  img, svg, video, canvas { display: block; max-width: 100%; }',
+        '  img { height: auto; }',
+        '  figure { margin: 0; }',
+        '  ul, ol { padding-inline-start: 1.15em; }',
+        '  li + li { margin-top: var(--space-xs); }',
+        '  button {',
+        '    font: inherit; color: inherit; background: none;',
+        '    border: 0; cursor: pointer;',
+        '  }',
+        '  strong, b { font-weight: 600; }',
+        '  ::selection {',
+        '    background: var(--action-primary);',
+        '    color: var(--action-primary-ink);',
+        '  }',
+        '  :focus-visible {',
+        '    outline: 2px solid var(--border-focus);',
+        '    outline-offset: 3px;',
+        '  }',
+        '}',
+    ])
+
+
 def global_css(tokens):
     """@tailwind headers + emit_tokens' five TK layers + the component
     tail (density rungs derived from knobs.space.section_py)."""
@@ -312,4 +390,5 @@ def global_css(tokens):
     body = '\n'.join(emit_lines[5:])
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
         '  /* DENSITY-RUNGS */', _density_css(tokens))
-    return head + '\n' + body + '\n' + tail
+    return (head + '\n' + body + '\n' + _base_css(tokens)
+            + '\n' + tail)

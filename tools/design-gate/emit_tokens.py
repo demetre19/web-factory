@@ -132,10 +132,11 @@ def emit(tokens):
                   '"Segoe UI", Roboto, Helvetica, Arial, sans-serif')
     _fd = str(knobs.get('type.font_display') or _def_stack)
     _fb = str(knobs.get('type.font_body') or _fd)
-    # a stack stays one var VALUE — quoted, or the minifier splits it
-    # on commas and the css pipeline can't recover.
-    A(f"  --primitive-font-display: '{_fd}';")
-    A(f"  --primitive-font-body: '{_fb}';")
+    # A stack is a comma LIST, not a string: `font-family: 'a, b, c'`
+    # parses as ONE family name and silently falls back to the browser
+    # default. Custom properties keep commas intact.
+    A(f'  --primitive-font-display: {_fd};')
+    A(f'  --primitive-font-body: {_fb};')
     # grid.gutter names the gap rung; only real rungs bind.
     _gut = str(knobs.get('grid.gutter') or 'space-m')
     if _gut not in ('space-xs', 'space-s', 'space-m', 'space-l',
@@ -152,13 +153,26 @@ def emit(tokens):
     A(f'  --primitive-grid-min: {_gridmin};')
     # the fs scale is sequential idx -1..+5 around the knob base —
     # emitted per step so --fs-* stays a pure binding, never a copy.
+    # Fluid, ACSS-style: 68% of the desktop size at a 24rem viewport,
+    # the full size from 90rem up. A fixed rem ramp is why a display
+    # heading stayed 71px on a phone.
+    def _fluid(rem):
+        mn = rem * 0.68
+        slope = (rem - mn) * 16.0 / 1056.0
+        a = (mn * 16.0 - slope * 384.0) / 16.0
+        return f'clamp({mn:.3f}rem, {a:.3f}rem + {slope * 100:.2f}vw, {rem:.3f}rem)'
+
     for n in (-1, 0, 1, 2, 3, 4, 5):
         _nm = f'neg{-n}' if n < 0 else str(n)
+        _rem = round(base_px * ratio ** n, 2) / 16
+        # body sizes stay fixed (a 11px phone body is unreadable);
+        # display steps interpolate.
         A(f'  --primitive-text-{_nm}:'
-          f' {round(base_px * ratio ** n, 2) / 16:.3f}rem;')
+          f' {_fluid(_rem) if n >= 1 else f"{_rem:.3f}rem"};')
     for step in TYPE_SCALE_STEPS:
+        _rem = sizes[step] / 16
         A(f'  --primitive-text-{step}:'
-          f' {sizes[step] / 16:.3f}rem;')
+          f' {_fluid(_rem) if _rem > 1.1 else f"{_rem:.3f}rem"};')
     A('  --primitive-leading-body: 1.6;')
     A('  --primitive-leading-display: 1.15;')
     A('  --primitive-ease: cubic-bezier(.2,.6,.2,1);')
