@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: rise-words — per-word masked rise</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{height:80vh;display:grid;place-items:center;color:var(--muted)}
+.stage{padding:20vh 8vw 30vh;max-width:900px}
+h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;margin:0;font-weight:600;letter-spacing:-.02em}
+/* --- recipe ----------------------------------------------------------
+   Lexington "Rise" component (astromaxsp.lexdemos.com): each word is a
+   clipped window (.rise-word) holding an inline <span> that rises
+   translateY(130%) → 0. The split is BUILD-TIME — the markup already
+   carries .rise-word spans with --i indexes; zero split JS.
+   [data-rise-scroll] arms the scroll variant: spans are pre-paused so
+   they sit masked until .is-in releases them — no flicker, no replay. */
+.rise-word{display:inline-block;overflow:clip;overflow-clip-margin:.2em;
+  vertical-align:top;margin-bottom:-.08em;padding-bottom:.08em}
+.rise-word>span{display:inline-block;
+  animation:rise .9s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay:calc(var(--i)*40ms + .1s)}
+@keyframes rise{0%{transform:translateY(130%)}}
+[data-rise-scroll]:not(.is-in) .rise-word>span{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  .rise-word>span{animation:none}
+}
+/* --------------------------------------------------------------------- */
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer">scroll ↓ — the headline rises word by word</div>
+<div class="stage">
+  <h1 data-rise-scroll aria-label="We give companies a colour, a name and a voice."><span class="rise-word"><span style="--i:0">We</span></span> <span class="rise-word"><span style="--i:1">give</span></span> <span class="rise-word"><span style="--i:2">companies</span></span> <span class="rise-word"><span style="--i:3">a</span></span> <span class="rise-word"><span style="--i:4">colour,</span></span> <span class="rise-word"><span style="--i:5">a</span></span> <span class="rise-word"><span style="--i:6">name</span></span> <span class="rise-word"><span style="--i:7">and</span></span> <span class="rise-word"><span style="--i:8">a</span></span> <span class="rise-word"><span style="--i:9">voice.</span></span></h1>
+</div>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS — .is-in once per [data-rise-scroll], unobserve. ~10 lines.
+const io = new IntersectionObserver(es => {
+  for (const e of es) if (e.isIntersecting) {
+    e.target.classList.add('is-in'); io.unobserve(e.target);
+  }
+}, { rootMargin: '0px 0px -15%' }); /* ≈ ScrollTrigger "top 85%" */
+document.querySelectorAll('[data-rise-scroll]').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

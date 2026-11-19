@@ -45,8 +45,10 @@ Self-contained animation recipes for the Web Factory. Each recipe dir:
 | progress-rig | @property-driven progress track | loop | light |
 | radar-pulse | expanding rings + converging signals | loop | none |
 | reveal-fade | in-view fade + rise | in-view | light |
+| rise-words | per-word masked rise | in-view | light |
 | scan-sweep | travelling scanner + pick flash | loop | none |
 | scroll-draw | scroll-linked line + quantised steps | scroll-linked | light |
+| scroll-scrub | ink words + parallax + horizontal track | scroll-linked | light |
 | slide-entrance | enterView animation system | in-view | light |
 | snap-arrange | scatter-to-grid loop | loop | none |
 | stamp-check | confirm sequence (tint → draw → stamp) | loop | none |

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recipe: scroll-scrub — ink words + parallax + horizontal track</title>
+<style>
+:root{
+  --bg:#f4f1e6;--ink:#141412;--muted:#6e6a5c;--line:#e0dccf;--accent:#5e7355;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}}
+[data-theme=dark]{--bg:#141412;--ink:#f0efe9;--muted:#a09c8f;--line:#2a2a26;--accent:#90a985}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,sans-serif}
+.spacer{height:70vh;display:grid;place-items:center;color:var(--muted)}
+.ink{max-width:38ch;margin:0 auto;padding:10vh 24px;font-size:clamp(1.3rem,2.6vw,1.8rem);line-height:1.5;font-weight:500}
+.lift-wrap{overflow:hidden;border-radius:18px;margin:0 auto 12vh;max-width:880px;aspect-ratio:16/9;border:1px solid var(--line)}
+[data-lift]{width:100%;height:130%;object-fit:cover;background:linear-gradient(135deg,var(--accent),var(--muted));display:block}
+[data-marquee]{margin:0 0 20vh;overflow:hidden}
+[data-track]{display:flex;gap:16px;width:max-content;padding:0 24px}
+[data-track] .cell{flex:0 0 240px;aspect-ratio:3/4;border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;color:var(--muted);background:linear-gradient(160deg,var(--card,#fff),transparent)}
+/* --- recipe ----------------------------------------------------------
+   Lexington scrub trio (astromaxsp.lexdemos.com): scroll position is the
+   timeline. data-ink words lighten .15→1 as you read; data-lift parallax
+   inside an overflow-clipped frame; data-marquee translates a track
+   horizontally across the section's traversal.
+   Progressive: CSS scroll-timeline where supported (.native-tl), else a
+   ~25-line rAF driver. Reduced-motion renders everything at end state. */
+.ink-w{opacity:.15}
+html.native-tl .ink-w{animation:ink-fade linear both;
+  animation-timeline:view();animation-range:entry 15% cover 35%}
+@keyframes ink-fade{from{opacity:.15}to{opacity:1}}
+/* self-subject view() freezes when the animation moves its own box
+   (Chromium measures the transformed rect → circular). The wrapper
+   doesn't move: name its timeline, consume it on the child. */
+html.native-tl .lift-wrap{view-timeline-name:--lift-tl}
+html.native-tl [data-lift]{animation:lift linear both;animation-timeline:--lift-tl}
+@keyframes lift{from{transform:translateY(var(--lift,12%))}to{transform:translateY(0)}}
+html.native-tl [data-marquee]{view-timeline-name:--marq-tl}
+html.native-tl [data-marquee] [data-track]{animation:marq linear both;
+  animation-timeline:--marq-tl}
+@keyframes marq{from{transform:translateX(15vw)}
+  to{transform:translateX(calc(85vw - var(--sw,60vw)))}}
+@media (prefers-reduced-motion:reduce){
+  .ink-w{opacity:1}
+  html.native-tl .ink-w,html.native-tl [data-lift],
+  html.native-tl [data-marquee] [data-track]{animation:none}
+  [data-lift]{height:100%}
+}
+/* --------------------------------------------------------------------- */
+small{display:block;margin:0 0 12vh;text-align:center;color:var(--muted)}
+.theme{position:fixed;top:12px;right:12px;font:12px system-ui;padding:.4em .8em;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" onclick="const d=document.documentElement,e=d.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');d.dataset.theme=e==='dark'?'light':'dark'">light / dark</button>
+<div class="spacer">scroll ↓ — words ink in, then the panel lifts</div>
+<p class="ink" data-ink>Every project we ship earns its motion the same way: a small set of loops that carry the page while you read, and nothing that competes with the words themselves.</p>
+<div class="lift-wrap"><div data-lift data-lift="12" role="img" aria-label="gradient panel"></div></div>
+<div data-marquee>
+  <div class="track" data-track>
+    <div class="cell">work 01</div><div class="cell">work 02</div><div class="cell">work 03</div>
+    <div class="cell">work 04</div><div class="cell">work 05</div><div class="cell">work 06</div>
+  </div>
+</div>
+<small>three scrub arms, one attribute vocabulary — data-ink / data-lift / data-marquee</small>
+<script>
+addEventListener('message',e=>{if(e.data&&e.data.motionTheme)document.documentElement.dataset.theme=e.data.motionTheme});
+// recipe JS (~30 lines): split [data-ink] into .ink-w (the source does a
+// runtime split too), set --sw for the marquee, then either hand off to
+// CSS scroll-timeline or drive all three arms from one rAF loop.
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const inks = [...document.querySelectorAll('[data-ink]')];
+for (const t of inks) {
+  const w = t.textContent.trim().split(/\s+/);
+  t.replaceChildren(...w.flatMap(x => {
+    const s = document.createElement('span'); s.className = 'ink-w'; s.textContent = x;
+    return [s, document.createTextNode(' ')];
+  }));
+}
+const track = document.querySelector('[data-track]');
+const setSW = () => track && track.style.setProperty('--sw', track.scrollWidth + 'px');
+setSW(); addEventListener('resize', setSW);
+if (!reduce && CSS.supports('animation-timeline', 'view()')) {
+  document.documentElement.classList.add('native-tl');
+} else if (!reduce) {
+  // fallback driver: section progress p ∈ [0,1] over the viewport traversal
+  const lifts = [...document.querySelectorAll('[data-lift]')];
+  const marq = document.querySelector('[data-marquee]');
+  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+  function scr() {
+    const vh = innerHeight;
+    for (const t of inks) {
+      const r = t.getBoundingClientRect();
+      const p = clamp((vh*.85 - r.top) / (vh*.35), 0, 1);   // 85%→50% window
+      const ws = t.children, n = ws.length;
+      for (let i = 0; i < n; i++)
+        ws[i].style.opacity = .15 + .85 * clamp(p * n * 1.05 - i, 0, 1);
+    }
+    for (const el of lifts) {
+      const r = el.parentElement.getBoundingClientRect();
+      const q = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      el.style.transform = `translateY(${(1-q) * (+el.dataset.lift || 12)}%)`;
+    }
+    if (marq) {
+      const r = marq.getBoundingClientRect();
+      const q = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      const x = .15*innerWidth + q * (-(track.scrollWidth - .85*innerWidth) - .15*innerWidth);
+      track.style.transform = `translateX(${x}px)`;
+    }
+    requestAnimationFrame(scr);
+  }
+  scr();
+}
+</script>
+</body>
+</html>
