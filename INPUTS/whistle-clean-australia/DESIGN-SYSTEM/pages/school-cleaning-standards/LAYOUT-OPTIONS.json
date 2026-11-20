@@ -1,0 +1,151 @@
+{
+ "generated_by": "plan_from_copy.py",
+ "copy_sha256": "9732cce0d8533e6148375a96d0788c74aef40557b4379bcaa406eff7826fa21f",
+ "pick": "d1",
+ "allowed": {
+  "b01": [
+   "editorial",
+   "cards-n"
+  ],
+  "b02": [
+   "cards-n",
+   "editorial",
+   "text-index"
+  ],
+  "b03": [
+   "cards-n",
+   "editorial",
+   "text-index"
+  ],
+  "b04": [
+   "cards-n",
+   "editorial",
+   "text-index"
+  ],
+  "b05": [
+   "sequence",
+   "cards-n"
+  ],
+  "b06": [
+   "editorial"
+  ],
+  "b07": [
+   "editorial"
+  ],
+  "b08": [
+   "editorial",
+   "split-media"
+  ],
+  "b09": [
+   "cards-n",
+   "editorial",
+   "text-index"
+  ],
+  "b10": [
+   "split-media",
+   "link-grid"
+  ],
+  "b11": [
+   "faq"
+  ]
+ },
+ "options": [
+  {
+   "id": "d1",
+   "label": "copy default",
+   "compositions": {
+    "b01": "editorial",
+    "b02": "cards-n",
+    "b03": "cards-n",
+    "b04": "editorial",
+    "b05": "sequence",
+    "b06": "editorial",
+    "b07": "editorial",
+    "b08": "editorial",
+    "b09": "cards-n",
+    "b10": "split-media",
+    "b11": "faq"
+   },
+   "score": 0.83,
+   "score_inputs": {
+    "orphan_rows": 0,
+    "long_card_texts": 0,
+    "adjacent_same_composition": 3,
+    "distinct_compositions": 5
+   }
+  },
+  {
+   "id": "d2",
+   "label": "index-led",
+   "compositions": {
+    "b01": "editorial",
+    "b02": "text-index",
+    "b03": "text-index",
+    "b04": "cards-n",
+    "b05": "sequence",
+    "b06": "editorial",
+    "b07": "editorial",
+    "b08": "editorial",
+    "b09": "text-index",
+    "b10": "split-media",
+    "b11": "faq"
+   },
+   "score": 0.85,
+   "score_inputs": {
+    "orphan_rows": 0,
+    "long_card_texts": 0,
+    "adjacent_same_composition": 3,
+    "distinct_compositions": 6
+   }
+  },
+  {
+   "id": "d3",
+   "label": "prose-led",
+   "compositions": {
+    "b01": "editorial",
+    "b02": "editorial",
+    "b03": "cards-n",
+    "b04": "editorial",
+    "b05": "sequence",
+    "b06": "editorial",
+    "b07": "editorial",
+    "b08": "editorial",
+    "b09": "editorial",
+    "b10": "split-media",
+    "b11": "faq"
+   },
+   "score": 0.79,
+   "score_inputs": {
+    "orphan_rows": 0,
+    "long_card_texts": 0,
+    "adjacent_same_composition": 4,
+    "distinct_compositions": 5
+   }
+  },
+  {
+   "id": "d4",
+   "label": "grid-led",
+   "compositions": {
+    "b01": "cards-n",
+    "b02": "cards-n",
+    "b03": "editorial",
+    "b04": "cards-n",
+    "b05": "cards-n",
+    "b06": "editorial",
+    "b07": "editorial",
+    "b08": "editorial",
+    "b09": "cards-n",
+    "b10": "split-media",
+    "b11": "faq"
+   },
+   "score": 0.77,
+   "score_inputs": {
+    "orphan_rows": 0,
+    "long_card_texts": 0,
+    "adjacent_same_composition": 4,
+    "distinct_compositions": 4
+   }
+  }
+ ],
+ "score_formula": "0.85 - 0.1*orphan_rows - 0.05*long_card_texts - 0.04*adjacent_same_composition + 0.02*distinct_compositions, clamp 0..1"
+}

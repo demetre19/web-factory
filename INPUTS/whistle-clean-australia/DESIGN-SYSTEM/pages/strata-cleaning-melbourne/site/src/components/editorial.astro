@@ -1,0 +1,63 @@
+---
+/**
+ * editorial — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Full-copy slots (§4.3): the `copy` prop carries the COPY.json block
+ * verbatim — heading → answer → before → items → links → after in
+ * article order. No paragraph of the article is dropped (F.1).
+ */
+import { inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '',
+  body = '', cta, items = [], image, h1, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const subCls = 'mt-stack ' + (answer ? 'lede' : 'text-fluid-0');
+const before = cp.before || [];
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const ordered = !!cp.list_ordered;
+const ListTag = ordered ? 'ol' : 'ul';
+---
+
+<div>
+  <div class="max-w-prose">
+    {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class={subCls} set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {list.length > 0 && (
+      <ListTag class="mt-stack list-items text-fluid-0">
+        {list.map((it) => (
+          <li><strong set:html={inline(it.term || it.title)} />{' – '}<span set:html={inline(it.text)} /></li>
+        ))}
+      </ListTag>
+    )}
+    {links.map((l) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(l.text || '')} />
+    ))}
+    {after.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
+  </div>
+</div>

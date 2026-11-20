@@ -1,0 +1,60 @@
+---
+/**
+ * stacked-hero — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Hero copy (§4.2): `copy.heading` is the article H1, `copy.answer`
+ * the lede, both verbatim from COPY.json. No invented sub-copy: an
+ * absent lede renders nothing.
+ */
+import { Image } from 'astro:assets';
+import { inline, mediaFor } from '../_shared/inline';
+import type { CopySlot, MediaInput } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string }[];
+  image?: { src: string; alt: string; ratio?: string; focus?: string };
+  h1?: boolean;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', cta, items = [],
+  image, h1, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs;
+const before = cp.before || [];
+const after = cp.after || [];
+const hero = mediaFor(image);
+---
+
+<div class="text-center">
+  <div class="mx-auto max-w-prose">
+    {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class="mt-stack text-fluid-1" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {body && <p class="mt-stack text-fluid-0">{body}</p>}
+    {after.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+    {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
+  </div>
+  {hero && (
+    <div class="mt-stack media-round" data-ratio={image?.ratio} data-focus={image?.focus}>
+      {hero.mod
+        ? <Image src={hero.mod} alt={hero.alt || head}
+                 widths={[480, 960, 1440]}
+                 sizes="(min-width: 48rem) 66vw, 100vw" loading="eager" />
+        : <img src={hero.src} alt={hero.alt || head} width="1440"
+               height="810" loading="eager" />}
+    </div>
+  )}
+</div>

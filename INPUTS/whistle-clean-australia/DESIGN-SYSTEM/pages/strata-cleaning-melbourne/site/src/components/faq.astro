@@ -1,0 +1,63 @@
+---
+/**
+ * faq — gold exemplar (SB.5). Native details/summary: no JS, keyboard
+ * and screen-reader correct. Every answer stays open (disclosure-tier
+ * open): an article's Q&A is read, not hunted for.
+ *
+ * Full-copy slots (§4.3): `copy` carries the COPY.json block —
+ * heading → answer → before → Q&A pairs → after in article order
+ * (F.1). The question renders verbatim as the summary.
+ */
+import { inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const before = cp.before || [];
+const qa = (cp.qa && cp.qa.length)
+  ? cp.qa
+  : items.map((it) => ({ q: it.title, a: it.text }));
+const links = cp.links || [];
+const after = cp.after || [];
+---
+<div>
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 class="text-fluid-3">{head}</h2>
+    {sub && <p class="lede" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
+  </div>
+  <div class="mt-sec">
+    {qa.map((it) => (
+      <details class="faq-item" open>
+        <summary class="faq-q" set:html={inline(it.q)} />
+        <p class="t0 faq-a" set:html={inline(it.a)} />
+      </details>
+    ))}
+  </div>
+  {links.map((l) => (
+    <p class="t0 sub-p" set:html={inline(l.text || '')} />
+  ))}
+  {after.map((p) => (
+    <p class="t0 sub-p" set:html={inline(p)} />
+  ))}
+</div>

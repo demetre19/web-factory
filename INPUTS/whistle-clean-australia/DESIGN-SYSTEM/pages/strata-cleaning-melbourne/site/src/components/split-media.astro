@@ -1,0 +1,93 @@
+---
+/**
+ * split-media — gold exemplar (SB.5). Copy on the left, media on the
+ * right. As a hero it carries H1 + lede; as a content band it carries
+ * the full COPY.json block (§4.3): heading → answer → before → items →
+ * links → after in article order (F.1). Media comes from the plan row
+ * (BRIEF media), never a default.
+ */
+import { Image } from 'astro:assets';
+import { inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string;
+             label?: string; href?: string }[];
+  image?: { src: string; alt: string; ratio?: string; focus?: string };
+  attrib?: string;
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], image, attrib = '', h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const before = cp.before || [];
+const list = cp.items || [];
+const links = cp.links || [];
+const after = cp.after || [];
+// V.8/P.12 — media runs through astro:assets: the emitter mirrors
+// public/media/* into src/assets/media/ so hero rasters compile to
+// AVIF/WebP srcsets with real intrinsic dims
+const media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const mediaName = image ? String(image.src).split('/').pop() : null;
+const mediaMod = mediaName ? media[`../assets/media/${mediaName}`] : null;
+const mediaSrc = mediaMod?.default ?? null;
+const mediaRatio = image?.ratio || null;
+const mediaFocus = image?.focus || null;   // left|right|top|bottom
+---
+<div class="split">
+  <div class="stack">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1
+      ? <h1 class="t0 h-display text-fluid-5">{head}</h1>
+      : <h2 class="t0 h-section text-fluid-3">{head}</h2>}
+    {sub && <p class="t0 lede" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
+    {list.length > 0 && (
+      <ul class="t0 sub-p list-items">
+        {list.map((it) => (
+          <li><strong set:html={inline(it.term || it.title)} />{' – '}<span set:html={inline(it.text)} /></li>
+        ))}
+      </ul>
+    )}
+    {links.length > 0 && (
+      <ul class="t0 sub-p list-items">
+        {links.map((l) => (
+          <li set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />
+        ))}
+      </ul>
+    )}
+    {after.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
+    {cta && (
+      <div class="cta-row mt-act">
+        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+      </div>
+    )}
+    {attrib && <p class="t0 attrib sub-flow">{attrib}</p>}
+  </div>
+  {mediaSrc
+    ? <div class="media-round" data-ratio={mediaRatio} data-focus={mediaFocus}>
+        <Image src={mediaSrc} alt={image.alt} widths={[480, 960, 1440]}
+               sizes="(min-width: 48rem) 50vw, 100vw" loading="eager" />
+      </div>
+    : image
+      ? <div class="media-round" data-ratio={mediaRatio} data-focus={mediaFocus}>
+          <img src={image.src} alt={image.alt} width="960" height="432"
+               loading="eager" />
+        </div>
+      : <div class="media-panel media-hero" aria-hidden="true"></div>}
+</div>

@@ -1,0 +1,67 @@
+---
+/**
+ * sequence — gold exemplar (SB.5). Ordered steps as ruled rows: the
+ * numeral column is the motif, the rule is the rhythm. Reads as a
+ * process, not a card grid.
+ *
+ * Full-copy slots (§4.3): `copy` carries the COPY.json block —
+ * heading → answer → before → step rows → after in article order
+ * (F.1). The rows are numbered: the copy's term is the step name.
+ */
+import { inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  eyebrow?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  brand?: string;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', eyebrow = '',
+  cta, items = [], h1, brand, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const num = (i: number) => String(i + 1).padStart(2, '0');
+---
+<div>
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 class="text-fluid-3">{head}</h2>
+    {sub && <p class="lede" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
+    ))}
+  </div>
+  {list.length > 0 && (
+    <ol class="flow-list mt-sec list-plain">
+      {list.map((it, i) => (
+        <li class="flow-row">
+          <span class="num num-prom">{num(i)}</span>
+          <div>
+            <h3 class="t0 sub-h" set:html={inline(it.term || it.title)} />
+            <p class="t0 sub-p sub-flow" set:html={inline(it.text)} />
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
+  {links.map((l) => (
+    <p class="t0 sub-p" set:html={inline(l.text || '')} />
+  ))}
+  {after.map((p) => (
+    <p class="t0 sub-p" set:html={inline(p)} />
+  ))}
+</div>

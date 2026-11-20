@@ -1,0 +1,50 @@
+---
+/**
+ * footer-bar — gold exemplar (SB.5). Brand and one line of proof on
+ * the left, two link columns, a legal rule under both. The legal
+ * line's facts (licence, ABN) come from the plan row's `attrib` —
+ * never a default: an exemplar must not ship another trade's claims.
+ */
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { title?: string; text?: string; label?: string;
+             href?: string }[];
+  brand?: string;
+  attrib?: string;
+}
+const {
+  heading = '', fs = '', body = '', cta, items = [], attrib = '',
+  brand = 'Brand',
+} = Astro.props;
+const sub = fs || body;
+const year = 2026;
+---
+<div class="stack gap-form">
+  <div class="foot-cols">
+    <div class="foot-col">
+      <a class="brand-mark" href="/">{brand}</a>
+      {sub && <p class="t0 sub-p measure-28">{sub}</p>}
+      {heading && <p class="t0 attrib">{heading}</p>}
+    </div>
+    <div class="foot-col">
+      <p class="foot-head">Service</p>
+      {items.slice(0, 3).map((it) => (
+        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
+      ))}
+    </div>
+    <div class="foot-col">
+      <p class="foot-head">Contact</p>
+      {cta && <a class="nav-link" href={cta.href}>{cta.label}</a>}
+      {items.slice(3).map((it) => (
+        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
+      ))}
+    </div>
+  </div>
+  <div class="legal">
+    <span>Copyright {year} {brand}</span>
+    {attrib && <span>{attrib}</span>}
+  </div>
+</div>
