@@ -66,14 +66,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-testimonial-57-slider-card card">
-                {(it.items || []).length > 0 &&                 <div class="bm-testimonial-38-star-list">
-                  {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         {it2.icon && <IconChip name={it2.icon} />}
                       </div>
-                    ))}</div>}
-                </div>
-                }
+                    ))}</div>
+                </div>}
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <div class="bm-user-data">
                   <p class="text-fluid-0">{it.text}</p>

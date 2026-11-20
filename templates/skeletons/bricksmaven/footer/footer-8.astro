@@ -52,14 +52,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
     {list.length > 0 &&     <div>
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="footer-8-nav-menu row between">
-          {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="footer-8-nav-menu row between">
+          <div class="row gap-fluid-m">{(list || []).map((it) => (
               <div class="footer-8-nav-list">
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       }
     </div>
@@ -69,13 +69,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div class="footer-8__mid-column row between">
             <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
             <div class="footer-8__email-phone row between">
-              <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-              <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+              <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+              {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+              {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             </div>
             <p class="text-fluid-0">{it.text}</p>
           </div>
         ))}</div>}
-      {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
+      {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
     </div>
     }
     <div class="footer-8-bottom-container row between">
@@ -90,15 +92,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           </div>
         </div>
         <div>
-          {links.length >= 0 &&           <div class="footer-legal-nav row between">
-            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
+          {links.length > 0 && <div class="footer-legal-nav row between">
+            <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div>
-                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-              ))}</div>}
-            {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
-          </div>
-          }
+              ))}</div>
+          </div>}
+          {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
       </div>
       <div class="footer-social-wrapper-8 row between">

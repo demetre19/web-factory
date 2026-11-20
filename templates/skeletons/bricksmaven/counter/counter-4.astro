@@ -57,15 +57,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {head && <h2 class="counter-4-right-box__heading text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 &&         <div class="counter-4-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="counter-4-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="counter-4-list-card card">
-                <span></span>
+                <span>{it.stat || it.term || it.title}</span>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       {image && image.src &&       <div>
         {image && image.src && <figure class="counter-4-media__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}

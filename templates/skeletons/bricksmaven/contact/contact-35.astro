@@ -69,17 +69,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             </div>
           </div>
         </div>
-        {list.length > 0 &&         <div class="bm-contact-25-side-list-ul">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-contact-25-side-list-ul">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-contact-25-side-list-item card">
                 <div class="bm-contact-25-side-list-item__detail">
-                  <a class="bm-contact-25-side-list-item__cta text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="bm-contact-25-side-list-item__cta text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
                 {it.icon && <IconChip name={it.icon} />}
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       <div>
         <div>

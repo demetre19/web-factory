@@ -57,16 +57,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {head && <h1 class="checkout-page-4__page-heading text-fluid-4">{head}</h1>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-      {list.length > 0 &&       <div class="checkout-page-4-breadcrumb">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="checkout-page-4-breadcrumb">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="checkout-page-4-breadcrumb-item card">
               <p class="text-fluid-0">{it.text}</p>
               <p class="text-fluid-0">{it.text}</p>
               {it.icon && <IconChip name={it.icon} />}
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
     <div class="checkout-page-4__container">
       <div>

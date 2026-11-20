@@ -19,6 +19,7 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -69,26 +70,30 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
         {links.length > 0 &&         <div>
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="card">
-                <div class="blog-archive-12-archive-list">
-                  <div class="blog-archive-12-archive-card">
-                    <div class="blog-archive-12-archive-card__content">
-                      <div class="blog-archive-12-archive-card__meta">
-                        <p class="text-fluid-0">{it.text}</p>
-                        <p class="text-fluid-0">{it.text}</p>
+              {(it.items || []).length > 0 &&               <div class="card">
+                {(it.items || []).length > 0 && <div class="blog-archive-12-archive-list">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                      <div class="blog-archive-12-archive-card card">
+                        <div class="blog-archive-12-archive-card__content">
+                          <div class="blog-archive-12-archive-card__meta">
+                            <p class="text-fluid-0">{it2.text}</p>
+                            <p class="text-fluid-0">{it2.text}</p>
+                          </div>
+                          <div></div>
+                          <div></div>
+                          <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
+                          {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
+                        </div>
+                        <div class="grid-auto gap-fluid-l">
+                          <div class="blog-archive-12-archive-card__category-wrapper">
+                            <p class="text-fluid-0">{it2.text}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div></div>
-                      <div></div>
-                      <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-                    </div>
-                    <div class="grid-auto gap-fluid-l">
-                      <div class="blog-archive-12-archive-card__category-wrapper">
-                        <p class="text-fluid-0">{it.text}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                    ))}</div>
+                </div>}
               </div>
+              }
             ))}</div>}
         </div>
         }

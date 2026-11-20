@@ -73,17 +73,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
       {list.length > 0 &&       <div class="bm-hero-102__footer">
-        {list.length > 0 &&         <div class="bm-list bm-list--inline bm-hero-102__hero-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-list bm-list--inline bm-hero-102__hero-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-list-item card">
                 <div class="bm-list-item__icon-wrapper">
                   {it.icon && <IconChip name={it.icon} />}
                 </div>
                 <p class="bm-list-item__text text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       }
       {image && image.src && <figure class="bm-hero-102__background-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}

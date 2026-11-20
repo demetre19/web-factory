@@ -68,7 +68,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <svg></svg>
                 <p class="text-fluid-0">{it.text}</p>
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
           ))}</div>}

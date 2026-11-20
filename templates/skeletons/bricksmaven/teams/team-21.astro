@@ -61,19 +61,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 &&       <div class="bm-team-21-team-list">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-team-21-team-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-team-21-card card">
-              <div>
-                <div class="bm-social-share bm-social-share--column">
-                  <div>
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                  <div>
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                </div>
+              {(it.items || []).length > 0 &&               <div>
+                {(it.items || []).length > 0 && <div class="bm-social-share bm-social-share--column">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                      <div class="card">
+                        {it2.icon && <IconChip name={it2.icon} />}
+                      </div>
+                    ))}</div>
+                </div>}
               </div>
+              }
               <div>
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <div class="bm-team-21-card__footer">
@@ -83,9 +83,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               <div></div>
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

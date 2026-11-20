@@ -56,22 +56,20 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 &&       <div class="bm-review-grid">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-review-grid">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-review-card card">
-              {(it.items || []).length > 0 &&               <div class="bm-review-star">
-                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              {(it.items || []).length > 0 && <div class="bm-review-star">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="card">
                       {it2.icon && <IconChip name={it2.icon} />}
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}

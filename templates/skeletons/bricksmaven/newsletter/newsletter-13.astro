@@ -56,15 +56,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </form>
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="bm-newsletter-13-usp-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-newsletter-13-usp-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-newsletter-13-usp-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       }
     </div>

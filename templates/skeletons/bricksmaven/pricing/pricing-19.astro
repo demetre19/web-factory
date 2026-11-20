@@ -56,17 +56,16 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div>
         <div class="bm-pricing-19-card">
           <div class="bm-pricing-19-card__pricing">
-            {list.length > 0 &&             <div class="bm-list">
-              {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            {list.length > 0 && <div class="bm-list">
+              <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="bm-list-item card">
                     <div class="bm-list-item__icon-wrapper">
                       {it.icon && <IconChip name={it.icon} />}
                     </div>
                     <p class="bm-list-item__text text-fluid-0">{it.text}</p>
                   </div>
-                ))}</div>}
-            </div>
-            }
+                ))}</div>
+            </div>}
             <div class="bm-pricing-19-card__price-box-wrapper">
               <div class="bm-pricing-19-card__price-box">
                 {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

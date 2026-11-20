@@ -20,7 +20,6 @@ interface Props {
 }
 import { inline } from '../_shared/inline';
 import IconChip from '../_shared/IconChip.astro';
-import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
   heading = '',
@@ -44,14 +43,11 @@ const after = cp.after || [];
 const act = cp.cta || cta;
 const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
-// V.8/P.12 — rasters resolve through src/assets/media/
-// so <Image> compiles AVIF/WebP srcsets
-const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
-const _mn = image ? String(image.src).split('/').pop() : null;
-const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
 <div>
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="bm-header-1__container">
       <div class="bm-header-1__brand">
@@ -59,52 +55,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       <div class="bm-header-1__nav-wrapper">
         <div>
-          <div>
-            <div>
-              <div class="megamenu-5__content">
-                {list.length > 0 &&                 <div class="megamenu-5__column">
-                  {list.length > 0 &&                   <div class="megamenu-5__card-wrapper">
-                    {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                        <div class="megamenu-card-link-3 card">
-                          <div>
-                            <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-                            <p class="text-fluid-0">{it.text}</p>
-                          </div>
-                          <div class="megamenu-card-link-3__icon-wrapper">
-                            {it.icon && <IconChip name={it.icon} />}
-                          </div>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-                <div class="megamenu-5__article-wrapper">
-                  {head && <h2 class="text-fluid-2">{head}</h2>}
-                  <div class="megamenu-article-list">
-                    <div class="megamenu-article-card">
-                      <div class="megamenu-article-card__content">
-                        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-                        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-                      </div>
-                      {image && image.src &&                       <div>
-                        {image && image.src && <figure class="megamenu-article-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-                      </div>
-                      }
-                    </div>
-                    {image && image.src &&                     <div class="megamenu-article-card">
-                      {image && image.src &&                       <div>
-                        {image && image.src && <figure class="megamenu-article-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-                      </div>
-                      }
-                    </div>
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div></div>
-          </div>
+          {list.length > 0 && <div>
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              ))}</div>
+          </div>}
           <div></div>
         </div>
       </div>

@@ -80,14 +80,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {links.length > 0 &&     <div>
       {links.length > 0 &&       <div class="bm-hero-94-footer-container__logo-cover">
-        {links.length > 0 &&         <div class="bm-hero-94-logo-list">
-          {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+        {links.length > 0 && <div class="bm-hero-94-logo-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="bm-hero-94-logo-wrapper card">
                 <svg></svg>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       }
     </div>

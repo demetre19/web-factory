@@ -19,6 +19,7 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -59,7 +60,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div class="bm-header-14__top-nav">
         {list.length > 0 &&         <div class="bm-header-14__top-nav-wrapper row between">
           {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
-              <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+              <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+              {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             ))}</div>}
         </div>
         }

@@ -59,50 +59,54 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       <div class="bm-content-73__content">
         <div class="bm-content-73__top">
           {head && <h2 class="text-fluid-2">{head}</h2>}
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
         <div class="bm-content-73__footer">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           {links.length > 0 &&           <div class="bm-review-widget">
             {links.length > 0 &&             <div class="bm-testimonial-38__star-ratings">
-              {links.length > 0 &&               <div class="bm-testimonial-38-star-list">
-                {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              {links.length > 0 && <div class="bm-testimonial-38-star-list">
+                <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                     <div class="card">
                       {it.icon && <IconChip name={it.icon} />}
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
             </div>
             }
           </div>
           }
         </div>
       </div>
-      <div class="bm-content-73__data-column">
-        <div class="bm-content-73-data-list">
-          <div class="bm-content-73-data-card">
-            <span></span>
-            {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-            {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-          </div>
-          <div class="bm-content-73-data-card">
-            <span></span>
-          </div>
-        </div>
+      {links.length > 0 &&       <div class="bm-content-73__data-column">
+        {links.length > 0 && <div class="bm-content-73-data-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="bm-content-73-data-card card">
+                <span>{it.stat || it.term || it.title}</span>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}</div>
+        </div>}
       </div>
+      }
     </div>
     <div class="bm-content-73__footer-container">
       <div class="bm-logo-12-carousel">
-        <div class="bm-logo-12-track">
-          <div>
-            <svg></svg>
-          </div>
-        </div>
-        <div class="bm-logo-12-track">
-          <div>
-            <svg></svg>
-          </div>
-        </div>
+        {links.length > 0 && <div class="bm-logo-12-track">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <svg></svg>
+              </div>
+            ))}</div>
+        </div>}
+        {links.length > 0 && <div class="bm-logo-12-track">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <svg></svg>
+              </div>
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

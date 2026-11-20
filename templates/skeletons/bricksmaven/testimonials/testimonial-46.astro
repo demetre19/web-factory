@@ -56,14 +56,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="bm-testimonial-46__review-cover">
         {list.length > 0 &&         <div class="bm-testimonial-46__slider-nested">
           {list.length > 0 &&           <div class="bm-testimonial-46-card">
-            {list.length > 0 &&             <div class="bm-testimonial-38-star-list bm-testimonial-46-card__star-list">
-              {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            {list.length > 0 && <div class="bm-testimonial-38-star-list bm-testimonial-46-card__star-list">
+              <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="card">
                     {it.icon && <IconChip name={it.icon} />}
                   </div>
-                ))}</div>}
-            </div>
-            }
+                ))}</div>
+            </div>}
           </div>
           }
         </div>

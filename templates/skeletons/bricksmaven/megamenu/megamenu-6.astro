@@ -46,6 +46,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div>
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="bm-header-1__container">
       <div class="bm-header-1__brand">
@@ -53,47 +55,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       <div class="bm-header-1__nav-wrapper">
         <div>
-          <div>
-            <div>
-              <div class="megamenu-6__content">
-                <div class="megamenu-6__column">
-                  {head && <h2 class="text-fluid-2">{head}</h2>}
-  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-                  {list.length > 0 &&                   <div class="megamenu-6__card-wrapper">
-                    {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                        <div class="megamenu-card-link-4 card">
-                          <div>
-                            <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-                          </div>
-                          <div>
-                            {it.icon && <IconChip name={it.icon} />}
-                          </div>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                {links.length > 0 &&                 <div class="megamenu-6__column">
-                  {links.length > 0 &&                   <div class="megamenu-6__card-wrapper">
-                    {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                        <div class="megamenu-card-link-4 card">
-                          <div>
-                            <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-                          </div>
-                          <div>
-                            {it.icon && <IconChip name={it.icon} />}
-                          </div>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-            <div></div>
-          </div>
+          {list.length > 0 && <div>
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              ))}</div>
+          </div>}
           <div></div>
         </div>
       </div>

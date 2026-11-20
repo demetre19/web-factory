@@ -422,11 +422,25 @@ def translate(payload, stem):
         """The guard of an emit that is wholly one conditional
         expression — `{x.length > 0 && <div>…}` or
         `{image && image.src && …}` — else None. Parents propagate it
-        so a wrapper around a single conditional child collapses too."""
+        so a wrapper around a single conditional child collapses too.
+        A trailing `}` is not enough: `{g && …}{h && …}` is two
+        sibling expressions — only the head is conditional, so the
+        parent must NOT propagate the head's guard over the whole."""
         t = s.strip()
         m = re.match(r'^\{(.{1,80}?\.length > 0|image && image\.src)'
                      r' && ', t)
-        return m.group(1).strip() if m and t.endswith('}') else None
+        if not m:
+            return None
+        depth = 0
+        for i, ch in enumerate(t):
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if depth == 0:
+                    return m.group(1).strip() if i == len(t) - 1 \
+                        else None
+        return None
 
     def render(el_id, depth, ivar=None, card=False):
         el = els.get(el_id)
@@ -545,9 +559,17 @@ def translate(payload, stem):
                     'width={900} height={600} loading="lazy" />'
                     '</div></figure>}\n')
         if name == 'text-link' and ivar:
+            # term/label is the link's own text; a distinct text slot
+            # drops to a description line under the link (F.1 — both
+            # are copy and neither may be dropped)
             return (f'{pad}<a{cattr} href={{{ivar}.href}}>'
-                    f'{{{ivar}.label || {ivar}.anchor || '
-                    f'{ivar}.text}}</a>\n')
+                    f'{{{ivar}.icon && '
+                    f'<IconChip name={{{ivar}.icon}} />}} '
+                    f'{{{ivar}.label || {ivar}.term || '
+                    f'{ivar}.anchor || {ivar}.text}}</a>\n'
+                    f'{pad}{{({ivar}.label || {ivar}.term || '
+                    f'{ivar}.anchor) && {ivar}.text && '
+                    f'<p class="text-fluid-0">{{{ivar}.text}}</p>}}\n')
         if name == 'text-link' and not ivar:
             return ''
         if name in ('heading', 'text-basic', 'text'):
@@ -591,8 +613,50 @@ def translate(payload, stem):
                 return (f'{pad}{{{ivar}.icon && '
                         f'<IconChip name={{{ivar}.icon}} />}}\n')
             return ''
+        if name == 'counter':
+            # the stat figure binds the item's stat/term — the
+            # payload's own countTo is wireframe text (F.1)
+            if ivar:
+                return (f'{pad}<span{cattr}>{{{ivar}.stat || '
+                        f'{ivar}.term || {ivar}.title}}</span>\n')
+            return ''
         if name == 'divider':
             return f'{pad}<hr{cattr} />\n'
+        # a declared list element (ul/ol) IS a collection: its <li>
+        # children carry per-row class ids, so same-sig run detection
+        # under-counts real lists — the first child is the item
+        # template, every row maps the copy collection (SB.5)
+        if str(s.get('tag') or '') in ('ul', 'ol') and children:
+            if ivar:
+                coll, var = f'({ivar}.items || [])', ivar + '2'
+            elif seen.get('top_list'):
+                coll, var = 'links', 'it'
+            else:
+                seen['top_list'] = True
+                coll, var = 'list', 'it'
+            _item = render(children[0], depth + 3, var,
+                           card=cat not in ('header', 'footer'))
+            if _item.strip():
+                _wrap = ('row gap-fluid-m'
+                         if cat in ('header', 'footer')
+                         else 'grid-auto gap-fluid-m')
+                # the guard wraps the whole element — an empty list
+                # leaves no dead grid wrapper in the DOM (L.15)
+                out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>\n'
+                       f'{pad}  <div class="{_wrap}">'
+                       f'{{({coll} || []).map(({var}) => (\n'
+                       + _item
+                       + f'{pad}    ))}}'
+                       f'</div>\n' + f'{pad}</div>}}\n')
+                if coll == 'links' and cat == 'footer':
+                    # the legal line is a sibling of the guarded list
+                    # — inside the guard it never renders when links
+                    # is empty, which is exactly when PS.10 needs it
+                    out += (f'{pad}{{links.length === 0 && '
+                            f'<p class="footer-legal-nav text-fluid-0">Copyright '
+                            f'{{new Date().getFullYear()}} '
+                            f'{{brand}}</p>}}\n')
+                return out
         inner = ''
         _guard = None
         _static = False
@@ -638,7 +702,7 @@ def translate(payload, stem):
                     if _guard == 'links.length > 0':
                         _guard = 'links.length >= 0'
                     inner += (f'{pad}  {{links.length === 0 && '
-                              f'<p class="text-fluid-0">Copyright '
+                              f'<p class="footer-legal-nav text-fluid-0">Copyright '
                               f'{{new Date().getFullYear()}} '
                               f'{{brand}}</p>}}\n')
             else:

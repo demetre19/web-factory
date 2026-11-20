@@ -69,14 +69,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div class="bm-social-share bm-social-share--left">
-                  <div>
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                  <div>
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                </div>
+                {(it.items || []).length > 0 && <div class="bm-social-share bm-social-share--left">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                      <div class="card">
+                        {it2.icon && <IconChip name={it2.icon} />}
+                      </div>
+                    ))}</div>
+                </div>}
               </div>
             </div>
           ))}</div>}

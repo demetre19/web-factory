@@ -55,23 +55,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       <div>
         <div>
-          <div class="bm-header-11-nav-items row between">
-            {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
-                {(it.items || []).length > 0 &&                 <div>
-                  {(it.items || []).length > 0 &&                   <div class="row between">
-                    {(it.items || []).length > 0 && <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                        <a class="text-fluid-0" href={it2.href}>{it2.label || it2.anchor || it2.text}</a>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-              ))}</div>}
-            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-              ))}</div>}
-            <div></div>
-          </div>
+          {list.length > 0 && <div class="bm-header-11-nav-items row between">
+            <div class="row gap-fluid-m">{(list || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              ))}</div>
+          </div>}
           <div></div>
         </div>
       </div>

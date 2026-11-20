@@ -66,11 +66,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {image && image.src && <figure class="bm-shop-hero-5__image-alpha ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
-        <div class="bm-shop-hero-5__content">
-          <div class="bm-shop-hero-5__header">
-            <span></span>
-          </div>
-        </div>
         {image && image.src &&         <div class="bm-shop-hero-5__limited-offers grid-auto gap-fluid-l">
           {image && image.src && <figure class="bm-shop-hero-5__image-beta ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>

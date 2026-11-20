@@ -66,8 +66,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
             </div>
             <div class="bm-pricing-24__pricing-container">
-              {(it.items || []).length > 0 &&               <div class="bm-pricing-24-pricing-list">
-                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-pricing-24-pricing-item card">
                       <div class="bm-pricing-24-pricing-item__top">
                         <div class="bm-pricing-24-pricing-item__intro">
@@ -78,11 +78,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       </div>
                       <p class="text-fluid-0">{it2.text}</p>
                     </div>
-                  ))}</div>}
-              </div>
-              }
-              {(it.items || []).length > 0 &&               <div class="bm-pricing-24-pricing-list">
-                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  ))}</div>
+              </div>}
+              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-pricing-24-pricing-item card">
                       <div class="bm-pricing-24-pricing-item__top">
                         <div class="bm-pricing-24-pricing-item__intro">
@@ -93,9 +92,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       </div>
                       <p class="text-fluid-0">{it2.text}</p>
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
             </div>
           </div>
         ))}</div>}

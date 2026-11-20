@@ -63,15 +63,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               <div class="bm-feature-73-card__badge">
                 <p class="bm-feature-73-card__label text-fluid-0">{it.text}</p>
               </div>
-              {(it.items || []).length > 0 &&               <div class="bm-feature-service-list">
-                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              {(it.items || []).length > 0 && <div class="bm-feature-service-list">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-feature-service-item card">
                       <p class="text-fluid-0">{it2.text}</p>
                       {it2.icon && <IconChip name={it2.icon} />}
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
             </div>
           ))}</div>}
       </div>

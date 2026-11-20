@@ -75,14 +75,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
-                  {(it.items || []).length > 0 &&                   <div class="bm-hero-67-slide__rating-wrapper">
-                    {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  {(it.items || []).length > 0 && <div class="bm-hero-67-slide__rating-wrapper">
+                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="bm-hero-67-slide__rating-li card">
                           {it2.icon && <IconChip name={it2.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                 </div>
               </div>
             ))}</div>}

@@ -62,8 +62,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div class="bm-pricing-23__menu-wrapper">
-        {list.length > 0 &&         <div class="bm-pricing-23-menu-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-pricing-23-menu-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-pricing-23-menu-card card">
                 <div class="bm-pricing-23-menu-card__content">
                   <div class="bm-pricing-23-menu-card__top">
@@ -75,11 +75,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-            ))}</div>}
-        </div>
-        }
-        {links.length > 0 &&         <div class="bm-pricing-23-menu-list">
-          {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            ))}</div>
+        </div>}
+        {links.length > 0 && <div class="bm-pricing-23-menu-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="bm-pricing-23-menu-card card">
                 <div class="bm-pricing-23-menu-card__content">
                   <div class="bm-pricing-23-menu-card__top">
@@ -91,9 +90,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

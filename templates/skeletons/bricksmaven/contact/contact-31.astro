@@ -54,23 +54,21 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 &&         <div class="bm-contact-31-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-contact-31-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-contact-31-card card">
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
-                {(it.items || []).length > 0 &&                 <div class="bm-social-share bm-social-share--left">
-                  {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                {(it.items || []).length > 0 && <div class="bm-social-share bm-social-share--left">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         {it2.icon && <IconChip name={it2.icon} />}
                       </div>
-                    ))}</div>}
-                </div>
-                }
+                    ))}</div>
+                </div>}
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       <div class="bm-contact-31__form-wrapper">
         <form novalidate>

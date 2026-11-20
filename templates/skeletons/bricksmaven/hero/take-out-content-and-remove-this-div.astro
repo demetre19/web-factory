@@ -72,14 +72,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div class="hero-53-testimonial__container">
         {list.length > 0 &&         <div class="hero-53-testimonial__review">
           {list.length > 0 &&           <div class="hero-53-testimonial__review-user-rating">
-            {list.length > 0 &&             <div class="hero-53-testimonial-review-rating">
-              {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            {list.length > 0 && <div class="hero-53-testimonial-review-rating">
+              <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="card">
                     {it.icon && <IconChip name={it.icon} />}
                   </div>
-                ))}</div>}
-            </div>
-            }
+                ))}</div>
+            </div>}
           </div>
           }
         </div>

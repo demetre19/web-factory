@@ -19,6 +19,7 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -54,12 +55,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       <div class="bm-header-12__nav">
         <div>
-          <div class="row between">
-            {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-              ))}</div>}
-            <div></div>
-          </div>
+          {list.length > 0 && <div class="row between">
+            <div class="row gap-fluid-m">{(list || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              ))}</div>
+          </div>}
           <div></div>
         </div>
       </div>

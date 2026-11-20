@@ -60,8 +60,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
           </div>
-          {list.length > 0 &&           <div>
-            {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          {list.length > 0 && <div>
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-content-42-data-list card">
                   <div class="bm-content-42-data-list__numbers">
                     <p class="text-fluid-0">{it.text}</p>
@@ -71,9 +71,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              ))}</div>}
-          </div>
-          }
+              ))}</div>
+          </div>}
         </div>
         {image && image.src &&         <div>
           {image && image.src && <figure class="bm-content-42__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}

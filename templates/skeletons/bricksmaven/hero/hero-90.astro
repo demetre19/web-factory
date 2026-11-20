@@ -63,14 +63,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         {links.length > 0 &&         <div class="bm-review-widget bm-hero-90__review-widget">
           {links.length > 0 &&           <div class="bm-testimonial-38__star-ratings">
-            {links.length > 0 &&             <div class="bm-testimonial-38-star-list">
-              {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            {links.length > 0 && <div class="bm-testimonial-38-star-list">
+              <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="card">
                     {it.icon && <IconChip name={it.icon} />}
                   </div>
-                ))}</div>}
-            </div>
-            }
+                ))}</div>
+            </div>}
           </div>
           }
         </div>
@@ -85,20 +84,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                     <div class="bm-hero-90-case__footer">
                       <p class="text-fluid-0">{it.text}</p>
-                      <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                      <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                      {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
                   <div></div>
                 </div>
                 <div class="bm-hero-90-testimonial">
-                  {(it.items || []).length > 0 &&                   <div class="bm-testimonial-38-star-list">
-                    {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
+                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
                           {it2.icon && <IconChip name={it2.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                   <p class="text-fluid-0">{it.text}</p>
                   <div class="bm-hero-90-testimonial__client-meta grid-auto gap-fluid-l">
                     <div>

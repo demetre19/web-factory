@@ -71,14 +71,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="bm-testimonial-44-video-card">
                 <figure class="bm-testimonial-44-video-card__video"></figure>
                 <div class="bm-testimonial-44-video-card__user-data">
-                  {(it.items || []).length > 0 &&                   <div class="bm-testimonial-38-star-list">
-                    {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
+                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
                           {it2.icon && <IconChip name={it2.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                   <div class="testimonial-list-card__profile">
                     <div class="testimonial-list-card__meta">
                       <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
@@ -95,14 +94,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
-                  {(it.items || []).length > 0 &&                   <div class="bm-testimonial-38-star-list">
-                    {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
+                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
                           {it2.icon && <IconChip name={it2.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

@@ -55,8 +55,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       <div class="bm-comparison-3__grid">
         {list.length > 0 &&         <div class="bm-comparison-3__column">
-          {list.length > 0 &&           <div class="bm-comparison-3-list">
-            {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          {list.length > 0 && <div class="bm-comparison-3-list">
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-comparison-3-card card">
                   <div class="bm-comparison-3-card__icon-wrapper">
                     {it.icon && <IconChip name={it.icon} />}
@@ -66,14 +66,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              ))}</div>}
-          </div>
-          }
+              ))}</div>
+          </div>}
         </div>
         }
         {links.length > 0 &&         <div class="bm-comparison-3__column">
-          {links.length > 0 &&           <div class="bm-comparison-3-list">
-            {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+          {links.length > 0 && <div class="bm-comparison-3-list">
+            <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="bm-comparison-3-card card">
                   <div class="bm-comparison-3-card__icon-wrapper">
                     {it.icon && <IconChip name={it.icon} />}
@@ -87,9 +86,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                     </div>
                   </div>
                 </div>
-              ))}</div>}
-          </div>
-          }
+              ))}</div>
+          </div>}
         </div>
         }
       </div>

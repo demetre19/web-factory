@@ -74,17 +74,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           <div class="cart-page-5__cart-totals-wrapper">
             <div class="cart-page-5__cart-totals"></div>
           </div>
-          {links.length > 0 &&           <div class="cart-page-usp cart-page-usp--alt">
-            {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+          {links.length > 0 && <div class="cart-page-usp cart-page-usp--alt">
+            <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="cart-page-card-usp card">
                   <div class="cart-page-card-usp__content">
                     <p class="text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              ))}</div>}
-          </div>
-          }
+              ))}</div>
+          </div>}
         </div>
       </div>
     </div>

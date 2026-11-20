@@ -50,18 +50,21 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     <div class="bm-contact-38__container">
       <div class="bm-contact-38__intro">
         {head && <h1 class="text-fluid-4">{head}</h1>}
-        <div class="bm-content-column-wrapper">
-          <div class="bm-content-column">
-            {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-            {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-          </div>
-        </div>
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {list.length > 0 && <div class="bm-content-column-wrapper">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <div class="bm-content-column card">
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}</div>
+        </div>}
       </div>
       <div>
         <div></div>
       </div>
-      {list.length > 0 &&       <div class="bm-contact-38-contact-data">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {links.length > 0 &&       <div class="bm-contact-38-contact-data">
+        {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="bm-contact-38-card card">
               <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

@@ -74,14 +74,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     </div>
                   ))}</div>}
                 {links.length > 0 &&                 <div class="blog-single-head__details blog-single-head__details--coloumn">
-                  {links.length > 0 &&                   <div class="bm-social-share bm-social-share--left">
-                    {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+                  {links.length > 0 && <div class="bm-social-share bm-social-share--left">
+                    <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                         <div class="card">
                           {it.icon && <IconChip name={it.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                 </div>
                 }
               </div>

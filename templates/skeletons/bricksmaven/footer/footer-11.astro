@@ -19,6 +19,7 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -55,7 +56,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {list.length > 0 &&           <div class="footer-menu-inline--alt row between">
             {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
                 <div>
-                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               ))}</div>}
           </div>
@@ -68,15 +70,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       <div class="footer-11__bottom row between">
         <div>
-          {links.length >= 0 &&           <div class="footer-legal-nav row between">
-            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
+          {links.length > 0 && <div class="footer-legal-nav row between">
+            <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div>
-                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-              ))}</div>}
-            {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
-          </div>
-          }
+              ))}</div>
+          </div>}
+          {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
         <div class="footer-3-bottom__right">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

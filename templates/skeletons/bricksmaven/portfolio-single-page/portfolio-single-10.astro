@@ -67,6 +67,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
     </div>
     }
+    {links.length > 0 &&     <div class="bm-portfolio-single-10__results-container">
+      {links.length > 0 && <div class="bm-portfolio-single-10-data-list">
+        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            <div class="bm-portfolio-single-10-data card">
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}</div>
+      </div>}
+    </div>
+    }
     <div class="bm-portfolio-single-10__overlap">
       <div class="bm-portfolio-single-media-2col">
         {image && image.src &&         <div>
@@ -86,17 +97,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {image && image.src && <figure class="bm-contact-widget-10__background-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
     {links.length > 0 &&     <div class="bm-portfolio-single-10__footer-container">
-      {links.length > 0 &&       <div class="bm-portfolio-8-related-list">
-        {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+      {links.length > 0 && <div class="bm-portfolio-8-related-list">
+        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="bm-portfolio-8-related-card card">
               <div class="bm-portfolio-8-related-card__content">
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
     }
   </div>

@@ -52,6 +52,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 ---
 
 <div>
+  <div class={image && image.src ? 'split' : undefined}>
+    <div class="stack">
   <div class="sec-inner">
     <div class="bm-conparison-1__container">
       <div class="intro">
@@ -59,48 +61,34 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      <div class="bm-conparison-1-list">
-        <div class="bm-conparison-1-card">
-          {image && image.src &&           <div>
-            {image && image.src && <figure class="bm-conparison-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-          }
-          {list.length > 0 &&           <div class="bm-list">
-            {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-list-item card">
-                  <div class="bm-list-item__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                  <p class="text-fluid-0">{it.text}</p>
-                </div>
-              ))}</div>}
-          </div>
-          }
-        </div>
-        <div class="bm-conparison-1-card">
-          {image && image.src &&           <div>
-            {image && image.src && <figure class="bm-conparison-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-          }
-          {links.length > 0 &&           <div class="bm-list">
-            {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <div class="bm-list-item card">
-                  <div class="bm-list-item__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                  <p class="text-fluid-0">{it.text}</p>
-                </div>
-              ))}</div>}
-          </div>
-          }
-        </div>
-      </div>
+      {list.length > 0 && <div class="bm-conparison-1-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <div class="bm-conparison-1-card card">
+              <div class="bm-conparison-status">
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              {(it.items || []).length > 0 && <div class="bm-list">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    <div class="bm-list-item card">
+                      <div class="bm-list-item__icon-wrapper">
+                        {it2.icon && <IconChip name={it2.icon} />}
+                      </div>
+                      <p class="text-fluid-0">{it2.text}</p>
+                    </div>
+                  ))}</div>
+              </div>}
+            </div>
+          ))}</div>
+      </div>}
       <div class="bm-conparison-1__footer">
         <div class="cta-combo">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
     </div>
+  </div>
+    </div>
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}

@@ -62,7 +62,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {(it.items || []).length > 0 &&                 <div class="footer-menu row between">
                   {(it.items || []).length > 0 && <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div>
-                        <a class="text-fluid-0" href={it2.href}>{it2.label || it2.anchor || it2.text}</a>
+                        <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
+                        {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
                     ))}</div>}
                 </div>
@@ -84,7 +85,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {it.icon && <IconChip name={it.icon} />}
               </div>
             ))}</div>}
-          {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
+          {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
         }
       </div>
@@ -96,26 +97,25 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     <div class="bm-footer-21__bottom-container row between">
       <div class="footer-bottom__left row between">
         <div>
-          {links.length >= 0 &&           <div class="footer-legal-nav row between">
-            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
+          {links.length > 0 && <div class="footer-legal-nav row between">
+            <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div class="footer-legal__li">
-                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-              ))}</div>}
-            {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
-          </div>
-          }
+              ))}</div>
+          </div>}
+          {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
       </div>
-      {links.length >= 0 &&       <div class="bm-social-share bm-social-share--left row between">
-        {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
+      {links.length > 0 && <div class="bm-social-share bm-social-share--left row between">
+        <div class="row gap-fluid-m">{(links || []).map((it) => (
             <div>
               {it.icon && <IconChip name={it.icon} />}
             </div>
-          ))}</div>}
-        {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
-      </div>
-      }
+          ))}</div>
+      </div>}
+      {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}

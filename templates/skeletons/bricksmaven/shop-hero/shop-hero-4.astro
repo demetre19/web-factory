@@ -57,64 +57,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       <div class="shop-hero-4__navigation">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         <div>
-          <div class="shop-hero-4__nav-items">
-            <div>
-              <div class="shop-hero-4__nav-content">
-                {list.length > 0 &&                 <div>
-                  {list.length > 0 &&                   <div class="shop-hero-4__nav-dropdown-list">
-                    {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                        <div class="card">
-                          <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-                {links.length > 0 &&                 <div>
-                  {links.length > 0 &&                   <div class="shop-hero-4__nav-dropdown-list">
-                    {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                        <div class="card">
-                          <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-            <div>
-              <div class="shop-hero-4__nav-content">
-                {links.length > 0 &&                 <div>
-                  {links.length > 0 &&                   <div class="shop-hero-4__nav-dropdown-list">
-                    {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                        <div class="card">
-                          <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-                {links.length > 0 &&                 <div>
-                  {links.length > 0 &&                   <div class="shop-hero-4__nav-dropdown-list">
-                    {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                        <div class="card">
-                          <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
-                        </div>
-                      ))}</div>}
-                  </div>
-                  }
-                </div>
-                }
-              </div>
-            </div>
-            {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
-              ))}</div>}
-            <div></div>
-          </div>
+          {list.length > 0 && <div class="shop-hero-4__nav-items">
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+                <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
+              ))}</div>
+          </div>}
           <div></div>
         </div>
       </div>
@@ -132,14 +80,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
     </div>
-    {image && image.src &&     <div>
-      {image && image.src &&       <div class="shop-hero-4-category-list">
-        {image && image.src &&         <div class="shop-hero-4-category-card grid-auto gap-fluid-l">
-          {image && image.src && <figure class="shop-hero-4-category-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-        </div>
-        }
-      </div>
-      }
+    {links.length > 0 &&     <div>
+      {links.length > 0 && <div class="shop-hero-4-category-list">
+        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            <div class="shop-hero-4-category-card card">
+              <div class="shop-hero-4-category-card__content">
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              </div>
+            </div>
+          ))}</div>
+      </div>}
     </div>
     }
   </div>

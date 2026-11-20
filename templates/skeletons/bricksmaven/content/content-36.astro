@@ -52,6 +52,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 ---
 
 <div>
+  <div class={image && image.src ? 'split' : undefined}>
+    <div class="stack">
   <div class="sec-inner">
     <div class="content-36__container">
       <div class="intro intro--split">
@@ -64,25 +66,22 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      <div class="content-36__2col-wrapper">
-        {image && image.src &&         <div class="content-36-card">
-          {image && image.src &&           <div>
-            {image && image.src && <figure class="content-36-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-          }
-        </div>
-        }
-        {image && image.src &&         <div class="content-36-card">
-          {image && image.src &&           <div>
-            {image && image.src && <figure class="content-36-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-          }
-        </div>
-        }
-      </div>
+      {list.length > 0 && <div class="content-36__2col-wrapper">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <div class="content-36-card card">
+              <div class="content-36-card__intro">
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            </div>
+          ))}</div>
+      </div>}
     </div>
   </div>
-  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
+    </div>
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
+  </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
   {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}

@@ -65,19 +65,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         <form class="bm-form-widget bm-form-widget--width" novalidate>
         </form>
       </div>
-      {links.length > 0 &&       <div class="bm-testimonial-40-list bm-testimonial-40-list--alt">
-        {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+      {links.length > 0 && <div class="bm-testimonial-40-list bm-testimonial-40-list--alt">
+        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="bm-testimonial-40-card card">
               <div class="bm-testimonial-40-card__content">
                 <div class="bm-testimonial-40-card__top">
-                  {(it.items || []).length > 0 &&                   <div class="bm-testimonial-38-star-list">
-                    {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
+                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
                           {it2.icon && <IconChip name={it2.icon} />}
                         </div>
-                      ))}</div>}
-                  </div>
-                  }
+                      ))}</div>
+                  </div>}
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="bm-testimonial-40-card__client">
@@ -86,9 +85,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

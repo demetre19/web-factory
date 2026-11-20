@@ -74,7 +74,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       {it.icon && <IconChip name={it.icon} />}
                     </div>
                   </div>
-                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
             ))}</div>}

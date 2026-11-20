@@ -65,16 +65,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
       <div class="bm-logo-12-carousel">
-        <div class="bm-logo-12-track">
-          <div>
-            <svg></svg>
-          </div>
-        </div>
-        <div class="bm-logo-12-track">
-          <div>
-            <svg></svg>
-          </div>
-        </div>
+        {links.length > 0 && <div class="bm-logo-12-track">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <svg></svg>
+              </div>
+            ))}</div>
+        </div>}
+        {links.length > 0 && <div class="bm-logo-12-track">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <svg></svg>
+              </div>
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

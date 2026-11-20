@@ -57,22 +57,20 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         <div class="counter-1-box">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
-        <div class="counter-1-grid-ul">
-          <div class="counter-1-card">
-            <div class="counter-1-card__intro">
-              <span></span>
-            </div>
-          </div>
-          <div class="counter-1-card">
-            <div class="counter-1-card__intro">
-              <span></span>
-            </div>
-          </div>
-        </div>
+        {list.length > 0 && <div class="counter-1-grid-ul">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <div class="counter-1-card card">
+                <div class="counter-1-card__intro">
+                  {it.icon && <IconChip name={it.icon} />}
+                  <span>{it.stat || it.term || it.title}</span>
+                </div>
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>
-  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
   {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}

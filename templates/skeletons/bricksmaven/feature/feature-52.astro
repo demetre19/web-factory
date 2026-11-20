@@ -77,15 +77,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <div class="bm-feature-52-card__inner">
                   <div class="bm-feature-52-card__content">
                     <p class="text-fluid-0">{it.text}</p>
-                    {(it.items || []).length > 0 &&                     <div>
-                      {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    {(it.items || []).length > 0 && <div>
+                      <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                           <div class="bm-link-list-item card">
                             <p class="text-fluid-0">{it2.text}</p>
                             {it2.icon && <IconChip name={it2.icon} />}
                           </div>
-                        ))}</div>}
-                    </div>
-                    }
+                        ))}</div>
+                    </div>}
                   </div>
                 </div>
               </div>

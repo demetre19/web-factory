@@ -64,14 +64,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
               <div class="bm-how-it-works-28-card__deliverables-wrapper">
                 <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                {(it.items || []).length > 0 &&                 <div class="bm-how-it-works-28-card-deliverables-list">
-                  {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                {(it.items || []).length > 0 && <div class="bm-how-it-works-28-card-deliverables-list">
+                  <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
-                    ))}</div>}
-                </div>
-                }
+                    ))}</div>
+                </div>}
               </div>
             </div>
           ))}</div>}
@@ -81,8 +80,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        {links.length > 0 &&         <div class="bm-how-it-works-28-nav">
-          {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+        {links.length > 0 && <div class="bm-how-it-works-28-nav">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="bm-how-it-works-28-nav-item card">
                 <div></div>
                 <div class="bm-how-it-works-28-nav-item__content">
@@ -92,9 +91,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   </div>
                 </div>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
     </div>
     <div></div>

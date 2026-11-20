@@ -54,8 +54,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        {list.length > 0 &&         <div class="timeline-1-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="timeline-1-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="timeline-1-card card">
                 <div class="timeline-1-card__line-wrapper">
                   <div class="timeline-1-card__circle"></div>
@@ -66,9 +66,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

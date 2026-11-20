@@ -77,17 +77,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             </div>
             <div></div>
             <div></div>
-            {links.length > 0 &&             <div class="bm-product-single-usp-1">
-              {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            {links.length > 0 && <div class="bm-product-single-usp-1">
+              <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="bm-product-single-usp-1-list-item card">
                     <div>
                       {it.icon && <IconChip name={it.icon} />}
                     </div>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
-                ))}</div>}
-            </div>
-            }
+                ))}</div>
+            </div>}
             <div class="bm-product-single__product-meta"></div>
           </div>
         </div>

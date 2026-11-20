@@ -61,8 +61,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      <div class="grid-30-list">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="grid-30-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="grid-30-card card">
               <div class="grid-30-card__content">
                 <div class="grid-30-card__top">
@@ -71,11 +71,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               <div></div>
             </div>
-          ))}</div>}
-        <div class="grid-30-cta-card">
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-        </div>
-      </div>
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>
