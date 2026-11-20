@@ -123,6 +123,51 @@ def strip_md(s):
     return s.replace('**', '').strip()
 
 
+def _term_items(b):
+    """Stub-declared **Terms:** found inside the block's prose →
+    {term, text} pairs (I.4: a card/index row on real items, never a
+    re-cut paragraph). term = the declared term; text = the verbatim
+    clause tail AFTER the term's first case-insensitive hit — the card
+    elaborates, the paragraph (which still renders) keeps the lead-in.
+    Returns [] when nothing projectable."""
+    terms = b.get('terms') or []
+    if not terms or (b.get('items') or b.get('qa') or b.get('links')):
+        return []
+    prose = strip_md(' '.join((b.get('before') or []) +
+                              (b.get('after') or [])))
+    if not prose:
+        return []
+    clauses = [c.strip(' \t–—-') for c in
+               re.split(r'[;.]\s+|\s+–\s+|\s+—\s+', prose) if c.strip()]
+    out, used = [], set()
+    # longest term first so 'visit frequency' beats 'frequency'
+    for t in sorted(terms, key=len, reverse=True):
+        tl = t.lower()
+        for c in clauses:
+            if c in used:
+                continue
+            m = re.search(r'\b' + re.escape(tl) + r'\b', c, re.I)
+            if not m:
+                continue
+            rest = c[m.end():].strip(' \t–—-:,').strip()
+            if not rest or len(rest) < 8:
+                continue           # a bare term is no card
+            used.add(c)
+            it = {'term': t[:1].upper() + t[1:], 'text': rest}
+            try:
+                import copy_ingest as CI  # same icon table — one map
+                ic = CI._icon(t, rest)
+                if ic:
+                    it['icon'] = ic
+            except Exception:
+                pass
+            out.append(it)
+            break
+        if len(out) >= 4:
+            break                  # a band, not a wall
+    return out
+
+
 def shape(b, has_media):
     """Copy shape → [default composition, allowed alternates…] (I.4).
     The rule reads only the block's own copy."""
@@ -140,9 +185,19 @@ def shape(b, has_media):
         return ['cards-n', 'editorial', 'text-index']
     if n_items:
         return ['editorial', 'cards-n']
-    # prose-only answer
-    return ['editorial'] if prose <= 1 else ['editorial', 'split-media'] \
-        if has_media else ['editorial']
+    # prose-only answer — declared terms still give it honest item
+    # alternates (the term list is copy, not invention): a run of
+    # prose columns on a service page diversifies to index/cards,
+    # never a third identical column (rhythm gate)
+    base = ['editorial']
+    if has_media:
+        base.append('split-media')
+    n_terms = len(_term_items(b))
+    if n_terms >= 3:
+        base += ['cards-n', 'text-index']
+    elif n_terms >= 2:
+        base.append('text-index')
+    return base
 
 
 def cols_for(n):
@@ -382,8 +437,15 @@ def build(pdir, option=None):
             intent=intent_of(b),
             zone=b['zone'], content_ids=[f'c-{bid}'], copy_ref=bid,
             vector=[{'heading': b['h2'], 'fs': strip_md(b['answer'])}])
-        if comp == 'cards-n':
-            row['columns'] = cols_for(len(b['items']))
+        if comp in ('cards-n', 'text-index'):
+            # a term-derived items row (shape() allowed it) — project
+            # declared terms → items when the block has none of its own
+            proj = _term_items(b) if not b['items'] else []
+            if proj:
+                row['items'] = proj
+                row['columns'] = cols_for(len(proj))
+            elif comp == 'cards-n':
+                row['columns'] = cols_for(len(b['items']))
         if comp == 'split-media' and media_left:
             m = media_left.pop(0)
             row['image'] = {'src': m['src'], 'alt': m['alt']}
