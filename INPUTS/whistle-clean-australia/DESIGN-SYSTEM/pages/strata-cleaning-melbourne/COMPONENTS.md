@@ -1,5 +1,4 @@
 # COMPONENTS
-editorial → editorial.astro
 faq → faq.astro
 footer-bar → footer-bar.astro
 form-panel → form-panel.astro

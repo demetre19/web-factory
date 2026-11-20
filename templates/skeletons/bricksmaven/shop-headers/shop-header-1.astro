@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -54,7 +53,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div>
-        <div></div>
+        {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
+        {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
       <div class="bm-shop-header-1__end">
         <div class="bm-shop-header-1__login-wrapper">
@@ -67,7 +67,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
     </div>
   </div>
-  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
   {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}

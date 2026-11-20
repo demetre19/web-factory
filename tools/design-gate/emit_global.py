@@ -249,6 +249,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    background: var(--action-primary);
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
+                   white-space: nowrap;
                    min-height: var(--tap); }
   /* burger IS the mobile nav: visible below the nav breakpoint,
      hidden where .nav-links flows inline (R.1 mobile-first) */

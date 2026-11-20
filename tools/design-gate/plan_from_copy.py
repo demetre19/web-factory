@@ -447,13 +447,22 @@ def build(pdir, option=None):
     tel = 'tel:' + re.sub(r'[^\d+]', '', phone)
     hub = next((l for l in copy['links_out'] if 'hub' in l.get('zone', '')),
                None)
+    nav_items = ([{'label': hub['anchor'], 'href': hub['href']}]
+                 if hub else [])
+    for l in copy['links_out']:
+        # the nav menu leads with the hub then the first out-links —
+        # a one-item menu is no menu (PS.7: the links are sourced
+        # chrome, never invented)
+        if l is hub or len(nav_items) >= 4:
+            continue
+        nav_items.append({'label': l['anchor'], 'href': l['href']})
+    hero_cta = (copy.get('closing') or {}).get('cta')
     rows.append(base_row(
         'nav', 'nav-bar', speech_act=['chrome'], category='headers',
         surface='base', density='compact', emphasis='nav',
         align='center-axis', stack='text-first', collapse='wrap',
         media_ratio='none', disclosure='open', intent='chrome',
-        items=([{'label': hub['anchor'], 'href': hub['href']}]
-               if hub else []),
+        items=nav_items,
         cta={'label': phone, 'href': tel}))
     rows.append(base_row(
         'hero', hero_comp, speech_act=['promise'], category='hero',
@@ -461,7 +470,8 @@ def build(pdir, option=None):
         align='center-axis', stack='text-first', collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
         content_ids=['c-h1'], copy_ref='lede',
-        vector=[{'heading': copy['h1'], 'fs': strip_md(copy['lede'])}]))
+        vector=[{'heading': copy['h1'], 'fs': strip_md(copy['lede'])}],
+        **({'cta': hero_cta} if hero_cta else {})))
     comps = chosen['compositions']
     seq = [(b['id'], comps[b['id']]) for b in blocks]
     surfaces = ['muted', 'base']

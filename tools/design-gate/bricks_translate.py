@@ -570,7 +570,34 @@ def translate(payload, stem):
                     f'{pad}{{({ivar}.label || {ivar}.term || '
                     f'{ivar}.anchor) && {ivar}.text && '
                     f'<p class="text-fluid-0">{{{ivar}.text}}</p>}}\n')
+        if name == 'nav-menu':
+            # a wp nav-menu placeholder binds the plan's nav links —
+            # .nav-links/.burger carry the machinery's mobile-nav
+            # contract (hidden under the nav breakpoint, toggled by
+            # the BaseLayout click handler; the wireframe menu id is
+            # chrome, never copy)
+            if not seen.get('top_list'):
+                seen['top_list'] = True
+            ncls = (c + ' nav-links') if c else 'nav-links'
+            return (f'{pad}{{list.length > 0 && <nav class="{ncls}" '
+                    f'aria-label="Primary"><ul class="row gap-fluid-m '
+                    f'list-plain">'
+                    f'{{(list || []).map((it) => <li>'
+                    f'<a class="nav-link" href={{it.href}}>'
+                    f'{{it.label || it.term || it.title || it.text}}</a>'
+                    f'</li>)}}</ul></nav>}}\n'
+                    f'{pad}{{list.length > 0 && <button class="burger '
+                    f'wf-cta-button" type="button" aria-label="Menu">'
+                    f'Menu</button>}}\n')
         if name == 'text-link' and not ivar:
+            # a header's lone text-link IS the nav CTA slot (PS.7's
+            # one primary action); elsewhere the wireframe label is
+            # copy the plan supplies — the slot emits nothing
+            if cat == 'header':
+                return (f'{pad}{{act.label && <p class="mt-fluid-m">'
+                        f'<a class="wf-cta-button nav-cta" '
+                        f'href={{act.href}}>'
+                        f'{{act.label}}</a></p>}}\n')
             return ''
         if name in ('heading', 'text-basic', 'text'):
             raw = re.sub(r'</?(?:div|br|p)[^>]*>', ' ',
@@ -787,7 +814,8 @@ def translate(payload, stem):
                  '{list.map((it) => <div class="flow-row">'
                  '{it.icon && <IconChip name={it.icon} />}'
                  '<dt class="text-fluid-0" '
-                 'set:html={inline(it.term || it.title || \'\')} />'
+                 'set:html={inline(it.term || it.title || it.label '
+                 '|| \'\')} />'
                  '{it.text && <dd class="text-fluid-0" '
                  'set:html={inline(it.text)} />}'
                  '</div>)}</dl>}\n')

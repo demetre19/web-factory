@@ -63,7 +63,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {image && image.src && <figure class="content-23__background-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
   </div>
-  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
+  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
   {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
   {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}

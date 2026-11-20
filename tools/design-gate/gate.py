@@ -9119,6 +9119,17 @@ def _corpus_texts(ctx, cp):
     """Everything page text may legitimately say: COPY + STUB tables +
     plan vectors + BRIEF chrome strings."""
     out = list(_copy_texts(cp))
+    # declared terms are allowed copy too — verbatim article words
+    # extracted by copy_ingest; renderable (term-items projection)
+    # though never required, so they join the corpus, not _copy_texts
+    for b in cp.get('blocks') or []:
+        for t in b.get('terms') or []:
+            for s in (t, t[:1].upper() + t[1:]):
+                # term-items projection sentence-cases the term —
+                # both its raw and its displayed surface are sourced
+                s = _norm_text(_strip_inline_md(s))
+                if len(s) >= 4:
+                    out.append(s)
     for v in ctx.stub_vector() or []:
         for k in ('heading', 'fs', 'h1'):
             t = _norm_text(_strip_inline_md(v.get(k)))
