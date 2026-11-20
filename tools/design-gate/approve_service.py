@@ -52,6 +52,13 @@ import gate as G
 ORDER = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
 VERSION = 'wf-approve-service-v2'
 PORT = 4173
+def _code_sha():
+    """First 12 of this file's sha256 — the pick surface reports it in
+    /health so the pipeline can tell a stale daemon (pre-edit code
+    still bound to the port) from the current build."""
+    return hashlib.sha256(
+        open(os.path.abspath(__file__), 'rb').read()).hexdigest()[:12]
+
 
 # the file the picker page is rendered from, per wave/kind
 _PICKER_FILES = {
@@ -578,7 +585,10 @@ def _handler():
                 self._send(404, {'error': 'not found'})
                 return
             if self.path == '/health':
-                self._send(200, {'svc': VERSION, 'ok': True})
+                # svc tag + source sha — a stale build still bound to
+                # the port fails the sha check and gets restarted
+                self._send(200, {'svc': VERSION, 'ok': True,
+                                 'sha': _code_sha()})
                 return
             if self.path == '/page-token':
                 self._send(200, {'token': _page_token()})

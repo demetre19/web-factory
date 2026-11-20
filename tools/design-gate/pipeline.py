@@ -328,31 +328,53 @@ def _gate(d, wave, design, env):
 PICK_PORT = int(os.environ.get('WF_PICK_PORT', '4173'))
 
 
-def _svc_health(port=PICK_PORT):
-    """True iff the CURRENT pick surface answers — an older service
-    (or anything else on the port) is not ours."""
+def _svc_state(port=PICK_PORT):
+    """'current' | 'stale' | 'foreign' | 'down' — a same-tag service
+    whose /health sha differs from the source file on disk is a
+    STALE build: it answers, so nothing else can bind the port, but
+    it serves pre-edit routes (this is how an old pick surface kept
+    404ing /built iframes)."""
     import urllib.request
     try:
         d = json.load(urllib.request.urlopen(
             f'http://127.0.0.1:{port}/health', timeout=2))
-        # a foreign listener or a pre-rewrite service has no svc tag
-        return bool(d.get('ok')) and \
-            d.get('svc') == 'wf-approve-service-v2'
     except Exception:
-        return False
+        return 'down'
+    if not (d.get('ok') and d.get('svc') == 'wf-approve-service-v2'):
+        return 'foreign'
+    src = os.path.join(HERE, 'approve_service.py')
+    cur = hashlib.sha256(open(src, 'rb').read()).hexdigest()[:12]
+    return 'current' if d.get('sha') == cur else 'stale'
 
 
 def _ensure_service(port=PICK_PORT):
-    """Start approve_service detached if the pick surface is down."""
-    if _svc_health(port):
+    """Start approve_service detached if the pick surface is down or
+    stale — the stale build is killed first or it holds the port."""
+    st = _svc_state(port)
+    if st == 'current':
         return True
+    if st in ('stale', 'foreign'):
+        try:                      # free the port for the real build
+            pids = subprocess.run(
+                ['lsof', '-t', f'-iTCP:{port}', '-sTCP:LISTEN'],
+                capture_output=True, text=True, timeout=5).stdout
+            for pid in pids.split():
+                try:
+                    os.kill(int(pid), 15)
+                except (ValueError, ProcessLookupError,
+                        PermissionError):
+                    pass
+            import time
+            time.sleep(0.4)
+        except Exception:
+            return False
     subprocess.Popen(
         [PY, T('approve_service.py'), 'serve', '--port', str(port)],
         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL, start_new_session=True)
     import time
     for _ in range(40):                 # ~4 s for the key + bind
-        if _svc_health(port):
+        if _svc_state(port) == 'current':
             return True
         time.sleep(0.1)
     return False
