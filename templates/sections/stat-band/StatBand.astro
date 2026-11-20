@@ -3,37 +3,68 @@
  * stat-band — gold exemplar (SB.5). A row of headline figures: icon
  * chip when the item names one, the value at display size, the label
  * small. Renders inside Section.astro (SB.2).
+ *
+ * Full-copy slots (§4.3): heading → answer → before → stat row →
+ * links → after in article order (F.1). A block with no stat items
+ * still renders its full copy — the band appears only when figures
+ * exist (F.2: no invented numbers).
  */
-import { iconFor } from '../_shared/inline';
+import { iconFor, inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
+  items?: { term?: string; title?: string; text?: string; value?: string;
              label?: string; href?: string; quote?: string;
              icon?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
+  copy?: CopySlot;
 }
 const {
   heading = 'Section heading', fs = '',
-  body = '', cta, items = [], image, h1,
+  body = '', cta, items = [], image, h1, copy,
 } = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs || body;
+const before = cp.before || [];
+const links = (cp.links && cp.links.length)
+  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
+  : [];
+const list = (cp.items && cp.items.length) ? cp.items : items;
+const stats = list.filter((it) => it.value);
+const after = cp.after || [];
 ---
 
 <div>
-  {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
-  <dl class="mt-stack grid-auto gap-stack">
-    {items.map((it) => {
-      const Icon = iconFor(it.icon);
-      return (
-      <div>
-        {Icon && <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
-        <dd class="text-fluid-4 font-bold">{it.value}</dd>
-        <dt class="mt-fluid-s text-fluid--1">{it.label}</dt>
-      </div>
-      );
-    })}
-  </dl>
+  {h1 ? <h1 class="text-fluid-3">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
+  {before.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+  {stats.length > 0 && (
+    <dl class="mt-stack grid-auto gap-stack">
+      {stats.map((it) => {
+        const Icon = iconFor(it.icon);
+        return (
+        <div>
+          {Icon && <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
+          <dd class="text-fluid-4 font-bold">{it.value}</dd>
+          <dt class="mt-fluid-s text-fluid--1" set:html={inline(it.label)} />
+        </div>
+        );
+      })}
+    </dl>
+  )}
+  {links.length > 0 && (
+    <ul class="mt-stack grid-auto list-plain text-fluid-0">
+      {links.map((t) => <li set:html={inline(t)} />)}
+    </ul>
+  )}
+  {after.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
 </div>

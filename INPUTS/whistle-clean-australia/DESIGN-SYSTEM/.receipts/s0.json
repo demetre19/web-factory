@@ -1,0 +1,42 @@
+{
+ "steps": [
+  {
+   "label": "discovery",
+   "argv": [
+    "/usr/bin/python3.12",
+    "discovery.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM",
+    "--offline"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/BRIEF.yaml": "0be89fb2f5b713bf"
+   },
+   "outputs": {
+    "DISCOVERY.json": "7c592ea68f06faf4",
+    "DISCOVERY.md": "7e7a1f9c61a86b4b"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T14:13:58"
+  },
+  {
+   "label": "dna from discovery",
+   "argv": [
+    "/usr/bin/python3.12",
+    "dna_from_discovery.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM",
+    "--offline"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/DISCOVERY.json": "7c592ea68f06faf4",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/BRIEF.yaml": "0be89fb2f5b713bf"
+   },
+   "outputs": {
+    "DNA.json": "789bedf827f47e9d",
+    "TOKENS.json": "4dd0a7ea858a3159",
+    "DESIGN-SYSTEM.md": "c08404ba561880f7"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T14:13:58"
+  }
+ ]
+}

@@ -50,6 +50,8 @@ RECIPE = {
 }
 
 # composition → (speech act, emphasis, align, collapse)
+# acts stay inside COMP_FOR_ACT (gate §2): stat-band/proof-band can
+# only argue 'proof'; comparison only 'objection'/'detail'.
 ROLE = {
     'editorial': ('detail', 'answer', 'col-1-edge', 'stacked'),
     'cards-n': ('detail', 'items', 'col-1-edge', '1-col'),
@@ -58,7 +60,45 @@ ROLE = {
     'faq': ('objection', 'reassurance', 'col-1-edge', '1-col'),
     'split-media': ('detail', 'media', 'col-1-edge', 'stacked'),
     'link-grid': ('detail', 'links', 'col-1-edge', '1-col'),
+    'comparison': ('detail', 'items', 'col-1-edge', '1-col'),
+    'stat-band': ('proof', 'items', 'col-1-edge', '1-col'),
+    'proof-band': ('proof', 'proof', 'col-1-edge', '1-col'),
+    'quote-grid': ('proof', 'items', 'col-1-edge', '1-col'),
 }
+
+# prose-only block → intent-fit compositions (§3 rhythm: a run of
+# >2 'editorial' rows is a scan-fail, so a prose block's allowed set
+# diversifies by what it argues — a cost answer compares, a cadence
+# numbers, a coverage indexes, a proof quotes).
+INTENT_COMP = {
+    'cost': ['comparison', 'stat-band', 'text-index'],
+    'duration': ['stat-band', 'text-index'],
+    'coverage': ['link-grid', 'cards-n', 'text-index'],
+    'proof': ['proof-band', 'quote-grid', 'text-index'],
+}
+
+# CONTENT/<collection>/<slug>.md → PS page type (J.6 picks the layout
+# family from it). A services stub is a service page on the
+# conversion family; a guides stub stays a guide.
+COLL_TYPE = {
+    'cleaning-services': 'service-page', 'services': 'service-page',
+    'service-pages': 'service-page', 'near-me': 'near-me',
+    'locations': 'near-me', 'guides': 'guide', 'guide': 'guide',
+    'articles': 'guide', 'hubs': 'hub', 'hub': 'hub',
+}
+
+
+def page_type_of(copy):
+    src = str(((copy.get('source') or {}).get('stub') or {})
+              .get('path') or '')
+    m = re.search(r'/CONTENT/([^/]+)/', src)
+    coll = (m.group(1).lower() if m else '')
+    if coll in COLL_TYPE:
+        return COLL_TYPE[coll]
+    if coll:
+        sys.exit(f'plan_from_copy: CONTENT collection "{coll}" has no '
+                 'page-type mapping — extend COLL_TYPE (BLOCKED)')
+    return 'guide'
 
 # stub answer type (tail after '·') → PS.11 closed section intent.
 # An ordered list is a process whatever its answer type says.
@@ -103,12 +143,22 @@ def intent_of(b):
     if b.get('list_ordered'):
         return 'process'
     tail = ' '.join(b['answer_type'].split('·')[-1].lower().split())
-    for intent, keys in INTENT_SCAN:
+    intent = None
+    for i2, keys in INTENT_SCAN:
         if any(k in tail for k in keys):
-            return intent
-    sys.exit(f'plan_from_copy: block {b["id"]} answer type '
-             f'"{b["answer_type"]}" has no PS.11 intent mapping — '
-             'extend INTENT_SCAN (BLOCKED)')
+            intent = i2
+            break
+    if intent is None:
+        sys.exit(f'plan_from_copy: block {b["id"]} answer type '
+                 f'"{b["answer_type"]}" has no PS.11 intent mapping — '
+                 'extend INTENT_SCAN (BLOCKED)')
+    # a heading that asks price/cost argues cost whatever mechanism
+    # tail the stub chose ("How is X priced?" → cost, not process).
+    if intent in ('process', 'definition', 'scope') and re.search(
+            r'\b(priced?|costs?|rates?|fares?|fees?|charges?|quotes?)\b',
+            b['h2'], re.I):
+        return 'cost'
+    return intent
 
 
 HERO_FOR_ARCH = {'stacked-center': 'stacked-hero',
@@ -185,19 +235,21 @@ def shape(b, has_media):
         return ['cards-n', 'editorial', 'text-index']
     if n_items:
         return ['editorial', 'cards-n']
-    # prose-only answer — declared terms still give it honest item
-    # alternates (the term list is copy, not invention): a run of
-    # prose columns on a service page diversifies to index/cards,
-    # never a third identical column (rhythm gate)
-    base = ['editorial']
-    if has_media:
-        base.append('split-media')
+    # prose-only answer — the default comp is intent-fit, 'editorial'
+    # stays the always-safe alternate (I.4); declared terms still give
+    # honest item alternates (the term list is copy, not invention):
+    # a run of prose columns on a service page diversifies to
+    # index/cards, never a third identical column (rhythm gate)
+    out = list(dict.fromkeys(
+        INTENT_COMP.get(intent_of(b), ['editorial']) + ['editorial']))
     n_terms = len(_term_items(b))
     if n_terms >= 3:
-        base += ['cards-n', 'text-index']
+        out += ['cards-n', 'text-index']
     elif n_terms >= 2:
-        base.append('text-index')
-    return base
+        out.append('text-index')
+    if has_media and 'split-media' not in out and prose > 1:
+        out.append('split-media')
+    return out
 
 
 def cols_for(n):
@@ -552,8 +604,9 @@ def build(pdir, option=None):
                      'label': o['label'], 'score': o['score']}
                     for o in table],
         'pages': {slug: {
-            'page_class': 'info', 'page_type': 'guide',
-            'type': 'guide', 'layout_family': 'editorial',
+            'page_class': 'info', 'page_type': (pt := page_type_of(copy)),
+            'type': pt, 'layout_family': gate.PAGE_FAMILIES.get(pt,
+                                                              'editorial'),
             'rhetoric': rhetoric, 'sections': rows}},
     }
     copy_sha = SF.sha(copy_p)

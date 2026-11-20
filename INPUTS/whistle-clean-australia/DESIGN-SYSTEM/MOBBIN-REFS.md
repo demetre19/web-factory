@@ -68,3 +68,21 @@
 | mobbin-cbfc7106-bf76-4acd-8a7c-651354ad513b | section | guide · link-grid · Maze related articles: plain vertical link list under small heading | w3 |
 | mobbin-d6ac29a1-61dc-4593-b43b-1eaddeffd342 | section | guide · link-grid · Employment Hero "You may also be interested in": 2 image cards + arrow link | w3 |
 | mobbin-769865a2-4c59-4286-8d0a-ac85deaace68 | section | guide · link-grid · ignored — IFTTT dense 4-col directory, too busy | w3 |
+| mobbin-local-screen-3 | screen | service-page · split-media · alternating text/media rows sell each service feature | w1 |
+| mobbin-local-screen-2 | screen | service-page · split-media · headline left, collage media right | w1 |
+| mobbin-local-screen-0 | screen | service-page · split-media · photo hero with overlaid service finder | w1 |
+| mobbin-local-screen-1 | screen | service-page · stat-band · venue/professional count chips under search | w1 |
+| mobbin-local-screen-4 | screen | service-page · stat-band · single "91% of customers" figure mid-page | w1 |
+| mobbin-local-screen-6 | screen | service-page · stat-band · per-star count bars beside the rating | w1 |
+| mobbin-local-screen-6 | screen | service-page · comparison · 30/60-minute radio price options compared | w1 |
+| mobbin-local-screen-3 | screen | service-page · comparison · $500 listing card next to feature copy | w1 |
+| mobbin-local-screen-4 | screen | service-page · comparison · plan pitch beside hero copy | w1 |
+| mobbin-local-screen-6 | screen | service-page · proof-band · 4.8 rating with count leads the review list | w1 |
+| mobbin-local-screen-4 | screen | service-page · proof-band · "91% of our customers feel healthier" evidence line | w1 |
+| mobbin-local-screen-1 | screen | service-page · proof-band · "7.5k+ professionals" trust chip row | w1 |
+| mobbin-local-screen-0 | screen | service-page · link-grid · care-category cards each carrying a link | w1 |
+| mobbin-local-screen-1 | screen | service-page · link-grid · icon treatment list with per-row links | w1 |
+| mobbin-local-screen-3 | screen | service-page · link-grid · "Make your skills discoverable" link in feature text | w1 |
+| mobbin-local-screen-4 | screen | service-page · editorial · centered "Whatever your week looks like" paragraph block | w1 |
+| mobbin-local-screen-3 | screen | service-page · editorial · "Get found by buyers" headline + body copy | w1 |
+| mobbin-local-screen-6 | screen | service-page · editorial · review prose with left-aligned body text | w1 |

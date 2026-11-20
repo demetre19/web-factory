@@ -8,45 +8,39 @@
       "wave": "w1"
     },
     "COPY.json": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
-      "sha256": "31d01cdb627329d7ce2f4e565fc0f5f7a3398b3624f1519d10d6be1ff9551346",
-      "sig": "09933166edc609b351bb38eccfec00bd",
+      "sha256": "c128f394bea4e28033342a1a84bb17fa0a577f187337a6ba6829ebd12fbc018d",
       "wave": "w0"
     },
     "DESIGN-PLAN.md": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
-      "sha256": "586bef92023ca7de5196bfe37b15850619cc3318a8b79f38e9ad34e340671674",
-      "sig": "03780e4a6801d99194c179e4066e73bc",
+      "sha256": "a4c7a058a4b2975f3adf4268e0af4569c05fdfc4c335e6ed5874ae50cdec9972",
       "wave": "w0"
     },
     "DNA.json": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
-      "sha256": "e22ab9760d694b0ebb99d3ae1604e7a66c53d66b5c808a9c9f9ee6575dcc2240",
-      "sig": "4f70c8ec198a506e738ff887c50088a3",
+      "sha256": "5f9f62d170404764c99ad78af8906a806862222335f06a6925636be24178366b",
       "wave": "w0"
     },
     "LAYOUT-OPTIONS.json": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
-      "sha256": "d69b1468e68078b60848625fa16565c01822ff075e2b6b1a463371f64a59da95",
-      "sig": "e8a3e0a253eb13b5d2bfb171ca2eee95",
+      "sha256": "e3ac7f26931999b2fe281df84e3f85b1fd0a9f5a1faf2c7f90017718f436b138",
       "wave": "w0"
     },
     "STUB.md": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
-      "sha256": "c8fae5b27c89d0cfe9e9d18f41a50b141bd644545e02ffbe7545bc792e516386",
-      "sig": "b57d9c1c9192266e00d4d3d41a0f78d6",
+      "sha256": "c561a4cf8bd14538a02691df533e687e1bc1df5266f5a884aa3548ffdfab1f2b",
       "wave": "w0"
     },
     "TOKENS.json": {
-      "context_tokens": 5432,
+      "context_tokens": 5435,
       "gate_pass": true,
       "sha256": "4dd0a7ea858a31597fc14dcde6e9d63039f85058c775f676fd6b99a06dcfc5ff",
-      "sig": "c4b6b1e817218323a4a782c78d5296e5",
       "wave": "w0"
     },
     "preview/candidates.html": {
@@ -65,8 +59,8 @@
     },
     "failures": [],
     "inputs_files": [
-      "../../../../BLUEPRINTS/whistle-clean-australia/ARTICLES/cleaning-services/strata-cleaning-melbourne.md",
-      "../../../../BLUEPRINTS/whistle-clean-australia/CONTENT/cleaning-services/strata-cleaning-melbourne.md",
+      "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md",
+      "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md",
       "COPY.json",
       "DESIGN-PLAN.md",
       "DNA.json",
@@ -78,20 +72,20 @@
       "site/src/styles/global.css"
     ],
     "inputs_sha256": {
-      "../../../../BLUEPRINTS/whistle-clean-australia/ARTICLES/cleaning-services/strata-cleaning-melbourne.md": "a86ce5a57065a68a",
-      "../../../../BLUEPRINTS/whistle-clean-australia/CONTENT/cleaning-services/strata-cleaning-melbourne.md": "1f95c656e8fe26a1",
-      "COPY.json": "31d01cdb627329d7",
-      "DESIGN-PLAN.md": "586bef92023ca7de",
-      "DNA.json": "e22ab9760d694b0e",
-      "LAYOUT-OPTIONS.json": "d69b1468e68078b6",
-      "STUB.md": "c8fae5b27c89d0cf",
+      "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md": "a86ce5a57065a68a",
+      "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md": "1f95c656e8fe26a1",
+      "COPY.json": "c128f394bea4e280",
+      "DESIGN-PLAN.md": "a4c7a058a4b2975f",
+      "DNA.json": "5f9f62d170404764",
+      "LAYOUT-OPTIONS.json": "e3ac7f26931999b2",
+      "STUB.md": "c561a4cf8bd14538",
       "TOKENS.json": "4dd0a7ea858a3159",
       "site/astro.config.mjs": "41a825cd2f7ee30e",
       "site/package.json": "3ab373cc02b1f555",
       "site/src/styles/global.css": "4f1f1ca9696975bc"
     },
     "pass": true,
-    "ts": "2026-11-21T00:04:59"
+    "ts": "2026-11-20T14:14:03"
   },
   "w1": {
     "approved": false,
@@ -99,7 +93,9 @@
       "core": "dfec75735b32a95f",
       "structure": "348a40ded6dc2250"
     },
-    "failures": [],
+    "failures": [
+      "P.14 ~/.mobbin-oauth/refresh.sh missing \u2014 Mobbin token rotator unavailable; run the re-auth flow before consulting Mobbin"
+    ],
     "inputs_files": [
       "../../MOBBIN-REFS.md",
       "CANDIDATES.json",
@@ -110,27 +106,11 @@
     "inputs_sha256": {
       "../../MOBBIN-REFS.md": "e021d916d9062725",
       "CANDIDATES.json": "b62c11db0f9124bb",
-      "DESIGN-PLAN.md": "586bef92023ca7de",
+      "DESIGN-PLAN.md": "a4c7a058a4b2975f",
       "audit.md": null,
       "preview/candidates.html": "1d074d208a461c69"
     },
-    "pass": true,
-    "ts": "2026-11-21T00:05:01"
-  },
-  "w2": {
-    "approved": false,
-    "dna": {
-      "core": "dfec75735b32a95f",
-      "structure": "348a40ded6dc2250"
-    },
-    "failures": [],
-    "inputs_files": [
-      "STUB.md"
-    ],
-    "inputs_sha256": {
-      "STUB.md": "c8fae5b27c89d0cf"
-    },
-    "pass": true,
-    "ts": "2026-11-21T00:05:08"
+    "pass": false,
+    "ts": "2026-11-20T14:14:05"
   }
 }

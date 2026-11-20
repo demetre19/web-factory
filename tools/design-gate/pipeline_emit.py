@@ -381,9 +381,13 @@ def _toolchain(ctx):
         print(f'  ! no vendored node_modules at '
               f'{os.path.relpath(src, REPO)} — npm ci needed')
         return False
+    # macOS clonefile first (instant copy-on-write), then GNU cp -a;
+    # either way symlinks (npm .bin shims) must survive the copy.
     r = subprocess.run(['cp', '-Rc', src, dst], capture_output=True)
     if r.returncode != 0:
-        shutil.copytree(src, dst)
+        r = subprocess.run(['cp', '-a', src, dst], capture_output=True)
+    if r.returncode != 0:
+        shutil.copytree(src, dst, symlinks=True)
     return True
 
 
