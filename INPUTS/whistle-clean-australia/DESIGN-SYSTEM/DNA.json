@@ -60,9 +60,9 @@
    "surface": "#F0F3F6",
    "surface_elevated": "#E9EBEE",
    "border": "#D6D9DB",
-   "ink": "#363636",
-   "ink_muted": "#686868",
-   "inverse": "#0A322D",
+   "ink": "#273B37",
+   "ink_muted": "#556E6A",
+   "inverse": "#1F2E2C",
    "accent": "#166F64",
    "accent_foreground": "#FFFFFF"
   },
@@ -297,22 +297,22 @@
    "source": "DISCOVERY.palette.surface · live site (12 uses)"
   },
   "color.ink": {
-   "tag": "extracted",
-   "source": "DISCOVERY.palette.ink · live site body { color }"
+   "tag": "chosen",
+   "source": "C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles)"
+  },
+  "color.ink_muted": {
+   "tag": "chosen",
+   "source": "C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles)"
+  },
+  "color.inverse": {
+   "tag": "chosen",
+   "source": "C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles)"
   },
   "color.surface_elevated": {
    "tag": "chosen",
    "source": "mixed from discovered ink/surface/accent (dna_from_discovery.light_roles)"
   },
   "color.border": {
-   "tag": "chosen",
-   "source": "mixed from discovered ink/surface/accent (dna_from_discovery.light_roles)"
-  },
-  "color.ink_muted": {
-   "tag": "chosen",
-   "source": "mixed from discovered ink/surface/accent (dna_from_discovery.light_roles)"
-  },
-  "color.inverse": {
    "tag": "chosen",
    "source": "mixed from discovered ink/surface/accent (dna_from_discovery.light_roles)"
   },
@@ -353,6 +353,7 @@
     "lh-3": "unitless line-height paired with the fs-N step; ACSS sets line-height per element, the exemplar vocabulary binds it by step",
     "lh-4": "unitless line-height paired with the fs-N step; ACSS sets line-height per element, the exemplar vocabulary binds it by step",
     "lh-5": "unitless line-height paired with the fs-N step; ACSS sets line-height per element, the exemplar vocabulary binds it by step",
+    "motion-distance": "M.4 travel distance for motion.level — a transform length the motion knob sets, not a layout rung (ACSS has no motion family)",
     "grid-min": "G.5 card-floor width rung from width.inner_rung — a measure, not rhythm (ACSS grid uses fixed column counts instead)",
     "grid-floor": "per-grid local of --grid-min (data-cols cap)",
     "measure": "reading measure in ch (ACSS --content-width is the page cap; prose needs a ch cap too)",
@@ -395,7 +396,7 @@
  },
  "generated_by": "dna_from_discovery.py",
  "hashes": {
-  "core": "dfec75735b32a95f",
+  "core": "e9fdbe44338edd4c",
   "structure": "77945db23270dde3",
   "variants": "4f53cda18c2baa0c"
  }

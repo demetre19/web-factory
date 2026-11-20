@@ -242,7 +242,8 @@ def _steps(pdir, wave, build, site_dir):
              ['TOKENS.json', 'site/package.json',
               'site/astro.config.mjs', 'site/tailwind.config.js',
               'site/src/styles/global.css',
-              'site/src/_shared/inline.ts'])]
+              'site/src/_shared/inline.ts',
+              'site/src/_shared/IconChip.astro'])]
     if wave == 'w1':
         return [('candidate registry + picker',
                  [PY, T('candidates_emit.py'), pdir], [],
@@ -289,7 +290,10 @@ def _steps(pdir, wave, build, site_dir):
         return [('system sheet', asm + ['--system'],
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'TOKENS.json')],
-                 ['preview/system.html', 'site/dist/'])]
+                 ['preview/system.html', 'site/dist/']),
+                ('corpus artifacts', [PY, T('corpus_publish.py'), pdir],
+                 [os.path.join(pdir, 'DESIGN-PLAN.md')],
+                 ['SOP-CONSTANTS.json', 'CANON-PADDING.json'])]
     if wave == 'w6':
         em = [PY, T('pipeline_emit.py'), pdir]
         if build:
@@ -701,6 +705,16 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
                     continue
                 _checklist(d, wave, env)
                 projected = True
+                # the projection rewrote earlier-wave inputs — re-gate
+                # them in run order first (ORDER refuses w3 while
+                # w0/w1/w2 records are stale; same call the normal
+                # path makes before _gate)
+                blk = _regate_drifted(pdir, site_dir, wave, env)
+                if blk:
+                    print(f'{wave} BLOCKED — {blk}')
+                    if not no_stop:
+                        return 1
+                    continue
                 rc = _gate(d, wave, pick, env)
                 if rc != 0:
                     print(f'w3 BLOCKED — projected gate exited {rc}')
@@ -708,6 +722,25 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
                         return 1
                     continue
                 print(f'{wave} CLEAR')
+                continue
+        if wave == 'w7' and os.path.isfile(
+                os.path.join(pdir, 'REVIEW.json')):
+            # evidence.py re-bound the record and stripped its sig —
+            # only run.py sign-review rebinds it (P.8, TTY-gated like
+            # every human step); w8 refuses an unsigned review. The
+            # sign runs as a receipted step: without its receipt the
+            # w8 checklist cites the stale unsigned sha and P.9 reads
+            # the signed file as post-receipt drift.
+            rc = _run_step(d, wave, (
+                'review sign',
+                [PY, T('run.py'), 'sign-review', pdir],
+                [os.path.join(pdir, 'REVIEW.json')],
+                ['REVIEW.json']), env)
+            if rc != 0:
+                print('w7 BLOCKED — sign-review failed; the reviewer '
+                      'must sign in an interactive terminal (P.8)')
+                if not no_stop:
+                    return 1
                 continue
         print(f'{wave} CLEAR')
     print('=== PIPELINE COMPLETE — all waves CLEAR ===')

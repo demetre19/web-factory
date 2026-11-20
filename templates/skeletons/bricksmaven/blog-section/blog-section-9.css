@@ -1,6 +1,6 @@
   .blog-section-9-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     width: 100%;
   }
@@ -13,13 +13,13 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .blog-section-9-body {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -41,7 +41,7 @@
   }
 
   .blog-section-9-card__author {
-    padding: .8rem .8rem .8rem .8rem;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -49,7 +49,7 @@
   }
 
   .blog-section-9-card__author-image {
-    width: 2.5rem;
+    width: var(--space-xl);
     object-fit: cover;
     overflow: hidden;
   }
@@ -63,7 +63,7 @@
   }
 
   .blog-section-9-card__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-section-9-card__read {

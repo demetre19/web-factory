@@ -1,7 +1,7 @@
   .team-1-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .team-1-intro {
@@ -29,11 +29,15 @@
   }
 
   .team-1-profile__image {
-    width: 10rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
 
   .team-1-profile__image {
   	aspect-ratio:1/1;
+  }
+
+  @media (max-width: 44rem) {
+    .team-1-list { grid-template-columns: 1fr; }
   }

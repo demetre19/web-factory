@@ -1,5 +1,5 @@
   .hworks-9-container {
-    width: 64.5rem;
+    width: var(--space-xxl);
     align-items: center;
     row-gap: var(--space-l);
   }
@@ -48,8 +48,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") "";
     background-color: var(--action-primary);
-    padding-inline:1.8rem;
-    padding-block:1rem;
+    padding-inline:var(--space-l);
+    padding-block:var(--space-s);
     color:var(--bg-canvas);
     font-size: var(--fs-1);
     font-weight: 700;
@@ -59,11 +59,11 @@
   
   .hworks-9-grid-ul li::after {
     content: "step";
-    padding-inline:1.8rem;
-    padding-block:1rem;
+    padding-inline:var(--space-l);
+    padding-block:var(--space-s);
     color:var(--fs-0);
     font-size: var(--fs-1);
     position: absolute;
-    left: -10px;
+    left: calc(var(--space-xs) * -1);
     top: 60%;
   }

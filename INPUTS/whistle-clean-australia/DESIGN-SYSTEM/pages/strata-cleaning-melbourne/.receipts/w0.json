@@ -3,7 +3,7 @@
   {
    "label": "copy ingest",
    "argv": [
-    "/usr/bin/python3.12",
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
     "copy_ingest.py",
     "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
    ],
@@ -16,52 +16,53 @@
     "COPY.json": "c128f394bea4e280"
    },
    "rc": 0,
-   "ts": "2026-11-20T14:14:00"
+   "ts": "2026-11-20T19:37:44"
   },
   {
    "label": "plan from copy",
    "argv": [
-    "/usr/bin/python3.12",
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
     "plan_from_copy.py",
     "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
    ],
    "inputs": {
     "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/COPY.json": "c128f394bea4e280",
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/DNA.json": "789bedf827f47e9d",
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/MOBBIN-REFS.md": "e021d916d9062725"
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/DNA.json": "e153752ca7eee22d",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/MOBBIN-REFS.md": "b45ae5d60fb2fcfa"
    },
    "outputs": {
-    "LAYOUT-OPTIONS.json": "e3ac7f26931999b2",
-    "STUB.md": "c561a4cf8bd14538",
-    "DNA.json": "5f9f62d170404764",
-    "DESIGN-PLAN.md": "a4c7a058a4b2975f",
-    "TOKENS.json": "4dd0a7ea858a3159"
+    "DNA.json": "3933752469b6241a",
+    "DESIGN-PLAN.md": "c5d5596cb7366c79",
+    "STUB.md": "a3a6894672c08cd6",
+    "LAYOUT-OPTIONS.json": "c8a0e1034326ef98",
+    "TOKENS.json": "deb028bfc190d6cb"
    },
    "rc": 0,
-   "ts": "2026-11-20T14:14:00"
+   "ts": "2026-11-20T19:37:45"
   },
   {
    "label": "site scaffold",
    "argv": [
-    "/usr/bin/python3.12",
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
     "pipeline_emit.py",
     "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne",
     "--scaffold"
    ],
    "inputs": {
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "a4c7a058a4b2975f",
-    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DNA.json": "5f9f62d170404764"
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "c5d5596cb7366c79",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DNA.json": "3933752469b6241a"
    },
    "outputs": {
-    "TOKENS.json": "4dd0a7ea858a3159",
+    "site/src/styles/global.css": "a61a2f63523014ce",
+    "TOKENS.json": "deb028bfc190d6cb",
     "site/package.json": "3ab373cc02b1f555",
     "site/astro.config.mjs": "41a825cd2f7ee30e",
-    "site/tailwind.config.js": "05a4e453b5ee6202",
-    "site/src/styles/global.css": "4f1f1ca9696975bc",
-    "site/src/_shared/inline.ts": "24803e00bbed1c2d"
+    "site/tailwind.config.js": "0d3f8905546af3ec",
+    "site/src/_shared/inline.ts": "24803e00bbed1c2d",
+    "site/src/_shared/IconChip.astro": "1d52951865c3d515"
    },
    "rc": 0,
-   "ts": "2026-11-20T14:14:00"
+   "ts": "2026-11-20T19:37:45"
   }
  ]
 }

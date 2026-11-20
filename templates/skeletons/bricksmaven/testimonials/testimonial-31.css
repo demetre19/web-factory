@@ -1,6 +1,6 @@
   .testimonial-31-list-ul {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -28,8 +28,8 @@
   .testimonial-31-list-card__content {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--space-s);
   }
 
   .testimonial-31-list-card__profile {
@@ -40,7 +40,7 @@
 
   .testimonial-31-list-card__image {
     object-fit: cover;
-    width: 7rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 

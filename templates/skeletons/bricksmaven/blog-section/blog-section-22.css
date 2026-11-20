@@ -3,7 +3,7 @@
   }
 
   .blog-section-1-head {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     display: grid;
     padding: 0 0 var(--space-s) 0;
@@ -18,7 +18,7 @@
 
   .bm-blog-section-22-grid-ul {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -39,7 +39,7 @@
   }
 
   .blog-section-1-subs {
-  	gap: 1.5rem;
+  	gap: var(--space-m);
   }
   .blog-section-1-subs .bricks-button {
     background-color: var(--action-primary);

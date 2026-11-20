@@ -1,50 +1,91 @@
 ---
 /**
- * footer-bar — gold exemplar (SB.5). Brand and one line of proof on
- * the left, two link columns, a legal rule under both. The legal
- * line's facts (licence, ABN) come from the plan row's `attrib` —
- * never a default: an exemplar must not ship another trade's claims.
+ * bm-footer-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (footer-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; label?: string;
-             href?: string }[];
-  brand?: string;
-  attrib?: string;
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
 const {
-  heading = '', fs = '', body = '', cta, items = [], attrib = '',
   brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
 } = Astro.props;
-const sub = fs || body;
-const year = 2026;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
-<div class="stack gap-form">
-  <div class="foot-cols">
-    <div class="foot-col">
-      <a class="brand-mark" href="/">{brand}</a>
-      {sub && <p class="t0 sub-p measure-28">{sub}</p>}
-      {heading && <p class="t0 attrib">{heading}</p>}
+
+<div>
+  <div class="sec-inner">
+    <div class="footer-1-container row between">
+      <div class="footer-column-left row between">
+        <span class="logo brand-mark">{brand}</span>
+        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        <div class="footer-1__social"></div>
+      </div>
+      {list.length > 0 &&       <div class="footer-column-mid">
+        {list.length > 0 &&         <div class="footer-menu row between">
+          {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
+              <div>
+                <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+              </div>
+            ))}</div>}
+        </div>
+        }
+      </div>
+      }
+      <div class="footer-column-right row between">
+        {head && <h2 class="footer-1__title text-fluid-2">{head}</h2>}
+      </div>
     </div>
-    <div class="foot-col">
-      <p class="foot-head">Service</p>
-      {items.slice(0, 3).map((it) => (
-        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
-      ))}
-    </div>
-    <div class="foot-col">
-      <p class="foot-head">Contact</p>
-      {cta && <a class="nav-link" href={cta.href}>{cta.label}</a>}
-      {items.slice(3).map((it) => (
-        <a class="nav-link" href={it.href || '#'}>{it.label || it.title}</a>
-      ))}
+    <div class="footer-1-bottom row between">
+      <div class="footer-1-bottom__left row between">
+        <div>
+          {links.length >= 0 &&           <div class="footer-legal-nav row between">
+            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
+                <div>
+                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
+                </div>
+              ))}</div>}
+            {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
+          </div>
+          }
+        </div>
+      </div>
     </div>
   </div>
-  <div class="legal">
-    <span>Copyright {year} {brand}</span>
-    {attrib && <span>{attrib}</span>}
-  </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

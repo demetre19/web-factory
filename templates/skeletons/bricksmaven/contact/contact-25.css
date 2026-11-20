@@ -13,7 +13,7 @@
 
   .contact-25-content {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     width: 100%;
     gap: var(--space-l);
   }
@@ -23,7 +23,7 @@
     flex-direction: column;
     align-items: flex-start;
     row-gap: var(--space-l);
-    padding: 3rem 3rem 3rem 3rem;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
   }
 
   .contact-25-side-intro {
@@ -44,7 +44,7 @@
   .contact-25-side-list-item {
     display: flex;
     align-items: flex-start;
-    column-gap: 1.5rem;
+    column-gap: var(--space-m);
   }
 
   .contact-25-side-list-item__detail {
@@ -55,13 +55,13 @@
 
   .contact-25-side-list-item__cta {
     padding: 0 0 0 0;
-    margin: 1.5rem 0 0 0;
+    margin: var(--space-m) 0 0 0;
     text-align: left;
   }
 
   .contact-25-side-list-item__icon {
-    padding: .5rem .5rem .5rem .5rem;
-    width: 3.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
+    width: var(--space-xxl);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,13 +80,13 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    row-gap: 2rem;
+    row-gap: var(--space-l);
   }
 
   .contact-25-media {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .contact-25-media__image {

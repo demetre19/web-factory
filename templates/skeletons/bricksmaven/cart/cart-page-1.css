@@ -6,7 +6,7 @@
   .cart-page-1__cart-container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .cart-page-1__cart-totals {
@@ -20,7 +20,7 @@
   
     	/* Style border and inline padding to header cell */
     	 .shop_table thead th {
-      		border-bottom: 1px solid var(--color-line-default);
+      		border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
   				padding: 0 var(--space-s);
     	}
     	
@@ -32,7 +32,7 @@
     	
   		/* Set quantity width */
   		.shop_table .quantity {
-        	width: 13rem;
+        	width: var(--space-xxl);
     	}
     
     
@@ -51,7 +51,7 @@
         padding: 0 var(--space-s);		
         background-color: var(--action-primary);
        	color: var(--bg-canvas);
-        line-height: 40px;
+        line-height: var(--space-xl);
     	}
     
     	/* Style cart items link color */
@@ -67,7 +67,7 @@
   		--focus-color: var(--action-primary);
   
     	
-      border: 1px solid var(--color-line-default);
+      border: calc(0.0625rem + 0vw) solid var(--color-line-default);
     	background-color: var(--bg-subtle);
     	
     	/* Remove border top & bottom and margin bottom on the table */
@@ -92,10 +92,10 @@
         padding: 0 var(--space-s);	
         background-color: var(--action-primary);
         	color: var(--bg-canvas);
-        	font-size: 18px;
+        	font-size: var(--space-s);
         	display: block;
         	text-align: center;      	
-        	line-height: 40px;
+        	line-height: var(--space-xl);
     	}
     
     	/* Style Cart totals links */
@@ -142,7 +142,7 @@
     	
     	/* Right align the shipping methods */
     	ul.woocommerce-shipping-methods input[type=radio]+label {
-      	font-size: 14px;
+      	font-size: var(--space-xs);
         color: var(--text-secondary) !important;
         font-weight: 700;
   		}

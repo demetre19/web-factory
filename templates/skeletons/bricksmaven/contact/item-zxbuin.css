@@ -6,7 +6,7 @@
   .contact-3-grid-ul {
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -64,4 +64,8 @@
   
   .contact-3-form__field textarea:focus {
   outline-offset: 0;
+  }
+
+  @media (max-width: 44rem) {
+    .contact-3-footer { grid-template-columns: 1fr; }
   }

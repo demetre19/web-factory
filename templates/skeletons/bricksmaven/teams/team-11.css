@@ -13,7 +13,7 @@
 
   .team-11-team-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -42,7 +42,7 @@
   }
   
   .team-11-card:focus-within {
-  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
+  	box-shadow: 0 0 var(--space-xs) 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
   
   }
   

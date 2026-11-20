@@ -24,12 +24,12 @@
   .product-list-4__list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .product-list-4-card__container {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -70,9 +70,9 @@
   }
 
   .product-list-4__star-rating .star-rating {
-  		font-size: 24px;
-    	height: 24px;
-    	width: 120px;
+  		font-size: var(--space-m);
+    	height: var(--space-m);
+    	width: var(--space-xxl);
     	color: transparent; /* hide default rated text */
   }
   

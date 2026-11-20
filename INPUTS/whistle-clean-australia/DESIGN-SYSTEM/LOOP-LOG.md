@@ -2975,3 +2975,857 @@ w2 CLEAR
 - iterations: 2 (max 10), consecutive clean: 2 (need 2)
 - **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
 - known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-20 17:46:57
+- scratch: `/tmp/wf-loop-QIXI5V/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-QIXI5V/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 2 — 2026-11-20 17:46:57
+- scratch: `/tmp/wf-loop-DFRI7V/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-DFRI7V/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 3 — 2026-11-20 17:46:57
+- scratch: `/tmp/wf-loop-8ZPPic/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-8ZPPic/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 4 — 2026-11-20 17:46:57
+- scratch: `/tmp/wf-loop-ENeZe1/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-ENeZe1/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 5 — 2026-11-20 17:46:58
+- scratch: `/tmp/wf-loop-kL5GEk/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-kL5GEk/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 6 — 2026-11-20 17:46:58
+- scratch: `/tmp/wf-loop-Y2A7FA/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Y2A7FA/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 7 — 2026-11-20 17:46:58
+- scratch: `/tmp/wf-loop-Zhy2La/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Zhy2La/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 8 — 2026-11-20 17:46:58
+- scratch: `/tmp/wf-loop-TvFV3u/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-TvFV3u/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 9 — 2026-11-20 17:46:59
+- scratch: `/tmp/wf-loop-yupsK2/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-yupsK2/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## iteration 10 — 2026-11-20 17:46:59
+- scratch: `/tmp/wf-loop-z7HpDM/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-z7HpDM/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline.py", line 57, in <module>
+    import site_folder as SF  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/site_folder.py", line 16, in <module>
+    import gate as G  # noqa: E402
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/gate.py", line 4839
+    'same-intent group')
+                       ^
+SyntaxError: f-string expression part cannot include a backslash
+```
+
+## result — 2026-11-20 17:46:59
+- iterations: 10 (max 10), consecutive clean: 0 (need 2)
+- loop did not reach two consecutive clean iterations (see iterations above).
+
+## iteration 1 — 2026-11-20 17:47:34
+- scratch: `/tmp/wf-loop-wr7Gfq/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-wr7Gfq/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 2 — 2026-11-20 17:47:43
+- scratch: `/tmp/wf-loop-thpADL/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-thpADL/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 3 — 2026-11-20 17:47:52
+- scratch: `/tmp/wf-loop-P3HDPL/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-P3HDPL/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 4 — 2026-11-20 17:48:03
+- scratch: `/tmp/wf-loop-sTL9Ks/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-sTL9Ks/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 5 — 2026-11-20 17:48:14
+- scratch: `/tmp/wf-loop-THfF6r/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-THfF6r/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 6 — 2026-11-20 17:48:24
+- scratch: `/tmp/wf-loop-4Z8Ina/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-4Z8Ina/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 7 — 2026-11-20 17:48:34
+- scratch: `/tmp/wf-loop-cauQQr/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-cauQQr/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 8 — 2026-11-20 17:48:47
+- scratch: `/tmp/wf-loop-V94p5W/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-V94p5W/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 9 — 2026-11-20 17:48:58
+- scratch: `/tmp/wf-loop-Z2jbmH/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-Z2jbmH/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## iteration 10 — 2026-11-20 17:49:08
+- scratch: `/tmp/wf-loop-Bn0NYf/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **unexpected stop (see tail)**
+```
+checklist → /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-Bn0NYf/site/pages/strata-cleaning-melbourne
+Traceback (most recent call last):
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 113, in <module>
+    sys.exit(main(sys.argv))
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/assemble.py", line 49, in main
+    path, txt, h = preview_build.emit_layouts(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 609, in emit_layouts
+    ok, msg = _build(ctx)
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/preview_build.py", line 328, in _build
+    r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
+  File "/usr/lib/python3.10/subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/lib/python3.10/subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/lib/python3.10/subprocess.py", line 1863, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'npm'
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 BLOCKED — layouts picker exited 1
+```
+
+## result — 2026-11-20 17:49:08
+- iterations: 10 (max 10), consecutive clean: 0 (need 2)
+- loop did not reach two consecutive clean iterations (see iterations above).
+
+## iteration 1 — 2026-11-20 17:49:57
+- scratch: `/tmp/wf-loop-4iJgMh/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-4iJgMh/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-20 17:50:16
+- scratch: `/tmp/wf-loop-OyVTF9/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-OyVTF9/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-20 17:50:16
+- iterations: 2 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-20 18:32:45
+- scratch: `/tmp/wf-loop-McDFZb/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-McDFZb/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-20 18:33:02
+- scratch: `/tmp/wf-loop-CGucte/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-CGucte/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-20 18:33:02
+- iterations: 2 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-20 19:13:40
+- scratch: `/tmp/wf-loop-zwrowy/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-zwrowy/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-20 19:13:58
+- scratch: `/tmp/wf-loop-dSWZrF/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-dSWZrF/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-20 19:13:58
+- iterations: 2 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-20 19:41:43
+- scratch: `/tmp/wf-loop-jeWnQT/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-jeWnQT/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-20 19:42:02
+- scratch: `/tmp/wf-loop-Yzuq4q/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   regular  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 9bffbee5b31f)
+checklist → /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-Yzuq4q/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-20 19:42:02
+- iterations: 2 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.

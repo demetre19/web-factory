@@ -30,7 +30,7 @@
 
   .checkout-page-4__container {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-xl);
     width: 100%;
     padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-l);
@@ -67,7 +67,7 @@
   .checkout-page-4__breadcrumb-number {
   		
   		border-radius: 100%;
-    	padding: 0.2rem 1.2rem;
+    	padding: calc(0.2rem + 0vw) var(--space-s);
     	color: var(--text-secondary);
     	background-color: var(--bg-canvas);
     	font-size: var(--fs-0);
@@ -76,12 +76,12 @@
   }
 
   .checkout-page-4__breadcrumb-text {
-    	padding: 0.3rem 1.2rem;
+    	padding: calc(0.3rem + 0vw) var(--space-s);
     	color: var(--bg-canvas);
     	font-size: var(--fs-0);
     	font-weight: 700;
     	opacity: 0.5;
-    	letter-spacing: 1px;
+    	letter-spacing: calc(0.0625rem + 0vw);
   }
 
   .checkout-page-4__breadcrumb-text-active {

@@ -1,7 +1,7 @@
   .bm-content-64__container {
     display: grid;
     gap: calc(var(--space-m) * 2);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-64__content {
@@ -24,7 +24,7 @@
   }
 
   .bm-feature-list-item__icon-wrapper {
-    padding: 8px 12px 8px 12px;
+    padding: calc(0.5rem + 0vw) var(--space-xs) calc(0.5rem + 0vw) var(--space-xs);
   }
 
   .bm-content-64__media {

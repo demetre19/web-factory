@@ -37,17 +37,12 @@ import gate  # noqa: E402
 TOOL = 'plan_from_copy.py'
 
 # composition → bank recipe (fixed table; ids exist in templates/skeletons)
-RECIPE = {
-    'nav-bar': 'brixies/bottom-navigation-bar/bot-nav-1.topo',
-    'stacked-hero': 'brixies/banner-section/banner-1.topo',
-    'cards-n': 'hyperui/marketing/feature-grids/1',
-    'sequence': 'hyperui/application/steps/1',
-    'faq': 'hyperui/marketing/faqs/1',
-    'form-panel': 'brixies/cta-sections/cta-1.topo',
-    'footer-bar': 'hyperui/marketing/footers/1',
-    'editorial': 'hyperui/application/details-list/1',
-    'split-media': 'hyperui/marketing/sections/1',
-}
+# bricksmaven first — its ACSS payloads are the best-structured bank
+# (P6 resolves bricksmaven/<cat>/<stem> to the translated skeleton);
+# other banks fill the gaps bricksmaven has no topology for.
+# Canonical table lives in gate.RECIPE_FOR_COMP so the preview build
+# resolves option overrides through the same map.
+RECIPE = gate.RECIPE_FOR_COMP
 
 # composition → (speech act, emphasis, align, collapse)
 # acts stay inside COMP_FOR_ACT (gate §2): stat-band/proof-band can
@@ -630,6 +625,17 @@ def build(pdir, option=None):
     page_dna['rhythm'] = [{'section': r['name'], 'surface': r['surface'],
                            'density': r['density']} for r in rows]
     page_dna['site_dna_sha256'] = dna_sha
+    # the W4 look lock writes DNA.json version:1 — layout projection
+    # re-runs this producer, so a previously locked map keeps its lock
+    # (the lock belongs to the page, not to this rewrite).
+    try:
+        old_ver = json.load(open(os.path.join(pdir, 'DNA.json'))) \
+            .get('version')
+    except Exception:
+        old_ver = None
+    if isinstance(old_ver, int):
+        page_dna['version'] = max(int(page_dna.get('version') or 0),
+                                  old_ver)
     page_dna['hashes'] = gate.dna_slices(page_dna)
     _write(os.path.join(pdir, 'DNA.json'),
            json.dumps(page_dna, indent=1, ensure_ascii=False) + '\n')

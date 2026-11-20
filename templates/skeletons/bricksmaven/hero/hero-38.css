@@ -5,7 +5,7 @@
 
   .hero-38-container {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     padding: var(--section-space-xxl) 0 var(--section-space-xxl) 0;
     gap: var(--space-m);
   }
@@ -46,7 +46,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 

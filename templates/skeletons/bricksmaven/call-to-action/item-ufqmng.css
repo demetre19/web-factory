@@ -13,7 +13,7 @@
     row-gap: var(--space-s);
     align-items: center;
     text-align: center;
-    width: var(--measure);
+    max-width: var(--measure);
   }
 
   .cta-6__heading {
@@ -21,16 +21,16 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .cta-5-img--2 {
-    width: 29rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
   .cta-5-img {
-    width: 29rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }

@@ -88,9 +88,9 @@
   }
 
   .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
+  	margin-inline-start: calc(var(--space-s) * -1);
   }
   
   .bm-team-media:first-child {
-  	margin-inline-start: 0px;
+  	margin-inline-start: 0;
   }

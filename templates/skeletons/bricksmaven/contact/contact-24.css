@@ -14,7 +14,7 @@
   .contact-24-list-ul {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -23,11 +23,11 @@
     flex-direction: column;
     align-items: flex-start;
     row-gap: var(--space-m);
-    padding: 4rem 2.5rem 4rem 2.5rem;
+    padding: var(--space-xxl) var(--space-xl) var(--space-xxl) var(--space-xl);
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 

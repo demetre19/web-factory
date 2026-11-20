@@ -29,7 +29,7 @@
   }
 
   .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
   }
 
   .bm-form {
@@ -53,12 +53,12 @@
   }
 
   .newsletter-3__image-1 {
-    width: 42rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
   .newsletter-3__image-2 {
-    width: 42rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
@@ -67,4 +67,8 @@
   }
   .bm-form-widget input:focus {
   	outline-offset: 0;
+  }
+
+  @media (max-width: 44rem) {
+    .newsletter-3-container { grid-template-columns: 1fr; }
   }

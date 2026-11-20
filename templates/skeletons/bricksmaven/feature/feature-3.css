@@ -23,7 +23,7 @@
     align-items: flex-start;
     justify-content: center;
     row-gap: var(--space-xs);
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     margin: 0 0 0 auto;
   }
 
@@ -51,4 +51,8 @@
 
   .feature-3-li:nth-of-type(even) .feature-3-li__media-container {
   	order:-1;
+  }
+
+  @media (max-width: 44rem) {
+    .feature-3-li { grid-template-columns: 1fr; }
   }

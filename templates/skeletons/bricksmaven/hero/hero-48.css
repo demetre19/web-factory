@@ -4,7 +4,7 @@
   }
 
   .hero-48__content {
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     row-gap: var(--space-m);
     align-items: center;
     text-align: center;
@@ -24,7 +24,7 @@
     width: 100vw;
     padding: 0 0 var(--section-space-xxl) 0;
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     margin: 0 -50vw 0 -50vw;
     gap: var(--space-xs);
   }

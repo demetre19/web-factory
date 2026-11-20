@@ -17,7 +17,7 @@
     align-items: flex-start;
     text-align: left;
     align-self: flex-start;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -31,13 +31,13 @@
 
   .feature-39-grid-ul {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
   .feature-39-card {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .feature-39-card__content {
@@ -57,7 +57,7 @@
   }
 
   .feature-39-card__media {
-    width: 64rem;
+    width: var(--space-xxl);
   }
 
   .feature-39-card__image {

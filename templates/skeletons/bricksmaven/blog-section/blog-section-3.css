@@ -23,7 +23,7 @@
 
   .blog-section-3-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -40,7 +40,7 @@
   }
 
   .blog-section-3-card__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-section-3-card__author {
@@ -52,7 +52,7 @@
   }
 
   .blog-section-3-card__photo {
-    width: 6rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }

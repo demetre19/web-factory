@@ -23,7 +23,7 @@
   }
 
   .shop-hero-3__heading {
-    width: var(--measure);
+    max-width: var(--measure);
   }
 
   .shop-hero-3__price-wrapper {
@@ -51,7 +51,7 @@
   .shop-hero-3-featured-product-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .shop-hero-3-featured-product-card {

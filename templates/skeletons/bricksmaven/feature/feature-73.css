@@ -15,7 +15,7 @@
   .bm-feature-73-grid-ul {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-feature-73-card {
@@ -32,7 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4px var(--space-s) 4px var(--space-s);
+    padding: calc(0.25rem + 0vw) var(--space-s) calc(0.25rem + 0vw) var(--space-s);
     column-gap: calc(var(--flow-spacing) / 2);
   }
 

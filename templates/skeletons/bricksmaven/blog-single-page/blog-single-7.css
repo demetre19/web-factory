@@ -37,11 +37,11 @@
   }
 
   .blog-single-7__social-item {
-    padding: 1rem 1rem 1rem 1rem !important;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s) !important;
   }
 
   .blog-single-7__body {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     display: grid;
   }
@@ -74,7 +74,7 @@
   .blog-single-sidebar-latest-article-list-card {
     display: grid;
     flex-direction: row;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -105,8 +105,8 @@
   }
   .blog-single-7__term a::before {
   	content: '';
-    width: 5rem;
-    height: .1rem;
+    width: var(--space-xxl);
+    height: calc(0.1rem + 0vw);
     background-color: var(--action-primary);
     display: flex;
   }
@@ -136,7 +136,7 @@
   	fill: #fff;
   }
   .sb-7-head__gallery .splide__arrow.splide__arrow--prev {
-  	left: 5rem;
+  	left: var(--space-xxl);
   }
   .sb-7-head__gallery .splide__arrow.splide__arrow--next {
   	right: calc( 30rem + 5rem );
@@ -180,23 +180,23 @@
     top: 0;
     left: 0;
     bottom: 0;
-    right: 5rem;
+    right: var(--space-xxl);
     z-index: -1;
   }
 
   .blog-single-sidebar__social-sharing {
-  	gap: .5rem;
+  	gap: calc(0.5rem + 0vw);
   }
   .blog-single-sidebar__social-sharing li a {
   	background-color: var(--action-primary);
     border-radius: 0;
     color: var(--bg-canvas);
-    width: 4rem;
-    height: 4rem;
+    width: var(--space-xxl);
+    height: var(--space-xxl);
   }
 
   .blog-single-sidebar__newsletter-form {
-  	gap: 1rem;
+  	gap: var(--space-s);
     flex-wrap: nowrap;
   }
   .blog-single-sidebar__newsletter-form [type="email"],
@@ -209,7 +209,7 @@
   }
 
   .blog-single-7__footer-adjacent-post a {
-  	max-width: 30rem;
+  	max-width: var(--space-xxl);
   }
   .blog-single-7__footer-adjacent-post a.prev-post .content {
   	align-items: flex-start;
@@ -224,7 +224,7 @@
   .blog-single-7__footer-adjacent-post a .content {
   	display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-s);
     overflow: visible;
     justify-content: flex-end;
     height: 100%;

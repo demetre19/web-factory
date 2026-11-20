@@ -1,18 +1,18 @@
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .logo-7-list-item li:nth-child(1),
   .logo-7-list-item li:nth-child(3),
   .logo-7-list-item li:nth-child(5) {
-  	border-right: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+  	border-right: calc(0.03125rem + 0vw) solid color-mix(in srgb, var(--fs-0) 20%, transparent);
   }
   
   .logo-7-list-item li:nth-child(2),
   .logo-7-list-item li:nth-child(4),
   .logo-7-list-item li:nth-child(6) {
-  	border-left: .5px solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+  	border-left: calc(0.03125rem + 0vw) solid color-mix(in srgb, var(--fs-0) 20%, transparent);
   }
   
   
@@ -22,8 +22,8 @@
   
   .logo-7-list-item li:after {
     content: '';
-    width: 0.1rem;
-    height: 93px;
+    width: calc(0.1rem + 0vw);
+    height: var(--space-xxl);
     background: var(--action-primary);
     position: absolute;
     display: none;

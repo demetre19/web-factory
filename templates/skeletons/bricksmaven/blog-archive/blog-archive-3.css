@@ -26,7 +26,7 @@
   }
 
   .blog-archive-3-card {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     display: grid;
     gap: var(--space-m);
   }
@@ -45,7 +45,7 @@
   }
 
   .blog-archive-3-card__term {
-    padding: .8rem .8rem .8rem .8rem;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
   }
 
   .blog-archive-3-card__author {
@@ -56,17 +56,17 @@
   }
 
   .blog-archive-3-card__media {
-    width: 3.8rem;
+    width: var(--space-xxl);
   }
 
   .blog-archive-3-card__photo {
-    width: 3.8rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
 
   .blog-archive-3-head__form .bricks-search-form {
-  	gap: 1.5rem;
+  	gap: var(--space-m);
   }
   .blog-archive-3-head__form [type="search"] {
   	width: 70% !important;
@@ -75,7 +75,7 @@
   	background-color: var(--action-primary);
     color: var(--bg-canvas);
     width: 30%;
-    padding: 10px 15px;
+    padding: var(--space-xs) var(--space-xs);
     text-align: center;
     height: auto;
     position: static!important;
@@ -88,7 +88,7 @@
     font-weight: 400;
     line-height: 100%;
     outline: none;
-    padding: 10px;
+    padding: var(--space-xs);
     text-align: center;
     clip-path: unset;
   }
@@ -100,7 +100,7 @@
 
   .blog-archive-3-wrapper {
   	display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
   .blog-archive-3-wrapper .blog-archive-3-card:nth-child(1) {
   	grid-area: 1 / 1 / 2 / 7;

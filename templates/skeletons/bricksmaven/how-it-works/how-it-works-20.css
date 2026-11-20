@@ -13,7 +13,7 @@
 
   .hworks-20-card {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -45,8 +45,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: var(--action-primary);
-    padding-inline:.9rem;
-    padding-block:.3rem;
+    padding-inline:var(--space-xs);
+    padding-block:calc(0.3rem + 0vw);
     color:var(--bg-canvas);
     font-size: var(--fs-0);
     font-weight: 400;
@@ -59,7 +59,7 @@
   @media (max-width:767px) {
   
     .hworks-20-list li::before {
-    left:-1rem;
+    left:calc(var(--space-s) * -1);
     transform: translateX(0%);
   }
   }

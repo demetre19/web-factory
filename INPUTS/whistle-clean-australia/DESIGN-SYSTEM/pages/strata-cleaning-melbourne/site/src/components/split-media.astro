@@ -1,93 +1,94 @@
 ---
 /**
- * split-media — gold exemplar (SB.5). Copy on the left, media on the
- * right. As a hero it carries H1 + lede; as a content band it carries
- * the full COPY.json block (§4.3): heading → answer → before → items →
- * links → after in article order (F.1). Media comes from the plan row
- * (BRIEF media), never a default.
+ * bm-feature-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (feature-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
-import { Image } from 'astro:assets';
-import { inline } from '../_shared/inline';
-import type { CopySlot } from '../_shared/inline';
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
-  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { term?: string; title?: string; text?: string;
-             label?: string; href?: string }[];
-  image?: { src: string; alt: string; ratio?: string; focus?: string };
-  attrib?: string;
-  h1?: boolean;
-  brand?: string;
-  copy?: CopySlot;
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+import { Image } from 'astro:assets';
 const {
-  heading = 'Section heading', fs = '', body = '', eyebrow = '',
-  cta, items = [], image, attrib = '', h1, brand, copy,
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
 } = Astro.props;
-const cp: CopySlot = copy || {};
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
 const head = cp.heading || heading;
-const answer = cp.answer || '';
-const sub = answer || fs || body;
+const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
-const list = cp.items || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
-// V.8/P.12 — media runs through astro:assets: the emitter mirrors
-// public/media/* into src/assets/media/ so hero rasters compile to
-// AVIF/WebP srcsets with real intrinsic dims
-const media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
-const mediaName = image ? String(image.src).split('/').pop() : null;
-const mediaMod = mediaName ? media[`../assets/media/${mediaName}`] : null;
-const mediaSrc = mediaMod?.default ?? null;
-const mediaRatio = image?.ratio || null;
-const mediaFocus = image?.focus || null;   // left|right|top|bottom
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
-<div class="split">
-  <div class="stack">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    {h1
-      ? <h1 class="t0 h-display text-fluid-5">{head}</h1>
-      : <h2 class="t0 h-section text-fluid-3">{head}</h2>}
-    {sub && <p class="t0 lede" set:html={inline(sub)} />}
-    {before.map((p) => (
-      <p class="t0 sub-p" set:html={inline(p)} />
-    ))}
-    {list.length > 0 && (
-      <ul class="t0 sub-p list-items">
-        {list.map((it) => (
-          <li><strong set:html={inline(it.term || it.title)} />{' – '}<span set:html={inline(it.text)} /></li>
-        ))}
-      </ul>
-    )}
-    {links.length > 0 && (
-      <ul class="t0 sub-p list-items">
-        {links.map((l) => (
-          <li set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />
-        ))}
-      </ul>
-    )}
-    {after.map((p) => (
-      <p class="t0 sub-p" set:html={inline(p)} />
-    ))}
-    {cta && (
-      <div class="cta-row mt-act">
-        <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
+
+<div>
+  <div class={image && image.src ? 'split' : undefined}>
+    <div class="stack">
+  <div class="sec-inner">
+    <div>
+      <div class="intro">
+        {head && <h2 class="text-fluid-2">{head}</h2>}
+        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-    )}
-    {attrib && <p class="t0 attrib sub-flow">{attrib}</p>}
+    </div>
+    {list.length > 0 &&     <div class="feature-1-ul">
+      {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <div class="feature-1-li card">
+            <div class="feature-1-li__content">
+              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+              {(it.items || []).length > 0 &&               <div class="bm-list">
+                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    <div class="bm-list__item card">
+                      {it2.icon && <IconChip name={it2.icon} />}
+                      <p class="text-fluid-0">{it2.text}</p>
+                    </div>
+                  ))}</div>}
+              </div>
+              }
+              {it.icon && <IconChip name={it.icon} />}
+            </div>
+          </div>
+        ))}</div>}
+    </div>
+    }
   </div>
-  {mediaSrc
-    ? <div class="media-round" data-ratio={mediaRatio} data-focus={mediaFocus}>
-        <Image src={mediaSrc} alt={image.alt} widths={[480, 960, 1440]}
-               sizes="(min-width: 48rem) 50vw, 100vw" loading="eager" />
-      </div>
-    : image
-      ? <div class="media-round" data-ratio={mediaRatio} data-focus={mediaFocus}>
-          <img src={image.src} alt={image.alt} width="960" height="432"
-               loading="eager" />
-        </div>
-      : <div class="media-panel media-hero" aria-hidden="true"></div>}
+    </div>
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
+  </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

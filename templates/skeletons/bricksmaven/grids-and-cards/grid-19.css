@@ -2,17 +2,17 @@
     display: grid;
     width: 100%;
     gap: 3.125em;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .gridcard-19-article {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .gridcard-19-article__meta {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
     /* bm: box-shadow omitted — token layer owns elevation */
   }

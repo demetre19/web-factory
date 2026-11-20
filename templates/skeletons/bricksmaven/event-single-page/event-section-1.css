@@ -13,7 +13,7 @@
   .bm-event-section-1-grid-ul {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-event-section-1-card__content {
@@ -68,14 +68,14 @@
   }
 
   .bm-event-section-1-card__hart-wrapper {
-    width: 40px;
+    width: var(--space-xl);
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .bm-event-section-1-card__hart-wrapper--active {
-    width: 40px;
+    width: var(--space-xl);
     justify-content: center;
     align-items: center;
     display: flex;
@@ -92,7 +92,7 @@
   }
   
   .bm-event-section-1-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--color-line-default) 10%, transparent);
+    box-shadow: 0 0 var(--space-s) 0 color-mix(in srgb, var(--color-line-default) 10%, transparent);
   }
   
   .bm-event-section-1-card__content {

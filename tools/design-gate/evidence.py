@@ -64,6 +64,7 @@ with sync_playwright() as p:
                 pg.goto(url, wait_until="networkidle")
                 if mode == "dark":
                     pg.evaluate(
+                        "document.documentElement.dataset.theme='dark';"
                         "document.documentElement.classList.add('dark')")
                 pg.wait_for_timeout(250)
                 pg.screenshot(path=sys.argv[1] + "/shots/%d-%s-%s.png"

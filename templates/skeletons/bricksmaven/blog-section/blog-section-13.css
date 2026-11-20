@@ -13,7 +13,7 @@
 
   .blog-section-13-article-list {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -32,7 +32,7 @@
   }
 
   .blog-section-13-article__term {
-    padding: .4rem .4rem .4rem .4rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
   }
 
   .blog-section-13-article__featured-image {

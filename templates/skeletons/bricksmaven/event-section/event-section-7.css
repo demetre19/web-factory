@@ -16,7 +16,7 @@
 
   .bm-event-section-7-event-card {
     display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     padding: 0 0 var(--space-m) 0;
   }

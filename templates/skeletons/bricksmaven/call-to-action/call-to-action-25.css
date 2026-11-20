@@ -1,7 +1,7 @@
   .bm-call-to-action-25__cta-block {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-call-to-action-25__content {
@@ -28,7 +28,7 @@
   }
 
   .bm-list-item__icon-wrapper {
-    width: 24px;
+    width: var(--space-m);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,9 +73,9 @@
   }
 
   .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
+  	margin-inline-start: calc(var(--space-s) * -1);
   }
   
   .bm-team-media:first-child {
-  	margin-inline-start: 0px;
+  	margin-inline-start: 0;
   }

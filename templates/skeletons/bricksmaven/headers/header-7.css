@@ -34,18 +34,18 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .bm-header-7__topbar {
-  	padding-top: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: .1rem solid var(--fs-0);
+  	padding-top: var(--space-l);
+    padding-bottom: var(--space-l);
+    border-bottom: calc(0.1rem + 0vw) solid var(--fs-0);
   }
 
   .bm-header-7__menu-top .bricks-nav-menu {
-  	gap: 3rem;
+  	gap: var(--space-xl);
   }
   .bm-header-7__menu-top.menu-left .bricks-nav-menu {
   	justify-content: flex-start;

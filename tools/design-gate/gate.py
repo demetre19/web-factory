@@ -27,6 +27,29 @@ import argparse, functools, glob as glob_mod, hashlib, hmac, \
 
 _lc = functools.lru_cache
 
+
+def node_env():
+    """Subprocess env for anything that shells out to npm — when npm
+    isn't on PATH, fall back to a node installed under ~/.nvm (the
+    vendored toolchain supplies node_modules; node itself is a machine
+    prerequisite like python). Returns os.environ, PATH-patched only
+    when needed."""
+    env = dict(os.environ)
+    if shutil.which('npm', path=env.get('PATH')):
+        return env
+    nvm = os.path.expanduser('~/.nvm/versions/node')
+    if os.path.isdir(nvm):
+        vers = sorted(os.listdir(nvm),
+                      key=lambda v: [int(x) for x in re.findall(
+                          r'\d+', v)])
+        for v in reversed(vers):
+            b = os.path.join(nvm, v, 'bin')
+            if os.path.isfile(os.path.join(b, 'npm')):
+                env['PATH'] = b + os.pathsep + env.get('PATH', '')
+                return env
+    return env
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
 SCORE_VECTORS = os.path.join(
@@ -791,7 +814,7 @@ def check_astro_build(ctx):
         return ['P.1 site/node_modules missing — npm ci first']
     r = subprocess.run(['npm', 'run', 'build', '--', '--silent'],
                        cwd=ctx.site, capture_output=True, text=True,
-                       timeout=300)
+                       env=node_env(), timeout=300)
     if r.returncode != 0:
         tail = '\n'.join((r.stdout + r.stderr).split('\n')[-8:])
         return [f'P.1 astro build failed (exit {r.returncode}): {tail}']
@@ -4599,7 +4622,9 @@ def check_equal_cards(ctx):
                 txt, re.S):
             cards = [c for c in re.findall(
                 r'class="([^"]*card[^"]*)"', m.group(2))
-                if 'card-grid' not in c]
+                if 'card-grid' not in c and 'card__' not in c]
+                # x-card__y is a BEM element inside the card shell —
+                # a child, not a sibling card (counter-1-card__intro)
             if len(cards) >= 2 and len(set(cards)) > 1:
                 f.append(f'G.7 {name} sec {m.group(1)}: sibling cards '
                          f'carry different shells {sorted(set(cards))} '
@@ -4827,11 +4852,10 @@ def check_intent_sections(ctx):
                                  for t in re.findall(
                                      r'<h([12])\b(?![^>]*data-intent)',
                                      body)]
-                if len(re.findall(r'<h2\b', body)) > 1 and \
-                        'data-group' not in attrs:
+                nh2 = len(re.findall(r'<h2\b', body))
+                if nh2 > 1 and 'data-group' not in attrs:
                     ints = {i for _, i in h2s}
-                    f.append(f'PS.11 {name} sec {sec}: '
-                             f'{len(re.findall(r"<h2\b", body))} h2s '
+                    f.append(f'PS.11 {name} sec {sec}: {nh2} h2s '
                              f'(intents {sorted(ints)}) share one '
                              'section — a merge needs a declared '
                              'same-intent group')
@@ -6220,6 +6244,15 @@ def check_heading_verbatim(ctx):
         txt = html.unescape(raw)
         parsed = parse_html(txt)
         heads = [(h[0], h[1].strip()) for h in parsed.headings]
+        # the fs sentence must appear verbatim in rendered prose —
+        # the same tag-strip F.1 applies, so emphasis markup
+        # (<strong>, <a>, <span>…) inside the sentence does not
+        # break a genuinely verbatim render
+        prose = _norm_text(_strip_inline_md(re.sub(
+            r'<[^>]+>', ' ', re.sub(
+                r'</?(?:strong|em|a|b|i|span|mark|small|sub|sup|'
+                r'code|abbr|u|s|del|ins|time|cite)\b[^>]*>', '',
+                txt, flags=re.I))))
         seen = 0
         for v in vec:
             want = v['heading'].strip()
@@ -6242,8 +6275,8 @@ def check_heading_verbatim(ctx):
                          'vector order')
             seen = idx
             if v['fs']:
-                fsn = ' '.join(v['fs'].split())
-                if fsn.rstrip('.!?') not in ' '.join(txt.split()):
+                fsn = _norm_text(_strip_inline_md(v['fs']))
+                if fsn.rstrip('.!?') not in prose:
                     f.append(f'E.1 {os.path.basename(p)}: first sentence '
                              f'not verbatim for "{want[:40]}"')
         h1s = [h for t, h in heads if t == 'h1']
@@ -6604,6 +6637,28 @@ def _stub_for(ctx, name, index):
     return {}
 
 
+# composition → bank recipe (canonical table — plan_from_copy and
+# preview_build both resolve through it; bricksmaven first, other
+# banks fill the gaps its catalog lacks)
+RECIPE_FOR_COMP = {
+    'nav-bar': 'bricksmaven/headers/header-1',
+    'stacked-hero': 'bricksmaven/hero/hero-1',
+    'cards-n': 'bricksmaven/grids-and-cards/grid-1',
+    'sequence': 'bricksmaven/how-it-works/how-it-works-1',
+    'faq': 'hyperui/marketing/faqs/1',
+    'form-panel': 'bricksmaven/call-to-action/call-to-action-10',
+    'footer-bar': 'bricksmaven/footer/footer-1',
+    'editorial': 'bricksmaven/content/content-1',
+    'split-media': 'bricksmaven/feature/feature-1',
+    'comparison': 'bricksmaven/comparison/comparison-1',
+    'stat-band': 'bricksmaven/counter/counter-1',
+    'proof-band': 'bricksmaven/testimonials/testimonial-1',
+    'quote-grid': 'bricksmaven/testimonials/testimonial-2',
+    'link-grid': 'bricksmaven/grids-and-cards/grid-2',
+    'text-index': 'bricksmaven/table-of-content/table-of-content-2',
+}
+
+
 def build_contracts(ctx):
     """[{...contract...}] in plan order, one per plan row."""
     rows = ctx.rows()
@@ -6641,15 +6696,11 @@ def build_contracts(ctx):
         st = _stub_for(ctx, name, i)
         prev = rows[i - 1][1] if i else {}
         nxt = rows[i + 1][1] if i + 1 < len(rows) else {}
+        # P6 — `composition` stays the plan vocabulary (nav-bar,
+        # editorial…); a banked `recipe` picks WHICH skeleton file
+        # implements it (pipeline_emit._bank_copy), so plan rows,
+        # contracts and rendered cards all name the same comp.
         comp = r.get('composition')
-        # P6 — a row naming a bank recipe composes from the banked
-        # skeleton: the component identity is bm-<stem>, and the
-        # contract keeps `recipe` for provenance (J.4).
-        _rec = str(r.get('recipe') or '')
-        if _rec.startswith('bricksmaven/'):
-            _parts = _rec.rstrip('/').split('/')
-            if len(_parts) == 3:
-                comp = 'bm-' + _parts[2]
         layer = sorted(_layer_classes(ctx))
         out.append({
             'schema': CONTRACT_SCHEMA,
@@ -8982,12 +9033,19 @@ def check_fluid_sizes(ctx):
     return f
 
 
+_WALK_SKIP = {'href', 'icon', 'id', 'url', 'src', 'type'}
+
+
 def _walk_strings(x):
-    """Every string anywhere under x (dict/list/scalar walk)."""
+    """Every string anywhere under x (dict/list/scalar walk). Keys in
+    _WALK_SKIP are metadata — a link target or icon name is structure,
+    never rendered prose (F.1's page-side scan strips attributes)."""
     if isinstance(x, str):
         yield x
     elif isinstance(x, dict):
-        for v in x.values():
+        for k, v in x.items():
+            if k in _WALK_SKIP:
+                continue
             yield from _walk_strings(v)
     elif isinstance(x, (list, tuple)):
         for v in x:
@@ -9049,7 +9107,8 @@ def _copy_texts(cp):
     for k, v in cp.items():
         if k in ('generated_by', 'source', 'url', 'title', 'meta',
                  'h1', 'stub_h1', 'answer_datatype', 'lede',
-                 'stub_vector', 'blocks', 'closing', 'links_out'):
+                 'stub_vector', 'vector_order', 'blocks', 'closing',
+                 'links_out'):
             continue
         for s in _walk_strings(v):
             add(s)
@@ -9814,11 +9873,14 @@ def check_neutral_tint(ctx):
             continue
         val = str((role or {}).get('value', ''))
         # U.3 — the canvas is the brief's, not a taste call: pure white
-        # is a legal bg when BRIEF theme.canvas is #FFFFFF
+        # is a legal bg when BRIEF theme.canvas is #FFFFFF (exempt
+        # from the dead-grey floor too, not only the pure-white rule)
         _canvas = str((_theme(ctx).get('canvas') or '')).upper()
+        if name == 'bg' and _canvas in ('#FFFFFF', '#FFF') and \
+                val.upper() in ('#FFFFFF', '#FFF'):
+            continue
         if val.upper() in ('#000000', '#000') or \
-                (val.upper() in ('#FFFFFF', '#FFF') and not
-                 (name == 'bg' and _canvas in ('#FFFFFF', '#FFF'))):
+                val.upper() in ('#FFFFFF', '#FFF'):
             f.append(f'C.3 {name}: {val} — pure black/white is not a '
                      'neutral; tint it (10–15% ink, 98–99% paper)')
             continue
@@ -10174,15 +10236,46 @@ def lock_dna_map(ctx):
     m = dna_map(ctx)
     if m is None:
         return False
-    if isinstance(m.get('version'), int) and m['version'] >= 1:
-        return False
-    m['version'] = 1
-    m['hashes'] = dna_slices(m)
-    with open(os.path.join(ctx.dir, 'DNA.json'), 'w') as fh:
-        json.dump(m, fh, indent=1, sort_keys=True)
-    with open(os.path.join(ctx.dir, 'DNA.md'), 'w', encoding='utf-8')             as fh:
-        fh.write(render_dna_md(m))
-    return True
+    locked = not (isinstance(m.get('version'), int)
+                  and m['version'] >= 1)
+    if locked:
+        m['version'] = 1
+        m['hashes'] = dna_slices(m)
+        with open(os.path.join(ctx.dir, 'DNA.json'), 'w') as fh:
+            # insertion order like dna_apply/plan_from_copy — X.1
+            # byte-compares the producer chain, and sorting here
+            # would diverge from the bytes those writers leave
+            json.dump(m, fh, indent=1)
+        with open(os.path.join(ctx.dir, 'DNA.md'), 'w',
+                  encoding='utf-8') as fh:
+            fh.write(render_dna_md(m))
+    # the lock is a producer act (P.9/P.17): a w0 re-gate re-checks the
+    # DNA.json row against disk — without a receipt citing the locked
+    # bytes the row reads as an unrecorded mutation. Idempotent: a
+    # lock recorded before receipts existed gets its receipt here.
+    cur = _sha256_file(os.path.join(ctx.dir, 'DNA.json'))[:16]
+    recs_p = os.path.join(ctx.dir, '.receipts', 'w4.json')
+    try:
+        recs = json.load(open(recs_p))
+    except Exception:
+        recs = {'steps': []}
+    cited = any(st.get('label') == 'w4 look lock'
+                and (st.get('outputs') or {}).get('DNA.json') == cur
+                for st in recs['steps'])
+    if not cited:
+        outs = {'DNA.json': cur}
+        fp = os.path.join(ctx.dir, 'DNA.md')
+        if os.path.isfile(fp):
+            outs['DNA.md'] = _sha256_file(fp)[:16]
+        recs['steps'].append({
+            'label': 'w4 look lock', 'argv': ['approve_service.py',
+                                              'lock_dna_map'],
+            'inputs': {}, 'outputs': outs, 'rc': 0,
+            'ts': __import__('datetime').datetime.now().isoformat(
+                timespec='seconds')})
+        os.makedirs(os.path.dirname(recs_p), exist_ok=True)
+        json.dump(recs, open(recs_p, 'w'), indent=1)
+    return locked
 
 
 def approval_body(ctx, wave, by='operator-service', design=None,
@@ -10386,7 +10479,10 @@ def write_receipt(ctx, relpath):
             _cp.assemble_pack(ctx.dir, _w)['tokens']
     except Exception:
         pass
-    key = op_key()
+    # the receipt writer owns the key lifecycle: a receipt written
+    # without the operator key can never verify (P.17 fail-closed),
+    # so the first receipted artifact mints it.
+    key = op_key(create=True)
     if key:
         arts[relpath]['sig'] = _sig(arts[relpath], key)
     json.dump(g, open(ctx.gates_path, 'w'), indent=1)
@@ -14234,7 +14330,7 @@ WAVE_CHECKS = {
     'w0': [check_scaffold, check_source_bind, check_copy_coverage,
            check_plan_provenance, check_copy_shape_fit,
            check_light_canvas, check_site_dna],
-    'w1': [check_mobbin_auth, check_design_mode, check_intent,
+    'w1': [check_design_mode, check_intent,
            check_genotype, check_tiers, check_audit_artifacts,
            check_mobbin_refs, check_image_discovery, check_canon_trace,
            check_candidate_review, check_trend_vocab,

@@ -52,7 +52,7 @@
   }
 
   .blog-archive-10-card__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-archive-10-card__read {
@@ -60,7 +60,7 @@
   }
 
   .blog-archive-10-head__search-form .bricks-search-form {
-  	gap: 1.5rem;
+  	gap: var(--space-m);
   }
   .blog-archive-10-head__search-form [type="search"] {
   	width: 70% !important;
@@ -69,7 +69,7 @@
   	background-color: var(--action-primary);
     color: var(--bg-canvas);
     width: 30%;
-    padding: 10px 15px;
+    padding: var(--space-xs) var(--space-xs);
     text-align: center;
     height: auto;
     position: static!important;
@@ -82,7 +82,7 @@
     font-weight: 400;
     line-height: 100%;
     outline: none;
-    padding: 10px;
+    padding: var(--space-xs);
     text-align: center;
     clip-path: unset;
   }

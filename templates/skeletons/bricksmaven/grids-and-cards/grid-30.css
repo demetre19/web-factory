@@ -105,7 +105,7 @@
   /* Card */
   .grid-30-card {
   	transition: .5s ease;
-    height: 46rem;
+    height: var(--space-xxl);
     position: relative;
     justify-content: end;
     align-items: center;
@@ -117,7 +117,7 @@
   }
   
   .grid-30-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
+    box-shadow: 0 0 var(--space-s) 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
   }
   
   /* Media */

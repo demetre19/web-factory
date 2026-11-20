@@ -4,7 +4,7 @@
 
   .content-34__container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .content-34__content {
@@ -31,7 +31,7 @@
   }
 
   .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
   }
 
   .content-34__media {

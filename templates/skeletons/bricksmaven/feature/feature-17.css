@@ -4,7 +4,7 @@
 
   .feature-17-wrapper-sticky-scroll {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--section-space-xxl);
   }
 
@@ -15,7 +15,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -46,7 +46,7 @@
   .feature-17-sticky {
   	position: -webkit-sticky; /* Safari */
     position: sticky;
-    top: 6rem;
+    top: var(--space-xxl);
   }
   
   @media (max-width:767px) {
@@ -54,7 +54,11 @@
     .feature-17-sticky {
   	position: -webkit-static; /* Safari */
     position: static;
-    top: 0rem;
+    top: 0;
   }
   
+  }
+
+  @media (max-width: 44rem) {
+    .feature-17-card-list { grid-template-columns: 1fr; }
   }

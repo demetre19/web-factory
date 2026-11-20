@@ -30,7 +30,7 @@
   }
 
   .blog-archive-7-card__term {
-    padding: .3rem .8rem .3rem .8rem;
+    padding: calc(0.3rem + 0vw) var(--space-xs) calc(0.3rem + 0vw) var(--space-xs);
   }
 
   .blog-archive-7-card__read {
@@ -45,7 +45,7 @@
 
   .blog-archive-7-wrapper {
   	display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
   .blog-archive-7-wrapper .blog-archive-7-card:nth-child(1) {
   	grid-area: 1 / 1 / 2 / 3;

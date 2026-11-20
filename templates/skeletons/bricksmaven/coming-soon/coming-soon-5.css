@@ -1,6 +1,6 @@
   .coming-soon-5__container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .coming-soon-5__content {
@@ -14,7 +14,7 @@
   }
 
   .bm-coming-soon-5__intro {
-    width: var(--measure);
+    max-width: var(--measure);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -44,7 +44,7 @@
   }
 
   .bm-coming-soon-5__slide-content {
-    width: var(--measure);
+    max-width: var(--measure);
     text-align: center;
     display: flex;
     flex-direction: column;

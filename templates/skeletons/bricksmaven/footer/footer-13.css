@@ -4,7 +4,7 @@
 
   .footer-13-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     margin: 0 0 var(--space-m) 0;
   }
@@ -12,7 +12,7 @@
   .footer-13__nav {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .footer-nav-column {
@@ -28,8 +28,8 @@
   }
 
   .footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .footer-13__content {
@@ -41,7 +41,7 @@
   .footer-13-bottom-container {
     padding: var(--space-l) 0 0 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -58,7 +58,7 @@
 
   .footer-newsletter__form {
   	flex-wrap: nowrap;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .footer-newsletter__form [type="submit"] {
   	height: 100%;

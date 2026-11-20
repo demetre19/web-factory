@@ -11,11 +11,11 @@
   }
 
   .cta-10-content {
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     display: flex;
     row-gap: var(--space-m);
     flex-direction: column;
-    width: var(--measure);
+    max-width: var(--measure);
     margin: 0 0 0 auto;
   }
 
@@ -31,7 +31,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -47,4 +47,8 @@
   .cta-10-img {
   clip-path: polygon(12% 0%, 100% 0, 100% 100%, 0% 100%);
   
+  }
+
+  @media (max-width: 44rem) {
+    .cta-10-container { grid-template-columns: 1fr; }
   }

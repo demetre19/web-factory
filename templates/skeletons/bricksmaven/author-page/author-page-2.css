@@ -22,9 +22,9 @@
   }
 
   .bm-author-card-2__thumb-image {
-    width: 186px;
+    width: var(--space-xxl);
     object-fit: cover;
-    margin: -200px 0 0 0;
+    margin: calc(var(--space-xxl) * -1) 0 0 0;
   }
 
   .bm-author-card-2__content {
@@ -74,7 +74,7 @@
   }
 
   .bm-blog-archive-6-card__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .bm-blog-archive-6-card__read {

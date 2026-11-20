@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 32px;
+    width: var(--space-l);
   }
 
   .bm-portfolio-section-20-card__image {
@@ -50,8 +50,8 @@
   .bm-portfolio-section-20-card::before {
     content: '';
     position: absolute;
-    inline-size: 50px;
-    block-size: 50px;
+    inline-size: var(--space-xxl);
+    block-size: var(--space-xxl);
     z-index: 1;
     transition: all 0.5s ease;
     opacity: 0;

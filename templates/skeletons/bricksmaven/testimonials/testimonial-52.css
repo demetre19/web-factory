@@ -19,7 +19,7 @@
 
   .bm-testimonial-52-card {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     overflow: clip;
   }
 
@@ -35,8 +35,8 @@
   }
 
   .bm-testimonial-52__slider-nested {
-    --icon-dimension: 32px; /* Change the icon dimensions*/
-    --icon-size: 14px; /* Change the icon size*/
+    --icon-dimension: var(--space-l); /* Change the icon dimensions*/
+    --icon-size: var(--space-xs); /* Change the icon size*/
     --icon-opacity: 0.5;  /* Change the icon opacity*/
   }
   

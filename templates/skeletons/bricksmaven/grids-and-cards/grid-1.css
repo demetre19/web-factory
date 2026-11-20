@@ -13,6 +13,10 @@
 
   .gridcard-1-card:nth-child(odd) {
   
-  	border-right: 1px solid var(--bg-subtle);
+  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
     
+  }
+
+  @media (max-width: 44rem) {
+    .gridcard-1-grid-ul { grid-template-columns: 1fr; }
   }

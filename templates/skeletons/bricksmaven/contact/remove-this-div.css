@@ -5,14 +5,14 @@
 
   .bm-contact-27__container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
   .bm-contact-27__intro {
     flex-direction: row;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
   }
 
   .bm-contact-27__form-section {
@@ -38,7 +38,7 @@
 
   .bm-contact-27-container-sub {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-s);
   }
 

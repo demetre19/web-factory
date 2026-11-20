@@ -3,7 +3,7 @@
 
 Site type **services** · vibe **approachable / calm** (dependable, orderly, plain-spoken) · first paint **light**, follows OS: **False**, dark toggle: **True**
 
-DNA hashes: look `dfec75735b32` · structure `77945db23270` · status **v0 (unlocked until the operator approves the look at w4)**
+DNA hashes: look `e9fdbe44338e` · structure `77945db23270` · status **v0 (unlocked until the operator approves the look at w4)**
 
 ## Colour — light (default)
 
@@ -13,9 +13,9 @@ DNA hashes: look `dfec75735b32` · structure `77945db23270` · status **v0 (unlo
 | surface | `#F0F3F6` | 1.11:1 | DISCOVERY.palette.surface · live site (12 uses) |
 | surface_elevated | `#E9EBEE` | 1.19:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
 | border | `#D6D9DB` | 1.42:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
-| ink | `#363636` | 12.08:1 | DISCOVERY.palette.ink · live site body { color } |
-| ink_muted | `#686868` | 5.57:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
-| inverse | `#0A322D` | 13.93:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
+| ink | `#273B37` | 11.88:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
+| ink_muted | `#556E6A` | 5.49:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
+| inverse | `#1F2E2C` | 14.14:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
 | accent | `#166F64` | 6.01:1 | BRIEF brand.accent |
 | accent_foreground | `#FFFFFF` | 1.00:1 |  |
 

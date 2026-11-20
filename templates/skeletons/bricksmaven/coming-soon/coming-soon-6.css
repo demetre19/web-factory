@@ -15,7 +15,7 @@
 
   .bm-coming-soon-6__media-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -28,7 +28,7 @@
     align-items: center;
     text-align: center;
     row-gap: var(--flow-spacing);
-    width: var(--measure);
+    max-width: var(--measure);
   }
 
   .bm-social-share {

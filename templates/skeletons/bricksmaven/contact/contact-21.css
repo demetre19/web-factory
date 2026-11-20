@@ -19,7 +19,7 @@
     width: 70%;
     margin: 0 auto 0 auto;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -38,11 +38,11 @@
     width: 80%;
     margin: 0 auto 0 auto;
     /* bm: box-shadow omitted — token layer owns elevation */
-    padding: 4rem 4rem 4rem 4rem;
+    padding: var(--space-xxl) var(--space-xxl) var(--space-xxl) var(--space-xxl);
   }
 
   .contact-21-form__content {
-    padding: 3rem 0 3rem 0;
+    padding: var(--space-xl) 0 var(--space-xl) 0;
   }
 
   .contact-21::before {

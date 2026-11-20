@@ -17,7 +17,7 @@
     align-items: flex-start;
     text-align: left;
     align-self: flex-start;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -31,7 +31,7 @@
 
   .feature-41-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -56,7 +56,7 @@
   }
 
   .feature-41-items {
-  	perspective: 1000px;
+  	perspective: var(--space-xxl);
   }
   
   .feature-41-items:focus-within :focus {
@@ -83,7 +83,7 @@
     inset:0;
     padding: var(--space-m);
     background: var(--bg-canvas);
-    border: .1rem solid var(--color-line-default);
+    border: calc(0.1rem + 0vw) solid var(--color-line-default);
     transition: .5s ease;
     backface-visibility: hidden;
     height:100%;

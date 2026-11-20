@@ -1,0 +1,39 @@
+{
+ "steps": [
+  {
+   "label": "system sheet",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "assemble.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne",
+    "--system"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "1c616a1f0b6acb20",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/TOKENS.json": "deb028bfc190d6cb"
+   },
+   "outputs": {
+    "preview/system.html": "a10a3cca9513cd76"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T19:38:49"
+  },
+  {
+   "label": "corpus artifacts",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "corpus_publish.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "1c616a1f0b6acb20"
+   },
+   "outputs": {
+    "SOP-CONSTANTS.json": "cda13af51ee34998",
+    "CANON-PADDING.json": "7b349a27d8ad7e1c"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T19:38:49"
+  }
+ ]
+}

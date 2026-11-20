@@ -12,24 +12,43 @@ interface Props {
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string;
+  items?: { title?: string; text?: string; term?: string;
              label?: string; href?: string;
-             items?: any[] }[];
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
 const {
   brand = 'Brand',
   heading = '',
   fs = '',
   cta = { label: '', href: '#' },
   items = [],
+  image,
+  copy,
 } = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div>
   <div class="sec-inner">
     <div class="bm-header-1__container">
       <div class="bm-header-1__brand">
-        <span class="logo">{brand}</span>
+        <span class="logo brand-mark">{brand}</span>
       </div>
       <div class="bm-header-1__nav-wrapper">
         <div>
@@ -37,19 +56,19 @@ const {
             <div>
               <div class="megamenu-1__content">
                 <div class="megamenu-1__wrapper">
-                  <div class="megamenu-1__card-wrapper">
-                    <div class="grid-auto gap-fluid-m">
-                      {(items || []).map((it) => (
+                  {list.length > 0 &&                   <div class="megamenu-1__card-wrapper">
+                    {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                         <div class="megamenu-card card">
-                          <a class="text-fluid-0" href={it.href}>{it.label}</a>
+                          <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
-                      ))}
-                    </div>
+                      ))}</div>}
                   </div>
+                  }
                   <div>
                     <div class="megamenu-card">
-                      {fs && <p class="text-fluid-0">{fs}</p>}
+                      {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+                      {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
                     </div>
                   </div>
                 </div>
@@ -60,7 +79,10 @@ const {
           <div></div>
         </div>
       </div>
-      <div class="bm-header-1__cta"></div>
     </div>
   </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

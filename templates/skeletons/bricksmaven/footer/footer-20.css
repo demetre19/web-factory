@@ -5,13 +5,13 @@
   .bm-footer-20__top {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-footer-20__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-footer-20__left {
@@ -45,7 +45,7 @@
   }
 
   .bm-footer-nav-wrapper--grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .footer-nav-column {
@@ -61,14 +61,14 @@
   }
 
   .footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .bm-footer-20__footer {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-footer-20__payment-options-wrapper {
@@ -90,7 +90,7 @@
 
   .footer-newsletter__form {
   	flex-wrap: nowrap;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .footer-newsletter__form [type="submit"] {
   	height: 100%;

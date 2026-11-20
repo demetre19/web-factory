@@ -4,12 +4,12 @@
 
   .footer-7-container {
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
   .footer-brand-7 {
-    width: var(--measure);
+    max-width: var(--measure);
   }
 
   .footer-nav-wrapper {
@@ -19,7 +19,7 @@
   }
 
   .footer-nav-wrapper-7 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .footer-nav-column {
@@ -35,8 +35,8 @@
   }
 
   .footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .footer-7__content {
@@ -44,13 +44,13 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .footer-7-bottom-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 

@@ -23,7 +23,7 @@
 
   .bm-footer-17__contact-info {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -35,7 +35,7 @@
   .bm-footer-17__footer {
     padding: var(--space-m) 0 0 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -77,11 +77,11 @@
   }
 
   .bm-footer-17-address-list:first-child {
-  	border-right: 1px solid var(--color-line-default);
+  	border-right: calc(0.0625rem + 0vw) solid var(--color-line-default);
   }
   
   .bm-footer-17-address-list:last-child {
-  	border-left: 1px solid var(--color-line-default);
+  	border-left: calc(0.0625rem + 0vw) solid var(--color-line-default);
   }
   
   
@@ -89,13 +89,13 @@
   	
     .bm-footer-17-address-list:first-child {
   	border-right: none;
-    border-bottom: 1px solid var(--color-line-default);
+    border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
     padding-block-end: var(--space-s);
   }
   
   .bm-footer-17-address-list:last-child {
     border-left: none;
-  	border-top: 1px solid var(--color-line-default);
+  	border-top: calc(0.0625rem + 0vw) solid var(--color-line-default);
     padding-block-start: var(--space-s);
   }
     

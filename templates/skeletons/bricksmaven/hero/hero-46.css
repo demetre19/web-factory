@@ -29,7 +29,7 @@
   .hero-46__media {
     display: grid;
     gap: calc(var(--space-m) / 1.6);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .hero-46__carousel {

@@ -17,18 +17,18 @@
   .product-list-3__list {
     display: grid;
     gap: calc( var(--space-m) * 2 );
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .product-list-3-card__container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
   .product-list-3-card {
     padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     row-gap: calc(var(--flow-spacing) / 2);
   }
 

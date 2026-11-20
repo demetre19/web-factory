@@ -14,7 +14,7 @@
   .testimonial-13-list-ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-l);
   }
 
@@ -31,17 +31,17 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    row-gap: 2rem;
+    row-gap: var(--space-l);
   }
 
   .testimonial-13-list-card__content {
     display: flex;
     flex-direction: column;
-    row-gap: .5rem;
+    row-gap: calc(0.5rem + 0vw);
   }
 
   .testimonial-13-list-card__image {
-    width: 7rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }

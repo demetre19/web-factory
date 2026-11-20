@@ -4,7 +4,7 @@
 
   .bm-footer-16__intro {
     align-items: center;
-    width: var(--measure);
+    max-width: var(--measure);
     align-self: center;
     row-gap: var(--flow-spacing);
     text-align: center;
@@ -16,7 +16,7 @@
 
   .bm-footer-16__content {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     text-align: center;
     padding: 0 0 var(--space-m) 0;

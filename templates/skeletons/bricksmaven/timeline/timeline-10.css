@@ -43,11 +43,11 @@
 
   .timeline-10__border-line {
     width: 100%;
-    margin: -1.2rem 0 0 0;
+    margin: calc(var(--space-s) * -1) 0 0 0;
   }
 
   .timeline-10-list .splide__track {
-  		padding-bottom: calc(var(--section-space-xxl) + 1.5rem);
+  		padding-bottom: calc(var(--section-space-xxl) + var(--space-m));
   }
   
   .timeline-10-list .splide__arrows.custom {
@@ -70,7 +70,7 @@
   }
   
   .timeline-10-card:focus-within {
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--text-primary) 10%, transparent);
+    box-shadow: 0 0 0 calc(0.125rem + 0vw) color-mix(in srgb, var(--text-primary) 10%, transparent);
   }
   
   /* Overlay */
@@ -109,7 +109,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: .1rem;
+    width: calc(0.1rem + 0vw);
     height: var(--section-space-xxl); 
     background-color: var(--action-primary);
   }
@@ -118,14 +118,14 @@
   .timeline-10-card::after { 
     content: "";
     position: absolute;
-    top: calc(100% + var(--section-space-xxl) - 6px);
+    top: calc(100% + var(--section-space-xxl) - calc(0.375rem + 0vw));
     left: 50%;
     transform: translateX(-50%);
-    width: 2rem;
-    height: 2rem; 
+    width: var(--space-l);
+    height: var(--space-l); 
     background-color: var(--action-primary);
     border-radius: 100%;
-    border: .4rem solid var(--bg-canvas);
+    border: calc(0.4rem + 0vw) solid var(--bg-canvas);
   }
   
   @media (min-width: 767px) {

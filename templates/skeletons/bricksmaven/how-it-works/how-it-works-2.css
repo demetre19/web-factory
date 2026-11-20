@@ -1,6 +1,6 @@
   .hworks-grid-ul {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-s);
   }
 
@@ -30,7 +30,7 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:1.4rem;
-    padding-block:.4rem;
+    padding-inline:var(--space-m);
+    padding-block:calc(0.4rem + 0vw);
     color:var(--action-primary);
   }

@@ -15,7 +15,7 @@
 
   .counter-6-grid-ul {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .counter-6-card {
@@ -32,11 +32,11 @@
   }
 
   .counter-6-wrap:first-child {
-  	padding-left: 0px !important;
+  	padding-left: 0 !important;
   }
   
   .counter-6-wrap:last-child {
-  	padding-right: 0px;
+  	padding-right: 0;
     border-right: none;
   }
   
@@ -48,6 +48,6 @@
   }
 
   .counter-6-card__number {
-  -webkit-text-stroke: .1rem var(--bg-canvas);
+  -webkit-text-stroke: calc(0.1rem + 0vw) var(--bg-canvas);
   -webkit-text-fill-color: transparent;
   }

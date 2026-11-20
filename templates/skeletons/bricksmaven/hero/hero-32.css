@@ -9,7 +9,7 @@
   }
 
   .hero-32__content {
-    width: var(--measure);
+    max-width: var(--measure);
     padding: 0 0 0 var(--space-l);
   }
 
@@ -37,7 +37,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -50,7 +50,7 @@
 
   .hero-32__image {
     object-fit: cover;
-    width: 32rem;
+    width: var(--space-xxl);
   }
 
   .hero-32__container-image {

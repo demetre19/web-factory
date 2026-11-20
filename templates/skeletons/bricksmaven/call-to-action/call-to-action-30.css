@@ -2,7 +2,7 @@
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-cta-30-card__content {
@@ -22,7 +22,7 @@
 
   .bm-cta-30-contact-card__image {
     object-fit: cover;
-    width: 92px;
+    width: var(--space-xxl);
   }
 
   .bm-team-card__contact-details {

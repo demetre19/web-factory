@@ -12,17 +12,43 @@ interface Props {
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string;
+  items?: { title?: string; text?: string; term?: string;
              label?: string; href?: string;
-             items?: any[] }[];
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
   heading = '',
   fs = '',
   cta = { label: '', href: '#' },
   items = [],
+  image,
+  copy,
 } = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
 <div>
@@ -30,32 +56,32 @@ const {
     <div class="sec-inner">
       <div class="bm-product-archive-1__header-page grid-auto gap-fluid-l">
         <div class="bm-product-archive-1__content">
-          {heading && <h1 class="text-fluid-4">{heading}</h1>}
+          {head && <h1 class="text-fluid-4">{head}</h1>}
           <div></div>
-          {fs && <p class="text-fluid-0">{fs}</p>}
+          {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+          {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <figure class="bm-product-archive-1__header-page-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        {image && image.src && <figure class="bm-product-archive-1__header-page-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
     </div>
     <div class="sec-inner">
       <div class="bm-product-archive-1__container">
         <div class="bm-product-archive-1__product-container">
-          <div class="bm-product-archive-1__filter-column">
-            <div class="grid-auto gap-fluid-m">
-              {(items || []).map((it) => (
+          {list.length > 0 &&           <div class="bm-product-archive-1__filter-column">
+            {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-product-archive__filter-row card">
-                  <h4 class="text-fluid-2">{it.title}</h4>
+                  <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                   <div></div>
                 </div>
-              ))}
-            </div>
+              ))}</div>}
           </div>
+          }
           <div class="bm-product-archive-1__product-grid">
             <div class="bm-product-archive-1__header-page-short grid-auto gap-fluid-l">
               <div class="bm-product-archive-1__content">
                 <div></div>
               </div>
-              <figure class="bm-product-archive-1__header-page-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              {image && image.src && <figure class="bm-product-archive-1__header-page-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             <div>
               <div></div>
@@ -67,16 +93,15 @@ const {
                 </div>
                 <div>
                   <div class="bm-product-archive-off-canvas__content">
-                    <div class="bm-product-archive-1__filter-column">
-                      <div class="grid-auto gap-fluid-m">
-                        {(items || []).map((it) => (
+                    {links.length > 0 &&                     <div class="bm-product-archive-1__filter-column">
+                      {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                           <div class="bm-product-archive__filter-row card">
-                            <h4 class="text-fluid-2">{it.title}</h4>
+                            <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                             <div></div>
                           </div>
-                        ))}
-                      </div>
+                        ))}</div>}
                     </div>
+                    }
                     <div></div>
                   </div>
                   <div></div>
@@ -90,23 +115,22 @@ const {
             <div class="bm-product-archive__product-list">
               <div class="product-list-1-card grid-auto gap-fluid-l">
                 <div class="product-list-1-card__content">
-                  <div class="product-list-1-card__top"></div>
                   <div></div>
                 </div>
-                <div class="product-list-notice__wrapper">
-                  <div class="product-list-notice-circle__sale-badge"></div>
-                </div>
-                <figure class="product-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                {image && image.src && <figure class="product-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
               </div>
             </div>
             <div>
               <div></div>
             </div>
-            <div class="bm-product-archive__seo-text-block"></div>
           </div>
         </div>
       </div>
       <div></div>
     </div>
   </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

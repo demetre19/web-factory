@@ -17,7 +17,7 @@
     align-items: flex-start;
     text-align: left;
     align-self: flex-start;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -30,14 +30,14 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .portfolio-section-7-portfolio-wrapper {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .portfolio-section-7-card {
@@ -94,13 +94,13 @@
   }
   
   .portfolio-section-7-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--color-line-default) 90%, transparent);
+    box-shadow: 0 0 var(--space-s) 0 color-mix(in srgb, var(--color-line-default) 90%, transparent);
   }
   
   
   /* Card First child*/
   .portfolio-section-7-card:first-child {
-  	height: 72rem; /* Change the height of the first child */
+  	height: var(--space-xxl); /* Change the height of the first child */
     grid-column: span 2; /* Spans the first child over 2 columns */
     transition: .5s linear;
     
@@ -114,7 +114,7 @@
   
   /* Content */
   .portfolio-section-7-card:first-child .portfolio-section-7-card__content {
-    width: var(--measure); /* Change the width of content wrapper */
+    max-width: var(--measure); /* Change the width of content wrapper */
     height: 100%;
     flex-direction: column;
     justify-content: center;
@@ -154,7 +154,7 @@
   /* Media Query*/
   @media (max-width:991px) {
   	.portfolio-section-7-card:first-child {
-    height: 52rem;
+    height: var(--space-xxl);
     grid-column: span 1;
     
   }

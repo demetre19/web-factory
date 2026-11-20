@@ -1,116 +1,341 @@
 {
-  "artifacts": {
-    "CANDIDATES.json": {
-      "context_tokens": 6002,
-      "gate_pass": true,
-      "sha256": "b62c11db0f9124bb5a89000b4e643f4e59fd431062fdfb8224e8df96fac4ed5c",
-      "sig": "a6e2a3f11c08a04f18b01a9a7ce0414d",
-      "wave": "w1"
-    },
-    "COPY.json": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "c128f394bea4e28033342a1a84bb17fa0a577f187337a6ba6829ebd12fbc018d",
-      "wave": "w0"
-    },
-    "DESIGN-PLAN.md": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "a4c7a058a4b2975f3adf4268e0af4569c05fdfc4c335e6ed5874ae50cdec9972",
-      "wave": "w0"
-    },
-    "DNA.json": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "5f9f62d170404764c99ad78af8906a806862222335f06a6925636be24178366b",
-      "wave": "w0"
-    },
-    "LAYOUT-OPTIONS.json": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "e3ac7f26931999b2fe281df84e3f85b1fd0a9f5a1faf2c7f90017718f436b138",
-      "wave": "w0"
-    },
-    "STUB.md": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "c561a4cf8bd14538a02691df533e687e1bc1df5266f5a884aa3548ffdfab1f2b",
-      "wave": "w0"
-    },
-    "TOKENS.json": {
-      "context_tokens": 5435,
-      "gate_pass": true,
-      "sha256": "4dd0a7ea858a31597fc14dcde6e9d63039f85058c775f676fd6b99a06dcfc5ff",
-      "wave": "w0"
-    },
-    "preview/candidates.html": {
-      "context_tokens": 6002,
-      "gate_pass": true,
-      "sha256": "1d074d208a461c69e46c14d57e915399cff91be6d686381bb9015ffdeedfa701",
-      "sig": "52935e1064bd61048fea75fbf423d1ea",
-      "wave": "w1"
-    }
+ "artifacts": {
+  "ASSEMBLED.md": {
+   "context_tokens": 8270,
+   "gate_pass": true,
+   "sha256": "dd94b32be8dda67815c3de79595097b000c29b2b72b6da4e1ee816b2c840f1df",
+   "sig": "9f950b420894d506b74dc44c63c554f4",
+   "wave": "w7"
   },
-  "w0": {
-    "approved": false,
-    "dna": {
-      "core": "dfec75735b32a95f",
-      "structure": "348a40ded6dc2250"
-    },
-    "failures": [],
-    "inputs_files": [
-      "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md",
-      "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md",
-      "COPY.json",
-      "DESIGN-PLAN.md",
-      "DNA.json",
-      "LAYOUT-OPTIONS.json",
-      "STUB.md",
-      "TOKENS.json",
-      "site/astro.config.mjs",
-      "site/package.json",
-      "site/src/styles/global.css"
-    ],
-    "inputs_sha256": {
-      "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md": "a86ce5a57065a68a",
-      "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md": "1f95c656e8fe26a1",
-      "COPY.json": "c128f394bea4e280",
-      "DESIGN-PLAN.md": "a4c7a058a4b2975f",
-      "DNA.json": "5f9f62d170404764",
-      "LAYOUT-OPTIONS.json": "e3ac7f26931999b2",
-      "STUB.md": "c561a4cf8bd14538",
-      "TOKENS.json": "4dd0a7ea858a3159",
-      "site/astro.config.mjs": "41a825cd2f7ee30e",
-      "site/package.json": "3ab373cc02b1f555",
-      "site/src/styles/global.css": "4f1f1ca9696975bc"
-    },
-    "pass": true,
-    "ts": "2026-11-20T14:14:03"
+  "CANDIDATES.json": {
+   "context_tokens": 5992,
+   "gate_pass": true,
+   "sha256": "b62c11db0f9124bb5a89000b4e643f4e59fd431062fdfb8224e8df96fac4ed5c",
+   "sig": "8e056631143ba66f381a34a67abe631d",
+   "wave": "w1"
   },
-  "w1": {
-    "approved": false,
-    "dna": {
-      "core": "dfec75735b32a95f",
-      "structure": "348a40ded6dc2250"
-    },
-    "failures": [
-      "P.14 ~/.mobbin-oauth/refresh.sh missing \u2014 Mobbin token rotator unavailable; run the re-auth flow before consulting Mobbin"
-    ],
-    "inputs_files": [
-      "../../MOBBIN-REFS.md",
-      "CANDIDATES.json",
-      "DESIGN-PLAN.md",
-      "audit.md",
-      "preview/candidates.html"
-    ],
-    "inputs_sha256": {
-      "../../MOBBIN-REFS.md": "e021d916d9062725",
-      "CANDIDATES.json": "b62c11db0f9124bb",
-      "DESIGN-PLAN.md": "a4c7a058a4b2975f",
-      "audit.md": null,
-      "preview/candidates.html": "1d074d208a461c69"
-    },
-    "pass": false,
-    "ts": "2026-11-20T14:14:05"
+  "COPY.json": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "c128f394bea4e28033342a1a84bb17fa0a577f187337a6ba6829ebd12fbc018d",
+   "sig": "3f4ca99287ff3bde1423a1717e65fcde",
+   "wave": "w0"
+  },
+  "DESIGN-PLAN.md": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "1c616a1f0b6acb20a734618c39c4ad7f057e4cb04f743c8ca6dd1a7b27e19759",
+   "sig": "2def18660db22929d6d6ff8278a69a25",
+   "wave": "w0"
+  },
+  "DNA.json": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "ff6faea1653293191dd2687b0482badd585eaa836a22cd5c3dd2f3656f899878",
+   "sig": "6bf914187a1f1daf1afde30fe9f480fc",
+   "wave": "w0"
+  },
+  "LAYOUT-OPTIONS.json": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "c8a0e1034326ef980704c052ce8a1a5213a85e0a0cb5ab01c34de2b1e1145e3c",
+   "sig": "931aa56f1dd2c36b57837b671c2ad120",
+   "wave": "w0"
+  },
+  "REVIEW.json": {
+   "wave": "w8",
+   "sha256": "4e1161864132715547b4357f3f8bd6a10fefd187377f7589a2e08275111a4581",
+   "gate_pass": true,
+   "context_tokens": 9700,
+   "sig": "64fbdb660a5f62be361512716a767a59"
+  },
+  "SPEC.md": {
+   "context_tokens": 8270,
+   "gate_pass": true,
+   "sha256": "c305391fb889730e827432c0c5a3a5632785d4f837e17473f926be6a55bc720b",
+   "sig": "485789c031b642bd7a953473bb1c933f",
+   "wave": "w7"
+  },
+  "STUB.md": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "a3a6894672c08cd6645a95ad6f45d816c0db0ab78004a93cb8786e29f45fcade",
+   "sig": "3b90a9a1cbb12e9c9e008a430abc381a",
+   "wave": "w0"
+  },
+  "TOKENS.json": {
+   "context_tokens": 5421,
+   "gate_pass": true,
+   "sha256": "deb028bfc190d6cbd41bf571e3dadbf6e9b486d16c7b24913df2adcfaa746ed8",
+   "sig": "e75f72c3ac00a6c9ef37a59c700fb53d",
+   "wave": "w0"
+  },
+  "preview/candidates.html": {
+   "context_tokens": 5992,
+   "gate_pass": true,
+   "sha256": "4bc8ae8b702fd4f87dd079ad52be5c7396edf2671d9cc7c284395dd6ccaf7a33",
+   "sig": "bd9583dd858b0061e4390f0e123d886a",
+   "wave": "w1"
+  },
+  "preview/fine.html": {
+   "context_tokens": 6347,
+   "gate_pass": true,
+   "sha256": "d238b88eaaa704ab4639db9c5e7d50f7c47f28486703f89dfb4327aa4c18625c",
+   "sig": "66ff68158a6940f4e03b026580f164a1",
+   "wave": "w4"
+  },
+  "preview/layouts.html": {
+   "context_tokens": 6906,
+   "gate_pass": true,
+   "sha256": "8b71a8c592677c4a69fd72b721866f82ff3d197012b19393644fd9f9bc0d8f98",
+   "sig": "6055161953ec196ca3858cf96b0b34e5",
+   "wave": "w3"
+  },
+  "preview/system.html": {
+   "context_tokens": 7022,
+   "gate_pass": true,
+   "sha256": "a10a3cca9513cd76dd15d64ac6f2f9a90cf63c493e97d290c1d00243c3ab1a44",
+   "sig": "c8052fceed68bfc01ac1898f5164c806",
+   "wave": "w5"
+  },
+  "preview/variants.html": {
+   "context_tokens": 6347,
+   "gate_pass": true,
+   "sha256": "17e6abba7167612444d9e90bb1bebe24589629491aa54b1b3135b50393c2cd34",
+   "sig": "8e0573b5144b010dee949b56b9f19b8e",
+   "wave": "w4"
   }
+ },
+ "w0": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md",
+   "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md",
+   "COPY.json",
+   "DESIGN-PLAN.md",
+   "DNA.json",
+   "LAYOUT-OPTIONS.json",
+   "STUB.md",
+   "TOKENS.json",
+   "site/astro.config.mjs",
+   "site/package.json",
+   "site/src/styles/global.css"
+  ],
+  "inputs_sha256": {
+   "../../../BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md": "a86ce5a57065a68a",
+   "../../../BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md": "1f95c656e8fe26a1",
+   "COPY.json": "c128f394bea4e280",
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "DNA.json": "ff6faea165329319",
+   "LAYOUT-OPTIONS.json": "c8a0e1034326ef98",
+   "STUB.md": "a3a6894672c08cd6",
+   "TOKENS.json": "deb028bfc190d6cb",
+   "site/astro.config.mjs": "41a825cd2f7ee30e",
+   "site/package.json": "3ab373cc02b1f555",
+   "site/src/styles/global.css": "6d9705a2e2dd32f9"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:39:05"
+ },
+ "w1": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "../../MOBBIN-REFS.md",
+   "CANDIDATES.json",
+   "DESIGN-PLAN.md",
+   "audit.md",
+   "preview/candidates.html"
+  ],
+  "inputs_sha256": {
+   "../../MOBBIN-REFS.md": "b45ae5d60fb2fcfa",
+   "CANDIDATES.json": "b62c11db0f9124bb",
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "audit.md": null,
+   "preview/candidates.html": "4bc8ae8b702fd4f8"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:38:32"
+ },
+ "w2": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "STUB.md"
+  ],
+  "inputs_sha256": {
+   "STUB.md": "a3a6894672c08cd6"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:37:59"
+ },
+ "w3": {
+  "approved": true,
+  "design": "d2",
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "../../MOBBIN-REFS.md",
+   "DESIGN-PLAN.md",
+   "preview/layouts.html"
+  ],
+  "inputs_sha256": {
+   "../../MOBBIN-REFS.md": "b45ae5d60fb2fcfa",
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "preview/layouts.html": "8b71a8c592677c4a"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:38:36"
+ },
+ "w4": {
+  "approved": true,
+  "design": "v1",
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "DESIGN-PLAN.md",
+   "preview/fine.html",
+   "preview/variants.html"
+  ],
+  "inputs_sha256": {
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "preview/fine.html": "d238b88eaaa704ab",
+   "preview/variants.html": "17e6abba71676124"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:38:42"
+ },
+ "w5": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "DESIGN-PLAN.md",
+   "STUB.md",
+   "TOKENS.json",
+   "preview/layouts.html",
+   "preview/system.html",
+   "site/src/styles/global.css"
+  ],
+  "inputs_sha256": {
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "STUB.md": "a3a6894672c08cd6",
+   "TOKENS.json": "deb028bfc190d6cb",
+   "preview/layouts.html": "8b71a8c592677c4a",
+   "preview/system.html": "a10a3cca9513cd76",
+   "site/src/styles/global.css": "6d9705a2e2dd32f9"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:39:08"
+ },
+ "w6": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "COMPONENTS.md",
+   "DESIGN-PLAN.md",
+   "site/src/components/Section.astro",
+   "site/src/components/cards-n.astro",
+   "site/src/components/comparison.astro",
+   "site/src/components/editorial.astro",
+   "site/src/components/faq.astro",
+   "site/src/components/footer-bar.astro",
+   "site/src/components/form-panel.astro",
+   "site/src/components/link-grid.astro",
+   "site/src/components/nav-bar.astro",
+   "site/src/components/proof-band.astro",
+   "site/src/components/sequence.astro",
+   "site/src/components/split-media.astro",
+   "site/src/components/stacked-hero.astro",
+   "site/src/components/stat-band.astro",
+   "site/src/components/text-index.astro",
+   "site/src/pages/system.astro"
+  ],
+  "inputs_sha256": {
+   "COMPONENTS.md": "00396ce91f515af8",
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "site/src/components/Section.astro": "2d4af5f253fd303d",
+   "site/src/components/cards-n.astro": "3af78e15314ff229",
+   "site/src/components/comparison.astro": "1e877f36cc4402f0",
+   "site/src/components/editorial.astro": "890336936f99d83c",
+   "site/src/components/faq.astro": "6e90cb26c5e5b54a",
+   "site/src/components/footer-bar.astro": "cdb25e4743d71fb2",
+   "site/src/components/form-panel.astro": "ced10901c50bd8c8",
+   "site/src/components/link-grid.astro": "6be62aee911262ae",
+   "site/src/components/nav-bar.astro": "7cca2a63ee51ad4b",
+   "site/src/components/proof-band.astro": "b3094dcc6df0903d",
+   "site/src/components/sequence.astro": "45cc6ffbded61339",
+   "site/src/components/split-media.astro": "466a275acabd6d99",
+   "site/src/components/stacked-hero.astro": "c19c9f149a1a3053",
+   "site/src/components/stat-band.astro": "0278696af50dc01f",
+   "site/src/components/text-index.astro": "d8f577877905c919",
+   "site/src/pages/system.astro": "1d2fbfa597af3278"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:39:18"
+ },
+ "w7": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "DESIGN-PLAN.md",
+   "PAGES/strata-cleaning-melbourne/SPEC.md",
+   "STUB.md",
+   "site/dist/strata-cleaning-melbourne/index.html"
+  ],
+  "inputs_sha256": {
+   "DESIGN-PLAN.md": "1c616a1f0b6acb20",
+   "PAGES/strata-cleaning-melbourne/SPEC.md": "1d132f233b2f5f2e",
+   "STUB.md": "a3a6894672c08cd6",
+   "site/dist/strata-cleaning-melbourne/index.html": "0b029b031f4770fd"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:39:48"
+ },
+ "w8": {
+  "approved": false,
+  "dna": {
+   "core": "e9fdbe44338edd4c",
+   "structure": "00cdde7335dd5335"
+  },
+  "failures": [],
+  "inputs_files": [
+   "REVIEW.json"
+  ],
+  "inputs_sha256": {
+   "REVIEW.json": "4e11618641327155"
+  },
+  "pass": true,
+  "ts": "2026-11-20T19:41:11"
+ }
 }

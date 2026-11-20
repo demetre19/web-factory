@@ -25,7 +25,7 @@
   }
 
   .error-1-box__search .bricks-search-form {
-  	gap: 1.5rem;
+  	gap: var(--space-m);
   }
   .error-1-box__search [type="search"] {
   	width: 70% !important;
@@ -34,7 +34,7 @@
   	background-color: var(--action-primary);
     color: var(--bg-canvas);
     width: 30%;
-    padding: 10px 15px;
+    padding: var(--space-xs) var(--space-xs);
     text-align: center;
     height: auto;
     position: static!important;
@@ -47,7 +47,7 @@
     font-weight: 400;
     line-height: 100%;
     outline: none;
-    padding: 10px;
+    padding: var(--space-xs);
     text-align: center;
     clip-path: unset;
   }

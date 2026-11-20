@@ -82,6 +82,55 @@ DERIVED_SEMANTIC = {
                    ' 0 12px 40px color-mix(in oklch,'
                    ' var(--shadow-ink, black) 8%, transparent)'),
 }
+# ACSS --box-shadow-{1,2,3} rungs keyed by elevation.level; 0 = flat
+# (S.6/S.7 — radius couples at each rung, knob `radius.personality`).
+def _shadow_rungs(lvl, dark=False):
+    """elevation.level 0..3 → (shadow-card, shadow-pop) CSS strings."""
+    if lvl <= 0:
+        return ('none', 'none')
+    if dark:
+        a, b = 25 + 5 * lvl, 20 + 5 * lvl
+        ink = 'var(--shadow-ink)'
+    else:
+        a, b = 4 + 2 * lvl, 3 + 2 * lvl
+        ink = 'var(--shadow-ink, black)'
+    card = (f'0 {lvl}px {2 * lvl}px color-mix(in oklch, {ink} {a}%,'
+            f' transparent), 0 {2 * lvl}px {4 * lvl}px color-mix(in'
+            f' oklch, {ink} {b}%, transparent)')
+    pop = (f'0 {2 * lvl}px {8 * lvl}px color-mix(in oklch, {ink} '
+           f'{a + 5}%, transparent), 0 {6 * lvl}px {20 * lvl}px '
+           f'color-mix(in oklch, {ink} {b + 5}%, transparent)')
+    return (card, pop)
+
+
+# motion.level → the motion primitive set (M.1/M.4 — duration, ease,
+# travel distance all follow the level; motion.engine is emitted as a
+# marker var for the runtime gate in M.14).
+_MOTION_VARS = {
+    'none': ('0ms', '0ms', 'linear', '0'),
+    'subtle': ('120ms', '250ms', 'cubic-bezier(.2,.6,.2,1)', '4px'),
+    'professional': ('180ms', '350ms', 'cubic-bezier(.2,.6,.2,1)',
+                     '6px'),
+    'elegant': ('200ms', '400ms', 'cubic-bezier(.16,1,.3,1)', '8px'),
+    'playful': ('250ms', '500ms', 'cubic-bezier(.34,1.56,.64,1)',
+                '12px')}
+
+
+# image.treatment → a real filter/position the <img> consumer binds
+# (V.5). Duotone derives its hue from the brand accent.
+def _image_vars(treatment, accent):
+    import gate
+    lch = gate._oklch_lch(accent) if accent else None
+    hue = round(lch[2]) if lch else 180
+    f = {'natural': 'none', 'bw': 'grayscale(1)',
+         'duotone': ('grayscale(1) sepia(.65) '
+                     f'hue-rotate({hue}deg) saturate(1.4)'),
+         'cinematic': 'contrast(1.08) saturate(1.1)',
+         'editorial-crop': 'none'}.get(treatment, 'none')
+    pos = '35%' if treatment == 'editorial-crop' else '50%'
+    return f, pos
+
+
 # Tailwind utility names the inline map publishes
 UTILITY_MAP = {
     'bg-canvas': 'canvas', 'bg-surface': 'surface',
@@ -139,10 +188,17 @@ def emit(tokens):
     # ---- 1. primitives (plain :root — the project is Tailwind v3,
     # where @theme is a literal at-rule the browser drops) ------
     A(':root {')
-    A('  /* neutral ramp — brand-tinted at knobs.color.neutral_tint */')
+    A('  /* neutral ramp — literals; knobs.color.neutral_tint mixes')
+    A('     the accent into each neutral at the SEMANTIC layer via')
+    A('     var(--tint-amt), so a variant\'s scope carries only the')
+    A('     amount, never a hex or a primitive reference (TK.3) */')
+    nt = float(knobs.get('color.neutral_tint') or 0)
+    acc = light.get('accent')
     for role, hexv in light.items():
         safe = re.sub(r'\W+', '-', role)
         A(f'  --primitive-neutral-{safe}: {hexv};')
+    A(f'  --tint-amt: {round(nt * 100, 2)}%;')
+    A(f'  --tint-inv: {round(100 - nt * 100, 2)}%;')
     A('  /* semantic state ramp */')
     for st, v in (('success', '#2F7D4F'), ('warning', '#B57708'),
                   ('danger', '#C0392B'), ('info', '#2E6FBE')):
@@ -188,9 +244,25 @@ def emit(tokens):
     A(f'  --primitive-grid-min: {_gridmin};')
     A('  --primitive-leading-body: 1.6;')
     A('  --primitive-leading-display: 1.15;')
-    A('  --primitive-ease: cubic-bezier(.2,.6,.2,1);')
-    A('  --primitive-duration-fast: 150ms;')
-    A('  --primitive-duration-med: 300ms;')
+    # knobs.motion.level/engine drive the motion set (M.1/M.4;
+    # engine is the M.14 licence marker consumers read). Named
+    # without 'primitive' — variant scopes carry these raw and TK.3
+    # forbids a primitive reference inside a component
+    _mo = _MOTION_VARS.get(str(knobs.get('motion.level') or 'subtle'),
+                           _MOTION_VARS['subtle'])
+    A(f'  --motion-ease: {_mo[2]};')
+    A(f'  --motion-fast: {_mo[0]};')
+    A(f'  --motion-med: {_mo[1]};')
+    A(f'  --motion-distance: {_mo[3]};')
+    A(f"  --motion-engine: {knobs.get('motion.engine') or 'css'};")
+    # knobs.image.treatment drives the media treatment (V.5): a real
+    # filter is emitted as --image-fx for consumers to bind; non-filter
+    # treatments (natural/editorial-crop) carry only the crop position
+    _if, _ip = _image_vars(str(knobs.get('image.treatment')
+                                       or 'natural'), acc)
+    if _if != 'none':
+        A(f'  --image-fx: {_if};')
+    A(f'  --image-position: {_ip};')
     A('  --primitive-z-base: 0;')
     A('  --primitive-z-sticky: 10;')
     A('  --primitive-z-overlay: 50;')
@@ -199,10 +271,33 @@ def emit(tokens):
     # ---- 2. :root semantic layer ----------------------------------
     A(':root {')
     A(f"  --text-inverse-src: {inverse_ink(light.get('inverse'), light, dark)};")
+    # knobs.color.neutral_tint — the accent mix lands ON the semantic
+    # vars (var refs only: the same text emits for every variant, so a
+    # scope diff carries just --tint-amt/--tint-inv, never a hex or a
+    # primitive reference — TK.3)
+    _tinted = {'bg-surface': 'surface', 'bg-elevated':
+               'surface_elevated', 'border-default': 'border',
+               'text-primary': 'ink', 'text-secondary': 'ink_muted',
+               'bg-inverse': 'inverse'}
     for role, var in ROLE_SEMANTIC.items():
         if role in light:
-            A(f'  --{var}: {light[role]};')
-    for name, val in DERIVED_SEMANTIC.items():
+            if nt > 0 and acc and var in _tinted:
+                A(f'  --{var}: color-mix(in oklch, '
+                  f'var(--primitive-neutral-{_tinted[var]}) '
+                  f'var(--tint-inv), var(--primitive-neutral-accent) '
+                  f'var(--tint-amt));')
+            else:
+                A(f'  --{var}: {light[role]};')
+    _lvl = int(knobs.get('elevation.level') or 0)
+    _sh = dict(DERIVED_SEMANTIC)
+    _sh['shadow-card'], _sh['shadow-pop'] = _shadow_rungs(_lvl)
+    # color.surface_contrast (OKLCH L gap surface↔bg) drives the subtle
+    # blend — higher contrast → a more canvas-forward subtle surface
+    sc = float(knobs.get('color.surface_contrast') or 0.05)
+    _sh['bg-subtle'] = ('color-mix(in oklch, var(--bg-surface) '
+                        f'{round(90 - (sc - 0.02) * (40 / 0.06))}%,'
+                        ' var(--bg-canvas))')
+    for name, val in _sh.items():
         A(f'  --{name}: {val};')
     A('}')
     A('')
@@ -217,12 +312,9 @@ def emit(tokens):
             A(f'  --{var}: {light[role]};')
     A(f"  --text-inverse-src: {inverse_ink(dark.get('inverse'), light, dark)};")
     A('  --shadow-ink: black;')
-    A('  --shadow-card: 0 1px 2px color-mix(in oklch,'
-      ' var(--shadow-ink) 35%, transparent), 0 2px 8px'
-      ' color-mix(in oklch, var(--shadow-ink) 30%, transparent);')
-    A('  --shadow-pop: 0 4px 16px color-mix(in oklch,'
-      ' var(--shadow-ink) 45%, transparent), 0 12px 40px'
-      ' color-mix(in oklch, var(--shadow-ink) 35%, transparent);')
+    _dc, _dp = _shadow_rungs(_lvl, dark=True)
+    A(f'  --shadow-card: {_dc};')
+    A(f'  --shadow-pop: {_dp};')
     # derived semantics re-declare so their mix() resolves against
     # the dark bases — TK.2 parity covers every semantic var
     for name, val in DERIVED_SEMANTIC.items():

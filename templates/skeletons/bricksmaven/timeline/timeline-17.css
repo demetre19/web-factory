@@ -19,7 +19,7 @@
   .intro--split {
     display: grid;
     text-align: left;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -56,14 +56,14 @@
   }
   
   .bm-timeline-17__slider-nested .splide__arrow--next {
-      left: 40px;
+      left: var(--space-xl);
   }
 
   .bm-timeline-17-card::before {
     content: '';
     position: absolute;
     inline-size: calc(100% + var(--space-m));
-    block-size: 2px;
+    block-size: calc(0.125rem + 0vw);
     background-color: var(--text-secondary);
     inset-block-start: calc(var(--space-l) + var(--space-s));
   }
@@ -76,7 +76,7 @@
     content: '';
     position: absolute;
     inline-size: calc(100% + var(--space-m));
-    block-size: 4px;
+    block-size: calc(0.25rem + 0vw);
     background-color: var(--bg-subtle);
     inset-block-start: var(--space-s);
     inset-inline-start: calc(-1 * (var(--space-m) / 2));

@@ -10,7 +10,7 @@
   }
 
   .bm-hero-65__content {
-    width: var(--measure);
+    max-width: var(--measure);
     align-items: flex-start;
     row-gap: var(--flow-spacing);
   }
@@ -40,7 +40,7 @@
 
   .bm-hero-65-contact-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     width: var(--content-width);
     gap: 0;
   }
@@ -65,39 +65,39 @@
 
   @media (min-width:991px) {
     .bm-hero-65-contact-card:nth-child(1) {
-    border-left: 1px solid var(--bg-subtle);
-    border-right: 0px solid var(--bg-subtle);
-    border-bottom: 0px solid var(--bg-subtle);
+    border-left: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-right: 0 solid var(--bg-subtle);
+    border-bottom: 0 solid var(--bg-subtle);
     
   }
   
   .bm-hero-65-contact-card:nth-child(2) {
-    border-left: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 0px solid var(--bg-subtle);
+    border-left: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-bottom: 0 solid var(--bg-subtle);
   }
   
   .bm-hero-65-contact-card:nth-child(3) {
-    border-left: 0px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
+    border-left: 0 solid var(--bg-subtle);
+    border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
   }
   
   }
   
     .bm-hero-65-contact-card:nth-child(1) {
-    border-left: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 1px solid var(--bg-subtle);
+    border-left: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-bottom: calc(0.0625rem + 0vw) solid var(--bg-subtle);
     
   }
   
   .bm-hero-65-contact-card:nth-child(2) {
-    border-left: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
-    border-bottom: 1px solid var(--bg-subtle);
+    border-left: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-bottom: calc(0.0625rem + 0vw) solid var(--bg-subtle);
   }
   
   .bm-hero-65-contact-card:nth-child(3) {
-    border-left: 1px solid var(--bg-subtle);
-    border-right: 1px solid var(--bg-subtle);
+    border-left: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
   }

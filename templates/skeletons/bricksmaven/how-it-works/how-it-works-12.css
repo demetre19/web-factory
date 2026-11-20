@@ -13,7 +13,7 @@
 
   .hworks-12-grid-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -37,14 +37,14 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: var(--action-primary);
-    padding-inline:2rem;
-    padding-block:1rem;
+    padding-inline:var(--space-l);
+    padding-block:var(--space-s);
     color:var(--bg-canvas);
     font-size: var(--fs-1);
     font-weight: 700;
     border-radius: 100%;
     position:absolute;
-    left:-2.3rem;
+    left:calc(var(--space-l) * -1);
       top:50%;
     transform: translateY(-50%);
     

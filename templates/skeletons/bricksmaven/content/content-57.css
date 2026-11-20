@@ -5,7 +5,7 @@
   .bm-content-57__footer {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-57-card {

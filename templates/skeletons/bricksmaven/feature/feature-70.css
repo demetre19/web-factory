@@ -39,7 +39,7 @@
 
   .bm-feature-70-card__dot-wrapper {
     align-items: center;
-    width: 64px;
+    width: var(--space-xxl);
   }
 
   .bm-feature-70-card__dot-cover {
@@ -49,7 +49,7 @@
   }
 
   .bm-feature-70-card__dot {
-    width: 24px;
+    width: var(--space-m);
   }
 
   .bm-feature-70-card__content {
@@ -94,7 +94,7 @@
   .bm-feature-70-card .bm-feature-70-card__dot-wrapper::before {
     content: '';
     block-size: 100%;
-    inline-size: 1px;
+    inline-size: calc(0.0625rem + 0vw);
     position: absolute;
     background-color: var(--fs-0);
     z-index:-1;

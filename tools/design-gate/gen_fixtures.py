@@ -854,6 +854,7 @@ LAYOUT_OPTIONS = json.dumps({
 
 
 def dna_doc():
+    import clamp
     doc = {
         "version": 1,
         "site": "fixture",
@@ -971,6 +972,7 @@ def dna_doc():
                 "tag": "extracted",
                 "source": "ACSS dashboard defaults (clamp.DEFAULTS)",
                 "divergences": {
+                    **clamp.DIVERGENCES,
                     **{f"fs-{n}": "component alias → ACSS text scale"
                        for n in ('-1', '0', '1', '2', '3', '4', '5')},
                     **{f"lh-{n}": "leading ladder follows text scale"
@@ -1654,7 +1656,8 @@ def main():
     # minified/hashed is fine; the checks read real markup.
     r = subprocess.run(['npm', 'run', 'build'],
                        cwd=os.path.join(base_dir, 'site'),
-                       capture_output=True, text=True, timeout=300)
+                       capture_output=True, text=True, timeout=300,
+                       env=gate.node_env())
     if r.returncode:
         tail = '\n'.join((r.stdout + r.stderr).split('\n')[-8:])
         raise SystemExit(f'astro build failed in _base: {tail}')

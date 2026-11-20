@@ -5,7 +5,7 @@
   .bm-footer-18__newsletter-block {
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -20,7 +20,7 @@
 
   .bm-footer-18__content {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-footer-18__left {
@@ -43,7 +43,7 @@
   }
 
   .bm-footer-nav-wrapper--grid-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .footer-nav-column {
@@ -59,14 +59,14 @@
   }
 
   .footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .bm-footer-18__footer {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-social-share {
@@ -88,7 +88,7 @@
 
   .footer-newsletter__form {
   	flex-wrap: nowrap;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .footer-newsletter__form [type="submit"] {
   	height: 100%;

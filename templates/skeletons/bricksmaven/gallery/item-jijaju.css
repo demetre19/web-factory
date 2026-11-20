@@ -20,7 +20,7 @@
 
   .gallery-2-img {
     display: grid !important;
-    grid-template-columns: repeat(12, 1fr) !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     grid-template-rows: repeat(3, .2fr);
     gap: var(--space-s) !important;
   }

@@ -1,80 +1,78 @@
 ---
 /**
- * form-panel — gold exemplar (SB.5). The end act: the article's
- * closing paragraph, its CTA link and the phone number — nothing else.
- *
- * U.4/F.2: every string here comes from COPY.json `closing` (text,
- * cta {label, href}, phone). No form fields, select options, button
- * labels or response-time promises are invented: a static build has
- * no backend, so the CTA link and the tel: link are the actions.
- * A heading renders only when the copy supplies one.
- * Single-primary CTA (cta-restraint): a prose link to the CTA's own
- * href renders as plain words — the button is the one link to it.
+ * bm-call-to-action-10 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (call-to-action-10.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
-import { inline, unlink } from '../_shared/inline';
-import type { CopySlot } from '../_shared/inline';
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
   cta?: { label: string; href: string };
-  h1?: boolean;
-  brand?: string;
-  copy?: CopySlot;
-  fields?: { name?: string; label?: string; type?: string;
-             placeholder?: string; required?: boolean;
-             options?: string[] }[];
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
-const { heading = '', fs = '', body = '', cta, h1, brand, copy,
-        fields = [] } = Astro.props;
-const cp: CopySlot = copy || {};
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+import { Image } from 'astro:assets';
+const {
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
+} = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
 const head = cp.heading || heading;
-const text = cp.text || cp.answer || fs || body;
+const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
 const after = cp.after || [];
 const act = cp.cta || cta;
 const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
-const prose = (s: string) => inline(unlink(s, act?.href));
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
-<div class="split">
-  <div class="stack">
-    {head && (h1
-      ? <h1 class="t0 h-section text-fluid-3">{head}</h1>
-      : <h2 class="t0 h-section text-fluid-3">{head}</h2>)}
-    {before.map((p) => (
-      <p class="t0 lede" set:html={prose(p)} />
-    ))}
-    {text && <p class="t0 lede" set:html={prose(text)} />}
-    {after.map((p) => (
-      <p class="t0 lede" set:html={prose(p)} />
-    ))}
-  </div>
-  {fields.length > 0 ? (
-    <form class="stack mt-act gap-form" method="get"
-          action={act?.href || '#'}>
-      <div class="form-grid">
-        {fields.map((f) => (
-          <label class="field">
-            <span>{f.label || f.name}</span>
-            {f.options && f.options.length
-              ? <select name={f.name} required={f.required}>
-                  {f.options.map((o) => <option>{o}</option>)}
-                </select>
-              : <input name={f.name} type={f.type || 'text'}
-                       placeholder={f.placeholder}
-                       required={f.required} />}
-          </label>
-        ))}
+
+<div>
+  <div class="sec-inner">
+    <div class="cta-10-container">
+      <div class="cta-10-content">
+        <div class="cta-10-heading">
+          {head && <h2 class="text-fluid-2">{head}</h2>}
+  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
+  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        </div>
+        <div class="hero-1__cta">
+          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+        </div>
       </div>
-      {act && <button class="wf-cta-button cta-large" type="submit">
-        {act.label}</button>}
-      {tel && <a class="link-quiet" href={tel}>{phone}</a>}
-    </form>
-  ) : (act || tel) && (
-    <div class="stack mt-act gap-form">
-      {act && <a class="wf-cta-button cta-large" href={act.href}>{act.label}</a>}
-      {tel && <a class="link-quiet" href={tel}>{phone}</a>}
+      {image && image.src &&       <div class="cta-10-media-wrapper">
+        {image && image.src && <figure class="cta-10-img ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      </div>
+      }
     </div>
-  )}
+  </div>
+  {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

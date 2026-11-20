@@ -23,7 +23,7 @@
   .timeline-15-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .timeline-15-card__content {
@@ -36,7 +36,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -58,9 +58,9 @@
   }
 
   .timeline-15-card__circle {
-    width: .8rem;
+    width: var(--space-xs);
   }
 
   .timeline-15-card__line {
-    width: .1rem;
+    width: calc(0.1rem + 0vw);
   }

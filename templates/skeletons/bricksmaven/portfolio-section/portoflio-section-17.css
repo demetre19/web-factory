@@ -75,7 +75,7 @@
   }
   
   .bm-portfolio-section-17-case-container__slider-nested .splide__arrow:hover {
-      border: 1px solid var(--bg-subtle);
+      border: calc(0.0625rem + 0vw) solid var(--bg-subtle);
       border-radius: 100%;
     background-color: var(--action-primary);
     color: var(--bg-canvas);
@@ -99,5 +99,5 @@
   }
   
   .bm-portfolio-section-17-case-container__slide:hover .bm-portfolio-section-17-case-container__text {
-    margin-block-start: -30px;
+    margin-block-start: calc(var(--space-l) * -1);
   }

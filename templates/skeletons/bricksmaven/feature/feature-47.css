@@ -24,7 +24,7 @@
   .bm-feature-47__services {
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     margin: calc(-1 * var(--section-space-m)) 0 0 0;
     /* bm: box-shadow omitted — token layer owns elevation */
@@ -41,7 +41,7 @@
   .bm-feature-47-grid-ul {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-26-card {

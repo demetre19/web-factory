@@ -21,7 +21,7 @@
     align-items: flex-start;
     text-align: left;
     align-self: flex-start;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -51,7 +51,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 520px;
+    height: var(--space-xxl);
     background: linear-gradient(transparent, var(--bg-canvas));
     z-index: 1;
   }

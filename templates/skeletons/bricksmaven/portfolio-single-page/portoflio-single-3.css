@@ -54,7 +54,7 @@
   .bm-2col-media {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-2col-media-item__image {
@@ -62,7 +62,7 @@
   }
 
   .bm-portfolio-single-intro-inline--alt {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single__case-section-content-wrapper {
@@ -100,11 +100,11 @@
   .bm-portfolio-single-result-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single-result-list--alt {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single-result-item {
@@ -115,7 +115,7 @@
   .bm-span2-media {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-span2-media-item__image {
@@ -134,7 +134,7 @@
 
   .testimonial-list-card__profile {
     display: flex;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
     align-items: center;
   }
 
@@ -146,7 +146,7 @@
 
   .testimonial-list-card__image {
     object-fit: cover;
-    width: 5rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 
@@ -214,8 +214,8 @@
   }
 
   .bm-contact-25-side-list-item__icon {
-    padding: .5rem .5rem .5rem .5rem;
-    width: 3.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
+    width: var(--space-xxl);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -228,7 +228,7 @@
   .bm-portfolio-2-related-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-2-related-card__content {
@@ -249,8 +249,8 @@
   }
 
   .bm-live-website-btn__dot {
-    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
-    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+    --shadow-m:  0 0 calc(0.25rem + 0vw) calc(0.125rem + 0vw) rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 var(--space-s) calc(0.5rem + 0vw) rgba(255, 255, 255, 0.8);
   	--animation-duration-up: 1.2s;
     --shadow-light: var(--shadow-card);
     --shadow-heavy: var(--shadow-card);

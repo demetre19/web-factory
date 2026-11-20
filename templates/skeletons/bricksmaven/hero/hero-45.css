@@ -52,14 +52,14 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
+  	margin-inline-start: calc(var(--space-s) * -1);
   }
   
   .bm-team-media:first-child {
-  	margin-inline-start: 0px;
+  	margin-inline-start: 0;
   }

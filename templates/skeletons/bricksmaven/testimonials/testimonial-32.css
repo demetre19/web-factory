@@ -26,11 +26,11 @@
   .intro__text-cta-wrapper {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -60,7 +60,7 @@
   .testimonial-32-slide__client-image {
     object-fit: cover;
     overflow: hidden;
-    width: 6rem;
+    width: var(--space-xxl);
   }
 
   .testimonial-32-slide__meta-data {
@@ -76,5 +76,5 @@
   }
   
   .testimonial-32-slide:hover {
-  	box-shadow: 0 0 2rem 0 rgb(0,0,0,0.2);
+  	box-shadow: 0 0 var(--space-l) 0 rgb(0,0,0,0.2);
   }

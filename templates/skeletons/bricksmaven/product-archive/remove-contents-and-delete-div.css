@@ -96,7 +96,7 @@
   .bm-product-archive__product-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .product-list-1-card {
@@ -128,7 +128,7 @@
   .product-list-notice__wrapper {
     display: flex;
     flex-direction: column;
-    width: var(--measure);
+    max-width: var(--measure);
     align-items: flex-start;
     row-gap: calc(var(--flow-spacing) / 4);
   }

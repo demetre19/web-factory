@@ -5,7 +5,7 @@
   .header-page-8-container {
     display: grid;
     gap: var(--section-space-xxl);
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .header-page-8__content {
@@ -21,13 +21,13 @@
   }
 
   .header-page-8__image--2 {
-    margin: 0 -7.8rem 0 0;
-    width: 29.6rem;
+    margin: 0 calc(var(--space-xxl) * -1) 0 0;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
   .header-page-8__image--1 {
-    margin: 0 0 -8rem 0;
-    width: 42rem;
+    margin: 0 0 calc(var(--space-xxl) * -1) 0;
+    width: var(--space-xxl);
     object-fit: cover;
   }

@@ -13,7 +13,7 @@
 
   .timeline-14-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: calc(var(--space-m) * 4);
   }
 
@@ -42,7 +42,7 @@
     position: absolute;
     left:50%;
     height:100%;
-    width:.2rem;
+    width:calc(0.2rem + 0vw);
     background-color: var(--color-ink-secondary);
   }
   
@@ -75,7 +75,7 @@
   	content:'';
     position:absolute;
     width: calc(100% + (var(--space-m) * 2)) ;
-  	height:.1rem;
+  	height:calc(0.1rem + 0vw);
     bottom: calc(-1 * var(--space-xs));
     left: calc((var(--space-m) * 2) * -1 );
     background-color: var(--color-ink-secondary);
@@ -92,7 +92,7 @@
   	content:'';
     position:absolute;
     width: 0 ;
-  	height:.2rem;
+  	height:calc(0.2rem + 0vw);
     bottom: calc(-1 * var(--space-xs));
     left: calc((var(--space-m) * 2) * -1 );
     background-color: var(--color-ink-secondary);
@@ -118,7 +118,7 @@
   	content:'';
     position:absolute;
     width: calc(100% + (var(--space-m) * 2)) ;
-  	height:.1rem;
+  	height:calc(0.1rem + 0vw);
     bottom: calc(-1 * var(--space-xs));
     right: calc((var(--space-m) * 2) * -1);
     background-color: var(--color-ink-secondary);
@@ -133,7 +133,7 @@
   	content:'';
     position:absolute;
     width: 0 ;
-  	height:.2rem;
+  	height:calc(0.2rem + 0vw);
     bottom: calc(-1 * var(--space-xs));
     right: calc((var(--space-m) * 2) * -1 );
     background-color: var(--color-ink-secondary);

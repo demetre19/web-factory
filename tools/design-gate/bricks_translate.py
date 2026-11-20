@@ -114,6 +114,57 @@ def map_var(name):
 
 VAR_RE = re.compile(r'var\(\s*--([\w-]+)\s*\)')
 
+# ACSS space rungs (clamp._SPACE_ORDER, base 24/30px, ~1.333/1.5
+# ratios) — geometric midpoints in mob px snap an authored literal to
+# its nearest rung.
+_SPACE_EDGES = (('xs', 15.7), ('s', 20.9), ('m', 27.7), ('l', 36.9),
+                ('xl', 49.3))
+_BARE_SIZE = re.compile(r'(?<![\w.])(-?\d*\.?\d+)(rem|px)\b')
+_PAREN_SPAN = re.compile(r'\([^()]*\)')
+
+
+def _space_rung(px):
+    for rung, edge in _SPACE_EDGES:
+        if px < edge:
+            return rung
+    return 'xxl'
+
+
+def _acss_size(v):
+    """Bare Npx/Nrem literals → ACSS: ≥10px snaps to the nearest
+    --space-* rung; sub-rung sizes (<10px — Bricks' 1–4px hairline
+    breathing) keep the authored value inside calc() so the emitted
+    residue stays var/rem only (FL.1/R.12 ban bare literals in
+    padding/margin/gap). Literals inside function calls (clamp/calc
+    fluid tracks) are already legal — parens are masked first."""
+    spans = []
+
+    def stash(m):
+        spans.append(m.group(0))
+        return f'\x00{len(spans) - 1}\x00'
+
+    def subv(m):
+        n, u = float(m.group(1)), m.group(2)
+        px = abs(n) * (16.0 if u == 'rem' else 1.0)
+        if px == 0:
+            return '0'
+        rem = n if u == 'rem' else n / 16.0
+        if px < 10:
+            # single-term calc(Nrem) is folded back to bare Nrem by the
+            # build's css minifier — the trailing + 0vw keeps the calc()
+            # wrapper (and the FL.1-legal var/rem residue) in dist css;
+            # 0% would fail _fl_term_ok (% carries no word boundary)
+            return f'calc({rem:g}rem + 0vw)'
+        rung = _space_rung(px)
+        return (f'calc(var(--space-{rung}) * -1)' if n < 0
+                else f'var(--space-{rung})')
+
+    w = _PAREN_SPAN.sub(stash, str(v))
+    w = _BARE_SIZE.sub(subv, w)
+    for i, s in enumerate(spans):
+        w = w.replace(f'\x00{i}\x00', s)
+    return w
+
 
 def translate_value(v, unmapped):
     """Rewrite ACSS var refs to token refs inside any CSS value."""
@@ -136,7 +187,7 @@ def translate_value(v, unmapped):
     out = VAR_RE.sub(lambda m: (sub(m) or 'var(--unmapped)'), str(v))
     if '--unmapped' in out:
         return None
-    return out
+    return _acss_size(out)
 
 
 # ------------------------------------------------------ css settings
@@ -300,7 +351,8 @@ def translate(payload, stem):
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
     rules, raw_css = classes_css(payload, unmapped)
-    seen = {'h': False, 'p': False, 'btn': False}   # first heading→
+    seen = {'h': False, 'p': False, 'btn': False,
+            'loop_img': False}                    # first heading→
                                     # {heading}, first paragraph→{fs}
 
     cat = stem.split('-')[0]
@@ -366,6 +418,16 @@ def translate(payload, stem):
     def sig(el):
         return (el.get('name'), tuple(sorted(_classes_of(el))))
 
+    def _whole_cond(s):
+        """The guard of an emit that is wholly one conditional
+        expression — `{x.length > 0 && <div>…}` or
+        `{image && image.src && …}` — else None. Parents propagate it
+        so a wrapper around a single conditional child collapses too."""
+        t = s.strip()
+        m = re.match(r'^\{(.{1,80}?\.length > 0|image && image\.src)'
+                     r' && ', t)
+        return m.group(1).strip() if m and t.endswith('}') else None
+
     def render(el_id, depth, ivar=None, card=False):
         el = els.get(el_id)
         if not el:
@@ -393,8 +455,11 @@ def translate(payload, stem):
                         for i in range(len(_sigs))):
                     _body = ''.join(render(children[i], depth + 3, 'it')
                                     for i in range(_k))
+                    if not _body.strip():
+                        continue   # an item template that emits
+                        # nothing is not a loop
                     return (f'{pad}<div class="grid-auto gap-fluid-m">\n'
-                            f'{pad}  {{items.map((it) => (\n'
+                            f'{pad}  {{list.map((it) => (\n'
                             f'{pad}    <div class="card">\n{_body}'
                             f'{pad}    </div>\n'
                             f'{pad}  ))}}\n{pad}</div>\n')
@@ -417,9 +482,17 @@ def translate(payload, stem):
             # The page shell already wraps every component in
             # <section class="sec-band surface-* density-*">. The bank
             # only supplies the measure box, never a second band.
-            inner = ''.join(render(c, depth + 1, ivar) for c in children)
-            return (f'{pad}<div class="sec-inner">\n{inner}'
-                    f'{pad}</div>\n')
+            parts = [render(c, depth + 1, ivar) for c in children]
+            live = [p for p in parts if p.strip()]
+            inner = ''.join(parts)
+            out = (f'{pad}<div class="sec-inner">\n{inner}'
+                   f'{pad}</div>\n')
+            # a measure box whose only payload is a conditional block
+            # collapses with it (L.15 — no empty wrapper in the DOM)
+            g = _whole_cond(inner) if len(live) == 1 else None
+            if g:
+                return f'{pad}{{{g} && ' + out + f'{pad}}}\n'
+            return out
 
         tag = tag_of(el)
         c = cls(el, depth, card)
@@ -435,24 +508,46 @@ def translate(payload, stem):
             style_ = str(s.get('style') or '')
             cattr = ' class="wf-cta-button"'
             txt = re.sub(r'<[^>]+>', '', str(s.get('text') or ''))
-            inner = "{cta.label || 'Continue'}" if txt and not ivar else \
+            inner = '{cta.label}' if txt and not ivar else \
                 (f'{{{ivar}.label}}' if ivar else 'Action')
             # the wrapper keeps the inline-block button from being
-            # stretched by a grid cell
-            return (f'{pad}<p class="mt-fluid-m"><a{cattr} href='
-                    f'{"{cta.href}" if not ivar else "{%s.href}" % ivar}>'
-                    f'{inner}</a></p>\n')
+            # stretched by a grid cell; an unbound CTA renders nothing
+            # (F.1 — no invented 'Continue' text)
+            if ivar:
+                return (f'{pad}<p class="mt-fluid-m"><a{cattr} href='
+                        f'{{{ivar}.href}}>{inner}</a></p>\n')
+            return (f'{pad}{{act.label && <p class="mt-fluid-m">'
+                    f'<a{cattr} href={{act.href}}>{{act.label}}</a></p>}}\n')
         if name == 'logo':
+            # L.16 — brand-mark carries the explicit-size class token
+            cattr = (cattr[:-1] + ' brand-mark"') if cattr else \
+                ' class="brand-mark"'
             return (f'{pad}<span{cattr}>{{brand}}</span>\n')
         if name == 'image':
-            alt = str(s.get('alt') or el.get('label') or 'image')
-            return (f'{pad}<figure{cattr}><img '
-                    'src="/media/placeholder.svg" '
-                    f'alt="{alt}" loading="lazy" width="900" '
-                    'height="600" /></figure>\n')
+            # V.8/P.12 — media renders through astro:assets <Image> so
+            # the raster compiles to AVIF/WebP srcsets; the slot only
+            # exists when the plan binds image (text-led DNAs render
+            # no placeholder). Alt comes from the plan row, never
+            # invented (F.1/U.4)
+            if ivar:
+                # a section-bound image inside a per-item loop
+                # duplicates per item — and an empty list renders it
+                # zero times; lift it to one figure beside the copy
+                seen['loop_img'] = True
+                return ''
+            return (f'{pad}{{image && image.src && '
+                    f'<figure{cattr}><div class="media-round" '
+                    'data-ratio={image.ratio || null}>'
+                    '<Image src={mediaSrc || image.src} '
+                    'alt={image.alt || \'\'} '
+                    'widths={[480, 960, 1440]} '
+                    'sizes="(min-width: 48rem) 50vw, 100vw" '
+                    'width={900} height={600} loading="lazy" />'
+                    '</div></figure>}\n')
         if name == 'text-link' and ivar:
             return (f'{pad}<a{cattr} href={{{ivar}.href}}>'
-                    f'{{{ivar}.label}}</a>\n')
+                    f'{{{ivar}.label || {ivar}.anchor || '
+                    f'{ivar}.text}}</a>\n')
         if name == 'text-link' and not ivar:
             return ''
         if name in ('heading', 'text-basic', 'text'):
@@ -461,17 +556,29 @@ def translate(payload, stem):
             txt = re.sub(r'\s+', ' ',
                          re.sub(r'<[^>]+>', '', raw)).strip()
             if ivar:
-                txt = (f'{{{ivar}.title}}' if name == 'heading'
+                # §4.3 items carry term/icon — the icon name is a
+                # chip the CSS can glyph, the term is the label.
+                # Item labels are never h1/h2: PS.1 binds ONE
+                # heading to a block, so loop headings cap at h3.
+                if name == 'heading' and tag in ('h1', 'h2'):
+                    tag = 'h3'
+                txt = (f'{{{ivar}.icon && '
+                       f'<IconChip name={{{ivar}.icon}} />}} '
+                       f'{{{ivar}.term || {ivar}.title}}'
+                       if name == 'heading'
                        else f'{{{ivar}.text}}')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
-                return (f'{pad}{{heading && <{tag}{cattr}>'
-                        f'{{heading}}</{tag}>}}\n')
+                return (f'{pad}{{head && <{tag}{cattr}>'
+                        f'{{head}}</{tag}>}}\n')
             elif name in ('text-basic', 'text') and \
                     not seen['p'] and txt and len(txt) > 30:
                 seen['p'] = True
-                return (f'{pad}{{fs && <{tag}{cattr}>'
-                        f'{{fs}}</{tag}>}}\n')
+                # §4.3 — `before` paragraphs ride the answer slot
+                return (f'{pad}{{sub && <{tag}{cattr} '
+                        f'set:html={{inline(sub)}} />}}\n'
+                        f'{pad}{{before.map((p) => <p class="mt-stack '
+                        f'text-fluid-0" set:html={{inline(p)}} />)}}\n')
             elif not ivar:
                 # the payload's own copy is wireframe label text
                 # ("TAGLINE", "Call to action") — the bank supplies
@@ -480,40 +587,158 @@ def translate(payload, stem):
             href = ' href="#"' if name == 'text-link' else ''
             return f'{pad}<{tag}{cattr}{href}>{txt}</{tag}>\n'
         if name == 'icon':
-            return (f'{pad}<span{cattr} data-icon="lucide" '
-                    'aria-hidden="true"></span>\n')
+            if ivar:
+                return (f'{pad}{{{ivar}.icon && '
+                        f'<IconChip name={{{ivar}.icon}} />}}\n')
+            return ''
         if name == 'divider':
             return f'{pad}<hr{cattr} />\n'
         inner = ''
+        _guard = None
+        _static = False
+        _parts = 0
         for run, count in seq:
             if count >= 3 or (cat in ('header', 'footer')
                               and count >= 2):
-                # nested repeats iterate the parent's row: it.items
-                coll, var = (f'({ivar}.items || [])',
-                             ivar + '2') if ivar else ('items', 'it')
+                # nested repeats iterate the parent's row: it.items;
+                # the collection guards its grid so an empty list
+                # leaves no dead column in the DOM (L.15)
+                if ivar:
+                    coll, var = f'({ivar}.items || [])', ivar + '2'
+                elif seen.get('top_list'):
+                    # a second top-level collection (footers carry a
+                    # legal nav beside the menu) binds the copy slot's
+                    # links — re-emitting `list` would duplicate the
+                    # sitemap
+                    coll, var = 'links', 'it'
+                else:
+                    seen['top_list'] = True
+                    coll, var = 'list', 'it'
                 _wrap = ('row gap-fluid-m' if cat in ('header', 'footer')
                          else 'grid-auto gap-fluid-m')
-                inner += (f'{pad}  <div class="{_wrap}">\n'
-                          f'{pad}    {{({coll} || []).map(({var}) => (\n'
-                          + ''.join(render(r, depth + 3, var,
-                                           card=cat not in ('header',
-                                                            'footer'))
-                                    for r in run[:1])
-                          + f'{pad}    ))}}\n{pad}  </div>\n')
+                _item = ''.join(render(r, depth + 3, var,
+                                       card=cat not in ('header',
+                                                        'footer'))
+                                for r in run[:1])
+                if not _item.strip():
+                    continue   # an item template that emits nothing
+                    # is not a loop — nothing to guard or render
+                _guard = _guard or f'{coll}.length > 0'
+                _parts += 1
+                inner += (f'{pad}  {{{coll}.length > 0 && '
+                          f'<div class="{_wrap}">'
+                          f'{{({coll} || []).map(({var}) => (\n'
+                          + _item
+                          + f'{pad}    ))}}'
+                          f'</div>}}\n')
+                if coll == 'links' and cat == 'footer':
+                    # the legal nav is empty until the copy slot
+                    # ships privacy/terms — PS.10 still wants a legal
+                    # line, so the mark falls back to the copyright
+                    if _guard == 'links.length > 0':
+                        _guard = 'links.length >= 0'
+                    inner += (f'{pad}  {{links.length === 0 && '
+                              f'<p class="text-fluid-0">Copyright '
+                              f'{{new Date().getFullYear()}} '
+                              f'{{brand}}</p>}}\n')
             else:
-                inner += ''.join(render(r, depth + 1, ivar)
-                                 for r in run)
+                for r in run:
+                    sub = render(r, depth + 1, ivar)
+                    if not sub.strip():
+                        continue
+                    _parts += 1
+                    g = _whole_cond(sub)
+                    if g:
+                        _guard = _guard or g
+                    else:
+                        _static = True
+                    inner += sub
         if name == 'form':
-            return f'{pad}<form{cattr} novalidate>\n{inner}{pad}</form>\n'
-        if inner:
-            return f'{pad}<{tag}{cattr}>\n{inner}{pad}</{tag}>\n'
-        return f'{pad}<{tag}{cattr}></{tag}>\n'
+            out = f'{pad}<form{cattr} novalidate>\n{inner}{pad}</form>\n'
+        elif inner:
+            out = f'{pad}<{tag}{cattr}>\n{inner}{pad}</{tag}>\n'
+        else:
+            # a container whose entire payload emitted nothing
+            # collapses — a media column after its image lifts out,
+            # a loop with an empty template, wireframe-only chrome:
+            # no dead half-columns in the DOM (L.15)
+            if children:
+                return ''
+            return f'{pad}<{tag}{cattr}></{tag}>\n'
+        # wholly-conditional payloads propagate their guard upward: a
+        # wrapper around a single conditional child is conditional too
+        if _guard and not _static and _parts == 1:
+            return f'{pad}{{{_guard} && ' + out + f'{pad}}}\n'
+        return out
 
     roots = [e['id'] for e in payload.get('content') or []
              if not e.get('parent')]
     body = ''.join(render(r, 1) for r in roots)
-    if cat == 'header' and 'class="logo"' not in body:
-        body = f'  <span class="logo">{{brand}}</span>\n' + body
+    if cat == 'header' and 'brand-mark' not in body:
+        body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
+                + body)
+    # §4.3 fallback — a skeleton without a long-text slot still
+    # renders the answer + before paragraphs (verbatim, F.1), placed
+    # right after the heading emit when one exists
+    if 'sub &&' not in body:
+        sub_blk = ('  {sub && <p class="mt-stack lede" '
+                   'set:html={inline(sub)} />}\n'
+                   '  {before.map((p) => <p class="mt-stack '
+                   'text-fluid-0" set:html={inline(p)} />)}\n')
+        hm = re.search(r'^(\s*)\{head && ', body, re.M)
+        if hm:
+            eol = body.index('\n', hm.end()) + 1
+            body = body[:eol] + sub_blk + body[eol:]
+        else:
+            body = sub_blk + body
+    # V.8 lift — a bound image that sat inside a per-item loop becomes
+    # the media cell of the gold split shape (SB.5): copy in the stack
+    # column, media beside it. A bare figure inside the bank's centred
+    # .intro column shrinks to zero width; the wrapper itself must not
+    # exist when no image binds — an empty fr track squashes the text
+    # column, so 'split' only classes the wrap when image is bound.
+    if seen.get('loop_img') and '<Image' not in body:
+        body = ('  <div class={image && image.src ? \'split\' : '
+                'undefined}>\n'
+                '    <div class="stack">\n' + body +
+                '    </div>\n'
+                '    {image && image.src && '
+                '<div class="media-round" '
+                'data-ratio={image.ratio || null}>'
+                '<Image src={mediaSrc || image.src} '
+                'alt={image.alt || \'\'} widths={[480, 960, 1440]} '
+                'sizes="(min-width: 48rem) 50vw, 100vw" '
+                'width={900} height={600} loading="lazy" />'
+                '</div>}\n'
+                '  </div>\n')
+    # §4.3 tail — qa/links/after paragraphs close every copy-bound
+    # section, after the skeleton's own structure (COPY_BLOCK_KEYS
+    # order: items → qa → links → after)
+    if 'list.map' not in body and 'list || []).map' not in body:
+        # the payload's shape hid the items loop (nested ol/li,
+        # js-driven widget) — the copy slot's items still render
+        # verbatim as a term/definition list (F.1)
+        body += ('  {list.length > 0 && <dl class="mt-stack list-plain '
+                 'flow-list">'
+                 '{list.map((it) => <div class="flow-row">'
+                 '{it.icon && <IconChip name={it.icon} />}'
+                 '<dt class="text-fluid-0" '
+                 'set:html={inline(it.term || it.title || \'\')} />'
+                 '{it.text && <dd class="text-fluid-0" '
+                 'set:html={inline(it.text)} />}'
+                 '</div>)}</dl>}\n')
+    body += (
+        '  {qas.length > 0 && <dl class="mt-stack">'
+        '{qas.map((qa) => <>'
+        '<dt class="text-fluid-0" set:html={inline(qa.q)} />'
+        '<dd class="text-fluid-0" set:html={inline(qa.a)} />'
+        '</>)}</dl>}\n'
+        '  {links.map((l) => <p class="mt-stack text-fluid-0" '
+        'set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}\n'
+        '  {after.map((p) => <p class="mt-stack text-fluid-0" '
+        'set:html={inline(p)} />)}\n'
+        '  {tel && <p class="mt-stack"><a class="link-quiet" '
+        'href={tel}>{phone}</a></p>}\n')
 
     style = ''
     style = ''
@@ -526,10 +751,44 @@ def translate(payload, stem):
         decl += ['  ' + r.strip().replace('\n', '\n  ')
                  for r in raw_css if r and r.strip()]
         style = '\n\n'.join(decl) + '\n'
+        # G.5 — collections never carry a fixed track count: any
+        # repeat(N|Nfr …) or ≥4-literal-fr track the payload declared
+        # collapses to the auto-fit minmax form
+        style = re.sub(
+            r'grid-template-columns:\s*repeat\(\s*(?:\d+|\d+fr)[^;]*;',
+            'grid-template-columns: repeat(auto-fit, '
+            'minmax(min(var(--grid-min,28rem),100%),1fr));', style)
+        style = re.sub(
+            r'grid-template-columns:\s*(?:[\d.]+fr\s+){3,}[\d.]+fr\s*;',
+            'grid-template-columns: repeat(auto-fit, '
+            'minmax(min(var(--grid-min,28rem),100%),1fr));', style)
+        # viewport safety — a definite width sets the grid item's
+        # min-content, so the fr track sizes to 60ch and overflows the
+        # cell; max-width caps the column without forcing the track
+        style = re.sub(r'width:\s*var\(--measure\)\s*;',
+                       'max-width: var(--measure);', style)
+        # a --section-space-* var is vertical section padding — used
+        # inline (same var on all 4 sides) it outgrows the gutter
+        # (cta-10-content: 280px inline pad inside a 360px viewport)
+        style = re.sub(
+            r'padding:\s*(var\(--section-space-\w+\))(?:\s+\1){3}\s*;',
+            r'padding-block: \1; padding-inline: var(--gutter);', style)
+        # a literal 2–3-track fr grid collapses under 44rem — the
+        # payload's desktop split must never overflow a phone
+        _mq = [m.group(1) for m in re.finditer(
+            r'\.([\w-]+)\s*\{[^{}]*grid-template-columns:\s*'
+            r'(?:1fr|minmax\(0,\s*1fr\))'
+            r'(?:\s+(?:1fr|minmax\(0,\s*1fr\))){1,2}\s*;', style)]
+        if _mq:
+            style += ('\n  @media (max-width: 44rem) {\n' +
+                      ''.join(f'    .{c} {{ grid-template-columns: 1fr; '
+                              f'}}\n' for c in _mq) + '  }\n')
         if '--acss-' in style:      # never ship an unresolved var
             raise SystemExit(f'{stem}: unresolved ACSS var in emitted css')
 
     comp = camel('bm-' + stem)
+    _has_media = '<Image' in body
+    _has_chip = '<IconChip' in body
     src = (f'---\n/**\n * bm-{stem} — TRANSLATED Bricksmaven skeleton.\n'
            ' * Produced by bricks_translate.py from the ACSS payload\n'
            f' * beside this file ({stem}.json). Bank source, NOT a gold\n'
@@ -542,18 +801,51 @@ def translate(payload, stem):
            '  heading?: string;\n'
            '  fs?: string;\n'
            '  cta?: { label: string; href: string };\n'
-           '  items?: { title?: string; text?: string;\n'
+           '  items?: { title?: string; text?: string; term?: string;\n'
            '             label?: string; href?: string;\n'
-           '             items?: any[] }[];\n'
+           '             icon?: string; items?: any[] }[];\n'
+           '  image?: { src: string; alt: string };\n'
+           '  copy?: any;\n'
            '}\n'
-           'const {\n'
+           "import { inline } from '../_shared/inline';\n"
+           + (("import IconChip from '../_shared/IconChip.astro';\n")
+              if _has_chip else '')
+           + (("import { Image } from 'astro:assets';\n")
+              if _has_media else '')
+           + 'const {\n'
            "  brand = 'Brand',\n"
            "  heading = '',\n"
            "  fs = '',\n"
            "  cta = { label: '', href: '#' },\n"
            '  items = [],\n'
+           '  image,\n'
+           '  copy,\n'
            '} = Astro.props;\n'
-           '---\n\n<div>\n' + body + '</div>\n')
+           '// §4.3 — a copy slot binds verbatim article copy onto\n'
+           "// the skeleton's native props (F.1 — nothing dropped)\n"
+           'const cp = copy || {};\n'
+           'const head = cp.heading || heading;\n'
+           'const sub = cp.answer || cp.text || fs;\n'
+           'const before = cp.before || [];\n'
+           'const list = (cp.items && cp.items.length\n'
+           '  ? cp.items : items) || [];\n'
+           'const qas = cp.qa || [];\n'
+           'const links = cp.links || [];\n'
+           'const after = cp.after || [];\n'
+           'const act = cp.cta || cta;\n'
+           'const phone = cp.phone || \'\';\n'
+           "const tel = phone ? 'tel:' + "
+           "phone.replace(/[^0-9+]/g, '') : '';\n"
+           + (("// V.8/P.12 — rasters resolve through src/assets/media/"
+               "\n// so <Image> compiles AVIF/WebP srcsets\n"
+               "const _media = import.meta.glob('../assets/media/"
+               "*.{jpg,jpeg,png,webp}', { eager: true });\n"
+               "const _mn = image ? String(image.src).split('/').pop()"
+               " : null;\n"
+               "const mediaSrc = _mn ? (_media[`../assets/media/"
+               "${_mn}`]?.default ?? null) : null;\n")
+              if _has_media else '')
+           + '---\n\n<div>\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
 

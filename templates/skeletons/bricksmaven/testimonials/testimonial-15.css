@@ -2,7 +2,7 @@
     width: 100%;
     display: grid;
     gap: var(--space-s);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .testimonial-15-content__card {
@@ -11,20 +11,20 @@
 
   .testimonial-15-content__card-author {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     margin: 0 0 var(--space-s) 0;
-    gap: 1rem;
+    gap: var(--space-s);
   }
 
   .testimonial-15-content__card-meta {
     display: flex;
     flex-direction: column;
-    row-gap: .3rem;
+    row-gap: calc(0.3rem + 0vw);
   }
 
   .testimonial-15-content__card-photo {
     object-fit: cover;
-    width: 4rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 

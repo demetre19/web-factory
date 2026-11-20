@@ -1,7 +1,7 @@
   .hworks-17-container {
     row-gap: var(--space-s);
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -24,7 +24,7 @@
 
   .hworks-17-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -46,8 +46,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: var(--action-primary);
-    padding-inline:2.2rem;
-    padding-block:1.2rem;
+    padding-inline:var(--space-l);
+    padding-block:var(--space-s);
     color:var(--action-primary);
     font-size: var(--fs-1);
     font-weight: 700;

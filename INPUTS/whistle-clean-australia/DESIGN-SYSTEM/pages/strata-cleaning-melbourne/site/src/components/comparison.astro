@@ -1,0 +1,74 @@
+---
+/**
+ * comparison — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Full-copy slots (§4.3): heading → answer → the two arms → remaining
+ * prose → links → after in article order (F.1). An arm is an item card
+ * when the copy carries items; a prose block's first two paragraphs
+ * compare as the two columns (the copy stays verbatim — only the slot
+ * it renders in changes).
+ */
+import { iconFor, inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '',
+  body = '', cta, items = [], image, h1, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs || body;
+const before = cp.before || [];
+const links = (cp.links && cp.links.length)
+  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
+  : [];
+const list = (cp.items && cp.items.length) ? cp.items : items;
+const cards = list.length
+  ? list.slice(0, 2)
+  : before.slice(0, 2).map((t) => ({ text: t }));
+const rest = list.length ? before : before.slice(cards.length);
+const after = cp.after || [];
+---
+
+<div>
+  {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
+  <div class="mt-fluid-l grid gap-stack md:grid-cols-2">
+    {cards.map((it) => {
+      const Icon = iconFor(it.icon);
+      return (
+      <div class="card">
+        {Icon &&
+          <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
+        {(it.title || it.term) &&
+          <h3 class="t0 sub-h">{it.title || it.term}</h3>}
+        <p class="mt-fluid-s text-fluid-0" set:html={inline(it.text)} />
+      </div>
+      );
+    })}
+  </div>
+  {rest.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+  {links.length > 0 && (
+    <ul class="mt-stack grid-auto list-plain text-fluid-0">
+      {links.map((t) => <li set:html={inline(t)} />)}
+    </ul>
+  )}
+  {after.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+</div>

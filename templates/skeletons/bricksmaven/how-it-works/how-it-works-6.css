@@ -18,7 +18,7 @@
 
   .bm-hworks-6__pane {
     flex-direction: row;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     width: 100%;
     gap: var(--space-m);
   }

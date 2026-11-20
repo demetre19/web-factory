@@ -52,7 +52,7 @@
 
   .bm-hero-98-media-list {
     display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-hero-98-media-card__image {
@@ -61,11 +61,11 @@
   }
 
   .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
+  	margin-inline-start: calc(var(--space-s) * -1);
   }
   
   .bm-team-media:first-child {
-  	margin-inline-start: 0px;
+  	margin-inline-start: 0;
   }
 
   .bm-hero-98-media-list {

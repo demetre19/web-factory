@@ -21,7 +21,7 @@
 
   .counter-9-feature {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -46,7 +46,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -55,6 +55,6 @@
   }
 
   .counter-9-feature__number {
-  -webkit-text-stroke: .1rem var(--action-primary);
+  -webkit-text-stroke: calc(0.1rem + 0vw) var(--action-primary);
   -webkit-text-fill-color: transparent;
   }

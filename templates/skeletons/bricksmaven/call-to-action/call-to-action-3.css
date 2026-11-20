@@ -13,11 +13,15 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
   .cta-3__image {
     object-fit: cover;
     width: 100%;
+  }
+
+  @media (max-width: 44rem) {
+    .cta-3-container { grid-template-columns: 1fr; }
   }

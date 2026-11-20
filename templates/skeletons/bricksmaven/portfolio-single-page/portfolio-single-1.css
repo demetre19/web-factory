@@ -5,7 +5,7 @@
   .bm-portfolio-single-1__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single-1__aside {
@@ -64,7 +64,7 @@
   .bm-portfolio-single-1-media {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single-1-case-piece__image {
@@ -95,7 +95,7 @@
 
   .testimonial-17-list-card__image {
     overflow: hidden;
-    width: 7rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
@@ -106,7 +106,7 @@
   .bm-portfolio-related-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-related-card {
@@ -125,8 +125,8 @@
   }
 
   .bm-live-website-btn__dot {
-    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
-    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+    --shadow-m:  0 0 calc(0.25rem + 0vw) calc(0.125rem + 0vw) rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 var(--space-s) calc(0.5rem + 0vw) rgba(255, 255, 255, 0.8);
   	--animation-duration-up: 1.2s;
     --shadow-light: var(--shadow-card);
     --shadow-heavy: var(--shadow-card);
@@ -167,7 +167,7 @@
   .testimonial-17-list-card__author span {
   	text-decoration: underline;
     text-decoration-color: var(--action-primary);
-    text-decoration-thickness: .2rem;
+    text-decoration-thickness: calc(0.2rem + 0vw);
   }
 
   .bm-portfolio-related-card {

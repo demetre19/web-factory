@@ -13,7 +13,7 @@
 
   .hworks-16-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -37,7 +37,7 @@
     top: 50%;
     right: calc(var(--space-m) * -1);
     width: var(--space-m);
-    border: 1px dashed var(--bg-subtle);
+    border: calc(0.0625rem + 0vw) dashed var(--bg-subtle);
   }
   
   .hworks-16-card:last-child::after {
@@ -63,6 +63,6 @@
     left: 50%;
     width: 0;
     height: var(--space-m);
-    border: 1px dashed var(--bg-subtle);
+    border: calc(0.0625rem + 0vw) dashed var(--bg-subtle);
   }
   }

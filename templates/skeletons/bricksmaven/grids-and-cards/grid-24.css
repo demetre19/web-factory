@@ -14,7 +14,7 @@
   .grid-24-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .grid-24-card {
@@ -44,11 +44,11 @@
   }
   
   .grid-24-card:nth-child(even) .grid-24-card__icon {
-  	font-size: 4rem;
+  	font-size: var(--space-xxl);
   }
   
   .grid-24-card:nth-child(odd) .grid-24-card__icon {
-  	font-size: 8.8rem;
+  	font-size: var(--space-xxl);
   }
   
   .grid-24-card:nth-child(1) {
@@ -89,7 +89,7 @@
     }
     
     .grid-24-card:nth-child(even) .grid-24-card__icon {
-  	font-size: 8.8rem;
+  	font-size: var(--space-xxl);
   }
   }
   

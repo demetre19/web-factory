@@ -1,6 +1,6 @@
   .testimonial-18-container {
     flex-direction: column;
-    row-gap: 3rem;
+    row-gap: var(--space-xl);
     align-items: center;
   }
 
@@ -9,7 +9,7 @@
   }
 
   .testimonial-18-list__slide {
-    row-gap: 3rem;
+    row-gap: var(--space-xl);
     align-items: center;
   }
 
@@ -19,18 +19,18 @@
 
   .testimonial-18-list__author {
     display: flex;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
     align-items: center;
   }
 
   .testimonial-18-list__meta {
     display: flex;
     flex-direction: column;
-    row-gap: .5rem;
+    row-gap: calc(0.5rem + 0vw);
   }
 
   .testimonial-18-list__image {
     object-fit: cover;
-    width: 7rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }

@@ -1,7 +1,7 @@
   .hworks-7-content {
     display: grid;
     gap: var(--section-space-xxl);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .hworks-7-card {
@@ -20,7 +20,7 @@
   }
 
   .hworks-7-card__image {
-    width: 14.8rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
@@ -34,7 +34,7 @@
     font-family: 'themify';
     color: var(--action-primary);
     position: absolute;
-    right: -6rem;
+    right: calc(var(--space-xxl) * -1);
   }
   
   .hworks-7-card:last-child::after  {

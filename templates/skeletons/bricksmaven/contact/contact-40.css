@@ -26,7 +26,7 @@
 
   .bm-contact-40-contact-list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-contact-40-contact-item {
@@ -41,7 +41,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
+    width: var(--space-xl);
   }
 
   .bm-contact-40-contact-item__content {
@@ -68,7 +68,7 @@
 
   .bm-hero-86-card__image {
     object-fit: cover;
-    width: 64px;
+    width: var(--space-xxl);
   }
 
   .bm-hero-86-card__content {

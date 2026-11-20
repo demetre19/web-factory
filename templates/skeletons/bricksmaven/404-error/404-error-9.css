@@ -12,7 +12,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -34,4 +34,8 @@
   .error-9-card-btn {
     padding: 0 0 0 0;
     justify-content: flex-start;
+  }
+
+  @media (max-width: 44rem) {
+    .error-9-container { grid-template-columns: 1fr; }
   }

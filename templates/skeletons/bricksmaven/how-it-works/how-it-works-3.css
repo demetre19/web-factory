@@ -50,8 +50,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:1.4rem;
-    padding-block:.4rem;
+    padding-inline:var(--space-m);
+    padding-block:calc(0.4rem + 0vw);
     color:var(--action-primary);
   }
   

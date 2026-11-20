@@ -1,6 +1,6 @@
   .contact-22-container {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-l);
   }
 
@@ -31,7 +31,7 @@
   }
 
   .contact-22-content__form-inner {
-    padding: 3rem 0 3rem 0;
+    padding: var(--space-xl) 0 var(--space-xl) 0;
     gap: var(--space-s);
   }
 

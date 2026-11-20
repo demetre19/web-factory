@@ -5,7 +5,7 @@
   .bm-content-69__wrapper {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-69__content {
@@ -22,11 +22,11 @@
 
   .bm-content-69-image-wrapper__image {
     object-fit: cover;
-    width: 299px;
+    width: var(--space-xxl);
   }
 
   .bm-content-69-image-wrapper {
-    border: 10px solid var(--bg-canvas);
+    border: var(--space-xs) solid var(--bg-canvas);
     cursor: pointer;
     transition: 0.2s ease;
   }

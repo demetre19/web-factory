@@ -14,7 +14,7 @@
   .team-12-list {
     display: grid;
     gap: calc(var(--space-m) * 1.2);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .team-12-card {

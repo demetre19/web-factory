@@ -15,7 +15,7 @@
   .intro--split {
     display: grid;
     text-align: left;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -29,7 +29,7 @@
 
   .bm-feature-56-feature-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -51,7 +51,7 @@
   .bm-feature-56__footer {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-feature-56__sub-feature-list {
@@ -72,7 +72,7 @@
   }
 
   .bm-list-item__icon-wrapper {
-    width: 24px;
+    width: var(--space-m);
     display: flex;
     justify-content: center;
     align-items: center;

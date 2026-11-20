@@ -21,7 +21,7 @@
   }
 
   .footer-nav-wrapper-4 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .footer-nav-column {
@@ -37,8 +37,8 @@
   }
 
   .footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .footer-4-bottom {
@@ -59,7 +59,7 @@
 
   .footer-newsletter__form {
   	flex-wrap: nowrap;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .footer-newsletter__form [type="submit"] {
   	height: 100%;
@@ -67,7 +67,7 @@
 
   .footer-4__social {
   	align-items: flex-start;
-    row-gap: 2rem;
+    row-gap: var(--space-l);
   }
   .footer-4__social a {
   	padding: 0 !important;

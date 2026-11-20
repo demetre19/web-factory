@@ -24,7 +24,7 @@
   .bm-portfolio-single-media-hero {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     width: 100%;
   }
 
@@ -75,7 +75,7 @@
   .bm-portfolio-single-10-data-list {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -91,7 +91,7 @@
   .bm-portfolio-single-media-2col {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-single-10__testimonial-container {
@@ -144,7 +144,7 @@
   .bm-portfolio-8-related-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-portfolio-8-related-card {
@@ -176,9 +176,9 @@
     --animation-timing-function-up: linear;
     content: '';
     position: absolute;
-    bottom: -3px;
+    bottom: calc(-0.1875rem + 0vw);
     width: 0%;
-    height: 1px;
+    height: calc(0.0625rem + 0vw);
     background-color: var(--text-secondary);
     transition: all 0.5 ease;
   }

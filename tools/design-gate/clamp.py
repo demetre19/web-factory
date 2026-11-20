@@ -169,7 +169,10 @@ _LH_WHY = ('unitless line-height paired with the fs-N step; ACSS sets '
 DIVERGENCES = dict(
     {f'fs-{n}': _FS_WHY for n in FS_MAP},
     **{f'lh-{n}': _LH_WHY for n in FS_MAP},
-    **{'grid-min': 'G.5 card-floor width rung from width.inner_rung — a '
+    **{'motion-distance': 'M.4 travel distance for motion.level — a '
+                          'transform length the motion knob sets, not a '
+                          'layout rung (ACSS has no motion family)',
+       'grid-min': 'G.5 card-floor width rung from width.inner_rung — a '
                    'measure, not rhythm (ACSS grid uses fixed column '
                    'counts instead)',
        'grid-floor': 'per-grid local of --grid-min (data-cols cap)',

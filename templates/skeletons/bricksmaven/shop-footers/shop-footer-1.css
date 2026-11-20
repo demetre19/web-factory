@@ -47,7 +47,7 @@
   .bm-shop-footer-1__nav {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     padding: var(--section-space-xxl) 0 var(--section-space-xxl) var(--space-m);
   }
 
@@ -64,8 +64,8 @@
   }
 
   .bm-footer-link-update {
-    padding: .4rem .4rem .4rem .4rem;
-    margin: 0 0 0 1rem;
+    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
+    margin: 0 0 0 var(--space-s);
   }
 
   .bm-shop-footer-1__bottom-container {
@@ -111,7 +111,7 @@
 
   .bm-footer-newsletter__form {
   	flex-wrap: nowrap;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .bm-footer-newsletter__form [type="submit"] {
   	height: 100%;

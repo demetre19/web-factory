@@ -7,7 +7,7 @@
     flex-direction: column;
     row-gap: var(--space-xl);
     padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    width: var(--measure);
+    max-width: var(--measure);
   }
 
   .intro {
@@ -45,11 +45,11 @@
   }
 
   .timeline-1-card__circle {
-    width: 1rem;
+    width: var(--space-s);
   }
 
   .timeline-1-card__extending-line {
-    width: .1rem;
+    width: calc(0.1rem + 0vw);
   }
 
   .timeline-1-card__content {

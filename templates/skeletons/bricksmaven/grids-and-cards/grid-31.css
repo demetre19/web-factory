@@ -21,7 +21,7 @@
 
   .grid-31-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: calc(var(--space-m) * 4);
   }
 
@@ -50,7 +50,7 @@
   }
   
   .grid-31-card:focus-within {
-    box-shadow: 0 0 1rem 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
+    box-shadow: 0 0 var(--space-s) 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
   }
   
   .grid-31-card__image {

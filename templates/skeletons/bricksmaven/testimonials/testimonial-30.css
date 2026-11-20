@@ -13,7 +13,7 @@
 
   .testimonial-30-list-ul {
     width: 100%;
-    grid-template-columns: repeat(12, minmax(0, 2fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     display: grid;
     gap: var(--space-m);
   }
@@ -22,7 +22,7 @@
     display: flex;
     column-gap: var(--space-xs);
     justify-content: center;
-    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
     /* bm: box-shadow omitted — token layer owns elevation */
   }
 
@@ -36,7 +36,7 @@
   .testimonial-30-list-card__profile {
     display: flex;
     align-items: center;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
   }
 
   .testimonial-30-list-card__divider {
@@ -45,7 +45,7 @@
 
   .testimonial-30-content__photo-img {
     object-fit: cover;
-    width: 13rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 

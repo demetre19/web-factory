@@ -14,18 +14,18 @@
   .gridcard-18-ct {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: 1.875em;
   }
 
   .gridcard-18-article {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .gridcard-18-article__meta {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     /* bm: box-shadow omitted — token layer owns elevation */
   }

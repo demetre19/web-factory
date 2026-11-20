@@ -26,7 +26,7 @@
 
   .bm-author-card-3__image {
     object-fit: cover;
-    width: 165px;
+    width: var(--space-xxl);
   }
 
   .bm-author-card-3__content {
@@ -46,7 +46,7 @@
   .bm-author-page-3-post-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-blog-section-22-card {

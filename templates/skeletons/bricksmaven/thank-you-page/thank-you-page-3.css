@@ -77,7 +77,7 @@
   /* Woocommerce Order Overview  */
   .bm-thank-you-3__element ul.woocommerce-order-overview {
     grid-column: span 2;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     position: relative;
     margin-block-start: var(--space-xl);
   }
@@ -112,9 +112,9 @@
   /* Woocommerce Customer Details  */
   .bm-thank-you-3__element .woocommerce-customer-details {
     grid-column: span 1;
-    margin-block: 0px;
+    margin-block: 0;
     background-color: var(--bg-subtle);
-   border: 1px solid var(--color-line-default);
+   border: calc(0.0625rem + 0vw) solid var(--color-line-default);
     order: 3;
   }
   
@@ -146,7 +146,7 @@
     .bm-thank-you-3__element ul.woocommerce-order-overview {
       grid-column: span 1;
       grid-row: auto;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     }
     
     /* Woocommerce Order Details  */

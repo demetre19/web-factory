@@ -14,7 +14,7 @@
   .contact-14-list-ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .contact-14-list-item {
@@ -31,7 +31,7 @@
 
   .contact-14-list-item__image {
     object-fit: cover;
-    width: 19rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 
@@ -48,7 +48,7 @@
   .contact-14-list-item:not(:last-child)::after {
   	content: '';
     position: absolute;
-    width: .1rem;
+    width: calc(0.1rem + 0vw);
     height: 100%;
     background-color: #C7C7C7;
     right: 0;

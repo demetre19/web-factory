@@ -8,7 +8,7 @@
 
   .bm-content-66__inner-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-66__content {
@@ -33,7 +33,7 @@
   @media (min-width:991px) {
   
   .bm-content-66__slider-nested .splide__arrows--ltr {
-    width: var(--measure);
+    max-width: var(--measure);
     position: absolute;
     bottom: var(--space-m);
     right: calc(-1 * (var(--section-space-xxl) * 2.4));

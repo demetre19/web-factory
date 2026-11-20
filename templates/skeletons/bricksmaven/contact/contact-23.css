@@ -1,6 +1,6 @@
   .contact-23-container {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-xl);
   }
 
@@ -28,14 +28,14 @@
 
   .contact-23-list-ul {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-s);
     width: 100%;
   }
 
   .contact-23-list-item {
     display: flex;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
   }
 
   .contact-23-list-item__detail {
@@ -51,7 +51,7 @@
   }
 
   .contact-23-form__inner {
-    padding: 3rem 0 3rem 0;
+    padding: var(--space-xl) 0 var(--space-xl) 0;
     gap: var(--space-s);
   }
 

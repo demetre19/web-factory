@@ -12,17 +12,37 @@ interface Props {
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string;
+  items?: { title?: string; text?: string; term?: string;
              label?: string; href?: string;
-             items?: any[] }[];
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
   fs = '',
   cta = { label: '', href: '#' },
   items = [],
+  image,
+  copy,
 } = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div>
@@ -30,39 +50,38 @@ const {
     <div class="bm-footer-23__top-container row between">
       <div class="bm-footer-23__contact row between">
         <div class="bm-footer-23__top row between">
-          {heading && <h2 class="text-fluid-2">{heading}</h2>}
+          {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="row between">
-          <div class="bm-footer-22-social-links row between">
-            <div class="row gap-fluid-m">
-              {(items || []).map((it) => (
+        {list.length > 0 &&         <div class="row between">
+          {list.length > 0 &&           <div class="bm-footer-22-social-links row between">
+            {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
                 <div>
-                  <a class="text-fluid-0" href={it.href}>{it.label}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
                 </div>
-              ))}
-            </div>
+              ))}</div>}
           </div>
+          }
         </div>
+        }
       </div>
       <div>
-        <div class="footer-nav-wrapper footer-nav-wrapper-23 row between">
-          <div class="row gap-fluid-m">
-            {(items || []).map((it) => (
+        {links.length >= 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-23 row between">
+          {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-nav-column row between">
-                <h3 class="text-fluid-2">{it.title}</h3>
-                <div class="footer-menu row between">
-                  <div class="row gap-fluid-m">
-                    {((it.items || []) || []).map((it2) => (
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                {(it.items || []).length > 0 &&                 <div class="footer-menu row between">
+                  {(it.items || []).length > 0 && <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div>
-                        <a class="text-fluid-0" href={it2.href}>{it2.label}</a>
+                        <a class="text-fluid-0" href={it2.href}>{it2.label || it2.anchor || it2.text}</a>
                       </div>
-                    ))}
-                  </div>
+                    ))}</div>}
                 </div>
+                }
               </div>
-            ))}
-          </div>
+            ))}</div>}
+          {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
+        }
       </div>
     </div>
     <div class="bm-footer-23__contact__mid-container">
@@ -71,20 +90,25 @@ const {
     <div class="bm-footer-23__footer-container row between">
       <div>
         <div class="footer-nav-legal">
-          <div class="footer-legal-nav row between">
-            <div class="row gap-fluid-m">
-              {(items || []).map((it) => (
+          {links.length >= 0 &&           <div class="footer-legal-nav row between">
+            {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div class="footer-legal__li">
-                  <a class="text-fluid-0" href={it.href}>{it.label}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.label || it.anchor || it.text}</a>
                 </div>
-              ))}
-            </div>
+              ))}</div>}
+            {links.length === 0 && <p class="text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
           </div>
+          }
         </div>
       </div>
       <div>
-        {fs && <p class="text-fluid-0">{fs}</p>}
+        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
     </div>
   </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

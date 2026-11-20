@@ -1,6 +1,6 @@
   .team-4-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--section-space-xxl);
   }
 
@@ -37,7 +37,7 @@
 
   .team-4-list .team-4-card:nth-child(even) {
   
-  	margin-top:8rem;
+  	margin-top:var(--space-xxl);
   }
   
   
@@ -45,7 +45,7 @@
   
       .team-4-list .team-4-card:nth-child(even) {
   
-      margin-top:0rem;
+      margin-top:0;
     }
   
   
@@ -53,4 +53,8 @@
 
   .team-4-box__img {
   	aspect-ratio: 4/5;
+  }
+
+  @media (max-width: 44rem) {
+    .team-4-list { grid-template-columns: 1fr; }
   }

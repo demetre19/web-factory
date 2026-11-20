@@ -5,8 +5,8 @@
   .testimonial-27-container {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--space-s);
   }
 
   .testimonial-27-quote {
@@ -38,7 +38,7 @@
   .testimonial-27-content__profile {
     display: flex;
     flex-direction: column;
-    row-gap: 3rem;
+    row-gap: var(--space-xl);
     align-items: center;
     justify-content: center;
   }
@@ -46,14 +46,14 @@
   .testimonial-27-content__meta {
     display: flex;
     flex-direction: column;
-    row-gap: .3rem;
+    row-gap: calc(0.3rem + 0vw);
     align-items: center;
     text-align: center;
   }
 
   .testimonial-27-content__photo {
     object-fit: cover;
-    width: 6.5rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 
@@ -68,11 +68,11 @@
   }
   
   .testimonial-27-quote__text::before {
-  	top: -5rem;
+  	top: calc(var(--space-xxl) * -1);
     left: 0;
   }
   .testimonial-27-quote__text::after {
-  	bottom: -5rem;
+  	bottom: calc(var(--space-xxl) * -1);
     right: 0;
   }
 

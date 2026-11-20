@@ -1,35 +1,35 @@
   .testimonial-17-list-ul {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-l);
   }
 
   .testimonial-17-list-card__wrapper {
     gap: 0;
     display: flex;
-    column-gap: 1.5rem;
+    column-gap: var(--space-m);
   }
 
   .testimonial-17-list-card__content {
     display: flex;
     flex-direction: column;
     width: calc(100% - 7rem);
-    row-gap: 1.5rem;
+    row-gap: var(--space-m);
   }
 
   .testimonial-17-list-card__review {
     display: flex;
-    column-gap: .5rem;
+    column-gap: calc(0.5rem + 0vw);
   }
 
   .testimonial-17-list-card__image {
     overflow: hidden;
-    width: 7rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
   .testimonial-17-list-card__author span {
   	text-decoration: underline;
     text-decoration-color: var(--action-primary);
-    text-decoration-thickness: .2rem;
+    text-decoration-thickness: calc(0.2rem + 0vw);
   }

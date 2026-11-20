@@ -14,7 +14,7 @@
   .blog-archive-13-archive-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .blog-archive-13-archive-card__content {
@@ -33,7 +33,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -43,7 +43,7 @@
   }
 
   .blog-archive-13-archive-card:nth-child(3n+1) {
-  	height: 25rem;
+  	height: var(--space-xxl);
   }
   
   .blog-archive-13-archive-card:first-child {

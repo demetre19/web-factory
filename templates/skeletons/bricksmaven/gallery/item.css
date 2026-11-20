@@ -20,7 +20,7 @@
 
   .gallery-10-card {
   	display: grid;
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     grid-template-rows: repeat(2, 1fr);
     gap: var(--space-m)!important;
   }

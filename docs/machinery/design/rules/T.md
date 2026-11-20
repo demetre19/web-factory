@@ -78,7 +78,7 @@ fetch per S5 rule).
 | DIN Mittelschrift | industrial sans | Barlow Condensed, Archivo Narrow |
 | Franklin Gothic | realist sans | Libre Franklin |
 | Frutiger | humanist sans | Source Sans 3 |
-| Futura | geometric sans | Jost |
+| Futura | geometric sans | Jost, Satoshi |
 | Garamond | old-style serif | EB Garamond |
 | Gill Sans | humanist sans | Cabin |
 | Gotham | geometric sans | Montserrat |

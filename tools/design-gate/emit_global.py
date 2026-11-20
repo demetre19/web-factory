@@ -358,6 +358,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               gap: var(--space-m); padding-block: var(--space-m);
               border-top: 1px solid var(--border-default);
               align-items: start; }
+  .flow-row > dt, .flow-row > dd { grid-column: 2; }
+  .flow-row:not(:has(> .icon-chip)) > dt,
+  .flow-row:not(:has(> .icon-chip)) > dd { grid-column: 1 / -1; }
   .flow-row:last-child { border-bottom: 1px solid
                          var(--border-default); }
   .split { display: grid; gap: var(--space-l);

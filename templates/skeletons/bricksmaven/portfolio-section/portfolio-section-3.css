@@ -14,7 +14,7 @@
   .portfolio-section-3-list {
     display: grid;
     gap: calc(var(--space-m) * 2);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .portfolio-section-3-card {
@@ -46,8 +46,8 @@
     counter-increment: hworks-counter;
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
-    padding-inline:1rem;
-    padding-block:.3rem;
+    padding-inline:var(--space-s);
+    padding-block:calc(0.3rem + 0vw);
     color:var(--bg-subtle);
     font-size: var(--fs-1);
     font-weight: 700;
@@ -94,7 +94,7 @@
     top:100%;
     bottom:0;
     left:50%;
-    width: .1rem;
+    width: calc(0.1rem + 0vw);
     height: calc((var(--space-m) * 2) + (var(--section-space-xxl) * 2));
     background-color: var(--action-primary);
   }

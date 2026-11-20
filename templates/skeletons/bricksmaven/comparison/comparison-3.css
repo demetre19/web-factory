@@ -15,7 +15,7 @@
   .bm-comparison-3__grid {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-comparison-3__column {
@@ -37,7 +37,7 @@
   }
 
   .bm-comparison-3-card__icon-wrapper {
-    width: 48px;
+    width: var(--space-xl);
     justify-content: center;
     align-items: center;
     display: flex;

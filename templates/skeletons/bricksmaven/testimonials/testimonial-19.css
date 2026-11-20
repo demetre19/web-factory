@@ -4,24 +4,24 @@
     align-items: center;
     text-align: center;
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: 1rem;
+    row-gap: var(--space-s);
   }
 
   .testimonial-19-content__card-divider {
-    margin: 1rem 0 1rem 0;
+    margin: var(--space-s) 0 var(--space-s) 0;
   }
 
   .testimonial-19-content__card-photo {
     object-fit: cover;
-    width: 10rem;
+    width: var(--space-xxl);
     overflow: hidden;
   }
 
   .testimonial-19-content__card-review {
     display: flex;
-    column-gap: 1rem;
+    column-gap: var(--space-s);
   }
 
   .testimonial-19-content__slide.is-active .testimonial-19-content__card {
-  	box-shadow: 13px 6px 56px rgba(87, 87, 87, 0.1);
+  	box-shadow: var(--space-xs) calc(0.375rem + 0vw) var(--space-xxl) rgba(87, 87, 87, 0.1);
   }

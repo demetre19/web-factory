@@ -19,7 +19,7 @@
 
   .feature-14-list-ul {
     display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -35,7 +35,7 @@
   .feature-14-list-item__image {
     object-fit: cover;
     overflow: hidden;
-    width: 100px;
+    width: var(--space-xxl);
   }
 
   .feature-14-media {

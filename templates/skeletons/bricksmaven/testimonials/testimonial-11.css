@@ -1,6 +1,6 @@
   .testimonial-11-container {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -8,18 +8,18 @@
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     display: flex;
     flex-direction: column;
-    row-gap: 5rem;
+    row-gap: var(--space-xxl);
   }
 
   .testimonial-11-content__profile {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .testimonial-11-content__bio {
     display: flex;
     flex-direction: column;
-    row-gap: .5rem;
+    row-gap: calc(0.5rem + 0vw);
   }
 
   .testimonial-11-content__logo {
@@ -32,6 +32,6 @@
     line-height: .4;
     color: var(--action-primary);
     position: absolute;
-    top: 0rem;
-    left: 3rem;
+    top: 0;
+    left: var(--space-xl);
   }

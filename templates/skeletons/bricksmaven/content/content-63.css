@@ -11,7 +11,7 @@
   .content-63__media {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .content-63__image-alpha {
@@ -25,13 +25,13 @@
   }
 
   .content-63__media {
-    --image-height: 496px;
+    --image-height: var(--space-xxl);
   }
   
   @media (max-width:767px) {
     
     .content-63__media {
-    --image-height: 296px;
+    --image-height: var(--space-xxl);
   }
     
   }

@@ -1,7 +1,7 @@
   .bm-feature-68-lijst {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-feature-68-intro {
@@ -27,7 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 64px;
+    width: var(--space-xxl);
   }
 
   .bm-feature-68-card__heading {

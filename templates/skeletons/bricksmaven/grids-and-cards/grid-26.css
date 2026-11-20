@@ -13,7 +13,7 @@
 
   .grid-26-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -68,7 +68,7 @@
   }
   
   .grid-26-card:focus-within {
-  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
+  	box-shadow: 0 0 var(--space-xs) 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
   
   }
   
@@ -129,7 +129,7 @@
   @media (max-width: 767px) {
     
     .grid-26-card {
-  	height: 34rem;
+  	height: var(--space-xxl);
   }
     
   	.grid-26-card:nth-child(odd), .grid-26-card:nth-child(even) {

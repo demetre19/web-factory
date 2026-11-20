@@ -5,7 +5,7 @@
 
   .cta-17-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .cta-17__box {
@@ -31,7 +31,7 @@
   }
 
   .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
   }
 
   .cta-combo {
@@ -41,7 +41,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 

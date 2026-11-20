@@ -7,7 +7,7 @@
     flex-direction: row;
     column-gap: var(--space-s);
     row-gap: var(--space-s);
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -38,7 +38,7 @@
   }
 
   .blog-single-8__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-single-8-footer {
@@ -63,7 +63,7 @@
   }
 
   .blog-single-8-footer__author-photo {
-    width: 6.4rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
@@ -77,17 +77,17 @@
   .sb-8-share__item {
   	flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: var(--space-s);
   }
   .sb-8-share__item li a {
   	background-color: transparent;
     border-radius: 0;
     color: var(--bg-subtle);
-    width: 4rem;
-    height: 4rem;
+    width: var(--space-xxl);
+    height: var(--space-xxl);
   }
   .sb-8-share__item svg {
-  	height: 2.5rem;
+  	height: var(--space-xl);
   }
 
   .blog-single-8__featured-image {
@@ -109,12 +109,12 @@
   }
 
   .blog-single-8-footer__share-item {
-  	gap: .5rem;
+  	gap: calc(0.5rem + 0vw);
   }
   .blog-single-8-footer__share-item li a {
   	background-color: color-mix(in srgb, var(--bg-subtle) 60%, transparent);
     border-radius: 0;
     color: var(--bg-subtle);
-    width: 4rem;
-    height: 4rem;
+    width: var(--space-xxl);
+    height: var(--space-xxl);
   }

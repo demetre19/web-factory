@@ -17,7 +17,7 @@
   }
 
   .hworks-4-grid-ul {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-xl);
     display: grid;
   }
@@ -44,8 +44,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:3.2rem;
-    padding-block:1.8rem;
+    padding-inline:var(--space-xxl);
+    padding-block:var(--space-l);
     color:var(--action-primary);
     border-radius: 100%;
     font-size: var(--fs-3);

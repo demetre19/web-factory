@@ -67,6 +67,52 @@ def mix(a, b, t):
                          for x, y in zip(ra, rb))
 
 
+def _oklch_to_rgb(L, C, H):
+    """OKLCh → sRGB (inverse of gate._oklch_lch)."""
+    import math
+    h = math.radians(H)
+    a, bb = C * math.cos(h), C * math.sin(h)
+    l = L + 0.3963377774 * a + 0.2158037573 * bb
+    m = L - 0.1055613458 * a - 0.0638541728 * bb
+    s = L - 0.0894841775 * a - 1.2914855480 * bb
+    l, m, s = l ** 3, m ** 3, s ** 3
+    r = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s
+    g = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s
+    b = -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s
+
+    def gam(c):
+        c = min(1.0, max(0.0, c))
+        return 12.92 * c if c <= 0.0031308 else \
+            1.055 * (c ** (1 / 2.4)) - 0.055
+    return (gam(r), gam(g), gam(b))
+
+
+# C.3 neutral-tint bands (gate.check_neutral_tint): (floor, cap) OKLCH C
+# per role — neutrals carry the brand hue, never dead grey.
+_NEUTRAL_BANDS = {'surface': (0.0015, 0.035),
+                  'surface_elevated': (0.002, 0.040),
+                  'border': (0.002, 0.045), 'ink_muted': (0.002, 0.060),
+                  'ink': (0.002, 0.050), 'inverse': (0.002, 0.040)}
+
+
+def tint_neutral(role, hexv, hue):
+    """Clamp the neutral's OKLCH C into its C.3 band, hue taken from the
+    brand accent (tint, never re-colour)."""
+    band = _NEUTRAL_BANDS.get(role)
+    lch = gate._oklch_lch(hexv)
+    if band is None or lch is None or hue is None:
+        return hexv
+    lo, hi = band
+    L, C, _ = lch
+    if lo <= C <= hi:
+        return hexv
+    # aim mid-band — sRGB quantization can shave ~0.001 off C, which
+    # would drop a floor-clamped value back under the C.3 floor
+    C = (lo + hi) / 2 if not (lo <= C <= hi) else C
+    r, g, b = _oklch_to_rgb(L, C, hue)
+    return '#' + ''.join(f'{round(c * 255):02X}' for c in (r, g, b))
+
+
 def contrast(a, b):
     return gate.contrast(a, b)
 
@@ -141,10 +187,24 @@ def light_roles(disc, brief, prov):
         'ink': ink, 'ink_muted': muted,
         'inverse': mix(accent, '#000000', 0.55),
         'accent': accent, 'accent_foreground': fg}
+    # C.3 — neutrals carry the brand hue, never dead grey: clamp each
+    # neutral's OKLCH chroma into its band with the accent hue (bg is
+    # the brief canvas itself and exempt via U.3).
+    a_lch = gate._oklch_lch(accent)
+    a_hue = a_lch[2] if a_lch else None
+    for r in ('surface', 'surface_elevated', 'border', 'ink_muted',
+              'ink', 'inverse'):
+        tinted = tint_neutral(r, roles[r], a_hue)
+        if tinted != roles[r]:
+            roles[r] = tinted
+            prov[f'color.{r}'] = {'tag': 'chosen', 'source':
+                                  'C.3 tint: accent-hue OKLCH chroma '
+                                  'clamped to the neutral band '
+                                  '(dna_from_discovery.light_roles)'}
     for r in ('surface_elevated', 'border', 'ink_muted', 'inverse'):
-        prov[f'color.{r}'] = {'tag': 'chosen', 'source':
+        prov.setdefault(f'color.{r}', {'tag': 'chosen', 'source':
                               'mixed from discovered ink/surface/accent '
-                              '(dna_from_discovery.light_roles)'}
+                              '(dna_from_discovery.light_roles)'})
     prov['color.accent'] = {'tag': 'chosen', 'source': 'BRIEF brand.accent'}
     return roles
 

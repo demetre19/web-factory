@@ -4,13 +4,13 @@
 
   .bm-content-46__wrapper {
     display: grid;
-    grid-template-columns: repeat(24, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-content-46__content {
     display: flex;
     row-gap: var(--flow-spacing);
-    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     text-align: center;
     align-items: center;
     flex-wrap: nowrap;

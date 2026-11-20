@@ -13,7 +13,7 @@
 
   .bm-author-card-1__image {
     object-fit: cover;
-    width: 128px;
+    width: var(--space-xxl);
   }
 
   .bm-social-share {
@@ -35,7 +35,7 @@
   .bm-author-page-1__post-list {
     display: grid;
     gap: calc(var(--space-m) * 2);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-blog-section-1-card {

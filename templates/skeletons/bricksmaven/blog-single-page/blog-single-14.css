@@ -6,7 +6,7 @@
   .bm-blog-single-14__intro {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-blog-single-14__column {
@@ -35,7 +35,7 @@
   }
 
   .blog-single-2__photo {
-    width: 4.4rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
@@ -59,7 +59,7 @@
   }
 
   .blog-single-2__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-single-head__term--alt {

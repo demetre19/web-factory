@@ -26,7 +26,7 @@
   }
 
   .blog-single-1-head__term {
-    padding: .4rem .8rem .4rem .8rem;
+    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
   }
 
   .blog-single-1__thumb {
@@ -58,7 +58,7 @@
   }
 
   .blog-single-1-footer__author-image {
-    width: 3.4rem;
+    width: var(--space-xxl);
     object-fit: cover;
   }
 
@@ -84,12 +84,12 @@
   }
 
   .blog-single-1-footer__share-item {
-  	gap: .5rem;
+  	gap: calc(0.5rem + 0vw);
   }
   .blog-single-1-footer__share-item li a {
   	background-color: color-mix(in srgb, var(--bg-subtle) 60%, transparent);
     border-radius: 0;
     color: var(--bg-subtle);
-    width: 4rem;
-    height: 4rem;
+    width: var(--space-xxl);
+    height: var(--space-xxl);
   }

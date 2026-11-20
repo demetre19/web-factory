@@ -11,7 +11,7 @@
 
   .team-2-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -28,7 +28,7 @@
   }
 
   .team-2-profile__img {
-    width: 10rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }

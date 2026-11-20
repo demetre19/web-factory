@@ -90,16 +90,16 @@
   }
 
   .bm-hero-90-testimonial__image {
-    width: 40px;
+    width: var(--space-xl);
     object-fit: cover;
   }
 
   .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: -20px;
+  	margin-inline-start: calc(var(--space-s) * -1);
   }
   
   .bm-team-media:first-child {
-  	margin-inline-start: 0px;
+  	margin-inline-start: 0;
   }
 
   /* Flip testimonial card in the even cards  */

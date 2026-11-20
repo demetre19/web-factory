@@ -15,7 +15,7 @@
 
   .team-5-list {
     display: grid;
-    grid-template-columns: repeat(18, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-l);
     width: 100%;
   }
@@ -63,7 +63,7 @@
     grid-row-start: 1;
     position:absolute;
     z-index:1;
-    top:-4rem;
+    top:calc(var(--space-xxl) * -1);
     box-shadow: var(--shadow-card);
   
   }

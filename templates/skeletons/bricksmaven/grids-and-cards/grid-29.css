@@ -21,7 +21,7 @@
 
   .grid-29-list {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .grid-29-card {
@@ -32,7 +32,7 @@
 
   @media (max-width:600px) {
   	.grid-29-list {
-    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
       grid-template-rows: auto !important;
     }
   }

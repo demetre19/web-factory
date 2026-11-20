@@ -5,7 +5,7 @@
 
   .newsletter-4-container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     flex-direction: row;
     gap: var(--space-m);
   }
@@ -31,7 +31,7 @@
   }
 
   .bm-list__item-icon {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
   }
 
   .bm-form {

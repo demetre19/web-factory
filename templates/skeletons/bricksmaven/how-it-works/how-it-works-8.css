@@ -26,7 +26,7 @@
   }
 
   .hworks-8-card__content {
-    margin: -2rem 0 0 0;
+    margin: calc(var(--space-l) * -1) 0 0 0;
     padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     display: flex;
     flex-direction: column;
@@ -48,8 +48,8 @@
     /* Display Counter */
     content: counters(hworks-counter,".") " ";
     background-color: var(--action-primary);
-    padding-inline:1.5rem;
-    padding-block:.6rem;
+    padding-inline:var(--space-m);
+    padding-block:calc(0.6rem + 0vw);
     color:var(--bg-canvas);
     border-radius: 100%;
     font-size: var(--fs-1);

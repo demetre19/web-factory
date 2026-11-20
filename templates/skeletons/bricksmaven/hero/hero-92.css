@@ -4,7 +4,7 @@
 
   .bm-hero-92__container {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .bm-hero-92__intro {
@@ -69,7 +69,7 @@
   }
 
   .bm-hero-90-testimonial__image {
-    width: 40px;
+    width: var(--space-xl);
     object-fit: cover;
   }
 
@@ -79,7 +79,7 @@
   }
 
   .bm-hero-92 {
-    --section-height: 1024px;
+    --section-height: var(--space-xxl);
     overflow-x: clip;
   }
   

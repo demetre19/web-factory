@@ -12,101 +12,119 @@ interface Props {
   heading?: string;
   fs?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string;
+  items?: { title?: string; text?: string; term?: string;
              label?: string; href?: string;
-             items?: any[] }[];
+             icon?: string; items?: any[] }[];
+  image?: { src: string; alt: string };
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
   heading = '',
   fs = '',
   cta = { label: '', href: '#' },
   items = [],
+  image,
+  copy,
 } = Astro.props;
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || cp.text || fs;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
 <div>
   <div class="sec-inner">
     <div class="bm-portfolio-single-1__container">
       <div class="bm-portfolio-single-1__aside">
-        {heading && <h1 class="text-fluid-4">{heading}</h1>}
+        {head && <h1 class="text-fluid-4">{head}</h1>}
         <div class="bm-live-website-btn">
           <div class="bm-live-website-btn__dot"></div>
         </div>
-        <div class="bm-portfolio-single-meta-data-1">
-          <div class="grid-auto gap-fluid-m">
-            {(items || []).map((it) => (
+        {list.length > 0 &&         <div class="bm-portfolio-single-meta-data-1">
+          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}
-          </div>
+            ))}</div>}
         </div>
+        }
         <div>
-          {fs && <p class="text-fluid-0">{fs}</p>}
+          {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+          {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <div class="bm-contact-widget-2">
-          <div class="bm-contact-widget-2__footer">
-            <div>
-              <figure class="bm-contact-widget-2__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        {image && image.src &&         <div class="bm-contact-widget-2">
+          {image && image.src &&           <div class="bm-contact-widget-2__footer">
+            {image && image.src &&             <div>
+              {image && image.src && <figure class="bm-contact-widget-2__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
-            <div></div>
-            <div class="bm-contact-widget-link">
-              <div class="bm-contact-widget-link__icon-wrapper">
-                <span data-icon="lucide" aria-hidden="true"></span>
-              </div>
-            </div>
+            }
           </div>
+          }
         </div>
+        }
       </div>
-      <div class="bm-portfolio-single-1__content">
-        <div class="bm-portfolio-single-1-media">
-          <div class="grid-auto gap-fluid-m">
-            {(items || []).map((it) => (
-              <div class="card">
-                <figure class="bm-portfolio-single-1-case-piece__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      {image && image.src &&       <div class="bm-portfolio-single-1__content">
+        {image && image.src &&         <div class="bm-portfolio-single-1-testimonial">
+          {image && image.src &&           <div class="testimonial-17-list-card">
+            {image && image.src &&             <div class="testimonial-17-list-card__wrapper">
+              {image && image.src &&               <div>
+                {image && image.src && <figure class="testimonial-17-list-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
               </div>
-            ))}
-          </div>
-        </div>
-        <div class="bm-portfolio-single-1-testimonial">
-          <div class="testimonial-17-list-card">
-            <div class="testimonial-17-list-card__wrapper">
-              <div class="testimonial-17-list-card__content"></div>
-              <div>
-                <figure class="testimonial-17-list-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
-              </div>
+              }
             </div>
+            }
           </div>
+          }
         </div>
+        }
       </div>
-      <div class="bm-contact-widget-2">
-        <div class="bm-contact-widget-2__footer">
-          <div>
-            <figure class="bm-contact-widget-2__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      }
+      {image && image.src &&       <div class="bm-contact-widget-2">
+        {image && image.src &&         <div class="bm-contact-widget-2__footer">
+          {image && image.src &&           <div>
+            {image && image.src && <figure class="bm-contact-widget-2__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
-          <div></div>
-          <div class="bm-contact-widget-link">
-            <div class="bm-contact-widget-link__icon-wrapper">
-              <span data-icon="lucide" aria-hidden="true"></span>
-            </div>
-          </div>
+          }
         </div>
+        }
       </div>
+      }
     </div>
     <div class="bm-portfolio-single-1__footer-container">
       <div class="bm-portfolio-related-list">
-        <div class="bm-portfolio-related-card grid-auto gap-fluid-l">
-          <div class="bm-portfolio-related-card__content"></div>
-          <figure class="bm-portfolio-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        {image && image.src &&         <div class="bm-portfolio-related-card grid-auto gap-fluid-l">
+          {image && image.src && <figure class="bm-portfolio-related-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
-        <div class="bm-portfolio-related-card grid-auto gap-fluid-l">
-          <div class="bm-portfolio-related-card__content"></div>
-          <figure class="bm-portfolio-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        }
+        {image && image.src &&         <div class="bm-portfolio-related-card grid-auto gap-fluid-l">
+          {image && image.src && <figure class="bm-portfolio-related-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
+        }
       </div>
     </div>
     <div></div>
   </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

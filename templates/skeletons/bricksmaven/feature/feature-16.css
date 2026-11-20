@@ -7,7 +7,7 @@
   .feature-16-content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .feature-16-content__intro {
@@ -32,19 +32,19 @@
   }
 
   .feature-16-card:nth-child(3) {
-  	margin-block-start:4rem;
+  	margin-block-start:var(--space-xxl);
   }
   
   .feature-16-card:nth-child(5) {
-  	margin-block-start:2rem;
+  	margin-block-start:var(--space-l);
   }
   
   .feature-16-card:nth-child(6) {
-  	margin-block-start:6rem;
+  	margin-block-start:var(--space-xxl);
   }
   
   @media (max-width:767px) {
   	.feature-16-card:nth-child(3), .feature-16-card:nth-child(5), .feature-16-card:nth-child(6) {
-  	margin-block-start:0rem;
+  	margin-block-start:0;
   }
   }

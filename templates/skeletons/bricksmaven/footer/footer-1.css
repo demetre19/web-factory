@@ -5,7 +5,7 @@
 
   .footer-1-container {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
     padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
@@ -48,7 +48,7 @@
 
   .footer-1-bottom {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 

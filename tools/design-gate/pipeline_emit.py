@@ -122,8 +122,11 @@ def _scaffold(ctx, comps):
     shell = os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro')
     shared = os.path.join(TEMPLATES, 'sections', '_shared',
                           'inline.ts')
+    chip = os.path.join(TEMPLATES, 'sections', '_shared',
+                        'IconChip.astro')
     if any('lucide-astro' in (_read(p) if os.path.isfile(p) else '')
-           for p in list(_exemplar_paths(comps)) + [shell, shared]):
+           for p in list(_exemplar_paths(comps))
+           + [shell, shared, chip]):
         deps['lucide-astro'] = '^0.556.0'
     _w(os.path.join(site, 'package.json'), json.dumps({
         'name': _slug(ctx), 'version': '1.0.0', 'private': True,
@@ -227,6 +230,39 @@ def _load_copy(ctx):
     return json.load(open(p, encoding='utf-8'))
 
 
+def _split_para(p, cap=240):
+    """R.4 — a rendered <p> carries at most `cap` chars. Long copy
+    paragraphs split at sentence boundaries; the emitted parts
+    re-join contiguously so F.1 still sees the verbatim string."""
+    p = str(p or '')
+    if len(p) <= cap:
+        return [p] if p else []
+    sents = re.split(r'(?<=[.!?])\s+', p)
+    out, cur = [], ''
+    for s in sents:
+        if cur and len(cur) + 1 + len(s) > cap:
+            out.append(cur)
+            cur = s
+        else:
+            cur = f'{cur} {s}'.strip()
+    if cur:
+        out.append(cur)
+    # a single sentence over the cap splits on the last ' – ' or
+    # '; ' boundary inside it — still verbatim when re-joined
+    final = []
+    for chunk in out:
+        while len(chunk) > cap:
+            cut = max(chunk.rfind(' – ', 0, cap),
+                      chunk.rfind('; ', 0, cap),
+                      chunk.rfind(', ', 0, cap))
+            if cut <= 0:
+                break
+            final.append(chunk[:cut + 1].rstrip())
+            chunk = chunk[cut + 1:].lstrip()
+        final.append(chunk)
+    return final
+
+
 def _copy_slot(copy, ref):
     """The full-copy prop for a plan row's copy_ref (§4.3), verbatim
     from COPY.json — inline markdown kept for the shared renderer:
@@ -257,6 +293,8 @@ def _copy_slot(copy, ref):
         v = blk.get(k)
         if k == 'list_ordered':
             slot[k] = bool(v)
+        elif k in ('before', 'after') and v:
+            slot[k] = [x for para in v for x in _split_para(para)]
         else:
             slot[k] = v if v is not None else ([] if k != 'answer'
                                                else '')
@@ -442,8 +480,11 @@ def main(argv):
     # scaffold and the full emit produce the same site tree (X.1)
     _w(os.path.join(ctx.site, 'src', '_shared', 'inline.ts'),
        _read(os.path.join(TEMPLATES, 'sections', '_shared', 'inline.ts')))
+    _w(os.path.join(ctx.site, 'src', '_shared', 'IconChip.astro'),
+       _read(os.path.join(TEMPLATES, 'sections', '_shared',
+                          'IconChip.astro')))
     print('  scaffold: package.json, astro.config.mjs, favicon, index, '
-          '_shared/inline.ts')
+          '_shared/inline.ts, _shared/IconChip.astro')
 
     # S1 — site-folder assets (fonts, media, logo) → site/public/, so
     # the @font-face urls, BRIEF media and the logo resolve at build
@@ -541,9 +582,22 @@ def main(argv):
         _comp_copy(ctx, comp)
     # a composition that left the plan leaves no component file: a
     # stale .astro still satisfies P.6's "has specimen" scan and the
-    # next build ships a component the page never renders
+    # next build ships a component the page never renders. Preview
+    # pages (src/pages/preview/*.astro) stay in the tree and keep
+    # importing the preview-phase union — a comp they reference is
+    # live, not stale, so it survives the prune.
     cdir = os.path.join(ctx.site, 'src', 'components')
     ckeep = {comp + '.astro' for comp in comps} | {'Section.astro'}
+    pages_root = os.path.join(ctx.site, 'src', 'pages')
+    if os.path.isdir(pages_root):
+        for dpth, _, fns in os.walk(pages_root):
+            for fn in fns:
+                if not fn.endswith('.astro'):
+                    continue
+                for m in re.finditer(
+                        r"components/([\w.-]+)\.astro",
+                        _read(os.path.join(dpth, fn))):
+                    ckeep.add(m.group(1) + '.astro')
     for fn in sorted(os.listdir(cdir)) if os.path.isdir(cdir) else []:
         if fn.endswith('.astro') and fn not in ckeep:
             os.remove(os.path.join(cdir, fn))
@@ -613,7 +667,7 @@ def main(argv):
         if '--build' in flags and ok:
             r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
                                capture_output=True, text=True,
-                               timeout=300)
+                               env=gate.node_env(), timeout=300)
             tail = '\n'.join(
                 (r.stdout + r.stderr).strip().split('\n')[-6:])
             print(f'  astro build exit {r.returncode}\n  {tail}')

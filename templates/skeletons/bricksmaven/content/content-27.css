@@ -30,7 +30,7 @@
   }
 
   .btn--primary {
-    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
     width: auto;
   }
 
@@ -40,8 +40,8 @@
 
   .content-27__data {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    margin: calc(var(--section-space-xxl) * -1 + -2rem) 0 0 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    margin: calc(var(--section-space-xxl) * -1 + calc(var(--space-l) * -1)) 0 0 0;
   }
 
   .content-27__data-content {

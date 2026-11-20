@@ -17,7 +17,7 @@
     align-items: flex-start;
     text-align: left;
     align-self: flex-start;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -46,7 +46,7 @@
   .bm-account-dashboard__page .woocommerce-MyAccount-navigation::before {
     content: '';
     position: absolute;
-    inline-size: 1px;
+    inline-size: calc(0.0625rem + 0vw);
     block-size: 100%;
     background-color: var(--fs-0);
     inset-inline-end: calc(-1 * (var(--flow-spacing) / 2));

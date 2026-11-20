@@ -1,0 +1,58 @@
+{
+ "steps": [
+  {
+   "label": "page assembly",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "assemble.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "1c616a1f0b6acb20"
+   },
+   "outputs": {
+    "SPEC.md": "c305391fb889730e",
+    "ASSEMBLED.md": "dd94b32be8dda678"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T19:39:19"
+  },
+  {
+   "label": "page evidence",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "evidence.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {},
+   "outputs": {
+    "REVIEW.json": "0c1bb361b5d4ba73",
+    "shots/768-light-strata-cleaning-melbourne.png": "96d4a79b0af01c2b",
+    "shots/1280-light-strata-cleaning-melbourne.png": "00035c0359ddefcd",
+    "shots/1280-dark-strata-cleaning-melbourne.png": "57bf871a897866e2",
+    "shots/360-dark-strata-cleaning-melbourne.png": "167456cfe23d162e",
+    "shots/360-light-strata-cleaning-melbourne.png": "95ac8b794d33e36e",
+    "shots/768-dark-strata-cleaning-melbourne.png": "d2418655e9c28bde"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T19:39:27"
+  },
+  {
+   "label": "review sign",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "run.py",
+    "sign-review",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/REVIEW.json": "4e11618641327155"
+   },
+   "outputs": {
+    "REVIEW.json": "4e11618641327155"
+   },
+   "rc": 0,
+   "ts": "2026-11-20T19:39:48"
+  }
+ ]
+}

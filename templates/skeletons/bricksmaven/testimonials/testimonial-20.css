@@ -1,6 +1,6 @@
   .testimonial-20-container {
     flex-direction: column;
-    row-gap: 5rem;
+    row-gap: var(--space-xxl);
     align-items: center;
   }
 
@@ -11,15 +11,15 @@
   .testimonial-20-content__wrapper {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--space-xxl);
   }
 
   .testimonial-20-content__text {
     text-align: center;
     display: flex;
     flex-direction: column;
-    row-gap: 3rem;
+    row-gap: var(--space-xl);
   }
 
   .testimonial-20-content__media-img {

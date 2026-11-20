@@ -6,7 +6,7 @@
   .product-list-6__list {
     display: grid;
     gap: calc( var(--space-m) * 2 );
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .intro {
@@ -26,7 +26,7 @@
 
   .product-list-6-card {
     padding: var(--space-m) var(--space-s) var(--space-m) var(--space-s);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     row-gap: var(--flow-spacing);
     flex-direction: column;
   }
@@ -52,7 +52,7 @@
   .product-list-notice__wrapper--right {
     display: flex;
     flex-direction: column;
-    width: var(--measure);
+    max-width: var(--measure);
     align-items: flex-end;
     row-gap: calc(var(--flow-spacing) / 4);
     justify-content: flex-end;

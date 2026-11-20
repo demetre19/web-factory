@@ -5,7 +5,7 @@
   .testimonial-23-content__wrapper {
     width: 90%;
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
   }
 
@@ -28,17 +28,17 @@
 
   .testimonial-23-content__meta {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .testimonial-23-content__profile {
     display: flex;
     flex-direction: column;
-    row-gap: .2rem;
+    row-gap: calc(0.2rem + 0vw);
   }
 
   .testimonial-23-content__name {
-    margin: 0 0 .5rem 0;
+    margin: 0 0 calc(0.5rem + 0vw) 0;
   }
 
   .testimonial-23-content__review {
@@ -46,7 +46,7 @@
     justify-content: flex-end;
     flex-direction: row;
     align-items: flex-start;
-    column-gap: .5rem;
+    column-gap: calc(0.5rem + 0vw);
   }
 
   .testimonial-23-content__photo {

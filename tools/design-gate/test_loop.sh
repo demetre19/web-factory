@@ -23,8 +23,9 @@
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
 PY="python3 -X pycache_prefix=/tmp/pc"
-SITE="${1:-/Users/apple/Documents/DEV-WORK/DESIGN-SYSTEMS/whistle-clean-australia}"
-PAGE_SLUG="school-cleaning-standards"
+REPO="$(cd "$HERE/../.." && pwd)"
+SITE="${1:-$REPO/INPUTS/whistle-clean-australia/DESIGN-SYSTEM}"
+PAGE_SLUG="strata-cleaning-melbourne"
 LOG="$SITE/LOOP-LOG.md"
 MAX=10
 NEED_CLEAN=2

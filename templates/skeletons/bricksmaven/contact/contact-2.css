@@ -44,7 +44,7 @@
   }
 
   .contact-2-sales-card__image {
-    width: 12.7rem;
+    width: var(--space-xxl);
     object-fit: cover;
     overflow: hidden;
   }
@@ -89,4 +89,8 @@
   
   .contact-form__fields textarea:focus {
   outline-offset: 0;
+  }
+
+  @media (max-width: 44rem) {
+    .contact-2-sales-grid-ul { grid-template-columns: 1fr; }
   }

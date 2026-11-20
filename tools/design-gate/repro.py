@@ -108,6 +108,14 @@ def _recorded_pick(pdir):
         return None
 
 
+def _recorded_look(pdir):
+    try:
+        rec = gate.read_approvals(gate.Ctx(pdir)).get('w4') or {}
+        return rec.get('design')
+    except Exception:
+        return None
+
+
 def rebuild(pdir, tmp):
     site_dir, slug = SF.site_of(pdir)
     if not site_dir:
@@ -142,6 +150,15 @@ def rebuild(pdir, tmp):
             os.path.join(pdir, 'DESIGN-PLAN.md'), encoding='utf-8',
             errors='replace').read():
         _run([PY, os.path.join(HERE, 'look_emit.py'), t_pdir])
+    if _recorded_look(pdir):
+        # the operator's w4 pick locks the DNA map to v1
+        # (approve_service.record_approval → gate.lock_dna_map) —
+        # replay the same producer so the rebuilt DNA.json carries
+        # the locked bytes
+        _run([PY, '-c',
+              'import sys; sys.path.insert(0, ' + repr(HERE) + '); '
+              'import gate; '
+              'gate.lock_dna_map(gate.Ctx(sys.argv[1]))', t_pdir])
     diffs = []
 
     # mirror the pipeline's own route: scaffold-only emit when the
