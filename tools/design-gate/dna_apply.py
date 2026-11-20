@@ -128,7 +128,9 @@ def main(argv):
     # TOKENS + plan hexes are shadows — re-derive, never drift
     rec = emit_global.tokens_json(dna)
     with open(__import__('os').path.join(ctx.dir, 'TOKENS.json'), 'w') as fh:
-        json.dump(rec, fh, indent=1)
+        # match pipeline_emit._tokens byte-for-byte — trailing newline,
+        # or the same record flips bytes by last-writer (repro X.1)
+        fh.write(json.dumps(rec, indent=1) + '\n')
     nplan = _sync_plan_roles(ctx, dna)
     print(f'dna_apply: {", ".join(changed)} → '
           f'core {dna["hashes"].get("core")} · '

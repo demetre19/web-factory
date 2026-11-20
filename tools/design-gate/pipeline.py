@@ -574,6 +574,22 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
         recs = os.path.join(d, '.receipts', wave + '.json')
         if os.path.isfile(recs):
             os.remove(recs)
+        # this run re-gates `wave` and every wave after it — their
+        # GATES.json records are stale verdicts from a prior run (or
+        # none). Left in place, X.3 at an ancestor's drifted re-gate
+        # demands an approval for a wave this run has not reached.
+        # Ancestor records stay: _regate_drifted reads their
+        # inputs_sha256 to detect legitimate downstream rewrites.
+        try:
+            later = ORDER[ORDER.index(wave):]
+            gp = os.path.join(d, 'GATES.json')
+            g = json.load(open(gp)) if os.path.isfile(gp) else {}
+            if any(w in g for w in later):
+                for w in later:
+                    g.pop(w, None)
+                json.dump(g, open(gp, 'w'), indent=2, sort_keys=True)
+        except ValueError:
+            pass                    # wave outside ORDER (site wave)
         print(f'=== {wave} ===')
         for step in _steps(d, wave, build, site_dir):
             rc = _run_step(d, wave, step, env)
