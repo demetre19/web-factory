@@ -27,21 +27,21 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-21-container">
+      <div class="testimonial-21-content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="testimonial-21-content__item card">
                 <p class="text-fluid-0">{it.text}</p>
-                <div>
-                  <div>
-                    <p class="text-fluid-0">{it.text}</p>
+                <div class="testimonial-21-content__profile">
+                  <div class="testimonial-21-content__meta">
+                    <p class="testimonial-21-content__name text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                   <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="testimonial-21-content__photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 </div>
               </div>
@@ -49,13 +49,13 @@ const {
           </div>
         </div>
       </div>
-      <div>
+      <div class="testimonial-21-post">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <div class="grid-auto gap-fluid-l">
+              <div class="testimonial-21-post__card grid-auto gap-fluid-l">
                 <h4 class="text-fluid-2">{it.title}</h4>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="testimonial-21-post__thumb ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

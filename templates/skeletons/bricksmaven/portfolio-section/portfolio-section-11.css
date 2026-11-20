@@ -1,0 +1,38 @@
+  .bm-portfolio-section-11__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-related-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-portfolio-related-card {
+    justify-content: flex-end;
+  }
+
+  .bm-portfolio-related-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 2);
+    display: flex;
+  }
+
+  .bm-portfolio-related-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-portfolio-related-card {
+    aspect-ratio: 4/3;
+  }

@@ -1,0 +1,40 @@
+  .bm-contact-32__container {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 3);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .bm-contact-32__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-32__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-accordion-clean {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-accordion-clean-card__icon-wrapper {
+    display: flex;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-contact-32__image {
+    object-fit: cover;
+  }
+
+  .bm-accordion-clean-card .bm-accordion-clean-card__icon--open {
+    transform: rotate(90deg);
+    transition: .1s ease;
+  }
+  
+  .bm-accordion-clean-card .bm-accordion-clean-card__title[aria-expanded="true"] .bm-accordion-clean-card__icon--open {
+    transform: rotate(0deg) !important;
+  }

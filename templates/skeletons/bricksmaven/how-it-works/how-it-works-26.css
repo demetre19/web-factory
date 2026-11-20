@@ -1,0 +1,75 @@
+  .bm-how-it-works-26 {
+    row-gap: var(--space-s);
+    overflow: clip;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-how-it-works-26__full-container {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+  }
+
+  .bm-how-it-works-26-list {
+    padding: 0 var(--gutter) 0 var(--gutter);
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    margin: 0 0 0 0;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-how-it-works-26-card {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-how-it-works-26-card__intro {
+    align-items: center;
+    text-align: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .bm-how-it-works-26-card__step {
+    display: flex;
+    gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-how-it-works-26-card__circle {
+    width: 32px;
+  }
+
+  .bm-how-it-works-26-card__vertical-line {
+    width: 1px;
+  }
+
+  .bm-how-it-works-26-card__inner {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-how-it-works-26-card__highlight {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--space-m) 0 var(--space-m);
+  }

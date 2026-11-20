@@ -1,0 +1,42 @@
+  .contact-11-container {
+    row-gap: var(--space-xl);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-11-list-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .contact-11-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+    padding: var(--space-l) var(--space-s) var(--space-l) var(--space-s);
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .contact-11-list-card::before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    left: var(--space-s);
+    width: 6rem;
+    height: 1rem;
+    background-color: var(--action-primary);
+  }

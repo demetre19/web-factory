@@ -1,0 +1,67 @@
+  .contact-3-container {
+    display: flex;
+    row-gap: var(--space-xl);
+  }
+
+  .contact-3-grid-ul {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-m);
+  }
+
+  .contact-3-card {
+    display: flex;
+    row-gap: var(--space-s);
+    flex-direction: column;
+  }
+
+  .contact-3-card--alt {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .contact-3-card__icon-wrapper {
+    width: 15%;
+  }
+
+  .contact-3-card__content {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .contact-3-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .contact-3-form {
+    display: flex;
+    row-gap: var(--space-xs);
+    flex-direction: column;
+  }
+
+  .contact-3-media__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .contact-3-form__field .bricks-button {
+  padding: 1em 1.5em;
+  }
+  
+  .contact-3-form__field .required:after{
+  color: var(--action-primary);
+  }
+  
+  .contact-3-form__field input:focus {
+  outline-offset: 0;
+  }
+  
+  
+  .contact-3-form__field textarea:focus {
+  outline-offset: 0;
+  }

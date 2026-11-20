@@ -27,7 +27,7 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="cart-page-5__container-top">
       {heading && <h1 class="text-fluid-4">{heading}</h1>}
       <div>
         <div></div>
@@ -36,34 +36,34 @@ const {
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
     </div>
-    <div>
-      <div>
+    <div class="cart-page-5__container">
+      <div class="cart-page-5__cart-container">
         <div>
           <div></div>
         </div>
-        <div>
-          <div>
-            <div></div>
-            <div>
-              <div>
+        <div class="cart-page-5__cart-totals-container">
+          <div class="cart-page-5__cart-totals-wrapper">
+            <div class="cart-page-5__cart-totals"></div>
+            <div class="cart-page-credit-card-wrapper">
+              <div class="cart-page-card-list">
                 <div class="grid-auto gap-fluid-m">
                   {(items || []).map((it) => (
                     <div class="card">
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Credit Card Logos" loading="lazy" width="900" height="600" /></figure>
+                      <figure class="cart-page-card-credit__brands ratio-portrait"><img src="/media/placeholder.svg" alt="Credit Card Logos" loading="lazy" width="900" height="600" /></figure>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <div>
+          <div class="cart-page-usp cart-page-usp--alt">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+                <div class="cart-page-card-usp card">
+                  <div class="cart-page-card-usp__media">
+                    <figure class="cart-page-card-usp__image ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
                   </div>
-                  <div>
+                  <div class="cart-page-card-usp__content">
                     <p class="text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>

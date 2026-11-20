@@ -28,49 +28,49 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
+        <div class="cta-combo">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
       <div>
-        <div>
-          <div>
-            <div>
+        <div class="pricing-5-price-box">
+          <div class="pricing-5-intro">
+            <div class="pricing-5-intro__price-wrapper">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>
           <div>
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-li-benefits card">
                   <span data-icon="lucide" aria-hidden="true"></span>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div></div>
+          <div class="pricing-5-cta"></div>
         </div>
-        <div>
-          <div>
-            <div>
+        <div class="pricing-5-price-box">
+          <div class="pricing-5-intro">
+            <div class="pricing-5-intro__price-wrapper">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>
           <div>
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-li-benefits card">
                   <span data-icon="lucide" aria-hidden="true"></span>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div></div>
+          <div class="pricing-5-cta"></div>
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@ const {
     <div>
       <div>
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
-        <div>
+        <div class="blog-archive-12-tab-menu">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
@@ -43,10 +43,10 @@ const {
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <div>
-                  <div>
-                    <div>
-                      <div>
+                <div class="blog-archive-12-archive-list">
+                  <div class="blog-archive-12-archive-card">
+                    <div class="blog-archive-12-archive-card__content">
+                      <div class="blog-archive-12-archive-card__meta">
                         <p class="text-fluid-0">{it.text}</p>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
@@ -55,8 +55,8 @@ const {
                       <a class="text-fluid-0" href={it.href}>{it.label}</a>
                     </div>
                     <div class="grid-auto gap-fluid-l">
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-                      <div>
+                      <figure class="blog-archive-12-archive-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                      <div class="blog-archive-12-archive-card__category-wrapper">
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>

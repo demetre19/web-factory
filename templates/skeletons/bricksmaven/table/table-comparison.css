@@ -1,0 +1,40 @@
+  .bm-table-comp-2-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-table-2 {
+    display: table;
+  }
+
+  .bm-table-2__thead {
+    display: table-header-group;
+  }
+
+  .bm-table-2__tr {
+    display: table-row;
+  }
+
+  .bm-table-2__th {
+    text-align: left;
+    padding: var(--space-xs) 0 var(--space-xs) var(--space-s);
+    display: table-cell;
+  }
+
+  .bm-table-2__tbody {
+    display: table-row-group;
+  }
+
+  .bm-table-2__td {
+    padding: var(--space-s) 0 var(--space-s) var(--space-s);
+    display: table-cell;
+  }

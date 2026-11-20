@@ -31,11 +31,11 @@ const {
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-testimonial-49-card card">
+              <div class="bm-testimonial-49-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
-                <div>
-                  <div>
+                <div class="bm-testimonial-49-card__badge">
+                  <div class="bm-testimonial-49-card__icon-wrapper">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -45,7 +45,7 @@ const {
                 </div>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-testimonial-49-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

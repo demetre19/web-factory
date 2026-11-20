@@ -11,11 +11,14 @@ output can never drift.
   tailwind_config(tok)  → site/tailwind.config.js text: darkMode +
                           colors/fontSize/borderRadius/spacing + every
                           TOKENS hex inlined
-  global_css(tok)       → site/src/styles/global.css text: @tailwind
-                          headers + emit_tokens five layers +
-                          GLOBAL_CSS_TAIL (@layer components, .sec-band,
-                          [data-surface] scope hooks, reduced-motion,
-                          text-wrap, --input-*, .flow)
+  global_css(tok, fonts) → site/src/styles/global.css text: @tailwind
+                          headers + DNA @font-face + emit_tokens five
+                          layers (light :root default, dark only under
+                          [data-theme=dark]) + GLOBAL_CSS_TAIL (@layer
+                          components, .sec-band, [data-surface] scope
+                          hooks, reduced-motion, text-wrap, --input-*)
+  site_assets(page_dir, site) → copies the site folder's assets/fonts,
+                          assets/media, assets/logo.svg into site/public/
 
 pipeline_emit.py is the only caller for real pipelines; gen_fixtures
 calls global_css() verbatim (the recipe moved here from its
@@ -29,6 +32,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import emit_tokens  # noqa: E402
+import clamp  # noqa: E402
 
 # The component layer appended below the emit_tokens five TK layers.
 # Historically gen_fixtures.GLOBAL_CSS_TAIL — moved here so it is real
@@ -40,19 +44,19 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
 :root {
   --text-wrap-heading: balance;
   --text-wrap-body: pretty;
-  --flow-spacing: var(--space-4);
+  --flow-spacing: var(--content-gap);
+  /* ACSS list vocab (U.10): markers' indent and item rhythm bind the
+     spacing scale — no list-* tokens are emitted by clamp */
+  --list-indent-spacing: var(--space-l);
+  --list-spacing: var(--space-s);
 
-  /* ACSS rungs — the primitives every check gates on. Every
-     --primitive-* value is derived from TOKENS.json knobs by
-     emit_tokens (type.ratio/type.base/radius/gutter/fonts); this
-     block only binds semantic names to primitives — never copies. */
-  --fs--1: var(--primitive-text-neg1);
-  --fs-0: var(--primitive-text-0);
-  --fs-1: var(--primitive-text-1);
-  --fs-2: var(--primitive-text-2);
-  --fs-3: var(--primitive-text-3);
-  --fs-4: var(--primitive-text-4);
-  --fs-5: var(--primitive-text-5);
+  /* ACSS names only (U.10). The ACSS size family (--text-*, --h1..6,
+     --space-*, --section-space-*, --gutter, --grid-gap, --content-gap,
+     --container-gap, --btn-padding-*, --radius) is emitted by
+     emit_tokens from clamp.py on the DNA fluid settings; this block
+     only binds the component utility layer to it — never copies.
+     --fs-N is a pure alias (clamp.FS_MAP), not a second scale. */
+@@FS_ALIASES@@
   --lh--1: 1.5;
   --lh-0: 1.6;
   --lh-1: 1.5;
@@ -60,32 +64,18 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --lh-3: 1.25;
   --lh-4: 1.2;
   --lh-5: 1.15;
-  --space-xs: clamp(0.5rem, 0.4rem + 0.5vi, 1rem);
-  --space-s: clamp(0.75rem, 0.55rem + 1vi, 1.5rem);
-  --space-m: clamp(1rem, 0.65rem + 1.75vi, 2rem);
-  --space-l: clamp(1.5rem, 1rem + 2.5vi, 3rem);
-  --space-xl: clamp(2rem, 1.3rem + 3.5vi, 4rem);
-  --space-2xl: clamp(3rem, 2rem + 5vi, 6rem);
-  --space-4: var(--space-m);
-  --section-space-xs: clamp(2rem, 1.5rem + 2.5vi, 4rem);
-  --section-space-s: clamp(3rem, 2rem + 5vi, 5rem);
-  --section-space-m: clamp(4rem, 2.5rem + 7.5vi, 6rem);
-  --section-space-l: clamp(6rem, 4rem + 10vi, 8rem);
-  --section-space-xl: clamp(8rem, 5rem + 15vi, 10rem);
-  --section-space-xxl: clamp(10rem, 6rem + 20vi, 12rem);
-  --gutter: var(--primitive-gutter);
   --grid-min: var(--primitive-grid-min);
   --content-width: 80rem;
   --content-width-safe: min(var(--content-width),
                             calc(100% - var(--gutter) * 2));
   --measure: 60ch;
   --r-card: var(--primitive-radius);
-  --tap: 2.75rem;
+  --tap: 3rem;
   --font-display: var(--primitive-font-display);
   --font-body: var(--primitive-font-body);
   --input-border: var(--border-default);
-  --input-py: 0.5rem;
-  --input-px: 0.75rem;
+  --input-py: 0.5em;
+  --input-px: 0.75em;
   --input-radius: var(--r-card);
   /* legacy aliases — components bind semantic names only (TK.3) */
   --c-ink: var(--text-primary);
@@ -106,7 +96,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 }
 
-.dark {
+[data-theme=dark] {
   --c-ink: var(--text-primary);
   --c-paper: var(--bg-canvas);
   --c-line: var(--border-default);
@@ -122,7 +112,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .text-fluid-2 { font-size: var(--fs-2); }
   .text-fluid-3 { font-size: var(--fs-3); }
   .text-fluid-4 { font-size: var(--fs-4); }
-  .mt-stack { margin-block-start: var(--space-4); }
+  .mt-stack { margin-block-start: var(--content-gap); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -130,7 +120,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .pb-fluid-s { padding-block-end: var(--space-s); }
   .p-fluid-s { padding: var(--space-s); }
   .p-fluid-m { padding: var(--space-m); }
-  .gap-stack { gap: var(--space-4); }
+  .gap-stack { gap: var(--grid-gap); }
   .gap-fluid-s { gap: var(--space-s); }
   .gap-fluid-m { gap: var(--space-m); }
   .gap-fluid-l { gap: var(--space-l); }
@@ -139,26 +129,81 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               color: var(--sec-fg, var(--text-primary)); }
   /* the measure box owns the page gutter: without it a 390px phone
      renders text flush to the bezel */
-  .sec-inner { max-width: 72rem; margin-inline: auto;
-               padding-inline: var(--space-m); }
+  .sec-inner { max-width: var(--content-width); margin-inline: auto;
+               padding-inline: var(--gutter); }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
              color: var(--sec-fg, var(--text-primary)); }
+  /* a footer bar holds columns + a legal rule: it needs air above the
+     last band and below the legal line, not the nav's slim strip */
+  footer.sec-bar { padding-block: var(--space-xl) var(--space-l); }
   /* G.5 canon — every collection grid is auto-fit on the rung-bound
-     card floor, never a fixed repeat(N). */
-  .grid-auto { display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(min(var(--grid-min),100%),1fr)); }
+     card floor, never a fixed repeat(N). G.8 — a declared columns
+     allele (data-cols=N) is a CAP: the track floor rises to an N-th
+     of the row, so wide rows hold exactly N and narrow rows still
+     collapse on the readable floor. */
+  .grid-auto { display: grid; grid-auto-rows: 1fr;
+      gap: var(--grid-gap);
+      --grid-floor: var(--grid-min); --grid-cap: 99;
+      grid-template-columns: repeat(auto-fit, minmax(min(max(
+        var(--grid-floor),
+        calc((100% - (var(--grid-cap) - 1) * var(--grid-gap))
+             / var(--grid-cap))), 100%), 1fr)); }
+  [data-cols] .grid-auto { --grid-floor: 15rem; }
+  [data-cols="2"] .grid-auto { --grid-cap: 2; }
+  [data-cols="3"] .grid-auto { --grid-cap: 3; }
+  [data-cols="4"] .grid-auto { --grid-cap: 4; }
+  /* logo-wall: a row of marks at one optical height — client artwork
+     keeps its colours, the row sets scale and rhythm */
+  .logo-row { display: flex; flex-wrap: wrap; align-items: center;
+              justify-content: flex-start; gap: var(--space-l); }
+  /* client artwork is drawn for a light ground: each mark sits on a
+     plate — elevated paper in light, the light ink tone in dark — so
+     a navy or red mark never sinks into a dark band */
+  .logo-row .brand-logo { --logo-h: 2.5rem;
+      padding: var(--space-xs) var(--space-s);
+      border-radius: var(--r-card); background: var(--bg-elevated);
+      border: 1px solid var(--border-default); }
+  [data-theme=dark] .logo-row .brand-logo { background: var(--text-primary); }
+  @media (min-width: 48rem) {
+    .split > .logo-row { justify-content: flex-end; } }
   /* layout primitives — ACSS's row/stack/card vocabulary, bound to
      the rungs so every composition spaces from the same scale */
   .row { display: flex; flex-wrap: wrap; align-items: center;
          gap: var(--space-m); }
   .between { justify-content: space-between; }
   .stack { display: flex; flex-direction: column; gap: var(--space-s); }
-  .card { background: var(--bg-elevated); border: 1px solid var(--border-default);
+  .card { background: var(--bg-surface);
+          border: 1px solid var(--border-default);
           border-radius: var(--r-card); padding: var(--space-m); }
+  /* brand mark — the inlined SVG scales to the bar height via the
+     token layer, never an arbitrary-value utility on the element.
+     ACSS has no logo token (U.10): the height binds --space-l, the
+     spacing scale's matching rung. */
+  .brand-logo { display: inline-flex; align-items: center; }
+  .brand-logo > svg, .brand-logo > img { height: var(--logo-h,
+      var(--space-l)); width: auto; display: block; }
   .ratio-portrait { aspect-ratio: 3 / 4; }
+  .ratio-16-9 { aspect-ratio: 16 / 9; }
+  .ratio-21-9 { aspect-ratio: 21 / 9; }
+  .ratio-4-3 { aspect-ratio: 4 / 3; }
+  .ratio-1-1 { aspect-ratio: 1 / 1; }
+  /* declared media ratios bind via data-ratio on the media wrapper —
+     the attr is contract data, not a computed class */
+  .media-round[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
+  .media-round[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
+  .media-round[data-ratio="4:3"] { aspect-ratio: 4 / 3; }
+  .media-round[data-ratio="1:1"] { aspect-ratio: 1 / 1; }
+  .media-round[data-ratio="3:4"] { aspect-ratio: 3 / 4; }
+  .media-round > img, .media-round > picture img {
+    width: 100%; height: 100%; object-fit: cover; }
+  /* a plan image may name its subject edge (image.focus) — the cover
+     crop keeps that edge instead of the centre */
+  .media-round[data-focus="left"] > img { object-position: 0% 50%; }
+  .media-round[data-focus="right"] > img { object-position: 100% 50%; }
+  .media-round[data-focus="top"] > img { object-position: 50% 0%; }
+  .media-round[data-focus="bottom"] > img { object-position: 50% 100%; }
   /* a technical panel stands in for media the build has no photograph
      for: the declared ornament, drawn from tokens, in both modes */
   .media-panel { aspect-ratio: 4 / 5; border-radius: var(--r-card);
@@ -188,28 +233,42 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .variant-stage { container-type: inline-size; }
   .variant-switcher { position: sticky; top: 0; }
   .btn-primary { min-height: var(--tap); }
-  .burger { display: none; }
   .inverse { background: var(--c-ink); color: var(--c-paper); }
   .fold-row { border-top: 1px solid var(--c-line); }
-  .card-grid { display: grid; gap: var(--space-4); }
+  .card-grid { display: grid; gap: var(--grid-gap); }
   .btn-primary:hover { filter: brightness(1.08); }
   .btn-primary:focus-visible { outline: 2px solid var(--c-ink); outline-offset: 2px; }
   .btn-primary:disabled { opacity: .5; }
   .skip-link { position: absolute; left: -9999px; }
-  .skip-link:focus { left: 8px; }
+  .skip-link:focus { left: var(--space-xs); }
   .logo { font-weight: 700; }
-  .helper { font-size: .875rem; }
+  .helper { font-size: var(--text-s); }
   .wf-cta-button { display: inline-block;
-                   padding: 0.75rem 1.5rem;
+                   padding: var(--btn-padding-block) var(--btn-padding-inline);
                    border-radius: var(--r-card);
                    background: var(--action-primary);
                    color: var(--action-primary-ink);
                    font-weight: 600; text-decoration: none;
                    min-height: var(--tap); }
-  /* ---- composition vocabulary -
+  /* burger IS the mobile nav: visible below the nav breakpoint,
+     hidden where .nav-links flows inline (R.1 mobile-first) */
+  .burger { display: inline-flex; min-height: var(--tap);
+            align-items: center; }
+  .row.between { position: relative; }
+  .nav-links.open { display: flex; flex-direction: column;
+            position: absolute; inset-inline: 0; top: 100%;
+            background: var(--bg-canvas); padding: var(--space-m);
+            border-bottom: 1px solid var(--border-default); }
+  /* header CTA: the sticky bottom bar carries the call below the nav
+     breakpoint, so the header copy appears only where nav is inline */
+  .nav-cta { display: none; }
+  @media (min-width: 48rem) {
+    .burger { display: none; }
+    .nav-cta { display: inline-block; }
+  }
+  /* ---- composition vocabulary ------------------------------- */
   .flow-list { list-style: none; padding: 0; }
   .num-prom { font-size: var(--fs-1); }
-------------------------------- */
   /* the section head: eyebrow, claim, lede - one measure, one gap */
   .sec-head { display: flex; flex-direction: column;
               gap: var(--space-s); max-width: 46rem; }
@@ -222,18 +281,72 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
           color: var(--text-secondary); max-width: var(--measure); }
   .card { display: flex; flex-direction: column;
           gap: var(--space-s); }
-  /* a card on a tinted band is the canvas colour: two greys a hair
-     apart is not a card, it is a smudge */
+  /* text lists keep markers — Tailwind preflight strips ul/ol
+     styling; indent + item rhythm bind the ACSS list tokens */
+  ul.list-items { list-style: disc; }
+  ol.list-items { list-style: decimal; }
+  .list-items { padding-inline-start: var(--list-indent-spacing); }
+  .list-items > li + li { margin-block-start: var(--list-spacing); }
+  /* copy links: inline() emits classless <a>; preflight strips the
+     underline, so bind the accent treatment here (classed anchors —
+     nav/cta/buttons — keep their own look) */
+  main a:not([class]) { color: var(--action-primary);
+      text-decoration: underline;
+      text-underline-offset: 0.15em; }
+  :is([data-surface="brand"], [data-surface="inverse"])
+      main a:not([class]),
+  :is([data-surface="brand"], [data-surface="inverse"])
+      a:not([class]) { color: var(--sec-fg); }
   .surface-muted .card { background: var(--bg-canvas); }
   .surface-inverse .card { background: color-mix(in srgb,
       var(--bg-inverse) 80%, var(--text-inverse)); }
+  /* image-top card media: the figure bleeds to the card edge and
+     crops on the rung ratio; icon chips sit above the title in the
+     same surface ink the card uses */
+  .card-media { margin: calc(var(--space-m) * -1)
+                  calc(var(--space-m) * -1) var(--space-s);
+      border-radius: var(--r-card) var(--r-card) 0 0; overflow: hidden;
+      aspect-ratio: 3 / 2; }
+  .card-media > img, .card-media > picture img {
+      width: 100%; height: 100%; object-fit: cover; }
+  .icon-chip { display: inline-grid; place-items: center;
+      width: var(--tap); height: var(--tap);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--action-primary) 10%,
+                            var(--bg-canvas));
+      color: var(--action-primary); }
+  .icon-chip > svg { width: 50%; height: 50%; }
+  [data-surface="brand"] .icon-chip {
+      background: color-mix(in srgb, var(--sec-fg) 16%, transparent);
+      color: var(--sec-fg); }
+  /* ratings + attributions: a star row binds the accent, the name row
+     carries a small avatar and a source line */
+  .stars { display: inline-flex; gap: calc(var(--space-xs) / 8);
+      color: var(--action-primary); }
+  .stars svg { width: 1em; height: 1em; }
+  .star-off { opacity: 0.35; }
+  .quote-foot { display: flex; gap: var(--space-s); align-items: center;
+      margin-block-start: var(--space-s); }
+  .avatar { width: var(--tap); height: var(--tap); border-radius: 999px;
+      object-fit: cover; }
   .num { font-size: var(--fs--1); font-weight: 600;
               letter-spacing: .14em; font-variant-numeric: tabular-nums;
               color: var(--action-primary); }
-  .sub-h { font-size: var(--fs-1); font-weight: 600;
+  .sub-h { font-size: var(--h4); font-weight: 600;
                 line-height: 1.25; letter-spacing: -.01em; }
   .sub-p { font-size: var(--fs-0); line-height: 1.55;
                color: var(--text-secondary); }
+  /* R.9 — below tablet every in-flow CTA goes full-width stacked
+     (the .call-bar does the same for the phone action). The 767px
+     media value is the check's own breakpoint vocabulary — a px
+     bound, not a sizing declaration. */
+  @media (max-width: 767px) {
+    .cta-row .wf-cta-button, .stack .wf-cta-button,
+    .split .wf-cta-button, form .wf-cta-button,
+    .max-w-prose .wf-cta-button {
+      display: flex; justify-content: center; align-items: center;
+      width: 100%; min-height: var(--tap); }
+  }
   .quote { font-size: var(--fs-1); line-height: 1.45;
                 letter-spacing: -.01em; }
   .attrib { font-size: var(--fs--1); color: var(--text-secondary);
@@ -261,18 +374,21 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links { display: none; gap: var(--space-m);
                align-items: center; }
   @media (min-width: 48rem) { .nav-links { display: flex; } }
-  .wf-cta-button { padding: 0.6rem 1rem; font-size: var(--fs--1); }
+  .wf-cta-button { font-size: var(--fs--1); }
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
       justify-content: center;
       position: fixed; inset-block-end: 0; inset-inline: 0;
       z-index: var(--primitive-z-sticky);
       padding: var(--space-s) var(--space-m)
                calc(var(--space-s) + env(safe-area-inset-bottom));
-      background: var(--bg-elevated);
-      border-top: 1px solid var(--border-default); }
-  body { padding-block-end: 4.5rem; }
+      background: var(--action-primary); color: var(--action-primary-ink);
+      font-weight: 600; text-decoration: none;
+      box-shadow: 0 -1px 0 var(--border-default); }
+  /* the call bar reserves bottom room so it never sits on content —
+     the theme toggle lives in the nav bar, never floating */
+  body { padding-block-end: calc(var(--tap) + var(--space-s)); }
   @media (min-width: 48rem) {
-    .wf-cta-button { padding: 0.75rem 1.5rem; font-size: inherit; }
+    .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
   .nav-link { color: var(--text-secondary); text-decoration: none;
@@ -301,12 +417,12 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                grid-template-columns: 1fr; }
   @media (min-width: 30rem) { .form-grid { grid-template-columns:
                                            1fr 1fr; } }
-  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field { display: flex; flex-direction: column; gap: var(--space-xs); }
   .field > span { font-size: var(--fs--1); font-weight: 600;
                   letter-spacing: .06em; text-transform: uppercase;
                   color: var(--text-secondary); }
   .field input, .field select { font: inherit; font-size: var(--fs-0);
-      padding: .7rem .85rem; border-radius: var(--r-card);
+      padding: var(--input-py) var(--input-px); border-radius: var(--r-card);
       border: 1px solid var(--border-default);
       background: var(--bg-canvas); color: var(--text-primary);
       min-height: var(--tap); }
@@ -336,7 +452,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .mt-sec { margin-block-start: var(--space-l); }
   .mt-act { margin-block-start: var(--space-s); }
   .gap-form { gap: var(--space-m); }
-  .cta-large { font-size: var(--fs-1); padding: 1rem 1.6rem; }
+  /* a stack stretches its children; the large CTA keeps its own width */
+  .cta-large { font-size: var(--fs-1);
+               padding: var(--btn-padding-block) var(--btn-padding-inline);
+               align-self: start; }
   .btn-block { width: 100%; border: 0; cursor: pointer; }
   .bar-min { min-height: 2.5rem; }
   .media-round { border-radius: var(--r-card); overflow: hidden; }
@@ -360,22 +479,44 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-surface="brand"] { --sec-bg: var(--action-primary);
                            --sec-fg: var(--action-primary-ink); }
   [data-surface="media"] { --sec-bg: transparent; }
-  .theme-toggle { position: fixed; inset-block-end: var(--space-m);
-      inset-inline-end: var(--space-m); z-index: var(--primitive-z-sticky);
-      width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  /* a coloured band owns its ink: secondary copy derives from --sec-fg
+     (never the page's --text-secondary, which is tuned for the canvas)
+     and the band CTA inverts to an ink plate — a brand-on-brand button
+     has no edge. A card inside the band re-grounds on the elevated
+     surface with the page inks and the standard primary action. */
+  :is([data-surface="brand"], [data-surface="inverse"])
+      :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
+          .foot-head, .legal, .brand-mark, .quote, .stars) {
+    color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
+  [data-surface="brand"] .wf-cta-button {
+    background: var(--sec-fg); color: var(--sec-bg); }
+  :is([data-surface="brand"], [data-surface="inverse"]) .card {
+    color: var(--text-primary); }
+  :is([data-surface="brand"], [data-surface="inverse"]) .card
+      :is(.lede, .attrib, .helper) { color: var(--text-secondary); }
+  [data-surface="brand"] .card .wf-cta-button {
+    background: var(--action-primary);
+    color: var(--action-primary-ink); }
+  /* a quiet control in the nav row: same border/surface vocabulary as
+     the buttons, sized on the tap rung */
+  .theme-toggle { display: inline-grid; place-items: center;
+      width: var(--tap); height: var(--tap); flex: none;
+      border-radius: 999px;
       border: 1px solid var(--border-default);
       background: var(--bg-elevated); color: var(--text-secondary);
-      cursor: pointer; font-size: 1rem; line-height: 1;
-      box-shadow: var(--shadow-card); }
+      cursor: pointer; }
   .theme-toggle:hover { color: var(--text-primary); }
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme=dark] .theme-toggle .icon-sun { display: block; }
+  [data-theme=dark] .theme-toggle .icon-moon { display: none; }
   .sr-only { position: absolute; width: 1px; height: 1px;
       padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  .site-foot { border-top: 1px solid var(--c-line);
-               padding-block: var(--space-m); }
 }
-.dark img { filter: brightness(.85) contrast(.92); }
+[data-theme=dark] img { filter: brightness(.85) contrast(.92); }
 '''
+GLOBAL_CSS_TAIL = GLOBAL_CSS_TAIL.replace('@@FS_ALIASES@@\n', ''.join(
+    f'  --fs-{n}: var(--{acss});\n' for n, acss in clamp.FS_MAP.items()))
 
 # light-mode role → tailwind colour key (dark roles prefix `dark`)
 ROLE_KEY = {
@@ -400,8 +541,18 @@ def tokens_json(dna):
     def _roles(mode):
         m = modes.get(mode) or {}
         return dict(m.get('roles') or m)  # tolerate {light:{roles}} shape
+    fluid = emit_tokens.fluid_of(
+        {'invariants': dna.get('invariants') or {}, 'knobs': knobs})
     return {
         'knobs': knobs,
+        # the ACSS fluid settings (DNA invariants.fluid) and every size
+        # token they produce, clamp + px at vp_min/768/vp_max — the
+        # FL.1 gate recomputes these through clamp.py
+        'fluid': fluid,
+        'sizes': {name: {'clamp': css, 'px': {
+                      f"{fluid['vp_min']:g}": a, '768': b,
+                      f"{fluid['vp_max']:g}": c}}
+                  for name, css, a, b, c in clamp.table(fluid)},
         # the genotype travels with the record: emit_tokens derives the
         # display/body stacks from display-face (DM.1 keeps type.font_*
         # out of the knob vocabulary)
@@ -471,7 +622,7 @@ export default {{
       'fluid-5': 'var(--fs-5)',
     }},
     borderRadius: {{ card: 'var(--r-card)' }},
-    spacing: {{ tap: '44px' }},
+    spacing: {{ tap: 'var(--tap)' }},
   }} }},
 }}
 '''
@@ -521,7 +672,7 @@ def _base_css(tokens):
         '  body {',
         '    margin: 0;',
         '    font-family: var(--font-body);',
-        '    font-size: var(--fs-0);',
+        '    font-size: var(--text-m);',
         '    line-height: var(--lh-0);',
         '    color: var(--text-primary);',
         '    background-color: var(--bg-canvas);',
@@ -533,13 +684,14 @@ def _base_css(tokens):
         '    font-weight: var(--display-weight);',
         '    letter-spacing: var(--tracking-display);',
         '  }',
-        '  h1 { font-size: var(--fs-5); line-height: var(--lh-5); }',
-        '  h2 { font-size: var(--fs-4); line-height: var(--lh-4); }',
-        '  h3 { font-size: var(--fs-3); line-height: var(--lh-3); }',
-        '  h4 { font-size: var(--fs-2); line-height: var(--lh-2); }',
-        '  h5 { font-size: var(--fs-1); line-height: var(--lh-1); }',
+        # ACSS heading scale verbatim: h1..h6 bind --h1..--h6
+        '  h1 { font-size: var(--h1); line-height: var(--lh-5); }',
+        '  h2 { font-size: var(--h2); line-height: var(--lh-4); }',
+        '  h3 { font-size: var(--h3); line-height: var(--lh-3); }',
+        '  h4 { font-size: var(--h4); line-height: var(--lh-2); }',
+        '  h5 { font-size: var(--h5); line-height: var(--lh-1); }',
         '  h6 {',
-        '    font-size: var(--fs-0); line-height: var(--lh-1);',
+        '    font-size: var(--h6); line-height: var(--lh-1);',
         '    font-weight: 600; text-transform: uppercase;',
         '    letter-spacing: 0.08em;',
         '  }',
@@ -556,7 +708,10 @@ def _base_css(tokens):
         '  img { height: auto; }',
         '  figure { margin: 0; }',
         '  ul, ol { padding-inline-start: 1.15em; }',
-        '  li + li { margin-top: var(--space-xs); }',
+        # prose rhythm only: layout lists carry a class and space
+        # with gap — a sibling margin there staggers grid tracks
+        '  :where(ul:not([class]), ol:not([class])) > li + li {',
+        '    margin-top: var(--space-xs); }',
         '  button {',
         '    font: inherit; color: inherit; background: none;',
         '    border: 0; cursor: pointer;',
@@ -574,14 +729,141 @@ def _base_css(tokens):
     ])
 
 
-def global_css(tokens):
-    """@tailwind headers + emit_tokens' five TK layers + the component
-    tail (density rungs derived from knobs.space.section_py)."""
+MAX_FACES = 4   # P.12 — two families x two weights max
+
+
+def font_faces_css(fonts):
+    """DNA invariants.fonts → @font-face blocks (font-display: swap).
+    Each face names its file under public/ (`/fonts/<f>.woff2`); the
+    family is the face's own `family`, else the DNA display family.
+    More than MAX_FACES is a DNA error, never silently truncated."""
+    fonts = fonts or {}
+    faces = fonts.get('faces') or []
+    if len(faces) > MAX_FACES:
+        raise SystemExit(f'emit_global: {len(faces)} font faces > '
+                         f'{MAX_FACES} (P.12) — fix DNA invariants.fonts')
+    out = []
+    for fc in faces:
+        fam = str(fc.get('family') or fonts.get('display') or '').strip()
+        src = str(fc.get('file') or '').strip()
+        if not fam or not src:
+            raise SystemExit('emit_global: font face without family/file '
+                             f'— {fc}')
+        fmt = src.rsplit('.', 1)[-1].lower()
+        fmt = {'woff2': 'woff2', 'woff': 'woff', 'ttf': 'truetype',
+               'otf': 'opentype'}.get(fmt, fmt)
+        out.append('@font-face {\n'
+                   f'  font-family: "{fam}";\n'
+                   f"  src: url('{src}') format('{fmt}');\n"
+                   f'  font-weight: {int(fc.get("weight") or 400)};\n'
+                   f'  font-style: {fc.get("style") or "normal"};\n'
+                   '  font-display: swap;\n'
+                   '}')
+    return '\n'.join(out) + ('\n' if out else '')
+
+
+def _with_font_stack(tokens, fonts):
+    """The DNA font stack rides knobs.type.font_display/font_body into
+    emit_tokens (its documented carrier) for this emission only — the
+    TOKENS record on disk is untouched."""
+    stack = str((fonts or {}).get('stack') or '').strip()
+    if not stack:
+        return tokens
+    t = dict(tokens)
+    t['knobs'] = dict(tokens.get('knobs') or {},
+                      **{'type.font_display': stack,
+                         'type.font_body': stack})
+    return t
+
+
+def global_css(tokens, fonts=None):
+    """@tailwind headers + DNA @font-face + emit_tokens' five TK layers
+    + the component tail (density rungs derived from
+    knobs.space.section_py). `fonts` is DNA invariants.fonts."""
     head = ('@tailwind base;\n@tailwind components;\n'
             '@tailwind utilities;\n')
-    emit_lines = emit_tokens.emit(tokens).split('\n')
+    emit_lines = emit_tokens.emit(_with_font_stack(tokens, fonts)) \
+        .split('\n')
     body = '\n'.join(emit_lines[5:])
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
         '  /* DENSITY-RUNGS */', _density_css(tokens))
-    return (head + '\n' + body + '\n' + _base_css(tokens)
+    return (head + '\n' + font_faces_css(fonts) + body + '\n'
+            + _base_css(tokens) + '\n' + tail)
+
+
+def site_assets(page_dir, site):
+    """Copy the site design folder's assets into site/public/:
+    assets/fonts/* → public/fonts/, assets/media/* → public/media/,
+    assets/logo.svg → public/logo.svg. The site folder resolves from
+    the page dir (site_folder.site_of); a page dir outside a site
+    folder copies nothing. Returns the copied public-relative paths."""
+    import shutil
+    import site_folder
+    sdir, _ = site_folder.site_of(page_dir)
+    if not sdir:
+        return []
+    src_root = os.path.join(sdir, 'assets')
+    pub = os.path.join(site, 'public')
+    done = []
+    for sub in ('fonts', 'media'):
+        d = os.path.join(src_root, sub)
+        if not os.path.isdir(d):
+            continue
+        os.makedirs(os.path.join(pub, sub), exist_ok=True)
+        for fn in sorted(os.listdir(d)):
+            p = os.path.join(d, fn)
+            if os.path.isfile(p) and not fn.startswith('.'):
+                shutil.copyfile(p, os.path.join(pub, sub, fn))
+                done.append(f'{sub}/{fn}')
+    logo = os.path.join(src_root, 'logo.svg')
+    if os.path.isfile(logo):
+        os.makedirs(pub, exist_ok=True)
+        shutil.copyfile(logo, os.path.join(pub, 'logo.svg'))
+        done.append('logo.svg')
+    return done
+
+
+TAILWIND_CDN = '<script src="https://cdn.tailwindcss.com"></script>'
+
+
+def tailwind_cdn_config(tokens):
+    """Inline ``tailwind.config`` for the browser CDN build — the same
+    theme tailwind_config() emits for the node build, so a preview
+    resolves every custom utility (bg-accent, text-fluid-N,
+    rounded-card) identically to ``astro build``."""
+    color = tokens.get('color') or {}
+    modes = color.get('modes') or {}
+    light = (modes.get('light') or {}).get('roles') \
+        or color.get('roles') or {}
+    dark = (modes.get('dark') or {}).get('roles') or {}
+    pairs = {}
+    for role, hexv in light.items():
+        pairs[ROLE_KEY.get(role) or role] = str(hexv).lower()
+    for role, hexv in dark.items():
+        pairs['dark' + (ROLE_KEY.get(role) or role)] = \
+            str(hexv).lower()
+    colours = ', '.join(f"{k}: '{v}'" for k, v in
+                        sorted(pairs.items()))
+    return ('<script>tailwind.config = { darkMode: "class", theme: {'
+            ' extend: { colors: { ' + colours + ' }, fontSize: {'
+            ' "fluid--1": "var(--fs--1)", "fluid-0": "var(--fs-0)",'
+            ' "fluid-1": "var(--fs-1)", "fluid-2": "var(--fs-2)",'
+            ' "fluid-3": "var(--fs-3)", "fluid-4": "var(--fs-4)",'
+            ' "fluid-5": "var(--fs-5)" },'
+            ' borderRadius: { card: "var(--r-card)" } } } }'
+            '</script>')
+
+
+def preview_css(tokens, fonts=None):
+    """The site stylesheet minus the compile-time @tailwind directives:
+    DNA @font-face + emit_tokens' TK layers + the base floor + the
+    component tail. Previews pair this <style> block with the Tailwind
+    CDN + the same tailwind.config the node build uses — utilities
+    come from Tailwind, component classes from TOKENS, never hand-CSS."""
+    emit_lines = emit_tokens.emit(_with_font_stack(tokens, fonts)) \
+        .split('\n')
+    body = '\n'.join(emit_lines[5:])
+    tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
+        '  /* DENSITY-RUNGS */', _density_css(tokens))
+    return (font_faces_css(fonts) + body + '\n' + _base_css(tokens)
             + '\n' + tail)

@@ -27,8 +27,8 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-event-section-8__container">
+      <div class="bm-event-section__intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
@@ -36,50 +36,50 @@ const {
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="bm-event-section-8-card card">
+                <div class="bm-event-section-8-card__date">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
-                  <div>
+                <div class="bm-event-section-8-card__content">
+                  <div class="bm-event-section-8-card__head">
                     <h2 class="text-fluid-2">{it.title}</h2>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
-                  <div>
-                    <div>
-                      <div>
+                  <div class="bm-event-section-1-card__mid--alt">
+                    <div class="bm-event-section-1-card__date--alt">
+                      <div class="bm-event-section-1-card__icon-wrapper--alt">
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
-                      <div>
-                        <div>
+                      <div class="bm-event-section-1-card__date-time--alt">
+                        <div class="bm-event-section-1-card__date-wrapper--alt">
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
-                        <div>
+                        <div class="bm-event-section-1-card__time-wrapper--alt">
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
                       </div>
                     </div>
-                    <div>
-                      <div>
+                    <div class="bm-event-section-1-card__location--alt">
+                      <div class="bm-event-section-1-card__icon-wrapper--alt">
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
-                  <div>
+                  <div class="bm-event-section-8-card__footer">
                     <div>
-                      <div>
+                      <div class="bm-event-hart-molecule">
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
-                      <div>
+                      <div class="bm-event-hart-molecule-active">
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-event-section-8-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             ))}
           </div>

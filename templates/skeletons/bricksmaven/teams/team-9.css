@@ -1,0 +1,48 @@
+  .team-9-container {
+    row-gap: var(--space-l);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .team-9-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .team-9-card {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .team-9-card__box {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .team-9-card__box-head {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-9-card__img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .team-9-card{
+  
+  	box-shadow: var(--shadow-card);
+    
+  }

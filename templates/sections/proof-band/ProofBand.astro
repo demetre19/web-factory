@@ -3,27 +3,41 @@
  * proof-band — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
  * contract; keep the skeleton. Renders inside Section.astro: no
  * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * F.2: every figure, quote and link label is a prop from the plan row
+ * (sourced from the article/BRIEF). Nothing renders by default — no
+ * rating, no quote, no "read the reviews" link without a source.
  */
+import { iconFor } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
   image?: { src: string; alt: string };
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image,
+  heading = '', fs = '', body = '', cta, items = [], image,
 } = Astro.props;
+const stat = items.find((it) => it.value);
+const voice = items.find((it) => it.quote);
+const StatIcon = stat ? iconFor(stat.icon) : null;
 ---
 
 <div class="flex flex-wrap items-center justify-between gap-stack">
-  <p class="text-fluid-1" aria-label="Rating">
-    <span class="font-bold">{items[0]?.value ?? '4.9'}</span>
-    <span class="text-fluid--1">/ 5 · {items[0]?.label ?? 'average rating'}</span>
-  </p>
-  <blockquote class="max-w-prose text-fluid-0">“{items[1]?.quote ?? fs}”</blockquote>
-  <a class="text-fluid-0 underline" href={cta?.href ?? '#'}>{cta?.label ?? 'Read the reviews'}</a>
+  {stat && (
+    <div class="row">
+      {StatIcon &&
+        <span class="icon-chip"><StatIcon size={22} aria-hidden="true" /></span>}
+      <p class="text-fluid-1 t0">
+        <span class="font-bold">{stat.value}</span>
+        {stat.label && <span class="text-fluid--1">{stat.label}</span>}
+      </p>
+    </div>
+  )}
+  {voice && <blockquote class="max-w-prose text-fluid-0">{voice.quote}</blockquote>}
+  {cta && <a class="text-fluid-0 underline" href={cta.href}>{cta.label}</a>}
 </div>

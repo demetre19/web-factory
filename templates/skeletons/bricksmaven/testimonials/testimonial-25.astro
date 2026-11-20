@@ -32,14 +32,14 @@ const {
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <div>
-                <p class="text-fluid-0">{it.text}</p>
-                <div>
+              <div class="testimonial-25-content__wrapper">
+                <p class="testimonial-25-content__desc text-fluid-0">{it.text}</p>
+                <div class="testimonial-25-content__profile">
                   <h4 class="text-fluid-2">{it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-25-content__photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             </div>

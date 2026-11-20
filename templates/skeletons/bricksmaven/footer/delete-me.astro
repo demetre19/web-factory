@@ -28,26 +28,26 @@ const {
 <div>
   <div class="sec-inner">
     <div class="sec-inner">
-      <div>
-        <div>
+      <div class="footer-cta-container">
+        <div class="footer-cta__content">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="footer-cta__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>
   </div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="footer-nav-wrapper">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="footer-nav-column card">
               <h3 class="text-fluid-2">{it.title}</h3>
-              <div>
+              <div class="footer-menu">
                 <div class="grid-auto gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div class="card">
@@ -61,15 +61,15 @@ const {
         </div>
       </div>
     </div>
-    <div>
-      <div>
+    <div class="footer-14-bottom-container">
+      <div class="footer-bottom__left">
         <div>
           <span class="logo">{brand}</span>
         </div>
         <div></div>
       </div>
       <div>
-        <div>
+        <div class="footer-legal-nav">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">

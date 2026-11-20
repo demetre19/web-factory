@@ -1,0 +1,46 @@
+  .bm-feature-60 {
+    overflow: clip;
+  }
+
+  .bm-feature-60__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-60__list {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .bm-feature-60-card {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .bm-feature-60-card__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: center;
+  }
+
+  .bm-feature-60-card__carousel {
+    overflow: clip;
+  }
+
+  .bm-feature-60-card__image {
+    object-fit: cover;
+    width: 100%;
+  }

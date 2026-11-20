@@ -26,6 +26,7 @@ const {
 // F3 fix — applyBaseStyles:false means nothing styles the page unless
 // the layout imports the shared layer itself (the starter does).
 import '../styles/global.css';
+
 ---
 <!doctype html>
 <html lang={lang} dir="ltr">
@@ -40,8 +41,10 @@ import '../styles/global.css';
 <link rel="icon" href="/favicon.svg" />
 <script is:inline>
 (function () {
-  var s = localStorage.getItem('theme');
-  var m = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || {{default_theme}};
   document.documentElement.dataset.theme = m;
   document.documentElement.classList.toggle('dark', m === 'dark');
   window.__wfSetTheme = function (v) {
@@ -53,22 +56,22 @@ import '../styles/global.css';
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.toggle('open');
+    }
   });
 })();
 </script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch between light and dark mode"><span class="sr-only">Light/Dark</span></button>
+
 <main id="main">
 <slot />
 </main>
 <a class="call-bar" href="{{tel}}">
   <span>{{phone}}</span><span class="sr-only">Call now</span>
 </a>
-<footer class="site-foot" data-page={slug}>
-  <address>{{brand}}{{phone_sep}}</address>
-  <small>Privacy · Terms · Copyright notice</small>
-</footer>
 </body>
 </html>

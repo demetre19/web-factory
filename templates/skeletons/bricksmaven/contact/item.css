@@ -1,0 +1,51 @@
+  .contact-10-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-l);
+  }
+
+  .contact-10-map__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .contact-10-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .contact-10-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-10-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .contact-10-information-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .contact-10-info-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-xs);
+  }
+
+  .contact-10-info-card__content {
+    width: 88%;
+    margin: .5rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-10-info-card__icon {
+    width: 12%;
+  }

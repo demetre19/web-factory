@@ -1,0 +1,174 @@
+  .bm-portfolio-single-7 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-single-7__container {
+    row-gap: var(--space-s);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-7__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-meta-data-1 {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-single-meta-data-1--inline {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) * 2);
+    width: 100%;
+  }
+
+  .bm-1col-media__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-portfolio-single-7__content-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 2 / 1);
+    width: 100%;
+  }
+
+  .bm-portfolio-single-7__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-7__media-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-single-7__image {
+    width: 100%;
+  }
+
+  .bm-portfolio-single-3__cta-container {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-contact-widget-7 {
+    padding: var(--section-space-s) 0 var(--section-space-s) 0;
+    row-gap: var(--flow-spacing);
+    flex-direction: row;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .bm-contact-widget-7__heading {
+    width: 100%;
+  }
+
+  .bm-portfolio-single-7__footer-container {
+    width: 100%;
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-section-9-list {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-section-9-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-9-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    padding: 0 0 var(--space-xs) 0;
+  }
+
+  .bm-portfolio-section-9-card__footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-9-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-live-website-link::before {
+    --animation-duration-up: 0.4s;
+    --animation-iteration-count: 1;
+    --animation-timing-function-up: linear;
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-secondary);
+    transition: all 0.5 ease;
+  }
+  
+  
+  /* Define the animation for the first child */
+  .bm-live-website-link:hover::before{
+    animation: motion var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) ;
+    width: 100%;
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes motion {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  .bm-contact-widget-7__link::before {
+    --animation-duration-up: 0.4s;
+    --animation-iteration-count: 1;
+    --animation-timing-function-up: linear;
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    width: 0%;
+    height: 1px;
+    background-color: var(--text-secondary);
+    transition: all 0.5 ease;
+  }
+  
+  
+  /* Define the animation for the first child */
+  .bm-contact-widget-7__link:hover::before{
+    animation: motion var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) ;
+    width: 100%;
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes motion {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  .bm-portfolio-section-9-card__media {
+    overflow: hidden;
+  }
+  
+  .bm-portfolio-section-9-card__image {
+    transition: 0.5s ease;
+  }
+  
+  .bm-portfolio-section-9-card:hover .bm-portfolio-section-9-card__image, .bm-portfolio-section-9-card:focus-within .bm-portfolio-section-9-card__image {
+    transform: scale(1.2);
+  }
+
+  .bm-portfolio-section-9-card__industry::after {
+    content: '-';
+    position: absolute;
+    right: calc(-1 * (var(--flow-spacing) / 1.4));
+  }

@@ -18,10 +18,15 @@ spec: {width, height, copy: [headline, lead],
 """
 
 import json
+import os
 import re
 import sys
 
 from PIL import Image, ImageDraw, ImageFont
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))))
+import clamp  # noqa: E402  (stdlib-only; the ACSS calculator)
 
 FONT = '/System/Library/Fonts/Helvetica.ttc'
 
@@ -38,10 +43,17 @@ def _clamp_px(v, default):
 
 
 def _cqi(val, W, default):
-    """Evaluate a CSS clamp(min, Ncqi, max) at container width W —
-    mobile-first: at 375 the min bound wins, at 1280 the cqi term.
+    """Evaluate a CSS clamp at render width W — mobile-first: at 375
+    the min bound wins, at 1280 the fluid term. The emitted ACSS form
+    `clamp(MIN, calc(Avw + Brem), MAX)` (and max(stop, clamp(…)))
+    goes through clamp.px_at; legacy proof fixtures carry
+    `clamp(min, [off +] Ncqi, max)`, evaluated with the container ≈ W.
     Without this the mobile shot is a scaled-down desktop and every
     mobile judgment is fiction."""
+    try:
+        return clamp.px_at(str(val), float(W))
+    except ValueError:
+        pass
     m = re.search(
         r'clamp\(\s*([\d.]+)(rem|px)\s*,\s*'
         r'(?:([\d.]+)(rem|px)\s*\+\s*)?([\d.]+)cqi\s*,\s*'

@@ -27,20 +27,20 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="counter-7-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
     </div>
-    <div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="counter-7-container">
+      <figure class="counter-7-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <div>
-      <div>
+    <div class="counter-7-container--alt">
+      <div class="counter-7-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="counter-7-card card">
               <span data-icon="lucide" aria-hidden="true"></span>
               <span></span>
               <p class="text-fluid-0">{it.text}</p>

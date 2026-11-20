@@ -1,0 +1,33 @@
+  .cta-13 {
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .cta-13-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .cta-13__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .cta-13__call-to-action {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }

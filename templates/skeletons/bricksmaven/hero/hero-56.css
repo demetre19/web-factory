@@ -1,0 +1,79 @@
+  .hero-56 {
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .hero-56__container {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-55__introduction {
+    width: var(--measure);
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .hero-57__media {
+    width: 100vw;
+    margin: 0 0 0 -50vw;
+  }
+
+  .hero-55__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hero-55__logo-carousel {
+    padding: var(--space-m) 0 var(--space-m) 0;
+    width: 100%;
+  }
+
+  .logo-12__logo-list-wrapper {
+    overflow: hidden;
+  }
+
+  .bm-gallery__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hero-56__content {
+    width: var(--content-width);
+    row-gap: var(--flow-spacing);
+  }
+
+  .logo-12__logo-list-wrapper::before {
+  	content:'';
+    position: absolute;
+    left:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
+    z-index: 99;
+  }
+  
+  .logo-12__logo-list-wrapper::after {
+  	content:'';
+    position: absolute;
+    right:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
+    z-index: 99;
+  }
+
+  .bm-gallery__slider  .splide__track{
+  	overflow:visible;
+  }
+  
+  .bm-gallery__slider .splide__list {
+    gap: calc(var(--flow-spacing) * 3);
+    align-items: center;
+  }
+  
+  .bm-gallery__slider :where(.splide__list, .splide__slide){
+    transition-timing-function: linear !important;
+  }

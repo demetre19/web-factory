@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="grid-auto gap-fluid-l">
-      <div>
-        <div>
+    <div class="bm-hero-65__container grid-auto gap-fluid-l">
+      <div class="bm-hero-65__content">
+        <div class="bm-hero-65__top">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div></div>
+        <div class="cta-combo"></div>
       </div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-      <div>
-        <div>
+      <figure class="bm-hero-65__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div class="bm-hero-65__footer">
+        <div class="bm-hero-65-contact-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="bm-hero-65-contact-card card">
+                <div class="bm-hero-65-contact-card__icon-wrapper">
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
-                <div>
+                <div class="bm-hero-65-contact-card__content">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

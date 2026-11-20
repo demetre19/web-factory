@@ -1,0 +1,80 @@
+  .bm-portfolio-section-19__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-section-19-list {
+    row-gap: var(--space-s);
+  }
+
+  .bm-portfolio-section-19-card {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-portfolio-section-19-card__content {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: flex;
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+  }
+
+  .bm-portfolio-section-19-card__inner {
+    row-gap: var(--flow-spacing);
+    margin: auto 0 0 0;
+  }
+
+  .bm-portfolio-section-19-card__image {
+    object-fit: cover;
+    width: 100%;
+    overflow: clip;
+  }
+
+  @supports (animation-timeline: view()) {
+    .bm-portfolio-section-19-card {
+  		position: sticky;
+    	top: var(--section-space-xxl); /* where the card will stick */
+      backdrop-filter: blur(100px);
+    	transform-origin: center center;
+      will-change: transform, filter;
+      
+      
+      animation-name: shrink-blur;
+      animation-duration: 1s;  /* acts as a scale, not real time now */
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+      /* Each card gets its own view-based timeline */
+      animation-timeline: view(block 90vh);
+  
+      /* When should the animation run during its journey in the viewport? */
+      /* entry 0%  = when it just starts entering
+         exit 100% = when it has almost left */
+      animation-range: entry 0% exit 100%;
+    }
+  }
+  
+  @keyframes shrink-blur {
+    from {
+      transform: scale(1);
+      filter: blur(0);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(0.5);
+      filter: blur(6px);
+      opacity: 0.8;
+    }
+  }

@@ -1,0 +1,84 @@
+  .bm-feature-64__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-64-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-feature-64-card {
+    justify-content: space-between;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-64-card__content {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-feature-64-card__inner {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  /* Create the counter on Parent */
+  .bm-feature-64-list {
+    counter-reset: cards ; /* starts at 0 */
+  }
+  
+  /* Every card we meet → add +1 to the counter */
+  
+  .bm-feature-64-list .bm-feature-64-card {
+    counter-increment: cards ;
+  }
+  
+  /* Show the number BEFORE each card */
+  .bm-feature-64-list .bm-feature-64-card::before {
+    content: "0"counter(cards);
+    position: absolute;
+    inset-block-start: var(--space-m);
+    font-size: var(--fs-1);
+    color: var(--color-line-default);
+  }
+  
+  /* CARD */
+  .bm-feature-64-list  .bm-feature-64-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-feature-64-list .bm-feature-64-card:hover, .bm-feature-64-list .bm-feature-64-card:focus-within {
+    background-color: var(--text-secondary);
+    color: var(--bg-canvas);
+  }
+  
+  .bm-feature-64-list .bm-feature-64-card:hover::before, .bm-feature-64-list .bm-feature-64-card:focus-within::before {
+    color: var(--bg-canvas);
+  }
+  
+  /* Make whole CARD clickable */
+  .bm-feature-64-list  .bm-feature-64-card .bm-feature-64-card__heading > a {
+    transition: 0.1s ease;
+  }
+  
+  .bm-feature-64-list  .bm-feature-64-card .bm-feature-64-card__heading:not(a) > a::after {
+    content: '';
+    position: absolute;
+    display: flex;
+    inset: 0;
+    cursor: pointer;
+  }

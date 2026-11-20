@@ -1,0 +1,68 @@
+  .hworks-16-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hworks-16-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .hworks-16-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hworks-16-card__icon {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .hworks-16-card::after {
+  	content: "";
+    position: absolute;
+    top: 50%;
+    right: calc(var(--space-m) * -1);
+    width: var(--space-m);
+    border: 1px dashed var(--bg-subtle);
+  }
+  
+  .hworks-16-card:last-child::after {
+  	display: none;
+  }
+  
+  .hworks-16-card__icon {
+  	transition: .5s linear;
+  }
+  
+  .hworks-16-card:hover .hworks-16-card__icon {
+  	background-color: var(--action-primary);
+    color: var(--bg-canvas);
+  }
+  
+  
+  @media (max-width:767px) {
+  	.hworks-16-card::after {
+  	content: "";
+    position: absolute;
+    top: 100%;
+    right: unset;
+    left: 50%;
+    width: 0;
+    height: var(--space-m);
+    border: 1px dashed var(--bg-subtle);
+  }
+  }

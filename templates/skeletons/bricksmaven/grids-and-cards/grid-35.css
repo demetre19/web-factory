@@ -1,0 +1,53 @@
+  .bm-grid-35__grid {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 1);
+  }
+
+  .bm-grid-35__content {
+    row-gap: var(--space-s);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    justify-content: center;
+  }
+
+  .bm-grid-35-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-grid-35-card {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .bm-grid-35-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-grid-35-card::after {
+  	content: '';
+    display: flex;
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background-color: var(--color-line-default);
+    right: calc(-1 * (var(--space-m) / 2));
+    z-index: 1;
+  }
+  
+  .bm-grid-35-card:last-child::after {
+    display: none; 
+  }
+  
+  @media (max-width:767px) {
+    
+    .bm-grid-35-card::after {
+    width: 100%;
+    height: 1px;
+    right: unset;
+    bottom: calc(-1 * (var(--space-m) / 2));
+  }
+    
+  }

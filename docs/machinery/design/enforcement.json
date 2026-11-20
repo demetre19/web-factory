@@ -27,6 +27,9 @@
   "check_breathing": [
    "L.17"
   ],
+  "check_brief_hash": [
+   "P.22"
+  ],
   "check_burst": [
    "B.2",
    "B.3"
@@ -59,8 +62,19 @@
   "check_content_map": [
    "J.5"
   ],
+  "check_copy_coverage": [
+   "J.5"
+  ],
   "check_copy_density": [
    "R.4"
+  ],
+  "check_copy_fidelity": [
+   "J.5",
+   "E.1"
+  ],
+  "check_copy_shape_fit": [
+   "L.3",
+   "J.5"
   ],
   "check_dark_media": [
    "V.9"
@@ -79,6 +93,9 @@
   ],
   "check_design_mode": [
    "P.8"
+  ],
+  "check_discovery_provenance": [
+   "D.1"
   ],
   "check_dna": [
    "DM.1",
@@ -133,6 +150,23 @@
   "check_layout_distinct": [
    "VG.4"
   ],
+  "check_layout_options": [
+   "L.3",
+   "VG.7"
+  ],
+  "check_layout_pick": [
+   "L.3",
+   "P.8"
+  ],
+  "check_layout_scores": [
+   "VG.7"
+  ],
+  "check_light_canvas": [
+   "C.5"
+  ],
+  "check_light_paint": [
+   "C.5"
+  ],
   "check_logo": [
    "L.16"
   ],
@@ -176,12 +210,18 @@
   "check_novelty": [
    "B.6"
   ],
+  "check_operator_approvals": [
+   "P.8"
+  ],
   "check_page_family": [
    "J.6"
   ],
   "check_picker_ux": [
    "VG.7",
    "VG.9"
+  ],
+  "check_plan_provenance": [
+   "P.17"
   ],
   "check_prebuild_receipt": [
    "J.3"
@@ -223,6 +263,9 @@
   "check_round_gated_look": [
    "P.18"
   ],
+  "check_run_pin": [
+   "P.17"
+  ],
   "check_scorecard": [
    "P.8",
    "SB.6"
@@ -242,17 +285,24 @@
   "check_seo_lint": [
    "E.3"
   ],
+  "check_site_dna": [
+   "DM.1"
+  ],
   "check_skeleton": [
    "SKL.1",
    "SKL.2",
    "SKL.3"
   ],
-  "check_speech_acts": [
-   "L.12"
-  ],
   "check_sop_constants": [
    "SC.1",
    "SC.2"
+  ],
+  "check_source_bind": [
+   "P.17",
+   "J.5"
+  ],
+  "check_speech_acts": [
+   "L.12"
   ],
   "check_sticky_offset": [
    "R.11"
@@ -262,6 +312,9 @@
   ],
   "check_surface_rhythm": [
    "L.14"
+  ],
+  "check_tailwind_preview": [
+   "P.1"
   ],
   "check_three_layers": [
    "TL.1",
@@ -280,6 +333,9 @@
   ],
   "check_trend_vocab": [
    "DM.1"
+  ],
+  "check_unsourced_quotes": [
+   "J.5"
   ],
   "check_variants": [
    "DM.4",
@@ -433,6 +489,11 @@
    "tier": "invariant",
    "wave": "w6"
   },
+  "AC.1": {
+   "check": "check_acss_tokens",
+   "mode": "script",
+   "tier": "invariant"
+  },
   "B.1": {
    "check": "check_tiers",
    "mode": "script",
@@ -481,6 +542,27 @@
    "threshold": "no seed / same genes as last round / image.treatment sole twice",
    "tier": "invariant",
    "wave": "w4"
+  },
+  "BM.1": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "motif_source \u2209 {logo-extracted,declared,none} or extracted/declared source with empty motif_family",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "BM.2": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif/motif-* decoration outside motif_family + neutral primitives, or ornament=logo-motif with empty kit",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "BM.3": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif-slot \u2209 declared usage or unknown slot vocabulary",
+   "tier": "stylistic",
+   "wave": "w7"
   },
   "C.1": {
    "check": "check_contrast",
@@ -645,6 +727,11 @@
    "tier": "stylistic",
    "wave": "w7"
   },
+  "FL.1": {
+   "check": "check_fluid_sizes",
+   "mode": "script",
+   "tier": "invariant"
+  },
   "G.1": {
    "check": "check_spacing_scale",
    "mode": "script",
@@ -695,12 +782,26 @@
    "tier": "stylistic",
    "wave": "w7"
   },
+  "G.8": {
+   "check": "check_grid_tracks",
+   "mode": "script",
+   "threshold": "grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele",
+   "tier": "structural",
+   "wave": "w7"
+  },
   "I.1": {
    "check": "check_system_enums",
    "mode": "script",
    "threshold": "family+style \u2208 closed set; one family",
    "tier": "stylistic",
    "wave": "w5"
+  },
+  "I.10": {
+   "check": "check_lucide",
+   "mode": "script",
+   "threshold": "literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value",
+   "tier": "stylistic",
+   "wave": "w6"
   },
   "I.2": {
    "check": "check_icon_discipline",
@@ -765,6 +866,13 @@
    "tier": "invariant",
    "wave": "w7"
   },
+  "J.10": {
+   "check": "check_hero_composition",
+   "mode": "script",
+   "threshold": "the composition carrying the promise is not allowed by the genotype's layout-archetype",
+   "tier": "invariant",
+   "wave": "w3"
+  },
   "J.2": {
    "check": "check_present_order",
    "mode": "script",
@@ -797,6 +905,27 @@
    "check": "check_page_family",
    "mode": "script",
    "threshold": "page without page_type, layout_family != the type\u2019s family, or PREBUILD family outside page families",
+   "tier": "invariant",
+   "wave": "w3"
+  },
+  "J.7": {
+   "check": "check_prebuild_receipt",
+   "mode": "script",
+   "threshold": "element_variant missing, declared != bank elements signature, class outside the vertical's canon media set, text-only under a media-led canon, or text-only under a declared image-led genotype",
+   "tier": "invariant",
+   "wave": "w4"
+  },
+  "J.8": {
+   "check": "check_block_trace",
+   "mode": "script",
+   "threshold": "rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "J.9": {
+   "check": "check_section_program",
+   "mode": "script",
+   "threshold": "a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items",
    "tier": "invariant",
    "wave": "w3"
   },
@@ -961,6 +1090,13 @@
    "tier": "structural",
    "wave": "w7"
   },
+  "M.15": {
+   "check": "check_js_cost",
+   "mode": "script",
+   "threshold": "interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification",
+   "tier": "invariant",
+   "wave": "w7"
+  },
   "M.2": {
    "check": "check_measurable",
    "mode": "script",
@@ -1016,6 +1152,69 @@
    "mode": "script",
    "threshold": "every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason",
    "tier": "structural",
+   "wave": "w7"
+  },
+  "O.1": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "missing seed/variant/density/bounds params or geometry != ornament.generate() output for declared params",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.2": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "layer != genotype ornament allele, or ornament rendered while allele=none",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.3": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament stroke is literal colour or stroke-width outside 0.5\u20131px",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.4": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament svg missing aria-hidden=\"true\" or data-layer=\"behind\"",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.5": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "ornament target undeclared/missing in ornament_placements, >4 ornaments per page, or allele!=none with empty placements",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.6": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "intensity not in ghost|accent|statement|bold or rendered opacity outside the declared band",
+   "tier": "stylistic",
+   "wave": "w7"
+  },
+  "O.7": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "motion not in static|drift|rotate|dash-draw|pulse|reveal, or non-static motion without .ornament-* CSS + prefers-reduced-motion disable",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "O.8": {
+   "check": "check_ornament",
+   "mode": "script",
+   "threshold": "declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget)",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "O.9": {
+   "check": "check_brand_motif",
+   "mode": "script",
+   "threshold": "data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements \u2014 illustration, not motif",
+   "tier": "invariant",
    "wave": "w7"
   },
   "P.1": {
@@ -1114,6 +1313,34 @@
    "mode": "script",
    "threshold": "REVIEW.json: reviewer_model recorded (cheap by default; strong-class requires machinery_review), vlm_calls=1, viewports=[1280,768,360], per_design table [{design,pass}]",
    "tier": "invariant",
+   "wave": "w8"
+  },
+  "P.22": {
+   "check": "check_frozen_inputs",
+   "mode": "script",
+   "threshold": "input file a passing wave sealed in inputs_sha256 changed or deleted downstream",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "P.23": {
+   "check": "check_seal",
+   "mode": "script",
+   "threshold": "sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal)",
+   "tier": "invariant",
+   "wave": "w7"
+  },
+  "P.24": {
+   "check": "check_vlm_evidence",
+   "mode": "script",
+   "threshold": "vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model",
+   "tier": "invariant",
+   "wave": "w8"
+  },
+  "P.25": {
+   "check": "check_vlm_evidence",
+   "mode": "script",
+   "threshold": "a re-judged shot whose (image,prompt,model) hash was already recorded \u2014 the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third",
+   "tier": "structural",
    "wave": "w8"
   },
   "P.3": {
@@ -1454,6 +1681,20 @@
    "tier": "structural",
    "wave": "w8"
   },
+  "SC.1": {
+   "check": "check_sop_constants",
+   "mode": "script",
+   "threshold": "SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "SC.2": {
+   "check": "check_sop_constants",
+   "mode": "script",
+   "threshold": "recorded verdict != derived verdict from sop-adherence.json",
+   "tier": "invariant",
+   "wave": "w5"
+  },
   "SKL.1": {
    "check": "check_skeleton",
    "mode": "script",
@@ -1572,6 +1813,62 @@
    "threshold": "directional flow legible",
    "tier": "stylistic",
    "wave": "w8"
+  },
+  "TK.1": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "missing @theme/:root/.dark/@theme inline/@custom-variant layer",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TK.2": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "semantic var in :root without a .dark override",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TK.3": {
+   "check": "check_token_layer",
+   "mode": "script",
+   "threshold": "raw hex in a component colour property, or a component referencing a --primitive-* var",
+   "tier": "invariant",
+   "wave": "w6"
+  },
+  "TK.4": {
+   "check": "check_contrast",
+   "mode": "script",
+   "threshold": "contrast verified on semantic role pairs in both light and dark modes",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.1": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "data-tl-layer value outside the closed taxonomy {ornament, motif, icon}",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.2": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "rendered candidate with dna-fit outside 0\u2013100 or below the 50 floor",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.3": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "candidate without its word-seed-chain provenance",
+   "tier": "invariant",
+   "wave": "w5"
+  },
+  "TL.4": {
+   "check": "check_three_layers",
+   "mode": "script",
+   "threshold": "candidate surface with \u22652 candidates using radio inputs instead of checkboxes",
+   "tier": "invariant",
+   "wave": "w5"
   },
   "V.0": {
    "item": "media-words-first",
@@ -1768,237 +2065,6 @@
    "threshold": "no concat, no idioms",
    "tier": "stylistic",
    "wave": "w8"
-  },
-  "J.7": {
-   "check": "check_prebuild_receipt",
-   "mode": "script",
-   "threshold": "element_variant missing, declared != bank elements signature, class outside the vertical's canon media set, text-only under a media-led canon, or text-only under a declared image-led genotype",
-   "tier": "invariant",
-   "wave": "w4"
-  },
-  "J.8": {
-   "check": "check_block_trace",
-   "mode": "script",
-   "threshold": "rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "TK.1": {
-   "check": "check_token_layer",
-   "mode": "script",
-   "threshold": "missing @theme/:root/.dark/@theme inline/@custom-variant layer",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TK.2": {
-   "check": "check_token_layer",
-   "mode": "script",
-   "threshold": "semantic var in :root without a .dark override",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TK.3": {
-   "check": "check_token_layer",
-   "mode": "script",
-   "threshold": "raw hex in a component colour property, or a component referencing a --primitive-* var",
-   "tier": "invariant",
-   "wave": "w6"
-  },
-  "TK.4": {
-   "check": "check_contrast",
-   "mode": "script",
-   "threshold": "contrast verified on semantic role pairs in both light and dark modes",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "G.8": {
-   "check": "check_grid_tracks",
-   "mode": "script",
-   "threshold": "grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele",
-   "tier": "structural",
-   "wave": "w7"
-  },
-  "M.15": {
-   "check": "check_js_cost",
-   "mode": "script",
-   "threshold": "interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "P.22": {
-   "check": "check_frozen_inputs",
-   "mode": "script",
-   "threshold": "input file a passing wave sealed in inputs_sha256 changed or deleted downstream",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "P.23": {
-   "check": "check_seal",
-   "mode": "script",
-   "threshold": "sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal)",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "I.10": {
-   "check": "check_lucide",
-   "mode": "script",
-   "threshold": "literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value",
-   "tier": "stylistic",
-   "wave": "w6"
-  },
-  "O.1": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "missing seed/variant/density/bounds params or geometry != ornament.generate() output for declared params",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "O.2": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "layer != genotype ornament allele, or ornament rendered while allele=none",
-   "tier": "stylistic",
-   "wave": "w7"
-  },
-  "O.3": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "ornament stroke is literal colour or stroke-width outside 0.5\u20131px",
-   "tier": "stylistic",
-   "wave": "w7"
-  },
-  "O.4": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "ornament svg missing aria-hidden=\"true\" or data-layer=\"behind\"",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "O.5": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "ornament target undeclared/missing in ornament_placements, >4 ornaments per page, or allele!=none with empty placements",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "O.6": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "intensity not in ghost|accent|statement|bold or rendered opacity outside the declared band",
-   "tier": "stylistic",
-   "wave": "w7"
-  },
-  "O.7": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "motion not in static|drift|rotate|dash-draw|pulse|reveal, or non-static motion without .ornament-* CSS + prefers-reduced-motion disable",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "O.8": {
-   "check": "check_ornament",
-   "mode": "script",
-   "threshold": "declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget)",
-   "tier": "structural",
-   "wave": "w7"
-  },
-  "BM.1": {
-   "check": "check_brand_motif",
-   "mode": "script",
-   "threshold": "motif_source \u2209 {logo-extracted,declared,none} or extracted/declared source with empty motif_family",
-   "tier": "structural",
-   "wave": "w7"
-  },
-  "BM.2": {
-   "check": "check_brand_motif",
-   "mode": "script",
-   "threshold": "data-motif/motif-* decoration outside motif_family + neutral primitives, or ornament=logo-motif with empty kit",
-   "tier": "stylistic",
-   "wave": "w7"
-  },
-  "BM.3": {
-   "check": "check_brand_motif",
-   "mode": "script",
-   "threshold": "data-motif-slot \u2209 declared usage or unknown slot vocabulary",
-   "tier": "stylistic",
-   "wave": "w7"
-  },
-  "O.9": {
-   "check": "check_brand_motif",
-   "mode": "script",
-   "threshold": "data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements \u2014 illustration, not motif",
-   "tier": "invariant",
-   "wave": "w7"
-  },
-  "P.24": {
-   "check": "check_vlm_evidence",
-   "mode": "script",
-   "threshold": "vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model",
-   "tier": "invariant",
-   "wave": "w8"
-  },
-  "P.25": {
-   "check": "check_vlm_evidence",
-   "mode": "script",
-   "threshold": "a re-judged shot whose (image,prompt,model) hash was already recorded \u2014 the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third",
-   "tier": "structural",
-   "wave": "w8"
-  },
-  "SC.1": {
-   "check": "check_sop_constants",
-   "mode": "script",
-   "threshold": "SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "SC.2": {
-   "check": "check_sop_constants",
-   "mode": "script",
-   "threshold": "recorded verdict != derived verdict from sop-adherence.json",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TL.1": {
-   "check": "check_three_layers",
-   "mode": "script",
-   "threshold": "data-tl-layer value outside the closed taxonomy {ornament, motif, icon}",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TL.2": {
-   "check": "check_three_layers",
-   "mode": "script",
-   "threshold": "rendered candidate with dna-fit outside 0\u2013100 or below the 50 floor",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TL.3": {
-   "check": "check_three_layers",
-   "mode": "script",
-   "threshold": "candidate without its word-seed-chain provenance",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "TL.4": {
-   "check": "check_three_layers",
-   "mode": "script",
-   "threshold": "candidate surface with \u22652 candidates using radio inputs instead of checkboxes",
-   "tier": "invariant",
-   "wave": "w5"
-  },
-  "J.9": {
-   "check": "check_section_program",
-   "mode": "script",
-   "threshold": "a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items",
-   "tier": "invariant",
-   "wave": "w3"
-  },
-  "J.10": {
-   "check": "check_hero_composition",
-   "mode": "script",
-   "threshold": "the composition carrying the promise is not allowed by the genotype's layout-archetype",
-   "tier": "invariant",
-   "wave": "w3"
   }
  }
 }

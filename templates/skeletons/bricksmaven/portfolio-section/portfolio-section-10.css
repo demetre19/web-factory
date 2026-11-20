@@ -1,0 +1,51 @@
+  .bm-portfolio-section-10__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-3-related-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-3-related-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: space-between;
+  }
+
+  .bm-portfolio-3-related-card__top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bm-portfolio-3-related-card__heading {
+    padding: calc(var(--space-xs) / 2) var(--space-xs)  calc(var(--space-xs) / 2) var(--space-xs) ;
+  }
+
+  .bm-portfolio-3-related-card__terms {
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+  }
+
+  .bm-portfolio-3-related-card__footer {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-3-related-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-portfolio-3-related-card {
+    aspect-ratio: 1/1;
+  }

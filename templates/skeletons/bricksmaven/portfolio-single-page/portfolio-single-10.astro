@@ -27,43 +27,43 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        {heading && <h1 class="text-fluid-4">{heading}</h1>}
-        {fs && <p class="text-fluid-0">{fs}</p>}
+    <div class="bm-portfolio-single-10__hero-container">
+      <div class="bm-portfolio-single-10__hero-content">
+        {heading && <h1 class="bm-portfolio-single-10__hero-heading text-fluid-4">{heading}</h1>}
+        {fs && <p class="bm-portfolio-single-10__subheading text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="bm-portfolio-single-media-hero">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-portfolio-single-media-hero__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>
       </div>
     </div>
-    <div>
-      <div></div>
+    <div class="bm-portfolio-single-10__content-container">
+      <div class="bm-portfolio-single-10__top"></div>
     </div>
     <div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-1col-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div>
-      <div></div>
+    <div class="bm-portfolio-single-10__content-container">
+      <div class="bm-portfolio-single-10__top"></div>
     </div>
-    <div>
-      <div>
-        <div></div>
+    <div class="bm-portfolio-single-10__results-container">
+      <div class="bm-portfolio-single-10__content">
+        <div class="bm-portfolio-single-10__top-result"></div>
       </div>
-      <div>
-        <div></div>
-        <div></div>
+      <div class="bm-portfolio-single-10-data-list">
+        <div class="bm-portfolio-single-10-data"></div>
+        <div class="bm-portfolio-single-10-data"></div>
       </div>
     </div>
-    <div>
-      <div>
+    <div class="bm-portfolio-single-10__overlap">
+      <div class="bm-portfolio-single-media-2col">
         <div>
           <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
@@ -72,28 +72,28 @@ const {
         </div>
       </div>
     </div>
-    <div>
-      <div>
-        <div></div>
+    <div class="bm-portfolio-single-10__testimonial-container">
+      <div class="bm-portfolio-single-testimonial">
+        <div class="bm-portfolio-single-testimonial__footer"></div>
       </div>
     </div>
-    <div class="grid-auto gap-fluid-l">
-      <div>
+    <div class="bm-portfolio-single-10__cta-container grid-auto gap-fluid-l">
+      <div class="bm-contact-widget-10">
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="bm-contact-widget-10__background-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <div>
-      <div>
+    <div class="bm-portfolio-single-10__footer-container">
+      <div class="bm-portfolio-8-related-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-portfolio-8-related-card card">
+              <div class="bm-portfolio-8-related-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
-              <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="bm-portfolio-8-related-card__media">
+                <figure class="bm-portfolio-8-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

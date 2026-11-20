@@ -1,0 +1,65 @@
+  .hworks-13-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .hworks-13-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .hworks-13-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--space-m) var(--space-m) var(--space-m) calc(var(--section-space-xxl) * 2);
+  }
+
+  .hworks-13-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .hworks-13-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hworks-13-list {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-13-list li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    color:var(--bg-subtle);
+    font-size: calc(var(--fs-4) * 4);
+    font-weight: 400;
+    position:absolute;
+    left: var(--space-l);
+    top:50%;
+    transform: translateY(-50%);
+    
+  }

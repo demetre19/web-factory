@@ -1,0 +1,83 @@
+  .blog-section-13-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-section-13-article-list {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .blog-section-13-article {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .blog-section-13-article__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    justify-content: center;
+  }
+
+  .blog-section-13-article__term {
+    padding: .4rem .4rem .4rem .4rem;
+  }
+
+  .blog-section-13-article__featured-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .blog-section-13-article:first-child {
+  	grid-column: 1/9;
+    grid-row: span 2;
+  }
+  
+  .blog-section-13-article:nth-child(2), .blog-section-13-article:nth-child(3) {
+  	grid-column: 9 / -1;
+  }
+  
+  .blog-section-13-article:nth-child(2) .blog-section-13-article__heading, .blog-section-13-article:nth-child(3) .blog-section-13-article__heading {
+  	font-size: var(--fs-1);
+  }
+  
+  .blog-section-13-article:nth-child(2) .blog-section-13-article__excerpt, .blog-section-13-article:nth-child(3) .blog-section-13-article__excerpt {
+  	display:none;
+  }
+  
+  @media (max-width:767px) {
+  
+  	.blog-section-13-article:first-child {
+        grid-column: 1/-1;
+        grid-row: span 1;
+    }
+  
+    .blog-section-13-article:nth-child(2), .blog-section-13-article:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+    
+    .blog-section-13-article:nth-child(2) .blog-section-13-article__heading, .blog-section-13-article:nth-child(3) .blog-section-13-article__heading {
+  	font-size: var(--fs-3);
+  }
+    
+    .blog-section-13-article:nth-child(2) .blog-section-13-article__excerpt, .blog-section-13-article:nth-child(3) .blog-section-13-article__excerpt {
+      display:block;
+    }
+    
+  }
+
+  .blog-section-13-article__featured-image {
+  	aspect-ratio: 1/1;
+  }

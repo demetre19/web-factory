@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
-          {heading && <h2 class="text-fluid-2">{heading}</h2>}
-          {fs && <p class="text-fluid-0">{fs}</p>}
+    <div class="product-list-10__container">
+      <div class="product-list-10__list">
+        <div class="product-list-10__content">
+          {heading && <h2 class="product-list-10__heading text-fluid-2">{heading}</h2>}
+          {fs && <p class="product-list-10__headline text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div>
-          <div>
+        <div class="product-list-10__slider">
+          <div class="product-list-10-card">
             <div class="grid-auto gap-fluid-l">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-              <div>
-                <div></div>
+              <figure class="product-list-10-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="product-list-notice__wrapper">
+                <div class="product-list-notice-circle__sale-badge"></div>
               </div>
             </div>
-            <div>
-              <div></div>
-              <div></div>
+            <div class="product-list-10-card__content">
+              <div class="product-list-10-card__top"></div>
+              <div class="product-list-card__add-to-cart--auto"></div>
             </div>
           </div>
         </div>

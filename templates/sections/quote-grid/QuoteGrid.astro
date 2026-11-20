@@ -1,8 +1,14 @@
 ---
 /**
- * quote-grid — gold exemplar (SB.5). Three first-party voices, each a
- * full sentence, attributed. No stars, no stock faces.
+ * quote-grid — gold exemplar (SB.5). Testimonial cards: a star row
+ * when the item rates it, the quote verbatim, a portrait avatar and
+ * the reviewer's name and source. Every field is a prop from the
+ * plan row (F.2) — an item without a rating or portrait renders
+ * without one.
  */
+import { Image } from 'astro:assets';
+import { iconFor, mediaFor } from '../_shared/inline';
+import type { MediaInput } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
@@ -10,7 +16,8 @@ interface Props {
   eyebrow?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; quote?: string;
-             who?: string }[];
+             who?: string; source?: string; rating?: number | string;
+             image?: MediaInput; avatar?: MediaInput }[];
   image?: { src: string; alt: string };
   h1?: boolean;
   brand?: string;
@@ -20,6 +27,9 @@ const {
   cta, items = [], h1, brand,
 } = Astro.props;
 const sub = fs || body;
+const Star = iconFor('star');
+const full = (r: number | string | undefined) =>
+  Math.max(0, Math.min(5, Math.round(Number(r) || 0)));
 ---
 <div>
   <div class="sec-head">
@@ -27,12 +37,37 @@ const sub = fs || body;
     <h2 class="text-fluid-3">{heading}</h2>
     {sub && <p class="lede">{sub}</p>}
   </div>
-  <ul class="mt-sec grid-auto gap-fluid-m list-plain">
-    {items.map((it) => (
+  <ul class="mt-sec grid-auto list-plain">
+    {items.map((it) => {
+      const av = mediaFor(it.avatar || it.image, it.who || '');
+      const n = full(it.rating);
+      return (
       <li class="card">
+        {n > 0 && <span class="stars" role="img"
+                        aria-label={`${n} out of 5`}>
+          {Array.from({ length: 5 }, (_, i) => (
+            <Star size={14} fill={i < n ? 'currentColor' : 'none'}
+                  class={i < n ? '' : 'star-off'} aria-hidden="true" />
+          ))}
+        </span>}
         <p class="t0 quote">“{it.quote || it.text}”</p>
-        <p class="t0 attrib">{it.who || it.title}</p>
+        <div class="quote-foot">
+          {av && (av.mod
+            ? <Image class="avatar" src={av.mod}
+                     alt={av.alt || it.who || ''} width={88}
+                     height={88} loading="lazy" />
+            : <img class="avatar" src={av.src}
+                   alt={av.alt || it.who || ''} width={44} height={44}
+                   loading="lazy" />)}
+          <span>
+            {(it.who || it.title) &&
+              <span class="t0 attrib">{it.who || it.title}</span>}
+            {it.source &&
+              <span class="t0 attrib"> — {it.source}</span>}
+          </span>
+        </div>
       </li>
-    ))}
+      );
+    })}
   </ul>
 </div>

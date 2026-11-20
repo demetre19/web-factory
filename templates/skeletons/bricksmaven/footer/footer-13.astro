@@ -27,13 +27,13 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
+    <div class="footer-13-container row between">
+      <div class="footer-13__nav row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="row between">
+            <div class="footer-nav-column row between">
               <h3 class="text-fluid-2">{it.title}</h3>
-              <div class="row between">
+              <div class="footer-menu row between">
                 <div class="row gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div>
@@ -46,22 +46,22 @@ const {
           ))}
         </div>
       </div>
-      <div class="row between">
+      <div class="footer-13__content row between">
         <span class="logo">{brand}</span>
         {fs && <p class="text-fluid-0">{fs}</p>}
         <form novalidate>
         </form>
       </div>
     </div>
-    <div class="row between">
-      <div class="row between">
+    <div class="footer-13-bottom-container row between">
+      <div class="footer-bottom__left row between">
         <div>
           <span class="logo">{brand}</span>
         </div>
         <div></div>
       </div>
       <div>
-        <div></div>
+        <div class="footer-social"></div>
       </div>
     </div>
   </div>

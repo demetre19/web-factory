@@ -1,0 +1,135 @@
+  .grid-25 {
+    overflow: hidden;
+  }
+
+  .grid-25-container {
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 1);
+    gap: calc(var(--space-m) * 1.2);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .grid-25-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .grid-25-card__inner-content {
+    row-gap: calc(var(--flow-spacing) / 6);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    justify-content: flex-end;
+  }
+
+  .grid-25-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .grid-25-slider .splide__track {
+  	overflow: visible;
+  }
+  
+  .grid-25-slider::before {
+  	content: "";
+    width: 100vw;
+    max-width: 100vw;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    right: 100%;
+    z-index: 1;
+    background-color: var(--bg-canvas);
+    
+  }
+  
+  
+  .grid-25-slider .splide__arrows {
+    display: flex!important;
+    position: absolute;
+    gap: var(--space-xs);
+    top: calc(100% + var(--space-l));
+   	left: 50%;
+    width: 100%;
+    justify-content: center;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+  
+  .grid-25-slider .splide__arrow {
+      position: relative !important;
+  }
+
+  /* Card */
+  
+  .grid-25-card:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  .grid-25-card:focus-within {
+  	box-shadow: 0 0 10px 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
+  
+  }
+  
+  /* Content */
+  .grid-25-card__inner-content {
+    transition: .4s linear;
+  	backdrop-filter: blur(1px);
+  }
+  
+  .grid-25-card:hover .grid-25-card__inner-content, .grid-25-card:focus-within .grid-25-card__inner-content {
+  	backdrop-filter: blur(0px);
+  }
+  
+  .grid-25-card__heading {
+    transition: .4s linear;
+  }
+  
+  .grid-25-card:hover .grid-25-card__heading, .grid-25-card:focus-within .grid-25-card__heading {
+  	color: var(--action-primary);
+  }
+  
+  /* Image */
+  .grid-25-card__image {
+  	transition: .6s linear;
+  }
+  
+  .grid-25-card:hover .grid-25-card__image, .grid-25-card:focus-within .grid-25-card__image {
+  	scale: 1.1;
+  }
+  
+  /* Overlay */
+  .grid-25-card__overlay {
+  	transition: .8s linear;
+    opacity: 0.8;
+  }
+  
+  .grid-25-card:hover .grid-25-card__overlay, .grid-25-card:focus-within .grid-25-card__overlay {
+  	background-image: linear-gradient(color-mix(in srgb, var(--bg-subtle) 10%, transparent), color-mix(in srgb, var(--bg-subtle) 90%, transparent));
+    opacity: 1;
+  }

@@ -27,10 +27,10 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-33-container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="intro__text-cta-wrapper">
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
@@ -38,21 +38,21 @@ const {
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="testimonial-33-slide card">
+              <div class="testimonial-33-slide__content">
                 <div>
                   <h2 class="text-fluid-2">{it.title}</h2>
                 </div>
-                <div>
+                <div class="testimonial-33-slide__client-data">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-33-slide__logo-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
-              <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="testimonial-33-slide__media">
+                <figure class="testimonial-33-slide__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

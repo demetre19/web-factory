@@ -1,0 +1,36 @@
+  .counter-3-container {
+    padding: 0 var(--space-l) 0 var(--space-l);
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-3-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .counter-3-card {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 4fr);
+  }
+
+  .counter-3-card__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .counter-3-card__number {
+  -webkit-text-stroke: .1rem var(--bg-canvas);
+  -webkit-text-fill-color: transparent;
+  }

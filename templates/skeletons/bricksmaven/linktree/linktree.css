@@ -1,0 +1,36 @@
+  .linktree-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .linktree__content {
+    width: 100%;
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .linktree__brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .linktree-card {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    text-align: center;
+    align-items: center;
+  }
+
+  .linktree-social {
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    justify-content: center;
+  }

@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="counter-10-container">
+      <div class="counter-10-box">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="counter-10-box__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
         {fs && <p class="text-fluid-0">{fs}</p>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div>
+      <div class="counter-10-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="counter-10-card card">
               <span></span>
               <p class="text-fluid-0">{it.text}</p>
               <p class="text-fluid-0">{it.text}</p>

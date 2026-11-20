@@ -28,49 +28,49 @@ const {
 <div>
   <div>
     <div class="sec-inner">
-      <div class="grid-auto gap-fluid-l">
-        <div>
+      <div class="bm-product-archive-1__header-page grid-auto gap-fluid-l">
+        <div class="bm-product-archive-1__content">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           <div></div>
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-product-archive-1__header-page-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
     <div class="sec-inner">
-      <div>
-        <div>
-          <div>
+      <div class="bm-product-archive-1__container">
+        <div class="bm-product-archive-1__product-container">
+          <div class="bm-product-archive-1__filter-column">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-product-archive__filter-row card">
                   <h4 class="text-fluid-2">{it.title}</h4>
                   <div></div>
                 </div>
               ))}
             </div>
           </div>
-          <div>
-            <div class="grid-auto gap-fluid-l">
-              <div>
+          <div class="bm-product-archive-1__product-grid">
+            <div class="bm-product-archive-1__header-page-short grid-auto gap-fluid-l">
+              <div class="bm-product-archive-1__content">
                 <div></div>
               </div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-product-archive-1__header-page-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
             <div>
               <div></div>
             </div>
-            <div>
-              <div>
-                <div>
-                  <div></div>
+            <div class="bm-product-archive-1__product-filters">
+              <div class="bm-product-archive-filter-wrapper">
+                <div class="bm-product-archive-filter-wrapper__toggle-button">
+                  <div class="bm-product-archive-filter-wrapper__toggle"></div>
                 </div>
                 <div>
-                  <div>
-                    <div>
+                  <div class="bm-product-archive-off-canvas__content">
+                    <div class="bm-product-archive-1__filter-column">
                       <div class="grid-auto gap-fluid-m">
                         {(items || []).map((it) => (
-                          <div class="card">
+                          <div class="bm-product-archive__filter-row card">
                             <h4 class="text-fluid-2">{it.title}</h4>
                             <div></div>
                           </div>
@@ -82,27 +82,27 @@ const {
                   <div></div>
                 </div>
               </div>
-              <div>
+              <div class="bm-product-archive-1__sort-wrapper">
                 <div></div>
                 <div></div>
               </div>
             </div>
-            <div>
-              <div class="grid-auto gap-fluid-l">
-                <div>
-                  <div></div>
-                  <div></div>
-                </div>
-                <div>
+            <div class="bm-product-archive__product-list">
+              <div class="product-list-1-card grid-auto gap-fluid-l">
+                <div class="product-list-1-card__content">
+                  <div class="product-list-1-card__top"></div>
                   <div></div>
                 </div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <div class="product-list-notice__wrapper">
+                  <div class="product-list-notice-circle__sale-badge"></div>
+                </div>
+                <figure class="product-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
             <div>
               <div></div>
             </div>
-            <div></div>
+            <div class="bm-product-archive__seo-text-block"></div>
           </div>
         </div>
       </div>

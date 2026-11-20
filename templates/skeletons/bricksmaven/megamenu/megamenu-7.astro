@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-header-1__container">
+      <div class="bm-header-1__brand">
         <span class="logo">{brand}</span>
       </div>
-      <div>
+      <div class="bm-header-1__nav-wrapper">
         <div>
           <div>
             <div>
-              <div>
-                <div>
+              <div class="megamenu-7__content">
+                <div class="megamenu-7__column-wrapper">
                   <div class="grid-auto gap-fluid-m">
                     {(items || []).map((it) => (
-                      <div class="card">
+                      <div class="megamenu-7__column card">
                         <h2 class="text-fluid-2">{it.title}</h2>
-                        <div>
+                        <div class="megamenu-7__card-wrapper">
                           <div class="grid-auto gap-fluid-m">
                             {((it.items || []) || []).map((it2) => (
-                              <div class="card">
+                              <div class="megamenu-card-link-5 card">
                                 <a class="text-fluid-0" href={it2.href}>{it2.label}</a>
                               </div>
                             ))}
@@ -61,7 +61,7 @@ const {
           <div></div>
         </div>
       </div>
-      <div></div>
+      <div class="bm-header-1__cta"></div>
     </div>
   </div>
 </div>

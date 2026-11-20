@@ -28,22 +28,22 @@ const {
 <div>
   <span class="logo">{brand}</span>
   <div class="sec-inner">
-    <div class="row between">
-      <div>
+    <div class="header-21__container row between">
+      <div class="header-21__nav">
         <div></div>
       </div>
-      <div>
+      <div class="header-21__brand">
         <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="row between">
+      <div class="header-21__cta row between">
         <span data-icon="lucide" aria-hidden="true"></span>
         <div class="row between">
           <div></div>
           <div>
-            <div class="row between">
+            <div class="bm-off-canvas-6__content row between">
               <div></div>
               {heading && <h2 class="text-fluid-2">{heading}</h2>}
-              <div class="row between">
+              <div class="bm-off-canvas-nav-ul row between">
                 <div class="row gap-fluid-m">
                   {(items || []).map((it) => (
                     <div>
@@ -52,11 +52,11 @@ const {
                   ))}
                 </div>
               </div>
-              <div class="row between">
-                <div class="row between">
+              <div class="bm-off-canvas-6__contact-footer row between">
+                <div class="bm-off-canvas-contact row between">
                   <div class="row gap-fluid-m">
                     {(items || []).map((it) => (
-                      <div class="row between">
+                      <div class="bm-off-canvas-contact-item row between">
                         <div>
                           <span data-icon="lucide" aria-hidden="true"></span>
                         </div>
@@ -65,10 +65,10 @@ const {
                     ))}
                   </div>
                 </div>
-                {fs && <p class="text-fluid-0">{fs}</p>}
+                {fs && <p class="bm-off-canvas-6__contact-address text-fluid-0">{fs}</p>}
               </div>
-              <div class="row between">
-                <div class="row between">
+              <div class="bm-off-canvas-6__socials row between">
+                <div class="bm-social-share bm-social-share--column row between">
                   <div class="row gap-fluid-m">
                     {(items || []).map((it) => (
                       <div>

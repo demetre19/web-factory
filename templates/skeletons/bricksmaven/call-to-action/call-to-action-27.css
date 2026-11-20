@@ -1,0 +1,109 @@
+  .bm-contact-widget-4 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: center;
+  }
+
+  .bm-contact-widget-4__heading {
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-contact-widget-4__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-contact-widget-4__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-4__image {
+    object-fit: cover;
+    width: 164;
+  }
+
+  .bm-contact-widget-4__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-live-website-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+  }
+
+  .bm-live-website-btn__dot {
+    width: 8;
+  }
+
+  .bm-contact-25-side-list-ul {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    padding: 0 0 0 0;
+  }
+
+  .bm-contact-25-side-list-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-25-side-list-item__detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bm-contact-25-side-list-item__cta {
+    padding: 0 0 0 0;
+    text-align: left;
+  }
+
+  .bm-contact-25-side-list-item__icon {
+    display: flex;
+    align-items: center;
+    padding: .5rem .5rem .5rem .5rem;
+    width: 3.5rem;
+    justify-content: center;
+  }
+
+  .bm-live-website-btn__dot {
+    --shadow-m:  0 0 4px 2px rgba(255, 255, 255, 0.2);
+    --shadow-xl: 0 0 16px 8px rgba(255, 255, 255, 0.8);
+  	--animation-duration-up: 1.2s;
+    --shadow-light: var(--shadow-card);
+    --shadow-heavy: var(--shadow-card);
+    --animation-iteration-count: infinite;
+    --animation-direction: alternate;
+    --animation-timing-function-up: linear;
+  }
+  
+  /* Define the animation for the first child */
+  .bm-live-website-btn__dot{
+    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
+  }
+  
+  /* Define the animations ending point for the first child */
+  @keyframes glow {
+    0% {
+      box-shadow: var(--shadow-card);
+    }
+    100% {
+      box-shadow: var(--shadow-card);
+    }
+  }
+
+  .bm-live-website-btn__text {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }

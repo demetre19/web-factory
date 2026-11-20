@@ -27,13 +27,13 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-content-72__container">
+      <div class="bm-content-72__content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="bm-content-72-achievement-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="bm-content-72-achievement-list-item card">
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             ))}
@@ -41,16 +41,16 @@ const {
         </div>
       </div>
     </div>
-    <div>
-      <div>
+    <div class="bm-content-72__beta-container">
+      <div class="bm-card-floating-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-card-floating card">
+              <div class="bm-card-floating__content">
                 <p class="text-fluid-0">{it.text}</p>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Floating Image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-card-floating__image ratio-portrait"><img src="/media/placeholder.svg" alt="Floating Image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

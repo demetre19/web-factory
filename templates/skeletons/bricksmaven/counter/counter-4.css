@@ -1,0 +1,42 @@
+  .counter-4-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .counter-4-right-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .counter-4-right-box__heading {
+    margin: 0 0 0 0;
+  }
+
+  .counter-4-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .counter-4-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+    padding: 0 0 0 var(--space-s);
+  }
+
+  .counter-4-media__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .counter-4-list-card:last-child {
+  	border-right: none;
+  }
+  
+  .counter-4-list-card:first-child {
+  	padding-left: 0px;
+  }

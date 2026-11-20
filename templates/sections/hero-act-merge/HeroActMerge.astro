@@ -3,6 +3,9 @@
  * hero-act-merge — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
  * contract; keep the skeleton. Renders inside Section.astro: no
  * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * U.4: the act is the plan's cta — a link with the copy's label, never
+ * an invented "check availability" form.
  */
 interface Props {
   heading?: string;
@@ -15,20 +18,15 @@ interface Props {
   h1?: boolean;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', body = '', cta, items = [],
+  image, h1,
 } = Astro.props;
 ---
 
 <div class="grid gap-fluid-l md:grid-cols-2 md:items-center">
   <div class="max-w-prose">
-    {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-4">{heading}</h2>}
-    <p class="mt-stack text-fluid-1">{fs}</p>
+    {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+    {fs && <p class="mt-stack text-fluid-1">{fs}</p>}
   </div>
-  <form class="flex flex-wrap gap-fluid-s" novalidate>
-    <label class="sr-only" for="hero-zip">Postcode</label>
-    <input id="hero-zip" class="rounded-card border border-muted p-fluid-s text-fluid-0"
-           type="text" name="zip" placeholder="Your postcode" autocomplete="postal-code" />
-    <button class="wf-cta-button" type="submit">{cta?.label ?? 'Check availability'}</button>
-  </form>
+  {cta && <a class="wf-cta-button" href={cta.href}>{cta.label}</a>}
 </div>

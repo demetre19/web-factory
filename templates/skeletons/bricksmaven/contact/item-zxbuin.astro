@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="contact-3-container">
+      <div class="contact-3-grid-ul">
+        <div class="contact-3-card">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="contact-3-card contact-3-card--alt card">
+              <div class="contact-3-card__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <div>
+              <div class="contact-3-card__content">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
@@ -48,13 +48,13 @@ const {
           ))}
         </div>
       </div>
-      <div>
-        <div>
+      <div class="contact-3-footer">
+        <div class="contact-3-form">
           <form novalidate>
           </form>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="contact-3-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

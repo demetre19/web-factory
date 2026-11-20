@@ -28,25 +28,25 @@ const {
 <div>
   <div>
     <div class="sec-inner">
-      <div>
-        <div>
+      <div class="hero-53__container">
+        <div class="hero-53__content">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="hero-53__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="hero-53__section-background-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     </div>
     <div class="sec-inner">
-      <div>
+      <div class="hero-53-testimonial__container">
         <div></div>
-        <div>
-          <div>
+        <div class="hero-53-testimonial__review">
+          <div class="hero-53-testimonial__review-user-rating">
             <div></div>
-            <div>
+            <div class="hero-53-testimonial-review-rating">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">

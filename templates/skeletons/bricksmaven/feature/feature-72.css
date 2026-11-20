@@ -1,0 +1,47 @@
+  .bm-feature-72 {
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .bm-feature-72__container {
+    width: 100%;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: grid;
+    gap: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-feature-72-card {
+    justify-content: flex-end;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    overflow: hidden;
+  }
+
+  .bm-feature-72-card__content {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-feature-72-card__background-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-feature-72-card__background-image {
+    transition: 0.5s ease;
+  }
+  
+  
+  
+  .bm-feature-72-card:hover .bm-feature-72-card__background-image {
+    scale:1.2;
+  }
+  
+  .bm-feature-72-card__content {
+    transition: 0.5s ease;
+  }
+  
+  .bm-feature-72-card:hover .bm-feature-72-card__content {
+    transform:translateY(calc(var(--space-xl) * -1));
+  }

@@ -1,0 +1,53 @@
+  .bm-feature-54__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-54-feature-list {
+    row-gap: var(--space-s);
+  }
+
+  .bm-feature-54-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: hidden;
+  }
+
+  .bm-feature-54-card__content {
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-feature-54-card__top {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-feature-54-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  @media (min-width:991px) {
+    
+    .bm-feature-54-card:nth-child(even) .bm-feature-54-card__media {
+    	order: -1;
+  	}
+  }

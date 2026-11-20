@@ -1,0 +1,40 @@
+  .feature-33-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: calc(var(--space-m) * 4);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .feature-33-list {
+    row-gap: var(--space-s);
+  }
+
+  .feature-33-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .feature-33-card__content {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .feature-33-card__image {
+    object-fit: cover;
+    width: 100%;
+  }

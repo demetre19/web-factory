@@ -1,0 +1,49 @@
+  .cta-15 {
+    overflow: hidden;
+  }
+
+  .cta-15-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .cta-15__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .cta-15__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .cta-15-container::before {
+    content:"";
+    background-color: var(--action-primary);
+    position: absolute;
+    width: 80vw;
+    height:100%;
+    clip-path: polygon(0% 0, 100% 0, 75% 100%, 0 100%);
+    -webkit-clip-path: polygon(0% 0, 100% 0, 75% 100%, 0 100%);
+    top: 0;
+    left: 0;
+  }
+  
+  @media (max-width: 478px) {
+  
+    .cta-15-container::before {
+    width: 100vw;
+    height:70%;
+    clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0% 0, 100% 0, 100% 100%, 0 100%);
+  
+  }
+    
+  }
+
+  .cta-15__image {
+  	clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+    	-webkit-clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+  }

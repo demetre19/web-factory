@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="portfolio-section-6__container">
+      <div class="portfolio-section-6__content">
+        <div class="portfolio-section-6__intro">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
         <div>
-          <div>
-            <div></div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="portfolio-section-6__account-manager">
+            <div class="portfolio-section-6__top"></div>
+            <div class="portfolio-section-6__team-profile">
+              <figure class="portfolio-section-6__team-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
+            <div class="portfolio-section-6__team-profile">
               <div></div>
               <div>
                 <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
@@ -48,17 +48,17 @@ const {
           </div>
         </div>
       </div>
-      <div>
+      <div class="portfolio-section-6-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <div>
+              <div class="portfolio-section-6-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div></div>
-              <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="portfolio-section-6-card__overlay"></div>
+              <div class="portfolio-section-6-card__media">
+                <figure class="portfolio-section-6-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

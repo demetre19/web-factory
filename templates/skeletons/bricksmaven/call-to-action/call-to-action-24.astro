@@ -27,23 +27,23 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-call-to-action-24__container">
+      <div class="bm-call-to-action-24-testimonial">
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
+        <div class="bm-call-to-action-24-testimonial__customer-bio">
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Thumbnail" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-call-to-action-24-testimonial__thumbnail ratio-portrait"><img src="/media/placeholder.svg" alt="Thumbnail" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div></div>
+          <div class="bm-call-to-action-24-testimonial__bio"></div>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-call-to-action-24-cta-card">
+        <div class="bm-call-to-action-24-cta-card__content">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="bm-call-to-action-24-cta-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

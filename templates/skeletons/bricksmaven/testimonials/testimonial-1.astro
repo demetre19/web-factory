@@ -28,15 +28,15 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="testimonial-1-content">
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="testimonial-1-slides-item card">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-1-slides__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             ))}

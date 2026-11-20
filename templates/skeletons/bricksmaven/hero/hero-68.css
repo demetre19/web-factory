@@ -1,0 +1,42 @@
+  .bm-hero-68 {
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .bm-hero-68__container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-hero-68__content {
+    display: flex;
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    width: var(--content-width);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-68-slide__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-hero-68__slider  .splide__track{
+  	overflow:visible;
+  }
+  
+  .bm-hero-68__slider .splide__list {
+    gap: var(--flow-spacing);
+    align-items: center;
+  }
+  
+  .bm-hero-68__slider :where(.splide__list, .splide__slide){
+    transition-timing-function: linear !important;
+  }

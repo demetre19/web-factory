@@ -28,9 +28,9 @@ const {
 <div>
   <span class="logo">{brand}</span>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div class="row between">
+    <div class="bm-header-14__top-container">
+      <div class="bm-header-14__top-nav">
+        <div class="bm-header-14__top-nav-wrapper row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
               <a class="text-fluid-0" href={it.href}>{it.label}</a>
@@ -39,14 +39,14 @@ const {
         </div>
       </div>
     </div>
-    <div class="row between">
+    <div class="bm-header-14__container row between">
       <div>
         <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
       <div>
         <div></div>
       </div>
-      <div class="row between">
+      <div class="bm-header-14__cta row between">
         <div></div>
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>

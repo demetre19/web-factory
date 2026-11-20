@@ -27,9 +27,9 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-banner-5__container">
+      <div class="bm-banner-inline-content">
+        <div class="bm-banner-inline-content__info">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
@@ -37,8 +37,8 @@ const {
       <div>
         <span data-icon="lucide" aria-hidden="true"></span>
       </div>
-      <div>
-        <div>
+      <div class="bm-banner-5__right-column">
+        <div class="bm-social-share bm-social-share--left">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">

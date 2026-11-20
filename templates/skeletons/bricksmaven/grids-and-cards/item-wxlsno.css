@@ -1,0 +1,18 @@
+  .gridcard-10-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .gridcard-10-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-10-card__image {
+    width: 100%;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    object-fit: cover;
+  }

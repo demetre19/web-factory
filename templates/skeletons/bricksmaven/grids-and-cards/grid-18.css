@@ -1,0 +1,70 @@
+  .gridcard-18-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .gridcard-18-ct {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.875em;
+  }
+
+  .gridcard-18-article {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .gridcard-18-article__meta {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .gridcard-18-article__detail {
+    display: grid;
+  }
+
+  .gridcard-18-article__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    margin: 0 0 0 auto;
+  }
+
+  .gridcard-18-article__thumb {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .gridcard-18-box:nth-child(1) {
+  	grid-column: span 8;
+  }
+  .gridcard-18-box:nth-child(2) {
+  	grid-column: span 4;
+    grid-row: span 2;
+  }
+  .gridcard-18-box:nth-child(3) {
+  	grid-column: span 4;
+  }
+  .gridcard-18-box:nth-child(4) {
+  	grid-column: span 4;
+  }
+
+  .gridcard-18-article:hover a {
+  	color: var(--action-primary);
+  }
+
+  .gridcard-18-article__title > a::after {
+  	z-index: 1;
+  }

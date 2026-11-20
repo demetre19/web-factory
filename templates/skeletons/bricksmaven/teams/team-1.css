@@ -1,0 +1,39 @@
+  .team-1-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-1-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .team-1-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-m);
+  }
+
+  .team-1-profile {
+    display: flex;
+    column-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .team-1-profile__detail {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .team-1-profile__image {
+    width: 10rem;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .team-1-profile__image {
+  	aspect-ratio:1/1;
+  }

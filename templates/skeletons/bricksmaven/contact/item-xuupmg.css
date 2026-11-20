@@ -1,0 +1,40 @@
+  .contact-8-container {
+    display: flex;
+    row-gap: var(--space-l);
+  }
+
+  .contact-8-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    width: 100%;
+  }
+
+  .contact-8-grid-ul {
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    gap: var(--space-s);
+    width: 100%;
+  }
+
+  .contact-8-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--space-s);
+  }
+
+  .contact-8-card__top-row {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-8-card__information {
+    margin: 0 0 0 0;
+  }
+
+  .contact-8-media__image {
+    width: 100%;
+    object-fit: cover;
+  }

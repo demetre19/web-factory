@@ -1,0 +1,37 @@
+  .bm-header-15 {
+    padding: var(--space-xs) 0 var(--space-xs) 0;
+  }
+
+  .bm-header-15__container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-header-15__brand {
+    width: auto;
+    display: flex;
+  }
+
+  .bm-header-15__image {
+    object-fit: contain;
+  }
+
+  .bm-header-15__right-column {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    width: auto;
+  }
+
+  .bm-header-15__cta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }

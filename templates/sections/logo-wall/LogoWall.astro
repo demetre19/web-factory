@@ -3,28 +3,50 @@
  * logo-wall — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
  * contract; keep the skeleton. Renders inside Section.astro: no
  * <section>, no outer padding/background/max-width (SB.2).
+ * Marks are inline SVG only (P.11): an item's `src` names an .svg in
+ * public/media/, mirrored + sanitised into src/assets/media/ at emit.
+ * Items without a resolvable mark render their label as text.
  */
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
+  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
-  image?: { src: string; alt: string };
+  items?: { title?: string; label?: string; src?: string }[];
   h1?: boolean;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
-  body = '', cta, items = [], image, h1,
+  heading = 'Section heading', fs = '', eyebrow = '', items = [], h1,
 } = Astro.props;
+const raws = import.meta.glob('../assets/media/*.svg',
+                              { query: '?raw', import: 'default',
+                                eager: true });
+function markFor(it) {
+  const name = String(it.src || '').split('/').pop();
+  return name.endsWith('.svg') ? raws[`../assets/media/${name}`] : null;
+}
 ---
 
-<div>
-  {h1 ? <h1 class="text-fluid-1">{heading}</h1> : <h2 class="text-fluid-1">{heading}</h2>}
-  <ul class="mt-stack flex flex-wrap items-center gap-fluid-l">
-    {items.map((it) => (
-      <li class="text-fluid-0 opacity-80">{it.label}</li>
-    ))}
+<div class="split">
+  <div class="sec-head">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {h1 ? <h1 class="text-fluid-3">{heading}</h1>
+        : <h2 class="text-fluid-3">{heading}</h2>}
+    {fs && <p class="lede">{fs}</p>}
+  </div>
+  <ul class="logo-row list-plain">
+    {items.map((it) => {
+      const svg = markFor(it);
+      const name = it.label || it.title || '';
+      return (
+        <li>
+          {svg
+            ? <span class="brand-logo" set:html={svg}
+                    role="img" aria-label={name} />
+            : name}
+        </li>
+      );
+    })}
   </ul>
 </div>

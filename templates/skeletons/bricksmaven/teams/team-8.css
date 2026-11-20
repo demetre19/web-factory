@@ -1,0 +1,51 @@
+  .team-8-container {
+    display: flex;
+    row-gap: var(--space-l);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .team-8-card {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .team-8-card__box {
+    display: flex;
+    row-gap: var(--space-s);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    flex-direction: column;
+  }
+
+  .team-8-card__image-wrapper {
+    width: 100%;
+  }
+
+  .team-8-card__img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .team-8-card:nth-child(even) .team-8-card__image-wrapper {
+  	order:1;  
+  }
+  
+  .team-8-card {
+  	box-shadow: var(--shadow-card);
+  }
+  
+  
+  @media (max-width:768px) {
+  
+  	.team-8-card:nth-child(even) .team-8-card__image-wrapper {
+  	order:-1;  
+  }
+  
+  }

@@ -27,25 +27,25 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-how-it-works-28__container">
+      <div class="bm-how-it-works-28-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
+            <div class="bm-how-it-works-28-card card">
+              <div class="bm-how-it-works-28-card__content">
+                <div class="bm-how-it-works-28-card__heading-cover">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <div></div>
                   <div>
-                    <p class="text-fluid-0">{it.text}</p>
+                    <p class="bm-how-it-works-28-nav-item__duration-text text-fluid-0">{it.text}</p>
                   </div>
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div>
+              <div class="bm-how-it-works-28-card__deliverables-wrapper">
                 <h2 class="text-fluid-2">{it.title}</h2>
-                <div>
+                <div class="bm-how-it-works-28-card-deliverables-list">
                   <div class="grid-auto gap-fluid-m">
                     {((it.items || []) || []).map((it2) => (
                       <div class="card">
@@ -59,17 +59,17 @@ const {
           ))}
         </div>
       </div>
-      <div>
+      <div class="bm-how-it-works-28__aside">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="bm-how-it-works-28-nav">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="bm-how-it-works-28-nav-item card">
                 <div></div>
-                <div>
+                <div class="bm-how-it-works-28-nav-item__content">
                   <p class="text-fluid-0">{it.text}</p>
                   <div>
-                    <p class="text-fluid-0">{it.text}</p>
+                    <p class="bm-how-it-works-28-nav-item__duration-text text-fluid-0">{it.text}</p>
                   </div>
                 </div>
               </div>

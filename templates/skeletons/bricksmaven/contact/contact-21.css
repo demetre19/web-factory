@@ -1,0 +1,62 @@
+  .contact-21 {
+    overflow: hidden;
+  }
+
+  .contact-21-container {
+    row-gap: var(--space-l);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .contact-21-list-ul {
+    width: 70%;
+    margin: 0 auto 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .contact-21-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-xs);
+  }
+
+  .contact-21-list-item__cta {
+    padding: 0 0 0 0;
+  }
+
+  .contact-21-form {
+    width: 80%;
+    margin: 0 auto 0 auto;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    padding: 4rem 4rem 4rem 4rem;
+  }
+
+  .contact-21-form__content {
+    padding: 3rem 0 3rem 0;
+  }
+
+  .contact-21::before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 160%;
+    height: 50%;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);
+    background-color: #F2F2F2;
+    z-index: -1;
+  }
+
+  .contact-21-list-item__cta:hover {
+  	color: var(--action-primary);
+  }

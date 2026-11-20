@@ -1,0 +1,98 @@
+  .blog-archive-7-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-7-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-7-wrapper {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .blog-archive-7-card {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog-archive-7-card__category {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .blog-archive-7-card__term {
+    padding: .3rem .8rem .3rem .8rem;
+  }
+
+  .blog-archive-7-card__read {
+    padding: 0 0 0 0;
+  }
+
+  .blog-archive-7-card__thumb {
+    margin: auto 0 0 0;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .blog-archive-7-wrapper {
+  	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(3) {
+  	grid-area: 2 / 2 / 3 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(4) {
+  	grid-area: 3 / 1 / 4 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(5) {
+  	grid-area: 3 / 2 / 4 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(6) {
+  	grid-area: 4 / 1 / 5 / 2;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(7) {
+  	grid-area: 4 / 2 / 5 / 3;
+  }
+  
+  @media (max-width:767px) {
+  	.blog-archive-7-wrapper .blog-archive-7-card:nth-child(1) {
+  	grid-area: 1 / 1 / 2 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(2) {
+  	grid-area: 2 / 1 / 3 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(3) {
+  	grid-area: 3 / 1 / 4 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(4) {
+  	grid-area: 4 / 1 / 5 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(5) {
+  	grid-area: 5 / 1 / 6 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(6) {
+  	grid-area: 6 / 1 / 7 / 3;
+  }
+  .blog-archive-7-wrapper .blog-archive-7-card:nth-child(7) {
+  	grid-area: 7 / 1 / 8 / 3;
+  }
+  }
+
+  .blog-archive-7-card__term a {
+  	color: var(--fs-0);
+  }

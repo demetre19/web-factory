@@ -1,0 +1,51 @@
+  .category-list-5__container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .category-list-5__list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .category-list-5-card {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    flex-direction: row;
+    column-gap: calc( var(--flow-spacing) / 2 );
+    display: grid;
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .category-list-5__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .category-list-5-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .category-list-5-card__text {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .category-list-5-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+  }

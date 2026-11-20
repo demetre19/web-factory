@@ -1,0 +1,27 @@
+  .gridcard-8-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-8-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-8-card__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .gridcard-8-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-8-card__image {
+    width: 100%;
+    object-fit: cover;
+  }

@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      {heading && <h2 class="text-fluid-2">{heading}</h2>}
-      <div>
-        <div class="grid-auto gap-fluid-l">
-          <div>
-            <div>
+    <div class="bm-content-65__container">
+      {heading && <h2 class="bm-content-65__heading text-fluid-2">{heading}</h2>}
+      <div class="bm-content-65__content">
+        <div class="bm-content-65__inner grid-auto gap-fluid-l">
+          <div class="bm-content-column-wrapper">
+            <div class="bm-content-column">
               {fs && <p class="text-fluid-0">{fs}</p>}
             </div>
-            <div>
+            <div class="bm-content-column">
               <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
             </div>
           </div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="bm-content-65__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

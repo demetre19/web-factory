@@ -1,0 +1,60 @@
+  .hworks-19-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hworks-19__content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .hworks-19-card {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .hworks-19-card__content {
+    row-gap: var(--flow-spacing);
+    padding: 0 0 var(--space-l) 0;
+  }
+
+  .hworks-19__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hworks-19-list {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-19-list li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: var(--action-primary);
+    padding-inline:1rem;
+    padding-block:.4rem;
+    color:var(--bg-canvas);
+    font-size: var(--fs-0);
+    font-weight: 700;
+    border-radius: 100%;
+    position:absolute;
+    left:-1.1rem;
+      top:0%;
+    transform: translateY(-50%);
+    
+  }

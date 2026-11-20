@@ -28,13 +28,13 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="testimonial-31-list-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <div>
-                <h2 class="text-fluid-2">{it.title}</h2>
-                <p class="text-fluid-0">{it.text}</p>
+              <div class="intro testimonial-31-content__intro">
+                <h2 class="testimonial-31-content__intro-title text-fluid-2">{it.title}</h2>
+                <p class="testimonial-31-content__intro-desc text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}

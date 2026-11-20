@@ -1,0 +1,50 @@
+  .gridcard-20-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .gridcard-20-ct {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5em 0.9375em;
+  }
+
+  .gridcard-20-article {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gridcard-20-article__meta {
+    display: flex;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .gridcard-20-article__cta {
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-20-article__thumb {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .gridcard-20-article:hover a {
+  	color: var(--action-primary);
+  }
+
+  .gridcard-20-article__title > a::after {
+  	z-index: 1;
+  }

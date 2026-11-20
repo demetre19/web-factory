@@ -27,21 +27,21 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-career-6__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="bm-career-6-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-career-6-card card">
+              <div class="bm-career-6-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
-                <div>
+                <div class="bm-career-meta-list">
                   <div class="grid-auto gap-fluid-m">
                     {((it.items || []) || []).map((it2) => (
-                      <div class="card">
+                      <div class="bm-career-meta-item card">
                         <span data-icon="lucide" aria-hidden="true"></span>
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
@@ -49,8 +49,8 @@ const {
                   </div>
                 </div>
               </div>
-              <div class="grid-auto gap-fluid-l">
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="bm-career-6-card__media grid-auto gap-fluid-l">
+                <figure class="bm-career-6-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

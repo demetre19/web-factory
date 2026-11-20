@@ -27,35 +27,35 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-testimonial-54__container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
+            <div class="bm-testimonial-54-slide card">
+              <div class="bm-testimonial-54-slide__content">
+                <div class="bm-testimonial-54-slide__client-review">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="bm-testimonial-54-slide__respons">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              <div>
-                <div>
+              <div class="testimonial-list-card__profile">
+                <div class="testimonial-list-card__meta">
                   <custom class="text-fluid-2">{it.title}</custom>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-list-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-testimonial-54-slide__background-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>

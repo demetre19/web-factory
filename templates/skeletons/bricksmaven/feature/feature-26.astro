@@ -27,13 +27,13 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="feature-26-container">
       {heading && <h2 class="text-fluid-2">{heading}</h2>}
-      <div>
+      <div class="bm-omega-feature-list-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-omega-feature-list-card card">
+              <div class="bm-omega-feature-list-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

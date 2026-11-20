@@ -1,0 +1,60 @@
+  .testimonial-29-container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .testimonial-29-intro {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .testimonial-29-intro__desc {
+    text-align: left;
+  }
+
+  .testimonial-29-list-ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+  }
+
+  .testimonial-29-list-card {
+    display: flex;
+    column-gap: var(--space-xs);
+    justify-content: center;
+    padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .testimonial-29-list-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    justify-content: center;
+  }
+
+  .testimonial-29-list-card__profile {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+  }
+
+  .testimonial-29-list-card__divider {
+    width: auto;
+  }
+
+  .testimonial-29-list-card__image {
+    object-fit: cover;
+    width: 13rem;
+    overflow: hidden;
+  }

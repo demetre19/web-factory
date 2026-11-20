@@ -28,13 +28,13 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="testimonial-17-list-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <div>
-                <div>
-                  <div>
+              <div class="testimonial-17-list-card__wrapper">
+                <div class="testimonial-17-list-card__content">
+                  <div class="testimonial-17-list-card__review">
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <span class="card" data-icon="lucide" aria-hidden="true"></span>
@@ -45,7 +45,7 @@ const {
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-17-list-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             </div>

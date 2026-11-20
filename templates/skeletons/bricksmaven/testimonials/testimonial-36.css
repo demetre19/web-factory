@@ -1,0 +1,105 @@
+  .testimonial-36 {
+    padding: 0 0 0 0;
+  }
+
+  .testimonial-36__container {
+    align-items: flex-start;
+  }
+
+  .testimonial-36__content {
+    row-gap: calc(var(--flow-spacing) * 2.6);
+    padding: var(--section-space-xxl) var(--space-xl) var(--section-space-xxl) 0;
+    width: 40%;
+  }
+
+  .testimonial-36__content-head {
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .bm-content-feature-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .bm-content-feature-list-item {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-s);
+    flex-wrap: nowrap;
+  }
+
+  .bm-content-feature-list-item__content {
+    display: flex;
+    row-gap: var(--space-xs);
+  }
+
+  .bm-content-feature-list-item__media {
+    width: auto;
+  }
+
+  .bm-content-feature-list-item__icon {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .testimonial-36__carousel {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    width: 60%;
+  }
+
+  .testimonial-36__row {
+    width: calc(50% - var(--space-m) / 2 - var(--space-m));
+  }
+
+  .testimonial-36-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .testimonial-36-card__head {
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .testimonial-36-card__avatar {
+    display: flex;
+    width: 40;
+    overflow: hidden;
+  }
+
+  .testimonial-36-card__client-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bm-content-feature-list-item__icon {
+  	box-shadow: var(--shadow-card);
+  }
+
+  .testimonial-36__carousel::before {
+  	content:'';
+    position: absolute;
+    top:0;
+    left:0;
+    height:15%;
+    width:100%;
+    background: linear-gradient( var(--bg-canvas), transparent);
+    z-index: 99;
+  }
+  
+  .testimonial-36__carousel::after {
+  	content:'';
+    position: absolute;
+    bottom:0;
+    left:0;
+    height:15%;
+    width:100%;
+    background: linear-gradient( transparent, var(--bg-canvas));
+    z-index: 99;
+  }

@@ -1,0 +1,47 @@
+  .bm-contact-widget-3 {
+    row-gap: var(--flow-spacing);
+    flex-direction: column;
+    column-gap: var(--flow-spacing);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+  }
+
+  .bm-contact-widget-3__heading {
+    width: 100%;
+  }
+
+  .bm-contact-widget-3__manager-data {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-widget-3__media {
+    width: auto;
+  }
+
+  .bm-contact-widget-3__image {
+    object-fit: cover;
+    width: 128;
+  }
+
+  .bm-contact-widget-3__data {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-contact-widget-link {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
+  }
+
+  .bm-contact-widget-link__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32;
+  }
+
+  .bm-contact-widget-link__data {
+    --link-color: var(--bg-canvas);
+    --link-color-hover: var(--color-line-default);
+  }

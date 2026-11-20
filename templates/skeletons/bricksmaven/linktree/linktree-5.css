@@ -1,0 +1,122 @@
+  .bm-linktree-5 {
+    padding: var(--section-space-l) 0 0 0;
+  }
+
+  .bm-linktree-5__bio-data {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+
+  .bm-linktree-5-bio-card {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-5-bio-card__media {
+    margin: calc(-1 * var(--section-space-xxl)) 0 0 0;
+  }
+
+  .bm-linktree-5-bio-card__image {
+    object-fit: cover;
+    width: 128px;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-5__links {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+  }
+
+  .bm-linktree-5-newsletter-card {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-5-newsletter-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-5-newsletter-card__top {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-5-newsletter-card__form-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-form-widget {
+    display: flex;
+    gap: var(--space-xs);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .bm-form-widget--stacked {
+    flex-direction: column;
+  }
+
+  .bm-linktree-5-newsletter-card__image-newsletter {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  @media  (max-width:991px) {
+    
+    .bm-linktree-5__bio-data {
+    grid-template-columns: calc(100% * 1 / 2);
+      
+    }
+    
+    .bm-linktree-5__bio-data .bm-linktree-5__bio-cover {
+      grid-column: span 2;
+    }
+  }
+  
+  @media  (max-width:767px) {
+    
+    .bm-linktree-5__bio-data {
+    grid-template-columns: calc(100% * 1 / 1);
+      
+    }
+    
+    .bm-linktree-5__bio-data .bm-linktree-5__bio-cover {
+      grid-column: span 1;
+    }
+  }
+
+  .bm-form-widget {
+  flex-wrap: nowrap;
+  }
+  
+  .bm-form-widget input:focus {
+  	outline-offset: 0;
+  } 
+  
+  .bm-form-widget button[type=submit].bricks-button {
+      height: 100% !important;
+  }
+  
+  .bm-form-widget .submit-button-wrapper {
+      height: 100% !important;
+  }

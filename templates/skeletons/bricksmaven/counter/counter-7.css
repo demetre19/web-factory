@@ -1,0 +1,45 @@
+  .counter-7 {
+    row-gap: var(--space-s);
+    overflow: hidden;
+  }
+
+  .counter-7-container {
+    width: 100%;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-7-image {
+    width: 100vw;
+    object-fit: cover;
+    margin: 0 0 0 -50vw !important;
+  }
+
+  .counter-7-container--alt {
+    margin: -24rem 0 0 0;
+    padding: 0 var(--space-s) 0 var(--space-s);
+  }
+
+  .counter-7-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .counter-7-card {
+    /* bm: box-shadow omitted — token layer owns elevation */
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+  }

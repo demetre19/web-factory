@@ -1,0 +1,39 @@
+  .contact-5-container {
+    display: grid;
+    gap: var(--section-space-xxl);
+    grid-template-columns: 2fr 3fr;
+  }
+
+  .contact-left-box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+    padding: 0 var(--section-space-xxl) 0 0;
+  }
+
+  .contact-left-box__top-row {
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    display: flex;
+  }
+
+  .contact-left-box__accent-heading {
+    width: fit-content;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .contact-5-media__image {
+    width: 100%;
+    object-fit: cover;
+  }

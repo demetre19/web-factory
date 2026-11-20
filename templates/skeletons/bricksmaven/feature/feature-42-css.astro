@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-feature-42__container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="bm-feature-42-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-feature-42-card card">
               <div>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="bm-feature-42-card__icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <div>
+              <div class="bm-feature-42-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

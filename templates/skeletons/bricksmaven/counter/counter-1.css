@@ -1,0 +1,60 @@
+  .counter-1-container {
+    display: flex;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-1-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-m);
+    width: 100%;
+  }
+
+  .counter-1-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .counter-1-box__heading {
+    margin: 0 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .counter-1-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .counter-1-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .counter-1-card__intro {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }

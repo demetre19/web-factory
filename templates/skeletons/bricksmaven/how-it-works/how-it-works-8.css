@@ -1,0 +1,58 @@
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-8-grid-ul {
+    text-align: center;
+    align-items: center;
+    display: grid;
+    flex-direction: column;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+  }
+
+  .hworks-8-card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hworks-8-card__content {
+    margin: -2rem 0 0 0;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    text-align: center;
+    align-items: center;
+  }
+
+  .hworks-8-grid-ul {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-8-grid-ul li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: var(--action-primary);
+    padding-inline:1.5rem;
+    padding-block:.6rem;
+    color:var(--bg-canvas);
+    border-radius: 100%;
+    font-size: var(--fs-1);
+    font-weight: 700;
+    position: relative;
+  }

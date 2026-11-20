@@ -27,22 +27,22 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-conparison-1__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
-          <div></div>
+      <div class="bm-conparison-1-list">
+        <div class="bm-conparison-1-card">
+          <div class="bm-conparison-status"></div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-conparison-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div>
+          <div class="bm-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
+                <div class="bm-list-item card">
+                  <div class="bm-list-item__icon-wrapper">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -51,16 +51,16 @@ const {
             </div>
           </div>
         </div>
-        <div>
-          <div></div>
+        <div class="bm-conparison-1-card">
+          <div class="bm-conparison-status"></div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-conparison-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div>
+          <div class="bm-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
+                <div class="bm-list-item card">
+                  <div class="bm-list-item__icon-wrapper">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -70,8 +70,8 @@ const {
           </div>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-conparison-1__footer">
+        <div class="cta-combo">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>

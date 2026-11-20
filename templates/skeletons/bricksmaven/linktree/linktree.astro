@@ -27,22 +27,22 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="linktree-container">
+      <div class="linktree__content">
+        <div class="linktree__brand">
           <span class="logo">{brand}</span>
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
+        <div class="linktree-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="linktree-card card">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
           </div>
         </div>
-        <div>
+        <div class="linktree-social">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">

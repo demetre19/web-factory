@@ -1,0 +1,58 @@
+  .timeline-1-container {
+    align-items: center;
+  }
+
+  .timeline-1__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    width: var(--measure);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .timeline-1-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-1-card {
+    display: flex;
+  }
+
+  .timeline-1-card__line-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-self: flex-start;
+  }
+
+  .timeline-1-card__circle {
+    width: 1rem;
+  }
+
+  .timeline-1-card__extending-line {
+    width: .1rem;
+  }
+
+  .timeline-1-card__content {
+    padding: 0 0 var(--space-s) 0;
+    row-gap: var(--space-xs);
+  }

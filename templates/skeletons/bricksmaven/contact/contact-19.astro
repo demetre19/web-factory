@@ -27,27 +27,27 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="contact-19-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="contact-19-list-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="contact-19-list-card card">
               <h2 class="text-fluid-2">{it.title}</h2>
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}
         </div>
       </div>
-      <div>
-        <div>
-          <div></div>
+      <div class="contact-19-location">
+        <div class="contact-19-location__box">
+          <div class="intro contact-19-location__intro"></div>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="contact-19-location__media-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

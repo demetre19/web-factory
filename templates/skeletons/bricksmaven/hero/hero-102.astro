@@ -27,38 +27,38 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="grid-auto gap-fluid-l">
-      <div>
-        <div>
+    <div class="bm-hero-102__container grid-auto gap-fluid-l">
+      <div class="bm-hero-102__inner-content">
+        <div class="bm-hero-102__intro">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
-          <div>
+          <div class="bm-hero-102__cta-cover">
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
           </div>
         </div>
-        <div>
-          <div>
+        <div class="bm-hero-102-card">
+          <div class="bm-hero-102-card__content">
             {fs && <p class="text-fluid-0">{fs}</p>}
           </div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-hero-102-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-hero-102__footer">
+        <div class="bm-list bm-list--inline bm-hero-102__hero-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="bm-list-item card">
+                <div class="bm-list-item__icon-wrapper">
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
-                <p class="text-fluid-0">{it.text}</p>
+                <p class="bm-list-item__text text-fluid-0">{it.text}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="bm-hero-102__background-image ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
     </div>
   </div>
 </div>

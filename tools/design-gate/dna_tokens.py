@@ -47,24 +47,52 @@ import gate  # noqa: E402
 ROOT = genome.DNA            # docs/machinery/design/dna
 KNOBS = gate.knob_set()
 
-# ---- canonical rungs (templates/astro/src/styles/global.css) -------
-# verbatim ACSS ramps with vi→cqi: same interpolation, the
-# container width as the axis. Browser-valid clamp math; the
-# rasteriser's _cqi() evaluates the offset + slope form.
-SPACE_RUNG = {
-    'space-xs': 'clamp(0.5rem,0.4rem + 0.5cqi,1rem)',
-    'space-s': 'clamp(0.75rem,0.55rem + 1cqi,1.5rem)',
-    'space-m': 'clamp(1rem,0.65rem + 1.75cqi,2rem)',
-    'space-l': 'clamp(1.5rem,1rem + 2.5cqi,3rem)',
-    'space-xl': 'clamp(2rem,1.3rem + 3.5cqi,4rem)',
-    'space-xxl': 'clamp(3rem,2rem + 5cqi,6rem)'}
-SECTION_RUNG = {
-    'section-space-xs': 'clamp(2rem,1.5rem + 2.5cqi,4rem)',
-    'section-space-s': 'clamp(3rem,2rem + 5cqi,5rem)',
-    'section-space-m': 'clamp(4rem,2.5rem + 7.5cqi,6rem)',
-    'section-space-l': 'clamp(6rem,4rem + 10cqi,8rem)',
-    'section-space-xl': 'clamp(8rem,5rem + 15cqi,10rem)',
-    'section-space-xxl': 'clamp(10rem,6rem + 20cqi,12rem)'}
+# ---- fluid sizes (ACSS fluidClamp via clamp.py — no literals here) --
+# Every size string comes from clamp.sizes(fluid_settings(knobs)):
+# the ACSS two-scale math (mobile base/ratio → min @320, desktop
+# base/ratio → max @1280). Knob → setting map, ACSS defaults where a
+# knob has no say (provenance: inferred):
+_DENSITY_SPACE = {'space-s': (20.0, 24.0),      # compact
+                  'space-m': (24.0, 30.0),      # regular = ACSS default
+                  'space-l': (28.0, 36.0)}      # spacious
+_BAND_SECTION = {'space-s': (2.0, 3.0),         # tight
+                 'space-m': (2.5, 3.5),         # medium
+                 'space-l': (3.0, 4.0)}         # airy = ACSS default
+_TIER_SECTION = {'space-s': 'section-space-s', 'space-m':
+                 'section-space-m', 'space-l': 'section-space-l'}
+
+
+def fluid_settings(knobs):
+    """knobs → the clamp.py settings record for a site with no live
+    ACSS file (provenance: inferred). Desktop text = type.base on
+    type.ratio; mobile text = ACSS 16px on a ratio pulled 40% toward
+    1 (1.333 → 1.2, ACSS's own mobile/desktop pair); headings run on
+    the ACSS heading defaults (1.2 mobile / 1.333 desktop) unless the
+    DNA ratio is steeper; space base by density tier; section adjust
+    by whitespace band; gutter = ACSS default."""
+    import clamp
+    base = float(knobs.get('type.base', 18))
+    ratio = float(knobs.get('type.ratio', 1.333))
+    mob_ratio = round(1 + (ratio - 1) * 0.6, 4)
+    d = clamp.DEFAULTS
+    h_desk = max(ratio, d['heading_scale_desk'])
+    h_mob = max(mob_ratio, d['heading_scale_mob'])
+    sp = _DENSITY_SPACE.get(knobs.get('space.density_scale'),
+                            (24.0, 30.0))
+    sec = _BAND_SECTION.get(knobs.get('grid.gutter'), (3.0, 4.0))
+    return clamp.settings({
+        'text_base_mob': min(16.0, base), 'text_base_desk': base,
+        'text_scale_mob': mob_ratio, 'text_scale_desk': ratio,
+        'heading_base_mob': min(16.0, base), 'heading_base_desk': base,
+        'heading_scale_mob': h_mob, 'heading_scale_desk': h_desk,
+        'space_base_mob': sp[0], 'space_base_desk': sp[1],
+        'section_adjust_mob': sec[0], 'section_adjust_desk': sec[1],
+        'grid_gap': knobs.get('grid.gutter') or 'space-m',
+        'btn_padding_inline': round(
+            0.75 * float(knobs.get('btn.padding_ratio', 2.0)), 4),
+        'source': 'inferred (ACSS defaults + DNA knobs type.base/'
+                  'type.ratio/space.density_scale/grid.gutter/'
+                  'btn.padding_ratio)'})
 
 # ---- canonical neutral palettes (fixtures/_base/DNA.json modes) ----
 NEUTRAL_LIGHT = {
@@ -269,20 +297,19 @@ def _lum(hexv):
     return gate._lum(rgb) if rgb else None
 
 
-def css_vars(knobs, geno, accent, roles_light):
+def css_vars(knobs, geno, accent, roles_light, fluid=None):
     """knobs + roles → the css custom-property strings. The ONLY
-    place these strings are authored — rungs bound verbatim from
-    SPACE_RUNG/SECTION_RUNG, radius from emit_tokens' personality
-    map, type from emit_tokens' scale math."""
+    place these strings are authored — every size is a clamp.py
+    ACSS fluidClamp from `fluid` (default fluid_settings(knobs)),
+    radius from emit_tokens' personality map, button padding in em
+    (ACSS btn-padding-block 0.75em × btn.padding_ratio inline)."""
+    import clamp
     import emit_tokens
-    base_px = knobs['type.base']
     ratio = knobs['type.ratio']
-    sizes = emit_tokens._type_sizes(base_px, ratio)
-    display = sizes['2xl']
-    body = max(16.0, sizes['base'])
+    fs = fluid or fluid_settings(knobs)
+    sz = clamp.sizes(fs)
     rad = emit_tokens._radius_map(knobs['radius.personality'])
-    pad_y = round(body / 16.0 * knobs['btn.padding_ratio'] * 0.32, 2)
-    pad_x = round(body / 16.0 * knobs['btn.padding_ratio'], 2)
+    al = clamp.aliases(fs, rad)
     lvl = knobs['elevation.level']
     ink = roles_light['ink']
     acc_ink = roles_light['ink'] if (_lum(accent) or 0) > 0.45 \
@@ -295,23 +322,18 @@ def css_vars(knobs, geno, accent, roles_light):
         '--line': roles_light['border'],
         '--accent': accent, '--accent-ink': acc_ink,
         '--radius': f'{rad}rem',
-        '--gap': SPACE_RUNG[knobs['space.density_scale']],
-        '--pad-block': SECTION_RUNG[
-            { 'compact': 'section-space-s',
-              'regular': 'section-space-m',
-              'spacious': 'section-space-l'}
-            [geno['density-tier']]],
-        '--f-display': f'clamp({display / 16:.3f}rem,'
-                       f'{display / 12:.1f}cqi,'
-                       f'{sizes["3xl"] / 16:.3f}rem)',
-        '--f-body': f'clamp({max(16, body - 1) / 16:.3f}rem,'
-                    f'{body / 12:.1f}cqi,'
-                    f'{body / 16:.3f}rem)',
+        '--gap': sz[knobs['space.density_scale']],
+        '--gutter': sz['gutter'],
+        '--pad-block': sz[_TIER_SECTION.get(
+            knobs['space.density_scale'], 'section-space-m')],
+        '--f-display': sz['h1'],
+        '--f-body': sz['text-m'],
         '--track': f"{knobs['type.tracking_display']}em",
         '--shadow': 'none' if lvl == 0 else
             f'0 {2 * lvl}px {8 * lvl}px rgb(0 0 0 /'
             f' {6 + 4 * lvl}%)',
-        '--btn-pad': f'{pad_y}rem {pad_x}rem',
+        '--btn-pad': f"{al['btn-padding-block']} "
+                     f"{al['btn-padding-inline']}",
         '--font-display': _FONT_LABEL[geno['display-face']],
         '--font-body': _FONT_LABEL[geno['display-face']],
         '--type-ratio': str(ratio),

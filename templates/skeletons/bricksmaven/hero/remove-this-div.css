@@ -1,0 +1,74 @@
+  .hero-57 {
+    justify-content: center;
+  }
+
+  .hero-57__container {
+    align-items: center;
+  }
+
+  .hero-57__content {
+    width: var(--content-width);
+    text-align: center;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .hero-57__subheading {
+    width: var(--measure);
+  }
+
+  .hero-57__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hero-57__footer-container {
+    row-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .bm-logo-carousel {
+    overflow: hidden;
+  }
+
+  .bm-logo-carousel-list {
+    flex-direction: row;
+  }
+
+  .bm-logo-carousel-list-item__brand {
+    object-fit: contain;
+    width: 100%;
+  }
+
+  .bm-logo-carousel::before {
+  	content:'';
+    position: absolute;
+    left:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, var(--text-secondary), transparent);
+    z-index: 99;
+  }
+  
+  .bm-logo-carousel::after {
+  	content:'';
+    position: absolute;
+    right:0;
+    height:100%;
+    width:25%;
+    background: linear-gradient( 90deg, transparent,var(--text-secondary));
+    z-index: 99;
+  }
+
+  .bm-logo-carousel-list  .splide__track{
+  	overflow:visible;
+  }
+  
+  .bm-logo-carousel-list .splide__list {
+    gap: calc(var(--flow-spacing) * 3);
+    align-items: center;
+  }
+  
+  .bm-logo-carousel-list :where(.splide__list, .splide__slide){
+    transition-timing-function: linear !important;
+  }

@@ -1,0 +1,62 @@
+  .bm-career-3__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    text-align: left;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-career-3-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-career-3-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-career-3-card__heading {
+    width: 100%;
+  }
+
+  .bm-career-card__status-cover {
+    padding: calc(var(--space-xs) / 4) var(--space-xs) calc(var(--space-xs) / 4) var(--space-xs);
+  }
+
+  .bm-career-3-card {
+    transition: 0.5s ease;
+    position: relative;
+  }
+  
+  .bm-career-3-card:hover {
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--fs-0);
+  }
+  
+  .bm-career-3-card:nth-child(odd) {
+    background-color: var(--fs-0);
+  }

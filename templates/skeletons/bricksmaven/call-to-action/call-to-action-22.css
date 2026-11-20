@@ -1,0 +1,33 @@
+  .bm-cta-22-widget {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-cta-22-widget__content {
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    padding: 0 var(--space-s) 0 0;
+  }
+
+  .bm-cta-22-review-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-user-card {
+    display: flex;
+    flex-wrap: nowrap;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-user-card__image {
+    object-fit: cover;
+    width: 48px;
+  }
+
+  .bm-user-card__data {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 6);
+  }

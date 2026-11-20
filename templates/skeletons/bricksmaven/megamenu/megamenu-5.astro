@@ -27,25 +27,25 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-header-1__container">
+      <div class="bm-header-1__brand">
         <span class="logo">{brand}</span>
       </div>
-      <div>
+      <div class="bm-header-1__nav-wrapper">
         <div>
           <div>
             <div>
-              <div>
-                <div>
-                  <div>
+              <div class="megamenu-5__content">
+                <div class="megamenu-5__column">
+                  <div class="megamenu-5__card-wrapper">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
-                        <div class="card">
+                        <div class="megamenu-card-link-3 card">
                           <div>
                             <a class="text-fluid-0" href={it.href}>{it.label}</a>
                             <p class="text-fluid-0">{it.text}</p>
                           </div>
-                          <div>
+                          <div class="megamenu-card-link-3__icon-wrapper">
                             <span data-icon="lucide" aria-hidden="true"></span>
                           </div>
                         </div>
@@ -53,24 +53,24 @@ const {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div class="megamenu-5__article-wrapper">
                   {heading && <h2 class="text-fluid-2">{heading}</h2>}
-                  <div>
-                    <div>
-                      <div>
-                        <div></div>
+                  <div class="megamenu-article-list">
+                    <div class="megamenu-article-card">
+                      <div class="megamenu-article-card__content">
+                        <div class="megamenu-article-card__top"></div>
                         {fs && <p class="text-fluid-0">{fs}</p>}
                       </div>
                       <div>
-                        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                        <figure class="megamenu-article-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                       </div>
                     </div>
-                    <div>
-                      <div>
-                        <div></div>
+                    <div class="megamenu-article-card">
+                      <div class="megamenu-article-card__content">
+                        <div class="megamenu-article-card__top"></div>
                       </div>
                       <div>
-                        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                        <figure class="megamenu-article-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                       </div>
                     </div>
                   </div>
@@ -82,7 +82,7 @@ const {
           <div></div>
         </div>
       </div>
-      <div></div>
+      <div class="bm-header-1__cta"></div>
     </div>
   </div>
 </div>

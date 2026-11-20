@@ -1,0 +1,31 @@
+  .error-4-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+    align-items: center;
+    text-align: center;
+  }
+
+  .error-4-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .error-4-content__btn {
+    padding: 0 0 0 0;
+  }
+
+  .error-4-content__list {
+    padding: .6rem 2.4rem .6rem 2.4rem;
+  }
+
+  .error-4-content__list li a {
+  	color: var(--fs-0)!important;
+  }
+  
+  .error-4-content__list li:nth-child(2) {
+  	border: .1rem solid color-mix(in srgb, var(--fs-0) 20%, transparent);
+    border-top: 0;
+    border-bottom: 0;
+  }

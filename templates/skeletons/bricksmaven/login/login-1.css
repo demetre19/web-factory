@@ -1,0 +1,62 @@
+  .login-1 {
+    overflow: hidden;
+    padding: 0 0 0 0;
+  }
+
+  .login-1__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .login-1__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-1__logo {
+    object-fit: contain;
+  }
+
+  .login-form-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .login-footer {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .login-1__logged-in-heading-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-login-1__media {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .login-1__image {
+    object-fit: cover;
+    width: 50vw;
+  }
+
+  .login-form .form-group ul li {
+  	display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .login-form .form-group span {
+  	display: flex;
+    flex-direction: row;
+    align-items: end;
+  }
+  
+  .login-form .form-group span a, .login-form .form-group ul li label {
+  	font-size: var(--fs-0);
+  }
+  
+  .login-form .form-group:nth-child(4) {
+      align-items: end;
+  }

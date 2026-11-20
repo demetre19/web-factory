@@ -1,0 +1,80 @@
+  .bm-testimonial-52 {
+    overflow: clip;
+    padding: 0 0 var(--section-space-xl) 0;
+  }
+
+  .bm-testimonial-52__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-testimonial-52-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: clip;
+  }
+
+  .bm-testimonial-52-card__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: center;
+  }
+
+  .bm-testimonial-52-card__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-testimonial-52__slider-nested {
+    --icon-dimension: 32px; /* Change the icon dimensions*/
+    --icon-size: 14px; /* Change the icon size*/
+    --icon-opacity: 0.5;  /* Change the icon opacity*/
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__track {
+    overflow:  visible; /* Expose other slides*/
+  }
+  
+  .bm-testimonial-52__slider-nested .is-active {
+    box-shadow: var(--shadow-card); /* Active card gets a box shadow */
+  }
+  
+  .bm-testimonial-52__slider-nested .bm-testimonial-52-card:not(.is-active) {
+    opacity: 0.4; /* non-active card gets a lower opacity */
+  }
+  
+  /* ARROWS */
+  .bm-testimonial-52__slider-nested .splide__arrow--next {
+    left: 0;
+    transition: 0.5s ease;
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrow--prev {
+    left: calc(-1 * var(--space-xl));
+    transition: 0.5s ease;
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows {
+      position: absolute;
+      inset-block-end: calc(-1 * var(--space-xl));
+    	inset-inline-end: var(--space-m);  	
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows button:hover {
+      background-color: var(--fs-0);
+    
+  }
+  
+  .bm-testimonial-52__slider-nested .splide__arrows button:hover svg {
+      fill: var(--fs-0);
+    
+  }

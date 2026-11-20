@@ -1,0 +1,34 @@
+  .content-2-container {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-2__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-2__image {
+    object-fit: cover;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .content-2__image-omega {
+    object-fit: cover;
+    overflow: hidden;
+    width: 75%;
+  }

@@ -15,7 +15,7 @@ interface Props {
   h1?: boolean;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
+  heading = 'Section heading', fs = '',
   body = '', cta, items = [], image, h1,
 } = Astro.props;
 ---
@@ -26,5 +26,5 @@ const {
     <path d="M20 6 9 17l-5-5" />
   </svg>
   {h1 ? <h1 class="mt-fluid-s text-fluid-1">{heading}</h1> : <h2 class="mt-fluid-s text-fluid-1">{heading}</h2>}
-  <p class="mt-fluid-s text-fluid-0">{fs}</p>
+  {fs && <p class="mt-fluid-s text-fluid-0">{fs}</p>}
 </div>

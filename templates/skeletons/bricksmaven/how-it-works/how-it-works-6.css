@@ -1,0 +1,46 @@
+  .bm-hworks-6-tabs {
+    display: flex;
+    gap: var(--space-xl);
+  }
+
+  .bm-hworks-6-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-hworks-6-menu-list {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hworks-6__pane {
+    flex-direction: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: var(--space-m);
+  }
+
+  .bm-hworks-6__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-hworks-6__pane-content {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--space-m);
+  }
+
+  .bm-hworks-6__pane:not(.brx-open) {
+  	display: none !important;
+  }
+  
+  .bm-hworks-6__pane {
+  
+  	display:grid !important;
+    
+  }

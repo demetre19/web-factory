@@ -27,30 +27,30 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-event-section-9__container">
+      <div class="bm-event-section__intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div>
+      <div class="bm-event-section-9__event-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
+            <div class="bm-event-section-9-card card">
+              <div class="bm-event-section-9-card__content">
+                <div class="bm-event-section-9-card__top">
                   <h2 class="text-fluid-2">{it.title}</h2>
-                  <div>
-                    <div>
+                  <div class="bm-event-section-9-card__mid">
+                    <div class="bm-event-section-1-card__date">
                       <div>
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
-                      <div>
-                        <div>
+                      <div class="bm-event-section-1-card__date-time">
+                        <div class="bm-event-section-1-card__date-wrapper bm-event-section-1-card__date-wrapper--borderless">
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
                       </div>
                     </div>
-                    <div>
+                    <div class="bm-event-section-1-card__location">
                       <div>
                         <span data-icon="lucide" aria-hidden="true"></span>
                       </div>
@@ -59,27 +59,27 @@ const {
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="bm-event-section-4-card__speaker-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
-                  <div>
+                  <div class="bm-event-speaker-list">
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <div class="card">
-                          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                          <figure class="bm-event-speaker-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-                <div></div>
+                <div class="bm-event-section-9-card__footer"></div>
               </div>
-              <div class="grid-auto gap-fluid-l">
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="bm-event-section-9-card__media grid-auto gap-fluid-l">
+                <figure class="bm-event-section-9-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 <div>
-                  <div>
+                  <div class="bm-event-hart-molecule">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
-                  <div>
+                  <div class="bm-event-hart-molecule-active">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                 </div>

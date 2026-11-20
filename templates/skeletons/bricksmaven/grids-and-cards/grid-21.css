@@ -1,0 +1,114 @@
+  .grid-21-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .grid-21-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .grid-21-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .grid-21-card__content {
+    row-gap: calc(var(--flow-spacing) / 1.6);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid-21-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* Card */
+  .grid-21-card {
+  	overflow: hidden;
+  }
+  
+  .grid-21-card:focus-within :focus {
+  	outline: none;
+    box-shadow: none;
+  }
+  
+  .grid-21-card:focus-within {
+  	box-shadow: var(--shadow-card);
+  }
+  
+  /* Content */
+  
+  .grid-21-card__content {
+    padding: var(--space-m);
+    color: var(--bg-canvas);
+    transition: .6s linear .3s;
+    transform: translateY(12rem);
+    backdrop-filter: blur(1rem);
+  }
+  
+  .grid-21-card:hover .grid-21-card__content,
+  .grid-21-card:focus-within .grid-21-card__content {
+    transform: translateY(0rem);
+  }
+  
+  .grid-21-card__text, .grid-21-card__link {
+    opacity: 0;
+    transition: 1s linear;
+  }
+  
+  .grid-21-card:hover .grid-21-card__text, .grid-21-card:focus-within .grid-21-card__text, .grid-21-card:hover .grid-21-card__link, .grid-21-card:focus-within .grid-21-card__link {
+  	opacity: 1;
+    display: block;
+  }
+  
+  .grid-21-card__heading {
+    transition: 4s;
+  }
+  
+  .grid-21-card:hover .grid-21-card__heading, .grid-21-card:focus-within .grid-21-card__heading {
+  	writing-mode: unset;
+  } 
+  
+  @media (max-width: 767px) {
+  	.grid-21-card__content {
+    transform: translateY(10rem);
+  }
+  }
+  
+  @media (max-width: 478px) {
+  	.grid-21-card__content {
+    transform: translateY(12rem);
+  }
+  }
+  
+  
+  /* Image */
+  .grid-21-card__image {
+    transition: 1s linear;  
+  }
+  
+  .grid-21-card:hover .grid-21-card__image, .grid-21-card:focus-within .grid-21-card__image {
+    scale: 1.11; 
+  }
+  
+  /* Overlay */
+  .grid-21-card__overlay {
+    opacity: 0.6;
+    transition: .3s linear;  
+  }
+  
+  .grid-21-card:hover .grid-21-card__overlay, .grid-21-card:focus-within .grid-21-card__overlay {
+    opacity: 1; 
+  }

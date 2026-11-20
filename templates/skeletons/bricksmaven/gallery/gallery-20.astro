@@ -27,17 +27,17 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-gallery-20__container">
+      <div class="bm-intro-center">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
       </div>
       <div>
-        <div>
+        <div class="bm-gallery-20-slider">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <figure></figure>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-gallery-20-media__video"></figure>
+                <figure class="bm-gallery-20-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             ))}
           </div>

@@ -27,12 +27,12 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div>
+    <div class="footer-2-container row between">
+      <div class="footer-2-column-left">
         <span class="logo">{brand}</span>
       </div>
       <div>
-        <div class="row between">
+        <div class="footer-menu-inline row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
               <div>
@@ -43,14 +43,14 @@ const {
         </div>
       </div>
       <div>
-        <div></div>
+        <div class="footer-2__social"></div>
       </div>
     </div>
     <div>
-      <div class="row between">
+      <div class="footer-2-bottom__container row between">
         {fs && <p class="text-fluid-0">{fs}</p>}
         <div>
-          <div class="row between">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>

@@ -27,20 +27,20 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div class="grid-auto gap-fluid-l">
-        <div>
+    <div class="bm-content-60__container">
+      <div class="bm-content-60__intro grid-auto gap-fluid-l">
+        <div class="bm-content-60__wrapper">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-content-60__background-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
-        <div></div>
+      <div class="bm-content-60__content">
+        <div class="bm-content-60__top"></div>
         <div>
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div>
+        <div class="bm-content-60__footer">
+          <div class="bm-social-share bm-social-share--left">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">

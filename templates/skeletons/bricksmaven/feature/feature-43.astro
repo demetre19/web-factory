@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-feature-43__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-feature-43__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
+      <div class="bm-feature-43-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-feature-43-card card">
               <span data-icon="lucide" aria-hidden="true"></span>
               <h3 class="text-fluid-2">{it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>

@@ -27,27 +27,27 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="bm-testimonial-42__container">
       <div>
-        <div>
+        <div class="bm-testimonial-42__content">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-testimonial-42__testimonial-list">
+        <div class="bm-testimonial-42__testimonial-column">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="testimonial-36-card card">
                 <div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
-                  <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <div class="testimonial-36-card__head">
+                  <div class="testimonial-36-card__avatar">
+                    <figure class="testimonial-36-card__avatar-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
-                  <div>
+                  <div class="testimonial-36-card__client-data">
                     <custom class="text-fluid-2">{it.title}</custom>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
@@ -56,18 +56,18 @@ const {
             ))}
           </div>
         </div>
-        <div>
+        <div class="bm-testimonial-42__testimonial-column">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="testimonial-36-card card">
                 <div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
-                  <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <div class="testimonial-36-card__head">
+                  <div class="testimonial-36-card__avatar">
+                    <figure class="testimonial-36-card__avatar-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
-                  <div>
+                  <div class="testimonial-36-card__client-data">
                     <custom class="text-fluid-2">{it.title}</custom>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>

@@ -1,0 +1,49 @@
+  .hworks-10-container {
+    align-items: center;
+    row-gap: var(--space-xl);
+  }
+
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-10-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+
+  .hworks-10-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    align-items: flex-start;
+  }
+
+  .hworks-10-grid-ul {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-10-grid-ul li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:3.2rem;
+    padding-block:1.4rem;
+    color:var(--action-primary);
+    border-radius: 100%;
+    font-size: var(--fs-3);
+  }

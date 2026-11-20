@@ -27,34 +27,34 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-newsletter-11__container">
+      <div class="bm-newsletter-11__newsletter">
+        <div class="bm-newsletter-11__top">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <form novalidate>
+        <form class="bm-form-widget bm-form-widget--width" novalidate>
         </form>
-        <div>
-          <div>
+        <div class="bm-review-widget bm-review-widget--center">
+          <div class="bm-team-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="bm-team-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               ))}
             </div>
           </div>
-          <div></div>
+          <div class="bm-testimonial-38__star-ratings"></div>
         </div>
       </div>
-      <div>
+      <div class="bm-testimonial-40-list bm-testimonial-40-list--alt">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
-                  <div>
+            <div class="bm-testimonial-40-card card">
+              <div class="bm-testimonial-40-card__content">
+                <div class="bm-testimonial-40-card__top">
+                  <div class="bm-testimonial-38-star-list">
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <div class="card">
@@ -65,13 +65,13 @@ const {
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="bm-testimonial-40-card__client">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-testimonial-40-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

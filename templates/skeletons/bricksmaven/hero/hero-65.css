@@ -1,0 +1,103 @@
+  .bm-hero-65 {
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .bm-hero-65__container {
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-65__content {
+    width: var(--measure);
+    align-items: flex-start;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-65__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .btn--link {
+    padding: 0 0 0 0;
+  }
+
+  .bm-hero-65__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-hero-65__footer {
+    align-items: center;
+  }
+
+  .bm-hero-65-contact-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: var(--content-width);
+    gap: 0;
+  }
+
+  .bm-hero-65-contact-card {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: auto;
+    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
+  }
+
+  .bm-hero-65-contact-card__icon-wrapper {
+    width: auto;
+  }
+
+  .bm-hero-65-contact-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  @media (min-width:991px) {
+    .bm-hero-65-contact-card:nth-child(1) {
+    border-left: 1px solid var(--bg-subtle);
+    border-right: 0px solid var(--bg-subtle);
+    border-bottom: 0px solid var(--bg-subtle);
+    
+  }
+  
+  .bm-hero-65-contact-card:nth-child(2) {
+    border-left: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 0px solid var(--bg-subtle);
+  }
+  
+  .bm-hero-65-contact-card:nth-child(3) {
+    border-left: 0px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+  }
+  
+  }
+  
+    .bm-hero-65-contact-card:nth-child(1) {
+    border-left: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+    
+  }
+  
+  .bm-hero-65-contact-card:nth-child(2) {
+    border-left: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+    border-bottom: 1px solid var(--bg-subtle);
+  }
+  
+  .bm-hero-65-contact-card:nth-child(3) {
+    border-left: 1px solid var(--bg-subtle);
+    border-right: 1px solid var(--bg-subtle);
+  }

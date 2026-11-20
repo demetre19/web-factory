@@ -13,10 +13,12 @@ import hashlib, hmac, json, os, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FX = os.path.join(HERE, 'fixtures')
+REPO_DIR = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
 import gate  # noqa: E402  (hash helpers for the fixture DNA)
 import ornament  # noqa: E402  (O.1 — ornaments render generate() output)
 import pipeline_emit  # noqa: E402  (the real emit chain — no drift)
+import preview_build  # noqa: E402  (pickers = real built pages)
 
 
 def _ornament(seed=7, density=0.4, w=320, h=240,
@@ -135,34 +137,16 @@ pages:
     layout_family: conversion
     rhetoric: [promise, proof, how, act]
     sections:
-      - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "brixies/bottom-navigation-bar/bot-nav-1.topo", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-abc123]}
-      - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1], vector: [{heading: "Testing Site", fs: "Testing is the thing."}]}
-      - {name: services, wf_ref: "cards/index.html#d1:services", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
-      - {name: proof, wf_ref: "cards/index.html#d1:proof", recipe: "hyperui/marketing/testimonials/1", speech_act: [proof], category: content, surface: base, density: regular, composition: quote-grid, emphasis: voices, align: col-1-edge, stack: text-first, collapse: "3-col", media_ratio: none, disclosure: open, intent: proof, refs: [mobbin-def458], content_ids: [c-proof], vector: [{heading: "What clients say", fs: "Twelve thousand cleans, and counting."}]}
-      - {name: how, wf_ref: "cards/index.html#d1:how", recipe: "hyperui/application/steps/1", speech_act: [how], category: content, surface: muted, density: regular, composition: sequence, emphasis: steps, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: process, refs: [mobbin-ghi789], content_ids: [c-how], vector: [{heading: "How it works", fs: "Book, test, report — done in a day."}]}
-      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", recipe: "brixies/cta-sections/cta-1.topo", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, refs: [mobbin-abc123], content_ids: [c-cta, c-faq]}
+      - {name: nav, wf_ref: "cards/index.html#d1:nav", recipe: "brixies/bottom-navigation-bar/bot-nav-1.topo", speech_act: [chrome], category: headers, surface: base, density: compact, composition: nav-bar, emphasis: nav, align: center-axis, stack: text-first, collapse: burger, media_ratio: none, disclosure: open, intent: chrome, items: [{label: "Service", href: "/service"}], cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc123]}
+      - {name: hero, wf_ref: "cards/index.html#d1:hero", recipe: "brixies/banner-section/banner-1.topo", speech_act: [promise, act], category: hero, surface: base, density: spacious, composition: split-media, emphasis: headline, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: "16:9", disclosure: open, intent: hero, copy_ref: lede, cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc124, mobbin-abc125], content_ids: [c-h1], vector: [{heading: "Testing Site", fs: "Testing is the thing."}]}
+      - {name: services, wf_ref: "cards/index.html#d1:services", recipe: "hyperui/marketing/feature-grids/1", speech_act: [detail], category: content, surface: muted, density: regular, composition: cards-n, emphasis: answer, align: col-1-edge, stack: text-first, collapse: "2-col", media_ratio: none, disclosure: open, intent: definition, copy_ref: b01, refs: [mobbin-def456, mobbin-def457], content_ids: [c-def], vector: [{heading: "What is testing?", fs: "Testing is the thing."}]}
+      - {name: proof, wf_ref: "cards/index.html#d1:proof", recipe: "hyperui/marketing/testimonials/1", speech_act: [proof], category: content, surface: base, density: regular, composition: quote-grid, emphasis: voices, align: col-1-edge, stack: text-first, collapse: "3-col", media_ratio: none, disclosure: open, intent: proof, copy_ref: b02, refs: [mobbin-def458], content_ids: [c-proof], vector: [{heading: "What clients say", fs: "Twelve thousand cleans, and counting."}]}
+      - {name: how, wf_ref: "cards/index.html#d1:how", recipe: "hyperui/application/steps/1", speech_act: [how], category: content, surface: muted, density: regular, composition: sequence, emphasis: steps, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: process, copy_ref: b03, refs: [mobbin-ghi789], content_ids: [c-how], vector: [{heading: "How it works", fs: "Book, test, report — done in a day."}]}
+      - {name: end-act, wf_ref: "cards/index.html#d1:end-act", recipe: "brixies/cta-sections/cta-1.topo", speech_act: [act], category: contact, surface: inverse, density: spacious, composition: form-panel, emphasis: form, align: col-1-edge, stack: text-first, collapse: stacked, media_ratio: none, disclosure: open, intent: cta, copy_ref: closing, cta: {label: "Book now", href: "/book"}, refs: [mobbin-abc123], content_ids: [c-cta, c-faq]}
       - {name: footer, wf_ref: "cards/index.html#d1:footer", recipe: "hyperui/marketing/footers/1", speech_act: [chrome], category: footer, surface: base, density: compact, composition: footer-bar, emphasis: columns, align: center-axis, stack: text-first, collapse: "1-col", media_ratio: none, disclosure: open, intent: chrome, refs: [mobbin-def456]}
 ```
 '''
 
-WIREFRAME = '''<!doctype html><html><head><meta name="viewport" content="width=device-width"></head><body>
-<div class="card" id="d1">
-<nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>
-<section class="sec hero" data-sec="hero" data-comp="split-media" data-ratio="16:9" data-disclosure="open"></section>
-<section class="sec" data-sec="services" data-comp="cards-n" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="proof" data-comp="quote-grid" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="how" data-comp="sequence" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="end-act" data-comp="form-panel" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open"></section>
-</div>
-<div class="card" id="d2">
-<nav class="nav" data-sec="nav" data-comp="nav-bar" data-ratio="none" data-disclosure="open"></nav>
-<section class="sec hero" data-sec="hero" data-comp="stacked-hero" data-ratio="21:9" data-disclosure="open"></section>
-<section class="sec" data-sec="macro" data-comp="comparison" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="end-act" data-comp="full-bleed" data-ratio="none" data-disclosure="open"></section>
-<section class="sec" data-sec="footer" data-comp="footer-bar" data-ratio="none" data-disclosure="open"></section>
-</div>
-</body></html>'''
 
 STUB = '''# STUB — /fixture/
 
@@ -235,12 +219,26 @@ DARK = {"bg": "#14181A", "surface": "#1C2224", "surface_elevated": "#232A2C",
         "accent": "#4C93D6", "accent_foreground": "#0E1416",
         "inverse": "#F4F2EE"}
 
+def _fluid_settings():
+    """ACSS fluid settings record for the fixture DNA/TOKENS — the
+    dashboard defaults clamp.py computes the emitted scale from."""
+    import clamp
+    return clamp.settings({})
+
+
+def _fluid_sizes():
+    import clamp
+    s = _fluid_settings()
+    return {name: {'clamp': css}
+            for name, css in clamp.sizes(s).items()}
 TOKENS = json.dumps({
     "knobs": KNOBS,
     "color": {
         "modes": {"light": {"roles": LIGHT}, "dark": {"roles": DARK}},
         "roles": LIGHT,
     },
+    "fluid": _fluid_settings(),
+    "sizes": _fluid_sizes(),
 }, indent=1)
 
 MOTIF_SVG = ('<svg data-motif="hairline-numeral" data-motif-slot="marker" '
@@ -680,6 +678,178 @@ CHECKLIST_W5 = '''# W5 checklist
 
 _REPO = os.path.dirname(os.path.dirname(HERE))
 
+BRIEF = '''# fixture brief — site scope
+site:
+  slug: fixture
+  url: https://fixture.example
+  blueprint: /blueprints/fixture
+brand:
+  name: Testing Site
+  phone: "555-0100"
+  logo: /logo.svg
+theme:
+  default: light
+  canvas: "#FDFCFA"
+  follow_os: false
+  dark_toggle: true
+media:
+  - {file: hero.webp, alt: "a Victorian plumber testing", role: hero}
+'''
+
+_SRC_STUB = '''# Source stub — Testing Site
+
+H1: Testing Site
+CTA: Book now
+'''
+
+_SRC_ARTICLE = '''# Testing Site
+
+Testing is the thing.
+
+## What is testing?
+
+Testing is the thing.
+
+## What clients say
+
+Twelve thousand cleans, and counting.
+
+## How it works
+
+Book, test, report — done in a day.
+'''
+
+
+def _sh(s):
+    return hashlib.sha256(
+        s.encode() if isinstance(s, str) else s).hexdigest()
+
+
+DISCOVERY = json.dumps({
+    "generated_by": "discovery.py",
+    "brief_sha256": _sh(BRIEF),
+    "palette": [{"hex": "#FDFCFA", "role": "canvas",
+                 "source": "brief.theme.canvas"},
+                {"hex": "#F1EFEC", "role": "surface",
+                 "source": "brief.palette"},
+                {"hex": "#EBE7E1", "role": "surface_elevated",
+                 "source": "brief.palette"},
+                {"hex": "#D8D3CC", "role": "border",
+                 "source": "brief.palette"},
+                {"hex": "#221F1B", "role": "ink",
+                 "source": "brief.palette"},
+                {"hex": "#6F665D", "role": "ink_muted",
+                 "source": "brief.palette"},
+                {"hex": "#0055AA", "role": "accent",
+                 "source": "brief.palette"},
+                {"hex": "#FFFFFF", "role": "accent_foreground",
+                 "source": "brief.palette"},
+                {"hex": "#1D2325", "role": "inverse",
+                 "source": "brief.palette"}],
+    "fonts": {"display": "Inter", "body": "Inter"},
+}, indent=1) + '\n'
+
+_COPY = {
+    "generated_by": "copy_ingest.py",
+    "source": {
+        "stub": {"path": "SOURCES/stub.md", "sha256": _sh(_SRC_STUB)},
+        "article": {"path": "SOURCES/article.md",
+                    "sha256": _sh(_SRC_ARTICLE)}},
+    "url": "/fixture/", "title": "Testing Site",
+    "meta": {"description": "Testing is the thing."},
+    "h1": "Testing Site", "stub_h1": "Testing Site",
+    "answer_datatype": "definition",
+    "lede": "Testing is the thing.",
+    "stub_vector": [
+        {"zone": "hero", "tag": "h1", "heading": "Testing Site",
+         "fs": "Testing is the thing."},
+        {"zone": "services", "tag": "h2", "heading": "What is testing?",
+         "fs": "Testing is the thing."},
+        {"zone": "proof", "tag": "h2", "heading": "What clients say",
+         "fs": "Twelve thousand cleans, and counting."},
+        {"zone": "how", "tag": "h2", "heading": "How it works",
+         "fs": "Book, test, report — done in a day."}],
+    "blocks": [
+        {"id": "b01", "h2": "What is testing?", "zone": "macro",
+         "stub_fs": "Testing is the thing.",
+         "answer_type": "what · definition",
+         "terms": ["testing", "bond"],
+         "answer": "Testing is the thing.",
+         "before": [], "after": [], "list_ordered": False,
+         "items": [
+             {"term": "Licensed Victorian plumber",
+              "text": "Fixed price agreed on site · 7 days"}],
+         "qa": [], "links": []},
+        {"id": "b02", "h2": "What clients say", "zone": "macro",
+         "stub_fs": "Twelve thousand cleans, and counting.",
+         "answer_type": "proof",
+         "terms": ["cleans"],
+         "answer": "Twelve thousand cleans, and counting.",
+         "before": [], "after": [], "list_ordered": False,
+         "items": [], "qa": [], "links": []},
+        {"id": "b03", "h2": "How it works", "zone": "macro",
+         "stub_fs": "Book, test, report — done in a day.",
+         "answer_type": "process",
+         "terms": ["book", "test", "report"],
+         "answer": "Book, test, report — done in a day.",
+         "before": [], "after": [], "list_ordered": False,
+         "items": [], "qa": [], "links": []}],
+    "closing": {
+        "text": "Ready when you are — Book now.",
+        "cta": {"label": "Book now", "href": "/book"},
+        "phone": "555-0100"},
+    "links_out": [{"href": "/book", "anchor": "Book now",
+                   "zone": "closing"}],
+}
+COPY_TXT = json.dumps(_COPY, indent=1, ensure_ascii=False) + '\n'
+_COPY_SHA = _sh(COPY_TXT)
+
+_ALLOWED = {
+    "b01": ["cards-n", "editorial", "text-index", "quote-grid"],
+    "b02": ["quote-grid", "editorial", "cards-n", "text-index"],
+    "b03": ["sequence", "cards-n", "text-index", "editorial"],
+}
+
+
+def _option(oid, label, comps):
+    seq = sorted(comps.items())
+    blocks_by = {b["id"]: b for b in _COPY["blocks"]}
+    import plan_from_copy as _PF
+    s, inputs = _PF.score(seq, blocks_by)
+    return {"id": oid, "label": label, "compositions": dict(comps),
+            "score": s, "score_inputs": inputs}
+
+
+LAYOUT_OPTIONS = json.dumps({
+    "generated_by": "plan_from_copy.py",
+    "copy_sha256": _COPY_SHA,
+    "pick": "d1",
+    "allowed": _ALLOWED,
+    "options": [
+        _option("d1", "copy default",
+                {"b01": "cards-n", "b02": "quote-grid",
+                 "b03": "sequence"}),
+        _option("d2", "index-led",
+                {"b01": "editorial", "b02": "cards-n",
+                 "b03": "text-index"}),
+        _option("d3", "prose-led",
+                {"b01": "text-index", "b02": "editorial",
+                 "b03": "cards-n"}),
+        _option("d4", "grid-led",
+                {"b01": "quote-grid", "b02": "text-index",
+                 "b03": "editorial"}),
+        _option("d5", "mixed",
+                {"b01": "editorial", "b02": "quote-grid",
+                 "b03": "editorial"}),
+    ],
+    "score_formula": "0.85 - 0.1*orphan_rows - 0.05*long_card_texts "
+                     "- 0.04*adjacent_same_composition "
+                     "+ 0.02*distinct_compositions, clamp 0..1",
+}, indent=1, ensure_ascii=False) + '\n'
+
+
+
+
 
 
 
@@ -714,9 +884,13 @@ def dna_doc():
             "motif_family": ["hairline-numeral", "counter"],
             "usage": ["accent", "marker", "divider"]},
         "knobs": KNOBS,
+        "theme": {"default": "light", "canvas": "#FDFCFA",
+                  "follow_os": False, "dark_toggle": True},
+
         "modes": {"light": LIGHT, "dark": DARK},
         "invariants": {"accent": "#0055AA", "logo": "wordmark",
-                       "fonts": {"display": "Inter", "body": "Inter"}},
+                       "fonts": {"display": "Inter", "body": "Inter"},
+                       "fluid": _fluid_settings()},
         "constraints": {"likes": ["calm editorial spacing"],
                         "dislikes": ["gradient meshes"],
                         "references": ["mobbin:app/linear"]},
@@ -743,16 +917,21 @@ def dna_doc():
                         "color.neutral_tint": 0.06},
              "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 81, "wildcard_breaks": []},
+            # the wildcard must differ from every sibling in ≥3 knobs
+            # the token emit actually renders (ROUND2 consumed-diff on
+            # the real build) — radius/type.ratio/btn.padding_ratio
+            # all project through preview_build._semantic_scope;
+            # elevation rides along as the declared break
             {"id": "v3", "vector": "wildcard",
              "deltas": {"radius.personality": "p4",
-                        "motion.level": "playful",
-                        "elevation.level": 3,
-                        "image.treatment": "duotone"},
+                        "type.ratio": 1.2,
+                        "btn.padding_ratio": 2.5,
+                        "elevation.level": 3},
              "sheet_pass": {"light": True, "dark": True},
              "pass": True, "score": 78,
              "wildcard_seed": 424242,
-             "wildcard_genes": ["radius.personality", "motion.level",
-                                "elevation.level", "image.treatment"],
+             "wildcard_genes": ["radius.personality", "type.ratio",
+                                "btn.padding_ratio", "elevation.level"],
              "wildcard_breaks": ["S.1"]},
         ],
         "vector_targets": {
@@ -770,11 +949,50 @@ def dna_doc():
                                  "patterns": ["pattern-cards-n"], "n": 18},
             "grid.gutter": {"tag": "snapped",
                             "patterns": ["pattern-nav-bar"], "n": 21},
+            "fonts": {"tag": "extracted",
+                      "source": "DISCOVERY.fonts (live site)"},
+            **{f"color.{role}": {"tag": "briefed",
+                                 "source": "BRIEF.theme.canvas · "
+                                           "palette swatches"}
+               for role in LIGHT},
+            **{f"color.dark.{role}": {"tag": "derived",
+                                      "source": "BRIEF.theme · "
+                                                "DISCOVERY.dark ramp"}
+               for role in DARK},
+            "color.dark": {"tag": "derived",
+                           "source": "BRIEF.theme.dark_toggle"},
             **{k: {"tag": "chosen", "reason": "fixture baseline"}
                for k in KNOBS
                if k not in ("type.ratio", "type.base",
                             "space.section_py", "grid.gutter")},
+            # U.10 — written divergence reasons for the non-ACSS
+            # size tokens the emit layer still carries
+            "fluid": {
+                "tag": "extracted",
+                "source": "ACSS dashboard defaults (clamp.DEFAULTS)",
+                "divergences": {
+                    **{f"fs-{n}": "component alias → ACSS text scale"
+                       for n in ('-1', '0', '1', '2', '3', '4', '5')},
+                    **{f"lh-{n}": "leading ladder follows text scale"
+                       for n in ('-1', '0', '1', '2', '3', '4', '5')},
+                    "space-4": "legacy alias → --space-m",
+                    "r-card": "card radius → --radius",
+                    "grid-min": "auto-grid floor (ACSS exemption)",
+                    "grid-floor": "auto-grid floor (ACSS exemption)",
+                    "measure": "ch measure (ACSS exemption)",
+                    "logo-h": "logo box height — no ACSS analogue",
+                    "tap": "a11y hit-area floor (ACSS exemption)",
+                    "input-px": "form field pad — btn-padding analogue",
+                    "input-py": "form field pad — btn-padding analogue",
+                    "input-radius": "form field radius → --radius",
+                    "sec-pad": "density dial → section-space-*",
+                    "tracking-display": "display tracking — "
+                                        "letter-spacing is em-exempt",
+                },
+            },
         },
+        "inputs": {"BRIEF.yaml": _sh(BRIEF),
+                   "DISCOVERY.json": _sh(DISCOVERY)},
     }
     doc["hashes"] = gate.dna_slices(doc)
     return doc
@@ -799,11 +1017,27 @@ def _fx_sig(rec):
     return gate._sig(rec, b'fixture-key')
 
 
+_DNA_TXT = json.dumps(dna_doc(), indent=1) + '\n'
+_STAMP = (f'<!-- GENERATED by plan_from_copy.py from COPY.json '
+          f'sha256:{_COPY_SHA} DNA.json sha256:{_sh(_DNA_TXT)} '
+          f'option:d1 — do not edit -->')
+
 BASE = {
-    'DNA.json': json.dumps(dna_doc(), indent=1) + '\n',
-    'DESIGN-PLAN.md': PLAN,
-    'cards/index.html': WIREFRAME,
-    'STUB.md': STUB,
+    'DNA.json': _DNA_TXT,
+    'DESIGN-PLAN.md': _STAMP + '\n' + PLAN,
+    'STUB.md': _STAMP + '\n' + STUB,
+
+    'BRIEF.yaml': BRIEF,
+    'DISCOVERY.json': DISCOVERY,
+    'COPY.json': COPY_TXT,
+    'LAYOUT-OPTIONS.json': LAYOUT_OPTIONS,
+    'SOURCES/stub.md': _SRC_STUB,
+    'SOURCES/article.md': _SRC_ARTICLE,
+    'SOURCES/.seal-manifest.sha256': (
+        '# sha256 manifest — written by tools, verified by '
+        'the gate. Do not hand-edit.\n'
+        f'{_sh(_SRC_ARTICLE)}  article.md\n'
+        f'{_sh(_SRC_STUB)}  stub.md\n'),
 
     'TOKENS.json': TOKENS,
 
@@ -907,6 +1141,24 @@ def mut(*ops):
         return files
     return f
 
+def _clone_card(files, oid):
+    """Rewrite option <oid>'s BUILT page (site/dist/preview/lo-<oid>/
+    index.html) so its section comps equal option d1's — two
+    identical options (VG.4/ROUND1). The thin shell only iframes the
+    built render, so the clone lives there, never in the picker."""
+    d1 = files['site/dist/preview/lo-d1/index.html']
+    d1_comps = re.findall(r'data-comp="([^"]+)"', d1)
+    idx = [0]
+
+    def sub(c):
+        v = d1_comps[idx[0]] if idx[0] < len(d1_comps) else c.group(1)
+        idx[0] += 1
+        return f'data-comp="{v}"'
+
+    key = f'site/dist/preview/lo-{oid}/index.html'
+    files[key] = re.sub(r'data-comp="([^"]+)"', sub, files[key])
+
+
 MUT = {
  'check_design_mode': mut(('REPL','DESIGN-PLAN.md','design_mode: variants','design_mode: bogus')),
  'check_intent': mut(('REPL','DESIGN-PLAN.md','who: tenants','who: ""')),
@@ -944,12 +1196,9 @@ MUT = {
                      'confidence': 0.8, 'evidence': 'fixture'}]},
          indent=1)),
      ('SET','discovery/ref.example/hero.jpg', '\x89PNG\r\n')),
- 'check_layout_distinct': mut(
-     ('REPL','preview/layouts.html',
-      'data-comp="stacked-hero"','data-comp="split-media"'),
-     ('REPL','preview/layouts.html',
-      'data-comp="comparison"','data-comp="cards-n"'))
- , 'check_mobile_cta': mut(
+ 'check_layout_distinct': (lambda files: (
+     _clone_card(files, 'd2'), files)[1]),
+ 'check_mobile_cta': mut(
      ('APPEND','site/dist/home/index.html',
       '<a class="cta">Act</a><style>@media(max-width:768px)'
       '{.cta{padding:8px}}</style>')),
@@ -965,8 +1214,10 @@ MUT = {
       'class="sec-band surface-base density-spacious"',
       'class="sec-band surface-base density-spacious drift-class"')),
  'check_direction_axes': mut(('REPL','DESIGN-PLAN.md','temperature: warm','temperature: hot')),
- 'check_wireframe_tags': mut(('REPL','preview/layouts.html',
-    'data-ratio="none" data-disclosure','data-ratio="bogus" data-disclosure')),
+ 'check_wireframe_tags': (lambda files: files.update({
+     'site/dist/preview/lo-d1/index.html': re.sub(
+         r'data-ratio="[^"]+"', 'data-ratio="bogus"',
+         files['site/dist/preview/lo-d1/index.html'], count=1)})),
  'check_spacing_scale': mut(('REPL','DESIGN-PLAN.md','16, 24, 32','16, 20, 32')),
  'check_breakpoints': mut(('REPL','DESIGN-PLAN.md','640, 768','640, 999')),
  'check_content_width': mut(('REPL','DESIGN-PLAN.md','content_width: 80rem','content_width: 95rem')),
@@ -1001,7 +1252,11 @@ MUT = {
  'check_schema_fields': mut(('REPL','DESIGN-PLAN.md',', align: col-1-edge','')),
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
  'check_components_exist': mut(('DEL','site/src/components/split-media.astro')),
- 'check_tile_is_system': mut(('REPL','site/src/pages/system.astro','<SplitMedia />','')),
+ 'check_tile_is_system': (lambda files: files.update({
+     'site/dist/preview/system/index.html': re.sub(
+         r'<div data-comp="split-media">.*?</div>', '',
+         files['site/dist/preview/system/index.html'],
+         count=1, flags=re.S)})),
  'check_class_subset': mut(('REPL','site/dist/home/index.html',
     'class="sec-bar surface-base density-compact" data-sec="nav"',
     'class="bogus-class" data-sec="nav"')),
@@ -1055,27 +1310,29 @@ MUT = {
      'data-dna-fit="42"></div><div data-candidate="c2" '
      'data-dna-fit="80"></div><input type="radio"></div>'),),
  'check_primary_cta': mut(('REPL','site/dist/home/index.html',
-     '<form class="card gap-form">',
+     '<a class="wf-cta-button cta-large" href="/book">Book now</a>',
      '<a class="btn-primary" href="/x">One</a>'
-     '<a class="btn-primary" href="/y">Two</a>'
-     '<form class="card gap-form">')),
+     '<a class="btn-primary" href="/y">Two</a>')),
  'check_interaction_states': mut(('REPL','site/src/styles/global.css',
      ':focus-visible',':focus'),('REPL','site/src/styles/global.css',
      '.btn-primary:hover',''),
      ('REPLGLOB','site/dist/_astro/',':focus-visible',':focus'),
      ('REPLGLOB','site/dist/_astro/','.btn-primary:hover','')),
  'check_forms': mut(('REPL','site/dist/home/index.html',
-     '<label class="field">','<x-label class="field">')),
+     '</main>','<form><input type="email" required></form></main>')),
  'check_heading_pattern': mut(('REPL','site/dist/home/index.html',
-     '<h2 class="text-fluid-3">What is testing?','')),
+     '</main>',
+     '<section data-sec="stray" data-comp="editorial"><p>Stray '
+     'copy first, no heading, no lead.</p></section></main>')),
  'check_equal_cards': mut(('REPL','site/dist/home/index.html',
      '<svg data-motif','<div class="card"></div><div class="cardx feature"></div><svg data-motif')),
  'check_dark_media': mut(('REPL','site/src/styles/global.css',
-     '.dark img { filter: brightness(.85) contrast(.92); }',''),
+     '[data-theme=dark] img { filter: brightness(.85) contrast(.92); }',
+     ''),
      ('REPLGLOB','site/dist/_astro/',
-      '.dark img{filter:brightness(.85) contrast(.92)}',''),
-     ('APPEND','site/dist/home/index.html',
-      '<img src="/x.png" alt="a">')),
+      '[data-theme=dark] img{filter:brightness(.85) contrast(.92)}',''),
+     ('REPL','site/dist/home/index.html',
+      '</main>','<img src="/x.png" alt="a"></main>')),
  'check_logo': mut(('REPL','site/dist/home/index.html',
      'class="brand-mark logo"','class="logo"')),
  'check_accent_surfaces': mut(('REPL','site/dist/home/index.html',
@@ -1086,21 +1343,20 @@ MUT = {
      'class="sec-band surface-base density-spacious"',
      'class="sec-band surface-base density-spacious sticky"')),
  'check_footer_structure': mut(('REPL','site/dist/home/index.html',
-     '<div class="legal"> <span>Copyright 2026 Brand</span> '
-     '<span>Licensed Victorian plumber · ABN 00 000 000 000</span> '
-     '</div>','')),
+     '<div class="legal"> <span>Copyright 2026 Brand</span>','')),
  'check_meta': mut(('REPL','site/dist/home/index.html',
      '<meta name="description" content>','')),
  'check_intent_deviation': mut(('REPL','DESIGN-PLAN.md',
      'reason: "brief asks for editorial warmth"','reason: ""')),
  'check_wildcard_random': mut(('REPL','DNA.json',
      '"wildcard_seed": 424242','"wildcard_seed": null')),
- 'check_auto_grid': mut(('REPL','site/src/styles/global.css',
-     '.card-grid { display: grid; gap: var(--space-4); }',
-     '.card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }'),
-     ('REPL','site/dist/home/index.html',
-      'class="mt-fluid-l grid-auto gap-stack"',
-      'class="mt-fluid-l grid-auto gap-stack snap-x overflow-x-auto"')),
+ 'check_auto_grid': (lambda files: files.update({
+    k: re.sub(r'\[data-cols=.2.\]\s*\.grid-auto\s*\{[^}]*\}',
+              '.fixed-grid{display:grid;grid-template-columns:'
+              'repeat(3,1fr)}\\g<0>', files[k], count=1)
+    for k in list(files)
+    if k == 'site/src/styles/global.css' or
+    k.startswith('site/dist/_astro/')})),
  'check_surface_rhythm': mut(('REPL','site/dist/home/index.html',
      'surface-muted','surface-base'),
      ('REPL','site/dist/home/index.html',
@@ -1119,6 +1375,9 @@ MUT = {
      ('REPL','site/dist/home/index.html',
       'sec-band surface-muted density-regular','density-regular py-2')),
  'check_candidate_review': mut(('DEL','preview/candidates.html')),
+ 'check_tailwind_preview': mut(
+     ('REPL','preview/layouts.html',
+      'cdn.tailwindcss.com','cdn.invalid.invalid')),
  'check_picker_ux': mut(
      ('REPL','preview/layouts.html',
       '<details class="variant-data"><summary>Design ',
@@ -1137,17 +1396,23 @@ MUT = {
       '"recipe_id": "brixies/made-up/thing-9"')),
  'check_receipts': mut(('SET','GATES.json','{"artifacts":{}}')),
  'check_fine_round': mut(('COPY','preview/fine.html',
-     'preview/variants.html')),
- 'check_round_gated': mut(
-     ('REPL','preview/layouts.html',
-      'data-comp="stacked-hero"','data-comp="split-media"'),
-     ('REPL','preview/layouts.html',
-      'data-comp="comparison"','data-comp="cards-n"')),
- 'check_round_gated_look': mut(('REPL','preview/variants.html',
-     'var(--type-ratio',
-     'var(--bogus-ratio'),('REPL','preview/variants.html',
-     'var(--type-tracking-display',
-     'var(--bogus-tracking')),
+     'preview/variants.html'),
+     ('COPY','site/dist/preview/look-fv1/index.html',
+      'site/dist/preview/look-v1/index.html'),
+     ('COPY','site/dist/preview/look-fv2/index.html',
+      'site/dist/preview/look-v2/index.html'),
+     ('COPY','site/dist/preview/look-fv3/index.html',
+      'site/dist/preview/look-v3/index.html')),
+ 'check_round_gated': (lambda files: (
+     _clone_card(files, 'd2'), files)[1]),
+ # dead-var attack: v2 renders v1's page verbatim and "differs" only
+ # in three vars nothing consumes — ROUND2 must count 0 consumed
+ 'check_round_gated_look': mut(
+     ('COPY','site/dist/preview/look-v2/index.html',
+      'site/dist/preview/look-v1/index.html'),
+     ('REPL','site/dist/preview/look-v2/index.html',
+      'data-variant-scope="v1" style="',
+      'data-variant-scope="v2" style="--zz-a:1;--zz-b:2;--zz-c:3;')),
  'check_acss_conventions': mut(('APPEND','site/src/styles/global.css',
      '\n.x { color: rgba(0,0,0,.5); }')),
  'check_motion_recipes': mut(('APPEND',
@@ -1220,7 +1485,10 @@ MUT = {
  'check_dark_mode': mut(('REPL','site/tailwind.config.js',
     "darkMode: 'class',","")),
  'check_dark_toggle': mut(('REPL','site/dist/home/index.html',
-    'data-theme-toggle','data-nope')),
+    'data-theme-toggle','data-nope'),
+    ('REPL','site/dist/home/index.html','<head>',
+     '<head><script>var __os=window.matchMedia('
+     '"(prefers-color-scheme: dark)");</script>')),
  'check_variants': mut(('REPL','DNA.json','"id": "v3"','"id": "v9"')),
  'check_review_modes': mut(
      ('DEL','shots/1280-dark-home.png'),
@@ -1255,7 +1523,7 @@ MUT = {
     '<section data-sec="media-block"><img src="/x.png"></section>'
     '<footer></footer>')),
  'check_segment_footer': mut(('REPL','site/dist/home/index.html',
-    '</address>','</address><h2>Fixture Co</h2>')),
+    '</footer>','<h2>Fixture Co</h2></footer>')),
  'check_segment_priority': mut(('REPL','site/dist/home/index.html',
     '<body>','<body><aside class="sidebar">ads</aside>')),
  'check_checklist': mut(('SET','CHECKLIST/w3.md',
@@ -1263,6 +1531,84 @@ MUT = {
  'check_novelty': mut(('SET','GATES.json',
     '{"w5": {"design": "d3"}}'),
     ('REPL','NOVELTY.json','"distance": 0.44','"distance": 0.90')),
+ # ---- plan §5 machinery checks -------------------------------------
+ 'check_source_bind': mut(('APPEND','SOURCES/article.md',
+    '\n\none more paragraph\n')),
+ 'check_copy_coverage': mut(('REPL','DESIGN-PLAN.md',
+    'copy_ref: b02','copy_ref: b01')),
+ 'check_plan_provenance': (lambda files: files.update({
+     'DESIGN-PLAN.md': re.sub(
+         r'(COPY\.json sha256:)([0-9a-f])',
+         r'\g<1>0', files['DESIGN-PLAN.md'], count=1)})),
+ 'check_copy_shape_fit': mut(('REPL','DESIGN-PLAN.md',
+    'copy_ref: b03, refs: [mobbin-ghi789], content_ids: [c-how]',
+    'composition: bogus-grid, copy_ref: b03, '
+    'refs: [mobbin-ghi789], content_ids: [c-how]'),
+    ('REPL','DESIGN-PLAN.md',
+     'composition: sequence, emphasis: steps',
+     'emphasis: steps')),
+ 'check_light_canvas': mut(('REPL','BRIEF.yaml',
+    'canvas: "#FDFCFA"','canvas: "#ABC0EF"')),
+ 'check_discovery_provenance': mut(('REPL','DNA.json',
+    '"source": "BRIEF.theme.canvas',
+    '"source": "agent guess on'),
+    ('REPL','DNA.json',
+    '"bg": "#FDFCFA"',
+    '"bg": "#123456"')),
+ 'check_brief_hash': mut(('REPL','DISCOVERY.json',
+    f'"brief_sha256": "{_sh(BRIEF)}"',
+    '"brief_sha256": "deadbeef"')),
+ 'check_run_pin': mut(('SET','RUN.json',
+    json.dumps({"token": "bad-token",
+                "gate_sha256": "deadbeef",
+                "rules_sha256": "deadbeef",
+                "brief_sha256": "deadbeef"}))),
+ 'check_operator_approvals': mut(
+    ('SET','RUN.json', json.dumps({"token": "fixture-run"})),
+    ('SET','APPROVALS.json', json.dumps({
+        "w3": {"wave": "w3", "inputs": "x", "dna": {},
+               "by": "agent", "ts": "2026-11-19T00:00:00",
+               "sig": "unsigned"}}))),
+ 'check_layout_options': mut(('REPL','LAYOUT-OPTIONS.json',
+    '"b02": "editorial"','"b02": "bogus-comp"')),
+ 'check_layout_scores': (lambda files: files.update({
+    'preview/layouts.html': re.sub(
+        r'(<article[^>]*id="d2"[^>]*data-score=")0\.91',
+        r'\g<1>0.11',
+        files['preview/layouts.html'], count=1)})),
+ 'check_layout_pick': mut(('REPL','LAYOUT-OPTIONS.json',
+    '"pick": "d1"','"pick": "d2"'),
+    ('REPL','DESIGN-PLAN.md',
+     'option:d1 — do not edit -->','option:d2 — do not edit -->'),
+    ('REPL','STUB.md',
+     'option:d1 — do not edit -->','option:d2 — do not edit -->')),
+ 'check_copy_fidelity': mut(('REPL','site/dist/home/index.html',
+    '</main>',
+    '<section data-sec="fake" data-comp="editorial"><p>Invented praise '
+    'nobody ever wrote anywhere.</p></section>'
+    '<div data-comp="nav-bar" aria-label="bogus invented nav label">'
+    '<svg><text>svg chrome nobody wrote</text></svg></div></main>')),
+ 'check_unsourced_quotes': mut(('REPL','site/dist/home/index.html',
+    '</main>',
+    '<section data-sec="fake" data-comp="quote-grid"><blockquote>'
+    'An invented praise quote that never happened.</blockquote>'
+    '</section></main>')),
+ 'check_light_paint': mut(('REPL','site/dist/home/index.html',
+    '<html lang="en" dir="ltr">',
+    '<html lang="en" dir="ltr" class="dark">'),
+    ('REPL','site/dist/home/index.html',
+    '</main>',
+    '<script>var __os=window.matchMedia("(prefers-color-scheme: dark)"'
+    ');</script></main>')),
+ 'check_acss_tokens': mut(('APPEND','site/src/styles/global.css',
+    ':root { --pad-x: clamp(1rem, 2vw, 2rem); }')),
+ 'check_fluid_sizes': (lambda files: files.update({
+    'site/src/styles/global.css': re.sub(
+        r'--space-m:\s*clamp\([^;]+\)',
+        '--space-m: min(18px, 3vw)',
+        files['site/src/styles/global.css'], count=1)
+    + '.sub-h { font-size: 1.25rem; gap: 1.5em; '
+    'color: var(--bogus-tok); }'})),
 }
 
 ENV_EXEMPT = {'check_astro_build', 'check_mobbin_auth'}
@@ -1312,15 +1658,24 @@ def main():
     if r.returncode:
         tail = '\n'.join((r.stdout + r.stderr).split('\n')[-8:])
         raise SystemExit(f'astro build failed in _base: {tail}')
-    vp, vtxt, _ = gate.assemble_variants(gate.Ctx(base_dir))
-    os.makedirs(os.path.dirname(vp), exist_ok=True)
-    with open(vp, 'w', encoding='utf-8') as fh:
-        fh.write(vtxt)
-    lp, ltxt, _ = gate.assemble_layouts(gate.Ctx(base_dir))
+    # The w3/w4/w5 pickers are REAL producer output: preview_build
+    # emits src/pages/preview/*.astro, astro-builds them, then writes
+    # the thin shells into preview/ (each card iframes its built
+    # page). Never canned mock markup — the gates read the render.
+    bctx = gate.Ctx(base_dir)
+    lp, ltxt, _ = preview_build.emit_layouts(bctx)
     os.makedirs(os.path.dirname(lp), exist_ok=True)
     with open(lp, 'w', encoding='utf-8') as fh:
         fh.write(ltxt)
-    cp, ctxt_, _ = gate.assemble_candidates(gate.Ctx(base_dir))
+    vp, vtxt, _ = preview_build.emit_variants(bctx)
+    os.makedirs(os.path.dirname(vp), exist_ok=True)
+    with open(vp, 'w', encoding='utf-8') as fh:
+        fh.write(vtxt)
+    tp, ttxt, _ = preview_build.emit_system(bctx)
+    os.makedirs(os.path.dirname(tp), exist_ok=True)
+    with open(tp, 'w', encoding='utf-8') as fh:
+        fh.write(ttxt)
+    cp, ctxt_, _ = gate.assemble_candidates(bctx)
     os.makedirs(os.path.dirname(cp), exist_ok=True)
     with open(cp, 'w', encoding='utf-8') as fh:
         fh.write(ctxt_)
@@ -1374,13 +1729,15 @@ def main():
         _fh.write('fixture-key')
     _saved_home = gate.OPERATOR_HOME
     gate.OPERATOR_HOME = os.path.join(_th, '.web-factory')
-    for rel in ('preview/candidates.html', 'preview/layouts.html',
-                'preview/variants.html', 'preview/fine.html',
-                'SPEC.md', 'ASSEMBLED.md'):
+    # P.17 — every artifact a wave produced binds a signed receipt to
+    # the LAST wave ARTIFACTS claims it (check_receipts' wanted map)
+    _due = {}
+    for _wv in gate.WAVE_SEQ:
+        for _rel in gate.ARTIFACTS.get(_wv, []):
+            _due[_rel] = _wv
+    for rel, wv in _due.items():
         if rel in BASE:
-            rec = {'wave': 'w1' if 'candidates' in rel else
-                   'w3' if 'layouts' in rel else
-                   'w7' if not rel.startswith('preview') else 'w4',
+            rec = {'wave': wv,
                    'sha256': hashlib.sha256(
                        BASE[rel].encode()).hexdigest(),
                    'gate_pass': True}
@@ -1463,6 +1820,97 @@ def main():
     BASE['GATES.json'] = json.dumps(_g, indent=1)
     with open(os.path.join(base_dir, 'GATES.json'), 'w') as fh:
         fh.write(BASE['GATES.json'])
+    # APPROVALS.json — the signed operator records (X.3): the human
+    # only picks w3 (layout) and w4 (look); w1/w8 advance on gate
+    # pass alone. Signed with the deterministic fixture Ed25519 key;
+    # ctx.read_approvals finds the dir-local file.
+    gate.OPERATOR_HOME = os.path.join(tmp_home, '.web-factory')
+    ctx_a = gate.Ctx(base_dir)
+    pick_id = next((vid for vid, (e, f_) in
+                    gate._variant_entries(ctx_a).items()
+                    if not f_), None)
+    _appr = {}
+    # X.3 — records must Ed25519-verify against the pinned pubkey.
+    # The fixture keypair is deterministic (fixed seed) and its
+    # pubkey lives at fixtures/.fixture-pub.json; the selftest
+    # monkeypatches approval_key.PUBKEY_PATH + ANCHOR_OVERRIDE to it.
+    import approval_key as AK
+    _fseed = hashlib.sha256(b'web-factory fixture key').digest()
+    _fpub = AK._publickey(_fseed).hex()
+    with open(os.path.join(FX, '.fixture-pub.json'), 'w') as fh:
+        json.dump({'ed25519_public_key': _fpub}, fh, indent=1)
+    for wv in sorted(gate.APPROVABLE):
+        rec = gate.approval_body(
+            ctx_a, wv, by='operator-service',
+            design=pick_id if wv == 'w4' else
+            ('d1' if wv == 'w3' else None),
+            nonce=hashlib.sha256(
+                f'fixture-nonce-{wv}'.encode()).hexdigest()[:32],
+            evidence='fixture approval')
+        rec['sig'] = AK.ed25519_sign(
+            _fseed, json.dumps(
+                {k: v for k, v in rec.items() if k != 'sig'},
+                sort_keys=True).encode())
+        _appr[wv] = rec
+        gate.write_approval(ctx_a, wv, rec=rec)
+    BASE['APPROVALS.json'] = json.dumps(_appr, indent=1, sort_keys=True)
+    gate.OPERATOR_HOME = _saved_home
+    with open(os.path.join(base_dir, 'APPROVALS.json'), 'w') as fh:
+        fh.write(BASE['APPROVALS.json'])
+    # X.2 — RUN.json pins the tools tree, templates tree and pubkey
+    # AS THEY ARE AT GEN TIME. Regenerate after any tool edit; the
+    # pin is what makes mid-run tool edits a gate failure.
+    _run = json.loads(BASE.get('RUN.json') or '{}')
+    _run['tools_sha256'] = {
+        fn: hashlib.sha256(
+            open(os.path.join(HERE, fn), 'rb').read()).hexdigest()
+        for fn in sorted(os.listdir(HERE)) if fn.endswith('.py')}
+    _run['templates_sha256'] = gate._dir_sha256(
+        os.path.join(REPO_DIR, 'templates'))
+    _pub_p = os.path.join(HERE, 'approval_pubkey.json')
+    _run['approval_pubkey_sha256'] = (
+        hashlib.sha256(open(_pub_p, 'rb').read()).hexdigest()
+        if os.path.isfile(_pub_p) else None)
+    _run.setdefault('gate_sha256', _run['tools_sha256']['gate.py'])
+    _run.setdefault('token', 'fixture-run')
+    _brf = os.path.join(base_dir, 'BRIEF.yaml')
+    if os.path.isfile(_brf):
+        _run['brief_sha256'] = hashlib.sha256(
+            open(_brf, 'rb').read()).hexdigest()
+    _rl = os.path.join(base_dir, 'RULES.md')
+    if os.path.isfile(_rl):
+        _run['rules_sha256'] = hashlib.sha256(
+            open(_rl, 'rb').read()).hexdigest()
+    BASE['RUN.json'] = json.dumps(_run, indent=1, sort_keys=True)
+    with open(os.path.join(base_dir, 'RUN.json'), 'w') as fh:
+        fh.write(BASE['RUN.json'])
+    # P.9 — producer receipts + machine-emitted checklists: the gate
+    # cross-verifies each input row's sha against .receipts and disk.
+    _recs = {}
+    for _wv in gate.WAVE_SEQ:
+        outs = {}
+        for rel in gate.ARTIFACTS.get(_wv, []):
+            fp = os.path.join(base_dir, rel)
+            if os.path.isfile(fp):
+                outs[rel] = hashlib.sha256(
+                    open(fp, 'rb').read()).hexdigest()[:16]
+        if outs:
+            _recs[_wv] = outs
+    for _wv, _outs in _recs.items():
+        rp = os.path.join(base_dir, '.receipts', _wv + '.json')
+        os.makedirs(os.path.dirname(rp), exist_ok=True)
+        _rec = {'steps': [{
+            'label': f'fixture {_wv} producers',
+            'argv': ['pipeline_emit.py'],
+            'inputs': {}, 'outputs': _outs, 'rc': 0,
+            'ts': 'fixture'}]}
+        with open(rp, 'w') as fh:
+            json.dump(_rec, fh, indent=1)
+        BASE[f'.receipts/{_wv}.json'] = json.dumps(_rec, indent=1)
+    import checklist_emit as CE
+    for _wv in ('w2', 'w3', 'w5'):
+        _p, _t = CE.emit(base_dir, _wv)
+        BASE[f'CHECKLIST/{_wv}.md'] = _t
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)
@@ -1484,16 +1932,45 @@ def main():
                 src = os.path.relpath(
                     os.path.join(FX, '_base', rel), os.path.dirname(dst))
                 os.symlink(src, dst)
-        # approvals are keyed by abspath: sign every pass dir so the
-        # operator rules and the scorecard see a real signed record
-        ctx_p = gate.Ctx(pd)
-        pick_id = next((vid for vid, (e, f_) in
-                        gate._variant_entries(ctx_p).items()
-                        if not f_), None)
-        for wv in sorted(gate.APPROVABLE):
-            gate.write_approval(
-                ctx_p, wv, design=pick_id if wv == 'w4' else None,
-                evidence='fixture approval')
+
+    # check_site_dna — X.5 needs a REAL site shape (pages/<slug> under
+    # a site root): _site/pass and _site/fail are two site dirs, each
+    # holding a full _base copy at pages/home. pass' page DNA stamps
+    # the site DNA sha; fail edits the site DNA after the page copied
+    # it. ctx.site_dir resolves because the parent dir is 'pages'.
+    for sub, mutate in (('pass', False), ('fail', True)):
+        sroot = os.path.join(FX, '_site', sub)
+        pdir = os.path.join(sroot, 'pages', 'home')
+        for rel, content in BASE.items():
+            p = os.path.join(pdir, rel)
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            mode = 'wb' if isinstance(content, bytes) else 'w'
+            with open(p, mode) as fh:
+                fh.write(content)
+        for rel, content in (
+                ('BRIEF.yaml', BASE['BRIEF.yaml']),
+                ('DISCOVERY.json', BASE['DISCOVERY.json']),
+                ('MOBBIN-REFS.md', BASE['MOBBIN-REFS.md']),
+                ('DNA.json', BASE['DNA.json']),
+                ('TOKENS.json', BASE['TOKENS.json'])):
+            with open(os.path.join(sroot, rel), 'w') as fh:
+                fh.write(content)
+        if mutate:
+            sdna = open(os.path.join(sroot, 'DNA.json')).read()
+            with open(os.path.join(sroot, 'DNA.json'), 'w') as fh:
+                fh.write(sdna.replace('"#0055AA"', '"#AA5500"', 1))
+        # restamp the page DNA with the (possibly mutated) site sha
+        pdna = json.load(open(os.path.join(pdir, 'DNA.json')))
+        pdna['site_dna_sha256'] = _sh(
+            open(os.path.join(sroot, 'DNA.json'), 'rb').read())
+        pdna['hashes'] = gate.dna_slices(pdna)
+        with open(os.path.join(pdir, 'DNA.json'), 'w') as fh:
+            json.dump(pdna, fh, indent=1)
+        tdir = os.path.join(FX, 'check_site_dna', sub)
+        os.makedirs(os.path.dirname(tdir), exist_ok=True)
+        if os.path.lexists(tdir):
+            os.remove(tdir)
+        os.symlink(os.path.relpath(pdir, os.path.dirname(tdir)), tdir)
 
     # check_tiers pass fixture (global rule → pass only, no fail dir)
     pd = os.path.join(FX, 'check_tiers', 'pass')

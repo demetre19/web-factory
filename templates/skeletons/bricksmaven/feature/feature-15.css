@@ -1,0 +1,24 @@
+  .feature-15-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .feature-15-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+  }
+
+  .feature-15__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .feature-15-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  }

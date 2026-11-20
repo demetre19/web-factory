@@ -1,0 +1,60 @@
+  .shop-hero-1__top-container {
+    align-items: center;
+  }
+
+  .shop-hero-1__top {
+    text-align: center;
+    align-items: center;
+    width: var(--content-width);
+  }
+
+  .shop-hero-1__container {
+    width: 100%;
+  }
+
+  .shop-hero-1__choice-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .shop-hero-1-card {
+    display: flex;
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .shop-hero-1-card__top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .shop-hero-1-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .shop-hero-1-usp {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+  }
+
+  .shop-hero-1-usp-card {
+    display: flex;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }

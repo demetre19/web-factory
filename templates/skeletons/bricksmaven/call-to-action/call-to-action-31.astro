@@ -27,26 +27,26 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-cta-31__container">
+      <div class="bm-testimonial-card-cta">
+        <div class="bm-testimonial-card-cta__content">
           {fs && <p class="text-fluid-0">{fs}</p>}
-          <div>
+          <div class="bm-testimonial-card-cta__icon-wrapper">
             <span data-icon="lucide" aria-hidden="true"></span>
           </div>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="bm-testimonial-card-cta__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-cta-31__content">
+        <div class="bm-cta-31__top">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
-          <div>
+          <div class="bm-avatar-list-2">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="bm-avatar-item-2__avatar ratio-portrait"><img src="/media/placeholder.svg" alt="Avatar" loading="lazy" width="900" height="600" /></figure>
                 </div>
               ))}
             </div>

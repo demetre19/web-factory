@@ -27,25 +27,25 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="blog-archive-28__container">
       <div>
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
       </div>
-      <div>
-        <div>
-          <div>
-            <div>
-              <div></div>
+      <div class="blog-archive-28__archive-articles">
+        <div class="blog-archive-28-list">
+          <div class="blog-archive-28-article-card">
+            <div class="blog-archive-28-article-card__meta-data">
+              <div class="blog-archive-28-article-card__terms-wrapper"></div>
               <div></div>
               <div></div>
             </div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+            <div class="blog-archive-28-article-card__media">
+              <figure class="blog-archive-28-article-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
-              <div>
+            <div class="blog-archive-28-article-card__content">
+              <div class="blog-archive-28-article-card__author">
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="blog-archive-28-article-card__author-image ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@ const {
           <div>
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="blog-archive-28-category-list-items card">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>

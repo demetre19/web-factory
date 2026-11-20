@@ -1,0 +1,102 @@
+  .feature-2 {
+    display: flex;
+    row-gap: var(--space-l);
+    overflow: hidden;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .feature-2-li__content {
+    padding: var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl) var(--section-space-xxl);
+    row-gap: var(--space-xs);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 0 0 auto;
+  }
+
+  .feature-2-li__cta {
+    padding: 0 0 0 0;
+  }
+
+  .feature-2-li__icon {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+  }
+
+  .feature-2-li__image {
+    object-fit: cover;
+    width: calc(50vw + ((var(--content-width) / 12) * 3));
+  }
+
+  .feature-2-li {
+  		display:grid;
+    	grid-template-columns:repeat(12, minmax(0, 1fr));
+    	align-items:center;
+    	margin-bottom:var(--space-xl);
+  }
+  
+  .feature-2-li:last-of-type {
+    	margin-bottom:0;
+  }
+  
+  .feature-2-li:nth-of-type(even) .feature-2-li__media-container{
+  		grid-column: 1 / 10;
+    	grid-row-start: 1;
+    display:flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  
+  .feature-2-li:nth-of-type(even) .feature-2-li__content{
+  		grid-column: 8 / -1;
+    	grid-row-start: 1;
+  }
+  
+  .feature-2-li .feature-2-li__content{
+  	grid-column: 1 / 6;
+    grid-row-start: 1;
+    z-index:1;
+  }
+  
+  .feature-2-li .feature-2-li__media-container{
+  	grid-column: 4 / -1;
+    grid-row-start: 1;
+  }
+  
+  
+  @media (max-width: 768px){
+        .feature-2-li {
+          grid-template-columns:repeat(1, minmax(0, 1fr));
+          margin-bottom:0;
+      }
+  
+      .feature-2-li .feature-2-li__content{
+        grid-column: 1 / -1;
+        grid-row-start: 2;
+      }
+  
+      .feature-2-li .feature-2-li__media-container{
+        grid-column: 1 / -1;
+        grid-row-start: 1;
+        order:-1;
+      }
+    
+    .feature-2-li:nth-of-type(even) .feature-2-li__media-container{
+  		grid-column: 1 / -1;
+    	grid-row-start: 1;
+      align-items: start;
+  }
+  
+      .feature-2-li:nth-of-type(even) .feature-2-li__content{
+          grid-column: 1 / -1;
+          grid-row-start: 2;
+      }
+  }

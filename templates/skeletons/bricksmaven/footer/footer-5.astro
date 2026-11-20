@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
+    <div class="footer-5-container row between">
+      <div class="footer-5-alpha row between">
         <span class="logo">{brand}</span>
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div></div>
+        <div class="footer-5__social"></div>
       </div>
-      <div class="row between">
+      <div class="footer-nav-wrapper footer-nav-wrapper-5 row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="row between">
+            <div class="footer-nav-column row between">
               <h3 class="text-fluid-2">{it.title}</h3>
-              <div class="row between">
+              <div class="footer-menu row between">
                 <div class="row gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div>
@@ -51,12 +51,12 @@ const {
           ))}
         </div>
       </div>
-      <div class="row between">
+      <div class="footer-5-epsilon row between">
         {heading && <h4 class="text-fluid-2">{heading}</h4>}
-        <div class="row between">
+        <div class="footer-5__apps row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="row between">
+              <div class="footer-5__apps-btn row between">
                 <span data-icon="lucide" aria-hidden="true"></span>
                 <div class="row between">
                   <p class="text-fluid-0">{it.text}</p>
@@ -68,11 +68,11 @@ const {
         </div>
       </div>
     </div>
-    <div class="row between">
-      <div></div>
-      <div>
+    <div class="footer-5-bottom row between">
+      <div class="footer-5-bottom__alpha"></div>
+      <div class="footer-5-bottom__beta">
         <div>
-          <div class="row between">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>

@@ -27,23 +27,23 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
-          {heading && <h1 class="text-fluid-4">{heading}</h1>}
+    <div class="bm-hero-92__container">
+      <div class="bm-hero-92__intro">
+        <div class="bm-hero-92__top">
+          {heading && <h1 class="bm-hero-92__heading text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div>
-            <div class="grid-auto gap-fluid-l">
-              <div>
-                <div></div>
+        <div class="bm-hero-92__case-cover">
+          <div class="bm-hero-90-slide">
+            <div class="bm-hero-90-case grid-auto gap-fluid-l">
+              <div class="bm-hero-90-case__content">
+                <div class="bm-hero-90-case__footer"></div>
               </div>
               <div></div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-hero-90-case__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
-              <div>
+            <div class="bm-hero-90-testimonial">
+              <div class="bm-testimonial-38-star-list">
                 <div class="grid-auto gap-fluid-m">
                   {(items || []).map((it) => (
                     <div class="card">
@@ -52,16 +52,16 @@ const {
                   ))}
                 </div>
               </div>
-              <div class="grid-auto gap-fluid-l">
+              <div class="bm-hero-90-testimonial__client-meta grid-auto gap-fluid-l">
                 <div></div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-hero-90-testimonial__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-hero-92__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
     <div></div>

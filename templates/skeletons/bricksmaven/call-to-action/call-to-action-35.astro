@@ -28,24 +28,24 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div>
-          <div>
-            <div></div>
+      <div class="cta-35__cover">
+        <div class="cta-35__content">
+          <div class="cta-35__inner">
+            <div class="bm-project-status"></div>
             {heading && <h2 class="text-fluid-2">{heading}</h2>}
             {fs && <p class="text-fluid-0">{fs}</p>}
           </div>
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div>
+        <div class="cta-35-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="cta-35-item card">
                 <div>
                   <custom class="text-fluid-2">{it.title}</custom>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="cta-35-item__icon-wrapper">
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
               </div>

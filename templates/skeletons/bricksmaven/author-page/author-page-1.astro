@@ -28,13 +28,13 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div>
+      <div class="bm-author-page-1__content">
+        <div class="bm-author-card-1">
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-author-card-1__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
           <div></div>
-          <div>
+          <div class="bm-social-share bm-social-share--left">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
@@ -44,10 +44,10 @@ const {
             </div>
           </div>
         </div>
-        <div>
+        <div class="bm-author-page-1__post-container">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
-          <div>
-            <div></div>
+          <div class="bm-author-page-1__post-list">
+            <div class="bm-blog-section-1-card"></div>
           </div>
         </div>
       </div>

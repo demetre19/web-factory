@@ -1,0 +1,65 @@
+  .gridcard-11-wrapper {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .gridcard-11-media {
+    width: 100%;
+  }
+
+  .gridcard-11-media__figure {
+    margin: 0 0 0 0;
+  }
+
+  .gridcard-11-media__img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .gridcard-11-heading {
+    flex-direction: column;
+    padding: 0 var(--space-xl) 0 0;
+    row-gap: var(--space-s);
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .gridcard-11-profile {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+  }
+
+  .gridcard-11-profile__author {
+    display: flex;
+    column-gap: 1rem;
+    align-items: center;
+  }
+
+  .gridcard-11-profile__figure {
+    margin: 0 0 0 0;
+    width: auto;
+  }
+
+  .gridcard-11-profile__photo {
+    width: 6rem;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .gridcard-11-profile__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+  }
+
+  .gridcard-11-container {
+  	row-gap: 5rem;
+  }

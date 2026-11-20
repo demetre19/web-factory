@@ -1,0 +1,58 @@
+  .bm-coming-soon-6__container {
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .coming-soon-2__logo {
+    object-fit: contain;
+  }
+
+  .bm-coming-soon-6__inner {
+    align-items: center;
+    text-align: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-coming-soon-6__media-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-coming-soon-6__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-coming-soon-6__content {
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+    width: var(--measure);
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-coming-soon-6__media:nth-child(odd) {
+  	margin-block: var(--space-l);
+  }
+  
+  @media (max-width:767px) {
+  	.bm-coming-soon-6__media:nth-child(odd) {
+  	margin-block: unset;
+  }
+  }
+
+  .coming-soon-countdown .field {
+  	gap: var(--flow-spacing);
+  }
+  
+  .coming-soon-countdown .field:not(:last-of-type) {
+  	margin-inline-end: var(--space-m) !important;
+  }

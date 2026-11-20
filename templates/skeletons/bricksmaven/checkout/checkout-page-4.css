@@ -1,0 +1,175 @@
+  .checkout-page-4 {
+    overflow: hidden;
+    row-gap: var(--space-s);
+  }
+
+  .checkout-page-4__container-background {
+    justify-content: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .checkout-page-4__page-heading {
+    display: flex;
+    align-self: center;
+  }
+
+  .checkout-page-4-breadcrumb {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-xs);
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .checkout-page-4-breadcrumb-item {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .checkout-page-4__container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: var(--space-xl);
+    width: 100%;
+    padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-l);
+  }
+
+  .bm-woo-notice {
+    padding: 0 0 var(--space-m) 0;
+  }
+
+  .checkout-page-4__details {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .checkout-page-4__customer-details {
+    width: 100%;
+  }
+
+  .checkout-page-4__order {
+    width: 100%;
+  }
+
+  .checkout-page-4__order-review {
+    width: 100%;
+  }
+
+  .checkout-page-4__image {
+    width: 100vw;
+    object-fit: cover;
+    margin: 0 0 0 -50vw !important;
+  }
+
+  .checkout-page-4__breadcrumb-number {
+  		
+  		border-radius: 100%;
+    	padding: 0.2rem 1.2rem;
+    	color: var(--text-secondary);
+    	background-color: var(--bg-canvas);
+    	font-size: var(--fs-0);
+    	font-weight: 700;
+    	opacity: 0.5;
+  }
+
+  .checkout-page-4__breadcrumb-text {
+    	padding: 0.3rem 1.2rem;
+    	color: var(--bg-canvas);
+    	font-size: var(--fs-0);
+    	font-weight: 700;
+    	opacity: 0.5;
+    	letter-spacing: 1px;
+  }
+
+  .checkout-page-4__breadcrumb-text-active {
+  		opacity: 1;  
+  }
+
+  .checkout-page-4__container {
+  
+  		box-shadow: var(--shadow-card);
+  
+  }
+
+  .checkout-page-4__customer-details {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+  
+    	/* Change accent color of checkbox and radio */
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+    	
+    	/* Set container of billing and shiiping fiedls to display flex */
+    	.col2-set {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    .col-2 {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    	/* Sets margin-bottom of h3 element */
+  		.woocommerce-shipping-fields > h3, .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+    
+    #ship-to-different-address label {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .woocommerce-shipping-fields h3 span {
+      font-size: var(--fs-2) !important;
+      order: -1;
+      color: var(--action-primary);
+      font-weight: 700;
+      
+    }
+    
+    
+  }
+
+  .checkout-page-4__order {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+  
+      .woocommerce-shipping-fields {
+        margin-top: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields label {
+        font-size: var(--fs-1);
+        color: var(--action-primary);
+        font-weight: bold;
+      }
+  
+      .woocommerce-billing-fields #ship-to-different-address-checkbox + span {
+        color: var(--action-primary);
+        font-weight: bold;
+        font-size: var(--fs-1);
+      }
+    
+  }

@@ -1,0 +1,22 @@
+  .hero-5-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-5-wrapper__content {
+    flex-direction: column;
+    row-gap: var(--space-m);
+    justify-content: center;
+    display: flex;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-5-wrapper__img {
+    object-fit: cover;
+  }

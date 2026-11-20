@@ -1,0 +1,24 @@
+  .hero-6-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .hero-6-wrapper__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--space-m);
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-6-wrapper__img {
+    object-fit: cover;
+    width: 100%;
+  }

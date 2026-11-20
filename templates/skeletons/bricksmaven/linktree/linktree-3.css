@@ -1,0 +1,49 @@
+  .bm-linktree-3__container {
+    align-items: center;
+  }
+
+  .bm-linktree-3__bio-wrapper {
+    width: 100%;
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-linktree-3-bio {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-3-bio__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-3-bio__image {
+    width: 100%;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-3__link-wrapper {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+  }

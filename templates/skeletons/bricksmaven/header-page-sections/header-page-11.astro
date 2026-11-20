@@ -28,16 +28,16 @@ const {
 <div>
   <span class="logo">{brand}</span>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
-        <div class="row between">
+    <div class="bm-header-page-11__container row between">
+      <div class="bm-header-page-11__intro row between">
+        <div class="bm-header-page-11__top row between">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
         </div>
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div class="row between"></div>
+        <div class="cta-combo row between"></div>
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-header-page-11__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
       <div class="row gap-fluid-m">
         {(items || []).map((it) => (

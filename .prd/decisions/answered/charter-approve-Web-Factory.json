@@ -1,0 +1,16 @@
+{
+  "id": "charter-approve-Web Factory",
+  "question": "approve the Web Factory project charter (SOURCE-OF-TRUTH.md) + ideals (IDEALS.md)?",
+  "detail": "`crew init-repo` drafted the charter pair at the repo root \u2014 SOURCE-OF-TRUTH.md (enforced what-is: measured `## Current shape` + evidence-backed invariants) and IDEALS.md (declared what-should-be, decision 0138). census: 99 files (7 source, 30 symbols), languages javascript 4, typescript 3, 1 test file(s); top modules: templates/astro/.astro/content.d.ts, templates/astro/src/site.ts, templates/astro/.astro/types.d.ts, templates/astro/astro.config.mjs, templates/astro/tailwind.config.mjs; draft sha 4999f7439793; open questions: Confirm the top-module ranking reads right \u2014 the PageRank order in `## Current shape` is what the boss will assume is load-bearing.. Read both \u2014 answer `approve` to publish `.prd/profile.json` source_of_truth (the charter joins every boss/worker read contract in this repo) and ratify IDEALS.md, and re-run `crew init-repo --apply`; `deny` settles the stage \u2014 both drafts are removed and the repo runs charter-free. Any other free-text answer is a REVISION request \u2014 the note is appended to the draft's `## Revision log` and the row re-opens on the revised draft.",
+  "options": [
+    "approve",
+    "deny"
+  ],
+  "raised_by": "init-repo:charter",
+  "raised_at": "2026-11-18T00:40:58.430881+00:00",
+  "rehomed_from": "fleet",
+  "status": "resolved",
+  "resolved_at": "2026-11-18T01:41:26.498510+00:00",
+  "resolved_by": "answered:deny",
+  "answer": "deny"
+}

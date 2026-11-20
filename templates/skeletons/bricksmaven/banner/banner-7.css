@@ -1,0 +1,49 @@
+  .bm-banner-7 {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-banner-7__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-banner-inline-content {
+    width: auto;
+  }
+
+  .bm-banner-inline-content__info {
+    column-gap: calc(var(--flow-spacing) / 4);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+    align-items: center;
+  }
+
+  .bm-banner-7__container {
+    box-shadow: var(--shadow-card);
+    
+  }
+
+  .coming-soon-countdown--alt .field {
+  	gap: calc(var(--space-xs) / 4);
+    background-color: var(--text-secondary);
+    padding-inline: var(--space-xs);
+    padding-block: var(--space-xs);
+    color: var(--fs-0);
+    
+  }
+  
+  .coming-soon-countdown--alt .field:not(:last-of-type) {
+  	margin-inline-end: var(--space-xs) !important;
+  }
+
+  .bm-banner-inline-content__text a {
+    text-decoration: underline;
+    font-weight: 700;
+  }

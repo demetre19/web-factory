@@ -1,0 +1,36 @@
+  .bm-shop-header-1 {
+    padding: var(--space-s) 0 var(--space-s) 0;
+  }
+
+  .bm-shop-header-1__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .bm-shop-header-1__end {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-shop-header-1__login-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-shop-header-cart-search {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 3);
+    align-items: center;
+  }
+
+  /* Remove the left margin on the first link */
+  .bm-shop-header-1__nav-menu .bricks-nav-menu>li:first-child {
+    margin-inline-start: 0;
+  }

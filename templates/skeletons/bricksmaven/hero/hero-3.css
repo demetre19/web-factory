@@ -1,0 +1,29 @@
+  .hero-3 {
+    overflow: hidden;
+    padding: 0 0 0 0;
+  }
+
+  .hero-3-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-3-left-box {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) 0;
+    row-gap: var(--space-m);
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-3-media__image {
+    width: 50vw;
+    object-fit: cover;
+    margin: 0 calc(-50vw + 50%) 0 0;
+  }

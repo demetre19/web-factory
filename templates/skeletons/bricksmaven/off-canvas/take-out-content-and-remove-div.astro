@@ -29,10 +29,10 @@ const {
   <div>
     <div></div>
     <div>
-      <div>
+      <div class="bm-off-canvas-6__content">
         <div></div>
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="bm-off-canvas-nav-ul">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
@@ -41,23 +41,23 @@ const {
             ))}
           </div>
         </div>
-        <div>
-          <div>
-            <div>
+        <div class="bm-off-canvas-6__contact-footer">
+          <div class="bm-off-canvas-contact">
+            <div class="bm-off-canvas-contact-item">
               <div>
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             </div>
-            <div>
+            <div class="bm-off-canvas-contact-item">
               <div>
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             </div>
           </div>
-          {fs && <p class="text-fluid-0">{fs}</p>}
+          {fs && <p class="bm-off-canvas-6__contact-address text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div>
+        <div class="bm-off-canvas-6__socials">
+          <div class="bm-social-share bm-social-share--column">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">

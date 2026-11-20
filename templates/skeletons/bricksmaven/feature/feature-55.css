@@ -1,0 +1,33 @@
+  .bm-feature-55__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-feature-55__fixed-scroll {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-feature-55-featured-list {
+    row-gap: calc(var(--flow-spacing) * 4);
+  }
+
+  .bm-feature-55-card__inner {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-feature-55__image {
+    object-fit: cover;
+    width: calc(50vw - (var(--space-m) / 1.3)) ;
+  }

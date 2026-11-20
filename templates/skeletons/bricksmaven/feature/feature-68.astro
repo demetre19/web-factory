@@ -28,21 +28,21 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div>
-          <div>
+      <div class="bm-feature-68-lijst">
+        <div class="bm-feature-68-intro">
+          <div class="bm-feature-68-intro__top">
             {heading && <h2 class="text-fluid-2">{heading}</h2>}
           </div>
         </div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-feature-68-card card">
               <svg></svg>
-              <div>
+              <div class="bm-feature-68-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div>
+              <div class="bm-feature-68-card__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             </div>

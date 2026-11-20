@@ -1,0 +1,108 @@
+  .footer-15-container {
+    row-gap: var(--space-s);
+  }
+
+  .footer-15__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-15__cta-heading {
+    text-align: center;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .footer-15__header {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .footer-15__social-wrapper {
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    justify-content: flex-end;
+  }
+
+  .footer-15__socials {
+    display: flex;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-15__footer {
+    row-gap: var(--space-s);
+  }
+
+  .footer-15__footer-intro {
+    row-gap: var(--flow-spacing);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .footer-15__newsletter {
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-nav-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .footer-nav-wrapper-15 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .footer-link-update {
+    padding: .4rem .4rem .4rem .4rem;
+    margin: 0 0 0 1rem;
+  }
+
+  .footer-15__copy-legal {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--space-l) 0 0 0;
+  }
+
+  .footer-bottom__left {
+    flex-direction: row;
+    row-gap: var(--space-xs);
+    column-gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .footer-legal-nav {
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .footer-newsletter__form {
+  	flex-wrap: nowrap;
+    gap: 1rem;
+  }
+  .footer-newsletter__form [type="submit"] {
+  	height: 100%;
+  }

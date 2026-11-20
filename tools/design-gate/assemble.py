@@ -22,19 +22,31 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gate
+import preview_build
 
 
 def main(argv):
     args = [a for a in argv[1:] if not a.startswith('--')]
     flags = {a for a in argv[1:] if a.startswith('--')}
     if not args or flags - {'--variants', '--layouts', '--fine',
-                            '--candidates'}:
+                            '--candidates', '--system'}:
         print('usage: assemble.py <pipeline-dir> '
-              '[--variants | --fine | --layouts | --candidates]')
+              '[--variants | --fine | --layouts | --candidates '
+              '| --system]')
         return 2
     ctx = gate.Ctx(args[0])
+    if '--system' in flags:
+        # W5 system sheet — the REAL built tile (site/dist/preview/
+        # system/index.html) shelled under preview/system.html
+        path, txt, h = preview_build.emit_system(ctx)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as fh:
+            fh.write(txt)
+        print(f'assembled system sheet → '
+              f'{os.path.relpath(path, ctx.dir)} (marker {h})')
+        return 0
     if '--layouts' in flags:
-        path, txt, h = gate.assemble_layouts(ctx)
+        path, txt, h = preview_build.emit_layouts(ctx)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, 'w', encoding='utf-8') as fh:
             fh.write(txt)
@@ -42,7 +54,7 @@ def main(argv):
               f'{os.path.relpath(path, ctx.dir)} (marker {h})')
         return 0
     if '--variants' in flags:
-        path, txt, h = gate.assemble_variants(ctx)
+        path, txt, h = preview_build.emit_variants(ctx)
         os.makedirs(os.path.dirname(path), exist_ok=True)
         with open(path, 'w', encoding='utf-8') as fh:
             fh.write(txt)

@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-newsletter-13__container">
+      <div class="bm-newsletter-13__content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
         <form novalidate>
         </form>
       </div>
       <div>
-        <div>
+        <div class="bm-newsletter-13-usp-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <span data-icon="lucide" aria-hidden="true"></span>
+              <div class="bm-newsletter-13-usp-item card">
+                <span class="bm-newsletter-13-usp-item__icon" data-icon="lucide" aria-hidden="true"></span>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             ))}

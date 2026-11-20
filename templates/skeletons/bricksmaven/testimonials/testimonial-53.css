@@ -1,0 +1,58 @@
+  .bm-testimonial-53 {
+    padding: 0 0 var(--section-space-xl) 0;
+    overflow: clip;
+  }
+
+  .bm-testimonial-53__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-testimonial-53-card {
+    display: grid;
+    grid-template-columns: repeat(24, minmax(0, 1fr));
+  }
+
+  .bm-testimonial-53-card__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: space-between;
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-testimonial-53-card__footer {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-testimonial-53-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-testimonial-53__slider-nested .splide__track {
+    overflow: visible;
+  }
+
+  .bm-testimonial-53-card__content {
+    transform: translateY(calc(-1 * var(--space-m)));
+  }
+  
+  @media (min-width:767px) {
+  
+  .bm-testimonial-53-card__content {
+    transform: translateY(var(--space-m));
+  }
+  
+  }

@@ -1,0 +1,23 @@
+  .content-9-container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+  }
+
+  .content-9__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--section-space-xxl);
+    justify-content: center;
+    margin: var(--section-space-xxl) 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-9__image {
+    object-fit: cover;
+    width: 100%;
+  }

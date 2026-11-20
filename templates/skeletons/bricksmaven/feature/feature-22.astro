@@ -27,17 +27,17 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="feature-22-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="cta-combo">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
-      <div>
+      <div class="bm-feature-list-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-feature-list-card card">
               <h2 class="text-fluid-2">{it.title}</h2>
               <p class="text-fluid-0">{it.text}</p>
               <span data-icon="lucide" aria-hidden="true"></span>

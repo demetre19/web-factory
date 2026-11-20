@@ -27,20 +27,20 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-cta-32__container">
+      <div class="bm-cta-32__intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
       </div>
-      <div>
+      <div class="bm-cta-ul-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-cta-item card">
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}
         </div>
       </div>
-      <div>
+      <div class="bm-cta-32__footer">
         {fs && <p class="text-fluid-0">{fs}</p>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>

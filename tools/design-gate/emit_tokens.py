@@ -8,10 +8,12 @@ accepts (TK.*):
                      easing/duration, z-index
   2. :root           semantic layer: bg-*/text-*/border-*/action-*/
                      shadow-* — what components consume
-  3. .dark           every semantic var overridden
+  3. [data-theme=dark]  every semantic var overridden (explicit toggle
+                     only — light is the :root default, the OS
+                     colour-scheme preference is never read, U.3)
   4. :root           semantic names → utility names
                      (color-canvas, ink-primary, line-default…)
-  5. .dark scope — the dark mode block the utilities consume
+  5. dark scope — the [data-theme=dark] block the utilities consume
 
 Components bind semantic names only — a raw hex or a primitive
 var in a component is a TK.3 FAIL.
@@ -95,20 +97,26 @@ UTILITY_MAP = {
     'shadow-card': 'shadow-card', 'shadow-pop': 'shadow-pop',
 }
 
-TYPE_SCALE_STEPS = ('xs', 'sm', 'base', 'lg', 'xl', '2xl', '3xl')
 
-
-def _type_sizes(base, ratio):
-    """Major-third-ish scale around the knob base size."""
-    out = {}
-    idx = {'xs': -2, 'sm': -1, 'base': 0, 'lg': 1, 'xl': 2,
-           '2xl': 3, '3xl': 5}
-    for step, n in idx.items():
-        out[step] = round(base * (ratio ** n), 2)
-    return out
+def fluid_of(tokens):
+    """TOKENS/DNA record → clamp.py settings: the record's own `fluid`
+    block (DNA invariants.fluid — extracted or inferred upstream),
+    else inferred from its knobs (dna_tokens.fluid_settings)."""
+    import clamp
+    import dna_tokens
+    fl = tokens.get('fluid') or \
+        (tokens.get('invariants') or {}).get('fluid')
+    if fl:
+        return clamp.settings(fl)
+    return dna_tokens.fluid_settings(tokens.get('knobs') or {})
 
 
 def _radius_map(personality):
+    """radius.personality → rem. p0–p5 presets, else an exact 'Npx'
+    literal (U.10: an extracted radius) at N/16 rem, else 0.5rem."""
+    m = re.match(r'^\s*(\d+(?:\.\d+)?)px\s*$', str(personality))
+    if m:
+        return float(m.group(1)) / 16.0
     return {'p0': 0.0, 'p1': 0.125, 'p2': 0.25, 'p3': 0.5,
             'p4': 0.75, 'p5': 1.0}.get(str(personality), 0.5)
 
@@ -120,9 +128,6 @@ def emit(tokens):
     light = (modes.get('light') or {}).get('roles') \
         or color.get('roles') or {}
     dark = (modes.get('dark') or {}).get('roles') or {}
-    base_px = float(knobs.get('type.base', 16)) or 16
-    ratio = float(knobs.get('type.ratio', 1.25)) or 1.25
-    sizes = _type_sizes(base_px, ratio)
     rad = _radius_map(knobs.get('radius.personality'))
     L = []
     A = L.append
@@ -142,13 +147,18 @@ def emit(tokens):
     for st, v in (('success', '#2F7D4F'), ('warning', '#B57708'),
                   ('danger', '#C0392B'), ('info', '#2E6FBE')):
         A(f'  --primitive-state-{st}: {v};')
-    A('  /* spacing — ACSS density scale */')
-    for rung in ('xs', 's', 'm', 'l', 'xl', '2xl'):
-        A(f'  --primitive-space-{rung}: var(--space-{rung});')
-    for rung in ('s', 'm', 'l'):
-        A(f'  --primitive-section-space-{rung}:'
-          f' var(--section-space-{rung});')
-    A(f'  --primitive-radius: {rad}rem;')
+    # ---- ACSS size family: every value from clamp.py fluidClamp on
+    # the DNA fluid settings (two ratios, 320→1280). No literals.
+    import clamp
+    fl = fluid_of(tokens)
+    A('  /* ACSS fluid sizes — clamp.py fluidClamp, '
+      f"{fl['vp_min']:g}px→{fl['vp_max']:g}px */")
+    for name, css in clamp.sizes(fl).items():
+        A(f'  --{name}: {css};')
+    al = clamp.aliases(fl, rad)
+    for name, css in al.items():
+        A(f'  --{name}: {css};')
+    A('  --primitive-radius: var(--radius);')
     # knobs.type.font_display/font_body carry the DNA display-face CSS
     # stack (dna_tokens._finish); a bare TOKENS.json falls back to
     # the system sans stack.
@@ -168,12 +178,6 @@ def emit(tokens):
     # default. Custom properties keep commas intact.
     A(f'  --primitive-font-display: {_fd};')
     A(f'  --primitive-font-body: {_fb};')
-    # grid.gutter names the gap rung; only real rungs bind.
-    _gut = str(knobs.get('grid.gutter') or 'space-m')
-    if _gut not in ('space-xs', 'space-s', 'space-m', 'space-l',
-                    'space-xl', 'space-2xl'):
-        _gut = 'space-m'
-    A(f'  --primitive-gutter: var(--{_gut});')
     # width.inner_rung sizes the collection card floor; off-rung →
     # the 28rem canon the G.5 check names.
     _inner = str(knobs.get('width.inner_rung') or 'full')
@@ -182,28 +186,6 @@ def emit(tokens):
                 '70': '32rem', '80': '36rem', '90': '40rem',
                 'full': '28rem'}.get(_inner, '28rem')
     A(f'  --primitive-grid-min: {_gridmin};')
-    # the fs scale is sequential idx -1..+5 around the knob base —
-    # emitted per step so --fs-* stays a pure binding, never a copy.
-    # Fluid, ACSS-style: 68% of the desktop size at a 24rem viewport,
-    # the full size from 90rem up. A fixed rem ramp is why a display
-    # heading stayed 71px on a phone.
-    def _fluid(rem):
-        mn = rem * 0.68
-        slope = (rem - mn) * 16.0 / 1056.0
-        a = (mn * 16.0 - slope * 384.0) / 16.0
-        return f'clamp({mn:.3f}rem, {a:.3f}rem + {slope * 100:.2f}vw, {rem:.3f}rem)'
-
-    for n in (-1, 0, 1, 2, 3, 4, 5):
-        _nm = f'neg{-n}' if n < 0 else str(n)
-        _rem = round(base_px * ratio ** n, 2) / 16
-        # body sizes stay fixed (a 11px phone body is unreadable);
-        # display steps interpolate.
-        A(f'  --primitive-text-{_nm}:'
-          f' {_fluid(_rem) if n >= 1 else f"{_rem:.3f}rem"};')
-    for step in TYPE_SCALE_STEPS:
-        _rem = sizes[step] / 16
-        A(f'  --primitive-text-{step}:'
-          f' {_fluid(_rem) if _rem > 1.1 else f"{_rem:.3f}rem"};')
     A('  --primitive-leading-body: 1.6;')
     A('  --primitive-leading-display: 1.15;')
     A('  --primitive-ease: cubic-bezier(.2,.6,.2,1);')
@@ -224,8 +206,10 @@ def emit(tokens):
         A(f'  --{name}: {val};')
     A('}')
     A('')
-    # ---- 3. .dark — every semantic overridden ---------------------
-    A('.dark {')
+    # ---- 3. [data-theme=dark] — every semantic overridden. The light
+    # roles above are the :root default; dark binds ONLY under the
+    # explicit toggle attribute — never prefers-color-scheme (U.3).
+    A('[data-theme=dark] {')
     for role, var in ROLE_SEMANTIC.items():
         if role in dark:
             A(f'  --{var}: {dark[role]};')
@@ -253,15 +237,15 @@ def emit(tokens):
         A(f'  --color-{util}: var(--{var});')
     A('}')
     A('')
-    # ---- 5. dark scope — v3 has no @custom-variant; the .dark class
-    # on <html> is what the utilities and the mode block key off.
+    # ---- 5. dark scope — v3 has no @custom-variant; the data-theme
+    # attribute on <html> is what the mode block keys off.
     return '\n'.join(L) + '\n'
 
 
 def main(argv):
     if len(argv) >= 2 and argv[1] == '--check':
         css = open(argv[2], encoding='utf-8').read()
-        need = [':root {', '.dark {']
+        need = [':root {', '[data-theme=dark] {']
         miss = [x for x in need if x not in css]
         print('layers missing:', miss if miss else 'none')
         return 0 if not miss else 1

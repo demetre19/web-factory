@@ -53,11 +53,13 @@ EX['split-media'] = '''
 '''
 
 EX['stacked-hero'] = '''
-<div class="max-w-prose text-center">
-  <h1 class="text-fluid-4">{heading}</h1>
-  <p class="mt-stack text-fluid-1">{fs}</p>
-  {body && <p class="mt-stack text-fluid-0">{body}</p>}
-  {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
+<div class="text-center">
+  <div class="max-w-prose mx-auto">
+    <h1 class="text-fluid-5">{heading}</h1>
+    <p class="mt-stack text-fluid-1">{fs}</p>
+    {body && <p class="mt-stack text-fluid-0">{body}</p>}
+    {cta && <a class="wf-cta-button mt-stack" href={cta.href}>{cta.label}</a>}
+  </div>
 </div>
 '''
 

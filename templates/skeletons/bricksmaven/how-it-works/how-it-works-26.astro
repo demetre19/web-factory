@@ -28,23 +28,23 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
     </div>
-    <div>
-      <div>
+    <div class="bm-how-it-works-26__full-container">
+      <div class="bm-how-it-works-26-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <p class="text-fluid-0">{it.text}</p>
-                <div></div>
-                <div></div>
+            <div class="bm-how-it-works-26-card card">
+              <div class="bm-how-it-works-26-card__intro">
+                <p class="bm-how-it-works-26-card__step text-fluid-0">{it.text}</p>
+                <div class="bm-how-it-works-26-card__circle"></div>
+                <div class="bm-how-it-works-26-card__vertical-line"></div>
               </div>
-              <div>
-                <div>
+              <div class="bm-how-it-works-26-card__inner">
+                <div class="bm-how-it-works-26-card__highlight">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <h2 class="text-fluid-2">{it.title}</h2>

@@ -27,48 +27,48 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="bm-woo-notice-container-absolute">
       <div>
         <div></div>
       </div>
     </div>
-    <div>
-      <div>
+    <div class="bm-product-single-4__container">
+      <div class="bm-product-single-4__breadcrumb-wrapper">
         <div></div>
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
-          <div>
-            <div>
+      <div class="bm-product-single-4__main">
+        <div class="bm-product-single-4__content">
+          <div class="bm-product-single-4__content-wrapper">
+            <div class="bm-product-single-4__top">
               <div></div>
               <div></div>
             </div>
-            <div>
+            <div class="bm-product-single-4__mid">
               <div></div>
-              <div></div>
+              <div class="bm-product-single__product-stock"></div>
             </div>
             <div></div>
             <div></div>
-            <div>
-              <div>
+            <div class="bm-payment-options-wrapper-2">
+              <div class="bm-payment-options-2__text-icon">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <div>
+              <div class="bm-payment-options">
                 <div class="grid-auto gap-fluid-m">
                   {(items || []).map((it) => (
                     <div class="card">
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                      <figure class="bm-footer-option__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-            <div></div>
-            <div>
+            <div class="bm-product-single__product-meta"></div>
+            <div class="bm-product-single-usp-1">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
-                  <div class="card">
+                  <div class="bm-product-single-usp-1-list-item card">
                     <div>
                       <span data-icon="lucide" aria-hidden="true"></span>
                     </div>
@@ -84,13 +84,13 @@ const {
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-product-single__related-products-container">
       <div>
         <div>
-          <div>
+          <div class="bm-product-single-accordion">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-product-single-accordion-card card">
                   <div>
                     <h3 class="text-fluid-2">{it.title}</h3>
                     <span data-icon="lucide" aria-hidden="true"></span>
@@ -105,18 +105,18 @@ const {
         </div>
       </div>
       {heading && <h2 class="text-fluid-2">{heading}</h2>}
-      <div>
+      <div class="bm-related-products-list-1__list">
         <div>
-          <div>
-            <div>
-              <div></div>
+          <div class="bm-related-products-list-1-card">
+            <div class="bm-related-products-list-1-card__content">
+              <div class="bm-related-products-list-1-card__top"></div>
               <div></div>
             </div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-related-products-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
-              <div></div>
+            <div class="bm-product-list-notice__wrapper">
+              <div class="bm-product-list-notice-circle__sale-badge"></div>
             </div>
           </div>
         </div>

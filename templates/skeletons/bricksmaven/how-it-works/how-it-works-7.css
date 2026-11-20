@@ -1,0 +1,42 @@
+  .hworks-7-content {
+    display: grid;
+    gap: var(--section-space-xxl);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hworks-7-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .hworks-7-card__media {
+    display: flex;
+    align-items: center;
+  }
+
+  .hworks-7-card__image {
+    width: 14.8rem;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .hworks-icon {
+    display: none;
+  }
+
+  .hworks-7-card::after  {
+    content: "\e628";
+    font-family: 'themify';
+    color: var(--action-primary);
+    position: absolute;
+    right: -6rem;
+  }
+  
+  .hworks-7-card:last-child::after  {
+    content: none;
+  }

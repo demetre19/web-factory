@@ -28,44 +28,44 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div class="grid-auto gap-fluid-l">
-          <div>
+      <div class="bm-call-to-action-25__cta-block">
+        <div class="bm-call-to-action-25__content grid-auto gap-fluid-l">
+          <div class="bm-call-to-action-25__content-inner">
             {heading && <h2 class="text-fluid-2">{heading}</h2>}
             {fs && <p class="text-fluid-0">{fs}</p>}
-            <div>
+            <div class="bm-list">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
-                  <div class="card">
-                    <div>
+                  <div class="bm-list-item card">
+                    <div class="bm-list-item__icon-wrapper">
                       <span data-icon="lucide" aria-hidden="true"></span>
                     </div>
-                    <p class="text-fluid-0">{it.text}</p>
+                    <p class="bm-list-item__text text-fluid-0">{it.text}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="bm-call-to-action-25__content-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div>
-          <div>
-            <div>
+        <div class="bm-call-to-action-25__contact">
+          <div class="bm-call-to-action-25__contact-inner">
+            <div class="bm-team-list">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="bm-team-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="Team Image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           <div>
-            <div>
+            <div class="bm-call-to-action-25-contact-item">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-            <div>
+            <div class="bm-call-to-action-25-contact-item">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>

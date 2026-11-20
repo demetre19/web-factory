@@ -1,7 +1,9 @@
 ---
 /**
  * footer-bar — gold exemplar (SB.5). Brand and one line of proof on
- * the left, two link columns, a legal rule under both.
+ * the left, two link columns, a legal rule under both. The legal
+ * line's facts (licence, ABN) come from the plan row's `attrib` —
+ * never a default: an exemplar must not ship another trade's claims.
  */
 interface Props {
   heading?: string;
@@ -11,9 +13,10 @@ interface Props {
   items?: { title?: string; text?: string; label?: string;
              href?: string }[];
   brand?: string;
+  attrib?: string;
 }
 const {
-  heading = '', fs = '', body = '', cta, items = [],
+  heading = '', fs = '', body = '', cta, items = [], attrib = '',
   brand = 'Brand',
 } = Astro.props;
 const sub = fs || body;
@@ -42,6 +45,6 @@ const year = 2026;
   </div>
   <div class="legal">
     <span>Copyright {year} {brand}</span>
-    <span>Licensed Victorian plumber · ABN 00 000 000 000</span>
+    {attrib && <span>{attrib}</span>}
   </div>
 </div>

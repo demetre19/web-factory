@@ -31,14 +31,14 @@ const {
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="testimonial-3-slides-item card">
+              <div class="testimonial-3-slides-item__details">
+                <div class="testimonial-3-slides-item__media-wrapper">
+                  <figure class="testimonial-3-slides__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div>
+              <div class="testimonial-3-slides-item__bio">
                 <custom class="text-fluid-2">{it.title}</custom>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

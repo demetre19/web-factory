@@ -1,0 +1,38 @@
+  .bm-shop-hero-6__container {
+    justify-content: center;
+  }
+
+  .bm-shop-hero-6__content {
+    align-items: center;
+    display: flex;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-shop-hero-6__intro {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    width: var(--content-width);
+  }
+
+  .bm-shop-hero-6__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-shop-hero-6 {
+    --section-height: 820px;
+  }
+  
+  @media (max-width:767px) {
+    .bm-shop-hero-6 {
+    --section-height: 620px;
+  }
+  
+  }
+
+  .bm-shop-hero-6__slider {
+    position: absolute !important;
+    inset: 0;
+   	z-index: -1;
+  }

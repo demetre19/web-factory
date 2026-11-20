@@ -28,13 +28,13 @@ const {
 <div>
   <span class="logo">{brand}</span>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
+    <div class="header-page-4-container row between">
+      <div class="header-page-4__top row between">
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
       </div>
-      <div class="row between">
+      <div class="header-page-4__cta-text row between">
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div class="row between">
+        <div class="header-page-btn row between">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>

@@ -27,8 +27,8 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-34-container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
@@ -36,9 +36,9 @@ const {
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="testimonial-34-slide card">
                 <p class="text-fluid-0">{it.text}</p>
-                <div>
+                <div class="testimonial-34-slide__client-data">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

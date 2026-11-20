@@ -27,28 +27,28 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-content-75__container">
+      <div class="bm-content-75__intro">
         <div>
-          {heading && <h2 class="text-fluid-2">{heading}</h2>}
+          {heading && <h2 class="bm-content-75__heading text-fluid-2">{heading}</h2>}
         </div>
-        <div>
-          <div>
+        <div class="bm-content-75__content">
+          <div class="bm-content-75__content-intro">
             {fs && <p class="text-fluid-0">{fs}</p>}
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
           </div>
-          <div>
+          <div class="bm-content-75-media-list">
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-content-75-media-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-content-75-media-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-content-75__footer">
+        <div class="bm-content-75-data-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">

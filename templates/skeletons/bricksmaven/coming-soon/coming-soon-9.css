@@ -1,0 +1,68 @@
+  .bm-coming-soon-9__container {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .coming-soon-2__logo {
+    object-fit: contain;
+  }
+
+  .bm-coming-soon-9__content {
+    width: var(--measure);
+  }
+
+  .bm-coming-soon-9__intro {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-form-widget {
+    display: flex;
+    gap: var(--space-xs);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-coming-soon-9__background-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-form-widget {
+  flex-wrap: nowrap;
+  }
+  
+  .bm-form-widget input:focus {
+  	outline-offset: 0;
+  } 
+  
+  .bm-form-widget button[type=submit].bricks-button {
+      height: 100% !important;
+  }
+  
+  .bm-form-widget .submit-button-wrapper {
+      height: 100% !important;
+  }
+
+  .bm-coming-soon-9__background-image {
+  	clip-path: polygon(100% 0, 80% 0, 50% 50%, 80% 100%, 100% 100%);
+  
+  }

@@ -28,18 +28,18 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div>
-          {heading && <h2 class="text-fluid-2">{heading}</h2>}
-          {fs && <p class="text-fluid-0">{fs}</p>}
+      <div class="product-list-2__list">
+        <div class="product-list-2__content">
+          {heading && <h2 class="product-list-2__heading text-fluid-2">{heading}</h2>}
+          {fs && <p class="product-list-2__headline text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
         <div>
-          <div>
-            <div></div>
-            <div></div>
+          <div class="product-list-2-card">
+            <div class="product-list-2-card__content"></div>
+            <div class="product-list-notice-rect__sale-badge"></div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="product-list-2-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>

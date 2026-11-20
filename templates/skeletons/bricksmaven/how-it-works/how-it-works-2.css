@@ -1,0 +1,36 @@
+  .hworks-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-s);
+  }
+
+  .hworks-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-s);
+  }
+
+  .hworks-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .hworks-grid-ul {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-grid-ul li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:1.4rem;
+    padding-block:.4rem;
+    color:var(--action-primary);
+  }

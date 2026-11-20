@@ -1,0 +1,38 @@
+  .feature-27-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .feature-27-intro {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .bm-feature-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+    padding: 0 0 0 0;
+  }
+
+  .bm-feature-list-ul--alt {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-feature-list-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }

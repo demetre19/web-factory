@@ -1,0 +1,56 @@
+  .bm-shop-header-4 {
+    padding: 0 0 var(--space-s) 0;
+    row-gap: calc(var(--flow-spacing) / 2);
+    overflow: clip;
+  }
+
+  .bm-shop-header-4__container {
+    width: 100vw;
+    align-items: center;
+    margin: 0 0 0 -50vw;
+    padding: calc(var(--space-xs) / 2) var(--gutter) calc(var(--space-xs) / 2) var(--gutter);
+  }
+
+  .bm-shop-header-4-usp-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .bm-shop-header-4-usp-item {
+    width: auto;
+  }
+
+  .bm-shop-header-4__main-container {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-shop-header-4-item__brand {
+    width: auto;
+  }
+
+  .bm-shop-header-4-item__end {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    justify-content: flex-end;
+  }
+
+  .bm-shop-header-cart-search {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 3);
+    align-items: center;
+  }
+
+  /* Remove the left margin on the first link */
+  .bm-shop-header-4-item__nav-menu .bricks-nav-menu>li:first-child {
+    margin-inline-start: 0;
+  }

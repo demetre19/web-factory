@@ -1,0 +1,69 @@
+  .hworks-5-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .hworks-5-content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .hworks-intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .hworks-intro--alt {
+    text-align: left;
+  }
+
+  .hworks-intro__heading {
+    margin: 0 0 0 0;
+  }
+
+  .hworks-5-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .hworks-5-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: var(--space-s);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hworks-5-media__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .hworks-5-list {
+  /* Define & Initialize Counter */
+  	counter-reset: hworks-counter;
+    
+  }
+  
+  
+  .hworks-5-list li::before {
+    /* Increment Counter */
+    counter-increment: hworks-counter;
+    /* Display Counter */
+    content: counters(hworks-counter,".") " ";
+    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
+    padding-inline:1.5rem;
+    padding-block:.4rem;
+    color:var(--action-primary);
+  
+  }

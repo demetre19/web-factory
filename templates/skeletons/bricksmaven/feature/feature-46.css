@@ -1,0 +1,64 @@
+  .bm-feature-46__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-feature-46-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+  }
+
+  .bm-feature-46-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-46-card__icon-wrapper {
+    width: 56;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-feature-46__media {
+    width: auto;
+    overflow: hidden;
+  }
+
+  .bm-feature-46__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  @media (min-width:991px) {
+  .bm-feature-46-card:nth-child(1) {
+    grid-column:1/5;
+    grid-row:1/5;
+  }
+  
+  .bm-feature-46-card:nth-child(2) {
+    grid-column:1/5;
+    grid-row:5/9;
+  }
+  
+  .bm-feature-46-card:nth-child(3) {
+    grid-column:9/-1;
+    grid-row:5/9;
+  }
+  
+  .bm-feature-46-card:nth-child(4) {
+    grid-column:9/-1;
+    grid-row:9/-1;
+  }
+    
+  }

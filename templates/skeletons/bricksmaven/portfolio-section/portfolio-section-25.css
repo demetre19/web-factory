@@ -1,0 +1,113 @@
+  .bm-portfolio-section-25__container {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    text-align: left;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-25-list {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-portfolio-section-25-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .bm-portfolio-section-25-card__content {
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-25-card__intro {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-portfolio-section-25-card-terms-list {
+    display: flex;
+    padding: 0 0 0 0;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-portfolio-section-25-card__media {
+    display: flex;
+  }
+
+  .bm-portfolio-section-25-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-portfolio-section-25__container .intro__heading {
+    color: var(--fs-0);
+  }
+
+  @media (min-width:991px) {
+  
+  .bm-portfolio-section-25-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-portfolio-section-25-card:hover {
+    border-color: var(--fs-0);
+  }
+  
+  }
+
+  .bm-portfolio-section-25-card-terms-list {
+    list-style:none;
+  } 
+  
+  .bm-portfolio-section-25-card-terms-list li {
+    display:flex;
+    align-items: center;
+    gap: calc(var(--space-xs) / 2);
+  }
+  
+  .bm-portfolio-section-25-card-terms-list li:not(:first-child)::before {
+    content:'+';
+    color: var(--fs-0);
+  }
+
+  .bm-portfolio-section-25-card__results {
+    display:flex;
+    gap: calc(var(--space-xs) / 2);
+    align-items: baseline;
+  }
+  
+  .bm-portfolio-section-25-card__results::after {
+    content:attr(data-after);
+    font-size: var(--fs-0);
+    font-weight: 400;
+  }

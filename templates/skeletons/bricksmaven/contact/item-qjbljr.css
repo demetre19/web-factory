@@ -1,0 +1,57 @@
+  .contact-6-container {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: var(--space-xl);
+  }
+
+  .contact-6-details {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .contact-6-details__heading {
+    margin: 0 0 0 0;
+  }
+
+  .contact-6-ul-list {
+    padding: 0 0 0 var(--space-xs);
+    display: flex;
+    row-gap: var(--space-s);
+    flex-direction: column;
+  }
+
+  .contact-6-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .contact-6-list__text {
+    text-align: left;
+  }
+
+  .contact-6-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-l);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .contact-6-form__field .bricks-button {
+  padding: 1em 1.5em;
+  }
+  
+  .contact-6-form__field .required:after{
+  color: var(--action-primary);
+  }
+  
+  .contact-6-form__field input:focus {
+  outline-offset: 0;
+  }
+  
+  
+  .contact-6-form__field textarea:focus {
+  outline-offset: 0;
+  }

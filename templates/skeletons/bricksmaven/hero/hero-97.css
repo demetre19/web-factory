@@ -1,0 +1,50 @@
+  .bm-hero-97__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-hero-97__content {
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+    justify-content: space-between;
+  }
+
+  .bm-hero-97__top {
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-review-banner-1 {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .bm-testimonial-38-star-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-97__image {
+    object-fit: cover;
+  }
+
+  .bm-hero-97::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 75%;
+    background-color: var(--text-secondary);
+    z-index: -1;
+  }

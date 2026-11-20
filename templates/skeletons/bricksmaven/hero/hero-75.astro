@@ -27,30 +27,30 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-hero-75__container">
+      <div class="bm-hero-75__top">
+        <div class="bm-hero-75__content">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
+        <div class="bm-hero-75__cta">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
-      <div>
+      <div class="bm-hero-75-media">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-hero-75-image-wrapper__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>
       </div>
-      <div>
+      <div class="bm-hero-75-logo-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Brand" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-hero-75-logo-item card">
+              <figure class="bm-hero-75-logo-item__brand ratio-portrait"><img src="/media/placeholder.svg" alt="Brand" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>

@@ -27,31 +27,31 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-event-section-4__container">
+      <div class="bm-event-section__intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div>
+      <div class="bm-event-section-4-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
+            <div class="bm-event-section-4-card card">
+              <div class="bm-event-section-4-card__content">
+                <div class="bm-event-meta-info bm-event-meta-info--alt">
                   <span data-icon="lucide" aria-hidden="true"></span>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="bm-event-section-4-card__heading-wrapper">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="bm-event-section-4-card__speaker-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
-                  <div>
+                  <div class="bm-event-speaker-list">
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <div class="card">
-                          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                          <figure class="bm-event-speaker-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                         </div>
                       ))}
                     </div>
@@ -59,18 +59,18 @@ const {
                 </div>
                 <div></div>
                 <div>
-                  <div>
+                  <div class="bm-event-hart-molecule">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
-                  <div>
+                  <div class="bm-event-hart-molecule-active">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
               <div class="grid-auto gap-fluid-l">
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-event-section-4__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 <div>
-                  <div>
+                  <div class="bm-event-meta-info">
                     <span data-icon="lucide" aria-hidden="true"></span>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>

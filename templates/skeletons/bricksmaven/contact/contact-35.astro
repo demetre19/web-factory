@@ -27,28 +27,28 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-contact-35__container">
+      <div class="bm-contact-35__content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
-          <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-contact-widget bm-contact-widget--inline">
+          <div class="bm-contact-widget__avatar-wrapper">
+            <figure class="bm-contact-widget__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div>
-            <div>
-              <div></div>
+          <div class="bm-contact-widget__footer">
+            <div class="bm-contact-widget__notification">
+              <div class="bm-contact-widget__dot"></div>
             </div>
           </div>
         </div>
-        <div>
+        <div class="bm-contact-25-side-list-ul">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
-                  <a class="text-fluid-0" href={it.href}>{it.label}</a>
+              <div class="bm-contact-25-side-list-item card">
+                <div class="bm-contact-25-side-list-item__detail">
+                  <a class="bm-contact-25-side-list-item__cta text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="bm-contact-25-side-list-item__icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
             ))}
           </div>
@@ -56,7 +56,7 @@ const {
       </div>
       <div>
         <div>
-          <div>
+          <div class="bm-contact-tab__tab-menu">
             <div></div>
             <div></div>
           </div>
@@ -66,19 +66,19 @@ const {
               </form>
             </div>
             <div>
-              <div>
+              <div class="accordion-4-main">
                 <div class="grid-auto gap-fluid-m">
                   {(items || []).map((it) => (
-                    <div class="card">
-                      <div>
-                        <p class="text-fluid-0">{it.text}</p>
-                        <div>
+                    <div class="accordion-4-item card">
+                      <div class="accordion-4-head">
+                        <p class="accordion-4-head__title text-fluid-0">{it.text}</p>
+                        <div class="accordion-4-head__icon">
                           <span data-icon="lucide" aria-hidden="true"></span>
                           <span data-icon="lucide" aria-hidden="true"></span>
                         </div>
                       </div>
-                      <div>
-                        <p class="text-fluid-0">{it.text}</p>
+                      <div class="accordion-4-body">
+                        <p class="accordion-4-body__content text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                   ))}

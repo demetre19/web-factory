@@ -27,31 +27,31 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-testimonial-56__container">
+      <div class="intro intro--split">
+        <div class="intro__left-column">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <div>
+        <div class="intro__right-column">
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
       </div>
-      <div>
+      <div class="bm-testimonial-56-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div class="grid-auto gap-fluid-l">
+            <div class="bm-testimonial-56-card card">
+              <div class="bm-testimonial-56-card__top grid-auto gap-fluid-l">
                 <svg></svg>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-testimonial-56-card__avatar ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
-              <div>
+              <div class="bm-testimonial-56-card__content">
                 <p class="text-fluid-0">{it.text}</p>
-                <div>
+                <div class="bm-testimonial-56-card__user-data">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-testimonial-56-card__background-image ratio-portrait"><img src="/media/placeholder.svg" alt="Background Image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>

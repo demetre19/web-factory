@@ -1,0 +1,40 @@
+  .bm-how-it-works-25 {
+    overflow: clip;
+    padding: 0 0 var(--section-space-xl) 0;
+  }
+
+  .bm-how-it-works-25__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-how-it-works-25__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-how-it-works-25-card {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    text-align: left;
+    justify-content: flex-start;
+  }
+
+  .bm-how-it-works-25-card__top {
+    display: flex;
+    flex-wrap: nowrap;
+    align-self: flex-start;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+    flex-direction: row;
+  }
+
+  .bm-how-it-works-25__content::before {
+    content: '';
+    position: absolute;
+    inline-size: 100vw;
+    block-size: 100%;
+    background-color: var(--bg-canvas);
+    margin-inline-start: calc(-1 * 100vw);
+    z-index: 1;
+    
+  }

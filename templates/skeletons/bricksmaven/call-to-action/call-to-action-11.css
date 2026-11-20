@@ -1,0 +1,26 @@
+  .cta-11-container {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: var(--content-width);
+  }
+
+  .cta-11__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--space-xl) var(--space-l) var(--space-xl) min(22vw, 22rem);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .cta-11__media {
+    padding: var(--space-m) 0 var(--space-m) 0;
+  }
+
+  .cta-11__image {
+    object-fit: cover;
+    width: 100%;
+  }

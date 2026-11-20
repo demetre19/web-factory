@@ -27,21 +27,21 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+    <div class="contact-6-container">
+      <div class="contact-6-details">
+        {heading && <h2 class="contact-6-details__heading text-fluid-2">{heading}</h2>}
+        <div class="contact-6-ul-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="contact-6-list card">
                 <span data-icon="lucide" aria-hidden="true"></span>
-                <p class="text-fluid-0">{it.text}</p>
+                <p class="contact-6-list__text text-fluid-0">{it.text}</p>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div>
+      <div class="contact-6-form">
         <form novalidate>
         </form>
       </div>

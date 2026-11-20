@@ -1,0 +1,60 @@
+  .gridcard-16-container {
+    flex-direction: column;
+    row-gap: var(--space-s);
+  }
+
+  .gridcard-16-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    row-gap: var(--space-s);
+    text-align: center;
+  }
+
+  .gridcard-16-articles {
+    width: 100%;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-16-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gridcard-16-card__box {
+    width: 100%;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .gridcard-16-card__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .gridcard-16-card__media {
+    width: 100%;
+  }
+
+  .gridcard-16-card__img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .gridcard-16-articles__item:nth-child(3n+1) {
+  	grid-column: span 2;
+  }
+
+  .gridcard-16-card:hover .gridcard-16-card__title {
+  	color: var(--action-primary); 
+  }

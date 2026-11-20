@@ -27,12 +27,12 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-portfolio-section-18__container">
+      <div class="intro intro--split">
+        <div class="intro__left-column">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <div>
+        <div class="intro__right-column">
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
       </div>
@@ -40,13 +40,13 @@ const {
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
-                  <div>
-                    <div>
+              <div class="bm-portfolio-section-18-case-card card">
+                <div class="bm-portfolio-section-18-case-card__content">
+                  <div class="bm-portfolio-section-18-case-card__top">
+                    <div class="bm-portfolio-section-18-case-card__brand">
                       <svg></svg>
                     </div>
-                    <div>
+                    <div class="bm-portfolio-section-18-case-card__icon-wrapper">
                       <span data-icon="lucide" aria-hidden="true"></span>
                     </div>
                     <div>
@@ -56,7 +56,7 @@ const {
                   <h2 class="text-fluid-2">{it.title}</h2>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Case Image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="bm-portfolio-section-18-case-card__case-image ratio-portrait"><img src="/media/placeholder.svg" alt="Case Image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             ))}

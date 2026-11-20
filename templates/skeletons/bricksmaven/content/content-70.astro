@@ -27,16 +27,16 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-content-70__container">
+      <div class="bm-content-70__content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
       </div>
-      <div>
+      <div class="bm-content-70-usp-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-content-70-card card">
               <p class="text-fluid-0">{it.text}</p>
-              <div>
+              <div class="bm-content-70-card__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             </div>

@@ -27,15 +27,15 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div class="grid-auto gap-fluid-l">
-        {heading && <h1 class="text-fluid-4">{heading}</h1>}
+    <div class="hero-16-container">
+      <div class="hero-16-content grid-auto gap-fluid-l">
+        {heading && <h1 class="hero-16-content__title text-fluid-4">{heading}</h1>}
         {fs && <p class="text-fluid-0">{fs}</p>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="hero-16-content__background ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="hero-16-media__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
   </div>

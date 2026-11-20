@@ -27,16 +27,16 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-testimonial-45__container">
+      <div class="bm-testimonial-45__content">
+        <div class="bm-testimonial-45__top">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <div>
-          <div>
+        <div class="bm-testimonial-45__customer-list">
+          <div class="bm-testimonial-45-brand-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-testimonial-45-brand-item card">
                   <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               ))}
@@ -48,16 +48,16 @@ const {
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="bm-testimonial-45-card card">
+                <div class="bm-testimonial-45-card__content">
                   <p class="text-fluid-0">{it.text}</p>
                   <div>
                     <p class="text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-                <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <div class="bm-testimonial-45-card__media">
+                  <figure class="bm-testimonial-45-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               </div>
             ))}

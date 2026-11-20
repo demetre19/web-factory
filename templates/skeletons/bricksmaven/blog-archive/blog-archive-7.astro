@@ -27,17 +27,17 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="blog-archive-7-container">
       <div>
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
       </div>
-      <div>
-        <div>
-          <div>
-            <div></div>
+      <div class="blog-archive-7-body">
+        <div class="blog-archive-7-wrapper">
+          <div class="blog-archive-7-card">
+            <div class="blog-archive-7-card__category"></div>
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="blog-archive-7-card__thumb ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>

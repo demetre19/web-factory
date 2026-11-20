@@ -1,0 +1,15 @@
+  .gridcard-5-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .gridcard-5-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+  }
+
+  .gridcard-5-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }

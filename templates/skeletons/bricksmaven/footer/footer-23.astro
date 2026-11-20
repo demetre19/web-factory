@@ -27,13 +27,13 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
-        <div class="row between">
+    <div class="bm-footer-23__top-container row between">
+      <div class="bm-footer-23__contact row between">
+        <div class="bm-footer-23__top row between">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
         <div class="row between">
-          <div class="row between">
+          <div class="bm-footer-22-social-links row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>
@@ -45,12 +45,12 @@ const {
         </div>
       </div>
       <div>
-        <div class="row between">
+        <div class="footer-nav-wrapper footer-nav-wrapper-23 row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="row between">
+              <div class="footer-nav-column row between">
                 <h3 class="text-fluid-2">{it.title}</h3>
-                <div class="row between">
+                <div class="footer-menu row between">
                   <div class="row gap-fluid-m">
                     {((it.items || []) || []).map((it2) => (
                       <div>
@@ -65,16 +65,16 @@ const {
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-footer-23__contact__mid-container">
       <svg></svg>
     </div>
-    <div class="row between">
+    <div class="bm-footer-23__footer-container row between">
       <div>
-        <div>
-          <div class="row between">
+        <div class="footer-nav-legal">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
-                <div>
+                <div class="footer-legal__li">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}

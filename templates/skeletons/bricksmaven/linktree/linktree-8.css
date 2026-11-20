@@ -1,0 +1,72 @@
+  .bm-linktree-8 {
+    padding: 0 0 0 0;
+    overflow: hidden;
+  }
+
+  .bm-linktree-8__container {
+    flex-direction: row;
+    width: 100%;
+    padding: var(--section-space-m) 0 0 0;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-linktree-8__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  .bm-linktree-7-bio {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-7-bio__author-media {
+    width: auto;
+  }
+
+  .bm-linktree-7-bio__author-image {
+    object-fit: cover;
+    width: 64px;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-linktree-8__links {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-linktree-card {
+    text-align: center;
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    align-items: center;
+  }
+
+  .bm-linktree-8__background-image {
+    object-fit: cover;
+    width: 100vw;
+    margin: 0 0 0 -50vw !important;
+  }
+
+  .bm-linktree-8__content a {
+    color: var(--bg-canvas);
+  }

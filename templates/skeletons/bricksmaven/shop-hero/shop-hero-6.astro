@@ -27,9 +27,9 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-shop-hero-6__container">
+      <div class="bm-shop-hero-6__content">
+        <div class="bm-shop-hero-6__intro">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
@@ -39,7 +39,7 @@ const {
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-shop-hero-6__image ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>

@@ -28,15 +28,15 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="bm-linktree-5__bio-data">
         <div>
-          <div>
+          <div class="bm-linktree-5-bio-card">
             <div></div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-linktree-5-bio-card__media">
+              <figure class="bm-linktree-5-bio-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
             {fs && <p class="text-fluid-0">{fs}</p>}
-            <div>
+            <div class="bm-social-share bm-social-share--left">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">
@@ -47,11 +47,11 @@ const {
             </div>
           </div>
         </div>
-        <div>
-          <div>
+        <div class="bm-linktree-5__links">
+          <div class="bm-linktree-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-linktree-card card">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}
@@ -59,18 +59,18 @@ const {
           </div>
         </div>
         <div>
-          <div>
-            <div>
-              <div>
+          <div class="bm-linktree-5-newsletter-card">
+            <div class="bm-linktree-5-newsletter-card__content">
+              <div class="bm-linktree-5-newsletter-card__top">
                 {heading && <h2 class="text-fluid-2">{heading}</h2>}
               </div>
-              <div>
-                <form novalidate>
+              <div class="bm-linktree-5-newsletter-card__form-wrapper">
+                <form class="bm-form-widget bm-form-widget--stacked" novalidate>
                 </form>
               </div>
             </div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image newsletter" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-linktree-5-newsletter-card__image-newsletter ratio-portrait"><img src="/media/placeholder.svg" alt="Image newsletter" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>

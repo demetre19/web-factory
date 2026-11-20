@@ -27,27 +27,27 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-shop-header-4__container">
+      <div class="bm-shop-header-4-usp-list">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-shop-header-4-usp-item card">
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-shop-header-4__main-container">
       <div>
         <div></div>
       </div>
-      <div>
+      <div class="bm-shop-header-4-item__brand">
         <span class="logo">{brand}</span>
       </div>
-      <div>
+      <div class="bm-shop-header-4-item__end">
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-        <div>
+        <div class="bm-shop-header-cart-search">
           <div></div>
           <div></div>
         </div>

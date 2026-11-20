@@ -27,36 +27,36 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="contact-2-container">
+      <div class="contact-2-content">
+        <div class="contact-content__intro">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div>
-            <div></div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="contact-2-sales-grid-ul">
+          <div class="contact-2-sales-card">
+            <div class="contact-2-sales-card__contact-information"></div>
+            <div class="contact-2-sales-card__media">
+              <figure class="contact-2-sales-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
-          <div>
-            <div></div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="contact-2-sales-card">
+            <div class="contact-2-sales-card__contact-information"></div>
+            <div class="contact-2-sales-card__media">
+              <figure class="contact-2-sales-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>
-        <div>
+        <div class="contact-form">
           <form novalidate>
           </form>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="contact-aside">
+        <div class="contact-aside-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="contact-aside-list-item card">
                 <span data-icon="lucide" aria-hidden="true"></span>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

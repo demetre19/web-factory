@@ -1,0 +1,112 @@
+  .bm-hero-90 {
+    overflow: clip;
+  }
+
+  .bm-hero-90__container {
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-90__content {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .bm-review-widget {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    text-align: center;
+    align-items: center;
+  }
+
+  .bm-hero-90__review-widget {
+    width: auto;
+  }
+
+  .bm-team-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-team-media__image {
+    object-fit: cover;
+    width: 53;
+    overflow: hidden;
+  }
+
+  .bm-testimonial-38__star-ratings {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    row-gap: 0;
+  }
+
+  .bm-testimonial-38-star-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-90-slide {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-90-case {
+    overflow: clip;
+  }
+
+  .bm-hero-90-case__content {
+    justify-content: flex-end;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-hero-90-case__footer {
+    flex-wrap: nowrap;
+  }
+
+  .bm-hero-90-case__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-hero-90-testimonial {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-90-testimonial__client-meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-hero-90-testimonial__image {
+    width: 40px;
+    object-fit: cover;
+  }
+
+  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
+  	margin-inline-start: -20px;
+  }
+  
+  .bm-team-media:first-child {
+  	margin-inline-start: 0px;
+  }
+
+  /* Flip testimonial card in the even cards  */
+  .bm-hero-90__slider-nested .bm-hero-90-slide:nth-child(odd) .bm-hero-90-testimonial {
+    order: -1;
+  }
+  
+  .bm-hero-90__slider-nested .splide__track {
+    overflow: visible;
+  }

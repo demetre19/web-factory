@@ -1,0 +1,97 @@
+  .blog-archive-28__container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-28__archive-articles {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .blog-archive-28-list {
+    display: grid;
+  }
+
+  .blog-archive-28-article-card {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .blog-archive-28-article-card__meta-data {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--space-s);
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .blog-archive-28-article-card__terms-wrapper {
+    padding: calc(var(--space-xs) / 2) calc(var(--space-m) / 2) calc(var(--space-xs) / 2) calc(var(--space-m) / 2);
+    display: flex;
+    align-items: center;
+  }
+
+  .blog-archive-28-article-card__media {
+    overflow: hidden;
+    display: flex;
+  }
+
+  .blog-archive-28-article-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .blog-archive-28-article-card__content {
+    row-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .blog-archive-28-article-card__author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--space-xs);
+    flex-wrap: nowrap;
+  }
+
+  .blog-archive-28-article-card__author-image {
+    width: 40;
+    object-fit: cover;
+  }
+
+  .blog-archive-28-category-list-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-s) var(--space-s) var(--space-s) 0;
+  }
+
+  .blog-archive-28-category-list-items {
+  	transition: .3s ease;
+  }
+  
+  .blog-archive-28-category-list-items:hover {
+  	border-bottom: .1rem solid var(--color-line-default);
+  }
+  
+  
+  
+  .blog-archive-28-category-list-items__icon {
+  	transition: .3s ease;
+  }
+  
+  .blog-archive-28-category-list-items:hover .blog-archive-28-category-list-items__icon {
+  	transform: translateX(var(--space-xs));
+    font-size: 1.6rem;
+  }
+  
+  .blog-archive-28-category-list-items > a::after {
+  	content:"";
+    position: absolute;
+    inset:0;
+    cursor: pointer !important;
+  }

@@ -27,21 +27,21 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="product-list-1__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div class="grid-auto gap-fluid-l">
-          <div>
-            <div></div>
-            <div></div>
-          </div>
-          <div>
+      <div class="product-list-1__list">
+        <div class="product-list-1-card grid-auto gap-fluid-l">
+          <div class="product-list-1-card__content">
+            <div class="product-list-1-card__top"></div>
             <div></div>
           </div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="product-list-notice__wrapper">
+            <div class="product-list-notice-circle__sale-badge"></div>
+          </div>
+          <figure class="product-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

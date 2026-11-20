@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="content-30-container">
+      <div class="content-30__content-block">
+        <div class="intro intro--left">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div>
+        <div class="content-30-list">
+          <div class="content-30-item">
             <div></div>
             <div></div>
           </div>
-          <div>
+          <div class="content-30-item">
             <div></div>
             <div></div>
           </div>
@@ -46,8 +46,8 @@ const {
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
       <div class="grid-auto gap-fluid-l">
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div></div>
+        <figure class="content-30-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="content-30-item__media-content"></div>
       </div>
     </div>
   </div>

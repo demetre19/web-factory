@@ -27,21 +27,21 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-pricing-22__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="bm-pricing-22__pricing-wrapper">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="bm-pricing-22__pricing-cover card">
               <h2 class="text-fluid-2">{it.title}</h2>
-              <div>
+              <div class="bm-pricing-22-pricing-ul">
                 <div class="grid-auto gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
-                    <div class="card">
-                      <div>
+                    <div class="bm-pricing-22-card card">
+                      <div class="bm-pricing-22-card__top">
                         <div>
                           <h4 class="text-fluid-2">{it2.title}</h4>
                           <p class="text-fluid-0">{it2.text}</p>

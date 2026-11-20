@@ -1,0 +1,30 @@
+  .gridcard-9-grid-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .gridcard-9-card {
+    /* bm: box-shadow omitted — token layer owns elevation */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gridcard-9-card__box {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--space-s);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .gridcard-9-card__image {
+    width: 100%;
+    object-fit: cover;
+  }

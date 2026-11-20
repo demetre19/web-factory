@@ -1,0 +1,46 @@
+  .bm-contact-36__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-contact-36__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-36__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-team-list {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-team-card {
+    flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-team-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-team-card__contact-details {
+    flex-direction: column;
+    padding: 0 0 0 0;
+  }
+
+  .bm-team-card__item {
+    column-gap: calc(var(--flow-spacing) / 4);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bm-team-card__image {
+    object-fit: cover;
+    width: 100%;
+  }

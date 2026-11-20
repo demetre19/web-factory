@@ -27,16 +27,16 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="bm-author-page-2__container">
       <div class="grid-auto gap-fluid-l">
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-        <div>
-          <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-author-card-2__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-author-card-2__bottom">
+          <div class="bm-author-card-2__thumb">
+            <figure class="bm-author-card-2__thumb-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div>
+          <div class="bm-author-card-2__content">
             <div></div>
-            <div>
+            <div class="bm-social-share bm-social-share--left">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">
@@ -48,14 +48,14 @@ const {
           </div>
         </div>
       </div>
-      <div>
+      <div class="bm-author-page-2__post-container">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
-          <div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-author-page-2-post-list">
+          <div class="bm-blog-archive-6-card">
+            <div class="bm-blog-archive-6-card__media">
+              <figure class="bm-blog-archive-6-card__thumb ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
+            <div class="bm-blog-archive-6-card__meta">
               <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
             </div>
           </div>

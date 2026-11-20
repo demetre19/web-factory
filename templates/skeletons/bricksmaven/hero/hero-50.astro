@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="hero-50__container">
+      <div class="hero-50__content">
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
+        <div class="cta-combo">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
-      <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div class="hero-50__image-wrapper">
+        <figure class="hero-50__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div></div>
+      <div class="hide"></div>
     </div>
   </div>
 </div>

@@ -1,0 +1,37 @@
+  .counter-2-container {
+    row-gap: var(--space-s);
+    align-items: center;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .counter-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    width: var(--content-width);
+  }
+
+  .counter-2-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .counter-2-card__number {
+    width: 11.1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+  }

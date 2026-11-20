@@ -1,33 +1,39 @@
 ---
 /**
- * stat-band — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
+ * stat-band — gold exemplar (SB.5). A row of headline figures: icon
+ * chip when the item names one, the value at display size, the label
+ * small. Renders inside Section.astro (SB.2).
  */
+import { iconFor } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
+  heading = 'Section heading', fs = '',
   body = '', cta, items = [], image, h1,
 } = Astro.props;
 ---
 
 <div>
-  {h1 ? <h1 class="text-fluid-1">{heading}</h1> : <h2 class="text-fluid-1">{heading}</h2>}
+  {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
   <dl class="mt-stack grid-auto gap-stack">
-    {items.map((it) => (
+    {items.map((it) => {
+      const Icon = iconFor(it.icon);
+      return (
       <div>
+        {Icon && <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
         <dd class="text-fluid-4 font-bold">{it.value}</dd>
         <dt class="mt-fluid-s text-fluid--1">{it.label}</dt>
       </div>
-    ))}
+      );
+    })}
   </dl>
 </div>

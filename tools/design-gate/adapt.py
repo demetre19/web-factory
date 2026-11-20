@@ -30,6 +30,11 @@ REPO = os.path.normpath(os.path.join(HERE, '..', '..'))
 SKELETONS = os.path.join(REPO, 'templates', 'skeletons')
 sys.path.insert(0, HERE)
 import gate  # noqa: E402
+import clamp  # noqa: E402
+
+# block inline padding = the ACSS gutter (clamp.py); the DNA vars block
+# carries --gutter, the fallback is the ACSS default gutter
+_GUTTER = f"var(--gutter,{clamp.sizes()['gutter']})"
 
 
 # ------------------------------------------------------- adapt sheet
@@ -44,7 +49,7 @@ def adapt_sheet(scope):
     return (
         f'{s}{{background:var(--bg);color:var(--ink);'
         f'font-family:var(--font-body);'
-        f'padding:var(--pad-block) clamp(1.5rem,5cqi,4rem);'
+        f'padding:var(--pad-block) {_GUTTER};'
         f'container-type:inline-size}}'
         f'{s} h1,{s} h2,{s} h3{{font-family:var(--font-display);'
         f'font-size:var(--f-display);font-weight:var(--display-weight);'

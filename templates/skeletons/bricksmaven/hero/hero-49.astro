@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="hero-49__carousel-list">
       <div class="grid-auto gap-fluid-m">
         {(items || []).map((it) => (
-          <div class="card">
-            <div>
+          <div class="hero-49__carousel card">
+            <div class="hero-49-carousel-ul">
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="hero-49-carousel-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="hero-46-carousel-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="hero-49-carousel-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
               <div class="grid-auto gap-fluid-m">
                 {((it.items || []) || []).map((it2) => (
                   <div class="card">
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="hero-46-carousel-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 ))}
               </div>
@@ -53,11 +53,11 @@ const {
         ))}
       </div>
     </div>
-    <div></div>
-    <div>
+    <div class="hero-49__overlay"></div>
+    <div class="hero-49-container">
       {heading && <h1 class="text-fluid-4">{heading}</h1>}
       {fs && <p class="text-fluid-0">{fs}</p>}
-      <div>
+      <div class="cta-combo">
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
     </div>

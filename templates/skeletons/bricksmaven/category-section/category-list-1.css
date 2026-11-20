@@ -1,0 +1,29 @@
+  .category-list-1 {
+    row-gap: var(--flow-spacing);
+  }
+
+  .category-list-1__container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .category-list-1__list {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .category-list-1-card {
+    align-items: flex-start;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    text-align: left;
+  }

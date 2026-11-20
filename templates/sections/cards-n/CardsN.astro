@@ -3,40 +3,82 @@
  * cards-n — gold exemplar (SB.5). One claim, then the same card
  * repeated with a numeral, a title and one sentence. The numeral is
  * the motif: it recurs, so it reads as a system.
+ *
+ * Full-copy slots (§4.3): `copy` carries the COPY.json block —
+ * heading → answer → before → item cards → after in article order
+ * (F.1). `columns` on the plan row sets the grid track count via
+ * data-cols on the Section shell; the template only repeats.
  */
+import { Image } from 'astro:assets';
+import { inline, iconFor, mediaFor } from '../_shared/inline';
+import type { CopySlot, MediaInput } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string;
+             icon?: string; image?: MediaInput }[];
   image?: { src: string; alt: string };
   h1?: boolean;
   brand?: string;
+  copy?: CopySlot;
 }
 const {
   heading = 'Section heading', fs = '', body = '', eyebrow = '',
-  cta, items = [], image, h1, brand,
+  cta, items = [], image, h1, brand, copy,
 } = Astro.props;
-const sub = fs || body;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const answer = cp.answer || '';
+const sub = answer || fs || body;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const links = cp.links || [];
+const after = cp.after || [];
 ---
 <div>
   <div class="sec-head">
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    {h1 ? <h1 class="text-fluid-3">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
-    {sub && <p class="lede">{sub}</p>}
-  </div>
-  <ul class="mt-sec grid-auto gap-fluid-m list-plain">
-    {items.map((it, i) => (
-      <li class="card">
-        <span class="num">{String(i + 1).padStart(2, '0')}</span>
-        <h3 class="t0 sub-h">{it.title}</h3>
-        <p class="t0 sub-p">{it.text}</p>
-      </li>
+    {h1 ? <h1 class="text-fluid-3">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class="lede" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="t0 sub-p" set:html={inline(p)} />
     ))}
-  </ul>
+  </div>
+  {list.length > 0 && (
+    <ul class="mt-sec grid-auto list-plain">
+      {list.map((it, i) => {
+        const m = mediaFor(it.image);
+        const Icon = iconFor(it.icon);
+        return (
+        <li class="card">
+          {m && <figure class="card-media">
+            {m.mod
+              ? <Image src={m.mod} alt={m.alt || it.title || it.term || ''}
+                       widths={[480, 960]} sizes="(min-width: 48rem) 33vw, 100vw"
+                       loading="lazy" />
+              : <img src={m.src} alt={m.alt || it.title || it.term || ''}
+                     width="960" height="640" loading="lazy" />}
+          </figure>}
+          {Icon
+            ? <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>
+            : <span class="num">{String(i + 1).padStart(2, '0')}</span>}
+          <h3 class="t0 sub-h" set:html={inline(it.term || it.title)} />
+          <p class="t0 sub-p" set:html={inline(it.text)} />
+        </li>
+        );
+      })}
+    </ul>
+  )}
+  {links.map((l) => (
+    <p class="t0 sub-p" set:html={inline(l.text || '')} />
+  ))}
+  {after.map((p) => (
+    <p class="t0 sub-p" set:html={inline(p)} />
+  ))}
   {cta && <div class="cta-row mt-sec">
     <a class="wf-cta-button" href={cta.href}>{cta.label}</a>
   </div>}

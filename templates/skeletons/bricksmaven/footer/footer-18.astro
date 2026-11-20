@@ -27,9 +27,9 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="grid-auto gap-fluid-l">
-        <div class="row between">
+    <div class="bm-footer-18__container row between">
+      <div class="bm-footer-18__newsletter-block row between">
+        <div class="bm-footer-18__newsletter-intro row between">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
@@ -37,22 +37,22 @@ const {
           <form novalidate>
           </form>
         </div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-footer-18__newsletter-background-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div class="row between">
-        <div class="row between">
+      <div class="bm-footer-18__content row between">
+        <div class="bm-footer-18__left row between">
           <div>
             <span class="logo">{brand}</span>
           </div>
           <div class="row between"></div>
         </div>
         <div>
-          <div class="row between">
+          <div class="footer-nav-wrapper bm-footer-nav-wrapper--grid-3 row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="row between">
+                <div class="footer-nav-column row between">
                   <h3 class="text-fluid-2">{it.title}</h3>
-                  <div class="row between">
+                  <div class="footer-menu row between">
                     <div class="row gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <div>
@@ -67,8 +67,8 @@ const {
           </div>
         </div>
       </div>
-      <div class="row between">
-        <div class="row between">
+      <div class="bm-footer-18__footer row between">
+        <div class="bm-social-share bm-social-share--left row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
               <div>
@@ -77,7 +77,7 @@ const {
             ))}
           </div>
         </div>
-        <div></div>
+        <div class="bm-footer-18__copyright-wrapper"></div>
       </div>
     </div>
   </div>

@@ -28,29 +28,29 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="gridcard-11-wrapper">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="gridcard-11-media card">
+              <div class="gridcard-11-media__figure">
+                <figure class="gridcard-11-media__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div>
-        <div>
+      <div class="gridcard-11-wrapper">
+        <div class="gridcard-11-heading">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
-        <div>
-          <div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
+        <div class="gridcard-11-profile">
+          <div class="gridcard-11-profile__author">
+            <div class="gridcard-11-profile__figure">
+              <figure class="gridcard-11-profile__photo ratio-portrait"><img src="/media/placeholder.svg" alt="Photo" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div></div>
+            <div class="gridcard-11-profile__meta"></div>
           </div>
         </div>
       </div>

@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-27-container">
+      <div class="testimonial-27-quote">
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
+      <div class="testimonial-27-content">
+        <div class="testimonial-27-content__wrapper">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           <div>
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
-                  <p class="text-fluid-0">{it.text}</p>
+                  <p class="testimonial-27-content__desc text-fluid-0">{it.text}</p>
                 </div>
               ))}
             </div>
@@ -47,13 +47,13 @@ const {
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
-                  <div>
-                    <div>
+                  <div class="testimonial-27-content__profile">
+                    <div class="testimonial-27-content__meta">
                       <h4 class="text-fluid-2">{it.title}</h4>
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                     <div>
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                      <figure class="testimonial-27-content__photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                     </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@ const {
           </div>
         </div>
       </div>
-      <div></div>
+      <div class="testimonial-27-script"></div>
     </div>
   </div>
 </div>

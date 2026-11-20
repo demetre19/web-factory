@@ -27,20 +27,20 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        {heading && <h2 class="text-fluid-2">{heading}</h2>}
+    <div class="gridcard-12-container">
+      <div class="gridcard-12-ct">
+        {heading && <h2 class="gridcard-12-ct__title text-fluid-2">{heading}</h2>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
-      <div>
-        <div></div>
-        <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div class="gridcard-12-media">
+        <div class="gridcard-12-media__box--light"></div>
+        <div class="gridcard-12-media__wrapper">
+          <figure class="gridcard-12-media__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="gridcard-12-media__wrapper">
+          <figure class="gridcard-12-media__img ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div></div>
+        <div class="gridcard-12-media__box"></div>
       </div>
     </div>
   </div>

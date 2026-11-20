@@ -27,20 +27,20 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="hero-43-container-top">
       <div>
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
       </div>
     </div>
-    <div>
+    <div class="hero-43-container-footer">
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="hero-43__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
       <div>
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
+      <div class="hero-43__cta">
+        <div class="hero-43__cta-wrapper">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>

@@ -1,0 +1,35 @@
+  .testimonial-17-list-ul {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  .testimonial-17-list-card__wrapper {
+    gap: 0;
+    display: flex;
+    column-gap: 1.5rem;
+  }
+
+  .testimonial-17-list-card__content {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 7rem);
+    row-gap: 1.5rem;
+  }
+
+  .testimonial-17-list-card__review {
+    display: flex;
+    column-gap: .5rem;
+  }
+
+  .testimonial-17-list-card__image {
+    overflow: hidden;
+    width: 7rem;
+    object-fit: cover;
+  }
+
+  .testimonial-17-list-card__author span {
+  	text-decoration: underline;
+    text-decoration-color: var(--action-primary);
+    text-decoration-thickness: .2rem;
+  }

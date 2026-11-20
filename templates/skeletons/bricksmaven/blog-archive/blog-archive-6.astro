@@ -27,23 +27,23 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="blog-archive-6-container">
+      <div class="blog-archive-6-head">
+        <div class="blog-archive-6-head__intro">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <div>
+        <div class="blog-archive-6-head__search-wrapper">
           {fs && <p class="text-fluid-0">{fs}</p>}
           <div></div>
         </div>
       </div>
-      <div>
-        <div>
-          <div>
-            <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+      <div class="blog-archive-6-body">
+        <div class="blog-archive-6-wrapper">
+          <div class="blog-archive-6-card">
+            <div class="blog-archive-6-card__media">
+              <figure class="blog-archive-6-card__thumb ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
+            <div class="blog-archive-6-card__meta">
               <div></div>
               <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
             </div>

@@ -1,0 +1,30 @@
+  .content-4-container {
+    display: flex;
+    row-gap: var(--space-l);
+  }
+
+  .content-4__box {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .content-4__intro {
+    row-gap: var(--space-xs);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .content-4__text {
+  	columns: 2;
+  }
+  
+  @media (max-width:478px){
+  
+  	.content-4__text {
+  	columns: 1;
+  }
+  }

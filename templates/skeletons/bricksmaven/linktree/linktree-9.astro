@@ -27,15 +27,15 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-linktree-9__container">
+      <div class="bm-linktree-9__bio-cover">
+        <div class="bm-linktree-7-bio">
           <div></div>
-          <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Author Image" loading="lazy" width="900" height="600" /></figure>
+          <div class="bm-linktree-7-bio__author-media">
+            <figure class="bm-linktree-7-bio__author-image ratio-portrait"><img src="/media/placeholder.svg" alt="Author Image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
-        <div>
+        <div class="bm-social-share bm-social-share--left">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
@@ -45,24 +45,24 @@ const {
           </div>
         </div>
       </div>
-      <div>
-        <div>
+      <div class="bm-linktree-9__links">
+        <div class="bm-linktree-9__link-row">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
-          <div>
+          <div class="bm-linktree-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-linktree-card card">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}
             </div>
           </div>
         </div>
-        <div>
-          <div>
+        <div class="bm-linktree-9__link-row">
+          <div class="bm-linktree-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-linktree-card card">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}

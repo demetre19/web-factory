@@ -27,10 +27,10 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-32-container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div>
+        <div class="intro__text-cta-wrapper">
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
@@ -38,9 +38,9 @@ const {
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="testimonial-32-slide card">
               <p class="text-fluid-0">{it.text}</p>
-              <div>
+              <div class="testimonial-32-slide__rating-wrapper">
                 <div class="grid-auto gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div class="card">
@@ -49,11 +49,11 @@ const {
                   ))}
                 </div>
               </div>
-              <div>
-                <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
+              <div class="testimonial-32-slide__client-wrapper">
+                <div class="testimonial-32-slide__media">
+                  <figure class="testimonial-32-slide__client-image ratio-portrait"><img src="/media/placeholder.svg" alt="Client Image" loading="lazy" width="900" height="600" /></figure>
                 </div>
-                <div>
+                <div class="testimonial-32-slide__meta-data">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

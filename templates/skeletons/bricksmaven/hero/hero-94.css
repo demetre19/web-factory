@@ -1,0 +1,69 @@
+  .bm-hero-94 {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-94__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-hero-94__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-94__review-carousel {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-hero-94-review-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+    flex-wrap: nowrap;
+  }
+
+  .bm-hero-94-review-card__image {
+    object-fit: cover;
+    width: 64px;
+  }
+
+  .bm-hero-94-review-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-94-review-card__name {
+    padding: 0 0 0 var(--space-s);
+  }
+
+  .bm-hero-94-footer-container__logo-cover {
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    text-align: center;
+  }
+
+  .bm-hero-94-logo-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-94-logo-wrapper {
+    width: auto;
+  }
+
+  .bm-hero-94-review-card__name::before {
+    content: '-';
+    position: absolute;
+    left: 0;
+  }

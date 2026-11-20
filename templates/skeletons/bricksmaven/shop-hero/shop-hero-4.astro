@@ -27,15 +27,15 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="shop-hero-4__top-container">
+      <div class="shop-hero-4__navigation">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <div>
-          <div>
+          <div class="shop-hero-4__nav-items">
             <div>
-              <div>
+              <div class="shop-hero-4__nav-content">
                 <div>
-                  <div>
+                  <div class="shop-hero-4__nav-dropdown-list">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
                         <div class="card">
@@ -46,7 +46,7 @@ const {
                   </div>
                 </div>
                 <div>
-                  <div>
+                  <div class="shop-hero-4__nav-dropdown-list">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
                         <div class="card">
@@ -59,9 +59,9 @@ const {
               </div>
             </div>
             <div>
-              <div>
+              <div class="shop-hero-4__nav-content">
                 <div>
-                  <div>
+                  <div class="shop-hero-4__nav-dropdown-list">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
                         <div class="card">
@@ -72,7 +72,7 @@ const {
                   </div>
                 </div>
                 <div>
-                  <div>
+                  <div class="shop-hero-4__nav-dropdown-list">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
                         <div class="card">
@@ -95,23 +95,23 @@ const {
         </div>
       </div>
       <div>
-        <div class="grid-auto gap-fluid-l">
-          <div>
+        <div class="shop-hero-4__wrapper grid-auto gap-fluid-l">
+          <div class="shop-hero-4__wrapper-content">
             {fs && <p class="text-fluid-0">{fs}</p>}
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
           </div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="shop-hero-4__hero-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div>
+        <div class="shop-hero-4__search-wrapper">
           <div></div>
         </div>
       </div>
     </div>
     <div>
-      <div>
-        <div class="grid-auto gap-fluid-l">
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <div></div>
+      <div class="shop-hero-4-category-list">
+        <div class="shop-hero-4-category-card grid-auto gap-fluid-l">
+          <figure class="shop-hero-4-category-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="shop-hero-4-category-card__content"></div>
         </div>
       </div>
     </div>

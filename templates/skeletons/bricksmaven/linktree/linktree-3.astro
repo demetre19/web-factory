@@ -27,17 +27,17 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
-          <div>
+    <div class="bm-linktree-3__container">
+      <div class="bm-linktree-3__bio-wrapper">
+        <div class="bm-linktree-3-bio">
+          <div class="bm-linktree-3-bio__content">
             <div></div>
             {fs && <p class="text-fluid-0">{fs}</p>}
           </div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-linktree-3-bio__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
-          <div>
+          <div class="bm-social-share bm-social-share--left">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
                 <div class="card">
@@ -47,11 +47,11 @@ const {
             </div>
           </div>
         </div>
-        <div>
-          <div>
+        <div class="bm-linktree-3__link-wrapper">
+          <div class="bm-linktree-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
+                <div class="bm-linktree-card card">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}

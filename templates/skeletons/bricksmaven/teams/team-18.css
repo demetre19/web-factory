@@ -1,0 +1,89 @@
+  .bm-team-18__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-team-18-team-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-team-18-card {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .bm-team-18-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-team-18-card__top {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+  }
+
+  .bm-team-18-card__foot {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 0;
+  }
+
+  .bm-team-18-card__media {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-team-18-card__image {
+    object-fit: cover;
+    width: 124px;
+  }
+
+  /* Sets vertical bar on desktop */
+  .bm-team-18-card .bm-team-18-card__media:before {
+    content: '';
+    position: absolute;
+    inline-size: 50%;
+    block-size: 100%;
+    background-color: var(--bg-subtle);
+    left: 0;
+    transition: 0.5s ease;
+    
+  }
+  
+  /* Vertical bar fills the whole width on hover */
+  .bm-team-18-card:hover .bm-team-18-card__media:before {
+    inline-size: 100%;
+  }
+  
+  @media (max-width:991px) {
+     
+    /* Top and bottom padding on the media element to give the image some breathing space */
+    .bm-team-18-card .bm-team-18-card__media {
+      padding-block: var(--space-m);
+    }
+    
+    /* Flips vertical bar to horizontal on tablet breakpoint */
+    .bm-team-18-card .bm-team-18-card__media:before {
+  
+      inline-size: 100%;
+      block-size: 50%;
+       top: 0; 
+  }
+    /* Horizontal bar fills the whole height on hover */
+    .bm-team-18-card:hover .bm-team-18-card__media:before {
+    block-size: 100%;
+  }
+  }

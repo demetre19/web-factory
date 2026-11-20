@@ -28,19 +28,19 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="testimonial-15-content">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <div>
+            <div class="testimonial-15-content__card card">
+              <div class="testimonial-15-content__card-author">
+                <div class="testimonial-15-content__card-meta">
                   <h4 class="text-fluid-2">{it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="testimonial-15-content__card-photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="testimonial-15-content__card-icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
               <p class="text-fluid-0">{it.text}</p>
             </div>

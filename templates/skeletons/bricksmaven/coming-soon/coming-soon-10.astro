@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="bm-coming-soon-10__container">
       <div>
-        <svg></svg>
+        <svg class="coming-soon-2__logo"></svg>
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-coming-soon-10__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
-        <div>
+      <div class="bm-coming-soon-10__content">
+        <div class="bm-coming-soon-9__intro">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
-          <div>
-            <form novalidate>
+          <div class="bm-form">
+            <form class="bm-form-widget" novalidate>
             </form>
           </div>
         </div>
       </div>
-      <div>
+      <div class="bm-social-share">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">

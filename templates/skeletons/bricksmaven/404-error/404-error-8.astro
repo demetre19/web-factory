@@ -28,8 +28,8 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        <div>
+      <div class="error-8-grid-ul">
+        <div class="error-8-intro">
           <div>
             {heading && <h1 class="text-fluid-4">{heading}</h1>}
             {fs && <p class="text-fluid-0">{fs}</p>}
@@ -38,7 +38,7 @@ const {
         </div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="error-8-card card">
               <div>
                 <h3 class="text-fluid-2">{it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>

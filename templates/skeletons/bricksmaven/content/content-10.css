@@ -1,0 +1,29 @@
+  .content-10 {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xl);
+  }
+
+  .content-10-container {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+  }
+
+  .content-10__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--space-l);
+    justify-content: center;
+    margin: var(--section-space-xxl) 0 0 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .content-10__image {
+    object-fit: cover;
+    width: 100%;
+  }

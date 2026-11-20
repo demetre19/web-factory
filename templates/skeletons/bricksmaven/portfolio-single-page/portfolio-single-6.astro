@@ -28,14 +28,14 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="bm-portfolio-single-6__intro">
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
-        {fs && <p class="text-fluid-0">{fs}</p>}
-        <div></div>
-        <div>
+        {fs && <p class="bm-portfolio-single-6__intro-text text-fluid-0">{fs}</p>}
+        <div class="bm-portfolio-single-6-breadcrumbs"></div>
+        <div class="bm-portfolio-single-6-expertise-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="bm-portfolio-single-6-expertise-item card">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
@@ -43,48 +43,48 @@ const {
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-portfolio-single-6-case-container">
       <div>
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <div class="bm-portfolio-single-6-case-container__slide card">
+                <figure class="bm-portfolio-single-6-case-container__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             ))}
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <div>
-        <div></div>
+    <div class="bm-portfolio-single-6__content-container">
+      <div class="bm-portfolio-single-6__content">
+        <div class="bm-portfolio-single-6__column"></div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="bm-1col-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div></div>
-        <div>
-          <div>
-            <div></div>
+        <div class="bm-portfolio-single-6__column"></div>
+        <div class="bm-portfolio-single-testimonial-3">
+          <div class="testimonial-list-card__profile">
+            <div class="testimonial-list-card__meta"></div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="testimonial-list-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <div>
-          <div></div>
+      <div class="bm-portfolio-single-6__aside">
+        <div class="bm-live-website-btn">
+          <div class="bm-live-website-btn__dot"></div>
         </div>
         <div>
-          <div>
-            <div>
+          <div class="bm-contact-widget-2">
+            <div class="bm-contact-widget-2__footer">
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-contact-widget-2__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
               <div></div>
-              <div>
-                <div>
+              <div class="bm-contact-widget-link">
+                <div class="bm-contact-widget-link__icon-wrapper">
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
               </div>
@@ -93,13 +93,13 @@ const {
         </div>
       </div>
     </div>
-    <div>
-      <div>
-        <div class="grid-auto gap-fluid-l">
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <div class="bm-portfolio-single-6__footer-container">
+      <div class="bm-portfolio-5-related-list">
+        <div class="bm-portfolio-5-related-card grid-auto gap-fluid-l">
+          <figure class="bm-portfolio-5-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
-        <div class="grid-auto gap-fluid-l">
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <div class="bm-portfolio-5-related-card grid-auto gap-fluid-l">
+          <figure class="bm-portfolio-5-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>

@@ -1,0 +1,100 @@
+  .bm-hero-92 {
+    padding: 0 0 0 0;
+  }
+
+  .bm-hero-92__container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-hero-92__intro {
+    padding: var(--section-space-m) 0 0 0;
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-92__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-92__heading {
+    width: 130%;
+  }
+
+  .bm-hero-92__case-cover {
+    width: 100%;
+    margin: 0 0 calc(-1 * var(--section-space-xxl)) 0;
+  }
+
+  .bm-hero-90-slide {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-hero-90-case {
+    overflow: clip;
+  }
+
+  .bm-hero-90-case__content {
+    justify-content: flex-end;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-hero-90-case__footer {
+    flex-wrap: nowrap;
+  }
+
+  .bm-hero-90-case__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bm-hero-90-testimonial {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-testimonial-38-star-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .bm-hero-90-testimonial__client-meta {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-hero-90-testimonial__image {
+    width: 40px;
+    object-fit: cover;
+  }
+
+  .bm-hero-92__image {
+    object-fit: cover;
+    width: 50vw;
+  }
+
+  .bm-hero-92 {
+    --section-height: 1024px;
+    overflow-x: clip;
+  }
+  
+  .bm-hero-92::before {
+    content: '';
+    position: absolute;
+    inline-size: 100%;
+    block-size: var(--content-width);
+    background: linear-gradient(transparent 75%, color-mix(in srgb, var(--text-secondary) 20%, transparent));
+    inset-block-end: 0;
+    z-index: -1;
+  }
+  
+  @media (max-width:767px) {
+    .bm-hero-92 {
+    --section-height: 100%;
+  }
+  }

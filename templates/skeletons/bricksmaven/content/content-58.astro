@@ -27,24 +27,24 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-content-58__container">
+      <div class="bm-content-58__top">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-content-58__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
-        <div>
-          <div>
-            <div>
+      <div class="bm-content-58__content-wrapper">
+        <div class="bm-content-58__column">
+          <div class="bm-content-58__contact">
+            <div class="bm-content-58-list">
               <div></div>
               <div></div>
             </div>
           </div>
-          <div>
+          <div class="bm-content-58__social">
             {fs && <p class="text-fluid-0">{fs}</p>}
-            <div>
+            <div class="bm-social-share bm-social-share--left">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">
@@ -55,7 +55,7 @@ const {
             </div>
           </div>
         </div>
-        <div></div>
+        <div class="bm-content-58__content"></div>
       </div>
     </div>
   </div>

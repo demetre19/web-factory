@@ -4,31 +4,38 @@
  * contract; keep the skeleton. Renders inside Section.astro: no
  * <section>, no outer padding/background/max-width (SB.2).
  */
+import { iconFor } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
   cta?: { label: string; href: string };
   items?: { title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string }[];
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
   image?: { src: string; alt: string };
   h1?: boolean;
 }
 const {
-  heading = 'Section heading', fs = 'The first sentence a reader needs.',
+  heading = 'Section heading', fs = '',
   body = '', cta, items = [], image, h1,
 } = Astro.props;
 ---
 
 <div>
-  {h1 ? <h1 class="text-fluid-2">{heading}</h1> : <h2 class="text-fluid-2">{heading}</h2>}
-  <p class="mt-stack max-w-prose text-fluid-0">{fs}</p>
+  {h1 ? <h1 class="text-fluid-4">{heading}</h1> : <h2 class="text-fluid-3">{heading}</h2>}
+  {fs && <p class="mt-stack max-w-prose text-fluid-0">{fs}</p>}
   <div class="mt-fluid-l grid gap-stack md:grid-cols-2">
-    {items.slice(0, 2).map((it) => (
-      <div class="rounded-card border border-muted p-fluid-m">
-        <h3 class="text-fluid-1">{it.title}</h3>
+    {items.slice(0, 2).map((it) => {
+      const Icon = iconFor(it.icon);
+      return (
+      <div class="card">
+        {Icon &&
+          <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
+        <h3 class="t0 sub-h">{it.title}</h3>
         <p class="mt-fluid-s text-fluid-0">{it.text}</p>
       </div>
-    ))}
+      );
+    })}
   </div>
 </div>

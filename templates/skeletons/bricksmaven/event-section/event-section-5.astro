@@ -27,17 +27,17 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-event-section-5__container">
+      <div class="bm-event-section__intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
       <div>
-        <div>
+        <div class="bm-event-section-5-accordion">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <div>
+                <div class="bm-event-section-5-accordion__title">
                   <h3 class="text-fluid-2">{it.title}</h3>
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
@@ -45,14 +45,14 @@ const {
                   <div>
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
-                        <div class="card">
+                        <div class="bm-event-section-5-accordion-event-card card">
                           <p class="text-fluid-0">{it2.text}</p>
-                          <div>
+                          <div class="bm-event-section-5-accordion-event-card__heading-wrapper">
                             <h2 class="text-fluid-2">{it2.title}</h2>
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
                           <p class="text-fluid-0">{it2.text}</p>
-                          <div>
+                          <div class="bm-event-meta-info bm-event-meta-info--alt">
                             <span data-icon="lucide" aria-hidden="true"></span>
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>

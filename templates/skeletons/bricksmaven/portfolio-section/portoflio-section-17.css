@@ -1,0 +1,103 @@
+  .bm-portoflio-section-17 {
+    row-gap: var(--space-s);
+    overflow: clip;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-portfolio-section-17-case-container {
+    align-items: flex-start;
+    overflow: clip;
+  }
+
+  .bm-portfolio-section-17-case-container__content {
+    width: 100%;
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: flex-end;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-portfolio-section-17-case-container__footer {
+    overflow: clip;
+    flex-wrap: nowrap;
+  }
+
+  .bm-portfolio-section-17-case-container__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  @media (min-width: 1329px) {
+  
+  .bm-portfolio-section-17-case-container {
+    width: calc(((100vw - var(--content-width)) / 2) + var(--content-width));
+    max-width: calc(((100vw - var(--content-width)) / 2) + var(--content-width));
+    margin-inline-start:calc(((99.3% - var(--content-width)) / 2)) ;
+    position: relative;
+  }
+  
+  }
+
+  /* Make Slide Cards visible */
+  .bm-portfolio-section-17-case-container__slider-nested .splide__track {
+      overflow: visible;
+  }
+  
+  /* ARROWS */
+  @layer bricks {
+      .bm-portfolio-section-17-case-container__slider-nested .splide__arrows.custom {
+      	display: flex !important;
+        flex-direction: column;
+    		gap: var(--space-s);
+      }
+    }
+  
+  .bm-portfolio-section-17-case-container__slider-nested .splide__arrows {
+    position: absolute;
+    top: 50%; 
+    transform: translateY(-30%);
+    left: var(--space-l);
+    
+  }
+  
+  .bm-portfolio-section-17-case-container__slider-nested .splide__arrow {
+      position: static;
+    transition: 1s ease;
+  
+  }
+  
+  .bm-portfolio-section-17-case-container__slider-nested .splide__arrow:hover {
+      border: 1px solid var(--bg-subtle);
+      border-radius: 100%;
+    background-color: var(--action-primary);
+    color: var(--bg-canvas);
+  }
+  
+  
+  /* SLIDE CARD */
+  .bm-portfolio-section-17-case-container__slider-nested .bm-portfolio-section-17-case-container__slide {
+    transition: .5s ease;
+  }
+  
+  /* Add Blur to next slide */
+  .bm-portfolio-section-17-case-container__slider-nested .bm-portfolio-section-17-case-container__slide:not(.is-visible) {
+    filter: blur(3px);
+    opacity: .5;
+  }
+  
+  /* Move text out of the view */
+  .bm-portfolio-section-17-case-container__slide .bm-portfolio-section-17-case-container__text {
+    transition: .5s ease;
+  }
+  
+  .bm-portfolio-section-17-case-container__slide:hover .bm-portfolio-section-17-case-container__text {
+    margin-block-start: -30px;
+  }

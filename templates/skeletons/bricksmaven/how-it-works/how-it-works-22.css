@@ -1,0 +1,57 @@
+  .hworks-22-container {
+    align-items: center;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .hworks-22-tab-menu {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hworks-22-tabs__content {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .hworks-22-tabs__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .hworks-22-tabs__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .hworks-22-tabs {
+  	display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-m);
+    width: 100%;
+    max-width: 76rem;
+  }
+  
+  .hworks-22-tab-menu {
+  	grid-column:span 2;
+  }
+  
+  .hworks-22-tab-content {
+  	grid-column:span 10;
+  }
+
+  .hworks-22-tab-menu::before {
+  	content: "";
+    position: absolute;
+    width: .1rem;
+    height: 100%;
+    border: .1rem solid var(--action-primary);
+  }

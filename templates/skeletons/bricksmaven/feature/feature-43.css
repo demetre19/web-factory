@@ -1,0 +1,48 @@
+  .bm-feature-43 {
+    overflow: hidden;
+  }
+
+  .bm-feature-43__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-feature-43__image {
+    width: 100%;
+    object-fit: cover;
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-feature-43-grid-ul {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-feature-43-card {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-feature-43::before {
+  	content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 480px;
+    background-color: var(--bg-subtle);
+    z-index: -1;
+  }

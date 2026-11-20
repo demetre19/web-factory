@@ -28,19 +28,19 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="pricing-7-content">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="pricing-7-card card">
               <h3 class="text-fluid-2">{it.title}</h3>
               <div>
                 <div class="grid-auto gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
-                    <div class="card">
+                    <div class="bm-li-benefits card">
                       <span data-icon="lucide" aria-hidden="true"></span>
                       <p class="text-fluid-0">{it2.text}</p>
                     </div>

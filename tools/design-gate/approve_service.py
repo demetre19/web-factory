@@ -1,40 +1,64 @@
 #!/usr/bin/env python3
-"""approve_service.py — the only process that writes operator approvals.
+"""approve_service.py — the operator's pick surface (the ONLY
+process that writes approval records).
 
-Trust model (documented honestly): this service runs under the
-orchestrator's control and holds the signing key
-(~/.web-factory/operator.key, 0600). A designer/builder agent cannot
-record an approval through the pipeline: the record needs a
-single-use NONCE the operator's channel minted (the picker's
-"Approve" button POSTs here; the orchestrator mints one for a chat
-approval), and every approval re-verifies that nonce's signed
-issue+consume events on read. Same-user processes on one machine
-cannot be made cryptographically unforgeable — the key is
-same-uid-readable, so a same-uid attacker can sign a registry; the
-registry is tamper-evident, not tamper-proof. Every NON-same-uid
-path is closed: loopback-only Host, same-origin Origin (cross-origin
-POSTs refused), JSON-only, per-page token on spends, single-use
-consumed-event ledger, no env-var or free-text bypass.
+Model (user decree): the human picks by pressing the picker's own
+"Pick this layout" / "Pick this look" button (button.pick[data-d])
+in the page this service serves — no terminal, no dialogs, no typed
+confirmations. That click POSTs /approve with the page token + the
+nonce minted when THAT page was served; the record is Ed25519-signed
+by the service key and verifies offline (approval_key.verify_approval).
+Card bodies, tabs and viewport-size buttons record nothing.
+
+Picks: w3 = layout in preview/layouts.html; w4 = look in
+preview/variants.html (or the fine round). The record binds
+{wave, pipeline(realpath), design, inputs hash, dna, run token, ts};
+a changed input or a different run token voids it at gate time
+(`/confirm` re-signs the SAME pick to the new inputs/run).
+
+Honest limits (§6.4): the signing seed is a same-uid file —
+records are tamper-evident, not tamper-proof; the harness tool
+fence is what denies agents this service and the key file. The
+bindings below are what make records traceable to a rendered
+click surface: every mutation requires the per-page token,
+nonces are single-use ledger-bound, the design must be an option
+in the served HTML, and the ledger records issue/consume.
 
 Commands:
-    approve_service.py serve [--port 4173]     orchestrator runs this
-    approve_service.py nonce <wave> <pipeline> mint a one-time nonce (TTY only)
-    approve_service.py record <wave> <pipeline> --nonce N [--design D] [--chat TEXT]
+    approve_service.py serve [--port 4173]    the pick surface
+    approve_service.py promote --site X --decision approved|rejected
+                                              (candidate registry; TTY)
 
-HTTP (127.0.0.1 only, X-WF-Page-Token on spends — GET /page-token):
-    POST /nonce   {wave, pipeline}              → {nonce}
-    POST /approve {wave, pipeline, nonce, design?, chat?} → {ok|error}
+HTTP (127.0.0.1 only, X-WF-Page-Token on every mutation):
+    GET  /health                     → {svc, version}
+    GET  /picker?pipeline=..&wave=w3|w4[&kind=layouts|variants|fine]
+                                   → the picker page + click JS
+    GET  /page-token                 → {token}   (picker JS origin)
+    POST /nonce   {wave, pipeline}   → {nonce}
+    POST /approve {wave, pipeline, nonce, design, chat?}
+                                   → {ok|error} — signs + writes
+    POST /confirm {wave, pipeline}   → re-signs the existing pick
+                                       against current inputs
+                                       (post-projection rebind)
     POST /promote {site, decision, pipeline?} → {ok|error}
-      (candidate review: approved → endorsed tier, rejected →
-       excluded/contrast; the registry owns the record)
 """
 import argparse, datetime, hashlib, hmac, json, os, re, secrets, sys
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import gate as G
 
 ORDER = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
+VERSION = 'wf-approve-service-v2'
+PORT = 4173
+
+# the file the picker page is rendered from, per wave/kind
+_PICKER_FILES = {
+    ('w3', 'layouts'): 'preview/layouts.html',
+    ('w4', 'variants'): 'preview/variants.html',
+    ('w4', 'fine'): 'preview/fine.html',
+}
 
 
 def _nonces_dir():
@@ -51,10 +75,12 @@ def issue_nonce(pipeline, wave):
     """Mint a single-use approval nonce bound to wave+pipeline+inputs."""
     if wave not in G.APPROVABLE:
         return None, f'{wave} is not an approval point'
-    pd = os.path.abspath(pipeline)
-    if not os.path.isdir(pd):
+    if not os.path.isdir(pipeline):
         return None, f'pipeline {pipeline} not found'
-    ctx = G.Ctx(pd)
+    ctx = G.Ctx(pipeline)
+    # canonical (realpath) — gate's X.3 compares this against ctx.dir,
+    # so a symlinked pipeline path (macOS /tmp) must not diverge
+    pd = ctx.dir
     ih = G._h(G.input_hashes_for(ctx, wave))
     rec = {'wave': wave, 'pipeline': pd, 'inputs': ih, 'used': False,
            'ts': datetime.datetime.now().isoformat(timespec='seconds'),
@@ -137,9 +163,28 @@ def consume_nonce(nonce):
     return rec, None
 
 
+def _design_options(ctx, wave):
+    """The design ids the wave's rendered pickers offer — a click can
+    only bind to one of them (F-27)."""
+    blocks = {}
+    rels = (['preview/layouts.html'] if wave == 'w3'
+            else ['preview/variants.html', 'preview/fine.html'])
+    for rel in rels:
+        cand = ctx.find(rel)
+        if not cand:
+            continue
+        blocks.update(G._design_blocks(
+            open(cand, encoding='utf-8', errors='replace').read()))
+    return blocks
+
+
 def record_approval(wave, pipeline, nonce=None, design=None,
-                    chat=None, by='operator-service'):
-    """Verify + write the signed approval. Returns (exit_code, text)."""
+                    chat=None):
+    """Spend a picker nonce + record the operator's signed pick.
+    ONLY the /approve handler calls this — a nonce (minted when the
+    picker page was served) and a design from the served HTML are
+    both required; there is no nonce-free path. Returns
+    (exit_code, text)."""
     ctx = G.Ctx(pipeline)
     ctx.wave = wave
     if wave not in ORDER:
@@ -147,41 +192,28 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     if wave not in G.APPROVABLE:
         return 2, (f'{wave} is not an approval point '
                    f'(approvable: {sorted(G.APPROVABLE)})')
-    if wave == 'w4' and not nonce:
-        return 1, ('approve REFUSED: w4 is the DNA v1 lock — it '
-                   'approves only via a consumed service nonce '
-                   '(run.py nonce w4 <dir>, then the picker/chat '
-                   'route). THE lock point, one documented channel.')
-    nrec = None
-    if nonce:
-        nrec, err = consume_nonce(nonce)
-        if err:
-            return 1, f'approve REFUSED: {err}'
-        if os.path.abspath(pipeline) != nrec['pipeline'] \
-                or nrec['wave'] != wave:
-            return 1, 'approve REFUSED: nonce bound to a different ' \
-                      'wave/pipeline'
-        if nrec['inputs'] != G._h(G.input_hashes_for(ctx, wave)):
-            return 1, 'approve REFUSED: inputs changed since the nonce ' \
-                      'was minted — re-render the picker'
-    # the picked design must be a real option in the picker's rendered
-    # output — free text can never bind (F-27)
-    if design:
-        blocks = {}
-        for cand in (ctx.find('preview/layouts.html') if wave == 'w3'
-                     else ctx.find('preview/variants.html'),
-                     ctx.find('preview/fine.html')):
-            if not cand:
-                continue
-            blocks = G._design_blocks(
-                open(cand, encoding='utf-8',
-                     errors='replace').read())
-            if design in blocks:
-                break
-        else:
-            return 1, (f'approve REFUSED: design "{design}" is not an '
-                       'option in the rendered picker — the pick '
-                       'binds to rendered output, not a name')
+    if not nonce:
+        return 1, ('approve REFUSED: no nonce — pick records come '
+                   'only from a served picker page (the page\'s '
+                   'click JS spends the nonce it was served with)')
+    nrec, err = consume_nonce(nonce)
+    if err:
+        return 1, f'approve REFUSED: {err}'
+    if ctx.dir != nrec['pipeline'] or nrec['wave'] != wave:
+        return 1, 'approve REFUSED: nonce bound to a different ' \
+                  'wave/pipeline'
+    if nrec['inputs'] != G._h(G.input_hashes_for(ctx, wave)):
+        return 1, 'approve REFUSED: inputs changed since the nonce ' \
+                  'was minted — re-render the picker'
+    # the picked design must be a real option in the rendered
+    # picker — free text can never bind (F-27)
+    if not design:
+        return 1, ('approve REFUSED: no design — a pick is a card '
+                   'click, not free text')
+    if design not in _design_options(ctx, wave):
+        return 1, (f'approve REFUSED: design "{design}" is not an '
+                   'option in the rendered picker — the pick '
+                   'binds to rendered output, not a name')
     fails = G.ancestry_fails(ctx) if wave != 'w0' else []
     if fails:
         return 1, 'approve REFUSED — earlier waves are not clean: ' \
@@ -189,14 +221,131 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     g = G.load_gates(ctx)
     if not (g.get(wave) or {}).get('pass'):
         return 1, f'approve REFUSED: {wave} has not passed'
+    # the record binds this pipeline run (X.2/X.3) — an approval
+    # captured inside one run cannot be replayed under another
+    run_tok = None
+    try:
+        run_tok = json.load(open(os.path.join(
+            ctx.dir, 'RUN.json'))).get('token')
+    except Exception:
+        pass
+    try:
+        body = G.approval_body(ctx, wave, by='operator-service',
+                               design=design, nonce=nonce, chat=chat,
+                               run=run_tok)
+    except (AttributeError, TypeError):
+        body = _approval_body(ctx, wave, design=design, nonce=nonce,
+                              chat=chat, run=run_tok)
+    import approval_key as AK
+    body['sig'] = AK.sign_body(body, _seed())
+    # w4 locks the DNA map to v1 — the look lock, once, here, and
+    # only for a signed pick
     if wave == 'w4' and G.lock_dna_map(ctx):
-        pass  # the DNA map is now v1 — the look lock, once, here
-    rec = G.write_approval(ctx, wave, by=by, design=design,
-                           nonce=nonce, chat=chat)
-    extra = f' · design {design}' if design else ''
+        pass
+    rec = _write_approval(ctx, wave, body)
     locked = ' · DNA locked to v1' if wave == 'w4' else ''
-    return 0, (f'approved {wave} · {rec["inputs"]} · {rec["dna"]}'
-               f'{extra}{locked}')
+    return 0, (f'approved {wave} · pick {design} · {rec["inputs"]} '
+               f'· {rec["dna"]}{locked}')
+
+
+def confirm_approval(wave, pipeline):
+    """Re-sign an EXISTING verified pick against the wave's current
+    inputs — the projection rebind (after layout_pick re-plans for
+    the pick, the wave's recorded inputs legitimately changed and
+    the SAME pick is re-signed; the design can never change here).
+    /confirm spends page-token only — there is nothing new for an
+    operator to decide."""
+    ctx = G.Ctx(pipeline)
+    ctx.wave = wave
+    if wave not in G.APPROVABLE:
+        return 2, f'{wave} is not an approval point'
+    allr = G.read_approvals(ctx) or {}
+    rec = allr.get(wave)
+    import approval_key as AK
+    ok, why = AK.verify_approval(rec or {})
+    if not ok:
+        return 1, (f'confirm REFUSED: no verified {wave} pick to '
+                   f're-bind ({why}) — the pick is the operator\'s '
+                   'click first')
+    cur = G._h(G.input_hashes_for(ctx, wave))
+    # the record must also be bound to THIS run (a re-run mints a new
+    # token) — "same inputs" is not enough for X.3 to accept it
+    try:
+        run_tok = json.load(open(os.path.join(
+            ctx.dir, 'RUN.json'))).get('token')
+    except Exception:
+        run_tok = None
+    if rec.get('inputs') == cur and \
+            (not run_tok or str(rec.get('run')) == str(run_tok)):
+        return 0, f'{wave} pick already bound to current inputs'
+    body = dict(rec)
+    body.pop('sig', None)
+    body['inputs'] = cur
+    sl = G.dna_slices(G.dna_map(ctx) or {})
+    body['dna'] = {'core': sl.get('core'),
+                   'structure': sl.get('structure')}
+    body['ts'] = datetime.datetime.now().isoformat(
+        timespec='seconds')
+    try:
+        body['run'] = json.load(open(os.path.join(
+            ctx.dir, 'RUN.json'))).get('token')
+    except Exception:
+        body.pop('run', None)
+    body['sig'] = AK.sign_body(body, _seed())
+    out = _write_approval(ctx, wave, body)
+    return 0, (f'confirmed {wave} · pick {out.get("design")} re-bound '
+               f'to {out["inputs"]}')
+
+
+_SEED = None
+
+
+def _seed():
+    """The service's Ed25519 seed — auto-provisioned at startup."""
+    global _SEED
+    if _SEED is None:
+        import approval_key as AK
+        _pub, _SEED = AK.ensure_signing_key()
+    return _SEED
+
+
+def _approval_body(ctx, wave, design=None, nonce=None, chat=None,
+                   run=None):
+    """Fallback body builder matching gate.approval_body — used only
+    if an older gate.py lacks it. Field set is part of the X.3
+    contract with approval_key.verify_approval."""
+    sl = G.dna_slices(G.dna_map(ctx) or {})
+    rec = {'wave': wave,
+           'inputs': G._h(G.input_hashes_for(ctx, wave)),
+           'dna': {'core': sl.get('core'),
+                   'structure': sl.get('structure')},
+           'by': 'operator-service',
+           'ts': datetime.datetime.now().isoformat(
+               timespec='seconds')}
+    if design:
+        rec['design'] = str(design)[:40]
+    if nonce:
+        rec['nonce'] = nonce
+    if chat:
+        rec['chat'] = str(chat)[:300]
+    if run:
+        rec['run'] = run
+    return rec
+
+
+def _write_approval(ctx, wave, rec):
+    """Persist the signed record — the file write is machinery; the
+    signature already in `rec` is the operator-pick authority."""
+    import inspect
+    if 'rec' in inspect.signature(G.write_approval).parameters:
+        return G.write_approval(ctx, wave, rec=rec)
+    p = G.approvals_path(ctx)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    allr = G.read_approvals(ctx)
+    allr[wave] = rec
+    with open(p, 'w') as fh:
+        json.dump(allr, fh, indent=2, sort_keys=True)
+    return rec
 
 
 def _candidates_file(pipeline=None):
@@ -246,10 +395,9 @@ def record_candidate_decision(site, decision, pipeline=None):
 
 
 def _page_token():
-    """The per-page secret picker JS sends on spend calls — minted
-    once per service run, served only over loopback at GET
-    /page-token, required as X-WF-Page-Token on /approve + /promote
-    (A10: a cross-origin POST can arrive but can never carry it)."""
+    """The per-page secret picker JS sends on mutation calls —
+    minted once per service run, served to same-origin callers at
+    GET /page-token, required as X-WF-Page-Token on every POST."""
     global _TOKEN
     if _TOKEN is None:
         _TOKEN = secrets.token_hex(16)
@@ -257,6 +405,114 @@ def _page_token():
 
 
 _TOKEN = None
+
+
+def _picker_page(pipeline, wave, kind):
+    """Serve the wave's rendered picker HTML with the click-to-pick
+    script injected — the page gets a fresh nonce bound to
+    wave+pipeline+current inputs, the page token, and a handler
+    that POSTs /approve on a card click. Returns (code, bytes,
+    error_text)."""
+    ctx0 = G.Ctx(pipeline)
+    pd = ctx0.dir
+    rel = _PICKER_FILES.get((wave, kind))
+    if not rel:
+        return 404, b'', f'no {kind} picker for {wave}'
+    ctx = G.Ctx(pd)
+    fp = ctx.find(rel) or os.path.join(pd, rel)
+    if not os.path.isfile(fp):
+        return 404, b'', (f'{rel} not found — the pipeline renders '
+                          f'the picker before it stops for a pick')
+    html = open(fp, encoding='utf-8', errors='replace').read()
+    nonce, err = issue_nonce(pd, wave)
+    if not nonce:
+        return 400, b'', f'cannot mint a pick nonce: {err}'
+    # record which picker file the nonce's page served — /approve
+    # re-derives the option set from disk anyway
+    options = sorted(_design_options(ctx, wave))
+    banner = (
+        '<div id="wf-banner" style="position:fixed;left:0;right:0;'
+        'bottom:0;z-index:99999;padding:10px 16px;background:#0e1513;'
+        'color:#e8f2ee;font:14px/1.45 system-ui;box-shadow:0 -1px '
+        '6px #0004">pick a card — press <b>Pick this layout</b> / '
+        '<b>Pick this look</b> below the card you want. Your click '
+        'is recorded and signed; the pipeline continues after it.</div>'
+        '<style>body{padding-bottom:64px}</style>')
+    meta = (f'<meta name="wf-pick" data-wave="{wave}" '
+            f'data-pipeline="{pd}" data-nonce="{nonce}" '
+            f'data-token="{_page_token()}">')
+    script = f"""
+<script>
+(function() {{
+  var meta = document.querySelector('meta[name="wf-pick"]');
+  var OPTIONS = {json.dumps(options)};
+  // the rendered picker's OWN pick control is button.pick[data-d]
+  // ("Pick this layout" / "Pick this look"). Only that control (or,
+  // on an old page with no pick row, the card's pick affordance)
+  // records a pick — clicking a card body, a viewport-size button or
+  // a tab must never approve anything.
+  var HAS_CTRL = !!document.querySelector('.pick[data-d],[data-pick]');
+  function pickOf(el) {{
+    var ctl = el.closest('.pick[data-d],[data-pick]');
+    var card = ctl ? ctl.closest('article[id],[data-pane],[data-variant],'
+                                 + '[data-design]') : null;
+    if (!ctl && !HAS_CTRL) {{
+      // legacy page: the card itself is the pick target
+      card = el.closest('article[id],[data-pane],[data-variant],'
+                        + '[data-design]');
+    }}
+    if (!card) return null;
+    var cand = (ctl && (ctl.getAttribute('data-d')
+      || ctl.getAttribute('data-pick'))) || card.id
+      || card.getAttribute('data-pane')
+      || card.getAttribute('data-variant')
+      || card.getAttribute('data-design');
+    return OPTIONS.indexOf(cand) >= 0 ? {{id: cand, card: card}} : null;
+  }}
+  document.addEventListener('click', function(e) {{
+    var hit = pickOf(e.target);
+    if (!hit || hit.card.dataset.wfDone) return;
+    fetch('/approve', {{
+      method: 'POST',
+      headers: {{'Content-Type': 'application/json',
+                'X-WF-Page-Token': meta.dataset.token}},
+      body: JSON.stringify({{wave: meta.dataset.wave,
+        pipeline: meta.dataset.pipeline,
+        nonce: meta.dataset.nonce, design: hit.id}})
+    }}).then(function(r) {{ return r.json(); }}).then(function(j) {{
+      var b = document.getElementById('wf-banner');
+      if (j.ok) {{
+        b.textContent = '\\u2713 pick ' + hit.id + ' recorded — '
+          + 'return to the pipeline (or keep it running with --wait)';
+        b.style.background = '#166F64';
+        hit.card.dataset.wfDone = '1';
+        hit.card.style.outline = '3px solid #00B488';
+        document.querySelectorAll('.pick[data-d]').forEach(
+          function(x) {{ if (!hit.card.contains(x)) {{
+            x.disabled = true; x.style.opacity = '.35'; }} }});
+      }} else {{
+        b.textContent = '\\u2717 ' + (j.message || 'refused');
+        b.style.background = '#7a1f1f';
+      }}
+    }}).catch(function(err) {{
+      document.getElementById('wf-banner').textContent =
+        'service error: ' + err;
+    }});
+  }});
+}})();
+</script>"""
+    inject = banner + meta + script
+    m = re.search(r'</body\s*>', html, re.I)
+    html = (html[:m.start()] + inject + html[m.start():]
+            if m else html + inject)
+    # real-build pickers embed the astro-built pages in iframes whose
+    # src is the on-disk relative path (../site/dist/preview/…) — the
+    # service serves them back through /built/<pipeline-rel-path>.
+    html = html.replace('src="../site/',
+                        'src="/built/' +
+                        urllib.parse.quote(os.path.join(
+                            pd, 'site') + '/', safe=''))
+    return 200, html.encode('utf-8'), ''
 
 
 def _handler():
@@ -279,14 +535,24 @@ def _handler():
             self.end_headers()
             self.wfile.write(b)
 
-        def _guard(self):
-            """A10 — the service is a local, same-origin, JSON API:
-            browsers hitting it cross-origin are refused outright, and
-            a page-level secret (served only to loopback callers at
-            /page-token, where SOP keeps cross-origin reads away)
-            must accompany /approve and /promote spends."""
+        def _send_html(self, code, b):
+            self.send_response(code)
+            self.send_header('Content-Type', 'text/html; charset=utf-8')
+            self.send_header('Content-Length', str(len(b)))
+            self.end_headers()
+            self.wfile.write(b)
+
+        def _loopback(self):
             host = (self.headers.get('Host') or '').split(':')[0]
-            if host not in ('127.0.0.1', 'localhost', '::1'):
+            return host in ('127.0.0.1', 'localhost', '::1')
+
+        def _guard(self):
+            """A10 — a local, same-origin, JSON API: cross-origin
+            browser POSTs are refused outright, and every mutation
+            must carry the per-page token (served only to loopback
+            callers at /page-token, where SOP keeps cross-origin
+            reads away)."""
+            if not self._loopback():
                 self._send(403, {'error': 'host not loopback'})
                 return False
             origin = self.headers.get('Origin')
@@ -300,8 +566,7 @@ def _handler():
                     (self.headers.get('Content-Type') or ''):
                 self._send(415, {'error': 'application/json only'})
                 return False
-            if self.path in ('/approve', '/promote') and \
-                    self.headers.get('X-WF-Page-Token') != _page_token():
+            if self.headers.get('X-WF-Page-Token') != _page_token():
                 self._send(403, {'error': 'missing/invalid page token '
                                  '(GET /page-token from the picker '
                                  'server origin first)'})
@@ -309,11 +574,55 @@ def _handler():
             return True
 
         def do_GET(self):
+            if not self._loopback():
+                self._send(404, {'error': 'not found'})
+                return
+            if self.path == '/health':
+                self._send(200, {'svc': VERSION, 'ok': True})
+                return
             if self.path == '/page-token':
-                host = (self.headers.get('Host') or '').split(':')[0]
-                if host in ('127.0.0.1', 'localhost', '::1'):
-                    self._send(200, {'token': _page_token()})
+                self._send(200, {'token': _page_token()})
+                return
+            q = urllib.parse.urlsplit(self.path)
+            if q.path == '/picker':
+                args = dict(urllib.parse.parse_qsl(q.query))
+                wave = args.get('wave', 'w3')
+                kind = args.get('kind') or (
+                    'layouts' if wave == 'w3' else 'variants')
+                code, html, err = _picker_page(
+                    args.get('pipeline', ''), wave, kind)
+                if html:
+                    self._send_html(code, html)
+                else:
+                    self._send(code, {'error': err})
+                return
+            if q.path.startswith('/built/'):
+                # serve the pipeline's built pages + assets to the
+                # picker's iframes — path is the quoted absolute file
+                # under the served pipeline's site tree
+                fp = urllib.parse.unquote(q.path[len('/built/'):])
+                fp = os.path.normpath('/' + fp.lstrip('/'))
+                if not (os.path.isfile(fp) and
+                        re.search(r'/site/', fp)):
+                    self._send(404, {'error': 'not found'})
                     return
+                ext = os.path.splitext(fp)[1].lower()
+                mime = {'.html': 'text/html; charset=utf-8',
+                        '.css': 'text/css', '.js': 'text/javascript',
+                        '.svg': 'image/svg+xml',
+                        '.png': 'image/png', '.jpg': 'image/jpeg',
+                        '.jpeg': 'image/jpeg', '.webp': 'image/webp',
+                        '.woff': 'font/woff', '.woff2': 'font/woff2',
+                        '.avif': 'image/avif'}.get(ext,
+                                                  'application/octet-stream')
+                body = open(fp, 'rb').read()
+                self.send_response(200)
+                self.send_header('Content-Type', mime)
+                self.send_header('Content-Length', str(len(body)))
+                self.send_header('Cache-Control', 'no-store')
+                self.end_headers()
+                self.wfile.write(body)
+                return
             self._send(404, {'error': 'not found'})
 
         def do_POST(self):
@@ -333,15 +642,15 @@ def _handler():
                            {'nonce': nonce, 'error': None if nonce
                             else rec})
             elif self.path == '/approve':
-                if not body.get('nonce'):
-                    self._send(400, {'ok': False, 'message':
-                                     'HTTP approvals spend a service '
-                                     'nonce — POST /nonce first'})
-                    return
                 code, txt = record_approval(
                     body.get('wave', ''), body.get('pipeline', ''),
                     nonce=body.get('nonce'), design=body.get('design'),
                     chat=body.get('chat'))
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt})
+            elif self.path == '/confirm':
+                code, txt = confirm_approval(body.get('wave', ''),
+                                             body.get('pipeline', ''))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
             else:
@@ -353,9 +662,13 @@ def _handler():
 
 
 def serve(port):
+    """Boot the pick surface: provision the signing key (first
+    start only), publish its public half, then serve loopback."""
     from http.server import HTTPServer
-    print(f'approve_service on 127.0.0.1:{port} — operator approvals '
-          'only')
+    import approval_key as AK
+    pub, _ = AK.ensure_signing_key()
+    print(f'approve_service on 127.0.0.1:{port} — pick surface '
+          f'(key pub {pub[:16]}…)')
     HTTPServer(('127.0.0.1', port), _handler()).serve_forever()
 
 
@@ -363,46 +676,23 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=
                                  argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('cmd', choices=['serve', 'nonce', 'record',
-                                    'promote'])
-    ap.add_argument('wave', nargs='?')
+    ap.add_argument('cmd', choices=['serve', 'promote'])
     ap.add_argument('pipeline', nargs='?')
-    ap.add_argument('--port', type=int, default=4173)
-    ap.add_argument('--nonce')
-    ap.add_argument('--design')
-    ap.add_argument('--chat')
+    ap.add_argument('--port', type=int, default=PORT)
     ap.add_argument('--site')
     ap.add_argument('--decision', choices=['approved', 'rejected'])
     a = ap.parse_args(argv)
     if a.cmd == 'serve':
         serve(a.port)
         return 0
-    # operator authority lives behind two channels: an interactive
-    # TTY (chat flow) or the loopback HTTP service (picker flow).
-    # A non-interactive caller gets neither — a batch pipeline must
-    # never mint or spend authority on its own (A2/A3/A9/A10)
+    # candidate decisions stay operator-side interactive: the
+    # picker flow never calls promote headless
     if not sys.stdin.isatty():
-        print(f'{a.cmd} REFUSED: this command runs operator-side — '
-              'interactive terminal (chat) or the approve service '
-              '(picker) only')
+        print('promote REFUSED: interactive terminal or the picker '
+              'service only')
         return 1
-    if a.cmd == 'promote':
-        code, txt = record_candidate_decision(
-            a.site, a.decision, pipeline=a.pipeline)
-        print(txt)
-        return code
-    if not a.wave or not a.pipeline:
-        print('wave and pipeline required')
-        return 2
-    if a.cmd == 'nonce':
-        nonce, rec = issue_nonce(a.pipeline, a.wave)
-        if not nonce:
-            print(f'nonce REFUSED: {rec}')
-            return 1
-        print(nonce)
-        return 0
-    code, txt = record_approval(a.wave, a.pipeline, nonce=a.nonce,
-                                design=a.design, chat=a.chat)
+    code, txt = record_candidate_decision(a.site, a.decision,
+                                          pipeline=a.pipeline)
     print(txt)
     return code
 

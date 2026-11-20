@@ -30,12 +30,12 @@ const {
     <div class="sec-inner">
       <div>
         <div>
-          <div>
-            <div>
-              {heading && <h2 class="text-fluid-2">{heading}</h2>}
+          <div class="shop-hero-3-category-slider__slide">
+            <div class="shop-hero-3-category-slider__content">
+              {heading && <h2 class="shop-hero-3-category-slider__content text-fluid-2">{heading}</h2>}
             </div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="shop-hero-3-category-slider__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           </div>
         </div>
@@ -44,30 +44,30 @@ const {
     <div class="sec-inner">
       <div>
         <div>
-          <div></div>
-          <div>
+          <div class="shop-hero-3__price-wrapper"></div>
+          <div class="shop-hero-3__cta">
             <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
           </div>
         </div>
         <div>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="shop-hero-3__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>
     <div class="sec-inner">
       <div>
-        <div>
+        <div class="shop-hero-3-featured-product-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="shop-hero-3-featured-product-card card">
+                <div class="shop-hero-3-featured-product-card__content">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div>
+                <div class="shop-hero-3__badge-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="shop-hero-3-featured-product-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             ))}
           </div>

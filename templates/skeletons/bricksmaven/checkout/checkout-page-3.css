@@ -1,0 +1,112 @@
+  .checkout-page-3__heading {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: 0 var(--space-l) 0 var(--space-l);
+    margin: 0 0 var(--space-xl) 0;
+  }
+
+  .checkout-page-3__container {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: var(--space-xl);
+    width: 100%;
+  }
+
+  .checkout-page-3__details {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .checkout-page-3__customer-details {
+    width: 100%;
+  }
+
+  .checkout-page-3__order {
+    width: 100%;
+  }
+
+  .checkout-page-3__order-review {
+    width: 100%;
+  }
+
+  .checkout-page-3__customer-details {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+  
+    	/* Change accent color of checkbox and radio */
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+    	
+    	/* Set container of billing and shiiping fiedls to display flex */
+    	.col2-set {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    .col-2 {
+      display: flex;
+      flex-direction: column;
+      gap: var(--flow-spacing);
+  }
+    
+    	/* Sets margin-bottom of h3 element */
+  		.woocommerce-shipping-fields > h3, .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+    
+    #ship-to-different-address label {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .woocommerce-shipping-fields h3 span {
+      font-size: var(--fs-2) !important;
+      order: -1;
+      color: var(--action-primary);
+      font-weight: 700;
+      
+    }
+    
+    
+  }
+
+  .checkout-page-3__order {
+  
+  		--customer-details--primary: var(--text-primary);
+    	--focus-color: var(--action-primary);
+    
+    	input[type="checkbox"],
+      input[type="radio"] {
+        accent-color: var(--action-primary);
+      }
+  
+      .woocommerce-shipping-fields {
+        margin-top: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields > h3 {
+        margin-bottom: var(--space-m);
+      }
+  
+      .woocommerce-billing-fields label {
+        font-size: var(--fs-1);
+        color: var(--action-primary);
+        font-weight: bold;
+      }
+  
+      .woocommerce-billing-fields #ship-to-different-address-checkbox + span {
+        color: var(--action-primary);
+        font-weight: bold;
+        font-size: var(--fs-1);
+      }
+    
+  }

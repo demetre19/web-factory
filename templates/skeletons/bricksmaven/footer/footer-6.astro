@@ -27,16 +27,16 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
+    <div class="footer-6-container row between">
       <div>
         <span class="logo">{brand}</span>
       </div>
-      <div class="row between">
+      <div class="footer-nav-wrapper footer-nav-wrapper-6 row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="row between">
+            <div class="footer-nav-column row between">
               <h3 class="text-fluid-2">{it.title}</h3>
-              <div class="row between">
+              <div class="footer-menu row between">
                 <div class="row gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div>
@@ -49,17 +49,17 @@ const {
           ))}
         </div>
       </div>
-      <div class="row between">
+      <div class="footer-6-delta row between">
         {heading && <h4 class="text-fluid-2">{heading}</h4>}
         {fs && <p class="text-fluid-0">{fs}</p>}
         <form novalidate>
         </form>
       </div>
     </div>
-    <div class="row between">
-      <div class="row between">
+    <div class="footer-6-bottom row between">
+      <div class="footer-6-bottom__alpha row between">
         <div>
-          <div class="row between">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>
@@ -70,7 +70,7 @@ const {
           </div>
         </div>
       </div>
-      <div>
+      <div class="footer-6-bottom__beta">
         <div></div>
       </div>
     </div>

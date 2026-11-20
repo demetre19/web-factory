@@ -27,30 +27,30 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-feature-71__container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="bm-feature-71-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="bm-feature-71-card card">
+              <div class="bm-feature-71-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <p class="text-fluid-0">{it.text}</p>
-              <div>
+              <p class="bm-feature-71-card__accent-heading text-fluid-0">{it.text}</p>
+              <div class="bm-feature-71-card__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
             </div>
           ))}
         </div>
-        <div>
-          <div></div>
+        <div class="bm-feature-71-cta-card bm-feature-71-card">
+          <div class="bm-feature-71-cta-card__content"></div>
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-          <div>
+          <div class="bm-feature-71-cta-card__icon-wrapper">
             <span data-icon="lucide" aria-hidden="true"></span>
           </div>
         </div>

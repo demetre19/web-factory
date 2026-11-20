@@ -27,13 +27,13 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="hworks-22-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
       <div>
-        <div>
+        <div class="hworks-22-tab-menu">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
@@ -46,13 +46,13 @@ const {
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <div>
-                  <div>
+                <div class="hworks-22-tabs__content">
+                  <div class="hworks-22-tabs__intro">
                     <h2 class="text-fluid-2">{it.title}</h2>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                   <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="hworks-22-tabs__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 </div>
               </div>

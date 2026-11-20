@@ -1,0 +1,164 @@
+  .bm-thank-you-3 {
+    row-gap: var(--space-s);
+    overflow: hidden;
+  }
+
+  .checkout-page-4__container-background {
+    justify-content: center;
+    row-gap: var(--flow-spacing);
+    align-items: center;
+  }
+
+  .bm-checkout-breadcrumb {
+    column-gap: var(--flow-spacing);
+    flex-wrap: wrap;
+    row-gap: calc(var(--flow-spacing) / 2);
+    justify-content: center;
+  }
+
+  .bm-checkout-breadcrumb-item {
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-checkout-breadcrumb-item__digit-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32;
+  }
+
+  .bm-thank-you-3__container {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .checkout-page-4__image {
+    width: 100vw;
+    object-fit: cover;
+    margin: 0 0 0 -50vw !important;
+  }
+
+  .bm-checkout-breadcrumb-item[data-status='inactive'] {
+    opacity: 0.5;
+  }
+  
+  .bm-checkout-breadcrumb-item[data-status='active'] {
+    opacity: 1;
+  }
+
+  /* Thank you element  */
+  .bm-thank-you-3__element {
+    display: grid;
+    grid-template-columns: calc(100% * 1 / 2);
+    align-items: start;
+    gap: var(--space-m);
+  }
+  
+  
+  /* RESET */
+  .woocommerce-checkout .shop_table td, .woocommerce-checkout .shop_table th {
+      line-height: 1;
+  }
+  
+  
+  /* Woocommerce Notice  */
+  .bm-thank-you-3__element .woocommerce-notice {
+    font-size: calc(var(--fs-4) * 1.4);
+    font-weight: 700;
+    grid-column: span 2;
+    grid-row: auto;
+    display: flex;
+    align-items: start;
+    text-align: left;
+    max-width: var(--content-width);
+  }
+  
+  /* Woocommerce Order Overview  */
+  .bm-thank-you-3__element ul.woocommerce-order-overview {
+    grid-column: span 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    position: relative;
+    margin-block-start: var(--space-xl);
+  }
+  
+  .bm-thank-you-3__element ul.woocommerce-order-overview::before {
+    content: 'Order overview';
+    position: absolute;
+    font-size: var(--fs-3);
+    
+    line-height: var(--lh-0);
+    font-weight: 700;
+    inset-block-start: calc(-1 * var(--space-xl));
+  }
+  
+  /* Woocommerce Order Details  */
+  .bm-thank-you-3__element .woocommerce-order-details {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--flow-spacing);
+    order: 4;
+  }
+  
+  .bm-thank-you-3__element .woocommerce-table__product-name {
+    font-weight: 700; /* Style font-weight price name */ 
+  }
+  
+  .bm-thank-you-3__element .woocommerce-Price-amount {
+    font-weight: 400; /* Style font-weight price amount */ 
+  }
+  
+  /* Woocommerce Customer Details  */
+  .bm-thank-you-3__element .woocommerce-customer-details {
+    grid-column: span 1;
+    margin-block: 0px;
+    background-color: var(--bg-subtle);
+   border: 1px solid var(--color-line-default);
+    order: 3;
+  }
+  
+  .bm-thank-you-3__element .woocommerce-customer-details .woocommerce-columns--addresses{
+      flex-direction: column;
+    gap: 0;
+    }
+  
+  .bm-thank-you-3__element .woocommerce-customer-details .woocommerce-column--billing-address, .bm-thank-you-3__element .woocommerce-customer-details .woocommerce-column--shipping-address {
+    display: flex;
+    flex-direction: column;
+    gap: var(--flow-spacing);
+    padding: var(--space-m);
+  }
+  
+  
+  @media (max-width:991px) {
+    /* Thank you element  */
+    .bm-thank-you-3__element {
+      grid-template-columns: calc(100% * 1 / 1);
+    }
+    
+    /* Woocommerce Notice  */
+    .bm-thank-you-3__element .woocommerce-notice {
+      grid-column: span 1;
+    }
+    
+    /* Woocommerce Order Overview  */
+    .bm-thank-you-3__element ul.woocommerce-order-overview {
+      grid-column: span 1;
+      grid-row: auto;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    
+    /* Woocommerce Order Details  */
+    .bm-thank-you-3__element .woocommerce-order-details {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+    
+    /* Woocommerce Customer Details  */
+    .bm-thank-you-3__element .woocommerce-customer-details {
+      grid-column: span 1;
+      grid-row: auto;
+    }
+  
+  }

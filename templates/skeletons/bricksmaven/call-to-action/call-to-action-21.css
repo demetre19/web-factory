@@ -1,0 +1,36 @@
+  .bm-cta-21-card {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-cta-21-card__left {
+    row-gap: calc(var(--flow-spacing) / 1.4);
+  }
+
+  .bm-team-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .bm-team-media__image {
+    object-fit: cover;
+    width: 53;
+    overflow: hidden;
+  }
+
+  .bm-cta-21-card__right {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
+  	margin-inline-start: -20px;
+  }
+  
+  .bm-team-media:first-child {
+  	margin-inline-start: 0px;
+  }

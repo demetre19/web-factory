@@ -1,0 +1,42 @@
+  .bm-hero-85__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .bm-hero-85__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-85__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-85-testimonial {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-85-client {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-hero-85-client__image {
+    object-fit: cover;
+    width: 64px;
+  }
+
+  .bm-hero-85__form-cover {
+    align-items: flex-end;
+  }
+
+  .bm-hero-85__form-container {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    width: 100%;
+    /* bm: box-shadow omitted — token layer owns elevation */
+    row-gap: var(--flow-spacing);
+  }

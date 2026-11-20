@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="contact-23-container">
+      <div class="contact-23-content">
+        <div class="intro contact-23-content__intro">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
+        <div class="contact-23-list-ul">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="contact-23-list-item card">
                 <span data-icon="lucide" aria-hidden="true"></span>
-                <div>
+                <div class="contact-23-list-item__detail">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
@@ -48,7 +48,7 @@ const {
         </div>
       </div>
       <div>
-        <form novalidate>
+        <form class="contact-23-form__inner" novalidate>
         </form>
       </div>
     </div>

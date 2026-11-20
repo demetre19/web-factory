@@ -27,8 +27,8 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-testimonial-43__container">
+      <div class="intro intro--left">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
@@ -37,26 +37,26 @@ const {
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <div>
-                  <figure></figure>
-                  <div>
-                    <div>
+                <div class="bm-testimonial-43-card__video-wrapper">
+                  <figure class="bm-testimonial-43-card__video"></figure>
+                  <div class="bm-testimonial-43-card__video-footer">
+                    <div class="bm-user-card__data">
                       <p class="text-fluid-0">{it.text}</p>
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div>
+                <div class="bm-testimonial-43-card__standard">
+                  <div class="bm-testimonial-43-card__top">
                     <h2 class="text-fluid-2">{it.title}</h2>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                   <div>
-                    <div>
+                    <div class="bm-user-card">
                       <div>
-                        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                        <figure class="bm-user-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                       </div>
-                      <div>
+                      <div class="bm-user-card__data">
                         <p class="text-fluid-0">{it.text}</p>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>

@@ -27,31 +27,31 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
+    <div class="contact-10-container">
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="contact-10-map__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
-      <div>
-        <div>
-          {heading && <h2 class="text-fluid-2">{heading}</h2>}
+      <div class="contact-10-content">
+        <div class="contact-10-intro">
+          {heading && <h2 class="contact-10-intro__heading text-fluid-2">{heading}</h2>}
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
+        <div class="contact-10-information-grid-ul">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="contact-10-info-card card">
+                <div class="contact-10-info-card__content">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="contact-10-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
             ))}
           </div>
-          <div>
-            <div></div>
-            <span data-icon="lucide" aria-hidden="true"></span>
+          <div class="contact-10-info-card">
+            <div class="contact-10-info-card__content"></div>
+            <span class="contact-10-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
           </div>
         </div>
       </div>

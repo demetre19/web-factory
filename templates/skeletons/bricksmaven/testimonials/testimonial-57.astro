@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div class="grid-auto gap-fluid-l">
-        <div>
+    <div class="bm-testimonial-57-slider__container">
+      <div class="bm-testimonial-57-slider__content grid-auto gap-fluid-l">
+        <div class="bm-testimonial-57-slider__inner">
           {heading && <h2 class="text-fluid-2">{heading}</h2>}
         </div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-testimonial-57-slider__image ratio-portrait"><img src="/media/placeholder.svg" alt="Image" loading="lazy" width="900" height="600" /></figure>
       </div>
       <div>
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
+              <div class="bm-testimonial-57-slider-card card">
+                <div class="bm-testimonial-38-star-list">
                   <div class="grid-auto gap-fluid-m">
                     {((it.items || []) || []).map((it2) => (
                       <div class="card">
@@ -49,7 +49,7 @@ const {
                   </div>
                 </div>
                 <h2 class="text-fluid-2">{it.title}</h2>
-                <div>
+                <div class="bm-user-data">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

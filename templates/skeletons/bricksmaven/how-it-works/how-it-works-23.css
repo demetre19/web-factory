@@ -1,0 +1,54 @@
+  .bm-how-it-works-23__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-how-it-works-23-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-how-it-works-23-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-how-it-works-23-card__number-wrapper {
+    display: flex;
+    width: 84;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item__icon-wrapper {
+    padding: var(--tap) var(--tap) var(--tap) var(--tap);
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+  }
+
+  .bm-list-item {
+  	--circle-size: var(--fs-0);
+  }

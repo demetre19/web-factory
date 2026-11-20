@@ -27,18 +27,18 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-comparison-2__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
-          <div>
+      <div class="bm-comparison-2-list">
+        <div class="bm-comparison-2-card">
+          <div class="bm-comparison-2-check-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
+                <div class="bm-comparison-2-check-item card">
+                  <div class="bm-comparison-2-check-item__icon-wrapper">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -47,12 +47,12 @@ const {
             </div>
           </div>
         </div>
-        <div>
-          <div>
+        <div class="bm-comparison-2-card">
+          <div class="bm-comparison-2-check-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
+                <div class="bm-comparison-2-check-item card">
+                  <div class="bm-comparison-2-check-item__icon-wrapper">
                     <span data-icon="lucide" aria-hidden="true"></span>
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -62,7 +62,7 @@ const {
           </div>
         </div>
       </div>
-      <div>
+      <div class="bm-comparison-2__footer">
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
     </div>

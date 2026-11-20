@@ -1,0 +1,98 @@
+  .bm-feature-63__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    text-align: left;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-63-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bm-feature-63-card {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: flex-end;
+  }
+
+  .bm-feature-63-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  /* Create the counter on Parent */
+  .bm-feature-63-list {
+    counter-reset: cards ; /* starts at 0 */
+  }
+  
+  /* Every card we meet → add +1 to the counter */
+  
+  .bm-feature-63-list .bm-feature-63-card {
+    counter-increment: cards ;
+  }
+  
+  /* Show the number BEFORE each card */
+  .bm-feature-63-list .bm-feature-63-card::before {
+    content: "0"counter(cards);
+    position: absolute;
+    inset-block-start: var(--space-m);
+    inset-inline-end: var(--space-m);
+    font-size: calc(var(--fs-4) * 1.6);
+    color: var(--color-line-default);
+  }
+  
+  .bm-feature-63-list .bm-feature-63-card::after {
+    content: "●";
+    position: absolute;
+    inset-block-start: var(--space-xs);
+    color: var(--action-primary);
+  }
+  
+  /* CARD */
+  .bm-feature-63-list  .bm-feature-63-card {
+    transition: 0.5s ease;
+  }
+  
+  .bm-feature-63-list .bm-feature-63-card:hover, .bm-feature-63-list .bm-feature-63-card:focus-within {
+    background-color: var(--text-secondary);
+    color: var(--bg-canvas);
+  }
+  
+  .bm-feature-63-list .bm-feature-63-card:hover::before, .bm-feature-63-list .bm-feature-63-card:focus-within::before, .bm-feature-63-list .bm-feature-63-card:hover::after, .bm-feature-63-list .bm-feature-63-card:focus-within::after {
+    color: var(--bg-canvas);
+  }
+  
+  /* Make whole CARD clickable */
+  .bm-feature-63-list  .bm-feature-63-card .bm-feature-63-card__heading > a {
+    transition: 0.1s ease;
+  }
+  
+  .bm-feature-63-list  .bm-feature-63-card .bm-feature-63-card__heading:not(a) > a::after {
+    content: '';
+    position: absolute;
+    display: flex;
+    inset: 0;
+    cursor: pointer;
+  }

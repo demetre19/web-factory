@@ -1,0 +1,167 @@
+  .bm-cta-34__container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-cta-34__content {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    justify-content: space-between;
+    row-gap: var(--space-s);
+  }
+
+  .bm-cta-34__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-34__footer {
+    align-items: stretch;
+  }
+
+  .bm-btn-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: var(--space-xs);
+    padding: 8px 8px 8px 24px;
+  }
+
+  .bm-btn-cta__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+  }
+
+  .bm-cta-34__image {
+    width: 100%;
+    object-fit: cover;
+    overflow: clip;
+  }
+
+  /* White + Icon*/
+  .bm-btn-cta[data-design='whiteicon'] {
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--bg-canvas);
+    font-size: var(--fs-0);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='whiteicon'] a {
+    color: var(--fs-0);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='whiteicon']:hover a {
+    color: var(--action-primary);
+  }
+  
+  .bm-btn-cta[data-design='whiteicon']:hover {
+    border: 1px solid var(--action-primary);
+    color: var(--action-primary);
+  }
+  
+  .bm-btn-cta[data-design='whiteicon'] .bm-btn-cta__icon-wrapper {
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='whiteicon']:hover .bm-btn-cta__icon-wrapper {
+    background-color: var(--action-primary);
+  }
+  
+  /* White*/
+  .bm-btn-cta[data-design='white'] {
+    background-color: var(--bg-canvas);
+    border: 1px solid var(--bg-canvas);
+    padding-block: 14px;
+    padding-inline: 24px;
+    font-size: var(--fs-0);
+    justify-content: center;
+    transition: 0.2s ease;
+    
+  }
+  
+  .bm-btn-cta[data-design='white'] a {
+    color: var(--fs-0);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='white']:hover a {
+    color: var(--action-primary);
+  }
+  
+  .bm-btn-cta[data-design='white']:hover {
+    border: 1px solid var(--action-primary);
+    color: var(--action-primary);
+  }
+  
+  .bm-btn-cta[data-design='white'] .bm-btn-cta__icon-wrapper {
+    display:none;
+  }
+  
+  
+  /* Whitetrans */
+  .bm-btn-cta[data-design='whitetrans'] {
+    background-color: color-mix(in srgb, var(--bg-canvas) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--bg-canvas) 10%, transparent);
+    font-size: var(--fs-0);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='whitetrans'] a {
+    color: var(--bg-canvas);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='whitetrans']:hover a {
+    color: var(--text-primary);
+  }
+  
+  .bm-btn-cta[data-design='whitetrans']:hover {
+    border: 1px solid var(--bg-canvas);
+    color: var(--text-primary);
+    background-color: var(--bg-canvas);
+  }
+  
+  .bm-btn-cta[data-design='whitetrans'] .bm-btn-cta__icon-wrapper {
+    transition: 0.2s ease;
+    background-color: var(--bg-canvas); 
+  }
+  
+  .bm-btn-cta[data-design='whitetrans'] .bm-btn-cta__icon {
+    color: var(--text-primary);
+  }
+  
+  
+  /* Red */
+  .bm-btn-cta[data-design='red'] {
+    background-color: var(--action-primary);
+    border: 1px solid var(--action-primary);
+    font-size: var(--fs-0);
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='red'] a {
+    color: var(--bg-canvas) ;
+    transition: 0.2s ease;
+  }
+  
+  .bm-btn-cta[data-design='red']:hover a {
+    color: var(--bg-canvas);
+  }
+  
+  .bm-btn-cta[data-design='red']:hover {
+    border: 1px solid var(--action-primary);
+    color: var(--bg-canvas);
+    background-color: var(--action-primary);
+  }
+  
+  .bm-btn-cta[data-design='red'] .bm-btn-cta__icon-wrapper {
+    transition: 0.2s ease;
+    background-color: var(--bg-canvas); 
+  }
+  
+  .bm-btn-cta[data-design='red'] .bm-btn-cta__icon {
+    color: var(--text-primary);
+  }

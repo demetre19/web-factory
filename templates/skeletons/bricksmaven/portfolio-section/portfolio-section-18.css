@@ -1,0 +1,81 @@
+  .bm-portfolio-section-18 {
+    overflow: clip;
+  }
+
+  .bm-portfolio-section-18__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--split {
+    display: grid;
+    text-align: left;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .intro__right-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-18-case-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-18-case-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-portfolio-section-18-case-card__top {
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .bm-portfolio-section-18-case-card__brand {
+    display: flex;
+  }
+
+  .bm-portfolio-section-18-case-card__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+  }
+
+  .bm-portfolio-section-18-case-card__case-image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-portfolio-section-18__slider-nested .splide__track {
+    overflow: visible;
+  }
+
+  .bm-portfolio-section-18-case-card__media {
+    overflow: clip;
+  }
+  
+  
+  /* Add scale to image */
+  .bm-portfolio-section-18-case-card .bm-portfolio-section-18-case-card__case-image, .bm-portfolio-section-18-case-card:focus-within .bm-portfolio-section-18-case-card__case-image {
+    transition: 0.5s ease;
+  }
+  
+  .bm-portfolio-section-18-case-card:hover .bm-portfolio-section-18-case-card__case-image, .bm-portfolio-section-18-case-card:focus-within .bm-portfolio-section-18-case-card__case-image {
+    scale: 1.1;
+  }

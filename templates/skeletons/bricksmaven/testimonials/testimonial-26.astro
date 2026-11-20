@@ -27,23 +27,23 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="testimonial-26-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
       <div>
-        <div>
+        <div class="testimonial-26-tabs__nav">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <div>
-                  <div>
+              <div class="testimonial-26-tabs__nav-item card">
+                <div class="testimonial-26-tabs__nav-profile">
+                  <div class="testimonial-26-tabs__nav-meta">
                     <h4 class="text-fluid-2">{it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                   <div>
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="testimonial-26-tabs__nav-photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 </div>
               </div>
@@ -54,9 +54,9 @@ const {
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <div>
-                  <h2 class="text-fluid-2">{it.title}</h2>
-                  <div>
+                <div class="testimonial-26-tabs__content-wrapper">
+                  <h2 class="testimonial-26-tabs__content-title text-fluid-2">{it.title}</h2>
+                  <div class="testimonial-26-tabs__content-review">
                     <div class="grid-auto gap-fluid-m">
                       {((it.items || []) || []).map((it2) => (
                         <span class="card" data-icon="lucide" aria-hidden="true"></span>
@@ -70,7 +70,7 @@ const {
           </div>
         </div>
       </div>
-      <div></div>
+      <div class="testimonial-26-script"></div>
     </div>
   </div>
 </div>

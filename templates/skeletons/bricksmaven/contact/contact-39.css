@@ -1,0 +1,43 @@
+  .bm-contact-39 {
+    padding: 0 0 var(--section-space-xxl) 0;
+  }
+
+  .bm-contact-39__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-contact-39__top {
+    row-gap: var(--flow-spacing);
+    width: 100%;
+  }
+
+  .bm-contact-39__footer {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-contact-39__form-wrapper {
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+    row-gap: var(--flow-spacing);
+    /* bm: box-shadow omitted — token layer owns elevation */
+  }
+
+  .bm-contact-39__contact-information {
+    padding: var(--space-l) var(--space-xl) var(--space-l) var(--space-xl);
+  }
+
+  .bm-contact-39-contact-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-contact-39-link {
+    row-gap: calc(var(--flow-spacing) / 3);
+  }
+
+  @media (min-width:767px) {
+  .bm-contact-39 + section {
+    padding-block-start: var(--section-space-xxl);
+  }
+  
+  }

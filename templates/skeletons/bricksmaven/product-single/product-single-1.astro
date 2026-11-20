@@ -32,36 +32,36 @@ const {
         <div></div>
       </div>
     </div>
-    <div>
+    <div class="bm-product-single-1__container">
       <div>
         <div></div>
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
-          <div>
+      <div class="bm-product-single-1__main">
+        <div class="bm-product-single-1__content">
+          <div class="bm-product-single-1__top">
             <div></div>
             <div></div>
           </div>
-          <div>
+          <div class="bm-product-single-1__mid">
             <div></div>
-            <div></div>
+            <div class="bm-product-single__product-stock"></div>
           </div>
           <div></div>
           <div></div>
-          <div></div>
+          <div class="bm-product-single__product-meta"></div>
         </div>
-        <div>
+        <div class="bm-product-single-1__media">
           <div></div>
-          <div>
-            <div>
+          <div class="bm-payment-options-wrapper-2">
+            <div class="bm-payment-options-2__text-icon">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
-            <div>
+            <div class="bm-payment-options">
               <div class="grid-auto gap-fluid-m">
                 {(items || []).map((it) => (
                   <div class="card">
-                    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                    <figure class="bm-footer-option__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                   </div>
                 ))}
               </div>
@@ -75,20 +75,20 @@ const {
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-product-single__related-products-container">
       {heading && <h2 class="text-fluid-2">{heading}</h2>}
-      <div>
+      <div class="bm-related-products-list-1__list">
         <div>
-          <div>
-            <div>
-              <div></div>
+          <div class="bm-related-products-list-1-card">
+            <div class="bm-related-products-list-1-card__content">
+              <div class="bm-related-products-list-1-card__top"></div>
               <div></div>
             </div>
             <div>
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-related-products-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
-            <div>
-              <div></div>
+            <div class="bm-product-list-notice__wrapper">
+              <div class="bm-product-list-notice-circle__sale-badge"></div>
             </div>
           </div>
         </div>

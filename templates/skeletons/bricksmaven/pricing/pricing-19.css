@@ -1,0 +1,81 @@
+  .bm-pricing-19__container {
+    width: var(--content-width);
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .bm-pricing-19-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-pricing-19-card__top {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-pricing-19-card__pricing {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-list-item__icon-wrapper {
+    padding: var(--tap) var(--tap) var(--tap) var(--tap);
+  }
+
+  .bm-list-item__text {
+    text-align: left;
+  }
+
+  .bm-pricing-19-card__price-box-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-pricing-19-card__price-box {
+    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+    row-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bm-pricing-19-card__meta-box {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+    align-items: center;
+  }
+
+  .bm-list-item {
+  	--circle-size: var(--fs-0);
+  }
+
+  .bm-pricing-19-card__price::before {
+    content: '$';
+    font-size: var(--fs-0);
+    position: absolute;
+    top: calc(-1 * var(--space-xs));
+    left: calc((var(--space-xs) / 2) * -1);
+  }

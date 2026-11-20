@@ -28,30 +28,30 @@ const {
 <div>
   <div>
     <div class="sec-inner">
-      <div>
+      <div class="bm-product-archive-4__header-container">
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
+        <div class="bm-product-archive-4__breadcrumb-wrapper">
           <div></div>
         </div>
       </div>
     </div>
     <div class="sec-inner">
-      <div>
+      <div class="bm-product-archive-4__container">
         <div>
           <div></div>
         </div>
-        <div>
-          <div>
-            <div>
-              <div></div>
+        <div class="bm-product-archive-4__product-filters">
+          <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
+            <div class="bm-product-archive-filter-wrapper__toggle-button">
+              <div class="bm-product-archive-filter-wrapper__toggle"></div>
             </div>
             <div>
-              <div>
-                <div>
+              <div class="bm-product-archive-off-canvas__content">
+                <div class="bm-product-archive-2__filter-container">
                   <div class="grid-auto gap-fluid-m">
                     {(items || []).map((it) => (
-                      <div class="card">
+                      <div class="bm-product-archive__filter-row card">
                         <h4 class="text-fluid-2">{it.title}</h4>
                         <div></div>
                       </div>
@@ -64,7 +64,7 @@ const {
               <div></div>
             </div>
           </div>
-          <div>
+          <div class="bm-product-archive-1__sort-wrapper">
             <div></div>
             <div></div>
           </div>
@@ -72,22 +72,22 @@ const {
         <div>
           <div></div>
         </div>
-        <div>
-          <div class="grid-auto gap-fluid-l">
-            <div>
-              <div></div>
-              <div></div>
-            </div>
-            <div>
+        <div class="bm-product-archive__product-list">
+          <div class="product-list-1-card grid-auto gap-fluid-l">
+            <div class="product-list-1-card__content">
+              <div class="product-list-1-card__top"></div>
               <div></div>
             </div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="product-list-notice__wrapper">
+              <div class="product-list-notice-circle__sale-badge"></div>
+            </div>
+            <figure class="product-list-1-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
         <div>
           <div></div>
         </div>
-        <div></div>
+        <div class="bm-product-archive__seo-text-block"></div>
       </div>
     </div>
   </div>

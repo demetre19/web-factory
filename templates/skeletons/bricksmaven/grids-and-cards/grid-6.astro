@@ -28,16 +28,16 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
+      <div class="gridcard-6-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="gridcard-6-card card">
+              <div class="gridcard-6-card__box-wrapper">
                 <h3 class="text-fluid-2">{it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
               <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="gridcard-6-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             </div>
           ))}

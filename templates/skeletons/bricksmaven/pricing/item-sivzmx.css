@@ -1,0 +1,40 @@
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .pricing-7-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    gap: var(--space-m);
+  }
+
+  .pricing-7-card {
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    flex-direction: column;
+  }
+
+  .bm-li-benefits {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .pricing-7-card:nth-child(2) {
+  
+  	box-shadow: var(--shadow-card);
+  
+  }

@@ -27,29 +27,29 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div>
-        <div class="row between">
+    <div class="bm-footer-17__container row between">
+      <div class="bm-footer-17__nav-wrapper">
+        <div class="bm-footer-17-nav-menu row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div>
+              <div class="bm-footer-17-nav-list">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div class="row between">
+      <div class="bm-footer-17__contact-info row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
-            <div>
+            <div class="bm-footer-17-address-list">
               <a class="text-fluid-0" href={it.href}>{it.label}</a>
             </div>
           ))}
         </div>
       </div>
-      <div class="row between">
-        <div class="row between">
+      <div class="bm-footer-17__footer row between">
+        <div class="bm-social-share bm-social-share--left-center row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
               <div>
@@ -58,15 +58,15 @@ const {
             ))}
           </div>
         </div>
-        <div>
+        <div class="bm-footer-17__copyright-wrapper">
           {fs && <p class="text-fluid-0">{fs}</p>}
         </div>
-        <div>
-          <div class="row between">
+        <div class="bm-footer-17__payment-option-wrapper">
+          <div class="bm-footer-payment-options row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>
-                  <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                  <figure class="bm-footer-option__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                 </div>
               ))}
             </div>

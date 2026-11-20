@@ -1,66 +1,43 @@
 #!/usr/bin/env python3
-"""run.py — design-gate orchestrator + operator approval.
+"""run.py — design-gate orchestrator.
 
   python3 run.py <wave> <pipeline-dir> [gate.py options]
-  python3 run.py approve <wave> <pipeline-dir> --nonce N [--design D]
-  python3 run.py nonce <wave> <pipeline-dir>            (TTY only)
   python3 run.py migrate-approvals <pipeline-dir>
   python3 run.py sign-review <pipeline-dir>
+  python3 run.py reset <pipeline-dir> <from-wave>   (clears state)
 
-A wave runs only when EVERY earlier wave passed, every approvable one is
-operator-approved for the CURRENT inputs, and no recorded input changed
-(ORDER / DM.6). Approvals are service-nonce spends — approve_service.py
-mints a one-time nonce per render (interactive `run.py nonce` or the
-picker Approve button POST), spends it once, and writes the HMAC-signed
-record under ~/.web-factory/operator.key. The signed nonce ledger is the
-only provenance the registry can prove (P.8). Approving w4 — and only
-w4 — locks DNA v1.
+A wave runs only when EVERY earlier wave passed, every approvable one
+(w3 layout pick, w4 look pick) is operator-approved for the CURRENT
+inputs, and no recorded input changed (ORDER / DM.6). Gate invocations
+are orchestrator-only: `run.py <wave>` refuses unless PIPELINE_RUN
+matches the token pipeline.py wrote into RUN.json at run start
+(X.2 — waves cannot be invoked à la carte).
+
+There is NO terminal approval path: the operator picks by pressing
+the picker's own "Pick this layout" / "Pick this look" button in the
+page served by `approve_service.py serve` (the pipeline prints the
+URL and waits). Approving w4 — and only w4 — locks DNA v1.
+`approve` / `keygen` / `nonce` / `nonce-batch` were REMOVED; they
+print that message and exit 1.
 """
-import json, os, subprocess, sys
+import json, os, shutil, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ORDER = ['w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
+ORDER = ['s0', 'w0', 'w1', 'w2', 'w3', 'w4', 'w5', 'w6', 'w7', 'w8']
 
 
-def approve(wave, pdir, G, nonce=None, design=None, chat=None):
-    """Record an operator approval.
-
-    Two legal channels (P.8 — a designer agent can use NEITHER):
-    - interactive: a real TTY confirm (by=operator-tty), or
-    - service: --nonce <one-time nonce> minted by approve_service.py —
-      the picker's Approve button or the orchestrator recording an
-      operator's chat approval (`run.py nonce` first).
-    """
-    if wave not in ORDER:
-        print(f'run.py approve: unknown wave {wave}')
-        return 2
-    if wave not in G.APPROVABLE:
-        print(f'run.py approve: {wave} is not an approval point '
-              f'(approvable: {sorted(G.APPROVABLE)}) — its pass is '
-              'mechanical')
-        return 2
-    tty = sys.stdin.isatty()
-    import approve_service as S
-    if not nonce:
-        # every approval is a service-nonce spend now — a bare record
-        # (by=operator-tty) has no verifiable provenance: scripted
-        # ptys pass any TTY check, so the signed nonce ledger is the
-        # only thing the registry can prove (A7/A9/F-02)
-        print(f'run.py approve REFUSED: approvals spend a service '
-              f'nonce — mint one first: python3 run.py nonce {wave} '
-              f'<dir> (interactive terminal), or the picker '
-              f'Approve button')
-        return 1
-    if tty:
-        ans = input(f'type "APPROVE {wave}" to record operator '
-                    f'approval: ')
-        if ans.strip() != f'APPROVE {wave}':
-            print('not approved')
-            return 1
-    code, txt = S.record_approval(wave, pdir, nonce=nonce,
-                                  design=design, chat=chat)
-    print(txt)
-    return code
+def _run_token_ok(pdir):
+    """X.2 — a wave gate may only be invoked inside a pipeline run:
+    PIPELINE_RUN (exported by pipeline.py) must match the token in
+    RUN.json written at run start. Operator commands (reset)
+    are exempt — they never pass a wave."""
+    try:
+        run = json.load(open(os.path.join(pdir, 'RUN.json')))
+    except Exception:
+        run = {}
+    tok = run.get('token')
+    env = os.environ.get('PIPELINE_RUN')
+    return bool(tok) and env == tok
 
 
 def sign_review(pdir, G):
@@ -98,39 +75,54 @@ def sign_review(pdir, G):
 
 def main():
     a = sys.argv[1:]
-    if len(a) >= 3 and a[0] == 'approve':
-        sys.path.insert(0, HERE)
-        import gate as G
-        kw = {}
-        for flag, key in (('--nonce', 'nonce'), ('--design', 'design'),
-                          ('--chat', 'chat')):
-            if flag in a:
-                i = a.index(flag)
-                kw[key] = a[i + 1] if i + 1 < len(a) else ''
-        return approve(a[1], a[2], G, **kw)
+    if len(a) >= 2 and a[0] in ('approve', 'keygen', 'nonce',
+                                'nonce-batch'):
+        print(f'{a[0]}: REMOVED — operator picks happen by clicking '
+              'a card in the picker page. Run the pipeline; it '
+              'prints the picker URL and waits '
+              '(approve_service.py serve --port 4173).')
+        return 1
     if len(a) >= 3 and a[0] == 'migrate-approvals':
         sys.path.insert(0, HERE)
         import gate as G
         ch, tot = G.migrate_approvals(G.Ctx(a[2]))
         print(f'migrated {ch}/{tot} approval record(s)')
         return 0
-    if len(a) >= 3 and a[0] == 'nonce':
+    if len(a) >= 3 and a[0] == 'reset':
         sys.path.insert(0, HERE)
-        import gate as G  # noqa: F401
-        import approve_service as S
-        # a nonce is operator authority — minting is an interactive act
-        # (chat flow) or a picker POST; a pipeline must never mint its
-        # own (A2: non-TTY mint is a designer forgery channel)
-        if not sys.stdin.isatty():
-            print('nonce REFUSED: minting is operator-side — '
-                  'interactive terminal or the approve service '
-                  '(picker) only')
-            return 1
-        nonce, rec = S.issue_nonce(a[2], a[1])
-        if not nonce:
-            print(f'nonce REFUSED: {rec}')
-            return 1
-        print(nonce)
+        import gate as G
+        pdir, frm = a[1], a[2]
+        if frm not in ORDER:
+            print(f'reset: {frm} is not a wave ({ORDER})')
+            return 2
+        gp = os.path.join(pdir, 'GATES.json')
+        g = json.load(open(gp)) if os.path.isfile(gp) else {}
+        drop = {w for w in ORDER if ORDER.index(w) >= ORDER.index(frm)}
+        for w in drop:
+            g.pop(w, None)
+        arts = g.get('artifacts') or {}
+        # receipts: gate.ARTIFACTS is the one wave→artifact map; a
+        # receipt surviving its wave's reset fails P.17 on re-run
+        for w in drop:
+            for rel in G.ARTIFACTS.get(w, []):
+                arts.pop(rel, None)
+        # files: only regenerable outputs are deleted — REVIEW.json is
+        # the reviewer's record, re-bound by evidence.py, never removed
+        regen = {'w3': ['preview/layouts.html'],
+                 'w4': ['preview/variants.html', 'preview/fine.html'],
+                 'w5': ['preview/system.html'],
+                 'w6': ['site/dist']}
+        for w in drop:
+            for rel in regen.get(w, []):
+                fp = os.path.join(pdir, rel)
+                if os.path.isdir(fp):
+                    shutil.rmtree(fp)
+                elif os.path.isfile(fp):
+                    os.remove(fp)
+        g['artifacts'] = arts
+        json.dump(g, open(gp, 'w'), indent=1, sort_keys=True)
+        print(f'reset: cleared wave state ≥ {frm} '
+              '(approvals auto-stale via input hash)')
         return 0
     if len(a) >= 2 and a[0] == 'sign-review':
         sys.path.insert(0, HERE)
@@ -140,6 +132,11 @@ def main():
         print(__doc__)
         return 2
     wave, pdir = a[0], a[1]
+    if not _run_token_ok(pdir):
+        print(f'run {wave} REFUSED: waves run inside the orchestrator '
+              'only — no RUN.json token matching PIPELINE_RUN '
+              f'(X.2). Use `pipeline.py {pdir} --from {wave}`.')
+        return 1
     sys.path.insert(0, HERE)
     import gate as G
 

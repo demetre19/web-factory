@@ -28,14 +28,14 @@ const {
 <div>
   <div class="sec-inner">
     <div>
-      <div>
-        {heading && <h2 class="text-fluid-2">{heading}</h2>}
+      <div class="hworks-intro">
+        {heading && <h2 class="hworks-intro__heading text-fluid-2">{heading}</h2>}
       </div>
-      <div>
+      <div class="hworks-8-grid-ul">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
+            <div class="hworks-8-card card">
+              <div class="hworks-8-card__content">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

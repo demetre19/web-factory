@@ -1,0 +1,101 @@
+  .blog-archive-6-container {
+    row-gap: var(--space-s);
+  }
+
+  .blog-archive-6-head {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+    display: grid;
+  }
+
+  .blog-archive-6-head__intro {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-6-head__search-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-6-body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-6-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .blog-archive-6-card {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .blog-archive-6-card__media {
+    width: 100%;
+  }
+
+  .blog-archive-6-card__thumb {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .blog-archive-6-card__meta {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    align-items: flex-start;
+  }
+
+  .blog-archive-6-card__term {
+    padding: .4rem .8rem .4rem .8rem;
+  }
+
+  .blog-archive-6-card__read {
+    padding: 0 0 0 0;
+  }
+
+  .blog-archive-6-head__form .bricks-search-form {
+  	gap: 1.5rem;
+  }
+  .blog-archive-6-head__form [type="search"] {
+  	width: 70% !important;
+  }
+  .blog-archive-6-head__form [type="submit"] {
+  	background-color: var(--action-primary);
+    color: var(--bg-canvas);
+    width: 30%;
+    padding: 10px 15px;
+    text-align: center;
+    height: auto;
+    position: static!important;
+    clip-path: unset !important;
+  }
+  .blog-archive-6-head__form [type="submit"]:focus {
+  	border-radius: 0;
+    box-shadow: none;
+    font-size: 100%;
+    font-weight: 400;
+    line-height: 100%;
+    outline: none;
+    padding: 10px;
+    text-align: center;
+    clip-path: unset;
+  }
+  .blog-archive-6-head__form [type="submit"] span {
+  	height: auto;
+    position: static!important;
+    width: auto;
+  }
+
+  .blog-archive-6-card__term a {
+  	color: var(--fs-0);
+  }

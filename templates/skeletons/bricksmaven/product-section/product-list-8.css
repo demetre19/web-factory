@@ -1,0 +1,82 @@
+  .product-list-8__product-category {
+    row-gap: var(--space-s);
+  }
+
+  .product-list-8__product-category-intro {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product-list-8-card {
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    row-gap: var(--flow-spacing);
+    flex-wrap: nowrap;
+  }
+
+  .product-list-8-card__content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .product-list-notice__wrapper--inline {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .product-list-notice-circle__sale-badge {
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+    display: flex;
+    align-items: center;
+  }
+
+  .product-list-1-card__new--alt {
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+  }
+
+  .product-list-1-card__soldout--alt {
+    padding: calc( var(--space-xs) / 4 ) var(--space-xs) calc( var(--space-xs) / 4 ) var(--space-xs);
+  }
+
+  .product-list-8-card__title-pricing {
+    row-gap: calc(var(--flow-spacing) / 4);
+    align-items: center;
+    text-align: center;
+  }
+
+  .product-list-8-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    align-self: flex-start;
+  }
+
+  .product-list-8-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .product-list-8-card {
+    justify-content: space-between !Important;
+    
+  }
+
+  .product-list-card__price del {
+    	color: var(--bg-subtle);
+  }
+  
+  .product-list-card__price ins {
+    	text-decoration: none;
+  }
+  .product-list-card__price ins .amount {
+    	text-decoration: none;
+    	border-bottom: 0;
+  }

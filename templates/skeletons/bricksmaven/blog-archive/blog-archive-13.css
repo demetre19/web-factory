@@ -1,0 +1,103 @@
+  .blog-archive-13-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .blog-archive-13-archive-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .blog-archive-13-archive-card__content {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .blog-archive-13-archive-card__post-title {
+    margin: 0 0 var(--space-m) 0;
+  }
+
+  .blog-archive-13-archive-card__cta-wrapper {
+    align-items: flex-end;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .blog-archive-13-archive-card__image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .blog-archive-13-archive-card:nth-child(3n+1) {
+  	height: 25rem;
+  }
+  
+  .blog-archive-13-archive-card:first-child {
+  	grid-column: 1 / 7;
+    grid-row: span 2;
+    height:100%;
+  }
+  
+  .blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {
+  	font-size: var(--fs-3);
+  }
+  
+  .blog-archive-13-archive-card:nth-child(2) {
+  	grid-column: 7 / -1;
+    grid-row-start: 1;
+    height: 100%;
+  }
+  
+  .blog-archive-13-archive-card:nth-child(3) {
+  	grid-column: 7 / -1;
+    grid-row-start: 2;
+    height: 100%;
+  }
+  
+  @media (max-width:767px) {
+  
+  	.blog-archive-13-archive-card:nth-child(3n+1) {
+  	height: 100%;
+  }
+  
+  .blog-archive-13-archive-card:first-child {
+  	grid-column: span 1;
+    grid-row: span 1;
+    height:100%;
+  }
+  
+  .blog-archive-13-archive-card:first-child .blog-archive-13-archive-card__post-title {
+  	font-size: var(--fs-2);
+  }
+  
+  .blog-archive-13-archive-card:nth-child(2) {
+  	grid-column: span 1;
+    grid-row-start: auto;
+    height: 100%;
+  }
+  
+  .blog-archive-13-archive-card:nth-child(3) {
+  	grid-column: span 1;
+    grid-row-start: auto;
+    height: 100%;
+  }
+  
+  }
+
+  .blog-archive-13-archive-card__image {
+  	aspect-ratio: 1/1;
+  }

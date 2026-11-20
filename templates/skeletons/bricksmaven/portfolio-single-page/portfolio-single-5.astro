@@ -27,89 +27,89 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="grid-auto gap-fluid-l">
-      <div>
-        {heading && <h1 class="text-fluid-4">{heading}</h1>}
+    <div class="bm-portfolio-single-5__container grid-auto gap-fluid-l">
+      <div class="bm-portfolio-single-5__intro">
+        {heading && <h1 class="bm-portfolio-single-5__intro-heading text-fluid-4">{heading}</h1>}
       </div>
-      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
+      <figure class="bm-portfolio-single-5__featured-image ratio-portrait"><img src="/media/placeholder.svg" alt="Featured Image" loading="lazy" width="900" height="600" /></figure>
     </div>
-    <div>
-      <div>
-        <div>
+    <div class="bm-portfolio-single-5__overview-container">
+      <div class="bm-portfolio-single-5__expertise">
+        <div class="bm-portfolio-single-5-expetise-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="bm-portfolio-single-5-expetise-item card">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div>
+      <div class="bm-portfolio-single-5__overview-content">
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
-          <div></div>
+        <div class="bm-live-website-btn">
+          <div class="bm-live-website-btn__dot"></div>
         </div>
       </div>
     </div>
-    <div>
+    <div class="bm-portfolio-single-5__wide-media-container">
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-1col-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div>
+    <div class="bm-portfolio-single-5__carousel-container">
       <div>
-        <div></div>
+        <div class="bm-portfolio-single-5__content-intro"></div>
       </div>
-      <div>
+      <div class="bm-portfolio-single-5__slider-wrapper">
         <div>
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
               <div class="card">
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                <figure class="bm-portfolio-slider__slide-image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
             ))}
           </div>
         </div>
       </div>
     </div>
-    <div>
-      <div>
-        <div></div>
+    <div class="bm-portfolio-single-5__content-container">
+      <div class="bm-portfolio-single-5__intro-wrapper--centered">
+        <div class="bm-portfolio-single-5__content-intro"></div>
       </div>
-      <div>
+      <div class="bm-span2-media">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
             <div class="card">
-              <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+              <figure class="bm-span2-media-item__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
             </div>
           ))}
         </div>
       </div>
-      <div>
-        <div></div>
+      <div class="bm-portfolio-single-5__intro-wrapper--right">
+        <div class="bm-portfolio-single-5__content-intro"></div>
       </div>
       <div>
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+        <figure class="bm-1col-media__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
       </div>
     </div>
-    <div>
-      <div>
+    <div class="bm-portfolio-single-5__cta-container">
+      <div class="bm-contact-widget-6">
         <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
       </div>
     </div>
-    <div>
-      <div>
-        <div>
-          <div></div>
+    <div class="bm-portfolio-single-5__footer-container">
+      <div class="bm-portfolio-4-related-list">
+        <div class="bm-portfolio-4-related-card">
+          <div class="bm-portfolio-4-related-card__content"></div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-portfolio-4-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
-        <div>
-          <div></div>
+        <div class="bm-portfolio-4-related-card">
+          <div class="bm-portfolio-4-related-card__content"></div>
           <div>
-            <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <figure class="bm-portfolio-4-related-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
           </div>
         </div>
       </div>

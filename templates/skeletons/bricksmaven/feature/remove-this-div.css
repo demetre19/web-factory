@@ -1,0 +1,91 @@
+  .feature-40__container {
+    row-gap: calc(var(--flow-spacing) * 2);
+    align-items: center;
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .feature-40__list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-40-feature-nav {
+    column-gap: var(--flow-spacing);
+    display: flex;
+    flex-direction: row;
+    padding: var(--space-xs) var(--space-s) var(--space-xs) var(--space-s);
+    margin: 0 0 0 0;
+    width: var(--measure);
+    /* bm: box-shadow omitted — token layer owns elevation */
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-40-nav-item {
+    align-items: center;
+  }
+
+  .feature-40__section {
+    row-gap: var(--space-s);
+  }
+
+  .feature-40__feature-container {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+  }
+
+  .feature-40__list-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: var(--flow-spacing);
+  }
+
+  .feature-40__list-image {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .feature-40__feature-container {
+    position: sticky;
+    top: var(--section-space-xxl);
+    background: var(--bg-subtle);
+  }
+  
+  .feature-40__feature-container:nth-of-type(2) {
+  	top: calc(var(--section-space-xxl) * 1.2);
+    background: var(--color-line-default);
+  }
+  
+  .feature-40__feature-container:nth-of-type(3) {
+  	top:  calc(var(--section-space-xxl) * 1.4);
+    background: var(--bg-subtle);
+  }
+  
+  .feature-40__feature-container:nth-of-type(4) {
+  	top: calc(var(--section-space-xxl) * 1.6);
+    background: var(--color-ink-secondary);
+    color: var(--bg-canvas);
+  }
+  
+  @media (min-width:767px) {
+  
+    .feature-40__feature-container {
+      height:70vh;
+      align-items: center;
+    }
+    
+    
+  }

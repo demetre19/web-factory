@@ -1,0 +1,55 @@
+  .bm-feature-42 {
+    padding: 50vh 0 50vh 0;
+  }
+
+  .bm-feature-42__container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-feature-42-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bm-feature-42-card {
+    display: flex;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-feature-42-card__icon {
+    padding: calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2) calc(var(--space-xs) / 2);
+  }
+
+  .bm-feature-42-card__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--flow-spacing);
+    padding: calc(var(--space-xs) / 1.8) 0 var(--space-m) 0;
+  }
+
+  .bm-feature-42 {
+  	--line-height: 0%;
+  }
+
+  .bm-feature-42-card__icon-wrapper {
+  	overflow-y: clip;
+  }

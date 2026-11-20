@@ -1,0 +1,45 @@
+  .team-15-container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--space-s);
+    align-self: center;
+  }
+
+  .team-15-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-m);
+  }
+
+  .team-15-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: var(--flow-spacing);
+  }
+
+  .team-15-card__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .team-15-card__footer {
+    padding: var(--space-s) 0 0 0;
+  }
+
+  .team-15-card__email-wrapper {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .team-15-card__image {
+    object-fit: cover;
+    width: 100%;
+  }

@@ -1,54 +1,80 @@
 ---
 /**
- * form-panel — gold exemplar (SB.5). The end act: one number to call,
- * one short form for everyone else. No action attribute — a static
- * build has no backend, so the phone is the primary action.
+ * form-panel — gold exemplar (SB.5). The end act: the article's
+ * closing paragraph, its CTA link and the phone number — nothing else.
+ *
+ * U.4/F.2: every string here comes from COPY.json `closing` (text,
+ * cta {label, href}, phone). No form fields, select options, button
+ * labels or response-time promises are invented: a static build has
+ * no backend, so the CTA link and the tel: link are the actions.
+ * A heading renders only when the copy supplies one.
+ * Single-primary CTA (cta-restraint): a prose link to the CTA's own
+ * href renders as plain words — the button is the one link to it.
  */
+import { inline, unlink } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
 interface Props {
   heading?: string;
   fs?: string;
   body?: string;
-  eyebrow?: string;
   cta?: { label: string; href: string };
-  items?: { title?: string; text?: string }[];
-  image?: { src: string; alt: string };
   h1?: boolean;
   brand?: string;
+  copy?: CopySlot;
+  fields?: { name?: string; label?: string; type?: string;
+             placeholder?: string; required?: boolean;
+             options?: string[] }[];
 }
-const {
-  heading = 'Section heading', fs = '', body = '', eyebrow = '',
-  cta, items = [], h1, brand,
-} = Astro.props;
-const sub = fs || body;
+const { heading = '', fs = '', body = '', cta, h1, brand, copy,
+        fields = [] } = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const text = cp.text || cp.answer || fs || body;
+const before = cp.before || [];
+const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+const prose = (s: string) => inline(unlink(s, act?.href));
 ---
 <div class="split">
   <div class="stack">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h2 class="t0 h-section text-fluid-3">{heading}</h2>
-    {sub && <p class="t0 lede">{sub}</p>}
-    {cta && (
-      <div class="stack mt-act gap-form">
-        <a class="wf-cta-button cta-large" href={cta.href}>{cta.label}</a>
-        {items[0]?.text && <p class="t0 attrib">{items[0].text}</p>}
-      </div>
-    )}
+    {head && (h1
+      ? <h1 class="t0 h-section text-fluid-3">{head}</h1>
+      : <h2 class="t0 h-section text-fluid-3">{head}</h2>)}
+    {before.map((p) => (
+      <p class="t0 lede" set:html={prose(p)} />
+    ))}
+    {text && <p class="t0 lede" set:html={prose(text)} />}
+    {after.map((p) => (
+      <p class="t0 lede" set:html={prose(p)} />
+    ))}
   </div>
-  <form class="card gap-form">
-    <div class="form-grid">
-      <label class="field"><span>Name *</span><input name="name" autocomplete="name" required aria-required="true" /></label>
-      <label class="field"><span>Phone *</span><input name="phone" type="tel" autocomplete="tel" required aria-required="true" /></label>
-      <label class="field"><span>Suburb</span><input name="suburb" autocomplete="address-level2" /></label>
-      <label class="field"><span>Job</span>
-        <select name="job">
-          <option>Blocked drain</option>
-          <option>Burst pipe</option>
-          <option>Hot water</option>
-          <option>Something else</option>
-        </select>
-      </label>
+  {fields.length > 0 ? (
+    <form class="stack mt-act gap-form" method="get"
+          action={act?.href || '#'}>
+      <div class="form-grid">
+        {fields.map((f) => (
+          <label class="field">
+            <span>{f.label || f.name}</span>
+            {f.options && f.options.length
+              ? <select name={f.name} required={f.required}>
+                  {f.options.map((o) => <option>{o}</option>)}
+                </select>
+              : <input name={f.name} type={f.type || 'text'}
+                       placeholder={f.placeholder}
+                       required={f.required} />}
+          </label>
+        ))}
+      </div>
+      {act && <button class="wf-cta-button cta-large" type="submit">
+        {act.label}</button>}
+      {tel && <a class="link-quiet" href={tel}>{phone}</a>}
+    </form>
+  ) : (act || tel) && (
+    <div class="stack mt-act gap-form">
+      {act && <a class="wf-cta-button cta-large" href={act.href}>{act.label}</a>}
+      {tel && <a class="link-quiet" href={tel}>{phone}</a>}
     </div>
-    <p class="t0 helper">* Required — we only call about your job.</p>
-    <button class="wf-cta-button btn-block" type="submit">Request a callout</button>
-    <p class="t0 attrib">We reply within one business hour, 7am–9pm.</p>
-    <p class="t0 helper" data-form-error hidden>Something missed a field — check the form and retry.</p>
+  )}
 </div>

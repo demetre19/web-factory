@@ -27,22 +27,22 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
-        <div>
+    <div class="bm-blog-single-16__container">
+      <div class="bm-blog-single-16__intro">
+        <div class="bm-blog-single-16__intro-content">
           <div></div>
           <div></div>
           <div>
-            <div>
-              <div>
+            <div class="bm-blog-single-14__meta-column">
+              <div class="blog-single-2__meta blog-single-head__meta--column">
                 <div class="grid-auto gap-fluid-m">
                   {(items || []).map((it) => (
-                    <div class="card">
-                      <div>
+                    <div class="blog-single-head__details blog-single-head__details--coloumn card">
+                      <div class="blog-single-2__author">
                         <div>
-                          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                          <figure class="blog-single-2__photo ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                         </div>
-                        <div>
+                        <div class="blog-single-head__data">
                           <p class="text-fluid-0">{it.text}</p>
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
@@ -50,8 +50,8 @@ const {
                     </div>
                   ))}
                 </div>
-                <div>
-                  <div>
+                <div class="blog-single-head__details blog-single-head__details--coloumn">
+                  <div class="bm-social-share bm-social-share--left">
                     <div class="grid-auto gap-fluid-m">
                       {(items || []).map((it) => (
                         <div class="card">
@@ -66,8 +66,8 @@ const {
           </div>
         </div>
       </div>
-      <div class="grid-auto gap-fluid-l">
-        <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="Feature image" loading="lazy" width="900" height="600" /></figure>
+      <div class="bm-blog-single-16__content grid-auto gap-fluid-l">
+        <figure class="bm-blog-single-16__feature-image ratio-portrait"><img src="/media/placeholder.svg" alt="Feature image" loading="lazy" width="900" height="600" /></figure>
         <div></div>
       </div>
     </div>

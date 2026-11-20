@@ -27,12 +27,12 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      {heading && <h1 class="text-fluid-4">{heading}</h1>}
-      <div>
+    <div class="checkout-page-4__container-background">
+      {heading && <h1 class="checkout-page-4__page-heading text-fluid-4">{heading}</h1>}
+      <div class="checkout-page-4-breadcrumb">
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
+            <div class="checkout-page-4-breadcrumb-item card">
               <p class="text-fluid-0">{it.text}</p>
               <p class="text-fluid-0">{it.text}</p>
               <span data-icon="lucide" aria-hidden="true"></span>
@@ -41,18 +41,18 @@ const {
         </div>
       </div>
     </div>
-    <div>
+    <div class="checkout-page-4__container">
       <div>
-        <div></div>
+        <div class="bm-woo-notice"></div>
       </div>
-      <div>
-        <div></div>
+      <div class="checkout-page-4__details">
+        <div class="checkout-page-4__customer-details"></div>
       </div>
-      <div>
-        <div></div>
+      <div class="checkout-page-4__order">
+        <div class="checkout-page-4__order-review"></div>
       </div>
     </div>
-    <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+    <figure class="checkout-page-4__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
     <div></div>
   </div>
 </div>

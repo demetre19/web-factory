@@ -27,34 +27,34 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="blog-single-7-container">
+      <div class="blog-single-7__head">
         <div></div>
         <div>
-          <div></div>
-          <div></div>
+          <div class="blog-single-7__author"></div>
+          <div class="blog-single-7__date"></div>
         </div>
-        <div>
-          <div></div>
+        <div class="blog-single-7__social">
+          <div class="blog-single-7__social-item"></div>
         </div>
         <div></div>
       </div>
-      <div>
+      <div class="blog-single-7__body">
         <div>
           <div></div>
         </div>
-        <div>
+        <div class="blog-single-sidebar">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
-                <h2 class="text-fluid-2">{it.title}</h2>
+              <div class="blog-single-sidebar__item card">
+                <h2 class="blog-single-sidebar__heading text-fluid-2">{it.title}</h2>
                 <div></div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div>
+      <div class="blog-single-7__footer">
         <div>
           <div></div>
         </div>

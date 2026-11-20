@@ -1,0 +1,65 @@
+  .cta-35__cover {
+    display: grid;
+    grid-template-columns: calc(100% * 2 / 3);
+    gap: var(--space-m);
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  }
+
+  .cta-35__content {
+    row-gap: var(--flow-spacing);
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cta-35__inner {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-project-status {
+    padding: 6px var(--space-s) 6px var(--space-s);
+  }
+
+  .cta-35-list {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    row-gap: calc(var(--flow-spacing) / 2);
+    width: 100%;
+    padding: 0 0 0 0;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .cta-35-item {
+    display: flex;
+    align-items: flex-start;
+    column-gap: calc(var(--flow-spacing) / 2);
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    width: 100%;
+  }
+
+  .cta-35-item__icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+  }
+
+  .bm-project-status__label::before {
+    content: '●';
+    padding-inline-end: calc(var(--space-s) / 2);
+    color: var(--bg-subtle);
+    animation: 3s ease-in 0s infinite alternate both running glow;
+  
+  }
+  
+  @keyframes glow {
+    from {
+      
+      filter: blur(1px);
+    }
+  
+    to {
+      
+      filter: blur(3px);
+    }
+  }

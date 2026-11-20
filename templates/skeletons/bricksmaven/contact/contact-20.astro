@@ -27,22 +27,22 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="contact-20-container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
+      <div class="contact-20-content">
         <div>
-          <form novalidate>
+          <form class="contact-20-form__content" novalidate>
           </form>
         </div>
-        <div>
+        <div class="contact-20-list-ul">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="contact-20-list-item card">
                 <span data-icon="lucide" aria-hidden="true"></span>
-                <div>
+                <div class="contact-20-list-item__detail">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

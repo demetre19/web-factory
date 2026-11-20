@@ -32,10 +32,10 @@ const {
     </div>
     <div>
       <div>
-        <div class="row between">
+        <div class="footer-8-nav-menu row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div>
+              <div class="footer-8-nav-list">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}
@@ -43,12 +43,12 @@ const {
         </div>
       </div>
     </div>
-    <div class="row between">
+    <div class="footer-8-mid-container row between">
       <div class="row gap-fluid-m">
         {(items || []).map((it) => (
-          <div class="row between">
+          <div class="footer-8__mid-column row between">
             <h2 class="text-fluid-2">{it.title}</h2>
-            <div class="row between">
+            <div class="footer-8__email-phone row between">
               <a class="text-fluid-0" href={it.href}>{it.label}</a>
               <a class="text-fluid-0" href={it.href}>{it.label}</a>
             </div>
@@ -57,9 +57,9 @@ const {
         ))}
       </div>
     </div>
-    <div class="row between">
-      <div class="row between">
-        <div class="row between">
+    <div class="footer-8-bottom-container row between">
+      <div class="footer-8-bottom__left-column row between">
+        <div class="footer-bottom__left row between">
           <div>
             <span class="logo">{brand}</span>
           </div>
@@ -68,7 +68,7 @@ const {
           </div>
         </div>
         <div>
-          <div class="row between">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
                 <div>
@@ -79,8 +79,8 @@ const {
           </div>
         </div>
       </div>
-      <div class="row between">
-        <div></div>
+      <div class="footer-social-wrapper-8 row between">
+        <div class="footer-social"></div>
       </div>
     </div>
   </div>

@@ -1,0 +1,61 @@
+  .feature-31-container {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-l);
+  }
+
+  .bm-delta-feature-list-ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+  }
+
+  .bm-delta-feature-list-card__content {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-delta-feature-list-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .feature-31__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .feature-31:before {
+  	content:'';
+    width:50vw;
+    height:100%;
+    background-color: var(--action-primary);
+    position: absolute;
+    top:0;
+    right:0;
+  }
+  
+  
+  @media (max-width:767px) {
+  	.feature-31:before {
+  	content:'';
+    width:100%;
+    height:50%;
+    background-color: var(--action-primary);
+    position: absolute;
+    top:0;
+    left:0;
+  }
+  }
+
+  .bm-delta-feature-list-card:nth-child(even) .bm-delta-feature-list-card__media {
+  	order: -1;
+  }
+  
+  
+  @media (max-width:478px) {
+  		.bm-delta-feature-list-card:nth-child(even) .bm-delta-feature-list-card__media {
+  	order: 1;
+  }
+   
+  }

@@ -27,28 +27,28 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-contact-40__container">
+      <div class="bm-contact-40__content">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
-        <div class="grid-auto gap-fluid-l">
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
-          <div>
-            <div>
-              <div>
+        <div class="bm-contact-40-media-card grid-auto gap-fluid-l">
+          <figure class="bm-contact-40-media-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <div class="bm-contact-40-contact-list">
+            <div class="bm-contact-40-contact-item">
+              <div class="bm-contact-40-contact-item__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <div></div>
+              <div class="bm-contact-40-contact-item__content"></div>
             </div>
-            <div>
-              <div>
+            <div class="bm-contact-40-contact-item">
+              <div class="bm-contact-40-contact-item__icon-wrapper">
                 <span data-icon="lucide" aria-hidden="true"></span>
               </div>
-              <div></div>
+              <div class="bm-contact-40-contact-item__content"></div>
             </div>
           </div>
         </div>
       </div>
-      <div>
+      <div class="bm-contact-40__form-wrapper">
         <form novalidate>
         </form>
       </div>
@@ -57,16 +57,16 @@ const {
       <div>
         <div class="grid-auto gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="card">
-              <div>
-                <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+            <div class="bm-hero-86-card card">
+              <div class="bm-hero-86-card__thumb">
+                <figure class="bm-hero-86-card__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
               </div>
-              <div>
-                <div>
+              <div class="bm-hero-86-card__content">
+                <div class="bm-hero-86-card__top">
                   <p class="text-fluid-0">{it.text}</p>
                   <span data-icon="lucide" aria-hidden="true"></span>
                 </div>
-                <p class="text-fluid-0">{it.text}</p>
+                <p class="bm-hero-86-card__review text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}

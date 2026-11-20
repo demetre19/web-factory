@@ -1,0 +1,30 @@
+  .bm-banner-3 {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-banner-3__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  }
+
+  .bm-banner-inline-content__info {
+    column-gap: calc(var(--flow-spacing) / 4);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: calc(var(--flow-spacing) / 4);
+    align-items: center;
+  }
+
+  .bm-banner-3__container {
+    box-shadow: var(--shadow-card);
+    
+  }
+
+  .bm-banner-inline-content__text a {
+    text-decoration: underline;
+    font-weight: 700;
+  }

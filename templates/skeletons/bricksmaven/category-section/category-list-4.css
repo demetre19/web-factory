@@ -1,0 +1,51 @@
+  .category-list-4 {
+    row-gap: var(--flow-spacing);
+  }
+
+  .category-list-4__container {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .category-list-4__list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+  }
+
+  .category-list-4-card {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .category-list-4-card__heading {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    text-align: center;
+    padding: 0 var(--space-m) 0 var(--space-m);
+  }
+
+  .category-list-4-card__image {
+    align-items: center;
+    row-gap: calc( var(--flow-spacing) / 2 );
+    object-fit: cover;
+    width: 100%;
+  }

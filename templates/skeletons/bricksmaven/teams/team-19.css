@@ -1,0 +1,99 @@
+  .bm-team-19__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-team-19-team-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-team-19-card {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: var(--space-m) var(--space-m) 0 var(--space-m);
+  }
+
+  .bm-team-19-card__content {
+    row-gap: var(--flow-spacing);
+    padding: 0 0 var(--space-m) 0;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--left {
+    justify-content: flex-start;
+  }
+
+  .bm-team-19-card__media {
+    overflow: hidden;
+  }
+
+  .bm-team-19-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* CARD */
+  .bm-team-19-card {
+    background-color: var(--bg-subtle);
+    overflow: hidden;
+    transition: 1s linear;
+  }
+  
+  /* Sets all color to white on hover */
+  .bm-team-19-card:hover {
+  	color: var(--bg-canvas);
+  }
+  
+  /* IMAGE */
+  .bm-team-19-card__image {
+    transition: 0.5s ease-out;
+    scale: 1.2;
+  }
+  
+  .bm-team-19-card:hover .bm-team-19-card__image {
+    scale: 1;
+  }
+  
+  /* PSUEDO ELEMENT */
+  .bm-team-19-card:after {
+    content: '';
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top: 100%;
+    background-color: var(--bg-subtle);
+    z-index: -1;
+    transition: 0.2s ease-out;
+  }
+  
+  .bm-team-19-card:hover:after {
+    top: 0%;
+    background-color: var(--text-secondary);
+  }

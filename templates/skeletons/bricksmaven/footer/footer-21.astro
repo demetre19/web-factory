@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      {heading && <h2 class="text-fluid-2">{heading}</h2>}
-      {fs && <p class="text-fluid-0">{fs}</p>}
+    <div class="bm-footer-21__cta-container row between">
+      {heading && <h2 class="bm-footer-21__heading text-fluid-2">{heading}</h2>}
+      {fs && <p class="bm-footer-21__subheading text-fluid-0">{fs}</p>}
       <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
     </div>
-    <div class="row between">
+    <div class="bm-footer-21__footer-container row between">
       <div>
-        <div class="row between">
+        <div class="footer-nav-wrapper footer-nav-wrapper-21 row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="row between">
+              <div class="footer-nav-column row between">
                 <h3 class="text-fluid-2">{it.title}</h3>
-                <div class="row between">
+                <div class="footer-menu row between">
                   <div class="row gap-fluid-m">
                     {((it.items || []) || []).map((it2) => (
                       <div>
@@ -54,33 +54,33 @@ const {
         </div>
       </div>
       <div class="row between">
-        <div class="row between">
+        <div class="bm-contact-information-grid-ul row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="row between">
-                <div class="row between">
+              <div class="bm-contact-info-card row between">
+                <div class="bm-contact-info-card__content row between">
                   <h2 class="text-fluid-2">{it.title}</h2>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="bm-contact-info-card__icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div class="row between">
+      <div class="bm-footer-21__newsletter row between">
         <form novalidate>
         </form>
       </div>
     </div>
-    <div class="row between">
-      <div class="row between">
+    <div class="bm-footer-21__bottom-container row between">
+      <div class="footer-bottom__left row between">
         <div></div>
         <div>
-          <div class="row between">
+          <div class="footer-legal-nav row between">
             <div class="row gap-fluid-m">
               {(items || []).map((it) => (
-                <div>
+                <div class="footer-legal__li">
                   <a class="text-fluid-0" href={it.href}>{it.label}</a>
                 </div>
               ))}
@@ -88,7 +88,7 @@ const {
           </div>
         </div>
       </div>
-      <div class="row between">
+      <div class="bm-social-share bm-social-share--left row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
             <div>

@@ -28,24 +28,24 @@ const {
 <div>
   <div>
     <div class="sec-inner">
-      <div>
-        <div class="grid-auto gap-fluid-l">
+      <div class="hero-21-container">
+        <div class="hero-21-content__wrapper grid-auto gap-fluid-l">
           {heading && <h1 class="text-fluid-4">{heading}</h1>}
           {fs && <p class="text-fluid-0">{fs}</p>}
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
-          <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+          <figure class="hero-21-content__background ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
         </div>
       </div>
     </div>
     <div class="sec-inner">
       <div>
-        <div>
+        <div class="hero-21-list">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="hero-21-card card">
                 <h2 class="text-fluid-2">{it.title}</h2>
                 <p class="text-fluid-0">{it.text}</p>
-                <span data-icon="lucide" aria-hidden="true"></span>
+                <span class="hero-21-card__icon" data-icon="lucide" aria-hidden="true"></span>
               </div>
             ))}
           </div>

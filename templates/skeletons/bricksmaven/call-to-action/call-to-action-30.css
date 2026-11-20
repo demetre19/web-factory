@@ -1,0 +1,37 @@
+  .bm-cta-30-card {
+    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .bm-cta-30-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-cta-30-contact-card {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  }
+
+  .bm-cta-30-contact-card__top {
+    flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-cta-30-contact-card__image {
+    object-fit: cover;
+    width: 92px;
+  }
+
+  .bm-team-card__contact-details {
+    flex-direction: column;
+    padding: 0 0 0 0;
+  }
+
+  .bm-team-card__item {
+    column-gap: calc(var(--flow-spacing) / 4);
+    display: flex;
+    flex-direction: row;
+  }

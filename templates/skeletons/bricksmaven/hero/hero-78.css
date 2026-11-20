@@ -1,0 +1,32 @@
+  .bm-hero-78__container {
+    row-gap: var(--space-s);
+  }
+
+  .bm-hero-78__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-hero-78-media-grid {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+  }
+
+  .bm-hero-78-media-item__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-hero-78__footer {
+    row-gap: var(--flow-spacing);
+    padding: var(--space-m) 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }

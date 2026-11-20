@@ -27,19 +27,19 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div class="row between">
-      <div class="row between">
-        <div>
+    <div class="bm-footer-16__container row between">
+      <div class="bm-footer-16__intro row between">
+        <div class="bm-footer-16__media">
           <svg></svg>
         </div>
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div class="row between">
+      <div class="bm-footer-16__content row between">
         <div class="row gap-fluid-m">
           {(items || []).map((it) => (
-            <div class="row between">
-              <h2 class="text-fluid-2">{it.title}</h2>
-              <div class="row between">
+            <div class="bm-footer-16-card row between">
+              <h2 class="bm-footer-16-card__heading text-fluid-2">{it.title}</h2>
+              <div class="bm-social-share row between">
                 <div class="row gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div>
@@ -48,11 +48,11 @@ const {
                   ))}
                 </div>
               </div>
-              <div class="row between">
+              <div class="bm-footer-payment-options row between">
                 <div class="row gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div>
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                      <figure class="bm-footer-option__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                     </div>
                   ))}
                 </div>
@@ -61,11 +61,11 @@ const {
           ))}
         </div>
       </div>
-      <div class="row between">
-        <div class="row between">
+      <div class="bm-footer-16__nav row between">
+        <div class="bm-footer-16-nav-menu row between">
           <div class="row gap-fluid-m">
             {(items || []).map((it) => (
-              <div>
+              <div class="bm-footer-16-nav-list">
                 <a class="text-fluid-0" href={it.href}>{it.label}</a>
               </div>
             ))}

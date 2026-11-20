@@ -38,6 +38,8 @@ The Web Factory is the integration: a prd-herdr-driven stage pipeline that turns
 
 **D10 — schema reconciliation (this PRD adds; resolves F1):** `sitemap.md` is the route-table authority and is emitted under the S1 schema (§4.1). `content-plan.md` is a *projection* of it: S2 emits `slug` (derives from `route`'s last path segment), `path` (= `route` verbatim), `type` (= `page_class`; S1's `ancillary` renders as `utility` in the plan vocabulary), `primary_keyword` (= head of `target_keywords`). The closed page-type set is `money | article | ancillary` — `utility` in S2–S5 vocabulary is the `ancillary` alias. Conformance patch to the S2–S5 specs is OI-3 below.
 
+**D11 — SEO/a11y/perf shell expansion (2026-11-06):** the emitted site carries a normative shell contract (§5.7) — JSON-LD entity graph, full OG + generated `og-image.png`, footer closing surface incl. the HTML sitemap, `astro:assets` image pipeline, vanilla-script-only JS, WCAG-2.2-AA floors, mobile action bar + fluid stacking, weight budget, the S6 `cache_policy` matrix, mobile-usability floors (input-zoom/zoom-kill/`dvh`/hover-only/popover-clip/`scroll-padding`) and the design-ban anti-pattern lint — verified by a 23-check SEO gate at S7. `site/company-description.md` is the single reviewed source for concise business copy and `site/customer-profile.md` the single source for audience/conversion psychology (§5.7). Content-side support lands in the `media`/`faq`/`og_image`/`pain_point` plan columns, featured-snippet answer blocks, the FAQ `<details>` contract, the 14-rule sentence contract (Koray-style sentence-level SEO), Rule-of-One + AIDA page structure, the four-question fold quad, and anchor=target-title link discipline.
+
 ---
 
 ## 3. Stage map
@@ -77,14 +79,14 @@ All cross-stage I/O rides the run's shared `site/` folder — the run folder is 
 
 | Stage | Spec | Contract in one paragraph |
 |---|---|---|
-| S0 Discovery | intake (prd-herdr side) | Structured Q&A producing `site-brief.md`. First question is **site class** (`local` \| `national` \| `ecom`). For `local`/`national` the brief must carry `gbp_primary_category` + `gbp_secondary_category`, discovered via the GMB extractor / SEO Time Machine method: search the niche's core keywords on Maps, open top-ranked listings, read their Top Categories, pick the category closest to what the business actually does. Also collects entity facts, geography, competitor names, reference copy, `## Deploy` target (`host_alias`, `user`, `docroot`, `url`), and contact destinations (`contact_email`, `contact_phone`, `notify_phone`). |
+| S0 Discovery | intake (prd-herdr side) | Structured Q&A producing `site-brief.md`. First question is **site class** (`local` \| `national` \| `ecom`). For `local`/`national` the brief must carry `gbp_primary_category` + `gbp_secondary_category`, discovered via the GMB extractor / SEO Time Machine method: search the niche's core keywords on Maps, open top-ranked listings, read their Top Categories, pick the category closest to what the business actually does. Also collects entity facts, geography, competitor names, reference copy, `social_profiles` (URLs — footer + `/about/` + JSON-LD `sameAs`), `review_source` (GBP URL or pasted testimonials — gates `AggregateRating`; never fabricated), `## About source` (the business's own home/about copy — `[SOURCE]` for `company-description.md`), `## Deploy` target (`host_alias`, `user`, `docroot`, `url`), and contact destinations (`contact_email`, `contact_phone`, `notify_phone`). |
 | S1 Sitemap | `WEB-FACTORY-S1-SITEMAP.md` (prd-herdr `research/`) | Turns the brief into `sitemap.md`: topical map (pillar → cluster → support), route table with the URL=H1=title-tag lock minted per row, ancillary-page matrix per `site_type`, and a `research-inputs` degradation manifest. Research tiers: SERP always (a `serp.ran: false` lane refuses), GSC/Cora/entities/embeddings optional and recorded. Ends at the `ACCEPT SITEMAP` human gate — nothing downstream mints until the operator accepts the map. Category→route contract: homepage H1 = **brand**; each GBP category owns exactly one money route whose URL+H1+title carry the category phrase; location pages are `<primary category> <suburb>` for the ~20 largest suburbs; nav labels are shortened forms — the lock binds URL/H1/title, never the label. |
-| S2 Tone+plan | `research/WEB-FACTORY-S2-TONE-PLAN.md` | One lane, sequential. Produces `tone-profile.md` (frontmatter lint bounds, voice statement, lexical table, banned list, CTA palette, trust vocabulary, before/after) and `content-plan.md` (one row per sitemap row + `## Writer batches`, money batches first, ≤6 rows per batch). Downstream refuses to mint on a stale or missing pair — S3/S4 re-check row-count parity at mint. |
-| S3 Writing | `research/WEB-FACTORY-S3-WRITING.md` | Parallel `pi/WRITER`-bound lanes, one per `## Writer batches` entry, producing `content/<slug>.md` per owned row: frontmatter (`title` ≤60, `description` 140–160, `slug`, `path`, `type`, `primary_keyword`), skeleton-H2 discipline, money/article posture split, link seeds placed as `[anchor](<row.path>)` (canon link notation — F2/F3 fix landed), tone profile and `site-brief.md` facts bound hard. One commit per page. |
+| S2 Tone+plan | `research/WEB-FACTORY-S2-TONE-PLAN.md` | One lane, sequential. Produces `tone-profile.md` (frontmatter lint bounds, voice statement, lexical table, banned list, CTA palette, trust vocabulary, before/after), `customer-profile.md` (≥5 personas × ≥7 pain points with `PP-<n>` IDs + the CRO bank + the four-question fold contract — `research/customer-profile-prompt.md` is the contract; every page's copy loops around its bound pain), `content-plan.md` (one row per sitemap row + `## Writer batches`, money batches first, ≤6 rows per batch; `media`/`faq`/`og_image`/`pain_point` columns added), and `company-description.md` (the 100–200-word entity description — `research/company-description-prompt.md` is the contract; footer, `/about/`, JSON-LD `description` all render it). Downstream refuses to mint on a stale or missing set — S3/S4 re-check row-count parity at mint. |
+| S3 Writing | `research/WEB-FACTORY-S3-WRITING.md` | Parallel `pi/WRITER`-bound lanes, one per `## Writer batches` entry, producing `content/<slug>.md` per owned row: frontmatter (`title` ≤60, `description` 140–160, `slug`, `path`, `type`, `primary_keyword`, `faq`, `og_image`, `images`, `pain_point`), skeleton-H2 discipline, featured-snippet answer blocks (40–60-word direct answer opening every H2 — R2's answer surface), FAQ `###` Q/A contract for `<details>`+JSON-LD, money/article posture split, the conversion contract (Rule of One on the row's `pain_point` persona, AIDA spine on money pages, the fold quad — H1/first-para/trust/CTA answering all four questions above the fold, CRO bank spent in voice), link seeds placed as `[anchor](<row.path>)` (canon link notation — F2/F3 fix landed), `/about/` embeds `company-description.md` verbatim, alt text written per `media` slot, tone profile and `site-brief.md` facts bound hard. One commit per page. |
 | S4 Interlink+cleanup | `research/WEB-FACTORY-S4-INTERLINK.md` | Two lanes, strictly ordered. Graph lane computes `link-graph.md` — every plan `link_seed` an edge, orphans fixed, ≤3 body outbound, `## Notes` audit — *before* any page file changes. Apply lane injects edges (idempotent `present` short-circuit, `body` first-occurrence wrap, `related` demotion), then runs the corpus-wide cleanup pass emitting `content-final/` + `cleanup-report.md` (7 removal classes; frontmatter, link targets, entity facts, heading skeleton never touched). |
-| S5 Design→Astro | `research/WEB-FACTORY-S5-DESIGN-DNA.md` | Two lanes, strictly ordered. Distill lane normalizes both design sources (DOX packet verified by checksum; operator HTML/screenshot refs read as observation only, never executed) into `site/design-dna/` — `TOKENS.json`, `CLASS-SYSTEM.md`, `COMPONENTS.md`, `ROUTE-MANIFEST.json`, `PAGES/*/SPEC.md`, `DESIGN-DNA.md`. Build lane scaffolds `sites/<slug>/` from vendored `templates/astro/` (never `npm create`), binds `content-final/` to routes on `path`, enforces **fluid typography** (utopia-style `clamp()` scale site-wide — no breakpoint-stepped sizes), a real functional mobile menu (hamburger → focus-trapped panel), a complete footer (site map + NAP), and shortened nav labels. `astro build` must exit 0 with one `dist/` page per route. |
-| S6 Integrations | `research/WEB-FACTORY-S6-INTEGRATIONS.md` | One wiring lane per site. `site/integrations.json` is the single capability registry (`form_delivery`, `sms_notify`, `ssl`, `security_headers`), resolved once against the operator environment; every capability degrades rather than blocks except SSL. Emits `public/form.php` (PHP — the one runtime the SSH-host contract implies; Resend → SMTP → mailto degrade chain; honeypot + timestamp anti-bot), `.htaccess`/nginx snippet + `public/_headers`, `.env.sample` (key names only — no secret ever commits), and `INTEGRATIONS.md` (the audit artifact). |
-| S7 Gate+deploy | `research/WEB-FACTORY-S7-GATE-DEPLOY.md` | One deploy lane per site: clean `astro build` → 13-check SEO gate against `dist/` (route parity, titles, canonicals, OG, sitemap.xml, robots, internal links, self-containment, alts, CTA endpoints, heading levels) → atomic rsync deploy (`releases/<ts>/` + `current` symlink flip, ≤5 releases retained) → HTTP smoke → operator ~10% tweak loop (rebuild → re-gate → re-deploy → re-smoke per iteration) → operator sign-off = `APPROVE SITE` = seal in `deploy-report.md`. `dist/` never commits. |
+| S5 Design→Astro | `research/WEB-FACTORY-S5-DESIGN-DNA.md` | Two lanes, strictly ordered. Distill lane normalizes both design sources (DOX packet verified by checksum; operator HTML/screenshot refs read as observation only, never executed) into `site/design-dna/` — `TOKENS.json`, `CLASS-SYSTEM.md`, `COMPONENTS.md`, `ROUTE-MANIFEST.json`, `PAGES/*/SPEC.md`, `DESIGN-DNA.md`. Build lane scaffolds `sites/<slug>/` from vendored `templates/astro/` (never `npm create`), binds `content-final/` to routes on `path`, enforces **the shell contract** (§5.7): fluid type + spacing + grid stacking site-wide, focus-trapped mobile menu + mobile action bar, heading-surface `.seo-h*` classes, the footer closing surface (company description + social links + HTML sitemap + NAP), JSON-LD entity graph, full OG + generated `og-image.png`, `astro:assets` WebP/AVIF images, vanilla-script-only JS, icon-first mobile controls, WCAG-2.2-AA floors, ≥44px tap targets, weight budget, designed 404. `astro build` must exit 0 … |
+| S6 Integrations | `research/WEB-FACTORY-S6-INTEGRATIONS.md` | One wiring lane per site. `site/integrations.json` is the single capability registry (`form_delivery`, `sms_notify`, `ssl`, `security_headers`, `cache_policy`), resolved once against the operator environment; every capability degrades rather than blocks except SSL. Emits `public/form.php` (PHP — the one runtime the SSH-host contract implies; Resend → SMTP → mailto degrade chain; honeypot + timestamp anti-bot), `.htaccess`/nginx snippet + `public/_headers` (security headers + the cache matrix: fingerprinted `/_astro/` assets immutable, stable `public/` URLs revalidate, HTML `max-age=0`), `.env.sample` (key names only — no secret ever commits), and `INTEGRATIONS.md` (the audit artifact). |
+| S7 Gate+deploy | `research/WEB-FACTORY-S7-GATE-DEPLOY.md` | One deploy lane per site: clean `astro build` → 23-check SEO gate against `dist/` (route parity, titles, canonicals, OG+social cards, sitemap.xml + HTML sitemap, robots, internal links + social render, self-containment, image alt/srcset/sizes, CTA endpoints, heading levels, JSON-LD entity graph, JS containment, a11y shell, responsive floors + mobile action bar + mobile-usability floors, footer surface, cache policy, weight budget, ancillary surface incl. 404, fold quad, design bans) → atomic rsync deploy (`releases/<ts>/` + `current` symlink flip, ≤5 releases retained) → HTTP smoke → operator ~10% tweak loop (rebuild → re-gate → re-deploy → re-smoke per iteration) → operator sign-off = `APPROVE SITE` = seal in `deploy-report.md`. `dist/` never commits. |
 
 ---
 
@@ -116,7 +118,7 @@ All run-scoped artifacts live in the run's shared **`site/` folder**. **F6 resol
 
 ### 5.1 `site-brief.md` — intake artifact (owner: S0)
 
-Carries every entity fact the factory binds: brand, offering, audience, `site_type` (`local | national | ecom`), geo(s), `gbp_primary_category` + `gbp_secondary_category` (required for `local`/`national`), voice fields, `## Reference copy`, competitors, services, contact destinations (`contact_email`, `contact_phone`, `notify_phone`), and `## Deploy` (`host_alias`, `user`, `docroot`, `url`). Writers and cleanup quote it verbatim; a fact the brief does not carry is omitted or flagged, never fabricated.
+Carries every entity fact the factory binds: brand, offering, audience, `site_type` (`local | national | ecom`), geo(s), `gbp_primary_category` + `gbp_secondary_category` (required for `local`/`national`), voice fields, `## Reference copy`, competitors, services, `social_profiles` (URLs — the footer's and `/about/`'s social links and the JSON-LD `sameAs` all render this one list), `review_source` (GBP URL or pasted testimonials — the only input that can mint `AggregateRating`/`Review` JSON-LD), `## About source` (the business's own home/about copy — the `[SOURCE]` slot for `company-description.md`), contact destinations (`contact_email`, `contact_phone`, `notify_phone`), and `## Deploy` (`host_alias`, `user`, `docroot`, `url`). Writers and cleanup quote it verbatim; a fact the brief does not carry is omitted or flagged, never fabricated.
 
 ### 5.2 `sitemap.md` — route-table authority (owner: S1; schema of record)
 
@@ -158,6 +160,71 @@ Canonical template: `research/link-graph.md`. Columns: `source_slug | target_slu
 - `site/link-graph.md`, `site/cleanup-report.md`, `site/design-dna/DESIGN-DNA.md`, `site/INTEGRATIONS.md`, `site/seo-gate-report.md`, `site/deploy-report.md` — the per-stage review artifacts.
 - `site/design-dna/ROUTE-MANIFEST.json` — the build-side route list; route count is always `sitemap.md`'s authority.
 - `sites/<slug>/sitemap.md` vs `site/sitemap.md`: per the F1/F4 resolution note recorded at spec time, **S0/S1 artifacts land under the consuming run's repo** — the factory repo holds the specs, the run's repo (or the run's `site/` folder inside the factory checkout for single-repo runs) holds the artifacts. The S1 spec writes `sites/<slug>/sitemap.md`; the S2–S7 specs read `site/sitemap.md`. These are the same file under the run-folder convention: `site/` is the run-scoped alias for the site's artifact tree. Where they physically differ (S1 lane writing `sites/<slug>/`), the coordinator's collection point copies it into `site/` before S2 mints — recorded as OI-2.
+
+### 5.7 `company-description.md`, `customer-profile.md` + the S5 shell contract
+
+`site/company-description.md` (owner: S2; canonical template
+`research/company-description-prompt.md`) is the single reviewed
+source for concise business copy: 100–200 words, encyclopedic
+lead-paragraph register, blacklist-clean, `## Provenance` audit block.
+Three render targets — footer blurb, `/about/` body (verbatim),
+JSON-LD entity `description`. A fourth use case is a re-write of this
+file, never a second description.
+
+`site/customer-profile.md` (owner: S2; canonical template
+`research/customer-profile-prompt.md`) is the single reviewed source
+for audience and conversion psychology: ≥5 personas × ≥7 pain
+points with stable `PP-<n>` IDs, a CRO bank (headline directions,
+USP framings, subheads, trust variations, emotional hooks,
+differentiators), and the four-question fold contract. Every plan
+row's `pain_point` names one `PP-<n>`; S3 writers bind each page to
+that persona (Rule of One + AIDA spine + the fold quad), S5 renders
+the quad as the hero module, S7 check 22 verifies it in `dist/`.
+
+The **shell contract** (S5 spec §The shell contract) is the normative
+surface every `sites/<slug>/` build satisfies and the S7 gate
+re-verifies on `dist/` — it answers the audit findings the early
+specs left unowned (S5A F9 a11y, S5B F7 JSON-LD, RESPONSIVE F5/F6):
+
+- **JSON-LD entity graph** — one `@graph` rooted at the business node;
+  `LocalBusiness`/`Organization` + `WebSite` every page,
+  `BreadcrumbList` non-root, `Service` on money, `Article` on article,
+  `FAQPage` on `faq: yes` (generated from the rendered `<details>`,
+  never hand-written), `AggregateRating`/`Review` only with real
+  `review_source` data.
+- **Open Graph** — full tag set incl. `og:image`/`og:site_name`/
+  `og:locale`/twitter card on every page; a generated 1200×630
+  `public/og-image.png` default, per-row `og_image` override.
+- **Social links** — `site.ts` `social` array from `social_profiles`;
+  footer + `/about/` render targets, one source, empty = absent.
+- **Footer closing surface** — company description + social links +
+  the HTML sitemap (every route, pillar-grouped, `details`-collapsible
+  at scale) + NAP `itemscope`; no shell headings in the H-sequence.
+- **Images** — `astro:assets` `<Image>` in `src/assets/`: WebP/AVIF +
+  srcset + intrinsic sizes + lazy-below-fold; `public/` holds only
+  stable-URL assets (favicon, og-image, robots); SVG icons
+  `currentColor`.
+- **JS** — zero framework hydration baseline; vanilla component
+  scripts bundled under `/_astro/`; hydrated widgets only as
+  `DESIGN-DNA.md`-declared `client:visible` islands.
+- **Mobile** — fluid `clamp()` grids with declared stacking
+  staircases (4→2→1), zero `overflow-x` 320–1440px, ≥44px targets,
+  focus-trapped drawer menu, mobile-only `MobileCTA` action bar.
+- **Copy + heading surface** — `.seo-h{1,2,3}` classes decouple visual
+  size from semantic rank (heading *vector* stays the SEO contract);
+  icon-first mobile controls with `aria-label`s; no directional text
+  as anchor or label; the S3 14-rule sentence contract and
+  anchor=target-title link discipline are enforced upstream and
+  re-verified at the gate.
+- **Ancillary** — `/terms/` + `/privacy/` per the ancillary matrix and
+  a designed `404.astro` (brand shell + onward links, noindex).
+- **A11y** — landmarks, skip link, `:focus-visible`, ≥4.5:1 contrast,
+  `prefers-reduced-motion`, `aria-expanded`/`controls` pairs.
+- **Weight budget** — ≤500 KB first-load, ≤150 KB HTML, ≤100 KB JS,
+  ≤60 KB CSS, WOFF2-only ≤4 font files; overage rows into the report.
+- **Cache matrix** (S6 `cache_policy`) — fingerprinted `/_astro/`
+  immutable, stable `public/` URLs `must-revalidate`, HTML
+  `max-age=0`.
 
 ---
 
@@ -204,6 +271,7 @@ Everything else — stage specs (`research/`), canonical templates (`research/{s
 | OI-6 | `docs/machinery/WEB-FACTORY.md` runbook + `skills/` per-stage lane skills | factory repo |
 | OI-7 | `tools/sitemap_lint.py` + `seo-gate` mechanical checkers (the specs' lint posture is prose-until-tooled) | factory repo |
 | OI-8 | S1 spec's two vendored deterministic modules (YAKE/PMI analysis half, semantic scorer) under `lib/` | factory repo |
+| OI-9 | Vendored `templates/astro/` conformance to the expanded shell contract — `SocialLinks.astro`, `JsonLd.astro`, `MobileCTA.astro` action bar, `src/pages/404.astro`, `.seo-h*` heading classes, footer regions (description + social + grouped HTML sitemap + NAP), skip link, `src/og/og-image.svg` template, `_headers` cache matrix fix | factory repo |
 
 ---
 

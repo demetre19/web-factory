@@ -1,0 +1,129 @@
+  .bm-team-21__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .intro--left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    align-self: flex-start;
+  }
+
+  .bm-team-21-team-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--space-m);
+  }
+
+  .bm-team-21-card {
+    padding: var(--space-m) var(--space-m) var(--space-l) var(--space-m);
+    justify-content: space-between;
+    overflow: clip;
+  }
+
+  .bm-social-share {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .bm-social-share--column {
+    row-gap: calc(var(--flow-spacing) / 2);
+    flex-direction: column;
+  }
+
+  .bm-team-21-card__footer {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bm-team-21-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* CONTENT */
+  .bm-team-21-card .bm-team-21-card__content {
+    color: var(--bg-canvas) !important;
+    z-index: 2;
+  }
+  
+  /* SOCIAL WRAPPER */
+  .bm-team-21-card .bm-team-21-card__social-wrapper {
+    z-index: 2;
+  }
+  
+  .bm-team-21-card .bm-team-21-card__social-wrapper .bm-social-share__icon {
+    color: var(--bg-canvas); 
+  }
+  
+  .bm-team-21-card .bm-team-21-card__social-wrapper {
+    transform: translateY(-200%);
+    opacity: 0;
+    transition: .3s transform, .3s opacity;
+  }
+  
+  .bm-team-21-card:hover .bm-team-21-card__social-wrapper, .bm-team-21-card:focus-within .bm-team-21-card__social-wrapper {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  
+  /* HEADING */
+  .bm-team-21-card .bm-team-21-card__heading {
+    transform: translateY(85%);
+    transition: .3s transform, .3s opacity;
+  }
+  
+  .bm-team-21-card:hover .bm-team-21-card__heading, .bm-team-21-card:focus-within .bm-team-21-card__heading {
+    transform: translateY(0%);
+  }
+  
+  /* FOOTER */
+   .bm-team-21-card .bm-team-21-card__footer {
+    transform: translateY(100%);
+    transition: .3s transform, .3s opacity;
+    opacity: 0;
+  }
+  
+   .bm-team-21-card:hover .bm-team-21-card__footer, .bm-team-21-card:focus-within .bm-team-21-card__footer {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  
+  /* IMAGE */
+  .bm-team-21-card .bm-team-21-card__image {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    transition: .3s all;
+  }
+  
+  .bm-team-21-card:hover .bm-team-21-card__image, .bm-team-21-card:focus-within .bm-team-21-card__image {
+    filter: grayscale(0%);
+    -webkit-filter: grayscale(0%);
+  }
+  
+  /* OVERLAY */
+  .bm-team-21-card .bm-team-21-card__overlay {
+    position: absolute;
+    inline-size: 100%;
+    block-size: 100%;
+    inset: 0;
+    background: linear-gradient(transparent 75%, color-mix(in srgb, var(--text-secondary) 90%, transparent));
+    z-index: 1;
+    
+  }

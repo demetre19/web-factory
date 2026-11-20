@@ -27,27 +27,27 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-comparison-5__container">
+      <div class="intro">
         {heading && <h2 class="text-fluid-2">{heading}</h2>}
         {fs && <p class="text-fluid-0">{fs}</p>}
       </div>
-      <div>
-        <div>
-          <div>
-            <div>
+      <div class="bm-comparison-5-list">
+        <div class="bm-comparison-5-card">
+          <div class="bm-comparison-5-card__intro">
+            <div class="bm-comparison-5-card__icon-wrapper">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>
-          <div>
+          <div class="bm-comparison-5-step-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
-                    <div></div>
+                <div class="bm-comparison-5-step-item card">
+                  <div class="bm-comparison-5-step-item__marker">
+                    <div class="bm-comparison-5-step-item__circle"></div>
                     <div></div>
                   </div>
-                  <div>
+                  <div class="bm-comparison-5-step-item__content">
                     <div></div>
                     <h4 class="text-fluid-2">{it.title}</h4>
                   </div>
@@ -56,21 +56,21 @@ const {
             </div>
           </div>
         </div>
-        <div>
-          <div>
-            <div>
+        <div class="bm-comparison-5-card">
+          <div class="bm-comparison-5-card__intro">
+            <div class="bm-comparison-5-card__icon-wrapper">
               <span data-icon="lucide" aria-hidden="true"></span>
             </div>
           </div>
-          <div>
+          <div class="bm-comparison-5-step-list">
             <div class="grid-auto gap-fluid-m">
               {(items || []).map((it) => (
-                <div class="card">
-                  <div>
-                    <div></div>
+                <div class="bm-comparison-5-step-item card">
+                  <div class="bm-comparison-5-step-item__marker">
+                    <div class="bm-comparison-5-step-item__circle"></div>
                     <div></div>
                   </div>
-                  <div>
+                  <div class="bm-comparison-5-step-item__content">
                     <div></div>
                     <h4 class="text-fluid-2">{it.title}</h4>
                   </div>

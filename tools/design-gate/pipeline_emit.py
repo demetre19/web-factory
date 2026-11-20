@@ -21,8 +21,15 @@ Then (optionally) clone the vendored toolchain and `astro build` for a
 real dist tree the w7 checks can open.
 
 Usage: pipeline_emit.py <pipeline-dir> [--with-toolchain] [--build]
+       pipeline_emit.py <pipeline-dir> --scaffold
        --with-toolchain  clonefile templates/astro/node_modules
        --build           implies --with-toolchain; runs npm run build
+       --scaffold        w0: TOKENS + scaffold + site assets + global
+                         css + shell only; no contracts/components/
+                         instances/assemble/build
+
+Copy: a plan row's copy_ref resolves against the page's COPY.json and
+rides into the section as the full `copy` slot (§4.3).
 """
 import json
 import os
@@ -60,6 +67,44 @@ def _read(path):
     return open(path, encoding='utf-8').read()
 
 
+def _clean_svg(svg):
+    """Inline-SVG hygiene for exported artwork (Illustrator et al.):
+    prolog dropped; <style> class rules (.st0{fill:#..}) folded into
+    presentation attributes on the elements that used them; style=""
+    and editor-only attrs removed. The mark keeps its own colours as
+    attributes — artwork, not a page stylesheet (P.2/TK.3)."""
+    svg = re.sub(r'<\?xml[^>]*\?>', '', svg)
+    rules = {}
+    for blk in re.findall(r'<style[^>]*>(.*?)</style>', svg, re.S):
+        for cls, body in re.findall(r'\.([\w-]+)\s*\{([^}]*)\}', blk):
+            decl = {}
+            for d in body.split(';'):
+                if ':' in d:
+                    k, v = d.split(':', 1)
+                    decl[k.strip()] = v.strip()
+            rules[cls] = decl
+    svg = re.sub(r'<style[^>]*>.*?</style>', '', svg, flags=re.S)
+
+    def _cls(m):
+        attrs = []
+        for c in m.group(1).split():
+            for k, v in (rules.get(c) or {}).items():
+                if k in ('fill', 'stroke', 'stroke-width', 'opacity',
+                         'fill-rule', 'clip-rule', 'fill-opacity'):
+                    attrs.append(f'{k}="{v}"')
+        return ' '.join(attrs)
+    svg = re.sub(r'class="([^"]*)"', _cls, svg)
+    # style="" goes everywhere (P.2); editor-only placement attrs
+    # only on the root <svg> — child x/y/id are geometry and refs
+    svg = re.sub(r'\sstyle="[^"]*"', '', svg)
+    svg = re.sub(
+        r'<svg\b[^>]*>',
+        lambda m: re.sub(r'\s(?:xml:space|x|y|id)="[^"]*"', '',
+                         m.group(0)),
+        svg, count=1)
+    return svg.strip()
+
+
 def _slug(ctx):
     site = ctx.site_block() or {}
     return str(site.get('slug') or os.path.basename(ctx.dir.rstrip('/'))
@@ -70,9 +115,16 @@ def _scaffold(ctx, comps):
     """S0 — package.json + astro.config.mjs + favicon + empty index."""
     site = ctx.site
     deps = dict(PKG_DEPS)
+    # the layout shell renders icons too (theme toggle), and the
+    # shared helper file may import lucide-astro — scan it, the shared
+    # helpers and the exemplars so the manifest declares what the
+    # build imports
+    shell = os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro')
+    shared = os.path.join(TEMPLATES, 'sections', '_shared',
+                          'inline.ts')
     if any('lucide-astro' in (_read(p) if os.path.isfile(p) else '')
-           for p in _exemplar_paths(comps)):
-        deps['lucide-astro'] = '^0.4.0'
+           for p in list(_exemplar_paths(comps)) + [shell, shared]):
+        deps['lucide-astro'] = '^0.556.0'
     _w(os.path.join(site, 'package.json'), json.dumps({
         'name': _slug(ctx), 'version': '1.0.0', 'private': True,
         'type': 'module',
@@ -112,14 +164,16 @@ def _exemplar_paths(comps):
 
 
 def _tokens(ctx, dna):
-    """P1 — TOKENS.json: keep the operator's if the wave wrote it, else
-    derive from DNA (knobs + modes both ride the map)."""
+    """P1 — TOKENS.json is a DERIVED shadow of DNA (knobs + modes ride
+    the map). Always re-emit: a stale TOKENS.json next to a moved DNA
+    is drift, not provenance (P.5 catches hex divergence)."""
     p = os.path.join(ctx.dir, 'TOKENS.json')
-    if os.path.isfile(p):
-        return json.loads(_read(p)), False
     rec = emit_global.tokens_json(dna)
-    _w(p, json.dumps(rec, indent=1))
-    return rec, True
+    was = _read(p) if os.path.isfile(p) else None
+    wrote = json.dumps(rec, indent=1) + '\n' != was
+    if wrote:
+        _w(p, json.dumps(rec, indent=1) + '\n')
+    return rec, wrote
 
 
 def _comp_copy(ctx, comp):
@@ -160,13 +214,65 @@ def _bank_copy(ctx, comp, recipe):
     return _read(css) if os.path.isfile(css) else ''
 
 
-def _instance(ctx, contract, row):
-    """W6 — the section instance: frontmatter contract + import + render.
-    Copy/props come from the contract content + plan row (cta/items/
-    image); the component owns the skeleton (P.6)."""
+COPY_BLOCK_KEYS = ('answer', 'before', 'items', 'list_ordered', 'qa',
+                   'links', 'after')
+
+
+def _load_copy(ctx):
+    """COPY.json of the page (the pipeline dir IS the page dir) — the
+    article, block by block (copy_ingest.py). None when absent."""
+    p = os.path.join(ctx.dir, 'COPY.json')
+    if not os.path.isfile(p):
+        return None
+    return json.load(open(p, encoding='utf-8'))
+
+
+def _copy_slot(copy, ref):
+    """The full-copy prop for a plan row's copy_ref (§4.3), verbatim
+    from COPY.json — inline markdown kept for the shared renderer:
+      bNN     → {heading, answer, before, items, list_ordered, qa,
+                 links, after}
+      lede    → {heading: h1, answer: lede}            (hero)
+      closing → {text, cta, phone}                      (end-act)
+    A copy_ref the copy cannot resolve is a producer error, never a
+    silently empty section."""
+    ref = str(ref or '')
+    if not ref:
+        return None
+    if copy is None:
+        raise SystemExit(f'W6 plan row copy_ref "{ref}" but no COPY.json '
+                         '— run copy_ingest.py')
+    if ref == 'lede':
+        return {'heading': copy.get('h1') or '',
+                'answer': copy.get('lede') or ''}
+    if ref == 'closing':
+        cl = copy.get('closing') or {}
+        return {k: cl[k] for k in ('text', 'cta', 'phone') if cl.get(k)}
+    blk = next((b for b in copy.get('blocks') or []
+                if b.get('id') == ref), None)
+    if blk is None:
+        raise SystemExit(f'W6 copy_ref "{ref}" not in COPY.json blocks')
+    slot = {'heading': blk.get('h2') or ''}
+    for k in COPY_BLOCK_KEYS:
+        v = blk.get(k)
+        if k == 'list_ordered':
+            slot[k] = bool(v)
+        else:
+            slot[k] = v if v is not None else ([] if k != 'answer'
+                                               else '')
+    return slot
+
+
+def _instance_body(ctx, contract, row, copy=None):
+    """The <Comp props/> render call + its import — the ONE instance
+    serializer (P.6/W6). Returns (import_line, render_line); the
+    section-instance writer wraps it in the contract frontmatter,
+    preview_build inlines it inside the page's <Section> wrappers —
+    same props, same copy binding, never a second recipe."""
     comp = contract['composition']
     camel = gate.camel(comp)
     c = contract['content'] or {}
+    slot = _copy_slot(copy, row.get('copy_ref'))
     # the plan's vector IS the copy: a stub paragraph may describe the
     # section, but the claim a reader sees is the one the row declares
     vec = (row.get('vector') or [{}])
@@ -184,12 +290,22 @@ def _instance(ctx, contract, row):
             props.append(f'{k}={json.dumps(str(v))}')
     # F1 fix — cta rides the contract (stub inventory couriered at
     # build_contracts); items/image still come from the plan row.
+    img = None
+    if row.get('image'):
+        img = dict(row['image'])
+        img['ratio'] = contract.get('media_ratio')   # the contract's
+                                            # ratio, not the exemplar's
     for k, src in (('cta', c.get('cta') or row.get('cta')),
                    ('eyebrow', row.get('eyebrow')),
                    ('items', row.get('items')),
-                   ('image', row.get('image'))):
+                   ('fields', row.get('fields')),
+                   ('image', img),
+                   ('attrib', row.get('attrib'))):
         if src:
             props.append(f'{k}={{({json.dumps(src)})}}')
+    if slot:
+        props.append('copy={(' + json.dumps(slot, ensure_ascii=False)
+                     + ')}')
     if h1_text:
         props.append('h1={true}')
     # the brand is site chrome: every composition that renders a logo
@@ -197,6 +313,9 @@ def _instance(ctx, contract, row):
     site = ctx.site_block() or {}
     if site.get('brand'):
         props.append('brand=' + json.dumps(str(site['brand']),
+                                          ensure_ascii=False))
+    if site.get('logo'):
+        props.append('logo=' + json.dumps(str(site['logo']),
                                           ensure_ascii=False))
     _sa = (row.get('speech_act') or [])
     _sa = _sa if isinstance(_sa, list) else [str(_sa or '')]
@@ -211,6 +330,16 @@ def _instance(ctx, contract, row):
                            'speech_act=' + '+'.join(_sa)]) + ' -->')
     body = (asm_note + '\n<' + camel + ' ' + ' '.join(props) + ' />'
             if props else asm_note + '\n<' + camel + ' />')
+    return comp, camel, body
+
+
+def _instance(ctx, contract, row, copy=None):
+    """W6 — the section instance: frontmatter contract + import + render.
+    A row with copy_ref carries the full COPY.json slot as the `copy`
+    prop (§4.3: heading → answer → before → items/qa/links → after);
+    chrome rows (nav/footer) keep the row's own items/cta. The
+    component owns the skeleton (P.6)."""
+    comp, camel, body = _instance_body(ctx, contract, row, copy)
     txt = ('---\n'
            '// contract echoes (frontmatter is JS; the gate reads\n'
            '// dna_hash:/structure_hash:/exemplar: via regex):\n'
@@ -261,10 +390,14 @@ def _toolchain(ctx):
 def main(argv):
     args = [a for a in argv[1:] if not a.startswith('--')]
     flags = {a for a in argv[1:] if a.startswith('--')}
-    if len(args) != 1 or flags - {'--with-toolchain', '--build'}:
+    if len(args) != 1 or \
+            flags - {'--with-toolchain', '--build', '--scaffold'} or \
+            ('--scaffold' in flags
+             and flags & {'--with-toolchain', '--build'}):
         print('usage: pipeline_emit.py <pipeline-dir> '
-              '[--with-toolchain] [--build]')
+              '[--with-toolchain] [--build] | --scaffold')
         return 2
+    scaffold_only = '--scaffold' in flags
     ctx = gate.Ctx(args[0])
     for req in ('DESIGN-PLAN.md', 'DNA.json'):
         if not os.path.isfile(os.path.join(ctx.dir, req)):
@@ -283,46 +416,110 @@ def main(argv):
     print(f'  TOKENS.json {"written" if wrote else "kept"} '
           f'({len((tokens.get("knobs") or {}))} knobs)')
 
-    contracts = gate.build_contracts(ctx)
-    comps = sorted({c['composition'] for c in contracts
-                    if c['composition']})
+    # --scaffold (w0): contracts are not built yet — the scaffold's
+    # composition list comes straight from the plan rows
+    if scaffold_only:
+        contracts = []
+        comps = sorted({str(r.get('composition')) for _, r in rows
+                        if r.get('composition')})
+    else:
+        contracts = gate.build_contracts(ctx)
+        comps = sorted({c['composition'] for c in contracts
+                        if c['composition']})
     by_name = {str(r.get('name')): r for _, r in rows}
+    copy = _load_copy(ctx)
+    inv = dna.get('invariants') or {}
+    fonts = inv.get('fonts') or None
 
     # S0 — scaffold
     _scaffold(ctx, comps)
-    print('  scaffold: package.json, astro.config.mjs, favicon, index')
+    # the shared inline-markdown renderer is a static template copy
+    # with no contract inputs — emit it in BOTH modes so the w0
+    # scaffold and the full emit produce the same site tree (X.1)
+    _w(os.path.join(ctx.site, 'src', '_shared', 'inline.ts'),
+       _read(os.path.join(TEMPLATES, 'sections', '_shared', 'inline.ts')))
+    print('  scaffold: package.json, astro.config.mjs, favicon, index, '
+          '_shared/inline.ts')
+
+    # S1 — site-folder assets (fonts, media, logo) → site/public/, so
+    # the @font-face urls, BRIEF media and the logo resolve at build
+    pub = emit_global.site_assets(ctx.dir, ctx.site)
+    print(f'  public/: {len(pub)} site asset(s)'
+          + (f' ({", ".join(pub)})' if pub else ''))
 
     # P2 — tailwind config (every TOKENS hex verbatim)
     _w(os.path.join(ctx.site, 'tailwind.config.js'),
        emit_global.tailwind_config(tokens))
     print('  tailwind.config.js')
 
-    # P3 — global.css (emit_tokens five layers + component tail)
+    # P3 — global.css (DNA @font-face + emit_tokens five layers +
+    # component tail; light :root default, dark only under
+    # [data-theme=dark])
     _w(os.path.join(ctx.site, 'src', 'styles', 'global.css'),
-       emit_global.global_css(tokens))
-    print('  src/styles/global.css')
+       emit_global.global_css(tokens, fonts))
+    print('  src/styles/global.css'
+          + (f' ({len((fonts or {}).get("faces") or [])} @font-face)'
+             if fonts else ''))
 
     # S2/S4 — shell + document layout (template files, verbatim)
     _w(os.path.join(ctx.site, 'src', 'components', 'Section.astro'),
        _read(os.path.join(TEMPLATES, 'sections', 'Section.astro')))
     shell = _read(os.path.join(TEMPLATES, 'layouts', 'BaseLayout.astro'))
-    # the shell's address is the site's own contact fact, never lorem:
-    # brand from the plan, phone from the STUB's contact table
+    # the call bar dials the site's own contact fact, never lorem:
+    # phone from the STUB's contact table, else the DNA invariant
+    # (BRIEF brand.phone)
     site = ctx.site_block() or {}
     stub = ctx.read('STUB.md') or ''
     m = re.search(r'\|\s*phone\s*\|\s*([^|]+)\|', stub)
-    phone = (m.group(1).strip() if m else '')
+    phone = (m.group(1).strip() if m else str(inv.get('phone') or ''))
     tel = re.sub(r'[^0-9+]', '', phone)
     if tel and not tel.startswith('+'):
         tel = '+61' + tel.lstrip('0')
-    shell = (shell.replace('{{brand}}', str(site.get('brand') or ''))
-                  .replace('{{phone_sep}}',
-                           (' · ' + phone) if phone else '')
-                  .replace('{{phone}}',
+    # first paint follows the DNA theme default (BRIEF theme.default),
+    # never the OS colour-scheme preference (U.3)
+    theme_default = str((dna.get('theme') or {}).get('default')
+                        or 'light')
+    shell = (shell.replace('{{phone}}',
                            ('Call ' + phone) if phone else 'Call us')
-                  .replace('{{tel}}', 'tel:' + tel))
+                  .replace('{{tel}}', 'tel:' + tel)
+                  .replace('{{default_theme}}',
+                           json.dumps(theme_default)))
     _w(os.path.join(ctx.site, 'src', 'layouts', 'BaseLayout.astro'), shell)
     print('  Section.astro + BaseLayout.astro')
+    # P.11 — logos inline: public/<logo>.svg is mirrored into
+    # src/assets/ (prolog-stripped) so components render the real
+    # mark as SVG markup, never an image tag
+    adir = os.path.join(ctx.site, 'src', 'assets')
+    lp = site.get('logo')
+    if lp:
+        src = os.path.join(ctx.site, 'public', str(lp).lstrip('/'))
+        if os.path.isfile(src) and str(lp).endswith('.svg'):
+            os.makedirs(adir, exist_ok=True)
+            svg = _read(src)
+            svg = _clean_svg(svg)
+            _w(os.path.join(adir, os.path.basename(str(lp))), svg)
+    # V.8/P.12 — rasters mirror into src/assets/media/ so components
+    # compile them through astro:assets (AVIF/WebP + intrinsic dims)
+    mdir = os.path.join(ctx.site, 'src', 'assets', 'media')
+    pdir_media = os.path.join(ctx.site, 'public', 'media')
+    if os.path.isdir(pdir_media):
+        for fn in os.listdir(pdir_media):
+            if fn.rsplit('.', 1)[-1].lower() in (
+                    'jpg', 'jpeg', 'png', 'webp'):
+                os.makedirs(mdir, exist_ok=True)
+                shutil.copyfile(os.path.join(pdir_media, fn),
+                                os.path.join(mdir, fn))
+            elif fn.endswith('.svg'):
+                os.makedirs(mdir, exist_ok=True)
+                svg = _read(os.path.join(pdir_media, fn))
+                svg = _clean_svg(svg)
+                _w(os.path.join(mdir, fn), svg)
+
+    # (the shared renderer is emitted above — both modes share it)
+
+    if scaffold_only:
+        print('  scaffold-only emit done (w0)')
+        return 0
 
     # P6/W6 — component skeleton + instance per contract. A plan row
     # carrying recipe: bricksmaven/<cat>/<stem> resolves to the banked
@@ -338,6 +535,14 @@ def main(argv):
                 bank_css.append(f'/* {bank[comp]} */\n' + css)
             continue
         _comp_copy(ctx, comp)
+    # a composition that left the plan leaves no component file: a
+    # stale .astro still satisfies P.6's "has specimen" scan and the
+    # next build ships a component the page never renders
+    cdir = os.path.join(ctx.site, 'src', 'components')
+    ckeep = {comp + '.astro' for comp in comps} | {'Section.astro'}
+    for fn in sorted(os.listdir(cdir)) if os.path.isdir(cdir) else []:
+        if fn.endswith('.astro') and fn not in ckeep:
+            os.remove(os.path.join(cdir, fn))
     if bank_css:
         # SB.2 — bank rules live in the shared layer, never in a
         # component. @tailwind components in global.css opens it.
@@ -355,7 +560,7 @@ def main(argv):
         if fn.endswith('.astro') and fn not in keep:
             os.remove(os.path.join(sdir, fn))
     for c in contracts:
-        _instance(ctx, c, by_name.get(str(c['section'])) or {})
+        _instance(ctx, c, by_name.get(str(c['section'])) or {}, copy)
     print(f'  {len(comps)} components + {len(contracts)} instances')
 
     # VG.1 — system tile + comp map

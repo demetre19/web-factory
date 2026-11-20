@@ -1,0 +1,27 @@
+  .hero-24 {
+    padding: 0 0 0 0;
+  }
+
+  .hero-24__container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-24__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-s);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    justify-content: center;
+    margin: var(--space-m) 0 var(--space-m) 0;
+  }
+
+  .btn--primary {
+    padding: 1.25rem 1.875rem 1.25rem 1.875rem !important;
+    width: auto;
+  }
+
+  .hero-24__image {
+    width: 50vw;
+    object-fit: cover;
+  }

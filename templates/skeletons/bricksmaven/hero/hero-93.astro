@@ -27,23 +27,23 @@ const {
 
 <div>
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-hero-93__container">
+      <div class="bm-hero-93__content">
         {heading && <h1 class="text-fluid-4">{heading}</h1>}
         {fs && <p class="text-fluid-0">{fs}</p>}
-        <div>
+        <div class="cta-combo">
           <p class="mt-fluid-m"><a class="wf-cta-button" href={cta.href}>{cta.label || 'Continue'}</a></p>
         </div>
       </div>
       <div>
-        <div>
+        <div class="bm-hero-93__work-row">
           <div class="grid-auto gap-fluid-m">
             {(items || []).map((it) => (
-              <div class="card">
+              <div class="bm-hero-93-work-list card">
                 <div class="grid-auto gap-fluid-m">
                   {((it.items || []) || []).map((it2) => (
                     <div class="card">
-                      <figure class="ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
+                      <figure class="bm-hero-93-work__image ratio-portrait"><img src="/media/placeholder.svg" alt="image" loading="lazy" width="900" height="600" /></figure>
                     </div>
                   ))}
                 </div>
