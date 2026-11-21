@@ -57,7 +57,7 @@
 
 | Section | Asset | Ratio |
 |---|---|---|
-| hero | /media/team.jpg | 4:3 |
+| hero | /media/team.jpg | none |
 | definition | /media/office-clean.jpg | 4:3 |
 | reporting | /media/gallery-vacuum.jpg | 4:3 |
 | siblings | /media/team-foyer.jpg | 4:3 |

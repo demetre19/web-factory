@@ -86,3 +86,6 @@
 | mobbin-local-screen-4 | screen | service-page · editorial · centered "Whatever your week looks like" paragraph block | w1 |
 | mobbin-local-screen-3 | screen | service-page · editorial · "Get found by buyers" headline + body copy | w1 |
 | mobbin-local-screen-6 | screen | service-page · editorial · review prose with left-aligned body text | w1 |
+| mobbin-local-screen-0 | screen | service-page · hero-act-merge · photo hero with overlaid headline and service CTA | w1 |
+| mobbin-local-screen-2 | screen | service-page · hero-act-merge · media-led hero, headline over imagery | w1 |
+| mobbin-local-screen-1 | screen | service-page · hero-act-merge · photographic hero band carrying trust signals | w1 |

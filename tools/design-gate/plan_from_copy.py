@@ -43,6 +43,7 @@ TOOL = 'plan_from_copy.py'
 # Canonical table lives in gate.RECIPE_FOR_COMP so the preview build
 # resolves option overrides through the same map.
 RECIPE = gate.RECIPE_FOR_COMP
+HERO_COMP = gate.HERO_COMP
 
 # composition → (speech act, emphasis, align, collapse)
 # acts stay inside COMP_FOR_ACT (gate §2): stat-band/proof-band can
@@ -496,7 +497,17 @@ def build(pdir, option=None):
         raise SystemExit(f'{TOOL}: option {pick!r} not among '
                          f'{[o["id"] for o in table]}')
     refs = refs_by_comp(site_dir)
-    hero_comp = HERO_FOR_ARCH.get(geno['layout-archetype'], 'stacked-hero')
+    # a page with first-party photography earns the authored
+    # media-backed hero (image behind the copy, scrim-bound) —
+    # but only where the archetype admits the merge comp (J.10);
+    # a text-led DNA keeps the archetype's contained hero
+    _media_hero = ('hero-act-merge'
+                   if 'hero-act-merge' in
+                   HERO_COMP.get(geno['layout-archetype'], ())
+                   else None)
+    hero_comp = (_media_hero if media and _media_hero else
+                 HERO_FOR_ARCH.get(geno['layout-archetype'],
+                                   'stacked-hero'))
 
     def base_row(name, comp, **kw):
         r = {'name': name, 'wf_ref': f'preview/layouts.html#{pick}:{name}'}
@@ -531,7 +542,8 @@ def build(pdir, option=None):
         cta={'label': phone, 'href': tel}))
     rows.append(base_row(
         'hero', hero_comp, speech_act=['promise'], category='hero',
-        surface='base', density='regular', emphasis='headline',
+        surface='media' if hero_comp == 'hero-act-merge' else 'base',
+        density='regular', emphasis='headline',
         align='center-axis', stack='text-first', collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
         content_ids=['c-h1'], copy_ref='lede',
@@ -547,7 +559,10 @@ def build(pdir, option=None):
         hm = media_left.pop(0)
         rows[-1]['image'] = {'src': hm['src'], 'alt': hm['alt'],
                              'ratio': '4:3'}
-        rows[-1]['media_ratio'] = '4:3'
+        # a media-backed hero covers its band — the photo's own
+        # aspect is the ratio; a contained hero keeps 4:3
+        rows[-1]['media_ratio'] = (
+            'none' if hero_comp == 'hero-act-merge' else '4:3')
     for i, (bid, comp) in enumerate(seq):
         b = by[bid]
         comp = eff_comp(b, comp, allowed[bid], len(media_left))

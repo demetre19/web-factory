@@ -420,6 +420,21 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .media-round[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
   .media-round > img, .media-round > picture img {
     width: 100%; height: 100%; object-fit: cover; }
+  /* media-backed band — a skeleton's background figure (.media-bg)
+     covers its whole section band edge-to-edge behind the content,
+     the authored full-bleed treatment. The band gains the stacking
+     context; the figure sits at z -1 so every in-flow sibling paints
+     above it; a token-bound scrim keeps copy contrast honest in
+     both modes. */
+  .sec-band:has(.media-bg) { position: relative;
+      overflow: hidden; }
+  .media-bg { position: absolute; inset: 0; z-index: -1;
+      overflow: hidden; }
+  .media-bg > img { width: 100%; height: 100%; object-fit: cover;
+      object-position: center; display: block; }
+  .media-bg::after { content: ""; position: absolute; inset: 0;
+      background: color-mix(in srgb, var(--bg-canvas) 76%,
+      transparent); }
   /* a plan image may name its subject edge (image.focus) — the cover
      crop keeps that edge instead of the centre */
   .media-round[data-focus="left"] > img { object-position: 0% 50%; }
@@ -987,6 +1002,32 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
   .wf-call-to-action-10 .cta-10-container > :only-child { grid-column: 1 / -1; }
 
+/* bricksmaven/hero/hero-99 */
+  .wf-hero-99 .bm-hero-99__content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--space-s);
+  }
+
+  .wf-hero-99 .bm-hero-99__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-hero-99 .cta-combo {
+    display: flex;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-hero-99 .bm-hero-99__media {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-hero-99 .bm-hero-99__content { flex-direction: column; }
+    .wf-hero-99 .cta-combo { flex-direction: column; }
+  }
+
 /* bricksmaven/grids-and-cards/grid-2 */
   .wf-grid-2 .gridcard-2-grid-ul {
     display: grid;
@@ -1091,47 +1132,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   @media (max-width: 44rem) {
     .wf-feature-1 .bm-list__item { flex-direction: column; }
-  }
-
-/* bricksmaven/hero/hero-1 */
-  .wf-hero-1 .hero-1 {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-  .wf-hero-1 .hero-1-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--space-m);
-  }
-
-  .wf-hero-1 .hero-1__content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .wf-hero-1 .hero-1__cta {
-    display: flex;
-    column-gap: var(--space-xs);
-  }
-
-  .wf-hero-1 .hero-1__content-trust {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .wf-hero-1 .hero-1-logo-ul {
-    display: flex;
-    flex-direction: row;
-    column-gap: var(--space-m);
-  }
-
-  @media (max-width: 44rem) {
-    .wf-hero-1 .hero-1 { flex-direction: column; }
-    .wf-hero-1 .hero-1__cta { flex-direction: column; }
-    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
   }
 
 /* bricksmaven/counter/counter-1 */

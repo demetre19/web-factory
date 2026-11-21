@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Section from '../../components/Section.astro';
 import '../../styles/preview-bank.css';
 import NavBar from '../../components/nav-bar.astro';
-import StackedHero from '../../components/stacked-hero.astro';
+import HeroActMerge from '../../components/hero-act-merge.astro';
 import Editorial from '../../components/editorial.astro';
 import Sequence from '../../components/sequence.astro';
 import CardsN from '../../components/cards-n.astro';
@@ -21,9 +21,9 @@ import FooterBar from '../../components/footer-bar.astro';
   <!-- section contract: composition=nav-bar section=nav surface=base density=compact speech_act=chrome -->
   <NavBar cta={({"label": "+61 3 7003 2223", "href": "tel:+61370032223"})} items={([{"label": "all commercial cleaning services", "href": "/cleaning-services/"}, {"label": "body corporate cleaning", "href": "/cleaning-services/body-corporate-cleaning-melbourne/"}, {"label": "strata window cleaning", "href": "/cleaning-services/strata-window-cleaning-melbourne/"}, {"label": "strata floor scrubbing", "href": "/cleaning-services/strata-floor-scrubbing-melbourne/"}])} brand="Whistle Clean" logo="/logo.svg" />
 </Section>
-<Section sec="hero" comp="stacked-hero" wf-ref="preview/layouts.html#d5:hero" ratio="4:3" disclosure="open" surface="base" density="regular" intent="hero" content="c-h1" recipe="bricksmaven/hero/hero-1" mode="band">
-  <!-- section contract: composition=stacked-hero section=hero surface=base density=regular speech_act=promise -->
-  <StackedHero heading="Strata Cleaning Melbourne" fs="Strata Cleaning Melbourne is common-area cleaning for strata buildings \u2013 foyers, lifts, carparks and amenities, run as a contracted service to a documented standard." cta={({"label": "get a strata cleaning quote", "href": "/contact/"})} image={({"src": "/media/team.jpg", "alt": "Whistle Clean cleaner sanitising a work surface", "ratio": "3:2"})} copy={({"heading": "Strata Cleaning Melbourne", "answer": "Strata Cleaning Melbourne is common-area cleaning for strata buildings – foyers, lifts, carparks and amenities, run as a contracted service to a documented standard."})} h1={true} brand="Whistle Clean" logo="/logo.svg" />
+<Section sec="hero" comp="hero-act-merge" wf-ref="preview/layouts.html#d5:hero" ratio="none" disclosure="open" surface="media" density="regular" intent="promise+act" content="c-h1" recipe="bricksmaven/hero/hero-99" mode="band">
+  <!-- section contract: composition=hero-act-merge section=hero surface=media density=regular speech_act=promise -->
+  <HeroActMerge heading="Strata Cleaning Melbourne" fs="Strata Cleaning Melbourne is common-area cleaning for strata buildings \u2013 foyers, lifts, carparks and amenities, run as a contracted service to a documented standard." cta={({"label": "get a strata cleaning quote", "href": "/contact/"})} image={({"src": "/media/team.jpg", "alt": "Whistle Clean cleaner sanitising a work surface", "ratio": "3:2"})} copy={({"heading": "Strata Cleaning Melbourne", "answer": "Strata Cleaning Melbourne is common-area cleaning for strata buildings – foyers, lifts, carparks and amenities, run as a contracted service to a documented standard."})} h1={true} brand="Whistle Clean" logo="/logo.svg" />
 </Section>
 <Section sec="definition" comp="editorial" wf-ref="preview/layouts.html#d5:definition" ratio="none" disclosure="open" surface="muted" density="regular" intent="hero" content="c-b01" recipe="bricksmaven/content/content-1" mode="band">
   <!-- section contract: composition=editorial section=definition surface=muted density=regular speech_act=detail -->

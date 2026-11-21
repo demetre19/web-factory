@@ -1830,7 +1830,8 @@ def check_measurable(ctx):
                 r'class="([^"]*)"[^>]*>(.*?)</section>', t, re.S):
             cls, body = m.group(1), m.group(2)
             if re.search(r'<(?:h[12]|p)\b', body) and not re.search(
-                    r'p[xytl]?-|px-|padding|inset|container|content-',
+                    r'p[xytl]?-|px-|padding|inset|container|content-|'
+                    r'sec-inner',
                     cls + body[:200]):
                 f.append(f'L.3 {name}: full-bleed text without edge '
                          'insets — content never jams the viewport '
@@ -6146,7 +6147,8 @@ HERO_COMP = {
     'split-media': {'split-media', 'hero-act-merge', 'media-gallery',
                     'full-bleed'},
     'editorial-single': {'editorial', 'split-media', 'full-bleed'},
-    'stacked-center': {'stacked-hero', 'badge-center'},
+    'stacked-center': {'stacked-hero', 'badge-center',
+                       'hero-act-merge'},
     'immersive-media': {'full-bleed', 'media-gallery'},
     'carousel-track': {'media-gallery', 'quote-grid'},
     'masonry-grid': {'media-gallery', 'quote-grid'},
@@ -7086,6 +7088,8 @@ def _stub_for(ctx, name, index):
 RECIPE_FOR_COMP = {
     'nav-bar': 'bricksmaven/headers/header-1',
     'stacked-hero': 'bricksmaven/hero/hero-1',
+    'full-bleed': 'bricksmaven/hero/hero-99',
+    'hero-act-merge': 'bricksmaven/hero/hero-99',
     'cards-n': 'bricksmaven/grids-and-cards/grid-1',
     'sequence': 'bricksmaven/how-it-works/how-it-works-1',
     'faq': 'hyperui/marketing/faqs/1',

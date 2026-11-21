@@ -1,8 +1,8 @@
 ---
 /**
- * bm-hero-1 — TRANSLATED Bricksmaven skeleton.
+ * bm-hero-99 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
- * beside this file (hero-1.json). Bank source, NOT a gold
+ * beside this file (hero-99.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
  * canonising (SB.5). Unmapped ACSS vars surface as
  * var(--acss-*) and are listed in the translate report.
@@ -51,22 +51,21 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div class="wf-hero-1">
+<div class="wf-hero-99">
   <div class="sec-inner">
-    <div class="hero-1-container">
-      <div class="hero-1__content">
-        {head && <h1 class="text-fluid-4">{head}</h1>}
-        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {act.label &&         <div class="hero-1__cta">
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+    <div class="grid-auto gap-fluid-l">
+      <div class="bm-hero-99__content">
+        <div class="bm-hero-99__column">
+          {head && <h1 class="text-fluid-4">{head}</h1>}
+          {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+          {act.label &&           <div class="cta-combo">
+            {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+          </div>
+          }
         </div>
-        }
       </div>
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-      </div>
-      }
+      {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
   </div>
   {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}

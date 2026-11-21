@@ -613,6 +613,25 @@ def translate(payload, stem):
             # exists when the plan binds image (text-led DNAs render
             # no placeholder). Alt comes from the plan row, never
             # invented (F.1/U.4)
+            _gcn = ' '.join(gc_names.get(i, '')
+                            for i in _classes_of(el))
+            if ('background' in _gcn.lower()
+                    or 'backdrop' in _gcn.lower()
+                    or 'background'
+                    in (el.get('label') or '').lower()
+                    or 'backdrop'
+                    in (el.get('label') or '').lower()):
+                # a background figure is the band's surface, not a
+                # content item — emit the .media-bg layer (edge-to-edge
+                # cover behind the content, token scrim keeps contrast)
+                return (f'{pad}{{image && image.src && '
+                        '<figure class="media-bg" aria-hidden="true">'
+                        '<Image src={mediaSrc || image.src} '
+                        "alt={image.alt || ''} "
+                        'widths={[960, 1440, 1920]} '
+                        'sizes="100vw" width={1600} height={900} '
+                        'loading="eager" fetchpriority="high" />'
+                        '</figure>}\n')
             if ivar:
                 # a section-bound image inside a per-item loop
                 # duplicates per item — and an empty list renders it
