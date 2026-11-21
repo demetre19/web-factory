@@ -10718,6 +10718,33 @@ ARTIFACTS = {
 }
 
 
+def clear_stale_receipts(ctx):
+    """Drop unverifiable receipts for THIS wave's artifacts —
+    receipts bind on this wave's pass, so a record whose sha or sig
+    no longer verifies is dead weight that only blocks the re-bind.
+    Earlier waves' receipts are never touched. Returns dropped rels."""
+    g = load_gates(ctx)
+    arts = g.get('artifacts') or {}
+    key = op_key()
+    dropped = []
+    for rel in ARTIFACTS.get(ctx.wave, []):
+        rec = arts.get(rel)
+        if not rec:
+            continue
+        fp = os.path.join(ctx.dir, rel)
+        sha = hashlib.sha256(open(fp, 'rb').read()).hexdigest() \
+            if os.path.isfile(fp) else None
+        want = _sig({k: v for k, v in rec.items() if k != 'sig'},
+                    key) if key else None
+        if sha != rec.get('sha256') or not want or \
+                rec.get('sig') != want:
+            del arts[rel]
+            dropped.append(rel)
+    if dropped:
+        json.dump(g, open(ctx.gates_path, 'w'), indent=1)
+    return dropped
+
+
 def write_receipt(ctx, relpath):
     """Bind an artifact to the passing wave in GATES.json — the
     NOTHING-OUTSIDE-THE-PIPELINE receipt (P.17)."""

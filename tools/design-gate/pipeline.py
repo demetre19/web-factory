@@ -340,6 +340,15 @@ def _checklist(d, wave, env):
 
 
 def _gate(d, wave, design, env):
+    # this wave re-binds its artifacts on pass — a carried-over
+    # receipt whose sha/sig no longer verifies is cleared first, or
+    # P.17 deadlocks the wave before write_gate can re-sign it
+    ctx = G.Ctx(d)
+    ctx.wave = wave
+    dropped = G.clear_stale_receipts(ctx)
+    if dropped:
+        print(f'  {wave}: cleared stale receipts for '
+              f'{", ".join(dropped)} — re-bound on this wave\'s pass')
     argv = [PY, T('run.py'), wave, d]
     if design:
         argv += ['--design', design]
@@ -422,6 +431,13 @@ def _pick_gate(d, wave, wait, timeout=1800):
               'start — run `approve_service.py serve --port '
               f'{PICK_PORT}` yourself and retry')
         return 'paused'
+    # A verified pick bound to an earlier run's token (or to none)
+    # reads 'ok' to approval_state but fails X.3 — /confirm re-signs
+    # the SAME pick to this run instead of waiting on a re-click
+    # that can never happen for a record that already exists.
+    if _verified(d, wave) and not _current(d, wave):
+        if _confirm(d, wave):
+            return 'ok'
     print(f'  ┌ pick {wave} — click a card in the picker:')
     print(f'  │   {_picker_url(d, wave)}')
     if wave == 'w4':
