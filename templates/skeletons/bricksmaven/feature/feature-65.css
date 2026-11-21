@@ -1,16 +1,24 @@
   .wf-feature-65 .bm-feature-65__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-feature-65 .bm-feature-65__column {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-65 .bm-feature-65__slider-media {
     flex-wrap: nowrap;
   }
 
+  .wf-feature-65 .bm-feature-slider-card {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-feature-65 .bm-feature-slider-card__icon-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

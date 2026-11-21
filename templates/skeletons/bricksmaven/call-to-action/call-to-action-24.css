@@ -1,13 +1,21 @@
+  .wf-call-to-action-24 .bm-call-to-action-24__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-call-to-action-24 .bm-call-to-action-24-testimonial {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-call-to-action-24 .bm-call-to-action-24-testimonial__customer-bio {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-call-to-action-24 .bm-call-to-action-24-testimonial__bio {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-call-to-action-24 .bm-call-to-action-24-cta-card {
@@ -19,6 +27,7 @@
   .wf-call-to-action-24 .bm-call-to-action-24-cta-card__content {
     flex-wrap: nowrap;
     flex-direction: column;
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

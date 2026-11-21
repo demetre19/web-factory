@@ -1,6 +1,18 @@
+  .wf-newsletter-11 .bm-newsletter-11__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-newsletter-11 .bm-newsletter-11__newsletter {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-newsletter-11 .bm-newsletter-11__top {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-newsletter-11 .bm-form-widget {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-xs);
     flex-direction: row;
   }
 
@@ -8,48 +20,61 @@
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-newsletter-11 .bm-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-newsletter-11 .bm-testimonial-38__star-ratings {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-newsletter-11 .bm-testimonial-40-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-newsletter-11 .bm-testimonial-40-list--alt {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-newsletter-11 .bm-testimonial-40-card {
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+  }
+
+  .wf-newsletter-11 .bm-testimonial-40-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-newsletter-11 .bm-testimonial-40-card__top {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-newsletter-11 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-newsletter-11 .bm-testimonial-40-card__client {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

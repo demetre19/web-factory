@@ -1,6 +1,6 @@
   .wf-content-4 .content-4-container {
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-l);
   }
 
   .wf-content-4 .content-4__box {
@@ -9,9 +9,13 @@
     gap: var(--grid-gap);
   }
 
+  .wf-content-4 .content-4__intro {
+    row-gap: var(--space-xs);
+  }
+
   .wf-content-4 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {

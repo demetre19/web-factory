@@ -1,22 +1,39 @@
+  .wf-event-section-10 .bm-event-section-10__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-event-section-10 .bm-event-section-10__intro {
     flex-direction: row;
     flex-wrap: nowrap;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-event-section-10 .bm-event-section-10__column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-event-section-10 .bm-event-section-10-card__head {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-event-section-10 .bm-event-section-10-card__meta {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-10 .bm-event-meta-info {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-event-section-10 .bm-event-section-10-card__footer {
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

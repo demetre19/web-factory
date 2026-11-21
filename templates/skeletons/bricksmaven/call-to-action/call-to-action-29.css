@@ -1,10 +1,21 @@
   .wf-call-to-action-29 .bm-contact-widget-8 {
+    row-gap: var(--flow-spacing);
     flex-direction: row;
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-call-to-action-29 .bm-contact-widget-8__right {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-call-to-action-29 .bm-contact-widget-8__manager-data {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
+  }
+
+  .wf-call-to-action-29 .bm-contact-widget-8__data {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

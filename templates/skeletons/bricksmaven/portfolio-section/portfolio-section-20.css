@@ -1,21 +1,27 @@
+  .wf-portfolio-section-20 .bm-portfolio-section-20__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-portfolio-section-20 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-portfolio-section-20 .bm-portfolio-section-20-card__content {
+    row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
   .wf-portfolio-section-20 .bm-portfolio-section-20-card__results {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-portfolio-section-20 .bm-portfolio-section-20-card__icon-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

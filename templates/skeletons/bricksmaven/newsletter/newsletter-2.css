@@ -1,36 +1,36 @@
   .wf-newsletter-2 .newsletter-2-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--grid-gap);
+    gap: var(--space-xl);
   }
 
   .wf-newsletter-2 .newsletter-2__left-box {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-newsletter-2 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-newsletter-2 .bm-list__item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-newsletter-2 .bm-form {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-newsletter-2 .bm-form-widget {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-xs);
     flex-direction: row;
   }
 

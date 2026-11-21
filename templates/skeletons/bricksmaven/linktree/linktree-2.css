@@ -1,15 +1,23 @@
+  .wf-linktree-2 .bm-linktree-2__bio-wrapper {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-linktree-2 .bm-linktree-2-bio__bio-data {
     display: flex;
+    row-gap: calc(var(--flow-spacing) / 2);
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+  }
+
+  .wf-linktree-2 .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-linktree-2 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

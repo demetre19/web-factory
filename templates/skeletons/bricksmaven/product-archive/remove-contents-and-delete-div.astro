@@ -58,24 +58,27 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         <div class="bm-product-archive-1__content">
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        </div>
+                  </div>
+        {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+        </div>}
+
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
     </div>
     <div class="sec-inner">
-      <div>
+      <div class="bm-product-archive-1__container">
         <div class="bm-product-archive-1__product-container">
           {list.length > 0 &&           <div class="bm-product-archive-1__filter-column">
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="card">
+                <div class="bm-product-archive__filter-row card">
                   {it.icon && <IconChip name={it.icon} />}
                   <h4 class="text-fluid-1">{it.term || it.title}</h4>
                 </div>
               ))}</div>}
           </div>
           }
-          <div>
+          <div class="bm-product-archive-1__product-grid">
             {image &&             <div class="grid-auto gap-fluid-l">
               {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
@@ -86,7 +89,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   {links.length > 0 &&                   <div class="bm-product-archive-off-canvas__content">
                     {links.length > 0 &&                     <div class="bm-product-archive-1__filter-column">
                       {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                          <div class="card">
+                          <div class="bm-product-archive__filter-row card">
                             {it.icon && <IconChip name={it.icon} />}
                             <h4 class="text-fluid-1">{it.term || it.title}</h4>
                           </div>
@@ -103,7 +106,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             }
             {image &&             <div class="bm-product-archive__product-list">
               {image &&               <div class="product-list-1-card grid-auto gap-fluid-l">
-                {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+                {image && image.src && <figure class="product-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
               </div>
               }
             </div>
@@ -114,7 +117,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

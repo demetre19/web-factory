@@ -1,18 +1,30 @@
+  .wf-blog-archive-27 .blog-archive-27-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-blog-archive-27 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-blog-archive-27 .blog-archive-27-list {
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-blog-archive-27 .blog-archive-27-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
+  }
+
+  .wf-blog-archive-27 .blog-archive-27-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-blog-archive-27 .blog-archive-27-card__content-intro {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

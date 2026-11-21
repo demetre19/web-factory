@@ -1,3 +1,7 @@
+  .wf-hero-34 .hero-34 {
+    row-gap: var(--space-l);
+  }
+
   .wf-hero-34 .hero-34-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
@@ -7,25 +11,30 @@
   .wf-hero-34 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-hero-34 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-hero-34 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
+  }
+
+  .wf-hero-34 .hero-34-container-logo {
+    row-gap: var(--space-m);
   }
 
   .wf-hero-34 .hero-34-logo-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--grid-gap);
+    column-gap: var(--space-m);
+    row-gap: var(--space-m);
   }
 
   @media (max-width: 44rem) {

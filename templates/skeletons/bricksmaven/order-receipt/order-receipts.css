@@ -1,23 +1,27 @@
   .wf-order-receipts .bm-order-receipts__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-order-receipts .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-order-receipts .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-order-receipts .bm-order-receipts__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-order-receipts .bm-order-receipts__lists {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
   }

@@ -51,8 +51,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div class="header-page-7__content row between">
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
+              </div>
+      {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+      </div>}
+
       {act.label &&       <div class="header-page-btn row between">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>

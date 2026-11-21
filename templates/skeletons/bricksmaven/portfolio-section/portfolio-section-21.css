@@ -1,5 +1,13 @@
   .wf-portfolio-section-21 .bm-portfolio-section-21__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-portfolio-section-21 .bm-portfolio-section-21__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-portfolio-section-21 .bm-portfolio-section-21-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }

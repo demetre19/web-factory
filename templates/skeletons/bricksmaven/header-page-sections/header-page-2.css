@@ -1,11 +1,15 @@
   .wf-header-page-2 .header-page-2-container {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-page-2 .header-page-2__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-page-2 .header-page__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
   }

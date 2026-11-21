@@ -1,43 +1,52 @@
   .wf-career-2 .bm-career-2__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
   .wf-career-2 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-career-2 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-career-2 .bm-career-2__career-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-career-2 .bm-career-2-card {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
   .wf-career-2 .bm-career-2-card__intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-career-2 .bm-career-2-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-career-2 .bm-career-meta-list {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
   }
 
   .wf-career-2 .bm-career-meta-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 3);
   }
 
   @media (max-width: 44rem) {

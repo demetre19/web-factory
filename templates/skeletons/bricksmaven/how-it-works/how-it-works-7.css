@@ -1,18 +1,18 @@
   .wf-how-it-works-7 .hworks-7-content {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--section-space-xxl);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-how-it-works-7 .hworks-7-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-how-it-works-7 .hworks-7-card__media {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-how-it-works-7 .hworks-icon {

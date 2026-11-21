@@ -1,18 +1,22 @@
+  .wf-testimonial-33 .testimonial-33-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-testimonial-33 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-testimonial-33 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-testimonial-33 .intro__text-cta-wrapper {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
@@ -23,14 +27,14 @@
   }
 
   .wf-testimonial-33 .testimonial-33-slide__content {
+    row-gap: calc(var(--flow-spacing) * 1.4);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-testimonial-33 .testimonial-33-slide__client-data {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }

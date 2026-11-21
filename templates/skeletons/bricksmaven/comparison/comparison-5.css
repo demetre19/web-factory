@@ -1,42 +1,58 @@
+  .wf-comparison-5 .bm-comparison-5__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-comparison-5 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-5 .bm-comparison-5-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-5 .bm-comparison-5-card {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 1);
+  }
+
+  .wf-comparison-5 .bm-comparison-5-card__intro {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-5 .bm-comparison-5-card__icon-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-comparison-5 .bm-comparison-5-step-list {
     flex-direction: row;
     flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-comparison-5 .bm-comparison-5-step-item {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-comparison-5 .bm-comparison-5-step-item__marker {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-comparison-5 .bm-comparison-5-step-item__circle {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-comparison-5 .bm-comparison-5-step-item__content {
+    row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
 

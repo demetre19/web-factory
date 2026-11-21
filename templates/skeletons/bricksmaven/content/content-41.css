@@ -1,6 +1,6 @@
   .wf-content-41 .content-41__main {
     display: grid;
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 4);
     grid-template-columns: calc(100% * 2 / 3);
   }
 
@@ -9,5 +9,6 @@
   }
 
   .wf-content-41 .content-41__top {
+    row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }

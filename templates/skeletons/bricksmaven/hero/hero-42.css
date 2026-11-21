@@ -1,6 +1,6 @@
   .wf-hero-42 .hero-42 {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-hero-42 .hero-42__container {
@@ -10,14 +10,14 @@
   }
 
   .wf-hero-42 .hero-42__content {
+    row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-hero-42 .hero-42__image-left {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

@@ -1,16 +1,16 @@
   .wf-header-page-8 .header-page-8-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--section-space-xxl);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-header-page-8 .header-page-8__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-header-page-8 .header-page-8__media {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }

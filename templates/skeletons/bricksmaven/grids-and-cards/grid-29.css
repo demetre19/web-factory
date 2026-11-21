@@ -1,13 +1,17 @@
+  .wf-grid-29 .grid-29-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-grid-29 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-grid-29 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-grid-29 .grid-29-list {
@@ -17,5 +21,6 @@
   }
 
   .wf-grid-29 .grid-29-card {
+    row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }

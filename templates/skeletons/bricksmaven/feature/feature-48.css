@@ -1,18 +1,22 @@
   .wf-feature-48 .bm-feature-48__intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-48 .bm-feature-48-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: 0;
   }
 
   .wf-feature-48 .bm-feature-48-card {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-feature-48 .bm-feature-48-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

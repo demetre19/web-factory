@@ -1,4 +1,13 @@
+  .wf-hero-98 .bm-hero-98__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-hero-98 .bm-hero-98__intro {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-hero-98 .bm-hero-98__social-proof {
+    column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
     flex-direction: row;
   }
@@ -7,21 +16,21 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-hero-98 .bm-testimonial-38__star-ratings {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: 0;
   }
 
   .wf-hero-98 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-hero-98 .bm-hero-98-media-list {

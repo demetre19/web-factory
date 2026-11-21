@@ -1,6 +1,10 @@
+  .wf-hero-45 .hero-45-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-hero-45 .hero-45__footer {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
@@ -8,27 +12,31 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-hero-45 .hero-45-data-item {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-hero-45 .hero-45__statement-wrapper {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-hero-45 .hero-45__team-cta {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-hero-45 .bm-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

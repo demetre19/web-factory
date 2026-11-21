@@ -1,13 +1,13 @@
   .wf-testimonial-11 .testimonial-11-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-testimonial-11 .testimonial-11-content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xxl);
   }
 
   .wf-testimonial-11 .testimonial-11-content__profile {
@@ -19,5 +19,5 @@
   .wf-testimonial-11 .testimonial-11-content__bio {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(0.5rem + 0vw);
   }

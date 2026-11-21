@@ -1,35 +1,55 @@
+  .wf-blog-single-11 .bm-blog-single-11__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-blog-single-11 .bm-blog-single-11__blog-intro {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-blog-single-11 .blog-single-2__meta {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-11 .blog-single-2__author {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-blog-single-11 .blog-single-head__data {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-blog-single-11 .blog-single-head__details {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-blog-single-11 .bm-blog-single-11__content {
+    row-gap: var(--space-s);
   }
 
   .wf-blog-single-11 .bm-newsletter-widget-card-1 {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-blog-single-11 .bm-newsletter-widget-card-1__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-blog-single-11 .bm-newsletter-widget-card-1__top {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-blog-single-11 .bm-form-widget {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-xs);
     flex-direction: row;
   }
 
@@ -37,21 +57,21 @@
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-blog-single-11 .bm-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-blog-single-11 .bm-testimonial-38__star-ratings {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

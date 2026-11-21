@@ -1,18 +1,27 @@
+  .wf-feature-59 .bm-feature-59__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-59 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-59 .bm-feature-list-59 {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-feature-59 .bm-feature-card-59 {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-feature-59 .bm-feature-card-59__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

@@ -57,8 +57,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       <div class="header-page-9__content row between">
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
+              </div>
+      {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+      </div>}
+
       {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>

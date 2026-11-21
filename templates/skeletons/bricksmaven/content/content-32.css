@@ -3,3 +3,11 @@
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
+
+  .wf-content-32 .content-32__content {
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
+  .wf-content-32 .content-32__intro {
+    row-gap: calc(var(--flow-spacing) / 1.6);
+  }

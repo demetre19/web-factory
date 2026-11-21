@@ -53,20 +53,25 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-product-single-4">
   <div class="sec-inner">
-    <div>
-      <div>
+    <div class="bm-product-single-4__container">
+      <div class="bm-product-single-4__breadcrumb-wrapper">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
+              </div>
+      {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+      </div>}
+
       {links.length > 0 &&       <div class="bm-product-single-4__main">
-        {links.length > 0 &&         <div>
-          {links.length > 0 &&           <div>
+        {links.length > 0 &&         <div class="bm-product-single-4__content">
+          {links.length > 0 &&           <div class="bm-product-single-4__content-wrapper">
             {links.length > 0 && <div class="bm-product-single-usp-1">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="bm-product-single-usp-1-list-item card">
                     {it.icon && <IconChip name={it.icon} />}
-                    <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
-                    {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
+                    <div class="stack">
+                      <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                      {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
+                    </div>
                   </div>
                 ))}</div>
             </div>}
@@ -77,7 +82,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
     </div>
-    <div>
+    <div class="bm-product-single__related-products-container">
       {links.length > 0 &&       <div>
         {links.length > 0 &&         <div>
           {links.length > 0 &&           <div class="bm-product-single-accordion">
@@ -102,7 +107,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {image &&         <div>
           {image &&           <div class="bm-related-products-list-1-card">
             {image &&             <div>
-              {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+              {image && image.src && <figure class="bm-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>
@@ -115,7 +120,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   </div>
   {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

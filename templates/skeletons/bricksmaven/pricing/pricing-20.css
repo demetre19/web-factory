@@ -1,37 +1,49 @@
+  .wf-pricing-20 .bm-pricing-20__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-pricing-20 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-20 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-pricing-20 .bm-pricing-20__pricing-wrapper {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-pricing-20 .bm-pricing-20-feature-list {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-pricing-20 .bm-pricing-20-pricing-card {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-20 .bm-pricing-20-pricing-card__top {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-20 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-pricing-20 .bm-list-item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

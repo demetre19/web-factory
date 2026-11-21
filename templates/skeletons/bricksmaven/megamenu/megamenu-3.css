@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-megamenu-3 .megamenu-3__content {
@@ -12,17 +12,23 @@
   }
 
   .wf-megamenu-3 .megamenu-3__column {
+    row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
+  }
+
+  .wf-megamenu-3 .megamenu-3__card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-megamenu-3 .megamenu-card-link-2 {
     flex-wrap: nowrap;
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-megamenu-3 .bm-header-1__cta {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

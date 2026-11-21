@@ -1,33 +1,45 @@
   .wf-contact-31 .bm-contact-31__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 4);
     grid-template-columns: calc(100% * 2 / 3);
+  }
+
+  .wf-contact-31 .bm-contact-31__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-contact-31 .bm-contact-31-list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-contact-31 .bm-contact-31-card {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-contact-31 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-contact-31 .bm-contact-31-card-ul {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-contact-31 .bm-contact-31__address {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-contact-31 .bm-contact-31__column {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

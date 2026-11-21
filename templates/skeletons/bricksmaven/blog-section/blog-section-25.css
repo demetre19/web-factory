@@ -1,9 +1,18 @@
+  .wf-blog-section-25 .bm-blog-section-25__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-blog-section-25 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-section-25 .bm-blog-section-25-blog-card {
+    row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
+  }
+
+  .wf-blog-section-25 .bm-blog-section-25-blog-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }

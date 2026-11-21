@@ -1,20 +1,28 @@
   .wf-call-to-action-33 .bm-cta-33__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-call-to-action-33 .bm-cta-33__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-call-to-action-33 .bm-cta-33__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-call-to-action-33 .bm-cta-33-accordion {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-call-to-action-33 .bm-cta-33-accordion-item__title {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

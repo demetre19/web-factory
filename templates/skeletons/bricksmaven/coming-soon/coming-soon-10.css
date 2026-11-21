@@ -1,12 +1,20 @@
+  .wf-coming-soon-10 .bm-coming-soon-10__container {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-coming-soon-10 .bm-coming-soon-9__intro {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-coming-soon-10 .bm-form {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-coming-soon-10 .bm-form-widget {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-xs);
     flex-direction: row;
   }
 
@@ -14,7 +22,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

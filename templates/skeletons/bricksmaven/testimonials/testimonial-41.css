@@ -4,16 +4,25 @@
     gap: var(--grid-gap);
   }
 
+  .wf-testimonial-41 .bm-testimonial-41__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-testimonial-41 .bm-testimonial-41__top {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
   .wf-testimonial-41 .bm-testimonial-41__footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-testimonial-41 .bm-testimonial-41__media {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

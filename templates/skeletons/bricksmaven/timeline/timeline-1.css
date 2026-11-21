@@ -1,37 +1,41 @@
   .wf-timeline-1 .timeline-1__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xl);
   }
 
   .wf-timeline-1 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-timeline-1 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-timeline-1 .timeline-1-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-timeline-1 .timeline-1-card {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-timeline-1 .timeline-1-card__line-wrapper {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-timeline-1 .timeline-1-card__content {
+    row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {

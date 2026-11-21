@@ -1,44 +1,56 @@
   .wf-content-29 .content-29-container {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .wf-content-29 .content-29__content {
+    row-gap: calc(var(--flow-spacing) * 2);
   }
 
   .wf-content-29 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-content-29 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-content-29 .content-29__2col {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-content-29 .content-29__list-cta {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-content-29 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-content-29 .bm-list__item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-content-29 .content-29-list-item {
     display: flex;
     flex-direction: row;
+    column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+  }
+
+  .wf-content-29 .content-29-list-item__data {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

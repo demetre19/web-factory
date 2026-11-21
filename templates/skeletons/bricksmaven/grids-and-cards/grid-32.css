@@ -1,23 +1,35 @@
+  .wf-grid-32 .grid-32__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-grid-32 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-grid-32 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-grid-32 .intro__head {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-grid-32 .grid-32-card-ul {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-grid-32 .grid-32-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-grid-32 .grid-32-card__content {
+    row-gap: var(--flow-spacing);
   }

@@ -1,62 +1,82 @@
+  .wf-pricing-12 .bm-pricing-12__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-pricing-12 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .intro--split {
     display: grid;
     flex-direction: column;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-pricing-12 .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-pricing-12 .intro__right-column {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .bm-pricing-12-price-options {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-pricing-12 .bm-pricing-12-card {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .bm-pricing-12-card__intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 1.4);
   }
 
   .wf-pricing-12 .bm-pricing-12-card__top {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-pricing-12 .bm-pricing-12-card__label-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-pricing-12 .bm-pricing-12-card__price-wrapper {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-pricing-12 .bm-pricing-12-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .bm-list-item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-pricing-12 .bm-cta-combo {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

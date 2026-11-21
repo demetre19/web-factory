@@ -1,12 +1,24 @@
+  .wf-hero-80 .bm-hero-80 {
+    row-gap: var(--space-s);
+  }
+
+  .wf-hero-80 .bm-hero-80__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-hero-80 .bm-hero-80__content {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-hero-80 .bm-hero-80-data-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-hero-80 .bm-hero-80-data-card__top {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

@@ -1,38 +1,47 @@
   .wf-take-out-content-and-remove-div .bm-off-canvas-6__content {
     display: flex;
     flex-direction: column;
+    row-gap: var(--space-s);
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-take-out-content-and-remove-div .bm-off-canvas-nav-ul {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) * 2);
   }
 
   .wf-take-out-content-and-remove-div .bm-off-canvas-6__contact-footer {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-take-out-content-and-remove-div .bm-off-canvas-contact {
+    row-gap: calc(var(--flow-spacing) / 1.8);
   }
 
   .wf-take-out-content-and-remove-div .bm-off-canvas-contact-item {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-take-out-content-and-remove-div .bm-off-canvas-6__socials {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-take-out-content-and-remove-div .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-take-out-content-and-remove-div .bm-social-share--column {
     flex-direction: column;
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

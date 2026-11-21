@@ -2,31 +2,31 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-20 .bm-header-20__brand {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-20 .bm-header-20__right-column {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-header-20 .bm-header-20__nav-menu {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-header-20 .bm-header-20__search-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }

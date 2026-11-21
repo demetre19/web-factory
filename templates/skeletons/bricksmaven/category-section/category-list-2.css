@@ -1,9 +1,26 @@
+  .wf-category-list-2 .category-list-2 {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-category-list-2 .category-list-2__container {
     flex-direction: column;
+    row-gap: var(--space-s);
   }
 
   .wf-category-list-2 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-category-list-2 .category-list-2-card {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-list-2 .category-list-2-card__heading {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-list-2 .category-list-2-card__image {
+    row-gap: calc( var(--flow-spacing) / 2 );
   }

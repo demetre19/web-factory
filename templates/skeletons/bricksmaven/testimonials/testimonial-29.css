@@ -1,35 +1,35 @@
   .wf-testimonial-29 .testimonial-29-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-testimonial-29 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-testimonial-29 .testimonial-29-list-ul {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xl);
   }
 
   .wf-testimonial-29 .testimonial-29-list-card {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   .wf-testimonial-29 .testimonial-29-list-card__meta {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-testimonial-29 .testimonial-29-list-card__profile {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

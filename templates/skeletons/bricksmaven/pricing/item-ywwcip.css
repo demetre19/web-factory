@@ -1,17 +1,17 @@
   .wf-item-ywwcip .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-item-ywwcip .pricing-6-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-item-ywwcip .pricing-6-card {
     display: flex;
+    row-gap: var(--space-xs);
     flex-direction: column;
-    gap: var(--grid-gap);
   }

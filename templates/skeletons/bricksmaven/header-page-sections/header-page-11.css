@@ -1,10 +1,18 @@
   .wf-header-page-11 .bm-header-page-11__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .wf-header-page-11 .bm-header-page-11__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-header-page-11 .bm-header-page-11__top {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-header-page-11 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }

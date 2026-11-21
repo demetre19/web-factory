@@ -1,14 +1,23 @@
+  .wf-category-list-1 .category-list-1 {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-category-list-1 .category-list-1__container {
     flex-direction: column;
+    row-gap: var(--space-s);
   }
 
   .wf-category-list-1 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-category-list-1 .category-list-1__list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-category-list-1 .category-list-1-card {
+    row-gap: calc( var(--flow-spacing) / 2 );
   }

@@ -1,13 +1,17 @@
+  .wf-testimonial-43 .bm-testimonial-43__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-testimonial-43 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-testimonial-43 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-testimonial-43 .bm-testimonial-43-card__video-footer {
@@ -17,13 +21,21 @@
   .wf-testimonial-43 .bm-user-card__data {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 6);
+  }
+
+  .wf-testimonial-43 .bm-testimonial-43-card__standard {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-testimonial-43 .bm-testimonial-43-card__top {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-testimonial-43 .bm-user-card {
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

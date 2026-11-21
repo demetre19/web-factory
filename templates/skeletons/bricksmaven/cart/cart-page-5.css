@@ -1,24 +1,36 @@
+  .wf-cart-page-5 .cart-page-5 {
+    row-gap: var(--space-s);
+  }
+
   .wf-cart-page-5 .cart-page-5__container-top {
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-cart-page-5 .cart-page-5__cart-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-cart-page-5 .cart-page-5__cart-totals-container {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-cart-page-5 .cart-page-5__cart-totals-wrapper {
     flex-direction: column;
   }
 
+  .wf-cart-page-5 .cart-page-credit-card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
   .wf-cart-page-5 .cart-page-card-list {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-cart-page-5 .cart-page-usp {
@@ -27,12 +39,18 @@
 
   .wf-cart-page-5 .cart-page-usp--alt {
     flex-direction: column;
+    row-gap: var(--flow-spacing);
     flex-wrap: nowrap;
   }
 
   .wf-cart-page-5 .cart-page-card-usp {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
+  }
+
+  .wf-cart-page-5 .cart-page-card-usp__content {
+    row-gap: calc( var(--space-xs) / 2 );
   }
 
   @media (max-width: 44rem) {

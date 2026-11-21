@@ -1,11 +1,19 @@
+  .wf-login .bm-woo-login__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-login .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-login .bm-woo-login__cover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-login .bm-woo-login__column {
+    row-gap: var(--space-m);
   }

@@ -1,14 +1,31 @@
   .wf-category-section-7 .category-list-7__container {
     flex-direction: column;
+    row-gap: var(--space-s);
   }
 
   .wf-category-section-7 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-category-section-7 .category-list-7__list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-category-section-7 .category-list-7-card {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-section-7 .category-list-7-card__intro {
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-category-section-7 .category-list-7-card__heading {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-section-7 .category-list-7-card__image {
+    row-gap: calc( var(--flow-spacing) / 2 );
   }
