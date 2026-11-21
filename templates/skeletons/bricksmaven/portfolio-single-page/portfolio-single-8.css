@@ -1,5 +1,6 @@
   .wf-portfolio-single-8 .bm-portfolio-single-8__intro-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 3fr) minmax(0, 4fr);
   }
 
@@ -14,11 +15,13 @@
 
   .wf-portfolio-single-8 .bm-portfolio-single-8__work-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-portfolio-single-8 .bm-portfolio-single-result-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -34,6 +37,7 @@
   .wf-portfolio-single-8 .bm-portfolio-6-related-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

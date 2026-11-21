@@ -1,6 +1,7 @@
   .wf-blog-archive-10 .blog-archive-10-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-10 .blog-archive-10-head {
@@ -25,6 +26,7 @@
 
   .wf-blog-archive-10 .blog-archive-10-card {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
     display: grid;
   }
 

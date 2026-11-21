@@ -5,6 +5,7 @@
 
   .wf-blog-archive-23 .blog-archive-23-archive-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -12,6 +13,7 @@
     display: grid;
     flex-direction: row;
     grid-template-columns: minmax(0, 2fr) minmax(0, 4fr);
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-23 .blog-archive-23-archive-card__content {

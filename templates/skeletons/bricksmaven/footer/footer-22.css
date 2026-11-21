@@ -11,12 +11,14 @@
 
   .wf-footer-22 .bm-footer-22__mid-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 4fr) minmax(0, 5fr) minmax(0, 5fr);
   }
 
   .wf-footer-22 .footer-nav-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-22 .footer-nav-wrapper-21 {

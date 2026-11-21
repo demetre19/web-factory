@@ -64,7 +64,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
       {list.length > 0 &&       <div class="blog-archive-3-body">
-        {list.length > 0 && <div>
+        {list.length > 0 && <div class="blog-archive-3-wrapper">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="blog-archive-3-card card">
                 <div class="blog-archive-3-card__box">

@@ -6,6 +6,7 @@
     flex-direction: row;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-cart-page-3 .cart-page-3__heading {
@@ -18,6 +19,7 @@
   }
 
   .wf-cart-page-3 .cart-page-3__cart-totals-container {
+    gap: var(--grid-gap);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }

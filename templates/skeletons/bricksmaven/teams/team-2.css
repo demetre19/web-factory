@@ -1,5 +1,6 @@
   .wf-team-2 .team-2-container {
     display: grid;
+    gap: var(--grid-gap);
   }
 
   .wf-team-2 .team-2-intro {
@@ -10,6 +11,7 @@
   .wf-team-2 .team-2-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-team-2 .team-2-profile {

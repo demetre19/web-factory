@@ -1,11 +1,13 @@
   .wf-content-45 .bm-content-45__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-45 .bm-content-45__intro {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   .wf-content-45 .bm-content-45__intro-top {
@@ -16,9 +18,11 @@
   .wf-content-45 .bm-content-45__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-45 .bm-content-45__content {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }

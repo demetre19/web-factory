@@ -1,6 +1,7 @@
   .wf-how-it-works-1 .hworks-1-container {
     grid-template-columns: 1fr 3fr;
     display: grid;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-1 .hworks-1-intro {
@@ -11,6 +12,7 @@
   .wf-how-it-works-1 .hworks-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-1 .hworks-card {

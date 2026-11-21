@@ -1,5 +1,6 @@
   .wf-product-single-1 .bm-product-single-1__main {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -17,6 +18,10 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+  }
+
+  .wf-product-single-1 .bm-related-products-list-1__list {
+    gap: var(--grid-gap);
   }
 
   .wf-product-single-1 .bm-related-products-list-1-card {

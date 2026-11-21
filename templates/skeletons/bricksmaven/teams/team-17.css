@@ -9,12 +9,14 @@
 
   .wf-team-17 .bm-team-17-card {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-team-17 .bm-team-17-card__inner {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-team-17 .bm-team-card__contact-details {

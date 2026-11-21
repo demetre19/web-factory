@@ -1,5 +1,6 @@
   .wf-product-single-2 .bm-product-single-2__main {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -25,18 +26,24 @@
 
   .wf-product-single-2 .bm-product-single-2__media {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-product-single-2 .bm-product-single-2__footer-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-product-single-2 .bm-product-single-2__column {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+  }
+
+  .wf-product-single-2 .bm-related-products-list-1__list {
+    gap: var(--grid-gap);
   }
 
   .wf-product-single-2 .bm-related-products-list-1-card {

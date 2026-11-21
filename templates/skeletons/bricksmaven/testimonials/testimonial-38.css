@@ -1,5 +1,6 @@
   .wf-testimonial-38 .bm-testimonial-38__top {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
@@ -14,11 +15,13 @@
 
   .wf-testimonial-38 .bm-testimonial-38__bottom {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 3);
   }
 
   .wf-testimonial-38 .bm-testimonial-38__data {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

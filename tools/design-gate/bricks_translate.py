@@ -254,7 +254,16 @@ GRID_TRACK_RE = re.compile(r'calc\(100% \* (\d+) / (\d+)\)')
 # to the token layer + Section.astro + the global patterns — a bank
 # rule that re-declares them is bespoke shape leaking site-wide (M2).
 TOPOLOGY = {'display', 'flex-direction', 'flex-wrap',
-            'grid-template-columns', 'grid-template-rows', 'order'}
+            'grid-template-columns', 'grid-template-rows', 'order',
+            'gap'}
+
+# a collection's gap says "separated siblings" — topology. The
+# distance is styling, so it binds the system's grid-gap, never the
+# payload's literal.
+def _topo_bind(p, v):
+    if p == 'gap':
+        return p, 'var(--grid-gap)'
+    return p, v
 
 
 def _scope_css(style, scope):
@@ -600,11 +609,18 @@ def translate(payload, stem):
             # term/label is the link's own text; a distinct text slot
             # drops to a description line under the link (F.1 — both
             # are copy and neither may be dropped)
-            return (f'{pad}<a{cattr} href={{{ivar}.href}}>'
+            # the item's link IS its title — a bare <a> inside a
+            # card carries no heading, so the title wraps an h3
+            # (Q.2 hierarchy); header/footer links stay bare anchors.
+            _lead = f'{pad}<h3 class="text-fluid-1">' \
+                if cat not in ('header', 'footer') else pad
+            _tail = '</h3>\n' if cat not in ('header', 'footer') \
+                else '\n'
+            return (f'{_lead}<a{cattr} href={{{ivar}.href}}>'
                     f'{{{ivar}.icon && '
                     f'<IconChip name={{{ivar}.icon}} />}} '
                     f'{{{ivar}.label || {ivar}.term || '
-                    f'{ivar}.anchor || {ivar}.text}}</a>\n'
+                    f'{ivar}.anchor || {ivar}.text}}</a>{_tail}'
                     f'{pad}{{({ivar}.label || {ivar}.term || '
                     f'{ivar}.anchor) && {ivar}.text && '
                     f'<p class="text-fluid-0">{{{ivar}.text}}</p>}}\n')
@@ -698,8 +714,10 @@ def translate(payload, stem):
             # the stat figure binds the item's stat/term — the
             # payload's own countTo is wireframe text (F.1)
             if ivar:
-                return (f'{pad}<span{cattr}>{{{ivar}.stat || '
-                        f'{ivar}.term || {ivar}.title}}</span>\n')
+                # the stat card's figure/label is its title — an
+                # h3 so the card reads heading-then-body (Q.2)
+                return (f'{pad}<h3{cattr}>{{{ivar}.stat || '
+                        f'{ivar}.term || {ivar}.title}}</h3>\n')
             return ''
         if name == 'divider':
             return f'{pad}<hr{cattr} />\n'
@@ -963,7 +981,7 @@ def translate(payload, stem):
             if not _props:
                 continue
             _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
-                      for p, v in _props]
+                      for p, v in (_topo_bind(p, v) for p, v in _props)]
             decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')
         # _cssCustom raw blocks are collected but never emitted —
         # topology-only bank css carries no bespoke rules

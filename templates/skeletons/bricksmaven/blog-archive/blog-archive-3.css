@@ -13,9 +13,14 @@
     flex-direction: column;
   }
 
+  .wf-blog-archive-3 .blog-archive-3-wrapper {
+    gap: var(--grid-gap);
+  }
+
   .wf-blog-archive-3 .blog-archive-3-card {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     display: grid;
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-3 .blog-archive-3-card__box {

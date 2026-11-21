@@ -1,6 +1,7 @@
   .wf-coming-soon-4 .coming-soon-4__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-4 .coming-soon-4__brand-content {
@@ -28,6 +29,7 @@
 
   .wf-coming-soon-4 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 

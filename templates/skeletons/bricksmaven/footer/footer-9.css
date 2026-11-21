@@ -1,11 +1,13 @@
   .wf-footer-9 .footer-9-top {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
+    gap: var(--grid-gap);
   }
 
   .wf-footer-9 .footer-nav-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-9 .footer-nav-wrapper-9 {
@@ -31,11 +33,13 @@
     display: grid;
     flex-direction: row;
     grid-template-columns: minmax(0, 1fr) minmax(0, 5fr);
+    gap: var(--grid-gap);
   }
 
   .wf-footer-9 .footer-9-bottom {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-9 .footer-bottom__left {

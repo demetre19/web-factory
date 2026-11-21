@@ -1,5 +1,6 @@
   .wf-blog-section-22 .blog-section-1-head {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
     display: grid;
   }
 
@@ -11,12 +12,14 @@
   .wf-blog-section-22 .bm-blog-section-22-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-section-22 .bm-blog-section-22-card {
     flex-direction: row;
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

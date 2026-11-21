@@ -20,6 +20,7 @@
 
   .wf-blog-single-7 .blog-single-7__body {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
     display: grid;
   }
 
@@ -42,6 +43,7 @@
     display: grid;
     flex-direction: row;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-single-7 .blog-single-sidebar-latest-article-list-card__content {

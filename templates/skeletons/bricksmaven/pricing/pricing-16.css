@@ -1,11 +1,13 @@
   .wf-pricing-16 .bm-pricing-16__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   .wf-pricing-16 .bm-pricing-16__price-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-pricing-16 .bm-pricing-13-card__icon-wrapper {

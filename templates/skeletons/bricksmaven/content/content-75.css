@@ -1,19 +1,23 @@
   .wf-content-75 .bm-content-75__content {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 3 / 1);
   }
 
   .wf-content-75 .bm-content-75-media-list {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
+    gap: var(--grid-gap);
   }
 
   .wf-content-75 .bm-content-75__footer {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 3);
   }
 
   .wf-content-75 .bm-content-75-data-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }

@@ -74,7 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="content-29-list-item card">
                   <div>
-                    <span>{it.stat || it.term || it.title}</span>
+                    <h3>{it.stat || it.term || it.title}</h3>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

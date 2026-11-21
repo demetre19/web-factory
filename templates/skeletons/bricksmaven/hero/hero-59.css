@@ -1,5 +1,6 @@
   .wf-hero-59 .bm-hero-59__footer {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -10,6 +11,7 @@
   .wf-hero-59 .bm-hero-59-media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
