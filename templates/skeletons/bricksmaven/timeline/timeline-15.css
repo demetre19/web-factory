@@ -1,18 +1,30 @@
+  .wf-timeline-15 .timeline-15-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-timeline-15 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-timeline-15 .timeline-15-card {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-timeline-15 .timeline-15-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-timeline-15 .timeline-15-card__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-timeline-15 .timeline-15-card__timeline {
     flex-direction: column;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }

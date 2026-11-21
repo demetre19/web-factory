@@ -1,16 +1,23 @@
+  .wf-feature-66 .bm-feature-66__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-66 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-66 .bm-feature-66-list {
     flex-direction: row;
+    column-gap: var(--flow-spacing);
     flex-wrap: wrap;
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-66 .bm-feature-66-item {
     flex-direction: row;
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

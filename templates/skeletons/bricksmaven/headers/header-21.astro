@@ -77,7 +77,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   ))}</div>
               </div>}
               <div class="bm-off-canvas-6__contact-footer row between">
-                {links.length > 0 && <div class="row between">
+                {links.length > 0 && <div class="bm-off-canvas-contact row between">
                   <div class="row gap-fluid-m">{(links || []).map((it) => (
                       <div class="bm-off-canvas-contact-item row between">
                         <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
@@ -86,8 +86,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     ))}</div>
                 </div>}
                 {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-                {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-              </div>
+                              </div>
+              {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+              </div>}
+
             </div>
           </div>
         </div>

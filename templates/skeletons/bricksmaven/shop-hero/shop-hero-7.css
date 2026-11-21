@@ -1,13 +1,29 @@
+  .wf-shop-hero-7 .bm-shop-hero-7 {
+    row-gap: var(--space-s);
+  }
+
+  .wf-shop-hero-7 .bm-shop-hero-7__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-shop-hero-7 .bm-shop-hero-7__header {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
   .wf-shop-hero-7 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-shop-hero-7 .shop-hero-3-category-slider__slide {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-shop-hero-7 .shop-hero-3-category-slider__content {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

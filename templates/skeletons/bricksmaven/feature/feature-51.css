@@ -1,14 +1,27 @@
+  .wf-feature-51 .bm-feature-51__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-51 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-51 .bm-feature-51-feature-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-feature-51 .bm-feature-51-feature-card {
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-feature-51 .bm-feature-51-feature-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

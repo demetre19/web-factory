@@ -1,17 +1,25 @@
   .wf-shop-hero-5 .bm-shop-hero-5__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .wf-shop-hero-5 .bm-shop-hero-5__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-shop-hero-5 .bm-shop-hero-5__top {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-shop-hero-5 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-shop-hero-5 .bm-shop-hero-5__grid {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
@@ -19,18 +27,27 @@
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-shop-hero-5 .bm-shop-hero-5__content {
     flex-wrap: nowrap;
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-shop-hero-5 .bm-shop-hero-5__header {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-shop-hero-5 .bm-shop-hero-5__offer {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-shop-hero-5 .bm-shop-hero-5__left-column {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

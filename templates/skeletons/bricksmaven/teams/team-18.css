@@ -1,29 +1,37 @@
+  .wf-team-18 .bm-team-18__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-team-18 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-team-18 .bm-team-18-team-list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-team-18 .bm-team-18-card {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .wf-team-18 .bm-team-18-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-team-18 .bm-team-18-card__top {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: 0;
   }
 
   .wf-team-18 .bm-team-18-card__foot {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: 0;
   }

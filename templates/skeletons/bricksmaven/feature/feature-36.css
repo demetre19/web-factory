@@ -1,11 +1,23 @@
+  .wf-feature-36 .feature-36-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-36 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
+  }
+
+  .wf-feature-36 .feature-36-list {
+    row-gap: var(--space-s);
   }
 
   .wf-feature-36 .feature-36-card {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-feature-36 .feature-36-card__content {
+    row-gap: var(--flow-spacing);
   }

@@ -1,14 +1,22 @@
+  .wf-cart-page-4 .cart-page-4 {
+    row-gap: var(--space-s);
+  }
+
   .wf-cart-page-4 .cart-page-4__container-top {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-cart-page-4 .cart-page-4__cart-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-cart-page-4 .cart-page-4__cart-items-container {
+    row-gap: var(--space-l);
   }
 
   .wf-cart-page-4 .cart-page-usp {
@@ -17,18 +25,28 @@
 
   .wf-cart-page-4 .cart-page-card-usp {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
+  }
+
+  .wf-cart-page-4 .cart-page-card-usp__content {
+    row-gap: calc( var(--space-xs) / 2 );
   }
 
   .wf-cart-page-4 .cart-page-4__cart-totals-container {
     flex-direction: column;
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-cart-page-4 .cart-page-credit-card-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-cart-page-4 .cart-page-card-list {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

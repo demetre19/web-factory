@@ -1,32 +1,44 @@
+  .wf-how-it-works-26 .bm-how-it-works-26 {
+    row-gap: var(--space-s);
+  }
+
   .wf-how-it-works-26 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-how-it-works-26 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-how-it-works-26 .bm-how-it-works-26-list {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-how-it-works-26 .bm-how-it-works-26-card {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-how-it-works-26 .bm-how-it-works-26-card__intro {
+    row-gap: calc(var(--flow-spacing) / 2);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-26 .bm-how-it-works-26-card__step {
     display: flex;
-    gap: var(--grid-gap);
+    gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-how-it-works-26 .bm-how-it-works-26-card__inner {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-how-it-works-26 .bm-how-it-works-26-card__highlight {

@@ -4,22 +4,38 @@
     gap: var(--grid-gap);
   }
 
+  .wf-hero-92 .bm-hero-92__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-hero-92 .bm-hero-92__top {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-hero-92 .bm-hero-90-slide {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
   .wf-hero-92 .bm-hero-90-case__footer {
     flex-wrap: nowrap;
+  }
+
+  .wf-hero-92 .bm-hero-90-testimonial {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-hero-92 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-hero-92 .bm-hero-90-testimonial__client-meta {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

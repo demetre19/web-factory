@@ -1,19 +1,19 @@
   .wf-content-50 .bm-content-50__container {
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-content-50 .bm-content-50__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-content-50 .bm-content-50__media {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 

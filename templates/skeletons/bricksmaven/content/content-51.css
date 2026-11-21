@@ -1,12 +1,24 @@
+  .wf-content-51 .bm-content-51 {
+    row-gap: var(--space-s);
+  }
+
   .wf-content-51 .bm-content-51__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
+  }
+
+  .wf-content-51 .bm-content-51__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-content-51 .bm-content-51__top {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-content-51 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-content-51 .logo-12-list {

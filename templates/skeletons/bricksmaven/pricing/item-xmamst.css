@@ -1,23 +1,23 @@
   .wf-item-xmamst .pricing-4 {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-item-xmamst .pricing-4-container {
     display: flex;
+    row-gap: var(--space-m);
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-item-xmamst .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   .wf-item-xmamst .pricing-4-price-cards {
@@ -28,8 +28,8 @@
 
   .wf-item-xmamst .pricing-4-card {
     display: flex;
+    row-gap: var(--space-s);
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

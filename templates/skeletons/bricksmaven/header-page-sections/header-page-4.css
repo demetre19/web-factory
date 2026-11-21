@@ -1,22 +1,22 @@
   .wf-header-page-4 .header-page-4-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--section-space-xxl);
   }
 
   .wf-header-page-4 .header-page-4__top {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-header-page-4 .header-page-4__cta-text {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-header-page-4 .header-page-btn {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }

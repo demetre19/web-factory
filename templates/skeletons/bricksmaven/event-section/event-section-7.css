@@ -1,25 +1,43 @@
+  .wf-event-section-7 .bm-event-section-7__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-event-section-7 .bm-event-section__intro {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-event-section-7 .bm-event-section-7-event-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-event-section-7 .bm-event-section-7-event-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-event-section-7 .bm-event-section-7-event-card__date {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 6);
+  }
+
+  .wf-event-section-7 .bm-event-section-7-event-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-event-section-7 .bm-event-section-7-event-card__details-wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-7 .bm-event-section-7-card__speaker-wrapper {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-7 .bm-event-speaker-list {
@@ -31,7 +49,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

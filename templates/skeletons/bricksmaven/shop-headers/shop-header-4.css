@@ -1,3 +1,7 @@
+  .wf-shop-header-4 .bm-shop-header-4 {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
   .wf-shop-header-4 .bm-shop-header-4-usp-list {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -6,18 +10,20 @@
   .wf-shop-header-4 .bm-shop-header-4__main-container {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
   }
 
   .wf-shop-header-4 .bm-shop-header-4-item__end {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-shop-header-4 .bm-shop-header-cart-search {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 3);
   }
 
   @media (max-width: 44rem) {

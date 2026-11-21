@@ -1,24 +1,28 @@
+  .wf-blog-archive-7 .blog-archive-7-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-blog-archive-7 .blog-archive-7-body {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-archive-7 .blog-archive-7-wrapper {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-blog-archive-7 .blog-archive-7-card {
+    row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-7 .blog-archive-7-card__category {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

@@ -1,32 +1,40 @@
+  .wf-remove-this-div .feature-40__container {
+    row-gap: calc(var(--flow-spacing) * 2);
+  }
+
   .wf-remove-this-div .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-remove-this-div .feature-40__list-container {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-remove-this-div .feature-40-feature-nav {
+    column-gap: var(--flow-spacing);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+  }
+
+  .wf-remove-this-div .feature-40__section {
+    row-gap: var(--space-s);
   }
 
   .wf-remove-this-div .feature-40__feature-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-remove-this-div .feature-40__list-content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

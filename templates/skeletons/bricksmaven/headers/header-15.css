@@ -2,24 +2,24 @@
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-15 .bm-header-15__brand {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-15 .bm-header-15__right-column {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-header-15 .bm-header-15__cta {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }

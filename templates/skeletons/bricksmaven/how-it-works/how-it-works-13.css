@@ -1,13 +1,21 @@
+  .wf-how-it-works-13 .hworks-13-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-how-it-works-13 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-how-it-works-13 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-how-it-works-13 .hworks-13-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-how-it-works-13 .hworks-13-card {
@@ -19,5 +27,5 @@
   .wf-how-it-works-13 .hworks-13-card__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }

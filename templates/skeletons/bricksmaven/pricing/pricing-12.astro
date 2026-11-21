@@ -47,19 +47,22 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-pricing-12">
   <div class="sec-inner">
-    <div>
+    <div class="bm-pricing-12__container">
       <div class="intro intro--split">
-        {head &&         <div>
+        {head &&         <div class="intro__left-column">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }
-        <div>
+        <div class="intro__right-column">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        </div>
+                  </div>
+        {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+        </div>}
+
       </div>
       {list.length > 0 && <div class="bm-pricing-12-price-options">{(list || []).map((it) => (
-            <div class="card">
+            <div class="bm-pricing-12-card card">
               <div class="bm-pricing-12-card__intro">
                 <div class="bm-pricing-12-card__top">
                   <h3 class="text-fluid-4">{it.term || it.title}</h3>
@@ -73,7 +76,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div>
+              <div class="bm-pricing-12-card__content">
                 <div>
                   <h4 class="text-fluid-1">{it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
@@ -82,8 +85,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-list-item card">
                         {it2.icon && <IconChip name={it2.icon} />}
-                        <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
-                        {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
+                        <div class="stack">
+                          <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
+                          {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
+                        </div>
                       </div>
                     ))}</div>
                 </div>}
@@ -99,7 +104,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

@@ -1,17 +1,21 @@
   .wf-content-78 .bm-content-78__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 4);
+  }
+
+  .wf-content-78 .bm-content-78__content {
+    row-gap: calc(var(--flow-spacing) * 4);
   }
 
   .wf-content-78 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-content-78 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }

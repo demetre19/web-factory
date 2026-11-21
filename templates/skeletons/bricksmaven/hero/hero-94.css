@@ -1,22 +1,41 @@
+  .wf-hero-94 .bm-hero-94 {
+    row-gap: var(--space-s);
+  }
+
   .wf-hero-94 .bm-hero-94__container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-hero-94 .bm-hero-94__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-hero-94 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-hero-94 .bm-hero-94-review-card {
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
+  }
+
+  .wf-hero-94 .bm-hero-94-review-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-hero-94 .bm-hero-94-footer-container__logo-cover {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-hero-94 .bm-hero-94-logo-list {
     flex-direction: row;
     flex-wrap: wrap;
+    column-gap: var(--flow-spacing);
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

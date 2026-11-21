@@ -1,14 +1,26 @@
+  .wf-content-59 .bm-content-59__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-content-59 .bm-content-59__row {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
+  }
+
+  .wf-content-59 .bm-content-59__intro {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-content-59 .bm-content-59__section {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-content-59 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

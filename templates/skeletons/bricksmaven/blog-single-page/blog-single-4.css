@@ -1,3 +1,11 @@
+  .wf-blog-single-4 .blog-single-4-container {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-blog-single-4 .blog-single-4__head {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-blog-single-4 .blog-single-4__meta {
     display: grid;
     gap: var(--grid-gap);
@@ -5,38 +13,39 @@
 
   .wf-blog-single-4 .blog-single-4__meta-wrapper-inner {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-blog-single-4 .blog-single__meta {
     display: flex;
     flex-direction: row;
+    column-gap: var(--flow-spacing);
     flex-wrap: wrap;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-4 .blog-single-4__body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-blog-single-4 .blog-single__newsletter {
+    row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-blog-single-4 .blog-single-newsletter__social {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-4 .blog-single-4__footer {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

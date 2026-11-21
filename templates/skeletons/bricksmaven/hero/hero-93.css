@@ -1,16 +1,25 @@
+  .wf-hero-93 .bm-hero-93__container {
+    row-gap: calc(var(--space-s) * 2);
+  }
+
+  .wf-hero-93 .bm-hero-93__content {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-hero-93 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-hero-93 .bm-hero-93__work-row {
     display: flex;
     flex-direction: row;
+    column-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-hero-93 .bm-hero-93-work-list {
+    row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
 

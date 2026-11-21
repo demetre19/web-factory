@@ -1,68 +1,73 @@
+  .wf-blog-single-7 .blog-single-7-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-blog-single-7 .blog-single-7__head {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-7__author {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-7__date {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-7__social {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-7__body {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     display: grid;
   }
 
   .wf-blog-single-7 .blog-single-sidebar {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-sidebar__item {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-sidebar-latest-article-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-sidebar-latest-article-list-card {
     display: grid;
     flex-direction: row;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-blog-single-7 .blog-single-sidebar-latest-article-list-card__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-single-7 .blog-single-7__footer {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

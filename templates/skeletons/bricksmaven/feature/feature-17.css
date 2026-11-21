@@ -1,31 +1,35 @@
+  .wf-feature-17 .feature-17 {
+    row-gap: var(--space-l);
+  }
+
   .wf-feature-17 .feature-17-wrapper-sticky-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--section-space-xxl);
   }
 
   .wf-feature-17 .feature-17-sticky {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-feature-17 .feature-17-scroll {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-m);
   }
 
   .wf-feature-17 .feature-17-card-list {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-feature-17 .feature-17-card-list__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {

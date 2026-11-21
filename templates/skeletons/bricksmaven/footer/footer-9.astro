@@ -70,7 +70,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }
-        {links.length > 0 && <div class="row between">
+        {links.length > 0 && <div class="footer-9__contact-list row between">
           <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-9-card row between">
                 <div class="row between">
@@ -91,8 +91,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        </div>
+                  </div>
+        {before.length > 0 && <div class="flow mt-stack">
+{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+        </div>}
+
       </div>
       <div>
         {links.length > 0 && <div class="footer-legal-nav row between">
@@ -108,7 +111,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

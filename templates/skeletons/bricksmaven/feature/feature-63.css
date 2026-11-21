@@ -1,17 +1,33 @@
+  .wf-feature-63 .bm-feature-63__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-63 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-63 .intro--split {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-feature-63 .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-feature-63 .intro__right-column {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-63 .bm-feature-63-list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-feature-63 .bm-feature-63-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }

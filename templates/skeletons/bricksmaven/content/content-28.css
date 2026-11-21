@@ -1,26 +1,27 @@
   .wf-content-28 .content-28-container {
+    row-gap: var(--space-s);
     display: grid;
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-content-28 .content-28__intro-block {
     display: flex;
     flex-direction: row;
+    column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-content-28 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-content-28 .intro--left {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

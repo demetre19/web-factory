@@ -1,20 +1,28 @@
+  .wf-feature-53 .bm-feature-53 {
+    row-gap: var(--space-s);
+  }
+
   .wf-feature-53 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-53 .bm-feature-53-feature-item-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-feature-53 .bm-feature-53-feature-item-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-53 .bm-feature-53-feature-item-card__media {
     display: flex;
     flex-direction: row;
+    column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

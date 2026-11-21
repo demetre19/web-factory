@@ -1,15 +1,27 @@
+  .wf-content-60 .bm-content-60__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-content-60 .bm-content-60__wrapper {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-content-60 .bm-content-60__content {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-content-60 .bm-content-60__footer {
     display: flex;
+    row-gap: var(--flow-spacing);
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }
 
   .wf-content-60 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

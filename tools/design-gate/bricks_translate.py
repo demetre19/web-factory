@@ -97,6 +97,12 @@ def map_var(name):
                 'MIX:'):
             return f'MIX:{t}:{pct}'
         return 'bg-subtle'
+    m = re.match(r'content-gap(?:--\w+)?$', name)
+    if m:      # ACSS content-gap family → prose-flow rung
+        return 'flow-spacing'
+    m = re.match(r'grid-gap(?:--\w+)?$', name)
+    if m:
+        return 'grid-gap'
     if name.startswith('at-'):
         return map_var(name[3:]) or 'fs-0'
     if name == 'danger':
@@ -255,14 +261,14 @@ GRID_TRACK_RE = re.compile(r'calc\(100% \* (\d+) / (\d+)\)')
 # rule that re-declares them is bespoke shape leaking site-wide (M2).
 TOPOLOGY = {'display', 'flex-direction', 'flex-wrap',
             'grid-template-columns', 'grid-template-rows', 'order',
-            'gap'}
+            'gap', 'row-gap', 'column-gap'}
 
 # a collection's gap says "separated siblings" — topology. The
-# distance is styling, so it binds the system's grid-gap, never the
-# payload's literal.
+# authored distance is the skeleton's own intent (a prose column's
+# content-gap is not a card grid's gutter), so it binds through
+# translate_value — honour it verbatim. A container with NO authored
+# gap gets the Q.4 default below instead.
 def _topo_bind(p, v):
-    if p == 'gap':
-        return p, 'var(--grid-gap)'
     return p, v
 
 
@@ -713,15 +719,22 @@ def translate(payload, stem):
                         # body copy, never a heading); when a term
                         # led, the verbatim tail follows as the card
                         # body so every card reads title-then-body
+                        # title + body stack in ONE column — a
+                        # flat emit inside a row container (status
+                        # pill, list item) splayed title and body
+                        # side-by-side (render defect: heading and
+                        # clause looked like two columns)
                         return (f'{pad}{{{ivar}.icon && '
                                 f'<IconChip name={{{ivar}.icon}} />}}\n'
-                                f'{pad}<h3 class="text-fluid-1">'
+                                f'{pad}<div class="stack">\n'
+                                f'{pad}  <h3 class="text-fluid-1">'
                                 f'{{{ivar}.term || {ivar}.title || '
                                 f'{ivar}.text}}</h3>\n'
-                                f'{pad}{{{ivar}.text && '
+                                f'{pad}  {{{ivar}.text && '
                                 f'({ivar}.term || {ivar}.title) && '
                                 f'<p class="text-fluid-0">'
-                                f'{{{ivar}.text}}</p>}}\n')
+                                f'{{{ivar}.text}}</p>}}\n'
+                                f'{pad}</div>\n')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
                 return (f'{pad}{{head && <{tag}{cattr}>'
@@ -957,6 +970,23 @@ def translate(payload, stem):
             body = body[:eol] + sub_blk + body[eol:]
         else:
             body = sub_blk + body
+    # prose rhythm — a `before` paragraph run emitted INSIDE the
+    # bank's `.intro` inherits the intro's column gap (a heading-block
+    # gap, section-scale on this design: 'every block of text is
+    # SEPARATE'). The run moves out of .intro into a .flow sibling —
+    # paragraph spacing becomes flow-spacing and the heading block
+    # keeps its authored gap. Only fires when the run is the intro's
+    # last child (the close tag right after it).
+    def _outdent(m):
+        close_pad = m.group(2)
+        return (f'{close_pad}</div>\n'
+                f'{close_pad}{{before.length > 0 && <div class="flow mt-stack">\n'
+                f'{m.group(1)}'
+                f'{close_pad}</div>}}\n')
+    body = re.sub(
+        r'(\{before\.map\(\(p\) => <p class="mt-flow text-fluid-0" '
+        r'set:html=\{inline\(p\)\} />\)\}\n)'
+        r'(\s+)</div>', _outdent, body)
     # V.8 lift — a bound image that sat inside a per-item loop becomes
     # the media cell of the gold split shape (SB.5): copy in the stack
     # column, media beside it. A bare figure inside the bank's centred
@@ -996,16 +1026,24 @@ def translate(payload, stem):
                  'set:html={inline(it.text)} />}'
                  '</div>)}</dl>}\n')
     if cat != 'header':
+        # paragraph runs flow as prose — a plain .flow block keeps
+        # flow-spacing between them instead of the root column's
+        # sibling gap (user-visible 'every block spaced like a
+        # section' defect); mt-stack separates the run from the
+        # structure above it
         body += (
         '  {qas.length > 0 && <dl class="mt-stack">'
         '{qas.map((qa) => <>'
         '<dt class="text-fluid-0" set:html={inline(qa.q)} />'
         '<dd class="text-fluid-0" set:html={inline(qa.a)} />'
         '</>)}</dl>}\n'
-        '  {links.map((l) => <p class="mt-flow text-fluid-0" '
-        'set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}\n'
-        '  {after.map((p) => <p class="mt-flow text-fluid-0" '
-        'set:html={inline(p)} />)}\n'
+        '  {links.length > 0 && <div class="flow mt-stack">'
+        '{links.map((l) => <p class="text-fluid-0" '
+        'set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}'
+        '</div>}\n'
+        '  {after.length > 0 && <div class="flow mt-stack">'
+        '{after.map((p) => <p class="text-fluid-0" '
+        'set:html={inline(p)} />)}</div>}\n'
         '  {tel && <p class="mt-stack"><a class="link-quiet" '
         'href={tel}>{phone}</a></p>}\n')
 
@@ -1034,7 +1072,16 @@ def translate(payload, stem):
             if _is_flexgrid and not any(
                     p in ('gap', 'row-gap', 'column-gap')
                     for p, _v in _bound):
-                _bound.append(('gap', 'var(--grid-gap)'))
+                # collections space at the grid rung; interior flex
+                # containers (chip+label rows, title stacks) space at
+                # the small rung — a section-scale gap between icon
+                # and title reads as the M2 'everything is separate'
+                # defect
+                _is_grid = any(
+                    p == 'display' and 'grid' in str(v)
+                    for p, v in _bound)
+                _bound.append(('gap', 'var(--grid-gap)' if _is_grid
+                               else 'var(--space-s)'))
             _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
                       for p, v in _bound]
             decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')

@@ -8,7 +8,19 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-linktree-10 .bm-linktree-10__links {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-linktree-10 .bm-linktree-9__link-row {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-linktree-10 .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

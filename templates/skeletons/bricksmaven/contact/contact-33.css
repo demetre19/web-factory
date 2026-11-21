@@ -1,23 +1,27 @@
+  .wf-contact-33 .bm-contact-33__contact-data {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-contact-33 .bm-contact-25-side-list-ul {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-contact-33 .bm-contact-25-side-list-item {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-contact-33 .bm-contact-25-side-list-item__detail {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-contact-33 .bm-contact-25-side-list-item__icon {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

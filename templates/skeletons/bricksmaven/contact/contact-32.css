@@ -1,18 +1,26 @@
   .wf-contact-32 .bm-contact-32__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) * 2);
+  }
+
+  .wf-contact-32 .bm-contact-32__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-contact-32 .bm-contact-32__top {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-contact-32 .bm-accordion-clean {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-contact-32 .bm-accordion-clean-card__icon-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

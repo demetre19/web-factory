@@ -1,59 +1,75 @@
+  .wf-event-section-8 .bm-event-section-8__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-event-section-8 .bm-event-section__intro {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-event-section-8 .bm-event-section-8-card {
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-event-section-8 .bm-event-section-8-card__date {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 4);
+  }
+
+  .wf-event-section-8 .bm-event-section-8-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-event-section-8 .bm-event-section-8-card__head {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-event-section-8 .bm-event-section-1-card__mid--alt {
+    row-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-event-section-8 .bm-event-section-1-card__date--alt {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-8 .bm-event-section-1-card__icon-wrapper--alt {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-8 .bm-event-section-1-card__date-time--alt {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-event-section-8 .bm-event-section-1-card__location--alt {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-event-section-8 .bm-event-section-8-card__footer {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-event-section-8 .bm-event-hart-molecule {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-event-section-8 .bm-event-hart-molecule-active {

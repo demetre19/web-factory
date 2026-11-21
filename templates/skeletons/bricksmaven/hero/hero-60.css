@@ -1,6 +1,18 @@
+  .wf-hero-60 .bm-hero-60__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-hero-60 .bm-hero-60__content {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-hero-60 .bm-hero-60__top {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-hero-60 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   .wf-hero-60 .bm-hero-60-contact-usp {
@@ -11,10 +23,11 @@
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-hero-60 .bm-hero-60-contact-usp-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
 

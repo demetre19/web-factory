@@ -1,11 +1,15 @@
+  .wf-testimonial-62 .bm-testimonial-62__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-testimonial-62 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-testimonial-62 .bm-testimonial-62-card {
     display: grid;
-    gap: var(--grid-gap);
+    gap: calc(var(--space-m) / 2);
     grid-template-columns: calc(100% * 3 / 2);
   }

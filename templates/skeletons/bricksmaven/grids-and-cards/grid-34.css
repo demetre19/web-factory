@@ -1,18 +1,22 @@
+  .wf-grid-34 .bm-grid-34__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-grid-34 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-grid-34 .bm-grid-34-grid-ul {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-grid-34 .bm-grid-34-card {
+    row-gap: var(--flow-spacing);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
   }

@@ -1,25 +1,25 @@
   .wf-footer-5 .footer-5 {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-m);
   }
 
   .wf-footer-5 .footer-5-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-footer-5 .footer-5-alpha {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-nav-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-footer-5 .footer-nav-wrapper-5 {
@@ -29,51 +29,52 @@
   .wf-footer-5 .footer-nav-column {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-footer-5 .footer-menu {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-footer-5 .footer-5-epsilon {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-5__apps {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-5__apps-btn {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   .wf-footer-5 .footer-5-bottom {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-5-bottom__alpha {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-5-bottom__beta {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-footer-5 .footer-legal-nav {
     flex-direction: row;
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

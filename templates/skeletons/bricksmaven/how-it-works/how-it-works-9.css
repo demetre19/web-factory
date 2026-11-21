@@ -1,24 +1,28 @@
+  .wf-how-it-works-9 .hworks-9-container {
+    row-gap: var(--space-l);
+  }
+
   .wf-how-it-works-9 .hworks-intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-how-it-works-9 .hworks-9-grid-ul {
+    row-gap: var(--space-l);
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-9 .hworks-9-card {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-l);
   }
 
   .wf-how-it-works-9 .hworks-9-card__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

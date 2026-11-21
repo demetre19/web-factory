@@ -1,7 +1,15 @@
+  .wf-career-6 .bm-career-6__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-career-6 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-career-6 .bm-career-6-list {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-career-6 .bm-career-6-card {
@@ -10,16 +18,21 @@
     gap: var(--grid-gap);
   }
 
+  .wf-career-6 .bm-career-6-card__content {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-career-6 .bm-career-meta-list {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: var(--flow-spacing);
   }
 
   .wf-career-6 .bm-career-meta-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 3);
   }
 
   @media (max-width: 44rem) {

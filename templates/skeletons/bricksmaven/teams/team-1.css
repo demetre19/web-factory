@@ -1,30 +1,30 @@
   .wf-team-1 .team-1-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-team-1 .team-1-intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-team-1 .team-1-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-team-1 .team-1-profile {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   .wf-team-1 .team-1-profile__detail {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {

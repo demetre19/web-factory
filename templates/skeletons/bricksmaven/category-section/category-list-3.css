@@ -1,15 +1,32 @@
+  .wf-category-list-3 .category-list-3 {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-category-list-3 .category-list-3__container {
     flex-direction: column;
+    row-gap: var(--space-s);
   }
 
   .wf-category-list-3 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-category-list-3 .category-list-3__list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-category-list-3 .category-list-3-card {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-list-3 .category-list-3-card__heading {
+    row-gap: calc( var(--flow-spacing) / 2 );
+  }
+
+  .wf-category-list-3 .category-list-3-card__image {
+    row-gap: calc( var(--flow-spacing) / 2 );
   }

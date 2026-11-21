@@ -1,13 +1,13 @@
   .wf-feature-30 .feature-30-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-feature-30 .feature-30__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-feature-30 .feature-30__feature-wrapper {
@@ -19,19 +19,19 @@
   .wf-feature-30 .feature-30__feature-content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-m);
   }
 
   .wf-feature-30 .feature-30-list-ul {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-feature-30 .feature-30-list-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

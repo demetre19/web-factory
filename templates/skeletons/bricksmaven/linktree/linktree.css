@@ -1,18 +1,27 @@
   .wf-linktree .linktree-container {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-linktree .linktree__content {
+    row-gap: calc(var(--flow-spacing) * 2);
   }
 
   .wf-linktree .linktree__brand {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-linktree .linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-linktree .linktree-social {
     flex-wrap: nowrap;
     flex-direction: row;
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

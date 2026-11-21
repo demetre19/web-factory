@@ -84,7 +84,6 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --c-paper: var(--bg-canvas);
   --c-line: var(--border-default);
 }
-.flow > * + * { margin-block-start: var(--flow-spacing); }
 h1, h2 { text-wrap: var(--text-wrap-heading); }
 p { text-wrap: var(--text-wrap-body); }
 img { object-fit: cover; }
@@ -118,6 +117,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   /* prose paragraphs ride the small flow rung — mt-stack's
      content-gap turns every paragraph into a separate block */
   .mt-flow { margin-block-start: var(--flow-spacing); }
+  .flow > * + * { margin-block-start: var(--flow-spacing); }
+  /* a content container that directly follows a prose block (the
+     intro column or a paragraph) separates at the content rung —
+     without it the lead-in line sits flush against the first card
+     row ('text touching divs'). Elements that already carry their
+     own stack/flow margin keep it. */
+  :is(.intro, p) + :not(p, .mt-stack, .mt-flow) {
+      margin-block-start: var(--content-gap); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }

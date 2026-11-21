@@ -262,7 +262,6 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   --c-paper: var(--bg-canvas);
   --c-line: var(--border-default);
 }
-.flow > * + * { margin-block-start: var(--flow-spacing); }
 h1, h2 { text-wrap: var(--text-wrap-heading); }
 p { text-wrap: var(--text-wrap-body); }
 img { object-fit: cover; }
@@ -296,6 +295,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   /* prose paragraphs ride the small flow rung — mt-stack's
      content-gap turns every paragraph into a separate block */
   .mt-flow { margin-block-start: var(--flow-spacing); }
+  .flow > * + * { margin-block-start: var(--flow-spacing); }
+  /* a content container that directly follows a prose block (the
+     intro column or a paragraph) separates at the content rung —
+     without it the lead-in line sits flush against the first card
+     row ('text touching divs'). Elements that already carry their
+     own stack/flow margin keep it. */
+  :is(.intro, p) + :not(p, .mt-stack, .mt-flow) {
+      margin-block-start: var(--content-gap); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -827,7 +834,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .wf-grid-1 .gridcard-1-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
@@ -836,38 +843,50 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
 
 /* bricksmaven/comparison/comparison-1 */
+  .wf-comparison-1 .bm-conparison-1__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-comparison-1 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-1 .bm-conparison-1-list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-comparison-1 .bm-conparison-1-card {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-1 .bm-conparison-status {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-comparison-1 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-1 .bm-list-item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-comparison-1 .bm-conparison-1__footer {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-comparison-1 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
@@ -877,34 +896,38 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 
 /* bricksmaven/footer/footer-1 */
+  .wf-footer-1 .footer-1 {
+    row-gap: var(--space-s);
+  }
+
   .wf-footer-1 .footer-1-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-footer-1 .footer-column-left {
     display: flex;
+    row-gap: var(--flow-spacing);
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-column-mid {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-footer-1 .footer-menu {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-footer-1 .footer-column-right {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-footer-1 .footer-1-bottom {
@@ -915,17 +938,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   .wf-footer-1 .footer-1-bottom__left {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   .wf-footer-1 .footer-legal-nav {
     flex-direction: row;
+    column-gap: var(--flow-spacing);
   }
 
   .wf-footer-1 .footer-1-bottom__right {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
@@ -936,25 +960,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 /* bricksmaven/call-to-action/call-to-action-10 */
   .wf-call-to-action-10 .cta-10-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: 1fr 1fr;
   }
 
   .wf-call-to-action-10 .cta-10-content {
     display: flex;
+    row-gap: var(--space-m);
     flex-direction: column;
-    gap: var(--grid-gap);
   }
 
   .wf-call-to-action-10 .cta-10-heading {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-call-to-action-10 .hero-1__cta {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
@@ -973,7 +997,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .wf-grid-2 .gridcard-2-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
 /* bricksmaven/headers/header-1 */
@@ -981,43 +1005,43 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-header-1 .bm-header-1__cta {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
 /* bricksmaven/how-it-works/how-it-works-1 */
   .wf-how-it-works-1 .hworks-1-container {
     grid-template-columns: 1fr 3fr;
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-how-it-works-1 .hworks-1-intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-how-it-works-1 .hworks-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-how-it-works-1 .hworks-card {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   .wf-how-it-works-1 .hworks-card__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
@@ -1027,34 +1051,42 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .wf-how-it-works-1 .hworks-1-container > :only-child { grid-column: 1 / -1; }
 
 /* bricksmaven/feature/feature-1 */
+  .wf-feature-1 .feature-1 {
+    row-gap: var(--section-space-xxl);
+  }
+
   .wf-feature-1 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
+  }
+
+  .wf-feature-1 .feature-1-ul {
+    row-gap: var(--space-xl);
   }
 
   .wf-feature-1 .feature-1-li {
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-feature-1 .feature-1-li__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-xs);
   }
 
   .wf-feature-1 .bm-list {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-feature-1 .bm-list__item {
     flex-direction: row;
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {
@@ -1064,36 +1096,36 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 /* bricksmaven/hero/hero-1 */
   .wf-hero-1 .hero-1 {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-hero-1 .hero-1-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-hero-1 .hero-1__content {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-m);
   }
 
   .wf-hero-1 .hero-1__cta {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-xs);
   }
 
   .wf-hero-1 .hero-1__content-trust {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-hero-1 .hero-1-logo-ul {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    column-gap: var(--space-m);
   }
 
   @media (max-width: 44rem) {
@@ -1105,43 +1137,43 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 /* bricksmaven/counter/counter-1 */
   .wf-counter-1 .counter-1-container {
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-counter-1 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-counter-1 .counter-1-content {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-counter-1 .counter-1-box {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-counter-1 .counter-1-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-counter-1 .counter-1-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-counter-1 .counter-1-card__intro {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

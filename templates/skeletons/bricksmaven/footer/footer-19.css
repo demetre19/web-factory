@@ -1,18 +1,39 @@
+  .wf-footer-19 .bm-footer-19 {
+    row-gap: var(--space-s);
+  }
+
+  .wf-footer-19 .bm-footer-19__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-footer-19 .bm-footer-19__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
+  .wf-footer-19 .bm-footer-19__content-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-footer-19 .bm-footer-19-phone-ul {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-footer-19 .bm-footer-19-phone-list {
     flex-direction: row;
+    column-gap: var(--flow-spacing);
   }
 
   .wf-footer-19 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: var(--flow-spacing);
+  }
+
+  .wf-footer-19 .bm-footer-19__column {
+    row-gap: var(--flow-spacing);
   }
 
   @media (max-width: 44rem) {

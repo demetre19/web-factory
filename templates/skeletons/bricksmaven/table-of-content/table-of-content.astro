@@ -53,12 +53,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-    {list.length > 0 && <div>
+    {list.length > 0 && <div class="table-of-content-1-ol">
       <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
           <div class="card">
             <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
             {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-            {(it.items || []).length > 0 && <div>
+            {(it.items || []).length > 0 && <div class="table-of-content-1-ol">
               <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                   <div class="card">
                     <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>
@@ -71,7 +71,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>}
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+  {links.length > 0 && <div class="flow mt-stack">{links.map((l) => <p class="text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}</div>}
+  {after.length > 0 && <div class="flow mt-stack">{after.map((p) => <p class="text-fluid-0" set:html={inline(p)} />)}</div>}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

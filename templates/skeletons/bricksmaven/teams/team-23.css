@@ -1,29 +1,47 @@
+  .wf-team-23 .bm-team-23__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-team-23 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-team-23 .intro--split {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
+  }
+
+  .wf-team-23 .intro__left-column {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-team-23 .intro__right-column {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-team-23 .bm-team-23-lijst {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-team-23 .bm-team-23-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-team-23 .bm-team-23-card-feature-list {
     flex-direction: row;
     flex-wrap: wrap;
+    column-gap: calc(var(--space-xs) / 2);
+    row-gap: calc(var(--space-xs) / 2);
   }
 
   .wf-team-23 .bm-team-23-cta__icon-wrapper {
     display: flex;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

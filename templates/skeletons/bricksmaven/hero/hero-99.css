@@ -2,12 +2,20 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
+  }
+
+  .wf-hero-99 .bm-hero-99__column {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-hero-99 .cta-combo {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-hero-99 .bm-hero-99__media {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

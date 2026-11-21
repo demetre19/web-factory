@@ -1,13 +1,25 @@
+  .wf-content-70 .bm-content-70__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-content-70 .bm-content-70__content {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-content-70 .bm-content-70-usp-list {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+  }
+
+  .wf-content-70 .bm-content-70-card {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-content-70 .bm-content-70-card__icon-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

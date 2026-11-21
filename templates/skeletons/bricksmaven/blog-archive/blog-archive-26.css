@@ -1,7 +1,11 @@
+  .wf-blog-archive-26 .blog-archive-26-container {
+    row-gap: var(--space-s);
+  }
+
   .wf-blog-archive-26 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-blog-archive-26 .blog-archive-26-archive-list {
@@ -13,13 +17,17 @@
   .wf-blog-archive-26 .blog-archive-26-archive-card {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-blog-archive-26 .blog-archive-26-archive-card__content {
+    row-gap: var(--flow-spacing);
   }
 
   .wf-blog-archive-26 .blog-archive-26-archive-card__meta-data {
     display: flex;
     flex-direction: row;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

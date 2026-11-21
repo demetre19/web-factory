@@ -1,13 +1,34 @@
+  .wf-linktree-9 .bm-linktree-9__container {
+    row-gap: var(--space-s);
+  }
+
+  .wf-linktree-9 .bm-linktree-9__bio-cover {
+    row-gap: var(--flow-spacing);
+  }
+
   .wf-linktree-9 .bm-linktree-7-bio {
     flex-direction: row;
     flex-wrap: nowrap;
+    column-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-linktree-9 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-linktree-9 .bm-linktree-9__links {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-linktree-9 .bm-linktree-9__link-row {
+    row-gap: calc(var(--flow-spacing) / 2);
+  }
+
+  .wf-linktree-9 .bm-linktree-list {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {

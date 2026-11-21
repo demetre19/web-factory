@@ -1,28 +1,40 @@
+  .wf-testimonial-46 .bm-testimonial-46__container {
+    row-gap: var(--space-s);
+  }
+
   .wf-testimonial-46 .intro {
     flex-direction: column;
     display: flex;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-testimonial-46 .bm-testimonial-46-card {
+    row-gap: var(--flow-spacing);
+  }
+
+  .wf-testimonial-46 .bm-testimonial-46-card__content {
+    row-gap: calc(var(--flow-spacing) / 2);
   }
 
   .wf-testimonial-46 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   .wf-testimonial-46 .bm-testimonial-46-card__footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   .wf-testimonial-46 .bm-testimonial-46-card__client {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: var(--grid-gap);
+    column-gap: calc(var(--flow-spacing) / 4);
   }
 
   @media (max-width: 44rem) {

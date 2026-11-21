@@ -1,19 +1,19 @@
   .wf-404-error-1 .error-1-container {
     display: grid;
-    gap: var(--grid-gap);
+    gap: var(--space-m);
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-404-error-1 .error-1-box {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--space-s);
   }
 
   .wf-404-error-1 .error-1-media-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--grid-gap);
+    gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {

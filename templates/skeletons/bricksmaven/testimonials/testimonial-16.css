@@ -1,24 +1,24 @@
   .wf-testimonial-16 .testimonial-16-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
+    gap: var(--space-m);
   }
 
   .wf-testimonial-16 .testimonial-16-list-card__wrapper {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: var(--flow-spacing);
   }
 
   .wf-testimonial-16 .testimonial-16-list-card__profile {
     display: flex;
-    gap: var(--grid-gap);
+    column-gap: var(--space-s);
   }
 
   .wf-testimonial-16 .testimonial-16-list-card__meta {
     display: flex;
     flex-direction: column;
-    gap: var(--grid-gap);
+    row-gap: calc(0.3rem + 0vw);
   }
 
   @media (max-width: 44rem) {
