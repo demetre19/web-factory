@@ -23,6 +23,7 @@
       "bm-header-1__cta",
       "bm-list",
       "bm-list-item",
+      "bm-list__item",
       "brand-logo",
       "brand-mark",
       "btn-block",
@@ -33,8 +34,6 @@
       "card-grid",
       "card-media",
       "center",
-      "content-1-container",
-      "content-1__box",
       "counter-1-box",
       "counter-1-card",
       "counter-1-card__intro",
@@ -87,6 +86,8 @@
       "faq-a",
       "faq-item",
       "faq-q",
+      "feature-1-li",
+      "feature-1-li__content",
       "field",
       "flow-list",
       "flow-row",
@@ -196,8 +197,6 @@
       "surface-media",
       "surface-muted",
       "t0",
-      "testimonial-1-content",
-      "testimonial-1-slides-item",
       "text-fluid--1",
       "text-fluid-0",
       "text-fluid-1",
@@ -209,25 +208,24 @@
       "variant-switcher",
       "wf-call-to-action-10",
       "wf-comparison-1",
-      "wf-content-1",
       "wf-counter-1",
       "wf-cta-button",
+      "wf-feature-1",
       "wf-footer-1",
       "wf-grid-1",
       "wf-grid-2",
       "wf-header-1",
       "wf-hero-1",
-      "wf-how-it-works-1",
-      "wf-testimonial-1"
+      "wf-how-it-works-1"
     ],
     "utilities": "tailwind utilities derived from TOKENS.json"
   },
-  "archetype": "editorial-single",
+  "archetype": "split-media",
   "category": "content",
   "collapse": "stacked",
   "cols": null,
   "component": "site/src/components/sections/Definition.astro",
-  "composition": "editorial",
+  "composition": "split-media",
   "content": {
     "body": null,
     "cta": null,
@@ -342,7 +340,7 @@
         "surface": "muted"
       },
       {
-        "density": "compact",
+        "density": "regular",
         "section": "coverage",
         "surface": "base"
       },
@@ -364,12 +362,12 @@
     ]
   },
   "dna_hash": "e9fdbe44338edd4c",
-  "emphasis": "answer",
-  "exemplar": "templates/sections/editorial/Editorial.astro",
+  "emphasis": "media",
+  "exemplar": "templates/sections/split-media/SplitMedia.astro",
   "file": "sections/02-definition.contract.json",
   "index": 2,
-  "intent": "detail",
-  "media_ratio": "none",
+  "intent": "hero",
+  "media_ratio": "4:3",
   "neighbours": {
     "next": {
       "composition": "cards-n",
@@ -382,10 +380,10 @@
   },
   "page": "strata-cleaning-melbourne",
   "patterns": [
-    "pattern-editorial"
+    "pattern-split-media"
   ],
   "plan_intent": "definition",
-  "recipe": "bricksmaven/content/content-1",
+  "recipe": "bricksmaven/feature/feature-1",
   "rules": [
     "A.1",
     "A.2",
@@ -406,7 +404,7 @@
     "detail"
   ],
   "stack": "text-first",
-  "structure_hash": "43c8f6d859f0b648",
+  "structure_hash": "f75d9f70b0cf40a5",
   "surface": "muted",
-  "wf_ref": "preview/layouts.html#d1:definition"
+  "wf_ref": "preview/layouts.html#d5:definition"
 }

@@ -18,7 +18,7 @@
 
   .wf-feature-32 .bm-beta-feature-list-ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
@@ -38,3 +38,4 @@
   @media (max-width: 44rem) {
     .wf-feature-32 .feature-32-container { grid-template-columns: 1fr; }
   }
+  .wf-feature-32 .feature-32-container > :only-child { grid-column: 1 / -1; }

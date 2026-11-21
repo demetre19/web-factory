@@ -65,8 +65,8 @@ def map_var(name):
     """ACSS var name → emitted token name, or None (report)."""
     if name in EXACT:
         return EXACT[name]
-    m = re.match(r'grid-(\d+)(?:-(\d+))?$', name)
-    if m:      # ACSS grid fractions: --grid-2 → 50%
+    m = re.match(r'grid--?(\d+)(?:-(\d+))?$', name)
+    if m:      # ACSS grid fractions: --grid-2 and --at-grid--2 → 50%
         num = int(m.group(2) or 1)
         return f'GRID:{num}/{int(m.group(1))}'
     m = re.match(r'h(\d)$', name)
@@ -281,6 +281,15 @@ def _scope_css(style, scope):
     return re.sub(r'([^{}]+)\{', repl, style)
 
 
+# the G.5 canon every collection grid collapses to — floor/cap are
+# locals so data-cols (G.8) tightens the count per section
+AUTO_TRACKS = ('repeat(auto-fit, minmax(min(max('
+               'var(--grid-floor,var(--grid-min,28rem)), '
+               'calc((100% - (var(--grid-cap,99) - 1) * '
+               'var(--grid-gap)) / var(--grid-cap,99))), '
+               '100%), 1fr))')
+
+
 def tracks(value):
     """A grid track list: ACSS `--grid-N` is N equal tracks, not a
     column width. `calc(100% * 1 / N)` alone → repeat(N, 1fr); inside a
@@ -292,8 +301,7 @@ def tracks(value):
         # a 12-track card matrix is a composition, not a layout: the
         # DNA floor decides how many columns fit
         if n > 3:
-            return ('repeat(auto-fit, minmax(min(var(--grid-min), '
-                    '100%), 1fr))')
+            return AUTO_TRACKS
         return f'repeat({n}, minmax(0, 1fr))'
     return GRID_TRACK_RE.sub(lambda t: f'{t.group(0)}', v)
 
@@ -699,8 +707,21 @@ def translate(payload, stem):
                     # reads heading-then-body
                     if in_card and not seen.get('ivar_head'):
                         seen['ivar_head'] = True
-                        return (f'{pad}<h3 class="text-fluid-1">'
-                                f'{txt}</h3>\n')
+                        # the title binds the item's term/label —
+                        # `text` alone is the clause tail (a fragment
+                        # like "multiplies them across the week" is
+                        # body copy, never a heading); when a term
+                        # led, the verbatim tail follows as the card
+                        # body so every card reads title-then-body
+                        return (f'{pad}{{{ivar}.icon && '
+                                f'<IconChip name={{{ivar}.icon}} />}}\n'
+                                f'{pad}<h3 class="text-fluid-1">'
+                                f'{{{ivar}.term || {ivar}.title || '
+                                f'{ivar}.text}}</h3>\n'
+                                f'{pad}{{{ivar}.text && '
+                                f'({ivar}.term || {ivar}.title) && '
+                                f'<p class="text-fluid-0">'
+                                f'{{{ivar}.text}}</p>}}\n')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
                 return (f'{pad}{{head && <{tag}{cattr}>'
@@ -1022,15 +1043,15 @@ def translate(payload, stem):
         style = '\n\n'.join(decl) + '\n'
         # G.5 — collections never carry a fixed track count: any
         # repeat(N|Nfr …) or ≥4-literal-fr track the payload declared
-        # collapses to the auto-fit minmax form
+        # collapses to the auto-fit minmax form. The floor/cap are
+        # locals so a section's declared columns (data-cols → G.8)
+        # tightens the track count without touching the canon.
         style = re.sub(
             r'grid-template-columns:\s*repeat\(\s*(?:\d+|\d+fr)[^;]*;',
-            'grid-template-columns: repeat(auto-fit, '
-            'minmax(min(var(--grid-min,28rem),100%),1fr));', style)
+            'grid-template-columns: ' + AUTO_TRACKS + ';', style)
         style = re.sub(
             r'grid-template-columns:\s*(?:[\d.]+fr\s+){3,}[\d.]+fr\s*;',
-            'grid-template-columns: repeat(auto-fit, '
-            'minmax(min(var(--grid-min,28rem),100%),1fr));', style)
+            'grid-template-columns: ' + AUTO_TRACKS + ';', style)
         # viewport safety — a definite width sets the grid item's
         # min-content, so the fr track sizes to 60ch and overflows the
         # cell; max-width caps the column without forcing the track
@@ -1082,6 +1103,13 @@ def translate(payload, stem):
                                 f'1fr; }}\n' for c in _mq_g)
                       + ''.join(f'    .{c} {{ flex-direction: column; '
                                 f'}}\n' for c in _mq_f) + '  }\n')
+        # a multi-track grid whose optional sibling was dropped by
+        # copy leaves its lone child stranded in the first track
+        # (counter-1-content without a CTA box) — an only child
+        # spans the row
+        for _c in _mq_g:
+            style += (f'  .{_c} > :only-child {{ grid-column: '
+                      f'1 / -1; }}\n')
         style = _scope_css(style, f'.wf-{stem}')
         if '--acss-' in style:      # never ship an unresolved var
             raise SystemExit(f'{stem}: unresolved ACSS var in emitted css')

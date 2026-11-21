@@ -12,7 +12,7 @@
 
   .wf-how-it-works-1 .hworks-grid-ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
@@ -32,3 +32,4 @@
     .wf-how-it-works-1 .hworks-1-container { grid-template-columns: 1fr; }
     .wf-how-it-works-1 .hworks-card { flex-direction: column; }
   }
+  .wf-how-it-works-1 .hworks-1-container > :only-child { grid-column: 1 / -1; }

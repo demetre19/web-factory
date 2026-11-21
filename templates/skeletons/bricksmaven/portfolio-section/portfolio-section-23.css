@@ -7,7 +7,7 @@
   .wf-portfolio-section-23 .intro--split {
     display: grid;
     flex-direction: column;
-    grid-template-columns: var(--fs-0);
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
@@ -20,7 +20,7 @@
 
   .wf-portfolio-section-23 .bm-portfolio-section-23-card {
     display: grid;
-    grid-template-columns: var(--fs-0);
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 

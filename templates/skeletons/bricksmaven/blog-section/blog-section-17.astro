@@ -73,7 +73,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div>
                 <div class="bm-blog-section-17-card__top">
                   <div class="bm-blog-section-17-card__term-wrapper">
-                    <h3 class="text-fluid-1">{it.text}</h3>
+                    {it.icon && <IconChip name={it.icon} />}
+                    <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                    {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

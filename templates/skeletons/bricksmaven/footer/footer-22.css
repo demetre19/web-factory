@@ -19,12 +19,12 @@
 
   .wf-footer-22 .footer-nav-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
   .wf-footer-22 .footer-nav-wrapper-21 {
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-footer-22 .footer-nav-column {
@@ -66,3 +66,4 @@
     .wf-footer-22 .footer-legal-nav { flex-direction: column; }
     .wf-footer-22 .footer-legal__li { flex-direction: column; }
   }
+  .wf-footer-22 .bm-footer-22__mid-container > :only-child { grid-column: 1 / -1; }

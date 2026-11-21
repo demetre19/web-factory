@@ -1,6 +1,6 @@
   .wf-blog-section-5 .blog-section-5-head {
     gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     display: grid;
   }
 
@@ -18,7 +18,7 @@
 
   .wf-blog-section-5 .blog-section-5-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 

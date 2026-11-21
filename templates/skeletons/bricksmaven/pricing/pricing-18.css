@@ -7,7 +7,7 @@
   .wf-pricing-18 .bm-pricing-18__pricing-wrapper {
     display: grid;
     gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-pricing-18 .bm-list {

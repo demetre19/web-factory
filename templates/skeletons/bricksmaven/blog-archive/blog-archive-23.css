@@ -7,7 +7,7 @@
   .wf-blog-archive-23 .blog-archive-23-archive-list {
     display: grid;
     gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-blog-archive-23 .blog-archive-23-archive-card {
@@ -40,3 +40,4 @@
     .wf-blog-archive-23 .blog-archive-23-archive-card__author-wrapper { flex-direction: column; }
     .wf-blog-archive-23 .blog-archive-23-archive-card__meta-data { flex-direction: column; }
   }
+  .wf-blog-archive-23 .blog-archive-23-archive-card > :only-child { grid-column: 1 / -1; }

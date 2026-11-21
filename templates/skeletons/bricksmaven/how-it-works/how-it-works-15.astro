@@ -55,7 +55,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       {list.length > 0 && <div class="hworks-15-list">{(list || []).map((it) => (
             <div class="card">
-              <h3 class="text-fluid-1">{it.text}</h3>
+              {it.icon && <IconChip name={it.icon} />}
+              <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+              {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
