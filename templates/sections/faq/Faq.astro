@@ -1,8 +1,8 @@
 ---
 /**
  * faq — gold exemplar (SB.5). Native details/summary: no JS, keyboard
- * and screen-reader correct. Every answer stays open (disclosure-tier
- * open): an article's Q&A is read, not hunted for.
+ * and screen-reader correct. Answers ship collapsed — the accordion
+ * is the disclosure mechanism; an all-open FAQ is just a text wall.
  *
  * Full-copy slots (§4.3): `copy` carries the COPY.json block —
  * heading → answer → before → Q&A pairs → after in article order
@@ -48,7 +48,7 @@ const after = cp.after || [];
   </div>
   <div class="mt-sec">
     {qa.map((it) => (
-      <details class="faq-item" open>
+      <details class="faq-item">
         <summary class="faq-q" set:html={inline(it.q)} />
         <p class="t0 faq-a" set:html={inline(it.a)} />
       </details>

@@ -51,16 +51,16 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="footer-13__nav row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
             <div class="footer-nav-column row between">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-              {(it.items || []).length > 0 &&               <div class="footer-menu row between">
-                {(it.items || []).length > 0 && <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              {it.icon && <IconChip name={it.icon} />}
+              <h3 class="text-fluid-1">{it.term || it.title}</h3>
+              {(it.items || []).length > 0 && <div class="footer-menu row between">
+                <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div>
                       <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
                       {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
             </div>
           ))}</div>}
       </div>
@@ -68,7 +68,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div class="footer-13__content row between">
         <span class="logo brand-mark">{brand}</span>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         <form novalidate>
         </form>
       </div>
@@ -82,7 +82,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

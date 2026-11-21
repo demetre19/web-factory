@@ -1537,6 +1537,29 @@ MUT = {
  'check_novelty': mut(('SET','GATES.json',
     '{"w5": {"design": "d3"}}'),
     ('REPL','NOVELTY.json','"distance": 0.44','"distance": 0.90')),
+ 'check_faq_collapsed': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<details class="faq-item" open><summary>q</summary></details>')),
+ 'check_card_hierarchy': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<div class="card"><p>bare text, no heading</p></div>')),
+ 'check_icon_ring': mut(
+     ('APPEND','site/dist/home/index.html',
+      '<div class="card"><h3>t</h3><svg viewBox="0 0 24 24"></svg></div>')),
+ 'check_gap_floor': (lambda files: files.update({
+     k: files[k] + '\n.zgap-stack{display:flex}' for k in list(files)
+     if k == 'site/src/styles/global.css' or
+     k.startswith('site/dist/_astro/') and k.endswith('.css')})),
+ 'check_type_scale_min': (lambda files: files.update({
+     k: files[k] + '\n:root{--h2:clamp(1rem,1rem,1rem);'
+     '--h3:clamp(1rem,1rem,1rem)}' for k in list(files)
+     if k == 'site/src/styles/global.css' or
+     k.startswith('site/dist/_astro/') and k.endswith('.css')})),
+ 'check_contrast_pairs': (lambda files: files.update({
+     k: files[k] + '\n.lowc{color:#777777;background:#888888}'
+     for k in list(files)
+     if k == 'site/src/styles/global.css' or
+     k.startswith('site/dist/_astro/') and k.endswith('.css')})),
  # ---- plan §5 machinery checks -------------------------------------
  'check_source_bind': mut(('APPEND','SOURCES/article.md',
     '\n\none more paragraph\n')),

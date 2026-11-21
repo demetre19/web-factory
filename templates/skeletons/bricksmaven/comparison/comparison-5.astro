@@ -51,19 +51,20 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
       {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-comparison-5-card card">
               <div>
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
               </div>
               {(it.items || []).length > 0 &&               <div class="bm-comparison-5-step-list">
                 {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-comparison-5-step-item card">
                       <div class="bm-comparison-5-step-item__content">
-                        <h4 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
+                        {it2.icon && <IconChip name={it2.icon} />}
+                        <h4 class="text-fluid-1">{it2.term || it2.title}</h4>
                       </div>
                     </div>
                   ))}</div>}
@@ -75,7 +76,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

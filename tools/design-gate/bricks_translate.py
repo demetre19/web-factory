@@ -652,12 +652,17 @@ def translate(payload, stem):
                     cattr = cattr.replace('text-fluid-2',
                                           'text-fluid-1')
                     # a dedicated icon element in the same item owns
-                    # the chip — the heading must not render it twice
-                    txt = (f'{{{ivar}.term || {ivar}.title}}'
-                           if seen.get('ivar_icon_el') else
-                           f'{{{ivar}.icon && '
-                           f'<IconChip name={{{ivar}.icon}} />}} '
-                           f'{{{ivar}.term || {ivar}.title}}')
+                    # the chip — the heading must not render it twice.
+                    # The chip sits ABOVE the title, never inline in
+                    # it — an icon inside the heading reads as stray
+                    # glyph spacing, not the ring element.
+                    if not seen.get('ivar_icon_el'):
+                        return (f'{pad}{{{ivar}.icon && '
+                                f'<IconChip name={{{ivar}.icon}} />}}\n'
+                                f'{pad}<{tag}{cattr}>'
+                                f'{{{ivar}.term || {ivar}.title}}'
+                                f'</{tag}>\n')
+                    txt = f'{{{ivar}.term || {ivar}.title}}'
                 else:
                     txt = f'{{{ivar}.text}}'
             elif name == 'heading' and not seen['h'] and txt:
@@ -670,7 +675,7 @@ def translate(payload, stem):
                 # §4.3 — `before` paragraphs ride the answer slot
                 return (f'{pad}{{sub && <{tag}{cattr} '
                         f'set:html={{inline(sub)}} />}}\n'
-                        f'{pad}{{before.map((p) => <p class="mt-stack '
+                        f'{pad}{{before.map((p) => <p class="mt-flow '
                         f'text-fluid-0" set:html={{inline(p)}} />)}}\n')
             elif not ivar:
                 # the payload's own copy is wireframe label text
@@ -851,17 +856,19 @@ def translate(payload, stem):
                 + body)
     # §4.3 heading fallback — a pure-collection skeleton (grid of
     # cards, list of links) has no section-heading slot; the block's
-    # h2 is still copy that must render (F.1, PS.8)
-    if '{head && ' not in body:
+    # h2 is still copy that must render (F.1, PS.8). Chrome rows
+    # (header/footer) skip every prose fallback: an h2/lede rendered
+    # inside the bar breaks the chrome (user-visible nav defect).
+    if '{head && ' not in body and cat not in ('header', 'footer'):
         body = ('  {head && <h2 class="text-fluid-2">{head}</h2>}\n'
                 + body)
     # §4.3 fallback — a skeleton without a long-text slot still
     # renders the answer + before paragraphs (verbatim, F.1), placed
     # right after the heading emit when one exists
-    if 'sub &&' not in body:
+    if 'sub &&' not in body and cat not in ('header', 'footer'):
         sub_blk = ('  {sub && <p class="mt-stack lede" '
                    'set:html={inline(sub)} />}\n'
-                   '  {before.map((p) => <p class="mt-stack '
+                   '  {before.map((p) => <p class="mt-flow '
                    'text-fluid-0" set:html={inline(p)} />)}\n')
         hm = re.search(r'^(\s*)\{head && ', body, re.M)
         if hm:
@@ -892,7 +899,8 @@ def translate(payload, stem):
     # §4.3 tail — qa/links/after paragraphs close every copy-bound
     # section, after the skeleton's own structure (COPY_BLOCK_KEYS
     # order: items → qa → links → after)
-    if 'list.map' not in body and 'list || []).map' not in body:
+    if cat != 'header' and 'list.map' not in body and \
+            'list || []).map' not in body:
         # the payload's shape hid the items loop (nested ol/li,
         # js-driven widget) — the copy slot's items still render
         # verbatim as a term/definition list (F.1)
@@ -906,15 +914,16 @@ def translate(payload, stem):
                  '{it.text && <dd class="text-fluid-0" '
                  'set:html={inline(it.text)} />}'
                  '</div>)}</dl>}\n')
-    body += (
+    if cat != 'header':
+        body += (
         '  {qas.length > 0 && <dl class="mt-stack">'
         '{qas.map((qa) => <>'
         '<dt class="text-fluid-0" set:html={inline(qa.q)} />'
         '<dd class="text-fluid-0" set:html={inline(qa.a)} />'
         '</>)}</dl>}\n'
-        '  {links.map((l) => <p class="mt-stack text-fluid-0" '
+        '  {links.map((l) => <p class="mt-flow text-fluid-0" '
         'set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}\n'
-        '  {after.map((p) => <p class="mt-stack text-fluid-0" '
+        '  {after.map((p) => <p class="mt-flow text-fluid-0" '
         'set:html={inline(p)} />)}\n'
         '  {tel && <p class="mt-stack"><a class="link-quiet" '
         'href={tel}>{phone}</a></p>}\n')
