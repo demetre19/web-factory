@@ -8,7 +8,7 @@ links:
 # LEXINGTON HARVEST INDEX — viewport preview pattern bank
 
 - themes harvested: **54**
-- pages captured: **1256** (seen 1255, quarantined/error 127)
+- pages captured: **1256** (seen 1255, quarantined/error 164)
 - system pages: **129** (colours / typography / buttons / links / shaders)
 
 ## Page-type coverage
@@ -156,56 +156,56 @@ Lexington section types with **no proven pattern row** in `pattern-index.json`:
 | theme | site_type | pages | page types |
 |---|---|---|---|
 | aelen | med-spa | 25 | service-detail×7, about×5, other×4, article×4, blog×1, appointment×1, contact×1, pricing×1, home×1 |
-| alfred | other | 25 | other×19, article×2, about×1, contact×1, pricing×1, home×1 |
+| alfred | saas | 25 | other×19, article×2, about×1, contact×1, pricing×1, home×1 |
 | astromaxsp | other | 19 | other×5, service-detail×4, article×3, case-study×3, contact×1, blog×1, work-index×1, home×1 |
-| aubergine | other | 25 | other×6, article×4, service-detail×4, about×3, case-study×3, listing×1, contact×1, blog×1, work-index×1, home×1 |
+| aubergine | agency-portfolio | 25 | other×6, article×4, service-detail×4, about×3, case-study×3, listing×1, contact×1, blog×1, work-index×1, home×1 |
 | author | other | 25 | other×20, schedule×2, appointment×1, contact×1, home×1 |
 | bastion | other | 25 | about×5, article×4, listing×4, service-detail×4, case-study×3, other×2, contact×1, work-index×1, home×1 |
-| brightlight | other | 25 | other×20, article×2, about×1, contact×1, home×1 |
-| buio | other | 25 | other×18, article×3, contact×1, listing×1, about×1, home×1 |
-| carbon | other | 22 | other×14, article×3, about×1, blog×1, listing×1, pricing×1, home×1 |
-| carriera | other | 25 | other×14, listing×4, about×2, article×2, contact×1, pricing×1, home×1 |
+| brightlight | saas | 25 | other×20, article×2, about×1, contact×1, home×1 |
+| buio | technology | 25 | other×18, article×3, contact×1, listing×1, about×1, home×1 |
+| carbon | agency-portfolio | 22 | other×14, article×3, about×1, blog×1, listing×1, pricing×1, home×1 |
+| carriera | saas | 25 | other×14, listing×4, about×2, article×2, contact×1, pricing×1, home×1 |
 | carrington | other | 25 | other×10, about×4, article×3, case-study×3, blog×1, listing×1, work-index×1, contact×1, home×1 |
 | coleman | other | 24 | other×11, service-detail×4, article×4, about×1, contact×1, blog×1, pricing×1, home×1 |
 | copperlane | automotive | 25 | other×8, about×4, work-index×4, article×3, listing×2, appointment×1, pricing×1, service-detail×1, home×1 |
 | duckbutt | other | 25 | other×7, about×5, article×5, service-detail×3, appointment×1, listing×1, contact×1, pricing×1, home×1 |
 | dusk | other | 25 | other×15, work-index×4, article×2, blog×1, contact×1, schedule×1, home×1 |
-| ellamae | other | 25 | other×11, article×3, about×2, listing×2, schedule×2, blog×2, contact×1, service-detail×1, home×1 |
+| ellamae | automotive | 25 | other×11, article×3, about×2, listing×2, schedule×2, blog×2, contact×1, service-detail×1, home×1 |
 | enlightr | other | 24 | other×16, article×4, about×1, contact×1, pricing×1, home×1 |
 | flabbergasted | saas | 25 | other×20, about×2, article×1, contact×1, home×1 |
 | flaco | agency-portfolio | 15 | other×4, article×4, case-study×3, about×1, contact×1, work-index×1, home×1 |
 | gerstner | other | 25 | other×17, about×2, schedule×2, article×1, blog×1, contact×1, home×1 |
-| halden | other | 18 | other×12, article×4, about×1, home×1 |
+| halden | saas | 18 | other×12, article×4, about×1, home×1 |
 | hemingway | other | 25 | other×17, article×3, about×1, blog×1, contact×1, pricing×1, home×1 |
-| hirewise | other | 25 | other×13, about×5, article×3, blog×2, contact×1, home×1 |
+| hirewise | saas | 25 | other×13, about×5, article×3, blog×2, contact×1, home×1 |
 | jacobsen | other | 25 | other×13, article×4, schedule×2, about×1, appointment×1, contact×1, blog×1, pricing×1, home×1 |
-| kinfolk | other | 25 | other×11, product×6, article×4, about×1, contact×1, category×1, home×1 |
+| kinfolk | ecommerce | 25 | other×11, product×6, article×4, about×1, contact×1, category×1, home×1 |
 | kotei | agency-portfolio | 21 | other×5, article×4, service-detail×4, case-study×3, about×1, work-index×1, contact×1, pricing×1, home×1 |
-| matterhaus | other | 25 | other×7, listing×4, service-detail×4, case-study×3, about×2, article×1, blog×1, contact×1, work-index×1, home×1 |
+| matterhaus | agency-portfolio | 25 | other×7, listing×4, service-detail×4, case-study×3, about×2, article×1, blog×1, contact×1, work-index×1, home×1 |
 | molle | other | 25 | other×19, about×1, article×1, blog×1, contact×1, pricing×1, home×1 |
 | mulberry | other | 25 | other×9, article×3, service-detail×3, about×2, case-study×2, blog×1, work-index×1, contact×1, pricing×1, appointment×1, home×1 |
-| navy | other | 25 | other×19, about×2, article×1, contact×1, pricing×1, home×1 |
+| navy | saas | 25 | other×19, about×2, article×1, contact×1, pricing×1, home×1 |
 | newport | other | 25 | other×17, schedule×3, about×1, article×1, contact×1, work-index×1, home×1 |
 | northbound | other | 25 | other×11, article×4, schedule×4, work-index×4, blog×1, home×1 |
 | offcut | other | 26 | other×10, schedule×4, article×3, product×3, about×1, blog×1, category×1, contact×1, pricing×1, home×1 |
 | ottis | other | 25 | other×10, article×4, schedule×4, service-detail×4, about×2, home×1 |
-| outkast | other | 17 | other×4, article×4, case-study×3, about×1, listing×1, contact×1, service-detail×1, work-index×1, home×1 |
+| outkast | agency-portfolio | 17 | other×4, article×4, case-study×3, about×1, listing×1, contact×1, service-detail×1, work-index×1, home×1 |
 | phanatik | saas | 22 | other×14, article×4, about×1, contact×1, pricing×1, home×1 |
 | primapersona | agency-portfolio | 5 | other×4, home×1 |
-| profoliox | other | 25 | other×8, article×5, product×3, case-study×3, work-index×2, about×1, contact×1, category×1, home×1 |
+| profoliox | agency-portfolio | 25 | other×8, article×5, product×3, case-study×3, work-index×2, about×1, contact×1, category×1, home×1 |
 | quartiere | other | 25 | other×16, article×5, about×1, appointment×1, contact×1, home×1 |
-| riflesso | other | 24 | other×13, article×3, case-study×3, about×1, contact×1, blog×1, work-index×1, home×1 |
-| rosewood | other | 22 | other×6, article×4, service-detail×4, case-study×3, about×1, blog×1, contact×1, work-index×1, home×1 |
+| riflesso | agency-portfolio | 24 | other×13, article×3, case-study×3, about×1, contact×1, blog×1, work-index×1, home×1 |
+| rosewood | agency-portfolio | 22 | other×6, article×4, service-detail×4, case-study×3, about×1, blog×1, contact×1, work-index×1, home×1 |
 | sandstone | other | 20 | other×5, service-detail×4, article×3, case-study×3, blog×1, contact×1, work-index×1, about×1, home×1 |
-| scarlet | other | 25 | other×7, article×5, service-detail×4, about×2, blog×2, appointment×1, listing×1, contact×1, pricing×1, home×1 |
-| semplice | other | 17 | other×5, article×4, case-study×3, about×1, contact×1, service-detail×1, work-index×1, home×1 |
-| simplexity | other | 14 | other×4, article×3, case-study×3, about×1, blog×1, work-index×1, home×1 |
+| scarlet | med-spa | 25 | other×7, article×5, service-detail×4, about×2, blog×2, appointment×1, listing×1, contact×1, pricing×1, home×1 |
+| semplice | agency-portfolio | 17 | other×5, article×4, case-study×3, about×1, contact×1, service-detail×1, work-index×1, home×1 |
+| simplexity | agency-portfolio | 14 | other×4, article×3, case-study×3, about×1, blog×1, work-index×1, home×1 |
 | snowpeak | other | 25 | other×16, article×5, about×1, contact×1, pricing×1, home×1 |
 | spaziobianco | saas | 25 | other×16, article×4, about×1, listing×1, contact×1, pricing×1, home×1 |
 | streamer | other | 25 | other×17, article×4, about×1, contact×1, pricing×1, home×1 |
-| studiomax | other | 24 | other×13, article×4, service-detail×3, about×1, contact×1, appointment×1, home×1 |
-| trendspotter | other | 25 | other×16, article×5, about×1, contact×1, pricing×1, home×1 |
+| studiomax | agency-portfolio | 24 | other×13, article×4, service-detail×3, about×1, contact×1, appointment×1, home×1 |
+| trendspotter | saas | 25 | other×16, article×5, about×1, contact×1, pricing×1, home×1 |
 | vanta | other | 25 | other×12, article×4, about×3, schedule×3, contact×1, blog×1, home×1 |
 | westend | other | 25 | other×13, article×5, blog×2, appointment×1, listing×1, about×1, service-detail×1, home×1 |
-| williamsburg | other | 25 | other×12, product×5, article×4, about×1, contact×1, category×1, home×1 |
+| williamsburg | ecommerce | 25 | other×12, product×5, article×4, about×1, contact×1, category×1, home×1 |
 | zeroindex | docs | 22 | other×21, home×1 |

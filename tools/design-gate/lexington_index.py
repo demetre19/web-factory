@@ -53,9 +53,9 @@ def load_meta():
                            'capture_status': d.get('capture_status'),
                            'n_sections': len(d.get('sections', []))})
         t['page_types'][d.get('page_type') or 'other'] += 1
-        t['site_type'] = d.get('site_type')
-        t['site_type_v2'] = d.get('site_type_v2')
-        t['template'] = d.get('lexington_template')
+        t['site_type'] = d.get('site_type') or t['site_type']
+        t['site_type_v2'] = d.get('site_type_v2') or t['site_type_v2']
+        t['template'] = d.get('lexington_template') or t['template']
         for k, v in (d.get('vibe') or {}).items():
             if k in ('confidence', 'evidence'):
                 continue
@@ -110,13 +110,15 @@ def main():
     sec_types = Counter()
     matrix = defaultdict(Counter)  # theme -> page_type -> count
     system_pages = []
-    captured = seen = quarantined = 0
+    captured = seen = ok = quarantined = 0
     if os.path.exists(DEEP_SRC):
         deep = json.load(open(DEEP_SRC))
         for s in deep.get('sites', {}).values():
             seen += s.get('seen', 0)
             captured += s.get('captured', 0)
-            quarantined += s.get('skipped', 0) + s.get('errors', 0)
+            ok += s.get('ok', 0)
+            quarantined += s.get('errors', 0)
+        quarantined += captured - ok
 
     for slug, t in themes.items():
         page_types.update(t['page_types'])
