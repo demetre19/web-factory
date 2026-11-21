@@ -1,0 +1,84 @@
+---
+/**
+ * proof-band — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * F.2: every figure, quote and link label is a prop from the plan row
+ * or the copy block (sourced from the article/BRIEF). Nothing renders
+ * by default — no rating, no quote, no "read the reviews" link
+ * without a source.
+ *
+ * Full-copy slots (§4.3): heading → answer → band → remaining prose →
+ * links → after in article order (F.1). The band's voice is the item
+ * carrying `quote`, else the copy's first `before` paragraph — the
+ * evidence the section leads with.
+ */
+import { iconFor, inline } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', cta, items = [], image,
+  h1, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs || body;
+const before = cp.before || [];
+const links = (cp.links && cp.links.length)
+  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
+  : [];
+const list = (cp.items && cp.items.length) ? cp.items : items;
+const stat = list.find((it) => it.value);
+const voice = list.find((it) => it.quote);
+const quote = voice ? voice.quote : before[0];
+const rest = voice ? before : before.slice(1);
+const after = cp.after || [];
+const StatIcon = stat ? iconFor(stat.icon) : null;
+---
+
+<div>
+  {(h1 || head) &&
+    (h1 ? <h1 class="text-fluid-4">{head}</h1>
+       : <h2 class="text-fluid-3">{head}</h2>)}
+  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
+  <div class="mt-stack flex flex-wrap items-center justify-between gap-stack">
+    {stat && (
+      <div class="row">
+        {StatIcon &&
+          <span class="icon-chip"><StatIcon size={22} aria-hidden="true" /></span>}
+        <p class="text-fluid-1 t0">
+          <span class="font-bold">{stat.value}</span>
+          {stat.label &&
+            <span class="text-fluid--1" set:html={inline(stat.label)} />}
+        </p>
+      </div>
+    )}
+    {quote &&
+      <blockquote class="max-w-prose text-fluid-0"
+                  set:html={inline(quote)} />}
+    {cta && <a class="text-fluid-0 underline" href={cta.href}>{cta.label}</a>}
+  </div>
+  {rest.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+  {links.length > 0 && (
+    <ul class="mt-stack grid-auto list-plain text-fluid-0">
+      {links.map((t) => <li set:html={inline(t)} />)}
+    </ul>
+  )}
+  {after.map((p) => (
+    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
+  ))}
+</div>

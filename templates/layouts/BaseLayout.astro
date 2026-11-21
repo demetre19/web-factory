@@ -56,9 +56,24 @@ import '../styles/global.css';
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
+    var nl = document.querySelector('.nav-links');
     if (e.target && e.target.closest && e.target.closest('.burger')) {
-      var nl = document.querySelector('.nav-links');
       if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
     }
   });
 })();

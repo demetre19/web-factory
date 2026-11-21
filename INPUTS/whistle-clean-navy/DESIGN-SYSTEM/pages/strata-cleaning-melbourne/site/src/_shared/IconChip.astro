@@ -1,0 +1,7 @@
+---
+import { iconFor } from './inline';
+interface Props { name?: string; }
+const { name } = Astro.props;
+const Icon = iconFor(name);
+---
+{Icon && <span class="icon-chip"><Icon size={20} aria-hidden="true" /></span>}

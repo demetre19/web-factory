@@ -1,0 +1,71 @@
+{
+ "steps": [
+  {
+   "label": "copy ingest",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "copy_ingest.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/BRIEF.yaml": "2f5afb52e17afca8",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/BLUEPRINTS/CONTENT/cleaning-services/strata-cleaning-melbourne.md": "1f95c656e8fe26a1",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/BLUEPRINTS/ARTICLES/cleaning-services/strata-cleaning-melbourne.md": "a86ce5a57065a68a"
+   },
+   "outputs": {
+    "COPY.json": "c128f394bea4e280"
+   },
+   "rc": 0,
+   "ts": "2026-11-21T13:50:29",
+   "sig": "852d3c5ba4a35718bf82065f6c9d51ec"
+  },
+  {
+   "label": "plan from copy",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "plan_from_copy.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/COPY.json": "c128f394bea4e280",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/DNA.json": "3539e1a4ccb20e4a",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/MOBBIN-REFS.md": "b6e47d9735ef0de2"
+   },
+   "outputs": {
+    "DNA.json": "85376515cba5cf8e",
+    "DESIGN-PLAN.md": "e554d2d707cf7a13",
+    "STUB.md": "e83d9449a30e3509",
+    "LAYOUT-OPTIONS.json": "b6bbd78e787f9d6b",
+    "TOKENS.json": "deb028bfc190d6cb"
+   },
+   "rc": 0,
+   "ts": "2026-11-21T13:50:29",
+   "sig": "53b61656595834572bb5c00a02812b96"
+  },
+  {
+   "label": "site scaffold",
+   "argv": [
+    "/home/ubuntu/.pyenv/versions/3.12.16/bin/python3.12",
+    "pipeline_emit.py",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne",
+    "--scaffold"
+   ],
+   "inputs": {
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DESIGN-PLAN.md": "e554d2d707cf7a13",
+    "/home/ubuntu/repos/web-factory/INPUTS/whistle-clean-australia/DESIGN-SYSTEM/pages/strata-cleaning-melbourne/DNA.json": "85376515cba5cf8e"
+   },
+   "outputs": {
+    "site/src/styles/global.css": "e65a37561a2092c3",
+    "TOKENS.json": "deb028bfc190d6cb",
+    "site/package.json": "3ab373cc02b1f555",
+    "site/astro.config.mjs": "41a825cd2f7ee30e",
+    "site/tailwind.config.js": "0d3f8905546af3ec",
+    "site/src/_shared/inline.ts": "24803e00bbed1c2d",
+    "site/src/_shared/IconChip.astro": "1d52951865c3d515"
+   },
+   "rc": 0,
+   "ts": "2026-11-21T13:50:30",
+   "sig": "fd3b0992aeb78f8c2f9e51b5dc37dbe5"
+  }
+ ]
+}

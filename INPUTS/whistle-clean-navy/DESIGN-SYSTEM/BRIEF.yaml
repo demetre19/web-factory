@@ -1,0 +1,30 @@
+# BRIEF — operator-owned. The ONLY hand-written input for this site.
+# Every other file in this folder is produced by a pipeline tool.
+# Copy fields are deliberately absent: copy comes from each page's article.
+site:
+  slug: whistle-clean-navy
+  url: https://whistlecleanaustralia.com.au
+  blueprint: /home/ubuntu/repos/web-factory/INPUTS/whistle-clean-navy/BLUEPRINTS
+brand:
+  name: Whistle Clean
+  accent: "#1D4ED8"
+  secondary: "#0EA5E9"
+  phone: "+61 3 7003 2223"
+  logo: /logo.svg
+theme:
+  default: light
+  canvas: "#FFFFFF"
+  follow_os: false
+  dark_toggle: true
+media:
+  - {src: /media/team.jpg, alt: "Whistle Clean cleaner sanitising a work surface"}
+  - {src: /media/office-clean.jpg, alt: "Whistle Clean cleaner detailing an office kitchen bench"}
+  - {src: /media/gallery-vacuum.jpg, alt: "Whistle Clean cleaner vacuuming a gallery floor"}
+  - {src: /media/team-foyer.jpg, alt: "Whistle Clean cleaner mopping a bright residential foyer"}
+pages:
+  - slug: school-cleaning-standards
+    stub: CONTENT/guides/school-cleaning-standards.md
+    article: ARTICLES/guides/school-cleaning-standards.md
+  - slug: strata-cleaning-melbourne
+    stub: CONTENT/cleaning-services/strata-cleaning-melbourne.md
+    article: ARTICLES/cleaning-services/strata-cleaning-melbourne.md
