@@ -42,6 +42,9 @@ closed set.
 | DM.4 | Variants derive from the baseline | structural | script | `check_variants` | variant not derived from the baseline (undeclared knob delta) | w8 |
 | DM.5 | The rhythm plan is binding | structural | script | `check_rhythm` | a section's surface/density deviates from the map's rhythm plan | w3 |
 | DM.6 | A changed map invalidates everything downstream | invariant | script | `check_dna_fresh` | map changed but downstream artifacts were not rebuilt | w1 |
+| DS.1 | The sheet exists and renders | invariant | script | `check_design_system` | design-system sheet missing, not under shared chrome, no theme toggle, or no specimens | w6 |
+| DS.2 | Every rung renders, and declared values match TOKENS.json | invariant | script | `check_design_system` | a token rung/role unrendered, or sheet value != TOKENS.json / global.css / tailwind.config — drift | w6 |
+| DS.3 | Machinery chrome stays out of the public nav | structural | script | `check_design_system` | a plan page links to the design-system sheet (machinery chrome is not in the public nav) | w6 |
 | E.1 | The heading vector is the section list | invariant | script | `check_vector_map` | STUB heading missing, re-ordered or reworded in plan rows | w3 |
 | E.2 | Two heading classes | structural | script | `check_section_enums` | heading_class query|claim; macro open | w3 |
 | E.3 | SEO invariants (lint) | structural | script | `check_seo_lint` | one h1; no skipped heading ranks | w7 |
@@ -238,4 +241,4 @@ closed set.
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
 
-228 rules — script 197, reviewer 30, operator 1; invariant 90, structural 55, stylistic 83.
+231 rules — script 200, reviewer 30, operator 1; invariant 92, structural 56, stylistic 83.

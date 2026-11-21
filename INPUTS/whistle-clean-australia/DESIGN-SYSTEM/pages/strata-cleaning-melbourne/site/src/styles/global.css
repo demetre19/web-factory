@@ -740,6 +740,51 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .sr-only { position: absolute; width: 1px; height: 1px;
       padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  /* design-system sheet — one class per rung, each a var() binding on the shared token layer */
+  .ds-spec { display: flex; flex-direction: column;
+      gap: var(--space-xs); }
+  .ds-swatch { display: block; block-size: var(--space-xl);
+      border-radius: var(--r-card);
+      border: 1px solid var(--border-default); }
+  .ds-bar { display: block; inline-size: 100%;
+      background: var(--action-primary);
+      border-radius: var(--r-card); }
+  .ds-radius { display: block; block-size: var(--space-l);
+      inline-size: var(--space-l);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--r-card); }
+  .ds-shadow-card { box-shadow: var(--shadow-card); }
+  .ds-shadow-pop { box-shadow: var(--shadow-pop); }
+  .ds-label { font-size: var(--fs--1);
+      color: var(--text-secondary); }
+  .ds-value { font-size: var(--fs--1);
+      color: var(--text-muted); }
+  .ds-sp-gutter { block-size: var(--gutter); }
+  .ds-tx-h1 { font-size: var(--h1); }
+  .ds-tx-h2 { font-size: var(--h2); }
+  .ds-tx-h3 { font-size: var(--h3); }
+  .ds-tx-h4 { font-size: var(--h4); }
+  .ds-tx-h5 { font-size: var(--h5); }
+  .ds-tx-h6 { font-size: var(--h6); }
+  .ds-sp-section-space-l { block-size: var(--section-space-l); }
+  .ds-sp-section-space-m { block-size: var(--section-space-m); }
+  .ds-sp-section-space-s { block-size: var(--section-space-s); }
+  .ds-sp-section-space-xl { block-size: var(--section-space-xl); }
+  .ds-sp-section-space-xs { block-size: var(--section-space-xs); }
+  .ds-sp-section-space-xxl { block-size: var(--section-space-xxl); }
+  .ds-sp-space-l { block-size: var(--space-l); }
+  .ds-sp-space-m { block-size: var(--space-m); }
+  .ds-sp-space-s { block-size: var(--space-s); }
+  .ds-sp-space-xl { block-size: var(--space-xl); }
+  .ds-sp-space-xs { block-size: var(--space-xs); }
+  .ds-sp-space-xxl { block-size: var(--space-xxl); }
+  .ds-tx-text-l { font-size: var(--text-l); }
+  .ds-tx-text-m { font-size: var(--text-m); }
+  .ds-tx-text-s { font-size: var(--text-s); }
+  .ds-tx-text-xl { font-size: var(--text-xl); }
+  .ds-tx-text-xs { font-size: var(--text-xs); }
+  .ds-tx-text-xxl { font-size: var(--text-xxl); }
 }
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
 
@@ -766,6 +811,82 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   @media (max-width: 44rem) {
     .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/comparison/comparison-1 */
+  .bm-conparison-1__container {
+    row-gap: var(--space-s);
+  }
+
+  .intro {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    row-gap: var(--flow-spacing);
+    align-self: center;
+    width: 100%;
+  }
+
+  .bm-conparison-1-list {
+    display: grid;
+    gap: var(--space-m);
+    grid-template-columns: var(--fs-0);
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+  }
+
+  .bm-conparison-1-card {
+    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+    row-gap: var(--flow-spacing);
+  }
+
+  .bm-conparison-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--fs-0) var(--fs-0) var(--fs-0) var(--fs-0);
+  }
+
+  .bm-conparison-1-card__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .bm-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 0 0;
+    row-gap: var(--fs-0);
+    margin: 0 0 0 0;
+  }
+
+  .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    column-gap: var(--fs-0);
+  }
+
+  .bm-list-item__icon-wrapper {
+
+  }
+
+  .bm-conparison-1__footer {
+    row-gap: var(--flow-spacing);
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    width: 100%;
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--flow-spacing);
+  }
+
+  .bm-list-item__icon-wrapper {
   }
 
 /* bricksmaven/content/content-1 */
@@ -992,6 +1113,34 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
       transform: translateX(-50%) translateY(-50%);
   }
 
+/* bricksmaven/testimonials/testimonial-1 */
+  .testimonial-1-content {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .testimonial-1-slides-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: var(--space-m);
+    padding: 0 var(--space-xl) 0 var(--space-xl);
+  }
+
+  .testimonial-1-slides__img {
+    width: var(--space-xxl);
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .testimonial-1-slides svg {
+  	fill: var(--bg-canvas);
+    width: var(--space-s);
+  }
+
 /* bricksmaven/how-it-works/how-it-works-1 */
   .hworks-1-container {
     grid-template-columns: 1fr 3fr;
@@ -1158,38 +1307,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     flex-direction: column;
     align-items: center;
     row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-/* bricksmaven/table-of-content/table-of-content-2 */
-  .table-of-content-2 {
-
-  }
-
-  .table-of-content-2__intro {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .table-of-content-2-ol {
-    row-gap: var(--flow-spacing);
-    overflow: hidden;
-  }
-
-  .table-of-content-2-li__link {
-
-  }
-
-  .table-of-content-2__icon.rotated {
-  	transform: scaleY(-1);
-  }
-
-  .table-of-content-2-li {
-  	    display: list-item;
-  }
-
-  .table-of-content-2-li__link {
-  	gap: var(--space-m);
   }
 
 }
