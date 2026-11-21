@@ -465,14 +465,12 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             background: var(--bg-canvas); padding: var(--space-m);
             border-bottom: 1px solid var(--border-default); }
   /* header CTA: the sticky bottom bar carries the call below the nav
-     breakpoint, so the header copy appears only where the whole row
-     (brand + links + CTA) actually fits — 56rem, not the 48rem links
-     breakpoint; at exactly 48rem the row overflows by the CTA's width */
+     breakpoint; burger, links and CTA share one breakpoint (60rem —
+     the .nav-links one below) or a dead zone opens where the header
+     shows brand alone */
   .nav-cta { display: none; }
-  @media (min-width: 48rem) {
+  @media (min-width: 60rem) {
     .burger { display: none; }
-  }
-  @media (min-width: 56rem) {
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -587,13 +585,16 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
   .link-quiet:hover { color: var(--text-primary); }
-  .nav-links { display: none; gap: var(--space-m);
-               align-items: center; }
+  .nav-links { display: none; gap: var(--space-s);
+               align-items: center; flex: 0 1 auto; min-width: 0; }
+  .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
   /* the brand mark and the primary links hold one line — a nav that
-     wraps reads as two bars (L.1 axis) */
-  .nav-links ul { flex-wrap: nowrap; }
+     wraps reads as two bars (L.1 axis); links shrink to --fs--1 so a
+     long label list still fits between brand and CTA */
   .bm-header-1__brand { white-space: nowrap; }
-  @media (min-width: 48rem) { .nav-links { display: flex; } }
+  /* 4 full-length labels can't fit under ~60rem — the burger takes
+     over below that instead of overflowing the page */
+  @media (min-width: 60rem) { .nav-links { display: flex; } }
   .wf-cta-button { font-size: var(--fs--1); }
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
       justify-content: center;
@@ -612,7 +613,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
   .nav-link { color: var(--text-secondary); text-decoration: none;
-              font-size: var(--fs-0); font-weight: 500; }
+              font-size: var(--fs--1); font-weight: 500;
+              /* one line per link — a link that wraps reads as two
+                 nav bars even when the ul itself cannot wrap */
+              white-space: nowrap; }
   .nav-link:hover { color: var(--text-primary); }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
