@@ -16,57 +16,26 @@
   }
   .wf-grid-1 .gridcard-1-grid-ul > :only-child { grid-column: 1 / -1; }
 
-/* bricksmaven/comparison/comparison-1 */
-  .wf-comparison-1 .bm-conparison-1__container {
-    row-gap: var(--space-s);
-  }
-
-  .wf-comparison-1 .intro {
-    flex-direction: column;
-    display: flex;
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-1-list {
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .content-1-container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    gap: var(--space-xl);
   }
 
-  .wf-comparison-1 .bm-conparison-1-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-status {
-    display: flex;
-    gap: var(--space-s);
-  }
-
-  .wf-comparison-1 .bm-list {
+  .wf-content-1 .content-1__box {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
+    row-gap: var(--space-m);
   }
 
-  .wf-comparison-1 .bm-list-item {
-    flex-direction: row;
+  .wf-content-1 .cta-combo {
     display: flex;
-    column-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .bm-conparison-1__footer {
-    row-gap: var(--flow-spacing);
-  }
-
-  .wf-comparison-1 .cta-combo {
-    display: flex;
-    column-gap: var(--flow-spacing);
+    column-gap: var(--space-xs);
   }
 
   @media (max-width: 44rem) {
-    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
-    .wf-comparison-1 .bm-list-item { flex-direction: column; }
-    .wf-comparison-1 .cta-combo { flex-direction: column; }
+    .wf-content-1 .cta-combo { flex-direction: column; }
   }
 
 /* bricksmaven/footer/footer-1 */
@@ -185,19 +154,6 @@
   @media (max-width: 44rem) {
     .wf-hero-99 .bm-hero-99__content { flex-direction: column; }
     .wf-hero-99 .cta-combo { flex-direction: column; }
-  }
-
-/* bricksmaven/grids-and-cards/grid-2 */
-  .wf-grid-2 .gridcard-2-grid-ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
-    gap: var(--grid-gap);
-  }
-
-  .wf-grid-2 .gridcard-2-card {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-xs);
   }
 
 /* bricksmaven/headers/header-1 */
@@ -340,3 +296,16 @@
     .wf-counter-1 .counter-1-container { flex-direction: column; }
   }
   .wf-counter-1 .counter-1-content > :only-child { grid-column: 1 / -1; }
+
+/* bricksmaven/table-of-content/table-of-content-2 */
+  .wf-table-of-content-2 .table-of-content-2__intro {
+    flex-direction: row;
+  }
+
+  .wf-table-of-content-2 .table-of-content-2-ol {
+    row-gap: var(--flow-spacing);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-table-of-content-2 .table-of-content-2__intro { flex-direction: column; }
+  }

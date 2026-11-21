@@ -50,27 +50,35 @@ def shots(ctx, port=18173):
     try:
         script = f'''
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from playwright.sync_api import sync_playwright
 slugs = {slugs!r}
 widths = {list(gate.SHOT_WIDTHS)!r}
-with sync_playwright() as p:
-    b = p.chromium.launch()
-    for w in widths:
-        for mode in ("light", "dark"):
-            pg = b.new_page(viewport={{"width": w, "height": 1100}})
-            for slug in slugs:
-                url = "http://127.0.0.1:{port}/" + (
-                    "" if slug == "index" else slug + "/")
-                pg.goto(url, wait_until="networkidle")
-                if mode == "dark":
-                    pg.evaluate(
-                        "document.documentElement.dataset.theme='dark';"
-                        "document.documentElement.classList.add('dark')")
-                pg.wait_for_timeout(250)
-                pg.screenshot(path=sys.argv[1] + "/shots/%d-%s-%s.png"
-                              % (w, mode, slug), full_page=True)
-            pg.close()
-    b.close()
+
+def shoot(w, mode):
+    # each viewport×mode pair is independent — one browser per pair
+    # fans the capture out; output filenames are identical to the
+    # serial version
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        pg = b.new_page(viewport={{"width": w, "height": 1100}})
+        for slug in slugs:
+            url = "http://127.0.0.1:{port}/" + (
+                "" if slug == "index" else slug + "/")
+            pg.goto(url, wait_until="networkidle")
+            if mode == "dark":
+                pg.evaluate(
+                    "document.documentElement.dataset.theme='dark';"
+                    "document.documentElement.classList.add('dark')")
+            pg.wait_for_timeout(250)
+            pg.screenshot(path=sys.argv[1] + "/shots/%d-%s-%s.png"
+                          % (w, mode, slug), full_page=True)
+        pg.close()
+        b.close()
+
+jobs = [(w, m) for w in widths for m in ("light", "dark")]
+with ThreadPoolExecutor(max_workers=len(jobs)) as ex:
+    list(ex.map(lambda j: shoot(*j), jobs))
 '''
         tmp = os.path.join(ctx.dir, '.shots.py')
         with open(tmp, 'w') as fh:

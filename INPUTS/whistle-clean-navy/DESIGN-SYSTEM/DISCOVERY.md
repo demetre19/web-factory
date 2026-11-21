@@ -16,8 +16,8 @@
 | Role | Hex | Source |
 |---|---|---|
 | canvas | `#FFFFFF` | BRIEF theme (default light, follow OS False) |
-| accent | `#166F64` | BRIEF · 20 uses on live site |
-| secondary | `#00B488` | BRIEF · 41 uses on live site |
+| accent | `#1D4ED8` | BRIEF · 20 uses on live site |
+| secondary | `#0EA5E9` | BRIEF · 41 uses on live site |
 | surface | `#F0F3F6` | live site (12 uses) |
 | ink | `#363636` | live site body { color } |
 

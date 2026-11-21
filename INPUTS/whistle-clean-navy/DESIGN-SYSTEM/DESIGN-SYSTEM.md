@@ -3,7 +3,7 @@
 
 Site type **services** · vibe **approachable / calm** (dependable, orderly, plain-spoken) · first paint **light**, follows OS: **False**, dark toggle: **True**
 
-DNA hashes: look `e9fdbe44338e` · structure `77945db23270` · status **v0 (unlocked until the operator approves the look at w4)**
+DNA hashes: look `f33934ff1986` · structure `77945db23270` · status **v0 (unlocked until the operator approves the look at w4)**
 
 ## Colour — light (default)
 
@@ -13,10 +13,10 @@ DNA hashes: look `e9fdbe44338e` · structure `77945db23270` · status **v0 (unlo
 | surface | `#F0F3F6` | 1.11:1 | DISCOVERY.palette.surface · live site (12 uses) |
 | surface_elevated | `#E9EBEE` | 1.19:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
 | border | `#D6D9DB` | 1.42:1 | mixed from discovered ink/surface/accent (dna_from_discovery.light_roles) |
-| ink | `#273B37` | 11.88:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
-| ink_muted | `#556E6A` | 5.49:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
-| inverse | `#1F2E2C` | 14.14:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
-| accent | `#166F64` | 6.01:1 | BRIEF brand.accent |
+| ink | `#2F3644` | 12.12:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
+| ink_muted | `#5F687B` | 5.60:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
+| inverse | `#252A35` | 14.37:1 | C.3 tint: accent-hue OKLCH chroma clamped to the neutral band (dna_from_discovery.light_roles) |
+| accent | `#1D4ED8` | 6.70:1 | BRIEF brand.accent |
 | accent_foreground | `#FFFFFF` | 1.00:1 |  |
 
 ## Colour — dark (toggle only)
@@ -30,7 +30,7 @@ DNA hashes: look `e9fdbe44338e` · structure `77945db23270` · status **v0 (unlo
 | ink | `#EDEBE7` | 15.01:1 |
 | ink_muted | `#A8A49D` | 7.20:1 |
 | inverse | `#F4F2EE` | 15.98:1 |
-| accent | `#00B488` | 6.71:1 |
+| accent | `#0EA5E9` | 6.45:1 |
 | accent_foreground | `#14181A` | 1.00:1 |
 
 ## Typography

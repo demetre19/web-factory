@@ -4,9 +4,9 @@ export default {
   content: ['./src/**/*.{astro,html}'],
   theme: { extend: {
     colors: {
-      paper: '#ffffff', surface: '#f0f3f6', elev: '#e9ebee', border: '#d6d9db', ink: '#273b37', muted: '#556e6a',
-      inverse: '#1f2e2c', accent: '#166f64', accentfg: '#ffffff', darkpaper: '#14181a', darksurface: '#1c2224', darkelev: '#232a2c',
-      darkborder: '#2c3437', darkink: '#edebe7', darkmuted: '#a8a49d', darkinverse: '#f4f2ee', darkaccent: '#00b488', darkaccentfg: '#14181a',
+      paper: '#ffffff', surface: '#f0f3f6', elev: '#e9ebee', border: '#d6d9db', ink: '#2f3644', muted: '#5f687b',
+      inverse: '#252a35', accent: '#1d4ed8', accentfg: '#ffffff', darkpaper: '#14181a', darksurface: '#1c2224', darkelev: '#232a2c',
+      darkborder: '#2c3437', darkink: '#edebe7', darkmuted: '#a8a49d', darkinverse: '#f4f2ee', darkaccent: '#0ea5e9', darkaccentfg: '#14181a',
    },
     fontSize: {
       'fluid--1': 'var(--fs--1)', 'fluid-0': 'var(--fs-0)',

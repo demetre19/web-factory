@@ -7692,8 +7692,14 @@ def cmd_section(pipeline, name):
         print(f'section "{name}" not in plan rows')
         return 2
     rc = 0
-    for c in pick:
-        f = section_failures(ctx, c)
+    # section checks are independent — each contract reads the same
+    # build and writes its own .gate.json, so they fan out on the
+    # I/O (the dist/src scans dominate) and report in plan order
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=min(8, len(pick))) as ex:
+        results = list(ex.map(lambda c: section_failures(ctx, c),
+                              pick))
+    for c, f in zip(pick, results):
         p = os.path.join(contracts_dir(ctx),
                          os.path.basename(c['file']).replace(
                              '.contract.json', '.gate.json'))
@@ -10981,16 +10987,33 @@ def _run_token_fails(ctx):
     return []
 
 
+def _check_pool(checks, ctx):
+    """The checks of one wave are independent judges over the same
+    artifacts — each reads ctx and returns a failure list, so they
+    run concurrently and merge in declaration order."""
+    import copy
+    from concurrent.futures import ThreadPoolExecutor
+    def call(chk):
+        try:
+            # private ctx per check — some checks mutate ctx.wave and
+            # siblings must not observe it mid-flight
+            return chk(copy.copy(ctx)) or []
+        except BaseException as e:
+            return [f'{chk.__name__} errored: {e}']
+    if not checks:
+        return []
+    with ThreadPoolExecutor(max_workers=min(8, len(checks))) as ex:
+        results = list(ex.map(call, checks))
+    return list(zip(checks, results))
+
+
 def run_wave(ctx):
     fails = _run_token_fails(ctx) + ancestry_fails(ctx)
     if not os.path.isfile(os.path.join(ctx.dir, 'DESIGN-PLAN.md')) \
             and ctx.wave not in ('s0', 'w0'):
         fails.append('DESIGN-PLAN.md missing')
-    for chk in WAVE_CHECKS[ctx.wave]:
-        try:
-            fails += chk(ctx) or []
-        except BaseException as e:
-            fails.append(f'{chk.__name__} errored: {e}')
+    for chk, msgs in _check_pool(WAVE_CHECKS[ctx.wave], ctx):
+        fails += msgs
     # check_checklist already covers P.9; identical lines from checks
     # that share a rule (e.g. check_dark_mode at two waves) count once
     fails = list(dict.fromkeys(fails))
@@ -14155,13 +14178,10 @@ def check_wildcard(ctx, waves=None):
     scopes = skipped_rules(ctx)
     seen = set()
     for wv in waves:
-        for chk in WAVE_CHECKS[wv]:
-            if chk is check_wildcard or chk is check_scorecard:
-                continue        # aggregates recurse via _check_fail_map
-            try:
-                msgs = chk(ctx)
-            except Exception as e:
-                msgs = [f'{chk.__name__} errored: {e}']
+        for chk, msgs in _check_pool(
+                [c for c in WAVE_CHECKS[wv]
+                 if c is not check_wildcard
+                 and c is not check_scorecard], ctx):
             for msg in msgs:
                 if _break_covers(scopes, msg):
                     continue
@@ -14242,13 +14262,9 @@ def check_rhythm_render(ctx):
 def _check_fail_map(ctx, waves):
     by_check, by_rule = {}, {}
     for wv in waves:
-        for chk in WAVE_CHECKS[wv]:
-            if chk is check_wildcard:
-                continue        # aggregate sweep → recursion cycle
-            try:
-                r = chk(ctx) or []
-            except BaseException:
-                r = ['err']
+        for chk, r in _check_pool(
+                [c for c in WAVE_CHECKS[wv]
+                 if c is not check_wildcard], ctx):
             by_check[chk.__name__] = len(r)
             for msg in r:
                 rid = _rule_of(msg)
