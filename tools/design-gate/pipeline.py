@@ -630,6 +630,14 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
             if any(w in g for w in later):
                 for w in later:
                     g.pop(w, None)
+                    # a restarted run re-gates every later wave — its
+                    # receipts are a prior run's signed provenance and
+                    # must go with the gate record, or
+                    # _checklist_receipt_fails rejects them before the
+                    # wave can regenerate them
+                    rp = os.path.join(d, '.receipts', w + '.json')
+                    if os.path.isfile(rp):
+                        os.remove(rp)
                 json.dump(g, open(gp, 'w'), indent=2, sort_keys=True)
         except ValueError:
             pass                    # wave outside ORDER (site wave)

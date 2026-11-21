@@ -10110,7 +10110,11 @@ def run_token_sig(token, key=None):
     k = key or op_key()
     if not k:
         return None
-    return hmac.new(k, str(token).encode(),
+    # domain-separate from _sig(rec, key): _sig HMACs a record's
+    # canonical JSON, so a receipt step's sig would otherwise be a
+    # valid token_sig for PIPELINE_RUN=<that canonical string> — a
+    # tagged HMAC keeps the domains disjoint
+    return hmac.new(k, ('wf-run-token:' + str(token)).encode(),
                     hashlib.sha256).hexdigest()[:32]
 
 
