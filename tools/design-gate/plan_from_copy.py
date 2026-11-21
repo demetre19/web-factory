@@ -43,6 +43,7 @@ TOOL = 'plan_from_copy.py'
 # Canonical table lives in gate.RECIPE_FOR_COMP so the preview build
 # resolves option overrides through the same map.
 RECIPE = gate.RECIPE_FOR_COMP
+HERO_COMP = gate.HERO_COMP
 
 # composition → (speech act, emphasis, align, collapse)
 # acts stay inside COMP_FOR_ACT (gate §2): stat-band/proof-band can
@@ -497,9 +498,14 @@ def build(pdir, option=None):
                          f'{[o["id"] for o in table]}')
     refs = refs_by_comp(site_dir)
     # a page with first-party photography earns the authored
-    # media-backed hero (image behind the copy, scrim-bound);
+    # media-backed hero (image behind the copy, scrim-bound) —
+    # but only where the archetype admits the merge comp (J.10);
     # a text-led DNA keeps the archetype's contained hero
-    hero_comp = ('hero-act-merge' if media else
+    _media_hero = ('hero-act-merge'
+                   if 'hero-act-merge' in
+                   HERO_COMP.get(geno['layout-archetype'], ())
+                   else None)
+    hero_comp = (_media_hero if media and _media_hero else
                  HERO_FOR_ARCH.get(geno['layout-archetype'],
                                    'stacked-hero'))
 
