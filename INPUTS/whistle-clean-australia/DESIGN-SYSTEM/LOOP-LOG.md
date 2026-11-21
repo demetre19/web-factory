@@ -4145,3 +4145,426 @@ w2 CLEAR
 - iterations: 2 (max 10), consecutive clean: 2 (need 2)
 - **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
 - known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.
+
+## iteration 1 — 2026-11-21 07:55:14
+- scratch: `/tmp/wf-loop-nYTfue/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-nYTfue/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-nYTfue/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-nYTfue/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 2 — 2026-11-21 07:55:18
+- scratch: `/tmp/wf-loop-TibhFH/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-TibhFH/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-TibhFH/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-TibhFH/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 3 — 2026-11-21 07:55:21
+- scratch: `/tmp/wf-loop-JKnOqT/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-JKnOqT/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-JKnOqT/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-JKnOqT/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 4 — 2026-11-21 07:55:26
+- scratch: `/tmp/wf-loop-61ACFZ/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-61ACFZ/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-61ACFZ/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-61ACFZ/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 5 — 2026-11-21 07:55:29
+- scratch: `/tmp/wf-loop-hcQKKU/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-hcQKKU/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-hcQKKU/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-hcQKKU/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 6 — 2026-11-21 07:55:33
+- scratch: `/tmp/wf-loop-XLmUsj/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-XLmUsj/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-XLmUsj/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-XLmUsj/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 7 — 2026-11-21 07:55:37
+- scratch: `/tmp/wf-loop-xnywH8/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-xnywH8/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-xnywH8/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-xnywH8/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 8 — 2026-11-21 07:55:40
+- scratch: `/tmp/wf-loop-N0F3od/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-N0F3od/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-N0F3od/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-N0F3od/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 9 — 2026-11-21 07:55:44
+- scratch: `/tmp/wf-loop-suXohP/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-suXohP/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-suXohP/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-suXohP/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## iteration 10 — 2026-11-21 07:55:47
+- scratch: `/tmp/wf-loop-7fL0iE/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-7fL0iE/site/pages/strata-cleaning-melbourne --to w2` → exit 1
+- verdict: **producer/gate BLOCKED before w1 (see tail)**
+```
+DISCOVERY: type=services vibe=approachable/calm fonts=Satoshi palette={'accent': '#166F64', 'secondary': '#00B488', 'surface': '#F0F3F6', 'ink': '#363636'}
+DNA: profile-services v0 bg=#FFFFFF surface=#F0F3F6 ink=#273B37 accent=#166F64 font=Satoshi core=e9fdbe44338e
+checklist → /tmp/wf-loop-7fL0iE/site/CHECKLIST/s0.md
+s0 PASS — /tmp/wf-loop-7fL0iE/site
+COPY.json: h1='Strata Cleaning Melbourne' blocks=9 links_out=8 closing=yes
+plan_from_copy.py: option d1 · 13 rows · options d1=0.97, d2=0.95, d3=0.95, d4=0.89
+  nav              nav-bar       base   compact  
+  hero             stacked-hero  base   regular  
+  definition       editorial     muted  regular  
+  scope            cards-n       base   regular  
+  process          sequence      muted  regular  
+  reporting        proof-band    base   regular  
+  pricing          comparison    muted  regular  
+  frequency        stat-band     base   regular  
+  siblings         link-grid     muted  regular  
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+  File "/home/ubuntu/repos/web-factory/tools/design-gate/pipeline_emit.py", line 535
+    f'{re.sub(r"(\d)px", r"\1 px",
+    ^
+SyntaxError: unterminated string literal (detected at line 535)
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 BLOCKED — site scaffold exited 1
+```
+
+## result — 2026-11-21 07:55:47
+- iterations: 10 (max 10), consecutive clean: 0 (need 2)
+- loop did not reach two consecutive clean iterations (see iterations above).
+
+## iteration 1 — 2026-11-21 07:56:30
+- scratch: `/tmp/wf-loop-ggz41r/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 2832d402e8ca)
+checklist → /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-ggz41r/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## iteration 2 — 2026-11-21 07:56:48
+- scratch: `/tmp/wf-loop-0Qvess/site` (operator+research files only; all generated files wiped)
+- command: `pipeline.py /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne --to w2` → exit 0
+- verdict: **CLEAN — s0:yes w0/w1/w2 PASS, run COMPLETE through w2**
+```
+  coverage         link-grid     base   compact  
+  faq-no-link-before-its-concept-defined faq           muted  regular  
+  end-act          form-panel    brand  spacious 
+  footer           footer-bar    base   compact  
+emit → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne
+  TOKENS.json kept (18 knobs)
+  scaffold: package.json, astro.config.mjs, favicon, index, _shared/inline.ts, _shared/IconChip.astro
+  public/: 4 site asset(s) (fonts/satoshi-400.woff2, fonts/satoshi-700.woff2, media/team.jpg, logo.svg)
+  tailwind.config.js
+  src/styles/global.css (2 @font-face)
+  Section.astro + BaseLayout.astro
+  scaffold-only emit done (w0)
+checklist → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne/CHECKLIST/w0.md
+w0 PASS — /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne
+candidates_emit.py: 60/3414 pending candidates (+0 decided) → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne/CANDIDATES.json
+candidates_emit.py: picker → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne/preview/candidates.html (a84cdee5fb0a)
+checklist → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne/CHECKLIST/w1.md
+w1 PASS — /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne
+assembled layout picker → preview/layouts.html (marker 2832d402e8ca)
+checklist → /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne/CHECKLIST/w2.md
+w2 PASS — /tmp/wf-loop-0Qvess/site/pages/strata-cleaning-melbourne
+=== s0 ===
+s0 CLEAR
+=== w0 ===
+w0 CLEAR
+=== w1 ===
+w1 CLEAR
+=== w2 ===
+w2 CLEAR
+=== PIPELINE COMPLETE — all waves CLEAR ===
+```
+
+## result — 2026-11-21 07:56:48
+- iterations: 2 (max 10), consecutive clean: 2 (need 2)
+- **LOOP CLEAN** — from-scratch runs reached PIPELINE COMPLETE (s0→w2) twice with all mechanical checks green.
+- known external blocker: Mobbin P.14 (research service unreachable to the agent); w3/w4 picks are operator-only by design.

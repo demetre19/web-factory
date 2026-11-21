@@ -22,7 +22,12 @@
 
 set -u
 HERE="$(cd "$(dirname "$0")" && pwd)"
-PY="python3 -X pycache_prefix=/tmp/pc"
+# the producers require Python 3.12+ (PEP 701 f-strings); plain
+# `python3` on this box is 3.10 and dies on pipeline_emit.py
+PYBIN="$(command -v python3.12 || command -v python3)"
+"$PYBIN" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 12) else 1)' \
+  || { echo "test_loop: need python3.12+ (found $($PYBIN --version))" >&2; exit 2; }
+PY="$PYBIN -X pycache_prefix=/tmp/pc"
 REPO="$(cd "$HERE/../.." && pwd)"
 SITE="${1:-$REPO/INPUTS/whistle-clean-australia/DESIGN-SYSTEM}"
 PAGE_SLUG="strata-cleaning-melbourne"
