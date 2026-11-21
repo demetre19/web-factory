@@ -51,6 +51,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 ---
 
 <div>
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <span class="logo brand-mark">{brand}</span>

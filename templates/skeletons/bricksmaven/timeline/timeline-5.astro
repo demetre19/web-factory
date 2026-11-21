@@ -56,7 +56,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 && <div class="timeline-5-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}</div>

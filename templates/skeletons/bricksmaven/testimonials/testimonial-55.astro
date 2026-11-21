@@ -64,8 +64,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
       </div>
-      {list.length > 0 && <div class="bm-testimonial-56-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-testimonial-56-list">{(list || []).map((it) => (
             <div class="bm-testimonial-56-card card">
               <div class="bm-testimonial-56-card__top grid-auto gap-fluid-l">
                 <svg></svg>
@@ -78,8 +77,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
     </div>

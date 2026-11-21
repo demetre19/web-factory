@@ -65,8 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       }
       {list.length > 0 &&       <div class="bm-hero-80__content">
-        {list.length > 0 && <div class="bm-hero-80-data-list">
-          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-hero-80-data-list">{(list || []).map((it) => (
               <div class="card">
                 <div class="bm-hero-80-data-card__top">
                   <p class="text-fluid-0">{it.text}</p>
@@ -74,8 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
       </div>
       }
     </div>

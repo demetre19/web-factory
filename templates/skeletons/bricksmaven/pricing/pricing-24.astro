@@ -61,39 +61,35 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div class="bm-pricing-24__content card">
             <div class="bm-pricing-24__aside">
               <div class="bm-pricing-24__aside-content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
             <div class="bm-pricing-24__pricing-container">
-              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">
-                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
                     <div class="bm-pricing-24-pricing-item card">
                       <div class="bm-pricing-24-pricing-item__top">
                         <div class="bm-pricing-24-pricing-item__intro">
-                          <h3 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h3>
+                          <h3 class="text-fluid-1">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h3>
                           <p class="text-fluid-0">{it2.text}</p>
                         </div>
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
                       <p class="text-fluid-0">{it2.text}</p>
                     </div>
-                  ))}</div>
-              </div>}
-              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">
-                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  ))}</div>}
+              {(it.items || []).length > 0 && <div class="bm-pricing-24-pricing-list">{((it.items || []) || []).map((it2) => (
                     <div class="bm-pricing-24-pricing-item card">
                       <div class="bm-pricing-24-pricing-item__top">
                         <div class="bm-pricing-24-pricing-item__intro">
-                          <h3 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h3>
+                          <h3 class="text-fluid-1">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h3>
                           <p class="text-fluid-0">{it2.text}</p>
                         </div>
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
                       <p class="text-fluid-0">{it2.text}</p>
                     </div>
-                  ))}</div>
-              </div>}
+                  ))}</div>}
             </div>
           </div>
         ))}</div>}

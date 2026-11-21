@@ -72,6 +72,16 @@ INTENT_COMP = {
     'proof': ['proof-band', 'quote-grid', 'text-index'],
 }
 
+# comps whose layout is item-driven: without ≥2 renderable items they
+# are an empty grid or a lone orphan card (L.15) — the honest render
+# is the prose column the copy actually carries.
+ITEM_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
+              'comparison', 'sequence', 'proof-band', 'quote-grid'}
+# comps that accept a term-projected item list (ordered-step and
+# quote shapes need their own slots, not terms)
+PROJ_COMPS = {'cards-n', 'text-index', 'stat-band', 'link-grid',
+              'comparison'}
+
 # CONTENT/<collection>/<slug>.md → PS page type (J.6 picks the layout
 # family from it). A services stub is a service page on the
 # conversion family; a guides stub stays a guide.
@@ -183,7 +193,8 @@ def _term_items(b):
     if not prose:
         return []
     clauses = [c.strip(' \t–—-') for c in
-               re.split(r'[;.]\s+|\s+–\s+|\s+—\s+', prose) if c.strip()]
+               re.split(r'[;.]\s+|\s+–\s+|\s+—\s+|,\s+|\s+and\s+',
+                        prose) if c.strip()]
     out, used = [], set()
     # longest term first so 'visit frequency' beats 'frequency'
     for t in sorted(terms, key=len, reverse=True):
@@ -201,9 +212,10 @@ def _term_items(b):
             it = {'term': t[:1].upper() + t[1:], 'text': rest}
             try:
                 import copy_ingest as CI  # same icon table — one map
-                ic = CI._icon(t, rest)
-                if ic:
-                    it['icon'] = ic
+                # a grid of markers must be a system (I.4): an item
+                # whose keyword has no icon still gets the neutral
+                # utility tick, never a bare gap beside icon cards
+                it['icon'] = CI._icon(t, rest) or 'check'
             except Exception:
                 pass
             out.append(it)
@@ -261,22 +273,55 @@ def option_vectors(blocks, n_media):
     split-media are served first, then document order; no block gets a
     split-media row without a real image."""
     allowed = {b['id']: shape(b, n_media > 0) for b in blocks}
+    bmap = {b['id']: b for b in blocks}
+
+    def repair(v):
+        # the option card must already show only comps that can
+        # render — a repair after the pick would contradict it (L.3)
+        return {k: eff_comp(bmap[k], c, allowed[k], n_media)
+                for k, c in v.items()}
+
     base = {k: v[0] for k, v in allowed.items()}
-    opts = [('d1', 'copy default', budget(dict(base), allowed, n_media))]
+    opts = [('d1', 'copy default',
+             repair(cap_share(budget(dict(base), allowed, n_media),
+                              allowed)))]
     themes = [('d2', 'index-led', 'text-index'),
               ('d3', 'prose-led', 'editorial'),
               ('d4', 'grid-led', 'cards-n'),
               ('d5', 'media-led', 'split-media')]
     seen = {json.dumps(opts[0][2], sort_keys=True)}
     for name, label, comp in themes:
-        v = budget({k: (comp if comp in allowed[k] else base[k])
-                    for k in base}, allowed, n_media)
+        v = repair(cap_share(budget(
+            {k: (comp if comp in allowed[k] else base[k])
+             for k in base}, allowed, n_media), allowed))
         key = json.dumps(v, sort_keys=True)
         if key in seen:
             continue
         seen.add(key)
         opts.append((name, label, v))
     return opts, allowed
+
+
+def cap_share(v, allowed):
+    """J.1 quality floor per option: no composition may hold more
+    than ~40% of a page's rows — a theme biases, it may not blanket.
+    Surplus rows take their own next allowed comp, deterministic."""
+    n = len(v)
+    cap = max(2, -(-n * 2 // 5))
+    counts = {}
+    for c in v.values():
+        counts[c] = counts.get(c, 0) + 1
+    for k in v:
+        c = v[k]
+        while counts.get(c, 0) > cap:
+            alt = next((a for a in allowed[k]
+                        if a != c and counts.get(a, 0) < cap), None)
+            if not alt:
+                break
+            counts[c] -= 1
+            counts[alt] = counts.get(alt, 0) + 1
+            c = v[k] = alt
+    return v
 
 
 def budget(v, allowed, n_media):
@@ -288,6 +333,21 @@ def budget(v, allowed, n_media):
         v[k] = next(c for c in allowed[k] + ['editorial']
                     if c != 'split-media')
     return v
+
+
+def eff_comp(b, comp, allowed_for_b, n_media):
+    """The picked comp repaired against the copy that must render:
+    a media row with no asset is a dead split, and an item comp with
+    <2 projectable items is an empty grid — both fall to the block's
+    next honest alternate (L.15). The pick stays the intent; the
+    repair only fires where the pick can't render."""
+    if comp == 'split-media' and n_media <= 0:
+        return next((c for c in allowed_for_b if c != 'split-media'),
+                    'editorial')
+    if comp in ITEM_COMPS and not (b['items'] or b['links'] or b['qa']) \
+            and len(_term_items(b)) < 2:
+        return 'editorial'
+    return comp
 
 
 def repair_rhythm(seq, allowed, zone_of):
@@ -415,12 +475,17 @@ def build(pdir, option=None):
     names = [re.sub(r'[^a-z0-9-]+', '-', n).strip('-') for n in names]
     name_of = {b['id']: n for b, n in zip(blocks, names)}
 
-    opts, allowed = option_vectors(blocks, len(media))
+    # the hero spends the first media asset (V.1) — the rows'
+    # budget and allowed comps are computed on what remains
+    opts, allowed = option_vectors(blocks, max(0, len(media) - 1))
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
+    row_media = max(0, len(media) - 1)
     for oid, label, v in opts:
         seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
                             allowed, zone_of)
+        seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
+               for bid, c in seq]
         s, inputs = score(seq, by)
         table.append({'id': oid, 'label': label,
                       'compositions': {bid: c for bid, c in seq},
@@ -476,8 +541,16 @@ def build(pdir, option=None):
     seq = [(b['id'], comps[b['id']]) for b in blocks]
     surfaces = ['muted', 'base']
     media_left = list(media)
+    # V.1 — a real service's promise row carries the first-party
+    # photo; the hero spends the media budget before any detail row
+    if media_left:
+        hm = media_left.pop(0)
+        rows[-1]['image'] = {'src': hm['src'], 'alt': hm['alt'],
+                             'ratio': '4:3'}
+        rows[-1]['media_ratio'] = '4:3'
     for i, (bid, comp) in enumerate(seq):
         b = by[bid]
+        comp = eff_comp(b, comp, allowed[bid], len(media_left))
         act, emph, align, collapse = ROLE[comp]
         prev = seq[i - 1][1] if i else None
         nxt = seq[i + 1][1] if i + 1 < len(seq) else None
@@ -494,7 +567,7 @@ def build(pdir, option=None):
             intent=intent_of(b),
             zone=b['zone'], content_ids=[f'c-{bid}'], copy_ref=bid,
             vector=[{'heading': b['h2'], 'fs': strip_md(b['answer'])}])
-        if comp in ('cards-n', 'text-index'):
+        if comp in PROJ_COMPS:
             # a term-derived items row (shape() allowed it) — project
             # declared terms → items when the block has none of its own
             proj = _term_items(b) if not b['items'] else []

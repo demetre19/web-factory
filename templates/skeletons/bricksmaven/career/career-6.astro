@@ -65,7 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-career-6-card card">
               <div class="bm-career-6-card__content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="bm-career-meta-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-career-meta-item card">

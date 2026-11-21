@@ -110,14 +110,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {links.length > 0 &&     <div>
       {links.length > 0 &&       <div class="bm-portfolio-single__resul-section-8">
-        {links.length > 0 && <div class="bm-portfolio-single-result-list">
-          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+        {links.length > 0 && <div class="bm-portfolio-single-result-list">{(links || []).map((it) => (
               <div class="bm-portfolio-single-result-item card">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
       </div>
       }
     </div>
@@ -139,18 +137,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     }
     {links.length > 0 &&     <div class="bm-portfolio-single-8__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-6-related-list">
-        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+      {links.length > 0 && <div class="bm-portfolio-6-related-list">{(links || []).map((it) => (
             <div class="bm-portfolio-6-related-card card">
               <div class="bm-portfolio-6-related-card__content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <div class="bm-portfolio-6-related-card__footer">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
     }
   </div>

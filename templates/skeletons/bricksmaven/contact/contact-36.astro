@@ -63,11 +63,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-contact-team-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-contact-team-list">{(list || []).map((it) => (
             <div class="bm-team-card card">
               <div class="bm-team-card__content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="bm-team-card__contact-details">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-team-card__item card">
@@ -79,8 +78,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>}
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
     </div>

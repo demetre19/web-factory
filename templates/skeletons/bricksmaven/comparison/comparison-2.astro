@@ -53,10 +53,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-comparison-2-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-comparison-2-list">{(list || []).map((it) => (
             <div class="bm-comparison-2-card card">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="text-fluid-1">{it.term || it.title}</h3>
               {(it.items || []).length > 0 && <div class="bm-comparison-2-check-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-comparison-2-check-item card">
@@ -68,8 +67,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   ))}</div>
               </div>}
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
       <div class="bm-comparison-2__footer">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>

@@ -66,7 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             <div class="bm-portoflio-section-24-card card">
               <div class="bm-portoflio-section-24-card__content">
                 <div class="bm-portoflio-section-24-card__intro">
-                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <div>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
@@ -74,7 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 {(it.items || []).length > 0 && <div class="bm-portfolio-meta-data-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-portfolio-meta-data-item card">
-                        <h4 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
+                        <h4 class="text-fluid-1">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
                     ))}</div>

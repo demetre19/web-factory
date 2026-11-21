@@ -52,6 +52,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 ---
 
 <div>
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
@@ -73,7 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {links.length > 0 &&         <div class="bm-linktree-10__links">
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="bm-linktree-9__link-row card">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="bm-linktree-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-linktree-card card">

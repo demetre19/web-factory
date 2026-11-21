@@ -58,15 +58,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div class="pricing-3-toggle__switch-state"></div>
         </div>
       </div>
-      {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div>
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-li-benefits card">
               {it.icon && <IconChip name={it.icon} />}
               <p class="text-fluid-0">{it.text}</p>
             </div>
-          ))}</div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
       {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       <div></div>
     </div>

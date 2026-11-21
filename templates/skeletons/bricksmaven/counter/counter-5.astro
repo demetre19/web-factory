@@ -53,14 +53,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="counter-5-grid-ul">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="counter-5-grid-ul">{(list || []).map((it) => (
             <div class="counter-5-introduction card">
               <p class="text-fluid-0">{it.text}</p>
-              <h3 class="counter-5-introduction__heading text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="counter-5-introduction__heading text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}

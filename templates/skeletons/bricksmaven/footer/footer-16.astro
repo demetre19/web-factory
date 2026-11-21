@@ -54,6 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div>
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div class="bm-footer-16__container row between">
       <div class="bm-footer-16__intro row between">
@@ -66,7 +67,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div class="bm-footer-16__content row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-footer-16-card row between">
-              <h3 class="bm-footer-16-card__heading text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="bm-footer-16-card__heading text-fluid-1">{it.term || it.title}</h3>
               {(it.items || []).length > 0 && <div class="bm-social-share row between">
                 <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div>

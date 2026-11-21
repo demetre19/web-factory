@@ -61,22 +61,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 &&       <div class="gridcard-18-ct">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="gridcard-18-ct">{(list || []).map((it) => (
             <div class="card">
               <div class="gridcard-18-article">
                 <div class="gridcard-18-article__meta">
                   <div class="gridcard-18-article__detail">
                     <p class="text-fluid-0">{it.text}</p>
-                    <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                    <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   </div>
                   {it.icon && <IconChip name={it.icon} />}
                 </div>
               </div>
             </div>
           ))}</div>}
-      </div>
-      }
     </div>
   </div>
     </div>

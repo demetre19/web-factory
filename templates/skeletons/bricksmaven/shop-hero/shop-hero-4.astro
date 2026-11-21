@@ -81,15 +81,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
     </div>
     {links.length > 0 &&     <div>
-      {links.length > 0 && <div class="shop-hero-4-category-list">
-        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+      {links.length > 0 && <div class="shop-hero-4-category-list">{(links || []).map((it) => (
             <div class="shop-hero-4-category-card card">
               <div class="shop-hero-4-category-card__content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
     }
   </div>

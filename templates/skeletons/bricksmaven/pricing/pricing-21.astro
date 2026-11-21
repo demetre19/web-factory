@@ -61,8 +61,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-pricing-21-pricing-wrapper">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-pricing-21-pricing-wrapper">{(list || []).map((it) => (
             <div class="bm-pricing-21-card card">
               <div class="bm-pricing-21-card__top">
                 <div class="bm-pricing-21-card__footer">
@@ -84,8 +83,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
       {links.length > 0 &&       <div class="bm-pricing-21__review-wrapper">
         {links.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (

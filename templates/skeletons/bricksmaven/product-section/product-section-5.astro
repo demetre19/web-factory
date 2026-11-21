@@ -62,8 +62,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        {list.length > 0 && <div class="product-list-5-card__group">
-          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="product-list-5-card__group">{(list || []).map((it) => (
               <div class="product-list-5-card__container card">
                 <div class="product-list-5__category-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
@@ -74,7 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   <div class="product-list-5-card">
                     <div class="product-list-5-card__content">
                       <div class="product-list-5-card__top">
-                        <h3 class="product-list-5-card__heading text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                        <h3 class="product-list-5-card__heading text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                         <div></div>
                         <div></div>
                       </div>
@@ -86,8 +85,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
       </div>
     </div>
   </div>

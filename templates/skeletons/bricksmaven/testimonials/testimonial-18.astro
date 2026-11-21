@@ -54,6 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div>
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div class="testimonial-18-container">
       {sub && <p class="testimonial-18-subtitle text-fluid-0" set:html={inline(sub)} />}
@@ -64,7 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <p class="testimonial-18-list__text text-fluid-0">{it.text}</p>
               <div class="testimonial-18-list__author">
                 <div class="testimonial-18-list__meta">
-                  <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                  <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>

@@ -60,16 +60,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="blog-archive-14-archive-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="blog-archive-14-archive-list">{(list || []).map((it) => (
             <div class="card">
               <div class="blog-archive-14-archive-card__content">
                 <div></div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
     </div>

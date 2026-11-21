@@ -53,7 +53,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             <div class="bm-how-it-works-28-card card">
               <div class="bm-how-it-works-28-card__content">
                 <div class="bm-how-it-works-28-card__heading-cover">
-                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <div></div>
                   <div>
                     <p class="bm-how-it-works-28-nav-item__duration-text text-fluid-0">{it.text}</p>
@@ -63,7 +63,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <p class="text-fluid-0">{it.text}</p>
               </div>
               <div class="bm-how-it-works-28-card__deliverables-wrapper">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="bm-how-it-works-28-card-deliverables-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="card">

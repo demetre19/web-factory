@@ -4622,9 +4622,13 @@ def check_equal_cards(ctx):
                 txt, re.S):
             cards = [c for c in re.findall(
                 r'class="([^"]*card[^"]*)"', m.group(2))
-                if 'card-grid' not in c and 'card__' not in c]
-                # x-card__y is a BEM element inside the card shell —
-                # a child, not a sibling card (counter-1-card__intro)
+                if 'card-grid' not in c and 'card__' not in c
+                and any(t.startswith('card') or t.endswith('-card')
+                        for t in c.split())]
+                # a card SHELL token is 'card' or *-card — containers
+                # like gridcard-1-grid-ul carry 'card' inside a longer
+                # token and are not sibling cards; x-card__y is a BEM
+                # element inside the shell (counter-1-card__intro)
             if len(cards) >= 2 and len(set(cards)) > 1:
                 f.append(f'G.7 {name} sec {m.group(1)}: sibling cards '
                          f'carry different shells {sorted(set(cards))} '

@@ -68,14 +68,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-product-list-1__list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-product-list-1__list">{(list || []).map((it) => (
             <div class="bm-product-list-1-card card">
               <div class="bm-product-list-1-card__content">
                 <p class="text-fluid-0">{it.text}</p>
                 <div class="bm-product-list-1-card__top">
-                  <h3 class="bm-product-list-1-card__heading text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                  <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
+                  <h3 class="bm-product-list-1-card__heading text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                  <custom class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
                 </div>
                 <div></div>
               </div>
@@ -87,8 +86,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="bm-product-list-1-card__soldout text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
     </div>

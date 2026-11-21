@@ -309,6 +309,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders text flush to the bezel */
   .sec-inner { max-width: var(--content-width); margin-inline: auto;
                padding-inline: var(--gutter); }
+  /* a bank skeleton that ships its own measure box must not double
+     the gutter inside the shell's .sec-inner — the shell owns it
+     (SB.2). One measure, one gutter, every section. */
+  .sec-inner .sec-inner { max-width: none; margin-inline: 0;
+                          padding-inline: 0; }
+  /* L.15 — a media-split grid whose media never bound collapses to
+     one column; the lone child centres on its measure instead of
+     leaving a dead half-column. */
+  [class*="container"]:has(> :only-child) { grid-template-columns: 1fr; }
+  [class*="container"]:has(> :only-child) > :only-child {
+    margin-inline: auto; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
@@ -439,10 +450,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             background: var(--bg-canvas); padding: var(--space-m);
             border-bottom: 1px solid var(--border-default); }
   /* header CTA: the sticky bottom bar carries the call below the nav
-     breakpoint, so the header copy appears only where nav is inline */
+     breakpoint, so the header copy appears only where the whole row
+     (brand + links + CTA) actually fits — 56rem, not the 48rem links
+     breakpoint; at exactly 48rem the row overflows by the CTA's width */
   .nav-cta { display: none; }
   @media (min-width: 48rem) {
     .burger { display: none; }
+  }
+  @media (min-width: 56rem) {
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -555,6 +570,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet:hover { color: var(--text-primary); }
   .nav-links { display: none; gap: var(--space-m);
                align-items: center; }
+  /* the brand mark and the primary links hold one line — a nav that
+     wraps reads as two bars (L.1 axis) */
+  .nav-links ul { flex-wrap: nowrap; }
+  .bm-header-1__brand { white-space: nowrap; }
   @media (min-width: 48rem) { .nav-links { display: flex; } }
   .wf-cta-button { font-size: var(--fs--1); }
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
@@ -673,7 +692,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      surface with the page inks and the standard primary action. */
   :is([data-surface="brand"], [data-surface="inverse"])
       :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
-          .foot-head, .legal, .brand-mark, .quote, .stars) {
+          .foot-head, .legal, .brand-mark, .quote, .stars,
+          .link-quiet) {
     color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
   [data-surface="brand"] .wf-cta-button {
     background: var(--sec-fg); color: var(--sec-bg); }
@@ -703,6 +723,59 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
 
 @layer components {
+/* bricksmaven/grids-and-cards/grid-1 */
+  .gridcard-1-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gridcard-1-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 var(--space-s) 0;
+  }
+
+  .gridcard-1-card:nth-child(odd) {
+  
+  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    
+  }
+
+  @media (max-width: 44rem) {
+    .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/content/content-1 */
+  .content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--space-xl);
+  }
+
+  .content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
+    width: auto;
+  }
+
+  .content-1__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
 /* bricksmaven/footer/footer-1 */
   .footer-1 {
     justify-content: center;
@@ -713,7 +786,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 
   .footer-column-left {
@@ -799,7 +871,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 
   .cta-10-content {
-    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     display: flex;
     row-gap: var(--space-m);
     flex-direction: column;
@@ -839,6 +910,31 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   @media (max-width: 44rem) {
     .cta-10-container { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/grids-and-cards/grid-2 */
+  .gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .gridcard-2-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 var(--space-s) 0;
+  }
+
+  .gridcard-2-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-2-card:nth-child(odd) {
+  
+  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+  
   }
 
 /* bricksmaven/headers/header-1 */
@@ -929,91 +1025,6 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     padding-inline:var(--space-m);
     padding-block:calc(0.4rem + 0vw);
     color:var(--action-primary);
-  }
-
-/* bricksmaven/feature/feature-1 */
-  .feature-1 {
-    row-gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-1-ul {
-    row-gap: var(--space-xl);
-  }
-
-  .feature-1-li {
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .feature-1-li__content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    row-gap: var(--space-xs);
-    margin: 0 0 0 auto;
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-list__item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-list__item-icon {
-    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
-  }
-
-  .feature-1__content-icon {
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .feature-1-li__media-container {
-    width: 100%;
-  }
-
-  .feature-1-li__image {
-    object-fit: cover;
-    width: calc(50vw + var(--space-m));
-  }
-
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	order:-1;
-  }
-  
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	display:flex;
-    flex-direction: column;
-    align-items: end;
-  }
-  
-  
-  @media (max-width:768px) {
-  
-    .feature-1-li:nth-of-type(even) .feature-1-li__image {
-  	margin-left:0;
-  }
-    
-    
   }
 
 /* bricksmaven/hero/hero-1 */
@@ -1130,11 +1141,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
 /* bricksmaven/table-of-content/table-of-content-2 */
   .table-of-content-2 {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+
   }
 
   .table-of-content-2__intro {
-    padding: 0 0 var(--space-xs) 0;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -1146,7 +1156,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
 
   .table-of-content-2-li__link {
-    padding: 0 var(--space-m) 0 0;
+
   }
 
   .table-of-content-2__icon.rotated {

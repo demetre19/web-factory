@@ -66,21 +66,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="feature-41-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="feature-41-list">{(list || []).map((it) => (
             <div class="card">
               <div class="feature-41-items__inner">
                 <div class="feature-41-items__content">
                   <div class="feature-41-items__top">
-                    <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                    <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                     <p class="text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
   </div>
     </div>

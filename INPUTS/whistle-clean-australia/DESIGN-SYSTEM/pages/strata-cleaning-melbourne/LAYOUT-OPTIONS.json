@@ -5,8 +5,7 @@
  "allowed": {
   "b01": [
    "editorial",
-   "text-index",
-   "split-media"
+   "text-index"
   ],
   "b02": [
    "cards-n",
@@ -23,8 +22,7 @@
    "text-index",
    "editorial",
    "cards-n",
-   "text-index",
-   "split-media"
+   "text-index"
   ],
   "b05": [
    "comparison",
@@ -32,26 +30,25 @@
    "text-index",
    "editorial",
    "cards-n",
-   "text-index",
-   "split-media"
+   "text-index"
   ],
   "b06": [
    "stat-band",
    "text-index",
    "editorial",
    "cards-n",
-   "text-index",
-   "split-media"
+   "text-index"
   ],
   "b07": [
-   "split-media",
    "link-grid"
   ],
   "b08": [
    "link-grid",
    "cards-n",
    "text-index",
-   "editorial"
+   "editorial",
+   "cards-n",
+   "text-index"
   ],
   "b09": [
    "faq"
@@ -68,60 +65,60 @@
     "b04": "proof-band",
     "b05": "comparison",
     "b06": "stat-band",
-    "b07": "split-media",
+    "b07": "link-grid",
     "b08": "link-grid",
     "b09": "faq"
    },
-   "score": 1.0,
+   "score": 0.97,
    "score_inputs": {
     "orphan_rows": 0,
     "long_card_texts": 0,
-    "adjacent_same_composition": 0,
-    "distinct_compositions": 9
+    "adjacent_same_composition": 1,
+    "distinct_compositions": 8
    }
   },
   {
    "id": "d2",
    "label": "index-led",
    "compositions": {
-    "b01": "text-index",
-    "b02": "text-index",
+    "b01": "editorial",
+    "b02": "cards-n",
     "b03": "sequence",
     "b04": "text-index",
     "b05": "text-index",
     "b06": "stat-band",
-    "b07": "split-media",
+    "b07": "link-grid",
     "b08": "text-index",
     "b09": "faq"
    },
-   "score": 0.87,
+   "score": 0.95,
    "score_inputs": {
     "orphan_rows": 0,
     "long_card_texts": 0,
-    "adjacent_same_composition": 2,
-    "distinct_compositions": 5
+    "adjacent_same_composition": 1,
+    "distinct_compositions": 7
    }
   },
   {
    "id": "d3",
    "label": "prose-led",
    "compositions": {
-    "b01": "editorial",
-    "b02": "editorial",
+    "b01": "text-index",
+    "b02": "cards-n",
     "b03": "sequence",
     "b04": "editorial",
     "b05": "editorial",
     "b06": "stat-band",
-    "b07": "split-media",
+    "b07": "link-grid",
     "b08": "editorial",
     "b09": "faq"
    },
-   "score": 0.87,
+   "score": 0.95,
    "score_inputs": {
     "orphan_rows": 0,
     "long_card_texts": 0,
-    "adjacent_same_composition": 2,
-    "distinct_compositions": 5
+    "adjacent_same_composition": 1,
+    "distinct_compositions": 7
    }
   },
   {
@@ -129,21 +126,21 @@
    "label": "grid-led",
    "compositions": {
     "b01": "editorial",
-    "b02": "cards-n",
-    "b03": "cards-n",
-    "b04": "proof-band",
+    "b02": "editorial",
+    "b03": "sequence",
+    "b04": "cards-n",
     "b05": "cards-n",
-    "b06": "cards-n",
-    "b07": "split-media",
+    "b06": "stat-band",
+    "b07": "link-grid",
     "b08": "cards-n",
     "b09": "faq"
    },
-   "score": 0.87,
+   "score": 0.89,
    "score_inputs": {
     "orphan_rows": 0,
     "long_card_texts": 0,
     "adjacent_same_composition": 2,
-    "distinct_compositions": 5
+    "distinct_compositions": 6
    }
   }
  ],

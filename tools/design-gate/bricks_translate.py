@@ -399,6 +399,14 @@ def translate(payload, stem):
                 role = 'row between'
         return ' '.join(x for x in (skel, role) if x)
 
+    def _subtree_names(el_id, acc):
+        e = els.get(el_id)
+        if not e:
+            return
+        acc.add(e.get('name'))
+        for k in e.get('children') or []:
+            _subtree_names(k, acc)
+
     def tag_of(el):
         n = el.get('name')
         s = el.get('settings') or {}
@@ -608,14 +616,22 @@ def translate(payload, stem):
                 # §4.3 items carry term/icon — the icon name is a
                 # chip the CSS can glyph, the term is the label.
                 # Item labels are never h1/h2: PS.1 binds ONE
-                # heading to a block, so loop headings cap at h3.
-                if name == 'heading' and tag in ('h1', 'h2'):
-                    tag = 'h3'
-                txt = (f'{{{ivar}.icon && '
-                       f'<IconChip name={{{ivar}.icon}} />}} '
-                       f'{{{ivar}.term || {ivar}.title}}'
-                       if name == 'heading'
-                       else f'{{{ivar}.text}}')
+                # heading to a block, so loop headings cap at h3 and
+                # read at the card-title step, not section scale.
+                if name == 'heading':
+                    if tag in ('h1', 'h2'):
+                        tag = 'h3'
+                    cattr = cattr.replace('text-fluid-2',
+                                          'text-fluid-1')
+                    # a dedicated icon element in the same item owns
+                    # the chip — the heading must not render it twice
+                    txt = (f'{{{ivar}.term || {ivar}.title}}'
+                           if seen.get('ivar_icon_el') else
+                           f'{{{ivar}.icon && '
+                           f'<IconChip name={{{ivar}.icon}} />}} '
+                           f'{{{ivar}.term || {ivar}.title}}')
+                else:
+                    txt = f'{{{ivar}.text}}'
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
                 return (f'{pad}{{head && <{tag}{cattr}>'
@@ -653,7 +669,19 @@ def translate(payload, stem):
         # children carry per-row class ids, so same-sig run detection
         # under-counts real lists — the first child is the item
         # template, every row maps the copy collection (SB.5)
-        if str(s.get('tag') or '') in ('ul', 'ol') and children:
+        _ltag = str(s.get('tag') or '')
+        if _ltag == 'custom':
+            _ltag = str(s.get('customTag') or '')
+        if _ltag in ('ul', 'ol') and children:
+            # the list element's own class may already be the grid
+            # (gridcard-1-grid-ul declares the tracks) — wrapping the
+            # map in a second grid div fills one track and leaves the
+            # rest a dead column (L.15)
+            _own_grid = any(
+                p == 'display' and 'grid' in str(v)
+                or str(p).startswith('grid-template')
+                for _i in _classes_of(el)
+                for p, v in (rules.get(gc_names.get(_i)) or []))
             if ivar:
                 coll, var = f'({ivar}.items || [])', ivar + '2'
             elif seen.get('top_list'):
@@ -661,20 +689,31 @@ def translate(payload, stem):
             else:
                 seen['top_list'] = True
                 coll, var = 'list', 'it'
+            _itnames = set()
+            _subtree_names(children[0], _itnames)
+            seen['ivar_icon_el'] = 'icon' in _itnames
             _item = render(children[0], depth + 3, var,
                            card=cat not in ('header', 'footer'))
+            seen.pop('ivar_icon_el', None)
             if _item.strip():
-                _wrap = ('row gap-fluid-m'
-                         if cat in ('header', 'footer')
-                         else 'grid-auto gap-fluid-m')
-                # the guard wraps the whole element — an empty list
-                # leaves no dead grid wrapper in the DOM (L.15)
-                out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>\n'
-                       f'{pad}  <div class="{_wrap}">'
-                       f'{{({coll} || []).map(({var}) => (\n'
-                       + _item
-                       + f'{pad}    ))}}'
-                       f'</div>\n' + f'{pad}</div>}}\n')
+                if _own_grid:
+                    out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>'
+                           f'{{({coll} || []).map(({var}) => (\n'
+                           + _item
+                           + f'{pad}    ))}}'
+                           f'</div>}}\n')
+                else:
+                    _wrap = ('row gap-fluid-m'
+                             if cat in ('header', 'footer')
+                             else 'grid-auto gap-fluid-m')
+                    # the guard wraps the whole element — an empty list
+                    # leaves no dead grid wrapper in the DOM (L.15)
+                    out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>\n'
+                           f'{pad}  <div class="{_wrap}">'
+                           f'{{({coll} || []).map(({var}) => (\n'
+                           + _item
+                           + f'{pad}    ))}}'
+                           f'</div>\n' + f'{pad}</div>}}\n')
                 if coll == 'links' and cat == 'footer':
                     # the legal line is a sibling of the guarded list
                     # — inside the guard it never renders when links
@@ -707,10 +746,14 @@ def translate(payload, stem):
                     coll, var = 'list', 'it'
                 _wrap = ('row gap-fluid-m' if cat in ('header', 'footer')
                          else 'grid-auto gap-fluid-m')
+                _itnames = set()
+                _subtree_names(run[0], _itnames)
+                seen['ivar_icon_el'] = 'icon' in _itnames
                 _item = ''.join(render(r, depth + 3, var,
                                        card=cat not in ('header',
                                                         'footer'))
                                 for r in run[:1])
+                seen.pop('ivar_icon_el', None)
                 if not _item.strip():
                     continue   # an item template that emits nothing
                     # is not a loop — nothing to guard or render
@@ -764,9 +807,22 @@ def translate(payload, stem):
 
     roots = [e['id'] for e in payload.get('content') or []
              if not e.get('parent')]
+    # the root element's classes sit directly inside the section
+    # shell's .sec-inner — band + shell own outer rhythm (SB.2), so
+    # their padding/margin decls are stripped at serialization
+    root_names = set()
+    for _e in payload.get('content') or []:
+        if not _e.get('parent'):
+            root_names.update(_classes_of(_e))
     body = ''.join(render(r, 1) for r in roots)
     if cat == 'header' and 'brand-mark' not in body:
         body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
+                + body)
+    # §4.3 heading fallback — a pure-collection skeleton (grid of
+    # cards, list of links) has no section-heading slot; the block's
+    # h2 is still copy that must render (F.1, PS.8)
+    if '{head && ' not in body:
+        body = ('  {head && <h2 class="text-fluid-2">{head}</h2>}\n'
                 + body)
     # §4.3 fallback — a skeleton without a long-text slot still
     # renders the answer + before paragraphs (verbatim, F.1), placed
@@ -836,7 +892,19 @@ def translate(payload, stem):
     style = ''
     if rules:
         decl = []
+        # shells own layout, never rhythm: padding (and margin on a
+        # root class) on a container/content/wrapper/intro/inner/grid
+        # class duplicates the band's padding and the shell's gutter
+        # — the *inner* box model, cards and buttons keep theirs.
+        _SHELL = re.compile(r'(?:^|[-_])(container|content|wrapper|'
+                            r'intro|inner|grid)(?:$|[-_])')
         for _name, _props in rules.items():
+            if _name in root_names:
+                _props = [(p, v) for p, v in _props
+                          if not p.startswith(('padding', 'margin'))]
+            elif _SHELL.search(_name):
+                _props = [(p, v) for p, v in _props
+                          if not p.startswith('padding')]
             _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
                       for p, v in _props]
             decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')

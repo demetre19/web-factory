@@ -21,6 +21,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 
@@ -107,7 +108,7 @@ def _emit_components(ctx, contracts_rows, extra_comps=()):
     # no pruning here — preview pages the same build still compiles
     # may import comps this emit's union doesn't cover (a stale
     # lo-*.astro from an earlier option set). w6's emit owns pruning.
-    return '\n'.join(bank_css)
+    return '\n'.join(bank_css), sorted(comps)
 
 
 def _option_comps(ctx):
@@ -325,6 +326,9 @@ def _build(ctx):
     ok = PE._toolchain(ctx)
     if not ok:
         return False, 'no vendored node_modules — npm ci needed'
+    # astro does not empty outDir — hashed assets from an earlier
+    # wave's build would linger and fail X.1 byte-rebuild
+    shutil.rmtree(os.path.join(ctx.site, 'dist'), ignore_errors=True)
     r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
                        capture_output=True, text=True,
                        env=gate.node_env(), timeout=300)
@@ -582,7 +586,7 @@ def emit_layouts(ctx):
     # components emit once (bank recipes stay recipe-bound)
     extra = {comp for _, _, _, ov in options
              for comp in ov.values()}
-    bank_css = _emit_components(ctx, contracts_rows, extra)
+    bank_css, emitted = _emit_components(ctx, contracts_rows, extra)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
     if bank_css:
@@ -606,7 +610,7 @@ def emit_layouts(ctx):
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'lo-{oid}.astro'), txt)
-    _write_system_astro(ctx)
+    _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:
         raise SystemExit(f'preview_build: {msg}')
@@ -645,8 +649,8 @@ def emit_variants(ctx, entries=None, fname='variants.html',
             if not fails][:5]
     contracts_rows = _contracts(ctx)
     copy = PE._load_copy(ctx)
-    bank_css = _emit_components(ctx, contracts_rows,
-                                _option_comps(ctx))
+    bank_css, emitted = _emit_components(ctx, contracts_rows,
+                                         _option_comps(ctx))
     _ensure_shell(ctx)
     _ensure_assets(ctx)
     if bank_css:
@@ -671,7 +675,7 @@ def emit_variants(ctx, entries=None, fname='variants.html',
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'look-{vid}.astro'), txt)
         pages.append((e, vid, vs))
-    _write_system_astro(ctx)
+    _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:
         raise SystemExit(f'preview_build: {msg}')
@@ -737,16 +741,11 @@ def _sheet(m, deltas):
             f'{kn_txt or "baseline — no knob diff"}</p>')
 
 
-def _write_system_astro(ctx):
-    """Regenerate preview/system.astro from the live components dir.
-    Every preview build compiles the file, so its imports must match
-    what the components dir holds THIS build — a sheet emitted at an
-    earlier wave references comps a later union may not cover."""
-    cdir = os.path.join(ctx.site, 'src', 'components')
-    if not os.path.isdir(cdir):
-        return
-    comps = sorted(fn[:-len('.astro')] for fn in os.listdir(cdir)
-                   if fn.endswith('.astro') and fn != 'Section.astro')
+def _write_system_astro(ctx, comps):
+    """Regenerate preview/system.astro from THIS build's emit union.
+    Reading the live components dir re-lists stale specimens an
+    earlier wave left behind (the dir prunes at w6, after w5 runs),
+    and the tile's own stale imports then keep them alive forever."""
     PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                        'system.astro'), _system_astro(ctx, comps))
 
@@ -759,10 +758,10 @@ def emit_system(ctx):
     no pick)."""
     contracts_rows = _contracts(ctx)
     extra = _option_comps(ctx)
-    _emit_components(ctx, contracts_rows, extra)
+    _bank, emitted = _emit_components(ctx, contracts_rows, extra)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
-    _write_system_astro(ctx)
+    _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:
         raise SystemExit(f'preview_build: {msg}')

@@ -56,13 +56,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="bm-pricing-22__pricing-wrapper">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-pricing-22__pricing-cover card">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               {(it.items || []).length > 0 &&               <div class="bm-pricing-22-pricing-ul">
                 {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-pricing-22-card card">
                       <div class="bm-pricing-22-card__top">
                         <div>
-                          <h4 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
+                          <h4 class="text-fluid-1">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
                           <p class="text-fluid-0">{it2.text}</p>
                         </div>
                         <p class="text-fluid-0">{it2.text}</p>

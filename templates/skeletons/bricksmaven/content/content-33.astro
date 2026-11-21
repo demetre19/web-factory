@@ -67,8 +67,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       {list.length > 0 &&       <div class="content-33__data">
-        {list.length > 0 && <div class="content-33-data-list">
-          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="content-33-data-list">{(list || []).map((it) => (
               <div class="content-33-data-item card">
                 <div class="content-33-data-item__number-wrapper">
                   <p class="text-fluid-0">{it.text}</p>
@@ -77,8 +76,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 {it.icon && <IconChip name={it.icon} />}
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
       </div>
       }
     </div>

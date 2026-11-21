@@ -60,18 +60,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
       {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
     </div>
-    {list.length > 0 &&     <div>
-      {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+    {list.length > 0 && <div>
+      <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
           <div class="feature-3-li card">
             <div class="feature-3-li__content">
-              <h3 class="feature-3-li__title text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="feature-3-li__title text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
               {it.icon && <IconChip name={it.icon} />}
             </div>
           </div>
-        ))}</div>}
-    </div>
-    }
+        ))}</div>
+    </div>}
   </div>
     </div>
     {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}

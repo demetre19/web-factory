@@ -81,7 +81,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="bm-hero-90-slide card">
                 <div class="bm-hero-90-case grid-auto gap-fluid-l">
                   <div class="bm-hero-90-case__content">
-                    <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                    <h3 class="text-fluid-1">{it.term || it.title}</h3>
                     <div class="bm-hero-90-case__footer">
                       <p class="text-fluid-0">{it.text}</p>
                       <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>

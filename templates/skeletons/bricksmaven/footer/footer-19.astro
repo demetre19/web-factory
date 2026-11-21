@@ -46,6 +46,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div>
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div class="bm-footer-19__container row between">
       <div>
@@ -54,7 +55,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="bm-footer-19__content row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-footer-19__content-column row between">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               {(it.items || []).length > 0 && <div class="bm-footer-19-phone-ul row between">

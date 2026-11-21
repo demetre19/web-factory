@@ -68,16 +68,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {links.length >= 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-23 row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-nav-column row between">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                {(it.items || []).length > 0 &&                 <div class="footer-menu row between">
-                  {(it.items || []).length > 0 && <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                {(it.items || []).length > 0 && <div class="footer-menu row between">
+                  <div class="row gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div>
                         <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
                         {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
-                    ))}</div>}
-                </div>
-                }
+                    ))}</div>
+                </div>}
               </div>
             ))}</div>}
           {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}

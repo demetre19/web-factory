@@ -57,7 +57,7 @@
 
 | Section | Asset | Ratio |
 |---|---|---|
-| siblings | /media/team.jpg | 4:3 |
+| hero | /media/team.jpg | 4:3 |
 
 ### CTAs
 

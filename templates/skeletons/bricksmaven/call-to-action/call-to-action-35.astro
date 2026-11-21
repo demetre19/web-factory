@@ -61,7 +61,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="cta-35-item card">
                 <div>
-                  <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
+                  <custom class="text-fluid-1">{it.term || it.title}</custom>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="cta-35-item__icon-wrapper">

@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <div class="bm-comparison-5-card__icon-wrapper">
                   {it.icon && <IconChip name={it.icon} />}
                 </div>
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
               </div>
               {(it.items || []).length > 0 &&               <div class="bm-comparison-5-step-list">
                 {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
@@ -71,7 +71,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       </div>
                       <div class="bm-comparison-5-step-item__content">
                         <div></div>
-                        <h4 class="text-fluid-2">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
+                        <h4 class="text-fluid-1">{it2.icon && <IconChip name={it2.icon} />} {it2.term || it2.title}</h4>
                       </div>
                     </div>
                   ))}</div>}

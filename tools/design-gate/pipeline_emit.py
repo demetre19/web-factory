@@ -665,6 +665,10 @@ def main(argv):
         ok = _toolchain(ctx)
         print(f'  toolchain: {"cloned" if ok else "missing"}')
         if '--build' in flags and ok:
+            # astro does not empty outDir — hashed assets from an
+            # earlier wave's build would linger and fail X.1
+            shutil.rmtree(os.path.join(ctx.site, 'dist'),
+                          ignore_errors=True)
             r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
                                capture_output=True, text=True,
                                env=gate.node_env(), timeout=300)

@@ -54,12 +54,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div>
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
-      {list.length > 0 &&       <div class="testimonial-17-list-ul">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="testimonial-17-list-ul">{(list || []).map((it) => (
             <div class="card">
               <div class="testimonial-17-list-card__wrapper">
                 <div class="testimonial-17-list-card__content">
@@ -75,8 +75,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
             </div>
           ))}</div>}
-      </div>
-      }
     </div>
     }
   </div>

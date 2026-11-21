@@ -20,9 +20,6 @@
       "bm-header-1__brand",
       "bm-header-1__container",
       "bm-header-1__cta",
-      "bm-list",
-      "bm-list__item",
-      "bm-list__item-icon",
       "brand-logo",
       "brand-mark",
       "btn--primary",
@@ -34,6 +31,9 @@
       "card-grid",
       "card-media",
       "center",
+      "content-1-container",
+      "content-1__box",
+      "content-1__image",
       "counter-1-box",
       "counter-1-box__heading",
       "counter-1-card",
@@ -47,6 +47,7 @@
       "cta-10-heading",
       "cta-10-img",
       "cta-10-media-wrapper",
+      "cta-combo",
       "cta-large",
       "cta-row",
       "density-compact",
@@ -56,13 +57,6 @@
       "faq-a",
       "faq-item",
       "faq-q",
-      "feature-1",
-      "feature-1-li",
-      "feature-1-li__content",
-      "feature-1-li__image",
-      "feature-1-li__media-container",
-      "feature-1-ul",
-      "feature-1__content-icon",
       "field",
       "flow-list",
       "flow-row",
@@ -92,6 +86,11 @@
       "gap-form",
       "gap-stack",
       "grid-auto",
+      "gridcard-1-card",
+      "gridcard-1-grid-ul",
+      "gridcard-2-card",
+      "gridcard-2-card-btn",
+      "gridcard-2-grid-ul",
       "h-display",
       "h-section",
       "header-1__nav",
@@ -192,12 +191,12 @@
     ],
     "utilities": "tailwind utilities derived from TOKENS.json"
   },
-  "archetype": "split-media",
+  "archetype": "card-grid-4",
   "category": "content",
-  "collapse": "stacked",
+  "collapse": "1-col",
   "cols": null,
   "component": "site/src/components/sections/Siblings.astro",
-  "composition": "split-media",
+  "composition": "link-grid",
   "content": {
     "body": null,
     "cta": null,
@@ -282,7 +281,7 @@
         "surface": "muted"
       },
       {
-        "density": "compact",
+        "density": "regular",
         "section": "scope",
         "surface": "base"
       },
@@ -334,12 +333,12 @@
     ]
   },
   "dna_hash": "e9fdbe44338edd4c",
-  "emphasis": "media",
-  "exemplar": "templates/sections/split-media/SplitMedia.astro",
+  "emphasis": "links",
+  "exemplar": "templates/sections/link-grid/LinkGrid.astro",
   "file": "sections/08-siblings.contract.json",
   "index": 8,
-  "intent": "hero",
-  "media_ratio": "4:3",
+  "intent": "detail",
+  "media_ratio": "none",
   "neighbours": {
     "next": {
       "composition": "text-index",
@@ -352,10 +351,10 @@
   },
   "page": "strata-cleaning-melbourne",
   "patterns": [
-    "pattern-split-media"
+    "pattern-link-grid"
   ],
   "plan_intent": "scope",
-  "recipe": "bricksmaven/feature/feature-1",
+  "recipe": "bricksmaven/grids-and-cards/grid-2",
   "rules": [
     "A.1",
     "A.2",
@@ -376,7 +375,7 @@
     "detail"
   ],
   "stack": "text-first",
-  "structure_hash": "fb5f7576918c881f",
+  "structure_hash": "00cdde7335dd5335",
   "surface": "muted",
   "wf_ref": "preview/layouts.html#d2:siblings"
 }

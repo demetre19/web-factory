@@ -46,6 +46,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div>
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div class="linktree-container">
       <div class="linktree__content">

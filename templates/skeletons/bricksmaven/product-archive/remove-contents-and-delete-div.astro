@@ -70,7 +70,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {list.length > 0 &&           <div class="bm-product-archive-1__filter-column">
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-product-archive__filter-row card">
-                  <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                  <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                   <div></div>
                 </div>
               ))}</div>}
@@ -96,7 +96,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     {links.length > 0 &&                     <div class="bm-product-archive-1__filter-column">
                       {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                           <div class="bm-product-archive__filter-row card">
-                            <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                            <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                             <div></div>
                           </div>
                         ))}</div>}

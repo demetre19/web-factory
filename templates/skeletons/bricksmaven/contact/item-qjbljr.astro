@@ -52,15 +52,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {head && <h2 class="contact-6-details__heading text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 &&         <div class="contact-6-ul-list">
-          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="contact-6-ul-list">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="contact-6-list card">
                 {it.icon && <IconChip name={it.icon} />}
                 <p class="contact-6-list__text text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
-        </div>
-        }
+            ))}</div>
+        </div>}
       </div>
       <div class="contact-6-form">
         <form novalidate>

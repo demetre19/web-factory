@@ -20,9 +20,6 @@
       "bm-header-1__brand",
       "bm-header-1__container",
       "bm-header-1__cta",
-      "bm-list",
-      "bm-list__item",
-      "bm-list__item-icon",
       "brand-logo",
       "brand-mark",
       "btn--primary",
@@ -34,6 +31,9 @@
       "card-grid",
       "card-media",
       "center",
+      "content-1-container",
+      "content-1__box",
+      "content-1__image",
       "counter-1-box",
       "counter-1-box__heading",
       "counter-1-card",
@@ -47,6 +47,7 @@
       "cta-10-heading",
       "cta-10-img",
       "cta-10-media-wrapper",
+      "cta-combo",
       "cta-large",
       "cta-row",
       "density-compact",
@@ -56,13 +57,6 @@
       "faq-a",
       "faq-item",
       "faq-q",
-      "feature-1",
-      "feature-1-li",
-      "feature-1-li__content",
-      "feature-1-li__image",
-      "feature-1-li__media-container",
-      "feature-1-ul",
-      "feature-1__content-icon",
       "field",
       "flow-list",
       "flow-row",
@@ -92,6 +86,11 @@
       "gap-form",
       "gap-stack",
       "grid-auto",
+      "gridcard-1-card",
+      "gridcard-1-grid-ul",
+      "gridcard-2-card",
+      "gridcard-2-card-btn",
+      "gridcard-2-grid-ul",
       "h-display",
       "h-section",
       "header-1__nav",
@@ -195,7 +194,7 @@
   "archetype": "horizontal-band",
   "category": "content",
   "collapse": "1-col",
-  "cols": null,
+  "cols": "2",
   "component": "site/src/components/sections/Frequency.astro",
   "composition": "stat-band",
   "content": {
@@ -282,7 +281,7 @@
         "surface": "muted"
       },
       {
-        "density": "compact",
+        "density": "regular",
         "section": "scope",
         "surface": "base"
       },
@@ -342,7 +341,7 @@
   "media_ratio": "none",
   "neighbours": {
     "next": {
-      "composition": "split-media",
+      "composition": "link-grid",
       "surface": "muted"
     },
     "prev": {
@@ -376,7 +375,7 @@
     "proof"
   ],
   "stack": "text-first",
-  "structure_hash": "fb5f7576918c881f",
+  "structure_hash": "00cdde7335dd5335",
   "surface": "base",
   "wf_ref": "preview/layouts.html#d2:frequency"
 }

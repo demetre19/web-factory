@@ -56,19 +56,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     <div class="stack">
   <div class="sec-inner">
     {list.length > 0 &&     <div class="bm-shop-footer-1__usp-container">
-      {list.length > 0 && <div class="bm-usp-1-list">
-        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-usp-1-list">{(list || []).map((it) => (
             <div class="bm-usp-1-list-card card">
               <div class="bm-usp-1-list-card__icon-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
               </div>
               <div class="bm-usp-1-list-card__content">
-                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>
-      </div>}
+          ))}</div>}
     </div>
     }
     <div class="bm-shop-footer-1__container">
@@ -82,16 +80,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {links.length > 0 &&       <div class="bm-shop-footer-1__nav">
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="bm-footer-nav-column card">
-              <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-              {(it.items || []).length > 0 &&               <div class="bm-footer-menu">
-                {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+              <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              {(it.items || []).length > 0 && <div class="bm-footer-menu">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="card">
                       <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
                       {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                     </div>
-                  ))}</div>}
-              </div>
-              }
+                  ))}</div>
+              </div>}
             </div>
           ))}</div>}
       </div>

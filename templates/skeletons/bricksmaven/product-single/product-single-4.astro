@@ -102,7 +102,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="bm-product-single-accordion-card card">
                   <div>
-                    <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                    <h3 class="text-fluid-1">{it.term || it.title}</h3>
                     {it.icon && <IconChip name={it.icon} />}
                   </div>
                   <div>

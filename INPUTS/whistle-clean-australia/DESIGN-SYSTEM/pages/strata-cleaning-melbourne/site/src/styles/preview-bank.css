@@ -1,3 +1,56 @@
+/* bricksmaven/grids-and-cards/grid-1 */
+  .gridcard-1-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gridcard-1-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 var(--space-s) 0;
+  }
+
+  .gridcard-1-card:nth-child(odd) {
+  
+  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+    
+  }
+
+  @media (max-width: 44rem) {
+    .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/content/content-1 */
+  .content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--space-xl);
+  }
+
+  .content-1__box {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-m);
+  }
+
+  .cta-combo {
+    display: flex;
+    align-items: center;
+    column-gap: var(--space-xs);
+  }
+
+  .btn--primary {
+    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
+    width: auto;
+  }
+
+  .content-1__image {
+    object-fit: cover;
+    width: 100%;
+  }
+
 /* bricksmaven/footer/footer-1 */
   .footer-1 {
     justify-content: center;
@@ -8,7 +61,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     gap: var(--space-m);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 
   .footer-column-left {
@@ -94,7 +146,6 @@
   }
 
   .cta-10-content {
-    padding-block: var(--section-space-xxl); padding-inline: var(--gutter);
     display: flex;
     row-gap: var(--space-m);
     flex-direction: column;
@@ -134,6 +185,31 @@
 
   @media (max-width: 44rem) {
     .cta-10-container { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/grids-and-cards/grid-2 */
+  .gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .gridcard-2-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-xs);
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+    margin: 0 0 var(--space-s) 0;
+  }
+
+  .gridcard-2-card-btn {
+    align-self: flex-start;
+    padding: 0 0 0 0;
+  }
+
+  .gridcard-2-card:nth-child(odd) {
+  
+  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
+  
   }
 
 /* bricksmaven/headers/header-1 */
@@ -224,91 +300,6 @@
     padding-inline:var(--space-m);
     padding-block:calc(0.4rem + 0vw);
     color:var(--action-primary);
-  }
-
-/* bricksmaven/feature/feature-1 */
-  .feature-1 {
-    row-gap: var(--section-space-xxl);
-  }
-
-  .intro {
-    text-align: center;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
-  }
-
-  .feature-1-ul {
-    row-gap: var(--space-xl);
-  }
-
-  .feature-1-li {
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    display: grid;
-    gap: var(--space-m);
-  }
-
-  .feature-1-li__content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    row-gap: var(--space-xs);
-    margin: 0 0 0 auto;
-  }
-
-  .bm-list {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-  }
-
-  .bm-list__item {
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-list__item-icon {
-    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
-  }
-
-  .feature-1__content-icon {
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .feature-1-li__media-container {
-    width: 100%;
-  }
-
-  .feature-1-li__image {
-    object-fit: cover;
-    width: calc(50vw + var(--space-m));
-  }
-
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	order:-1;
-  }
-  
-  .feature-1-li:nth-of-type(even) .feature-1-li__media-container {
-  	display:flex;
-    flex-direction: column;
-    align-items: end;
-  }
-  
-  
-  @media (max-width:768px) {
-  
-    .feature-1-li:nth-of-type(even) .feature-1-li__image {
-  	margin-left:0;
-  }
-    
-    
   }
 
 /* bricksmaven/hero/hero-1 */
@@ -425,11 +416,10 @@
 
 /* bricksmaven/table-of-content/table-of-content-2 */
   .table-of-content-2 {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+
   }
 
   .table-of-content-2__intro {
-    padding: 0 0 var(--space-xs) 0;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -441,7 +431,7 @@
   }
 
   .table-of-content-2-li__link {
-    padding: 0 var(--space-m) 0 0;
+
   }
 
   .table-of-content-2__icon.rotated {

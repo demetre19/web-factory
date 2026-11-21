@@ -57,8 +57,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         <div class="counter-1-box">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
-        {list.length > 0 && <div class="counter-1-grid-ul">
-          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 && <div class="counter-1-grid-ul">{(list || []).map((it) => (
               <div class="counter-1-card card">
                 <div class="counter-1-card__intro">
                   {it.icon && <IconChip name={it.icon} />}
@@ -66,8 +65,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
       </div>
     </div>
   </div>

@@ -65,16 +65,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     }
     {list.length > 0 &&     <div class="counter-7-container--alt">
-      {list.length > 0 &&       <div class="counter-7-grid-ul">
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+      {list.length > 0 && <div class="counter-7-grid-ul">{(list || []).map((it) => (
             <div class="counter-7-card card">
               {it.icon && <IconChip name={it.icon} />}
               <span>{it.stat || it.term || it.title}</span>
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}</div>}
-      </div>
-      }
     </div>
     }
   </div>

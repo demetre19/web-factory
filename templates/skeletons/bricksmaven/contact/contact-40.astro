@@ -60,8 +60,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         <div class="bm-contact-40-media-card grid-auto gap-fluid-l">
           {image && image.src && <figure class="bm-contact-40-media-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          {list.length > 0 && <div class="bm-contact-40-contact-list">
-            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          {list.length > 0 && <div class="bm-contact-40-contact-list">{(list || []).map((it) => (
                 <div class="bm-contact-40-contact-item card">
                   <div class="bm-contact-40-contact-item__icon-wrapper">
                     {it.icon && <IconChip name={it.icon} />}
@@ -71,8 +70,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              ))}</div>
-          </div>}
+              ))}</div>}
         </div>
       </div>
       <div class="bm-contact-40__form-wrapper">

@@ -295,6 +295,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders text flush to the bezel */
   .sec-inner { max-width: var(--content-width); margin-inline: auto;
                padding-inline: var(--gutter); }
+  /* a bank skeleton that ships its own measure box must not double
+     the gutter inside the shell's .sec-inner — the shell owns it
+     (SB.2). One measure, one gutter, every section. */
+  .sec-inner .sec-inner { max-width: none; margin-inline: 0;
+                          padding-inline: 0; }
+  /* L.15 — a media-split grid whose media never bound collapses to
+     one column; the lone child centres on its measure instead of
+     leaving a dead half-column. */
+  [class*="container"]:has(> :only-child) { grid-template-columns: 1fr; }
+  [class*="container"]:has(> :only-child) > :only-child {
+    margin-inline: auto; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
@@ -425,10 +436,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             background: var(--bg-canvas); padding: var(--space-m);
             border-bottom: 1px solid var(--border-default); }
   /* header CTA: the sticky bottom bar carries the call below the nav
-     breakpoint, so the header copy appears only where nav is inline */
+     breakpoint, so the header copy appears only where the whole row
+     (brand + links + CTA) actually fits — 56rem, not the 48rem links
+     breakpoint; at exactly 48rem the row overflows by the CTA's width */
   .nav-cta { display: none; }
   @media (min-width: 48rem) {
     .burger { display: none; }
+  }
+  @media (min-width: 56rem) {
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -541,6 +556,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet:hover { color: var(--text-primary); }
   .nav-links { display: none; gap: var(--space-m);
                align-items: center; }
+  /* the brand mark and the primary links hold one line — a nav that
+     wraps reads as two bars (L.1 axis) */
+  .nav-links ul { flex-wrap: nowrap; }
+  .bm-header-1__brand { white-space: nowrap; }
   @media (min-width: 48rem) { .nav-links { display: flex; } }
   .wf-cta-button { font-size: var(--fs--1); }
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
@@ -659,7 +678,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      surface with the page inks and the standard primary action. */
   :is([data-surface="brand"], [data-surface="inverse"])
       :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
-          .foot-head, .legal, .brand-mark, .quote, .stars) {
+          .foot-head, .legal, .brand-mark, .quote, .stars,
+          .link-quiet) {
     color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
   [data-surface="brand"] .wf-cta-button {
     background: var(--sec-fg); color: var(--sec-bg); }

@@ -54,27 +54,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div>
   <div class="sec-inner">
     <div class="contact-3-container">
-      <div class="contact-3-grid-ul">
-        <div class="contact-3-card">
+      {list.length > 0 && <div class="contact-3-grid-ul">{(list || []).map((it) => (
+            <div class="contact-3-card card">
+              <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <p class="text-fluid-0">{it.text}</p>
+            </div>
+          ))}</div>}
+      <div class="contact-3-footer">
+        <div class="contact-3-form">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        </div>
-        {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="contact-3-card contact-3-card--alt card">
-              <div class="contact-3-card__icon-wrapper">
-                {it.icon && <IconChip name={it.icon} />}
-              </div>
-              <div class="contact-3-card__content">
-                <p class="text-fluid-0">{it.text}</p>
-                <p class="text-fluid-0">{it.text}</p>
-                <p class="text-fluid-0">{it.text}</p>
-              </div>
-            </div>
-          ))}</div>}
-      </div>
-      <div class="contact-3-footer">
-        <div class="contact-3-form">
           <form novalidate>
           </form>
         </div>

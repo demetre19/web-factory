@@ -54,6 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div>
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
+  {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
@@ -64,7 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="testimonial-24-content__wrapper">
                 <p class="testimonial-24-content__desc text-fluid-0">{it.text}</p>
                 <div class="testimonial-24-content__profile">
-                  <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                  <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
