@@ -51,34 +51,33 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-contact-37">
   <div class="sec-inner">
-    {image && image.src &&     <div class="bm-contact-37__top-container">
-      {image && image.src && <figure class="bm-contact-37__top-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+    {image && image.src &&     <div>
+      {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
     }
     <div class="bm-contact-37__content-container">
-      <div class="bm-contact-37__content">
-        <div class="bm-contact-37__intro">
+      <div>
+        <div>
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-          {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>
         {list.length > 0 && <div class="bm-contact-25-side-list-ul">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-contact-25-side-list-item card">
                 <div class="bm-contact-25-side-list-item__detail">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <a class="bm-contact-25-side-list-item__cta text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
+                  <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                {it.icon && <IconChip name={it.icon} />}
               </div>
             ))}</div>
         </div>}
       </div>
       <div>
-        <div class="bm-contact-37__form-wrapper">
+        <div>
           <form novalidate>
           </form>
         </div>
@@ -86,7 +85,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

@@ -1,91 +1,33 @@
-  .bm-testimonial-44__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-testimonial-44 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--split {
+  .wf-testimonial-44 .intro--split {
     display: grid;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-testimonial-44-grid {
+  .wf-testimonial-44 .bm-testimonial-44-grid {
     display: block;
   }
 
-  .bm-testimonial-44-video-card {
-    justify-content: flex-end;
-    overflow: hidden;
-  }
-
-  .bm-testimonial-44-video-card__video {
-    width: 100%;
-  }
-
-  .bm-testimonial-44-video-card__user-data {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-testimonial-44 .bm-testimonial-44-video-card__user-data {
     display: none;
   }
 
-  .bm-testimonial-38-star-list {
+  .wf-testimonial-44 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .testimonial-list-card__profile {
+  .wf-testimonial-44 .testimonial-list-card__profile {
     display: flex;
-    column-gap: var(--space-s);
-    align-items: center;
   }
 
-  .testimonial-list-card__meta {
+  .wf-testimonial-44 .testimonial-list-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: calc(--content-gap / 2);
-  }
-
-  .bm-testimonial-44-review-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .testimonial-list-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .bm-testimonial-44-card[data-card-status="video-card"] .bm-testimonial-44-review-card {
-    display: none;
-  }
-  
-  .bm-testimonial-44-card[data-card-status="review-card"] .bm-testimonial-44-video-card {
-    display: none;
-  }
-
-  .bm-testimonial-44-video-card__video[data-visible='show'] + .bm-testimonial-44-video-card__user-data {
-    display: flex;
   }

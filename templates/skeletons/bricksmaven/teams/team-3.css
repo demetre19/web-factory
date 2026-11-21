@@ -1,47 +1,23 @@
-  .team-3-container {
+  .wf-team-3 .team-3-container {
     display: flex;
-    row-gap: var(--space-l);
   }
 
-  .intro {
-    text-align: center;
+  .wf-team-3 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .team-3-content {
+  .wf-team-3 .team-3-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-s);
-    width: 100%;
   }
 
-  .team-3-card {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .team-3-card__content {
-    width: 100%;
+  .wf-team-3 .team-3-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    align-items: center;
   }
 
-  .team-3-card__image-wrapper {
-    width: 100%;
-  }
-
-  .team-3-card__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .team-3-card__image {
-  aspect-ratio: 4/;
+  .wf-team-3 .team-3-card__content {
+    display: flex;
+    flex-direction: column;
   }

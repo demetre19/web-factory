@@ -1,38 +1,22 @@
-  .team-2-container {
+  .wf-team-2 .team-2-container {
     display: grid;
-    gap: var(--space-l);
   }
 
-  .team-2-intro {
+  .wf-team-2 .team-2-intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
   }
 
-  .team-2-list {
+  .wf-team-2 .team-2-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .team-2-profile {
+  .wf-team-2 .team-2-profile {
     display: flex;
-    column-gap: var(--space-s);
-    align-items: center;
   }
 
-  .team-2-profile__detail {
+  .wf-team-2 .team-2-profile__detail {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .team-2-profile__img {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  .team-2-profile__img {
-  	aspect-ratio: 1/1;
   }

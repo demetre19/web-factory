@@ -708,7 +708,7 @@
   "DS.2": {
    "check": "check_design_system",
    "mode": "script",
-   "threshold": "a token rung/role unrendered, or sheet value != TOKENS.json / global.css / tailwind.config — drift",
+   "threshold": "a token rung/role unrendered, or sheet value != TOKENS.json / global.css / tailwind.config \u2014 drift",
    "tier": "invariant",
    "wave": "w6"
   },
@@ -2086,6 +2086,48 @@
    "threshold": "no concat, no idioms",
    "tier": "stylistic",
    "wave": "w8"
+  },
+  "Q.1": {
+   "check": "check_faq_collapsed",
+   "mode": "script",
+   "threshold": "faq-item emitted with `open`",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "Q.2": {
+   "check": "check_card_hierarchy",
+   "mode": "script",
+   "threshold": "card without heading before body",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "Q.3": {
+   "check": "check_icon_ring",
+   "mode": "script",
+   "threshold": "bare svg icon inside card/flow-row",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "Q.4": {
+   "check": "check_gap_floor",
+   "mode": "script",
+   "threshold": "sibling container with zero gap",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "Q.5": {
+   "check": "check_type_scale_min",
+   "mode": "script",
+   "threshold": "heading level not smaller than previous",
+   "tier": "structural",
+   "wave": "w7"
+  },
+  "Q.6": {
+   "check": "check_contrast_pairs",
+   "mode": "script",
+   "threshold": "element fg/bg below floor",
+   "tier": "structural",
+   "wave": "w7"
   }
  }
 }

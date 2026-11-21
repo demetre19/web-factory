@@ -1,48 +1,24 @@
-  .intro {
-    text-align: center;
+  .wf-counter-5 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .counter-5-grid-ul {
+  .wf-counter-5 .counter-5-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-    width: 100%;
   }
 
-  .counter-5-introduction {
+  .wf-counter-5 .counter-5-introduction {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
   }
 
-  .counter-5-introduction__heading {
-    margin: 0 0 0 0;
-    padding: 0 var(--space-l) 0 0;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .counter-5-card {
+  .wf-counter-5 .counter-5-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
   }
 
-  .counter-5-card__icon-counter {
+  .wf-counter-5 .counter-5-card__icon-counter {
     display: flex;
-    align-items: center;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }

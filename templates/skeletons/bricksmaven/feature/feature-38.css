@@ -1,101 +1,20 @@
-  .feature-38-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-38 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-feature-38 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .feature-38-list {
+  .wf-feature-38 .feature-38-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .feature-38-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    overflow: hidden;
+  .wf-feature-38 .feature-38-card {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .feature-38-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  /* Card */
-  .feature-38-card {
-  	transition: 1s ease;
-  }
-  
-  .feature-38-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .feature-38-card:focus-within {
-    box-shadow: 0 0 var(--space-s) 0 color-mix(in srgb, var(--bg-subtle) 10%, transparent);
-  }
-  
-  .feature-38-card:hover {
-  	background-color: var(--bg-subtle);
-  }
-  
-  .feature-38-card:nth-child(1), .feature-38-card:nth-child(7) {
-  	grid-column: 1/7;
-  }
-  
-  .feature-38-card:nth-child(3) {
-  	grid-column: 1/6;
-  }
-  
-  .feature-38-card:nth-child(4) {
-  	grid-column: 6/-1;
-  }
-  .feature-38-card:nth-child(5) {
-  	grid-column: 1/8;
-  }
-  
-  .feature-38-card:nth-child(6) {
-  	grid-column: 8/-1;
-  }
-  
-  .feature-38-card:nth-child(2),.feature-38-card:nth-child(8) {
-  	grid-column: 7/-1;
-  }
-  
-  /* Image */
-  .feature-38-card__image {
-  	transition: 1s ease;
-  }
-  
-  .feature-38-card:hover .feature-38-card__image, .feature-38-card:focus-within .feature-38-card__image {
-    scale: 1.1;
-  }
-  
-  @media (max-width:767px) {
-  	.feature-38-card {
-  	height:var(--space-xxl) !important;
-  }
-    
-    .feature-38-card:nth-child(1), .feature-38-card:nth-child(2), .feature-38-card:nth-child(3), .feature-38-card:nth-child(4), .feature-38-card:nth-child(5), .feature-38-card:nth-child(6),.feature-38-card:nth-child(7), .feature-38-card:nth-child(8) {
-  	grid-column: span 1;
-  }
-  
   }

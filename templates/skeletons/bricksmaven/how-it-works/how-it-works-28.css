@@ -1,186 +1,21 @@
-  .bm-how-it-works-28__container {
+  .wf-how-it-works-28 .bm-how-it-works-28__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 1);
   }
 
-  .bm-how-it-works-28-list {
-    row-gap: var(--space-s);
-  }
-
-  .bm-how-it-works-28-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  .wf-how-it-works-28 .bm-how-it-works-28-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-how-it-works-28-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-28-card__heading-cover {
+  .wf-how-it-works-28 .bm-how-it-works-28-card__heading-cover {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-how-it-works-28-nav-item__duration-text {
-    padding: calc(var(--space-xs) / 2.6) var(--space-s) calc(var(--space-xs) / 2.6) var(--space-s);
-  }
-
-  .bm-how-it-works-28-card__deliverables-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-28-card-deliverables-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-how-it-works-28__aside {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-28-nav {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-28-nav-item {
+  .wf-how-it-works-28 .bm-how-it-works-28-nav-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    align-items: flex-start;
-  }
-
-  .bm-how-it-works-28-nav-item__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-how-it-works-28-list {
-    counter-reset: step-counter;
-  }
-  
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card{
-    counter-increment: step-counter;
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card .bm-how-it-works-28-card__step-counter::before{
-    content: '0' counter(step-counter);
-    font-size: var(--fs-3);
-    font-weight: 300;
-    color: var(--fs-0);
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card {
-    position: sticky;
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card:nth-child(1) {
-    inset-block-start: var(--space-xl);
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card:nth-child(2) {
-    inset-block-start: var(--section-space-xs);
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card:nth-child(3) {
-    inset-block-start: var(--section-space-s);
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card:nth-child(4) {
-    inset-block-start: var(--section-space-m);
-  }
-  
-  .bm-how-it-works-28-list .bm-how-it-works-28-card:nth-child(5) {
-    inset-block-start: var(--section-space-l);
-  }
-  
-  @media (min-width:991px) {
-  .bm-how-it-works-28-list .bm-how-it-works-28-nav-item__duration[data-visibility] {
-    display:none;
-  }
-    
-  }
-
-  .bm-how-it-works-28-nav {
-    counter-reset: nav-steps;
-  }
-  
-  .bm-how-it-works-28-nav-item {
-    transition: 0.5s ease;
-    opacity: 0.7;
-  }
-  
-  /* Active nav item */
-  .bm-how-it-works-28-nav-item.is-active {
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-    opacity: 1;
-    transform: translateX(0.25rem);
-  }
-  
-  .bm-how-it-works-28-nav-item:hover.is-active, .bm-how-it-works-28-nav-item:focus-within.is-active {
-    background-color: var(--fs-0);
-    color: var(--fs-0) !important;
-  }
-  
-  .bm-how-it-works-28-nav-item:hover.is-active .bm-how-it-works-28-nav-item__link, .bm-how-it-works-28-nav-item:focus-within.is-active .bm-how-it-works-28-nav-item__link {
-    color: var(--fs-0) !important;
-  }
-  
-  .bm-how-it-works-28-nav-item.is-active .bm-how-it-works-28-nav-item__duration {
-    border-color: var(--bg-canvas);
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-how-it-works-28-nav-item:hover, .bm-how-it-works-28-nav-item:focus-within {
-    background-color: var(--fs-0);
-  }
-  
-  
-  .bm-how-it-works-28-nav .bm-how-it-works-28-nav-item{
-    counter-increment: nav-steps;
-  }
-  
-  .bm-how-it-works-28-nav .bm-how-it-works-28-nav-item .bm-how-it-works-28-nav-item__counter::before{
-    content: '0' counter(nav-steps);
-    font-size: var(--fs-0);
-    
-  }
-  
-  
-  
-  .bm-how-it-works-28-nav-item__duration {
-    transition: background 0.5s ease;
-  }
-  
-  .bm-how-it-works-28-nav-item:hover .bm-how-it-works-28-nav-item__duration, .bm-how-it-works-28-nav-item:focus-within .bm-how-it-works-28-nav-item__duration {
-    background-color: var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-how-it-works-28-nav-item__link {
-    transition:0.5s ease;
-  }
-  
-  .bm-how-it-works-28-nav-item__link.is-active {
-  	color: var(--fs-0);
-  }
-  
-  
-  .bm-how-it-works-28-nav-item__link::after {
-    content:'';
-    position:absolute;
-    inset:0;
-    display:flex;
-    cursor:pointer;
-    z-index:1;
   }

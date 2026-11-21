@@ -9,7 +9,9 @@ skeleton per payload, banked next to the payload as `<stem>.astro`:
 
   element tree  → JSX markup (section/container shells dropped —
                   Section.astro owns those, SB.2)
-  globalClasses → embedded <style is:global> in @layer components
+  globalClasses → sibling .css, every selector scoped under
+                  .wf-<stem> (the component surface) for @layer
+                  components — topology only, never site-wide
   ACSS var refs → the token layer (var(--space-*) survive; colours,
                   radius, text and width map to emitted vars)
 
@@ -247,6 +249,28 @@ def _dim(v, unmapped):
 
 GRID_TRACK_RE = re.compile(r'calc\(100% \* (\d+) / (\d+)\)')
 
+# decls the skeleton may keep: topology ONLY. Spacing, colour,
+# border, radius, clip, font, width/measure and alignment all belong
+# to the token layer + Section.astro + the global patterns — a bank
+# rule that re-declares them is bespoke shape leaking site-wide (M2).
+TOPOLOGY = {'display', 'flex-direction', 'flex-wrap',
+            'grid-template-columns', 'grid-template-rows', 'order'}
+
+
+def _scope_css(style, scope):
+    """Prefix every rule selector with the component's `.wf-<stem>`
+    scope — bank topology binds only inside its own surface (M2):
+    bespoke names never reach the site-wide namespace."""
+    def repl(m):
+        sel = m.group(1)
+        if sel.strip().startswith('@'):
+            return sel + '{'
+        lead = sel[:len(sel) - len(sel.lstrip())]
+        parts = [f'{scope} {p.strip()}' if '.' in p else p.strip()
+                 for p in sel.strip().split(',')]
+        return lead + ', '.join(parts) + ' {'
+    return re.sub(r'([^{}]+)\{', repl, style)
+
 
 def tracks(value):
     """A grid track list: ACSS `--grid-N` is N equal tracks, not a
@@ -291,10 +315,9 @@ def settings_css(settings, unmapped, raw=None):
                         'owns elevation */', None))
             continue
         if key == '_cssCustom' and val:
-            # raw css (keyframes, descendant selectors) — emit at
-            # @layer top level, translated but verbatim-shaped
-            if raw is not None:
-                raw.append(translate_value(str(val), unmapped))
+            # raw bespoke css (keyframes, descendant selectors,
+            # pseudo-chrome) — never emitted: verbatim shape is
+            # exactly what the scope is meant to keep out (M2)
             continue
         prop = SETTING_CSS.get(key)
         if prop in ('grid-template-rows', 'height', 'min-height',
@@ -320,6 +343,10 @@ def classes_css(payload, unmapped):
         if not name:
             continue
         decls = settings_css(gc.get('settings') or {}, unmapped, raw)
+        # topology-only scope (M2): a class whose decls are all
+        # bespoke styling keeps no rule — and no markup class either
+        # (SB.3: markup classes must exist in the shared layer)
+        decls = [(p, v) for p, v in decls if p in TOPOLOGY]
         if decls:
             rules[name] = decls
     return rules, raw
@@ -351,6 +378,7 @@ def translate(payload, stem):
                 for g in payload.get('globalClasses') or []}
     unmapped = set()
     rules, raw_css = classes_css(payload, unmapped)
+
     seen = {'h': False, 'p': False, 'btn': False,
             'loop_img': False}                    # first heading→
                                     # {heading}, first paragraph→{fs}
@@ -624,12 +652,17 @@ def translate(payload, stem):
                     cattr = cattr.replace('text-fluid-2',
                                           'text-fluid-1')
                     # a dedicated icon element in the same item owns
-                    # the chip — the heading must not render it twice
-                    txt = (f'{{{ivar}.term || {ivar}.title}}'
-                           if seen.get('ivar_icon_el') else
-                           f'{{{ivar}.icon && '
-                           f'<IconChip name={{{ivar}.icon}} />}} '
-                           f'{{{ivar}.term || {ivar}.title}}')
+                    # the chip — the heading must not render it twice.
+                    # The chip sits ABOVE the title, never inline in
+                    # it — an icon inside the heading reads as stray
+                    # glyph spacing, not the ring element.
+                    if not seen.get('ivar_icon_el'):
+                        return (f'{pad}{{{ivar}.icon && '
+                                f'<IconChip name={{{ivar}.icon}} />}}\n'
+                                f'{pad}<{tag}{cattr}>'
+                                f'{{{ivar}.term || {ivar}.title}}'
+                                f'</{tag}>\n')
+                    txt = f'{{{ivar}.term || {ivar}.title}}'
                 else:
                     txt = f'{{{ivar}.text}}'
             elif name == 'heading' and not seen['h'] and txt:
@@ -642,7 +675,7 @@ def translate(payload, stem):
                 # §4.3 — `before` paragraphs ride the answer slot
                 return (f'{pad}{{sub && <{tag}{cattr} '
                         f'set:html={{inline(sub)}} />}}\n'
-                        f'{pad}{{before.map((p) => <p class="mt-stack '
+                        f'{pad}{{before.map((p) => <p class="mt-flow '
                         f'text-fluid-0" set:html={{inline(p)}} />)}}\n')
             elif not ivar:
                 # the payload's own copy is wireframe label text
@@ -653,8 +686,11 @@ def translate(payload, stem):
             return f'{pad}<{tag}{cattr}{href}>{txt}</{tag}>\n'
         if name == 'icon':
             if ivar:
-                return (f'{pad}{{{ivar}.icon && '
-                        f'<IconChip name={{{ivar}.icon}} />}}\n')
+                # the item heading already inlines the chip — a
+                # standalone icon element would render a duplicate
+                # chip at the BOTTOM of the card (M2 defect: the
+                # card pattern carries the icon first/top only)
+                return ''
             return ''
         if name == 'counter':
             # the stat figure binds the item's stat/term — the
@@ -795,10 +831,10 @@ def translate(payload, stem):
             # a container whose entire payload emitted nothing
             # collapses — a media column after its image lifts out,
             # a loop with an empty template, wireframe-only chrome:
-            # no dead half-columns in the DOM (L.15)
-            if children:
-                return ''
-            return f'{pad}<{tag}{cattr}></{tag}>\n'
+            # no dead half-columns in the DOM (L.15). An unbound LEAF
+            # prunes the same way: an empty shell still stretches its
+            # grid/flex row into a dead column (M2)
+            return ''
         # wholly-conditional payloads propagate their guard upward: a
         # wrapper around a single conditional child is conditional too
         if _guard and not _static and _parts == 1:
@@ -820,17 +856,19 @@ def translate(payload, stem):
                 + body)
     # §4.3 heading fallback — a pure-collection skeleton (grid of
     # cards, list of links) has no section-heading slot; the block's
-    # h2 is still copy that must render (F.1, PS.8)
-    if '{head && ' not in body:
+    # h2 is still copy that must render (F.1, PS.8). Chrome rows
+    # (header/footer) skip every prose fallback: an h2/lede rendered
+    # inside the bar breaks the chrome (user-visible nav defect).
+    if '{head && ' not in body and cat not in ('header', 'footer'):
         body = ('  {head && <h2 class="text-fluid-2">{head}</h2>}\n'
                 + body)
     # §4.3 fallback — a skeleton without a long-text slot still
     # renders the answer + before paragraphs (verbatim, F.1), placed
     # right after the heading emit when one exists
-    if 'sub &&' not in body:
+    if 'sub &&' not in body and cat not in ('header', 'footer'):
         sub_blk = ('  {sub && <p class="mt-stack lede" '
                    'set:html={inline(sub)} />}\n'
-                   '  {before.map((p) => <p class="mt-stack '
+                   '  {before.map((p) => <p class="mt-flow '
                    'text-fluid-0" set:html={inline(p)} />)}\n')
         hm = re.search(r'^(\s*)\{head && ', body, re.M)
         if hm:
@@ -861,7 +899,8 @@ def translate(payload, stem):
     # §4.3 tail — qa/links/after paragraphs close every copy-bound
     # section, after the skeleton's own structure (COPY_BLOCK_KEYS
     # order: items → qa → links → after)
-    if 'list.map' not in body and 'list || []).map' not in body:
+    if cat != 'header' and 'list.map' not in body and \
+            'list || []).map' not in body:
         # the payload's shape hid the items loop (nested ol/li,
         # js-driven widget) — the copy slot's items still render
         # verbatim as a term/definition list (F.1)
@@ -875,15 +914,16 @@ def translate(payload, stem):
                  '{it.text && <dd class="text-fluid-0" '
                  'set:html={inline(it.text)} />}'
                  '</div>)}</dl>}\n')
-    body += (
+    if cat != 'header':
+        body += (
         '  {qas.length > 0 && <dl class="mt-stack">'
         '{qas.map((qa) => <>'
         '<dt class="text-fluid-0" set:html={inline(qa.q)} />'
         '<dd class="text-fluid-0" set:html={inline(qa.a)} />'
         '</>)}</dl>}\n'
-        '  {links.map((l) => <p class="mt-stack text-fluid-0" '
+        '  {links.map((l) => <p class="mt-flow text-fluid-0" '
         'set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}\n'
-        '  {after.map((p) => <p class="mt-stack text-fluid-0" '
+        '  {after.map((p) => <p class="mt-flow text-fluid-0" '
         'set:html={inline(p)} />)}\n'
         '  {tel && <p class="mt-stack"><a class="link-quiet" '
         'href={tel}>{phone}</a></p>}\n')
@@ -899,17 +939,15 @@ def translate(payload, stem):
         _SHELL = re.compile(r'(?:^|[-_])(container|content|wrapper|'
                             r'intro|inner|grid)(?:$|[-_])')
         for _name, _props in rules.items():
-            if _name in root_names:
-                _props = [(p, v) for p, v in _props
-                          if not p.startswith(('padding', 'margin'))]
-            elif _SHELL.search(_name):
-                _props = [(p, v) for p, v in _props
-                          if not p.startswith('padding')]
+            _props = [(p, v) for p, v in _props
+                      if p in TOPOLOGY]
+            if not _props:
+                continue
             _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
                       for p, v in _props]
             decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')
-        decl += ['  ' + r.strip().replace('\n', '\n  ')
-                 for r in raw_css if r and r.strip()]
+        # _cssCustom raw blocks are collected but never emitted —
+        # topology-only bank css carries no bespoke rules
         style = '\n\n'.join(decl) + '\n'
         # G.5 — collections never carry a fixed track count: any
         # repeat(N|Nfr …) or ≥4-literal-fr track the payload declared
@@ -943,6 +981,7 @@ def translate(payload, stem):
             style += ('\n  @media (max-width: 44rem) {\n' +
                       ''.join(f'    .{c} {{ grid-template-columns: 1fr; '
                               f'}}\n' for c in _mq) + '  }\n')
+        style = _scope_css(style, f'.wf-{stem}')
         if '--acss-' in style:      # never ship an unresolved var
             raise SystemExit(f'{stem}: unresolved ACSS var in emitted css')
 
@@ -1005,7 +1044,7 @@ def translate(payload, stem):
                "const mediaSrc = _mn ? (_media[`../assets/media/"
                "${_mn}`]?.default ?? null) : null;\n")
               if _has_media else '')
-           + '---\n\n<div>\n' + body + '</div>\n')
+           + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
 

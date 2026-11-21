@@ -1,31 +1,15 @@
-  .bm-cta-20__container {
+  .wf-call-to-action-20 .bm-cta-20__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-cta-20__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-cta-20__footer {
+  .wf-call-to-action-20 .bm-cta-20__footer {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-cta-20-list {
+  .wf-call-to-action-20 .bm-cta-20-list {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-cta-20__media {
-    justify-content: flex-end;
-  }
-
-  .bm-cta-20__image {
-    object-fit: cover;
-    width: 100%;
   }

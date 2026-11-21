@@ -1,47 +1,24 @@
-  .testimonial-13-container {
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-testimonials-13 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .testimonial-13-list-ul {
-    width: 100%;
+  .wf-testimonials-13 .testimonial-13-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-l);
   }
 
-  .testimonial-13-list-card {
+  .wf-testimonials-13 .testimonial-13-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    text-align: center;
   }
 
-  .testimonial-13-list-card__profile {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    row-gap: var(--space-l);
-  }
-
-  .testimonial-13-list-card__content {
+  .wf-testimonials-13 .testimonial-13-list-card__profile {
     display: flex;
     flex-direction: column;
-    row-gap: calc(0.5rem + 0vw);
   }
 
-  .testimonial-13-list-card__image {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
+  .wf-testimonials-13 .testimonial-13-list-card__content {
+    display: flex;
+    flex-direction: column;
   }

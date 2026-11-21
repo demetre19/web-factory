@@ -1,46 +1,24 @@
-  .grid-23-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-grid-23 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .grid-23-card-list {
+  .wf-grid-23 .grid-23-card-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .grid-23-card {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
-  .grid-23-card__heading-wrapper {
+  .wf-grid-23 .grid-23-card {
     display: flex;
     flex-direction: column;
   }
 
-  .grid-23-card__content {
-    row-gap: var(--flow-spacing);
+  .wf-grid-23 .grid-23-card__heading-wrapper {
     display: flex;
     flex-direction: column;
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .grid-23-card__image {
-    object-fit: cover;
-    width: 100%;
+  .wf-grid-23 .grid-23-card__content {
+    display: flex;
+    flex-direction: column;
   }

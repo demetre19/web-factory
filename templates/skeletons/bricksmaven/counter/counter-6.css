@@ -1,53 +1,24 @@
-  .counter-6 {
+  .wf-counter-6 .counter-6 {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
   }
 
-  .intro {
-    text-align: center;
+  .wf-counter-6 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .counter-6-grid-ul {
+  .wf-counter-6 .counter-6-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .counter-6-card {
-    padding: 0 var(--space-m) 0 var(--space-m);
+  .wf-counter-6 .counter-6-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .counter-6-card__box {
+  .wf-counter-6 .counter-6-card__box {
     display: flex;
-    row-gap: var(--space-xs);
     flex-direction: column;
-  }
-
-  .counter-6-wrap:first-child {
-  	padding-left: 0 !important;
-  }
-  
-  .counter-6-wrap:last-child {
-  	padding-right: 0;
-    border-right: none;
-  }
-  
-  
-  @media (max-width:768px) {
-    .counter-6-wrap:last-child {
-  	border-bottom: none !important;
-    }
-  }
-
-  .counter-6-card__number {
-  -webkit-text-stroke: calc(0.1rem + 0vw) var(--bg-canvas);
-  -webkit-text-fill-color: transparent;
   }

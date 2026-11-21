@@ -1,35 +1,14 @@
-  .bm-content-56__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-56__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-content-56__content {
+  .wf-content-56 .bm-content-56__content {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-content-56__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .cta-combo {
+  .wf-content-56 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-content-56-data {
+  .wf-content-56 .bm-content-56-data {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-56-data-card {
-    row-gap: calc(var(--flow-spacing) / 2);
   }

@@ -1,49 +1,14 @@
-  .contact-24-container {
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-contact-24 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .contact-24-list-ul {
+  .wf-contact-24 .contact-24-list-ul {
     display: grid;
-    width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .contact-24-list-card {
+  .wf-contact-24 .contact-24-list-card {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-m);
-    padding: var(--space-xxl) var(--space-xl) var(--space-xxl) var(--space-xl);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .contact-24-media {
-    width: 100%;
-  }
-
-  .contact-24-media__image {
-    object-fit: cover;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .contact-24-list-card:nth-child(1) {
-  	grid-column: span 6;
-  }
-  .contact-24-list-card:nth-child(2) {
-  	grid-column: span 6;
   }

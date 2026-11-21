@@ -1,35 +1,19 @@
-  .newsletter-7-container {
+  .wf-newsletter-7 .newsletter-7-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .newsletter-7__content {
+  .wf-newsletter-7 .newsletter-7__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .newsletter-7__right-box {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-form {
+  .wf-newsletter-7 .bm-form {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
   }
 
-  .bm-form-widget {
+  .wf-newsletter-7 .bm-form-widget {
     display: flex;
-    gap: var(--space-xs);
     flex-direction: row;
-    align-items: center;
-  }
-
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
   }

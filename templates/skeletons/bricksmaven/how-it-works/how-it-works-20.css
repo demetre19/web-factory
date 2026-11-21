@@ -1,102 +1,13 @@
-  .hworks-20-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-20 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-20-card {
+  .wf-how-it-works-20 .hworks-20-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hworks-20-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hworks-20-card__line-wrapper {
-    align-items: center;
+  .wf-how-it-works-20 .hworks-20-card__line-wrapper {
     flex-wrap: nowrap;
-  }
-
-  .hworks-20-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .hworks-20-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-20-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:var(--space-xs);
-    padding-block:calc(0.3rem + 0vw);
-    color:var(--bg-canvas);
-    font-size: var(--fs-0);
-    font-weight: 400;
-    border-radius: 100%;
-    position:absolute;
-    left:50%;
-    transform: translateX(-50%);
-  }
-  
-  @media (max-width:767px) {
-  
-    .hworks-20-list li::before {
-    left:calc(var(--space-s) * -1);
-    transform: translateX(0%);
-  }
-  }
-
-  .hworks-20-card:nth-child(even) .hworks-20-card__media {
-  	order: -1;
-  }
-  
-  .hworks-20-card:nth-child(even) .hworks-20-card__content {
-  	order: 1;
-  }
-  
-  @media (max-width:767px) {
-  	.hworks-20-card:nth-child(even) .hworks-20-card__media {
-  	order: unset;
-    grid-column: span 11;
-  }
-  
-  .hworks-20-card:nth-child(even) .hworks-20-card__content {
-  	order: 2;
-    grid-column: span 11;
-  }
-    
-  	.hworks-20-card:nth-child(odd) .hworks-20-card__content {
-  	order: 2;
-    grid-column: span 11;
-  }  
-    
-    	.hworks-20-card:nth-child(odd) .hworks-20-card__media {
-  	grid-column: span 11;
-  }
-    
-    .hworks-20-card .hworks-20-card__line-wrapper {
-  	order: -1;
-  }
-    
-    .hworks-20-card__line-wrapper {
-  	grid-column: span 1 !important;
-    grid-row: span 2;
-  }
   }

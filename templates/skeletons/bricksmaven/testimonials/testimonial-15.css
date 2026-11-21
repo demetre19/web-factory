@@ -1,47 +1,14 @@
-  .testimonial-15-content {
-    width: 100%;
-    display: grid;
-    gap: var(--space-s);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .testimonial-15-content__card {
-
-  }
-
-  .testimonial-15-content__card-author {
+  .wf-testimonial-15 .testimonial-15-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    margin: 0 0 var(--space-s) 0;
-    gap: var(--space-s);
   }
 
-  .testimonial-15-content__card-meta {
+  .wf-testimonial-15 .testimonial-15-content__card-author {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .wf-testimonial-15 .testimonial-15-content__card-meta {
     display: flex;
     flex-direction: column;
-    row-gap: calc(0.3rem + 0vw);
-  }
-
-  .testimonial-15-content__card-photo {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .testimonial-15-content__card-icon {
-    margin: 0 0 auto auto;
-  }
-
-  .testimonial-15-content__card:nth-child(2) {
-  	grid-column: span 8;
-  }
-  .testimonial-15-content__card:nth-child(2) .testimonial-15-content__card-media {
-  	grid-column: span 1;
-  }
-  .testimonial-15-content__card:nth-child(2) .testimonial-15-content__card-meta {
-  	grid-column: span 9;
-  }
-
-  .testimonial-15-content__card-icon {
-  	grid-column: span 2;
   }

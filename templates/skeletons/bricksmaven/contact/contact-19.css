@@ -1,68 +1,24 @@
-  .contact-19-container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-contact-19 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .contact-19-list-ul {
-    width: 100%;
+  .wf-contact-19 .contact-19-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-s);
   }
 
-  .contact-19-list-card {
+  .wf-contact-19 .contact-19-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
-    padding: var(--space-l) var(--space-s) var(--space-l) var(--space-s);
-    align-items: flex-start;
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .contact-19-location {
+  .wf-contact-19 .contact-19-location {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    width: 100%;
   }
 
-  .contact-19-location__box {
+  .wf-contact-19 .contact-19-location__box {
     display: flex;
-    padding: var(--space-l) var(--space-m) var(--space-l) var(--space-m);
     flex-direction: column;
-    align-self: center;
-    row-gap: var(--space-l);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .contact-19-location__intro {
-    align-items: flex-start;
-    text-align: left;
-    row-gap: var(--space-xs);
-  }
-
-  .contact-19-location__media-image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .contact-19-list-card::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: var(--space-s);
-    width: var(--space-xxl);
-    height: var(--space-s);
-    background-color: var(--action-primary);
   }

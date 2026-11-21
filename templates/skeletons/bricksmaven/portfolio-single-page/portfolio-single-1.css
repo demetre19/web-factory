@@ -1,174 +1,44 @@
-  .bm-portfolio-single-1 {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-single-1__container {
+  .wf-portfolio-single-1 .bm-portfolio-single-1__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-single-1__aside {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-live-website-btn {
+  .wf-portfolio-single-1 .bm-live-website-btn {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 4);
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
   }
 
-  .bm-live-website-btn__dot {
-    width: 8;
-  }
-
-  .bm-portfolio-single-meta-data-1 {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-widget-2 {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-widget-2__footer {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-contact-widget-2__image {
-    object-fit: cover;
-    width: 128;
-  }
-
-  .bm-contact-widget-link {
+  .wf-portfolio-single-1 .bm-contact-widget-link {
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
   }
 
-  .bm-contact-widget-link__icon-wrapper {
+  .wf-portfolio-single-1 .bm-contact-widget-link__icon-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32;
   }
 
-  .bm-portfolio-single-1__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-single-1-media {
+  .wf-portfolio-single-1 .bm-portfolio-single-1-media {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-single-1-case-piece__image {
-    object-fit: cover;
-  }
-
-  .bm-portfolio-single-1-testimonial {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .testimonial-17-list-card {
+  .wf-portfolio-single-1 .testimonial-17-list-card {
     display: flex;
   }
 
-  .testimonial-17-list-card__wrapper {
-    gap: 0;
+  .wf-portfolio-single-1 .testimonial-17-list-card__wrapper {
     display: flex;
-    column-gap: var(--flow-spacing);
   }
 
-  .testimonial-17-list-card__content {
+  .wf-portfolio-single-1 .testimonial-17-list-card__content {
     display: flex;
     flex-direction: column;
-    width: calc(100% - 7rem);
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .testimonial-17-list-card__image {
-    overflow: hidden;
-    width: var(--space-xxl);
-    object-fit: cover;
-  }
-
-  .bm-portfolio-single-1__footer-container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-related-list {
+  .wf-portfolio-single-1 .bm-portfolio-related-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-related-card {
-    justify-content: flex-end;
-  }
-
-  .bm-portfolio-related-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
+  .wf-portfolio-single-1 .bm-portfolio-related-card__content {
     display: flex;
-  }
-
-  .bm-portfolio-related-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-live-website-btn__dot {
-    --shadow-m:  0 0 calc(0.25rem + 0vw) calc(0.125rem + 0vw) rgba(255, 255, 255, 0.2);
-    --shadow-xl: 0 0 var(--space-s) calc(0.5rem + 0vw) rgba(255, 255, 255, 0.8);
-  	--animation-duration-up: 1.2s;
-    --shadow-light: var(--shadow-card);
-    --shadow-heavy: var(--shadow-card);
-    --animation-iteration-count: infinite;
-    --animation-direction: alternate;
-    --animation-timing-function-up: linear;
-  }
-  
-  /* Define the animation for the first child */
-  .bm-live-website-btn__dot{
-    animation: glow var(--primitive-duration-med) var(--primitive-ease) var(--primitive-ease) var(--primitive-ease);
-  }
-  
-  /* Define the animations ending point for the first child */
-  @keyframes glow {
-    0% {
-      box-shadow: var(--shadow-card);
-    }
-    100% {
-      box-shadow: var(--shadow-card);
-    }
-  }
-
-  .bm-live-website-btn__text {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-
-  .bm-contact-widget-link__data {
-    --link-color: var(--bg-canvas);
-    --link-color-hover: var(--color-line-default);
-  }
-
-  .bm-portfolio-single-1-case-piece:first-child {
-    grid-column: span 2;
-  }
-
-  .testimonial-17-list-card__author span {
-  	text-decoration: underline;
-    text-decoration-color: var(--action-primary);
-    text-decoration-thickness: calc(0.2rem + 0vw);
-  }
-
-  .bm-portfolio-related-card {
-    aspect-ratio: 4/3;
   }

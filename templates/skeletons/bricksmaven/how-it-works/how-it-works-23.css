@@ -1,54 +1,23 @@
-  .bm-how-it-works-23__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-23 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .bm-how-it-works-23-list {
+  .wf-how-it-works-23 .bm-how-it-works-23-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-how-it-works-23-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-how-it-works-23-card__number-wrapper {
+  .wf-how-it-works-23 .bm-how-it-works-23-card__number-wrapper {
     display: flex;
-    width: 84;
-    justify-content: center;
-    align-items: center;
   }
 
-  .bm-list {
+  .wf-how-it-works-23 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item {
+  .wf-how-it-works-23 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-list-item__icon-wrapper {
-
-  }
-
-  .bm-list-item__text {
-    text-align: left;
-  }
-
-  .bm-list-item {
-  	--circle-size: var(--fs-0);
   }

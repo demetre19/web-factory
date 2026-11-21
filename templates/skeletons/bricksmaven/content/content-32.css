@@ -1,16 +1,4 @@
-  .content-32-container {
+  .wf-content-32 .content-32-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .content-32__content {
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .content-32__intro {
-    row-gap: calc(var(--flow-spacing) / 1.6);
-  }
-
-  .content-32__image {
-    object-fit: cover;
   }

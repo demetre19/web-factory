@@ -1,64 +1,28 @@
-  .error-7-container {
+  .wf-404-error-7 .error-7-container {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    gap: var(--space-xl);
   }
 
-  .error-7-left-box {
+  .wf-404-error-7 .error-7-left-box {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-    align-items: flex-start;
   }
 
-  .error-7-left-box__heading-wrapper {
+  .wf-404-error-7 .error-7-left-box__heading-wrapper {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .error-7-grid-ul {
+  .wf-404-error-7 .error-7-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-s);
   }
 
-  .error-7-card {
+  .wf-404-error-7 .error-7-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .error-7-card-btn {
-    padding: 0 0 0 0;
-    justify-content: flex-start;
-  }
-
-  .error-7-card:nth-child(3n) {
-  
-  	grid-column: span 2;
-  
-  }
-  
-  
-  
-  @media (max-width:478px) {
-  
-  
-  	.error-7-card:nth-child(3n) {
-  
-  	grid-column: auto;
-  
-  }
-    
   }
 
   @media (max-width: 44rem) {
-    .error-7-grid-ul { grid-template-columns: 1fr; }
+    .wf-404-error-7 .error-7-grid-ul { grid-template-columns: 1fr; }
   }

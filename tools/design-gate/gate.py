@@ -5126,6 +5126,234 @@ def check_breathing(ctx):
     return f
 
 
+def check_faq_collapsed(ctx):
+    """D.1 — disclosure: a faq-item emits collapsed. An `open` detail
+    turns the accordion into a text wall."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        for m in re.finditer(r'<details\b[^>]*\bclass="[^"]*faq-item[^"]*"[^>]*>',
+                             txt):
+            if re.search(r'\bopen\b', m.group(0)):
+                f.append(f'Q.1 {os.path.basename(p)}: <details '
+                         'class="faq-item" open> — answers ship '
+                         'collapsed')
+    return f
+
+
+def check_card_hierarchy(ctx):
+    """D.2 — every .card carries a heading before its body text. A
+    bare-text card has no hierarchy."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    card_re = re.compile(
+        r'<(?:div|li|article|dd|dt)\b[^>]*\bclass="[^"]*\bcard\b[^"]*"'
+        r'[^>]*>(.*?)</(?:div|li|article|dd|dt)>',
+        re.S)
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for i, m in enumerate(card_re.finditer(txt)):
+            body = m.group(1)
+            head = re.search(r'<h[234]\b[^>]*>\s*([^<]{1,80})', body)
+            prose = re.search(r'<(?:p|dd|li)\b', body)
+            if prose and not head:
+                f.append(f'Q.2 {name} card#{i + 1}: no heading '
+                         'before body text — hierarchy missing')
+    return f
+
+
+def check_icon_ring(ctx):
+    """D.3 — an icon inside a card or flow row renders inside
+    .icon-chip (the ring), never a bare svg."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    for p, txt in ctx.page_htmls():
+        name = os.path.basename(p)
+        for m in re.finditer(
+                r'<(?:div|li|dl)\b[^>]*\bclass="[^"]*\b(?:card|flow-row)\b[^"]*"[^>]*>'
+                r'(.*?)</(?:div|li|dl)>', txt, re.S):
+            body = m.group(1)
+            for sm in re.finditer(r'<svg\b', body):
+                pre = body[:sm.start()]
+                if 'icon-chip' not in pre[-400:] and \
+                        not re.search(r'<span[^>]*icon-chip[^>]*>$', pre):
+                    f.append(f'Q.3 {name}: bare <svg> inside card/'
+                             'flow-row — icons sit in the ring')
+                    break
+    return f
+
+
+def check_gap_floor(ctx):
+    """D.4 — every grid/flex container of siblings resolves a gap ≥
+    8px; a zero-gap sibling group abuts."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    _px = {}
+    def px(v):
+        v = str(v)
+        if v in _px:
+            return _px[v]
+        m = re.match(r'([\d.]+)(?:px|rem)?', v)
+        if not m:
+            return None
+        n = float(m.group(1))
+        out = n * 16 if v.endswith('rem') else n
+        _px[v] = out
+        return out
+    tokens = {}
+    for p, css in dist_csss(ctx):
+        for vm in re.finditer(r'(--[\w-]+)\s*:\s*([^;}]+)', css):
+            tokens[vm.group(1)] = vm.group(2).strip()
+    def resolve(v):
+        seen = set()
+        while v and 'var(' in str(v):
+            mm = re.search(r'var\((--[\w-]+)[^)]*\)', str(v))
+            if not mm or mm.group(1) in seen:
+                break
+            seen.add(mm.group(1))
+            v = tokens.get(mm.group(1))
+        return v
+    for p, css in dist_csss(ctx):
+        name = os.path.basename(p)
+        for rm in re.finditer(
+                r'([^{}]+)\{([^}]*)\bdisplay:\s*(grid|flex)\b([^}]*)\}',
+                css):
+            sel, decl = rm.group(1).strip(), rm.group(2) + rm.group(4)
+            kids = len(re.findall(r'\b(?:card|item|row|li)\b', sel))
+            if kids == 0 and not re.search(
+                    r'card-grid|grid-ul|flow-list|nav-links|cta-row|'
+                    r'grid-auto|gridcard|\brow\b|\bstack\b', sel):
+                continue
+            gm = re.search(r'\bgap\s*:\s*([^;}]+)', decl)
+            if not gm:
+                f.append(f'Q.4 {name} "{sel[:50]}": flex/grid '
+                         'container has no gap — siblings abut')
+                continue
+            n = px(resolve(gm.group(1).strip()) or '')
+            if n is not None and n < 8:
+                f.append(f'Q.4 {name} "{sel[:50]}": gap {n:.0f}px '
+                         '< 8px floor')
+    return f
+
+
+def check_type_scale_min(ctx):
+    """D.5 — heading steps descend monotonically: each level's
+    resolved minimum ≥10% under the level above, and every card
+    title smaller than its section heading."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    vals = {}
+    for p, css in dist_csss(ctx):
+        for vm in re.finditer(
+                r'(--(?:h[1-6]|fs-?\d+|text-[a-z0-9-]+))\s*:\s*clamp\('
+                r'\s*([\d.]+)(?:px|rem)', css):
+            n = float(vm.group(2))
+            if 'rem' in vm.group(0):
+                n *= 16
+            # cascade order: the later declaration wins
+            vals[vm.group(1)] = n
+    order = ['--h1', '--h2', '--h3', '--h4', '--h5', '--h6']
+    seq = [vals.get(k) for k in order]
+    seq = [s for s in seq if s]
+    for a, b, ka, kb in zip(seq, seq[1:], order, order[1:]):
+        if b >= a:
+            f.append(f'Q.5 {kb} ({b:.0f}px) ≥ {ka} ({a:.0f}px) — '
+                     'the scale must descend')
+        elif b > a * 0.92:
+            f.append(f'Q.5 {kb} ({b:.0f}px) only {100 - b / a * 100:.0f}% '
+                     f'under {ka} — steps need ≥8% separation')
+    return f
+
+
+def check_contrast_pairs(ctx):
+    """D.6 — element-level contrast: every color/background pairing
+    in emitted CSS (incl. data-surface overrides) meets the floor —
+    4.5:1 text, 3:1 ≥24px display or non-text chrome."""
+    if not _wave_ge(ctx, 'w7'):
+        return []
+    f = []
+    tokens = {}
+    for p, css in dist_csss(ctx):
+        for vm in re.finditer(r'(--[\w-]+)\s*:\s*([^;}]+)', css):
+            tokens[vm.group(1)] = vm.group(2).strip()
+    def resolve(v):
+        seen = set()
+        v = str(v)
+        for _ in range(12):
+            mm = re.search(r'var\((--[\w-]+)[^)]*\)', v)
+            if not mm or mm.group(1) in seen:
+                break
+            seen.add(mm.group(1))
+            v = v[:mm.start()] + str(
+                tokens.get(mm.group(1), '')) + v[mm.end():]
+        return v
+    def _hex_rgb(h):
+        h = h.lstrip('#')
+        if len(h) == 3:
+            h = ''.join(c * 2 for c in h)
+        if len(h) < 6:
+            return None
+        return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+    def _mix(parts):
+        """color-mix(in srgb, A p%, B) — weighted srgb blend."""
+        cm = re.fullmatch(
+            r'color-mix\(in srgb,\s*(.+?)\s+([\d.]+)%,\s*(.+)\)', parts)
+        if not cm:
+            return None
+        a, w, b = cm.group(1), float(cm.group(2)) / 100, cm.group(3)
+        ra, rb = _hex_rgb(_norm(a) or ''), _hex_rgb(_norm(b) or '')
+        if not ra or not rb:
+            return None
+        return '#%02x%02x%02x' % tuple(
+            round(ra[i] * w + rb[i] * (1 - w)) for i in range(3))
+    def _norm(v):
+        v = resolve(str(v).strip())
+        if v.startswith('color-mix('):
+            return _mix(v)
+        m = re.search(r'#[0-9a-fA-F]{3,8}\b', v)
+        if m:
+            return m.group(0)
+        if re.match(r'^(?:oklch|lch|lab|color)\(', v):
+            return v
+        return None
+    hx = _norm
+    for p, css in dist_csss(ctx):
+        name = os.path.basename(p)
+        for rm in re.finditer(r'([^{}@]+)\{([^}]*)\}', css):
+            sel, decl = rm.group(1).strip(), rm.group(2)
+            if '@' in sel or sel.startswith(':'):
+                pass
+            fg = re.search(r'(?<![-\w])color\s*:\s*([^;}]+)', decl)
+            bg = re.search(r'background(?:-color)?\s*:\s*([^;}]+)', decl)
+            if not fg or not bg:
+                continue
+            a, b = hx(fg.group(1)), hx(bg.group(1))
+            if not a or not b:
+                continue
+            r = contrast(a, b)
+            if r is None:
+                continue
+            fs = re.search(r'font-size\s*:\s*([^;}]+)', decl)
+            display = False
+            if fs:
+                vm = re.search(r'([\d.]+)(px|rem)', resolve(
+                    fs.group(1)) or '')
+                if vm:
+                    n = float(vm.group(1)) * (16 if vm.group(2)
+                                              == 'rem' else 1)
+                    display = n >= 24
+            floor = 3.0 if display else 4.5
+            if r < floor:
+                f.append(f'Q.6 {name} "{sel[:40]}": {r:.1f}:1 '
+                         f'< {floor}:1')
+    return f
+
+
 def check_receipts(ctx):
     """P.17 — nothing outside the pipeline: an artifact that exists on
     disk must be bound in GATES.json.artifacts to its passing wave."""
@@ -14696,6 +14924,8 @@ WAVE_CHECKS = {
            check_copy_fidelity, check_unsourced_quotes,
            check_light_paint, check_acss_tokens, check_fluid_sizes,
            check_design_system,
+           check_faq_collapsed, check_card_hierarchy, check_icon_ring,
+           check_gap_floor, check_type_scale_min, check_contrast_pairs,
            check_seal] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

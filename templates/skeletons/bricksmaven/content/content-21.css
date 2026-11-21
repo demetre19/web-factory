@@ -1,24 +1,9 @@
-  .content-21-container {
+  .wf-content-21 .content-21-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .content-21__content {
+  .wf-content-21 .content-21__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .content-21__image {
-    object-fit: cover;
-  }
-
-  .content-21::before {
-  	content:'';
-    width:50vw;
-    height:75%;
-    background-color:  var(--bg-subtle);
-    position:absolute;
-    left:0;
-    bottom:0;
   }

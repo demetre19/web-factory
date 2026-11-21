@@ -1,28 +1,13 @@
-  .testimonial-20-container {
+  .wf-testimonial-20 .testimonial-20-container {
     flex-direction: column;
-    row-gap: var(--space-xxl);
-    align-items: center;
   }
 
-  .testimonial-20-content__title {
-    text-align: center;
-  }
-
-  .testimonial-20-content__wrapper {
-    width: 100%;
+  .wf-testimonial-20 .testimonial-20-content__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-xxl);
   }
 
-  .testimonial-20-content__text {
-    text-align: center;
+  .wf-testimonial-20 .testimonial-20-content__text {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
-  }
-
-  .testimonial-20-content__media-img {
-    object-fit: cover;
-    width: 100%;
   }

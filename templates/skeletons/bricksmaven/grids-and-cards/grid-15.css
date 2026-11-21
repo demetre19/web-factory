@@ -1,52 +1,23 @@
-  .gridcard-15-container {
-    row-gap: var(--space-s);
-  }
-
-  .gridcard-15-head {
-    width: 100%;
-    text-align: center;
+  .wf-grid-15 .gridcard-15-head {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
   }
 
-  .gridcard-15-articles {
-    width: 100%;
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
+  .wf-grid-15 .gridcard-15-articles {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .gridcard-15-card {
+  .wf-grid-15 .gridcard-15-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
 
-  .gridcard-15-card__box {
-    width: 100%;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    /* bm: box-shadow omitted — token layer owns elevation */
+  .wf-grid-15 .gridcard-15-card__box {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    margin: -2.5em 0 0 0;
   }
 
-  .gridcard-15-card__title {
+  .wf-grid-15 .gridcard-15-card__title {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .gridcard-15-card__img {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .gridcard-15-card:hover .gridcard-15-card__title {
-  	color: var(--action-primary); 
   }

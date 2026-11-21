@@ -1,27 +1,17 @@
-  .hero-42 {
-    padding: 0 0 0 0;
+  .wf-hero-42 .hero-42 {
     display: flex;
   }
 
-  .hero-42__container {
+  .wf-hero-42 .hero-42__container {
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr) minmax(0, 4fr);
   }
 
-  .hero-42__content {
-    row-gap: var(--flow-spacing);
+  .wf-hero-42 .hero-42__content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
   }
 
-  .hero-42__image-left {
+  .wf-hero-42 .hero-42__image-left {
     display: flex;
-  }
-
-  .hero-42__image {
-    object-fit: cover;
-    width: 100%;
   }

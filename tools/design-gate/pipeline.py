@@ -666,6 +666,14 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
                             for s in _st)
                         if _bad or not _st:
                             os.remove(rp)
+                # artifact receipts bind to the wave + key that
+                # produced them: receipts for waves this run re-gates
+                # are stale verdicts too — left in place they fail
+                # P.17 before the wave can re-receipt
+                arts = g.get('artifacts') or {}
+                for rel, rec in list(arts.items()):
+                    if rec.get('wave') in later:
+                        arts.pop(rel)
                 json.dump(g, open(gp, 'w'), indent=2, sort_keys=True)
         except ValueError:
             pass                    # wave outside ORDER (site wave)

@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -45,29 +44,28 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-feature-73">
   <div class="sec-inner">
-    <div class="bm-feature-73__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
       {list.length > 0 &&       <div class="bm-feature-73-grid-ul">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-feature-73-card card">
-              <div class="bm-feature-73-card__content">
+            <div class="card">
+              <div>
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
               <div class="bm-feature-73-card__badge">
                 <p class="bm-feature-73-card__label text-fluid-0">{it.text}</p>
               </div>
-              {(it.items || []).length > 0 && <div class="bm-feature-service-list">
+              {(it.items || []).length > 0 && <div>
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-feature-service-item card">
                       <p class="text-fluid-0">{it2.text}</p>
-                      {it2.icon && <IconChip name={it2.icon} />}
                     </div>
                   ))}</div>
               </div>}
@@ -78,7 +76,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

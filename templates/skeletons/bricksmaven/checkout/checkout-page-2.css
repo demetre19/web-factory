@@ -1,91 +1,19 @@
-  .checkout-page-2__container {
+  .wf-checkout-page-2 .checkout-page-2__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
   }
 
-  .checkout-page-2__details {
+  .wf-checkout-page-2 .checkout-page-2__details {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    padding: 0 var(--space-l) var(--space-xl) 0;
   }
 
-  .intro {
-    text-align: center;
+  .wf-checkout-page-2 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-checkout-page-2 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-  }
-
-  .checkout-page-2__customer-details {
-    width: 100%;
-  }
-
-  .checkout-page-2__order {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .checkout-page-2__order-review {
-    width: 100%;
-  }
-
-  .checkout-page-2__customer-details {
-  
-  		--customer-details--primary: var(--text-primary);
-    	--focus-color: var(--action-primary);
-    
-  
-    	/* Change accent color of checkbox and radio */
-    	input[type="checkbox"],
-      input[type="radio"] {
-        accent-color: var(--action-primary);
-      }
-    	
-    	/* Set container of billing and shiiping fiedls to display flex */
-    	.col2-set {
-      display: flex;
-      flex-direction: column;
-      gap: var(--flow-spacing);
-  }
-    
-    .col-2 {
-      display: flex;
-      flex-direction: column;
-      gap: var(--flow-spacing);
-  }
-    
-    	/* Sets margin-bottom of h3 element */
-  		.woocommerce-shipping-fields > h3, .woocommerce-billing-fields > h3 {
-        margin-bottom: var(--space-m);
-      }
-    
-    #ship-to-different-address label {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .woocommerce-shipping-fields h3 span {
-      font-size: var(--fs-2) !important;
-      order: -1;
-      color: var(--action-primary);
-      font-weight: 700;
-      
-    }
-    
-  
-  
-  
-    
   }

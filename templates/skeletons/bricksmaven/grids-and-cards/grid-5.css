@@ -1,15 +1,9 @@
-  .gridcard-5-grid-ul {
+  .wf-grid-5 .gridcard-5-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-5-card {
+  .wf-grid-5 .gridcard-5-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-5-card-btn {
-    align-self: flex-start;
-    padding: 0 0 0 0;
   }

@@ -1,62 +1,14 @@
-  .contact-21 {
-    overflow: hidden;
-  }
-
-  .contact-21-container {
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-contact-21 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .contact-21-list-ul {
-    width: 70%;
-    margin: 0 auto 0 auto;
+  .wf-contact-21 .contact-21-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .contact-21-list-item {
+  .wf-contact-21 .contact-21-list-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-xs);
-  }
-
-  .contact-21-list-item__cta {
-    padding: 0 0 0 0;
-  }
-
-  .contact-21-form {
-    width: 80%;
-    margin: 0 auto 0 auto;
-    /* bm: box-shadow omitted — token layer owns elevation */
-    padding: var(--space-xxl) var(--space-xxl) var(--space-xxl) var(--space-xxl);
-  }
-
-  .contact-21-form__content {
-
-  }
-
-  .contact-21::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 160%;
-    height: 50%;
-    clip-path: polygon(0 0, 100% 0, 100% 70%, 0% 100%);
-    background-color: #F2F2F2;
-    z-index: -1;
-  }
-
-  .contact-21-list-item__cta:hover {
-  	color: var(--action-primary);
   }

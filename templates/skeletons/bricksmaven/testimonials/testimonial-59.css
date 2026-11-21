@@ -1,65 +1,25 @@
-  .bm-testimonial-59__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-testimonial-59 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--left {
+  .wf-testimonial-59 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .bm-testimonial-59__wrapper {
+  .wf-testimonial-59 .bm-testimonial-59__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-testimonial-59-card {
-    row-gap: calc(var(--flow-spacing) * 2);
-    padding: var(--space-xl) 0 0 0;
-  }
-
-  .bm-testimonial-59-card__client {
+  .wf-testimonial-59 .bm-testimonial-59-card__client {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: flex-start;
   }
 
-  .bm-testimonial-59-card__client-avatar {
-    object-fit: cover;
-    width: var(--space-xl);
-  }
-
-  .bm-testimonial-59-stats {
+  .wf-testimonial-59 .bm-testimonial-59-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .bm-testimonial-59-stats-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    row-gap: calc(var(--flow-spacing) / 3);
-    justify-content: center;
-  }
-
-  .bm-testimonial-59-card__review-text::before {
-    content:'"';
-    position: absolute;
-    inset-block-start: 0;
-    font-size: var(--fs-4);
-    line-height:1;
   }

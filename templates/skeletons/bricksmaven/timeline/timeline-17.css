@@ -1,84 +1,13 @@
-  .bm-timeline-17 {
-    overflow: clip;
-  }
-
-  .bm-timeline-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-timeline-17 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--split {
+  .wf-timeline-17 .intro--split {
     display: grid;
-    text-align: left;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-timeline-17-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-timeline-17-card__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-timeline-17-card__year-wrapper {
+  .wf-timeline-17 .bm-timeline-17-card__year-wrapper {
     display: flex;
-    justify-content: center;
-    align-self: flex-start;
-    align-items: center;
-  }
-
-  .bm-timeline-17-card__year {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-  }
-
-  .bm-timeline-17__slider-nested .splide__track {
-    overflow: visible;
-  }
-  
-  .bm-timeline-17__slider-nested .splide__arrow--next {
-      left: var(--space-xl);
-  }
-
-  .bm-timeline-17-card::before {
-    content: '';
-    position: absolute;
-    inline-size: calc(100% + var(--space-m));
-    block-size: calc(0.125rem + 0vw);
-    background-color: var(--text-secondary);
-    inset-block-start: calc(var(--space-l) + var(--space-s));
-  }
-  
-  .bm-timeline-17-card__year-wrapper {
-    z-index: 1;
-  }
-  
-  .bm-timeline-17-card__year::before {
-    content: '';
-    position: absolute;
-    inline-size: calc(100% + var(--space-m));
-    block-size: calc(0.25rem + 0vw);
-    background-color: var(--bg-subtle);
-    inset-block-start: var(--space-s);
-    inset-inline-start: calc(-1 * (var(--space-m) / 2));
-    z-index: -100;
   }

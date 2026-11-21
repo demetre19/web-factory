@@ -1,40 +1,18 @@
-  .gridcard-19-ct {
-    display: grid;
-    width: 100%;
-    gap: 3.125em;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .gridcard-19-article {
+  .wf-grid-19 .gridcard-19-ct {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-19-article__meta {
+  .wf-grid-19 .gridcard-19-article {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    /* bm: box-shadow omitted — token layer owns elevation */
   }
 
-  .gridcard-19-article__detail {
+  .wf-grid-19 .gridcard-19-article__meta {
     display: grid;
-    gap: .5em;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-19-article__thumb {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .gridcard-19-box:nth-child(2) {
-  	grid-row: span 2;
-  }
-
-  .gridcard-19-article:hover a {
-  	color: var(--action-primary);
-  }
-
-  .gridcard-19-article__title > a::after {
-  	z-index: 1;
+  .wf-grid-19 .gridcard-19-article__detail {
+    display: grid;
   }

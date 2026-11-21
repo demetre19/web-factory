@@ -51,31 +51,24 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-newsletter-11">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-newsletter-11__container">
-      <div class="bm-newsletter-11__newsletter">
-        <div class="bm-newsletter-11__top">
+    <div>
+      <div>
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-          {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+          {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <form class="bm-form-widget bm-form-widget--width" novalidate>
+        <form class="bm-form-widget" novalidate>
         </form>
       </div>
-      {links.length > 0 && <div class="bm-testimonial-40-list bm-testimonial-40-list--alt">{(links || []).map((it) => (
+      {links.length > 0 && <div class="bm-testimonial-40-list--alt">{(links || []).map((it) => (
             <div class="bm-testimonial-40-card card">
-              <div class="bm-testimonial-40-card__content">
-                <div class="bm-testimonial-40-card__top">
-                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
-                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                        <div class="card">
-                          {it2.icon && <IconChip name={it2.icon} />}
-                        </div>
-                      ))}</div>
-                  </div>}
+              <div>
+                <div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="bm-testimonial-40-card__client">
@@ -92,7 +85,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   </div>
   {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

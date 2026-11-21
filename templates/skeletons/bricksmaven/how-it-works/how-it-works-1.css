@@ -1,54 +1,24 @@
-  .hworks-1-container {
+  .wf-how-it-works-1 .hworks-1-container {
     grid-template-columns: 1fr 3fr;
     display: grid;
-    gap: var(--space-s);
   }
 
-  .hworks-1-intro {
+  .wf-how-it-works-1 .hworks-1-intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: flex-start;
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hworks-grid-ul {
+  .wf-how-it-works-1 .hworks-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-s);
   }
 
-  .hworks-card {
+  .wf-how-it-works-1 .hworks-card {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    column-gap: var(--space-s);
   }
 
-  .hworks-card__content {
+  .wf-how-it-works-1 .hworks-card__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .hworks-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-grid-ul li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:var(--space-m);
-    padding-block:calc(0.4rem + 0vw);
-    color:var(--action-primary);
   }

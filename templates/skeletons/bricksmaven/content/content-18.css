@@ -1,38 +1,9 @@
-  .content-18-container {
+  .wf-content-18 .content-18-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .content-18__content {
+  .wf-content-18 .content-18__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .content-18__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .content-18::before {
-  	content:"";
-    width:20vw;
-    height:50%;
-    background-color: var(--bg-subtle);
-    position:absolute;
-    left:0;
-    top:50%;
-    transform: translateY(-50%);
-  }
-  
-  @media (max-width:478px) {
-  	.content-18::before {
-    height:100%;
-    width:50%;
-  }
   }

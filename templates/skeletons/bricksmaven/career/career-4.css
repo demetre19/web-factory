@@ -1,63 +1,25 @@
-  .bm-career-4__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-career-4 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-career-4-list {
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
+  .wf-career-4 .bm-career-4-list {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
-  .bm-career-4-card {
-    row-gap: calc(var(--flow-spacing) / 2);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    width: auto;
-  }
-
-  .bm-career-4-card__footer {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-career-meta-list {
+  .wf-career-4 .bm-career-4-card__footer {
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    width: auto;
   }
 
-  .bm-career-meta-item {
+  .wf-career-4 .bm-career-meta-list {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .wf-career-4 .bm-career-meta-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-career-4-card {
-    transition: 0.1s ease;
-  }
-  
-  .bm-career-4-card:hover, .bm-career-4-card:focus-within {
-    transform: translateY(calc(-1 * var(--space-xs)));
-    background-color: var(--bg-canvas);
-    color: var(--fs-0);
-    border: calc(0.0625rem + 0vw) solid var(--bg-subtle);
-    box-shadow: var(--shadow-card);
   }

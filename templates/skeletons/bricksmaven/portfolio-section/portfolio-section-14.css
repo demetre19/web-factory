@@ -1,96 +1,37 @@
-  .bm-portfolio-section-14__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-14 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-portfolio-section-14__intro {
-    width: 100%;
-  }
-
-  .bm-portfolio-section-14-feature-list {
-    row-gap: var(--space-s);
-  }
-
-  .bm-portfolio-section-14-card {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    overflow: hidden;
-  }
-
-  .bm-portfolio-section-14-card__cover {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-portfolio-section-14 .bm-portfolio-section-14-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-section-14-card__content {
-    justify-content: space-between;
+  .wf-portfolio-section-14 .bm-portfolio-section-14-card__cover {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-section-14-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-    margin: 0 0 var(--section-space-xxl) 0;
-  }
-
-  .bm-list {
+  .wf-portfolio-section-14 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item {
+  .wf-portfolio-section-14 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item__icon-wrapper {
-    width: var(--space-m);
+  .wf-portfolio-section-14 .bm-list-item__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
-  .bm-list-item__text {
-    text-align: left;
-  }
-
-  .bm-portfolio-section-14-card__testimonial {
-    justify-content: space-between;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .testimonial-list-card__profile {
+  .wf-portfolio-section-14 .testimonial-list-card__profile {
     display: flex;
-    column-gap: var(--space-s);
-    align-items: center;
   }
 
-  .testimonial-list-card__meta {
+  .wf-portfolio-section-14 .testimonial-list-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: calc(--content-gap / 2);
-  }
-
-  .bm-portfolio-section-14-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-portfolio-section-14-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-portfolio-section-14-card:hover, .bm-portfolio-section-14-card:focus-within {
-    box-shadow: var(--shadow-card);
   }

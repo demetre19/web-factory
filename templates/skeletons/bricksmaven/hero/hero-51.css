@@ -1,34 +1,9 @@
-  .hero-51 {
-    overflow: hidden;
-  }
-
-  .hero-51__container {
+  .wf-hero-51 .hero-51__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .hero-51__media-left {
+  .wf-hero-51 .hero-51__media-left {
     display: flex;
-    align-items: flex-end;
     flex-wrap: nowrap;
-  }
-
-  .hero-51__image {
-    width: 50vw;
-    object-fit: cover;
-  }
-
-  .hero-51__content {
-    row-gap: var(--flow-spacing);
-    text-align: center;
-    align-items: center;
-  }
-
-  .hero-51__media-right {
-    margin: 0 0 calc(-1 * var(--section-space-xxl)) 0;
-  }
-
-  .hero-51__image--alt {
-    width: 50vw;
-    object-fit: cover;
   }

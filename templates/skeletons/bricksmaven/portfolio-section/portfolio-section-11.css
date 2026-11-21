@@ -1,37 +1,13 @@
-  .bm-portfolio-section-11__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-11 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-portfolio-related-list {
+  .wf-portfolio-section-11 .bm-portfolio-related-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portfolio-related-card {
-    justify-content: flex-end;
-  }
-
-  .bm-portfolio-related-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
+  .wf-portfolio-section-11 .bm-portfolio-related-card__content {
     display: flex;
-  }
-
-  .bm-portfolio-related-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-portfolio-related-card {
-    aspect-ratio: 4/3;
   }

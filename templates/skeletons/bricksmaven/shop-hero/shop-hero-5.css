@@ -1,87 +1,29 @@
-  .bm-shop-hero-5__container {
+  .wf-shop-hero-5 .bm-shop-hero-5__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .bm-shop-hero-5__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-shop-hero-5__top {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .cta-combo {
+  .wf-shop-hero-5 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-shop-hero-5__grid {
+  .wf-shop-hero-5 .bm-shop-hero-5__grid {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .bm-shop-hero-5__new-arrival {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: flex-end;
-  }
-
-  .bm-shop-hero-5__button-wrapper {
+  .wf-shop-hero-5 .bm-shop-hero-5__button-wrapper {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .bm-shop-hero-5__image-alpha {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-shop-hero-5__content {
+  .wf-shop-hero-5 .bm-shop-hero-5__content {
     flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
   }
 
-  .bm-shop-hero-5__header {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-shop-hero-5__link {
-    margin: auto 0 0 0;
-  }
-
-  .bm-shop-hero-5__limited-offers {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: flex-end;
-  }
-
-  .bm-shop-hero-5__offer {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-shop-hero-5 .bm-shop-hero-5__offer {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-shop-hero-5__left-column {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-shop-hero-5__image-beta {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-shop-hero-5__new-arrival {
-    aspect-ratio: 4/6;
-  }
-
-  @media (max-width:478px) {
-    .bm-shop-hero-5__limited-offers {
-    aspect-ratio: 6/4;
-  }
   }

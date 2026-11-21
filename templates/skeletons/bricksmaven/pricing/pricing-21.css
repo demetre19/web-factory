@@ -1,91 +1,23 @@
-  .bm-pricing-21__container {
-    row-gap: var(--space-s);
-    align-items: center;
-    width: var(--content-width);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-pricing-21 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .bm-pricing-21-pricing-wrapper {
+  .wf-pricing-21 .bm-pricing-21-pricing-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-pricing-21-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-pricing-21-card__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-pricing-21-card__media {
-    width: 128;
-  }
-
-  .bm-pricing-21-card__image {
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .bm-pricing-21-card__footer {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-list {
+  .wf-pricing-21 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item {
+  .wf-pricing-21 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item__icon-wrapper {
-
-  }
-
-  .bm-list-item__text {
-    text-align: left;
-  }
-
-  .bm-pricing-21-card__cta-wrapper {
-    align-items: center;
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-pricing-21-card__pricing-wrapper {
+  .wf-pricing-21 .bm-pricing-21-card__pricing-wrapper {
     display: flex;
-    align-items: baseline;
-  }
-
-  .bm-pricing-21__review-wrapper {
-    align-items: center;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-pricing-21-card__pricing::before {
-  	content: '$';
-    position: absolute;
-    font-size: var(--fs-0);
-    top: calc(-1 * var(--space-xs));
-    left: calc(-1 * (var(--space-xs)) / 2);
-      
-  }
-
-  .bm-list-item {
-  	--circle-size: var(--fs-0);
   }

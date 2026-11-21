@@ -51,32 +51,31 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-product-list-3">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
     <div class="product-list-3__container">
       <div class="product-list-3__content">
-        {head && <h1 class="product-list-3-card__heading text-fluid-4">{head}</h1>}
+        {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
       {list.length > 0 &&       <div class="product-list-3__list">
         {list.length > 0 && <div class="product-list-3-card__container">{(list || []).map((it) => (
               <div class="product-list-3-card card">
-                <div class="product-list-3-card__content">
-                  <h3 class="product-list-3-card__heading text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <div>
+                  {it.icon && <IconChip name={it.icon} />}
+                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="grid-auto gap-fluid-l">
-                  <p class="product-list-3__category text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <div class="product-list-3__footer">
+                <div>
                   <div class="product-list-notice-rect__sale-badge">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
-                  <div></div>
-                  <div class="product-list-3__button"></div>
                 </div>
               </div>
             ))}</div>}
@@ -88,7 +87,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

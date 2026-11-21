@@ -1,105 +1,14 @@
-  .grid-24-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-grid-24 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .grid-24-list {
+  .wf-grid-24 .grid-24-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .grid-24-card {
+  .wf-grid-24 .grid-24-card {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 1.2);
-  }
-
-  .grid-24-card {
-  	border-radius: var(--r-card);
-  }
-  
-  .grid-24-card__icon {
-  	order: -1;
-  }
-  
-  .grid-24-card:nth-child(odd) {
-  	background-color: var(--bg-subtle);
-  	color: var(--bg-subtle);
-  }
-  
-  
-  .grid-24-card:nth-child(even) {
-  	background-color: var(--action-primary);
-  	color: var(--bg-canvas);
-  }
-  
-  .grid-24-card:nth-child(even) .grid-24-card__icon {
-  	font-size: var(--space-xxl);
-  }
-  
-  .grid-24-card:nth-child(odd) .grid-24-card__icon {
-  	font-size: var(--space-xxl);
-  }
-  
-  .grid-24-card:nth-child(1) {
-  	grid-area: 1 / 1 / 4 / 2;
-  }
-  
-  .grid-24-card:nth-child(2) {
-    grid-area: 1 / 2 / 3 / 3
-  }
-  
-  .grid-24-card:nth-child(3) {
-    grid-area: 1 / 3 / 4 / -1;
-  }
-  
-  .grid-24-card:nth-child(4) {
-  	grid-area: 4 / 1 / -1 / 2;
-  }
-  
-  .grid-24-card:nth-child(5) {
-  	grid-area: 3 / 2 / -1 / 3;
-  }
-  
-  .grid-24-card:nth-child(6) {
-  	grid-area: 4 / 3 / -1 / -1;
-  }
-  
-  @media (max-width: 767px) {
-  	.grid-24-card:nth-child(1), .grid-24-card:nth-child(2), .grid-24-card:nth-child(3), .grid-24-card:nth-child(4), .grid-24-card:nth-child(5), .grid-24-card:nth-child(6) {
-  		grid-area: span 1;
-  }
-    
-    .grid-24-card:nth-child(3) {
-    	order: 4;
-    }
-    
-    .grid-24-card:nth-child(6) {
-    	order: 5;
-    }
-    
-    .grid-24-card:nth-child(even) .grid-24-card__icon {
-  	font-size: var(--space-xxl);
-  }
-  }
-  
-  @media (max-width: 478px) {
-    
-    .grid-24-card:nth-child(3) {
-    	order: unset;
-    }
-    
-    .grid-24-card:nth-child(6) {
-    	order: unset;
-    }
-    
   }

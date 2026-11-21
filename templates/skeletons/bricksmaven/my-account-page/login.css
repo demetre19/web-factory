@@ -1,33 +1,9 @@
-  .bm-woo-login {
-    justify-content: center;
-  }
-
-  .bm-woo-login__container {
-    row-gap: var(--space-s);
-    width: 100%;
-  }
-
-  .intro {
-    text-align: center;
+  .wf-login .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .bm-woo-login__cover {
+  .wf-login .bm-woo-login__cover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .bm-woo-login__column {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--space-m);
-  }
-
-  .bm-woo-login__column:nth-child(1) {
-    background-color: var(--fs-0);
-    border-radius: var(--r-card);
   }

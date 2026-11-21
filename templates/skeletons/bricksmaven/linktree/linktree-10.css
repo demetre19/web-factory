@@ -1,71 +1,10 @@
-  .bm-linktree-10__container {
-    align-items: center;
-  }
-
-  .bm-linktree-10__link-cover {
+  .wf-linktree-10 .bm-linktree-10__link-cover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    width: 100%;
   }
 
-  .bm-linktree-10-bio {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-    justify-content: flex-end;
-    overflow: hidden;
-    margin: var(--space-xl) 0 0 0;
-  }
-
-  .bm-linktree-10-bio__content {
-
-  }
-
-  .bm-linktree-10-bio__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-social-share {
+  .wf-linktree-10 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-linktree-10__links {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-xl) var(--section-space-xxl) var(--space-xl) var(--section-space-xxl);
-  }
-
-  .bm-linktree-9__link-row {
-    row-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-linktree-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-card {
-    text-align: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    align-items: center;
-  }
-
-  .bm-linktree-10-bio__social-position {
-    inline-size: auto;
-    block-size: auto;
-    position: absolute;
-    inset-block-end: var(--space-s);
-    inset-inline-start: var(--space-s);
-    z-index: 1;
-    writing-mode: vertical-lr;
-  }
-  
-  .bm-linktree-10-bio__social-position .bm-social-share__icon {
-    color: var(--bg-canvas);
   }

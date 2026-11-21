@@ -1,59 +1,14 @@
-  .hworks-19-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-19 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-19__content {
+  .wf-how-it-works-19 .hworks-19__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hworks-19-card {
+  .wf-how-it-works-19 .hworks-19-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .hworks-19-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .hworks-19__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .hworks-19-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-19-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:var(--space-s);
-    padding-block:calc(0.4rem + 0vw);
-    color:var(--bg-canvas);
-    font-size: var(--fs-0);
-    font-weight: 700;
-    border-radius: 100%;
-    position:absolute;
-    left:calc(var(--space-s) * -1);
-      top:0%;
-    transform: translateY(-50%);
-    
   }

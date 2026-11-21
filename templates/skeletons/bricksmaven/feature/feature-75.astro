@@ -51,15 +51,15 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-feature-75">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-feature-75__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
       {links.length > 0 &&       <div class="bm-feature-75__cover">
         {links.length > 0 &&         <div class="bm-feature-75-accordion-nestable">
@@ -67,12 +67,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="card">
                 <div class="bm-feature-75-accordion-item__title">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  {it.icon && <IconChip name={it.icon} />}
                 </div>
-                <div class="bm-feature-75-accordion-item__content">
+                <div>
                   <div class="bm-feature-75-accordion-item__inner grid-auto gap-fluid-l">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
-                    {it.icon && <IconChip name={it.icon} />}
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
@@ -82,7 +80,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
       </div>
       }
-      <div></div>
     </div>
   </div>
     </div>
@@ -90,7 +87,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   </div>
   {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

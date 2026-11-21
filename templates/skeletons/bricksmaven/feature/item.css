@@ -1,44 +1,19 @@
-  .feature-29-conatiner {
+  .wf-item .feature-29-conatiner {
     display: flex;
     flex-direction: column;
-    row-gap: var(--section-space-xxl);
   }
 
-  .intro {
-    text-align: center;
+  .wf-item .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .bm-gamma-feature-list-ul {
+  .wf-item .bm-gamma-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-l);
   }
 
-  .bm-gamma-feature-list-card {
+  .wf-item .bm-gamma-feature-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: center;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    text-align: center;
-  }
-
-  .bm-gamma-feature-list-card:nth-child(2) {
-  	background-color: var(--action-primary);
-    transform: translateY(-4rem);
-  }
-  
-  .bm-gamma-feature-list-card:nth-child(odd) {
-    color: var(--bg-canvas);
-  }
-  
-  @media (max-width:767px) {
-  	.bm-gamma-feature-list-card:nth-child(2) {
-    transform: translateY(0rem);
-  }
   }

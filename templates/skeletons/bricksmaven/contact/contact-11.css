@@ -1,42 +1,14 @@
-  .contact-11-container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-contact-11 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .contact-11-list-ul {
-    width: 100%;
+  .wf-contact-11 .contact-11-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-s);
   }
 
-  .contact-11-list-card {
+  .wf-contact-11 .contact-11-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
-    padding: var(--space-l) var(--space-s) var(--space-l) var(--space-s);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .contact-11-list-card::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: var(--space-s);
-    width: var(--space-xxl);
-    height: var(--space-s);
-    background-color: var(--action-primary);
   }

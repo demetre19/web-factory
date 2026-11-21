@@ -45,30 +45,28 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-shop-header-3">
   {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="bm-shop-header-3__top-container">
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
-      <div class="bm-shop-header-3__search-wrapper">
-        <div class="bm-shop-header-3__search"></div>
-      </div>
-      <div class="bm-shop-header-3__end">
-        <div>
+      {list.length > 0 &&       <div class="bm-shop-header-3__end">
+        {list.length > 0 &&         <div>
           {list.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 {(it.items || []).length > 0 &&                 <div class="card">
                   {(it.items || []).length > 0 && <div class="bm-megamenu-7__content">{((it.items || []) || []).map((it2) => (
                         {(it2.items || []).length > 0 && <div class="bm-megamenu-7__column-wrapper card">{((it2.items || []) || []).map((it22) => (
                               <div class="bm-megamenu-7__column card">
-                                <h3 class="text-fluid-1">{it22.icon && <IconChip name={it22.icon} />} {it22.term || it22.title}</h3>
-                                {(it22.items || []).length > 0 && <div class="bm-megamenu-7__card-wrapper">
+                                {it22.icon && <IconChip name={it22.icon} />}
+                                <h3 class="text-fluid-1">{it22.term || it22.title}</h3>
+                                {(it22.items || []).length > 0 && <div>
                                   <div class="grid-auto gap-fluid-m">{((it22.items || []) || []).map((it222) => (
-                                      <div class="bm-megamenu-card-link-5 card">
+                                      <div class="card">
                                         <a class="text-fluid-0" href={it222.href}>{it222.icon && <IconChip name={it222.icon} />} {it222.label || it222.term || it222.anchor || it222.text}</a>
                                         {(it222.label || it222.term || it222.anchor) && it222.text && <p class="text-fluid-0">{it222.text}</p>}
                                       </div>
@@ -81,25 +79,26 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 }
               ))}</div>
           </div>}
-          <div></div>
         </div>
-        <div></div>
+        }
       </div>
+      }
     </div>
-    <div class="bm-shop-header-3__footer-container">
-      <div>
-        {links.length > 0 && <div class="bm-shop-header-3__nav-items">
+    {links.length > 0 &&     <div class="bm-shop-header-3__footer-container">
+      {links.length > 0 &&       <div>
+        {links.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             ))}</div>
         </div>}
-        <div></div>
       </div>
+      }
     </div>
+    }
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

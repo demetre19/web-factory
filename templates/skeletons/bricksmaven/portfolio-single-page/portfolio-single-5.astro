@@ -51,19 +51,19 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-portfolio-single-5">
   <div class="sec-inner">
     <div class="bm-portfolio-single-5__container grid-auto gap-fluid-l">
-      <div class="bm-portfolio-single-5__intro">
-        {head && <h1 class="bm-portfolio-single-5__intro-heading text-fluid-4">{head}</h1>}
+      <div>
+        {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
-      {image && image.src && <figure class="bm-portfolio-single-5__featured-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
     <div class="bm-portfolio-single-5__overview-container">
-      {list.length > 0 &&       <div class="bm-portfolio-single-5__expertise">
-        {list.length > 0 && <div class="bm-portfolio-single-5-expetise-list">
+      {list.length > 0 &&       <div>
+        {list.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-portfolio-single-5-expetise-item card">
+              <div class="card">
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
@@ -71,49 +71,46 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
       </div>
       }
-      <div class="bm-portfolio-single-5__overview-content">
+      <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        <div class="bm-live-website-btn">
-          <div class="bm-live-website-btn__dot"></div>
-        </div>
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
     </div>
-    {image && image.src &&     <div class="bm-portfolio-single-5__wide-media-container">
+    {image && image.src &&     <div>
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-1col-media__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>
     }
-    {image && image.src &&     <div class="bm-portfolio-single-5__content-container">
+    {image && image.src &&     <div>
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-1col-media__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>
     }
-    <div class="bm-portfolio-single-5__cta-container">
-      <div class="bm-contact-widget-6">
+    <div>
+      <div>
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
     </div>
-    {links.length > 0 &&     <div class="bm-portfolio-single-5__footer-container">
+    {links.length > 0 &&     <div>
       {links.length > 0 && <div class="bm-portfolio-4-related-list">{(links || []).map((it) => (
-            <div class="bm-portfolio-4-related-card card">
-              <div class="bm-portfolio-4-related-card__content">
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+            <div class="card">
+              <div>
+                {it.icon && <IconChip name={it.icon} />}
+                <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
-                <p class="bm-portfolio-4-related-card__terms text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}</div>}
     </div>
     }
-    <div></div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

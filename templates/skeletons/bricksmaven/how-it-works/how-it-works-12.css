@@ -1,51 +1,14 @@
-  .hworks-12-container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-12 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-12-grid-list {
+  .wf-how-it-works-12 .hworks-12-grid-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hworks-12-card {
+  .wf-how-it-works-12 .hworks-12-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-m) var(--space-l) var(--space-m) var(--space-l);
-  }
-
-  .hworks-12-grid-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-12-grid-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:var(--space-l);
-    padding-block:var(--space-s);
-    color:var(--bg-canvas);
-    font-size: var(--fs-1);
-    font-weight: 700;
-    border-radius: 100%;
-    position:absolute;
-    left:calc(var(--space-l) * -1);
-      top:50%;
-    transform: translateY(-50%);
-    
   }

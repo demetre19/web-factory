@@ -1,57 +1,23 @@
-  .feature-28 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .feature-28-container {
+  .wf-feature-28 .feature-28-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .feature-28__content {
-    justify-content: center;
-    row-gap: var(--space-l);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-28 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .bm-feature-list-ul {
+  .wf-feature-28 .bm-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-    padding: 0 0 0 0;
   }
 
-  .bm-feature-list-card {
+  .wf-feature-28 .bm-feature-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
   }
 
-  .cta-combo {
+  .wf-feature-28 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .feature-28__media {
-    align-items: flex-end;
-  }
-
-  .feature-28__image {
-    object-fit: cover;
-    width: 50vw;
   }

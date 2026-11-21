@@ -1,79 +1,24 @@
-  .hworks-14-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-14 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-14-list {
-    width: 100%;
-    align-self: center;
-  }
-
-  .hworks-14-card {
+  .wf-how-it-works-14 .hworks-14-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hworks-14-card__line-wrapper {
+  .wf-how-it-works-14 .hworks-14-card__line-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .hworks-14-card__line {
-    width: calc(0.0625rem + 0vw);
-  }
-
-  .hworks-14-card__media {
+  .wf-how-it-works-14 .hworks-14-card__media {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: var(--space-l) 0 var(--space-l) 0;
   }
 
-  .hworks-14-card__image {
-    object-fit: cover;
-    overflow: hidden;
-    width: var(--space-xxl);
-  }
-
-  .hworks-14-card__content {
-    row-gap: var(--flow-spacing);
+  .wf-how-it-works-14 .hworks-14-card__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-  }
-
-  .hworks-14-list {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-  }
-  
-  
-  .hworks-14-list li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: var(--action-primary);
-    padding-inline:var(--space-l);
-    padding-block:var(--space-s);
-    color:var(--bg-canvas);
-    font-size: var(--fs-0);
-    font-weight: 700;
-    border-radius: 100%;
-    position:absolute;
-    left:0%;
-    top:0%;
-    transform: translateY(-50%);
-    transform: translateX(-45%);
-    
   }

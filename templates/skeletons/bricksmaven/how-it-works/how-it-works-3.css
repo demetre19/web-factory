@@ -1,67 +1,14 @@
-  .hworks-3-container {
+  .wf-how-it-works-3 .hworks-3-container {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
-    align-items: center;
   }
 
-  .hworks-intro {
+  .wf-how-it-works-3 .hworks-intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    text-align: center;
   }
 
-  .hworks-intro__heading {
-    margin: 0 0 0 0;
-  }
-
-  .hworks-3-grid-ul {
-    width: 100%;
-  }
-
-  .hworks-3-list-item {
-    margin: 0 0 var(--space-l) 0;
+  .wf-how-it-works-3 .hworks-3-list-item {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    column-gap: var(--space-s);
-  }
-
-  .hworks-3-grid-ul {
-    -moz-column-count: 2;
-    -moz-column-gap: var(--space-xl);
-    -webkit-column-count: 2;
-    -webkit-column-gap: var(--space-xl);
-    column-count: 2;
-    column-gap: var(--space-xl);
-  }
-  
-  .hworks-3-grid-ul {
-  /* Define & Initialize Counter */
-  	counter-reset: hworks-counter;
-    
-  }
-  
-  
-  .hworks-3-grid-ul li::before {
-    /* Increment Counter */
-    counter-increment: hworks-counter;
-    /* Display Counter */
-    content: counters(hworks-counter,".") " ";
-    background-color: color-mix(in srgb, var(--action-primary) 40%, transparent);
-    padding-inline:var(--space-m);
-    padding-block:calc(0.4rem + 0vw);
-    color:var(--action-primary);
-  }
-  
-  
-  @media (max-width:768px) {
-  
-  	.hworks-3-grid-ul {
-    -moz-column-count: 1;
-    -webkit-column-count: 1;
-    column-count: 1;
-  }
-  
   }

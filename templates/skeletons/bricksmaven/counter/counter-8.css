@@ -1,46 +1,19 @@
-  .counter-8-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-counter-8 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .counter-8-content {
+  .wf-counter-8 .counter-8-content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
   }
 
-  .counter-8-grid-ul {
+  .wf-counter-8 .counter-8-grid-ul {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .counter-8-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  .wf-counter-8 .counter-8-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
-  	grid-column: span 3;
-  }
-  
-  
-  @media (max-width:768px) {
-  	.counter-8-card:nth-child(1), .counter-8-card:nth-child(2) {
-  	grid-column: auto;
-  }
   }

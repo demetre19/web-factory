@@ -1,27 +1,14 @@
-  .gridcard-6-grid-ul {
+  .wf-grid-6 .gridcard-6-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .gridcard-6-card {
+  .wf-grid-6 .gridcard-6-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
   }
 
-  .gridcard-6-card__box-wrapper {
+  .wf-grid-6 .gridcard-6-card__box-wrapper {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-  }
-
-  .gridcard-6-card-btn {
-    align-self: flex-start;
-    padding: 0 0 0 0;
-  }
-
-  .gridcard-6-card__image {
-    width: 100%;
-    object-fit: cover;
   }

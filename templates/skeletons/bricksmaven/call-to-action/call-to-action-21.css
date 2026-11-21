@@ -1,36 +1,10 @@
-  .bm-cta-21-card {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
+  .wf-call-to-action-21 .bm-cta-21-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-cta-21-card__left {
-    row-gap: calc(var(--flow-spacing) / 1.4);
-  }
-
-  .bm-team-list {
+  .wf-call-to-action-21 .bm-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .bm-team-media__image {
-    object-fit: cover;
-    width: 53;
-    overflow: hidden;
-  }
-
-  .bm-cta-21-card__right {
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-
-  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: calc(var(--space-s) * -1);
-  }
-  
-  .bm-team-media:first-child {
-  	margin-inline-start: 0;
   }

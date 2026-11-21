@@ -1,36 +1,9 @@
-  .bm-portfolio-section-12__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-12 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-portfolio-4-related-list {
+  .wf-portfolio-section-12 .bm-portfolio-4-related-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .bm-portfolio-4-related-card {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portfolio-4-related-card__content {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-portfolio-4-related-card__terms {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-  }
-
-  .bm-portfolio-4-related-card__image {
-    width: 100%;
-    object-fit: cover;
   }

@@ -51,68 +51,50 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-remove-contents-and-delete-this-div">
   <div>
     <div class="sec-inner">
       <div class="bm-product-archive-4__header-container">
         {head && <h1 class="text-fluid-4">{head}</h1>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        <div class="bm-product-archive-4__breadcrumb-wrapper">
-          <div></div>
-        </div>
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
     </div>
     <div class="sec-inner">
-      <div class="bm-product-archive-4__container">
-        <div>
-          <div></div>
-        </div>
-        <div class="bm-product-archive-4__product-filters">
-          <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
-            <div class="bm-product-archive-filter-wrapper__toggle-button">
-              <div class="bm-product-archive-filter-wrapper__toggle"></div>
-            </div>
-            <div>
-              <div class="bm-product-archive-off-canvas__content">
-                <div class="bm-product-archive-2__filter-container">
+      <div>
+        {list.length > 0 &&         <div class="bm-product-archive-4__product-filters">
+          {list.length > 0 &&           <div class="bm-product-archive-filter-wrapper bm-product-archive-filter-wrapper--alt">
+            {list.length > 0 &&             <div>
+              {list.length > 0 &&               <div class="bm-product-archive-off-canvas__content">
+                {list.length > 0 &&                 <div class="bm-product-archive-2__filter-container">
                   {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                      <div class="bm-product-archive__filter-row card">
-                        <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
-                        <div></div>
+                      <div class="card">
+                        {it.icon && <IconChip name={it.icon} />}
+                        <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       </div>
                     ))}</div>}
-                  <div></div>
                 </div>
-                <div></div>
+                }
               </div>
-              <div></div>
+              }
             </div>
+            }
           </div>
-          <div class="bm-product-archive-1__sort-wrapper">
-            <div></div>
-            <div></div>
+          }
+        </div>
+        }
+        {image && image.src &&         <div class="bm-product-archive__product-list">
+          {image && image.src &&           <div class="product-list-1-card grid-auto gap-fluid-l">
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
+          }
         </div>
-        <div>
-          <div></div>
-        </div>
-        <div class="bm-product-archive__product-list">
-          <div class="product-list-1-card grid-auto gap-fluid-l">
-            <div class="product-list-1-card__content">
-              <div></div>
-            </div>
-            {image && image.src && <figure class="product-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          </div>
-        </div>
-        <div>
-          <div></div>
-        </div>
+        }
       </div>
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

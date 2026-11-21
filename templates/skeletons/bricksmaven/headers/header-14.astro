@@ -51,14 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
-  {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-  {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+<div class="wf-header-14">
   <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
-    {list.length > 0 &&     <div class="bm-header-14__top-container">
-      {list.length > 0 &&       <div class="bm-header-14__top-nav">
+    {list.length > 0 &&     <div>
+      {list.length > 0 &&       <div>
         {list.length > 0 &&         <div class="bm-header-14__top-nav-wrapper row between">
           {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
@@ -80,13 +77,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
       <div class="bm-header-14__cta row between">
-        <div></div>
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
     </div>
   </div>
-  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

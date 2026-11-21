@@ -1,57 +1,15 @@
-  .bm-linktree-7 {
-    padding: 0 0 0 0;
-  }
-
-  .bm-linktree-7__container {
-    width: 100%;
+  .wf-linktree-7 .bm-linktree-7__container {
     display: grid;
     grid-template-columns: calc(100% * 3 / 1);
   }
 
-  .bm-linktree-7__content {
-    justify-content: space-between;
-  }
-
-  .bm-linktree-7-bio {
+  .wf-linktree-7 .bm-linktree-7-bio {
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    justify-content: flex-start;
   }
 
-  .bm-linktree-7-bio__author-media {
-    width: auto;
-  }
-
-  .bm-linktree-7-bio__author-image {
-    object-fit: cover;
-    width: var(--space-xxl);
-  }
-
-  .bm-linktree-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-linktree-card {
-    text-align: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-    align-items: center;
-  }
-
-  .bm-social-share {
+  .wf-linktree-7 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-linktree-7__biography-image {
-    object-fit: cover;
-    width: 100%;
   }

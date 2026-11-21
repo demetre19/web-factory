@@ -1,82 +1,33 @@
-  .bm-feature-56__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-56 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--split {
-    display: grid;
-    text-align: left;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-56-feature-list {
+  .wf-feature-56 .intro--split {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-feature-56-feature-card {
-    overflow: hidden;
-  }
-
-  .bm-feature-56-feature-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-feature-56-feature-card__content {
-    justify-content: flex-end;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-56__footer {
+  .wf-feature-56 .bm-feature-56-feature-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-feature-56__sub-feature-list {
-    row-gap: var(--flow-spacing);
+  .wf-feature-56 .bm-feature-56__footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-list {
+  .wf-feature-56 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item {
+  .wf-feature-56 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item__icon-wrapper {
-    width: var(--space-m);
+  .wf-feature-56 .bm-list-item__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-list-item__text {
-    text-align: left;
   }

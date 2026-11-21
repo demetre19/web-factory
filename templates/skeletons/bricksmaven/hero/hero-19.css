@@ -1,34 +1,14 @@
-  .hero-19-container {
+  .wf-hero-19 .hero-19-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hero-19-content {
+  .wf-hero-19 .hero-19-content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    align-items: flex-start;
   }
 
-  .hero-19-content__tagline {
-    margin: 0 0 0 0;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-19-media {
+  .wf-hero-19 .hero-19-media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    gap: var(--space-s);
-  }
-
-  .hero-19-media__img {
-    object-fit: cover;
-    width: 100%;
   }

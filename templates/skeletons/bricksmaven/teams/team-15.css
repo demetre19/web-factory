@@ -1,44 +1,18 @@
-  .team-15-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-team-15 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .team-15-list {
+  .wf-team-15 .team-15-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .team-15-card__content {
+  .wf-team-15 .team-15-card__content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
   }
 
-  .team-15-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-15-card__footer {
-    padding: var(--space-s) 0 0 0;
-  }
-
-  .team-15-card__email-wrapper {
+  .wf-team-15 .team-15-card__email-wrapper {
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-15-card__image {
-    object-fit: cover;
-    width: 100%;
   }

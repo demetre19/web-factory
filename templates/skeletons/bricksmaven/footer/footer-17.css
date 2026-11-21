@@ -1,102 +1,36 @@
-  .bm-footer-17__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-footer-17__nav-wrapper {
-    width: auto;
-    align-self: center;
-  }
-
-  .bm-footer-17-nav-menu {
+  .wf-footer-17 .bm-footer-17-nav-menu {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-    width: auto;
   }
 
-  .bm-footer-17-nav-list {
-    align-items: center;
-    width: auto;
-  }
-
-  .bm-footer-17__contact-info {
+  .wf-footer-17 .bm-footer-17__contact-info {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-footer-17-address-list {
-    align-items: center;
-    text-align: center;
-  }
-
-  .bm-footer-17__footer {
-    padding: var(--space-m) 0 0 0;
+  .wf-footer-17 .bm-footer-17__footer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-social-share {
+  .wf-footer-17 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-social-share--left-center {
-    justify-content: flex-start;
-  }
-
-  .bm-footer-17__copyright-wrapper {
+  .wf-footer-17 .bm-footer-17__copyright-wrapper {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
   }
 
-  .bm-footer-17__payment-option-wrapper {
+  .wf-footer-17 .bm-footer-17__payment-option-wrapper {
     flex-direction: row;
-    justify-content: flex-end;
   }
 
-  .bm-footer-payment-options {
+  .wf-footer-17 .bm-footer-payment-options {
     display: flex;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
     flex-direction: row;
-    width: auto;
-  }
-
-  .bm-footer-option__image {
-    object-fit: contain;
-    width: 32;
-  }
-
-  .bm-footer-17-address-list:first-child {
-  	border-right: calc(0.0625rem + 0vw) solid var(--color-line-default);
-  }
-  
-  .bm-footer-17-address-list:last-child {
-  	border-left: calc(0.0625rem + 0vw) solid var(--color-line-default);
-  }
-  
-  
-  @media (max-width:767px) {
-  	
-    .bm-footer-17-address-list:first-child {
-  	border-right: none;
-    border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
-    padding-block-end: var(--space-s);
-  }
-  
-  .bm-footer-17-address-list:last-child {
-    border-left: none;
-  	border-top: calc(0.0625rem + 0vw) solid var(--color-line-default);
-    padding-block-start: var(--space-s);
-  }
-    
   }

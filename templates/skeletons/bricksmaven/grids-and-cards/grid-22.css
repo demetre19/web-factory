@@ -1,117 +1,20 @@
-  .grid-22-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-grid-22 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .grid-22-list {
+  .wf-grid-22 .grid-22-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .grid-22-card {
-    overflow: hidden;
-  }
-
-  .grid-22-card__front {
+  .wf-grid-22 .grid-22-card__front {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    text-align: center;
   }
 
-  .grid-22-card__back {
-    row-gap: var(--flow-spacing);
-    text-align: center;
-    align-items: center;
+  .wf-grid-22 .grid-22-card__back {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     flex-wrap: nowrap;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .grid-22-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* Card */
-  
-  .grid-22-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .grid-22-card:focus-within {
-  	box-shadow: 0 0 var(--space-xs) 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
-  
-  }
-  
-  /* Front */
-  
-  .grid-22-card__front {
-  	transition: .5s ease-in-out;
-    backdrop-filter: blur(10px);
-  }
-  
-  .grid-22-card:hover .grid-22-card__front, .grid-22-card:focus-within .grid-22-card__front {
-  	transform: translateY(100%);
-  }
-  
-  .grid-22-card__heading {
-  	transition: .4s ease-in-out;
-    writing-mode: vertical-rl;
-  }
-  
-  .grid-22-card:hover .grid-22-card__heading, .grid-22-card:focus-within .grid-22-card__heading {
-  	opacity: 0;
-  }
-  
-  
-  /* Back */
-  .grid-22-card__back {
-  	transition: .5s ease-in-out;
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  
-  .grid-22-card:hover .grid-22-card__back, .grid-22-card:focus-within .grid-22-card__back {
-  	transform: translateY(0%);
-    opacity: 1;
-  }
-  
-  /* Overlay */
-  .grid-22-card__overlay {
-  	transition: .5s ease-in-out;
-    opacity: 0;
-  }
-  
-  .grid-22-card:hover .grid-22-card__overlay, .grid-22-card:focus-within .grid-22-card__overlay {
-    opacity: 1;
-  }
-  
-  /* Image */
-  .grid-22-card__image {
-  	transition: .8s ease-in-out;
-    filter: blur(10px) grayscale(1);
-  }
-  
-  .grid-22-card:hover .grid-22-card__image, .grid-22-card:focus-within .grid-22-card__image {
-  	filter: blur(0px) grayscale(0);
-    scale: 1.1;
   }

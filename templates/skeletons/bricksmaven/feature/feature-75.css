@@ -1,96 +1,26 @@
-  .bm-feature-75__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-75 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-feature-75__cover {
+  .wf-feature-75 .bm-feature-75__cover {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    overflow: clip;
   }
 
-  .bm-feature-75-slider-media__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-feature-75-accordion-nestable {
+  .wf-feature-75 .bm-feature-75-accordion-nestable {
     display: flex;
     flex-direction: column;
   }
 
-  .bm-feature-75-accordion-item__title {
-    padding: 0 var(--space-s) 0 var(--space-s);
-    justify-content: space-between;
-    align-items: center;
+  .wf-feature-75 .bm-feature-75-accordion-item__title {
     flex-direction: row;
   }
 
-  .bm-feature-75-accordion-item__content {
-    margin: auto 0 0 0;
-  }
-
-  .bm-feature-75-accordion-item__inner {
-    row-gap: var(--flow-spacing);
-    justify-content: flex-end;
+  .wf-feature-75 .bm-feature-75-accordion-item__inner {
     flex-wrap: nowrap;
   }
 
-  .bm-feature-75-accordion-item__image {
-    object-fit: cover;
-    width: 100%;
+  .wf-feature-75 .bm-feature-75-accordion-item__image {
     display: none;
-  }
-
-  .bm-feature-75-accordion-item.brx-open {
-    /* block-size:calc(100% - (50px * 2)); */
-    flex-grow:1;
-  }  
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__title {
-    background-color: var(--bg-subtle);
-    color: var(--text-secondary) ;
-  
-  }
-  
-  .bm-feature-75-accordion-item:first-child .bm-feature-75-accordion-item__title {
-    border:none;
-  }
-  
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__content {
-    animation: tabPaneFadeIn 1s ease both;
-    opacity:1;
-  }
-  
-  .bm-feature-75-accordion-item.brx-open .bm-feature-75-accordion-item__heading {
-    color: var(--text-secondary) ;
-  }
-  
-  /* .bm-feature-75-accordion-item.brx-open {
-    animation: tabPaneFadeIn 1s ease both;
-  } */
-  
-  @keyframes tabPaneFadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(1px);
-    }
-  
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }

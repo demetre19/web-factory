@@ -1,47 +1,27 @@
-  .footer-3 {
-    row-gap: var(--space-m);
+  .wf-footer-3 .footer-3 {
     display: flex;
     flex-direction: column;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }
 
-  .footer-3-container {
+  .wf-footer-3 .footer-3-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .footer-menu-inline {
+  .wf-footer-3 .footer-menu-inline {
     display: flex;
     flex-direction: row;
-    column-gap: var(--space-m);
-    justify-content: center;
   }
 
-  .footer-social {
-    width: auto;
-  }
-
-  .footer-3-bottom {
+  .wf-footer-3 .footer-3-bottom {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-xs);
   }
 
-  .footer-legal-nav {
+  .wf-footer-3 .footer-legal-nav {
     flex-direction: row;
-    column-gap: var(--flow-spacing);
   }
 
-  .footer-3-bottom__right {
+  .wf-footer-3 .footer-3-bottom__right {
     display: flex;
-  }
-
-  .footer-3__lang {
-  	text-align: right;
-  }
-
-  .footer-social {
-  	justify-content: center;
   }

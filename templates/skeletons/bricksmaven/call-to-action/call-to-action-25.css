@@ -1,80 +1,29 @@
-  .bm-call-to-action-25__cta-block {
+  .wf-call-to-action-25 .bm-call-to-action-25__cta-block {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-call-to-action-25__content {
-    row-gap: var(--flow-spacing);
-    overflow: clip;
-  }
-
-  .bm-call-to-action-25__content-inner {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-list {
+  .wf-call-to-action-25 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item {
+  .wf-call-to-action-25 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-list-item__icon-wrapper {
-    width: var(--space-m);
+  .wf-call-to-action-25 .bm-list-item__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
-  .bm-list-item__text {
-    text-align: left;
-  }
-
-  .bm-call-to-action-25__content-image {
-    object-fit: cover;
-  }
-
-  .bm-call-to-action-25__contact {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-call-to-action-25__contact-inner {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-team-list {
+  .wf-call-to-action-25 .bm-team-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
   }
 
-  .bm-team-media__image {
-    object-fit: cover;
-    width: 53;
-    overflow: hidden;
-  }
-
-  .bm-call-to-action-25-contact-item {
+  .wf-call-to-action-25 .bm-call-to-action-25-contact-item {
     flex-direction: row;
-    align-items: center;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-team-media:nth-child(even),.bm-team-media:nth-child(odd) {
-  	margin-inline-start: calc(var(--space-s) * -1);
-  }
-  
-  .bm-team-media:first-child {
-  	margin-inline-start: 0;
   }

@@ -1,11 +1,9 @@
-  .gridcard-3-grid-ul {
+  .wf-grid-3 .gridcard-3-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .gridcard-3-card {
+  .wf-grid-3 .gridcard-3-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
   }

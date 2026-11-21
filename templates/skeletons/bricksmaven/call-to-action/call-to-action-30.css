@@ -1,37 +1,17 @@
-  .bm-cta-30-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  .wf-call-to-action-30 .bm-cta-30-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-cta-30-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-cta-30-contact-card {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .bm-cta-30-contact-card__top {
+  .wf-call-to-action-30 .bm-cta-30-contact-card__top {
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-cta-30-contact-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-  }
-
-  .bm-team-card__contact-details {
+  .wf-call-to-action-30 .bm-team-card__contact-details {
     flex-direction: column;
-    padding: 0 0 0 0;
   }
 
-  .bm-team-card__item {
-    column-gap: calc(var(--flow-spacing) / 4);
+  .wf-call-to-action-30 .bm-team-card__item {
     display: flex;
     flex-direction: row;
   }

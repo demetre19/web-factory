@@ -1,55 +1,23 @@
-  .hero-2 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .hero-2-container {
+  .wf-hero-2 .hero-2-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .hero-2__content {
+  .wf-hero-2 .hero-2__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-self: center;
-    row-gap: var(--space-m);
-    align-items: flex-start;
   }
 
-  .hero-2__cta {
+  .wf-hero-2 .hero-2__cta {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-2__trust {
-    row-gap: var(--space-xs);
-    margin: var(--space-l) 0 0 0;
+  .wf-hero-2 .hero-2__trust {
     display: flex;
     flex-direction: column;
-    width: 90%;
   }
 
-  .hero-2-logo-ul {
+  .wf-hero-2 .hero-2-logo-ul {
     display: flex;
-    row-gap: var(space-s);
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: var(--space-s);
-  }
-
-  .hero-2-logo-li__brand {
-    object-fit: contain;
-  }
-
-  .hero-2__image {
-    width: 100%;
-    object-fit: cover;
   }

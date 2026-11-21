@@ -1,38 +1,18 @@
-  .gridcard-13-container {
+  .wf-grid-13 .gridcard-13-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-xl);
   }
 
-  .gridcard-13-ct {
+  .wf-grid-13 .gridcard-13-ct {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-m);
   }
 
-  .gridcard-13-ct__detail {
+  .wf-grid-13 .gridcard-13-ct__detail {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-xs);
   }
 
-  .gridcard-13-ct__tag {
-    margin: 0 0 0 0;
-  }
-
-  .gridcard-13-ct__media {
-    width: 100%;
+  .wf-grid-13 .gridcard-13-ct__media {
     display: flex;
-  }
-
-  .gridcard-13-ct__img {
-    object-fit: cover;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .gridcard-13-ct:nth-child(even) .gridcard-13-ct__detail {
-  	order: 1;
   }

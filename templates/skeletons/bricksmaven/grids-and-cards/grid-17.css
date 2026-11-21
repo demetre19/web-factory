@@ -1,50 +1,27 @@
-  .gridcard-17-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-grid-17 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .gridcard-17-list {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .gridcard-17-card {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .gridcard-17-card__content {
+  .wf-grid-17 .gridcard-17-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-17-article__detail {
-    display: grid;
-    gap: .5em;
-  }
-
-  .gridcard-17-article__icon {
+  .wf-grid-17 .gridcard-17-card {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+    flex-direction: column;
   }
 
-  .gridcard-17-card__image {
-    object-fit: cover;
-    width: 100%;
+  .wf-grid-17 .gridcard-17-card__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-17-article__title > a::after {
-  	z-index: 1;
+  .wf-grid-17 .gridcard-17-article__detail {
+    display: grid;
+  }
+
+  .wf-grid-17 .gridcard-17-article__icon {
+    display: flex;
   }

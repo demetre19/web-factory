@@ -1,22 +1,13 @@
-  .gridcard-1-grid-ul {
+  .wf-grid-1 .gridcard-1-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  .gridcard-1-card {
+  .wf-grid-1 .gridcard-1-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    margin: 0 0 var(--space-s) 0;
-  }
-
-  .gridcard-1-card:nth-child(odd) {
-  
-  	border-right: calc(0.0625rem + 0vw) solid var(--bg-subtle);
-    
   }
 
   @media (max-width: 44rem) {
-    .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+    .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
   }

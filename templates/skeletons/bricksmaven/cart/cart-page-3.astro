@@ -50,25 +50,19 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-cart-page-3">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
     <div class="cart-page-3__container">
-      <div class="cart-page-3__intro">
+      <div>
         {head && <h1 class="cart-page-3__heading text-fluid-4">{head}</h1>}
       </div>
       <div>
-        <div></div>
-      </div>
-      <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
-        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+        {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
-      <div class="cart-page-3__cart-items-container">
-        <div></div>
-      </div>
-      <div class="cart-page-3__cart-totals-container">
+      {list.length > 0 &&       <div class="cart-page-3__cart-totals-container">
         {list.length > 0 && <div class="cart-page-3__review-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="cart-page-3-review card">
@@ -80,15 +74,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
             ))}</div>
         </div>}
-        <div class="cart-page-3__cart-totals"></div>
       </div>
+      }
     </div>
   </div>
     </div>
     {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
-  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
-  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {links.map((l) => <p class="mt-flow text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

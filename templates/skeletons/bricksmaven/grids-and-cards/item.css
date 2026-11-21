@@ -1,57 +1,24 @@
-  .gridcard-12-container {
+  .wf-item .gridcard-12-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .gridcard-12-ct {
-    width: 100%;
+  .wf-item .gridcard-12-ct {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--space-xs);
   }
 
-  .gridcard-12-ct__title {
-    margin: 0 0 0 0;
-  }
-
-  .gridcard-12-ct__cta {
-    padding: 0 0 0 0;
-  }
-
-  .gridcard-12-media {
-    width: 100%;
+  .wf-item .gridcard-12-media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .gridcard-12-media__box--light {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  .wf-item .gridcard-12-media__box--light {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .gridcard-12-media__box-cta {
-    padding: 0 0 0 0;
-  }
-
-  .gridcard-12-media__wrapper {
-    object-fit: cover;
-    margin: 0 0 0 0;
-    width: 100%;
-  }
-
-  .gridcard-12-media__img {
-    object-fit: cover;
-    margin: 0 0 0 0;
-    width: 100%;
-  }
-
-  .gridcard-12-media__box {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  .wf-item .gridcard-12-media__box {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }

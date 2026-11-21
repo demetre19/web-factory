@@ -1,64 +1,9 @@
-  .hero-44__content {
+  .wf-hero-44 .hero-44__content {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .hero-44__intro {
-    row-gap: var(--space-s);
-    justify-content: space-between;
-  }
-
-  .hero-44__media-big {
-    padding: var(--space-m) var(--space-xl) var(--space-m) var(--space-xl);
-    align-items: center;
-  }
-
-  .hero-44__image-big {
-    object-fit: cover;
-    margin: calc(var(--space-xl) * -1) 0 0 0;
-    overflow: hidden;
-    width: 100%;
-  }
-
-  .hero-44__media-small {
-    overflow: hidden;
-  }
-
-  .hero-44__image-small {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .hero-44__cta {
+  .wf-hero-44 .hero-44__cta {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .hero-44__image-big {
-  	transition: .5s ease;
-  }
-  
-  .hero-44__image-big:hover {
-  	box-shadow: var(--shadow-card);
-  }
-
-  .hero-44__image-small {
-  	transition: 1s ease;
-  }
-  
-  .hero-44__image-small:hover {
-  	scale:1.1;
-  }
-
-  .hero-44__cta {
-  	transition: .5s ease;
-  }
-  
-  .hero-44__cta:hover {
-  	background-color: var(--action-primary);
-    cursor: pointer;
   }

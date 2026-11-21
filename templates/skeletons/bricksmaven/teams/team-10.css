@@ -1,35 +1,19 @@
-  .team-10-container {
+  .wf-team-10 .team-10-container {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--space-s) * 2.4);
   }
 
-  .intro {
-    text-align: center;
+  .wf-team-10 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .team-10-content {
+  .wf-team-10 .team-10-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .team-10-card {
+  .wf-team-10 .team-10-card {
     display: flex;
-    align-items: center;
-    padding: calc(var(--space-xl) * 1.3) var(--space-m) var(--space-m) var(--space-m);
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    text-align: center;
-  }
-
-  .team-10-card__img {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
   }

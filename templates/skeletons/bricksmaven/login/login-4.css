@@ -1,94 +1,14 @@
-  .bm-login-4 {
-    overflow: hidden;
-  }
-
-  .bm-login-4__container {
+  .wf-login-4 .bm-login-4__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-login-4__login {
-    justify-content: center;
-  }
-
-  .login-form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-form-wrapper--alt {
-    max-width: var(--measure);
-  }
-
-  .login-footer {
+  .wf-login-4 .login-footer {
     display: flex;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
   }
 
-  .login-1__logged-in-heading-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-4__content {
-    row-gap: var(--flow-spacing);
+  .wf-login-4 .bm-login-4__content {
     display: flex;
     flex-direction: column;
   }
-
-  .bm-login-4__content-intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-4__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .login-form .form-group ul li {
-  	display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .login-form .form-group span {
-  	display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-  
-  .login-form .form-group span a, .login-form .form-group ul li label {
-  	font-size: var(--fs-0);
-  }
-  
-  .login-form .form-group:nth-child(4) {
-      align-items: end;
-  }
-
-  .bm-login-4__content::before {
-  	content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 50vw;
-    max-width: 50vw;
-    background-color: var(--bg-subtle);
-    z-index: -1;
-    
-  }
-  
-    @media (max-width:991px) {
-    
-      
-      .bm-login-4__content::before {
-        right: 0;
-        bottom: 0;
-        left: 50%;
-        width: 100vw;
-        max-width: 100vw;
-        margin-left: -50vw !important;
-  
-      }
-      
-    }

@@ -1,60 +1,27 @@
-  .testimonial-29-container {
+  .wf-testimonial-29 .testimonial-29-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .intro {
-    text-align: center;
+  .wf-testimonial-29 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .testimonial-29-intro {
-    text-align: left;
-    align-items: flex-start;
-  }
-
-  .testimonial-29-intro__desc {
-    text-align: left;
-  }
-
-  .testimonial-29-list-ul {
+  .wf-testimonial-29 .testimonial-29-list-ul {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
   }
 
-  .testimonial-29-list-card {
+  .wf-testimonial-29 .testimonial-29-list-card {
     display: flex;
-    column-gap: var(--space-xs);
-    justify-content: center;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    /* bm: box-shadow omitted — token layer owns elevation */
   }
 
-  .testimonial-29-list-card__meta {
+  .wf-testimonial-29 .testimonial-29-list-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    justify-content: center;
   }
 
-  .testimonial-29-list-card__profile {
+  .wf-testimonial-29 .testimonial-29-list-card__profile {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-s);
-  }
-
-  .testimonial-29-list-card__divider {
-    width: auto;
-  }
-
-  .testimonial-29-list-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
   }

@@ -44,7 +44,9 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
 :root {
   --text-wrap-heading: balance;
   --text-wrap-body: pretty;
-  --flow-spacing: var(--content-gap);
+  /* prose rhythm: consecutive paragraphs breathe at a small rung —
+     binding content-gap makes every paragraph read as its own block */
+  --flow-spacing: var(--space-xs);
   /* ACSS list vocab (U.10): markers' indent and item rhythm bind the
      spacing scale — no list-* tokens are emitted by clamp */
   --list-indent-spacing: var(--space-l);
@@ -113,6 +115,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .text-fluid-3 { font-size: var(--fs-3); }
   .text-fluid-4 { font-size: var(--fs-4); }
   .mt-stack { margin-block-start: var(--content-gap); }
+  /* prose paragraphs ride the small flow rung — mt-stack's
+     content-gap turns every paragraph into a separate block */
+  .mt-flow { margin-block-start: var(--flow-spacing); }
   .mt-fluid-s { margin-block-start: var(--space-s); }
   .mt-fluid-m { margin-block-start: var(--space-m); }
   .mt-fluid-l { margin-block-start: var(--space-l); }
@@ -286,6 +291,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             align-items: center; }
   .row.between { position: relative; }
   .nav-links.open { display: flex; flex-direction: column;
+            gap: var(--space-s);
             position: absolute; inset-inline: 0; top: 100%;
             background: var(--bg-canvas); padding: var(--space-m);
             border-bottom: 1px solid var(--border-default); }
@@ -390,7 +396,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               letter-spacing: .02em; }
   .rule { height: 1px; background: var(--border-default);
           border: 0; margin: 0; }
-  .flow-list { display: flex; flex-direction: column; }
+  .flow-list { display: flex; flex-direction: column;
+               gap: var(--space-xs); }
   .flow-row { display: grid; grid-template-columns: 4rem 1fr;
               gap: var(--space-m); padding-block: var(--space-m);
               border-top: 1px solid var(--border-default);

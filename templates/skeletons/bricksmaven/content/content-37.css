@@ -1,29 +1,4 @@
-  .content-37 {
-    overflow: hidden;
-  }
-
-  .content-37__container {
+  .wf-content-37 .content-37__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: calc(var(--space-m) * 2);
-  }
-
-  .content-37__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .content-37__image {
-    object-fit: cover;
-  }
-
-  .content-37__container::before {
-  	content:'';
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    background-color: var(--bg-subtle);
-    height: 100%;
-    width:calc(50vw + ((var(--content-width) / 12) * 6));
-    z-index:-1;
   }

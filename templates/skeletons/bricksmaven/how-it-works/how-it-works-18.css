@@ -1,33 +1,9 @@
-  .hworks-18-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-18 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-18-list {
+  .wf-how-it-works-18 .hworks-18-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .hworks-18-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .hworks-18-card:nth-child(2) {
-  		margin-block-start: calc(var(--space-m) * -1);
-  }
-  
-  @media (max-width:767px) {
-  	.hworks-18-card:nth-child(2) {
-  		margin-block-start: unset;
-  }
   }
