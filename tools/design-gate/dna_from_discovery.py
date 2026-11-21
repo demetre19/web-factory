@@ -235,7 +235,34 @@ def build(site_dir, offline=False):
     stype = disc['site_type']['value']
     brand = brief.get('brand') or {}
     vibe = disc.get('vibe') or {}
-    rec = T.derive(stype, seed=0, burst=0,
+    # the seed is the site's own identity: same inputs → same DNA
+    # (X.1 replay), different sites → different wildcard genes —
+    # otherwise every vertical collapses to the dominant-allele DNA
+    # and "a different design" is only ever a palette swap.
+    import hashlib
+    slug = (brief.get('site') or {}).get('slug') or \
+        os.path.basename(site_dir)
+    seed = int.from_bytes(hashlib.sha256(slug.encode()).digest()[:4],
+                          'big')
+    # design.variance — operator dial for how far the genotype may
+    # wander from the vertical's dominant alleles: 'low' nudges two
+    # stylistic genes, 'high' re-samples nearly every gene (see
+    # below), so a variant site is a different DESIGN, not a
+    # palette swap.
+    variance = str((brief.get('design') or {}).get('variance')
+                   or 'low').lower()
+    # at 'high' the pool widens past stylistic genes to every gene
+    # except the vibe-pinned mood pair — layout-archetype,
+    # page-macro-structure, columns, nav-pattern, surface-rhythm et al
+    # re-sample too, so the page SHAPE differs, not only its styling
+    pool = None
+    if variance == 'high':
+        pool = [g for g in T.genome.GENE_NAMES
+                if g not in ('mood-register', 'mood-energy')]
+        burst = len(pool)
+    else:
+        burst = {'none': 0, 'low': 2, 'medium': 6}.get(variance, 2)
+    rec = T.derive(stype, seed=seed, burst=burst, pool=pool,
                    declared={'accent': brand['accent']})
     prof = T.profile(stype)
     geno = dict(rec['genotype'])
@@ -248,7 +275,8 @@ def build(site_dir, offline=False):
         if g not in geno:
             geno[g] = max(alleles, key=alleles.get)
             gprov[g] = f"{prof.get('id')} dominant (not sampled by derive)"
-    rec = T.from_genotype(geno, stype, {'accent': brand['accent']})
+    rec = T.from_genotype(geno, stype, {'accent': brand['accent']},
+                          seed=seed)
     knobs = {k: v for k, v in rec['knobs'].items()
              if k in gate.knob_set()}
     pid = rec.get('profile') or f'profile-{stype}'

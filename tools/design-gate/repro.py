@@ -60,8 +60,9 @@ PAGE_COMPARE_DIRS = {'sections': ()}   # *.contract.json, *.gate.json
 EMIT_SKIP = {'node_modules', 'dist', '.git', '__pycache__', '.astro'}
 
 
-def _run(argv, cwd=None):
-    r = subprocess.run(argv, cwd=cwd, capture_output=True, text=True)
+def _run(argv, cwd=None, env=None):
+    r = subprocess.run(argv, cwd=cwd, env=env, capture_output=True,
+                       text=True)
     if r.returncode != 0:
         tail = (r.stdout + r.stderr).strip().split('\n')[-6:]
         raise SystemExit(
@@ -193,11 +194,19 @@ def rebuild(pdir, tmp):
     # BEFORE the site tree diff so site/src/pages/preview/*.astro and
     # the shells are producer output, byte-compared below.
     if full:
-        for flag in ('--layouts', '--variants', '--fine', '--system'):
-            if os.path.isfile(os.path.join(
-                    pdir, 'preview', flag[2:] + '.html')):
-                _run([PY, os.path.join(HERE, 'assemble.py'), t_pdir,
-                      flag])
+        # one astro build serves every picker: each emit only adds
+        # pages under src/pages and astro always builds them all,
+        # so defer the build to the LAST emit — 4 builds → 1
+        flags = [f for f in ('--layouts', '--variants', '--fine',
+                             '--system')
+                 if os.path.isfile(os.path.join(
+                     pdir, 'preview', f[2:] + '.html'))]
+        for i, flag in enumerate(flags):
+            env = dict(os.environ)
+            if i < len(flags) - 1:
+                env['WF_DEFER_BUILD'] = '1'
+            _run([PY, os.path.join(HERE, 'assemble.py'), t_pdir,
+                  flag], env=env)
 
     # compares run once every producer has landed: pipeline_emit
     # re-emits TOKENS.json (P1 shadow), the preview emitters write

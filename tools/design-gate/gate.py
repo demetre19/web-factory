@@ -2456,11 +2456,12 @@ def check_tile_is_system(ctx):
             if re.search(r'<[a-zA-Z]|\S', inner.strip()):
                 rendered.add(m.group(2))
         rendered |= set(re.findall(r'data-cell="([^"]+)"', tile))
-        if not _wave_ge(ctx, 'w6'):
-            # pre-build the contract set IS the component set — disk
-            # files may still hold last emit's comps (pruned at w6)
-            comp_names = {str(c.get('composition'))
-                          for c in build_contracts(ctx)}
+        # the contract set IS the component set — disk files may hold
+        # last emit's comps or picker-only comps kept alive by option
+        # preview pages (w6 can't prune those: w3/w4 gates still need
+        # the built option pages in dist)
+        comp_names = {str(c.get('composition'))
+                      for c in build_contracts(ctx)}
         for c in sorted(comp_names):
             if c not in rendered:
                 f.append(f'P.6 component {c} has no specimen on the '
@@ -3903,9 +3904,31 @@ MEDIA_CLASS_RX = {
 
 def _recipe_element_sig(recipe_id):
     """Canonical media classes in a bank recipe's elements[] —
-    the element-variant signature. [] means text-only."""
+    the element-variant signature. [] means text-only. Bank records
+    carry the element list in three shapes: a flat `elements` list
+    (.topo sidecars), a bricks `content` tree of named nodes, and a
+    `tree` of topo nodes — all three are scanned."""
     v = _recipe_topo_map().get(recipe_id) or {}
     els = ' '.join(str(e) for e in (v.get('elements') or [])).lower()
+    if not els:
+        parts = []
+        for node in (v.get('content') or []):
+            if isinstance(node, dict):
+                parts += [node.get('name'), node.get('label')]
+        for node in (v.get('tree') or []):
+            if isinstance(node, dict):
+                parts += [node.get('name'), node.get('tag'),
+                          node.get('label')]
+        # element_sig counts: {img: n, icn: n, vid: n, ...} — a
+        # present count means the recipe carries that media class
+        sig = v.get('element_sig') or {}
+        if sig.get('img'):
+            parts.append('image')
+        if sig.get('icn'):
+            parts.append('icon')
+        if sig.get('vid'):
+            parts.append('video')
+        els = ' '.join(str(p) for p in parts if p).lower()
     return sorted(k for k, rx in MEDIA_CLASS_RX.items()
                   if re.search(rx, els))
 
@@ -5620,6 +5643,11 @@ def check_fine_round(ctx):
     knobs on the LOOK winner, so rendered structure must evolve."""
     fp = ctx.find('preview/fine.html')
     if not fp:
+        if os.environ.get('WF_GATE_STAGE') != 'post-pick':
+            # the fine round nudges the pick — it is emitted after the
+            # pick exists, so pre-pick the file legitimately is not
+            # there yet
+            return []
         return ['P.18 preview/fine.html missing — the fine knob-nudge '
                 'round is produced after the look round, never skipped']
     stub = None
