@@ -623,19 +623,33 @@ def _checklist_receipt_fails(ctx, wave, t):
     if ctx.site_dir and ctx.site_dir != ctx.dir:
         rec_dirs.append(os.path.join(ctx.site_dir, '.receipts'))
     steps = []
+    f = []
+    key = op_key()
     for rd in rec_dirs:
         for rp in sorted(_g.glob(os.path.join(rd, '*.json'))):
             try:
-                steps += (json.load(open(rp)) or {}).get('steps') or []
+                rsteps = (json.load(open(rp)) or {}).get('steps') or []
             except Exception:
                 continue
+            for st in rsteps:
+                # provenance must be signed at write time (pipeline
+                # ._record signs with op_key) — an unsigned step is a
+                # forgeable receipt, never checklist evidence
+                want_sig = _sig(st, key) if key else None
+                if not want_sig or st.get('sig') != want_sig:
+                    f.append(f'P.9 .receipts/{os.path.basename(rp)} '
+                             f'step "{st.get("label")}" is unsigned '
+                             'or forged — receipts sign at write '
+                             'time; an unverifiable step proves '
+                             'nothing')
+                    continue
+                steps.append(st)
     outs = {}
     for st in steps:
         for rel, sha in (st.get('outputs') or {}).items():
             outs.setdefault(rel, set()).add(sha)
     # a file a tool genuinely produced must cite one of the recorded
     # output shas; several waves can legitimately write the same rel
-    f = []
     for line in t.split('\n'):
         m = re.match(r'\|\s*input\s+([^|]+?)\s*\|\s*(.*)\|\s*$', line)
         if not m:
@@ -3396,6 +3410,17 @@ def check_wildcard_random(ctx):
                      '(forged or spliced — the history is '
                      'append-only, each entry binds the last)')
             break
+        # a bare sha256 chain is forgeable — the writer is whoever
+        # holds the key. Every entry must HMAC-sign over its own
+        # record (hash included) with the operator key; an unsigned
+        # or re-built history reads as tampering, not a reset.
+        key = op_key()
+        want_sig = _sig(h, key) if key else None
+        if not want_sig or h.get('sig') != want_sig:
+            f.append(f'B.7 history entry {i} unsigned or badly '
+                     'signed — entries are appended by '
+                     'append_wildcard_history (op_key-signed); '
+                     'regenerating the file cannot mint them')
         if not isinstance(h.get('round'), int) or \
                 h['round'] <= last_round:
             f.append(f'B.7 history entry {i} round {h.get("round")} '
@@ -4991,6 +5016,17 @@ def check_receipts(ctx):
                 if rel not in wanted and rel not in named:
                     wanted[rel] = 'w4' if 'variants' in fn or \
                         'fine' in fn else 'w3'
+    # the signing key must live OUTSIDE the graded tree — a key
+    # inside ctx.dir is designer-writable, so a receipt signed by it
+    # proves nothing (the boundary is the operator home, not the
+    # pipeline dir)
+    kp = os.path.realpath(os.path.join(OPERATOR_HOME,
+                                       'operator.key'))
+    rd = os.path.realpath(ctx.dir)
+    if kp == rd or kp.startswith(rd + os.sep):
+        f.append('P.17 the receipt signing key resolves inside the '
+                 'pipeline dir — operator state must live outside '
+                 'the tree it grades')
     for rel, wv in sorted(wanted.items()):
         if wv == ctx.wave:
             # this wave's own artifacts are in transit — receipts bind
@@ -5095,8 +5131,10 @@ def check_seal(ctx):
         mp = os.path.join(d, seal.MANIFEST)
         if not os.path.isfile(mp):
             # unsealed evidence is a warn-tier gap — strict mode
-            # promotes it; --allow-warns keeps it advisory
-            if getattr(ctx.args, 'allow_warns', False):
+            # promotes it; --allow-warns keeps it advisory only
+            # inside a verified run (a bare CLI flag cannot
+            # downgrade — argv passthrough is not authority)
+            if _warns_allowed(ctx):
                 continue
             f.append(f'P.23 {dname}/: {len(files)} evidence files, '
                      'no seal manifest — run `seal.py adopt` to '
@@ -7731,8 +7769,8 @@ def render_dna_md(m):
         d = ', '.join(f'{k} {m.get("knobs", {}).get(k)}→{x}'
                       for k, x in sorted((v.get('deltas') or {}).items()))
         lines.append(f'- `{v.get("id")}` · {v.get("vector")} · '
-                     f'{d or "baseline"} · sheet '
-                     f'{v.get("sheet_pass")} · score {v.get("score")}')
+                     f'{d or "baseline"} · predicted score '
+                     f'{v.get("predicted_score")}')
     return '\n'.join(lines) + '\n'
 
 
@@ -8396,9 +8434,10 @@ def check_run_pin(ctx):
         f.append('X.2 approval public key changed since the run '
                  'started')
     tok = os.environ.get('PIPELINE_RUN')
-    if tok is not None and tok != str(run.get('token')):
-        f.append('X.2 PIPELINE_RUN token ≠ RUN.json — waves enter '
-                 'through pipeline.py only')
+    if tok is not None and not run_token_ok(run, tok):
+        f.append('X.2 PIPELINE_RUN token fails the RUN.json '
+                 'token_sig check — waves enter through pipeline.py '
+                 'only')
     return f
 
 
@@ -8452,7 +8491,9 @@ def check_operator_approvals(ctx):
         rp = ctx.find('RUN.json')
         if rp:
             try:
-                run_tok = json.load(open(rp)).get('token')
+                # the run binding inside a signed record is the
+                # keyed token_sig — the raw token is never on disk
+                run_tok = json.load(open(rp)).get('token_sig')
             except Exception:
                 run_tok = None
         if run_tok and rec.get('run') and str(rec.get('run')) != \
@@ -9616,7 +9657,7 @@ def _variant_fails(ctx, e):
     if not (e.get('deltas') or {}) and not e.get('baseline'):
         f.append(f'VG.2 variant {vid}: no deltas — a variant is a knob '
                  'vector, not a mood (mark the baseline one baseline: true)')
-    if not isinstance(e.get('score'), (int, float)):
+    if not isinstance(e.get('predicted_score'), (int, float)):
         f.append(f'VG.6 variant {vid}: no predicted score on the tile')
     # B F-31 — the W3 layout lock is frozen: NO non-baseline variant may
     # move a structural knob (wildcard or not); only the wildcard vector
@@ -9829,7 +9870,7 @@ def assemble_fine(ctx):
         deltas.update(deltas_i)
         variants[f'fv{i + 1}'] = ({
             'id': f'fv{i + 1}', 'vector': 'fine',
-            'score': entry.get('score') or 80,
+            'predicted_score': entry.get('predicted_score') or 80,
             'deltas': deltas,
             'wildcard_breaks': [],
             'pick_of': pick}, [])
@@ -10063,6 +10104,60 @@ def _sig(rec, key):
     body = {k: v for k, v in rec.items() if k != 'sig'}
     return hmac.new(key, json.dumps(body, sort_keys=True).encode(),
                     hashlib.sha256).hexdigest()[:32]
+
+
+def run_token_sig(token, key=None):
+    """The on-disk form of a run token: HMAC(operator key, token).
+    RUN.json stores ONLY this — the plaintext token never touches
+    disk, so reading RUN.json yields nothing usable as a bare
+    PIPELINE_RUN env value. None when no operator key exists."""
+    k = key or op_key()
+    if not k:
+        return None
+    # domain-separate from _sig(rec, key): _sig HMACs a record's
+    # canonical JSON, so a receipt step's sig would otherwise be a
+    # valid token_sig for PIPELINE_RUN=<that canonical string> — a
+    # tagged HMAC keeps the domains disjoint
+    return hmac.new(k, ('wf-run-token:' + str(token)).encode(),
+                    hashlib.sha256).hexdigest()[:32]
+
+
+def run_token_ok(run, env_tok, key=None):
+    """True iff PIPELINE_RUN (env) verifies against RUN.json's
+    token_sig under the operator key — the keyed compare replaces
+    plaintext equality."""
+    ts = (run or {}).get('token_sig')
+    want = run_token_sig(env_tok, key=key) if env_tok else None
+    return bool(ts) and bool(want) and hmac.compare_digest(
+        str(ts), want)
+
+
+def append_wildcard_history(d, genes, seed):
+    """The append-only RNG log writer — the ONLY producer of
+    WILDCARD-HISTORY.json entries. Each entry binds {round, genes,
+    seed} to the previous entry's hash AND to the operator key: a
+    deleted/regenerated history cannot mint valid sigs."""
+    p = os.path.join(d, 'WILDCARD-HISTORY.json')
+    try:
+        hist = json.load(open(p))
+        if not isinstance(hist, list):
+            hist = []
+    except Exception:
+        hist = []
+    prev = hist[-1] if hist and isinstance(hist[-1], dict) else {}
+    e = {'round': (prev.get('round') or 0) + 1,
+         'genes': sorted(str(g) for g in genes),
+         'seed': seed, 'prev': prev.get('hash') or 'genesis'}
+    rec = {'round': e['round'], 'genes': e['genes'],
+           'seed': e['seed'], 'prev': e['prev']}
+    e['hash'] = hashlib.sha256(json.dumps(
+        rec, sort_keys=True, separators=(',', ':')).encode()
+        ).hexdigest()
+    e['sig'] = _sig(e, op_key(create=True))
+    hist.append(e)
+    with open(p, 'w') as fh:
+        json.dump(hist, fh, indent=1)
+    return e
 
 
 def approvals_path(ctx):
@@ -10416,22 +10511,35 @@ def ancestry_fails(ctx):
     return f
 
 
+def _warns_allowed(ctx):
+    """--allow-warns counts only inside a verified run: an argv flag
+    on a bare gate.py invocation carries no authority to downgrade
+    WARN_CHECKS — the env token must satisfy RUN.json's keyed
+    token_sig first (X.2)."""
+    return bool(getattr(getattr(ctx, 'args', None), 'allow_warns',
+                        False)) and not _run_token_fails(ctx)
+
+
 def _run_token_fails(ctx):
     """X.2 — a wave runs only inside the orchestrator's run: RUN.json
-    exists and PIPELINE_RUN equals its token. The gate.py CLI must
-    not bypass the pin (attack 6g)."""
+    exists and PIPELINE_RUN verifies against its keyed token_sig.
+    The gate.py CLI must not bypass the pin (attack 6g)."""
     p = ctx.find('RUN.json')
     if not p:
         return ['X.2 RUN.json missing — waves enter through '
                 'pipeline.py only']
     try:
-        tok = json.load(open(p)).get('token')
+        run = json.load(open(p))
     except Exception:
         return ['X.2 RUN.json unparseable']
     env = os.environ.get('PIPELINE_RUN')
-    if env != str(tok):
-        return ['X.2 PIPELINE_RUN token ≠ RUN.json (or unset) — '
-                'waves enter through pipeline.py only']
+    # keyed/derived check: RUN.json stores token_sig =
+    # HMAC(op_key, token), never the token itself — the on-disk
+    # value cannot be replayed as a bare PIPELINE_RUN env
+    if not run_token_ok(run, env):
+        return ['X.2 PIPELINE_RUN token fails the RUN.json '
+                'token_sig check (or unset) — waves enter through '
+                'pipeline.py only']
     return []
 
 
@@ -10780,7 +10888,7 @@ def cli_selftest():
                        'sig': 'forged'}
         json.dump(_allr, open(_ap, 'w'))
         with open(os.path.join(pd_, 'RUN.json'), 'w') as fh:
-            json.dump({'token': 'selftest-tok'}, fh)
+            json.dump({'token_sig': run_token_sig('selftest-tok')}, fh)
         env2 = dict(env, PIPELINE_RUN='selftest-tok')
         r = subprocess.run(
             [sys.executable, os.path.join(HERE, 'run.py'), 'w4', pd_],
@@ -10952,6 +11060,10 @@ def cli_selftest():
     try:
         home = os.path.join(tmp, 'home')
         os.makedirs(home)
+        os.makedirs(os.path.join(home, '.web-factory'))
+        with open(os.path.join(home, '.web-factory', 'operator.key'),
+                  'w') as fh:
+            fh.write('fixture-key')
         gate_self.OPERATOR_HOME = os.path.join(home, '.web-factory')
         pdir = os.path.join(tmp, 'p')
         shutil.copytree(os.path.join(HERE, 'fixtures', '_base'), pdir,
@@ -10968,7 +11080,7 @@ def cli_selftest():
         # X.2 — run.py waves enter only inside a run: pin the token
         # and env the orchestrator would have set
         with open(os.path.join(pdir, 'RUN.json'), 'w') as fh:
-            json.dump({'token': 'selftest-tok'}, fh)
+            json.dump({'token_sig': run_token_sig('selftest-tok')}, fh)
         env = dict(os.environ, HOME=home, PIPELINE_RUN='selftest-tok')
         rp = os.path.join(HERE, 'run.py')
         r = subprocess.run([sys.executable, rp, 'w4', pdir],
@@ -12293,9 +12405,11 @@ def main():
             warns.extend(wchk(ctx))
         except Exception:
             pass
-    if warns and not a.allow_warns:
+    if warns and not _warns_allowed(ctx):
         # strict-by-default (SOP law): a warn is an unmet obligation
-        # — it promotes unless --allow-warns is declared deliberately
+        # — it promotes; --allow-warns counts only inside a verified
+        # run (PIPELINE_RUN token_sig-verified), so a bare gate.py
+        # invocation cannot downgrade WARN_CHECKS locally
         fails += [f'advisory→fail (strict): {w}' for w in warns]
     else:
         for w in warns:

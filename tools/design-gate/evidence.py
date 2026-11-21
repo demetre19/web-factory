@@ -128,6 +128,10 @@ def rebind(ctx):
     rv = json.load(open(rp))
     dist = gate._dist_sha(ctx)
     rv['dist_sha256'] = dist
+    # J.2's contract: rules_pass_hash and judgment_pass_hash are both
+    # "the artifact version that passed" — the dist sha of THIS build.
+    # They intentionally carry the same value: the check's point is
+    # equality (a post-judgment rebuild changes both together).
     rv['rules_pass_hash'] = dist
     rv['judgment_pass_hash'] = dist
     ev = rv.get('vlm_evidence') or {}

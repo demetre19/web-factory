@@ -910,14 +910,13 @@ def dna_doc():
         ],
         "variants": [
             {"id": "v1", "vector": "best-predicted", "baseline": True,
-             "deltas": {}, "sheet_pass": {"light": True, "dark": True},
-             "pass": True, "score": 84, "wildcard_breaks": []},
+             "deltas": {}, "predicted_score": 84,
+             "wildcard_breaks": []},
             {"id": "v2", "vector": "typography-led",
              "deltas": {"type.ratio": 1.3625, "type.display_weight": 800,
                         "type.tracking_display": -0.035,
                         "color.neutral_tint": 0.06},
-             "sheet_pass": {"light": True, "dark": True},
-             "pass": True, "score": 81, "wildcard_breaks": []},
+             "predicted_score": 81, "wildcard_breaks": []},
             # the wildcard must differ from every sibling in ≥3 knobs
             # the token emit actually renders (ROUND2 consumed-diff on
             # the real build) — radius/type.ratio/btn.padding_ratio
@@ -928,8 +927,7 @@ def dna_doc():
                         "type.ratio": 1.2,
                         "btn.padding_ratio": 2.5,
                         "elevation.level": 3},
-             "sheet_pass": {"light": True, "dark": True},
-             "pass": True, "score": 78,
+             "predicted_score": 78,
              "wildcard_seed": 424242,
              "wildcard_genes": ["radius.personality", "type.ratio",
                                 "btn.padding_ratio", "elevation.level"],
@@ -1009,6 +1007,10 @@ def _wild_hist():
            'seed': e['seed'], 'prev': e['prev']}
     e['hash'] = _h.sha256(json.dumps(
         rec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    # B.7 requires every entry to HMAC-sign over its own record
+    # (hash included) with the operator key — fixtures sign with the
+    # fixture key cmd_selftest provisions
+    e['sig'] = _fx_sig(e)
     return json.dumps([e])
 
 
@@ -1561,12 +1563,15 @@ MUT = {
     f'"brief_sha256": "{_sh(BRIEF)}"',
     '"brief_sha256": "deadbeef"')),
  'check_run_pin': mut(('SET','RUN.json',
-    json.dumps({"token": "bad-token",
+    json.dumps({"token_sig": gate.run_token_sig("bad-token",
+                                              b'fixture-key'),
                 "gate_sha256": "deadbeef",
                 "rules_sha256": "deadbeef",
                 "brief_sha256": "deadbeef"}))),
  'check_operator_approvals': mut(
-    ('SET','RUN.json', json.dumps({"token": "fixture-run"})),
+    ('SET','RUN.json', json.dumps(
+        {"token_sig": gate.run_token_sig("fixture-run",
+                                        b'fixture-key')})),
     ('SET','APPROVALS.json', json.dumps({
         "w3": {"wave": "w3", "inputs": "x", "dna": {},
                "by": "agent", "ts": "2026-11-19T00:00:00",
@@ -1875,7 +1880,8 @@ def main():
         hashlib.sha256(open(_pub_p, 'rb').read()).hexdigest()
         if os.path.isfile(_pub_p) else None)
     _run.setdefault('gate_sha256', _run['tools_sha256']['gate.py'])
-    _run.setdefault('token', 'fixture-run')
+    _run['token_sig'] = gate.run_token_sig('fixture-run',
+                                          b'fixture-key')
     _brf = os.path.join(base_dir, 'BRIEF.yaml')
     if os.path.isfile(_brf):
         _run['brief_sha256'] = hashlib.sha256(
@@ -1902,11 +1908,12 @@ def main():
     for _wv, _outs in _recs.items():
         rp = os.path.join(base_dir, '.receipts', _wv + '.json')
         os.makedirs(os.path.dirname(rp), exist_ok=True)
-        _rec = {'steps': [{
-            'label': f'fixture {_wv} producers',
-            'argv': ['pipeline_emit.py'],
-            'inputs': {}, 'outputs': _outs, 'rc': 0,
-            'ts': 'fixture'}]}
+        _step = {'label': f'fixture {_wv} producers',
+                 'argv': ['pipeline_emit.py'],
+                 'inputs': {}, 'outputs': _outs, 'rc': 0,
+                 'ts': 'fixture'}
+        _step['sig'] = _fx_sig(_step)
+        _rec = {'steps': [_step]}
         with open(rp, 'w') as fh:
             json.dump(_rec, fh, indent=1)
         BASE[f'.receipts/{_wv}.json'] = json.dumps(_rec, indent=1)

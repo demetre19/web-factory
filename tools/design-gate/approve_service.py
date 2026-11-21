@@ -233,7 +233,7 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     run_tok = None
     try:
         run_tok = json.load(open(os.path.join(
-            ctx.dir, 'RUN.json'))).get('token')
+            ctx.dir, 'RUN.json'))).get('token_sig')
     except Exception:
         pass
     try:
@@ -279,7 +279,7 @@ def confirm_approval(wave, pipeline):
     # token) — "same inputs" is not enough for X.3 to accept it
     try:
         run_tok = json.load(open(os.path.join(
-            ctx.dir, 'RUN.json'))).get('token')
+            ctx.dir, 'RUN.json'))).get('token_sig')
     except Exception:
         run_tok = None
     if rec.get('inputs') == cur and \
@@ -295,7 +295,7 @@ def confirm_approval(wave, pipeline):
         timespec='seconds')
     try:
         body['run'] = json.load(open(os.path.join(
-            ctx.dir, 'RUN.json'))).get('token')
+            ctx.dir, 'RUN.json'))).get('token_sig')
     except Exception:
         body.pop('run', None)
     body['sig'] = AK.sign_body(body, _seed())
@@ -308,7 +308,15 @@ _SEED = None
 
 
 def _seed():
-    """The service's Ed25519 seed — auto-provisioned at startup."""
+    """The service's Ed25519 seed — auto-provisioned at startup.
+
+    OS-user separation is NOT achievable inside this repo: this seed,
+    the operator key (~/.web-factory/operator.key) and RUN.json are all
+    readable by the same OS user the agent runs as, so nothing in-repo
+    stops a local forger. True separation requires serving under a
+    different OS user (or a remote service) — that boundary is
+    deployment configuration, not code, and is deliberately not
+    simulated here."""
     global _SEED
     if _SEED is None:
         import approval_key as AK
