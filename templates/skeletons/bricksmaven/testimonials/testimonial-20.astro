@@ -19,6 +19,7 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -63,7 +64,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             <div class="card">
               <div class="testimonial-20-content__wrapper">
                 <div class="testimonial-20-content__text">
-                  <h3 class="text-fluid-1">{it.text}</h3>
+                  {it.icon && <IconChip name={it.icon} />}
+                  <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                  {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>

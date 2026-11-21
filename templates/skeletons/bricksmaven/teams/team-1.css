@@ -1,7 +1,7 @@
   .wf-team-1 .team-1-container {
     display: grid;
     gap: var(--grid-gap);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-team-1 .team-1-intro {
@@ -31,3 +31,4 @@
     .wf-team-1 .team-1-list { grid-template-columns: 1fr; }
     .wf-team-1 .team-1-profile { flex-direction: column; }
   }
+  .wf-team-1 .team-1-list > :only-child { grid-column: 1 / -1; }

@@ -333,6 +333,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-cols="2"] .grid-auto { --grid-cap: 2; }
   [data-cols="3"] .grid-auto { --grid-cap: 3; }
   [data-cols="4"] .grid-auto { --grid-cap: 4; }
+  /* G.8 on bank collections: a section's declared columns cap rides
+     the same floor/cap locals the .grid-auto canon uses — a bank
+     -grid-ul / -list grid tightens to exactly N tracks instead of
+     spilling a lone orphan onto a partial row */
+  [data-cols] [class*="-grid-ul"], [data-cols] [class*="-list"],
+  [data-cols] ul[class*="grid"] { --grid-floor: 15rem; }
+  [data-cols="2"] [class*="-grid-ul"], [data-cols="2"] [class*="-list"],
+  [data-cols="2"] ul[class*="grid"] { --grid-cap: 2; }
+  [data-cols="3"] [class*="-grid-ul"], [data-cols="3"] [class*="-list"],
+  [data-cols="3"] ul[class*="grid"] { --grid-cap: 3; }
+  [data-cols="4"] [class*="-grid-ul"], [data-cols="4"] [class*="-list"],
+  [data-cols="4"] ul[class*="grid"] { --grid-cap: 4; }
   /* grid gaps are GLOBAL: any bank grid list inherits the token's
      --grid-gap as the floor. A bank rule that names its own gap still
      wins (same layer, later source) until the translator stops

@@ -67,7 +67,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="blog-section-9-card card">
                 <div class="blog-section-9-card__media grid-auto gap-fluid-l">
                   <div class="blog-section-9-card__author grid-auto gap-fluid-l">
-                    <h3 class="text-fluid-1">{it.text}</h3>
+                    {it.icon && <IconChip name={it.icon} />}
+                    <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                    {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

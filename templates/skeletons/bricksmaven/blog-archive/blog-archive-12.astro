@@ -63,7 +63,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
-                <h3 class="text-fluid-1">{it.text}</h3>
+                {it.icon && <IconChip name={it.icon} />}
+                <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
+                {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
             ))}</div>}
         </div>
@@ -75,7 +77,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       <div class="blog-archive-12-archive-card card">
                         <div class="blog-archive-12-archive-card__content">
                           <div class="blog-archive-12-archive-card__meta">
-                            <h3 class="text-fluid-1">{it2.text}</h3>
+                            {it2.icon && <IconChip name={it2.icon} />}
+                            <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
+                            {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
                           <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>

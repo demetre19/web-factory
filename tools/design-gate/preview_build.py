@@ -30,6 +30,7 @@ sys.path.insert(0, HERE)
 import gate          # noqa: E402
 import pipeline_emit as PE  # noqa: E402
 import emit_global   # noqa: E402
+import site_folder as SF  # noqa: E402
 
 
 _REM_LIT = re.compile(r'(?<![\w.])(-?\d*\.?\d+)rem\b')
@@ -594,11 +595,20 @@ def emit_layouts(ctx):
                            'preview-bank.css'), bank_css)
     slug = gate.page_path(ctx)[1]
     rows_by_sec = {r.get('name'): r for _, r in ctx.rows(slug)}
+    brief_media = list((gate._brief(ctx).get('media') or []))
     for oid, label, score, override in options:
+        # a comp override must render the way the real projection would
+        # (L.3): the hero already spent media[0] (V.1), then every
+        # effective split-media row pops the next asset in document
+        # order — an overridden split with no image would present a
+        # dead split the shipped page never produces
+        left = iter(list(brief_media[1:]))
         ov_rows = []
         for c, row in contracts_rows:
             cc = dict(c)
+            r2 = dict(row)
             ov = override.get(c['section'])
+            eff = ov or c['composition']
             if ov and ov != c['composition']:
                 # the override swaps the whole skeleton binding — comp
                 # AND recipe — or the section renders the old recipe's
@@ -606,7 +616,24 @@ def emit_layouts(ctx):
                 cc['composition'] = ov
                 cc['recipe'] = gate.RECIPE_FOR_COMP.get(
                     ov, c.get('recipe'))
-            ov_rows.append((cc, row))
+            if eff == 'split-media':
+                m = next(left, None)
+                if m:
+                    r2['image'] = {'src': m['src'], 'alt': m['alt']}
+                    r2['media_ratio'] = '4:3'
+                    # data-ratio rides the contract's locked card —
+                    # the shipped media box locks the same ratio the
+                    # projected plan would declare (P.7)
+                    cc['media_ratio'] = '4:3'
+                else:
+                    r2.pop('image', None)
+            elif c['section'] != 'hero':
+                # media only rides split-media rows; an option that
+                # lifts this row's comp away hands the asset on
+                if r2.pop('image', None) is not None:
+                    r2['media_ratio'] = 'none'
+                    cc['media_ratio'] = 'none'
+            ov_rows.append((cc, r2))
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'lo-{oid}.astro'), txt)

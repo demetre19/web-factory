@@ -7,7 +7,7 @@
   .wf-comparison-1 .bm-conparison-1-list {
     display: grid;
     gap: var(--grid-gap);
-    grid-template-columns: var(--fs-0);
+    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
   .wf-comparison-1 .bm-conparison-status {
