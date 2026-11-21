@@ -1,11 +1,16 @@
   .wf-blog-archive-4 .blog-archive-4-head {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
     display: grid;
   }
 
   .wf-blog-archive-4 .blog-archive-4-head__intro {
     display: flex;
     flex-direction: column;
+  }
+
+  .wf-blog-archive-4 .blog-archive-4-wrapper {
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-4 .blog-archive-4-card {

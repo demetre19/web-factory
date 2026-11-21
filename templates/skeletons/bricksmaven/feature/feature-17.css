@@ -1,6 +1,7 @@
   .wf-feature-17 .feature-17-wrapper-sticky-scroll {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-feature-17 .feature-17-sticky {
@@ -16,6 +17,7 @@
   .wf-feature-17 .feature-17-card-list {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--grid-gap);
   }
 
   .wf-feature-17 .feature-17-card-list__content {

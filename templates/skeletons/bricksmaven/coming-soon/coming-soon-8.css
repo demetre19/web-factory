@@ -1,6 +1,7 @@
   .wf-coming-soon-8 .bm-coming-soon-8__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-8 .bm-form {
@@ -10,6 +11,7 @@
 
   .wf-coming-soon-8 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 
@@ -21,6 +23,7 @@
 
   .wf-coming-soon-8 .bm-coming-soon-8__media-wrapper {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

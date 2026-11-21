@@ -5,6 +5,7 @@
 
   .wf-portfolio-single-5 .bm-portfolio-single-5__overview-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
@@ -15,11 +16,13 @@
 
   .wf-portfolio-single-5 .bm-span2-media {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-portfolio-single-5 .bm-portfolio-4-related-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

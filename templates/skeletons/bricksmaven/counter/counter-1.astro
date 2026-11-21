@@ -60,7 +60,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {list.length > 0 && <div class="counter-1-grid-ul">{(list || []).map((it) => (
               <div class="counter-1-card card">
                 <div class="counter-1-card__intro">
-                  <span>{it.stat || it.term || it.title}</span>
+                  <h3>{it.stat || it.term || it.title}</h3>
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

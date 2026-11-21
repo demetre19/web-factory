@@ -1,10 +1,12 @@
   .wf-how-it-works-28 .bm-how-it-works-28__container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 3 / 1);
   }
 
   .wf-how-it-works-28 .bm-how-it-works-28-card {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

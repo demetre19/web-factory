@@ -1,6 +1,7 @@
   .wf-blog-single-13 .bm-blog-single-13__inner {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-single-13 .blog-single-2__meta {
@@ -28,11 +29,13 @@
 
   .wf-blog-single-13 .bm-blog-single-13__bottom-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-blog-single-13 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 

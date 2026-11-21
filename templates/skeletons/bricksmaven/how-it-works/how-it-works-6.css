@@ -1,10 +1,12 @@
   .wf-how-it-works-6 .bm-hworks-6-tabs {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-6 .bm-hworks-6-menu {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-6 .bm-hworks-6-menu-list {
@@ -15,6 +17,7 @@
   .wf-how-it-works-6 .bm-hworks-6__pane {
     flex-direction: row;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-6 .bm-hworks-6__pane-content {

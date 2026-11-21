@@ -4,6 +4,7 @@
 
   .wf-hero-102 .bm-hero-102__inner-content {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -14,6 +15,7 @@
   .wf-hero-102 .bm-hero-102-card {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   .wf-hero-102 .bm-list {

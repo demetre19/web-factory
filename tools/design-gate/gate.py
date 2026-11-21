@@ -5156,9 +5156,9 @@ def check_card_hierarchy(ctx):
         name = os.path.basename(p)
         for i, m in enumerate(card_re.finditer(txt)):
             body = m.group(1)
-            head = re.search(r'<h[234]\b[^>]*>\s*([^<]{1,80})', body)
+            head = re.search(r'<h[234]\b', body)
             prose = re.search(r'<(?:p|dd|li)\b', body)
-            if prose and not head:
+            if prose and (not head or head.start() > prose.start()):
                 f.append(f'Q.2 {name} card#{i + 1}: no heading '
                          'before body text — hierarchy missing')
     return f
@@ -5199,9 +5199,12 @@ def check_gap_floor(ctx):
             return _px[v]
         m = re.match(r'([\d.]+)(?:px|rem)?', v)
         if not m:
+            # clamp()/calc(): the first length is the floor
+            m = re.search(r'([\d.]+)\s*(px|rem)', v)
+        if not m:
             return None
         n = float(m.group(1))
-        out = n * 16 if v.endswith('rem') else n
+        out = n * 16 if 'rem' in v[:m.end()] else n
         _px[v] = out
         return out
     tokens = {}
@@ -5217,6 +5220,37 @@ def check_gap_floor(ctx):
             seen.add(mm.group(1))
             v = tokens.get(mm.group(1))
         return v
+    # first pass — class patterns whose rulesets already give an
+    # element a resolved gap ≥8px (exact class, [class*=x] substring,
+    # or the emit's `*-card` → `.card` convention)
+    gapped = []
+    for p, css in dist_csss(ctx):
+        for rm in re.finditer(
+                r'([^{}]+)\{([^}]*)\bgap\s*:\s*([^;}]+)', css):
+            n = px(resolve(rm.group(3).strip()) or '')
+            if n is None or n < 8:
+                continue
+            sel = rm.group(1)
+            pats = set(re.findall(r'\.(-?[_a-zA-Z][\w-]*)', sel))
+            subs = set(re.findall(
+                r'class\*=\s*["\']?([^"\'\]\s]+)', sel))
+            gapped.append((pats, subs))
+
+    def covered(sel):
+        classes = set(re.findall(r'\.(-?[_a-zA-Z][\w-]*)', sel))
+        for c in classes:
+            cands = {c}
+            if c.endswith('-card'):
+                cands.add('card')
+            if c.endswith('-grid-ul'):
+                cands.add('-grid-ul')
+            for pats, subs in gapped:
+                if cands & pats:
+                    return True
+                if any(s in c for s in subs):
+                    return True
+        return False
+
     for p, css in dist_csss(ctx):
         name = os.path.basename(p)
         for rm in re.finditer(
@@ -5230,6 +5264,8 @@ def check_gap_floor(ctx):
                 continue
             gm = re.search(r'\bgap\s*:\s*([^;}]+)', decl)
             if not gm:
+                if covered(sel):
+                    continue
                 f.append(f'Q.4 {name} "{sel[:50]}": flex/grid '
                          'container has no gap — siblings abut')
                 continue

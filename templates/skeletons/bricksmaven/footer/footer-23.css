@@ -1,5 +1,6 @@
   .wf-footer-23 .bm-footer-23__top-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
@@ -17,6 +18,7 @@
   .wf-footer-23 .footer-nav-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-23 .footer-nav-wrapper-23 {

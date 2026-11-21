@@ -14,17 +14,20 @@
 
   .wf-product-section-4 .product-list-4__list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-product-section-4 .product-list-4-card__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-product-section-4 .product-list-4-card {
     grid-template-columns: calc(100% * 2 / 1);
     display: grid;
+    gap: var(--grid-gap);
   }
 
   .wf-product-section-4 .product-list-notice-rect__sale-badge {

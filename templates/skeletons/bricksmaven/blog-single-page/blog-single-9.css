@@ -1,11 +1,13 @@
   .wf-blog-single-9 .blog-single-9-body {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
   .wf-blog-single-9 .blog-single-9-footer__meta {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-single-9 .blog-single-9-footer__author {

@@ -11,6 +11,7 @@
   .wf-content-72 .bm-card-floating-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

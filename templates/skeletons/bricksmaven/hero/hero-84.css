@@ -1,10 +1,12 @@
   .wf-hero-84 .bm-hero-84__container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-hero-84 .bm-hero-84__intro {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
@@ -14,6 +16,7 @@
 
   .wf-hero-84 .bm-hero-84__footer-media {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -54,6 +57,7 @@
   .wf-hero-84 .bm-hero-84__media {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

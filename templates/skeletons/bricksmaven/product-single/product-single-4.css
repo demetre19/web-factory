@@ -1,6 +1,7 @@
   .wf-product-single-4 .bm-product-single-4__main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-product-single-4 .bm-payment-options-wrapper-2 {
@@ -32,6 +33,11 @@
   .wf-product-single-4 .bm-product-single-accordion {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  .wf-product-single-4 .bm-related-products-list-1__list {
+    gap: var(--grid-gap);
   }
 
   .wf-product-single-4 .bm-related-products-list-1-card {

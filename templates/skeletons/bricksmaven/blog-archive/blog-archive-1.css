@@ -6,6 +6,7 @@
   .wf-blog-archive-1 .blog-archive-1-intro {
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-1 .blog-archive-1-intro__body {
@@ -16,6 +17,10 @@
   .wf-blog-archive-1 .blog-archive-1-body {
     display: flex;
     flex-direction: column;
+  }
+
+  .wf-blog-archive-1 .blog-archive-1-wrapper {
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-1 .blog-archive-1-card {

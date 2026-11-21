@@ -5,10 +5,12 @@
   .wf-hero-43 .hero-43-container-top {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-hero-43 .hero-43-container-footer {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
   }
 

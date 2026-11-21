@@ -8,12 +8,17 @@
     flex-direction: column;
   }
 
+  .wf-feature-62 .bm-feature-62-tabs {
+    gap: var(--grid-gap);
+  }
+
   .wf-feature-62 .bm-feature-62-tabs__menu {
     flex-direction: row;
   }
 
   .wf-feature-62 .bm-feature-62-feature-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 

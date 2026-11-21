@@ -9,6 +9,7 @@
 
   .wf-author-page-3 .bm-author-page-3-post-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -16,6 +17,7 @@
     flex-direction: row;
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

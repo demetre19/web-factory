@@ -11,6 +11,7 @@
   .wf-newsletter-9 .newsletter-9__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-newsletter-9 .newsletter-9__box {
@@ -25,6 +26,7 @@
 
   .wf-newsletter-9 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 

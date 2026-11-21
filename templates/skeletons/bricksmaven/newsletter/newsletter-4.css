@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   .wf-newsletter-4 .newsletter-4__content {
@@ -26,6 +27,7 @@
 
   .wf-newsletter-4 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 

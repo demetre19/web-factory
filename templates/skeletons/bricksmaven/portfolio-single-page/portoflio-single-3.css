@@ -5,11 +5,13 @@
 
   .wf-portoflio-single-3 .bm-portfolio-single-intro-inline {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
   .wf-portoflio-single-3 .bm-2col-media {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -20,10 +22,12 @@
   .wf-portoflio-single-3 .bm-portfolio-single__solution-wrapper {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   .wf-portoflio-single-3 .bm-portfolio-single-result-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -33,6 +37,7 @@
 
   .wf-portoflio-single-3 .bm-span2-media {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -73,6 +78,7 @@
 
   .wf-portoflio-single-3 .bm-portfolio-2-related-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

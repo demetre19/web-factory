@@ -1,5 +1,6 @@
   .wf-author-page-1 .bm-author-page-1__content {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
@@ -11,6 +12,7 @@
 
   .wf-author-page-1 .bm-author-page-1__post-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

@@ -1,11 +1,13 @@
   .wf-cart-page-2 .cart-page-2__cart-container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
   .wf-cart-page-2 .cart-page-2-testimonial-card {
     flex-direction: row;
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: calc(100% * 2 / 1);
   }
 

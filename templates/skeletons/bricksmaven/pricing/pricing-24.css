@@ -6,15 +6,18 @@
   .wf-pricing-24 .intro--split {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-pricing-24 .bm-pricing-24__content {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
+    gap: var(--grid-gap);
   }
 
   .wf-pricing-24 .bm-pricing-24-pricing-list {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 

@@ -1,5 +1,6 @@
   .wf-newsletter-12 .bm-newsletter-12__container {
     display: grid;
+    gap: var(--grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
@@ -10,6 +11,7 @@
 
   .wf-newsletter-12 .bm-form-widget {
     display: flex;
+    gap: var(--grid-gap);
     flex-direction: row;
   }
 
