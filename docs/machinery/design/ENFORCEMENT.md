@@ -12,6 +12,7 @@ closed set.
 | A.1 | Mechanical conventions | structural | script | `check_acss_conventions` | rgba()/min-height/unnamed control/unsafe external link | w6 |
 | A.2 | The card contract | structural | script | `check_card_contract` | whole-card <a> wrap / literal card overrides | w6 |
 | A.3 | Every type has a profile | invariant | script | `check_component_profile` | unclassified component type / missing profile | w6 |
+| AC.1 | ACSS naming | invariant | script | `check_acss_tokens` |  |  |
 | B.1 | Every rule has exactly one tier | invariant | script | `check_tiers` | rule without tier / unknown tier | w1 |
 | B.2 | One burst toggle, closed range | invariant | script | `check_burst` | burst missing or outside {0,1,2,3} | w3 |
 | B.3 | Exactly one wildcard option | stylistic | script | `check_burst` | 0 or 2 wildcards when burst>0; wildcard when burst=0 | w3 |
@@ -19,6 +20,9 @@ closed set.
 | B.5 | Judged for style, not compliance | invariant | script | `check_style_review` | wildcard chosen without STYLE items in REVIEW.json | w8 |
 | B.6 | Novelty stays inside the profile's orbit | invariant | script | `check_novelty` | distance > bound, or no NOVELTY.json | w8 |
 | B.7 | The wildcard rolls the gene | invariant | script | `check_wildcard_random` | no seed / same genes as last round / image.treatment sole twice | w4 |
+| BM.1 | The kit is declared and real | structural | script | `check_brand_motif` | motif_source ∉ {logo-extracted,declared,none} or extracted/declared source with empty motif_family | w7 |
+| BM.2 | Decorations trace to the kit | stylistic | script | `check_brand_motif` | data-motif/motif-* decoration outside motif_family + neutral primitives, or ornament=logo-motif with empty kit | w7 |
+| BM.3 | Usage stays in declared slots | stylistic | script | `check_brand_motif` | data-motif-slot ∉ declared usage or unknown slot vocabulary | w7 |
 | C.1 | The 6-role semantic map (closed set) | stylistic | script | `check_contrast` | 6-role map bound; ink≥7:1 bg/surface | w5 |
 | C.2 | Temperature | stylistic | script | `check_direction_axes` | temperature ∈ {warm,cool,neutral} | w4 |
 | C.3 | Neutral construction | structural | script | `check_neutral_tint` | neutrals S 2–15%; no #000000 | w5 |
@@ -42,6 +46,7 @@ closed set.
 | E.2 | Two heading classes | structural | script | `check_section_enums` | heading_class query|claim; macro open | w3 |
 | E.3 | SEO invariants (lint) | structural | script | `check_seo_lint` | one h1; no skipped heading ranks | w7 |
 | E.4 | SEO QA | stylistic | script | `check_heading_verbatim` | rendered headings/fs verbatim vs STUB | w7 |
+| FL.1 | One clamp per size | invariant | script | `check_fluid_sizes` |  |  |
 | G.1 | The closed set | stylistic | script | `check_spacing_scale` | any spacing value ∉ {4,8,12,16,24,32,48,64,96,128} | w5 |
 | G.2 | The proximity law | structural | script | `check_proximity` | group gap vs section gap ≥2× | w5 |
 | G.3 | Density is a named tier | stylistic | script | `check_section_enums` | density ∈ {compact,regular,spacious} | w3 |
@@ -49,7 +54,9 @@ closed set.
 | G.5 | Self-organising grids | structural | script | `check_auto_grid` | fixed repeat(N) collection grid / narrow undeclared scroll rail | w7 |
 | G.6 | Canon padding ratios | structural | script | `check_canon_padding` | padding ratio outside the type canon IQR / unclassified type | w7 |
 | G.7 | Equal-height cards | stylistic | script | `check_equal_cards` | mixed card shells in one grid | w7 |
+| G.8 | Track count is the `columns` allele | structural | script | `check_grid_tracks` | grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele | w7 |
 | I.1 | Style selection | stylistic | script | `check_system_enums` | family+style ∈ closed set; one family | w5 |
+| I.10 | Lucide-astro wiring | stylistic | script | `check_lucide` | literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value | w6 |
 | I.2 | Stroke math, corner geometry, the grid | stylistic | script | `check_icon_discipline` | stroke ∈ {1.5,2,2.5,3}px uniform | w6 |
 | I.3 | Size | stylistic | script | `check_icon_discipline` | sizes ∈ {16,20,24,32,48} | w6 |
 | I.4 | Icon + text pairing | stylistic | reviewer | `icon-text-pairing` | icon+text baseline/leading correct | w8 |
@@ -59,11 +66,15 @@ closed set.
 | I.8 | Icon QA | stylistic | script | `check_icon_discipline` | labelled where required, zero emoji | w6 |
 | I.9 | Interaction states | structural | script | `check_interaction_states` | interactive class without hover/focus-visible/disabled styles | w7 |
 | J.1 | Every option clears the quality floor | invariant | script | `check_quality_floor` | option unjudged, any dimension <50, composite <60, judged_by != configured reviewer_model, or quality_retry >1 | w7 |
+| J.10 | HERO-COMPOSITION | invariant | script | `check_hero_composition` | the composition carrying the promise is not allowed by the genotype's layout-archetype | w3 |
 | J.2 | PRESENT-ORDER | invariant | script | `check_present_order` | picker option without quality receipt, or rules_pass_hash != judgment_pass_hash | w7 |
 | J.3 | PRE-BUILD VALIDATION | invariant | script | `check_prebuild_receipt` | pickers without PREBUILD.json; recipe_id not in topology bank; unjustified exception; missing field; plan_vector_dist <0.3 | w4 |
 | J.4 | BLOCK-TRACE | invariant | script | `check_block_trace` | rendered block without data-recipe, recipe not in bank, missing receipt row, empty field, or receipt/render recipe mismatch | w7 |
 | J.5 | CONTENT-MAP | invariant | script | `check_content_map` | inventoried content_id unmapped, unserved/orphan section row, rendered block without data-content, or un-inventoried rendered id | w3 |
 | J.6 | PAGE-FAMILY | invariant | script | `check_page_family` | page without page_type, layout_family != the type’s family, or PREBUILD family outside page families | w3 |
+| J.7 | ELEMENT-VARIANT | invariant | script | `check_prebuild_receipt` | element_variant missing, declared != bank elements signature, class outside the vertical's canon media set, text-only under a media-led canon, or text-only under a declared image-led genotype | w4 |
+| J.8 | SEAM-SHAPE | invariant | script | `check_block_trace` | rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes | w7 |
+| J.9 | SECTION-PROGRAM | invariant | script | `check_section_program` | a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items | w3 |
 | L.1 | Alignment | stylistic | script | `check_schema_fields` | align = named edge per row | w3 |
 | L.10 | Atomic architecture | stylistic | script | `check_scaffold` | atomic file structure: tokens→layer→components→pages | w0 |
 | L.11 | The 960 containment rule | stylistic | script | `check_content_width` | content_width ≤1280px | w5 |
@@ -87,6 +98,7 @@ closed set.
 | M.12 | Loop licensing | stylistic | script | `check_motion_recipes` | continuous loops ⊆ licensed loop_type recipes (ambient/status/iconography/word-cycle); others one-shot | w7 |
 | M.13 | Reduced-motion parity | structural | script | `check_motion_recipes` | built CSS carries prefers-reduced-motion when any animation exists | w7 |
 | M.14 | Animation JS budget | structural | script | `check_motion_js_budget` | tamdoma-way default: pure CSS + CSS-animated SVG + minimal vanilla JS ≤4KB; GSAP is the ONLY licensable library — needs DESIGN-PLAN licence object {name:'gsap', justification:'why CSS cannot do this'} AND motion.engine=gsap; all other libraries (lenis/anime/lottie/scrollmagic/…) banned outright | w7 |
+| M.15 | JS cost order | invariant | script | `check_js_cost` | interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification | w7 |
 | M.2 | Duration & easing tokens | stylistic | script | `check_measurable` | durations/easing token-bound | w7 |
 | M.3 | Element-class rules | stylistic | reviewer | `motion-element-class` | per-class motion rules | w8 |
 | M.4 | One focal animation | stylistic | reviewer | `motion-personality` | one focal animation | w8 |
@@ -95,6 +107,15 @@ closed set.
 | M.7 | Performance | stylistic | script | `check_speed_budget` | compositor budget — transform/opacity only | w7 |
 | M.8 | Motion QA | stylistic | script | `check_measurable` | QA: no linear spatial, ≤80px+fade | w7 |
 | M.9 | Recipe membership | structural | script | `check_motion_recipes` | every @keyframes/animation maps to a recipe id in templates/motion/*/recipe.md or a declared motion_deviation with reason | w7 |
+| O.1 | Ornaments are deterministic output, never drawn | invariant | script | `check_ornament` | missing seed/variant/density/bounds params or geometry != ornament.generate() output for declared params | w7 |
+| O.2 | The layer is DNA-coherent | stylistic | script | `check_ornament` | layer != genotype ornament allele, or ornament rendered while allele=none | w7 |
+| O.3 | Ornaments bind theme tokens | stylistic | script | `check_ornament` | ornament stroke is literal colour or stroke-width outside 0.5–1px | w7 |
+| O.4 | Ornaments stay decoration | invariant | script | `check_ornament` | ornament svg missing aria-hidden="true" or data-layer="behind" | w7 |
+| O.5 | Injection is targeted and sparse | invariant | script | `check_ornament` | ornament target undeclared/missing in ornament_placements, >4 ornaments per page, or allele!=none with empty placements | w7 |
+| O.6 | Intensity is a band axis | stylistic | script | `check_ornament` | intensity not in ghost|accent|statement|bold or rendered opacity outside the declared band | w7 |
+| O.7 | Motion is a tamdoma axis | invariant | script | `check_ornament` | motion not in static|drift|rotate|dash-draw|pulse|reveal, or non-static motion without .ornament-* CSS + prefers-reduced-motion disable | w7 |
+| O.8 | The DNA filters the option set | structural | script | `check_ornament` | declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget) | w7 |
+| O.9 | A motif is one primitive, never an illustration | invariant | script | `check_brand_motif` | data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements — illustration, not motif | w7 |
 | P.1 | Golden rule | invariant | script | `check_scaffold` | Astro+Tailwind project, astro build 0 | w0 |
 | P.10 | No emoji | invariant | script | `check_no_emoji` | zero emoji in src/emitted html | w5 |
 | P.11 | Icon discipline | invariant | script | `check_icon_discipline` | one library, inline SVG, sizes+stroke closed | w6 |
@@ -109,6 +130,10 @@ closed set.
 | P.2 | Shared source | invariant | script | `check_no_stray_styles` | one shared layer; no <style>/style=""/stray classes | w6 |
 | P.20 | Build lanes | invariant | script | `check_parallel_build` | BUILD-PLAN lanes: fan-out kinds model_lane=cheap only; coherence lanes not cheap; coordinated lanes <=10; lanes are {id,kind,model_lane} objects. Advisory: serial build >=4 independent sections (check_serial_build_warn) | w7 |
 | P.21 | Visual review is bounded and model-parameterised | invariant | script | `check_bounded_review` | REVIEW.json: reviewer_model recorded (cheap by default; strong-class requires machinery_review), vlm_calls=1, viewports=[1280,768,360], per_design table [{design,pass}] | w8 |
+| P.22 | Frozen inputs stay frozen | invariant | script | `check_frozen_inputs` | input file a passing wave sealed in inputs_sha256 changed or deleted downstream | w7 |
+| P.23 | Evidence is sealed | invariant | script | `check_seal` | sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal) | w7 |
+| P.24 | VLM judgment leaves a real invocation record | invariant | script | `check_vlm_evidence` | vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model | w8 |
+| P.25 | The VLM tail is cached, parallel and shot-budgeted | structural | script | `check_vlm_evidence` | a re-judged shot whose (image,prompt,model) hash was already recorded — the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third | w8 |
 | P.3 | Wireframe contract tags | invariant | script | `check_wireframe_tags` | every card section carries 4 data-* attrs | w3 |
 | P.4 | Wireframe lock | invariant | script | `check_wireframe_lock` | rows match card data-* 1:1 in order, wf_ref | w3 |
 | P.5 | Tailwind theme | invariant | script | `check_tailwind_derivation` | config generated from TOKENS.json | w5 |
@@ -157,6 +182,8 @@ closed set.
 | SB.4 | The glue is mechanical | invariant | script | `check_assembly` | page source == assemble.py output, marker current | w7 |
 | SB.5 | Gold exemplars, adapted not invented | structural | script | `check_exemplars` | every used composition has an exemplar; every component names one | w6 |
 | SB.6 | Page gates only after section gates | structural | script | `check_scorecard` | scorecard sections ≥90% | w8 |
+| SC.1 | The verdict table exists and covers the corpus | invariant | script | `check_sop_constants` | SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded | w5 |
+| SC.2 | Verdicts recompute, never drift | invariant | script | `check_sop_constants` | recorded verdict != derived verdict from sop-adherence.json | w5 |
 | SKL.1 | Structure-only adoption | structural | script | `check_skeleton` | data-skeleton sections carry structure classes only — raw visual utilities FAIL | w7 |
 | SKL.2 | Never cited as canon | structural | script | `check_skeleton` | skeleton ids never appear as canon refs | w7 |
 | SKL.3 | Component-tier endorsement (component-reference sources) | stylistic | script | `check_skeleton` | component-reference (shadcn) visuals inform only open component values; token classes exempt; section-level cites = SKL.2 defect | w7 |
@@ -174,6 +201,14 @@ closed set.
 | T.7 | Web section application | stylistic | script | `check_measurable` | hero subhead 50–60% of display | w7 |
 | T.8 | Typography QA | stylistic | script | `check_type_system` | directory, ≤2 families, measure, tracking, text-wrap, overlay tint | w5 |
 | T.9 | Reading paths | stylistic | reviewer | `reading-path` | directional flow legible | w8 |
+| TK.1 | The five layers exist, in order | invariant | script | `check_token_layer` | missing @theme/:root/.dark/@theme inline/@custom-variant layer | w5 |
+| TK.2 | Semantic parity | invariant | script | `check_token_layer` | semantic var in :root without a .dark override | w5 |
+| TK.3 | Components bind semantics, never values | invariant | script | `check_token_layer` | raw hex in a component colour property, or a component referencing a --primitive-* var | w6 |
+| TK.4 | Contrast rides the semantic pairs in both modes | invariant | script | `check_contrast` | contrast verified on semantic role pairs in both light and dark modes | w5 |
+| TL.1 | The taxonomy is closed | invariant | script | `check_three_layers` | data-tl-layer value outside the closed taxonomy {ornament, motif, icon} | w5 |
+| TL.2 | Candidates are scored on DNA-FIT; the floor is 50 | invariant | script | `check_three_layers` | rendered candidate with dna-fit outside 0–100 or below the 50 floor | w5 |
+| TL.3 | Every candidate carries its seed chain | invariant | script | `check_three_layers` | candidate without its word-seed-chain provenance | w5 |
+| TL.4 | Layers multi-select; a pick is per-layer | invariant | script | `check_three_layers` | candidate surface with ≥2 candidates using radio inputs instead of checkboxes | w5 |
 | V.0 | Positive Selection Architecture | stylistic | reviewer | `media-words-first` | positive selection: words before pixels | w8 |
 | V.1 | Media-by-section decision matrix | stylistic | reviewer | `media-matrix` | media-by-section matrix followed | w8 |
 | V.2 | The four treatments | stylistic | script | `check_system_enums` | one treatment ∈ {natural,bw,duotone,cinematic} | w5 |
@@ -202,38 +237,5 @@ closed set.
 | W.7 | Links & navigation | stylistic | reviewer | `link-scent` | links front-loaded, scent preserved | w8 |
 | W.8 | Concision | stylistic | script | `check_system_enums` | reading_level ≤grade-8 | w5 |
 | W.9 | Localization-ready copy | stylistic | reviewer | `i18n-copy` | no concat, no idioms | w8 |
-| J.7 | ELEMENT-VARIANT | invariant | script | `check_prebuild_receipt` | element_variant missing, declared != bank elements signature, class outside the vertical's canon media set, text-only under a media-led canon, or text-only under a declared image-led genotype | w4 |
-| J.8 | SEAM-SHAPE | invariant | script | `check_block_trace` | rendered seam-shape != the recipe's declared topo edge shape; shaped edge rendered while the genotype declares flat (undeclared personality); adjacent non-flat edges with different shapes | w7 |
-| TK.1 | The five layers exist, in order | invariant | script | `check_token_layer` | missing @theme/:root/.dark/@theme inline/@custom-variant layer | w5 |
-| TK.2 | Semantic parity | invariant | script | `check_token_layer` | semantic var in :root without a .dark override | w5 |
-| TK.3 | Components bind semantics, never values | invariant | script | `check_token_layer` | raw hex in a component colour property, or a component referencing a --primitive-* var | w6 |
-| TK.4 | Contrast rides the semantic pairs in both modes | invariant | script | `check_contrast` | contrast verified on semantic role pairs in both light and dark modes | w5 |
-| G.8 | Track count is the `columns` allele | structural | script | `check_grid_tracks` | grid comp without data-cols, data-cols outside the columns allele set {1-4}, or data-cols != the declared columns allele | w7 |
-| M.15 | JS cost order | invariant | script | `check_js_cost` | interactive library shipped without a licensed_libraries {name, justification} entry; library-required recipe without js_cost in the block trace; licence lacking written justification | w7 |
-| P.22 | Frozen inputs stay frozen | invariant | script | `check_frozen_inputs` | input file a passing wave sealed in inputs_sha256 changed or deleted downstream | w7 |
-| P.23 | Evidence is sealed | invariant | script | `check_seal` | sealed evidence file whose hash != manifest, unsealed file among sealed, or populated evidence dir without a manifest (check_seal) | w7 |
-| I.10 | Lucide-astro wiring | stylistic | script | `check_lucide` | literal <svg> in .astro template (non-Logo*), lucide-astro imported w/o declared dep, or unresolvable data-icon value | w6 |
-| O.1 | Ornaments are deterministic output, never drawn | invariant | script | `check_ornament` | missing seed/variant/density/bounds params or geometry != ornament.generate() output for declared params | w7 |
-| O.2 | The layer is DNA-coherent | stylistic | script | `check_ornament` | layer != genotype ornament allele, or ornament rendered while allele=none | w7 |
-| O.3 | Ornaments bind theme tokens | stylistic | script | `check_ornament` | ornament stroke is literal colour or stroke-width outside 0.5–1px | w7 |
-| O.4 | Ornaments stay decoration | invariant | script | `check_ornament` | ornament svg missing aria-hidden="true" or data-layer="behind" | w7 |
-| O.5 | Injection is targeted and sparse | invariant | script | `check_ornament` | ornament target undeclared/missing in ornament_placements, >4 ornaments per page, or allele!=none with empty placements | w7 |
-| O.6 | Intensity is a band axis | stylistic | script | `check_ornament` | intensity not in ghost|accent|statement|bold or rendered opacity outside the declared band | w7 |
-| O.7 | Motion is a tamdoma axis | invariant | script | `check_ornament` | motion not in static|drift|rotate|dash-draw|pulse|reveal, or non-static motion without .ornament-* CSS + prefers-reduced-motion disable | w7 |
-| O.8 | The DNA filters the option set | structural | script | `check_ornament` | declared placement layer/intensity/motion outside the DNA-derived ornament budget (_ornament_budget) | w7 |
-| BM.1 | The kit is declared and real | structural | script | `check_brand_motif` | motif_source ∉ {logo-extracted,declared,none} or extracted/declared source with empty motif_family | w7 |
-| BM.2 | Decorations trace to the kit | stylistic | script | `check_brand_motif` | data-motif/motif-* decoration outside motif_family + neutral primitives, or ornament=logo-motif with empty kit | w7 |
-| BM.3 | Usage stays in declared slots | stylistic | script | `check_brand_motif` | data-motif-slot ∉ declared usage or unknown slot vocabulary | w7 |
-| O.9 | A motif is one primitive, never an illustration | invariant | script | `check_brand_motif` | data-motif svg with >2 geometric primitives or carrying text/image/tspan detail elements — illustration, not motif | w7 |
-| P.24 | VLM judgment leaves a real invocation record | invariant | script | `check_vlm_evidence` | vlm_calls>0 without vlm_evidence {model,command,image_sha256,prompt_sha256,output_sha256}, evidence image absent/drifted, or evidence model != reviewer_model | w8 |
-| P.25 | The VLM tail is cached, parallel and shot-budgeted | structural | script | `check_vlm_evidence` | a re-judged shot whose (image,prompt,model) hash was already recorded — the verdict cache must answer it; shot budget >2 viewports without a rule requiring the third | w8 |
-| SC.1 | The verdict table exists and covers the corpus | invariant | script | `check_sop_constants` | SOP-CONSTANTS.json missing, dataset != sop-adherence.json, or a measured rule unrecorded | w5 |
-| SC.2 | Verdicts recompute, never drift | invariant | script | `check_sop_constants` | recorded verdict != derived verdict from sop-adherence.json | w5 |
-| TL.1 | The taxonomy is closed | invariant | script | `check_three_layers` | data-tl-layer value outside the closed taxonomy {ornament, motif, icon} | w5 |
-| TL.2 | Candidates are scored on DNA-FIT; the floor is 50 | invariant | script | `check_three_layers` | rendered candidate with dna-fit outside 0–100 or below the 50 floor | w5 |
-| TL.3 | Every candidate carries its seed chain | invariant | script | `check_three_layers` | candidate without its word-seed-chain provenance | w5 |
-| TL.4 | Layers multi-select; a pick is per-layer | invariant | script | `check_three_layers` | candidate surface with ≥2 candidates using radio inputs instead of checkboxes | w5 |
-| J.9 | SECTION-PROGRAM | invariant | script | `check_section_program` | a rhetoric act with no section, a page missing its type's required categories, or a content row with no content_ids/vector/items | w3 |
-| J.10 | HERO-COMPOSITION | invariant | script | `check_hero_composition` | the composition carrying the promise is not allowed by the genotype's layout-archetype | w3 |
 
-226 rules — script 195, reviewer 30, operator 1; invariant 88, structural 55, stylistic 83.
+228 rules — script 197, reviewer 30, operator 1; invariant 90, structural 55, stylistic 83.
