@@ -329,6 +329,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-cols="2"] .grid-auto { --grid-cap: 2; }
   [data-cols="3"] .grid-auto { --grid-cap: 3; }
   [data-cols="4"] .grid-auto { --grid-cap: 4; }
+  /* grid gaps are GLOBAL: any bank grid list inherits the token's
+     --grid-gap as the floor. A bank rule that names its own gap still
+     wins (same layer, later source) until the translator stops
+     emitting spacing — the floor only catches silence, which today
+     renders as cards touching. */
+  [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
+      gap: var(--grid-gap); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
@@ -400,10 +407,21 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
       inset: 12%; border: 1px solid
         color-mix(in srgb, var(--action-primary) 22%, transparent);
       border-radius: calc(var(--r-card) / 2); }
-  /* a ratio box owns its media: the placeholder svg's intrinsic size
-     must never decide the layout */
-  .ratio-portrait > img, .ratio-phone > img { width: 100%; height: 100%;
-                                              object-fit: cover; }
+  /* a ratio box owns its media subtree, not only a direct <img>:
+     bank figures wrap media-round, so the declared size must reach
+     through to the raster */
+  .ratio-portrait > *, .ratio-phone > * { width: 100%; height: 100%; }
+  .ratio-portrait img, .ratio-phone img { width: 100%; height: 100%;
+                                          object-fit: cover; }
+  /* the contract's declared data-ratio on the media wrapper owns the
+     shape — a heuristic ratio on the bank figure must never fight it
+     (a 3/4 box around a 4/3 image leaves dead space below the media) */
+  .ratio-portrait:has(> [data-ratio]),
+  .ratio-phone:has(> [data-ratio]),
+  .ratio-16-9:has(> [data-ratio]),
+  .ratio-21-9:has(> [data-ratio]),
+  .ratio-4-3:has(> [data-ratio]),
+  .ratio-1-1:has(> [data-ratio]) { aspect-ratio: auto; }
   .ratio-phone { aspect-ratio: 9 / 19; }
   .variant-stage { container-type: inline-size; }
   .variant-switcher { position: sticky; top: 0; }
@@ -461,6 +479,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
           color: var(--text-secondary); max-width: var(--measure); }
   .card { display: flex; flex-direction: column;
           gap: var(--space-s); }
+  /* the chip opens a card — a bank DOM that lists it last still
+     renders icon-above-title, the global card order */
+  .card > .icon-chip { order: -1; }
   /* text lists keep markers — Tailwind preflight strips ul/ol
      styling; indent + item rhythm bind the ACSS list tokens */
   ul.list-items { list-style: disc; }
