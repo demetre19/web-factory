@@ -1,0 +1,69 @@
+{
+  "theme": "Gerstner",
+  "source": "https://lexingtonthemes.com/viewports/gerstner -> https://gerstner.lexdemos.com/",
+  "extraction_notes": "Live iframe was Cloudflare-blocked for headless/CDP browsers from this machine, so pages, CSS, fonts and images were fetched directly (public endpoints, no auth) and rendered locally; computed values below were measured with Playwright on the real rendered pages (real CSS + real fonts + real markup), and cross-checked against the compiled Tailwind v4 token layer in /_astro/BaseLayout.Bc0D0Wvq.css.",
+  "fonts": {
+    "family": "Switzer (fontshare, self-hosted woff2)",
+    "weights_used": { "light": 300, "regular": 400, "medium": 500, "bold": 700 },
+    "files": ["/fonts/switzer-300.woff2", "/fonts/switzer-400.woff2", "/fonts/switzer-500.woff2", "/fonts/switzer-700.woff2"],
+    "fallback": "sans-serif"
+  },
+  "palette": {
+    "background": { "token": "--color-background", "value": "oklch(100% 0 0)", "hex": "#FFFFFF", "role": "page background" },
+    "foreground": { "token": "--color-foreground", "value": "oklch(20.5% 0 0)", "hex": "#1B1B1B", "role": "primary text / dark section bg" },
+    "primary": { "token": "--color-primary", "value": "oklch(20.5% 0 0)", "hex": "#1B1B1B", "role": "dark sections, primary buttons" },
+    "primary_foreground": { "token": "--color-primary-foreground", "value": "oklch(100% 0 0)", "hex": "#FFFFFF", "role": "text on dark" },
+    "muted": { "token": "--color-muted", "value": "oklch(97% .002 90)", "hex": "#F4F4F3", "role": "secondary button bg" },
+    "muted_foreground": { "token": "--color-muted-foreground", "value": "oklch(50% 0 0)", "hex": "#757575", "role": "secondary text, meta" },
+    "secondary": { "token": "--color-secondary", "value": "oklch(93% .003 90)", "hex": "#E9E9E8", "role": "subtle surface" },
+    "border": { "token": "--color-border", "value": "oklch(90% 0 0)", "hex": "#DFDFDF", "role": "rules, input borders, hover on muted" },
+    "note": "Strictly monochrome. The only saturated colour in the whole theme is inside the WebGL shader gradients on dark hero sections.",
+    "shader_palettes_observed": [
+      ["#020a3a", "#0038ff", "#00c8ff", "#b8f0ff"],
+      ["#002b2b", "#00c9b7", "#ff9e7a", "#fff1d6"],
+      ["#0d0e12", "#6f8298", "#dde4ec", "#ffd2a1"],
+      ["#220705", "#8e2412", "#e0673a", "#f2e4d4"],
+      ["#2a0014", "#ff0a6c", "#ff3d00", "#ffae00"]
+    ]
+  },
+  "typography": {
+    "display_h1": { "computed": "128px/1.0 uppercase, weight 700, letter-spacing -6.4px (-0.05em), text-box: trim-both cap alphabetic", "classes": "text-9xl font-bold tracking-tighter uppercase leading-none trim-caps", "scale": "text-5xl sm:text-7xl md:text-8xl lg:text-9xl" },
+    "h2_section_wordmark": { "computed": "128px @1440w, same treatment as h1; oversized word bleeding below the section", "classes": "text-9xl font-bold tracking-tighter uppercase leading-none trim-caps" },
+    "quote_pull": { "computed": "~48-60px uppercase, weight 700, tracking -0.05em, trim-caps", "classes": "text-5xl md:text-6xl font-bold tracking-tighter uppercase leading-none trim-caps" },
+    "nav_links": { "computed": "12px uppercase, weight 500", "classes": "text-xs font-medium uppercase" },
+    "label_parenthesized": { "computed": "12px uppercase, weight 500; convention '(NN) NAME' or '(LABEL)'", "classes": "text-xs font-medium uppercase", "examples": ["(Error 404)", "(Est. 1962)", "(08 programmes, 04 faculties)", "(01) Bachelor", "STUDENTS: 14,800"] },
+    "meta_pairs": { "computed": "12px uppercase; key in muted-foreground weight 500, value in foreground", "classes": "text-xs uppercase" },
+    "body": { "computed": "14px/1.25 (text-sm), weight 400; muted-foreground for prose", "classes": "text-sm text-pretty text-muted-foreground" },
+    "programme_card_title": { "computed": "20px uppercase, weight 300 (light), tracking -0.025em", "classes": "text-xl font-light tracking-tight uppercase" },
+    "big_links": { "computed": "24-48px uppercase light/bold tracking-tighter (footer sitemap)", "classes": "text-4xl font-light tracking-tighter uppercase" }
+  },
+  "buttons": {
+    "shape": "full pill (border-radius 9999px), inline-flex centered, font-medium, duration-500 ease-in-out transition-all",
+    "primary": { "bg": "#1B1B1B", "text": "#FFFFFF", "hover": "bg-primary/90", "sizes": { "sm": "h-8 px-6 text-xs (32px)", "md": "h-9 px-6 text-sm (36px)", "lg": "h-10 px-8 text-base (40px)" } },
+    "secondary": { "bg": "#F4F4F3 (muted)", "text": "#1B1B1B", "hover": "bg #DFDFDF (border)", "same_sizes": true },
+    "filter_tab": "same as secondary but h-8 text-xs; aria-pressed state flips to primary colors",
+    "focus": "focus-visible:outline-2 outline-offset-4 outline-ring"
+  },
+  "links": {
+    "inline_nav": "text-xs uppercase, hover fades to opacity-70 or text-muted-foreground",
+    "underline": "rare; when used underline-offset-4",
+    "list_links": "uppercase light weight, large sizes in footer sitemap"
+  },
+  "layout": {
+    "container": "max-w-screen, 2xl:max-w-400 (1600px), mx-auto, px-4 sm:px-6 lg:px-8",
+    "grid": "12-col, gap-x-4 (16px), gap-y 8-16",
+    "header": "sticky top-0 z-30, h-16 (64px), bg-background, justify-between",
+    "sections": "full-bleed; alternate bg-background (white) and bg-primary (near-black) bands; generous whitespace — heroes ~min-h-svh with content pinned top and bottom"
+  },
+  "signature_moves": [
+    "Block-collage hero imagery: 3-4 grayscale photos in offset blocks, each with a white square 'knocked out' of one corner (grid with empty corner cell) — looks like a swiss-poster collage",
+    "All photography forced grayscale via CSS `grayscale` filter",
+    "WebGL grain/gradient shader canvases filling dark sections (canvas[data-shader] with 4-colour palette), monochrome UI on top",
+    "Oversized display wordmark (page name) at text-9xl with text-box trim so cap-height hugs the baseline, often cropped by the fold",
+    "(PARENTHESIZED) micro-labels in 12px/500/uppercase for every kicker, stat key and index number — '(NN) NAME' indexing convention",
+    "UPPERCASE EVERYTHING for labels, nav, buttons-adjacent text and display type; body prose stays sentence-case but is also frequently uppercased in meta rows",
+    "Pill buttons only; no radius anywhere else (radius 0 on cards/images)",
+    "A single dark 'quote/stat' band breaks white sections; ends with a black footer containing a giant cropped wordmark"
+  ],
+  "inputs": "underline-only inputs: border-b border-foreground/30, uppercase text-sm, no fill, giant display input variant text-7xl uppercase for search"
+}
