@@ -331,6 +331,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      plan's align allele): centring it would be a bespoke axis no
      contract declares. */
   [class*="container"]:has(> :only-child) { grid-template-columns: 1fr; }
+  /* G.floor — vertical container rhythm is machinery law, not
+     per-skeleton accident. Two inert-gap defect classes in the bank:
+     a *-container whose skeleton declares row-gap but leaves display
+     unset renders children touching (row-gap is inert on block), and
+     a display:flex row container that gained injected prose squeezes
+     it between head and collection columns. A bare *-container is a
+     vertical flow (grid activates the authored row-gap; any skeleton
+     display:flex/grid declaration still wins on specificity), and a
+     flex container holding a .flow child stacks vertically. */
+  [class*="container"] { display: grid; }
+  [class*="container"][class*="container"]:has(> .flow) {
+      flex-direction: column; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
@@ -503,19 +515,58 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
                    font-weight: 600; text-decoration: none;
                    white-space: nowrap;
                    min-height: var(--tap); }
-  /* burger IS the mobile nav: visible below the nav breakpoint,
-     hidden where .nav-links flows inline (R.1 mobile-first) */
+  /* burger IS the mobile nav trigger: an icon button top-right,
+     visible below the nav breakpoint, hidden where .nav-links flows
+     inline (R.1 mobile-first). It is a quiet icon — never a second
+     primary CTA in the bar. */
   .burger { display: inline-flex; min-height: var(--tap);
-            align-items: center; }
+            min-width: var(--tap); align-items: center;
+            justify-content: center;
+            background: var(--bg-surface); color: var(--text-primary);
+            border: 1px solid var(--border-default);
+            border-radius: var(--r-card); font-size: var(--fs-1);
+            font-weight: 600; cursor: pointer; }
   .row.between { position: relative; }
+  /* the open mobile menu is a flyout sheet, not a dropdown: a
+     right-side panel over a scrim, a close control, vertical links,
+     and the header CTA docked at the panel's foot (N.flyout) */
   .nav-links.open { display: flex; flex-direction: column;
-            gap: var(--space-s);
-            position: absolute; inset-inline: 0; top: 100%;
+            gap: var(--space-l);
+            position: fixed; inset-block: 0; inset-inline-end: 0;
+            width: min(20rem, 85vw);
+            z-index: calc(var(--primitive-z-sticky) + 1);
             background: var(--bg-canvas); padding: var(--space-m);
-            border-bottom: 1px solid var(--border-default); }
-  /* header CTA: the sticky bottom bar carries the call below the nav
-     breakpoint; burger, links and CTA share one breakpoint (60rem —
-     the .nav-links one below) or a dead zone opens where the header
+            padding-block-start: var(--space-xs);
+            border-inline-start: 1px solid var(--border-default);
+            box-shadow: var(--shadow-pop); overflow-y: auto; }
+  .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
+            align-items: flex-start; gap: var(--space-xs); }
+  .nav-links.open .nav-link { font-size: var(--fs-1);
+            white-space: normal; }
+  .nav-close { display: none; }
+  .nav-links.open .nav-close { display: inline-flex;
+            align-self: flex-end; min-height: var(--tap);
+            min-width: var(--tap); align-items: center;
+            justify-content: center; background: none; border: 0;
+            color: var(--text-secondary); font-size: var(--fs-2);
+            line-height: 1; cursor: pointer; }
+  body:has(.nav-links.open)::after { content: ""; position: fixed;
+            inset: 0; background: color-mix(in oklch,
+                var(--text-primary) 45%, transparent);
+            z-index: var(--primitive-z-sticky); }
+  body:has(.nav-links.open) .nav-cta { display: block;
+            position: fixed; inset-inline-end: 0; inset-block-end: 0;
+            width: min(20rem, 85vw); margin: 0;
+            z-index: calc(var(--primitive-z-sticky) + 1);
+            padding: var(--space-m); background: var(--bg-canvas);
+            border-inline-start: 1px solid var(--border-default); }
+  body:has(.nav-links.open) .nav-cta .wf-cta-button,
+  body:has(.nav-links.open) .nav-cta { display: block; }
+  body:has(.nav-links.open) .nav-cta > .wf-cta-button {
+            display: flex; justify-content: center; }
+  /* header CTA: below the nav breakpoint it rides inside the flyout;
+     burger, links and CTA share one breakpoint (60rem — the
+     .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
   @media (min-width: 60rem) {
@@ -645,18 +696,22 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      over below that instead of overflowing the page */
   @media (min-width: 60rem) { .nav-links { display: flex; } }
   .wf-cta-button { font-size: var(--fs--1); }
+  /* the mobile call action is a compact floating button, not a bar
+     that slices across mid-scroll content: a brand pill bottom-right
+     with the elevation pop (R.fab) */
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
       justify-content: center;
-      position: fixed; inset-block-end: 0; inset-inline: 0;
+      position: fixed; inset-block-end: var(--space-s);
+      inset-inline: auto var(--space-s);
       z-index: var(--primitive-z-sticky);
-      padding: var(--space-s) var(--space-m)
-               calc(var(--space-s) + env(safe-area-inset-bottom));
+      border-radius: 999px; min-height: var(--tap);
+      padding: var(--space-xs) var(--space-m);
       background: var(--action-primary); color: var(--action-primary-ink);
       font-weight: 600; text-decoration: none;
-      box-shadow: 0 -1px 0 var(--border-default); }
-  /* the call bar reserves bottom room so it never sits on content —
-     the theme toggle lives in the nav bar, never floating */
-  body { padding-block-end: calc(var(--tap) + var(--space-s)); }
+      box-shadow: var(--shadow-pop); }
+  /* the floating button reserves bottom room so it never sits on
+     content — the theme toggle lives in the nav bar, never floating */
+  body { padding-block-end: calc(var(--tap) + var(--space-m)); }
   @media (min-width: 48rem) {
     .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
@@ -686,6 +741,15 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .faq-a { padding-block-end: var(--space-m); max-width: var(--measure);
            color: var(--text-secondary); font-size: var(--fs-0);
            line-height: 1.6; }
+  /* footer items left-align on mobile — centred link columns read
+     unanchored below the fold (R.11). The container distributes
+     groups; items inside them hug the start edge. */
+  @media (max-width: 44rem) {
+    .footer-column-mid, .footer-menu, .footer-column-right {
+        align-items: flex-start; }
+    .footer-menu { justify-content: flex-start; }
+    .wf-footer-1 .footer-1-container { justify-items: start; }
+  }
   .form-grid { display: grid; gap: var(--space-s);
                grid-template-columns: 1fr; }
   @media (min-width: 30rem) { .form-grid { grid-template-columns:

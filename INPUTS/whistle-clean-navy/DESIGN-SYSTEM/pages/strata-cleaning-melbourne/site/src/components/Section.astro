@@ -1,0 +1,62 @@
+---
+/**
+ * Section.astro — the page shell. The ONLY component that sets outer
+ * rhythm: band padding, background, content max-width and gutters.
+ * Section components render inside it and never set their own outer
+ * layout (SB.2).
+ *
+ * assemble.py emits one <Section> per plan row, with the row's surface,
+ * density, wireframe ref and data-* contract. Surface/density are
+ * attribute scopes in the shared layer, so a section restyles by
+ * changing one attribute — never by adding its own bg- or py- classes.
+ */
+interface Props {
+  sec: string;
+  comp: string;
+  'wf-ref'?: string;
+  ratio?: string;
+  disclosure?: string;
+  surface?: 'base' | 'muted' | 'inverse' | 'brand' | 'media';
+  density?: 'compact' | 'regular' | 'spacious';
+  intent?: string;
+  content?: string;
+  cols?: string;
+  recipe?: string;
+  seam?: string;
+  'seam-shape-top'?: string;
+  'seam-shape-bottom'?: string;
+  skeleton?: string;
+  tag?: string;
+}
+const {
+  sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
+  surface = 'base', density = 'regular', intent, content, cols,
+  mode = 'band', tag = '',
+  recipe, seam, 'seam-shape-top': seamTop,
+  'seam-shape-bottom': seamBottom, skeleton,
+} = Astro.props;
+const Tag = tag || 'section';
+---
+<Tag
+  class={`${mode === 'bar' ? 'sec-bar' : 'sec-band'} surface-${surface} density-${density}`}
+  data-sec={sec}
+  data-comp={comp}
+  data-ratio={ratio}
+  data-disclosure={disclosure}
+  data-surface={surface}
+  data-density={density}
+  data-mode={mode}
+  data-wf-ref={wfRef}
+  {...(intent ? { 'data-intent': intent } : {})}
+  {...(content ? { 'data-content': content } : {})}
+  {...(cols ? { 'data-cols': cols } : {})}
+  {...(recipe ? { 'data-recipe': recipe } : {})}
+  {...(seam ? { 'data-seam': seam } : {})}
+  {...(seamTop ? { 'data-seam-shape-top': seamTop } : {})}
+  {...(seamBottom ? { 'data-seam-shape-bottom': seamBottom } : {})}
+  {...(skeleton ? { 'data-skeleton': skeleton } : {})}
+>
+  <div class="sec-inner">
+    <slot />
+  </div>
+</Tag>

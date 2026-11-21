@@ -5274,6 +5274,34 @@ def check_gap_floor(ctx):
             if n is not None and n < 8:
                 f.append(f'Q.4 {name} "{sel[:50]}": gap {n:.0f}px '
                          '< 8px floor')
+    # inert-gap scan: row-gap is law only where it can apply. It does
+    # nothing on display:block and nothing on a non-wrapping flex row —
+    # a *-container or *-grid* ruleset declaring it without an
+    # activating display/direction emits children that touch (the
+    # machinery's own activation rules, the [class*="container"] grid
+    # floor and the .flow flex-column override, live in the emitted
+    # global.css and clear the class pattern, not each rule).
+    activation = ('class*=container]{display:grid' in
+                  ''.join(c for _, c in dist_csss(ctx)).replace(' ', ''))
+    for p, css in dist_csss(ctx):
+        name = os.path.basename(p)
+        for rm in re.finditer(r'([^{}]+)\{([^}]*)\brow-gap\s*:[^;}]+'
+                              r'[^}]*\}', css):
+            sel, decl = rm.group(1).strip(), rm.group(2)
+            if 'container' not in sel:
+                continue
+            dm = re.search(r'\bdisplay:\s*([\w-]+)', decl)
+            disp = dm.group(1) if dm else 'block'
+            if disp == 'flex' and ('flex-direction: column' in decl or
+                                   'flex-direction:column' in decl or
+                                   'flex-wrap' in decl):
+                continue
+            if disp in ('grid', 'inline-grid'):
+                continue
+            if activation:
+                continue
+            f.append(f'Q.4 {name} "{sel[:50]}": row-gap on '
+                     f'{disp} is inert — children abut')
     return f
 
 

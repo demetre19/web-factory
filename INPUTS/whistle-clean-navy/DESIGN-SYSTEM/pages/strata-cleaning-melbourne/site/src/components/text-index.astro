@@ -1,0 +1,69 @@
+---
+/**
+ * text-index — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
+ * contract; keep the skeleton. Renders inside Section.astro: no
+ * <section>, no outer padding/background/max-width (SB.2).
+ *
+ * Full-copy slots (§4.3): an index of terms — heading → answer →
+ * before → term/definition list → links → after in article order
+ * (F.1). Terms render as <dt>, their text as <dd>.
+ */
+import { inline, iconFor } from '../_shared/inline';
+import type { CopySlot } from '../_shared/inline';
+interface Props {
+  heading?: string;
+  fs?: string;
+  body?: string;
+  cta?: { label: string; href: string };
+  items?: { term?: string; title?: string; text?: string; value?: string;
+             label?: string; href?: string; quote?: string;
+             icon?: string }[];
+  image?: { src: string; alt: string };
+  h1?: boolean;
+  copy?: CopySlot;
+}
+const {
+  heading = 'Section heading', fs = '', body = '', cta, items = [],
+  image, h1, copy,
+} = Astro.props;
+const cp: CopySlot = copy || {};
+const head = cp.heading || heading;
+const sub = cp.answer || fs || body;
+const before = cp.before || [];
+const list = (cp.items && cp.items.length ? cp.items : items) || [];
+const links = cp.links || [];
+const after = cp.after || [];
+---
+
+<div>
+  <div class="max-w-prose">
+    {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
+    {sub && <p class="mt-stack text-fluid-0" set:html={inline(sub)} />}
+    {before.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+  </div>
+  {list.length > 0 && (
+    <dl class="mt-stack grid-auto text-fluid-0">
+      {list.map((it) => {
+        const Icon = iconFor(it.icon);
+        return (
+        <div>
+          {Icon &&
+            <span class="icon-chip"><Icon size={20} aria-hidden="true" /></span>}
+          <dt class="font-bold" set:html={inline(it.term || it.title || it.label)} />
+          <dd class="t0" set:html={inline(it.text)} />
+        </div>
+        );
+      })}
+    </dl>
+  )}
+  <div class="max-w-prose">
+    {links.map((l) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />
+    ))}
+    {after.map((p) => (
+      <p class="mt-stack text-fluid-0" set:html={inline(p)} />
+    ))}
+  </div>
+</div>

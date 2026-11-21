@@ -676,15 +676,18 @@ def translate(payload, stem):
                 seen['top_list'] = True
             ncls = (c + ' nav-links') if c else 'nav-links'
             return (f'{pad}{{list.length > 0 && <nav class="{ncls}" '
-                    f'aria-label="Primary"><ul class="row gap-fluid-m '
+                    f'aria-label="Primary"><button class="nav-close" '
+                    f'type="button" aria-label="Close menu">'
+                    f'&times;</button><ul class="row gap-fluid-m '
                     f'list-plain">'
                     f'{{(list || []).map((it) => <li>'
                     f'<a class="nav-link" href={{it.href}}>'
                     f'{{it.label || it.term || it.title || it.text}}</a>'
                     f'</li>)}}</ul></nav>}}\n'
-                    f'{pad}{{list.length > 0 && <button class="burger '
-                    f'wf-cta-button" type="button" aria-label="Menu">'
-                    f'Menu</button>}}\n')
+                    f'{pad}{{list.length > 0 && <button class="burger" '
+                    f'type="button" aria-label="Menu">'
+                    f'<span aria-hidden="true">&#9776;</span>'
+                    f'</button>}}\n')
         if name == 'text-link' and not ivar:
             # a header's lone text-link IS the nav CTA slot (PS.7's
             # one primary action); elsewhere the wireframe label is
