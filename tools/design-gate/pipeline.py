@@ -119,12 +119,20 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
         recs = json.load(open(recs_p))
     except Exception:
         recs = {'steps': []}
-    recs['steps'].append({
+    rec = {
         'label': label,
         'argv': [os.path.basename(x) if x.startswith(HERE) else x
                  for x in argv],
         'inputs': inp, 'outputs': outs, 'rc': rc,
-        'ts': datetime.datetime.now().isoformat(timespec='seconds')})
+        'ts': datetime.datetime.now().isoformat(timespec='seconds')}
+    # a receipt step is provenance — sign it at write time with the
+    # operator key (same _sig recipe P.17 artifacts carry); the
+    # checklist verifier rejects unsigned steps, so a hand-written
+    # .receipts row is not evidence
+    key = G.op_key(create=True)
+    if key:
+        rec['sig'] = G._sig(rec, key)
+    recs['steps'].append(rec)
     os.makedirs(os.path.dirname(recs_p), exist_ok=True)
     json.dump(recs, open(recs_p, 'w'), indent=1)
 
@@ -181,8 +189,17 @@ def _write_run(site_dir, pdir):
         if fn.endswith('.py'):
             tools[fn] = _sha256(os.path.join(HERE, fn))
     pub = os.path.join(HERE, 'approval_pubkey.json')
+    # the raw token never lands on disk: RUN.json stores only its
+    # keyed digest (token_sig = HMAC(op_key, token)); consumers
+    # verify PIPELINE_RUN against it. An approval's `run` field binds
+    # to token_sig — it identifies the run without revealing the
+    # token. (OS-user separation is NOT achievable in-repo: the
+    # operator key lives under ~/.web-factory, readable by the same
+    # OS user the agent runs as; true separation needs
+    # approve_service under another user — documented in
+    # approve_service.py, not faked here.)
     doc = {
-        'token': token,
+        'token_sig': G.run_token_sig(token, G.op_key(create=True)),
         'gate_sha256': _sha256(T('gate.py')),
         'rules_sha256': _sha256(os.path.join(site_dir, 'RULES.md')),
         'brief_sha256': _sha256(os.path.join(site_dir, 'BRIEF.yaml')),
@@ -512,7 +529,7 @@ def _gate_fails_only_on_pick(d, wave):
     fails = rec.get('failures') or []
     if not fails:
         return False                # nothing recorded → not a pick fail
-    return all(re.search(r'X\.3|approval', str(x)) for x in fails)
+    return all(re.match(r'X\.3\b', str(x)) for x in fails)
 
 
 def _regate_drifted(pdir, site_dir, wave, env):
@@ -571,7 +588,7 @@ def _current(d, wave):
     rec = (G.read_approvals(G.Ctx(d)) or {}).get(wave) or {}
     try:
         run_tok = json.load(open(os.path.join(
-            G.Ctx(d).dir, 'RUN.json'))).get('token')
+            G.Ctx(d).dir, 'RUN.json'))).get('token_sig')
     except Exception:
         run_tok = None
     return not run_tok or str(rec.get('run')) == str(run_tok)

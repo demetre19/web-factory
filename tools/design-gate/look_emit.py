@@ -108,11 +108,12 @@ def _variants(ctx):
                 'look round needs ≥3 differing knobs per pair')
         # predicted score: the baseline keeps its DNA position; a
         # variant loses a point per knob it moves (a prediction, not a
-        # measurement — VG.6 asks for the number on the tile)
+        # measurement — VG.6 asks for the number on the tile). No
+        # pass/sheet_pass field: the producer never judged anything,
+        # so the record may not claim a verdict — VG.3 recomputes
+        # truth.
         rec = {'id': vid, 'vector': vector, 'deltas': deltas,
-               'score': 90 - 3 * len(deltas),
-               'sheet_pass': {'light': True, 'dark': True},
-               'pass': True}
+               'predicted_score': 90 - 3 * len(deltas)}
         if not deltas:
             rec['baseline'] = True
         out.append(rec)
@@ -310,8 +311,8 @@ def main(argv):
           'plan options: rewritten to the 3 look vectors')
     rewrite_options(ctx, variants)
     for v in variants:
-        print(f'  {v["id"]} {v["vector"]} score {v["score"]} '
-              f'deltas {sorted(v["deltas"])}')
+        print(f'  {v["id"]} {v["vector"]} predicted score '
+              f'{v["predicted_score"]} deltas {sorted(v["deltas"])}')
     return 0
 
 

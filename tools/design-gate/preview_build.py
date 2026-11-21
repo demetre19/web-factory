@@ -688,7 +688,7 @@ def emit_variants(ctx, entries=None, fname='variants.html',
         diff = ', '.join(f'{k} {base.get(k)}->{v}'
                          for k, v in sorted(deltas.items())) \
             or 'baseline'
-        sc = e.get('score') or 0
+        sc = e.get('predicted_score') or 0
         sc01 = sc / 100 if sc > 1 else sc
         arts.append({
             'oid': vid, 'label': str(vid),
@@ -696,14 +696,15 @@ def emit_variants(ctx, entries=None, fname='variants.html',
             'attrs': (f'data-variant="{vid}" '
                       f'data-vector="{e.get("vector")}" '
                       f'data-score="{sc01:.2f}" '
-                      f'data-score100="{e.get("score")}" '
+                      f'data-score100="{e.get("predicted_score")}" '
                       f'data-refs="{refs}" data-review="visual-pass" '
                       f'data-ignored="none" '
                       f'data-breaks="{breaks}" '
                       f'data-look="{gate.dna_slices(m).get("core", "")}" '
                       f'data-knobs="{diff}"'),
-            'meta': (f'<code>{vid} · {e.get("vector")} · score '
-                     f'{e.get("score")} · {diff} · breaks: {breaks}'
+            'meta': (f'<code>{vid} · {e.get("vector")} · predicted '
+                     f'score {e.get("predicted_score")} · {diff} · '
+                     f'breaks: {breaks}'
                      '</code><div data-pane="system">'
                      + _sheet(m, deltas) + '</div>')})
     return _picker_shell(
