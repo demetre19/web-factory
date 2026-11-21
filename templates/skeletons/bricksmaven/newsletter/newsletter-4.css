@@ -28,3 +28,9 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-newsletter-4 .newsletter-4-container { flex-direction: column; }
+    .wf-newsletter-4 .bm-list__item { flex-direction: column; }
+    .wf-newsletter-4 .bm-form-widget { flex-direction: column; }
+  }

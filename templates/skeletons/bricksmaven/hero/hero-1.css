@@ -25,3 +25,9 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-1 .hero-1 { flex-direction: column; }
+    .wf-hero-1 .hero-1__cta { flex-direction: column; }
+    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
+  }

@@ -333,8 +333,13 @@ def _instance_body(ctx, contract, row, copy=None):
     img = None
     if row.get('image'):
         img = dict(row['image'])
-        img['ratio'] = contract.get('media_ratio')   # the contract's
-                                            # ratio, not the exemplar's
+        # data-ratio describes the raster, not the plan's declared
+        # intent — the asset's own dims snapped to the contract's
+        # ratio vocabulary win; the contract value is the fallback.
+        _asset = os.path.join(ctx.site, 'public',
+                              str(img.get('src') or '').lstrip('/'))
+        img['ratio'] = emit_global.media_ratio_for(
+            _asset, contract.get('media_ratio'))
     for k, src in (('cta', c.get('cta') or row.get('cta')),
                    ('eyebrow', row.get('eyebrow')),
                    ('items', row.get('items')),

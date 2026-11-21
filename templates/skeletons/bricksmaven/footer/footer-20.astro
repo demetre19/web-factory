@@ -71,11 +71,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           </div>
-          <div class="row between">
+          {head &&           <div class="row between">
             {head && <h2 class="text-fluid-2">{head}</h2>}
           </div>
+          }
         </div>
-        <div>
+        {links.length >= 0 &&         <div>
           {links.length >= 0 &&           <div class="footer-nav-wrapper bm-footer-nav-wrapper--grid-2 row between">
             {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
                 <div class="footer-nav-column row between">
@@ -95,6 +96,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           </div>
           }
         </div>
+        }
       </div>
     </div>
   </div>

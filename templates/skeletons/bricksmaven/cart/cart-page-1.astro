@@ -48,9 +48,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 <div class="wf-cart-page-1">
   <div class="sec-inner">
     <div>
-      <div>
+      {head &&       <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
+      }
       <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}

@@ -35,3 +35,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-6 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-6 .bm-event-section-6-event-card { flex-direction: column; }
+    .wf-event-section-6 .bm-event-speaker-list { flex-direction: column; }
+    .wf-event-section-6 .bm-event-meta-info { flex-direction: column; }
+  }

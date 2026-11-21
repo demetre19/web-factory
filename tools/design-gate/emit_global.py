@@ -142,11 +142,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .sec-inner .sec-inner { max-width: none; margin-inline: 0;
                           padding-inline: 0; }
   /* L.15 — a media-split grid whose media never bound collapses to
-     one column; the lone child centres on its measure instead of
-     leaving a dead half-column. */
+     one column. The lone child keeps the measure's col-1 edge (the
+     plan's align allele): centring it would be a bespoke axis no
+     contract declares. */
   [class*="container"]:has(> :only-child) { grid-template-columns: 1fr; }
-  [class*="container"]:has(> :only-child) > :only-child {
-    margin-inline: auto; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
@@ -219,6 +218,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .media-round[data-ratio="4:3"] { aspect-ratio: 4 / 3; }
   .media-round[data-ratio="1:1"] { aspect-ratio: 1 / 1; }
   .media-round[data-ratio="3:4"] { aspect-ratio: 3 / 4; }
+  .media-round[data-ratio="3:2"] { aspect-ratio: 3 / 2; }
+  .media-round[data-ratio="2:3"] { aspect-ratio: 2 / 3; }
+  .media-round[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
   .media-round > img, .media-round > picture img {
     width: 100%; height: 100%; object-fit: cover; }
   /* a plan image may name its subject edge (image.focus) — the cover
@@ -262,7 +264,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .ratio-16-9:has(> [data-ratio]),
   .ratio-21-9:has(> [data-ratio]),
   .ratio-4-3:has(> [data-ratio]),
-  .ratio-1-1:has(> [data-ratio]) { aspect-ratio: auto; }
+  .ratio-1-1:has(> [data-ratio]),
+  .ratio-3-2:has(> [data-ratio]),
+  .ratio-2-3:has(> [data-ratio]),
+  .ratio-9-16:has(> [data-ratio]) { aspect-ratio: auto; }
   .ratio-phone { aspect-ratio: 9 / 19; }
   .variant-stage { container-type: inline-size; }
   .variant-switcher { position: sticky; top: 0; }
@@ -882,6 +887,59 @@ def global_css(tokens, fonts=None):
         '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
     return (head + '\n' + font_faces_css(fonts) + body + '\n'
             + _base_css(tokens) + '\n' + tail)
+
+
+RATIO_SET = ('21:9', '16:9', '3:2', '4:3', '1:1', '3:4', '2:3', '9:16')
+
+
+def _img_dims(path):
+    """(w, h) of a jpg/png/webp raster, or None — no PIL needed."""
+    import struct
+    try:
+        d = open(path, 'rb').read(65536)
+    except OSError:
+        return None
+    if d[:8] == b'\x89PNG\r\n\x1a\n' and len(d) >= 24:
+        return struct.unpack('>II', d[16:24])
+    if d[:2] == b'\xff\xd8':
+        i = 2
+        while i + 9 < len(d):
+            if d[i] != 0xFF:
+                i += 1
+                continue
+            m = d[i + 1]
+            if m in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC9, 0xCA,
+                     0xCD, 0xCE):
+                h, w = struct.unpack('>HH', d[i + 5:i + 9])
+                return w, h
+            i += 2 + struct.unpack('>H', d[i + 2:i + 4])[0]
+        return None
+    if d[:4] == b'RIFF' and d[8:12] == b'WEBP':
+        kind = d[12:16]
+        if kind == b'VP8X' and len(d) >= 30:
+            w = 1 + int.from_bytes(d[24:27], 'little')
+            h = 1 + int.from_bytes(d[27:30], 'little')
+            return w, h
+        if kind == b'VP8 ' and len(d) >= 30:
+            w, h = struct.unpack('<HH', d[26:30])
+            return w & 0x3FFF, h & 0x3FFF
+        if kind == b'VP8L' and len(d) >= 25:
+            b = int.from_bytes(d[21:25], 'little')
+            return (b & 0x3FFF) + 1, ((b >> 14) & 0x3FFF) + 1
+    return None
+
+
+def media_ratio_for(path, fallback=None):
+    """The raster's own aspect ratio snapped to the contract's ratio
+    vocabulary — data-ratio describes the asset, never the plan's
+    declared intent (a 4:3 box around a 3:2 photo crops wrong)."""
+    dims = _img_dims(path)
+    if not dims or not dims[1]:
+        return fallback
+    r = dims[0] / dims[1]
+    return min(RATIO_SET,
+               key=lambda t: abs(r - int(t.split(':')[0])
+                               / int(t.split(':')[1])))
 
 
 def site_assets(page_dir, site):

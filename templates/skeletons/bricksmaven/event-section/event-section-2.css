@@ -54,3 +54,15 @@
   .wf-event-section-2 .bm-event-section-2-card__hart-wrapper--active {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-2 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-grid-ul { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__price-wrapper { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__date { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__icon-wrapper { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__date-time { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__location { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__hart-wrapper { flex-direction: column; }
+    .wf-event-section-2 .bm-event-section-2-card__hart-wrapper--active { flex-direction: column; }
+  }

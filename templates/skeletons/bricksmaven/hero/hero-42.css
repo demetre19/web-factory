@@ -15,3 +15,9 @@
   .wf-hero-42 .hero-42__image-left {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-42 .hero-42__container { grid-template-columns: 1fr; }
+    .wf-hero-42 .hero-42 { flex-direction: column; }
+    .wf-hero-42 .hero-42__image-left { flex-direction: column; }
+  }

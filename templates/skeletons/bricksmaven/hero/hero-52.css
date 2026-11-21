@@ -23,3 +23,10 @@
   .wf-hero-52 .hero-52__bottom-image {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-52 .hero-52__usp-list { flex-direction: column; }
+    .wf-hero-52 .hero-52__usp-list-item { flex-direction: column; }
+    .wf-hero-52 .cta-combo { flex-direction: column; }
+    .wf-hero-52 .hero-52__bottom-image { flex-direction: column; }
+  }

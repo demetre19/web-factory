@@ -11,3 +11,8 @@
     display: flex;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-login-10 .bm-login-10 { flex-direction: column; }
+    .wf-login-10 .login-footer { flex-direction: column; }
+  }

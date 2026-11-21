@@ -35,3 +35,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-portfolio-single-6 .bm-portfolio-single-6-expertise-list { flex-direction: column; }
+    .wf-portfolio-single-6 .testimonial-list-card__profile { flex-direction: column; }
+    .wf-portfolio-single-6 .bm-live-website-btn { flex-direction: column; }
+    .wf-portfolio-single-6 .bm-contact-widget-link { flex-direction: column; }
+    .wf-portfolio-single-6 .bm-contact-widget-link__icon-wrapper { flex-direction: column; }
+  }

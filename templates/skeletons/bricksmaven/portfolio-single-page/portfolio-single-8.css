@@ -35,3 +35,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-portfolio-single-8 .bm-portfolio-single-8__intro-container { grid-template-columns: 1fr; }
+    .wf-portfolio-single-8 .bm-portfolio-single-meta-data-1--inline { flex-direction: column; }
+    .wf-portfolio-single-8 .bm-live-website-btn { flex-direction: column; }
+    .wf-portfolio-single-8 .bm-contact-widget-8 { flex-direction: column; }
+    .wf-portfolio-single-8 .bm-contact-widget-8__manager-data { flex-direction: column; }
+  }

@@ -40,3 +40,13 @@
   .wf-event-section-1 .bm-event-section-1-card__hart-wrapper--active {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-1 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__header { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__date { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__date-time { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__location { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__hart-wrapper { flex-direction: column; }
+    .wf-event-section-1 .bm-event-section-1-card__hart-wrapper--active { flex-direction: column; }
+  }

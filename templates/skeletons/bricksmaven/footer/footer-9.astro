@@ -66,9 +66,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
       <div class="row between">
-        <div class="footer-9__header row between">
+        {head &&         <div class="footer-9__header row between">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
+        }
         {links.length > 0 && <div class="row between">
           <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-9-card row between">

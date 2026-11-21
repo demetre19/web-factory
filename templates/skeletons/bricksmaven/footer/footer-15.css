@@ -53,3 +53,11 @@
   .wf-footer-15 .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-15 .footer-15__header { flex-direction: column; }
+    .wf-footer-15 .footer-15__social-wrapper { flex-direction: column; }
+    .wf-footer-15 .footer-15__socials { flex-direction: column; }
+    .wf-footer-15 .footer-bottom__left { flex-direction: column; }
+    .wf-footer-15 .footer-legal-nav { flex-direction: column; }
+  }

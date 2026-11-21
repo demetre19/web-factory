@@ -17,3 +17,9 @@
   .wf-login-3 .bm-login-3__footer {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-login-3 .bm-login-3__header { flex-direction: column; }
+    .wf-login-3 .login-footer { flex-direction: column; }
+    .wf-login-3 .bm-login-3__footer { flex-direction: column; }
+  }

@@ -54,7 +54,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div>
       {head && <h1 class="text-fluid-4">{head}</h1>}
-      {image && image.src &&       <div>
+      {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
@@ -72,11 +72,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           </div>
-          <div class="hero-45__team-cta">
-            <div>
+          {act.label &&           <div class="hero-45__team-cta">
+            {act.label &&             <div>
               {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
             </div>
+            }
           </div>
+          }
         </div>
       </div>
     </div>

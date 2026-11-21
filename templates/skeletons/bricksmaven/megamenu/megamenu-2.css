@@ -21,3 +21,8 @@
   .wf-megamenu-2 .bm-header-1__cta {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-megamenu-2 .bm-header-1__container { flex-direction: column; }
+    .wf-megamenu-2 .bm-header-1__cta { flex-direction: column; }
+  }

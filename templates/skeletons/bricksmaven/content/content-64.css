@@ -12,3 +12,8 @@
     display: flex;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-64 .bm-content-64__content { flex-direction: column; }
+    .wf-content-64 .bm-feature-list-item { flex-direction: column; }
+  }

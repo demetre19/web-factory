@@ -20,3 +20,9 @@
   .wf-portfolio-section-18 .bm-portfolio-section-18-case-card__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-portfolio-section-18 .bm-portfolio-section-18-case-card__top { flex-direction: column; }
+    .wf-portfolio-section-18 .bm-portfolio-section-18-case-card__brand { flex-direction: column; }
+    .wf-portfolio-section-18 .bm-portfolio-section-18-case-card__icon-wrapper { flex-direction: column; }
+  }

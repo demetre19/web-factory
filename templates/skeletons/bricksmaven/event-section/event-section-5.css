@@ -20,3 +20,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-5 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-5 .bm-event-section-5-accordion-event-card { flex-direction: column; }
+    .wf-event-section-5 .bm-event-meta-info { flex-direction: column; }
+  }

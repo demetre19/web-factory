@@ -6,3 +6,8 @@
     display: flex;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-login-6 .bm-login-6__container { flex-direction: column; }
+    .wf-login-6 .login-footer { flex-direction: column; }
+  }

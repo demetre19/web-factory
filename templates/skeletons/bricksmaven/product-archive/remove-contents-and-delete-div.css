@@ -60,3 +60,12 @@
   .wf-remove-contents-and-delete-div .product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-remove-contents-and-delete-div .bm-product-archive-1__filter-column { flex-direction: column; }
+    .wf-remove-contents-and-delete-div .bm-product-archive-1__product-filters { flex-direction: column; }
+    .wf-remove-contents-and-delete-div .bm-product-archive-filter-wrapper__toggle-button { flex-direction: column; }
+    .wf-remove-contents-and-delete-div .bm-product-archive-off-canvas__content { flex-direction: column; }
+    .wf-remove-contents-and-delete-div .bm-product-archive-1__sort-wrapper { flex-direction: column; }
+    .wf-remove-contents-and-delete-div .product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

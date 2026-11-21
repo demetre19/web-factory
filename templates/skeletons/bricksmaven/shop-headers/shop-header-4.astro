@@ -67,9 +67,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
-      <div class="bm-shop-header-4-item__end">
+      {act.label &&       <div class="bm-shop-header-4-item__end">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
+      }
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}

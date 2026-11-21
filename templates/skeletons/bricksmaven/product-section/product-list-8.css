@@ -22,3 +22,9 @@
   .wf-product-list-8 .product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-list-8 .product-list-8__product-category-intro { flex-direction: column; }
+    .wf-product-list-8 .product-list-notice__wrapper--inline { flex-direction: column; }
+    .wf-product-list-8 .product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

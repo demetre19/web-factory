@@ -34,3 +34,10 @@
   .wf-comparison-5 .bm-comparison-5-step-item__content {
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-comparison-5 .bm-comparison-5-card__icon-wrapper { flex-direction: column; }
+    .wf-comparison-5 .bm-comparison-5-step-list { flex-direction: column; }
+    .wf-comparison-5 .bm-comparison-5-step-item__marker { flex-direction: column; }
+    .wf-comparison-5 .bm-comparison-5-step-item__circle { flex-direction: column; }
+  }

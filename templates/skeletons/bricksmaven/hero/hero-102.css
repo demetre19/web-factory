@@ -33,3 +33,9 @@
   .wf-hero-102 .bm-list-item__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-102 .bm-list--inline { flex-direction: column; }
+    .wf-hero-102 .bm-list-item { flex-direction: column; }
+    .wf-hero-102 .bm-list-item__icon-wrapper { flex-direction: column; }
+  }

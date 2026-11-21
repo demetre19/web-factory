@@ -52,3 +52,11 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-8 .footer-8-nav-menu { flex-direction: column; }
+    .wf-footer-8 .footer-8-bottom-container { flex-direction: column; }
+    .wf-footer-8 .footer-bottom__left { flex-direction: column; }
+    .wf-footer-8 .footer-legal-nav { flex-direction: column; }
+    .wf-footer-8 .footer-social-wrapper-8 { flex-direction: column; }
+  }

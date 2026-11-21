@@ -54,13 +54,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-portfolio-single-4">
   <div class="sec-inner">
     <div class="grid-auto gap-fluid-l">
-      <div>
+      {head &&       <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
+      }
       {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
     <div>
-      {image && image.src &&       <div>
+      {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
@@ -71,10 +72,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
     </div>
-    {image && image.src &&     <div>
-      {image && image.src &&       <div class="bm-contact-widget-5">
-        {image && image.src &&         <div class="bm-contact-widget-5__manager-data">
-          {image && image.src &&           <div>
+    {image &&     <div>
+      {image &&       <div class="bm-contact-widget-5">
+        {image &&         <div class="bm-contact-widget-5__manager-data">
+          {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }

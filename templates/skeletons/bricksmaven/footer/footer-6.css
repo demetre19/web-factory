@@ -43,3 +43,9 @@
   .wf-footer-6 .footer-6-bottom__beta {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-6 .footer-6-bottom__alpha { flex-direction: column; }
+    .wf-footer-6 .footer-legal-nav { flex-direction: column; }
+    .wf-footer-6 .footer-6-bottom__beta { flex-direction: column; }
+  }

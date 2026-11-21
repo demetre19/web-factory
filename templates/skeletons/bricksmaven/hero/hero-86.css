@@ -21,3 +21,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-86 .bm-hero-86-card { flex-direction: column; }
+    .wf-hero-86 .bm-hero-86-card__thumb { flex-direction: column; }
+    .wf-hero-86 .bm-hero-86-card__top { flex-direction: column; }
+  }

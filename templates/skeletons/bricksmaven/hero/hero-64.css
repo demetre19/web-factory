@@ -5,3 +5,8 @@
   .wf-hero-64 .cta-combo {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-64 .bm-hero-64__footer { flex-direction: column; }
+    .wf-hero-64 .cta-combo { flex-direction: column; }
+  }

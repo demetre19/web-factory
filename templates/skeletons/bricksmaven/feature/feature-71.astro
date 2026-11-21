@@ -62,9 +62,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               <p class="bm-feature-71-card__accent-heading text-fluid-0">{it.text}</p>
             </div>
           ))}</div>}
-        <div>
+        {act.label &&         <div>
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
     </div>
   </div>

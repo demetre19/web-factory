@@ -43,3 +43,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-3 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-3 .bm-event-section-3-card__price-wrapper { flex-direction: column; }
+    .wf-event-section-3 .bm-event-section-3-card__date { flex-direction: column; }
+    .wf-event-section-3 .bm-event-section-3-card__icon-wrapper { flex-direction: column; }
+    .wf-event-section-3 .bm-event-section-3-card__date-time { flex-direction: column; }
+    .wf-event-section-3 .bm-event-section-3-card__location { flex-direction: column; }
+  }

@@ -57,9 +57,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div>
       <div class="blog-archive-6-head">
-        <div class="blog-archive-6-head__intro">
+        {head &&         <div class="blog-archive-6-head__intro">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
+        }
         <div class="blog-archive-6-head__search-wrapper">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}

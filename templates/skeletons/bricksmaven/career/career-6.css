@@ -18,3 +18,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-career-6 .bm-career-6-card { grid-template-columns: 1fr; }
+    .wf-career-6 .bm-career-meta-list { flex-direction: column; }
+    .wf-career-6 .bm-career-meta-item { flex-direction: column; }
+  }

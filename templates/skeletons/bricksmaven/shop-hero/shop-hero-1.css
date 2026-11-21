@@ -25,3 +25,9 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-shop-hero-1 .shop-hero-1-card { flex-direction: column; }
+    .wf-shop-hero-1 .cta-combo { flex-direction: column; }
+    .wf-shop-hero-1 .shop-hero-1-usp-card { flex-direction: column; }
+  }

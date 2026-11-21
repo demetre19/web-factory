@@ -16,3 +16,8 @@
   .wf-contact-5 .cta-combo {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-contact-5 .contact-5-container { grid-template-columns: 1fr; }
+    .wf-contact-5 .cta-combo { flex-direction: column; }
+  }

@@ -48,9 +48,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   <div class="sec-inner">
     <div class="bm-contact-31__container">
       <div>
-        <div>
+        {head &&         <div>
           {head && <h1 class="text-fluid-4">{head}</h1>}
         </div>
+        }
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="bm-contact-31-list">{(list || []).map((it) => (

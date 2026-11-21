@@ -22,3 +22,9 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-single-2 .blog-single-2__meta { flex-direction: column; }
+    .wf-blog-single-2 .blog-single-2__author { flex-direction: column; }
+    .wf-blog-single-2 .blog-single-2-footer__meta { flex-direction: column; }
+  }

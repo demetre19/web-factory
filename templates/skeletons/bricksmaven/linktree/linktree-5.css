@@ -17,3 +17,9 @@
   .wf-linktree-5 .bm-form-widget--stacked {
     flex-direction: column;
   }
+
+  @media (max-width: 44rem) {
+    .wf-linktree-5 .bm-linktree-5__bio-data { grid-template-columns: 1fr; }
+    .wf-linktree-5 .bm-social-share { flex-direction: column; }
+    .wf-linktree-5 .bm-form-widget { flex-direction: column; }
+  }

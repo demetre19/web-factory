@@ -19,3 +19,9 @@
   .wf-banner-1 .bm-banner-content__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-banner-1 .bm-banner-1__container { flex-direction: column; }
+    .wf-banner-1 .bm-banner-content { flex-direction: column; }
+    .wf-banner-1 .bm-banner-content__icon-wrapper { flex-direction: column; }
+  }

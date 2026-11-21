@@ -55,3 +55,10 @@
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-84 .cta-combo { flex-direction: column; }
+    .wf-hero-84 .bm-review-star { flex-direction: column; }
+    .wf-hero-84 .testimonial-36-card__head { flex-direction: column; }
+    .wf-hero-84 .testimonial-36-card__avatar { flex-direction: column; }
+  }

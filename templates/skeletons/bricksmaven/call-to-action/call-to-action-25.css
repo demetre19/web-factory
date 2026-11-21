@@ -27,3 +27,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-call-to-action-25 .bm-list-item { flex-direction: column; }
+    .wf-call-to-action-25 .bm-list-item__icon-wrapper { flex-direction: column; }
+    .wf-call-to-action-25 .bm-team-list { flex-direction: column; }
+    .wf-call-to-action-25 .bm-call-to-action-25-contact-item { flex-direction: column; }
+  }

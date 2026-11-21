@@ -14,3 +14,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-linktree-4 .bm-linktree-4__bio { flex-direction: column; }
+    .wf-linktree-4 .bm-linktree-4__author-details { flex-direction: column; }
+    .wf-linktree-4 .bm-social-share { flex-direction: column; }
+  }

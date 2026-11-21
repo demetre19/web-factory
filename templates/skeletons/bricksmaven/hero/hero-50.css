@@ -18,3 +18,9 @@
   .wf-hero-50 .hide {
     display: none;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-50 .hero-50 { flex-direction: column; }
+    .wf-hero-50 .hero-50__container { flex-direction: column; }
+    .wf-hero-50 .cta-combo { flex-direction: column; }
+  }

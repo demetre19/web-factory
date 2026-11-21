@@ -49,3 +49,12 @@
   .wf-footer-22 .footer-legal__li {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-22 .bm-footer-22__mid-container { grid-template-columns: 1fr; }
+    .wf-footer-22 .bm-footer-22-social-links { flex-direction: column; }
+    .wf-footer-22 .bm-footer-22__start { flex-direction: column; }
+    .wf-footer-22 .footer-nav-legal { flex-direction: column; }
+    .wf-footer-22 .footer-legal-nav { flex-direction: column; }
+    .wf-footer-22 .footer-legal__li { flex-direction: column; }
+  }

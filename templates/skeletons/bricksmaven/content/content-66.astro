@@ -61,11 +61,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
-      <div class="bm-content-66__inner-container">
-        <div>
+      {act.label &&       <div class="bm-content-66__inner-container">
+        {act.label &&         <div>
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
+      }
     </div>
   </div>
     </div>

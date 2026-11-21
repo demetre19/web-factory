@@ -45,3 +45,10 @@
   .wf-footer-9 .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-9 .footer-9-card { grid-template-columns: 1fr; }
+    .wf-footer-9 .footer-9__header { flex-direction: column; }
+    .wf-footer-9 .footer-bottom__left { flex-direction: column; }
+    .wf-footer-9 .footer-legal-nav { flex-direction: column; }
+  }

@@ -62,9 +62,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <div class="blog-section-5-cta">
+        {act.label &&         <div class="blog-section-5-cta">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="blog-section-5-wrapper">{(list || []).map((it) => (

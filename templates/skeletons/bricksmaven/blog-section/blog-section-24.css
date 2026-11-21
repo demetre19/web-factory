@@ -30,3 +30,9 @@
   .wf-blog-section-24 .bm-blog-section-24-card__term-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-section-24 .bm-blog-section-24-card__footer { flex-direction: column; }
+    .wf-blog-section-24 .bm-blog-section-24-card__icon-wrapper { flex-direction: column; }
+    .wf-blog-section-24 .bm-blog-section-24-card__term-wrapper { flex-direction: column; }
+  }

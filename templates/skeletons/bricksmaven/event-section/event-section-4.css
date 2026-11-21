@@ -31,3 +31,11 @@
   .wf-event-section-4 .bm-event-hart-molecule-active {
     display: none;
   }
+
+  @media (max-width: 44rem) {
+    .wf-event-section-4 .bm-event-section__intro { flex-direction: column; }
+    .wf-event-section-4 .bm-event-meta-info { flex-direction: column; }
+    .wf-event-section-4 .bm-event-section-4-card__speaker-wrapper { flex-direction: column; }
+    .wf-event-section-4 .bm-event-speaker-list { flex-direction: column; }
+    .wf-event-section-4 .bm-event-hart-molecule { flex-direction: column; }
+  }

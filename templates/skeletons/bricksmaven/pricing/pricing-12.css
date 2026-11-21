@@ -48,3 +48,11 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-pricing-12 .bm-pricing-12-card__top { flex-direction: column; }
+    .wf-pricing-12 .bm-pricing-12-card__label-wrapper { flex-direction: column; }
+    .wf-pricing-12 .bm-pricing-12-card__price-wrapper { flex-direction: column; }
+    .wf-pricing-12 .bm-list-item { flex-direction: column; }
+    .wf-pricing-12 .bm-cta-combo { flex-direction: column; }
+  }

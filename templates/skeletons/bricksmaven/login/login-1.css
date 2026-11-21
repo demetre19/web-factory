@@ -11,3 +11,8 @@
   .wf-login-1 .bm-login-1__media {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-login-1 .login-footer { flex-direction: column; }
+    .wf-login-1 .bm-login-1__media { flex-direction: column; }
+  }

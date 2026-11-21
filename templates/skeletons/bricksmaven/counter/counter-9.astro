@@ -73,9 +73,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             </div>
           ))}</div>
       </div>}
-      <div class="hero-1__cta">
+      {act.label &&       <div class="hero-1__cta">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
+      }
     </div>
   </div>
     </div>
