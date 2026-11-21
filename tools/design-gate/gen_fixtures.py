@@ -1254,6 +1254,8 @@ MUT = {
  'check_schema_fields': mut(('REPL','DESIGN-PLAN.md',', align: col-1-edge','')),
  'check_spec_verbatim': mut(('REPL','PAGES/home/SPEC.md','composition: cards-n','composition: editorial')),
  'check_components_exist': mut(('DEL','site/src/components/split-media.astro')),
+ 'check_design_system': mut(
+     ('DEL','site/dist/design-system/index.html')),
  'check_tile_is_system': (lambda files: files.update({
      'site/dist/preview/system/index.html': re.sub(
          r'<div data-comp="split-media">.*?</div>', '',

@@ -2468,6 +2468,143 @@ def check_tile_is_system(ctx):
                          'tile')
     return f
 
+
+_DS_ATTR = re.compile(
+    r'<(\w+)\b([^>]*\bdata-ds-name="[^"]*"[^>]*)>', re.S)
+
+
+def check_design_system(ctx):
+    """DS.* — the rendered design-system sheet (operator mandate:
+    NOT NEGOTIABLE — every design ships one after the styling pick).
+
+    pipeline_emit._design_system emits site/src/pages/design-
+    system.astro at W6 — TOKENS.json made visible: colour roles in
+    both modes, every ACSS size rung as a live specimen bound to the
+    same var a component consumes (emit_global._ds_specs emits one
+    .ds-tx-*/.ds-sp-* class per rung into the shared layer), buttons,
+    links, cards, icon chips, form fields when the plan carries a
+    form, density/section-space/surface/measure conventions, radius/
+    elevation/motion, and the knob table.
+
+    DS.1 the sheet exists and renders: site/dist/design-system/
+        index.html under the shared chrome, with a theme toggle
+        (the sheet must render both modes — C.5).
+    DS.2 every specimen carries data-ds-name/data-ds-var/
+        data-ds-value; each ACSS size rung's declared value equals
+        TOKENS.json's clamp AND the rung's var decl in global.css AND
+        the specimen class binds that var; each colour role's hex
+        equals TOKENS.json AND the tailwind.config utility hex —
+        a drifting component, emitter or page fails here.
+    DS.3 machinery chrome: no plan page links to it — the sheet is
+        not in the public nav.
+    """
+    if not _wave_ge(ctx, 'w6'):
+        return []
+    f = []
+    page = ctx.read('site/dist/design-system/index.html')
+    if page is None:
+        return ['DS.1 design-system sheet missing — pipeline_emit emits '
+                'site/src/pages/design-system.astro → dist/design-system/'
+                'index.html at w6 (post DNA lock)']
+    if 'id="main"' not in page:
+        f.append('DS.1 design-system sheet not under BaseLayout chrome '
+                 '(no <main id="main">)')
+    if 'data-theme-toggle' not in page:
+        f.append('DS.1 no theme toggle — the sheet must render light '
+                 'and dark (C.5)')
+    if 'data-ds-name=' not in page:
+        f.append('DS.1 design-system sheet carries no specimens '
+                 '(data-ds-name attributes missing — emit via '
+                 'pipeline_emit._design_system, never hand-author)')
+    specs = {}
+    for m in _DS_ATTR.finditer(page):
+        attrs = dict(re.findall(r'(data-ds-[\w-]+)="([^"]*)"',
+                                m.group(2)))
+        specs[attrs.get('data-ds-name')] = attrs
+    tok = {}
+    raw = ctx.read('TOKENS.json')
+    if raw:
+        try:
+            tok = json.loads(raw)
+        except Exception:
+            pass
+    sizes = tok.get('sizes') or {}
+    modes = (tok.get('color') or {}).get('modes') or {}
+    globcss = ctx.read('site/src/styles/global.css',
+                       'site/dist/assets/global.css') or ''
+    twconf = ctx.read('site/tailwind.config.js') or ''
+    if not globcss:
+        f.append('DS.2 global.css unreadable — cannot verify the '
+                 'specimens bind the token layer')
+    # ---- every size rung renders and declares the same clamp --------
+    for name, rec in sorted(sizes.items()):
+        want = str((rec or {}).get('clamp') or '')
+        # specimens name rungs `size-<name>` — a bare `text-xl` in an
+        # attribute would be extracted as a Tailwind candidate and emit
+        # a bare-rem utility (FL.1)
+        spec = specs.get(f'size-{name}') or specs.get(name)
+        if not spec:
+            f.append(f'DS.2 rung --{name} not rendered on the '
+                     'design-system sheet')
+            continue
+        if spec.get('data-ds-value') != want:
+            f.append(f'DS.2 --{name} sheet value '
+                     f'{spec.get("data-ds-value")} != TOKENS.json '
+                     f'{want} — drift')
+        if globcss:
+            decl = re.search(rf'--{re.escape(name)}:\s*([^;]+);',
+                             globcss)
+            if decl and decl.group(1).strip() != want:
+                f.append(f'DS.2 --{name} global.css decl '
+                         f'{decl.group(1).strip()} != TOKENS.json '
+                         f'{want} — the token layer drifted')
+            cls = spec.get('data-ds-class') or ''
+            if cls.startswith('ds-') and not re.search(
+                    rf'\.{re.escape(cls)}\s*\{{[^}}]*'
+                    rf'var\(--{re.escape(name)}\)', globcss):
+                f.append(f'DS.2 specimen class .{cls} does not bind '
+                         f'var(--{name}) in global.css')
+    # ---- every colour role, both modes -------------------------------
+    for mode in ('light', 'dark'):
+        roles = (modes.get(mode) or {}).get('roles') or {}
+        for role, hexv in sorted(roles.items()):
+            key = f'{mode}.{role}'
+            spec = specs.get(key)
+            if not spec:
+                f.append(f'DS.2 colour role {key} not rendered on '
+                         'the design-system sheet')
+                continue
+            hv = str(hexv).strip().lower()
+            # P.5: the sheet declares hex without '#' — no literal hex
+            # lands in .astro
+            if str(spec.get('data-ds-value') or '').strip().lower() \
+                    != hv.lstrip('#'):
+                f.append(f'DS.2 role {key} sheet value != TOKENS.json '
+                         f'{hexv}')
+            cls = spec.get('data-ds-class') or ''
+            if cls and twconf and hv not in twconf.lower():
+                f.append(f'DS.2 role {key} hex {hexv} not in '
+                         'tailwind.config.js — utilities drifted')
+    # ---- specimen blocks the mandate names ---------------------------
+    for block in ('buttons', 'links', 'cards'):
+        if f'data-ds-block="{block}"' not in page:
+            f.append(f'DS.2 design-system sheet missing the {block} '
+                     'block')
+    if 'data-ds-section="colours"' not in page:
+        f.append('DS.2 design-system sheet missing the colours section')
+    comps = ctx.components()
+    if 'form-panel.astro' in comps and 'data-ds-block="form"' \
+            not in page:
+        f.append('DS.2 plan carries a form but the sheet renders no '
+                 'form specimens')
+    # ---- DS.3 not in the public nav -----------------------------------
+    for pdir, txt in ctx.page_htmls():
+        if re.search(r'href="(?:/)?design-system', txt):
+            f.append(f'DS.3 {pdir}: nav links to the design-system '
+                     'sheet — machinery chrome stays out of the '
+                     'public nav')
+    return f
+
 def _shell_card_pages(path, txt):
     """{oid: (page_html, page_css)} for a thin picker shell.
 
@@ -14389,7 +14526,7 @@ WAVE_CHECKS = {
            check_acss_conventions,
            check_content_width,
            check_section_allowed, check_section_gates, check_exemplars,
-           check_astro_build, check_token_layer],
+           check_astro_build, check_token_layer, check_design_system],
     'w7': [check_section_program, check_hero_composition,
            check_assembly, check_spec_verbatim, check_page_data_attrs,
            check_heading_verbatim, check_class_subset,
@@ -14417,6 +14554,7 @@ WAVE_CHECKS = {
            check_js_cost, check_grid_tracks, check_frozen_inputs,
            check_copy_fidelity, check_unsourced_quotes,
            check_light_paint, check_acss_tokens, check_fluid_sizes,
+           check_design_system,
            check_seal] \
            + SEGMENT_ALL,
     'w8': [check_review_completeness, check_scorecard,

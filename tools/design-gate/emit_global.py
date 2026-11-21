@@ -557,11 +557,51 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .sr-only { position: absolute; width: 1px; height: 1px;
       padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+@@DS_SPECS@@
 }
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
 '''
 GLOBAL_CSS_TAIL = GLOBAL_CSS_TAIL.replace('@@FS_ALIASES@@\n', ''.join(
     f'  --fs-{n}: var(--{acss});\n' for n, acss in clamp.FS_MAP.items()))
+
+
+def _ds_specs(tokens):
+    """The /design-system sheet's specimen bindings, emitted inside
+    @layer components like every other shared class (DS.2: the page
+    binds vars, never literals — the same rung a component consumes).
+    Every ACSS size token gets one class: .ds-tx-* binds font-size for
+    the type rungs, .ds-sp-* binds block-size for the space/section/
+    gutter rungs."""
+    fl = emit_tokens.fluid_of(tokens)
+    out = [
+        '  /* design-system sheet — one class per rung, each a var() '
+        'binding on the shared token layer */',
+        '  .ds-spec { display: flex; flex-direction: column;',
+        '      gap: var(--space-xs); }',
+        '  .ds-swatch { display: block; block-size: var(--space-xl);',
+        '      border-radius: var(--r-card);',
+        '      border: 1px solid var(--border-default); }',
+        '  .ds-bar { display: block; inline-size: 100%;',
+        '      background: var(--action-primary);',
+        '      border-radius: var(--r-card); }',
+        '  .ds-radius { display: block; block-size: var(--space-l);',
+        '      inline-size: var(--space-l);',
+        '      background: var(--bg-elevated);',
+        '      border: 1px solid var(--border-default);',
+        '      border-radius: var(--r-card); }',
+        '  .ds-shadow-card { box-shadow: var(--shadow-card); }',
+        '  .ds-shadow-pop { box-shadow: var(--shadow-pop); }',
+        '  .ds-label { font-size: var(--fs--1);',
+        '      color: var(--text-secondary); }',
+        '  .ds-value { font-size: var(--fs--1);',
+        '      color: var(--text-muted); }']
+    for name in sorted(clamp.sizes(fl)):
+        if name.startswith(('text-', 'h')):
+            out.append(f'  .ds-tx-{name} {{ font-size: var(--{name}); }}')
+        else:
+            out.append(f'  .ds-sp-{name} {{ block-size: '
+                       f'var(--{name}); }}')
+    return '\n'.join(out)
 
 # light-mode role → tailwind colour key (dark roles prefix `dark`)
 ROLE_KEY = {
@@ -831,7 +871,8 @@ def global_css(tokens, fonts=None):
         .split('\n')
     body = '\n'.join(emit_lines[5:])
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
-        '  /* DENSITY-RUNGS */', _density_css(tokens))
+        '  /* DENSITY-RUNGS */', _density_css(tokens)).replace(
+        '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
     return (head + '\n' + font_faces_css(fonts) + body + '\n'
             + _base_css(tokens) + '\n' + tail)
 
@@ -909,6 +950,7 @@ def preview_css(tokens, fonts=None):
         .split('\n')
     body = '\n'.join(emit_lines[5:])
     tail = GLOBAL_CSS_TAIL.lstrip('\n').replace(
-        '  /* DENSITY-RUNGS */', _density_css(tokens))
+        '  /* DENSITY-RUNGS */', _density_css(tokens)).replace(
+        '@@DS_SPECS@@\n', _ds_specs(tokens) + '\n')
     return (font_faces_css(fonts) + body + '\n' + _base_css(tokens)
             + '\n' + tail)

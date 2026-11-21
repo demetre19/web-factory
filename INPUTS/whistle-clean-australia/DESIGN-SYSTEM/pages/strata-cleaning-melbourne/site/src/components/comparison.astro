@@ -1,74 +1,95 @@
 ---
 /**
- * comparison — gold exemplar (SB.5). Adapt copy, tokens and rhythm to the
- * contract; keep the skeleton. Renders inside Section.astro: no
- * <section>, no outer padding/background/max-width (SB.2).
- *
- * Full-copy slots (§4.3): heading → answer → the two arms → remaining
- * prose → links → after in article order (F.1). An arm is an item card
- * when the copy carries items; a prose block's first two paragraphs
- * compare as the two columns (the copy stays verbatim — only the slot
- * it renders in changes).
+ * bm-comparison-1 — TRANSLATED Bricksmaven skeleton.
+ * Produced by bricks_translate.py from the ACSS payload
+ * beside this file (comparison-1.json). Bank source, NOT a gold
+ * exemplar: the SOP adapts props/copy/rhythm before
+ * canonising (SB.5). Unmapped ACSS vars surface as
+ * var(--acss-*) and are listed in the translate report.
  */
-import { iconFor, inline } from '../_shared/inline';
-import type { CopySlot } from '../_shared/inline';
 interface Props {
+  brand?: string;
   heading?: string;
   fs?: string;
-  body?: string;
   cta?: { label: string; href: string };
-  items?: { term?: string; title?: string; text?: string; value?: string;
-             label?: string; href?: string; quote?: string;
-             icon?: string }[];
+  items?: { title?: string; text?: string; term?: string;
+             label?: string; href?: string;
+             icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
-  h1?: boolean;
-  copy?: CopySlot;
+  copy?: any;
 }
+import { inline } from '../_shared/inline';
+import IconChip from '../_shared/IconChip.astro';
+import { Image } from 'astro:assets';
 const {
-  heading = 'Section heading', fs = '',
-  body = '', cta, items = [], image, h1, copy,
+  brand = 'Brand',
+  heading = '',
+  fs = '',
+  cta = { label: '', href: '#' },
+  items = [],
+  image,
+  copy,
 } = Astro.props;
-const cp: CopySlot = copy || {};
+// §4.3 — a copy slot binds verbatim article copy onto
+// the skeleton's native props (F.1 — nothing dropped)
+const cp = copy || {};
 const head = cp.heading || heading;
-const sub = cp.answer || fs || body;
+const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
-const links = (cp.links && cp.links.length)
-  ? cp.links.map((l) => l.text || `[${l.anchor}](${l.href})`)
-  : [];
-const list = (cp.items && cp.items.length) ? cp.items : items;
-const cards = list.length
-  ? list.slice(0, 2)
-  : before.slice(0, 2).map((t) => ({ text: t }));
-const rest = list.length ? before : before.slice(cards.length);
+const list = (cp.items && cp.items.length
+  ? cp.items : items) || [];
+const qas = cp.qa || [];
+const links = cp.links || [];
 const after = cp.after || [];
+const act = cp.cta || cta;
+const phone = cp.phone || '';
+const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
+// V.8/P.12 — rasters resolve through src/assets/media/
+// so <Image> compiles AVIF/WebP srcsets
+const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
+const _mn = image ? String(image.src).split('/').pop() : null;
+const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
 <div>
-  {h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-3">{head}</h2>}
-  {sub && <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(sub)} />}
-  <div class="mt-fluid-l grid gap-stack md:grid-cols-2">
-    {cards.map((it) => {
-      const Icon = iconFor(it.icon);
-      return (
-      <div class="card">
-        {Icon &&
-          <span class="icon-chip"><Icon size={22} aria-hidden="true" /></span>}
-        {(it.title || it.term) &&
-          <h3 class="t0 sub-h">{it.title || it.term}</h3>}
-        <p class="mt-fluid-s text-fluid-0" set:html={inline(it.text)} />
+  <div class={image && image.src ? 'split' : undefined}>
+    <div class="stack">
+  <div class="sec-inner">
+    <div class="bm-conparison-1__container">
+      <div class="intro">
+        {head && <h2 class="text-fluid-2">{head}</h2>}
+        {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
+        {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      );
-    })}
+      {list.length > 0 && <div class="bm-conparison-1-list">{(list || []).map((it) => (
+            <div class="bm-conparison-1-card card">
+              <div class="bm-conparison-status">
+                <p class="text-fluid-0">{it.text}</p>
+              </div>
+              {(it.items || []).length > 0 && <div class="bm-list">
+                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    <div class="bm-list-item card">
+                      <div class="bm-list-item__icon-wrapper">
+                        {it2.icon && <IconChip name={it2.icon} />}
+                      </div>
+                      <p class="text-fluid-0">{it2.text}</p>
+                    </div>
+                  ))}</div>
+              </div>}
+            </div>
+          ))}</div>}
+      <div class="bm-conparison-1__footer">
+        <div class="cta-combo">
+          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
+        </div>
+      </div>
+    </div>
   </div>
-  {rest.map((p) => (
-    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
-  ))}
-  {links.length > 0 && (
-    <ul class="mt-stack grid-auto list-plain text-fluid-0">
-      {links.map((t) => <li set:html={inline(t)} />)}
-    </ul>
-  )}
-  {after.map((p) => (
-    <p class="mt-stack max-w-prose text-fluid-0" set:html={inline(p)} />
-  ))}
+    </div>
+    {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
+  </div>
+  {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
+  {links.map((l) => <p class="mt-stack text-fluid-0" set:html={inline(l.text || `[${l.anchor}](${l.href})`)} />)}
+  {after.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
+  {tel && <p class="mt-stack"><a class="link-quiet" href={tel}>{phone}</a></p>}
 </div>

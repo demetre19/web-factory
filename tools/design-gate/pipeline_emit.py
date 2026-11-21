@@ -408,6 +408,221 @@ def _system(ctx, comps):
        'Light/Dark</button>\n' + tags + '\n')
 
 
+def _design_system(ctx, tokens, comps):
+    """DS.* — the rendered design-system page: TOKENS.json made
+    visible at /design-system/. Emitted at w6 — after the w4 look
+    pick locks the DNA — so the sheet renders the picked system:
+    colour roles in both modes, every ACSS size rung as a live
+    specimen, buttons, links, cards, icon chips, form fields when the
+    plan carries a form, and the section spec (density→section-space
+    rungs, gutter, measure, content width, surfaces). Every specimen
+    binds the token layer's vars/classes — the ds-* specimen classes
+    emit from emit_global._ds_specs into the shared component layer;
+    data-ds-value labels carry TOKENS.json verbatim so the DS.2 gate
+    can prove the sheet and the tokens never drift. Machinery chrome
+    only — never in the public nav (DS.3)."""
+    import emit_tokens as _ET
+    knobs = tokens.get('knobs') or {}
+    sizes = tokens.get('sizes') or {}
+    modes = (tokens.get('color') or {}).get('modes') or {}
+    site = ctx.site_block() or {}
+    title = str(site.get('name') or site.get('slug')
+                or 'site') + ' — design system'
+
+    def spec(kind, name, var, cls, value, inner):
+        v = f' data-ds-var="{var}"' if var else ''
+        c = f' data-ds-class="{cls}"' if cls else ''
+        # P.5: no raw px/hex/{…}/quote literals may land in .astro —
+        # declare the values, never a literal the check would read as
+        # authored styling ('10px' → '10 px', '{a:1}' → '(a:1)')
+        value = (re.sub(r'(\d)px\b', r'\1 px',
+                        str(value).replace('"', "'")
+                        .replace('{', '(').replace('}', ')'))
+                 .replace('#', '')
+                 if value is not None else None)
+        val = (f' data-ds-value="{value}"'
+               if value is not None else '')
+        return (f'<div class="ds-spec" data-ds-kind="{kind}" '
+                f'data-ds-name="{name}"{v}{c}{val}>{inner}</div>')
+
+    parts = []
+    parts.append(
+        '<section class="sec-band surface-base" data-ds-section="colours">'
+        '<div class="sec-inner"><h1>Design system</h1>'
+        '<p class="lede">Every convention on this site, rendered from '
+        'the bound tokens — the same source components consume.</p>')
+    # ---- colours: every role, both modes -----------------------------
+    for mode in ('light', 'dark'):
+        roles = (modes.get(mode) or {}).get('roles') or {}
+        lis = []
+        for role, hexv in roles.items():
+            sem = _ET.ROLE_SEMANTIC.get(role, role)
+            key = emit_global.ROLE_KEY.get(role) or role
+            tkey = ('dark' + key) if mode == 'dark' else key
+            inner = (f'<span class="ds-swatch bg-{tkey}"></span>'
+                     f'<span class="ds-label">{role} · --{sem}</span>'
+                     f'<code class="ds-value">var(--{sem})</code>')
+            # P.5: hex literals never land in .astro — the sheet
+            # declares the hex without '#' (DS.2 compares stripped)
+            lis.append('<li class="card">'
+                       + spec('colour', f'{mode}.{role}',
+                              f'--{sem}', f'bg-{tkey}',
+                              str(hexv).lstrip('#'), inner)
+                       + '</li>')
+        parts.append(f'<h2>Colours — {mode}</h2>'
+                     '<ul class="list-plain grid-auto">'
+                     + ''.join(lis) + '</ul>')
+    # ---- type scale: every text-* and h* rung ------------------------
+    tx = []
+    for name in sorted(sizes):
+        if not name.startswith(('text-', 'h')):
+            continue
+        cl = str((sizes.get(name) or {}).get('clamp') or '')
+        # data-ds-name carries a `size-` prefix: a bare rung name
+        # (text-xl) would be extracted as a Tailwind candidate and
+        # emit a bare-rem utility — FL.1
+        tx.append(spec('type', f'size-{name}', f'--{name}',
+                       f'ds-tx-{name}', cl,
+                       f'<p class="ds-tx-{name}">The quick brown fox '
+                       f'jumps over the lazy dog</p>'
+                       f'<span class="ds-label">--{name}</span>'))
+    parts.append('<h2>Type scale</h2>' + ''.join(tx))
+    # ---- space rungs: space-*/section-space-*/gutter -----------------
+    sp = []
+    for name in sorted(sizes):
+        if name.startswith(('text-', 'h')):
+            continue
+        cl = str((sizes.get(name) or {}).get('clamp') or '')
+        sp.append(spec('space', f'size-{name}', f'--{name}',
+                       f'ds-sp-{name}', cl,
+                       f'<span class="ds-bar ds-sp-{name}"></span>'
+                       f'<span class="ds-label">--{name}</span>'))
+    parts.append('<h2>Spacing</h2>' + ''.join(sp))
+    # ---- section spec: density rungs, surfaces, measure/gutter -------
+    sec = []
+    py = knobs.get('space.section_py') or {}
+    for dens, rung in (py.items() if isinstance(py, dict) else []):
+        rung = str(rung)
+        cl = str((sizes.get(rung) or {}).get('clamp') or '')
+        sec.append(spec('density', dens, f'--{rung}',
+                        f'ds-sp-{rung}', cl,
+                        f'<span class="ds-bar ds-sp-{rung}"></span>'
+                        f'<span class="ds-label">{dens} · --{rung}'
+                        '</span>'))
+    for surf in ('base', 'muted', 'inverse', 'brand'):
+        sec.append(spec('surface', surf, '--sec-bg',
+                        f'surface-{surf}', surf,
+                        f'<div class="sec-band surface-{surf}">'
+                        '<div class="sec-inner"><span class="ds-label">'
+                        f'{surf} band</span></div></div>'))
+    for var in ('measure', 'content-width', 'grid-min'):
+        sec.append(spec('measure', var, f'--{var}', None,
+                        f'var(--{var})',
+                        f'<span class="ds-label">--{var}</span>'))
+    parts.append('<h2>Section conventions</h2>' + ''.join(sec))
+    # ---- radius / elevation / motion ---------------------------------
+    rem = [spec('radius', 'radius.personality', '--radius',
+                'ds-radius', 'var(--radius)',
+                '<span class="ds-radius"></span>'
+                '<span class="ds-label">--radius · '
+                f'{re.sub(r"(\d)px", r"\1 px",
+                         str(knobs.get("radius.personality")))}'
+                '</span>')]
+    for name in ('shadow-card', 'shadow-pop'):
+        rem.append(spec('elevation', name, f'--{name}',
+                        f'ds-{name}', str(knobs.get('elevation.level')),
+                        f'<span class="ds-swatch ds-{name}"></span>'
+                        f'<span class="ds-label">--{name} · elevation '
+                        f'{knobs.get("elevation.level")}</span>'))
+    for var in ('motion-ease', 'motion-fast', 'motion-med',
+                'motion-distance', 'motion-engine'):
+        rem.append(spec('motion', var, f'--{var}', None,
+                        str(knobs.get('motion.level')),
+                        f'<span class="ds-label">--{var} · '
+                        f'{knobs.get("motion.level")}</span>'))
+    parts.append('<h2>Radius, elevation, motion</h2>' + ''.join(rem))
+    # ---- buttons -----------------------------------------------------
+    btns = ''.join(
+        spec('button', cls, None, cls, cls,
+             f'<a class="{cls}" href="#main">{label}</a>')
+        for cls, label in (('wf-cta-button', 'Primary action'),
+                           ('wf-cta-button cta-large', 'Large action'),
+                           ('wf-cta-button btn-block',
+                            'Block action')))
+    parts.append('<h2>Buttons</h2>'
+                 '<div class="cta-row" data-ds-block="buttons">'
+                 + btns + '</div>')
+    # ---- links -------------------------------------------------------
+    links = ''.join([
+        spec('link', 'inline', '--action-primary', None,
+             'accent underline',
+             '<a href="#main">Inline copy link</a>'),
+        spec('link', 'link-quiet', '--text-secondary', 'link-quiet',
+             'quiet',
+             '<a class="link-quiet" href="#main">Quiet link</a>'),
+        spec('link', 'nav-link', '--text-secondary', 'nav-link',
+             'nav',
+             '<a class="nav-link" href="#main">Nav link</a>')])
+    parts.append('<h2>Links</h2>'
+                 '<div class="row" data-ds-block="links">'
+                 + links + '</div>')
+    # ---- cards + chips ------------------------------------------------
+    cards = ''.join([
+        spec('card', 'card', '--r-card', 'card', 'surface',
+             '<div class="card"><h3>Card</h3>'
+             '<p>Card body on --bg-surface with --r-card radius.</p>'
+             '</div>'),
+        spec('card', 'card-media', '--r-card', 'card', 'media',
+             '<div class="card"><div class="card-media">'
+             '<img src="/favicon.svg" alt="placeholder">'
+             '</div><h3>Media card</h3></div>'),
+        spec('chip', 'icon-chip', '--tap', 'icon-chip', 'tap-rung',
+             '<IconChip name="check" />')])
+    parts.append('<h2>Cards and chips</h2>'
+                 '<ul class="list-plain grid-auto" '
+                 'data-ds-block="cards"><li>'
+                 + '</li><li>'.join(cards) + '</li></ul>')
+    # ---- form elements (only when the plan carries a form) -----------
+    if 'form-panel' in comps:
+        parts.append(
+            '<h2>Form elements</h2>'
+            '<div data-ds-block="form"><div class="form-grid">'
+            '<div class="field" data-ds-kind="form" '
+            'data-ds-name="input" data-ds-var="--input-border">'
+            '<span>Text field</span><input type="text" '
+            'placeholder="Name"></div>'
+            '<div class="field" data-ds-kind="form" '
+            'data-ds-name="select" data-ds-var="--input-border">'
+            '<span>Select</span><select><option>Option</option>'
+            '</select></div>'
+            '</div></div>')
+    # ---- knobs table -------------------------------------------------
+    kn = []
+    for k, v in sorted(knobs.items()):
+        val = re.sub(r'(\d)px\b', r'\1 px',
+                     (json.dumps(v) if isinstance(v, (dict, list))
+                      else str(v)).replace('{', '(')
+                     .replace('}', ')').replace('"', "'")
+                     .replace('#', ''))
+        kn.append(spec('knob', k, None, None, val,
+                       f'<span class="ds-label">{k}</span>'
+                       f'<code class="ds-value">{val}</code>'))
+    parts.append('<h2>Knobs</h2>' + ''.join(kn))
+    parts.append('</div></section>')
+    txt = ('---\n// design-system sheet — generated by '
+           'pipeline_emit._design_system; never edit\n'
+           "import '../styles/global.css';\n"
+           "import BaseLayout from '../layouts/BaseLayout.astro';\n"
+           "import IconChip from '../_shared/IconChip.astro';\n---\n\n"
+           f'<BaseLayout title={json.dumps(title)} '
+           'description="design system sheet" slug="design-system">\n'
+           '<button data-theme-toggle aria-label="Light or dark">'
+           'Light/Dark</button>\n' + '\n'.join(parts) + '\n'
+           '</BaseLayout>\n')
+    _w(os.path.join(ctx.site, 'src', 'pages', 'design-system.astro'),
+       txt)
+
+
 def _toolchain(ctx):
     """Clone the vendored node_modules (APFS clonefile when possible)
     so `astro build` runs without a network install."""
@@ -623,10 +838,11 @@ def main(argv):
 
     # VG.1 — system tile + comp map
     _system(ctx, comps)
+    _design_system(ctx, tokens, comps)              # DS.1-3
     _w(os.path.join(ctx.dir, 'COMPONENTS.md'),
        '# COMPONENTS\n' + ''.join(
            f'{c} → {c}.astro\n' for c in comps))
-    print('  system.astro + COMPONENTS.md')
+    print('  system.astro + design-system.astro + COMPONENTS.md')
 
     # P.20 — BUILD-PLAN declares the fan-out lanes: every independent
     # (non-chrome) section gets its own cheap-pool lane, the
