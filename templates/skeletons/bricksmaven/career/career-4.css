@@ -23,3 +23,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-career-4 .bm-career-4-list { flex-direction: column; }
+    .wf-career-4 .bm-career-4-card__footer { flex-direction: column; }
+    .wf-career-4 .bm-career-meta-list { flex-direction: column; }
+    .wf-career-4 .bm-career-meta-item { flex-direction: column; }
+  }

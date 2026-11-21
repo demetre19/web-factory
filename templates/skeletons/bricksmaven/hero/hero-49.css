@@ -10,3 +10,8 @@
   .wf-hero-49 .cta-combo {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-49 .hero-49__carousel-list { flex-direction: column; }
+    .wf-hero-49 .cta-combo { flex-direction: column; }
+  }

@@ -21,3 +21,9 @@
   .wf-megamenu-6 .bm-header-1__cta {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-megamenu-6 .bm-header-1__container { flex-direction: column; }
+    .wf-megamenu-6 .megamenu-card-link-4 { flex-direction: column; }
+    .wf-megamenu-6 .bm-header-1__cta { flex-direction: column; }
+  }

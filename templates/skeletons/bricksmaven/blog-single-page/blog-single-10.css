@@ -37,3 +37,8 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-single-10 .blog-single-10-meta__author { flex-direction: column; }
+    .wf-blog-single-10 .blog-single-10__metadate { flex-direction: column; }
+  }

@@ -47,11 +47,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-table-of-content-2">
   <div>
-    <div class="table-of-content-2__intro">
+    {head &&     <div class="table-of-content-2__intro">
       {head && <h2 class="text-fluid-2">{head}</h2>}
+    </div>
+    }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-    </div>
     {list.length > 0 && <div>
       <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
           <div class="card">

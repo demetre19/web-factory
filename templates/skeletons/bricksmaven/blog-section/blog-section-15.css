@@ -36,3 +36,9 @@
   .wf-blog-section-15 .blog-section-15-card__date-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-section-15 .blog-section-15-card__meta-data { flex-direction: column; }
+    .wf-blog-section-15 .blog-section-15-card__author-wrapper { flex-direction: column; }
+    .wf-blog-section-15 .blog-section-15-card__date-wrapper { flex-direction: column; }
+  }

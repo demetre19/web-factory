@@ -18,3 +18,7 @@
     flex-direction: column;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-404-error-14 .error-14-container { grid-template-columns: 1fr; }
+  }

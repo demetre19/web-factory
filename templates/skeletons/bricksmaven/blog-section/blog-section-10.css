@@ -31,3 +31,8 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-section-10 .blog-section-10-card__media { flex-direction: column; }
+    .wf-blog-section-10 .blog-section-10-card__author { flex-direction: column; }
+  }

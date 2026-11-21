@@ -31,3 +31,9 @@
   .wf-product-single-1 .bm-product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-single-1 .bm-payment-options-2__text-icon { flex-direction: column; }
+    .wf-product-single-1 .bm-payment-options { flex-direction: column; }
+    .wf-product-single-1 .bm-product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

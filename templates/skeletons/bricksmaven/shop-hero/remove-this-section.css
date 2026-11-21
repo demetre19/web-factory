@@ -18,3 +18,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-remove-this-section .shop-hero-3-category-slider__slide { flex-direction: column; }
+    .wf-remove-this-section .shop-hero-3__price-wrapper { flex-direction: column; }
+    .wf-remove-this-section .shop-hero-3__cta { flex-direction: column; }
+  }

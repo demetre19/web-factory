@@ -21,3 +21,8 @@
   .wf-pricing-21 .bm-pricing-21-card__pricing-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-pricing-21 .bm-list-item { flex-direction: column; }
+    .wf-pricing-21 .bm-pricing-21-card__pricing-wrapper { flex-direction: column; }
+  }

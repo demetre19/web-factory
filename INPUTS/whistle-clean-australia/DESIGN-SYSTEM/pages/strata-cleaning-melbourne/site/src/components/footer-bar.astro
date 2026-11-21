@@ -64,9 +64,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>}
       </div>
       }
-      <div class="footer-column-right row between">
+      {head &&       <div class="footer-column-right row between">
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
+      }
     </div>
     <div class="footer-1-bottom row between">
       <div class="footer-1-bottom__left row between">

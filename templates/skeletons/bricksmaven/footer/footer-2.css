@@ -24,3 +24,9 @@
   .wf-footer-2 .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-2 .footer-menu-inline { flex-direction: column; }
+    .wf-footer-2 .footer-2-bottom__container { flex-direction: column; }
+    .wf-footer-2 .footer-legal-nav { flex-direction: column; }
+  }

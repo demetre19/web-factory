@@ -51,3 +51,10 @@
   .wf-product-single-2 .bm-product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-single-2 .bm-payment-options-wrapper-1 { flex-direction: column; }
+    .wf-product-single-2 .bm-payment-options { flex-direction: column; }
+    .wf-product-single-2 .bm-product-single-usp-1-list-item { flex-direction: column; }
+    .wf-product-single-2 .bm-product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

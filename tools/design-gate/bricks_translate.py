@@ -463,8 +463,10 @@ def translate(payload, stem):
         sibling expressions — only the head is conditional, so the
         parent must NOT propagate the head's guard over the whole."""
         t = s.strip()
-        m = re.match(r'^\{(.{1,80}?\.length > 0|image && image\.src)'
-                     r' && ', t)
+        # any simple guard (`list.length > 0`, `image && image.src`,
+        # `act.label`, `links.length === 0`) collapses upward — the
+        # expression is the text before the first ` && `
+        m = re.match(r'^\{([^{}]{1,80}?) && ', t)
         if not m:
             return None
         depth = 0
@@ -870,9 +872,26 @@ def translate(payload, stem):
                    'set:html={inline(sub)} />}\n'
                    '  {before.map((p) => <p class="mt-flow '
                    'text-fluid-0" set:html={inline(p)} />)}\n')
-        hm = re.search(r'^(\s*)\{head && ', body, re.M)
+        hm = re.search(r'^(\s*)\{head && <h', body, re.M)
         if hm:
             eol = body.index('\n', hm.end()) + 1
+            # the h2 emit may sit inside a collapsed `{head && <div>…}`
+            # wrapper — the answer slot isn't bound to `head`, so it
+            # lands after the line that closes that wrapper, not inside.
+            # `head` emits exactly once: a non-leaf `{head &&` line is
+            # the wrapper opener, and the leaf is nested in it.
+            nested = re.search(r'^\s*\{head && (?!<h)',
+                               body[:hm.start()], re.M)
+            if nested:
+                depth = 0
+                while eol < len(body):
+                    nl = body.index('\n', eol)
+                    nl = nl + 1 if nl >= 0 else len(body)
+                    seg = body[eol:nl]
+                    depth += seg.count('{') - seg.count('}')
+                    eol = nl
+                    if depth < 0:
+                        break
             body = body[:eol] + sub_blk + body[eol:]
         else:
             body = sub_blk + body
@@ -971,16 +990,46 @@ def translate(payload, stem):
         style = re.sub(
             r'padding:\s*(var\(--section-space-\w+\))(?:\s+\1){3}\s*;',
             r'padding-block: \1; padding-inline: var(--gutter);', style)
-        # a literal 2–3-track fr grid collapses under 44rem — the
-        # payload's desktop split must never overflow a phone
-        _mq = [m.group(1) for m in re.finditer(
-            r'\.([\w-]+)\s*\{[^{}]*grid-template-columns:\s*'
-            r'(?:1fr|minmax\(0,\s*1fr\))'
-            r'(?:\s+(?:1fr|minmax\(0,\s*1fr\))){1,2}\s*;', style)]
-        if _mq:
-            style += ('\n  @media (max-width: 44rem) {\n' +
-                      ''.join(f'    .{c} {{ grid-template-columns: 1fr; '
-                              f'}}\n' for c in _mq) + '  }\n')
+        # every multi-track grid / flex row collapses under 44rem —
+        # the payload's desktop split must never overflow a phone.
+        # Header chrome is exempt: the bar stays a row so brand +
+        # burger hold one line.
+        def _tracks(v):
+            depth, cur, out = 0, '', []
+            for ch in v:
+                if ch == '(':
+                    depth += 1
+                elif ch == ')':
+                    depth -= 1
+                if ch in ' \t' and depth == 0:
+                    if cur:
+                        out.append(cur)
+                        cur = ''
+                else:
+                    cur += ch
+            if cur:
+                out.append(cur)
+            return out
+        _mq_g, _mq_f = [], []
+        for _cm in re.finditer(r'\.([\w-]+)\s*\{([^{}]*)\}', style):
+            _c, _b = _cm.group(1), _cm.group(2)
+            _gm = re.search(r'grid-template-columns:\s*([^;]+);', _b)
+            if _gm and not _gm.group(1).strip().startswith(
+                    'repeat(auto-fit') and len(_tracks(
+                        _gm.group(1).strip())) >= 2:
+                _mq_g.append(_c)
+                continue
+            if cat != 'header' and not re.search(
+                    r'flex-direction:\s*column', _b) and (
+                    re.search(r'display:\s*flex', _b) or
+                    re.search(r'flex-direction:\s*row', _b)):
+                _mq_f.append(_c)
+        if _mq_g or _mq_f:
+            style += ('\n  @media (max-width: 44rem) {\n'
+                      + ''.join(f'    .{c} {{ grid-template-columns: '
+                                f'1fr; }}\n' for c in _mq_g)
+                      + ''.join(f'    .{c} {{ flex-direction: column; '
+                                f'}}\n' for c in _mq_f) + '  }\n')
         style = _scope_css(style, f'.wf-{stem}')
         if '--acss-' in style:      # never ship an unresolved var
             raise SystemExit(f'{stem}: unresolved ACSS var in emitted css')

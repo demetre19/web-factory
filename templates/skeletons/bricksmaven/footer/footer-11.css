@@ -20,3 +20,9 @@
   .wf-footer-11 .footer-3-bottom__right {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-11 .footer-menu-inline--alt { flex-direction: column; }
+    .wf-footer-11 .footer-legal-nav { flex-direction: column; }
+    .wf-footer-11 .footer-3-bottom__right { flex-direction: column; }
+  }

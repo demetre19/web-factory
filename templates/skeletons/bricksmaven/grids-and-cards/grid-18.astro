@@ -55,11 +55,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     <div class="stack">
   <div class="sec-inner">
     <div>
-      <div class="intro">
+      {head &&       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
+      </div>
+      }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
       {list.length > 0 && <div class="gridcard-18-ct">{(list || []).map((it) => (
             <div class="card">
               <div class="gridcard-18-article">

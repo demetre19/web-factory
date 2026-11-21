@@ -47,9 +47,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 <div class="wf-content-56">
   <div class="sec-inner">
     <div>
-      <div>
+      {head &&       <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
+      }
       <div class="bm-content-56__content">
         <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

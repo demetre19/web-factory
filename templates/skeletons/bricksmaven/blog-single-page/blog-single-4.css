@@ -31,3 +31,8 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-single-4 .blog-single-4__meta-wrapper-inner { flex-direction: column; }
+    .wf-blog-single-4 .blog-single__meta { flex-direction: column; }
+  }

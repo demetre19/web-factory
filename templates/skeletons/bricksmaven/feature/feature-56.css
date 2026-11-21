@@ -31,3 +31,8 @@
   .wf-feature-56 .bm-list-item__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-feature-56 .bm-list-item { flex-direction: column; }
+    .wf-feature-56 .bm-list-item__icon-wrapper { flex-direction: column; }
+  }

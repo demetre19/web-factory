@@ -39,3 +39,10 @@
   .wf-blog-single-16 .bm-blog-single-16__content {
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-single-16 .blog-single-2__meta { flex-direction: column; }
+    .wf-blog-single-16 .blog-single-head__details { flex-direction: column; }
+    .wf-blog-single-16 .blog-single-2__author { flex-direction: column; }
+    .wf-blog-single-16 .bm-social-share { flex-direction: column; }
+  }

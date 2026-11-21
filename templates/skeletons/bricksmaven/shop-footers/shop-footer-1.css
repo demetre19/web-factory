@@ -57,3 +57,9 @@
     flex-wrap: nowrap;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-shop-footer-1 .bm-shop-footer-1__footer { flex-direction: column; }
+    .wf-shop-footer-1 .bm-social-share { flex-direction: column; }
+    .wf-shop-footer-1 .bm-payment-options { flex-direction: column; }
+  }

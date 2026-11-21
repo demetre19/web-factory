@@ -10,3 +10,9 @@
   .wf-call-to-action-34 .bm-btn-cta__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-call-to-action-34 .bm-cta-34__container { grid-template-columns: 1fr; }
+    .wf-call-to-action-34 .bm-btn-cta { flex-direction: column; }
+    .wf-call-to-action-34 .bm-btn-cta__icon-wrapper { flex-direction: column; }
+  }

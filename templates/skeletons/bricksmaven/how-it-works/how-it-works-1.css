@@ -22,3 +22,8 @@
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 44rem) {
+    .wf-how-it-works-1 .hworks-1-container { grid-template-columns: 1fr; }
+    .wf-how-it-works-1 .hworks-card { flex-direction: column; }
+  }

@@ -16,3 +16,8 @@
   .wf-comparison-2 .bm-comparison-2-check-item__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-comparison-2 .bm-comparison-2-check-item { flex-direction: column; }
+    .wf-comparison-2 .bm-comparison-2-check-item__icon-wrapper { flex-direction: column; }
+  }

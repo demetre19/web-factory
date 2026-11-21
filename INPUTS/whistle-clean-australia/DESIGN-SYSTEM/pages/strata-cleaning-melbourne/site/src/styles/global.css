@@ -309,6 +309,16 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders text flush to the bezel */
   .sec-inner { max-width: var(--content-width); margin-inline: auto;
                padding-inline: var(--gutter); }
+  /* a bank skeleton that ships its own measure box must not double
+     the gutter inside the shell's .sec-inner — the shell owns it
+     (SB.2). One measure, one gutter, every section. */
+  .sec-inner .sec-inner { max-width: none; margin-inline: 0;
+                          padding-inline: 0; }
+  /* L.15 — a media-split grid whose media never bound collapses to
+     one column. The lone child keeps the measure's col-1 edge (the
+     plan's align allele): centring it would be a bespoke axis no
+     contract declares. */
+  [class*="container"]:has(> :only-child) { grid-template-columns: 1fr; }
   /* chrome is a bar: nav/footer get rhythm, never a section's padding */
   .sec-bar { padding-block: var(--space-xs);
              background: var(--sec-bg, var(--bg-canvas));
@@ -332,6 +342,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   [data-cols="2"] .grid-auto { --grid-cap: 2; }
   [data-cols="3"] .grid-auto { --grid-cap: 3; }
   [data-cols="4"] .grid-auto { --grid-cap: 4; }
+  /* grid gaps are GLOBAL: any bank grid list inherits the token's
+     --grid-gap as the floor. A bank rule that names its own gap still
+     wins (same layer, later source) until the translator stops
+     emitting spacing — the floor only catches silence, which today
+     renders as cards touching. */
+  [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
+      gap: var(--grid-gap); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
@@ -374,6 +391,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .media-round[data-ratio="4:3"] { aspect-ratio: 4 / 3; }
   .media-round[data-ratio="1:1"] { aspect-ratio: 1 / 1; }
   .media-round[data-ratio="3:4"] { aspect-ratio: 3 / 4; }
+  .media-round[data-ratio="3:2"] { aspect-ratio: 3 / 2; }
+  .media-round[data-ratio="2:3"] { aspect-ratio: 2 / 3; }
+  .media-round[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
   .media-round > img, .media-round > picture img {
     width: 100%; height: 100%; object-fit: cover; }
   /* a plan image may name its subject edge (image.focus) — the cover
@@ -403,10 +423,24 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
       inset: 12%; border: 1px solid
         color-mix(in srgb, var(--action-primary) 22%, transparent);
       border-radius: calc(var(--r-card) / 2); }
-  /* a ratio box owns its media: the placeholder svg's intrinsic size
-     must never decide the layout */
-  .ratio-portrait > img, .ratio-phone > img { width: 100%; height: 100%;
-                                              object-fit: cover; }
+  /* a ratio box owns its media subtree, not only a direct <img>:
+     bank figures wrap media-round, so the declared size must reach
+     through to the raster */
+  .ratio-portrait > *, .ratio-phone > * { width: 100%; height: 100%; }
+  .ratio-portrait img, .ratio-phone img { width: 100%; height: 100%;
+                                          object-fit: cover; }
+  /* the contract's declared data-ratio on the media wrapper owns the
+     shape — a heuristic ratio on the bank figure must never fight it
+     (a 3/4 box around a 4/3 image leaves dead space below the media) */
+  .ratio-portrait:has(> [data-ratio]),
+  .ratio-phone:has(> [data-ratio]),
+  .ratio-16-9:has(> [data-ratio]),
+  .ratio-21-9:has(> [data-ratio]),
+  .ratio-4-3:has(> [data-ratio]),
+  .ratio-1-1:has(> [data-ratio]),
+  .ratio-3-2:has(> [data-ratio]),
+  .ratio-2-3:has(> [data-ratio]),
+  .ratio-9-16:has(> [data-ratio]) { aspect-ratio: auto; }
   .ratio-phone { aspect-ratio: 9 / 19; }
   .variant-stage { container-type: inline-size; }
   .variant-switcher { position: sticky; top: 0; }
@@ -439,10 +473,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             background: var(--bg-canvas); padding: var(--space-m);
             border-bottom: 1px solid var(--border-default); }
   /* header CTA: the sticky bottom bar carries the call below the nav
-     breakpoint, so the header copy appears only where nav is inline */
+     breakpoint, so the header copy appears only where the whole row
+     (brand + links + CTA) actually fits — 56rem, not the 48rem links
+     breakpoint; at exactly 48rem the row overflows by the CTA's width */
   .nav-cta { display: none; }
   @media (min-width: 48rem) {
     .burger { display: none; }
+  }
+  @media (min-width: 56rem) {
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -460,6 +498,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
           color: var(--text-secondary); max-width: var(--measure); }
   .card { display: flex; flex-direction: column;
           gap: var(--space-s); }
+  /* the chip opens a card — a bank DOM that lists it last still
+     renders icon-above-title, the global card order */
+  .card > .icon-chip { order: -1; }
   /* text lists keep markers — Tailwind preflight strips ul/ol
      styling; indent + item rhythm bind the ACSS list tokens */
   ul.list-items { list-style: disc; }
@@ -555,6 +596,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet:hover { color: var(--text-primary); }
   .nav-links { display: none; gap: var(--space-m);
                align-items: center; }
+  /* the brand mark and the primary links hold one line — a nav that
+     wraps reads as two bars (L.1 axis) */
+  .nav-links ul { flex-wrap: nowrap; }
+  .bm-header-1__brand { white-space: nowrap; }
   @media (min-width: 48rem) { .nav-links { display: flex; } }
   .wf-cta-button { font-size: var(--fs--1); }
   .call-bar { display: flex; gap: var(--space-s); align-items: center;
@@ -673,7 +718,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      surface with the page inks and the standard primary action. */
   :is([data-surface="brand"], [data-surface="inverse"])
       :is(.lede, .attrib, .helper, .eyebrow, .sub-p, .nav-link,
-          .foot-head, .legal, .brand-mark, .quote, .stars) {
+          .foot-head, .legal, .brand-mark, .quote, .stars,
+          .link-quiet) {
     color: color-mix(in srgb, var(--sec-fg) 85%, transparent); }
   [data-surface="brand"] .wf-cta-button {
     background: var(--sec-fg); color: var(--sec-bg); }
@@ -703,6 +749,40 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 [data-theme=dark] img { filter: brightness(.85) contrast(.92); }
 
 @layer components {
+/* bricksmaven/grids-and-cards/grid-1 */
+  .wf-grid-1 .gridcard-1-grid-ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wf-grid-1 .gridcard-1-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 44rem) {
+    .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/content/content-1 */
+  .wf-content-1 .content-1-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .wf-content-1 .content-1__box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wf-content-1 .cta-combo {
+    display: flex;
+  }
+
+  @media (max-width: 44rem) {
+    .wf-content-1 .cta-combo { flex-direction: column; }
+  }
+
 /* bricksmaven/footer/footer-1 */
   .wf-footer-1 .footer-1-container {
     display: grid;
@@ -747,6 +827,11 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     flex-direction: column;
   }
 
+  @media (max-width: 44rem) {
+    .wf-footer-1 .footer-1-bottom__left { flex-direction: column; }
+    .wf-footer-1 .footer-legal-nav { flex-direction: column; }
+  }
+
 /* bricksmaven/call-to-action/call-to-action-10 */
   .wf-call-to-action-10 .cta-10-container {
     display: grid;
@@ -769,6 +854,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
 
   @media (max-width: 44rem) {
     .wf-call-to-action-10 .cta-10-container { grid-template-columns: 1fr; }
+    .wf-call-to-action-10 .hero-1__cta { flex-direction: column; }
+  }
+
+/* bricksmaven/grids-and-cards/grid-2 */
+  .wf-grid-2 .gridcard-2-grid-ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .wf-grid-2 .gridcard-2-card {
+    display: flex;
+    flex-direction: column;
   }
 
 /* bricksmaven/headers/header-1 */
@@ -808,30 +905,9 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     flex-direction: column;
   }
 
-/* bricksmaven/feature/feature-1 */
-  .wf-feature-1 .intro {
-    flex-direction: column;
-    display: flex;
-  }
-
-  .wf-feature-1 .feature-1-li {
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    display: grid;
-  }
-
-  .wf-feature-1 .feature-1-li__content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .wf-feature-1 .bm-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .wf-feature-1 .bm-list__item {
-    flex-direction: row;
-    display: flex;
+  @media (max-width: 44rem) {
+    .wf-how-it-works-1 .hworks-1-container { grid-template-columns: 1fr; }
+    .wf-how-it-works-1 .hworks-card { flex-direction: column; }
   }
 
 /* bricksmaven/hero/hero-1 */
@@ -861,6 +937,12 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .wf-hero-1 .hero-1-logo-ul {
     display: flex;
     flex-direction: row;
+  }
+
+  @media (max-width: 44rem) {
+    .wf-hero-1 .hero-1 { flex-direction: column; }
+    .wf-hero-1 .hero-1__cta { flex-direction: column; }
+    .wf-hero-1 .hero-1-logo-ul { flex-direction: column; }
   }
 
 /* bricksmaven/counter/counter-1 */
@@ -898,9 +980,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     flex-direction: column;
   }
 
+  @media (max-width: 44rem) {
+    .wf-counter-1 .counter-1-content { grid-template-columns: 1fr; }
+    .wf-counter-1 .counter-1-container { flex-direction: column; }
+  }
+
 /* bricksmaven/table-of-content/table-of-content-2 */
   .wf-table-of-content-2 .table-of-content-2__intro {
     flex-direction: row;
+  }
+
+  @media (max-width: 44rem) {
+    .wf-table-of-content-2 .table-of-content-2__intro { flex-direction: column; }
   }
 
 }

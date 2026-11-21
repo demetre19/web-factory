@@ -55,14 +55,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="bm-feature-9__container">
       <div class="bm-feature-9__content">
-        <div class="bm-feature-9__heading">
+        {head &&         <div class="bm-feature-9__heading">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
+        }
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        <div class="bm-feature-9__cta-wrapper">
+        {act.label &&         <div class="bm-feature-9__cta-wrapper">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
       {list.length > 0 && <div class="bm-feature-9-list-ul">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (

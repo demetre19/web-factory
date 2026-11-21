@@ -54,15 +54,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-gallery-20">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
-  <div class="sec-inner">
-    <div>
-      <div class="bm-intro-center">
+  {head &&   <div class="sec-inner">
+    {head &&     <div>
+      {head &&       <div class="bm-intro-center">
         {head && <h2 class="text-fluid-2">{head}</h2>}
+      </div>
+      }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
     </div>
+    }
   </div>
+  }
     </div>
     {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>

@@ -28,3 +28,9 @@
   .wf-product-list-9 .product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-list-9 .product-list-9-card { flex-direction: column; }
+    .wf-product-list-9 .product-list-9-card__content { flex-direction: column; }
+    .wf-product-list-9 .product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

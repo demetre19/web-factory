@@ -26,3 +26,9 @@
   .wf-portfolio-section-25 .bm-portfolio-section-25-card__media {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-portfolio-section-25 .bm-portfolio-section-25-card { flex-direction: column; }
+    .wf-portfolio-section-25 .bm-portfolio-section-25-card-terms-list { flex-direction: column; }
+    .wf-portfolio-section-25 .bm-portfolio-section-25-card__media { flex-direction: column; }
+  }

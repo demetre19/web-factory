@@ -48,11 +48,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 <div class="wf-how-it-works-8">
   <div class="sec-inner">
     <div>
-      <div class="hworks-intro">
+      {head &&       <div class="hworks-intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
+      </div>
+      }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>
       {list.length > 0 && <div class="hworks-8-grid-ul">{(list || []).map((it) => (
             <div class="hworks-8-card card">
               <div class="hworks-8-card__content">

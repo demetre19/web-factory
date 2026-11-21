@@ -25,3 +25,9 @@
   .wf-footer-3 .footer-3-bottom__right {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-3 .footer-menu-inline { flex-direction: column; }
+    .wf-footer-3 .footer-legal-nav { flex-direction: column; }
+    .wf-footer-3 .footer-3-bottom__right { flex-direction: column; }
+  }

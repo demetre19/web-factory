@@ -62,11 +62,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   </div>
                 ))}</div>
             </div>}
-            <div>
-              <div class="bm-pricing-19-card__price-box">
+            {act.label &&             <div>
+              {act.label &&               <div class="bm-pricing-19-card__price-box">
                 {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
               </div>
+              }
             </div>
+            }
           </div>
         </div>
       </div>

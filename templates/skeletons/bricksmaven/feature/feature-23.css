@@ -18,3 +18,8 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-feature-23 .feature-23-container { grid-template-columns: 1fr; }
+    .wf-feature-23 .feature-23-list-card { flex-direction: column; }
+  }

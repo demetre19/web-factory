@@ -35,3 +35,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-single-15 .blog-single-2__meta { flex-direction: column; }
+    .wf-blog-single-15 .blog-single-head__details { flex-direction: column; }
+    .wf-blog-single-15 .blog-single-2__author { flex-direction: column; }
+    .wf-blog-single-15 .bm-social-share { flex-direction: column; }
+  }

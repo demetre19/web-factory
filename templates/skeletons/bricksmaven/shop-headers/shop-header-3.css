@@ -36,3 +36,10 @@
   .wf-shop-header-3 .bm-shop-header-3__nav-label {
     display: none;
   }
+
+  @media (max-width: 44rem) {
+    .wf-shop-header-3 .bm-shop-header-3__top-container { flex-direction: column; }
+    .wf-shop-header-3 .bm-shop-header-3__search-wrapper { flex-direction: column; }
+    .wf-shop-header-3 .bm-shop-header-3__end { flex-direction: column; }
+    .wf-shop-header-3 .bm-shop-header-3__footer-container { flex-direction: column; }
+  }

@@ -53,9 +53,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div class="counter-1-content">
-        <div class="counter-1-box">
+        {act.label &&         <div class="counter-1-box">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
         {list.length > 0 && <div class="counter-1-grid-ul">{(list || []).map((it) => (
               <div class="counter-1-card card">
                 <div class="counter-1-card__intro">

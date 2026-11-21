@@ -25,3 +25,10 @@
   .wf-megamenu-4 .bm-header-1__cta {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-megamenu-4 .bm-header-1__container { flex-direction: column; }
+    .wf-megamenu-4 .megamenu-card-link-3 { flex-direction: column; }
+    .wf-megamenu-4 .megamenu-card-link-3__icon-wrapper { flex-direction: column; }
+    .wf-megamenu-4 .bm-header-1__cta { flex-direction: column; }
+  }

@@ -25,3 +25,10 @@
     flex-wrap: nowrap;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-banner-2 .bm-banner-2__container { flex-direction: column; }
+    .wf-banner-2 .bm-banner-content { flex-direction: column; }
+    .wf-banner-2 .bm-banner-content__icon-wrapper { flex-direction: column; }
+    .wf-banner-2 .bm-banner-2__right-column { flex-direction: column; }
+  }

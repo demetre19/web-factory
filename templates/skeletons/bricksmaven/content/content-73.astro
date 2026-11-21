@@ -57,14 +57,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="bm-content-73__container">
       <div>
-        <div>
+        {head &&         <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
+        </div>
+        }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        </div>
-        <div class="bm-content-73__footer">
+        {act.label &&         <div class="bm-content-73__footer">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
       {links.length > 0 &&       <div>
         {links.length > 0 && <div>

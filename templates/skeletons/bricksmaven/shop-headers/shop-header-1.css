@@ -19,3 +19,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-shop-header-1 .bm-shop-header-1__container { flex-direction: column; }
+    .wf-shop-header-1 .bm-shop-header-1__end { flex-direction: column; }
+    .wf-shop-header-1 .bm-shop-header-1__login-wrapper { flex-direction: column; }
+    .wf-shop-header-1 .bm-shop-header-cart-search { flex-direction: column; }
+  }

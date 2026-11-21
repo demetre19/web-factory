@@ -40,3 +40,9 @@
   .wf-product-single-3 .bm-product-list-notice-circle__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-single-3 .bm-payment-options-wrapper-1 { flex-direction: column; }
+    .wf-product-single-3 .bm-payment-options { flex-direction: column; }
+    .wf-product-single-3 .bm-product-list-notice-circle__sale-badge { flex-direction: column; }
+  }

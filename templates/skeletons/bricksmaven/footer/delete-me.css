@@ -34,3 +34,8 @@
   .wf-delete-me .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-delete-me .footer-bottom__left { flex-direction: column; }
+    .wf-delete-me .footer-legal-nav { flex-direction: column; }
+  }

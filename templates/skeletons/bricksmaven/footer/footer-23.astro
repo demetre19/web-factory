@@ -49,9 +49,10 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   <div class="sec-inner">
     <div class="bm-footer-23__top-container row between">
       <div class="row between">
-        <div class="bm-footer-23__top row between">
+        {head &&         <div class="bm-footer-23__top row between">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
+        }
         {list.length > 0 &&         <div class="row between">
           {list.length > 0 && <div class="bm-footer-22-social-links row between">
             <div class="row gap-fluid-m">{(list || []).map((it) => (
@@ -64,7 +65,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         }
       </div>
-      <div>
+      {links.length >= 0 &&       <div>
         {links.length >= 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-23 row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-nav-column row between">
@@ -84,6 +85,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
         }
       </div>
+      }
     </div>
     <div class="bm-footer-23__footer-container row between">
       <div>

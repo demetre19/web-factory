@@ -63,3 +63,10 @@
   .wf-footer-5 .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-5 .footer-5__apps-btn { flex-direction: column; }
+    .wf-footer-5 .footer-5-bottom__alpha { flex-direction: column; }
+    .wf-footer-5 .footer-5-bottom__beta { flex-direction: column; }
+    .wf-footer-5 .footer-legal-nav { flex-direction: column; }
+  }

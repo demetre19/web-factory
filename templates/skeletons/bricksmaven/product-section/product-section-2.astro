@@ -61,9 +61,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
-        {image && image.src &&         <div>
-          {image && image.src &&           <div class="product-list-2-card">
-            {image && image.src &&             <div>
+        {image &&         <div>
+          {image &&           <div class="product-list-2-card">
+            {image &&             <div>
               {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }

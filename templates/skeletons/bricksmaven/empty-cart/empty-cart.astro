@@ -58,9 +58,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     <div>
       <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
-        <div class="cta-combo">
+        {act.label &&         <div class="cta-combo">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
     </div>
     <div class="bm-product-list-1__container">

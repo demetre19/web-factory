@@ -12,3 +12,8 @@
   .wf-call-to-action-8 .hero-1__cta {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-call-to-action-8 .cta-8-container { flex-direction: column; }
+    .wf-call-to-action-8 .hero-1__cta { flex-direction: column; }
+  }

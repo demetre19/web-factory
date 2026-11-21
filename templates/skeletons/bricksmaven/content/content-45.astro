@@ -55,11 +55,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="bm-content-45__container">
       <div class="bm-content-45__intro">
-        <div class="bm-content-45__intro-top">
+        {head &&         <div class="bm-content-45__intro-top">
           {head && <h2 class="text-fluid-2">{head}</h2>}
+        </div>
+        }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        </div>
         {list.length > 0 && <div class="bm-content-45__columns">{(list || []).map((it) => (
               <div class="card">
                 {it.icon && <IconChip name={it.icon} />}
@@ -69,11 +70,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             ))}</div>}
       </div>
       <div class="bm-content-45__content">
-        {image && image.src &&         <div>
+        {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
-        {image && image.src &&         <div>
+        {image &&         <div>
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }

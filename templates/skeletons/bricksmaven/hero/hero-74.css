@@ -31,3 +31,9 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-hero-74 .bm-review-widget { flex-direction: column; }
+    .wf-hero-74 .bm-team-list { flex-direction: column; }
+    .wf-hero-74 .bm-testimonial-38-star-list { flex-direction: column; }
+  }

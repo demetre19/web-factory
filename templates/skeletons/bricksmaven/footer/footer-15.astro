@@ -65,7 +65,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             <form novalidate>
             </form>
           </div>
-          <div>
+          {links.length >= 0 &&           <div>
             {links.length >= 0 &&             <div class="footer-nav-wrapper footer-nav-wrapper-15 row between">
               {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
                   <div class="footer-nav-column row between">
@@ -85,6 +85,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             </div>
             }
           </div>
+          }
         </div>
         <div class="footer-15__copy-legal row between">
           <div>

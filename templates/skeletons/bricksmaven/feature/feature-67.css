@@ -25,3 +25,8 @@
   .wf-feature-67 .bm-feature-67-card__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-feature-67 .bm-feature-67-card { flex-direction: column; }
+    .wf-feature-67 .bm-feature-67-card__icon-wrapper { flex-direction: column; }
+  }

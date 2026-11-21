@@ -30,3 +30,8 @@
   .wf-footer-10 .footer-legal-nav {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-footer-10 .footer-bottom__left { flex-direction: column; }
+    .wf-footer-10 .footer-legal-nav { flex-direction: column; }
+  }

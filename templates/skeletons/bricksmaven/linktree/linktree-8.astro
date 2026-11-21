@@ -57,9 +57,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="bm-linktree-8__container grid-auto gap-fluid-l">
-      {image && image.src &&       <div class="bm-linktree-8__content">
-        {image && image.src &&         <div class="bm-linktree-7-bio">
-          {image && image.src &&           <div>
+      {image &&       <div class="bm-linktree-8__content">
+        {image &&         <div class="bm-linktree-7-bio">
+          {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }

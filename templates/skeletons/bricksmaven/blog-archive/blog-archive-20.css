@@ -21,3 +21,8 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-blog-archive-20 .blog-archive-20-archive-card__author-wrapper { flex-direction: column; }
+    .wf-blog-archive-20 .blog-archive-20-archive-card__meta-data { flex-direction: column; }
+  }

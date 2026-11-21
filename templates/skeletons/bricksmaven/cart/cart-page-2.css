@@ -16,3 +16,9 @@
   .wf-cart-page-2 .cart-page-2__cart-totals-container {
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-cart-page-2 .cart-page-2-testimonial-card { flex-direction: column; }
+    .wf-cart-page-2 .cart-page-2-testimonial-card__client { flex-direction: column; }
+    .wf-cart-page-2 .cart-page-2__cart-totals-container { flex-direction: column; }
+  }

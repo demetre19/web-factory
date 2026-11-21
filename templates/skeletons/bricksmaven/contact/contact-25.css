@@ -45,3 +45,8 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
+
+  @media (max-width: 44rem) {
+    .wf-contact-25 .contact-25-side-list-item { flex-direction: column; }
+    .wf-contact-25 .contact-25-side-list-item__icon { flex-direction: column; }
+  }

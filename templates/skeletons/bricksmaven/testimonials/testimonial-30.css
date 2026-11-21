@@ -20,3 +20,8 @@
   .wf-testimonial-30 .testimonial-30-list-card__profile {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-30 .testimonial-30-list-card { flex-direction: column; }
+    .wf-testimonial-30 .testimonial-30-list-card__profile { flex-direction: column; }
+  }

@@ -48,15 +48,17 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
     <div class="header-page-4-container row between">
-      <div class="header-page-4__top row between">
+      {head &&       <div class="header-page-4__top row between">
         {head && <h1 class="text-fluid-4">{head}</h1>}
       </div>
+      }
       <div class="header-page-4__cta-text row between">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        <div class="header-page-btn row between">
+        {act.label &&         <div class="header-page-btn row between">
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
+        }
       </div>
     </div>
   </div>

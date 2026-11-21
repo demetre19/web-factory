@@ -15,3 +15,8 @@
   .wf-call-to-action-35 .cta-35-item__icon-wrapper {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-call-to-action-35 .cta-35-item { flex-direction: column; }
+    .wf-call-to-action-35 .cta-35-item__icon-wrapper { flex-direction: column; }
+  }

@@ -25,3 +25,9 @@
   .wf-comparison-1 .cta-combo {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
+    .wf-comparison-1 .bm-list-item { flex-direction: column; }
+    .wf-comparison-1 .cta-combo { flex-direction: column; }
+  }

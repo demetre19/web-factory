@@ -10,3 +10,8 @@
   .wf-content-4 .cta-combo {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-4 .content-4-container { flex-direction: column; }
+    .wf-content-4 .cta-combo { flex-direction: column; }
+  }

@@ -68,7 +68,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     }
     <div class="bm-header-14__container row between">
-      {image && image.src &&       <div>
+      {image &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
@@ -76,9 +76,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
         {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
-      <div class="bm-header-14__cta row between">
+      {act.label &&       <div class="bm-header-14__cta row between">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
+      }
     </div>
   </div>
 </div>

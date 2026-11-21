@@ -22,3 +22,8 @@
     display: flex;
     flex-direction: row;
   }
+
+  @media (max-width: 44rem) {
+    .wf-grid-28 .grid-28-list { grid-template-columns: 1fr; }
+    .wf-grid-28 .grid-28-card__intro { flex-direction: column; }
+  }

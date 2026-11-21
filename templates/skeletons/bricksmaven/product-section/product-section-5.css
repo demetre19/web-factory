@@ -34,3 +34,8 @@
   .wf-product-section-5 .product-list-notice-rect__sale-badge {
     display: flex;
   }
+
+  @media (max-width: 44rem) {
+    .wf-product-section-5 .product-list-5__category-wrapper { flex-direction: column; }
+    .wf-product-section-5 .product-list-notice-rect__sale-badge { flex-direction: column; }
+  }
