@@ -217,7 +217,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .stack { display: flex; flex-direction: column; gap: var(--space-s); }
   .card { background: var(--bg-surface);
           border: 1px solid var(--border-default);
-          border-radius: var(--r-card); padding: var(--space-m); }
+          border-radius: var(--r-card); padding: var(--space-m);
+          box-shadow: var(--shadow-card); }
   /* brand mark — the inlined SVG scales to the bar height via the
      token layer, never an arbitrary-value utility on the element.
      ACSS has no logo token (U.10): the height binds --space-l, the
