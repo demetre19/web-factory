@@ -35,9 +35,13 @@ def _run_token_ok(pdir):
         run = json.load(open(os.path.join(pdir, 'RUN.json')))
     except Exception:
         run = {}
-    tok = run.get('token')
     env = os.environ.get('PIPELINE_RUN')
-    return bool(tok) and env == tok
+    # RUN.json stores token_sig = HMAC(op_key, token) — the disk
+    # artifact is only usable via the operator key, so copying the
+    # file's contents into PIPELINE_RUN cannot mint authority
+    sys.path.insert(0, HERE)
+    import gate
+    return gate.run_token_ok(run, env)
 
 
 def sign_review(pdir, G):
