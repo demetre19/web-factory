@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programmes — Gerstner University (style proof)</title>
+<style>
+  @font-face{font-family:"Switzer";src:url("fonts/switzer-300.woff2") format("woff2");font-weight:300;font-display:swap}
+  @font-face{font-family:"Switzer";src:url("fonts/switzer-400.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Switzer";src:url("fonts/switzer-500.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Switzer";src:url("fonts/switzer-700.woff2") format("woff2");font-weight:700;font-display:swap}
+
+  :root{
+    --background:#ffffff;
+    --foreground:#1b1b1b;          /* oklch(20.5% 0 0) */
+    --primary:#1b1b1b;
+    --primary-foreground:#ffffff;
+    --muted:#f4f4f3;               /* oklch(97% .002 90) */
+    --muted-foreground:#757575;    /* oklch(50% 0 0) */
+    --border:#dfdfdf;              /* oklch(90% 0 0) */
+    --gutter:32px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Switzer",sans-serif;
+    background:var(--background);
+    color:var(--foreground);
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;display:flex;flex-direction:column;
+  }
+  .wrap{width:100%;max-width:1600px;margin:0 auto;padding:0 var(--gutter)}
+  @media (max-width:1024px){:root{--gutter:24px}}
+  @media (max-width:640px){:root{--gutter:16px}}
+
+  /* ---------- type ---------- */
+  .label{font-size:12px;font-weight:500;text-transform:uppercase;line-height:1}
+  .meta{font-size:12px;font-weight:500;text-transform:uppercase;line-height:1.6;color:var(--muted-foreground)}
+  .meta b,.meta .v{font-weight:400;color:var(--foreground)}
+  .body-sm{font-size:14px;line-height:1.45;font-weight:400;text-wrap:pretty}
+  .display{
+    font-weight:700;text-transform:uppercase;letter-spacing:-0.05em;line-height:1;
+    text-box:trim-both cap alphabetic;
+    font-size:clamp(48px,8.9vw,128px);
+  }
+  .quote{
+    font-weight:700;text-transform:uppercase;letter-spacing:-0.05em;line-height:1;
+    text-box:trim-both cap alphabetic;
+    font-size:clamp(32px,4.4vw,60px);
+  }
+  .card-title{font-size:20px;font-weight:300;text-transform:uppercase;letter-spacing:-0.025em;line-height:1.2}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:30;background:var(--background)}
+  nav[aria-label="Main"]{display:flex;height:64px;align-items:center;justify-content:space-between;gap:24px}
+  .wordmark{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:-0.02em;text-decoration:none;color:inherit}
+  .nav-links{display:flex;gap:32px;list-style:none}
+  .nav-links a{font-size:12px;font-weight:500;text-transform:uppercase;text-decoration:none;color:inherit;transition:opacity .5s ease-in-out}
+  .nav-links a:hover{opacity:.7}
+  @media (max-width:900px){.nav-links{display:none}}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;justify-content:center;align-items:center;text-align:center;
+    border-radius:9999px;font-weight:500;text-decoration:none;border:0;cursor:pointer;
+    transition:all .5s ease-in-out;
+  }
+  .btn:focus-visible{outline:2px solid var(--foreground);outline-offset:4px}
+  .btn-primary{background:var(--primary);color:var(--primary-foreground)}
+  .btn-primary:hover{background:rgba(27,27,27,.9)}
+  .btn-muted{background:var(--muted);color:var(--foreground)}
+  .btn-muted:hover{background:var(--border)}
+  .btn-sm{height:32px;padding:12px 24px;font-size:12px}
+  .btn-md{height:36px;padding:12px 24px;font-size:14px}
+  .btn-lg{height:40px;padding:16px 32px;font-size:16px}
+  .btn[aria-pressed="true"]{background:var(--primary);color:var(--primary-foreground)}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:calc(100svh - 64px);display:flex;flex-direction:column;justify-content:space-between;gap:64px;padding:32px var(--gutter) 32px}
+  section.hero.wrap{padding-left:0;padding-right:0}
+  .hero > .hero-top,.hero > .meta-grid,.hero > .hero-bottom{padding:0 var(--gutter)}
+  .hero-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-start}
+  .hero-top .body-sm{max-width:340px;color:var(--muted-foreground)}
+  .hero-bottom h1{overflow:hidden}
+
+  /* ---------- collage ---------- */
+  .collage{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding:0}
+  .collage .cell{grid-column:span 4;position:relative;aspect-ratio:4/3}
+  .collage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+  /* the knocked-out corner block */
+  .collage .cell::after{content:"";position:absolute;width:25%;aspect-ratio:1;background:var(--background)}
+  .collage .cell.ko-tl::after{top:0;left:0}
+  .collage .cell.ko-tr::after{top:0;right:0}
+  .collage .cell.ko-bl::after{bottom:0;left:0}
+  @media (max-width:768px){.collage .cell{grid-column:span 12}}
+
+  /* ---------- meta row under collage ---------- */
+  .meta-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .meta-grid .col{grid-column:span 3}
+  .meta-grid .actions{grid-column:span 3;display:flex;gap:8px;justify-content:flex-end}
+  .meta-grid dl{display:grid;grid-template-columns:auto 1fr;gap:0 24px}
+  @media (max-width:900px){.meta-grid .col{grid-column:span 6}.meta-grid .actions{grid-column:span 12;justify-content:flex-start}}
+
+  /* ---------- dark band ---------- */
+  .band{background:var(--primary);color:var(--primary-foreground);position:relative;overflow:hidden}
+  .band .shader{position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(120% 90% at 85% 10%, rgba(0,200,255,.55), transparent 55%),
+      radial-gradient(110% 110% at 10% 90%, rgba(0,56,255,.6), transparent 60%),
+      radial-gradient(80% 60% at 55% 45%, rgba(184,240,255,.18), transparent 60%),
+      linear-gradient(160deg,#020a3a 0%, #0038ff 55%, #020a3a 100%);
+    filter:contrast(1.05) saturate(1.1);}
+  .band .shader::after{content:"";position:absolute;inset:0;opacity:.18;mix-blend-mode:overlay;
+    background-image:repeating-conic-gradient(rgba(255,255,255,.12) 0 .0001%,transparent 0 .0002%);background-size:180px 180px}
+  .band > *{position:relative;z-index:1}
+  .band .inner{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:96px;padding:32px var(--gutter) 64px}
+  .band .meta{color:rgba(255,255,255,.7)}
+  .band .meta .v{color:#fff}
+  .band .label .dim{color:rgba(255,255,255,.55)}
+  .quote-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;min-height:100svh}
+  .quote-grid .fig{grid-column:span 6;position:relative;overflow:hidden;margin-left:calc(var(--gutter) * -1)}
+  .quote-grid .fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+  .quote-grid .right{grid-column:span 6;display:flex;flex-direction:column;justify-content:space-between;gap:64px;padding:32px 0 64px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .stats .name{text-align:right}
+  @media (max-width:900px){.quote-grid .fig,.quote-grid .right{grid-column:span 12}.quote-grid .fig{aspect-ratio:3/4;margin-left:0}.stats .name{text-align:left}}
+
+  /* ---------- programme list ---------- */
+  .section-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;padding:64px 0 32px}
+  .section-head p{max-width:280px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start}
+  .cards{display:grid;grid-template-columns:repeat(12,1fr);gap:64px 16px;padding-bottom:96px}
+  .cards .card{grid-column:span 4;text-decoration:none;color:inherit;display:block}
+  .cards .card:hover .card-title{color:var(--muted-foreground)}
+  .cards .card-title{margin-top:8px;transition:color .5s}
+  .cards .card .meta{margin-top:8px}
+  @media (max-width:900px){.cards .card{grid-column:span 6}}
+  @media (max-width:600px){.cards .card{grid-column:span 12}}
+
+  /* ---------- giant section word ---------- */
+  .giant{font-weight:700;text-transform:uppercase;letter-spacing:-0.05em;line-height:.82;
+    font-size:clamp(64px,8.9vw,128px);text-box:trim-both cap alphabetic;overflow:hidden;white-space:nowrap}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:auto}
+  .foot-inner{min-height:60svh;display:flex;flex-direction:column;padding:32px var(--gutter) 24px}
+  .foot-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:40px 24px}
+  .foot-grid .fc{grid-column:span 3}
+  .foot-grid ul{list-style:none;margin-top:16px}
+  .foot-grid ul a{display:block;padding:2px 0;font-size:12px;font-weight:500;text-transform:uppercase;text-decoration:none;color:var(--muted-foreground);transition:color .3s}
+  .foot-grid ul a:hover{color:var(--foreground)}
+  .foot-word{margin-top:auto;padding-top:96px;overflow:hidden}
+  .foot-legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:24px}
+  @media (max-width:900px){.foot-grid .fc{grid-column:span 6}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="wordmark" href="#">Gerstner</a>
+      <ul class="nav-links">
+        <li><a href="#">Study</a></li>
+        <li><a href="#">University</a></li>
+        <li><a href="#">Research</a></li>
+        <li><a href="#">News</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">Overview</a></li>
+      </ul>
+      <a class="btn btn-primary btn-md" href="#">Apply</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-top">
+      <p class="label">(06 programmes, 04 faculties)</p>
+      <p class="body-sm">Bachelor&rsquo;s, master&rsquo;s and doctoral programmes, all taught in English
+        in groups of twenty or fewer. Filter by level or faculty, or search by name.</p>
+    </div>
+    <div class="collage">
+      <div class="cell ko-tl" style="aspect-ratio:3/2"><img src="img/studio.webp" alt="A student working on an architectural model in the design studio"></div>
+      <div class="cell ko-bl" style="aspect-ratio:4/3.4"><img src="img/courtyard.webp" alt="Students crossing the courtyard of the main building"></div>
+      <div class="cell ko-tr" style="aspect-ratio:3/2.2"><img src="img/seminar.webp" alt="A lecturer leading a seminar with a small group of students"></div>
+    </div>
+    <div class="meta-grid">
+      <div class="col">
+        <dl class="meta">
+          <dt>Address:</dt><dd class="v">Rheinweg 12, Basel</dd>
+          <dt>Email:</dt><dd class="v">study@gerstner.ch</dd>
+          <dt>Phone:</dt><dd class="v">+41 61 555 01 20</dd>
+        </dl>
+      </div>
+      <div class="col">
+        <dl class="meta">
+          <dt>Founded:</dt><dd class="v">1962</dd>
+          <dt>Faculties:</dt><dd class="v">4</dd>
+          <dt>Programmes:</dt><dd class="v">86</dd>
+        </dl>
+      </div>
+      <div class="col"></div>
+      <div class="actions">
+        <a class="btn btn-primary btn-md" href="#programmes">Find a programme</a>
+        <a class="btn btn-muted btn-md" href="#">Open days</a>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <h1 class="display">Programmes</h1>
+    </div>
+  </section>
+
+  <!-- DARK STAT / QUOTE BAND (plain black, grayscale portrait — as on the real homepage) -->
+  <section class="band">
+    <div class="wrap quote-grid">
+      <div class="fig"><img src="img/rector.webp" alt="Prof. Anna Lindgren, rector of Gerstner University"></div>
+      <div class="right">
+        <div class="stats">
+          <div class="cols">
+            <p class="meta">Students: <span class="v">14,800</span></p>
+            <p class="meta">Countries: <span class="v">112</span></p>
+            <p class="meta">Studios and labs: <span class="v">64</span></p>
+            <p class="meta">Graduates in work: <span class="v">94%</span></p>
+          </div>
+          <p class="meta name">Prof. Anna Lindgren<br>Rector</p>
+        </div>
+        <div class="pull">
+          <p class="quote">&ldquo;We do not teach subjects. We teach people to make things that last.&rdquo;</p>
+        </div>
+        <p class="meta"><span class="dim">From the rector&rsquo;s welcome, 2026</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHADER CTA BAND (the theme's WebGL gradient, approximated in CSS) -->
+  <section class="band">
+    <div class="shader" aria-hidden="true"></div>
+    <div class="wrap inner">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:16px">
+        <p class="label">(Apply)</p>
+        <p class="meta">Autumn intake 2027</p>
+      </div>
+      <div>
+        <p class="display">Applications<br>are open</p>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+        <p class="meta" style="max-width:340px">Deadline for the autumn intake: 15 March. Portfolio review for design programmes follows in April.</p>
+        <a class="btn btn-primary btn-lg" style="background:var(--primary-foreground);color:var(--primary)" href="#">Start an application</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMME LIST -->
+  <section id="programmes" class="wrap">
+    <div class="section-head">
+      <p class="body-sm" style="text-transform:uppercase;font-size:12px;font-weight:500;max-width:340px">
+        Bachelor&rsquo;s, master&rsquo;s and doctoral programmes across four faculties. Every programme
+        is taught in English, in studio groups of twenty or fewer, with a project for a real client in the final year.
+      </p>
+      <div class="filters">
+        <button class="btn btn-muted btn-sm" aria-pressed="true">Bachelor&rsquo;s</button>
+        <button class="btn btn-muted btn-sm">Master&rsquo;s</button>
+        <button class="btn btn-muted btn-sm">Doctorate</button>
+        <button class="btn btn-muted btn-sm">Short courses</button>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="#"><p class="meta">(01) Bachelor</p><h3 class="card-title">Architecture</h3><p class="meta">3 years &middot; 180 ECTS<br>Architecture and Design</p></a>
+      <a class="card" href="#"><p class="meta">(02) Master</p><h3 class="card-title">Visual Communication</h3><p class="meta">2 years &middot; 120 ECTS<br>Architecture and Design</p></a>
+      <a class="card" href="#"><p class="meta">(03) Bachelor</p><h3 class="card-title">Economics</h3><p class="meta">3 years &middot; 180 ECTS<br>Business and Economics</p></a>
+      <a class="card" href="#"><p class="meta">(04) Master</p><h3 class="card-title">Finance and Sustainability</h3><p class="meta">2 years &middot; 120 ECTS<br>Business and Economics</p></a>
+      <a class="card" href="#"><p class="meta">(05) Bachelor</p><h3 class="card-title">Computer Science</h3><p class="meta">3 years &middot; 180 ECTS<br>Science and Engineering</p></a>
+      <a class="card" href="#"><p class="meta">(06) Master</p><h3 class="card-title">Data Science</h3><p class="meta">2 years &middot; 120 ECTS<br>Science and Engineering</p></a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-grid">
+      <div class="fc">
+        <p class="label">(Est. 1962)</p>
+        <p class="meta" style="margin-top:16px">Gerstner University<br>Rheinweg 12, 4058 Basel</p>
+      </div>
+      <div class="fc">
+        <p class="label">Study</p>
+        <ul><li><a href="#">Programmes</a></li><li><a href="#">Faculties</a></li><li><a href="#">Admissions</a></li><li><a href="#">Apply</a></li></ul>
+      </div>
+      <div class="fc">
+        <p class="label">University</p>
+        <ul><li><a href="#">About</a></li><li><a href="#">Campus life</a></li><li><a href="#">Team</a></li><li><a href="#">Visit</a></li></ul>
+      </div>
+      <div class="fc">
+        <p class="label">Connect</p>
+        <ul><li><a href="#">News</a></li><li><a href="#">Events</a></li><li><a href="#">Contact</a></li></ul>
+      </div>
+    </div>
+    <p class="foot-word giant" aria-hidden="true">Gerstner</p>
+    <div class="foot-legal">
+      <p class="meta">&copy; 2026 Gerstner University. A theme by Lexington.</p>
+      <p class="meta">University of design, science and society</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
