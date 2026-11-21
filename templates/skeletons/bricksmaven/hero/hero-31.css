@@ -1,20 +1,24 @@
   .wf-hero-31 .hero-31-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-hero-31 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-31 .intro--left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-31 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

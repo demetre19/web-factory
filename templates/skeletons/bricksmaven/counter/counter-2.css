@@ -1,20 +1,24 @@
   .wf-counter-2 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-2 .counter-2-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-counter-2 .counter-2-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-2 .counter-2-card__number {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

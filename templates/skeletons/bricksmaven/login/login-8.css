@@ -1,11 +1,13 @@
   .wf-login-8 .bm-login-8__login-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-login-8 .login-footer {
     display: flex;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

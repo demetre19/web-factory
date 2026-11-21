@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-5 .megamenu-5__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-5 .megamenu-5__column {
@@ -20,16 +22,19 @@
 
   .wf-megamenu-5 .megamenu-card-link-3__icon-wrapper {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-5 .megamenu-article-card__top {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-5 .bm-header-1__cta {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

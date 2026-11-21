@@ -1,6 +1,7 @@
   .wf-feature-39 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-39 .intro--split {
@@ -19,9 +20,11 @@
   .wf-feature-39 .feature-39-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-feature-39 .feature-39-card__icon-wrapper {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

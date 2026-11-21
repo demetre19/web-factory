@@ -1,26 +1,31 @@
   .wf-hero-34 .hero-34-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-hero-34 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-34 .intro--left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-34 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-34 .hero-34-logo-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

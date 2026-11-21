@@ -1,6 +1,7 @@
   .wf-grid-20 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-20 .gridcard-20-ct {
@@ -12,9 +13,11 @@
   .wf-grid-20 .gridcard-20-article {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-grid-20 .gridcard-20-article__meta {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

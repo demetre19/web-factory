@@ -489,7 +489,11 @@ def translate(payload, stem):
                         else None
         return None
 
-    def render(el_id, depth, ivar=None, card=False):
+    def render(el_id, depth, ivar=None, card=False, in_card=False):
+        # card marks THIS element's role; in_card is the context for
+        # descendants (heading promotion, chip rules) — it persists
+        # through nested wrappers inside the card
+        in_card = in_card or card
         el = els.get(el_id)
         if not el:
             return ''
@@ -514,8 +518,12 @@ def translate(payload, stem):
                 if len(_sigs) >= 3 * _k and all(
                         _sigs[i] == _sigs[i % _k]
                         for i in range(len(_sigs))):
-                    _body = ''.join(render(children[i], depth + 3, 'it')
+                    seen['ivar_head'] = False
+                    _body = ''.join(render(children[i], depth + 3, 'it',
+                                           card=cat not in ('header',
+                                                            'footer'))
                                     for i in range(_k))
+                    seen.pop('ivar_head', None)
                     if not _body.strip():
                         continue   # an item template that emits
                         # nothing is not a loop
@@ -543,7 +551,8 @@ def translate(payload, stem):
             # The page shell already wraps every component in
             # <section class="sec-band surface-* density-*">. The bank
             # only supplies the measure box, never a second band.
-            parts = [render(c, depth + 1, ivar) for c in children]
+            parts = [render(c, depth + 1, ivar, in_card=in_card)
+                     for c in children]
             live = [p for p in parts if p.strip()]
             inner = ''.join(parts)
             out = (f'{pad}<div class="sec-inner">\n{inner}'
@@ -674,6 +683,7 @@ def translate(payload, stem):
                     # The chip sits ABOVE the title, never inline in
                     # it — an icon inside the heading reads as stray
                     # glyph spacing, not the ring element.
+                    seen['ivar_head'] = True
                     if not seen.get('ivar_icon_el'):
                         return (f'{pad}{{{ivar}.icon && '
                                 f'<IconChip name={{{ivar}.icon}} />}}\n'
@@ -683,6 +693,14 @@ def translate(payload, stem):
                     txt = f'{{{ivar}.term || {ivar}.title}}'
                 else:
                     txt = f'{{{ivar}.text}}'
+                    # Q.2 — an item's first text slot inside a card
+                    # IS its title when no heading slot exists: emit
+                    # h3 (E.3 forbids h2 → h4 rank skips) so the card
+                    # reads heading-then-body
+                    if in_card and not seen.get('ivar_head'):
+                        seen['ivar_head'] = True
+                        return (f'{pad}<h3 class="text-fluid-1">'
+                                f'{txt}</h3>\n')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
                 return (f'{pad}{{head && <{tag}{cattr}>'
@@ -716,6 +734,7 @@ def translate(payload, stem):
             if ivar:
                 # the stat card's figure/label is its title — an
                 # h3 so the card reads heading-then-body (Q.2)
+                seen['ivar_head'] = True
                 return (f'{pad}<h3{cattr}>{{{ivar}.stat || '
                         f'{ivar}.term || {ivar}.title}}</h3>\n')
             return ''
@@ -748,9 +767,11 @@ def translate(payload, stem):
             _itnames = set()
             _subtree_names(children[0], _itnames)
             seen['ivar_icon_el'] = 'icon' in _itnames
+            seen['ivar_head'] = False
             _item = render(children[0], depth + 3, var,
                            card=cat not in ('header', 'footer'))
             seen.pop('ivar_icon_el', None)
+            seen.pop('ivar_head', None)
             if _item.strip():
                 if _own_grid:
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>'
@@ -805,11 +826,13 @@ def translate(payload, stem):
                 _itnames = set()
                 _subtree_names(run[0], _itnames)
                 seen['ivar_icon_el'] = 'icon' in _itnames
+                seen['ivar_head'] = False
                 _item = ''.join(render(r, depth + 3, var,
                                        card=cat not in ('header',
                                                         'footer'))
                                 for r in run[:1])
                 seen.pop('ivar_icon_el', None)
+                seen.pop('ivar_head', None)
                 if not _item.strip():
                     continue   # an item template that emits nothing
                     # is not a loop — nothing to guard or render
@@ -833,7 +856,7 @@ def translate(payload, stem):
                               f'{{brand}}</p>}}\n')
             else:
                 for r in run:
-                    sub = render(r, depth + 1, ivar)
+                    sub = render(r, depth + 1, ivar, in_card=in_card)
                     if not sub.strip():
                         continue
                     _parts += 1
@@ -980,8 +1003,19 @@ def translate(payload, stem):
                       if p in TOPOLOGY]
             if not _props:
                 continue
+            _bound = [_topo_bind(p, v) for p, v in _props]
+            # Q.4 — every flex/grid container separates siblings: a
+            # skeleton that spaces via margins/justify loses them in
+            # the topology cut, so inject the system's gap default
+            _is_flexgrid = any(
+                p == 'display' and re.search(r'flex|grid', str(v))
+                for p, v in _bound)
+            if _is_flexgrid and not any(
+                    p in ('gap', 'row-gap', 'column-gap')
+                    for p, _v in _bound):
+                _bound.append(('gap', 'var(--grid-gap)'))
             _lines = [f'    {p}: {v};' if v is not None else f'    {p}'
-                      for p, v in (_topo_bind(p, v) for p, v in _props)]
+                      for p, v in _bound]
             decl.append(f'  .{_name} {{\n' + '\n'.join(_lines) + '\n  }')
         # _cssCustom raw blocks are collected but never emitted —
         # topology-only bank css carries no bespoke rules

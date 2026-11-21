@@ -1,25 +1,30 @@
   .wf-hero-2 .hero-2-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-hero-2 .hero-2__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-2 .hero-2__cta {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-2 .hero-2__trust {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-2 .hero-2-logo-ul {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

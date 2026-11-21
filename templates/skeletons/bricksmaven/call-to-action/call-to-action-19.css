@@ -1,15 +1,18 @@
   .wf-call-to-action-19 .cta-19-container {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     display: grid;
+    gap: var(--grid-gap);
   }
 
   .wf-call-to-action-19 .cta-19__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-call-to-action-19 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

@@ -5,6 +5,7 @@
   .wf-category-list-5 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-category-list-5 .category-list-5__list {
@@ -17,11 +18,13 @@
     flex-direction: row;
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
+    gap: var(--grid-gap);
   }
 
   .wf-category-list-5 .category-list-5__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

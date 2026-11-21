@@ -7,25 +7,30 @@
   .wf-testimonial-21 .testimonial-21-content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-21 .testimonial-21-content__profile {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-21 .testimonial-21-content__meta {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-21 .testimonial-21-post {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-21 .testimonial-21-post__card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

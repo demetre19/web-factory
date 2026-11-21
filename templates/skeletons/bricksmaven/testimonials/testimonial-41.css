@@ -1,16 +1,19 @@
   .wf-testimonial-41 .bm-testimonial-41__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-41 .bm-testimonial-41__footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-testimonial-41 .bm-testimonial-41__media {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

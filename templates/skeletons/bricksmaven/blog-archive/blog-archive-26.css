@@ -1,21 +1,25 @@
   .wf-blog-archive-26 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-26 .blog-archive-26-archive-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-26 .blog-archive-26-archive-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-26 .blog-archive-26-archive-card__meta-data {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

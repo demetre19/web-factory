@@ -1,11 +1,13 @@
   .wf-content-27 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-content-27 .intro--left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-content-27 .content-27__content-wrapper {
@@ -17,12 +19,14 @@
   .wf-content-27 .content-27__data {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-27 .content-27__data-content {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

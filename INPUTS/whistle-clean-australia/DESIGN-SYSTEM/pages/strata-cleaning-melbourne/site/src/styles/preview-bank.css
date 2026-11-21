@@ -2,15 +2,58 @@
   .wf-grid-1 .gridcard-1-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-1 .gridcard-1-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
     .wf-grid-1 .gridcard-1-grid-ul { grid-template-columns: 1fr; }
+  }
+
+/* bricksmaven/comparison/comparison-1 */
+  .wf-comparison-1 .intro {
+    flex-direction: column;
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  .wf-comparison-1 .bm-conparison-1-list {
+    display: grid;
+    gap: var(--grid-gap);
+    grid-template-columns: var(--fs-0);
+  }
+
+  .wf-comparison-1 .bm-conparison-status {
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  .wf-comparison-1 .bm-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  .wf-comparison-1 .bm-list-item {
+    flex-direction: row;
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  .wf-comparison-1 .cta-combo {
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-comparison-1 .bm-conparison-status { flex-direction: column; }
+    .wf-comparison-1 .bm-list-item { flex-direction: column; }
+    .wf-comparison-1 .cta-combo { flex-direction: column; }
   }
 
 /* bricksmaven/content/content-1 */
@@ -23,10 +66,12 @@
   .wf-content-1 .content-1__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-content-1 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
@@ -43,30 +88,36 @@
   .wf-footer-1 .footer-column-left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-column-mid {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-menu {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-column-right {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-1-bottom {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-1-bottom__left {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-1 .footer-legal-nav {
@@ -76,6 +127,7 @@
   .wf-footer-1 .footer-1-bottom__right {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
@@ -93,15 +145,18 @@
   .wf-call-to-action-10 .cta-10-content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-call-to-action-10 .cta-10-heading {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-call-to-action-10 .hero-1__cta {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
@@ -113,11 +168,13 @@
   .wf-grid-2 .gridcard-2-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-grid-2 .gridcard-2-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
 /* bricksmaven/headers/header-1 */
@@ -125,10 +182,28 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-header-1 .bm-header-1__cta {
     display: flex;
+    gap: var(--grid-gap);
+  }
+
+/* bricksmaven/testimonials/testimonial-1 */
+  .wf-testimonial-1 .testimonial-1-content {
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  .wf-testimonial-1 .testimonial-1-slides-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-1 .testimonial-1-content { flex-direction: column; }
   }
 
 /* bricksmaven/how-it-works/how-it-works-1 */
@@ -141,6 +216,7 @@
   .wf-how-it-works-1 .hworks-1-intro {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-1 .hworks-grid-ul {
@@ -152,11 +228,13 @@
   .wf-how-it-works-1 .hworks-card {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-1 .hworks-card__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
@@ -167,6 +245,7 @@
 /* bricksmaven/hero/hero-1 */
   .wf-hero-1 .hero-1 {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-1 .hero-1-container {
@@ -178,20 +257,24 @@
   .wf-hero-1 .hero-1__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-1 .hero-1__cta {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-1 .hero-1__content-trust {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-1 .hero-1-logo-ul {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
@@ -203,11 +286,13 @@
 /* bricksmaven/counter/counter-1 */
   .wf-counter-1 .counter-1-container {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-1 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-1 .counter-1-content {
@@ -219,6 +304,7 @@
   .wf-counter-1 .counter-1-box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-1 .counter-1-grid-ul {
@@ -230,23 +316,16 @@
   .wf-counter-1 .counter-1-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-counter-1 .counter-1-card__intro {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
     .wf-counter-1 .counter-1-content { grid-template-columns: 1fr; }
     .wf-counter-1 .counter-1-container { flex-direction: column; }
-  }
-
-/* bricksmaven/table-of-content/table-of-content-2 */
-  .wf-table-of-content-2 .table-of-content-2__intro {
-    flex-direction: row;
-  }
-
-  @media (max-width: 44rem) {
-    .wf-table-of-content-2 .table-of-content-2__intro { flex-direction: column; }
   }

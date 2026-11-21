@@ -1,16 +1,19 @@
   .wf-contact-29 .bm-contact-29__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-contact-29 .bm-contact-29__content {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-29 .bm-contact-29-row__footer {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

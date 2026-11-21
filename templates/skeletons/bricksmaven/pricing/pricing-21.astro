@@ -64,19 +64,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             <div class="card">
               <div>
                 <div>
-                  <p class="text-fluid-0">{it.text}</p>
+                  <h3 class="text-fluid-1">{it.text}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
               {(it.items || []).length > 0 && <div class="bm-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-list-item card">
-                      <p class="text-fluid-0">{it2.text}</p>
+                      <h3 class="text-fluid-1">{it2.text}</h3>
                     </div>
                   ))}</div>
               </div>}
               <div>
-                <p class="text-fluid-0">{it.text}</p>
+                <h3 class="text-fluid-1">{it.text}</h3>
               </div>
             </div>
           ))}</div>}

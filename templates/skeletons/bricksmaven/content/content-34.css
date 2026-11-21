@@ -1,22 +1,26 @@
   .wf-content-34 .content-34__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-34 .content-34__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-content-34 .bm-list {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-content-34 .bm-list__item {
     flex-direction: row;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

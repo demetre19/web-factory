@@ -1,6 +1,7 @@
   .wf-contact-12 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-12 .contact-12-content {
@@ -18,9 +19,11 @@
   .wf-contact-12 .contact-12-content-list-location {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-contact-12 .contact-12-content-list-location__detail {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

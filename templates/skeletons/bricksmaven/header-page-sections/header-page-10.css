@@ -1,14 +1,17 @@
   .wf-header-page-10 .header-page-10-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-header-page-10 .header-page-10__left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-header-page-10 .header-page-10__right {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

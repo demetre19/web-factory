@@ -1,6 +1,7 @@
   .wf-contact-25 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-content {
@@ -12,39 +13,47 @@
   .wf-contact-25 .contact-25-side {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-side-intro {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-side-list-ul {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-side-list-item {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-side-list-item__detail {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-side-list-item__icon {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-form {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-25 .contact-25-media {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {
