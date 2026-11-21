@@ -630,14 +630,26 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
             if any(w in g for w in later):
                 for w in later:
                     g.pop(w, None)
-                    # a restarted run re-gates every later wave — its
-                    # receipts are a prior run's signed provenance and
-                    # must go with the gate record, or
+                    # a restarted run re-gates every later wave —
+                    # drop only receipts that can never verify
+                    # (unsigned/pre-upgrade leftovers), or
                     # _checklist_receipt_fails rejects them before the
-                    # wave can regenerate them
+                    # wave regenerates. Signed prior-run receipts
+                    # stay: earlier checklists legitimately cite
+                    # later producers (w3 rewrites DESIGN-PLAN.md)
                     rp = os.path.join(d, '.receipts', w + '.json')
                     if os.path.isfile(rp):
-                        os.remove(rp)
+                        try:
+                            _st = (json.load(open(rp)) or {}
+                                   ).get('steps') or []
+                        except Exception:
+                            _st = []
+                        _k = G.op_key()
+                        _bad = any(
+                            not _k or s.get('sig') != G._sig(s, _k)
+                            for s in _st)
+                        if _bad or not _st:
+                            os.remove(rp)
                 json.dump(g, open(gp, 'w'), indent=2, sort_keys=True)
         except ValueError:
             pass                    # wave outside ORDER (site wave)
