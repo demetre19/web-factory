@@ -1,6 +1,7 @@
   .wf-grid-17 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-17 .gridcard-17-list {
@@ -12,11 +13,13 @@
   .wf-grid-17 .gridcard-17-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-17 .gridcard-17-card__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-grid-17 .gridcard-17-article__detail {
@@ -26,6 +29,7 @@
 
   .wf-grid-17 .gridcard-17-article__icon {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

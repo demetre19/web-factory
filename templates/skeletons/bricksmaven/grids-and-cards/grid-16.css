@@ -5,6 +5,7 @@
   .wf-grid-16 .gridcard-16-head {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-16 .gridcard-16-articles {
@@ -16,15 +17,18 @@
   .wf-grid-16 .gridcard-16-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-16 .gridcard-16-card__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-grid-16 .gridcard-16-card__title {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

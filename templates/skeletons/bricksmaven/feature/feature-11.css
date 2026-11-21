@@ -1,25 +1,30 @@
   .wf-feature-11 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-11 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-11 .feature-11-feature-list {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-11 .feature-11-feature-item {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-feature-11 .feature-11-feature-item__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

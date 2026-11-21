@@ -452,6 +452,11 @@ def _pick_gate(d, wave, wait, timeout=1800):
         if _current(d, wave):
             print(f'  {wave} pick recorded — continuing')
             return 'ok'
+        # a fresh pick can land without the run stamp (service
+        # predates run binding, or RUN.json was unreadable) — the
+        # same rebind as the pre-loop path rescues it
+        if _verified(d, wave) and not _current(d, wave):
+            _confirm(d, wave)
         time.sleep(2)
     print(f'  {wave} pick wait timed out ({timeout}s)')
     return 'paused'

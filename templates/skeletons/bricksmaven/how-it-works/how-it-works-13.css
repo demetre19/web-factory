@@ -1,19 +1,23 @@
   .wf-how-it-works-13 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-13 .intro--left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-13 .hworks-13-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-how-it-works-13 .hworks-13-card__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

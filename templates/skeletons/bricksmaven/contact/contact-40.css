@@ -7,22 +7,26 @@
   .wf-contact-40 .bm-contact-40-contact-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-contact-40 .bm-contact-40-contact-item {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-40 .bm-contact-40-contact-item__icon-wrapper {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-40 .bm-contact-40-contact-item__content {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-40 .bm-hero-86-card {
@@ -32,6 +36,7 @@
 
   .wf-contact-40 .bm-hero-86-card__thumb {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-40 .bm-hero-86-card__top {

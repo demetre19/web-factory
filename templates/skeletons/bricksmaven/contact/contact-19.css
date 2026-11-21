@@ -1,6 +1,7 @@
   .wf-contact-19 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-19 .contact-19-list-ul {
@@ -12,14 +13,17 @@
   .wf-contact-19 .contact-19-list-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-contact-19 .contact-19-location {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-contact-19 .contact-19-location__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

@@ -55,14 +55,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 && <div class="bm-pricing-13__pricing-list">{(list || []).map((it) => (
             <div class="card">
               <div class="bm-pricing-13-card__top">
-                <p class="text-fluid-0">{it.text}</p>
+                <h3 class="text-fluid-1">{it.text}</h3>
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
               {(it.items || []).length > 0 && <div class="bm-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-list-item card">
-                      <p class="text-fluid-0">{it2.text}</p>
+                      <h3 class="text-fluid-1">{it2.text}</h3>
                     </div>
                   ))}</div>
               </div>}

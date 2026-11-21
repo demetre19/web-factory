@@ -1,19 +1,23 @@
   .wf-feature-19 .feature-19-container {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-19 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-feature-19 .feature-19-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-feature-19 .feature-19-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

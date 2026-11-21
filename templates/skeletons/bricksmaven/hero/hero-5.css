@@ -1,9 +1,11 @@
   .wf-hero-5 .hero-5-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-hero-5 .hero-5-wrapper__content {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }

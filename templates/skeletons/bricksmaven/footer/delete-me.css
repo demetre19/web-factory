@@ -1,6 +1,7 @@
   .wf-delete-me .footer-cta-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-delete-me .footer-cta__content {
@@ -16,11 +17,13 @@
   .wf-delete-me .footer-nav-column {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-delete-me .footer-menu {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-delete-me .footer-14-bottom-container {

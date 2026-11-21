@@ -59,11 +59,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               {(it.items || []).length > 0 && <div>
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-li-benefits card">
-                      <p class="text-fluid-0">{it2.text}</p>
+                      <h3 class="text-fluid-1">{it2.text}</h3>
                     </div>
                   ))}</div>
               </div>}
-              <p class="text-fluid-0">{it.text}</p>
+              <h3 class="text-fluid-1">{it.text}</h3>
             </div>
           ))}</div>}
       </div>

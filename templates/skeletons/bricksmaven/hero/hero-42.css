@@ -1,19 +1,23 @@
   .wf-hero-42 .hero-42 {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-42 .hero-42__container {
     display: grid;
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr) minmax(0, 4fr);
+    gap: var(--grid-gap);
   }
 
   .wf-hero-42 .hero-42__content {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-hero-42 .hero-42__image-left {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

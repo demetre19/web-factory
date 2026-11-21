@@ -1,20 +1,24 @@
   .wf-content-6 .content-6-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-6 .content-6__wrapper {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-content-6 .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-content-6 .content-6__wrapper--alt {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

@@ -1,20 +1,24 @@
   .wf-team-8 .team-8-container {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-team-8 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-team-8 .team-8-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-team-8 .team-8-card__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

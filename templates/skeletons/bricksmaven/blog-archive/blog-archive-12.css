@@ -7,17 +7,20 @@
   .wf-blog-archive-12 .blog-archive-12-archive-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-12 .blog-archive-12-archive-card__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-blog-archive-12 .blog-archive-12-archive-card__meta {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

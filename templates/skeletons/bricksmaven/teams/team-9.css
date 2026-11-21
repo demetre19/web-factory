@@ -1,29 +1,35 @@
   .wf-team-9 .team-9-container {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-team-9 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-team-9 .team-9-list {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-team-9 .team-9-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-team-9 .team-9-card__box {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-team-9 .team-9-card__box-head {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }

@@ -5,20 +5,24 @@
   .wf-footer-2 .footer-2-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-2 .footer-2-column-left {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-2 .footer-menu-inline {
     display: flex;
     flex-direction: row;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-2 .footer-2-bottom__container {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-footer-2 .footer-legal-nav {

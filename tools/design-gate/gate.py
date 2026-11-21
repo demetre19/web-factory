@@ -10778,12 +10778,17 @@ def lock_dna_map(ctx):
         fp = os.path.join(ctx.dir, 'DNA.md')
         if os.path.isfile(fp):
             outs['DNA.md'] = _sha256_file(fp)[:16]
-        recs['steps'].append({
-            'label': 'w4 look lock', 'argv': ['approve_service.py',
-                                              'lock_dna_map'],
-            'inputs': {}, 'outputs': outs, 'rc': 0,
-            'ts': __import__('datetime').datetime.now().isoformat(
-                timespec='seconds')})
+        rec = {'label': 'w4 look lock', 'argv': ['approve_service.py',
+                                               'lock_dna_map'],
+               'inputs': {}, 'outputs': outs, 'rc': 0,
+               'ts': __import__('datetime').datetime.now().isoformat(
+                   timespec='seconds')}
+        # sign at write time like pipeline._record — the checklist
+        # verifier rejects unsigned steps as forgeable evidence
+        key = op_key(create=True)
+        if key:
+            rec['sig'] = _sig(rec, key)
+        recs['steps'].append(rec)
         os.makedirs(os.path.dirname(recs_p), exist_ok=True)
         json.dump(recs, open(recs_p, 'w'), indent=1)
     return locked

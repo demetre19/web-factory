@@ -1,6 +1,7 @@
   .wf-footer-19 .bm-footer-19__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-footer-19 .bm-footer-19-phone-list {
@@ -11,6 +12,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

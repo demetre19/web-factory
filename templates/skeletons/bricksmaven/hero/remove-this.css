@@ -1,20 +1,24 @@
   .wf-remove-this .hero-21-content__wrapper {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-remove-this .hero-21-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-remove-this .hero-21-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-remove-this .hero-21-card__icon {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

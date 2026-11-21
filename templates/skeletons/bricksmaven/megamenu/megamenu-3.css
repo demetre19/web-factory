@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-3 .megamenu-3__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-megamenu-3 .megamenu-3__column {
@@ -20,6 +22,7 @@
 
   .wf-megamenu-3 .bm-header-1__cta {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

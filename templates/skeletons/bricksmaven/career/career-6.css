@@ -1,11 +1,13 @@
   .wf-career-6 .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-career-6 .bm-career-6-card {
     display: grid;
     grid-template-columns: minmax(0, 2fr) minmax(0, 4fr);
+    gap: var(--grid-gap);
   }
 
   .wf-career-6 .bm-career-meta-list {
@@ -17,6 +19,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

@@ -1,11 +1,13 @@
   .wf-content-46 .bm-content-46__wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-content-46 .bm-content-46__content {
     display: flex;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

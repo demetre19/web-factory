@@ -1,29 +1,35 @@
   .wf-item-xmamst .pricing-4 {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .pricing-4-container {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .intro {
     flex-direction: column;
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .cta-combo {
     display: flex;
+    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .pricing-4-price-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-item-xmamst .pricing-4-card {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

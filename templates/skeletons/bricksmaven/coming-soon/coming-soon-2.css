@@ -1,23 +1,27 @@
   .wf-coming-soon-2 .coming-soon-2__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-2 .bm-coming-soon-2__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-2 .bm-coming-soon-2__intro {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-2 .bm-form {
     display: flex;
     flex-direction: column;
+    gap: var(--grid-gap);
   }
 
   .wf-coming-soon-2 .bm-form-widget {
@@ -30,6 +34,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    gap: var(--grid-gap);
   }
 
   @media (max-width: 44rem) {

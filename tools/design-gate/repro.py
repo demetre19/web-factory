@@ -24,6 +24,7 @@ passed explicitly, so the rebuilt plan reflects the approved option.
 Exit 0 = identical. Each differing file is printed.
 """
 import filecmp
+import json
 import os
 import shutil
 import subprocess
@@ -132,6 +133,17 @@ def rebuild(pdir, tmp):
     t_pdir = os.path.join(t_site, 'pages', slug)
     os.makedirs(t_pdir, exist_ok=True)
     _copy_filtered(pdir, t_pdir, GENERATED_PAGE)
+
+    # the operator's approvals live under the real dir's path hash —
+    # the scratch dir resolves its own hash and finds nothing, which
+    # silently re-derives picks (assemble_fine falls back to the
+    # first declared variant). Seed the recorded approvals beside the
+    # work; read_approvals honours a local APPROVALS.json.
+    appr = gate.read_approvals(gate.Ctx(pdir))
+    if appr:
+        with open(os.path.join(t_pdir, 'APPROVALS.json'), 'w',
+                  encoding='utf-8') as fh:
+            json.dump(appr, fh)
 
     # dna_from_discovery --offline: DISCOVERY.json + assets/fonts are
     # already captured — repro never refetches the network
