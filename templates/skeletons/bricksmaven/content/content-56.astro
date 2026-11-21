@@ -44,20 +44,20 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-content-56">
   <div class="sec-inner">
-    <div class="bm-content-56__container">
-      <div class="bm-content-56__intro">
+    <div>
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
       <div class="bm-content-56__content">
-        <div class="bm-content-56__column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
         {list.length > 0 && <div class="bm-content-56-data">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-content-56-data-card card">
+              <div class="card">
                 <span>{it.stat || it.term || it.title}</span>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

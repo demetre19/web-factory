@@ -1,50 +1,14 @@
-  .bm-content-64__container {
+  .wf-content-64 .bm-content-64__container {
     display: grid;
-    gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-content-64__content {
+  .wf-content-64 .bm-content-64__content {
     display: flex;
-    row-gap: var(--flow-spacing);
   }
 
-  .bm-feature-list-beta {
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-list-item {
+  .wf-content-64 .bm-feature-list-item {
     flex-direction: row;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-list-item__icon-wrapper {
-
-  }
-
-  .bm-content-64__media {
-    justify-content: flex-end;
-  }
-
-  .bm-content-64__image {
-    width: 100%;
-  }
-
-  .bm-quote-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-xl);
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-quote-card__review-text::before {
-    content:   '"';
-    position:absolute;
-    left: calc(-1 * var(--space-l));
-    font-size: var(--fs-3);
-    line-height: 1;
-      
   }

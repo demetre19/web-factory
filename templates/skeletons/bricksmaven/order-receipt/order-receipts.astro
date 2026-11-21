@@ -44,7 +44,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-order-receipts">
   <div class="sec-inner">
     <div class="bm-order-receipts__container">
       <div class="intro intro--left">
@@ -52,7 +52,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 &&       <div class="bm-order-receipts__content">
+      {list.length > 0 &&       <div>
         {list.length > 0 &&         <div class="bm-order-receipts__lists">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <p class="text-fluid-0">{it.text}</p>

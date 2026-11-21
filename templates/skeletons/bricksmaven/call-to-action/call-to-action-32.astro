@@ -44,10 +44,10 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-call-to-action-32">
   <div class="sec-inner">
-    <div class="bm-cta-32__container">
-      <div class="bm-cta-32__intro">
+    <div>
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
       {list.length > 0 && <div class="bm-cta-ul-list">
@@ -57,7 +57,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             </div>
           ))}</div>
       </div>}
-      <div class="bm-cta-32__footer">
+      <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

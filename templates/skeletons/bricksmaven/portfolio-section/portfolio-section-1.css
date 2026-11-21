@@ -1,84 +1,17 @@
-  .portfolio-section-1-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-1 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .portfolio-section-1-grid {
-    row-gap: calc(var(--flow-spacing) * 1.4);
-  }
-
-  .portfolio-section-1-card {
+  .wf-portfolio-section-1 .portfolio-section-1-card {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-    gap: calc(var(--space-m) * 1.4);
   }
 
-  .portfolio-section-1-card__work {
-    row-gap: var(--flow-spacing);
-    padding: var(--space-m) 0 0 var(--space-m);
+  .wf-portfolio-section-1 .portfolio-section-1-card__work {
     flex-wrap: nowrap;
   }
 
-  .portfolio-section-1-card__work-image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .portfolio-section-1-card__testimonial-wrapper {
+  .wf-portfolio-section-1 .portfolio-section-1-card__testimonial-wrapper {
     display: flex;
-    justify-content: space-between;
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .portfolio-section-1-card__review-text {
-    margin: var(--space-xl) 0 0 0;
-  }
-
-  .portfolio-section-1-card__client {
-    row-gap: var(--flow-spacing);
-  }
-
-  .portfolio-section-1-card__client-image {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .portfolio-section-1-card:nth-child(odd) .portfolio-section-1-card__testimonial-wrapper {
-    order: -1;
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-    grid-column: span 3;
-   
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__work {
-    grid-column: span 3;
-  }
-  
-  @media (max-width:767px) {
-    
-    .portfolio-section-1-card:nth-child(odd) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-  }
-    
-  	.portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__testimonial-wrapper {
-    order: 1;
-    grid-column: span 6;
-   
-  }
-  
-  .portfolio-section-1-card:nth-child(3n+3) .portfolio-section-1-card__work {
-    grid-column: span 6;
-  }
   }

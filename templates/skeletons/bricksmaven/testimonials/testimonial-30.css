@@ -1,84 +1,22 @@
-  .testimonial-30-container {
-    row-gap: var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-testimonial-30 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .testimonial-30-list-ul {
-    width: 100%;
+  .wf-testimonial-30 .testimonial-30-list-ul {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
     display: grid;
-    gap: var(--space-m);
   }
 
-  .testimonial-30-list-card {
+  .wf-testimonial-30 .testimonial-30-list-card {
     display: flex;
-    column-gap: var(--space-xs);
-    justify-content: center;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    /* bm: box-shadow omitted — token layer owns elevation */
   }
 
-  .testimonial-30-list-card__meta {
+  .wf-testimonial-30 .testimonial-30-list-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
-    justify-content: center;
   }
 
-  .testimonial-30-list-card__profile {
+  .wf-testimonial-30 .testimonial-30-list-card__profile {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-s);
-  }
-
-  .testimonial-30-list-card__divider {
-    width: auto;
-  }
-
-  .testimonial-30-content__photo-img {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .testimonial-30-list-card:first-child {
-  	grid-row: span 2;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  
-  .testimonial-30-list-card:first-child .testimonial-30-list-card__desc {
-  	text-align: center;
-  }
-  
-  .testimonial-30-list-card:first-child .testimonial-30-list-card__meta {
-  	align-items: center;
-  }
-  
-  .testimonial-30-list-card:nth-child(even), .testimonial-30-list-card:nth-child(odd) {
-  	flex-direction: row;
-    align-items: center;
-  }
-  
-  @media (max-width:767px) {
-  	.testimonial-30-list-card:first-child {
-  	grid-row: span 1;
-    flex-direction: row !important;
-    align-items: center !important;
-  }
-    .testimonial-30-list-card:first-child .testimonial-30-list-card__desc {
-  	text-align: left;
-  }
-  
-  .testimonial-30-list-card:first-child .testimonial-30-list-card__meta {
-  	align-items: start;
-  }
   }

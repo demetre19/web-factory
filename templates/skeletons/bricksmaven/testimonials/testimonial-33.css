@@ -1,100 +1,30 @@
-  .testimonial-33 {
-    overflow: hidden;
-  }
-
-  .testimonial-33-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-testimonial-33 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-testimonial-33 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .intro__text-cta-wrapper {
+  .wf-testimonial-33 .intro__text-cta-wrapper {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .testimonial-33-slide {
+  .wf-testimonial-33 .testimonial-33-slide {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
   }
 
-  .testimonial-33-slide__content {
-    row-gap: calc(var(--flow-spacing) * 1.4);
+  .wf-testimonial-33 .testimonial-33-slide__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: center;
   }
 
-  .testimonial-33-slide__client-data {
+  .wf-testimonial-33 .testimonial-33-slide__client-data {
     display: flex;
     flex-direction: column;
   }
-
-  .testimonial-33-slide__logo-image {
-    object-fit: contain;
-  }
-
-  .testimonial-33-slide__media {
-    overflow: hidden;
-  }
-
-  .testimonial-33-slide__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .testimonial-33-slider .splide__track {
-      overflow: visible;
-  }
-  
-  .testimonial-33-slider::before {
-  	content: "";
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    max-width: 100%;
-    height: 100%;
-    min-height: 100%;
-    max-height: 100%;
-    right: 100%;
-    background-color: var(--bg-canvas);
-    
-  }
-
-  .testimonial-33-slide {
-  	display:grid !important;
-    align-items: stretch !important;
-    
-  }
-
-  /*
-  .testimonial-33-slide__heading::before {
-  	content: '"';
-    position: absolute;
-    top: calc(var(--space-m) * -1);
-    font-size: calc(var(--fs-4) * 3);
-  	line-height: 1;
-  }
-  */

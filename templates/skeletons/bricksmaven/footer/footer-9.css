@@ -1,78 +1,47 @@
-  .footer-9 {
-    row-gap: var(--space-s);
-  }
-
-  .footer-9-top {
+  .wf-footer-9 .footer-9-top {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
-    gap: var(--space-m);
   }
 
-  .footer-nav-wrapper {
+  .wf-footer-9 .footer-nav-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-    gap: var(--space-m);
   }
 
-  .footer-nav-wrapper-9 {
+  .wf-footer-9 .footer-nav-wrapper-9 {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .footer-nav-column {
+  .wf-footer-9 .footer-nav-column {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .footer-menu {
+  .wf-footer-9 .footer-menu {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .footer-link-update {
-    padding: calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw) calc(0.4rem + 0vw);
-    margin: 0 0 0 var(--space-s);
-  }
-
-  .footer-9__header {
+  .wf-footer-9 .footer-9__header {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 
-  .footer-9__contact-list {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
-  }
-
-  .footer-9-card {
+  .wf-footer-9 .footer-9-card {
     display: grid;
     flex-direction: row;
     grid-template-columns: minmax(0, 1fr) minmax(0, 5fr);
-    gap: var(--space-xs);
   }
 
-  .footer-9-card__label-heading {
-    margin: 0 0 0 0;
-  }
-
-  .footer-9-bottom {
+  .wf-footer-9 .footer-9-bottom {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .footer-bottom__left {
+  .wf-footer-9 .footer-bottom__left {
     flex-direction: row;
-    row-gap: var(--space-xs);
-    column-gap: var(--space-xs);
-    align-items: center;
   }
 
-  .footer-legal-nav {
+  .wf-footer-9 .footer-legal-nav {
     flex-direction: row;
-    column-gap: var(--flow-spacing);
   }

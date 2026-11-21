@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -51,20 +50,21 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-pricing-21">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-pricing-21__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-pricing-21-pricing-wrapper">{(list || []).map((it) => (
-            <div class="bm-pricing-21-card card">
-              <div class="bm-pricing-21-card__top">
-                <div class="bm-pricing-21-card__footer">
+      {list.length > 0 && <div class="bm-pricing-21-pricing-wrapper">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <div class="card">
+              <div>
+                <div>
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
@@ -72,28 +72,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               {(it.items || []).length > 0 && <div class="bm-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                     <div class="bm-list-item card">
-                      <div class="bm-list-item__icon-wrapper">
-                        {it2.icon && <IconChip name={it2.icon} />}
-                      </div>
-                      <p class="bm-list-item__text text-fluid-0">{it2.text}</p>
+                      <p class="text-fluid-0">{it2.text}</p>
                     </div>
                   ))}</div>
               </div>}
-              <div class="bm-pricing-21-card__cta-wrapper">
+              <div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>}
-      {links.length > 0 &&       <div class="bm-pricing-21__review-wrapper">
-        {links.length > 0 && <div>
-          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="card">
-                {it.icon && <IconChip name={it.icon} />}
-              </div>
-            ))}</div>
-        </div>}
-      </div>
-      }
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

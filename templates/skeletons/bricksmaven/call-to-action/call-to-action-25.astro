@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -51,34 +50,30 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-call-to-action-25">
   <div class="sec-inner">
     <div>
       <div class="bm-call-to-action-25__cta-block">
-        <div class="bm-call-to-action-25__content grid-auto gap-fluid-l">
-          <div class="bm-call-to-action-25__content-inner">
+        <div class="grid-auto gap-fluid-l">
+          <div>
             {head && <h2 class="text-fluid-2">{head}</h2>}
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
             {list.length > 0 && <div class="bm-list">
               <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="bm-list-item card">
-                    <div class="bm-list-item__icon-wrapper">
-                      {it.icon && <IconChip name={it.icon} />}
-                    </div>
-                    <p class="bm-list-item__text text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
                 ))}</div>
             </div>}
           </div>
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-          {image && image.src && <figure class="bm-call-to-action-25__content-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
-        {links.length > 0 &&         <div class="bm-call-to-action-25__contact">
+        {links.length > 0 &&         <div>
           {links.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="bm-call-to-action-25-contact-item card">
-                  {it.icon && <IconChip name={it.icon} />}
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               ))}</div>

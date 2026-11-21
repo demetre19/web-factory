@@ -1,61 +1,18 @@
-  .contact-9 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-  }
-
-  .contact-9-container {
+  .wf-contact-9 .contact-9-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .contact-left-box {
+  .wf-contact-9 .contact-left-box {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
-    padding: 0 var(--section-space-xxl) 0 0;
   }
 
-  .contact-left-box__top-row {
+  .wf-contact-9 .contact-left-box__top-row {
     flex-direction: column;
-    row-gap: var(--space-xs);
     display: flex;
   }
 
-  .contact-left-box__accent-heading {
-    width: fit-content;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
-  }
-
-  .cta-combo {
+  .wf-contact-9 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .contact-9-image {
-    width: 50vw;
-    object-fit: cover;
-    margin: 0 calc(-50vw + 50% ) 0 0;
-  }
-
-  .contact-9-right__form {
-    padding: var(--space-m) var(--space-s) var(--space-m) var(--space-s);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .contact-9-form {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .contact-9-form .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-9-form .required:after{
-  color: var(--action-primary);
   }

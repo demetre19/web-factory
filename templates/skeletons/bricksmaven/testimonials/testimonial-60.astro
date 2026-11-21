@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -51,11 +50,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-60">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-60__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,10 +63,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-testimonial-slider-card card">
-              <div class="bm-testimonial-slider-card__content">
+              <div>
                 <div class="bm-testimonial-slider-card__top">
                   <p class="text-fluid-0">{it.text}</p>
-                  {it.icon && <IconChip name={it.icon} />}
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

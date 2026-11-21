@@ -45,14 +45,13 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-item-lrupzt">
   <div class="sec-inner">
     <div>
       <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        <div></div>
       </div>
     </div>
   </div>

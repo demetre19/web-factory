@@ -1,38 +1,23 @@
-  .feature-22-container {
+  .wf-feature-22 .feature-22-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--space-xl);
   }
 
-  .intro {
-    text-align: center;
+  .wf-feature-22 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .cta-combo {
+  .wf-feature-22 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .bm-feature-list-ul {
+  .wf-feature-22 .bm-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-    padding: 0 0 0 0;
   }
 
-  .bm-feature-list-card {
+  .wf-feature-22 .bm-feature-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
   }

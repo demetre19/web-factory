@@ -1,22 +1,9 @@
-  .content-9-container {
+  .wf-content-9 .content-9-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .content-9__content {
+  .wf-content-9 .content-9__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-    justify-content: center;
-    margin: var(--section-space-xxl) 0 0 0;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .content-9__image {
-    object-fit: cover;
-    width: 100%;
   }

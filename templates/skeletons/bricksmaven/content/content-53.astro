@@ -51,23 +51,20 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-content-53">
   <div class="sec-inner">
     <div class="bm-content-53__container">
-      <div class="bm-content-53__content">
-        <div class="bm-content-53__top">
+      <div>
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        {list.length > 0 &&         <div class="bm-content-53-list">
+        {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-content-53-card card">
                 <div>
-                  {it.icon && <IconChip name={it.icon} />}
-                </div>
-                <div class="bm-content-53-card__content">
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
@@ -77,7 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       {image && image.src &&       <div>
         {image && image.src &&         <div>
-          {image && image.src && <figure class="bm-content-53-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
       </div>

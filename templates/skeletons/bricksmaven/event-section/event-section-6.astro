@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-event-section-6">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-6__container">
+    <div>
       <div class="bm-event-section__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
@@ -77,8 +77,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div class="bm-event-section-6-card__speaker-wrapper">
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div class="bm-event-meta-info bm-event-meta-info--alt">
-                {it.icon && <IconChip name={it.icon} />}
+              <div class="bm-event-meta-info">
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

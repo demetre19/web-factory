@@ -1,96 +1,38 @@
-  .blog-section-15 {
-    padding: 0 0 calc(var(--section-space-xxl) + var(--space-xl)) 0;
-  }
-
-  .blog-section-15__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-blog-section-15 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--split {
+  .wf-blog-section-15 .intro--split {
     display: grid;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-section-15-grid-ul {
+  .wf-blog-section-15 .blog-section-15-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .blog-section-15-card__content {
+  .wf-blog-section-15 .blog-section-15-card__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-section-15-card__head {
+  .wf-blog-section-15 .blog-section-15-card__head {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-section-15-card__meta-data {
+  .wf-blog-section-15 .blog-section-15-card__meta-data {
     display: flex;
     flex-direction: row;
-    column-gap: var(--flow-spacing);
-    padding: calc( var(--space-xs) / 2) var(--space-xs) calc( var(--space-xs) / 2) var(--space-xs);
-    width: auto;
-    align-items: center;
   }
 
-  .blog-section-15-card__author-wrapper {
+  .wf-blog-section-15 .blog-section-15-card__author-wrapper {
     display: flex;
   }
 
-  .blog-section-15-card__date-wrapper {
+  .wf-blog-section-15 .blog-section-15-card__date-wrapper {
     display: flex;
-  }
-
-  .blog-section-15-card__footer {
-    row-gap: var(--space-xs);
-    margin: auto 0 0 0;
-  }
-
-  .blog-section-15-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-section-15::before {
-  	content:'';
-    position: absolute;
-    top:0;
-    width:100%;
-    height:40%;
-    background-color: var(--bg-canvas);
-  }
-
-  @media (min-width:991px) {
-  
-  .blog-section-15-card:nth-child(2) {
-  	transform: translateY(var(--space-xl));
-  }
-  
   }

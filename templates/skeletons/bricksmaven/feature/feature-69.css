@@ -1,34 +1,9 @@
-  .bm-feature-69__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-69 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-feature-69-card {
-    justify-content: flex-end;
-    padding: var(--space-xl) var(--space-xl) var(--section-space-xxl) var(--space-xl);
-    overflow: clip;
-  }
-
-  .bm-feature-69-card__content {
+  .wf-feature-69 .bm-feature-69-card__content {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .bm-feature-69-card__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-69-card__background-image {
-    object-fit: cover;
-    width: 100%;
   }

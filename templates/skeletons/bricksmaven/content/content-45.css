@@ -1,42 +1,24 @@
-  .bm-content-45__container {
+  .wf-content-45 .bm-content-45__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-content-45__intro {
+  .wf-content-45 .bm-content-45__intro {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
-    gap: var(--space-m);
   }
 
-  .bm-content-45__intro-top {
+  .wf-content-45 .bm-content-45__intro-top {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .bm-content-45__columns {
+  .wf-content-45 .bm-content-45__columns {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-content-45__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-content-45__content {
+  .wf-content-45 .bm-content-45__content {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
-    gap: var(--space-m);
-  }
-
-  .bm-content-45__intro-image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-content-45__content-image {
-    object-fit: cover;
   }

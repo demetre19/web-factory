@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -51,29 +50,25 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-section-24">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-blog-section-24__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
       </div>
       {list.length > 0 && <div class="bm-blog-section-24-list">{(list || []).map((it) => (
             <div class="bm-blog-section-24-card card">
-              <div class="bm-blog-section-24-card__content">
-                <div></div>
+              <div>
                 <div class="bm-blog-section-24-card__footer">
                   <p class="text-fluid-0">{it.text}</p>
-                  <div class="bm-blog-section-24-card__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
                 </div>
               </div>
               <div class="bm-blog-section-24-card__term-wrapper">

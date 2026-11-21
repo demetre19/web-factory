@@ -1,62 +1,13 @@
-  .error-15-container {
-    row-gap: var(--space-m);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-404-error-15 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro__top {
-    align-items: center;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .error-15-media-list {
+  .wf-404-error-15 .error-15-media-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .error-15-image-wrapper {
+  .wf-404-error-15 .error-15-image-wrapper {
     display: flex;
-    justify-content: flex-end;
-  }
-
-  .error-15-image-wrapper__image {
-    object-fit: cover;
-  }
-
-  .error-15-image-wrapper:nth-child(1) {
-  	transform: TranslateY(24rem);
-  }
-  
-  .error-15-image-wrapper:nth-child(3) {
-  	transform: TranslateY(9rem);
-  }
-  
-  
-  @media (max-width:767px) {
-  
-  	.error-15-image-wrapper:nth-child(1) {
-  	transform: TranslateY(0rem);
-  }
-  
-  .error-15-image-wrapper:nth-child(3) {
-  	transform: TranslateY(0rem);
-  }
-  
-    
-  }
-
-  .error-15-image-wrapper__image {
-  	aspect-ratio: 4/6;
   }

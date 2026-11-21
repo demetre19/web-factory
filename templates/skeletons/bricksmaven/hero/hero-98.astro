@@ -51,26 +51,13 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-hero-98">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-hero-98__container">
-      <div class="bm-hero-98__intro">
+    <div>
+      <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
-        {links.length > 0 &&         <div class="bm-hero-98__social-proof">
-          {links.length > 0 &&           <div class="bm-testimonial-38__star-ratings">
-            {links.length > 0 && <div class="bm-testimonial-38-star-list">
-              <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="card">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                ))}</div>
-            </div>}
-          </div>
-          }
-        </div>
-        }
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}

@@ -51,16 +51,16 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-35">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-35__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
@@ -78,7 +78,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       </div>
                       <div class="testimonial-35-carousel-card__client-data">
                         <p class="text-fluid-0">{it.text}</p>
-                        <p class="testimonial-35-carousel-card__title text-fluid-0">{it.text}</p>
+                        <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                   </div>
@@ -98,7 +98,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       </div>
                       <div class="testimonial-35-carousel-card__client-data">
                         <p class="text-fluid-0">{it.text}</p>
-                        <p class="testimonial-35-carousel-card__title text-fluid-0">{it.text}</p>
+                        <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                   </div>
@@ -107,7 +107,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           </div>}
         </div>
         }
-        <div></div>
       </div>
     </div>
   </div>

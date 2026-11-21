@@ -1,67 +1,26 @@
-  .product-list-3__container {
+  .wf-product-list-3 .product-list-3__container {
     flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
   }
 
-  .product-list-3__content {
+  .wf-product-list-3 .product-list-3__content {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .product-list-3-card__heading {
-    row-gap: calc( var(--flow-spacing) / 2 );
-  }
-
-  .product-list-3__list {
-    display: grid;
-    gap: calc( var(--space-m) * 2 );
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .product-list-3-card__container {
+  .wf-product-list-3 .product-list-3__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .product-list-3-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-product-list-3 .product-list-3-card__container {
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .product-list-3-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
+  .wf-product-list-3 .product-list-3-card {
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .product-list-3-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .product-list-3__category {
-    padding: calc( var(--space-xs) / 2 ) var(--space-xs)  calc( var(--space-xs) / 4 ) var(--space-xs) ;
-  }
-
-  .product-list-3__footer {
-    margin: auto 0 0 0;
-  }
-
-  .product-list-notice-rect__sale-badge {
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+  .wf-product-list-3 .product-list-notice-rect__sale-badge {
     display: flex;
-    align-items: center;
-  }
-
-  .product-list-3__button {
-    width: 100%;
-    margin: auto 0 0 0;
-  }
-
-  .product-list-4__category a {
-    	color: var(--text-primary);
   }

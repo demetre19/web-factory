@@ -1,91 +1,17 @@
-  .bm-portfolio-section-20__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-20 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-portfolio-section-20-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .bm-portfolio-section-20-card__content {
-    row-gap: var(--flow-spacing);
-    justify-content: flex-end;
+  .wf-portfolio-section-20 .bm-portfolio-section-20-card__content {
     flex-wrap: nowrap;
   }
 
-  .bm-portfolio-section-20-card__results {
+  .wf-portfolio-section-20 .bm-portfolio-section-20-card__results {
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-portfolio-section-20-card__icon-wrapper {
+  .wf-portfolio-section-20 .bm-portfolio-section-20-card__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: var(--space-l);
-  }
-
-  .bm-portfolio-section-20-card__image {
-    object-fit: cover;
-  }
-
-  .bm-portfolio-section-20-card {
-    overflow: clip;
-  }
-  
-  @media (min-width:991px) {
-  
-  
-  .bm-portfolio-section-20-card::before {
-    content: '';
-    position: absolute;
-    inline-size: var(--space-xxl);
-    block-size: var(--space-xxl);
-    z-index: 1;
-    transition: all 0.5s ease;
-    opacity: 0;
-    background-color: color-mix(in srgb, var(--fs-0) 20%, transparent);
-    border-radius: 100%;
-  }
-  
-   .bm-portfolio-section-20-card:hover::before {
-    inline-size: 200%;
-    block-size: 200%;
-    opacity: 1;
-    border-radius: 100%;
-    background-color: color-mix(in srgb, var(--fs-0) 70%, transparent);
-    
-  }
-  
-  .bm-portfolio-section-20-card__heading {
-    transform: translateY(400%);
-    transition: 0.2s ease-out;
-  }
-  
-  .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__heading {
-    transform: translateY(0%);
-  }
-  
-  .bm-portfolio-section-20-card__text, .bm-portfolio-section-20-card__results, .bm-portfolio-section-20-card__text-link {
-    transform: translateY(100%);
-    transition: 0.2s ease;
-    opacity: 0;
-  }
-  
-  .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__text, .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__results, .bm-portfolio-section-20-card:hover .bm-portfolio-section-20-card__text-link {
-    transform: translateY(0%);
-    opacity: 1;
-  }
-  
   }

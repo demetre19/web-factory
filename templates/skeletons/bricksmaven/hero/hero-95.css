@@ -1,44 +1,13 @@
-  .bm-hero-95__container {
+  .wf-hero-95 .bm-hero-95__container {
     display: grid;
-    gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-hero-95__content {
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-hero-95__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-95__heading {
-    width: 155%;
-  }
-
-  .cta-combo {
+  .wf-hero-95 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-hero-95-review {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-95-review__client-review {
+  .wf-hero-95 .bm-hero-95-review__client-review {
     display: flex;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-hero-95-review__avatar {
-    object-fit: cover;
-    width: var(--space-xl);
-  }
-
-  .bm-hero-95__image {
-    object-fit: cover;
   }

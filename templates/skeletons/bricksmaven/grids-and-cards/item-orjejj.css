@@ -1,30 +1,14 @@
-  .gridcard-9-grid-ul {
-    width: 100%;
+  .wf-item-orjejj .gridcard-9-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .gridcard-9-card {
-    /* bm: box-shadow omitted — token layer owns elevation */
+  .wf-item-orjejj .gridcard-9-card {
     display: flex;
     flex-direction: column;
   }
 
-  .gridcard-9-card__box {
-    align-items: flex-start;
+  .wf-item-orjejj .gridcard-9-card__box {
     display: flex;
     flex-direction: column;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--space-s);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .gridcard-9-card__image {
-    width: 100%;
-    object-fit: cover;
   }

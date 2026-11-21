@@ -199,8 +199,10 @@ BANK = os.path.join(REPO, 'templates', 'skeletons', 'bricksmaven')
 def _bank_copy(ctx, comp, recipe):
     """P6 — a banked composition: the translated Bricksmaven skeleton
     IS the component (markup only, SB.2), and its sibling .css returns
-    for hoisting into the shared layer. The recipe is the identity:
-    bricksmaven/<category>/<stem>."""
+    for hoisting into the shared layer — every selector already scoped
+    under `.wf-<stem>` by bricks_translate.py, so bank topology binds
+    only inside the component surface (M2). The recipe is the
+    identity: bricksmaven/<category>/<stem>."""
     parts = recipe.split('/')
     if len(parts) != 3 or parts[0] != 'bricksmaven':
         raise SystemExit(f'P6 bad bank recipe "{recipe}" '
@@ -818,7 +820,9 @@ def main(argv):
             os.remove(os.path.join(cdir, fn))
     if bank_css:
         # SB.2 — bank rules live in the shared layer, never in a
-        # component. @tailwind components in global.css opens it.
+        # component. Selectors arrive `.wf-<stem>`-scoped from
+        # bricks_translate.py, so hoisting into @layer components
+        # cannot leak bespoke names site-wide (M2).
         with open(os.path.join(ctx.site, 'src', 'styles',
                                'global.css'), 'a') as fh:
             fh.write('\n@layer components {\n'

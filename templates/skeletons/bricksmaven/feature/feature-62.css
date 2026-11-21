@@ -1,85 +1,22 @@
-  .bm-feature-62 {
-    overflow: clip;
-  }
-
-  .bm-feature-62__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-62 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--left {
+  .wf-feature-62 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .bm-feature-62-tabs {
-    gap: var(--space-s);
-  }
-
-  .bm-feature-62-tabs__menu {
-    column-gap: calc(var(--flow-spacing) / 2);
+  .wf-feature-62 .bm-feature-62-tabs__menu {
     flex-direction: row;
   }
 
-  .bm-feature-62-tabs__title {
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
-  }
-
-  .bm-feature-62-feature-list {
+  .wf-feature-62 .bm-feature-62-feature-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
   }
 
-  .bm-feature-62-feature-card {
-    padding: var(--space-m) var(--space-s) var(--space-m) var(--space-s);
+  .wf-feature-62 .bm-feature-62-feature-card {
     flex-wrap: nowrap;
-    justify-content: space-between;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-62-feature-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  @media (min-width:991px) {
-  
-  .bm-feature-62-feature-card {
-    transition: 0.5s ease;
-  }
-  
-  .bm-feature-62-feature-card:hover, .bm-feature-62-feature-card:focus-within {
-    background-color: var(--fs-0);
-    border: calc(0.0625rem + 0vw) solid var(--fs-0);
-    color: var(--fs-0);
-  }
-  
-  .bm-feature-62-feature-card:hover span.btn--primary, .bm-feature-62-feature-card:focus-within span.btn--primary {
-      
-    --btn-background: var(--bg-canvas);
-    --btn-text-color: var(--fs-0);
-    --btn-border-color: var(--bg-canvas);
-  
-  }
-  
-  .bm-feature-62-feature-card a {
-    transition: 0.1s ease;
-  }
-  
-  .bm-feature-62-feature-card:hover a, .bm-feature-62-feature-card:focus-within a {
-    color: var(--fs-0);
-  }
-    
   }

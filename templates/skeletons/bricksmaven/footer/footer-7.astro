@@ -45,10 +45,10 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-footer-7">
   <div class="sec-inner">
     <div class="footer-7-container row between">
-      <div class="footer-brand-7">
+      <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       {list.length > 0 &&       <div class="footer-nav-wrapper footer-nav-wrapper-7 row between">
@@ -67,7 +67,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           ))}</div>}
       </div>
       }
-      <div class="footer-7__content row between">
+      <div class="row between">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}

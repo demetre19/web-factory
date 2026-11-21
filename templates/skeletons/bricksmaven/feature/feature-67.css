@@ -1,60 +1,27 @@
-  .bm-feature-67__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-67 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--left {
+  .wf-feature-67 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .bm-feature-67-card__cover {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-67-media-list {
+  .wf-feature-67 .bm-feature-67-media-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
-  .bm-feature-67-item__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-feature-67-list {
+  .wf-feature-67 .bm-feature-67-list {
     display: grid;
-    gap: calc(var(--space-m) / 2);
   }
 
-  .bm-feature-67-card {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-feature-67 .bm-feature-67-card {
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-feature-67-card__icon-wrapper {
+  .wf-feature-67 .bm-feature-67-card__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .bm-feature-67-card__content {
-    row-gap: calc(var(--flow-spacing) / 5);
   }

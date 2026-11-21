@@ -51,7 +51,7 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-product-section-1">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
@@ -61,25 +61,26 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="product-list-1__list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="product-list-1__list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="product-list-1-card card">
-              <div class="product-list-1-card__content">
+              <div>
                 <p class="text-fluid-0">{it.text}</p>
                 <div class="product-list-1-card__top">
-                  <h3 class="product-list-1-card__heading text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                  <custom class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                  <custom class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
                 </div>
-                <div></div>
               </div>
               <div class="product-list-notice__wrapper">
                 <div class="product-list-notice-circle__sale-badge">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                <p class="product-list-1-card__new text-fluid-0">{it.text}</p>
-                <p class="product-list-1-card__soldout text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>}
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

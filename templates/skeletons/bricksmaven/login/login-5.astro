@@ -45,12 +45,12 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-login-5">
   <div class="sec-inner">
     <div>
       <div class="bm-login-5__login-wrapper">
-        <div class="bm-login-5__login">
-          <div class="login-form-wrapper login-form-wrapper--alt">
+        <div>
+          <div>
             {head && <h1 class="text-fluid-4">{head}</h1>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
@@ -65,7 +65,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 ))}</div>
             </div>}
           </div>
-          {links.length > 0 &&           <div class="login-1__logged-in-heading-wrapper">
+          {links.length > 0 &&           <div>
             {links.length > 0 && <div class="login-footer">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="card">
@@ -76,11 +76,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             </div>}
           </div>
           }
-        </div>
-        <div class="bm-login-5__intro">
-          <div>
-            <svg></svg>
-          </div>
         </div>
       </div>
     </div>

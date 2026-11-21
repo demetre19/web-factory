@@ -44,13 +44,12 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+<div class="wf-header-4">
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="bm-header-4__container row between">
-      <div class="bm-header-4__brand">
+      <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div>
@@ -58,7 +57,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
       <div class="bm-header-4__right row between">
-        <div></div>
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href={act.href}>{act.label}</a></p>}
       </div>
     </div>

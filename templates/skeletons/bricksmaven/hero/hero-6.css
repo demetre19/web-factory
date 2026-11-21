@@ -1,23 +1,9 @@
-  .hero-6-container {
+  .wf-hero-6 .hero-6-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hero-6-wrapper__content {
+  .wf-hero-6 .hero-6-wrapper__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    row-gap: var(--space-m);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-6-wrapper__img {
-    object-fit: cover;
-    width: 100%;
   }

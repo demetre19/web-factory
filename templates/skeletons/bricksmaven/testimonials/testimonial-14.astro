@@ -51,7 +51,7 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-14">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -59,7 +59,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
-      {list.length > 0 &&       <div class="testimonial-14-slide">
+      {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
               <div class="testimonial-14-slide__card">

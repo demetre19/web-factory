@@ -1,95 +1,57 @@
-  .contact-2-container {
+  .wf-contact-2 .contact-2-container {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: var(--space-m);
   }
 
-  .contact-2-content {
+  .wf-contact-2 .contact-2-content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .contact-content__intro {
+  .wf-contact-2 .contact-content__intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-    width: 100%;
   }
 
-  .contact-2-sales-grid-ul {
+  .wf-contact-2 .contact-2-sales-grid-ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-l);
   }
 
-  .contact-2-sales-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-    text-align: center;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .contact-2-sales-card__contact-information {
+  .wf-contact-2 .contact-2-sales-card {
     display: flex;
     flex-direction: column;
   }
 
-  .contact-2-sales-card__media {
-    display: flex;
-    align-items: center;
-  }
-
-  .contact-2-sales-card__image {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  .contact-form {
+  .wf-contact-2 .contact-2-sales-card__contact-information {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .contact-aside {
+  .wf-contact-2 .contact-2-sales-card__media {
+    display: flex;
+  }
+
+  .wf-contact-2 .contact-form {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
   }
 
-  .contact-aside-list {
+  .wf-contact-2 .contact-aside {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .contact-aside-list-item {
+  .wf-contact-2 .contact-aside-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wf-contact-2 .contact-aside-list-item {
     display: flex;
     flex-direction: row;
-    column-gap: var(--space-xs);
-  }
-
-  .contact-form__fields .bricks-button {
-  padding: 1em 1.5em;
-  }
-  
-  .contact-form__fields .required:after{
-  color: var(--action-primary);
-  }
-  
-  .contact-form__fields input:focus {
-  outline-offset: 0;
-  }
-  
-  
-  .contact-form__fields textarea:focus {
-  outline-offset: 0;
   }
 
   @media (max-width: 44rem) {
-    .contact-2-sales-grid-ul { grid-template-columns: 1fr; }
+    .wf-contact-2 .contact-2-sales-grid-ul { grid-template-columns: 1fr; }
   }

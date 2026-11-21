@@ -1,88 +1,41 @@
-  .bm-testimonial-38__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-testimonial-38__top {
+  .wf-testimonial-38 .bm-testimonial-38__top {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
   }
 
-  .bm-testimonial-38__intro {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-testimonial-38-review {
-    padding: var(--section-space-xxl) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: var(--flow-spacing);
-    /* bm: box-shadow omitted — token layer owns elevation */
-  }
-
-  .testimonial-list-card__profile {
+  .wf-testimonial-38 .testimonial-list-card__profile {
     display: flex;
-    column-gap: var(--space-s);
-    align-items: center;
   }
 
-  .testimonial-list-card__meta {
+  .wf-testimonial-38 .testimonial-list-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: calc(--content-gap / 2);
   }
 
-  .testimonial-list-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .bm-testimonial-38__bottom {
+  .wf-testimonial-38 .bm-testimonial-38__bottom {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 3);
   }
 
-  .bm-testimonial-38__statement-text {
-    max-width: var(--measure);
-  }
-
-  .bm-testimonial-38__data {
+  .wf-testimonial-38 .bm-testimonial-38__data {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-testimonial-38__ratings {
+  .wf-testimonial-38 .bm-testimonial-38__ratings {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-testimonial-38__star-ratings {
+  .wf-testimonial-38 .bm-testimonial-38__star-ratings {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    row-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .bm-testimonial-38-star-list {
+  .wf-testimonial-38 .bm-testimonial-38-star-list {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-testimonial-38__sales-count {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-testimonial-38-review__text::before {
-    content: '" ';
-    display: flex;
-    position: absolute;
-    top: calc(-1 * var(--space-xs));
-    left: calc(-1 * var(--space-xs));
-    font-size: calc(var(--fs-4) * 4);
   }

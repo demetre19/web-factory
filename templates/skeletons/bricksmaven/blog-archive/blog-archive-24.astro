@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-archive-24">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-24-container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,19 +64,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 && <div class="blog-archive-24-archive-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="blog-archive-24-archive-card card">
-              <div></div>
-              <p class="blog-archive-24-archive-card__category text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
               <div class="blog-archive-24-archive-card__meta-data">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-              <div></div>
               <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
               {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
             </div>
           ))}</div>
       </div>}
-      <div class="blog-archive-pagination"></div>
     </div>
   </div>
     </div>

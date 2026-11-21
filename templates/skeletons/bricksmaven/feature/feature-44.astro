@@ -51,32 +51,32 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-feature-44">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
-  {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-  <div class="sec-inner">
-    <div>
-      {list.length > 0 && <div class="feature-44-list">
+  {list.length > 0 &&   <div class="sec-inner">
+    {list.length > 0 &&     <div>
+      {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="feature-44-card card">
-              <div class="feature-44-card__content">
-                <div class="feature-44-card__intro">
-                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+            <div class="card">
+              <div>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
                 <div class="feature-44-card__footer">
-                  <p class="feature-44-card__text text-fluid-0">{it.text}</p>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
             </div>
           ))}</div>
       </div>}
-      <div></div>
     </div>
+    }
   </div>
+  }
     </div>
     {image && image.src && <div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div>}
   </div>

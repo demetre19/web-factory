@@ -1,65 +1,15 @@
-  .timeline-15 {
-    padding: 0 0 0 0;
-  }
-
-  .timeline-15-container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
+  .wf-timeline-15 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .timeline-15-list {
-    width: 100%;
-  }
-
-  .timeline-15-card {
+  .wf-timeline-15 .timeline-15-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .timeline-15-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .timeline-15-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .timeline-15-card__media {
-    align-items: center;
-    padding: 0 var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .timeline-15-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .timeline-15-card__timeline {
+  .wf-timeline-15 .timeline-15-card__timeline {
     flex-direction: column;
     display: flex;
-    align-items: center;
     flex-wrap: nowrap;
-  }
-
-  .timeline-15-card__circle {
-    width: var(--space-xs);
-  }
-
-  .timeline-15-card__line {
-    width: calc(0.1rem + 0vw);
   }

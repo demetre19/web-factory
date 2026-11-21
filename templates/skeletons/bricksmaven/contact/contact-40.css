@@ -1,99 +1,39 @@
-  .bm-contact-40 {
-    row-gap: calc(var(--space-s) * 2);
-    overflow: clip;
-  }
-
-  .bm-contact-40__container {
+  .wf-contact-40 .bm-contact-40__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-    gap: var(--space-m);
   }
 
-  .bm-contact-40__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-40-media-card {
-    padding: var(--space-s) var(--space-s) var(--space-m) var(--space-s);
-    justify-content: flex-end;
-    overflow: clip;
-  }
-
-  .bm-contact-40-media-card__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-contact-40-contact-list {
+  .wf-contact-40 .bm-contact-40-contact-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-contact-40-contact-item {
+  .wf-contact-40 .bm-contact-40-contact-item {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-contact-40-contact-item__icon-wrapper {
+  .wf-contact-40 .bm-contact-40-contact-item__icon-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: var(--space-xl);
   }
 
-  .bm-contact-40-contact-item__content {
+  .wf-contact-40 .bm-contact-40-contact-item__content {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
   }
 
-  .bm-contact-40__form-wrapper {
-    justify-content: center;
-  }
-
-  .bm-hero-86-card {
+  .wf-contact-40 .bm-hero-86-card {
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
   }
 
-  .bm-hero-86-card__thumb {
+  .wf-contact-40 .bm-hero-86-card__thumb {
     display: flex;
   }
 
-  .bm-hero-86-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-  }
-
-  .bm-hero-86-card__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-hero-86-card__top {
+  .wf-contact-40 .bm-hero-86-card__top {
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bm-hero-86-card__review {
-    padding: 0 0 var(--space-s) 0;
-  }
-
-  .bm-contact-40::before {
-    content: '';
-    position: absolute;
-    inline-size: 100%;
-    block-size: var(--content-width);
-    inset-block-end: 0;
-    background: linear-gradient(transparent 50%, color-mix(in srgb, var(--text-secondary) 10%, transparent));
-  }
-
-  .bm-contact-40__slider-visible .splide__track {
-    overflow: visible;
   }

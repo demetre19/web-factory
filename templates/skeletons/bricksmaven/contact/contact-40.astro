@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 import { Image } from 'astro:assets';
 const {
   brand = 'Brand',
@@ -51,29 +50,28 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-contact-40">
   <div class="sec-inner">
     <div class="bm-contact-40__container">
-      <div class="bm-contact-40__content">
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        <div class="bm-contact-40-media-card grid-auto gap-fluid-l">
-          {image && image.src && <figure class="bm-contact-40-media-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-          {list.length > 0 && <div class="bm-contact-40-contact-list">{(list || []).map((it) => (
+        <div class="grid-auto gap-fluid-l">
+          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {list.length > 0 && <div class="bm-contact-40-contact-list">
+            <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-contact-40-contact-item card">
-                  <div class="bm-contact-40-contact-item__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
                   <div class="bm-contact-40-contact-item__content">
                     <p class="text-fluid-0">{it.text}</p>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-              ))}</div>}
+              ))}</div>
+          </div>}
         </div>
       </div>
-      <div class="bm-contact-40__form-wrapper">
+      <div>
         <form novalidate>
         </form>
       </div>
@@ -82,12 +80,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {links.length > 0 &&       <div>
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
             <div class="bm-hero-86-card card">
-              <div class="bm-hero-86-card__content">
+              <div>
                 <div class="bm-hero-86-card__top">
                   <p class="text-fluid-0">{it.text}</p>
-                  {it.icon && <IconChip name={it.icon} />}
                 </div>
-                <p class="bm-hero-86-card__review text-fluid-0">{it.text}</p>
+                <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}</div>}

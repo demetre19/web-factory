@@ -51,12 +51,12 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-portfolio-section-21">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
     <div class="bm-portfolio-section-21__container">
-      <div class="bm-portfolio-section-21__content">
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
@@ -65,13 +65,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div>
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-portfolio-section-21-card card">
-                <div class="bm-portfolio-section-21-card__content">
-                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                  <p class="text-fluid-0">{it.text}</p>
-                </div>
+              <div class="card">
                 <div>
-                  <svg></svg>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                  <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
             ))}</div>}

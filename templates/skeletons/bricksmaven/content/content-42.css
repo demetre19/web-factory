@@ -1,23 +1,9 @@
-  .bm-content-42__main {
+  .wf-content-42 .bm-content-42__main {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-content-42__content {
-    row-gap: calc(var(--flow-spacing) * 2);
-  }
-
-  .bm-content-42-data-list {
+  .wf-content-42 .bm-content-42-data-list {
     display: grid;
     grid-template-columns: calc(100% * 3 / 2);
-  }
-
-  .bm-content-42-data-list__numbers {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-content-42__image {
-    object-fit: cover;
-    width: 100%;
   }

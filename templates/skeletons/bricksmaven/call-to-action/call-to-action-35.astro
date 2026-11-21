@@ -45,12 +45,12 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-call-to-action-35">
   <div class="sec-inner">
     <div>
       <div class="cta-35__cover">
-        <div class="cta-35__content">
-          <div class="cta-35__inner">
+        <div>
+          <div>
             {head && <h2 class="text-fluid-2">{head}</h2>}
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
@@ -63,9 +63,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <div>
                   <custom class="text-fluid-1">{it.term || it.title}</custom>
                   <p class="text-fluid-0">{it.text}</p>
-                </div>
-                <div class="cta-35-item__icon-wrapper">
-                  {it.icon && <IconChip name={it.icon} />}
                 </div>
               </div>
             ))}</div>

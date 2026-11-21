@@ -1,94 +1,30 @@
-  .feature-32-container {
+  .wf-feature-32 .feature-32-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    gap: var(--space-m);
   }
 
-  .feature-32__content {
+  .wf-feature-32 .feature-32__content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    row-gap: var(--space-m);
   }
 
-  .feature-32__top {
+  .wf-feature-32 .feature-32__top {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .feature-32__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-beta-feature-list-ul {
+  .wf-feature-32 .bm-beta-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-beta-feature-list-card {
+  .wf-feature-32 .bm-beta-feature-list-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
     flex-wrap: nowrap;
   }
 
-  .bm-beta-feature-list-card__content {
+  .wf-feature-32 .bm-beta-feature-list-card__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .bm-beta-feature-list-card__icon {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .bm-beta-feature-list-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .feature-32::before {
-  	content:'';
-    width:25%;
-    height:35%;
-    background-color: var(--action-primary);
-    position: absolute;
-    bottom:0;
-    left:0;
-  }
-  
-  @media (max-width:767px) {
-  	.feature-32::before {
-  	content:'';
-    width:35%;
-    height:15%;
-    background-color: var(--action-primary);
-    position: absolute;
-    bottom:0;
-    left:auto;
-    right:0;
-  }
-  }
-
-  .bm-beta-feature-list-card:nth-child(odd) .bm-beta-feature-list-card__media {
-  	order:-1;
-  }
-  
-  @media (max-width:478px) {
-  
-  		.bm-beta-feature-list-card:nth-child(odd) .bm-beta-feature-list-card__media {
-  	order:1;
-  }
-  }
-
-  .bm-beta-feature-list-card__icon {
-  	box-shadow: var(--shadow-card);
   }

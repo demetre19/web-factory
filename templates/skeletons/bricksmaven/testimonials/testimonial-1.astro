@@ -50,7 +50,7 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-1">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   {head && <h2 class="text-fluid-2">{head}</h2>}

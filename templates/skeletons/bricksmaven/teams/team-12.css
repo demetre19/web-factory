@@ -1,65 +1,19 @@
-  .team-12-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-team-12 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .team-12-list {
+  .wf-team-12 .team-12-list {
     display: grid;
-    gap: calc(var(--space-m) * 1.2);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .team-12-card {
+  .wf-team-12 .team-12-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 
-  .team-12-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .team-12-card__inner-content {
-    row-gap: calc(var(--flow-spacing) / 3);
-  }
-
-  .bm-social-list {
+  .wf-team-12 .bm-social-list {
     display: flex;
     flex-direction: row;
-    column-gap: var(--flow-spacing);
-  }
-
-  .team-12-card__image {
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  /* Card */
-  
-  .team-12-card {
-  	transition: .6s ease;
-  }
-  
-  .team-12-card:hover {
-  	background-color: var(--action-primary);
-  }
-  
-  /* Image */
-  
-  .team-12-card__image {
-  	transition: .8s ease-in;
-    filter: grayscale(1);
-  }
-  
-  .team-12-card:hover .team-12-card__image {
-  	filter: grayscale(0);
   }

@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-section-12">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-section-12-container">
+    <div>
       <div>
         <div class="intro">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -65,11 +65,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>
       {list.length > 0 && <div class="blog-section-12-list-ul">{(list || []).map((it) => (
             <div class="blog-section-12-list-item card">
-              <div class="blog-section-12-list-item__content">
+              <div>
                 <div class="blog-section-12-list-item__intro">
                   <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
-                  <div></div>
                 </div>
               </div>
             </div>

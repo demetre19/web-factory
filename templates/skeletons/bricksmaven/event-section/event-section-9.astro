@@ -51,37 +51,32 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-event-section-9">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-9__container">
+    <div>
       <div class="bm-event-section__intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {list.length > 0 && <div class="bm-event-section-9__event-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-event-section-9__event-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-event-section-9-card card">
-              <div class="bm-event-section-9-card__content">
-                <div class="bm-event-section-9-card__top">
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
+              <div>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <div class="bm-event-section-9-card__mid">
                     <div class="bm-event-section-1-card__date">
-                      <div>
-                        {it.icon && <IconChip name={it.icon} />}
-                      </div>
                       <div class="bm-event-section-1-card__date-time">
-                        <div class="bm-event-section-1-card__date-wrapper bm-event-section-1-card__date-wrapper--borderless">
+                        <div>
                           <p class="text-fluid-0">{it.text}</p>
                         </div>
                       </div>
                     </div>
                     <div class="bm-event-section-1-card__location">
-                      <div>
-                        {it.icon && <IconChip name={it.icon} />}
-                      </div>
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
@@ -91,18 +86,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              <div class="bm-event-section-9-card__media grid-auto gap-fluid-l">
-                <div>
-                  <div class="bm-event-hart-molecule">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                  <div class="bm-event-hart-molecule-active">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                </div>
-              </div>
             </div>
-          ))}</div>}
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

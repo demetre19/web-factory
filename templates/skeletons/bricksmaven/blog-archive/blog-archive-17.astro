@@ -50,11 +50,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-archive-17">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-archive-17-container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -63,7 +63,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 && <div class="blog-archive-17-archive-list">{(list || []).map((it) => (
             <div class="card">
               <div class="blog-archive-17-archive-card__content">
-                <div></div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

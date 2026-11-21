@@ -51,9 +51,9 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-section-22">
   <div class="sec-inner">
-    <div class="bm-blog-section-22__container">
+    <div>
       <div class="blog-section-1-head">
         <div class="blog-section-1-heading">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -66,7 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {image && image.src &&       <div class="bm-blog-section-22-grid-ul">
         {image && image.src &&         <div class="bm-blog-section-22-card">
           {image && image.src &&           <div>
-            {image && image.src && <figure class="bm-blog-section-22-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>

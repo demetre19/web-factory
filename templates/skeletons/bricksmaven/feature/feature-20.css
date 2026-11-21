@@ -1,32 +1,19 @@
-  .feature-20-container {
+  .wf-feature-20 .feature-20-container {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
   }
 
-  .feature-20-content {
+  .wf-feature-20 .feature-20-content {
     display: grid;
-    gap: var(--space-xl);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .feature-20-content__intro {
+  .wf-feature-20 .feature-20-content__intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
   }
 
-  .feature-20-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  .wf-feature-20 .feature-20-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .feature-20-card__heading {
-    margin: var(--space-m) 0 0 0;
-  }
-
-  .feature-20-card__icon {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }

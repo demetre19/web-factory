@@ -44,15 +44,14 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+<div class="wf-shop-header-4">
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
-    {list.length > 0 &&     <div class="bm-shop-header-4__container">
+    {list.length > 0 &&     <div>
       {list.length > 0 && <div class="bm-shop-header-4-usp-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-shop-header-4-usp-item card">
+            <div class="card">
               <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}</div>
@@ -64,15 +63,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
         {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
-      <div class="bm-shop-header-4-item__brand">
+      <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div class="bm-shop-header-4-item__end">
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
-        <div class="bm-shop-header-cart-search">
-          <div></div>
-          <div></div>
-        </div>
       </div>
     </div>
   </div>

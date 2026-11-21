@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-career-2">
   <div class="sec-inner">
     <div class="bm-career-2__container">
       <div class="intro intro--left">
@@ -53,21 +53,20 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 && <div class="bm-career-2__career-list">
+      {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-career-2-card card">
               <div class="bm-career-2-card__intro">
-                <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                <div class="bm-career-card__status-cover">
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              <div class="bm-career-2-card__content">
+              <div>
                 <p class="text-fluid-0">{it.text}</p>
                 {(it.items || []).length > 0 && <div class="bm-career-meta-list">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                       <div class="bm-career-meta-item card">
-                        {it2.icon && <IconChip name={it2.icon} />}
                         <p class="text-fluid-0">{it2.text}</p>
                       </div>
                     ))}</div>

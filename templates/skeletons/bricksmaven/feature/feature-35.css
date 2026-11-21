@@ -1,39 +1,9 @@
-  .feature-35 {
-    overflow: hidden;
-  }
-
-  .feature-35-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-35 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .feature-35-list {
-    row-gap: var(--space-s);
-  }
-
-  .feature-35-card {
+  .wf-feature-35 .feature-35-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-  }
-
-  .feature-35-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .feature-35-card__image {
-    object-fit: cover;
   }

@@ -51,15 +51,15 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-content-67">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-content-67__container">
-      <div class="bm-content-67__intro">
+    <div>
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
-      <div class="bm-content-67__footer">
+      <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>

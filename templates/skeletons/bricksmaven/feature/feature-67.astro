@@ -51,36 +51,35 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-feature-67">
   <div class="sec-inner">
-    <div class="bm-feature-67__container">
+    <div>
       <div class="intro intro--left">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      <div class="bm-feature-67-card__cover">
+      <div>
         <div class="bm-feature-67-media-list">
           {image && image.src &&           <div>
-            {image && image.src && <figure class="bm-feature-67-item__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
           {image && image.src &&           <div>
-            {image && image.src && <figure class="bm-feature-67-item__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
-        {links.length > 0 && <div class="bm-feature-67-list">{(links || []).map((it) => (
+        {links.length > 0 && <div class="bm-feature-67-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
               <div class="bm-feature-67-card card">
-                <div class="bm-feature-67-card__icon-wrapper">
-                  {it.icon && <IconChip name={it.icon} />}
-                </div>
-                <div class="bm-feature-67-card__content">
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

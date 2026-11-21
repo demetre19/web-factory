@@ -1,61 +1,9 @@
-  .hworks-21-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-how-it-works-21 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .hworks-21-tabs {
-    gap: var(--space-s);
-  }
-
-  .hworks-21-tabs-menu {
-    justify-content: space-between;
-  }
-
-  .hworks-21-tabs__content {
-    row-gap: var(--flow-spacing);
+  .wf-how-it-works-21 .hworks-21-tabs__content {
     display: flex;
     flex-direction: column;
-  }
-
-  .hworks-21-tabs__image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .hworks-21-tabs.brxe-tabs-nested > .tab-menu .tab-title:hover {
-  		color: var(--bg-canvas);
-      background-color: var(--action-primary) !important;
-    	border: calc(0.1rem + 0vw) solid var(--bg-canvas);
-  }
-
-  .hworks-21-tabs-menu::before {
-  	content: "";
-    position: absolute;
-    top: 50%;
-      transform: translateY(-50%);
-    width: 100%;
-    height: calc(0.1rem + 0vw);
-    border: calc(0.1rem + 0vw) solid var(--bg-subtle);
-    
-  }
-
-  .hworks-21-tabs__pane-wrapper {
-  	display: grid !important;
-    grid-template-columns: calc(100% * 1 / 2);
-    gap: var(--space-m);
-    align-items: center;
-  }
-  
-  @media (max-width:767px) {
-  	.hworks-21-tabs__pane-wrapper {
-    grid-template-columns: calc(100% * 1 / 1);
-  }
   }

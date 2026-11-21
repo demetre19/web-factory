@@ -1,52 +1,14 @@
-  .bm-grid-35__grid {
+  .wf-grid-35 .bm-grid-35__grid {
     display: grid;
     grid-template-columns: calc(100% * 3 / 1);
   }
 
-  .bm-grid-35__content {
-    row-gap: var(--space-s);
-    justify-content: center;
-  }
-
-  .bm-grid-35-list {
+  .wf-grid-35 .bm-grid-35-list {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-grid-35-card {
-    row-gap: var(--flow-spacing);
+  .wf-grid-35 .bm-grid-35-card {
     display: flex;
     flex-wrap: nowrap;
-  }
-
-  .bm-grid-35-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-grid-35-card::after {
-  	content: '';
-    display: flex;
-    position: absolute;
-    width: calc(0.0625rem + 0vw);
-    height: 100%;
-    background-color: var(--color-line-default);
-    right: calc(-1 * (var(--space-m) / 2));
-    z-index: 1;
-  }
-  
-  .bm-grid-35-card:last-child::after {
-    display: none; 
-  }
-  
-  @media (max-width:767px) {
-    
-    .bm-grid-35-card::after {
-    width: 100%;
-    height: calc(0.0625rem + 0vw);
-    right: unset;
-    bottom: calc(-1 * (var(--space-m) / 2));
-  }
-    
   }

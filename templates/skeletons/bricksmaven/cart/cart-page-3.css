@@ -1,207 +1,31 @@
-  .cart-page-3 {
+  .wf-cart-page-3 .cart-page-3 {
     flex-direction: column;
-    row-gap: var(--space-s);
   }
 
-  .cart-page-3__container {
+  .wf-cart-page-3 .cart-page-3__container {
     flex-direction: row;
-    column-gap: var(--space-xl);
-    align-items: stretch;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .cart-page-3__intro {
-    align-items: center;
-  }
-
-  .cart-page-3__heading {
+  .wf-cart-page-3 .cart-page-3__heading {
     display: flex;
     flex-direction: row;
-    column-gap: var(--space-m);
-    align-items: stretch;
-    text-align: center;
-    margin: 0 0 var(--space-m) 0;
   }
 
-  .cart-page-3__cart-items-container {
-    row-gap: var(--flow-spacing);
+  .wf-cart-page-3 .cart-page-3__cart-items-container {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .cart-page-3__cart-totals-container {
-    gap: var(--space-m);
+  .wf-cart-page-3 .cart-page-3__cart-totals-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .cart-page-3__review-list {
-    row-gap: var(--flow-spacing);
+  .wf-cart-page-3 .cart-page-3__review-list {
     flex-wrap: nowrap;
   }
 
-  .cart-page-3-review {
+  .wf-cart-page-3 .cart-page-3-review {
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 4);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .cart-page-3-review__image {
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .cart-page-3__cart-totals {
-    padding: var(--space-s) var(--space-m) var(--space-m) var(--space-m);
-  }
-
-  .cart-page-3__cart-items {
-  
-  		--cart-items--primary: var(--text-primary);
-  		--focus-color: var(--action-primary);
-  
-    	/* Style border and inline padding to header cell */
-    	 .shop_table thead th {
-      		border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
-  				padding: 0 var(--space-s);
-    	}
-    	
-    	/* Add block and inline padding to data cell */
-    	.shop_table tbody td {
-        	padding: var(--space-xs) var(--space-s);
-    	}
-    
-    	
-  		/* Set quantity width */
-  		.shop_table .quantity {
-        	width: var(--space-xxl);
-    	}
-    
-    
-    	/* Remove right border on the minus quantity element */
-    	.shop_table .quantity .minus {
-        	border-right: 0;
-    	}
-    
-    	/* Remove left border on the plus quantity element */
-    	.shop_table .quantity .plus {
-        	border-left: 0;
-    	}
-    
-    	/* Style cart items buttons */
-    	.shop_table .button {
-        	background-color: var(--action-primary);
-        	color: var(--bg-canvas);
-    	}
-    
-    	/* Style cart items link color */
-    	.shop_table a {
-        	color: var(--action-primary);
-    	}    
-    
-  }
-
-  .cart-page-3__cart-totals {
-  
-  		--cart-items--primary: var(--text-primary);
-  		--focus-color: var(--action-primary);
-  
-    	/* Remove border top & bottom and margin bottom on the table */
-    	.cart_totals table {
-      		border-top: 0;
-        	border-bottom: 0;
-        	margin-bottom: 0;      	
-    	}
-    
-    	border: calc(0.0625rem + 0vw) solid var(--color-line-default);
-    	background-color: var(--bg-subtle);
-    
-    	  .cart_totals table .cart-subtotal td, .cart_totals table .shipping td, .cart_totals table .order-total td {
-      text-align: end;
-      font-size: var(--fs-0);
-    }
-    
-    	/* Style h2 heading of cart totals */
-    	.cart_totals h2 {
-        	border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
-    	}
-    
-    	/* Style cart totals button */
-    	.cart_totals .button {
-        	background-color: var(--action-primary);
-        	color: var(--bg-canvas);
-        	font-size: var(--space-s);
-        	display: block;
-        	text-align: center;      	
-        	line-height: 150%;
-        	margin-top: var(--space-m);
-    	}
-    
-    	/* Style links of cart totals */
-    	.cart_totals a {
-        	color: var(--action-primary);
-    	}  
-    
-    	/* Style shipping calculator button */
-    	.shipping-calculator-button {
-      		text-decoration: none;
-        	font-weight: bold;
-    	}
-    
-    	/* Style th & shipping destination color */
-    	.cart-subtotal th,
-    	.shipping th,
-    	.woocommerce-shipping-destination {
-      		color: var(--text-secondary);
-    	}
-    	
-    	  	/* Add margin top to the calculation button */
-      .woocommerce-shipping-calculator .button {
-      margin-block-start: var(--space-xs);
-      
-    }	
-    
-    	 /* Style add padding to the right of the th cell */
-    	.shipping th {	
-        padding-inline-end: var(--space-m);
-    	}
-    	
-    	/* Style strong color of shipping destination */
-    	.woocommerce-shipping-destination strong {
-      		color: var(--text-primary);
-    	}  
-    
-    	  	/* Right align the shipping methods */
-      ul.woocommerce-shipping-methods li {
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-      }
-    
-      	/* Right align the shipping methods */
-    	ul.woocommerce-shipping-methods input[type=radio]+label {
-      	font-size: var(--space-xs);
-        color: var(--text-secondary) !important;
-        font-weight: 700;
-  		}
-    	
-    
-    	/* Style data title subtotal */
-    	.cart-subtotal td[data-title=Subtotal] {
-        	font-weight: bold;
-    	}  	 
-    	
-    
-    	/* Style order total th and td font-size */
-    	.order-total th, .order-total td {
-        	font-size: var(--fs-2);
-        	border-bottom: calc(0.0625rem + 0vw) solid var(--color-line-default);
-        	padding-bottom: var(--space-m);      	
-    	}
-    
-      /* Increase the Total price font size */
-    .cart_totals table .order-total td {
-      font-size: var(--fs-2);
-    }
   }

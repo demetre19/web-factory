@@ -1,62 +1,8 @@
-  .logo-12 {
-    overflow: hidden;
-  }
-
-  .logo-12__container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-logo-12 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .logo-12__logo-list-wrapper {
-    overflow: hidden;
-  }
-
-  .logo-12-list {
+  .wf-logo-12 .logo-12-list {
     flex-direction: row;
-  }
-
-  .logo-12-list-item__brand {
-    object-fit: contain;
-    width: 100%;
-  }
-
-  .logo-12__logo-list-wrapper::before {
-  	content:'';
-    position: absolute;
-    left:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, var(--bg-canvas), transparent);
-    z-index: 99;
-  }
-  
-  .logo-12__logo-list-wrapper::after {
-  	content:'';
-    position: absolute;
-    right:0;
-    height:100%;
-    width:25%;
-    background: linear-gradient( 90deg, transparent,var(--bg-canvas));
-    z-index: 99;
-  }
-
-  .logo-12-list  .splide__track{
-  	overflow:visible;
-  }
-  
-  .logo-12-list .splide__list {
-    gap: calc(var(--flow-spacing) * 3);
-    align-items: center;
-  }
-  
-  .logo-12-list :where(.splide__list, .splide__slide){
-    transition-timing-function: linear !important;
   }

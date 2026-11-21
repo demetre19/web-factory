@@ -45,28 +45,20 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+<div class="wf-linktree">
   <div class="sec-inner">
     <div class="linktree-container">
-      <div class="linktree__content">
+      <div>
         <div class="linktree__brand">
           <span class="logo brand-mark">{brand}</span>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        {list.length > 0 && <div class="linktree-list">
+        {list.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="linktree-card card">
+              <div class="card">
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-              </div>
-            ))}</div>
-        </div>}
-        {links.length > 0 && <div class="linktree-social">
-          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="card">
-                {it.icon && <IconChip name={it.icon} />}
               </div>
             ))}</div>
         </div>}

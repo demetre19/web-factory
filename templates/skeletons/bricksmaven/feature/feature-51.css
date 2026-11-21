@@ -1,43 +1,10 @@
-  .bm-feature-51__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-51 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-feature-51-feature-grid {
+  .wf-feature-51 .bm-feature-51-feature-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-feature-51-feature-card {
-    width: 50%;
-    column-gap: var(--flow-spacing);
-    overflow: hidden;
-    justify-content: flex-end;
-  }
-
-  .bm-feature-51-feature-card__background-image {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-feature-51-feature-card__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-feature-51-feature-grid:hover .feature-51-feature-card:not(:hover), .bm-feature-51-feature-grid:focus-within .feature-51-feature-card:not(:focus-within) {
-  	opacity: 0.8;
-    filter: grayscale(1);
-    
   }

@@ -1,51 +1,15 @@
-  .bm-hero-75__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-75__top {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .bm-hero-75__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-75__cta {
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-
-  .bm-hero-75-media {
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
+  .wf-hero-75 .bm-hero-75__top {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-hero-75-image-wrapper__image {
-    object-fit: cover;
-    width: 100%;
+  .wf-hero-75 .bm-hero-75-media {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-hero-75-logo-ul {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
+  .wf-hero-75 .bm-hero-75-logo-ul {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-75-logo-item {
-    justify-content: center;
-  }
-
-  .bm-hero-75-logo-item__brand {
-    object-fit: contain;
   }

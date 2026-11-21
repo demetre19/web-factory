@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-32">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-32-container">
+    <div>
       <div class="intro intro--left">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         <div class="intro__text-cta-wrapper">
@@ -68,16 +68,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="testimonial-32-slide card">
               <p class="text-fluid-0">{it.text}</p>
-              {(it.items || []).length > 0 && <div class="testimonial-32-slide__rating-wrapper">
-                <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                    <div class="card">
-                      {it2.icon && <IconChip name={it2.icon} />}
-                    </div>
-                  ))}</div>
-              </div>}
-              <div class="testimonial-32-slide__client-wrapper">
-                <div class="testimonial-32-slide__meta-data">
-                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <div>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>

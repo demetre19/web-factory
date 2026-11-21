@@ -1,62 +1,9 @@
-  .feature-36-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-feature-36 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .feature-36-list {
-    row-gap: var(--space-s);
-  }
-
-  .feature-36-card {
+  .wf-feature-36 .feature-36-card {
     display: grid;
     grid-template-columns: calc(100% * 2 / 3);
-    gap: var(--space-m);
-  }
-
-  .feature-36-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .feature-36-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .feature-36-card:nth-child(even) {
-  	grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  }
-  
-  .feature-36-card:nth-child(even) .feature-36-card__content {
-  	order: -1;
-  }
-  
-  .feature-36-card:nth-child(even) .feature-36-card__image {
-  	order: 1;
-  }
-  
-  @media (max-width:767px) {
-  		.feature-36-card:nth-child(even) {
-  	grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-  
-  .feature-36-card:nth-child(even) .feature-36-card__content {
-  	order: 1;
-  }
-  
-  .feature-36-card:nth-child(even) .feature-36-card__image {
-  	order: -1;
-  }
   }

@@ -44,9 +44,9 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-table-comparison">
   <div class="sec-inner">
-    <div class="bm-table-comp-2-container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -84,9 +84,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             }
           </div>
         </div>
-        {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-            <div class="card"></div>
-          ))}</div>}
       </div>
     </div>
   </div>

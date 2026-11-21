@@ -1,43 +1,13 @@
-  .bm-blog-section-19__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-blog-section-19 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .bm-blog-section-19-grid-ul {
+  .wf-blog-section-19 .bm-blog-section-19-grid-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .bm-blog-section-19-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    justify-content: flex-end;
-  }
-
-  .bm-blog-section-19-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-blog-section-19-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-section-19-card__meta-data {
+  .wf-blog-section-19 .bm-blog-section-19-card__meta-data {
     display: flex;
-    padding: calc(var(--space-xs) / 2)  var(--space-xs) calc(var(--space-xs) / 2)  var(--space-xs);
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-  }
-
-  .bm-blog-section-19-card {
-    aspect-ratio: 4/3;
   }

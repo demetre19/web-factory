@@ -45,12 +45,9 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-item-ctmenm">
   <div class="sec-inner">
     <div>
-      <div>
-        <div></div>
-      </div>
       <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

@@ -45,14 +45,13 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-footer-5">
   <div class="sec-inner">
     <div class="footer-5-container row between">
       <div class="footer-5-alpha row between">
         <span class="logo brand-mark">{brand}</span>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        <div class="footer-5__social"></div>
       </div>
       {list.length > 0 &&       <div class="footer-nav-wrapper footer-nav-wrapper-5 row between">
         {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
@@ -75,7 +74,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {links.length >= 0 &&         <div class="footer-5__apps row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
               <div class="footer-5__apps-btn row between">
-                {it.icon && <IconChip name={it.icon} />}
                 <div class="row between">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>

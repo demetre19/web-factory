@@ -1,29 +1,9 @@
-  .hero-3 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-  }
-
-  .hero-3-container {
+  .wf-hero-3 .hero-3-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .hero-3-left-box {
+  .wf-hero-3 .hero-3-left-box {
     display: flex;
     flex-direction: column;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) 0;
-    row-gap: var(--space-m);
-    justify-content: center;
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-3-media__image {
-    width: 50vw;
-    object-fit: cover;
-    margin: 0 calc(-50vw + 50%) 0 0;
   }

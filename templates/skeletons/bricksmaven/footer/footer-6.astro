@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-footer-6">
   <div class="sec-inner">
     <div class="footer-6-container row between">
       <div>
@@ -88,9 +88,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           </div>}
           {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
-      </div>
-      <div class="footer-6-bottom__beta">
-        <div></div>
       </div>
     </div>
   </div>

@@ -45,10 +45,10 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-content-6">
   <div class="sec-inner">
     <div class="content-6-container">
-      <div class="content-6__box">
+      <div>
         <div class="content-6__wrapper">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

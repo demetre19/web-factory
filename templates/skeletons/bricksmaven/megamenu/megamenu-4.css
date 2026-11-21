@@ -1,74 +1,27 @@
-  .bm-header-1 {
-    padding: var(--space-xs) 0 var(--space-xs) 0;
-  }
-
-  .bm-header-1__container {
+  .wf-megamenu-4 .bm-header-1__container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-header-1__brand {
-    align-items: flex-start;
-  }
-
-  .bm-header-1__nav-wrapper {
-    align-items: center;
-  }
-
-  .megamenu-4__content {
+  .wf-megamenu-4 .megamenu-4__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .megamenu-4__column {
-    row-gap: var(--flow-spacing);
-    justify-content: flex-start;
+  .wf-megamenu-4 .megamenu-4__column {
     flex-wrap: nowrap;
   }
 
-  .megamenu-4__card-wrapper {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .megamenu-card-link-3 {
+  .wf-megamenu-4 .megamenu-card-link-3 {
     flex-wrap: nowrap;
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
-    padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
   }
 
-  .megamenu-card-link-3__icon-wrapper {
+  .wf-megamenu-4 .megamenu-card-link-3__icon-wrapper {
     display: flex;
-    /* bm: box-shadow omitted — token layer owns elevation */
   }
 
-  .bm-header-1__cta {
+  .wf-megamenu-4 .bm-header-1__cta {
     display: flex;
-    align-items: flex-end;
-  }
-
-  @media (min-width:991px) {
-  
-  .megamenu-4__content {
-     min-width: var(--content-width) !important;
-     align-self: center;
-     left: unset !important;
-  }
-  }
-
-  .megamenu-4__column:last-child {
-    border-right: none;
-  }
-
-  .megamenu-card-link-3 {
-    transition: .5s ease;
-  }
-  
-  .megamenu-card-link-3:hover, .megamenu-card-link-3:focus-within {
-    background-color: var(--bg-subtle);
   }

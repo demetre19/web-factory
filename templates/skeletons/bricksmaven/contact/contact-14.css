@@ -1,55 +1,14 @@
-  .contact-14-container {
-    row-gap: var(--space-xl);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-contact-14 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .contact-14-list-ul {
-    width: 100%;
+  .wf-contact-14 .contact-14-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .contact-14-list-item {
+  .wf-contact-14 .contact-14-list-item {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: var(--space-s);
-    padding: 0 var(--space-l) 0 var(--space-l);
-  }
-
-  .contact-14-list-item__desc {
-    text-align: center;
-  }
-
-  .contact-14-list-item__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .contact-14::before {
-  	content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 45%;
-    background-color: #F2F2F2;
-  }
-
-  .contact-14-list-item:not(:last-child)::after {
-  	content: '';
-    position: absolute;
-    width: calc(0.1rem + 0vw);
-    height: 100%;
-    background-color: #C7C7C7;
-    right: 0;
   }

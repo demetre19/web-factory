@@ -51,26 +51,27 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-portfolio-section-25">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-portfolio-section-25__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
-      {list.length > 0 && <div class="bm-portfolio-section-25-list">{(list || []).map((it) => (
+      {list.length > 0 && <div class="bm-portfolio-section-25-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-portfolio-section-25-card card">
-              <div class="bm-portfolio-section-25-card__content">
-                <div class="bm-portfolio-section-25-card__intro">
-                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <div>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   {(it.items || []).length > 0 && <div class="bm-portfolio-section-25-card-terms-list">
                     <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                         <div class="card">
@@ -82,7 +83,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>}
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

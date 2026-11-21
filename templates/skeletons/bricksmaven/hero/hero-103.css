@@ -1,32 +1,8 @@
-  .bm-hero-103 {
-    overflow: clip;
-  }
-
-  .bm-hero-103__container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-hero-103__intro {
+  .wf-hero-103 .bm-hero-103__intro {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-hero-103__column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .cta-combo {
+  .wf-hero-103 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-hero-103__media {
-    align-items: flex-end;
-  }
-
-  .bm-hero-103__image {
-    width: calc(50vw + (var(--content-width) /  2));
-    object-fit: cover;
   }

@@ -1,69 +1,10 @@
-  .portfolio-section-5 {
-    align-self: flex-start;
-  }
-
-  .portfolio-section-5__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-5 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--split {
+  .wf-portfolio-section-5 .intro--split {
     display: grid;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .portfolio-section-5-case-list {
-    row-gap: var(--space-s);
-  }
-
-  .portfolio-section-5-case-card {
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl);
-    overflow: hidden;
-    justify-content: flex-end;
-  }
-
-  .portfolio-section-5-case-card__intro {
-
-  }
-
-  .portfolio-section-5-case-card__content {
-    row-gap: var(--flow-spacing);
-    max-width: var(--measure);
-    align-self: flex-start;
-  }
-
-  .portfolio-section-5-case-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .portfolio-section-5-case-card__image {
-    object-fit: cover;
-    width: 100%;
-    overflow: hidden;
   }

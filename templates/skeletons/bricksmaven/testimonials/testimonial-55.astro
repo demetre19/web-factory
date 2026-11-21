@@ -50,26 +50,24 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-55">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-56__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
       </div>
-      {list.length > 0 && <div class="bm-testimonial-56-list">{(list || []).map((it) => (
-            <div class="bm-testimonial-56-card card">
-              <div class="bm-testimonial-56-card__top grid-auto gap-fluid-l">
-                <svg></svg>
-              </div>
-              <div class="bm-testimonial-56-card__content">
+      {list.length > 0 && <div class="bm-testimonial-56-list">
+        <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <div class="card">
+              <div>
                 <p class="text-fluid-0">{it.text}</p>
                 <div class="bm-testimonial-56-card__user-data">
                   <p class="text-fluid-0">{it.text}</p>
@@ -77,7 +75,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
-          ))}</div>}
+          ))}</div>
+      </div>}
     </div>
   </div>
     </div>

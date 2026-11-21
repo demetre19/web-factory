@@ -1,41 +1,18 @@
-  .hero-33-container {
+  .wf-hero-33 .hero-33-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .hero-33__content {
-
-  }
-
-  .intro {
-    text-align: center;
+  .wf-hero-33 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-hero-33 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .cta-combo {
+  .wf-hero-33 .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-33__image {
-    object-fit: cover;
-    width: 100%;
   }

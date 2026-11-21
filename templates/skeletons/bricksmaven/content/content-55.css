@@ -1,20 +1,9 @@
-  .bm-content-55__intro {
+  .wf-content-55 .bm-content-55__intro {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 3 / 2);
-    margin: 0 0 calc(var(--section-space-xxl) * 2.5) 0;
   }
 
-  .bm-content-55__column {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-content-55__content {
+  .wf-content-55 .bm-content-55__content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .bm-content-55-card {
-    row-gap: var(--flow-spacing);
   }

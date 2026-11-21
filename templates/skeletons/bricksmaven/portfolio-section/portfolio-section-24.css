@@ -1,89 +1,19 @@
-  .bm-portoflio-section-24__container {
-    row-gap: var(--space-s);
-    align-items: center;
-  }
-
-  .intro {
-    text-align: center;
+  .wf-portfolio-section-24 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .bm-portoflio-section-24-list {
-    width: 100%;
-    row-gap: var(--space-s);
-  }
-
-  .bm-portoflio-section-24-card {
+  .wf-portfolio-section-24 .bm-portoflio-section-24-card {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-portoflio-section-24-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-portoflio-section-24-card__intro {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-meta-data-list {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-portfolio-meta-data-item {
+  .wf-portfolio-section-24 .bm-portfolio-meta-data-item {
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    padding: calc(var(--space-s) / 2) var(--space-s) calc(var(--space-s) / 2) var(--space-s);
-    column-gap: calc(var(--space-xs) / 2);
-    row-gap: calc(var(--space-xs) / 2);
   }
 
-  .bm-portoflio-section-24-card__image {
-    object-fit: cover;
-  }
-
-  .bm-portoflio-section-24__footer {
-    align-items: center;
-    text-align: center;
+  .wf-portfolio-section-24 .bm-portoflio-section-24__footer {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 2);
   }
-
-  @media (max-width:800px) {
-  .bm-portoflio-section-24-card {
-    grid-template-columns: calc(100% * 1 / 1);
-  }
-    .bm-portoflio-section-24-card .bm-portoflio-section-24-card__image {
-    aspect-ratio: 16/9;
-  }
-  
-  }
-  @media (min-width:800px) {
-    .bm-portoflio-section-24-card:nth-child(even) .bm-portoflio-section-24-card__media {
-    order: 0;
-  }
-  }
-  
-  
-  @media (min-width:991px) {
-  
-    
-    .bm-portoflio-section-24-card .bm-portoflio-section-24-card__image {
-    transition: 0.2s ease;
-  }
-    
-   .bm-portoflio-section-24-card:hover .bm-portoflio-section-24-card__image {
-    scale: 1.1;
-     z-index: 1;
-  }
-    
-   }

@@ -45,22 +45,19 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-comparison-3">
   <div class="sec-inner">
-    <div class="bm-comparison-3__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div class="bm-comparison-3__grid">
-        {list.length > 0 &&         <div class="bm-comparison-3__column">
-          {list.length > 0 && <div class="bm-comparison-3-list">
+        {list.length > 0 &&         <div>
+          {list.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="bm-comparison-3-card card">
-                  <div class="bm-comparison-3-card__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
                   <div class="bm-comparison-3-card__content">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
@@ -70,19 +67,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           </div>}
         </div>
         }
-        {links.length > 0 &&         <div class="bm-comparison-3__column">
-          {links.length > 0 && <div class="bm-comparison-3-list">
+        {links.length > 0 &&         <div>
+          {links.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                 <div class="bm-comparison-3-card card">
-                  <div class="bm-comparison-3-card__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
                   <div class="bm-comparison-3-card__content">
                     <h4 class="text-fluid-1">{it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                     <div class="bm-comparison-3-card__micro-wrapper">
                       <p class="text-fluid-0">{it.text}</p>
-                      {it.icon && <IconChip name={it.icon} />}
                     </div>
                   </div>
                 </div>

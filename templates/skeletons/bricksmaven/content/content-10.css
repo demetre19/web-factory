@@ -1,28 +1,14 @@
-  .content-10 {
+  .wf-content-10 .content-10 {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xl);
   }
 
-  .content-10-container {
+  .wf-content-10 .content-10-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .content-10__content {
+  .wf-content-10 .content-10__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
-    justify-content: center;
-    margin: var(--section-space-xxl) 0 0 0;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .content-10__image {
-    object-fit: cover;
-    width: 100%;
   }

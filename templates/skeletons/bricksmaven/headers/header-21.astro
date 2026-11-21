@@ -51,24 +51,22 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-header-21">
   <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
     <div class="header-21__container row between">
-      <div class="header-21__nav">
+      <div>
         {list.length > 0 && <nav class="nav-links" aria-label="Primary"><ul class="row gap-fluid-m list-plain">{(list || []).map((it) => <li><a class="nav-link" href={it.href}>{it.label || it.term || it.title || it.text}</a></li>)}</ul></nav>}
         {list.length > 0 && <button class="burger wf-cta-button" type="button" aria-label="Menu">Menu</button>}
       </div>
-      {image && image.src &&       <div class="header-21__brand">
+      {image && image.src &&       <div>
         {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
       <div class="header-21__cta row between">
         <div class="row between">
-          <div></div>
           <div>
             <div class="bm-off-canvas-6__content row between">
-              <div></div>
               {head && <h2 class="text-fluid-2">{head}</h2>}
               {links.length > 0 && <div class="bm-off-canvas-nav-ul row between">
                 <div class="row gap-fluid-m">{(links || []).map((it) => (
@@ -79,32 +77,18 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   ))}</div>
               </div>}
               <div class="bm-off-canvas-6__contact-footer row between">
-                {links.length > 0 && <div class="bm-off-canvas-contact row between">
+                {links.length > 0 && <div class="row between">
                   <div class="row gap-fluid-m">{(links || []).map((it) => (
                       <div class="bm-off-canvas-contact-item row between">
-                        <div>
-                          {it.icon && <IconChip name={it.icon} />}
-                        </div>
                         <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                         {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                       </div>
                     ))}</div>
                 </div>}
-                {sub && <p class="bm-off-canvas-6__contact-address text-fluid-0" set:html={inline(sub)} />}
+                {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                 {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
               </div>
-              {links.length > 0 &&               <div class="bm-off-canvas-6__socials row between">
-                {links.length > 0 && <div class="bm-social-share bm-social-share--column row between">
-                  <div class="row gap-fluid-m">{(links || []).map((it) => (
-                      <div>
-                        {it.icon && <IconChip name={it.icon} />}
-                      </div>
-                    ))}</div>
-                </div>}
-              </div>
-              }
             </div>
-            <div></div>
           </div>
         </div>
       </div>

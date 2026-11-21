@@ -1,146 +1,33 @@
-  .blog-archive-5-container {
+  .wf-blog-archive-5 .blog-archive-5-container {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-    gap: var(--space-m);
     display: grid;
   }
 
-  .blog-archive-5-head {
+  .wf-blog-archive-5 .blog-archive-5-head {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-archive-5-head--heading {
+  .wf-blog-archive-5 .blog-archive-5-head--heading {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-archive-5-body {
+  .wf-blog-archive-5 .blog-archive-5-body {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
   }
 
-  .blog-archive-5-wrapper {
+  .wf-blog-archive-5 .blog-archive-5-wrapper {
     display: grid;
-    gap: var(--space-m);
   }
 
-  .blog-archive-5-card {
+  .wf-blog-archive-5 .blog-archive-5-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
   }
 
-  .blog-archive-5-card__thumb {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-archive-5-card__term {
-    padding: calc(0.3rem + 0vw) var(--space-xs) calc(0.3rem + 0vw) var(--space-xs);
-  }
-
-  .blog-archive-5-card__author {
-    margin: auto 0 0 0;
+  .wf-blog-archive-5 .blog-archive-5-card__author {
     display: flex;
     flex-direction: row;
-    column-gap: var(--flow-spacing);
-    align-items: center;
-  }
-
-  .blog-archive-5-card__photo {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  .blog-archive-5-head__form .bricks-search-form {
-  	gap: var(--space-m);
-  }
-  .blog-archive-5-head__form [type="search"] {
-  	width: 70% !important;
-  }
-  .blog-archive-5-head__form [type="submit"] {
-  	background-color: var(--action-primary);
-    color: var(--bg-canvas);
-    width: 30%;
-    padding: var(--space-xs) var(--space-xs);
-    text-align: center;
-    height: auto;
-    position: static!important;
-    clip-path: unset !important;
-  }
-  .blog-archive-5-head__form [type="submit"]:focus {
-  	border-radius: 0;
-    box-shadow: none;
-    font-size: 100%;
-    font-weight: 400;
-    line-height: 100%;
-    outline: none;
-    padding: var(--space-xs);
-    text-align: center;
-    clip-path: unset;
-  }
-  .blog-archive-5-head__form [type="submit"] span {
-  	height: auto;
-    position: static!important;
-    width: auto;
-  }
-
-  .blog-archive-5-wrapper {
-  	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(1) {
-  	grid-area: 1 / 1 / 2 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(2) {
-  	grid-area: 2 / 1 / 3 / 2;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(3) {
-  	grid-area: 2 / 2 / 3 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(4) {
-  	grid-area: 3 / 1 / 4 / 2;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(5) {
-  	grid-area: 3 / 2 / 4 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(6) {
-  	grid-area: 4 / 1 / 5 / 2;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(7) {
-  	grid-area: 4 / 2 / 5 / 3;
-  }
-  
-  @media (max-width:767px) {
-  	.blog-archive-5-wrapper .blog-archive-5-card:nth-child(1) {
-  	grid-area: 1 / 1 / 2 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(2) {
-  	grid-area: 2 / 1 / 3 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(3) {
-  	grid-area: 3 / 1 / 4 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(4) {
-  	grid-area: 4 / 1 / 5 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(5) {
-  	grid-area: 5 / 1 / 6 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(6) {
-  	grid-area: 6 / 1 / 7 / 3;
-  }
-  .blog-archive-5-wrapper .blog-archive-5-card:nth-child(7) {
-  	grid-area: 7 / 1 / 8 / 3;
-  }
-  }
-
-  .blog-archive-5-card__term a {
-  	color: var(--fs-0);
   }

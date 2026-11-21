@@ -1,99 +1,23 @@
-  .bm-hero-86 {
-    overflow: clip;
-  }
-
-  .bm-hero-86__container {
+  .wf-hero-86 .bm-hero-86__container {
     display: grid;
     grid-template-columns: calc(100% * 2 / 1);
-    gap: var(--space-m);
   }
 
-  .bm-hero-86__content {
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
-  }
-
-  .bm-hero-86__top {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-hero-86-card {
+  .wf-hero-86 .bm-hero-86-card {
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
   }
 
-  .bm-hero-86-card__thumb {
+  .wf-hero-86 .bm-hero-86-card__thumb {
     display: flex;
   }
 
-  .bm-hero-86-card__image {
-    object-fit: cover;
-    width: var(--space-xxl);
-  }
-
-  .bm-hero-86-card__content {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-hero-86-card__top {
+  .wf-hero-86 .bm-hero-86-card__top {
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
   }
 
-  .bm-hero-86-card__review {
-    padding: 0 0 var(--space-s) 0;
-  }
-
-  .bm-hero-86-media {
+  .wf-hero-86 .bm-hero-86-media {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .bm-hero-86-image-wrapper__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-hero-86-image-wrapper {
-    overflow: clip;
-  }
-  
-  .bm-hero-86-image-wrapper:nth-child(1) {
-    grid-column:1/10;
-    grid-row:1/12;
-    border-start-start-radius: 100%;
-    border-end-end-radius: var(--r-card);
-  }
-  
-  .bm-hero-86-image-wrapper:nth-child(2) {
-    grid-column:1/10;
-    grid-row:12/-1;
-    border-start-end-radius: var(--r-card);
-    border-end-start-radius: var(--r-card);
-  }
-  
-  .bm-hero-86-image-wrapper:nth-child(3) {
-    grid-column:10/17;
-    grid-row:3/16;
-    border-start-end-radius: 100%;
-    border-end-start-radius: var(--r-card);
-    border-end-end-radius: var(--r-card);
-  }
-  
-  .bm-hero-86-image-wrapper:nth-child(4) {
-    grid-column:10/17;
-    grid-row:16/-1;
-    border-radius: var(--r-card);
-  }
-  
-  .bm-hero-86-image-wrapper:nth-child(5) {
-    grid-column:17/-1;
-    grid-row:9/-1;
-    border-start-end-radius: 100%;
-    border-end-end-radius: 100%;
   }

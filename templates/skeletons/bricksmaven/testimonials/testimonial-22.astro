@@ -51,33 +51,34 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-22">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="testimonial-22-container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
-      {list.length > 0 &&       <div class="testimonial-22-content">
-        {list.length > 0 && <div class="testimonial-22-content__list">
-          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="testimonial-22-content__item card">
+      {list.length > 0 &&       <div>
+        {list.length > 0 &&         <div class="testimonial-22-content__list">
+          {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <div class="card">
                 <div class="grid-auto gap-fluid-l">
                   <div class="testimonial-22-content__boxlabel">
                     <p class="testimonial-22-content__label text-fluid-0">{it.text}</p>
                     <div class="testimonial-22-content__box">
-                      <p class="testimonial-22-content__desc text-fluid-0">{it.text}</p>
-                      <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                      <p class="text-fluid-0">{it.text}</p>
+                      <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
+        </div>
+        }
       </div>
       }
     </div>

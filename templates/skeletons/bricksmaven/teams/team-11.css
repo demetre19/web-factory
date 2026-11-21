@@ -1,67 +1,9 @@
-  .team-11-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-team-11 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .team-11-team-list {
+  .wf-team-11 .team-11-team-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .team-11-card {
-    overflow: hidden;
-  }
-
-  .team-11-card__content {
-    text-align: center;
-    align-items: center;
-    justify-content: flex-end;
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .team-11-card__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  /* Card */
-  
-  .team-11-card:focus-within :focus {
-  	outline: none;
-    box-shadow: none;
-  }
-  
-  .team-11-card:focus-within {
-  	box-shadow: 0 0 var(--space-xs) 0 color-mix(in srgb, var(--text-primary) 10%, transparent);
-  
-  }
-  
-  /* Overlay */
-  .team-11-card__overlay {
-  	transition: .5s ease-in-out;
-    opacity: 1;
-  }
-  
-  .team-11-card:hover .team-11-card__overlay, .team-11-card:focus-within .team-11-card__overlay {
-    opacity: 0.3;
-  }
-  
-  /* Image */
-  .team-11-card__image {
-  	transition: .8s ease-in-out;
-    filter: grayscale(1);
-  }
-  
-  .team-11-card:hover .team-11-card__image, .team-11-card:focus-within .team-11-card__image {
-  	filter: grayscale(0);
-    scale: 1.1;
   }

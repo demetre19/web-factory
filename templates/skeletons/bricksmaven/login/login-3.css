@@ -1,78 +1,19 @@
-  .bm-login-3__header {
-    width: 100%;
+  .wf-login-3 .bm-login-3__header {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: var(--space-s) var(--space-m) var(--space-s) var(--space-m);
-    align-items: center;
   }
 
-  .bm-login-3__container {
-    justify-content: center;
-  }
-
-  .bm-login-3__inner {
+  .wf-login-3 .bm-login-3__inner {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-login-3__form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-form-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .login-form-wrapper--alt {
-    max-width: var(--measure);
-  }
-
-  .login-footer {
+  .wf-login-3 .login-footer {
     display: flex;
     flex-wrap: nowrap;
-    column-gap: var(--flow-spacing);
   }
 
-  .login-1__logged-in-heading-wrapper {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-login-3__footer {
+  .wf-login-3 .bm-login-3__footer {
     display: flex;
-    align-self: center;
-  }
-
-  .bm-login-3__inner:hover .bm-login-3__form-wrapper:not(:hover){
-  	opacity: 0.33;
-  }
-
-  .bm-login-3__form-wrapper {
-  	transition: 1s ease;
-  }
-  
-  .bm-login-3__form-wrapper:hover {
-  	box-shadow: var(--shadow-card);
-  }
-
-  .login-form .form-group ul li {
-  	display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .login-form .form-group span {
-  	display: flex;
-    flex-direction: row;
-    align-items: end;
-  }
-  
-  .login-form .form-group span a, .login-form .form-group ul li label {
-  	font-size: var(--fs-0);
-  }
-  
-  .login-form .form-group:nth-child(4) {
-      align-items: end;
   }

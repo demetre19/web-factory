@@ -1,49 +1,24 @@
-  .pricing-11-container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-pricing-11 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-pricing-11 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .pricing-11-list {
-    row-gap: calc(var(--flow-spacing) * 1.6);
+  .wf-pricing-11 .pricing-11-list {
     display: block;
   }
 
-  .pricing-11-card {
+  .wf-pricing-11 .pricing-11-card {
     display: grid;
-    gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    padding: 0 var(--space-m) var(--space-m) 0;
-    margin: 0 0 var(--space-l) 0;
   }
 
-  .pricing-11-card__menu-item {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .pricing-11-card__price-wrapper {
+  .wf-pricing-11 .pricing-11-card__price-wrapper {
     display: flex;
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 6);
-    justify-content: flex-end;
     flex-wrap: nowrap;
-  }
-
-  .pricing-11-list {
-  	column-count: 2;
   }

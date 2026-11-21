@@ -51,37 +51,36 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-feature-52">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-feature-52__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
       </div>
     </div>
-    {list.length > 0 &&     <div class="bm-feature-52__feature-container">
-      {list.length > 0 &&       <div class="bm-feature-52-card-list">
+    {list.length > 0 &&     <div>
+      {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-feature-52-card card">
-              <div class="bm-feature-52-card-inner">
+            <div class="card">
+              <div>
                 <div>
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 </div>
                 <div class="bm-feature-52-card__inner">
-                  <div class="bm-feature-52-card__content">
+                  <div>
                     <p class="text-fluid-0">{it.text}</p>
                     {(it.items || []).length > 0 && <div>
                       <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
                           <div class="bm-link-list-item card">
                             <p class="text-fluid-0">{it2.text}</p>
-                            {it2.icon && <IconChip name={it2.icon} />}
                           </div>
                         ))}</div>
                     </div>}

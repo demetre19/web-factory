@@ -51,32 +51,31 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-feature-47">
   <div class="sec-inner">
-    <div class="bm-feature-47__top-container grid-auto gap-fluid-l">
-      <div class="bm-feature-47__head">
+    <div class="grid-auto gap-fluid-l">
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
-      {image && image.src && <figure class="bm-feature-47__background-image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
     </div>
     <div>
       <div class="bm-feature-47__services">
-        <div class="bm-feature-47__content">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        {list.length > 0 && <div class="bm-feature-47-grid-ul">{(list || []).map((it) => (
+        {list.length > 0 && <div class="bm-feature-47-grid-ul">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-content-26-card card">
                 <div>
-                  {it.icon && <IconChip name={it.icon} />}
-                </div>
-                <div class="bm-content-26-card__content">
-                  <h4 class="text-fluid-1">{it.term || it.title}</h4>
+                  <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

@@ -1,117 +1,36 @@
-  .product-list-5__list {
+  .wf-product-section-5 .product-list-5__list {
     display: grid;
-    gap: calc( var(--space-m) * 2 );
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .intro {
-    text-align: center;
+  .wf-product-section-5 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .product-list-5-card__group {
-    display: grid;
-    gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-  }
-
-  .product-list-5-card__container {
+  .wf-product-section-5 .product-list-5-card__group {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .product-list-5__category-wrapper {
+  .wf-product-section-5 .product-list-5-card__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
+  }
+
+  .wf-product-section-5 .product-list-5__category-wrapper {
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 
-  .product-list-5__card-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .product-list-5-card {
+  .wf-product-section-5 .product-list-5-card {
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
     display: grid;
-    gap: var(--space-m);
   }
 
-  .product-list-5-card__content {
-    width: 100%;
+  .wf-product-section-5 .product-list-5-card__content {
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .product-list-5-card__top {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .product-list-5-card__heading {
-    row-gap: calc( var(--flow-spacing) / 2 );
-  }
-
-  .product-list-notice-rect__sale-badge {
-    padding: calc(var(--space-xs) / 2) var(--space-s) calc(var(--space-xs) / 2) var(--space-s);
+  .wf-product-section-5 .product-list-notice-rect__sale-badge {
     display: flex;
-    align-items: center;
-  }
-
-  .product-list-5__button {
-    width: 100%;
-    margin: auto 0 0 0;
-  }
-
-  .product-list-5__image-container {
-    width: 100%;
-  }
-
-  .product-list-5-card__image {
-    align-items: center;
-    row-gap: calc( var(--flow-spacing) / 2 );
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .product-list-5__category a {
-    	color: var(--text-primary);
-  }
-
-  .product-list-5__star-rating .star-rating {
-  		font-size: var(--space-m);
-    	height: var(--space-m);
-    	width: var(--space-xxl);
-    	color: transparent; /* hide default rated text */
-  }
-  
-  .product-list-5__star-rating .star-rating:before {
-    	color: var(--color-line-default);
-  }
-
-  .product-list-card__price del {
-    	color: var(--bg-subtle);
-  }
-  
-  .product-list-card__price ins {
-    	text-decoration: none;
-  }
-  .product-list-card__price ins .amount {
-    	text-decoration: none;
-    	border-bottom: 0;
-  }
-
-  .product-list-4__star-rating .star-rating {
-  		font-size: var(--space-m);
-    	height: var(--space-m);
-    	width: var(--space-xxl);
-    	color: transparent; /* hide default rated text */
-  }
-  
-  .product-list-4__star-rating .star-rating:before {
-    	color: var(--color-line-default);
   }

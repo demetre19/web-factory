@@ -51,28 +51,26 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-archive-2">
   <div class="sec-inner">
-    <div class="blog-archive-2-container">
+    <div>
       <div class="blog-archive-2-head">
         <div class="blog-archive-2-head__intro">
           {head && <h1 class="text-fluid-4">{head}</h1>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-          <div></div>
         </div>
       </div>
-      <div class="blog-archive-2-body">
-        <div class="blog-archive-2-wrapper">
-          <div class="blog-archive-2-card grid-auto gap-fluid-l">
-            {image && image.src && <figure class="blog-archive-2-card__thumb ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
-            <div class="blog-archive-2-card__box">
-              <div></div>
-            </div>
+      {image && image.src &&       <div class="blog-archive-2-body">
+        {image && image.src &&         <div>
+          {image && image.src &&           <div class="blog-archive-2-card grid-auto gap-fluid-l">
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
+          }
         </div>
-        <div></div>
+        }
       </div>
+      }
     </div>
   </div>
   {list.length > 0 && <dl class="mt-stack list-plain flow-list">{list.map((it) => <div class="flow-row">{it.icon && <IconChip name={it.icon} />}<dt class="text-fluid-0" set:html={inline(it.term || it.title || it.label || '')} />{it.text && <dd class="text-fluid-0" set:html={inline(it.text)} />}</div>)}</dl>}

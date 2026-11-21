@@ -19,7 +19,6 @@ interface Props {
   copy?: any;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -45,28 +44,25 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-pricing-19">
   <div class="sec-inner">
-    <div class="bm-pricing-19__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div>
-        <div class="bm-pricing-19-card">
+        <div>
           <div class="bm-pricing-19-card__pricing">
             {list.length > 0 && <div class="bm-list">
               <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="bm-list-item card">
-                    <div class="bm-list-item__icon-wrapper">
-                      {it.icon && <IconChip name={it.icon} />}
-                    </div>
-                    <p class="bm-list-item__text text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
                 ))}</div>
             </div>}
-            <div class="bm-pricing-19-card__price-box-wrapper">
+            <div>
               <div class="bm-pricing-19-card__price-box">
                 {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
               </div>

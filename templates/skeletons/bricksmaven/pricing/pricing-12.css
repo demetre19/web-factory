@@ -1,123 +1,50 @@
-  .bm-pricing-12__container {
-    row-gap: var(--space-s);
-  }
-
-  .intro {
-    text-align: center;
+  .wf-pricing-12 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .intro--split {
+  .wf-pricing-12 .intro--split {
     display: grid;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .intro__left-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .intro__right-column {
-    row-gap: var(--flow-spacing);
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .bm-pricing-12-price-options {
-    display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-pricing-12-card {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    row-gap: var(--flow-spacing);
+  .wf-pricing-12 .bm-pricing-12-price-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-pricing-12-card__intro {
+  .wf-pricing-12 .bm-pricing-12-card__intro {
     flex-direction: column;
     display: flex;
-    justify-content: space-between;
-    row-gap: calc(var(--flow-spacing) / 1.4);
   }
 
-  .bm-pricing-12-card__top {
+  .wf-pricing-12 .bm-pricing-12-card__top {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 
-  .bm-pricing-12-card__label-wrapper {
+  .wf-pricing-12 .bm-pricing-12-card__label-wrapper {
     display: flex;
   }
 
-  .bm-pricing-12-card__price-wrapper {
+  .wf-pricing-12 .bm-pricing-12-card__price-wrapper {
     display: flex;
     flex-direction: row;
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: baseline;
   }
 
-  .bm-pricing-12-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-list {
+  .wf-pricing-12 .bm-list {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .bm-list-item {
+  .wf-pricing-12 .bm-list-item {
     flex-direction: row;
     display: flex;
-    align-items: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-list-item__icon-wrapper {
-
-  }
-
-  .bm-cta-combo {
+  .wf-pricing-12 .bm-cta-combo {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  @media (min-width:991px) {
-  
-  .bm-pricing-12-price-options:hover .bm-pricing-12-card:not(:hover) {
-  	opacity: 0.1;
-    filter: blur(.1rem); 
-  }
-    
-  }
-
-  .bm-pricing-12-card {
-  	transition: .2s linear;
-  }
-  
-  .bm-pricing-12-card:hover {
-  	box-shadow: var(--shadow-card);
-    background-color: var(--bg-subtle);
-    cursor: pointer;
-  }
-
-  .bm-list-item {
-  	--circle-size: var(--fs-1);
   }

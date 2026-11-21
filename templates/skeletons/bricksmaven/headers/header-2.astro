@@ -44,13 +44,12 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+<div class="wf-header-2">
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
     <div class="header-2__container row between">
-      <div class="header-2__brand">
+      <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div class="Header-2__right-column row between">

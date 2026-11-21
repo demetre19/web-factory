@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-feature-70">
   <div class="sec-inner">
     <div class="bm-feature-70__container">
       <div class="intro intro--left">
@@ -56,14 +56,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="bm-feature-70-grid">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="bm-feature-70-card card">
-              <div class="bm-feature-70-card__counter"></div>
-              <div class="bm-feature-70-card__dot-wrapper">
-                <div class="bm-feature-70-card__dot-cover">
-                  <div class="bm-feature-70-card__dot"></div>
-                </div>
-              </div>
-              <div class="bm-feature-70-card__content">
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+              <div>
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

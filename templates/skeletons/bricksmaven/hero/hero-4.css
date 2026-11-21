@@ -1,32 +1,9 @@
-  .hero-4 {
-    overflow: hidden;
-    padding: 0 0 0 0;
-  }
-
-  .hero-4__container {
+  .wf-hero-4 .hero-4__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .hero-4__content {
+  .wf-hero-4 .hero-4__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    row-gap: var(--space-m);
-    align-items: flex-start;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-4__media {
-    width: 100%;
-  }
-
-  .hero-4__image {
-    width: 50vw;
-    object-fit: cover;
-    margin: 0 0 0 calc(-50vw + 100%) !important;
   }

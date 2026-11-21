@@ -1,48 +1,27 @@
-  .hero-1 {
-    padding: 0 0 0 0;
-    overflow: hidden;
+  .wf-hero-1 .hero-1 {
     display: flex;
-    justify-content: flex-end;
   }
 
-  .hero-1-container {
+  .wf-hero-1 .hero-1-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
   }
 
-  .hero-1__content {
+  .wf-hero-1 .hero-1__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-m);
   }
 
-  .hero-1__cta {
+  .wf-hero-1 .hero-1__cta {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
   }
 
-  .hero-1__content-trust {
+  .wf-hero-1 .hero-1__content-trust {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    margin: var(--space-l) 0 0 0;
   }
 
-  .hero-1-logo-ul {
+  .wf-hero-1 .hero-1-logo-ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    column-gap: var(--space-m);
-  }
-
-  .hero-1-logo-li__brand {
-    object-fit: contain;
-  }
-
-  .hero-1-wrapper__img {
-    object-fit: cover;
-    width: 100%;
   }

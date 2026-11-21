@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-59">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-59__container">
+    <div>
       <div class="intro intro--left">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -65,8 +65,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 &&         <div>
           {list.length > 0 &&           <div>
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-                <div class="bm-testimonial-59-card card">
-                  <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <div class="card">
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <div class="bm-testimonial-59-card__client">
                     <div>
                       <p class="text-fluid-0">{it.text}</p>
@@ -79,12 +79,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           }
         </div>
         }
-        {links.length > 0 && <div class="bm-testimonial-59-stats">{(links || []).map((it) => (
-              <div class="bm-testimonial-59-stats-card card">
+        {links.length > 0 && <div class="bm-testimonial-59-stats">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
     </div>
   </div>

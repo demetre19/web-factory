@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-contact-32">
   <div class="sec-inner">
     <div class="bm-contact-32__container">
-      <div class="bm-contact-32__content">
-        <div class="bm-contact-32__top">
+      <div>
+        <div>
           {head && <h1 class="text-fluid-4">{head}</h1>}
         </div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,11 +64,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <div>
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <div class="bm-accordion-clean-card__icon-wrapper">
-                    {it.icon && <IconChip name={it.icon} />}
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 </div>
                 <div>
                   <p class="text-fluid-0">{it.text}</p>
@@ -79,7 +75,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
       </div>
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-contact-32__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>

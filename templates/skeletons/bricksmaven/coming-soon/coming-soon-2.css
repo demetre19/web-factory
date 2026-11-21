@@ -1,74 +1,32 @@
-  .bm-coming-soon-2 {
-    padding: 0 0 0 0;
-    overflow: hidden;
-  }
-
-  .coming-soon-2__container {
+  .wf-coming-soon-2 .coming-soon-2__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-coming-soon-2__content {
+  .wf-coming-soon-2 .bm-coming-soon-2__content {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    align-items: flex-start;
-    text-align: left;
-    row-gap: var(--flow-spacing);
-    justify-content: space-between;
   }
 
-  .coming-soon-2__logo {
-    object-fit: contain;
-  }
-
-  .bm-coming-soon-2__intro {
-    max-width: var(--measure);
+  .wf-coming-soon-2 .bm-coming-soon-2__intro {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    row-gap: var(--flow-spacing);
   }
 
-  .bm-form {
+  .wf-coming-soon-2 .bm-form {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    width: 100%;
   }
 
-  .bm-form-widget {
+  .wf-coming-soon-2 .bm-form-widget {
     display: flex;
-    gap: var(--space-xs);
     flex-direction: row;
-    align-items: center;
   }
 
-  .bm-social-share {
+  .wf-coming-soon-2 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
-  }
-
-  .bm-coming-soon-2__image {
-    object-fit: cover;
-    width: 50vw;
-  }
-
-  .bm-form-widget {
-  flex-wrap: nowrap;
-  }
-  
-  .bm-form-widget input:focus {
-  	outline-offset: 0;
-  } 
-  
-  .bm-form-widget button[type=submit].bricks-button {
-      height: 100% !important;
-  }
-  
-  .bm-form-widget .submit-button-wrapper {
-      height: 100% !important;
   }

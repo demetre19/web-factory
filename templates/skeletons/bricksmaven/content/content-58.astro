@@ -51,20 +51,20 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-content-58">
   <div class="sec-inner">
-    <div class="bm-content-58__container">
-      <div class="bm-content-58__top">
+    <div>
+      <div>
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-content-58__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
       <div class="bm-content-58__content-wrapper">
-        <div class="bm-content-58__column">
-          {list.length > 0 &&           <div class="bm-content-58__contact">
-            {list.length > 0 && <div class="bm-content-58-list">
+        <div>
+          {list.length > 0 &&           <div>
+            {list.length > 0 && <div>
               <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                   <div class="card">
                     <p class="text-fluid-0">{it.text}</p>
@@ -75,16 +75,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
             </div>}
           </div>
           }
-          <div class="bm-content-58__social">
+          <div>
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
             {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-            {links.length > 0 && <div class="bm-social-share bm-social-share--left">
-              <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                  <div class="card">
-                    {it.icon && <IconChip name={it.icon} />}
-                  </div>
-                ))}</div>
-            </div>}
           </div>
         </div>
       </div>

@@ -51,13 +51,13 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-45">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
     <div class="bm-testimonial-45__container">
-      <div class="bm-testimonial-45__content">
-        <div class="bm-testimonial-45__top">
+      <div>
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
@@ -66,8 +66,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {links.length > 0 &&       <div>
         {links.length > 0 &&         <div>
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-              <div class="bm-testimonial-45-card card">
-                <div class="bm-testimonial-45-card__content">
+              <div class="card">
+                <div>
                   <p class="text-fluid-0">{it.text}</p>
                   <div>
                     <p class="text-fluid-0">{it.text}</p>

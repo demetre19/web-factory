@@ -45,9 +45,9 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-footer-22">
   <div class="sec-inner">
-    <div class="bm-footer-22__top-container row between">
+    <div class="row between">
       <div class="bm-footer-22__top row between">
         {head && <h2 class="text-fluid-2">{head}</h2>}
       </div>
@@ -64,9 +64,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       }
     </div>
     <div class="bm-footer-22__mid-container row between">
-      <div>
-        <svg></svg>
-      </div>
       <div>
         {links.length >= 0 &&         <div class="footer-nav-wrapper footer-nav-wrapper-21 row between">
           {links.length > 0 && <div class="row gap-fluid-m">{(links || []).map((it) => (
@@ -87,7 +84,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         }
       </div>
       <div>
-        <div class="bm-footer-22__newsletter row between">
+        <div class="row between">
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
           <form novalidate>
@@ -95,7 +92,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         </div>
       </div>
     </div>
-    <div class="bm-footer-22__footer-container">
+    <div>
       <div class="bm-footer-22__start row between">
         <div class="footer-nav-legal">
           {links.length > 0 && <div class="footer-legal-nav row between">

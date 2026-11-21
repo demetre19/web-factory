@@ -45,27 +45,24 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+<div class="wf-footer-3">
   <div class="sec-inner">
     <div class="footer-3-container row between">
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="footer-menu-inline row between">
-          <div class="row gap-fluid-m">{(list || []).map((it) => (
+        {list.length > 0 &&         <div class="footer-menu-inline row between">
+          {list.length > 0 && <div class="row gap-fluid-m">{(list || []).map((it) => (
               <div>
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
-            ))}</div>
-        </div>}
+            ))}</div>}
+        </div>
+        }
       </div>
       }
-      <div>
-        <div class="footer-social"></div>
-      </div>
     </div>
     <div class="footer-3-bottom row between">
       <div>

@@ -1,32 +1,19 @@
-  .bm-order-receipts__container {
+  .wf-order-receipts .bm-order-receipts__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .intro {
-    text-align: center;
+  .wf-order-receipts .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
   }
 
-  .intro--left {
+  .wf-order-receipts .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .bm-order-receipts__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-order-receipts__lists {
+  .wf-order-receipts .bm-order-receipts__lists {
     display: flex;
     flex-direction: column;
-    row-gap: calc(var(--flow-spacing) / 4);
   }

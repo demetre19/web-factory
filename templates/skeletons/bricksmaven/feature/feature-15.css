@@ -1,24 +1,19 @@
-  .feature-15-container {
+  .wf-feature-15 .feature-15-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-l);
   }
 
-  .feature-15-content {
+  .wf-feature-15 .feature-15-content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .feature-15__intro {
+  .wf-feature-15 .feature-15__intro {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-xs);
   }
 
-  .feature-15-card {
+  .wf-feature-15 .feature-15-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
   }

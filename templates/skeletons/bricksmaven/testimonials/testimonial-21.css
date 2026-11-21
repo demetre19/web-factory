@@ -1,83 +1,28 @@
-  .testimonial-21-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-  }
-
-  .testimonial-21-content {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-m);
-  }
-
-  .testimonial-21-content__item {
-    row-gap: var(--space-m);
-    align-items: flex-start;
-  }
-
-  .testimonial-21-content__profile {
-    display: flex;
-    column-gap: var(--space-m);
-    align-items: center;
-    align-self: flex-start;
-  }
-
-  .testimonial-21-content__meta {
-    display: flex;
-    flex-direction: column;
-    row-gap: calc(0.5rem + 0vw);
-  }
-
-  .testimonial-21-content__name {
-    margin: 0 0 0 0;
-  }
-
-  .testimonial-21-content__photo {
-    object-fit: cover;
-    width: var(--space-xxl);
-    overflow: hidden;
-  }
-
-  .testimonial-21-post {
+  .wf-testimonial-21 .testimonial-21-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .testimonial-21-post__card {
+  .wf-testimonial-21 .testimonial-21-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-    row-gap: calc(0.5rem + 0vw);
-    overflow: hidden;
   }
 
-  .testimonial-21-post__cta {
-    padding: 0 0 0 0;
-    margin: 0 0 calc(var(--space-xxl) * -1) 0;
+  .wf-testimonial-21 .testimonial-21-content__profile {
+    display: flex;
   }
 
-  .testimonial-21-post__thumb {
-    object-fit: cover;
-    width: 100%;
+  .wf-testimonial-21 .testimonial-21-content__meta {
+    display: flex;
+    flex-direction: column;
   }
 
-  .testimonial-21-post__card::before {
-  	content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 39.76%, rgba(0, 0, 0, 0.7) 84.42%);
-  }
-  .testimonial-21-post__card:hover .testimonial-21-post__cta {
-  	margin-bottom: 0;
+  .wf-testimonial-21 .testimonial-21-post {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .testimonial-21-post__cta {
-  	text-decoration-color: var(--action-primary) !important;
-    text-decoration-thickness: calc(0.2rem + 0vw) !important;
+  .wf-testimonial-21 .testimonial-21-post__card {
+    display: flex;
+    flex-direction: column;
   }

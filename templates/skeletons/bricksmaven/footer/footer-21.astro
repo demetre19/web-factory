@@ -45,11 +45,11 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-footer-21">
   <div class="sec-inner">
     <div class="bm-footer-21__cta-container row between">
-      {head && <h2 class="bm-footer-21__heading text-fluid-2">{head}</h2>}
-      {sub && <p class="bm-footer-21__subheading text-fluid-0" set:html={inline(sub)} />}
+      {head && <h2 class="text-fluid-2">{head}</h2>}
+      {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
       {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
     </div>
@@ -80,12 +80,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
-                {it.icon && <IconChip name={it.icon} />}
               </div>
             ))}</div>}
         {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
       </div>
-      <div class="bm-footer-21__newsletter row between">
+      <div class="row between">
         <form novalidate>
         </form>
       </div>
@@ -104,14 +103,6 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
         </div>
       </div>
-      {links.length > 0 && <div class="bm-social-share bm-social-share--left row between">
-        <div class="row gap-fluid-m">{(links || []).map((it) => (
-            <div>
-              {it.icon && <IconChip name={it.icon} />}
-            </div>
-          ))}</div>
-      </div>}
-      {links.length === 0 && <p class="footer-legal-nav text-fluid-0">Copyright {new Date().getFullYear()} {brand}</p>}
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}

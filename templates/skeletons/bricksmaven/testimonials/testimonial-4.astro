@@ -51,7 +51,7 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-4">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -66,9 +66,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               <div>
                 <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                 <p class="text-fluid-0">{it.text}</p>
-              </div>
-              <div>
-                <div></div>
               </div>
             </div>
           </div>

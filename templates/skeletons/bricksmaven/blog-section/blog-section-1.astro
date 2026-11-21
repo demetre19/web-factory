@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-blog-section-1">
   <div class="sec-inner">
     <div class="blog-section-1-container">
       <div class="blog-section-1-head">
@@ -57,14 +57,15 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         <form novalidate>
         </form>
       </div>
-      {list.length > 0 &&       <div class="blog-section-1-body">
-        {list.length > 0 && <div class="blog-section-1-wrapper">{(list || []).map((it) => (
+      {list.length > 0 &&       <div>
+        {list.length > 0 && <div class="blog-section-1-wrapper">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="blog-section-1-card card">
                 <p class="text-fluid-0">{it.text}</p>
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                <div></div>
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
       }
     </div>

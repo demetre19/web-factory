@@ -51,42 +51,41 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-event-section-10">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-event-section-10__container">
+    <div>
       <div class="bm-event-section-10__intro">
-        <div class="bm-event-section-10__column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <div class="bm-event-section-10__cta">
+        <div>
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>
       {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div class="bm-event-section-10-slider">
+        {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-event-section-10-card card">
+              <div class="card">
                 <div>
-                  <div class="bm-event-section-10-card__head">
+                  <div>
                     <div class="bm-event-section-10-card__meta">
-                      <div class="bm-event-section-10-card__term-wrapper">
+                      <div>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
-                      <div class="bm-event-meta-info bm-event-meta-info--alt">
+                      <div class="bm-event-meta-info">
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
-                      <div class="bm-event-meta-info bm-event-meta-info--alt">
-                        {it.icon && <IconChip name={it.icon} />}
+                      <div class="bm-event-meta-info">
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   </div>
-                  <div class="bm-event-section-10-card__footer">
+                  <div>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>

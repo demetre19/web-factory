@@ -1,32 +1,19 @@
-  .feature-19-container {
+  .wf-feature-19 .feature-19-container {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .intro {
-    text-align: center;
+  .wf-feature-19 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .feature-19-content {
+  .wf-feature-19 .feature-19-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .feature-19-card {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
+  .wf-feature-19 .feature-19-card {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-  }
-
-  .feature-19-card:nth-child(2) {
-  	box-shadow: var(--shadow-card) ;
-    position:relative;
-    z-index: 1;
   }

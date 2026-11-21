@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-item">
   <div class="sec-inner">
     <div class="pricing-10-container">
       <div class="intro">
@@ -61,8 +61,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             <div class="pricing-10-card card">
               <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
-              <p class="pricing-10-card__desc text-fluid-0">{it.text}</p>
-              <p class="pricing-10-card__small-letters text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
+              <p class="text-fluid-0">{it.text}</p>
             </div>
           ))}</div>}
       </div>

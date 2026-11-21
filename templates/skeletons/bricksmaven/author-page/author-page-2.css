@@ -1,86 +1,24 @@
-  .bm-author-page-2__container {
-    width: 100%;
-    row-gap: var(--space-s);
-  }
-
-  .bm-author-card-2__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-author-card-2__bottom {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
+  .wf-author-page-2 .bm-author-card-2__bottom {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .bm-author-card-2__thumb {
+  .wf-author-page-2 .bm-author-card-2__thumb {
     display: flex;
-    justify-content: center;
-    margin: calc(var(--section-space-xxl) * -1) 0 0 0;
   }
 
-  .bm-author-card-2__thumb-image {
-    width: var(--space-xxl);
-    object-fit: cover;
-    margin: calc(var(--space-xxl) * -1) 0 0 0;
-  }
-
-  .bm-author-card-2__content {
-    row-gap: calc(var(--flow-spacing) / 2);
-  }
-
-  .bm-social-share {
+  .wf-author-page-2 .bm-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
-    column-gap: var(--flow-spacing);
   }
 
-  .bm-social-share--left {
-    justify-content: flex-start;
-  }
-
-  .bm-author-page-2__post-container {
-    row-gap: var(--space-s);
-  }
-
-  .bm-author-page-2-post-list {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-blog-archive-6-card {
+  .wf-author-page-2 .bm-blog-archive-6-card {
     grid-template-columns: calc(100% * 2 / 1);
     display: grid;
-    gap: var(--space-m);
   }
 
-  .bm-blog-archive-6-card__media {
-    width: 100%;
-  }
-
-  .bm-blog-archive-6-card__thumb {
-    width: 100%;
-    object-fit: cover;
-  }
-
-  .bm-blog-archive-6-card__meta {
+  .wf-author-page-2 .bm-blog-archive-6-card__meta {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: flex-start;
-  }
-
-  .bm-blog-archive-6-card__term {
-    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
-  }
-
-  .bm-blog-archive-6-card__read {
-    padding: 0 0 0 0;
-  }
-
-  .bm-blog-archive-6-card__term a {
-  	color: var(--fs-0);
   }

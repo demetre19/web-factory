@@ -1,90 +1,26 @@
-  .bm-contact-34__container {
+  .wf-contact-34 .bm-contact-34__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-contact-34__content {
-    row-gap: calc(var(--space-s) * 2);
-  }
-
-  .bm-contact-34__contact-data {
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
-    width: 100%;
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-widget {
-    row-gap: var(--flow-spacing);
-  }
-
-  .bm-contact-34__widget-negative {
-    margin: calc(-1 * var(--space-xl)) 0 0 0;
-  }
-
-  .bm-contact-widget__avatar-wrapper {
-    width: auto;
-  }
-
-  .bm-contact-widget__image {
-    object-fit: cover;
-    width: 64;
-  }
-
-  .bm-contact-widget__footer {
-    row-gap: calc(var(--flow-spacing) / 4);
-  }
-
-  .bm-contact-widget__notification {
-    padding: calc(var(--space-xs) / 2) var(--space-xs) calc(var(--space-xs) / 2) var(--space-xs);
-    column-gap: calc(var(--flow-spacing) / 2);
-    align-items: center;
+  .wf-contact-34 .bm-contact-widget__notification {
     display: flex;
   }
 
-  .bm-contact-widget__dot {
-    width: calc(0.5rem + 0vw);
-  }
-
-  .bm-contact-25-side-list-ul {
+  .wf-contact-34 .bm-contact-25-side-list-ul {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    row-gap: var(--flow-spacing);
-    width: 100%;
-    padding: 0 0 0 0;
   }
 
-  .bm-contact-25-side-list-item {
+  .wf-contact-34 .bm-contact-25-side-list-item {
     display: flex;
-    align-items: flex-start;
-    column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .bm-contact-25-side-list-item--alt {
-    align-items: center;
-  }
-
-  .bm-contact-25-side-list-item__detail {
+  .wf-contact-34 .bm-contact-25-side-list-item__detail {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .bm-contact-25-side-list-item__cta {
-    padding: 0 0 0 0;
-    text-align: left;
-  }
-
-  .bm-contact-25-side-list-item__icon {
-    padding: calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw) calc(0.5rem + 0vw);
-    width: var(--space-xxl);
+  .wf-contact-34 .bm-contact-25-side-list-item__icon {
     display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .bm-contact-34__image {
-    object-fit: cover;
-    width: 100%;
   }

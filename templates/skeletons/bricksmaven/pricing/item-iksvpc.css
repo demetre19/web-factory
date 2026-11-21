@@ -1,61 +1,23 @@
-  .pricing-10-container {
+  .wf-item-iksvpc .pricing-10-container {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-l);
   }
 
-  .intro {
-    text-align: center;
+  .wf-item-iksvpc .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--space-s);
-    align-self: center;
   }
 
-  .cta-combo {
+  .wf-item-iksvpc .cta-combo {
     display: flex;
-    align-items: center;
-    column-gap: var(--space-xs);
   }
 
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .pricing-10-content {
+  .wf-item-iksvpc .pricing-10-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
-    gap: var(--space-m);
-    width: 100%;
   }
 
-  .pricing-10-card {
+  .wf-item-iksvpc .pricing-10-card {
     display: flex;
-    row-gap: var(--space-xs);
-    align-items: center;
-    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-m);
     flex-direction: column;
-  }
-
-  .pricing-10-card__desc {
-    text-align: center;
-  }
-
-  .pricing-10-box__cta {
-    width: 100% !important;
-    margin: auto 0 0 0;
-  }
-
-  .pricing-10-card__small-letters {
-    text-align: center;
-  }
-
-  .pricing-10-card {
-    box-shadow: var(--shadow-card);
-  }
-
-  .pricing-10-card__price span {
-  	font-size: var(--fs-1);
   }

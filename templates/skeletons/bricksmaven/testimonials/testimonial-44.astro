@@ -51,16 +51,16 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-testimonial-44">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-testimonial-44__container">
+    <div>
       <div class="intro intro--split">
-        <div class="intro__left-column">
+        <div>
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
-        <div class="intro__right-column">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
@@ -68,16 +68,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {list.length > 0 &&       <div class="bm-testimonial-44-grid">
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
             <div class="card">
-              <div class="bm-testimonial-44-video-card">
-                <figure class="bm-testimonial-44-video-card__video"></figure>
+              <div>
                 <div class="bm-testimonial-44-video-card__user-data">
-                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
-                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                        <div class="card">
-                          {it2.icon && <IconChip name={it2.icon} />}
-                        </div>
-                      ))}</div>
-                  </div>}
                   <div class="testimonial-list-card__profile">
                     <div class="testimonial-list-card__meta">
                       <custom class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</custom>
@@ -86,7 +78,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
-              <div class="bm-testimonial-44-review-card">
+              <div>
                 <div>
                   <div class="testimonial-list-card__profile">
                     <div class="testimonial-list-card__meta">
@@ -94,13 +86,6 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                       <p class="text-fluid-0">{it.text}</p>
                     </div>
                   </div>
-                  {(it.items || []).length > 0 && <div class="bm-testimonial-38-star-list">
-                    <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                        <div class="card">
-                          {it2.icon && <IconChip name={it2.icon} />}
-                        </div>
-                      ))}</div>
-                  </div>}
                 </div>
                 <p class="text-fluid-0">{it.text}</p>
               </div>

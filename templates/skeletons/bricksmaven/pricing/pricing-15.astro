@@ -45,23 +45,20 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-pricing-15">
   <div class="sec-inner">
-    <div class="bm-pricing-15__container">
+    <div>
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div class="bm-pricing-15__wrapper">
-        {list.length > 0 && <div class="bm-pricing-15-feature-list">
+        {list.length > 0 && <div>
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="bm-pricing-15-feature-card card">
-                <div class="bm-pricing-15-feature-card__icon-wrapper">
-                  {it.icon && <IconChip name={it.icon} />}
-                </div>
-                <div class="bm-pricing-15-feature-card__content">
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                <div>
+                  <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
@@ -72,25 +69,19 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             {links.length > 0 && <div class="bm-list">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="bm-list-item card">
-                    <div class="bm-list-item__icon-wrapper">
-                      {it.icon && <IconChip name={it.icon} />}
-                    </div>
-                    <p class="bm-list-item__text text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
                 ))}</div>
             </div>}
             {links.length > 0 && <div class="bm-list">
               <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
                   <div class="bm-list-item card">
-                    <div class="bm-list-item__icon-wrapper">
-                      {it.icon && <IconChip name={it.icon} />}
-                    </div>
-                    <p class="bm-list-item__text text-fluid-0">{it.text}</p>
+                    <p class="text-fluid-0">{it.text}</p>
                   </div>
                 ))}</div>
             </div>}
           </div>
-          <div class="bm-pricing-14-card__footer-cta">
+          <div>
             {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
           </div>
         </div>

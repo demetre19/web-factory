@@ -1,169 +1,49 @@
-  .blog-single-5 {
-    padding: var(--space-l) var(--space-l) var(--space-l) var(--space-l);
-  }
-
-  .blog-single-5-container {
-    row-gap: var(--flow-spacing);
-  }
-
-  .blog-single-5__head {
+  .wf-blog-single-5 .blog-single-5__head {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    text-align: center;
-    width: 100%;
   }
 
-  .blog-single-5__meta {
+  .wf-blog-single-5 .blog-single-5__meta {
     display: flex;
     flex-direction: row;
-    row-gap: var(--flow-spacing);
-    align-items: center;
-    column-gap: var(--flow-spacing);
-    justify-content: center;
   }
 
-  .blog-single-5__author {
+  .wf-blog-single-5 .blog-single-5__author {
     display: flex;
     flex-direction: row;
-    column-gap: var(--flow-spacing);
-    justify-content: center;
-    align-items: center;
   }
 
-  .blog-single-5__photo {
-    width: var(--space-xxl);
-    object-fit: cover;
-    overflow: hidden;
-  }
-
-  .blog-single-5__author-data {
+  .wf-blog-single-5 .blog-single-5__author-data {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  .blog-single-5__term {
-    padding: calc(0.4rem + 0vw) var(--space-xs) calc(0.4rem + 0vw) var(--space-xs);
-  }
-
-  .blog-single-5__featured-image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .blog-single-5__body {
+  .wf-blog-single-5 .blog-single-5__body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min), 100%), 1fr));
-    gap: var(--space-m);
   }
 
-  .blog-single-2__body-sidebar {
-    display: flex;
-    row-gap: var(--flow-spacing);
-    flex-direction: column;
-  }
-
-  .blog-single-2-search {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-blog-single-5 .blog-single-2__body-sidebar {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-single-2-aside__title {
-    padding: 0 0 var(--space-s) 0;
-  }
-
-  .blog-single-2-newsletter {
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
+  .wf-blog-single-5 .blog-single-2-search {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
   }
 
-  .blog-single-2-social {
+  .wf-blog-single-5 .blog-single-2-newsletter {
     display: flex;
     flex-direction: column;
-    row-gap: var(--flow-spacing);
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
   }
 
-  .blog-single-5-footer {
+  .wf-blog-single-5 .blog-single-2-social {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    row-gap: var(--flow-spacing);
-    column-gap: var(--flow-spacing);
-    padding: var(--space-m) 0 0 0;
   }
 
-  .blog-single-5__head::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70vh;
-      background-color: var(--action-primary);
-      content: "";
-      z-index: -1;
-  }
-
-  .blog-single-5__term a {
-  	color: var(--fs-0);
-  }
-
-  .blog-single-5__featured-image {
-  	aspect-ratio: 6/4;
-  }
-
-  .blog-single-5__body-content h1,
-  .blog-single-5__body-content h2,
-  .blog-single-5__body-content h3,
-  .blog-single-5__body-content h4,
-  .blog-single-5__body-content h5,
-  .blog-single-5__body-content h6,
-  .blog-single-5__body-content p {
-  	max-width: 100%; 
-  }
-
-  .blog-single-2-newsletter__form {
-  	gap: var(--space-s);
-    flex-wrap: nowrap;
-  }
-  .blog-single-2-newsletter__form [type="email"],
-  .blog-single-2-newsletter__form [type="submit"] {
-  	height: 100%;
-  }
-
-  .blog-single-5-footer__adjacent-post a {
-  	max-width: var(--space-xxl);
-  }
-  .blog-single-5-footer__adjacent-post a.prev-post .content {
-  	align-items: flex-start;
-  }
-  .blog-single-5-footer__adjacent-post a.next-post .content {
-  	align-items: flex-end;
-  }
-  .blog-single-5-footer__adjacent-post a .swiper-button {
-  	height: 100%;
-    align-items: flex-end;
-  }
-  .blog-single-5-footer__adjacent-post a .content {
-  	display: flex;
+  .wf-blog-single-5 .blog-single-5-footer {
+    display: flex;
     flex-direction: column;
-    gap: var(--space-s);
-    overflow: visible;
-    justify-content: flex-end;
-    height: 100%;
-  }
-  .blog-single-5-footer__adjacent-post a .label {
-  	order: 1;
-    text-transform: capitalize;
-    font-weight: 400;
-    font-size: var(--fs-0);
-  }
-  .blog-single-5-footer__adjacent-post a .title {
-  	white-space: normal;
   }

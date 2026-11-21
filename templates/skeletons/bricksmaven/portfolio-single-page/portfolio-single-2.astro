@@ -51,13 +51,13 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-portfolio-single-2">
   <div class="sec-inner">
-    <div class="bm-portfolio-single-2__container">
-      <div class="bm-portfolio-single-2__intro">
+    <div>
+      <div>
         {head && <h1 class="text-fluid-4">{head}</h1>}
-        <div class="bm-portfolio-single-2__intro-footer">
-          {list.length > 0 &&           <div class="bm-portfolio-single-meta-data-1 bm-portfolio-single-meta-data-1--inline">
+        {list.length > 0 &&         <div class="bm-portfolio-single-2__intro-footer">
+          {list.length > 0 &&           <div class="bm-portfolio-single-meta-data-1--inline">
             {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="card">
                   <p class="text-fluid-0">{it.text}</p>
@@ -66,58 +66,60 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               ))}</div>}
           </div>
           }
-          <div class="bm-live-website-btn">
-            <div class="bm-live-website-btn__dot"></div>
-          </div>
         </div>
+        }
       </div>
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-1col-media__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      <div class="bm-portfolio-single-2__overview">
+      <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
       <div class="bm-2col-media">
         {image && image.src &&         <div>
-          {image && image.src && <figure class="bm-2col-media-item__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
         {image && image.src &&         <div>
-          {image && image.src && <figure class="bm-2col-media-item__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
       </div>
-      {links.length > 0 &&       <div class="bm-portfolio-single__case-section-1">
-        {links.length > 0 && <div class="bm-portfolio-single-solution-list">{(links || []).map((it) => (
-              <div class="bm-portfolio-single-solution-item card">
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+      {links.length > 0 &&       <div>
+        {links.length > 0 && <div class="bm-portfolio-single-solution-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
       }
       {image && image.src &&       <div>
-        {image && image.src && <figure class="bm-1col-media__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      {links.length > 0 &&       <div class="bm-portfolio-single__case-section-2">
-        {links.length > 0 && <div class="bm-portfolio-single-result-list">{(links || []).map((it) => (
-              <div class="bm-portfolio-single-result-item card">
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+      {links.length > 0 &&       <div>
+        {links.length > 0 && <div class="bm-portfolio-single-result-list">
+          <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+              <div class="card">
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
       }
     </div>
-    {image && image.src &&     <div class="bm-portfolio-single-2__cta-container">
+    {image && image.src &&     <div>
       {image && image.src &&       <div class="bm-contact-widget-3">
         {image && image.src &&         <div class="bm-contact-widget-3__manager-data">
-          {image && image.src &&           <div class="bm-contact-widget-3__media">
-            {image && image.src && <figure class="bm-contact-widget-3__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+          {image && image.src &&           <div>
+            {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
@@ -126,15 +128,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
     </div>
     }
-    {links.length > 0 &&     <div class="bm-portfolio-single-1__footer-container">
-      {links.length > 0 && <div class="bm-portfolio-related-list">{(links || []).map((it) => (
-            <div class="bm-portfolio-related-card card">
+    {links.length > 0 &&     <div>
+      {links.length > 0 && <div class="bm-portfolio-related-list">
+        <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            <div class="card">
               <div class="bm-portfolio-related-card__content">
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
-          ))}</div>}
+          ))}</div>
+      </div>}
     </div>
     }
   </div>

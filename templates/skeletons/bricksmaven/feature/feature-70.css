@@ -1,110 +1,24 @@
-  .bm-feature-70__container {
+  .wf-feature-70 .bm-feature-70__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .intro {
-    text-align: center;
+  .wf-feature-70 .intro {
     flex-direction: column;
     display: flex;
-    align-items: center;
-    row-gap: var(--flow-spacing);
-    align-self: center;
-    width: 100%;
   }
 
-  .intro--left {
+  .wf-feature-70 .intro--left {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    align-self: flex-start;
   }
 
-  .bm-feature-70-grid {
+  .wf-feature-70 .bm-feature-70-grid {
     flex-wrap: nowrap;
   }
 
-  .bm-feature-70-card {
+  .wf-feature-70 .bm-feature-70-card {
     display: flex;
     flex-direction: row;
-    column-gap: var(--flow-spacing);
     flex-wrap: nowrap;
-  }
-
-  .bm-feature-70-card__counter {
-    align-items: center;
-  }
-
-  .bm-feature-70-card__dot-wrapper {
-    align-items: center;
-    width: var(--space-xxl);
-  }
-
-  .bm-feature-70-card__dot-cover {
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-s) var(--space-s) var(--space-s) var(--space-s);
-  }
-
-  .bm-feature-70-card__dot {
-    width: var(--space-m);
-  }
-
-  .bm-feature-70-card__content {
-    row-gap: var(--flow-spacing);
-  }
-
-  @media (min-width:991px) {
-  
-  .bm-feature-70-grid {
-    counter-reset: counter;
-  }
-  
-  .bm-feature-70-grid .bm-feature-70-card__counter {
-    counter-increment: counter ;
-  }
-  
-  .bm-feature-70-grid .bm-feature-70-card__counter::before {
-    content: "0" counter(counter);
-  }
-    
-  }
-  
-  @media (max-width:991px) {
-  
-  .bm-feature-70-grid {
-    counter-reset: counter;
-  }
-  
-  .bm-feature-70-grid .bm-feature-70-card__content {
-    counter-increment: counter ;
-  }
-  
-  .bm-feature-70-grid .bm-feature-70-card__content::before {
-    content: "0" counter(counter);
-    font-size: var(--fs-4);
-    color: var(--fs-0);
-  }
-    
-  }
-
-  .bm-feature-70-card .bm-feature-70-card__dot-wrapper::before {
-    content: '';
-    block-size: 100%;
-    inline-size: calc(0.0625rem + 0vw);
-    position: absolute;
-    background-color: var(--fs-0);
-    z-index:-1;
-  }
-    
-  
-  @media (max-width:991px) {
-  
-    .bm-feature-70-card .bm-feature-70-card__counter {
-    display:none;
-  }
-    
-    
   }

@@ -51,18 +51,18 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-call-to-action-21">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div>
       <div class="bm-cta-21-card">
-        <div class="bm-cta-21-card__left">
+        <div>
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
         </div>
-        <div class="bm-cta-21-card__right">
+        <div>
           {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
       </div>

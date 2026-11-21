@@ -45,7 +45,7 @@ const phone = cp.phone || '';
 const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
-<div>
+<div class="wf-how-it-works-26">
   <div class="sec-inner">
     <div>
       <div class="intro intro--left">
@@ -54,16 +54,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
       </div>
     </div>
-    {list.length > 0 &&     <div class="bm-how-it-works-26__full-container">
+    {list.length > 0 &&     <div>
       {list.length > 0 && <div class="bm-how-it-works-26-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-            <div class="bm-how-it-works-26-card card">
+            <div class="card">
               <div class="bm-how-it-works-26-card__intro">
                 <p class="bm-how-it-works-26-card__step text-fluid-0">{it.text}</p>
-                <div class="bm-how-it-works-26-card__circle"></div>
-                <div class="bm-how-it-works-26-card__vertical-line"></div>
               </div>
-              <div class="bm-how-it-works-26-card__inner">
+              <div>
                 <div class="bm-how-it-works-26-card__highlight">
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

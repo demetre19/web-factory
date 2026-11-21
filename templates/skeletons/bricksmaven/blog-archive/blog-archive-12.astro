@@ -51,7 +51,7 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-archive-12">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
@@ -60,7 +60,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {head && <h1 class="text-fluid-4">{head}</h1>}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-stack text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 &&         <div class="blog-archive-12-tab-menu">
+        {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="card">
                 <p class="text-fluid-0">{it.text}</p>
@@ -78,13 +78,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                             <p class="text-fluid-0">{it2.text}</p>
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
-                          <div></div>
-                          <div></div>
                           <a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a>
                           {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                         </div>
                         <div class="grid-auto gap-fluid-l">
-                          <div class="blog-archive-12-archive-card__category-wrapper">
+                          <div>
                             <p class="text-fluid-0">{it2.text}</p>
                           </div>
                         </div>

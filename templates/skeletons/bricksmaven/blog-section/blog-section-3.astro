@@ -51,11 +51,11 @@ const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
 ---
 
-<div>
+<div class="wf-blog-section-3">
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-section-3-container">
+    <div>
       <div class="blog-section-3-head">
         <div class="blog-section-3-heading">
           {head && <h2 class="text-fluid-2">{head}</h2>}
@@ -64,19 +64,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>
       </div>
       {list.length > 0 &&       <div class="blog-section-3-body">
-        {list.length > 0 && <div class="blog-section-3-wrapper">{(list || []).map((it) => (
+        {list.length > 0 && <div class="blog-section-3-wrapper">
+          <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
               <div class="blog-section-3-card card">
-                <p class="blog-section-3-card__term text-fluid-0">{it.text}</p>
-                <h3 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
-                <div></div>
+                <p class="text-fluid-0">{it.text}</p>
+                <h3 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h3>
                 <div class="blog-section-3-card__author grid-auto gap-fluid-l">
                   <div class="blog-section-3-card__meta">
-                    <h4 class="text-fluid-1">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
+                    <h4 class="text-fluid-2">{it.icon && <IconChip name={it.icon} />} {it.term || it.title}</h4>
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
               </div>
-            ))}</div>}
+            ))}</div>
+        </div>}
       </div>
       }
     </div>

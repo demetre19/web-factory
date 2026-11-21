@@ -1,26 +1,9 @@
-  .hero-24 {
-    padding: 0 0 0 0;
-  }
-
-  .hero-24__container {
+  .wf-hero-24 .hero-24__container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .hero-24__content {
+  .wf-hero-24 .hero-24__content {
     display: flex;
     flex-direction: column;
-    row-gap: var(--space-s);
-    justify-content: center;
-    margin: var(--space-m) 0 var(--space-m) 0;
-  }
-
-  .btn--primary {
-    padding: var(--space-s) var(--space-l) var(--space-s) var(--space-l) !important;
-    width: auto;
-  }
-
-  .hero-24__image {
-    width: 50vw;
-    object-fit: cover;
   }

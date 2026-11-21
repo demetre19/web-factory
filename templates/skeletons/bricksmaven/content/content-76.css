@@ -1,35 +1,10 @@
-  .bm-content-76__container {
+  .wf-content-76 .bm-content-76__container {
     display: grid;
-    gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(var(--grid-min,28rem),100%),1fr));
   }
 
-  .bm-content-76__content {
-    row-gap: var(--space-s);
-  }
-
-  .bm-content-76-core-list {
-    margin: 0 0 0 0;
-  }
-
-  .bm-content-76-core-item {
-    column-gap: calc(var(--flow-spacing) * 6);
-    row-gap: var(--flow-spacing);
+  .wf-content-76 .bm-content-76-core-item {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-  }
-
-  .bm-content-76__image {
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .bm-content-76-core-item  {
-    padding-block: var(--space-m);
-    border-top: calc(0.0625rem + 0vw) solid var(--fs-0);
-  }
-  
-  .bm-content-76-core-item .bm-content-76-core-item__heading {
-    flex-shrink:0;
   }
