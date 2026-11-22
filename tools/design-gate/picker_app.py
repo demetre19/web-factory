@@ -3967,7 +3967,35 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card.fxw{grid-column:1/-1}
 .card.mini .cb{min-height:0}
 .card.mini .cb.done,.card.mini .cb.err{height:auto}
-.card.mini iframe{height:clamp(240px,30vw,380px)!important}
+/* scrub PREVIEWS modal */
+.sprev{border:1px solid var(--line);background:var(--panel);
+      color:var(--ink);border-radius:6px;font:600 11.5px var(--font);
+      padding:3px 10px;cursor:pointer}
+.sprev:hover{border-color:var(--accent);color:var(--accent)}
+.sgov{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);
+      display:flex;align-items:center;justify-content:center;padding:14px}
+.sgbox{background:var(--panel);border:1px solid var(--line);
+      border-radius:14px;width:min(1100px,100%);max-height:90vh;
+      display:flex;flex-direction:column;overflow:hidden}
+.sgh{display:flex;align-items:center;gap:10px;padding:10px 14px;
+      border-bottom:1px solid var(--line);background:var(--bg-2)}
+.sgh .sec{font:600 11px var(--mono);color:var(--accent);
+      border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.sgt{font:600 12px var(--font);color:var(--ink-dim)}
+.sgx{margin-left:auto;background:var(--bg-2);border:1px solid var(--line);
+      border-radius:7px;color:var(--ink);padding:5px 10px;cursor:pointer}
+.sggrid{display:grid;grid-template-columns:repeat(auto-fill,
+      minmax(200px,1fr));gap:10px;padding:12px;overflow:auto}
+.sgcell{border:1px solid var(--line);border-radius:10px;
+      background:var(--bg-2);padding:0;overflow:hidden;cursor:pointer;
+      text-align:left;display:flex;flex-direction:column}
+.sgcell:hover,.sgcell:focus{border-color:var(--accent);outline:0}
+.sgcb{display:block;height:200px;overflow:hidden;position:relative;
+      background:var(--bg)}
+.sgcb iframe{display:block;border:0;pointer-events:none;
+      background:var(--bg)}
+.sgnm{display:block;padding:6px 9px;font:600 11.5px var(--mono);
+      color:var(--ink);border-top:1px solid var(--line)}
 .card{background:var(--panel);border:1px solid var(--line);
      border-radius:var(--r);overflow:hidden;display:flex;
      flex-direction:column;min-width:0}
@@ -4642,7 +4670,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     return c.element==='fx:default'&&FXWIDE.test(c.grp||'')}
   function card(c,idx){
     var tags=c.tags||[],cls='card'+(c.mobile?' mobile':'')+
-        (c.live?' live':'')+(fxWide(c)?' fxw':'');
+        (c.live?' live':'')+(fxWide(c)?' fxw':'')+(c.bank?'':' pg');
     var isPicked=c.element&&(DATA.picked_elements||{})[c.element]===
       c.variant;
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
@@ -4757,7 +4785,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         h+='<div class="glabel">'+esc(c.grp)+'</div>'}
       shown++;
       var sw=(c.swatch&&c.swatch[0])||[];
-      h+='<div class="card" data-i="'+i+'"><div class="ch">'+
+      h+='<div class="card pg" data-i="'+i+'"><div class="ch">'+
          '<span class="id">'+esc(c.id)+'</span>'+
          '<span class="nm" title="'+esc(c.name)+'">'+esc(c.name)+'</span>'+
          '<span class="vsw">'+(sw[2]?'<i style="background:'+
@@ -4948,8 +4976,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          esc((r.sec||'').replace(/-/g,' ').slice(0,34))+'</span>'+
          '<span class="sname" data-role="nm">'+esc(alt.id)+'</span>'+
          '<span class="spos" data-role="pos">'+(r.idx+1)+'/'+r.alts.length+'</span>'+
-         '<div class="snav"><button data-d="-1">‹</button>'+
-         '<button data-d="1">›</button></div>'+
+         '<button class="sprev" title="preview every option in a grid">▦ '+
+         r.alts.length+'</button>'+
          '<button class="spick" title="sign this row\'s choice">✓</button>'+
          '<button class="xp" title="expand" data-x="'+
          esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
@@ -5013,6 +5041,73 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           if(FXMENU===menu)FXMENU=null;
           document.removeEventListener('click',h)}})},0)}
 
+
+  // modal grid of every option's mini preview for one scrub row —
+  // click signs through the same /element-pick path the ✓ uses
+  function scrubModal(rowEl,r){
+    var ov=document.createElement('div');ov.className='sgov';
+    var cells=r.alts.map(function(a,j){
+      var src=frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+
+        a.preview));
+      return '<button class="sgcell" data-j="'+j+'">'+
+        '<span class="sgcb"><iframe data-src="'+esc(src)+'" src="'+
+        esc(src)+'" loading="lazy"></iframe></span>'+
+        '<span class="sgnm">'+esc(a.id)+'</span></button>'}).join('');
+    ov.innerHTML='<div class="sgbox" role="dialog" aria-modal="true" '+
+      'aria-label="preview options"><div class="sgh"><span class="sec">'+
+      esc(r.sec)+'</span><span class="sgt">'+r.alts.length+
+      ' options — click to pick</span>'+
+      '<button class="sgx" aria-label="close">✕</button></div>'+
+      '<div class="sggrid">'+cells+'</div></div>';
+    document.body.appendChild(ov);
+    document.body.style.overflow='hidden';
+    var prevFocus=document.activeElement;
+    ov.querySelectorAll('.sgcb iframe').forEach(function(f){
+      f.addEventListener('load',function(){try{
+        var cb2=f.closest('.sgcell').querySelector('.sgcb'),
+            s=Math.min(1,cb2.clientWidth/1280)||1,
+            hh=f.contentDocument.body.scrollHeight;
+        f.style.width='1280px';f.style.transform='scale('+s+')';
+        f.style.transformOrigin='0 0';
+        if(hh>0){f.style.height=hh+'px';
+          cb2.style.height=Math.min(hh*s,320)+'px'}
+      }catch(e){}})});
+    var cellsEl=ov.querySelectorAll('.sgcell');
+    function close(){ov.remove();document.body.style.overflow='';
+      document.removeEventListener('keydown',k,true);
+      if(prevFocus&&prevFocus.focus)prevFocus.focus()}
+    ov.querySelector('.sgx').onclick=close;
+    ov.onclick=function(e){if(e.target===ov)close()};
+    cellsEl.forEach(function(c){c.onclick=function(){
+      var j=+c.dataset.j;r.idx=j;srowSwap(rowEl,0);
+      var stat=rowEl.querySelector('.sstat');
+      api('/element-pick',{pipeline:PIPELINE,element:'sec:'+r.sec,
+        variant:r.alts[j].id}).then(function(jj){
+        stat.className='sstat '+(jj.ok?'ok':'bad');
+        stat.textContent=jj.ok?'signed ✓':(jj.message||'refused');
+        if(jj.ok)toast(jj.message)});
+      close()}});
+    function k(e){
+      if(e.key==='Escape'){close();e.preventDefault();return}
+      var arr=Array.prototype.slice.call(cellsEl),
+          at=arr.indexOf(document.activeElement);
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        var n=at<0?0:(at+(e.key==='ArrowRight'?1:-1)+arr.length)%arr.length;
+        arr[n].focus();e.preventDefault()}
+      else if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+        var cw=arr[0]?arr[0].offsetWidth:240,
+            cols=Math.max(1,Math.floor(
+              ov.querySelector('.sggrid').clientWidth/Math.max(1,cw))),
+            n2=at<0?0:Math.min(arr.length-1,Math.max(0,
+              at+(e.key==='ArrowDown'?cols:-cols)));
+        arr[n2].focus();e.preventDefault()}
+      else if(e.key==='Tab'){
+        var foci=arr.concat([ov.querySelector('.sgx')]),
+            ai=foci.indexOf(document.activeElement),
+            ni=ai<0?0:(ai+(e.shiftKey?-1:1)+foci.length)%foci.length;
+        foci[ni].focus();e.preventDefault()}}
+    document.addEventListener('keydown',k,true);
+    var f0=cellsEl[0];if(f0)f0.focus()}
 
   function srowSwap(rowEl,d){
     var i=+rowEl.dataset.i,r=DATA.boards.page.scrub[i];
@@ -5529,7 +5624,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var vw=document.documentElement.style.getPropertyValue('--vw')
         ||'100%';
     document.querySelectorAll('.card .cb iframe,.vprev iframe,'+
-      '.rmprev iframe').forEach(function(f){
+      '.rmprev iframe,.srow iframe').forEach(function(f){
       // remember each frame's own src once — derived variants come
       // back from it, never from a previously-swapped one
       var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
@@ -5544,6 +5639,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var cb=f.parentElement,
           fixedBox=!!cb.closest('.vprev')||
             cb.classList.contains('rmprev'),
+          srow=!!f.closest('.srow'),
           tsDoc=cb.classList.contains('tsdoc');
       if(vw==='100%'){
         var W=1280,s=Math.min(1,cb.clientWidth/W)||1;
@@ -5560,7 +5656,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
                 if(b>mb)mb=b});
             if(mb>4)hh=mb}
           if(hh>0){f.style.height=hh+'px';
-            if(!fixedBox){
+            if(srow){
+              // the row IS the container — collapse the empty band
+              // the downscaled frame leaves behind instead of
+              // cropping the row (its header would be cut)
+              f.style.marginBottom='-'+Math.max(0,
+                Math.round(hh*(1-s)))+'px'
+            }else if(!fixedBox){
               // 16:10 preview, capped 560px; short strips keep
               // their content height — type-specimen docs are
               // measured, never letterboxed
@@ -5569,7 +5671,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               cb.style.minHeight='0'}}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
-        f.style.height='';
+        f.style.height='';f.style.marginBottom='';
         if(!fixedBox){cb.style.height='';cb.style.minHeight=''}}
     })}
 
@@ -5623,9 +5725,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(o.scrub){
       el.innerHTML=h+scrubView(o);
       el.querySelectorAll('.srow').forEach(function(rowEl){
-        rowEl.querySelector('.snav').querySelectorAll('button')
-          .forEach(function(b){b.onclick=function(){
-            ROW=+rowEl.dataset.i;srowSwap(rowEl,+b.dataset.d)}});
+        rowEl.querySelector('.sprev').onclick=function(){
+          ROW=+rowEl.dataset.i;
+          scrubModal(rowEl,DATA.boards.page.scrub[+rowEl.dataset.i])};
         var f=rowEl.querySelector('iframe');
         f.onload=function(){try{
           f.style.height=f.contentDocument.body.scrollHeight+'px'
@@ -5732,7 +5834,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           maxB=Math.max(maxB,r.bottom)}});
       if(H&&(maxH<H*0.55||maxB<H*0.6)){
         var crd=f.closest('.card');
-        if(crd)crd.classList.add('mini')}}catch(e){}
+        // .pg = emitted page/layout docs — a full page's sections
+        // are each smaller than the frame, so the small-content
+        // heuristic misreads them; only bank exemplars may be mini
+        if(crd&&!crd.classList.contains('pg'))
+          crd.classList.add('mini')}}catch(e){}
     setTimeout(fitIframes,90)}
 
   // skeleton → done/error lifecycle for every preview frame in
