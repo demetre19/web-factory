@@ -729,7 +729,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               color: var(--action-primary); }
   /* the header CTA fits the bar — compact padding and nav font,
      never the hero-sized call */
-  .nav-cta .wf-cta-button { padding: .55em 1.15em;
+  .nav-cta .wf-cta-button { padding: .5em .75em;
               font-size: var(--fs-0); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);

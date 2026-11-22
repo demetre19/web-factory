@@ -336,9 +336,11 @@ def _copy_slot(copy, ref, comp=None):
                           re.split(r'(?<=[.!?])\s+', para) if x.strip()]
             slot['items'] = [
                 {'term': t if len(t) < 60 else t[:57] + '…',
+                 # item text renders as plain text — strip inline
+                 # markdown or a bold run leaks literal asterisks
                  'text': next(
-                     (x for x in sents if t.lower() in x.lower()),
-                     '')}
+                     (x.replace('**', '') for x in sents
+                      if t.lower() in x.lower()), '')}
                 for t in terms]
             slot['items_from'] = 'terms'
     return slot

@@ -1094,8 +1094,8 @@ def _copy_slot(pd, bid):
             slot['items'] = [
                 {'term': t if len(t) < 60 else t[:57] + '…',
                  'text': next(
-                     (x for x in sents if t.lower() in x.lower()),
-                     '')}
+                     (x.replace('**', '') for x in sents
+                      if t.lower() in x.lower()), '')}
                 for t in terms]
             slot['items_from'] = 'terms'
     # media slot — first real asset in the pipeline's media dir

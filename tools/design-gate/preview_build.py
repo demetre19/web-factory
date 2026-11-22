@@ -670,9 +670,13 @@ def emit_layouts(ctx):
                     cc['surface'] = (
                         'media' if ov == 'hero-act-merge'
                         else c.get('surface'))
-            elif c['section'] != 'hero':
+            elif (c['section'] != 'hero'
+                    and eff != 'split-media'):
                 # media only rides split-media rows; an option that
-                # lifts this row's comp away hands the asset on
+                # lifts this row's comp away hands the asset on. A
+                # row still effective as split-media KEEPS the spend
+                # the branch above just bound — popping it here used
+                # to strip the image AND reset the locked ratio.
                 if r2.pop('image', None) is not None:
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
