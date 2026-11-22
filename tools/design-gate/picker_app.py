@@ -1886,7 +1886,7 @@ def emit_bank_previews(pd):
     (the exemplar's own Tailwind), NOT bound into the baked family.
     Returns {gallery_id: [cards]}."""
     if not os.path.isdir(_GENMENU):
-        return {}
+        return {}, {}
     _BANK_DIRS['fx'] = tuple(sorted(
         d for d in os.listdir(_GENMENU)
         if d.startswith('fx-') and
