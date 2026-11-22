@@ -760,7 +760,8 @@ def _handler():
                 _fpd = fp.split('/site/', 1)[0] if '/site/' in fp \
                     else ''
                 F = picker_app.VIBE_FAMILIES.get(fam) or \
-                    picker_app.donor_family(_fpd, fam)
+                    picker_app.donor_family(_fpd, fam) or \
+                    picker_app.remix_family(fam)
                 if F and re.search(r'/site/', fp) and \
                         not os.path.isfile(fp):
                     _ensure_preview(fp)
@@ -898,6 +899,18 @@ def _handler():
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt,
                             'donor': rec if code == 0 else None})
+            elif self.path == '/remix':
+                import picker_app
+                self._send(200, picker_app.remix(
+                    body.get('pipeline', ''), body.get('spec') or {}))
+            elif self.path == '/remix-save':
+                import picker_app
+                code, txt, rec = picker_app.remix_save(
+                    body.get('pipeline', ''), body.get('name', ''),
+                    body.get('spec') or {})
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt,
+                            'remix': rec if code == 0 else None})
             elif self.path == '/confirm':
                 code, txt = confirm_approval(body.get('wave', ''),
                                              body.get('pipeline', ''))

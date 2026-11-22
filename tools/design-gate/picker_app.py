@@ -25,7 +25,7 @@ per-section topology scrubbing inline on the full page) →
 sections/elements (galleries). Every preview is static HTML —
 variants differ by a CSS-var override bundle, never by a rebuild.
 """
-import datetime, html.parser, json, os, re, sys, \
+import datetime, hashlib, html.parser, json, os, re, sys, \
     threading, urllib.parse
 from pathlib import Path
 
@@ -1552,6 +1552,8 @@ def app_data(pipeline):
             'bank_depth': bank_depth,
             'palette': _palette(galleries),
             'saved_systems': list_systems(pd),
+            'remix_sources': dna_sources(pd),
+            'remix_groups': REMIX_GROUPS,
             'contrast': contrast,
             'design': {
                 'site': dna.get('site') or pd.rsplit('/', 3)[-3],
@@ -1841,8 +1843,37 @@ def donor_vector(draft):
     gap = _DENSITY_GAP.get(density)
     font = (','.join('"' + f + '"' for f in fams[:2]) +
             ',ui-sans-serif,system-ui,sans-serif') if fams else ''
+    vec = {'palette': palette, 'ink': ink, 'surface': surface,
+           'accent': accent, 'radius_px': radius, 'density': density,
+           'type': {'families': fams}, 'motion': 0}
+    return {'knobs': vec,
+            'family': dict(knobs_to_family(vec),
+                           genes=['donor', 'ingest'])}
+
+
+def knobs_to_family(vec):
+    """knob vector {ink,surface,accent,radius_px,density,type,motion}
+    -> a VIBE_FAMILIES-shaped {css,css_dark,theme} bundle - the same
+    token space the emitter already reads."""
+    ink = vec.get('ink') or '#17171a'
+    surface = vec.get('surface') or '#ffffff'
+    accent = vec.get('accent') or '#17171a'
+    radius = vec.get('radius_px')
+    rpx = ('%gpx' % radius) if isinstance(radius, (int, float)) \
+        else ''
+    density = vec.get('density') or 'regular'
+    fams = [f for f in ((vec.get('type') or {}).get('families') or [])
+            if isinstance(f, str)]
+    dark = _hex_lum(surface) < 0.45
+    acc_ink = ink if _cr(ink, accent) >= _cr(surface, accent) \
+        else surface
+    hover = _hex_mix(accent,
+                     '#000000' if _hex_lum(accent) > 0.45
+                     else '#ffffff', 0.18)
+    gap = _DENSITY_GAP.get(density)
+    font = (','.join('"' + f + '"' for f in fams[:2]) +
+            ',ui-sans-serif,system-ui,sans-serif') if fams else ''
     if dark:
-        # donor's native look is the dark bundle; derive light
         lcan = _hex_mix(ink, '#ffffff', 0.94)
         css = _bundle(lcan, ink, accent, acc_ink, hover, rpx,
                       font, gap)
@@ -1856,14 +1887,201 @@ def donor_vector(draft):
         dcan = _hex_mix(ink, '#000000', 0.10)
         css_dark = _bundle(dcan, surface, accent, acc_ink, hover,
                            rpx, font, gap)
-    vec = {'knobs': {'palette': palette, 'ink': ink,
-                     'surface': surface, 'accent': accent,
-                     'radius_px': radius, 'density': density,
-                     'type': {'families': fams}, 'motion': 0},
-           'family': {'css': css, 'css_dark': css_dark, 'shape': '',
-                      'theme': 'dark' if dark else None,
-                      'genes': ['donor', 'ingest']}}
-    return vec
+    return {'css': css, 'css_dark': css_dark, 'shape': '',
+            'theme': 'dark' if dark else None}
+
+
+REMIX_LIVE = {}
+
+REMIX_GROUPS = {'type': 'type/headings', 'cta': 'CTA/buttons',
+                'surfaces': 'cards/surfaces', 'media': 'media/radius',
+                'density': 'density/spacing', 'motion': 'motion'}
+
+_GROUP_KNOBS = {'type': ['type'], 'cta': ['accent'],
+                'surfaces': ['surface'], 'media': ['radius_px'],
+                'density': ['density'], 'motion': ['motion']}
+
+_DENSITY_NUM = {'tight': 0, 'regular': 1, 'spacious': 2}
+_DENSITY_WORD = {v: k for k, v in _DENSITY_NUM.items()}
+
+
+def _css_vars(txt):
+    return dict(m.groups() for m in re.finditer(
+        r'(--[a-z0-9-]+)\s*:\s*([^;]+)', txt or ''))
+
+
+def _vibe_vector(fam):
+    f = VIBE_FAMILIES.get(fam) or {}
+    lv, dv = _css_vars(f.get('css')), _css_vars(f.get('css_dark'))
+    r = (lv.get('--radius') or lv.get('--r-card') or '').rstrip('px')
+    try:
+        rpx = float(r) if r else None
+    except ValueError:
+        rpx = None
+    gap = lv.get('--grid-gap') or ''
+    den = ('tight' if 'space-s' in gap else
+           'spacious' if 'space-l' in gap else 'regular')
+    fams = []
+    for x in (lv.get('--font-display') or '').split(','):
+        x = x.strip().strip('"').strip("'")
+        if x and 'sans-serif' not in x:
+            fams.append(x)
+    return {'ink': lv.get('--text-primary'),
+            'surface': lv.get('--bg-canvas'),
+            'accent': lv.get('--action-primary'),
+            'radius_px': rpx, 'density': den,
+            'type': {'families': fams},
+            'motion': 0, 'theme': f.get('theme'),
+            'dark': {'ink': dv.get('--text-primary'),
+                     'surface': dv.get('--bg-canvas')}}
+
+
+def _design_vector(pd):
+    t = _json_at(pd, 'TOKENS.json') or _json_at(
+        os.path.dirname(pd), 'TOKENS.json') or {}
+    roles = ((t.get('color') or {}).get('modes') or {})
+    lr = (roles.get('light') or {}).get('roles') or {}
+    dr = (roles.get('dark') or {}).get('roles') or {}
+    k = t.get('knobs') or {}
+    r = (k.get('radius.personality') or '').rstrip('px')
+    try:
+        rpx = float(r) if r else None
+    except ValueError:
+        rpx = None
+    ds = str(k.get('space.density_scale') or '')
+    den = ('tight' if ds.endswith('-s') else
+           'spacious' if ds.endswith('-l') else 'regular')
+    mo = {'none': 0, 'subtle': 0.3, 'moderate': 0.6,
+          'rich': 1}.get(str(k.get('motion.level')), 0)
+    return {'ink': lr.get('ink'), 'surface': lr.get('bg'),
+            'accent': lr.get('accent'), 'radius_px': rpx,
+            'density': den,
+            'type': {'families': []}, 'motion': mo,
+            'theme': None,
+            'dark': {'ink': dr.get('ink'), 'surface': dr.get('bg')}}
+
+
+def source_vector(pd, sid):
+    """'design' | 'vibe:<fam>' | 'donor:<slug>' -> knob vector."""
+    if sid == 'design':
+        return _design_vector(pd)
+    if (sid or '').startswith('vibe:'):
+        return _vibe_vector(sid[5:])
+    if (sid or '').startswith('donor:'):
+        rec = _json_at(pd, 'DNA-DRAFTS', sid[6:] + '.json') or {}
+        k = rec.get('knobs')
+        if isinstance(k, dict):
+            v = dict(k)
+            v['theme'] = (rec.get('family') or {}).get('theme')
+            return v
+    return None
+
+
+def dna_sources(pd):
+    """the remixable source list for a pipeline."""
+    out = [{'id': 'design', 'label': 'this design'}]
+    for fam, f in VIBE_FAMILIES.items():
+        out.append({'id': 'vibe:' + fam, 'label': f['name']})
+    dd = os.path.join(pd, 'DNA-DRAFTS')
+    if os.path.isdir(dd):
+        for fn in sorted(os.listdir(dd)):
+            if fn.endswith('.json'):
+                out.append({'id': 'donor:' + fn[:-5],
+                            'label': 'donor: ' + fn[:-5]})
+    return out
+
+
+def mix_vectors(vecs, shares, groups):
+    """numeric knobs lerp by share; categorical take the dominant
+    share; group picks override with one source's knobs outright."""
+    def dom(key):
+        best, bs = None, -1
+        for v, sh in zip(vecs, shares):
+            if v.get(key) is not None and sh > bs:
+                best, bs = v[key], sh
+        return best
+
+    dt = dom('type')
+    out = {'ink': dom('ink'), 'surface': dom('surface'),
+           'accent': dom('accent'),
+           'type': {'families': (dt or {}).get('families') or []}}
+    rp = sum((v.get('radius_px') or 0) * s
+             for v, s in zip(vecs, shares))
+    out['radius_px'] = round(rp, 1) if rp else None
+    out['motion'] = round(sum((v.get('motion') or 0) * s
+                              for v, s in zip(vecs, shares)), 3)
+    dn = sum(_DENSITY_NUM.get(v.get('density'), 1) * s
+             for v, s in zip(vecs, shares))
+    out['density'] = _DENSITY_WORD.get(int(round(dn)), 'regular')
+    out['theme'] = dom('theme')
+    for g, idx in (groups or {}).items():
+        try:
+            src = vecs[int(idx)]
+        except (TypeError, ValueError, IndexError):
+            continue
+        for knob in _GROUP_KNOBS.get(g, ()):
+            out[knob] = src.get(knob)
+    return out
+
+
+def remix(pipeline, spec):
+    """POST /remix - mix sources, register the live bundle keyed by
+    the spec hash, return its frame slug + mixed knobs.
+    Deterministic; the iframe swap does the rendering."""
+    ctx = G.Ctx(pipeline)
+    pd = ctx.dir
+    if not os.path.isdir(pd):
+        return {'error': 'pipeline not found'}
+    vecs, shares = [], []
+    for s0 in ((spec or {}).get('sources') or [])[:3]:
+        v = source_vector(pd, (s0 or {}).get('id'))
+        if v:
+            vecs.append(v)
+            shares.append(max(0.0, float(s0.get('share') or 0)))
+    if not vecs:
+        return {'error': 'no usable sources'}
+    tot = sum(shares) or 1.0
+    shares = [x / tot for x in shares]
+    groups = (spec or {}).get('groups') or {}
+    mixed = mix_vectors(vecs, shares, groups)
+    fam = knobs_to_family(mixed)
+    slug = 'remix-' + hashlib.sha1(
+        json.dumps(spec, sort_keys=True).encode()).hexdigest()[:10]
+    REMIX_LIVE[slug] = fam
+    return {'slug': slug, 'knobs': mixed, 'sources': len(vecs)}
+
+
+def remix_family(fam):
+    return REMIX_LIVE.get(fam)
+
+
+def remix_save(pipeline, name, spec):
+    """sign a mixed DNA into REMIX-SYSTEMS/<slug>.json - same staged
+    pattern as save_system; nothing auto-applies to a BRIEF."""
+    slug = re.sub(r'[^a-z0-9-]+', '-', (name or '').lower()) \
+        .strip('-')[:48]
+    if not slug:
+        return 1, 'name needed', None
+    ctx = G.Ctx(pipeline)
+    pd = ctx.dir
+    if not os.path.isdir(pd):
+        return 1, 'pipeline not found', None
+    res = remix(pipeline, spec)
+    if res.get('error'):
+        return 1, res['error'], None
+    rd = Path(pd) / 'REMIX-SYSTEMS'
+    rd.mkdir(exist_ok=True)
+    rec = {'name': name, 'slug': slug, 'kind': 'remix-system',
+           'generated_by': 'picker_app.remix_save',
+           'sources': (spec or {}).get('sources') or [],
+           'groups': (spec or {}).get('groups') or {},
+           'mixed': res['knobs'], 'frame_slug': res['slug'],
+           'created': datetime.datetime.now().isoformat(
+               timespec='seconds')}
+    fp = rd / (slug + '.json')
+    fp.write_text(json.dumps(rec, indent=1))
+    return 0, 'remix system saved: ' + fp.name, {
+        'slug': slug, 'file': str(fp), 'frame_slug': res['slug']}
 
 
 def donor_family(pd, fam):
@@ -2277,6 +2495,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .srow .srh{flex-wrap:wrap}
 }
 @media(min-width:761px){#railBtn{display:none !important}}
+.rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
+.rmslot{display:grid;grid-template-columns:1fr 200px 46px 20px;
+     gap:10px;align-items:center}
+.rmslot select{background:var(--bg2);border:1px solid var(--line);
+     border-radius:7px;color:var(--ink);padding:7px 10px;font:500 13px
+     var(--font)}
+.rmslot input[type=range]{accent-color:var(--accent)}
+.rmslot i{font:600 10px var(--mono);color:var(--muted)}
+.rmpct{font:600 11.5px var(--mono);text-align:right}
+.rmgroups{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.rmrow{display:flex;gap:14px;align-items:center;font:500 12.5px
+     var(--font);color:var(--ink);flex-wrap:wrap}
+.rmrow>span{min-width:120px;color:var(--muted);font-size:11.5px}
+.rmrow label{display:inline-flex;gap:5px;align-items:center;
+     font:600 11.5px var(--font);color:var(--muted);cursor:pointer}
+.rmsave{display:flex;gap:9px;align-items:center;margin-top:8px}
+.rmsave input{flex:0 0 240px;background:var(--bg2);border:1px solid
+  var(--line);border-radius:7px;color:var(--ink);padding:7px 11px;
+  font-size:13px}
+.rmsave span{font:500 12px var(--font);color:var(--muted)}
+.rmprev{margin-top:14px;border:1px solid var(--line);
+     border-radius:var(--r);overflow:hidden;height:520px}
+.rmprev iframe{width:100%;height:100%;border:0;background:#fff}
 
 </style>
 </head>
@@ -2386,6 +2627,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     mail:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3.5" width="12" height="9" rx="1.5"/><path d="M2.5 4.5L8 9l5.5-4.5"/></svg>',
     news:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2.5" width="10" height="11" rx="1.5"/><path d="M4.5 5.5h5M4.5 8h5M4.5 10.5h3"/><path d="M12 5h1.5a1 1 0 011 1v6a1.5 1.5 0 01-1.5 1.5H4"/></svg>',
     vibe:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="5" cy="8" r="2.6"/><circle cx="8" cy="8" r="2.6" opacity=".7"/><circle cx="11" cy="8" r="2.6" opacity=".4"/></svg>',
+    mix:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3h10M5 6.5h6M7 10h2M8 3v10" opacity=".9"/></svg>',
     page:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M5.5 4.5h5M5.5 7h5M5.5 9.5h5M5.5 12h3"/></svg>',
     bars:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="3" width="13" height="4" rx="1"/><path d="M3.5 10h9M3.5 13h5"/></svg>',
     burger:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg>',
@@ -2418,6 +2660,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<button class="ritem'+(CUR==='ingest'?' on':'')+
        '" data-k="ingest" data-t="b">'+ICON.news+
        '<span>URL · HTML</span></button>';
+    h+='<div class="railgrp">Remix</div>';
+    h+='<button class="ritem'+(CUR==='remix'?' on':'')+
+       '" data-k="remix" data-t="b">'+ICON.mix+
+       '<span>DNA mixer</span></button>';
     h+='<div class="railgrp">Saved</div>';
     h+='<button class="ritem'+(CUR==='saved'?' on':'')+
        '" data-k="saved" data-t="b">'+ICON.doc+
@@ -2673,9 +2919,110 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             toast('donor DNA staged — previews now wear it')}})};
   }
 
+  function remixPane(el){
+    var SRC=DATA.remix_sources||[{id:'design',label:'this design'}];
+    var GRP=DATA.remix_groups||{};
+    var page=null;
+    [DATA.boards,DATA.galleries].forEach(function(B){
+      Object.keys(B||{}).forEach(function(k){
+        (B[k].cards||[]).forEach(function(c){
+          if(!page&&c.preview)page=c.preview})})});
+    var slots=[{id:'design',sh:60},
+               {id:(SRC[1]||{}).id||null,sh:40},
+               {id:null,sh:0}];
+    var over={};   // group -> 'mix' | slot index
+    var t=null;
+
+    function spec(){
+      var ss=[];
+      slots.forEach(function(s0){
+        if(s0.id&&s0.sh>0)ss.push({id:s0.id,share:s0.sh/100})});
+      var g={};
+      Object.keys(over).forEach(function(k){
+        if(over[k]!=='mix')g[k]=over[k]});
+      return {sources:ss,groups:g}}
+
+    function go(){
+      clearTimeout(t);
+      t=setTimeout(function(){
+        var sp=spec();
+        if(!sp.sources.length)return;
+        api('/remix',{pipeline:PIPELINE,spec:sp}).then(function(j){
+          if(j.error){toast(j.error);return}
+          var f=document.getElementById('rmFrame');
+          if(f&&page)f.src=page.replace('/built/',
+            '/frame/'+j.slug+'/')})},140)}
+
+    var h='<h1>Remix — DNA mixer</h1>'+
+      '<div class="desc">Blend up to three DNA sources — this '+
+      'design, vibe families, and staged ingest donors. Numeric '+
+      'knobs lerp by share; categorical tokens follow the dominant '+
+      'share; group rows pin a token group to one source. The '+
+      'preview re-emits the current page wearing the mixed DNA.</div>'+
+      '<div class="rmgrid"><div class="rmslots">';
+    ['A','B','C'].forEach(function(L,i){
+      h+='<div class="rmslot"><select data-i="'+i+'">'+
+         '<option value="">— none —</option>';
+      SRC.forEach(function(o){
+        h+='<option value="'+esc(o.id)+'"'+
+           (slots[i].id===o.id?' selected':'')+'>'+esc(o.label)+
+           '</option>'});
+      h+='</select><input type="range" min="0" max="100" value="'+
+         slots[i].sh+'" data-i="'+i+'">'+
+         '<span class="rmpct" data-i="'+i+'">'+slots[i].sh+'%</span>'+
+         '<i>'+L+'</i></div>'});
+    h+='</div><div class="rmgroups">';
+    Object.keys(GRP).forEach(function(g){
+      h+='<div class="rmrow" data-g="'+esc(g)+'"><span>'+esc(GRP[g])+
+         '</span><label><input type="radio" name="rg-'+esc(g)+
+         '" value="mix" checked>mix</label>';
+      ['A','B','C'].forEach(function(L,i){
+        h+='<label><input type="radio" name="rg-'+esc(g)+
+           '" value="'+i+'"'+(i>0&&!slots[i].id?' disabled':'')+
+           '>'+L+'</label>'});
+      h+='</div>'});
+    h+='</div><div class="rmsave"><input id="rmName" placeholder='+
+       '"remix-name"><button id="rmSave" class="abtn">'+
+       'Sign remix system</button><span id="rmStatus"></span></div>'+
+       '<div class="rmprev"><iframe id="rmFrame"></iframe></div></div>';
+    el.innerHTML=h;
+
+    el.querySelectorAll('.rmslot select').forEach(function(sel){
+      sel.onchange=function(){
+        var i=+sel.dataset.i;slots[i].id=sel.value||null;
+        // enable/disable the matching group radio labels
+        el.querySelectorAll('.rmrow').forEach(function(r){
+          var inp=r.querySelectorAll('input[type=radio]')[i+1];
+          if(inp){inp.disabled=i>0&&!slots[i].id;
+            if(inp.disabled&&inp.checked){
+              r.querySelector('input[value=mix]').checked=true;
+              delete over[r.dataset.g]}}});
+        go()}});
+    el.querySelectorAll('.rmslot input[type=range]').forEach(
+      function(rg){rg.oninput=function(){
+        var i=+rg.dataset.i;slots[i].sh=+rg.value;
+        el.querySelector('.rmpct[data-i="'+i+'"]').textContent=
+          rg.value+'%';go()}});
+    el.querySelectorAll('.rmrow input[type=radio]').forEach(
+      function(rd){rd.onchange=function(){
+        var g=rd.name.slice(3);
+        if(rd.value==='mix')delete over[g];else over[g]=+rd.value;
+        go()}});
+    el.querySelector('#rmSave').onclick=function(){
+      var nm=el.querySelector('#rmName').value.trim();
+      if(!nm){toast('name the remix');return}
+      api('/remix-save',{pipeline:PIPELINE,name:nm,spec:spec()})
+        .then(function(r){
+          var st=el.querySelector('#rmStatus');
+          st.textContent=r.message||'';
+          toast(r.message||'saved')})};
+    go();
+  }
+
   function board(){
     var el=document.getElementById('board');
     if(CUR==='ingest'){ingestPane(el);return}
+    if(CUR==='remix'){remixPane(el);return}
     if(CUR==='saved'){
       el.innerHTML='<h1>Saved systems</h1>'+savedView();
       wireSaved();return}
