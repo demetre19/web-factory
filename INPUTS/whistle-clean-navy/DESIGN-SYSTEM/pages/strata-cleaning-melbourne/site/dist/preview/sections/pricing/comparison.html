@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"></head><body><section class="sec-band surface-muted density-regular" data-sec="pricing" data-comp="comparison" data-ratio="none" data-disclosure="open" data-surface="muted" data-density="regular" data-mode="band" data-wf-ref="preview/layouts.html#d5:pricing" data-intent="detail" data-content="c-b05" data-cols="2" data-recipe="bricksmaven/comparison/comparison-1"> <div class="sec-inner">  <!-- section contract: composition=comparison section=pricing surface=muted density=regular speech_act=detail --><div class="wf-comparison-1"> <div> <div class="stack"> <div class="sec-inner"> <div class="bm-conparison-1__container"> <div class="intro"> <h2 class="text-fluid-2">How is strata cleaning priced?</h2> <p class="text-fluid-0">Strata cleaning prices follow <strong>building size, visit frequency and access points</strong> – written as a monthly invoice after a site audit.</p> </div> <div class="flow mt-stack"> <p class="mt-flow text-fluid-0">Building size sets the base minutes; visit frequency multiplies them across the week; access points decide whether the team services one entry or several. Amenity count, lift banks and carpark area adjust the figure inside that frame.</p><p class="mt-flow text-fluid-0">Every engagement ships as a written quote first, so the owners corporation sees the rate structure before approval.</p><p class="mt-flow text-fluid-0">Older walk-ups and new towers price on the same frame – stairwell count, lift banks and basement levels feed the audit, and committees compare like-for-like written quotes rather than hourly guesses.</p><p class="mt-flow text-fluid-0">Buyers who ask about an hourly rate find it folded into the contract figure – the monthly invoice carries wages, super and insurance, then stays flat until scope changes.</p> </div> <div class="bm-conparison-1-list"><div class="bm-conparison-1-card card"> <div class="bm-conparison-status"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-calendar">  <path d="M8 2v4"></path> <path d="M16 2v4"></path> <rect width="18" height="18" x="3" y="4" rx="2"></rect> <path d="M3 10h18"></path>  </svg></span> <div class="stack"> <h3 class="text-fluid-1">Visit frequency</h3> <p class="text-fluid-0">multiplies them across the week</p> </div> </div>  </div><div class="bm-conparison-1-card card"> <div class="bm-conparison-status"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-calendar">  <path d="M8 2v4"></path> <path d="M16 2v4"></path> <rect width="18" height="18" x="3" y="4" rx="2"></rect> <path d="M3 10h18"></path>  </svg></span> <div class="stack"> <h3 class="text-fluid-1">Monthly invoice</h3> <p class="text-fluid-0">carries wages</p> </div> </div>  </div><div class="bm-conparison-1-card card"> <div class="bm-conparison-status"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-building">  <path d="M12 10h.01"></path> <path d="M12 14h.01"></path> <path d="M12 6h.01"></path> <path d="M16 10h.01"></path> <path d="M16 14h.01"></path> <path d="M16 6h.01"></path> <path d="M8 10h.01"></path> <path d="M8 14h.01"></path> <path d="M8 6h.01"></path> <path d="M9 22v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path> <rect x="4" y="2" width="16" height="20" rx="2"></rect>  </svg></span> <div class="stack"> <h3 class="text-fluid-1">Building size</h3> <p class="text-fluid-0">sets the base minutes</p> </div> </div>  </div><div class="bm-conparison-1-card card"> <div class="bm-conparison-status"> <span class="icon-chip"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="20" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" aria-hidden="true" class="lucide lucide-users">  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path> <path d="M16 3.128a4 4 0 0 1 0 7.744"></path> <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path> <circle cx="9" cy="7" r="4"></circle>  </svg></span> <div class="stack"> <h3 class="text-fluid-1">Access points</h3> <p class="text-fluid-0">decide whether the team services one entry or several</p> </div> </div>  </div></div>  </div> </div> </div>  </div>     </div>  </div> </section></body></html>

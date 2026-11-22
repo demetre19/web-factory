@@ -1,0 +1,39 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Whistle Clean</title><meta name="description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:title" content="Whistle Clean"><meta property="og:description" content="Strata Cleaning Melbourne – common-area cleaning for strata buildings – foyers, lifts, carparks and amenities. Eco products, audited visits."><meta property="og:image" content="/og.webp"><link rel="icon" href="/favicon.svg"><script>
+(function () {
+  // U.3 — first paint is BRIEF theme.default (never the OS preference);
+  // a manual toggle persists the choice in localStorage.
+  var s = new URLSearchParams(location.search).get('theme') || localStorage.getItem('theme');
+  var m = s || "light";
+  document.documentElement.dataset.theme = m;
+  document.documentElement.classList.toggle('dark', m === 'dark');
+  window.__wfSetTheme = function (v) {
+    localStorage.setItem('theme', v);
+    document.documentElement.dataset.theme = v;
+    document.documentElement.classList.toggle('dark', v === 'dark');
+  };
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
+      window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    }
+    var nl = document.querySelector('.nav-links');
+    if (e.target && e.target.closest && e.target.closest('.burger')) {
+      if (nl) nl.classList.toggle('open');
+    } else if (nl && nl.classList.contains('open')) {
+      // flyout closes on the close control, on a link it navigates
+      // to, or on any click outside the sheet (the scrim)
+      var inside = e.target && e.target.closest &&
+                   e.target.closest('.nav-links');
+      if (!inside || e.target.closest('.nav-close') ||
+          e.target.closest('.nav-links a')) {
+        nl.classList.remove('open');
+      }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var nl = document.querySelector('.nav-links');
+      if (nl) nl.classList.remove('open');
+    }
+  });
+})();
+</script><link rel="stylesheet" href="/_astro/design-system.DVFyCvPd.css"><style>.wf-lorem{display:inline-block;outline:1px dashed var(--action-primary,#999);outline-offset:2px;font-style:italic;opacity:.75;padding:0 .3em;border-radius:3px}</style></head><body><section class="sec-band surface-base density-regular" data-sec="definition" data-comp="editorial"><div class="sec-inner"><div><div class="max-w-prose"><h2 class="text-fluid-3">What is strata cleaning?</h2><p class="mt-stack lede">Strata cleaning is <strong>the scheduled cleaning of a building's shared areas</strong> – a trained team keeps foyers, lifts, carparks and amenities to a documented standard on a recurring roster.</p><p class="mt-stack text-fluid-0">The work answers to the strata manager and the strata management company, not to one household: the owners corporation signs for the scope, and the same residents judge the result every day. That is why the standard stays written down – shared areas hold no single owner to complain for them.</p><p class="mt-stack text-fluid-0">Common-area work differs from a residential booking because the payer judges collectively. The owners corporation holds the budget, the committee holds the vote, and the manager answers when a foyer slips – so the scope stays written and reported.</p><p class="mt-stack text-fluid-0">Strata Cleaning Melbourne runs this way for strata managers, owners corporations and building managers. Foyers mark the building's first impression, and the roster keeps it fixed.</p></div></div></div></section></body></html>

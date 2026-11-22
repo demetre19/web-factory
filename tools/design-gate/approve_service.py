@@ -41,6 +41,13 @@ HTTP (127.0.0.1 only, X-WF-Page-Token on every mutation):
                                        against current inputs
                                        (post-projection rebind)
     POST /promote {site, decision, pipeline?} → {ok|error}
+    GET  /app?pipeline=..           → the pick app shell
+    GET  /app-data?pipeline=..      → boards + galleries + design file
+    GET  /frame/<fam>/<abs-path>    → a built page bound under a
+                                      vibe family's token bundle
+                                      (var overrides, no rebuild)
+    POST /element-pick {pipeline, element, variant}
+                                   → signed ELEMENT-PICKS.json row
 """
 import argparse, datetime, hashlib, hmac, json, os, re, secrets, sys
 import urllib.parse
@@ -678,6 +685,22 @@ def _handler():
                 self._send(200, {'token': _page_token()})
                 return
             q = urllib.parse.urlsplit(self.path)
+            if q.path in ('/app', '/app-data'):
+                import picker_app
+                global _LAST_PD
+                args = dict(urllib.parse.parse_qsl(q.query))
+                if args.get('pipeline'):
+                    _LAST_PD = G.Ctx(args['pipeline']).dir
+                if q.path == '/app':
+                    self._send_html(200, picker_app.app_shell())
+                    return
+                if _LAST_PD:
+                    data, err = picker_app.app_data(_LAST_PD)
+                    self._send(200 if data else 404,
+                               data or {'error': err})
+                else:
+                    self._send(400, {'error': 'no pipeline'})
+                return
             if q.path == '/picker':
                 args = dict(urllib.parse.parse_qsl(q.query))
                 wave = args.get('wave', 'w3')
@@ -689,6 +712,33 @@ def _handler():
                     self._send_html(code, html)
                 else:
                     self._send(code, {'error': err})
+                return
+            if q.path.startswith('/frame/'):
+                # a built page bound under a vibe family's token
+                # bundle — server-side var overrides, no rebuild
+                import picker_app
+                fam, _, qpath = q.path[len('/frame/'):].partition('/')
+                F = picker_app.VIBE_FAMILIES.get(fam)
+                fp = urllib.parse.unquote(qpath)
+                fp = os.path.normpath('/' + fp.lstrip('/'))
+                if not (F and os.path.isfile(fp) and
+                        re.search(r'/site/', fp) and
+                        fp.lower().endswith(('.html', '.htm'))):
+                    self._send(404, {'error': 'not found'})
+                    return
+                txt = open(fp, encoding='utf-8',
+                           errors='replace').read()
+                css = (':root{' + F['css'] + '}'
+                       '[data-theme="dark"]{' + F['css_dark'] + '}')
+                if (F.get('theme') == 'dark' and
+                        'theme=' not in q.query):
+                    txt = re.sub(
+                        r'<html\b', '<html data-theme="dark" '
+                        'class="dark"', txt, count=1)
+                txt = txt.replace(
+                    '</head>',
+                    '<style>' + css + '</style></head>', 1)
+                self._send_html(200, txt.encode('utf-8'))
                 return
             if q.path.startswith('/built/'):
                 # serve the pipeline's built pages + assets to the
@@ -771,6 +821,19 @@ def _handler():
                     body.get('wave', ''), body.get('pipeline', ''),
                     nonce=body.get('nonce'), design=body.get('design'),
                     chat=body.get('chat'))
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt})
+            elif self.path == '/element-pick':
+                import picker_app
+                code, txt = picker_app.record_element_pick(
+                    body.get('pipeline', ''), body.get('element', ''),
+                    body.get('variant', ''))
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt})
+            elif self.path == '/save-system':
+                import picker_app
+                code, txt = picker_app.save_system(
+                    body.get('pipeline', ''), body.get('name', ''))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/confirm':
