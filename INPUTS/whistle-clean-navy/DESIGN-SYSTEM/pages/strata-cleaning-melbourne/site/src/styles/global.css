@@ -275,7 +275,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
 h1, h2 { text-wrap: var(--text-wrap-heading); }
 p { text-wrap: var(--text-wrap-body); }
 img { object-fit: cover; }
-input { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
+input, textarea { border: 1px solid var(--input-border); padding: var(--input-py) var(--input-px); border-radius: var(--input-radius); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1053,7 +1053,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .field > span { font-size: var(--fs--1); font-weight: 600;
                   letter-spacing: .06em; text-transform: uppercase;
                   color: var(--text-secondary); }
-  .field input, .field select { font: inherit; font-size: var(--fs-0);
+  .field input, .field select, .field textarea { font: inherit; font-size: var(--fs-0);
       padding: var(--input-py) var(--input-px); border-radius: var(--r-card);
       border: 1px solid var(--border-default);
       background: var(--bg-canvas); color: var(--text-primary);
