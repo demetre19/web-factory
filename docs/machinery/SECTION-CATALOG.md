@@ -118,6 +118,8 @@ section built as a `split-media` is a defect).
 | `app-band` | text + phone mockup | `detail` | Real sites: 3/5 carry one. |
 | `hero-act-merge` | promise + embedded search/form/zip input | `promise`+`act` | Service sites: the hero IS the first action. |
 | `link-grid` | city/area/category link grid — **text-index links only, never cards** | `detail` | Service-area pages + marketplaces (hipages, taskrabbit). See `text-index` for the canonical shape; `link-grid` names the page-level pattern. |
+| `flyout-nav` | bar: brand + `.nav-desk` link row + CTA + burger; mobile menu is the `.nav-links.nav-flyout` sheet (scrim, `.nav-close`, `.nav-group` link sections, docked CTA) | `chrome` | The ONLY nav for new plans — the mobile menu is always an overlay flyout, never a dropdown (N.flyout, P.13). `nav-bar` stays legal vocabulary. |
+| `modal-form` | pitch + `.flyout-open` trigger; the form rides in a `.flyout` dialog (scrim, centred panel, `.flyout-close`) | `act` | The folded end-act — binds when the DNA's disclosure-tier is `folded`; `form-panel` stays the open alternative. |
 
 **Banned as composition rows:** icon+heading+text card grids *used as
 a substitute for a real composition*; "eyebrow + h2 + 3-col card"

@@ -51,18 +51,17 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
-      {list.length > 0 &&       <div>
-        {list.length > 0 &&         <div>
+      <div>
+        <div>
           {list.length > 0 && <div class="row between">
             <div class="row gap-fluid-m">{(list || []).map((it) => (
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               ))}</div>
           </div>}
+          {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">&#9776;</span></button>}
         </div>
-        }
       </div>
-      }
       {act.label &&       <div>
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href={act.href}>{act.label}</a></p>}
       </div>
