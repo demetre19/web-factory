@@ -384,7 +384,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             align-items: stretch; gap: var(--space-xs); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
             display: flex; align-items: center;
-            min-height: 3rem; white-space: normal; }
+            /* ~3rem rows: fs-1 line + space-s padding, tap-sized
+               without declaring a height (A.1) */
+            padding-block: var(--space-s);
+            white-space: normal; }
   /* under 30rem the sheet is the whole viewport — a docked rail
      leaves no room for a strip of page behind it */
   @media (max-width: 30rem) {
