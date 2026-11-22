@@ -44,6 +44,9 @@ PACK_META = {
     "modal": ("modal-dialog", "modal", ["modal"], "modal"),
     "checkout": ("commerce-flow", "commerce", ["commerce"], "commerce"),
     "patternfolio": (None, "screen", ["screen"], "screen"),
+    "proofatlas": ("proof-testimonial", "proof", ["social proof"], "social proof"),
+    "meridian": ("data-display", "element", ["data"], "data display"),
+    "hero": ("hero-section", "hero", ["hero"], "hero"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -179,6 +182,31 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if has("h-full") and has("right-0", "left-0"):
             return "modal-slide-over", "high"
         return "modal-dialog", "high"
+    if baseline == "proof-testimonial":
+        low = c.lower()
+        if has("★", "stars", "star-") or ("rating" in low and "review" in low):
+            return "proof-rating", "medium"
+        if "case" in low and has("study", "results"):
+            return "proof-case", "medium"
+        if c.count("<svg") >= 8 or has("logo-cloud", "logos"):
+            return "proof-logo-cloud", "medium"
+        if has("blockquote"):
+            return "proof-quote", "medium"
+        return "proof-testimonial", "high"
+    if baseline == "data-display":
+        if "<table" in c:
+            return "data-table", "high"
+        if has("role=\"progressbar\"", "stepper", "aria-current=\"step\""):
+            return "data-stepper", "medium"
+        if has("grid-cols-2", "grid-cols-3", "grid-cols-4"):
+            return "data-grid", "medium"
+        return "data-display", "high"
+    if baseline == "hero-section":
+        if has("absolute inset-0", "object-cover", "min-h-screen"):
+            return "hero-media-bg", "medium"
+        if has("grid-cols-2", "lg:grid-cols-2", "md:grid-cols-2"):
+            return "hero-split", "high"
+        return "hero-centered", "high"
     return baseline, "high" if baseline in ("auth-form", "empty-state") else "low"
 
 

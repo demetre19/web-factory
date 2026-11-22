@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-280 exemplars generated with Google AI Studio / Claude (operator-supplied
+340 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -29,8 +29,19 @@ calls).
 | `order-confirm/` | order-confirm | 5 | checkout-components |
 | `product-page/` | product-page | 2 | checkout-components |
 | `commerce-flow/` | commerce-flow | 3 | checkout-components |
+| `proof-testimonial/` | proof-testimonial | 5 | proofatlas |
+| `proof-rating/` | proof-rating | 8 | proofatlas |
+| `proof-logo-cloud/` | proof-logo-cloud | 3 | proofatlas |
+| `proof-quote/` | proof-quote | 4 | proofatlas |
+| `data-display/` | data-display | 11 | meridian-data-components |
+| `data-grid/` | data-grid | 3 | meridian-data-components |
+| `data-table/` | data-table | 4 | meridian-data-components |
+| `data-stepper/` | data-stepper | 2 | meridian-data-components |
+| `hero-centered/` | hero-centered | 6 | hero-architecture |
+| `hero-split/` | hero-split | 3 | hero-architecture |
+| `hero-media-bg/` | hero-media-bg | 11 | hero-architecture |
 
-Counts are per `tags.json` (280 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (340 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state` and
 `modal-*` classes are new to this corpus (generator families, distinct from
