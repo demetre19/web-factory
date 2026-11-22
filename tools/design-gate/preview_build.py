@@ -18,6 +18,7 @@ data-disclosure ride Section.astro) — parsers are fixed to read real
 rendered markup, never the components.
 """
 import hashlib
+import itertools
 import json
 import os
 import re
@@ -639,7 +640,12 @@ def emit_layouts(ctx):
         # effective split-media row pops the next asset in document
         # order — an overridden split with no image would present a
         # dead split the shipped page never produces
+        # split-media spends the unspent intake in document order;
+        # the extras post-pass then cycles the non-hero pool — the
+        # same spend order the plan applies (P.7)
         left = iter(list(brief_media[1:]))
+        cyc = itertools.cycle(
+            list(brief_media[1:]) or list(brief_media))
         ov_rows = []
         for c, row in contracts_rows:
             cc = dict(c)
@@ -656,7 +662,8 @@ def emit_layouts(ctx):
             if eff == 'split-media':
                 m = next(left, None)
                 if m:
-                    r2['image'] = {'src': m['src'], 'alt': m['alt']}
+                    r2['image'] = {'src': m.get('src') or m.get('file'),
+                                   'alt': m.get('alt', '')}
                     r2['media_ratio'] = '4:3'
                     # data-ratio rides the contract's locked card —
                     # the shipped media box locks the same ratio the
@@ -676,12 +683,16 @@ def emit_layouts(ctx):
         # shipped page renders (P.7)
         for cc2, r3 in ov_rows:
             if (r3.get('image')
-                    or cc2.get('composition') not in PC.MEDIA_PANE_EXTRA):
+                    or cc2.get('composition') not in PC.MEDIA_PANE_EXTRA
+                    or cc2.get('recipe') not in PC.MEDIA_PANE_RECIPES):
                 continue
             m = next(left, None)
             if m is None:
+                m = next(cyc, None)
+            if m is None:
                 break
-            r3['image'] = {'src': m['src'], 'alt': m['alt']}
+            r3['image'] = {'src': m.get('src') or m.get('file'),
+                           'alt': m.get('alt', '')}
             r3['media_ratio'] = '4:3'
             cc2['media_ratio'] = '4:3'
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
