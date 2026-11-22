@@ -1,0 +1,850 @@
+{
+ "id": "gm-modal-dialog-modal-atlas-modal1",
+ "kind": "genmenu",
+ "model": "perplexity/pplx-decider-v1.3:free",
+ "labels": {
+  "colour-scheme": {
+   "allele": "light",
+   "confidence": 0.626,
+   "p": {
+    "light": 0.75,
+    "dark": 0.042,
+    "mixed": 0.208
+   }
+  },
+  "colour-temperature": {
+   "allele": "cool",
+   "confidence": 0.382,
+   "p": {
+    "neutral": 0.401,
+    "warm": 0.011,
+    "cool": 0.588
+   }
+  },
+  "saturation": {
+   "allele": "muted",
+   "confidence": 0.772,
+   "p": {
+    "muted": 0.848,
+    "medium": 0.133,
+    "vivid": 0.019
+   }
+  },
+  "accent-hue-family": {
+   "allele": "neutral",
+   "confidence": 0.923,
+   "p": {
+    "blue": 0.029,
+    "green": 0.023,
+    "red": 0.004,
+    "orange": 0.002,
+    "yellow": 0.002,
+    "purple": 0.003,
+    "pink": 0.002,
+    "neutral": 0.932,
+    "multi": 0.004
+   }
+  },
+  "surface-tone": {
+   "allele": "white",
+   "confidence": 0.637,
+   "p": {
+    "white": 0.71,
+    "off-white": 0.111,
+    "grey": 0.056,
+    "tinted": 0.047,
+    "dark": 0.076
+   }
+  },
+  "contrast-level": {
+   "allele": "high",
+   "confidence": 0.25,
+   "p": {
+    "low": 0.129,
+    "medium": 0.371,
+    "high": 0.5
+   }
+  },
+  "gradient-use": {
+   "allele": "none",
+   "confidence": 0.931,
+   "p": {
+    "none": 0.948,
+    "subtle": 0.045,
+    "feature": 0.004,
+    "dominant": 0.002
+   }
+  },
+  "margin-generosity": {
+   "allele": "regular",
+   "confidence": 0.629,
+   "p": {
+    "tight": 0.045,
+    "regular": 0.722,
+    "generous": 0.192,
+    "airy": 0.04
+   }
+  },
+  "card-padding": {
+   "allele": "regular",
+   "confidence": 0.581,
+   "p": {
+    "compact": 0.016,
+    "regular": 0.721,
+    "spacious": 0.264
+   }
+  },
+  "section-gap-rhythm": {
+   "allele": "uniform",
+   "confidence": 0.106,
+   "p": {
+    "uniform": 0.404,
+    "alternating": 0.329,
+    "progressive": 0.266
+   }
+  },
+  "content-measure": {
+   "allele": "narrow",
+   "confidence": 0.75,
+   "p": {
+    "narrow": 0.812,
+    "medium": 0.167,
+    "wide": 0.01,
+    "full-bleed": 0.011
+   }
+  },
+  "alignment-grammar": {
+   "allele": "left-grid",
+   "confidence": 0.203,
+   "p": {
+    "left-grid": 0.402,
+    "centered": 0.135,
+    "mixed": 0.365,
+    "asymmetric": 0.097
+   }
+  },
+  "type-mood": {
+   "allele": "neo-grotesque",
+   "confidence": 0.714,
+   "p": {
+    "neo-grotesque": 0.762,
+    "geometric": 0.087,
+    "humanist": 0.064,
+    "serif-editorial": 0.009,
+    "mono-technical": 0.07,
+    "display": 0.008
+   }
+  },
+  "case-style": {
+   "allele": "sentence",
+   "confidence": 0.518,
+   "p": {
+    "sentence": 0.638,
+    "title": 0.211,
+    "upper": 0.013,
+    "mixed": 0.138
+   }
+  },
+  "letter-spacing": {
+   "allele": "tight",
+   "confidence": 0.533,
+   "p": {
+    "normal": 0.303,
+    "tight": 0.688,
+    "wide": 0.009
+   }
+  },
+  "weight-contrast": {
+   "allele": "medium",
+   "confidence": 0.355,
+   "p": {
+    "low": 0.302,
+    "medium": 0.57,
+    "high": 0.127
+   }
+  },
+  "text-scale-drama": {
+   "allele": "subtle",
+   "confidence": 0.676,
+   "p": {
+    "subtle": 0.784,
+    "moderate": 0.209,
+    "extreme": 0.007
+   }
+  },
+  "border-treatment": {
+   "allele": "hairline",
+   "confidence": 0.883,
+   "p": {
+    "none": 0.032,
+    "hairline": 0.912,
+    "prominent": 0.052,
+    "double": 0.003
+   }
+  },
+  "elevation-style": {
+   "allele": "soft-shadow",
+   "confidence": 0.777,
+   "p": {
+    "flat": 0.022,
+    "soft-shadow": 0.822,
+    "hard-shadow": 0.057,
+    "layered": 0.096,
+    "glow": 0.003
+   }
+  },
+  "surface-texture": {
+   "allele": "solid",
+   "confidence": 0.673,
+   "p": {
+    "solid": 0.738,
+    "gradient": 0.017,
+    "glass": 0.229,
+    "pattern": 0.008,
+    "image": 0.008
+   }
+  },
+  "container-style": {
+   "allele": "bordered",
+   "confidence": 0.348,
+   "p": {
+    "cards": 0.425,
+    "bands": 0.008,
+    "panels": 0.077,
+    "frameless": 0.011,
+    "bordered": 0.479
+   }
+  },
+  "divider-language": {
+   "allele": "none",
+   "confidence": 0.386,
+   "p": {
+    "lines": 0.064,
+    "spacing": 0.38,
+    "ornament": 0.017,
+    "none": 0.539
+   }
+  },
+  "image-framing": {
+   "allele": "card-contained",
+   "confidence": 0.388,
+   "p": {
+    "full-bleed": 0.078,
+    "card-contained": 0.49,
+    "masked": 0.024,
+    "arched": 0.008,
+    "cropped": 0.018,
+    "none": 0.382
+   }
+  },
+  "icon-language": {
+   "allele": "line",
+   "confidence": 0.914,
+   "p": {
+    "none": 0.045,
+    "line": 0.929,
+    "solid": 0.017,
+    "duotone": 0.005,
+    "emoji": 0.003,
+    "3d": 0.002
+   }
+  },
+  "fx-classes-present": {
+   "allele": "mixed",
+   "confidence": 0.252,
+   "p": {
+    "none": 0.015,
+    "animate": 0.005,
+    "transition": 0.279,
+    "hover-fx": 0.3,
+    "mixed": 0.402
+   }
+  },
+  "hover-behavior": {
+   "allele": "color",
+   "confidence": 0.459,
+   "p": {
+    "none": 0.014,
+    "subtle": 0.408,
+    "lift": 0.008,
+    "scale": 0.003,
+    "color": 0.567
+   }
+  },
+  "transition-tempo": {
+   "allele": "fast",
+   "confidence": 0.527,
+   "p": {
+    "instant": 0.106,
+    "fast": 0.646,
+    "eased": 0.232,
+    "slow": 0.016
+   }
+  },
+  "vibe-primary": {
+   "allele": "professional",
+   "confidence": 0.549,
+   "p": {
+    "professional": 0.605,
+    "playful": 0.005,
+    "premium": 0.013,
+    "bold": 0.004,
+    "technical": 0.121,
+    "warm": 0.004,
+    "editorial": 0.003,
+    "minimal": 0.245
+   }
+  },
+  "brand-weight": {
+   "allele": "generic",
+   "confidence": 0.487,
+   "p": {
+    "generic": 0.658,
+    "moderate": 0.289,
+    "strong": 0.053
+   }
+  },
+  "copy-tone": {
+   "allele": "technical",
+   "confidence": 0.682,
+   "p": {
+    "formal": 0.201,
+    "conversational": 0.045,
+    "technical": 0.746,
+    "marketing": 0.006,
+    "poetic": 0.002
+   }
+  },
+  "header-style": {
+   "allele": "split",
+   "confidence": 0.753,
+   "p": {
+    "bar": 0.073,
+    "split": 0.802,
+    "centered": 0.027,
+    "overlay": 0.024,
+    "none": 0.074
+   }
+  },
+  "footer-style": {
+   "allele": "none",
+   "confidence": 0.423,
+   "p": {
+    "simple": 0.402,
+    "columns": 0.021,
+    "mega": 0.01,
+    "none": 0.568
+   }
+  },
+  "sticky-elements": {
+   "allele": "none",
+   "confidence": 0.884,
+   "p": {
+    "none": 0.913,
+    "header": 0.01,
+    "cta": 0.071,
+    "nav": 0.006
+   }
+  },
+  "overlay-language": {
+   "allele": "modal",
+   "confidence": 0.96,
+   "p": {
+    "modal": 0.97,
+    "drawer": 0.006,
+    "toast": 0.008,
+    "none": 0.016
+   }
+  },
+  "breadcrumb-presence": {
+   "allele": "no",
+   "confidence": 0.99,
+   "p": {
+    "yes": 0.005,
+    "no": 0.995
+   }
+  },
+  "button-style": {
+   "allele": "mixed",
+   "confidence": 0.576,
+   "p": {
+    "filled": 0.23,
+    "outline": 0.083,
+    "ghost": 0.017,
+    "pill": 0.008,
+    "mixed": 0.661
+   }
+  },
+  "button-size-presence": {
+   "allele": "medium",
+   "confidence": 0.367,
+   "p": {
+    "small": 0.292,
+    "medium": 0.525,
+    "large": 0.013,
+    "mixed": 0.169
+   }
+  },
+  "input-style": {
+   "allele": "boxed",
+   "confidence": 0.667,
+   "p": {
+    "boxed": 0.75,
+    "underline": 0.011,
+    "filled": 0.178,
+    "none": 0.06
+   }
+  },
+  "control-density": {
+   "allele": "regular",
+   "confidence": 0.621,
+   "p": {
+    "sparse": 0.214,
+    "regular": 0.747,
+    "dense": 0.039
+   }
+  },
+  "ornament-level": {
+   "allele": "moderate",
+   "confidence": 0.341,
+   "p": {
+    "none": 0.043,
+    "minimal": 0.439,
+    "moderate": 0.506,
+    "heavy": 0.012
+   }
+  },
+  "badge-chip-usage": {
+   "allele": "none",
+   "confidence": 0.515,
+   "p": {
+    "none": 0.677,
+    "few": 0.317,
+    "many": 0.007
+   }
+  },
+  "illustration-detail": {
+   "allele": "none",
+   "confidence": 0.45,
+   "p": {
+    "none": 0.633,
+    "simple": 0.331,
+    "detailed": 0.035
+   }
+  },
+  "3d-depth": {
+   "allele": "prominent",
+   "confidence": 0.308,
+   "p": {
+    "flat": 0.051,
+    "subtle": 0.41,
+    "prominent": 0.538
+   }
+  },
+  "symmetry": {
+   "allele": "symmetric",
+   "confidence": 0.166,
+   "p": {
+    "symmetric": 0.444,
+    "asymmetric": 0.225,
+    "mixed": 0.331
+   }
+  },
+  "visual-hierarchy-strength": {
+   "allele": "clear",
+   "confidence": 0.728,
+   "p": {
+    "weak": 0.052,
+    "clear": 0.819,
+    "strong": 0.13
+   }
+  },
+  "scroll-experience": {
+   "allele": "static",
+   "confidence": 0.91,
+   "p": {
+    "static": 0.933,
+    "snap": 0.022,
+    "parallax": 0.023,
+    "immersive": 0.023
+   }
+  },
+  "card-shape-variety": {
+   "allele": "uniform",
+   "confidence": 0.311,
+   "p": {
+    "uniform": 0.54,
+    "varied": 0.287,
+    "none": 0.172
+   }
+  },
+  "polish-level": {
+   "allele": "polished",
+   "confidence": 0.348,
+   "p": {
+    "rough": 0.009,
+    "production": 0.425,
+    "polished": 0.566
+   }
+  },
+  "copy-density": {
+   "allele": "sparse",
+   "confidence": 0.364,
+   "p": {
+    "sparse": 0.576,
+    "balanced": 0.414,
+    "dense": 0.01
+   }
+  },
+  "data-heaviness": {
+   "allele": "light",
+   "confidence": 0.465,
+   "p": {
+    "none": 0.228,
+    "light": 0.599,
+    "moderate": 0.157,
+    "heavy": 0.016
+   }
+  },
+  "social-proof-density": {
+   "allele": "none",
+   "confidence": 0.836,
+   "p": {
+    "none": 0.877,
+    "light": 0.085,
+    "moderate": 0.034,
+    "heavy": 0.004
+   }
+  },
+  "personalization-feel": {
+   "allele": "generic",
+   "confidence": 0.508,
+   "p": {
+    "generic": 0.672,
+    "tailored": 0.281,
+    "immersive": 0.047
+   }
+  },
+  "domain-vertical": {
+   "allele": "dev-tools",
+   "confidence": 0.747,
+   "p": {
+    "saas": 0.159,
+    "ecommerce": 0.008,
+    "editorial": 0.006,
+    "portfolio": 0.004,
+    "agency": 0.005,
+    "fintech": 0.005,
+    "health": 0.002,
+    "education": 0.003,
+    "gaming": 0.002,
+    "nonprofit": 0.002,
+    "dev-tools": 0.768,
+    "other": 0.037
+   }
+  },
+  "audience": {
+   "allele": "developer",
+   "confidence": 0.563,
+   "p": {
+    "consumer": 0.047,
+    "b2b": 0.15,
+    "developer": 0.65,
+    "internal": 0.092,
+    "mixed": 0.061
+   }
+  },
+  "device-feel": {
+   "allele": "responsive",
+   "confidence": 0.286,
+   "p": {
+    "desktop": 0.324,
+    "mobile-first": 0.152,
+    "responsive": 0.524
+   }
+  },
+  "era-signature": {
+   "allele": "current-2025",
+   "confidence": 0.681,
+   "p": {
+    "retro": 0.01,
+    "current-2025": 0.76,
+    "emerging": 0.035,
+    "timeless": 0.195
+   }
+  },
+  "layout-archetype": {
+   "allele": "stacked-center",
+   "confidence": 0.846,
+   "p": {
+    "split-media": 0.006,
+    "stacked-center": 0.856,
+    "full-bleed-media": 0.006,
+    "card-grid-2": 0.002,
+    "card-grid-3": 0.002,
+    "card-grid-4": 0.002,
+    "editorial-single": 0.077,
+    "sequence-steps": 0.002,
+    "accordion-list": 0.002,
+    "table-matrix": 0.002,
+    "horizontal-band": 0.012,
+    "immersive-media": 0.004,
+    "asymmetric-offset": 0.003,
+    "masonry-grid": 0.002,
+    "split-form": 0.02,
+    "carousel-track": 0.002
+   }
+  },
+  "page-macro-structure": {
+   "allele": "promise-detail-act",
+   "confidence": 0.549,
+   "p": {
+    "promise-proof-how-act": 0.033,
+    "promise-detail-act": 0.614,
+    "editorial-longform": 0.011,
+    "catalog-first": 0.009,
+    "conversion-short": 0.317,
+    "immersive-narrative": 0.005,
+    "index-grid-first": 0.011
+   }
+  },
+  "density-tier": {
+   "allele": "regular",
+   "confidence": 0.608,
+   "p": {
+    "compact": 0.22,
+    "regular": 0.738,
+    "spacious": 0.041
+   }
+  },
+  "image-led-ratio": {
+   "allele": "text-led",
+   "confidence": 0.88,
+   "p": {
+    "text-led": 0.91,
+    "balanced": 0.064,
+    "image-led": 0.014,
+    "media-first": 0.012
+   }
+  },
+  "type-contrast": {
+   "allele": "medium",
+   "confidence": 0.386,
+   "p": {
+    "low": 0.127,
+    "medium": 0.54,
+    "high": 0.313,
+    "extreme": 0.02
+   }
+  },
+  "display-face": {
+   "allele": "sans",
+   "confidence": 0.802,
+   "p": {
+    "serif": 0.009,
+    "sans": 0.851,
+    "mono": 0.015,
+    "mixed": 0.125
+   }
+  },
+  "radius-personality": {
+   "allele": "soft",
+   "confidence": 0.772,
+   "p": {
+    "sharp": 0.063,
+    "soft": 0.829,
+    "pill": 0.013,
+    "mixed": 0.095
+   }
+  },
+  "surface-rhythm": {
+   "allele": "single-surface",
+   "confidence": 0.446,
+   "p": {
+    "single-surface": 0.557,
+    "alternating": 0.059,
+    "one-contrast-moment": 0.293,
+    "dark-dominant": 0.084,
+    "media-interleaved": 0.008
+   }
+  },
+  "cta-restraint": {
+   "allele": "dual",
+   "confidence": 0.607,
+   "p": {
+    "single-primary": 0.284,
+    "dual": 0.705,
+    "multi": 0.007,
+    "none": 0.004
+   }
+  },
+  "cta-rank": {
+   "allele": "hero",
+   "confidence": 0.287,
+   "p": {
+    "hero": 0.525,
+    "section": 0.322,
+    "none": 0.153
+   }
+  },
+  "disclosure-tier": {
+   "allele": "open",
+   "confidence": 0.718,
+   "p": {
+    "open": 0.788,
+    "folded": 0.176,
+    "tabbed": 0.024,
+    "carousel": 0.011
+   }
+  },
+  "nav-pattern": {
+   "allele": "bar",
+   "confidence": 0.358,
+   "p": {
+    "bar": 0.487,
+    "bar-cta": 0.232,
+    "mega": 0.035,
+    "hamburger-only": 0.178,
+    "side": 0.068
+   }
+  },
+  "motion-tier": {
+   "allele": "subtle",
+   "confidence": 0.591,
+   "p": {
+    "static": 0.292,
+    "subtle": 0.693,
+    "expressive": 0.01,
+    "cinematic": 0.005
+   }
+  },
+  "proof-type": {
+   "allele": "none",
+   "confidence": 0.897,
+   "p": {
+    "none": 0.91,
+    "logos": 0.009,
+    "ratings": 0.006,
+    "testimonials": 0.007,
+    "certs": 0.051,
+    "stats": 0.007,
+    "case-study": 0.005,
+    "mixed": 0.005
+   }
+  },
+  "media-treatment": {
+   "allele": "none",
+   "confidence": 0.701,
+   "p": {
+    "none": 0.751,
+    "photo": 0.015,
+    "screenshot": 0.189,
+    "illustration": 0.031,
+    "3d-render": 0.009,
+    "video": 0.005
+   }
+  },
+  "columns": {
+   "allele": "1",
+   "confidence": 0.863,
+   "p": {
+    "1": 0.897,
+    "2": 0.08,
+    "3": 0.013,
+    "4": 0.01
+   }
+  },
+  "heading-form": {
+   "allele": "query",
+   "confidence": 0.955,
+   "p": {
+    "claim": 0.014,
+    "query": 0.97,
+    "label": 0.016
+   }
+  },
+  "whitespace-band": {
+   "allele": "medium",
+   "confidence": 0.795,
+   "p": {
+    "tight": 0.089,
+    "medium": 0.863,
+    "airy": 0.048
+   }
+  },
+  "gallery-mode": {
+   "allele": "lightbox",
+   "confidence": 0.567,
+   "p": {
+    "single-hero": 0.238,
+    "grid": 0.066,
+    "lightbox": 0.654,
+    "carousel": 0.023,
+    "before-after": 0.019
+   }
+  },
+  "form-presence": {
+   "allele": "panel",
+   "confidence": 0.762,
+   "p": {
+    "none": 0.055,
+    "inline": 0.104,
+    "panel": 0.841
+   }
+  },
+  "mood-energy": {
+   "allele": "calm",
+   "confidence": 0.404,
+   "p": {
+    "still": 0.193,
+    "calm": 0.523,
+    "balanced": 0.263,
+    "lively": 0.011,
+    "energetic": 0.009
+   }
+  },
+  "mood-register": {
+   "allele": "everyday",
+   "confidence": 0.234,
+   "p": {
+    "everyday": 0.387,
+    "approachable": 0.325,
+    "premium": 0.262,
+    "luxury": 0.009,
+    "ultra": 0.017
+   }
+  },
+  "image-style": {
+   "allele": "minimal",
+   "confidence": 0.563,
+   "p": {
+    "minimal": 0.635,
+    "editorial": 0.028,
+    "luxury": 0.012,
+    "bold-graphic": 0.012,
+    "playful": 0.009,
+    "technical": 0.304
+   }
+  },
+  "trend": {
+   "allele": "snug-simple",
+   "confidence": 0.299,
+   "p": {
+    "none": 0.147,
+    "cute-alism": 0.008,
+    "dial-up-delight": 0.008,
+    "resonant-stark": 0.071,
+    "frosted-touch": 0.366,
+    "light-skeuomorphism": 0.011,
+    "ai-personalisation": 0.004,
+    "snug-simple": 0.369,
+    "human-scribble": 0.003,
+    "dated": 0.012
+   }
+  }
+ },
+ "usage": {
+  "in": 32838,
+  "out": 80
+ }
+}
