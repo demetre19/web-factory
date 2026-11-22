@@ -27,6 +27,7 @@ variants differ by a CSS-var override bundle, never by a rebuild.
 """
 import datetime, html.parser, json, os, re, sys, \
     threading, urllib.parse
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -1695,6 +1696,42 @@ def emit_bank_previews(pd):
     return out
 
 
+def run_ingest(pipeline, url='', html='', css_text=''):
+    '''URL/pasted-HTML ingest — slices the page into section
+    fragments, vectorises each through the shared genmenu parser
+    (Tree + sniff_topology), ranks bank exemplars and drafts a
+    DNA-shaped style guess. No browser for paste mode.'''
+    import ingest_url
+    return ingest_url.ingest(url=url or None, html=html or None,
+                             css_text=css_text or '')
+
+
+def ingest_donor(pipeline, name, payload):
+    '''Stage an ingested style as a donor draft inside the pipeline
+    dir — INGEST-DRAFTS/<slug>.json, next to SAVED-SYSTEMS.'''
+    ctx = G.Ctx(pipeline)
+    pd = ctx.dir
+    if not os.path.isdir(pd):
+        return 1, f'pipeline {pipeline} not found', None
+    nm = re.sub(r'[^A-Za-z0-9_-]+', '-', (name or '').strip())[:60]        .strip('-')
+    if not nm:
+        return 1, 'name needed', None
+    dd = Path(pd) / 'INGEST-DRAFTS'
+    dd.mkdir(exist_ok=True)
+    rec = {'name': nm, 'kind': 'ingest-donor',
+           'url': (payload or {}).get('url') or '',
+           'dna_draft': (payload or {}).get('dna_draft') or {},
+           'fragments': [f for f in
+                         ((payload or {}).get('fragments') or [])
+                         if isinstance(f, dict)],
+           'created': datetime.datetime.now().isoformat(
+               timespec='seconds')}
+    fp = dd / (nm.lower() + '.json')
+    fp.write_text(json.dumps(rec, indent=1))
+    return 0, f'donor draft saved → {fp.name}', {
+        'name': nm, 'file': str(fp)}
+
+
 def save_system(pipeline, name, mode=None):
     """Persist the current combination — vibe + element + section
     picks + the chosen default mode — as a named design-system file
@@ -1894,6 +1931,31 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .railgrp{font:700 10.5px var(--font);letter-spacing:.08em;
      color:var(--muted);margin:16px 8px 6px;text-transform:uppercase}
 .railgrp:first-child{margin-top:2px}
+/* --- ingest --- */
+.ingbar{display:grid;gap:8px;margin:14px 0;max-width:640px}
+.ingbar input,.ingbar textarea{background:var(--bg-2);color:var(--ink);
+  border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+  font:13px var(--font)}
+.ingbar textarea{min-height:90px;font-family:var(--mono,monospace)}
+.dnacard{background:var(--bg-2);border:1px solid var(--line);
+  border-radius:12px;padding:14px 16px;max-width:720px}
+.dnacard h2{margin:0 0 10px;font:700 15px var(--font)}
+.dnapal{display:flex;gap:6px;margin-bottom:8px}
+.sw2{width:26px;height:26px;border-radius:6px;
+  border:1px solid var(--line)}
+.dnarow{font:12.5px var(--font);color:var(--ink-dim);margin:5px 0}
+.dnarow input{background:var(--bg-3,var(--bg-2));color:var(--ink);
+  border:1px solid var(--line);border-radius:6px;padding:6px 10px;
+  font:12.5px var(--font)}
+.ingrow{display:grid;grid-template-columns:180px 1fr;gap:10px;
+  padding:9px 12px;border:1px solid var(--line);border-radius:10px;
+  margin:6px 0;background:var(--bg-2);max-width:920px}
+.ingkind{font:700 12px var(--font)}
+.ingkind span{display:block;font-weight:400;color:var(--ink-dim);
+  margin-top:2px}
+.ingmatch{font:12.5px var(--font)}
+.ingmatch .score{color:var(--acc,#8ab)}
+.ingwhy{color:var(--ink-dim);font-size:11px;margin-top:2px}
 .ritem{display:flex;align-items:center;gap:10px;width:100%;
      padding:8px 10px;border:0;border-radius:var(--r-sm);
      background:transparent;color:var(--ink);cursor:pointer;
@@ -2168,6 +2230,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<div class="railgrp">3 · Sections · Elements</div>';
     Object.keys(DATA.galleries).forEach(function(k){
       item('g',DATA.galleries[k])});
+    h+='<div class="railgrp">Ingest</div>';
+    h+='<button class="ritem'+(CUR==='ingest'?' on':'')+
+       '" data-k="ingest" data-t="b">'+ICON.news+
+       '<span>URL · HTML</span></button>';
     h+='<div class="railgrp">Saved</div>';
     h+='<button class="ritem'+(CUR==='saved'?' on':'')+
        '" data-k="saved" data-t="b">'+ICON.doc+
@@ -2354,8 +2420,71 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         CUR='vibe';rail();board()}});
   }
 
+  var INGEST=null;
+  function ingestPane(el){
+    el.innerHTML='<h1>Ingest — style donor</h1>'+
+      '<div class="desc">Drop a URL or paste page HTML — the page is '+
+      'sliced into sections, vectorised through the shared bank '+
+      'parser, matched against the exemplar bank, and its style '+
+      'extracted into a draft DNA.</div>'+
+      '<div class="ingbar"><input id="ingUrl" placeholder='+
+      '"https://site.example/page">'+
+      '<textarea id="ingHtml" placeholder='+
+      '"…or paste full page HTML here"></textarea>'+
+      '<button id="ingGo" class="abtn">Ingest</button></div>'+
+      '<div id="ingOut"></div>';
+    el.querySelector('#ingGo').onclick=function(){
+      var u=el.querySelector('#ingUrl').value.trim(),
+          h=el.querySelector('#ingHtml').value.trim();
+      if(!u&&!h){toast('need a URL or pasted HTML');return}
+      el.querySelector('#ingOut').innerHTML=
+        '<div class="desc">ingesting…</div>';
+      api('/ingest',{pipeline:PIPELINE,url:u,html:h}).then(function(j){
+        INGEST=j;renderIngest(el,j)})};
+  }
+  function renderIngest(el,j){
+    var out=el.querySelector('#ingOut');
+    if(j.error){out.innerHTML='<div class="empty">'+esc(j.error)+
+      '</div>';return}
+    var d=j.dna_draft||{},ty=d.type||{},h='';
+    h+='<div class="dnacard"><h2>Draft DNA</h2><div class="dnapal">';
+    (d.palette||[]).forEach(function(c){
+      h+='<span class="sw2" title="'+esc(c)+'" style="background:'+
+         esc(c)+'"></span>'});
+    h+='</div><div class="dnarow">ink <b>'+esc(d.ink||'—')+
+       '</b> · surface <b>'+esc(d.surface||'—')+
+       '</b> · accent <b>'+esc(d.accent_guess||'—')+'</b>'+
+       ' · radius ≈ <b>'+esc(''+d.radius_px_median)+
+       'px</b> · density <b>'+esc(d.density_guess||'')+'</b></div>';
+    if((ty.families||[]).length)
+      h+='<div class="dnarow">type '+
+         esc(ty.families.slice(0,3).join(' · '))+'</div>';
+    h+='<div class="dnarow"><input id="donorName" placeholder='+
+       '"donor-name"> <button id="donorBtn" class="abtn">'+
+       'Use as style donor</button></div></div>';
+    h+='<h2 style="margin:18px 0 8px">Sections ('+
+       (j.fragments||[]).length+')</h2>';
+    (j.fragments||[]).forEach(function(f){
+      var m=(f.matches||[])[0]||{};
+      h+='<div class="ingrow"><div class="ingkind">'+esc(f.tag)+
+         '<span>'+esc(f.kind)+' → '+esc(f.topo_guess||'?')+
+         '</span></div><div class="ingmatch">'+
+         (m.cls?('<b>'+esc(m.cls)+'</b> '+esc(m.slug)+
+          ' <span class="score">'+m.score+'</span>'):'—')+
+         '<div class="ingwhy">'+esc(((m.why||[])[0])||'')+'</div>'+
+         '</div></div>'});
+    out.innerHTML=h;
+    var nb=out.querySelector('#donorBtn');
+    if(nb)nb.onclick=function(){
+      var nm=out.querySelector('#donorName').value.trim();
+      if(!nm){toast('name the donor');return}
+      api('/ingest-donor',{pipeline:PIPELINE,name:nm,data:INGEST})
+        .then(function(r){toast(r.message||'saved')})};
+  }
+
   function board(){
     var el=document.getElementById('board');
+    if(CUR==='ingest'){ingestPane(el);return}
     if(CUR==='saved'){
       el.innerHTML='<h1>Saved systems</h1>'+savedView();
       wireSaved();return}

@@ -880,6 +880,21 @@ def _handler():
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt,
                             'system': rec if code == 0 else None})
+            elif self.path == '/ingest':
+                import picker_app
+                res = picker_app.run_ingest(
+                    body.get('pipeline', ''),
+                    body.get('url', ''), body.get('html', ''),
+                    body.get('css', ''))
+                self._send(200, res)
+            elif self.path == '/ingest-donor':
+                import picker_app
+                code, txt, rec = picker_app.ingest_donor(
+                    body.get('pipeline', ''), body.get('name', ''),
+                    body.get('data'))
+                self._send(200 if code == 0 else 400,
+                           {'ok': code == 0, 'message': txt,
+                            'donor': rec if code == 0 else None})
             elif self.path == '/confirm':
                 code, txt = confirm_approval(body.get('wave', ''),
                                              body.get('pipeline', ''))
