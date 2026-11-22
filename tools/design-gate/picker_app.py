@@ -130,6 +130,7 @@ VIBE_FAMILIES = {
                  '.wf-hero-1 figure.ratio-portrait img{height:100%;'
                  'width:100%;object-fit:cover}'
                  '.wf-hero-1 .hero-1__content{position:relative;'
+                 'z-index:1;'
                  'padding:var(--space-l);width:100%;text-align:center;'
                  'background:linear-gradient(0deg,rgb(0 0 0/.78),'
                  'rgb(0 0 0/.30))}'
@@ -137,7 +138,7 @@ VIBE_FAMILIES = {
                  '.wf-hero-1 .hero-1__cta p{display:flex;'
                  'justify-content:center}',
         'css': '--radius:0;--primitive-radius:0;--r-card:0;'
-               '--action-primary:#22D3EE;--action-primary-hover:#0891B2;'
+               '--action-primary:#0E7490;--action-primary-hover:#155E75;'
                '--shadow-card:none;--shadow-pop:none;',
         'css_dark': '--bg-canvas:#0B0B0D;--bg-surface:#131316;'
                     '--bg-elevated:#1B1B1F;--border-default:#2A2A30;'
@@ -1202,9 +1203,10 @@ def _site_roles(pd):
     out = {}
     for mode, pat in (('light', r':root\s*\{'),
                       ('dark', r'\[data-theme=dark\]\s*\{')):
-        m = re.search(pat + r'([^}]*)\}', css)
-        decls = dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
-                                m.group(1))) if m else {}
+        decls = {}
+        for m in re.finditer(pat + r'([^}]*)\}', css):
+            decls.update(dict(re.findall(r'--([\w-]+)\s*:\s*([^;]+);',
+                                         m.group(1))))
         row = {}
         for role in _CONTRAST_ROLES:
             v, seen = decls.get(role), 0
@@ -1212,6 +1214,17 @@ def _site_roles(pd):
                 seen += 1
                 r2 = re.match(r'var\(--([\w-]+)', v.strip())
                 v = decls.get(r2.group(1)) if r2 else None
+            # color-mix(in oklch, A tint%, B amt%): resolve the
+            # dominant var — the mix only tints ~5%, close enough
+            # for an audit flag
+            while v and v.strip().startswith('color-mix(') and seen < 12:
+                seen += 1
+                r2 = re.search(r'var\(--([\w-]+)', v)
+                v = decls.get(r2.group(1)) if r2 else None
+                while v and v.strip().startswith('var(') and seen < 12:
+                    seen += 1
+                    r2 = re.match(r'var\(--([\w-]+)', v.strip())
+                    v = decls.get(r2.group(1)) if r2 else None
             if v:
                 row[role] = v.strip()
         out[mode] = row
@@ -1652,7 +1665,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      color:var(--muted)}
 .card .cb{position:relative;background:var(--bg);min-height:64px}
 .card .cb iframe{display:block;width:100%;height:430px;border:0}
-.card.mobile .cb iframe{max-width:340px;margin:0 auto;
+.card.mobile .cb iframe{max-width:var(--vw,340px);margin:0 auto;
      border-left:1px solid var(--line);
      border-right:1px solid var(--line)}
 .card .cb .noprev{display:grid;place-items:center;height:120px;
