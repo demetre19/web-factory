@@ -925,7 +925,12 @@ def _handler():
                 import picker_app
                 code, txt = picker_app.record_element_pick(
                     body.get('pipeline', ''), body.get('element', ''),
-                    body.get('variant', ''))
+                    body.get('variant', ''), body.get('bundle'))
+            elif self.path == '/vibe-resolve':
+                import picker_app
+                self._send(200, picker_app.vibe_resolve(
+                    body.get('pipeline', ''),
+                    body.get('genes') or {}))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
             elif self.path == '/save-system':
