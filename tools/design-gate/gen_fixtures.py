@@ -1234,6 +1234,8 @@ MUT = {
  'check_type_system': mut(('REPL','DESIGN-PLAN.md','body: "Inter"','body: "SerifX"'),('APPEND','DESIGN-PLAN.md','\n  extra: {fonts: {c: "Third"}}')),
  'check_system_enums': mut(('REPL','DESIGN-PLAN.md','family: lucide','family: wingdings')),
  'check_tailwind_derivation': mut(('REPL','TOKENS.json','#0055AA','#ABCDEF')),
+ 'check_look_tells': mut(('REPL','TOKENS.json','"ink": "#221F1B"','"ink": "#6366F1"')),
+ 'check_type_bounds': mut(('REPL','TOKENS.json','"type.ratio": 1.25','"type.ratio": 1.12')),
  'check_token_layer': mut(('SET','site/src/components/AdLib.astro',
     '<div style="color:#123456">x</div>')),
  'check_grid_tracks': mut(('REPL','site/dist/home/index.html',
