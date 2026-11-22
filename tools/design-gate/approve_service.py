@@ -993,12 +993,15 @@ def _handler():
                                      'message': 'bad wave or pipeline'})
                     return
                 try:
+                    env = dict(os.environ)
+                    env.pop('PIPELINE_RUN', None)
                     r = _sp.run(
                         [sys.executable,
                          os.path.join(os.path.dirname(
                              os.path.abspath(__file__)), 'gate.py'),
                          wv, pd],
-                        capture_output=True, text=True, timeout=600)
+                        capture_output=True, text=True, timeout=600,
+                        env=env)
                     tail = (r.stdout + r.stderr).strip()[-3000:]
                     self._send(200 if r.returncode == 0 else 400,
                                {'ok': r.returncode == 0,
