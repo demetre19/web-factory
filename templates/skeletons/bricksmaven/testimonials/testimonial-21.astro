@@ -82,12 +82,13 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="testimonial-21-content__profile">
-                  <div class="testimonial-21-content__meta">
-                    <p class="text-fluid-0">{it.text}</p>
-                    <p class="text-fluid-0">{it.text}</p>
+                {it.tag &&                 <div class="testimonial-21-content__profile">
+                  {it.tag &&                   <div class="testimonial-21-content__meta">
+                    {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                   </div>
+                  }
                 </div>
+                }
               </div>
             ))}</div>}
         </div>

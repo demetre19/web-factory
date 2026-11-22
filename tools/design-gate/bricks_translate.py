@@ -568,11 +568,15 @@ def translate(payload, stem):
                         _sigs[i] == _sigs[i % _k]
                         for i in range(len(_sigs))):
                     seen['ivar_head'] = False
+                    seen['ivar_text'] = False
+                    seen['ivar_tag'] = False
                     _body = ''.join(render(children[i], depth + 3, 'it',
                                            card=cat not in ('header',
                                                             'footer'))
                                     for i in range(_k))
                     seen.pop('ivar_head', None)
+                    seen.pop('ivar_text', None)
+                    seen.pop('ivar_tag', None)
                     if not _body.strip():
                         continue   # an item template that emits
                         # nothing is not a loop
@@ -928,6 +932,12 @@ def translate(payload, stem):
                     # The chip sits ABOVE the title, never inline in
                     # it — an icon inside the heading reads as stray
                     # glyph spacing, not the ring element.
+                    if seen.get('ivar_head'):
+                        # a second title slot in the same item (card
+                        # meta / author row) binds the item's meta —
+                        # never the title again
+                        return (f'{pad}{{{ivar}.meta && <p class="meta '
+                                f'text-fluid--1">{{{ivar}.meta}}</p>}}\n')
                     seen['ivar_head'] = True
                     if not seen.get('ivar_icon_el'):
                         return (f'{pad}{{{ivar}.icon && '
@@ -937,6 +947,16 @@ def translate(payload, stem):
                                 f'</{tag}>\n')
                     txt = f'{{{ivar}.term || {ivar}.title}}'
                 else:
+                    if seen.get('ivar_tag'):
+                        return ''
+                    if seen.get('ivar_text'):
+                        # a second body slot binds the item's tag
+                        # (category / attribution) — never the body
+                        # text twice; further body slots bind nothing
+                        seen['ivar_tag'] = True
+                        return (f'{pad}{{{ivar}.tag && <span class="tag '
+                                f'text-fluid--1">{{{ivar}.tag}}</span>}}\n')
+                    seen['ivar_text'] = True
                     txt = f'{{{ivar}.text}}'
                     # Q.2 — an item's first text slot inside a card
                     # IS its title when no heading slot exists: emit
@@ -1044,10 +1064,14 @@ def translate(payload, stem):
             _subtree_names(children[0], _itnames)
             seen['ivar_icon_el'] = 'icon' in _itnames
             seen['ivar_head'] = False
+            seen['ivar_text'] = False
+            seen['ivar_tag'] = False
             _item = render(children[0], depth + 3, var,
                            card=cat not in ('header', 'footer'))
             seen.pop('ivar_icon_el', None)
             seen.pop('ivar_head', None)
+            seen.pop('ivar_text', None)
+            seen.pop('ivar_tag', None)
             if _item.strip():
                 if _own_grid:
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>'
@@ -1123,12 +1147,16 @@ def translate(payload, stem):
                 _subtree_names(run[0], _itnames)
                 seen['ivar_icon_el'] = 'icon' in _itnames
                 seen['ivar_head'] = False
+                seen['ivar_text'] = False
+                seen['ivar_tag'] = False
                 _item = ''.join(render(r, depth + 3, var,
                                        card=cat not in ('header',
                                                         'footer'))
                                 for r in run[:1])
                 seen.pop('ivar_icon_el', None)
                 seen.pop('ivar_head', None)
+                seen.pop('ivar_text', None)
+                seen.pop('ivar_tag', None)
                 if not _item.strip():
                     continue   # an item template that emits nothing
                     # is not a loop — nothing to guard or render

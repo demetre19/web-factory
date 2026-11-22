@@ -152,16 +152,20 @@ PAGE_BOARDS = [
     {'id': 'location', 'title': 'Location', 'icon': 'pin',
      'desc': 'Location page layouts — area hero, coverage/suburbs, local '
              'proof, services, FAQ, contact; location content only '
-             '(lorem where the plan has none). Pick signs the location '
+             '(role-shaped placeholder where the plan has none). Pick '
+             'signs the location '
              'composition'},
     {'id': 'contact', 'title': 'Contact', 'icon': 'mail',
      'desc': 'Contact page layouts — page hero, form + details, map/area, '
-             'hours, FAQ; contact content only (lorem where the plan has '
-             'none). Pick signs the contact composition'},
+             'hours, FAQ; contact content only (role-shaped placeholder '
+             'where the plan has none). Pick signs the contact '
+             'composition'},
     {'id': 'blog', 'title': 'Blog', 'icon': 'news',
-     'desc': 'Blog page layouts — page hero, featured post, listing, '
-             'categories, newsletter; guide links from the plan, lorem '
-             'elsewhere. Pick signs the blog composition'},
+     'desc': 'Blog page layouts — page header, featured post, post '
+             'list with author/date/read time and tags, categories, '
+             'newsletter; guide links from the plan, role-shaped '
+             'placeholder posts elsewhere. Pick signs the blog '
+             'composition'},
 ]
 
 # galleries whose cards pick an element (element → comp ids)
@@ -1702,7 +1706,7 @@ def _page_boards(pd):
                             for o in b['options']],
                 'pick': picks.get('layout:' + board),
                 'page_type': b.get('page_type'),
-                'lorem_slots': b.get('lorem_slots'),
+                'placeholder_slots': b.get('placeholder_slots'),
                 'sources': {r: c.get('sources')
                             for r, c in (b.get('content') or {}).items()}}}
     return out

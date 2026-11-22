@@ -83,7 +83,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                           <h4 class="text-fluid-1">{it2.term || it2.title}</h4>
                           <p class="text-fluid-0">{it2.text}</p>
                         </div>
-                        <p class="text-fluid-0">{it2.text}</p>
+                        {it2.tag && <span class="tag text-fluid--1">{it2.tag}</span>}
                       </div>
                     </div>
                   ))}</div>}

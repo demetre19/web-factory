@@ -1998,6 +1998,12 @@ def main():
         'Area</a></div></header><section data-sec="hero" '
         'data-comp="hero-x"><h2>No h1</h2><div style="width:900px">'
         'wide</div></section></body></html>'))
+    # check_board_roles — fail: a blog option with only a hero (no
+    # featured/listing/categories/newsletter sections)
+    MUT['check_board_roles'] = mut(('SET',
+        'boards/site/dist/preview/lo-blog-01/index.html',
+        '<!doctype html><html><body><section data-sec="hero" '
+        'data-comp="hero-x"><h1>Guides</h1></section></body></html>'))
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)

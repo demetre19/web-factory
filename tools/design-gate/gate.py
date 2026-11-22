@@ -15461,6 +15461,14 @@ _BR_1280 = r"""() => {
  const hero = document.querySelector('[data-sec="hero"]');
  if (hero) out.media = Math.max(0, ...[...hero.querySelectorAll('img,iframe,video')].filter(vis)
    .map(i => { const r = i.getBoundingClientRect(); return Math.round(Math.max(0, Math.min(r.bottom, 900) - Math.max(r.top, 0)) * r.width); }));
+ out.imgov = [];
+ document.querySelectorAll('[data-sec]').forEach(s => {
+   const im = [...s.querySelectorAll('img')].filter(vis).filter(e => !e.closest('.media-bg'))
+     .map(e => e.getBoundingClientRect()).filter(r => r.width > 20 && r.height > 20);
+   for (let i = 0; i < im.length; i++) for (let j = i + 1; j < im.length; j++) {
+     const a = im[i], b = im[j];
+     const w = Math.min(a.right, b.right) - Math.max(a.left, b.left), h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+     if (w > 8 && h > 8 && w * h > 0.05 * Math.min(a.width * a.height, b.width * b.height)) out.imgov.push(s.dataset.comp || s.dataset.sec); } });
  if (hdr) {
    const items = [...hdr.querySelectorAll('a,button,input,img,svg,.logo')].filter(vis);
    const tops = [];
@@ -15565,7 +15573,8 @@ def check_board_render(ctx):
     burger hidden ≥60rem, no search field in the bar, no duplicated or
     overlapping items. BR.2 exactly one visible <h1>. BR.3 no
     horizontal overflow at 390px. BR.4 ≥ BR_MIN_CLUSTERS distinct
-    1280×900 first screens per board (all, when a board has fewer)."""
+    1280×900 first screens per board (all, when a board has fewer).
+    BR.5 no two content images overlap inside one section."""
     dist = os.path.join(ctx.dir, 'boards', 'site', 'dist')
     pv = os.path.join(dist, 'preview')
     if not os.path.isdir(pv):
@@ -15597,6 +15606,9 @@ def check_board_render(ctx):
                      'visible <h1> — exactly one')
         if r.get('o390'):
             f.append(f"BR.3 lo-{oid}: overflows 390px ({r['o390']})")
+        if r.get('imgov'):
+            f.append(f"BR.5 lo-{oid}: images overlap in "
+                     f"{', '.join(sorted(set(r['imgov'])))}")
     boards = {}
     for oid in oids:
         boards.setdefault(oid.rsplit('-', 1)[0], []).append(oid)
@@ -15606,6 +15618,46 @@ def check_board_render(ctx):
         if len(cl) < need:
             f.append(f'BR.4 board {board}: {len(cl)} distinct 1280x900 '
                      f'first screens < {need}')
+    return f
+
+
+# BRR — the section roles every option of a board must carry: a
+# board option looks like its page type (a blog option lists posts,
+# a contact option carries the form, details, hours and map)
+BOARD_ROLES = {
+    'home': ('hero', 'services', 'process', 'proof', 'cta'),
+    'service': ('hero', 'scope', 'process', 'pricing', 'proof'),
+    'location': ('hero', 'coverage', 'proof', 'services', 'contact'),
+    'contact': ('hero', 'form', 'map', 'hours'),
+    'blog': ('hero', 'featured', 'listing', 'categories', 'newsletter'),
+}
+
+
+def check_board_roles(ctx):
+    """BRR.1 — every built page-board option (boards/site/dist/
+    preview/lo-<board>-<nn>) carries a non-empty section for each
+    role BOARD_ROLES requires of its page type."""
+    pv = os.path.join(ctx.dir, 'boards', 'site', 'dist', 'preview')
+    if not os.path.isdir(pv):
+        return []
+    f = []
+    for d in sorted(os.listdir(pv)):
+        m = re.match(r'lo-([a-z]+)-\d+$', d)
+        fp = os.path.join(pv, d, 'index.html')
+        if not m or m.group(1) not in BOARD_ROLES \
+                or not os.path.isfile(fp):
+            continue
+        html = open(fp, encoding='utf-8', errors='replace').read()
+        have = set()
+        for sm in re.finditer(r'<(section|header|footer)\b[^>]*'
+                              r'data-sec="([^"]+)"[^>]*>(.*?)</\1>',
+                              html, re.S):
+            if re.sub(r'<[^>]+>|\s+', '', sm.group(3)):
+                have.add(sm.group(2))
+        miss = [r for r in BOARD_ROLES[m.group(1)] if r not in have]
+        if miss:
+            f.append(f'BRR.1 {d}: missing {m.group(1)} section role(s) '
+                     f'{", ".join(miss)}')
     return f
 
 
@@ -15707,6 +15759,7 @@ WARN_CHECKS = {'w7': [check_serial_build_warn]}
 WAVE_CHECKS['w7'].append(check_parallel_build)
 WAVE_CHECKS['w8'].append(check_bounded_review)
 WAVE_CHECKS['w3'].append(check_board_render)
+WAVE_CHECKS['w3'].append(check_board_roles)
 WAVE_CHECKS['w8'].append(check_measured_evidence)
 WAVE_CHECKS['w8'].append(check_judged_verdict)
 

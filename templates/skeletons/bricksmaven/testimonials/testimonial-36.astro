@@ -103,9 +103,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   </div>
                   <div class="testimonial-36-card__head">
                     <div class="testimonial-36-card__client-data">
-                      {it.icon && <IconChip name={it.icon} />}
-                      <custom class="text-fluid-1">{it.term || it.title}</custom>
-                      <p class="text-fluid-0">{it.text}</p>
+                      {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
+                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                     </div>
                   </div>
                 </div>
@@ -127,9 +126,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   </div>
                   <div class="testimonial-36-card__head">
                     <div class="testimonial-36-card__client-data">
-                      {it.icon && <IconChip name={it.icon} />}
-                      <custom class="text-fluid-1">{it.term || it.title}</custom>
-                      <p class="text-fluid-0">{it.text}</p>
+                      {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
+                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                     </div>
                   </div>
                 </div>

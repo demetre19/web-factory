@@ -92,9 +92,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                     </div>
                     <div class="testimonial-36-card__head">
                       <div class="testimonial-36-card__client-data">
-                        {it2.icon && <IconChip name={it2.icon} />}
-                        <custom class="text-fluid-1">{it2.term || it2.title}</custom>
-                        <p class="text-fluid-0">{it2.text}</p>
+                        {it2.meta && <p class="meta text-fluid--1">{it2.meta}</p>}
+                        {it2.tag && <span class="tag text-fluid--1">{it2.tag}</span>}
                       </div>
                     </div>
                   </div>

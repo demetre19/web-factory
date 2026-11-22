@@ -93,11 +93,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                     <h3 class="text-fluid-1">{it.term || it.title}</h3>
                     <div class="bm-testimonial-39-card__name-date">
                       <p class="text-fluid-0">{it.text}</p>
-                      <p class="text-fluid-0">{it.text}</p>
+                      {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                     </div>
                   </div>
                 </div>
-                <p class="text-fluid-0">{it.text}</p>
               </div>
             ))}</div>
         </div>}

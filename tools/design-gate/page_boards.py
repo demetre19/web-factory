@@ -12,7 +12,8 @@ each preview a page TYPE, not the one emitted article. This producer:
      matches plan_from_copy.page_type_of(COPY); every other board binds
      site facts the plan carries (brand, phone, CTA, nav/footer links,
      guide links, coverage suburbs, brief media). A slot with no
-     role-appropriate source gets lorem ipsum (sized per slot) — never
+     role-appropriate source gets role-shaped placeholder copy built
+     from the brand and topic (post titles, hours rows) — never
      another page's copy. Every slot records its source;
   3. options — candidates per role retrieved from the bricksmaven bank
      (+ catalog gold exemplars), ranked by retrieval.vibe_fit — the
@@ -126,8 +127,8 @@ PROGRAM = {
     ],
     'contact': [
         ('header', 'chrome', ['headers'], _NAV_CATALOG),
-        ('hero', 'promise', ['header-page-sections', 'hero'],
-         list(_HERO_CATALOG_TOPO)),
+        # a contact page opens on a page header or a form-led band
+        ('hero', 'promise', ['header-page-sections', 'contact'], []),
         ('form', 'act', ['contact'], ['contact-panel', 'form-panel']),
         ('map', 'detail', [], ['map-finder', 'link-grid']),
         ('hours', 'detail', ['counter'], ['stat-band', 'text-index']),
@@ -136,10 +137,14 @@ PROGRAM = {
     ],
     'blog': [
         ('header', 'chrome', ['headers'], _NAV_CATALOG),
-        ('hero', 'promise', ['header-page-sections', 'hero'],
-         list(_HERO_CATALOG_TOPO)),
+        # a blog opens on a page header / article intro — never a
+        # home-style media hero
+        # (or opens straight on the post index: an archive intro + its
+        # first post cards — the h1 is the blog's own title)
+        ('hero', 'promise', ['header-page-sections', 'blog-archive'],
+         ['hero-act-merge']),
         ('featured', 'detail', ['blog-section'], ['split-media']),
-        ('listing', 'how', ['blog-archive'], ['cards-n']),
+        ('listing', 'how', ['blog-archive', 'blog-section'], ['cards-n']),
         ('categories', 'detail', ['category-section'], ['link-grid']),
         ('newsletter', 'act', ['newsletter'], ['newsletter-band']),
         ('footer', 'chrome', ['footer'], ['footer-bar']),
@@ -156,30 +161,190 @@ ROLE_INTENTS = {
     'coverage': ('coverage',), 'services': ('scope',),
 }
 
-_LOREM = ('lorem ipsum dolor sit amet consectetur adipiscing elit sed do '
-          'eiusmod tempor incididunt ut labore et dolore magna aliqua ut '
-          'enim ad minim veniam quis nostrud exercitation ullamco laboris '
-          'nisi aliquip ex ea commodo consequat duis aute irure in '
-          'reprehenderit voluptate velit esse cillum fugiat nulla '
-          'pariatur excepteur sint occaecat cupidatat non proident sunt '
-          'culpa qui officia deserunt mollit anim id est laborum').split()
+# role-shaped placeholder copy — a slot with no role-appropriate plan
+# content renders words shaped like the role (post titles, hours rows,
+# attributions) built from the site's brand and topic; never another
+# page's prose. Every such slot records source 'placeholder'.
+_PH_HEAD = {
+    ('home', 'hero'): '{topic}',
+    ('home', 'services'): 'What {brand} looks after',
+    ('home', 'process'): 'How a {brand} contract runs',
+    ('home', 'proof'): 'What building managers say',
+    ('home', 'stats'): '{brand} at a glance',
+    ('home', 'cta'): 'Get a quote from {brand}',
+    ('service', 'hero'): '{topic}',
+    ('service', 'benefits'): 'Why committees choose {brand}',
+    ('service', 'process'): 'How the service runs',
+    ('service', 'scope'): "What's included",
+    ('service', 'pricing'): 'Pricing and quotes',
+    ('service', 'proof'): 'Results on recent buildings',
+    ('service', 'faq'): '{topic} questions',
+    ('service', 'cta'): 'Book a site walk-through',
+    ('location', 'hero'): '{brand} across {area}',
+    ('location', 'coverage'): 'Suburbs we cover',
+    ('location', 'proof'): 'Trusted by local building managers',
+    ('location', 'services'): 'Services in {area}',
+    ('location', 'faq'): 'Questions from {area} buildings',
+    ('location', 'contact'): 'Talk to the {area} team',
+    ('contact', 'hero'): 'Contact {brand}',
+    ('contact', 'form'): 'Request a quote',
+    ('contact', 'map'): 'Where we work',
+    ('contact', 'hours'): 'Office hours',
+    ('contact', 'faq'): 'Before you get in touch',
+    ('blog', 'hero'): '{topic} guides and news',
+    ('blog', 'featured'): 'Featured guide',
+    ('blog', 'listing'): 'Latest articles',
+    ('blog', 'categories'): 'Browse by topic',
+    ('blog', 'newsletter'): 'Cleaning tips from {brand}, monthly',
+}
+_PH_FS = {
+    'hero': '{brand}: scheduled visits, one coordinator and a report '
+            'after every visit.',
+    'services': 'Every area on one scope, cleaned on the schedule your '
+                'committee signs off.',
+    'benefits': 'One contact, one schedule and a visit report your '
+                'committee can check.',
+    'process': 'From the first walk-through to the monthly report, '
+               'each step is written down.',
+    'scope': 'The areas and tasks every scheduled visit covers.',
+    'pricing': 'Every quote follows a free site walk-through — no '
+               'surprises on the invoice.',
+    'proof': 'What building managers say after the first months.',
+    'stats': 'The numbers behind a {brand} contract.',
+    'cta': 'Tell us about the building and we will book a '
+           'walk-through.',
+    'coverage': '{brand} crews work across {area} every week.',
+    'contact': 'Call or send the form — a local coordinator replies '
+               'the same business day.',
+    'form': 'Tell us about the building — we reply within one business '
+            'day.',
+    'map': 'Crews based across {area}, scheduled by suburb.',
+    'hours': 'Phones and email are answered during these hours.',
+    'faq': 'Straight answers to what committees ask before they sign.',
+    'featured': 'The guide committees read before they change '
+                'cleaners.',
+    'listing': 'Practical articles from the {brand} team.',
+    'categories': 'Find articles by the question you are trying to '
+                  'answer.',
+    'newsletter': 'One email a month with checklists and schedule '
+                  'tips. No spam.',
+}
+_PH_POSTS = ('How often should common areas be cleaned?',
+             'A cleaning checklist for committees',
+             'Choosing a cleaning contractor',
+             'What a cleaning quote should include',
+             'Common-area hygiene between visits',
+             'Preparing the building for an inspection',
+             'Carpark and bin-room cleaning explained',
+             'Reading a cleaning visit report')
+_PH_TAGS = ('Guides', 'Checklists', 'Compliance', 'News')
+_PH_ITEMS = {
+    'process': [('Site walk-through', 'We inspect every common area '
+                 'with the building manager.'),
+                ('Fixed scope and quote', 'Areas, tasks and frequency '
+                 'agreed in writing.'),
+                ('Scheduled visits', 'The same crew on the same days '
+                 'each week.'),
+                ('Visit report', 'Photos and notes after every visit.')],
+    'scope': [('Foyers and lobbies', 'Floors, glass, letterboxes and '
+               'touch points.'),
+              ('Lifts', 'Doors, panels, mirrors and tracks.'),
+              ('Carparks', 'Sweeping, spot cleaning and bin areas.'),
+              ('Amenities', 'Bathrooms, gyms and shared rooms.')],
+    'pricing': [('Weekly contract', 'Scheduled visits with a monthly '
+                 'report.', 'Quote after walk-through'),
+                ('Periodic deep clean', 'Carpet, pressure washing and '
+                 'high areas.', 'Quarterly or yearly'),
+                ('One-off clean', 'Move-ins, events and inspections.',
+                 'Fixed price')],
+    'proof': [('Building manager', '"Complaints stopped within the '
+               'first month."', '{suburb0}'),
+              ('Strata committee chair', '"The visit reports make our '
+               'meetings shorter."', '{suburb1}'),
+              ('Facility manager', '"Same crew every week — they know '
+               'the building."', '{suburb2}')],
+    'stats': [('Weekly', 'scheduled visits'),
+              ('1 report', 'after every visit'),
+              ('Eco', 'cleaning products'),
+              ('Audited', 'visit quality')],
+    'hours': [('Monday – Friday', '7:00 am – 6:00 pm'),
+              ('Saturday', '8:00 am – 1:00 pm'),
+              ('Sunday', 'Closed'),
+              ('After-hours', 'Emergency line for contracted '
+               'buildings')],
+    'benefits': [('One point of contact', 'A coordinator who knows '
+                  'your building.'),
+                 ('Fixed schedule', 'Visits on agreed days, never '
+                  'skipped.'),
+                 ('Proof of work', 'A report after every visit.')],
+}
+_PH_QA = [('How often should common areas be cleaned?',
+           'Most buildings need weekly visits; busy foyers and bin '
+           'rooms may need more.'),
+          ('Do you work after hours?',
+           'Yes — visits can be scheduled early, late or on weekends.'),
+          ('What does a quote include?',
+           'Every area, task and frequency, agreed after a free '
+           'walk-through.'),
+          ('How do we raise a complaint?',
+           'Call or email your coordinator — issues are fixed on the '
+           'next visit or sooner.')]
 
-# slot → lorem length in words (sensible per slot)
-_LOREM_WORDS = {'heading': 5, 'fs': 22, 'term': 2, 'text': 12,
-                'q': 7, 'a': 18}
+
+def _ph_vars(facts, _copy=None):
+    brand = facts.get('plan.site.brand') or 'The team'
+    topic = (facts.get('plan.topic') or brand).strip()
+    subs = [s['term'] for s in facts.get('plan.suburbs') or []]
+    area = facts.get('plan.area') or (' & '.join(subs[:2]) if subs
+                                       else 'your area')
+    return {'brand': brand, 'topic': topic, 'topic_l': topic.lower(),
+            'area': area, 'suburbs': subs}
 
 
-def _lorem(seed, slot):
-    n = _LOREM_WORDS.get(slot, 10)
-    h = int(hashlib.sha256(seed.encode()).hexdigest(), 16)
-    start = h % len(_LOREM)
-    words = [_LOREM[(start + i * 7) % len(_LOREM)] for i in range(n)]
-    txt = ' '.join(words)
-    if slot in ('heading', 'term', 'q'):
-        txt = txt.capitalize() + ('?' if slot == 'q' else '')
-    else:
-        txt = txt.capitalize() + '.'
-    return txt
+def _ph(tpl, v, i=0):
+    subs = v['suburbs'] or [v['area']]
+    return tpl.format(brand=v['brand'], topic=v['topic'],
+                      topic_l=v['topic_l'], area=v['area'],
+                      suburb0=subs[0 % len(subs)],
+                      suburb1=subs[1 % len(subs)],
+                      suburb2=subs[2 % len(subs)])
+
+
+def _ph_posts(v, titles=None, n=6):
+    """post cards: title, excerpt, author · date · read time, tag."""
+    titles = list(titles or []) + [_ph(t, v) for t in _PH_POSTS]
+    out = []
+    for i, t in enumerate(titles[:n]):
+        out.append({'term': t[:1].upper() + t[1:],
+                    'text': _ph(_PH_FS['listing'], v),
+                    'meta': f"{v['brand']} team · {2 + i * 3} "
+                            f"{('Mar', 'Feb', 'Jan')[i % 3]} 2026 · "
+                            f'{4 + i % 4} min read',
+                    'tag': _PH_TAGS[i % len(_PH_TAGS)]})
+    return out
+
+
+def _ph_items(board, role, v, facts):
+    if role in ('listing', 'featured'):
+        return _ph_posts(v, n=1 if role == 'featured' else 6)
+    if role == 'categories':
+        return [{'term': t, 'text': f'{3 + i * 2} articles'}
+                for i, t in enumerate(_PH_TAGS)]
+    if role in ('coverage', 'map'):
+        return [{'term': s, 'icon': 'map-pin'}
+                for s in (v['suburbs'] or [v['area']])]
+    if role == 'services':
+        return [{'term': t, 'text': x} for t, x in _PH_ITEMS['scope']]
+    rows = _PH_ITEMS.get(role) or _PH_ITEMS['benefits']
+    out = []
+    for r in rows:
+        it = {'term': _ph(r[0], v), 'text': _ph(r[1], v)}
+        if len(r) > 2:
+            it['tag'] = _ph(r[2], v)
+        if role == 'stats':
+            it['stat'] = it['term']
+        out.append(it)
+    return out
 
 
 def _sha(path):
@@ -373,6 +538,8 @@ def generate(board, genes, n=N_OPTIONS, exclude=()):
             if not pool:
                 continue
             # MMR: least-used first, vibe fit breaks ties
+            # a skeleton already carrying the hero never repeats below
+            pool = [c for c in pool if c['comp'] != hero['comp']] or pool
             best = min(pool, key=lambda c: (used[role].get(c['comp'], 0),
                                             -c['fit'], c['comp']))
             pick[role] = best
@@ -453,6 +620,9 @@ def _facts(ctx, copy):
         media = []
     return {
         'plan.site.brand': site.get('brand') or site.get('name'),
+        # the site's service topic (its primary query) names what every
+        # board is about — a fact, not any one page's prose
+        'plan.topic': (copy or {}).get('h1') or site.get('name'),
         'plan.cta': ({'label': one or cta.get('label'),
                       'href': cta.get('href')} if cta else None),
         'plan.phone': ({'label': phone or tel.get('label'),
@@ -476,7 +646,7 @@ def _facts(ctx, copy):
     }
 
 
-# per (board, role) → slot → fact key (None = lorem unless real copy)
+# per (board, role) → slot → fact key (else placeholder unless real copy)
 FACT_SLOTS = {
     ('home', 'hero'): {'heading': 'plan.site.brand', 'cta': 'plan.cta'},
     ('home', 'services'): {'items': 'plan.services'},
@@ -517,8 +687,8 @@ def _real_block(copy, rows, role, taken):
 
 def bind(ctx, board, prog, copy):
     """{role: {'block': copy-block, 'row': row-extras, 'sources':
-    {slot: source}}} — role-bound content, lorem where nothing
-    role-appropriate exists. Real COPY prose only on the real board."""
+    {slot: source}}} — role-bound content, role-shaped placeholder
+    where nothing role-appropriate exists. Real COPY prose only on the real board."""
     facts = _facts(ctx, copy)
     # home is the emitted page itself; any other board binds COPY prose
     # only when the copy's page type is that board's type
@@ -587,39 +757,49 @@ def bind(ctx, board, prog, copy):
                 blk['items'] = [{'term': 'Phone', 'text': val['label'],
                                  'href': val['href']}] + blk['items']
             src[slot] = key
-        # lorem — every role slot still unbound
+        # role-shaped placeholder — every role slot still unbound
+        v = _ph_vars(facts, None)
         if not blk['h2']:
-            blk['h2'] = _lorem(seed + ':h', 'heading')
-            src['heading'] = 'lorem'
+            blk['h2'] = _ph(_PH_HEAD.get((board, role))
+                            or role.replace('-', ' ').capitalize(), v)
+            src['heading'] = 'placeholder'
         if not blk['answer']:
-            blk['answer'] = _lorem(seed + ':fs', 'fs')
-            src['fs'] = 'lorem'
+            blk['answer'] = _ph(_PH_FS.get(role) or _PH_FS['hero'], v)
+            src['fs'] = 'placeholder'
+        if board == 'blog' and role == 'hero' and not blk['items']:
+            # a post-index first screen lists the newest posts
+            guides = [it.get('term') for it in facts['plan.guides']]
+            blk['items'] = _ph_posts(v, guides, n=3)
+            src['items'] = 'plan.guides+placeholder' if guides \
+                else 'placeholder'
         if role in _ITEM_ROLES and not blk['items']:
-            blk['items'] = [{'term': _lorem(f'{seed}:t{i}', 'term'),
-                             'text': _lorem(f'{seed}:x{i}', 'text')}
-                            for i in range(4)]
-            src['items'] = 'lorem'
-        elif blk['items'] and 'items' in src and src['items'] != 'lorem':
-            # fact items carry a title only — their description slot
-            # has no role content: lorem, recorded
+            blk['items'] = _ph_items(board, role, v, facts)
+            src['items'] = 'placeholder'
+        elif blk['items'] and src.get('items') not in (None, 'placeholder'):
+            # fact items carry a title only — posts get excerpt + meta
+            # + tag, other rows a role-shaped description
             if not any(it.get('text') for it in blk['items']):
-                for i, it in enumerate(blk['items']):
-                    it = dict(it)
-                    it['text'] = _lorem(f'{seed}:x{i}', 'text')
-                    blk['items'][i] = it
-                src['items.text'] = 'lorem'
+                if role in ('listing', 'featured'):
+                    blk['items'] = _ph_posts(
+                        v, [it.get('term') for it in blk['items']],
+                        n=1 if role == 'featured' else
+                        max(3, len(blk['items'])))
+                else:
+                    blk['items'] = [dict(it, text=_ph(
+                        _PH_FS.get(role) or _PH_FS['services'], v))
+                        for it in blk['items']]
+                src['items.text'] = 'placeholder'
         if role == 'faq' and not blk['qa']:
-            blk['qa'] = [{'q': _lorem(f'{seed}:q{i}', 'q'),
-                          'a': _lorem(f'{seed}:a{i}', 'a')}
-                         for i in range(4)]
+            blk['qa'] = [{'q': q, 'a': a} for q, a in _PH_QA]
             blk['items'] = [{'title': q['q'], 'text': q['a']}
                             for q in blk['qa']]
-            src['qa'] = 'lorem'
+            src['qa'] = 'placeholder'
         if role in ('cta', 'contact', 'form', 'newsletter', 'hero') \
                 and 'cta' not in extra:
-            extra['cta'] = {'label': _lorem(seed + ':c', 'term'),
-                            'href': '#'}
-            src['cta'] = 'lorem'
+            extra['cta'] = {'label': {'newsletter': 'Subscribe',
+                                      'hero': 'Read the latest'}
+                            .get(role, 'Get a quote'), 'href': '#'}
+            src['cta'] = 'placeholder'
         out[role] = {'block': blk, 'row': extra, 'sources': src}
     return out, real
 
@@ -676,8 +856,8 @@ def build(pd, excluded=None):
     for board in PROGRAM:
         prog, pools, opts = generate(board, genes, exclude=excluded)
         bound, real = bind(ctx, board, prog, copy)
-        lorem_n = sum(1 for b in bound.values()
-                      for s in b['sources'].values() if s == 'lorem')
+        ph_n = sum(1 for b in bound.values()
+                   for s in b['sources'].values() if s == 'placeholder')
         doc['boards'][board] = {
             'page_type': BOARD_TYPE[board],
             'real_copy': real,
@@ -686,7 +866,7 @@ def build(pd, excluded=None):
                       'candidates': [x['comp'] for x in pools[r]]}
                      for r, a, c, k in prog],
             'content': bound,
-            'lorem_slots': lorem_n,
+            'placeholder_slots': ph_n,
             'options': opts}
     return doc
 
@@ -722,7 +902,7 @@ def ensure(pd, force=False, exclude=None):
 def report(doc):
     """Acceptance lines per board: option count, distinct hero
     topology_ids, max pairwise section overlap (all / same-topology),
-    lorem slots, slot→source map."""
+    placeholder slots, slot→source map."""
     lines = []
     for board, b in doc['boards'].items():
         opts = b['options']
@@ -742,7 +922,7 @@ def report(doc):
                      f'headers={len(heads)} '
                      f'max_overlap={mx:.2f} '
                      f'max_overlap_same_topology={mx_same:.2f} '
-                     f'lorem_slots={b["lorem_slots"]} '
+                     f'placeholder_slots={b["placeholder_slots"]} '
                      f'real_copy={b["real_copy"]}')
         for role, c in b['content'].items():
             lines.append(f'    {role:11s} ' + ', '.join(

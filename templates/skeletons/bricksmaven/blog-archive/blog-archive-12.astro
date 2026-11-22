@@ -99,15 +99,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                               <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
                               {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
                             </div>
-                            <p class="text-fluid-0">{it2.text}</p>
+                            {it2.tag && <span class="tag text-fluid--1">{it2.tag}</span>}
                           </div>
                           <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>
                           {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
-                        </div>
-                        <div class="grid-auto gap-fluid-l">
-                          <div>
-                            <p class="text-fluid-0">{it2.text}</p>
-                          </div>
                         </div>
                       </div>
                     ))}</div>}
