@@ -724,12 +724,25 @@ def _picked_look(ctx, tokens):
     if not design:
         return None, {}
     entry = (gate._variant_entries(ctx) or {}).get(str(design))
+    deltas = dict(((entry or (None,))[0] or {}).get('deltas') or {})
     if not entry:
-        raise SystemExit(
-            f'pipeline_emit: w4 pick "{design}" is not a declared '
-            'variant — cannot project the look layer')
-    return design, emit_global.look_scope(
-        tokens, dict((entry[0] or {}).get('deltas') or {}))
+        # a fine-round pick: fv ids are computed by gate.assemble_fine
+        # (the pick's own deltas + ±1 nudges), persisted at fine-emit
+        # time — the served picker's ids always resolve here
+        rec = {}
+        fp = os.path.join(ctx.dir, 'FINE-VARIANTS.json')
+        if os.path.isfile(fp):
+            try:
+                rec = (json.load(open(fp)) or {}).get(str(design)) \
+                    or {}
+            except Exception:
+                rec = {}
+        if not rec:
+            raise SystemExit(
+                f'pipeline_emit: w4 pick "{design}" is not a declared '
+                'variant — cannot project the look layer')
+        deltas = dict(rec.get('deltas') or {})
+    return design, emit_global.look_scope(tokens, deltas)
 
 
 def _look_layer(design, look_vars):

@@ -10453,6 +10453,16 @@ def assemble_fine(ctx):
             'deltas': deltas,
             'wildcard_breaks': [],
             'pick_of': pick}, [])
+    # persist the fv knob vectors: a signed fine pick (fv*) must
+    # project into the shipped artifact the same way a look pick
+    # does — pipeline_emit._picked_look resolves the design id
+    # through VARIANT-GATES first, then this record (the ids only
+    # exist here — VARIANT-GATES declares look rounds only)
+    with open(os.path.join(ctx.dir, 'FINE-VARIANTS.json'), 'w') as fh:
+        json.dump({vid: {'deltas': v['deltas'], 'pick_of': v['pick_of']}
+                   for vid, (v, _fails) in variants.items()},
+                  fh, indent=1, sort_keys=True)
+        fh.write('\n')
     return preview_build.emit_variants(
         ctx, entries=variants, fname='fine.html', marker='--fine')
 
