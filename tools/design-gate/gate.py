@@ -4178,14 +4178,19 @@ def assemble_candidates(ctx):
         shot = str(c.get('shot') or c.get('screenshot') or
                    (u.replace('://', '-').replace('/', '-') + '.webp'))
         meta = f'{u} · score {sc} · {st}'
+        shot_abs = os.path.join(ctx.dir, 'preview', shot)
+        media = (f'    <img src="{shot}" alt="{u} screenshot" '
+                 f'loading="lazy" data-dark="dim">\n'
+                 if os.path.isfile(shot_abs)
+                 else '    <div class="cand-noshot" data-dark="dim"'
+                 '>no capture yet</div>\n')
         cards.append(
             f'  <article class="picker-opt'
             f'{" active" if not cards else ""}" '
             f'data-pane="c{len(cards)}" '
             f'data-candidate="{u}" data-status="{st}" '
             f'data-score="{sc}">\n'
-            f'    <img src="{shot}" alt="{u} screenshot" '
-            f'loading="lazy" data-dark="dim">\n'
+            + media +
             f'    <div class="variant-pickrow">'
             f'<span class="variant-name">{u}</span>'
             f'<form method="POST" action="/promote" '
@@ -4211,17 +4216,26 @@ def assemble_candidates(ctx):
                 + '</nav>')
     txt = (f'<!-- assembled: {h} — candidate review picker; never '
            'edit -->\n<html><head><meta name="viewport" '
-           'content="width=device-width">\n<title>Candidate sources'
+           'content="width=device-width">\n<meta charset="utf-8">'
+           '<title>Candidate sources'
            '</title>' + _preview_tw(ctx) +
            '<style>.picker-opt{display:none}'
-           '.picker-opt.active{display:block}</style></head>\n'
+           '.picker-opt.active{display:block}'
+           '.cand-noshot{aspect-ratio:16/10;display:flex;'
+           'align-items:center;justify-content:center;'
+           'background:var(--surface,#eef);color:var(--ink-2,#667);'
+           'font:600 .9em/1 system-ui;border-radius:8px}</style>'
+           '</head>\n'
            '<body>\n<h1>Candidate sources — '
            'promote to endorsed or reject</h1>\n' + tabs + '\n' +
            '\n'.join(cards) +
            '\n<script is:inline>(function(){function show(id){'
            'document.querySelectorAll(".picker-opt").forEach('
            'function(a){a.classList.toggle("active",'
-           'a.dataset.pane===id)});window.scrollTo(0,0);'
+           'a.dataset.pane===id)});'
+           'document.querySelectorAll("[data-tab]").forEach('
+           'function(x){x.classList.toggle("on",'
+           'x.dataset.tab===id)});window.scrollTo(0,0);'
            'if(history.replaceState)history.replaceState(null,"",'
            '"#"+id);}document.querySelectorAll("[data-tab]").forEach('
            'function(b){b.addEventListener("click",function(){'

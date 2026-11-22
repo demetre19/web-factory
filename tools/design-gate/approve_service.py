@@ -62,10 +62,16 @@ def _code_sha():
 
 # the file the picker page is rendered from, per wave/kind
 _PICKER_FILES = {
+    ('w1', 'candidates'): 'preview/candidates.html',
     ('w3', 'layouts'): 'preview/layouts.html',
     ('w4', 'variants'): 'preview/variants.html',
     ('w4', 'fine'): 'preview/fine.html',
 }
+
+# the last pipeline the picker served — root-absolute asset URLs
+# inside /built pages (/_astro/…, /fonts/…, /media/…) resolve
+# against its site/dist, so iframes render styled on this origin
+_LAST_PD = None
 
 
 def _nonces_dir():
@@ -442,8 +448,10 @@ def _picker_page(pipeline, wave, kind):
     wave+pipeline+current inputs, the page token, and a handler
     that POSTs /approve on a card click. Returns (code, bytes,
     error_text)."""
+    global _LAST_PD
     ctx0 = G.Ctx(pipeline)
     pd = ctx0.dir
+    _LAST_PD = pd
     rel = _PICKER_FILES.get((wave, kind))
     if not rel:
         return 404, b'', f'no {kind} picker for {wave}'
@@ -453,6 +461,60 @@ def _picker_page(pipeline, wave, kind):
         return 404, b'', (f'{rel} not found — the pipeline renders '
                           f'the picker before it stops for a pick')
     html = open(fp, encoding='utf-8', errors='replace').read()
+    if wave == 'w1':
+        # candidate review: decisions POST /promote signed into the
+        # row — not a wave pick, so no nonce; the injected script
+        # carries just the page token + pipeline binding
+        banner = (
+            '<div id="wf-banner" style="position:fixed;left:0;right:0;'
+            'bottom:0;z-index:99999;padding:10px 16px;background:'
+            '#0e1513;color:#e8f2ee;font:14px/1.45 system-ui;'
+            'box-shadow:0 -1px 6px #0004">approve or reject each '
+            'candidate — decisions are signed into '
+            'CANDIDATES.json</div>'
+            '<style>body{padding-bottom:64px}</style>')
+        meta = (f'<meta name="wf-promote" data-pipeline="{pd}" '
+                f'data-token="{_page_token()}">')
+        script = """
+<script>
+(function() {
+  var meta = document.querySelector('meta[name="wf-promote"]');
+  document.querySelectorAll('form[action="/promote"]').forEach(
+    function(f) {
+      f.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var decision = e.submitter ? e.submitter.value : '';
+        var site = f.querySelector('input[name="site"]').value;
+        var stat = f.parentElement.querySelector('.pickstat');
+        fetch('/promote', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json',
+                    'X-WF-Page-Token': meta.dataset.token},
+          body: JSON.stringify({site: site, decision: decision,
+            pipeline: meta.dataset.pipeline})
+        }).then(function(r) { return r.json(); }).then(function(j) {
+          if (j.ok || j.message || j.error === undefined) {
+            var card = f.closest('article');
+            if (stat) stat.textContent = ' ' + decision;
+            if (card) card.style.outline = '3px solid ' +
+              (decision === 'approved' ? '#00B488' : '#7a1f1f');
+            f.querySelectorAll('button').forEach(
+              function(b) { b.disabled = true; });
+          } else if (stat) {
+            stat.textContent = ' ' + (j.error || 'refused');
+          }
+        }).catch(function() {
+          if (stat) stat.textContent = ' request failed';
+        });
+      });
+    });
+})();
+</script>"""
+        inject = banner + meta + script
+        m = re.search(r'</body\s*>', html, re.I)
+        html = (html[:m.start()] + inject + html[m.start():]
+                if m else html + inject)
+        return 200, html.encode('utf-8'), ''
     nonce, err = issue_nonce(pd, wave)
     if not nonce:
         return 400, b'', f'cannot mint a pick nonce: {err}'
@@ -655,6 +717,37 @@ def _handler():
                 self.end_headers()
                 self.wfile.write(body)
                 return
+            if _LAST_PD:
+                # root-absolute asset URL inside a /built page —
+                # resolve under that pipeline's site/dist
+                fp = os.path.normpath(os.path.join(
+                    _LAST_PD, 'site', 'dist',
+                    q.path.lstrip('/')))
+                dist = os.path.join(_LAST_PD, 'site', 'dist')
+                if fp.startswith(dist + os.sep) and \
+                        os.path.isfile(fp):
+                    ext = os.path.splitext(fp)[1].lower()
+                    mime = {'.html': 'text/html; charset=utf-8',
+                            '.css': 'text/css',
+                            '.js': 'text/javascript',
+                            '.svg': 'image/svg+xml',
+                            '.png': 'image/png',
+                            '.jpg': 'image/jpeg',
+                            '.jpeg': 'image/jpeg',
+                            '.webp': 'image/webp',
+                            '.woff': 'font/woff',
+                            '.woff2': 'font/woff2',
+                            '.avif': 'image/avif'}.get(
+                                ext, 'application/octet-stream')
+                    body = open(fp, 'rb').read()
+                    self.send_response(200)
+                    self.send_header('Content-Type', mime)
+                    self.send_header('Content-Length',
+                                     str(len(body)))
+                    self.send_header('Cache-Control', 'no-store')
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
             self._send(404, {'error': 'not found'})
 
         def do_POST(self):
