@@ -1102,7 +1102,7 @@ def _doc_shot(doc_path, shots_dir, pw_browser):
     doc_dir = os.path.dirname(os.path.abspath(doc_path))
 
     def _inline(m):
-        href = _up.unquote(m.group(1))
+        href = _up.unquote(m.group(2))
         base = 'bank-preview-extra.css' if 'extra' in href \
             else 'bank-preview.css'
         fp = os.path.join(os.path.dirname(doc_dir), base)
