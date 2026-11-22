@@ -69,8 +69,10 @@ import '../styles/global.css';
     });
   });
   markHead();
-  var nl = document.querySelector('.nav-links');
   var setNav = function (open, opts) {
+    // re-queried each call — this script can run before the nav
+    // markup exists (first paint defers to DOMContentLoaded)
+    var nl = document.querySelector('.nav-links');
     if (!nl) return;
     nl.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
@@ -88,6 +90,7 @@ import '../styles/global.css';
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
+    var nl = document.querySelector('.nav-links');
     var burger = e.target && e.target.closest &&
                  e.target.closest('.burger, .nav-more');
     if (burger) {
@@ -123,6 +126,7 @@ import '../styles/global.css';
       // Esc closes with the same contract as the close control:
       // .open off, scroll lock lifted, aria-expanded reset, focus
       // handed back to the trigger (W4.1 flyout spec)
+      var nl = document.querySelector('.nav-links');
       if (nl && nl.classList.contains('open')) {
         setNav(false, { refocus: true });
       }
