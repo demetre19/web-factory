@@ -3371,11 +3371,25 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   .card .cf{grid-row:3;grid-column:1;border-top:1px solid var(--line);
     flex-direction:row;flex-wrap:wrap}
   .card .cf .crow{margin-top:0}
-  .compwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .compwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
+    display:none}
+  .compmob{display:block}
   .fxlab{display:grid;gap:4px}
   .fxsel{width:100%}
 }
 .compwrap{overflow-x:auto}
+.compmob{display:none}
+.cmp{border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+  margin:8px 0;background:var(--panel)}
+.csec{font:600 11px var(--mono);color:var(--muted);margin-bottom:6px}
+.crow2{display:flex;justify-content:space-between;gap:10px;
+  align-items:baseline;padding:3px 0;font-size:12px}
+.crow2 .olab{color:var(--muted)}
+.crow2 .o{display:inline-block;margin:1px 3px 1px 0;
+  padding:1px 7px;border:1px solid var(--line);border-radius:10px;
+  font:600 10.5px var(--mono)}
+.crow2 .o.pickd{background:var(--accent);color:var(--accent-ink);
+  border-color:var(--accent)}
 .rmgrid{display:flex;flex-direction:column;gap:14px;max-width:920px}
 .rmslot{display:grid;grid-template-columns:20px minmax(0,1fr) 30px minmax(90px,170px) 46px;
      gap:10px;align-items:center}
@@ -4026,7 +4040,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         h+='<td>'+(v?'<span class="o'+(cb.pick===o.id?' pickd':'')+'">'+esc(v)+'</span>':'—')+'</td>'});
       h+='<td>'+((cb.allowed[s]||[]).map(function(a){
         return '<span class="o">'+esc(a)+'</span>'}).join(''))+'</td></tr>'});
-    return h+'</table></div>';
+    h+='</table></div>';
+    // narrow viewports: the same matrix as stacked cards — the wide
+    // table is hidden at ≤560px so nothing overflows
+    h+='<div class="compmob">';
+    secs.forEach(function(s){
+      h+='<div class="cmp"><div class="csec">'+esc(s)+'</div>';
+      opts.forEach(function(o){
+        var v=(o.compositions||{})[s];
+        if(v)h+='<div class="crow2"><span class="olab">'+
+          esc(o.label||o.id)+'</span><span class="o'+
+          (cb.pick===o.id?' pickd':'')+'">'+esc(v)+'</span></div>'});
+      h+='<div class="crow2"><span class="olab">allowed</span><span>'+
+        ((cb.allowed[s]||[]).map(function(a){
+          return '<span class="o">'+esc(a)+'</span>'}).join(''))+
+        '</span></div></div>'});
+    return h+'</div>';
   }
 
   // saved design systems — persist + reload the combination
