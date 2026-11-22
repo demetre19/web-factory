@@ -1541,7 +1541,7 @@ def app_data(pipeline):
 
     # element galleries — emitted preview cards (+ derived geometry
     # topos on menus) + bank options the build didn't emit
-    bank_cards = emit_bank_previews(pd)
+    bank_cards, fxmap = emit_bank_previews(pd)
     galleries = {}
     for g in ELEMENT_GALLERIES:
         gcards = []
@@ -1723,7 +1723,8 @@ def app_data(pipeline):
                 'knobs': knobs},
             'waves': {'picked': picked,
                       'approvable': sorted(G.APPROVABLE)},
-            'boards': boards, 'galleries': galleries}, None
+            'boards': boards, 'galleries': galleries,
+            'fxmap': fxmap}, None
 
 
 def pipelines_index():
@@ -1837,6 +1838,48 @@ def vibe_resolve(pd, genes):
                           'tokens')}}
 
 
+_FX_PACK_TARGETS = {
+    'fx-hover': {'cards'}, 'fx-tilt': {'cards'}, 'fx-drag': {'cards'},
+    'fx-magnetic': {'cards'}, 'fx-expand': {'cards'},
+    'fx-spring': {'cards'}, 'fx-jelly': {'cards'}, 'fx-glow': {'cards'},
+    'fx-morph': {'cards', 'text'},
+    'fx-check': {'buttons'}, 'fx-rating': {'buttons'},
+    'fx-meter': {'buttons'}, 'fx-state': {'buttons'},
+    'fx-toast': {'buttons'}, 'fx-progress': {'buttons'},
+    'fx-iconmorph': {'buttons'}, 'fx-loadmorph': {'buttons'},
+    'fx-skeleton': {'buttons', 'cards'},
+    'fx-tabslide': {'headers'}, 'fx-menumorph': {'headers'},
+    'fx-marquee': {'text'}, 'fx-letter': {'text'}, 'fx-ink': {'text'},
+    'fx-outline': {'text'},
+    'fx-duotone': {'images'}, 'fx-mask': {'images'},
+    'fx-gradient': {'images'}, 'fx-liquid-wipe': {'images'},
+    'fx-parallax': {'page'}, 'fx-pinned': {'page'},
+    'fx-timeline': {'page'}, 'fx-cursor': {'page'},
+    'fx-burst': {'page'}, 'fx-compare': {'page'},
+    'fx-goo': {'any'}, 'fx-gooey': {'any'}, 'fx-ambient': {'any'},
+    'fx-blob': {'any'}, 'fx-phys': {'any'}, 'fx-particles': {'any'},
+    'fx-reveal': {'any'}, 'fx-motion': {'any'},
+}
+_FX_TARGET_KEYWORDS = (
+    ('button', 'buttons'), ('control', 'buttons'),
+    ('card', 'cards'), ('folio', 'cards'),
+    ('header', 'headers'), ('nav', 'headers'), ('foot', 'footers'),
+    ('mob-chrome', 'mobile-chrome'), ('mobfx', 'mobile-chrome'),
+    ('mob', 'mobile-chrome'), ('ktxt', 'text'), ('text', 'text'),
+    ('icfx', 'images'), ('image', 'images'),
+    ('scroll', 'page'), ('pinned', 'page'), ('parallax', 'page'),
+    ('goo', 'any'), ('ambient', 'any'), ('phys', 'any'))
+
+
+def _fx_targets(cls):
+    if cls in _FX_PACK_TARGETS:
+        return sorted(_FX_PACK_TARGETS[cls])
+    for kw, bucket in _FX_TARGET_KEYWORDS:
+        if kw in cls:
+            return [bucket]
+    return ['any']
+
+
 def emit_bank_previews(pd):
     """preview/bank/<cls>/<slug>.html — every genmenu exemplar
     rendered standalone under bank-preview.css: reference fidelity
@@ -1907,10 +1950,15 @@ def emit_bank_previews(pd):
                     'grp': 'bank · ' + cls,
                     'mobile': gid == 'menu'})
         out[gid] = cards
-    # a pick on an fx card signs the SITE-DEFAULT effect
+    # a pick on an fx card signs the SITE-DEFAULT effect; each
+    # exemplar advertises which element types it may decorate
+    fxmap = {}
     for c in out.get('fx', []):
         c['element'] = 'fx:default'
-    return out
+        c['targets'] = _fx_targets(c['grp'].split(' · ')[-1])
+        for t in c['targets']:
+            fxmap.setdefault(t, []).append(c['variant'])
+    return out, {k: sorted(v) for k, v in fxmap.items()}
 
 
 def run_ingest(pipeline, url='', html='', css_text=''):
@@ -2777,6 +2825,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .srow .spos{margin-left:auto;font:600 10.5px var(--mono);
       color:var(--muted)}
 .srow .snav{display:flex;gap:3px}
+.fxmenu{position:absolute;right:8px;top:calc(100% - 2px);z-index:60;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:10px;padding:6px;display:flex;flex-direction:column;
+  gap:2px;max-height:240px;overflow:auto;min-width:150px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.fxopt{font:500 11px var(--mono);text-align:left;padding:5px 9px;
+  border:0;border-radius:6px;background:none;color:var(--ink-dim);
+  cursor:pointer;white-space:nowrap}
+.fxopt:hover{background:var(--bg-2);color:var(--ink)}
+.fxopt.on{color:var(--ink);font-weight:700}
 .fxbtn{margin-left:6px;padding:5px 10px;border:1px solid var(--line);
   border-radius:999px;background:transparent;color:var(--muted);
   font:650 11.5px var(--font);cursor:pointer}
@@ -3274,20 +3332,53 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     return h;
   }
 
+  var FXMENU=null;
+  function fxBucket(element){
+    var e=element.replace(/^fx:/,'').replace(/^sec:/,'');
+    if(/mob/.test(e))return 'mobile-chrome';
+    if(/nav|header|men/.test(e))return 'headers';
+    if(/foot/.test(e))return 'footers';
+    if(/text|ktxt|faq|type/.test(e))return 'text';
+    if(/image|img|gallery|icon|media/.test(e))return 'images';
+    if(/btn|button|cta|control/.test(e))return 'buttons';
+    if(/scroll|page|layout/.test(e))return 'page';
+    if(/card|folio|proof|stat|compar|seq|cover|grid|modal|pricing|empty|commerce|auth|band|tiles/.test(e))return 'cards';
+    return 'any'}
   function fxToggle(b){
-    var el=b.dataset.fx,cur=DATA.picked_elements[el];
-    var v=(cur&&cur!=='none')?'none':
-          DATA.picked_elements['fx:default'];
-    if(!v){toast('pick a default effect on the Effects board first');
-      return}
-    api('/element-pick',{pipeline:PIPELINE,element:el,variant:v})
-      .then(function(j){
-        if(j.ok){
-          if(v==='none')delete DATA.picked_elements[el];
-          else DATA.picked_elements[el]=v;
-          board()}
-        else toast(j.message||'refused')});
-  }
+    if(FXMENU){FXMENU.remove();FXMENU=null}
+    var el=b.dataset.fx,bucket=fxBucket(el),
+        fxmap=DATA.fxmap||{},
+        opts=((fxmap[bucket]||[]).concat(fxmap.any||[])),
+        cur=DATA.picked_elements[el],seen={};
+    var menu=document.createElement('div');
+    menu.className='fxmenu';
+    menu.innerHTML='<button class="fxopt'+(cur==='none'?' on':'')+
+      '" data-v="none">none</button>'+
+      opts.filter(function(v){if(seen[v])return 0;seen[v]=1;return 1})
+        .map(function(v){
+        return '<button class="fxopt'+(v===cur?' on':'')+
+          '" data-v="'+esc(v)+'">'+esc(v)+'</button>'}).join('');
+    if(!opts.length)
+      menu.innerHTML+='<span class="fxopt">no effects banked '+
+        'for '+esc(bucket)+'</span>';
+    b.parentElement.style.position='relative';
+    b.parentElement.appendChild(menu);FXMENU=menu;
+    menu.querySelectorAll('.fxopt[data-v]').forEach(function(o){
+      o.onclick=function(ev){ev.stopPropagation();
+        api('/element-pick',{pipeline:PIPELINE,element:el,
+          variant:o.dataset.v}).then(function(j){
+          if(j.ok){
+            if(o.dataset.v==='none')delete DATA.picked_elements[el];
+            else DATA.picked_elements[el]=o.dataset.v;
+            board()}
+          else toast(j.message||'refused')});
+        menu.remove();FXMENU=null}});
+    setTimeout(function(){
+      document.addEventListener('click',function h(e){
+        if(menu&&!menu.contains(e.target)){menu.remove();
+          if(FXMENU===menu)FXMENU=null;
+          document.removeEventListener('click',h)}})},0)}
+
 
   function srowSwap(rowEl,d){
     var i=+rowEl.dataset.i,r=DATA.boards.page.scrub[i];
