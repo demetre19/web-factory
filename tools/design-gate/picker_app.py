@@ -1723,15 +1723,16 @@ def _hex_mix(a, b, amt):
         for x, y in zip(ta, tb))
 
 
-_FONT_NAME = re.compile(r'[^A-Za-z0-9 ._-]+')
+_FONT_BAD = re.compile(r'[<>"\'`{}();\\&]|url', re.I)
 
 
 def _clean_fonts(fams):
-    # donor font families are untrusted page CSS - strict charset so
-    # they can never break out of the style block
+    # donor font families are untrusted page CSS - strip only the
+    # chars that could break out of the style block; unicode family
+    # names (e.g. localized fonts) stay valid
     out = []
     for f in fams or []:
-        f = _FONT_NAME.sub('', str(f)).strip(' ._-')[:48]
+        f = _FONT_BAD.sub('', str(f)).strip(' ._-')[:48]
         if f and f not in out:
             out.append(f)
     return out[:3]
@@ -1753,12 +1754,18 @@ def _to_hex(v):
         except ValueError:
             return None
     m = re.match(r'rgba?\(\s*([0-9.]+)[,\s]+([0-9.]+)[,\s]+'
-                 r'([0-9.]+)', v)
+                 r'([0-9.]+)(?:[,/\s]+([0-9.]+%?))?', v)
     if m:
         try:
+            if m.group(4):
+                a = m.group(4)
+                a = float(a[:-1]) / 100 if a.endswith('%') \
+                    else float(a)
+                if a < 0.1:
+                    return None
             return '#%02x%02x%02x' % tuple(
                 max(0, min(255, int(round(float(x)))))
-                for x in m.groups())
+                for x in m.groups()[:3])
         except ValueError:
             return None
     return None
