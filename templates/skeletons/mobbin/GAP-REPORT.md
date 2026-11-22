@@ -32,8 +32,14 @@ pages at 1440w. Re-run it per group (`elements-web`, `elements-ios`,
 
 ## Remaining work
 
-- Exemplars are UNVECTORISED reference (spec.complexity = "unscored",
-  topo fields null) — the vectorisation pass fills topology_id semantics,
-  nesting_depth, direction_ratio etc. the way 33cf2599 did for sections.
+- The Mobbin-group exemplars above are UNVECTORISED reference
+  (spec.complexity = "unscored", topo fields null) — the vectorisation
+  pass fills topology_id semantics, nesting_depth, direction_ratio etc.
+- Kit spec→topo translation is COMPLETE: all 1,842 html-index exemplars
+  across flowbite / preline / reui / shadcn / hyperui now carry
+  `.topo.json` + tags rows (matched_topo + confidence vs bank
+  signatures) — produced by `vectorise_html.py` in four batches
+  (nav/interactive 169, form/feedback 398, data-display/elements 583,
+  aggregates 692). `--census` reports zero missing topos.
 - Licence: every spec marks `reference-only` — design study, not
   redistributable assets.
