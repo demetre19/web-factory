@@ -137,57 +137,18 @@ _SEM_SCOPE_CACHE = {}
 
 def _semantic_scope(tok, merged):
     """Project a knob vector to the semantic --var overrides the token
-    layer actually emits: run emit_tokens.emit + _base_css on a
-    TOKENS record whose knobs are the merged vector and diff every
-    ``--name: value`` declaration vs the site's own emit. Whatever
-    the real emit changes IS the projection — never a parallel
-    knob→css table (ROUND2 'declared but unreferenced').
-
-    Fluid-driving knobs (type.ratio/type.base/grid.gutter/
-    btn.padding_ratio/space.density_scale) need the record's `fluid`
-    block re-derived from knobs first — TOKENS pins resolved settings,
-    so a raw knob delta alone leaves the clamps unchanged. We re-derive
-    via dna_tokens.fluid_settings and apply only the fields the delta
-    moves, onto the record's own resolved settings (pinned values keep
-    winning where no delta touches them)."""
-    import re
-    import dna_tokens as _dt
-    import emit_tokens as ET
-    def decls(css):
-        return dict(re.findall(r'(--[\w-]+)\s*:\s*([^;{}]+);', css))
-    base_knobs = dict(tok.get('knobs') or {})
-    # emit_for is pure in (tok, kn) and assemble_fine probes ~19
-    # knob nudges through it — the base decls are identical every
-    # call, so memoize per token record
+    layer actually emits — emit_global.look_scope, the ONE knob→css
+    projection: emit_tokens.emit + _base_css on a TOKENS record whose
+    knobs carry the deltas (fluid re-derived the way the delta moves
+    it), diffed vs the record's own emit. Whatever the real emit
+    changes IS the projection — never a parallel knob→css table
+    (ROUND2 'declared but unreferenced'). assemble_fine probes ~19
+    knob nudges through it — memoize per (token record, vector)."""
     cache = _SEM_SCOPE_CACHE.setdefault(id(tok), {})
-    def emit_for(kn):
-        key = json.dumps(kn, sort_keys=True)
-        if key in cache:
-            return cache[key]
-        tv = json.loads(json.dumps(tok or {}))
-        tv['knobs'] = kn
-        if kn != base_knobs:
-            fs0 = _dt.fluid_settings(base_knobs)
-            fs1 = _dt.fluid_settings(kn)
-            res = dict(ET.fluid_of(tv))   # record-resolved settings
-            for k, v1 in fs1.items():
-                v0 = fs0.get(k)
-                if v0 == v1:
-                    continue
-                r = res.get(k)
-                if (isinstance(r, (int, float)) and
-                        isinstance(v0, (int, float)) and
-                        isinstance(v1, (int, float)) and v0):
-                    res[k] = r * (v1 / v0)   # scale the record's value
-                else:
-                    res[k] = v1              # enum aliases map absolute
-            tv['fluid'] = res
-        cache[key] = ET.emit(tv) + emit_global._base_css(tv)
-        return cache[key]
-
-    b = decls(emit_for(base_knobs))
-    v = decls(emit_for({**base_knobs, **merged}))
-    return {k: x.strip() for k, x in v.items() if b.get(k) != x}
+    key = json.dumps(merged or {}, sort_keys=True)
+    if key not in cache:
+        cache[key] = emit_global.look_scope(tok, merged)
+    return cache[key]
 
 
 
