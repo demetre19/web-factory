@@ -482,6 +482,186 @@ def retrieve_section(section_type, dna=None, styles=None, k=8,
             'latency_ms': round((time.time() - t0) * 1000, 1)}
 
 
+# Vibe-only axes (outside RENDER_GENES' DNA subset) that still steer
+# what a section looks like — joined into the CLIP phrase so a
+# playful/luxe/still vibe retrieves different topologies.
+_VIBE_WORD = {
+    'image-style': {'minimal': 'minimal', 'editorial': 'editorial',
+                    'luxury': 'luxury', 'bold-graphic': 'bold graphic',
+                    'playful': 'playful', 'technical': 'technical'},
+    'mood-energy': {'still': 'calm', 'calm': 'calm',
+                    'balanced': 'balanced', 'lively': 'lively',
+                    'energetic': 'energetic'},
+    'motion-tier': {'static': '', 'subtle': '', 'expressive': 'dynamic',
+                    'cinematic': 'cinematic'},
+    'disclosure-tier': {'open': '', 'folded': '',
+                        'tabbed': 'compact', 'carousel': 'carousel'},
+    'trend': {'none': '', 'dated': '',
+              'cute-alism': 'playful rounded',
+              'dial-up-delight': 'retro',
+              'resonant-stark': 'stark minimal',
+              'frosted-touch': 'glass',
+              'light-skeuomorphism': 'textured',
+              'ai-personalisation': '',
+              'snug-simple': 'simple minimal',
+              'human-scribble': 'handmade editorial'},
+}
+
+_VIBE_AXES = tuple(RENDER_GENES) + tuple(_VIBE_WORD)
+
+# Gene allele → terms a bank row's vibe/style_tags vocab may carry —
+# the meta-mode scorer when no CLIP encoder is reachable. Terms are
+# the vocabulary classify/enrich already wrote into the sidecars;
+# nothing invented per-vibe.
+_VIBE_META = {
+    'surface-rhythm': {'dark-dominant': ('dark', 'moody'),
+                       'alternating': ('alternating', 'rhythm'),
+                       'media-interleaved': ('media-rich', 'image'),
+                       'one-contrast-moment': ('minimal', 'clean'),
+                       'single-surface': ('minimal', 'clean')},
+    'whitespace-band': {'tight': ('compact', 'tight', 'dense'),
+                        'medium': ('balanced',),
+                        'airy': ('spacious', 'airy', 'open')},
+    'density-tier': {'compact': ('compact', 'dense'),
+                     'spacious': ('spacious', 'open', 'airy'),
+                     'regular': ('balanced',)},
+    'mood-register': {'premium': ('premium', 'luxury', 'sophisticated',
+                                  'elegant', 'professional'),
+                      'luxury': ('luxury', 'premium', 'elegant'),
+                      'everyday': ('friendly', 'warm', 'casual',
+                                   'everyday'),
+                      'approachable': ('warm', 'friendly',
+                                       'approachable'),
+                      'ultra': ('bold', 'dramatic', 'expressive')},
+    'mood-energy': {'still': ('calm', 'minimal', 'quiet', 'still'),
+                    'calm': ('calm', 'quiet', 'serene'),
+                    'balanced': ('balanced', 'confident'),
+                    'lively': ('lively', 'playful', 'energetic'),
+                    'energetic': ('energetic', 'bold', 'dynamic')},
+    'image-style': {'playful': ('playful', 'fun', 'cute'),
+                    'editorial': ('editorial', 'magazine'),
+                    'luxury': ('luxury', 'premium'),
+                    'bold-graphic': ('bold', 'graphic'),
+                    'minimal': ('minimal', 'clean'),
+                    'technical': ('technical', 'geometric')},
+    'type-contrast': {'extreme': ('display', 'bold'),
+                      'high': ('bold',),
+                      'low': ('minimal', 'quiet')},
+    'display-face': {'serif': ('serif', 'editorial', 'elegant'),
+                     'mono': ('technical', 'mono', 'geometric'),
+                     'sans': ('clean', 'modern', 'neo-grotesque',
+                              'sans', 'corporate'),
+                     'mixed': ('editorial', 'mixed')},
+    'radius-personality': {'sharp': ('sharp', 'geometric', 'square'),
+                           'pill': ('rounded', 'pill', 'soft'),
+                           'soft': ('soft', 'rounded'),
+                           'mixed': ('mixed',)},
+    'trend': {'cute-alism': ('playful', 'cute', 'rounded'),
+              'resonant-stark': ('minimal', 'stark'),
+              'human-scribble': ('handmade', 'editorial', 'organic'),
+              'frosted-touch': ('glass', 'frosted'),
+              'dial-up-delight': ('retro', 'vintage'),
+              'light-skeuomorphism': ('textured', 'skeuomorphic'),
+              'snug-simple': ('minimal', 'simple', 'cozy')},
+}
+
+
+def _meta_terms(row):
+    """A bank row's search vocabulary — vibe sidecar + style_tags."""
+    v = row.get('vibe') or {}
+    st = row.get('style_tags') or {}
+    terms = set()
+    for src, keys in ((v, ('style', 'mood', 'tone', 'palette_family',
+                           'whitespace_band', 'type_personality',
+                           'formality')),
+                      (st, ('style', 'mood', 'tone'))):
+        for k in keys:
+            x = src.get(k)
+            if isinstance(x, str):
+                terms.add(x.lower())
+            elif isinstance(x, (list, tuple)):
+                terms.update(str(i).lower() for i in x)
+    return terms
+
+
+def _meta_score(genes, row):
+    """Sum of matched gene→term projections — deterministic, so a
+    tie keeps bank order (stable rotation input)."""
+    terms = _meta_terms(row)
+    score = 0.0
+    for ax, m in _VIBE_META.items():
+        allele = genes.get(ax)
+        if allele and allele in m:
+            if terms & set(m[allele]):
+                score += 1.0
+    return score
+
+
+def vibe_fit(genes, section_type, k=8, styles=None, bank=None):
+    """Rank section-bank rows by fit to a VIBE gene bundle.
+
+    genes        the resolved vibe genotype — the axis→allele map a
+                 vibe preset carries (`vibe_atlas.resolve(...)['gene_map']`,
+                 `vibe_atlas.PRESETS[i]['genes']` or a raw dict). The
+                 RENDER_GENES subset plus the vibe-only axes in
+                 _VIBE_WORD project to the CLIP phrase.
+    section_type 'hero', 'cards', ... — the section-bank family to
+                 rank inside.
+    k            top-k rows — callers rotate the k for
+                 layout-to-layout diversity.
+    styles       optional style_tags.style filter (ANDed).
+    bank         optional preloaded SectionBank.
+
+    Returns the retrieve_section contract —
+    {'mode', 'section_type', 'topology_id', 'composition',
+     'ranked': [(score, render_path, topology_id)],
+     'ranked_rows': [(score, row)]} — CLIP-ranked by the phrase the
+     genes project, meta-ordered when vectors are unavailable.
+    Never a hand-picked list."""
+    t0 = time.time()
+    bank = bank or SectionBank()
+    rows = bank.filter_rows(section_type, styles)
+    out = {'mode': 'empty', 'section_type': section_type,
+           'topology_id': None, 'composition': None,
+           'ranked': [], 'ranked_rows': []}
+    if not rows:
+        out['latency_ms'] = round((time.time() - t0) * 1000, 1)
+        return out
+    g = dict(genes or {})
+    words = ' '.join(w for ax in _VIBE_AXES
+                     for w in [str((_WORD.get(ax) or
+                                    _VIBE_WORD.get(ax) or
+                                    {}).get(g.get(ax), ''))]
+                     if w).strip()
+    vec = None
+    if words:
+        try:
+            vec = text_vector(f'a {words} {section_type} section')
+            try:
+                import numpy as np
+                vec = np.array(vec, dtype=np.float32)
+            except Exception:
+                pass
+        except Exception:
+            # no encoder on this box — degrade to the meta scorer
+            vec = None
+    ranked = bank.rank(vec, rows, k=k) if vec is not None else \
+        sorted(((_meta_score(g, r), r) for r in rows),
+               key=lambda t: -t[0])[:k]
+    top = ranked[0][1] if ranked else None
+    topo = (top.get('topo') or {}).get('topology_id') if top else None
+    out.update({'mode': 'clip' if vec is not None else 'meta',
+                'topology_id': topo,
+                'composition': _topo_map().get(topo) if topo else None,
+                'ranked': [(s, r.get('render_path'),
+                            (r.get('topo') or {}).get('topology_id'))
+                           for s, r in ranked],
+                'ranked_rows': ranked,
+                'query': words,
+                'latency_ms': round((time.time() - t0) * 1000, 1)})
+    return out
+
+
 @functools.lru_cache(maxsize=1)
 def _topo_map():
     """patterns/data/topo-map.json — bank topology_id → catalog
