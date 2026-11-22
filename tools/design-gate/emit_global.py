@@ -611,7 +611,7 @@ input, textarea { border: 1px solid var(--input-border); padding: var(--input-py
      long label list still fits between brand and CTA. The whole bar
      stays one row at every width: brand ellipsises under pressure,
      the burger pins to its lane's far end, nothing wraps (H.1) */
-  .bm-header-1__brand, .brand-mark, .logo { white-space: nowrap;
+  .wf-header-1__brand, .brand-mark, .logo { white-space: nowrap;
               overflow: hidden; text-overflow: ellipsis; }
   .row.between:has(.nav-links), .row.between:has(.burger),
   .row.between:has(.nav-desk) { flex-wrap: nowrap; }

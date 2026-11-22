@@ -747,7 +747,7 @@ def preview_css(root: Path = BANK) -> int:
     cfg = root / "tailwind.preview.cjs"
     src = root / "bank-preview-src.css"
     cfg.write_text(
-        "module.exports={content:['" +
+        "module.exports={darkMode:'class',content:['" +
         str(root / "**" / "*.html") + "'],theme:{extend:{}}}\n")
     src.write_text("@tailwind base;\n@tailwind components;\n"
                    "@tailwind utilities;\n")
