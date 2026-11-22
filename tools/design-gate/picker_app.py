@@ -125,6 +125,57 @@ _STAGE_SCROLL_SHIM = (
     's.addEventListener("scroll",function(){window.dispatchEvent('
     'new Event("scroll"))},{passive:true})}catch(e){}})();</script>')
 
+# page-scale fragments render at natural width (a 1280px checkout in
+# a 390px frame would scroll horizontally — the audit counts that as
+# overflow). The stage scroll shim also maps wheel scroll for pages:
+# documentElement.scrollTop on a .wf-page doc resolves onto the
+# page element so scroll-driven fx animate while the doc is panned.
+_PAGE_SCROLL_SHIM = (
+    '<script>(function(){var s=document.querySelector(".wf-page");'
+    'if(!s)return;try{'
+    'var de=document.documentElement;'
+    'Object.defineProperty(window,"scrollY",{get:function(){'
+    'return s.scrollTop}});'
+    'Object.defineProperty(window,"pageYOffset",{get:function(){'
+    'return s.scrollTop}});'
+    'Object.defineProperty(window,"scrollX",{get:function(){'
+    'return s.scrollLeft}});'
+    'Object.defineProperty(de,"scrollTop",{get:function(){'
+    'return s.scrollTop},set:function(v){s.scrollTop=v},'
+    'configurable:true});'
+    'Object.defineProperty(de,"scrollHeight",{get:function(){'
+    'return s.scrollHeight},configurable:true});'
+    's.addEventListener("scroll",function(){window.dispatchEvent('
+    'new Event("scroll"))},{passive:true})}catch(e){}})();</script>')
+
+def _menu_closed(frag):
+    """E-K2 — nav exemplars are banked mid-interaction: the snapshot
+    shows the drawer/sheet OPEN with its scrim covering the doc.
+    Preview default state is CLOSED (scrim faded out, panel slid
+    off-canvas, trigger aria-expanded=false); the exemplar markup
+    still demonstrates the chrome."""
+    frag = re.sub(r'(class="[^"]*fixed inset-0[^"]*?)opacity-100',
+                  r'\1opacity-0', frag)
+    frag = re.sub(r'(class="[^"]*fixed inset-0[^"]*?)'
+                  r'pointer-events-auto', r'\1pointer-events-none',
+                  frag)
+    # wf-menu-closed* is emitted in _BANK_STAGE_CSS — the compiled
+    # preview css never sees these emit-only class names
+    frag = re.sub(r'\btranslate-x-0\b', 'wf-menu-closed', frag)
+
+    def _closed_y(m):
+        cls = m.group(1)
+        # hide away from the anchored edge: top sheets slide up,
+        # bottom sheets slide down
+        direction = ('wf-menu-closed-up' if re.search(r'\btop-', cls)
+                     else 'wf-menu-closed-y')
+        return 'class="' + cls.replace('translate-y-0', direction) + '"'
+
+    frag = re.sub(r'class="([^"]*translate-y-0[^"]*)"', _closed_y, frag)
+    frag = frag.replace('aria-expanded="true"', 'aria-expanded="false"')
+    return frag
+
+
 _BANK_DIRS = {
     'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
              'nav-bottom-sheet', 'nav-dropdown-menu',
@@ -2617,6 +2668,10 @@ _BANK_STAGE_CSS = (
     'margin:auto;flex:none}'
     '.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);'
     'border-radius:24px}'
+    # a phone frame pins content to the TOP — vertical margin:auto
+    # centres over-tall fragments (clipping the header strip above
+    # the frame) and floats short ones mid-frame leaving dead bands
+    '.wf-stage.mob>.wf-stage-in{margin:0 auto}'
     # E1 — section/page-scale fragments never sit in the compact
     # stage (the 640x460 box clipped mega footers and tier pages):
     # full viewport width, content height, the fragment's own
@@ -2627,8 +2682,12 @@ _BANK_STAGE_CSS = (
     # align-self flex-start: the centered column body would push a
     # wider-than-viewport page's left edge outside the scrollable
     # area — horizontal scroll only reaches content to the right
-    '.wf-page{position:relative;width:max-content;min-width:100%;'
-    'min-height:100vh;align-self:flex-start}'
+    # page width is capped at the viewport and wide fragments scroll
+    # INSIDE it — max-content made documentElement.scrollWidth exceed
+    # the viewport on narrow frames (E-K2 390 overflow)
+    '.wf-page{position:relative;width:100%;min-width:0;'
+    'overflow-x:auto;display:grid;grid-auto-rows:minmax(100vh,auto);'
+    'align-self:flex-start}'
     # a page-scale doc taller than the viewport must NOT be
     # vertically centered — flex centering pushes its top off
     # screen and the heading/controls are unreachable
@@ -2643,6 +2702,11 @@ _BANK_STAGE_CSS = (
     # an explicit motion toggle is the ONLY reduced-motion switch in
     # preview docs (the emit pass strips the fragments\' own
     # prefers-reduced-motion freezes — E1 live-play contract)
+    # closed-state classes _menu_closed installs on banked nav
+    # snapshots (the compiled tailwind css never sees these names)
+    '.wf-menu-closed{transform:translateX(-105%)}'
+    '.wf-menu-closed-y{transform:translateY(105%)}'
+    '.wf-menu-closed-up{transform:translateY(-105%)}'
     'body[data-motion="off"] .wf-stage *,'
     'body[data-motion="off"] .wf-page *{'
     'animation-play-state:paused!important;'
@@ -2703,7 +2767,17 @@ _FX_DRIVER = (
     'setTimeout(function(){try{hit.dispatchEvent('
     'new MouseEvent(n,{bubbles:true}))}catch(e){'
     'hit.dispatchEvent(new Event(n,{bubbles:true}))}},'
-    '2600+i*140)})}}'
+    '2600+i*140)})}'
+    # cursor/hover fx (atlas reveals, parallax) bind pointer
+    # movement on the container, not a named control — sweep a
+    # synthetic pointer across the stage so they activate
+    'var r0=sc.getBoundingClientRect();'
+    '["pointermove","mousemove","pointerenter","mouseover"]'
+    '.forEach(function(n,i){'
+    'setTimeout(function(){try{sc.dispatchEvent('
+    'new MouseEvent(n,{bubbles:true,'
+    'clientX:r0.left+r0.width*(0.25+0.15*i),'
+    'clientY:r0.top+r0.height*0.5}))}catch(e){}},400+i*300)})}'
     'var loop=setInterval(function(){'
     'if(document.body.dataset.motion==="off")return;'
     'var a=anim().filter(function(x){'
@@ -3049,6 +3123,11 @@ def _bank_scale(frag):
     if re.search(r'\b(w-fit|inline-flex|inline-block|'
                  r'inline-grid)\b', cls) or tag == 'span':
         return 'widget'
+    # a shallow strip (e.g. a py-2/3 marquee band) is not a page:
+    # rendered .wf-page it leaves the whole viewport below it blank
+    if not re.search(r'min-h|h-screen|h-full|h-\[', cls) and \
+            re.search(r'\bpy-[0-4]\b', cls):
+        return 'widget'
     return 'page'
 
 
@@ -3209,6 +3288,11 @@ def emit_bank_previews(pd):
         if d.startswith(('fx-', 'imgfx-', 'mobfx-', 'mob-')) and
         os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
+    # /built/ URLs are repo-relative; Ctx.dir callers hand in an
+    # absolute pipeline dir — normalize for URL building only
+    pd_url = (os.path.relpath(
+        pd, os.path.dirname(os.path.dirname(_SKEL_ROOT)))
+        if os.path.isabs(pd) else pd)
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
     # E1 — the committed css must cover the CURRENT bank: an exemplar
     # banked after the last compile loses its arbitrary-value surface
@@ -3280,10 +3364,23 @@ def emit_bank_previews(pd):
             urllib.parse.quote(dark_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
-                pd, 'site', 'dist', 'preview', 'bank',
+                pd_url, 'site', 'dist', 'preview', 'bank',
                 'bank-preview.css')) + '">'
             '<link rel="stylesheet" href="/built/' +
-            urllib.parse.quote(extra_dst) + '">')
+            urllib.parse.quote(os.path.join(
+                pd_url, 'site', 'dist', 'preview', 'bank',
+                'bank-preview-extra.css')) + '">')
+    # demo image for fx fragments whose /src/assets refs are gone:
+    # prefer a real pipeline raster (a flat-gray placeholder.svg is
+    # what made reveal/marquee fx look blank); svg is the fallback
+    demo_img = 'placeholder.svg'
+    mdir = os.path.join(pd, 'site', 'dist', 'media')
+    if os.path.isdir(mdir):
+        real = sorted(f for f in os.listdir(mdir)
+                      if f.lower().endswith(
+                          ('.jpg', '.jpeg', '.png', '.webp')))
+        if real:
+            demo_img = real[0]
     out = {}
     for gid, dirs in _BANK_DIRS.items():
         cards = []
@@ -3304,7 +3401,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v8-->' not in open(
+                    '<!--wf:bank:v11-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3317,8 +3414,8 @@ def emit_bank_previews(pd):
                         r'/src/assets/[^\s"\'()]+',
                         '/built/' + urllib.parse.quote(
                             os.path.join(
-                                pd, 'site', 'dist', 'media',
-                                'placeholder.svg')), frag)
+                                pd_url, 'site', 'dist', 'media',
+                                demo_img)), frag)
                     # the AI-Studio harness shim is never vendored —
                     # it 404s on every load; the fx driver below is
                     # the replacement interaction layer
@@ -3329,6 +3426,8 @@ def emit_bank_previews(pd):
                     if fx:
                         frag = _fx_strip_freeze(frag)
                     mob = gid == 'menu' or cls.startswith('mob')
+                    if gid == 'menu':
+                        frag = _menu_closed(frag)
                     page = (not mob) and _bank_scale(frag) == 'page'
                     if page:
                         stage = ('<div class="wf-page">' + frag +
@@ -3357,10 +3456,11 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v8-->' +
+                        fh.write('<!--wf:bank:v11-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
-                                             if not page else '') +
+                                             if not page else
+                                             _PAGE_SCROLL_SHIM) +
                                       (_FX_DRIVER if fx else ''),
                                       css=css_,
                                       chrome=gid == 'menu' or
@@ -3376,7 +3476,7 @@ def emit_bank_previews(pd):
                 cards.append({
                     'id': slug, 'name': slug,
                     'preview': '/built/' + urllib.parse.quote(
-                        os.path.join(pd, 'site', 'dist', 'preview',
+                        os.path.join(pd_url, 'site', 'dist', 'preview',
                                      'bank', cls, slug + '.html')),
                     'tags': ctags, 'emitted': True, 'bank': True,
                     'element': cls, 'variant': slug,
