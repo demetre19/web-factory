@@ -1,0 +1,97 @@
+{
+ "label": "preline/card/transition-on-hover",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "hero-media-bg",
+ "element_sig": {
+  "a": 1,
+  "img": 1,
+  "h": 1,
+  "p": 1
+ },
+ "tree": [
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col",
+    "bg-card",
+    "border",
+    "border-card-line",
+    "shadow-2xs",
+    "rounded-xl",
+    "hover:shadow-lg"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "img",
+   "tag": "img",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "w-full",
+    "h-auto",
+    "rounded-t-xl"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-4"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "h3",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "font-semibold",
+    "text-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "p",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-1",
+    "text-muted-foreground-1"
+   ],
+   "depth": 3
+  }
+ ],
+ "classes": [
+  "bg-card",
+  "border",
+  "border-card-line",
+  "flex",
+  "flex-col",
+  "focus:outline-hidden",
+  "focus:shadow-lg",
+  "font-semibold",
+  "h-auto",
+  "hover:shadow-lg",
+  "mt-1",
+  "p-4",
+  "rounded-t-xl",
+  "rounded-xl",
+  "shadow-2xs",
+  "text-foreground",
+  "text-muted-foreground-1",
+  "transition",
+  "w-full"
+ ]
+}

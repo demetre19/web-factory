@@ -1,0 +1,780 @@
+{
+ "label": "preline/pagination/pagination-with-tooltip",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "nav-top-bar",
+ "element_sig": {
+  "nav": 3,
+  "btn": 21,
+  "icn": 9
+ },
+ "tree": [
+  {
+   "name": "nav",
+   "tag": "nav",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-1"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "jusify-center",
+    "items-center",
+    "gap-x-2"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-1"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "bg-surface-1",
+    "text-foreground",
+    "py-2"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-foreground",
+    "hover:bg-muted-hover",
+    "py-2"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-foreground",
+    "hover:bg-muted-hover",
+    "py-2"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip",
+    "[--placement:auto]",
+    "inline-block"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-toggle",
+    "group",
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-muted-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:hidden",
+    "text-xs"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:block",
+    "hidden",
+    "shrink-0",
+    "size-5"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-content",
+    "hs-tooltip-shown:opacity-100",
+    "hs-tooltip-shown:visible",
+    "opacity-0",
+    "transition-opacity",
+    "inline-block",
+    "absolute",
+    "invisible"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-foreground",
+    "hover:bg-muted-hover",
+    "py-2"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "jusify-center",
+    "items-center",
+    "gap-x-2"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "nav",
+   "tag": "nav",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-1"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-1"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-line-2",
+    "text-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip",
+    "[--placement:auto]",
+    "inline-block"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-toggle",
+    "group",
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-muted-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:hidden",
+    "text-xs"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:block",
+    "hidden",
+    "shrink-0",
+    "size-5"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-content",
+    "hs-tooltip-shown:opacity-100",
+    "hs-tooltip-shown:visible",
+    "opacity-0",
+    "transition-opacity",
+    "inline-block",
+    "absolute",
+    "invisible"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-transparent",
+    "text-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-2"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "nav",
+   "tag": "nav",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "-space-x-px"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-1.5"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "bg-surface-1",
+    "text-foreground",
+    "border"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-line-2",
+    "text-foreground"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-line-2",
+    "text-foreground"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip",
+    "[--placement:auto]",
+    "inline-block",
+    "border",
+    "border-line-2"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-toggle",
+    "group",
+    "min-h-9",
+    "min-w-9",
+    "flex",
+    "justify-center",
+    "items-center",
+    "text-muted-foreground"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:hidden",
+    "text-xs"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "group-hover:block",
+    "hidden",
+    "shrink-0",
+    "size-5"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-content",
+    "hs-tooltip-shown:opacity-100",
+    "hs-tooltip-shown:visible",
+    "opacity-0",
+    "transition-opacity",
+    "inline-block",
+    "absolute",
+    "invisible"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "flex",
+    "justify-center",
+    "items-center",
+    "border",
+    "border-line-2",
+    "text-foreground"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "min-h-9.5",
+    "min-w-9.5",
+    "py-2",
+    "px-2.5",
+    "inline-flex",
+    "justify-center",
+    "items-center",
+    "gap-x-1.5"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sr-only"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "shrink-0",
+    "size-3.5"
+   ],
+   "depth": 2
+  }
+ ],
+ "classes": [
+  "-space-x-px",
+  "[--placement:auto]",
+  "absolute",
+  "bg-surface-1",
+  "bg-tooltip",
+  "border",
+  "border-line-2",
+  "border-tooltip-line",
+  "border-transparent",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "first:rounded-s-lg",
+  "flex",
+  "focus:bg-muted-focus",
+  "focus:outline-hidden",
+  "font-medium",
+  "gap-x-1",
+  "gap-x-1.5",
+  "gap-x-2",
+  "group",
+  "group-hover:block",
+  "group-hover:hidden",
+  "hidden",
+  "hover:bg-muted-hover",
+  "hover:text-primary-hover",
+  "hs-tooltip",
+  "hs-tooltip-content",
+  "hs-tooltip-shown:opacity-100",
+  "hs-tooltip-shown:visible",
+  "hs-tooltip-toggle",
+  "inline-block",
+  "inline-flex",
+  "invisible",
+  "items-center",
+  "jusify-center",
+  "justify-center",
+  "last:rounded-e-lg",
+  "min-h-9",
+  "min-h-9.5",
+  "min-w-9",
+  "min-w-9.5",
+  "opacity-0",
+  "p-2",
+  "px-2",
+  "px-2.5",
+  "px-3",
+  "py-1",
+  "py-2",
+  "rounded-lg",
+  "rounded-md",
+  "shadow-2xs",
+  "shrink-0",
+  "size-3.5",
+  "size-5",
+  "sr-only",
+  "text-foreground",
+  "text-muted-foreground",
+  "text-sm",
+  "text-tooltip-foreground",
+  "text-xs"
+ ]
+}

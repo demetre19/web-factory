@@ -1,0 +1,289 @@
+{
+ "label": "preline/marquee/announcement-ticker",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {},
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "overflow-hidden",
+    "border-y",
+    "border-line-2",
+    "bg-background",
+    "before:pointer-events-none",
+    "before:absolute",
+    "before:inset-y-0"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "overflow-hidden"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "marquee-track-x",
+    "[animation:marquee-x_40s_linear_infinite]",
+    "hover:[animation-play-state:paused]",
+    "flex",
+    "w-max",
+    "gap-4",
+    "py-2.5"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-10",
+    "ps-4",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-10",
+    "pe-4",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-flex",
+    "items-center",
+    "gap-2",
+    "whitespace-nowrap"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [],
+   "depth": 5
+  }
+ ],
+ "classes": [
+  "[animation:marquee-x_40s_linear_infinite]",
+  "after:absolute",
+  "after:bg-[linear-gradient(to_left,var(--color-background),transparent)]",
+  "after:end-0",
+  "after:inset-y-0",
+  "after:pointer-events-none",
+  "after:w-16",
+  "after:z-2",
+  "before:absolute",
+  "before:bg-[linear-gradient(to_right,var(--color-background),transparent)]",
+  "before:inset-y-0",
+  "before:pointer-events-none",
+  "before:start-0",
+  "before:w-16",
+  "before:z-2",
+  "bg-background",
+  "border-line-2",
+  "border-y",
+  "flex",
+  "gap-10",
+  "gap-2",
+  "gap-4",
+  "hover:[animation-play-state:paused]",
+  "inline-flex",
+  "items-center",
+  "marquee-track-x",
+  "overflow-hidden",
+  "pe-4",
+  "ps-4",
+  "py-2.5",
+  "relative",
+  "text-foreground",
+  "text-sm",
+  "w-max",
+  "whitespace-nowrap"
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "label": "preline/avatar/avatar-with-tooltip",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "a": 1,
+  "img": 1
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip",
+    "[--placement:auto]",
+    "inline-block"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-toggle",
+    "relative",
+    "inline-block"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "img",
+   "tag": "img",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "inline-block",
+    "size-11",
+    "rounded-full"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "absolute",
+    "bottom-0",
+    "inset-e-0",
+    "block",
+    "size-3",
+    "rounded-full",
+    "ring-2",
+    "ring-layer"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-tooltip-content",
+    "hs-tooltip-shown:opacity-100",
+    "hs-tooltip-shown:visible",
+    "opacity-0",
+    "transition-opacity",
+    "inline-block",
+    "absolute",
+    "invisible"
+   ],
+   "depth": 3
+  }
+ ],
+ "classes": [
+  "[--placement:auto]",
+  "absolute",
+  "bg-teal-400",
+  "bg-tooltip",
+  "block",
+  "border",
+  "border-tooltip-line",
+  "bottom-0",
+  "font-medium",
+  "hs-tooltip",
+  "hs-tooltip-content",
+  "hs-tooltip-shown:opacity-100",
+  "hs-tooltip-shown:visible",
+  "hs-tooltip-toggle",
+  "inline-block",
+  "inset-e-0",
+  "invisible",
+  "opacity-0",
+  "px-2",
+  "py-1",
+  "relative",
+  "ring-2",
+  "ring-layer",
+  "rounded-full",
+  "rounded-lg",
+  "shadow-2xs",
+  "size-11",
+  "size-3",
+  "text-tooltip-foreground",
+  "text-xs",
+  "transition-opacity",
+  "z-10"
+ ]
+}

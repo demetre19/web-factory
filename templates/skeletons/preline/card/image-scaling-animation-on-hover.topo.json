@@ -1,0 +1,131 @@
+{
+ "label": "preline/card/image-scaling-animation-on-hover",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "hero-media-bg",
+ "element_sig": {
+  "a": 1,
+  "img": 1,
+  "h": 1,
+  "p": 1
+ },
+ "tree": [
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "flex-col",
+    "group",
+    "bg-card",
+    "border",
+    "border-card-line",
+    "shadow-2xs",
+    "rounded-xl"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "relative",
+    "pt-[50%]",
+    "sm:pt-[60%]",
+    "lg:pt-[80%]",
+    "rounded-t-xl",
+    "overflow-hidden"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "img",
+   "tag": "img",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "size-full",
+    "absolute",
+    "top-0",
+    "inset-s-0",
+    "object-cover",
+    "group-hover:scale-105",
+    "group-focus:scale-105",
+    "transition-transform"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-4"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "h3",
+   "tag": "h3",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "font-semibold",
+    "text-foreground"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "p",
+   "tag": "p",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-1",
+    "text-muted-foreground-1"
+   ],
+   "depth": 3
+  }
+ ],
+ "classes": [
+  "absolute",
+  "bg-card",
+  "border",
+  "border-card-line",
+  "duration-500",
+  "ease-in-out",
+  "flex",
+  "flex-col",
+  "focus:outline-hidden",
+  "focus:shadow-lg",
+  "font-semibold",
+  "group",
+  "group-focus:scale-105",
+  "group-hover:scale-105",
+  "hover:shadow-lg",
+  "inset-s-0",
+  "lg:pt-[80%]",
+  "mt-1",
+  "object-cover",
+  "overflow-hidden",
+  "p-4",
+  "pt-[50%]",
+  "relative",
+  "rounded-t-xl",
+  "rounded-xl",
+  "shadow-2xs",
+  "size-full",
+  "sm:pt-[60%]",
+  "text-foreground",
+  "text-muted-foreground-1",
+  "top-0",
+  "transition",
+  "transition-transform"
+ ]
+}
