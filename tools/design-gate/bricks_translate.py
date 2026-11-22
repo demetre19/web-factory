@@ -715,8 +715,13 @@ def translate(payload, stem):
                          '×</button>\n')
                 ncls = (c + ' nav-links nav-flyout') if c \
                     else 'nav-links nav-flyout'
+                _x = (f'<button class="nav-close" type="button" '
+                      f'aria-label="Close menu">×</button>')
+                _head = (f'{pad}  <div class="nav-sheet-head">'
+                         f'<span class="logo nav-sheet-brand">'
+                         f'{{brand}}</span>{_x}</div>\n')
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
-                       f' aria-label="Primary">\n{close}{inner}'
+                       f' aria-label="Primary">\n{_head}{inner}'
                        f'{pad}}}\n')
                 # the header CTA rides in the bar on desktop and
                 # docks at the panel's foot when the flyout opens —
@@ -790,9 +795,12 @@ def translate(payload, stem):
                        f'</form>')
             _close = (f'<button class="nav-close" type="button" '
                       f'aria-label="Close menu">×</button>')
+            _head = (f'<div class="nav-sheet-head">'
+                     f'<span class="logo nav-sheet-brand">{{brand}}</span>'
+                     f'{_close}</div>')
             return (f'{pad}{{list.length > 0 && list.length < 7 && '
                     f'<nav class="{ncls}" '
-                    f'aria-label="Primary">{_close}{_search}'
+                    f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
                     f'<div class="nav-group">'
                     f'<p class="nav-group-head">Menu</p>'
@@ -803,7 +811,7 @@ def translate(payload, stem):
                     + f'</ul></div></div></nav>}}\n'
                     f'{pad}{{list.length > 6 && <nav '
                     f'class="{ncls} nav-mega" '
-                    f'aria-label="Primary">{_close}{_search}'
+                    f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
                     f'{{[list.slice(0, Math.ceil(list.length / 2)), '
                     f'list.slice(Math.ceil(list.length / 2))]'

@@ -4,6 +4,8 @@
  * contract; keep the skeleton. Renders inside Section.astro: no
  * <section>, no outer padding/background/max-width (SB.2).
  */
+import IconChip from '../_shared/IconChip.astro';
+
 interface Props {
   heading?: string;
   fs?: string;
@@ -21,10 +23,7 @@ const {
 ---
 
 <div class="text-center">
-  <svg class="mx-auto" width="32" height="32" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" stroke-width="2" aria-hidden="true">
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
+  <IconChip name="check" />
   {h1 ? <h1 class="mt-fluid-s text-fluid-1">{heading}</h1> : <h2 class="mt-fluid-s text-fluid-1">{heading}</h2>}
   {fs && <p class="mt-fluid-s text-fluid-0">{fs}</p>}
 </div>

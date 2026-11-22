@@ -583,11 +583,17 @@ def emit_element_previews(pd):
             # inside the family's token space.
             open_js = ('<script>(function(){var n='
                        'document.querySelector('
-                       '".nav-links");if(n)n.classList.'
-                       'add("open");})()</script>')
+                       '".nav-links");if(n&&matchMedia('
+                       '"(min-width:60rem)").matches)'
+                       'n.classList.add("open");})()</script>')
             # desktop surface — the nav as a bar, drawer never forced
             # open: burger hidden, links inline (menu board at D)
-            _MENU_DESK = ('.burger,.nav-close{display:none !important}'
+            # the desktop-menu state only exists at/above the bar
+            # breakpoint — below it the fragment must show the real
+            # mobile chrome (burger + closed drawer), not a forced
+            # desktop row (r6 @390)
+            _MENU_DESK = ('@media (min-width:60rem){'
+                          '.burger,.nav-close{display:none !important}'
                           '.nav-links{position:static !important;'
                           'display:flex !important;transform:none '
                           '!important;visibility:visible !important;'
@@ -596,7 +602,7 @@ def emit_element_previews(pd):
                           'inset:auto !important;border:0 !important;'
                           'box-shadow:none !important;padding:0 '
                           '!important;background:transparent '
-                          '!important}')
+                          '!important}}')
             fp = os.path.join(outdir, comp + '-menu-desktop.html')
             with open(fp, 'w', encoding='utf-8') as fh:
                 fh.write(_doc(head, battr, block, '', _MENU_DESK))
@@ -754,13 +760,14 @@ def _topo_variants(block, comp):
 # bank's .burger renders "Menu" text; this turns it into a hamburger
 # icon button bound to tokens, applied to every emitted preview doc
 _CHROME_CSS = (
-    '.burger{display:inline-flex;align-items:center;'
+    '.burger{display:none;align-items:center;'
     'justify-content:center;width:44px;height:44px;min-width:44px;'
     'min-height:44px;padding:0!important;font-size:0!important;'
-    'border:1px solid var(--border-default);'
-    'border-radius:var(--radius,10px);background:var(--bg-elevated);'
+    'border:1px solid var(--border-subtle,var(--border-default));'
+    'border-radius:var(--radius,10px);background:transparent;'
     'color:var(--text-primary);box-shadow:none!important;'
     'cursor:pointer}'
+    '@media (max-width:60rem){.burger{display:inline-flex}}'
     '.burger::after{content:"";width:20px;height:14px;'
     'background:repeating-linear-gradient(to bottom,'
     'currentColor 0 2px,transparent 2px 6px)}')
@@ -1093,8 +1100,8 @@ def _copy_slot(pd, bid):
             slot['items'] = [
                 {'term': t if len(t) < 60 else t[:57] + '…',
                  'text': next(
-                     (x for x in sents if t.lower() in x.lower()),
-                     '')}
+                     (x.replace('**', '') for x in sents
+                      if t.lower() in x.lower()), '')}
                 for t in terms]
             slot['items_from'] = 'terms'
     # media slot — first real asset in the pipeline's media dir

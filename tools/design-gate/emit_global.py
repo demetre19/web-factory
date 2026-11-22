@@ -355,10 +355,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .burger { display: inline-flex; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
             justify-content: center;
-            background: var(--bg-surface); color: var(--text-primary);
-            border: 1px solid var(--border-default);
-            border-radius: var(--r-card); font-size: var(--fs-1);
-            font-weight: 600; cursor: pointer; }
+            /* a ghost icon pinned to the row's far end — never a
+               filled chip, never a second CTA (N.burger) */
+            margin-inline-start: auto;
+            background: transparent; color: var(--text-primary);
+            border: 1px solid var(--border-subtle,
+                var(--border-default));
+            border-radius: var(--r-card); font-size: 0;
+            cursor: pointer; }
+  .burger > * { font-size: 0; }
+  .burger::after { content: ""; width: 20px; height: 14px;
+            background: repeating-linear-gradient(to bottom,
+                currentColor 0 2px, transparent 2px 6px); }
   .row.between { position: relative; }
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
@@ -373,20 +381,56 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             border-inline-start: 1px solid var(--border-default);
             box-shadow: var(--shadow-pop); overflow-y: auto; }
   .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
-            align-items: flex-start; gap: var(--space-xs); }
+            align-items: stretch; gap: var(--space-xs); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
+            display: flex; align-items: center;
+            /* ~3rem rows: fs-1 line + space-s padding, tap-sized
+               without declaring a height (A.1) */
+            padding-block: var(--space-s);
             white-space: normal; }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+    body:has(.nav-links.open) .nav-cta { width: 100vw;
+            inset-inline: 0; border-inline-start: 0; }
+  }
   .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
-            justify-content: center; background: none; border: 0;
+            justify-content: center; background: none !important;
+            border: 0 !important;
             color: var(--text-secondary); font-size: var(--fs-2);
             line-height: 1; cursor: pointer; }
+  /* the sheet's top row: brand left, ghost close right — one row,
+     never a floating X (N.flyout) */
+  .nav-sheet-head { display: none; }
+  .nav-links.open .nav-sheet-head { display: flex;
+            align-items: center; justify-content: space-between;
+            gap: var(--space-m);
+            padding-block-end: var(--space-s);
+            border-block-end: 1px solid
+                var(--border-subtle, var(--border-default)); }
+  .nav-links.open .nav-sheet-head .nav-sheet-brand {
+            font-weight: 700; }
+  .nav-links.open .nav-sheet-head .nav-close {
+            align-self: center; margin-inline-start: auto; }
+  /* exactly one close — an exemplar's own mid-sheet X is dropped in
+     favour of the head-row ghost close (N.flyout) */
+  .nav-links.open .nav-close:not(.nav-sheet-head .nav-close) {
+            display: none; }
   body:has(.nav-links.open)::after { content: ""; position: fixed;
             inset: 0; background: color-mix(in oklch,
                 var(--text-primary) 45%, transparent);
             z-index: var(--primitive-z-sticky); }
+  /* the scrim paints after the header at equal z — lift the whole
+     header context (sheet + docked CTA ride inside it) above the
+     scrim, and park the floating call button while open (N.flyout) */
+  header[data-sec="nav"]:has(.nav-links.open) {
+          z-index: calc(var(--primitive-z-sticky) + 2); }
+  body:has(.nav-links.open) .call-bar { display: none; }
   body:has(.nav-links.open) .nav-cta { display: block;
             position: fixed; inset-inline-end: 0; inset-block-end: 0;
             width: min(20rem, 85vw); margin: 0;
@@ -396,14 +440,27 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   body:has(.nav-links.open) .nav-cta .wf-cta-button,
   body:has(.nav-links.open) .nav-cta { display: block; }
   body:has(.nav-links.open) .nav-cta > .wf-cta-button {
-            display: flex; justify-content: center; }
+            display: flex; justify-content: center; width: 100%; }
+  body:has(.nav-links.open) .nav-cta a {
+            display: flex; justify-content: center; width: 100%; }
   /* header CTA: below the nav breakpoint it rides inside the flyout;
      burger, links and CTA share one breakpoint (60rem — the
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
+  @media (max-width: 60rem) {
+    /* an empty CTA lane beside the burger must not hold flex space —
+       hide a wrapper whose only element is the hidden .nav-cta, so
+       the burger pins to the row's far end (N.flyout) */
+    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
+            display: none; }
+  }
   @media (min-width: 60rem) {
-    .burger { display: none; }
+    /* a stray CTA class on the trigger must not resurrect it: the
+       doubled class keeps this rule ahead of ANY later
+       .wf-cta-button{display:*} line at equal order (specificity
+       decides, never position) */
+    .burger, .burger.wf-cta-button { display: none; }
     .nav-cta { display: inline-block; }
   }
   /* ---- composition vocabulary ------------------------------- */
@@ -518,9 +575,17 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .link-quiet { color: var(--text-secondary); text-decoration: none;
                 font-size: var(--fs-0); }
   .link-quiet:hover { color: var(--text-primary); }
-  .nav-links { display: none; gap: var(--space-s);
+  /* the header bar is sticky chrome — it keeps a hairline at rest
+     and lifts a shadow once the page scrolls under it */
+  header[data-sec="nav"] { position: sticky; top: 0;
+              z-index: var(--primitive-z-sticky);
+              border-block-end: 1px solid var(--border-subtle,
+                  var(--border-default)); }
+  header[data-sec="nav"].scrolled { box-shadow: var(--shadow-card); }
+  .nav-links { display: none; gap: var(--space-m);
                align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-links ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-links ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   /* the desktop bar shows the group's links inline — the wrapper
      only materialises as a titled stack inside the open drawer */
   .nav-links .nav-group { display: contents; }
@@ -551,9 +616,10 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      .nav-flyout panel is the ONLY nav-links — hidden at every width
      until .open, so it never doubles as a second desktop row
      (N.flyout) */
-  .nav-desk { display: none; gap: var(--space-s);
+  .nav-desk { display: none; gap: var(--space-m);
               align-items: center; flex: 0 1 auto; min-width: 0; }
-  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-s); }
+  .nav-desk ul { flex-wrap: nowrap; gap: var(--space-m);
+              align-items: center; }
   .nav-links.nav-flyout { display: none; }
   .nav-links.open.nav-flyout { display: flex; }
   @media (min-width: 60rem) { .nav-desk { display: flex; } }
@@ -570,7 +636,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links.open .nav-group a { font-size: var(--fs-1);
               white-space: normal; color: var(--text-primary);
               text-decoration: none; display: inline-flex;
-              align-items: center; gap: var(--space-s); }
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-s); }
   /* drawer furniture — search, group heads, row numerals — exists
      only inside the open flyout; the desktop bar stays brand + links
      + CTA (N.flyout) */
@@ -593,7 +660,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               tabular-nums; }
   .nav-links.open .nav-link { display: flex; width: 100%;
               align-items: center; gap: var(--space-s);
-              padding-block: var(--space-xs);
+              padding-block: var(--space-s);
               border-block-end: 1px solid var(--border-default); }
   /* nav selection (N.select): >6 links switch to the hybrid —
      .nav-priority keeps the first four inline on desktop, the full
@@ -679,12 +746,25 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     .wf-cta-button { font-size: inherit; }
     .call-bar { display: none; }
     body { padding-block-end: 0; } }
-  .nav-link { color: var(--text-secondary); text-decoration: none;
-              font-size: var(--fs--1); font-weight: 500;
+  .wf-cta-button.alt { background: var(--bg-elevated);
+              color: var(--text-primary);
+              border: 1px solid var(--border-default);
+              box-shadow: var(--shadow-card); }
+  .wf-cta-button.alt:hover { box-shadow: var(--shadow-pop); }
+  .nav-link { color: var(--text-primary); text-decoration: none;
+              font-size: var(--fs-0); font-weight: 500;
               /* one line per link — a link that wraps reads as two
                  nav bars even when the ul itself cannot wrap */
               white-space: nowrap; }
-  .nav-link:hover { color: var(--text-primary); }
+  .nav-link:hover { color: var(--action-primary);
+              text-decoration: underline;
+              text-underline-offset: .2em; }
+  .nav-link[aria-current], .nav-link.active {
+              color: var(--action-primary); }
+  /* the header CTA fits the bar — compact padding and nav font,
+     never the hero-sized call */
+  .nav-cta .wf-cta-button { padding: .5em .75em;
+              font-size: var(--fs-0); min-height: 0; }
   .brand-mark { font-weight: 650; letter-spacing: -.02em;
                 font-size: var(--fs-1); color: var(--text-primary);
                 text-decoration: none; }

@@ -153,7 +153,17 @@ def _scaffold(ctx, comps):
     _w(os.path.join(site, 'public', 'favicon.svg'),
        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">'
        '<rect width="16" height="16" rx="3"/></svg>\n')
-    _w(os.path.join(site, 'src', 'pages', 'index.astro'), '')
+    # the dist root forwards to the page slug — an empty index.astro
+    # renders a 0-byte index.html (visible broken output); a real
+    # redirect page keeps the site root valid
+    _slug0 = next(iter(sorted(ctx.pages() or {'index': {}})))
+    _w(os.path.join(site, 'src', 'pages', 'index.astro'),
+       '---\nconst to = ' + repr(f'/{_slug0}/').replace("'", '"')
+       + ';\n---\n<!doctype html><html><head>\n'
+       '<meta charset="utf-8"><meta http-equiv="refresh" '
+       'content={"0;url=" + to}>\n'
+       '<link rel="canonical" href={to}><title>Redirect</title>\n'
+       '</head><body><a href={to}>Continue</a></body></html>\n')
     # Every translated bank figure points at /media/placeholder.svg.
     # It must exist or the ratio boxes render empty. Its fill is the
     # DNA's own surface rung — never an ad-libbed colour.
@@ -326,9 +336,11 @@ def _copy_slot(copy, ref, comp=None):
                           re.split(r'(?<=[.!?])\s+', para) if x.strip()]
             slot['items'] = [
                 {'term': t if len(t) < 60 else t[:57] + '…',
+                 # item text renders as plain text — strip inline
+                 # markdown or a bold run leaks literal asterisks
                  'text': next(
-                     (x for x in sents if t.lower() in x.lower()),
-                     '')}
+                     (x.replace('**', '') for x in sents
+                      if t.lower() in x.lower()), '')}
                 for t in terms]
             slot['items_from'] = 'terms'
     return slot
@@ -447,6 +459,19 @@ def _instance_body(ctx, contract, row, copy=None):
     return comp, camel, body
 
 
+def _specimen_row(comp):
+    """A labelled specimen row for the system tile: comps the plan
+    never contracted still render real structure — heading, items,
+    cta — so no orphan default strings leak. The tile IS a component
+    sheet, so the comp's own name is the honest heading."""
+    label = comp.replace('-', ' ').title()
+    return {'name': comp,
+            'vector': [{'heading': label}],
+            'items': [{'term': w, 'text': label}
+                      for w in ('First', 'Second', 'Third')],
+            'cta': {'label': 'Call to action', 'href': '#'}}
+
+
 def _instance(ctx, contract, row, copy=None):
     """W6 — the section instance: frontmatter contract + import + render.
     A row with copy_ref carries the full COPY.json slot as the `copy`
@@ -467,15 +492,28 @@ def _instance(ctx, contract, row, copy=None):
                     gate.camel(contract['section']) + '.astro'), txt)
 
 
-def _system(ctx, comps):
+def _system(ctx, comps, contracts=None, copy=None, by_name=None):
     """VG.1 — the system tile renders every composition + the toggle.
     It bypasses BaseLayout, so it imports the shared layer itself
-    (same F3 fix: applyBaseStyles:false ships no CSS otherwise)."""
+    (same F3 fix: applyBaseStyles:false ships no CSS otherwise).
+    Specimens ride the ONE instance serializer — contracted comps
+    render their real row/copy; the rest get a labelled specimen
+    row, never bare <Comp/> (bare defaults leak orphan strings)."""
     imps = '\n'.join(
         f"import {gate.camel(c)} from '../components/{c}.astro';"
         for c in comps)
-    tags = ''.join(f'<div data-comp="{c}"><{gate.camel(c)} /></div>'
-                   for c in comps)
+    by_comp = {}
+    for c in contracts or []:
+        by_comp.setdefault(c['composition'], c)
+    tags = ''
+    for c in comps:
+        contract = by_comp.get(c)
+        row = (by_name or {}).get(str(contract['section'])) \
+            if contract else None
+        _, _, frag = _instance_body(
+            ctx, contract or {'composition': c, 'content': {}},
+            row or _specimen_row(c), copy)
+        tags += f'<div data-comp="{c}">{frag}</div>\n'
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
        "import '../styles/global.css';\n"
@@ -1046,7 +1084,7 @@ def main(argv):
     print(f'  {len(comps)} components + {len(contracts)} instances')
 
     # VG.1 — system tile + comp map
-    _system(ctx, comps)
+    _system(ctx, comps, contracts, copy, by_name)
     _design_system(ctx, tokens, comps)              # DS.1-3
     _w(os.path.join(ctx.dir, 'COMPONENTS.md'),
        '# COMPONENTS\n' + ''.join(
