@@ -355,10 +355,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .burger { display: inline-flex; min-height: var(--tap);
             min-width: var(--tap); align-items: center;
             justify-content: center;
-            background: var(--bg-surface); color: var(--text-primary);
-            border: 1px solid var(--border-default);
-            border-radius: var(--r-card); font-size: var(--fs-1);
-            font-weight: 600; cursor: pointer; }
+            /* a ghost icon pinned to the row's far end — never a
+               filled chip, never a second CTA (N.burger) */
+            margin-inline-start: auto;
+            background: transparent; color: var(--text-primary);
+            border: 1px solid var(--border-subtle,
+                var(--border-default));
+            border-radius: var(--r-card); font-size: 0;
+            cursor: pointer; }
+  .burger > * { font-size: 0; }
+  .burger::after { content: ""; width: 20px; height: 14px;
+            background: repeating-linear-gradient(to bottom,
+                currentColor 0 2px, transparent 2px 6px); }
   .row.between { position: relative; }
   /* the open mobile menu is a flyout sheet, not a dropdown: a
      right-side panel over a scrim, a close control, vertical links,
@@ -373,9 +381,18 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
             border-inline-start: 1px solid var(--border-default);
             box-shadow: var(--shadow-pop); overflow-y: auto; }
   .nav-links.open ul { flex-direction: column; flex-wrap: nowrap;
-            align-items: flex-start; gap: var(--space-xs); }
+            align-items: stretch; gap: var(--space-xs); width: 100%; }
   .nav-links.open .nav-link { font-size: var(--fs-1);
-            white-space: normal; }
+            display: flex; align-items: center;
+            min-height: 3rem; white-space: normal; }
+  /* under 30rem the sheet is the whole viewport — a docked rail
+     leaves no room for a strip of page behind it */
+  @media (max-width: 30rem) {
+    .nav-links.open { width: 100vw; inset-inline: 0;
+            border-inline-start: 0; }
+    body:has(.nav-links.open) .nav-cta { width: 100vw;
+            inset-inline: 0; border-inline-start: 0; }
+  }
   .nav-close { display: none; }
   .nav-links.open .nav-close { display: inline-flex;
             align-self: flex-end; min-height: var(--tap);

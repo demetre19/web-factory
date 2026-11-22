@@ -57,8 +57,21 @@ import '../styles/global.css';
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
     var nl = document.querySelector('.nav-links');
-    if (e.target && e.target.closest && e.target.closest('.burger, .nav-more')) {
-      if (nl) nl.classList.toggle('open');
+    var setNav = function (open) {
+      if (!nl) return;
+      nl.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      var b = document.querySelector('.burger');
+      if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) {
+        var first = nl.querySelector('a, button, input');
+        if (first) first.focus();
+      }
+    };
+    var burger = e.target && e.target.closest &&
+                 e.target.closest('.burger, .nav-more');
+    if (burger) {
+      if (nl) setNav(!nl.classList.contains('open'));
     } else if (nl && nl.classList.contains('open')) {
       // flyout closes on the close control, on a link it navigates
       // to, or on any click outside the sheet (the scrim)
@@ -66,7 +79,7 @@ import '../styles/global.css';
                    e.target.closest('.nav-links');
       if (!inside || e.target.closest('.nav-close') ||
           e.target.closest('.nav-links a')) {
-        nl.classList.remove('open');
+        setNav(false);
       }
     }
     // the generic overlay family (.flyout — modals/popups/dialogs)
@@ -86,11 +99,24 @@ import '../styles/global.css';
     }
   });
   document.addEventListener('keydown', function (e) {
+    var nl = document.querySelector('.nav-links');
     if (e.key === 'Escape') {
-      var nl = document.querySelector('.nav-links');
       if (nl) nl.classList.remove('open');
+      document.body.style.overflow = '';
       var fo = document.querySelector('.flyout');
       if (fo) fo.classList.remove('open');
+    }
+    // the open sheet holds focus: Tab cycles inside the panel
+    if (e.key === 'Tab' && nl && nl.classList.contains('open')) {
+      var f = nl.querySelectorAll('a, button, input, [tabindex]');
+      if (f.length) {
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          last.focus(); e.preventDefault();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          first.focus(); e.preventDefault();
+        }
+      }
     }
   });
 })();

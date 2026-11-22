@@ -9253,7 +9253,10 @@ def check_layout_options(ctx):
                 f.append(f'L.1 option {o.get("id")} gives {bid} '
                          f'composition "{c}" outside the allowed '
                          f'copy shape {allowed[bid]}')
-        sig = tuple(sorted(comps.items()))
+        # chrome (nav/hero/footer) is part of the option's identity
+        # too — two options that differ only in chrome are distinct
+        sig = tuple(sorted(comps.items())) + tuple(
+            sorted((o.get('chrome') or {}).items()))
         if sig in seen:
             f.append(f'L.1 options {seen[sig]} and {o.get("id")} are '
                      'structurally identical — options must differ')
@@ -9281,7 +9284,15 @@ def check_layout_options(ctx):
         shown = re.findall(
             r'data-sec="([^"]+)"[^>]*data-comp="([^"]+)"', card)
         bad = []
+        declared_chrome = o.get('chrome') or {}
         for sec, comp in shown:
+            # a chrome section binds the option's DECLARED chrome pick
+            # when it has one — the preview is the option as shipped
+            cwant = declared_chrome.get(sec)
+            if cwant is not None:
+                if comp != str(cwant):
+                    bad.append(f'{sec}:{comp}≠{cwant}')
+                continue
             if comp in chrome:
                 continue
             r = rows_by_sec.get(sec) or {}
