@@ -72,6 +72,8 @@ PACK_META = {
     "statecraft": ("fx-state", "decoration", ["state animation"], "state effect"),
     "atmosphere": ("fx-ambient", "decoration", ["ambient background"], "ambient effect"),
     "icfx": ("fx-image", "decoration", ["image treatment"], "image effect"),
+    "springwork": ("fx-phys", "decoration", ["physics animation"], "physics effect"),
+    "kinetik": ("fx-ktxt", "decoration", ["kinetic typography"], "text animation"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -390,6 +392,36 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "zoom" in low or "scale" in low or "expand" in low:
             return "fx-zoom", "medium"
         return "fx-image", "low"
+    if baseline == "fx-phys":
+        low = c.lower()
+        if "spring" in low or "bounce" in low or "elastic" in low or "overshoot" in low:
+            return "fx-spring", "medium"
+        if "squash" in low or "jelly" in low or "wobble" in low:
+            return "fx-jelly", "medium"
+        if "shake" in low or "error" in low or "denied" in low:
+            return "fx-shake", "medium"
+        if "drag" in low or "slider" in low or "inertia" in low or "momentum" in low:
+            return "fx-drag", "medium"
+        return "fx-phys", "low"
+    if baseline == "fx-ktxt":
+        low = c.lower()
+        if "scramble" in low or "decode" in low or "cycle" in low:
+            return "fx-scramble", "medium"
+        if "marquee" in low or "strip" in low:
+            return "fx-marquee", "medium"
+        if "gradient" in low or "sweep" in low or "ink" in low:
+            return "fx-ink", "medium"
+        if "letter" in low or "char" in low or "stagger" in low or "wave" in low:
+            return "fx-letter", "medium"
+        if "outline" in low or "stroke" in low or "fill" in low:
+            return "fx-outline", "medium"
+        if "glitch" in low:
+            return "fx-glitch", "medium"
+        if "rotate" in low or "flip" in low or "roll" in low or "carousel" in low:
+            return "fx-rotate", "medium"
+        if "blur" in low or "focus" in low or "mask" in low or "wipe" in low:
+            return "fx-textreveal", "medium"
+        return "fx-ktxt", "low"
     if baseline == "ui-badge":
         low = c.lower()
         if "ribbon" in low or "corner" in low or "rotate" in low:
