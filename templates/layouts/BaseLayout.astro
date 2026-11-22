@@ -122,11 +122,11 @@ import '../styles/global.css';
     }
   });
   document.addEventListener('keydown', function (e) {
+    var nl = document.querySelector('.nav-links');
     if (e.key === 'Escape') {
       // Esc closes with the same contract as the close control:
       // .open off, scroll lock lifted, aria-expanded reset, focus
       // handed back to the trigger (W4.1 flyout spec)
-      var nl = document.querySelector('.nav-links');
       if (nl && nl.classList.contains('open')) {
         setNav(false, { refocus: true });
       }
