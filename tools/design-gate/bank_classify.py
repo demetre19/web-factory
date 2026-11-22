@@ -759,20 +759,26 @@ def test_embed():
             ((cos(qv, v), items[i]['id']) for i, v in
              enumerate(vecs)), reverse=True)
         topk = sims[:5]
-        # rerank stage: query png vs doc pngs
-        docs = ['data:image/png;base64,' + base64.b64encode(
-            open(bank[items.index(
-                next(x for x in items if x['id'] == sid))],
-                'rb').read()).decode() for sid, _ in
-            ((s, i) for s, i in sims[:8])]
+        # rerank stage-2: text-only per API (images 422) — rerank the
+        # top-8 items' structure text against the query's structure text
+        def _txt(it):
+            if it['kind'] == 'genmenu':
+                return open(it['path'], 'rb').read().decode(
+                    'utf-8', 'replace')
+            for ext in ('.topo.json', '.spec.json'):
+                p = it['path'][:-5] + ext
+                if os.path.exists(p):
+                    return open(p).read()
+            return ''
+        docs = [_txt(next(x for x in items if x['id'] == iid))[:2000]
+                for _s, iid in sims[:8]]
         try:
             rb = {'model': RERANK_MODEL,
-                  'query': 'data:image/png;base64,' +
-                  base64.b64encode(
-                      open(qpng[qi], 'rb').read()).decode(),
+                  'query': _txt(queries[qi])[:2000],
                   'documents': docs}
             rd = _post(key, RERANK_API, rb)
-            rorder = [rd['results'][j]['index']
+            rorder = [(rd['results'][j]['index'],
+                       round(rd['results'][j].get('relevance_score', 0), 4))
                       for j in range(len(rd['results']))]
             rerr = None
         except Exception as e:
