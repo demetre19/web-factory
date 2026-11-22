@@ -404,8 +404,9 @@ VIBE_FAMILIES = {
 }
 
 # fixed kitchen-sink row set for the vibe scrub (standard landing)
-_SINK_ORDER = ('nav-bar', 'stacked-hero', 'cards-n', 'split-media',
-               'stat-band', 'faq', 'form-panel', 'footer-bar')
+_SINK_ORDER = ('nav-bar', 'flyout-nav', 'stacked-hero', 'cards-n',
+               'split-media', 'stat-band', 'faq', 'form-panel',
+               'footer-bar')
 
 
 # ------------------------------------------------------------------
@@ -808,7 +809,7 @@ def emit_vibe_doc(pd, fam, bundle):
     if os.path.isfile(fp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:vibe:v3' not in rf.read(4096)
+                stale = 'wf:vibe:v4' not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
@@ -819,7 +820,7 @@ def emit_vibe_doc(pd, fam, bundle):
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:vibe:v3-->' + _doc(head, battr, body,
+            fh.write('<!--wf:vibe:v4-->' + _doc(head, battr, body,
                                                 theme, css))
     return 'preview/vibes/' + fam + '.html'
 
