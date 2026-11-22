@@ -17,6 +17,7 @@ interface Props {
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
   copy?: any;
+  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 const {
@@ -27,6 +28,7 @@ const {
   items = [],
   image,
   copy,
+  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -49,7 +51,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
     <div class="bm-feature-63__container">
       <div class="intro intro--split">
         {head &&         <div class="intro__left-column">
-          {head && <h2 class="text-fluid-2">{head}</h2>}
+          {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         </div>
         }
         <div class="intro__right-column">

@@ -912,6 +912,8 @@ def translate(payload, stem):
                                 f'{pad}</div>\n')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
+                if tag in ('h1', 'h2'):
+                    return f'{pad}{_ranked_head(cattr)}\n'
                 return (f'{pad}{{head && <{tag}{cattr}>'
                         f'{{head}}</{tag}>}}\n')
             elif name in ('text-basic', 'text') and \
@@ -1130,8 +1132,7 @@ def translate(payload, stem):
     # (header/footer) skip every prose fallback: an h2/lede rendered
     # inside the bar breaks the chrome (user-visible nav defect).
     if '{head && ' not in body and cat not in ('header', 'footer'):
-        body = ('  {head && <h2 class="text-fluid-2">{head}</h2>}\n'
-                + body)
+        body = f'  {_ranked_head("")}\n' + body
     # §4.3 fallback — a skeleton without a long-text slot still
     # renders the answer + before paragraphs (verbatim, F.1), placed
     # right after the heading emit when one exists
@@ -1140,7 +1141,7 @@ def translate(payload, stem):
                    'set:html={inline(sub)} />}\n'
                    '  {before.map((p) => <p class="mt-flow '
                    'text-fluid-0" set:html={inline(p)} />)}\n')
-        hm = re.search(r'^(\s*)\{head && <h', body, re.M)
+        hm = re.search(r'^(\s*)\{head && (?:\(h1 \? )?<h', body, re.M)
         if hm:
             eol = body.index('\n', hm.end()) + 1
             # the h2 emit may sit inside a collapsed `{head && <div>…}`
@@ -1148,7 +1149,7 @@ def translate(payload, stem):
             # lands after the line that closes that wrapper, not inside.
             # `head` emits exactly once: a non-leaf `{head &&` line is
             # the wrapper opener, and the leaf is nested in it.
-            nested = re.search(r'^\s*\{head && (?!<h)',
+            nested = re.search(r'^\s*\{head && (?!<h|\(h1 \? <h)',
                                body[:hm.start()], re.M)
             if nested:
                 depth = 0
@@ -1374,6 +1375,7 @@ def translate(payload, stem):
            '             icon?: string; items?: any[] }[];\n'
            '  image?: { src: string; alt: string };\n'
            '  copy?: any;\n'
+           '  h1?: boolean;\n'
            '}\n'
            "import { inline } from '../_shared/inline';\n"
            + (("import IconChip from '../_shared/IconChip.astro';\n")
@@ -1388,6 +1390,7 @@ def translate(payload, stem):
            '  items = [],\n'
            '  image,\n'
            '  copy,\n'
+           '  h1 = false,\n'
            '} = Astro.props;\n'
            '// §4.3 — a copy slot binds verbatim article copy onto\n'
            "// the skeleton's native props (F.1 — nothing dropped)\n"
@@ -1416,6 +1419,20 @@ def translate(payload, stem):
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
+
+
+def _ranked_head(cattr):
+    """The block heading's rank is the ROW's, not the payload's: the
+    page binds exactly one h1 (the hero row's `h1` prop), every other
+    block heading is an h2 — a bank payload tagged h1 in a contact
+    band must not mint a second h1, an h2-tagged hero must not leave
+    the page with none."""
+    m = re.search(r'class="([^"]*)"', cattr or '')
+    keep = ' '.join(c for c in (m.group(1).split() if m else [])
+                    if not c.startswith('text-fluid-'))
+    k = (' ' + keep) if keep else ''
+    return (f'{{head && (h1 ? <h1 class="text-fluid-4{k}">{{head}}</h1>'
+            f' : <h2 class="text-fluid-2{k}">{{head}}</h2>)}}')
 
 
 def _frag(item, pad):

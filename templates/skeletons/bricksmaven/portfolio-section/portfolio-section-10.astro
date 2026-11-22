@@ -17,6 +17,7 @@ interface Props {
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
   copy?: any;
+  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 import IconChip from '../_shared/IconChip.astro';
@@ -29,6 +30,7 @@ const {
   items = [],
   image,
   copy,
+  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -57,7 +59,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class="sec-inner">
     <div class="bm-portfolio-section-10__container">
       <div class="intro">
-        {head && <h2 class="text-fluid-2">{head}</h2>}
+        {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">

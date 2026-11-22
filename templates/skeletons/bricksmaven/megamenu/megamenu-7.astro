@@ -17,6 +17,7 @@ interface Props {
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
   copy?: any;
+  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 import IconChip from '../_shared/IconChip.astro';
@@ -28,6 +29,7 @@ const {
   items = [],
   image,
   copy,
+  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -46,7 +48,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div class="wf-megamenu-7">
-  {head && <h2 class="text-fluid-2">{head}</h2>}
+  {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
   <div class="sec-inner">
