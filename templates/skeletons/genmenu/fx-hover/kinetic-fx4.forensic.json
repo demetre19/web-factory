@@ -1,0 +1,112 @@
+{
+ "slug": "kinetic-fx4",
+ "topology_id": "fx-hover",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "flex-col",
+   "justify-between",
+   "gap-5",
+   "w-full"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "zinc-50"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": ""
+    }
+   ],
+   "elements": 4,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Pause"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Next"
+    }
+   ],
+   "elements": 11,
+   "text_len": 25,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.25,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.688,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true"
+  ],
+  "data": [
+   "data-testid=fx4-output"
+  ],
+  "pseudo_classes": {
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "fx-caret",
+  "rounded-lg",
+  "rounded-md",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Pause"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Next"
+  }
+ ]
+}

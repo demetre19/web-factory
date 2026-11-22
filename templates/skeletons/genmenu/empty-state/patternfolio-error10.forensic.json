@@ -1,0 +1,115 @@
+{
+ "slug": "patternfolio-error10",
+ "topology_id": "empty-state",
+ "wrapper": {
+  "tag": "main",
+  "classes": [
+   "min-h-[680px]",
+   "w-full",
+   "bg-slate-50",
+   "text-slate-900",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-6"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "section",
+   "role": "hero",
+   "aria": "Request timeout",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-6",
+   "align": "text-center",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "HTTP 504 \u00b7 Gateway Timeout (30s)"
+    },
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "The request timed out"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "The reporting server took longer than expected to compile this dataset. None of "
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Retry now"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Cancel"
+    }
+   ],
+   "elements": 23,
+   "text_len": 185,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.958,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Request timeout"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 2,
+   "disabled": 1,
+   "focus": 2,
+   "focus-visible": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-2xl",
+  "rounded-lg",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "The request timed out"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Retry now"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cancel"
+  }
+ ]
+}

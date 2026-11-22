@@ -1,0 +1,144 @@
+{
+ "slug": "morphology-morph15",
+ "topology_id": "fx-tabslide",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "flex-col",
+   "items-center",
+   "justify-center",
+   "gap-3",
+   "w-full"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "Billing interval",
+   "cols": 3,
+   "span_map": [
+    {
+     "col_span": 3,
+     "child_index": 0,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#EAEAE4]"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Day"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Week"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Year"
+    }
+   ],
+   "elements": 6,
+   "text_len": 15,
+   "has_media": false
+  },
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "text": "[11px]"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 43,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   },
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.75,
+   "text_share": 0.259
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.125,
+   "text_share": 0.741
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-checked=false",
+   "aria-hidden=true",
+   "aria-label=Billing interval"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus-visible": 9,
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Day"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Week"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Year"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Indicator mid-slide \u00b7 Click segment to land"
+  }
+ ]
+}

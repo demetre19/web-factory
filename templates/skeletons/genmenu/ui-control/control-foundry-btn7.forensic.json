@@ -1,0 +1,148 @@
+{
+ "slug": "control-foundry-btn7",
+ "topology_id": "ui-control",
+ "wrapper": {
+  "tag": "article",
+  "classes": [
+   "flex",
+   "flex-col",
+   "justify-between",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "p-6",
+   "transition-colors",
+   "duration-150",
+   "hover:border-slate-300"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Progress Fill Loading Button"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Determinate export control sweeping a live progress layer beneath crisp foregrou"
+    }
+   ],
+   "elements": 9,
+   "text_len": 158,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-50/70"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Export Bundle"
+    }
+   ],
+   "elements": 15,
+   "text_len": 49,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "text": "slate-500"
+   },
+   "slots": [],
+   "elements": 2,
+   "text_len": 60,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 2
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.333,
+   "text_share": 0.592
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.556,
+   "text_share": 0.184
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.074,
+   "text_share": 0.225
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-busy=false",
+   "aria-hidden=true",
+   "aria-label=Bundle export progress",
+   "aria-valuemax=100",
+   "aria-valuemin=0",
+   "aria-valuenow=0"
+  ],
+  "data": [
+   "data-testid=specimen-Btn7"
+  ],
+  "pseudo_classes": {
+   "hover": 2,
+   "focus-visible": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "transition-all",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Progress Fill Loading Button"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Export Bundle"
+  }
+ ]
+}

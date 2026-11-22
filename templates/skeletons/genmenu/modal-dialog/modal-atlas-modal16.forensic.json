@@ -1,0 +1,210 @@
+{
+ "slug": "modal-atlas-modal16",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-start",
+   "justify-center",
+   "pt-16",
+   "sm:pt-24",
+   "p-4",
+   "bg-black/70",
+   "backdrop-blur-sm"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "zinc-950",
+    "text": "zinc-100"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Quick action command palette"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search workspace commands"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Esc"
+    }
+   ],
+   "elements": 10,
+   "text_len": 60,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-1",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Create new specification doc  Workspace  Cmd+N"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Invite collaborator by email  Team  Cmd+I"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Export CSS variables bundle  Design  Cmd+E"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Promote staging build to production  Release  Cmd+P"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Run WCAG contrast verification  Quality  Cmd+A"
+    }
+   ],
+   "elements": 26,
+   "text_len": 234,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "zinc-900/60",
+    "text": "zinc-400"
+   },
+   "slots": [],
+   "elements": 3,
+   "text_len": 44,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.25,
+   "text_share": 0.178
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.65,
+   "text_share": 0.692
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.075,
+   "text_share": 0.13
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Close command palette dialog",
+   "aria-labelledby=modal16-title",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 1,
+   "hover": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-sm",
+  "rounded-2xl",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Quick action command palette"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search workspace commands"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Esc"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Create new specification doc  Workspace  Cmd+N"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Invite collaborator by email  Team  Cmd+I"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Export CSS variables bundle  Design  Cmd+E"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Promote staging build to production  Release  Cmd+P"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Run WCAG contrast verification  Quality  Cmd+A"
+  }
+ ]
+}

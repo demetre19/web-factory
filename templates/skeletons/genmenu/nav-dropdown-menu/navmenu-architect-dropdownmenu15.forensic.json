@@ -1,0 +1,384 @@
+{
+ "slug": "navmenu-architect-dropdownmenu15",
+ "topology_id": "nav-dropdown-menu",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "border-b",
+   "border-neutral-800",
+   "bg-[#141619]",
+   "text-neutral-100"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Strata CAD"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Kernels  Plugins  Workspace",
+     "links": 2
+    }
+   ],
+   "elements": 14,
+   "text_len": 39,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [
+    {
+     "col_span": 5,
+     "child_index": 1,
+     "tag": "div"
+    },
+    {
+     "col_span": 3,
+     "child_index": 2,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#181B20]"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Quick Command Search"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Strata CAD tools"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "FEA"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "NURBS"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "STEP"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Mesh"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Solver"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Sketch Constraints  Surface Lofting  Assembly Mates",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Parametric Modeling"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Sketch Constraints  2D geometric solver  Surface Lofting  NURBS class-A curves  ",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Simulation & Export"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Finite Element Mesh  Thermal & stress FEA  Tolerance Stack  GD&T dimension audit",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Kernel Release"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "GPU Ray-Traced Sectioning"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Real-time cross-section slicing on 100k+ part assemblies."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Benchmark Notes"
+    }
+   ],
+   "elements": 133,
+   "text_len": 535,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#111317]"
+   },
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Download Client"
+    }
+   ],
+   "elements": 19,
+   "text_len": 85,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 5
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   }
+  ],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.084,
+   "text_share": 0.059
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.796,
+   "text_share": 0.812
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.114,
+   "text_share": 0.129
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Primary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 26,
+   "focus-visible": 3,
+   "focus": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "opacity-60",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-black/60",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Strata CAD"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Kernels"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Plugins"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Workspace"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Quick Command Search"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Strata CAD tools"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "FEA"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "NURBS"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "STEP"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Mesh"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Solver"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Sketch Constraints"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Surface Lofting"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Assembly Mates"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Parametric Modeling"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Sketch Constraints  2D geometric solver"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Surface Lofting  NURBS class-A curves"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Assembly Mates  Kinematic joint tree"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Simulation & Export"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Finite Element Mesh  Thermal & stress FEA"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Tolerance Stack  GD&T dimension audit"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "STEP / IGES Bridge  Lossless kernel export"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Kernel Release"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Benchmark Notes"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Download Client"
+  }
+ ]
+}

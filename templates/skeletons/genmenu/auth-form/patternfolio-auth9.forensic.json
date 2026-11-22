@@ -1,0 +1,130 @@
+{
+ "slug": "patternfolio-auth9",
+ "topology_id": "auth-form",
+ "wrapper": {
+  "tag": "main",
+  "classes": [
+   "min-h-[680px]",
+   "w-full",
+   "bg-slate-100",
+   "text-slate-900",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-6"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "section",
+   "role": "form",
+   "aria": "Enterprise SSO and Passkey sign in",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Organization sign in"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Authenticate via SAML 2.0 single sign-on or a registered hardware passkey."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "SAML Domain"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Passkey / Key"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Workspace URL  .gridline.app  Continue with SAML SSO",
+     "fields": 1
+    }
+   ],
+   "elements": 21,
+   "text_len": 199,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.955,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Authentication method",
+   "aria-label=Enterprise SSO and Passkey sign in",
+   "aria-selected=false",
+   "aria-selected=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 4,
+   "focus-visible": 7,
+   "hover": 2,
+   "focus-within": 3
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Organization sign in"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "SAML Domain"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Passkey / Key"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Workspace URL"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Continue with SAML SSO"
+  }
+ ]
+}

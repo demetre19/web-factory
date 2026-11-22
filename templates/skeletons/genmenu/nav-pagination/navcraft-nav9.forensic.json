@@ -1,0 +1,129 @@
+{
+ "slug": "navcraft-nav9",
+ "topology_id": "nav-pagination",
+ "wrapper": {
+  "tag": "nav",
+  "classes": [
+   "flex",
+   "flex-wrap",
+   "items-center",
+   "justify-between",
+   "gap-3",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "px-3.5",
+   "py-2.5"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "text": "slate-600"
+   },
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Rows per page"
+    }
+   ],
+   "elements": 6,
+   "text_len": 25,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 5,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 16,
+   "text_len": 12,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.261,
+   "text_share": 0.676
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.696,
+   "text_share": 0.324
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Compact pagination",
+   "aria-label=First page",
+   "aria-label=Last page",
+   "aria-label=Next page",
+   "aria-label=Previous page",
+   "disabled",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 2,
+   "hover": 4,
+   "disabled": 8
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl"
+ ],
+ "copy_slots": [
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Rows per page"
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "slug": "patternfolio-error2",
+ "topology_id": "empty-state",
+ "wrapper": {
+  "tag": "main",
+  "classes": [
+   "min-h-[680px]",
+   "w-full",
+   "bg-slate-50",
+   "text-slate-900",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-6"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "section",
+   "role": "hero",
+   "aria": "Internal server error",
+   "cols": 1,
+   "span_map": [
+    {
+     "col_span": 5,
+     "child_index": 0,
+     "tag": "div"
+    },
+    {
+     "col_span": 7,
+     "child_index": 1,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "HTTP 500 \u00b7 Incident INC-8492-B"
+    },
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Internal server error"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Our application server encountered an unexpected fault while processing your req"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Retry request"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "System status"
+    }
+   ],
+   "elements": 32,
+   "text_len": 214,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 5
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 7
+   }
+  ],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.97,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Internal server error"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 2,
+   "disabled": 1,
+   "focus": 2,
+   "focus-visible": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-2xl",
+  "rounded-lg",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Internal server error"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Retry request"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "System status"
+  }
+ ]
+}

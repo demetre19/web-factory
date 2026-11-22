@@ -1,0 +1,178 @@
+{
+ "slug": "tabular-table5",
+ "topology_id": "data-table-expandable",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "rounded-xl",
+   "border",
+   "border-stone-200",
+   "bg-white",
+   "overflow-hidden"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "stone-50/70"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Order Fulfillment Queue"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Expandable rows \u00b7 Line-item breakdown & carrier tracking"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Expand All"
+    }
+   ],
+   "elements": 5,
+   "text_len": 93,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Order #"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Customer"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Fulfillment"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Order Total"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 116,
+   "text_len": 463,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.041,
+   "text_share": 0.167
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.951,
+   "text_share": 0.833
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=false",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Toggle details for ORD-7738",
+   "aria-label=Toggle details for ORD-7741",
+   "aria-label=Toggle details for ORD-7742",
+   "aria-label=Toggle details for ORD-7745",
+   "aria-sort=descending",
+   "aria-sort=none"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 16
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "rounded-md",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Order Fulfillment Queue"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Expand All"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Order #"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Customer"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Fulfillment"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Order Total"
+  }
+ ]
+}

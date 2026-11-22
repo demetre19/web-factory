@@ -1,0 +1,151 @@
+{
+ "slug": "menucraft-react-sheetmenu7",
+ "topology_id": "nav-top-sheet",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "relative",
+   "h-full",
+   "w-full",
+   "overflow-hidden",
+   "bg-[#090D16]",
+   "text-slate-100",
+   "flex",
+   "flex-col"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "[#0D1322]"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Close"
+    }
+   ],
+   "elements": 7,
+   "text_len": 18,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Infrastructure  Clusters & edge nodes  Security & IAM  Policies & tokens  Deploy",
+     "links": 0
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Deployments"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Multi-level drill-down stack panel with breadcrumb back navigation and flat sear"
+    }
+   ],
+   "elements": 64,
+   "text_len": 270,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.097,
+   "text_share": 0.062
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.889,
+   "text_share": 0.938
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-controls=_R_0_",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Close Orbital backdrop",
+   "aria-label=Close Orbital drill-down menu",
+   "aria-label=Multi-level drill-down navigation",
+   "aria-label=Search all drill-down levels"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "focus-visible": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Close"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Infrastructure  Clusters & edge nodes"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Security & IAM  Policies & tokens"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Deployments  Production & staging"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "System Diagnostics  Trace & profiler"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Deployments"
+  }
+ ]
+}

@@ -1,0 +1,156 @@
+{
+ "slug": "comparekit-compare17",
+ "topology_id": "comparison-pros-cons",
+ "wrapper": {
+  "tag": "section",
+  "classes": [
+   "w-full",
+   "bg-[#FAF8F4]",
+   "text-stone-900",
+   "border",
+   "border-stone-200",
+   "rounded-xl",
+   "p-6",
+   "md:p-10"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Editorial 2-Column Pros & Cons Evaluation"
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Core Backend Topology Trade-offs"
+    }
+   ],
+   "elements": 3,
+   "text_len": 75,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h4",
+     "text": "Modular Monolith"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Recommended for teams under 80 engineers"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Single transactional database guarantees ACID integrity across domain boundaries",
+     "items": 3
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Requires disciplined internal module boundaries to prevent circular imports.  Co",
+     "items": 2
+    },
+    {
+     "kind": "headline",
+     "tag": "h4",
+     "text": "Distributed Microservices"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Viable only with dedicated platform infrastructure team"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Independent deployment cadence and polyglot runtime choices per service.  Fine-g",
+     "items": 2
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Distributed tracing, service mesh, and saga compensation add steep operational c",
+     "items": 3
+    }
+   ],
+   "elements": 70,
+   "text_len": 1033,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.041,
+   "text_share": 0.068
+  },
+  {
+   "region_index": 1,
+   "role": "list",
+   "element_share": 0.946,
+   "text_share": 0.932
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-labelledby=compare17-heading"
+  ],
+  "data": [],
+  "pseudo_classes": {},
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Core Backend Topology Trade-offs"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Modular Monolith"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Distributed Microservices"
+  }
+ ]
+}

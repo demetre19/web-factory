@@ -1,0 +1,139 @@
+{
+ "slug": "checkout-components-checkout11",
+ "topology_id": "checkout",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "min-h-screen",
+   "items-center",
+   "justify-center",
+   "bg-neutral-100",
+   "p-6",
+   "font-sans",
+   "text-neutral-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Payment"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Amount due  $212.40"
+    },
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Save card for future purchases  Card number  VISA  Visa  Mastercard  AMEX  Ameri",
+     "fields": 5
+    }
+   ],
+   "elements": 71,
+   "text_len": 294,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.986,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=c11-cvc-msg",
+   "aria-describedby=c11-exp-msg",
+   "aria-describedby=c11-name-msg",
+   "aria-describedby=c11-num-msg",
+   "aria-hidden=true",
+   "aria-invalid=false",
+   "aria-label=Accepted cards",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 16,
+   "hover": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-500",
+  "ring-1",
+  "ring-neutral-200",
+  "rounded-2xl",
+  "rounded-lg",
+  "shadow-sm",
+  "transition",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Payment"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Card number"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Name on card"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Expiry (MM/YY)"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "CVC"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Pay $212.40"
+  }
+ ]
+}

@@ -1,0 +1,326 @@
+{
+ "slug": "checkout-components-checkout5",
+ "topology_id": "checkout",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "min-h-screen",
+   "bg-[#faf6f0]",
+   "font-sans",
+   "text-stone-800"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Return to cart"
+    }
+   ],
+   "elements": 3,
+   "text_len": 26,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Contact  1  Email  Phone (for delivery updates)  Delivery address  2  Full name ",
+     "fields": 15
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Your order"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "P  Stoneware Pour-Over Set  Speckled Oat  \u2212  1  +  $64.00  B  Single-Origin Bean",
+     "items": 3
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Promo code  Apply",
+     "fields": 1
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Place order"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Plastic-free packaging, carbon-neutral shipping"
+    }
+   ],
+   "elements": 134,
+   "text_len": 657,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   },
+   {
+    "cols": 6
+   },
+   {
+    "cols": 2
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 6
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 1
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.022,
+   "text_share": 0.038
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.971,
+   "text_share": 0.962
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=c5-promo-msg",
+   "aria-hidden=true",
+   "aria-invalid=false",
+   "aria-label=Decrease quantity of Linen Tea Towel",
+   "aria-label=Decrease quantity of Single-Origin Beans",
+   "aria-label=Decrease quantity of Stoneware Pour-Over",
+   "aria-label=Increase quantity of Linen Tea Towel",
+   "aria-label=Increase quantity of Single-Origin Beans",
+   "aria-label=Increase quantity of Stoneware Pour-Over",
+   "aria-labelledby=c5-s1",
+   "aria-labelledby=c5-s2",
+   "aria-labelledby=c5-s3",
+   "aria-labelledby=c5-s4",
+   "aria-labelledby=c5-sum",
+   "aria-live=polite",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 3,
+   "focus": 46
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-2xl",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-sm"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Return to cart"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Contact  1"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Phone (for delivery updates)"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Delivery address  2"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Full name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Address line 1"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Apt, suite (optional)"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "City"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "State"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "ZIP code"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Delivery speed  3"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Choose delivery speed"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Payment  4"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Payment method"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Card number"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Expiry date"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "CVC"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Your order"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Promo code"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Apply"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Place order"
+  }
+ ]
+}

@@ -1,0 +1,176 @@
+{
+ "slug": "wayfinding-atlas-way17",
+ "topology_id": "nav-anchor",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "bg-white",
+   "rounded-xl",
+   "border",
+   "border-teal-200",
+   "overflow-hidden"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Section anchors",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "teal-50/70"
+   },
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ol",
+     "text": "Overview  Specifications  Benchmarks  Changelog",
+     "items": 4
+    }
+   ],
+   "elements": 10,
+   "text_len": 47,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-5",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Overview"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Architectural summary of low-latency edge caching and regional routing."
+    },
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Specifications"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Supports HTTP/3 QUIC transport, Brotli level-6 compression, and 128 KB inline li"
+    },
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Benchmarks"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Median TTFB measured at 18 ms across 40 global test locations under sustained lo"
+    },
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Changelog"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Added stale-while-revalidate header directives and improved cache invalidation s"
+    }
+   ],
+   "elements": 13,
+   "text_len": 379,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.417,
+   "text_share": 0.11
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.542,
+   "text_share": 0.89
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=location",
+   "aria-label=Section anchors"
+  ],
+  "data": [
+   "data-anchor=benchmarks",
+   "data-anchor=changelog",
+   "data-anchor=overview",
+   "data-anchor=specs"
+  ],
+  "pseudo_classes": {
+   "hover": 3
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Overview"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Specifications"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Benchmarks"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Changelog"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Overview"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Specifications"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Benchmarks"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Changelog"
+  }
+ ]
+}

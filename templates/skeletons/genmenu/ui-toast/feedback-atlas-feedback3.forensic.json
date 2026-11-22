@@ -1,0 +1,124 @@
+{
+ "slug": "feedback-atlas-feedback3",
+ "topology_id": "ui-toast",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "w-full",
+   "max-w-sm",
+   "flex-col",
+   "gap-2.5"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "alert",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-start",
+   "tone": {
+    "bg": "amber-50/90",
+    "text": "amber-950"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Storage approaching quota"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "88% of your 50 GB workspace archive is currently allocated."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 12,
+   "text_len": 86,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "status",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-start",
+   "tone": {
+    "bg": "sky-50/90",
+    "text": "sky-950"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Scheduled maintenance window"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Read replicas undergo a 4-minute upgrade Sunday at 02:00 UTC."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 12,
+   "text_len": 91,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.48,
+   "text_share": 0.486
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.48,
+   "text_share": 0.514
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Dismiss Scheduled maintenance window",
+   "aria-label=Dismiss Storage approaching quota",
+   "aria-label=Notification stack",
+   "aria-live=assertive",
+   "aria-live=polite"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "animate-feedback-enter",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": []
+}

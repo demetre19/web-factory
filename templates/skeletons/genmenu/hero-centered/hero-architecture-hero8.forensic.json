@@ -1,0 +1,220 @@
+{
+ "slug": "hero-architecture-hero8",
+ "topology_id": "hero-centered",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "bg-zinc-950",
+   "text-white",
+   "font-sans",
+   "border-b",
+   "border-zinc-800"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "Release announcement",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "blue-700",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Read Release Notes"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 10,
+   "text_len": 129,
+   "has_media": false
+  },
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Foundry Grid"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Primitives  Design Tokens  Accessibility  Changelog",
+     "links": 4
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Get Starter Kit"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 14,
+   "text_len": 82,
+   "has_media": false
+  },
+  {
+   "tag": "section",
+   "role": "hero",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Zero-Runtime CSS \u00b7 Keyboard-First Components"
+    },
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Ship interface systems built to outlast trends"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Accessible dialogs, data tables, and responsive grid primitives compiled directl"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Install Component Kit"
+    }
+   ],
+   "elements": 13,
+   "text_len": 247,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 8
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   }
+  ],
+  "flex_wraps": 2
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.263,
+   "text_share": 0.282
+  },
+  {
+   "region_index": 1,
+   "role": "header",
+   "element_share": 0.368,
+   "text_share": 0.179
+  },
+  {
+   "region_index": 2,
+   "role": "hero",
+   "element_share": 0.342,
+   "text_share": 0.539
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=false",
+   "aria-hidden=true",
+   "aria-label=Dismiss announcement bar",
+   "aria-label=Foundry primary",
+   "aria-label=Release announcement",
+   "aria-label=Toggle Foundry navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 12
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Read Release Notes"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Foundry Grid"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Primitives"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Design Tokens"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Accessibility"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Changelog"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Get Starter Kit"
+  },
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Ship interface systems built to outlast trends"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Install Component Kit"
+  }
+ ]
+}

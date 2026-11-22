@@ -1,0 +1,252 @@
+{
+ "slug": "menucraft-react-sheetmenu15",
+ "topology_id": "nav-bottom-sheet",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "relative",
+   "h-full",
+   "w-full",
+   "overflow-hidden",
+   "bg-[#131126]",
+   "text-indigo-50",
+   "flex",
+   "flex-col",
+   "justify-between"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "main",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-3",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "#design-critique"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Nested drill-down bottom sheet with stack breadcrumbs, search bypass, and Compac"
+    }
+   ],
+   "elements": 7,
+   "text_len": 148,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#1B1836]"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Open Drill-Down Sheet"
+    }
+   ],
+   "elements": 5,
+   "text_len": 21,
+   "has_media": false
+  },
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "Close Nexus backdrop",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "black/70"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "Nexus nested drill-down bottom sheet",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#1B1836]"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Compact"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Full"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 17,
+   "text_len": 13,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-2",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Audio Channels  4 active rooms  Workspace Members  Directory & roles  Audio Pref",
+     "items": 3
+    }
+   ],
+   "elements": 44,
+   "text_len": 109,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.093,
+   "text_share": 0.509
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.067,
+   "text_share": 0.072
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.013,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 3,
+   "role": "form",
+   "element_share": 0.227,
+   "text_share": 0.045
+  },
+  {
+   "region_index": 4,
+   "role": "list",
+   "element_share": 0.587,
+   "text_share": 0.375
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-controls=_R_0_",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Close Nexus backdrop",
+   "aria-label=Close Nexus sheet",
+   "aria-label=Drag handle to resize nested sheet",
+   "aria-label=Nexus nested drill-down bottom sheet",
+   "aria-label=Search nested rooms",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "active": 1,
+   "focus-visible": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-200",
+  "ease-out",
+  "rounded-2xl",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-t-3xl",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-[height]",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "#design-critique"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Drill-Down Sheet"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Compact"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Full"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Audio Channels  4 active rooms"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Workspace Members  Directory & roles"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Audio Preferences  Mic & spatial output"
+  }
+ ]
+}

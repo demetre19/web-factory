@@ -1,0 +1,261 @@
+{
+ "slug": "hero-architecture-hero11",
+ "topology_id": "hero-split",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "bg-[#0B0F17]",
+   "text-slate-100",
+   "font-sans",
+   "border-b",
+   "border-slate-800"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Chronicle Telemetry"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Time-Series Engine  Threshold Rules  MQTT & OTel  Compliance",
+     "links": 4
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Open Live Console"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 14,
+   "text_len": 100,
+   "has_media": false
+  },
+  {
+   "tag": "section",
+   "role": "hero",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Sub-Millisecond Time-Series Storage \u00b7 Edge-to-Cloud Sync"
+    },
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Query ten years of fleet telemetry in a single SQL pass"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Chronicle ingests high-frequency sensor frames over MQTT and OpenTelemetry, comp"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Launch Sample Cluster"
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Read Storage Whitepaper"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Regional Ingestion Overview"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "eu-west"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "us-east"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "ap-south"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Frame Ingest Rate"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "1.42M/s"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "p99 Query Latency"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "4.1 ms"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Hot Retention"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "365 days"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Reporting Gateways"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "4,820"
+    },
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    }
+   ],
+   "elements": 37,
+   "text_len": 481,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 4
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 2
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.269,
+   "text_share": 0.172
+  },
+  {
+   "region_index": 1,
+   "role": "hero",
+   "element_share": 0.712,
+   "text_share": 0.828
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=false",
+   "aria-hidden=true",
+   "aria-label=24-hour ingestion throughput line chart",
+   "aria-label=Chronicle primary",
+   "aria-label=Toggle Chronicle navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 13
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-md",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Chronicle Telemetry"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Time-Series Engine"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Threshold Rules"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "MQTT & OTel"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Compliance"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Live Console"
+  },
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Query ten years of fleet telemetry in a single SQL pass"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Launch Sample Cluster"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Read Storage Whitepaper"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "eu-west"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "us-east"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "ap-south"
+  }
+ ]
+}

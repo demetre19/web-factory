@@ -1,0 +1,125 @@
+{
+ "slug": "kinetic-fx8",
+ "topology_id": "fx-hover",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "grid",
+   "grid-cols-1",
+   "sm:grid-cols-2",
+   "gap-3",
+   "w-full"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "text-left",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "12 ms latency"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Core motion primitives"
+    }
+   ],
+   "elements": 8,
+   "text_len": 50,
+   "has_media": false
+  },
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "text-left",
+   "tone": {
+    "bg": "zinc-50"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "60 fps locked"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Full compositor suite"
+    }
+   ],
+   "elements": 8,
+   "text_len": 51,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.471,
+   "text_share": 0.495
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.471,
+   "text_share": 0.505
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 11,
+   "focus-visible": 6,
+   "group-hover": 6
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-200",
+  "ease-[cubic-bezier(0.16,1,0.3,1)]",
+  "rounded-xl",
+  "shadow-[0_10px_22px_-10px_rgba(37,99,235,0.22)]",
+  "transition-all",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Starter Kit  12 ms latency  Core motion primitives"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Studio System  60 fps locked  Full compositor suite"
+  }
+ ]
+}

@@ -1,0 +1,328 @@
+{
+ "slug": "navmenu-architect-dropdownmenu20",
+ "topology_id": "nav-dropdown-menu",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "border-b",
+   "border-slate-200",
+   "bg-white",
+   "text-slate-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Quarry Cloud"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Quarry modules"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 11,
+   "text_len": 54,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Primary Navigation",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Billing  Audit Log  Modules",
+     "items": 3
+    }
+   ],
+   "elements": 12,
+   "text_len": 27,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Data & Pipelines"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Warehouse Sync  Incremental CDC streams  Batch Orchestrator  DAG dependency grap",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Runtime & Fleet"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Regional Clusters  Multi-zone autoscaling  Edge Gateways  Anycast TLS terminatio",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Access & Source"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Repo Connectors  PR preview environments  Role Policies  Scoped team permissions",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Featured Capability"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Zero-Downtime Sync"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Logical Replication Across Regions"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Stream schema and table snapshots without locking production reads."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Read Setup Guide"
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "CLI Docs"
+    }
+   ],
+   "elements": 121,
+   "text_len": 663,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.076,
+   "text_share": 0.073
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.083,
+   "text_share": 0.036
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.834,
+   "text_share": 0.891
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Primary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 3,
+   "hover": 31,
+   "focus-visible": 3,
+   "group-hover": 18
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-slate-900/10",
+  "shadow-xl",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Quarry Cloud"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Quarry modules"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Billing"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Audit Log"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Modules"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Data & Pipelines"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Warehouse Sync  Incremental CDC streams"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Batch Orchestrator  DAG dependency graphs"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Event Webhooks  Signed HTTP fanout"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Runtime & Fleet"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Regional Clusters  Multi-zone autoscaling"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Edge Gateways  Anycast TLS termination"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Live Telemetry  Latency & throughput logs"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Access & Source"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Repo Connectors  PR preview environments"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Role Policies  Scoped team permissions"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Token Vault  Short-lived OIDC keys"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Featured Capability"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Read Setup Guide"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "CLI Docs"
+  }
+ ]
+}

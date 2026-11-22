@@ -1,0 +1,193 @@
+{
+ "slug": "modal-atlas-modal12",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-4",
+   "bg-slate-950/45",
+   "backdrop-blur-[2px]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white",
+    "text": "slate-900"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Workspace settings"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "General  Notifications  Security",
+     "links": 0
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Workspace display name"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Compact table density"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Reduces row height across audit and asset tables."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 21,
+   "text_len": 150,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-end",
+   "tone": {
+    "bg": "slate-50"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Cancel"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Save changes"
+    }
+   ],
+   "elements": 3,
+   "text_len": 20,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 1
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.84,
+   "text_share": 0.882
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.12,
+   "text_share": 0.118
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-checked=false",
+   "aria-label=Close settings dialog",
+   "aria-label=Settings sections",
+   "aria-label=Toggle compact table density",
+   "aria-labelledby=modal12-title",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 8,
+   "focus": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-[2px]",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-xs",
+  "transition-colors",
+  "transition-transform",
+  "translate-x-0.5"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Workspace settings"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "General"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Notifications"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Security"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Workspace display name"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cancel"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Save changes"
+  }
+ ]
+}

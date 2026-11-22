@@ -1,0 +1,226 @@
+{
+ "slug": "meridian-data8",
+ "topology_id": "data-display",
+ "wrapper": {
+  "tag": "section",
+  "classes": [
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Engineering Releases"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "All"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Platform"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Security"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "API"
+    }
+   ],
+   "elements": 10,
+   "text_len": 67,
+   "has_media": false
+  },
+  {
+   "tag": "ul",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Zero-downtime partition rebalancing for multi-region tables"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Automatic shard splitting now runs incrementally without write locks during peak"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Reduces tail write latency spikes by 68% during background compaction.  Supports",
+     "items": 2
+    },
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Hardware-backed WebAuthn enforcement for organization admins"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Workspace owners can now mandate FIDO2 passkeys across billing and role-escalati"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Cursor-paginated batch export endpoint with Arrow IPC streaming"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Stream up to 5M analytical rows per request with deterministic resume cursors."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 58,
+   "text_len": 775,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 4
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.145,
+   "text_share": 0.08
+  },
+  {
+   "region_index": 1,
+   "role": "list",
+   "element_share": 0.841,
+   "text_share": 0.92
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=false",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Bookmark Cursor-paginated batch export e",
+   "aria-label=Bookmark Hardware-backed WebAuthn enforc",
+   "aria-label=Collapse details for Zero-downtime parti",
+   "aria-label=Expand details for Cursor-paginated batc",
+   "aria-label=Expand details for Hardware-backed WebAu",
+   "aria-label=Filter releases by category",
+   "aria-label=Platform release and changelog feed",
+   "aria-label=Remove bookmark for Zero-downtime partit",
+   "aria-pressed=false",
+   "aria-pressed=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 13
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Engineering Releases"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "All"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Platform"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Security"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "API"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Zero-downtime partition rebalancing for multi-region tables"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Hardware-backed WebAuthn enforcement for organization admins"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Cursor-paginated batch export endpoint with Arrow IPC streaming"
+  }
+ ]
+}

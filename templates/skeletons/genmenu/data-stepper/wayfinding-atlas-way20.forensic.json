@@ -1,0 +1,174 @@
+{
+ "slug": "wayfinding-atlas-way20",
+ "topology_id": "data-stepper",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "bg-slate-950",
+   "text-slate-100",
+   "p-5",
+   "rounded-xl",
+   "border",
+   "border-slate-800",
+   "space-y-4"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [],
+   "elements": 3,
+   "text_len": 37,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-800"
+   },
+   "slots": [],
+   "elements": 2,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Step pagination",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Previous"
+    },
+    {
+     "kind": "list",
+     "tag": "ol",
+     "text": "1  2  3  4  5  ...  8",
+     "items": 7
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Next"
+    }
+   ],
+   "elements": 21,
+   "text_len": 37,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 2
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.111,
+   "text_share": 0.5
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.074,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 2,
+   "role": "nav",
+   "element_share": 0.778,
+   "text_share": 0.5
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=page",
+   "aria-hidden=true",
+   "aria-label=Go to step 1",
+   "aria-label=Go to step 2",
+   "aria-label=Go to step 3",
+   "aria-label=Go to step 4",
+   "aria-label=Go to step 5",
+   "aria-label=Go to step 8",
+   "aria-label=Step pagination"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 10,
+   "disabled": 2,
+   "focus-visible": 18
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-200",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "transition-all",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Previous"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "1"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "2"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "3"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "4"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "5"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "8"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Next"
+  }
+ ]
+}

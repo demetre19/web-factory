@@ -1,0 +1,133 @@
+{
+ "slug": "navcraft-nav2",
+ "topology_id": "nav-menu",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "flex-col",
+   "gap-3"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Hide Menu"
+    }
+   ],
+   "elements": 3,
+   "text_len": 44,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-start justify-between",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Open Preview  Space  Cut  \u2318X  Copy Path  \u2325\u2318C  Inspect Source  F12  View History ",
+     "links": 0
+    }
+   ],
+   "elements": 65,
+   "text_len": 159,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.043,
+   "text_share": 0.217
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.942,
+   "text_share": 0.783
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Canvas context menu"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 7,
+   "focus-visible": 14
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "ring-1",
+  "ring-slate-900/5",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-xl"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Hide Menu"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Preview  Space"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cut  \u2318X"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Copy Path  \u2325\u2318C"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Inspect Source  F12"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "View History  \u2318H"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Move to Trash  \u232b"
+  }
+ ]
+}

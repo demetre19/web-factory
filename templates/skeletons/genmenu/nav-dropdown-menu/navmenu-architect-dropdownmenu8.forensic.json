@@ -1,0 +1,365 @@
+{
+ "slug": "navmenu-architect-dropdownmenu8",
+ "topology_id": "nav-dropdown-menu",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "border-b",
+   "border-rose-200/70",
+   "bg-white",
+   "text-slate-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Prism Collective"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Showcase  Artists  Events  Explore",
+     "links": 3
+    }
+   ],
+   "elements": 16,
+   "text_len": 52,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Prism tools"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 10,
+   "text_len": 74,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 12,
+   "span_map": [
+    {
+     "col_span": 3,
+     "child_index": 0,
+     "tag": "div"
+    },
+    {
+     "col_span": 5,
+     "child_index": 1,
+     "tag": "div"
+    },
+    {
+     "col_span": 4,
+     "child_index": 2,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Categories"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Creative Suites  Motion, vectors, and grids"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Broadcast & Sound  Audio scoring and live stages"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Guides & Curations  Monographs and field notes"
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Creative Suites"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Motion Storyboards  Keyframe curves & camera rigs  Vector Foundry  Variable glyp",
+     "items": 4
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Featured Release"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Autumn Residency"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Chromatic Typography & Spatial Sound"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Twelve independent studios collaborating on kinetic web posters."
+    },
+    {
+     "kind": "cta",
+     "tag": "a",
+     "text": "View Monograph"
+    }
+   ],
+   "elements": 73,
+   "text_len": 517,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "gradient-to-r",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Applications open for the Winter Experimental Design Grant \u2014 submissions close D"
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Submit Portfolio"
+    }
+   ],
+   "elements": 8,
+   "text_len": 109,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 5
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.148,
+   "text_share": 0.069
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.093,
+   "text_share": 0.098
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.676,
+   "text_share": 0.688
+  },
+  {
+   "region_index": 3,
+   "role": "content",
+   "element_share": 0.074,
+   "text_share": 0.145
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Explore categories",
+   "aria-label=Primary Navigation",
+   "aria-selected=false",
+   "aria-selected=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 23,
+   "focus-visible": 3,
+   "focus": 2,
+   "group-hover": 8
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-2xl",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-md",
+  "shadow-rose-500/20",
+  "shadow-violet-950/10",
+  "transition-all",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Prism Collective"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Showcase"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Artists"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Events"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Explore"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Prism tools"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Categories"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Creative Suites  Motion, vectors, and grids"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Broadcast & Sound  Audio scoring and live stages"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Guides & Curations  Monographs and field notes"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Creative Suites"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Motion Storyboards  Keyframe curves & camera rigs"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Vector Foundry  Variable glyph & icon sets"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Modular Grids  Responsive artboard rules"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Color Systems Playbook  Perceptual contrast palettes"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Featured Release"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "View Monograph"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Submit Portfolio"
+  }
+ ]
+}

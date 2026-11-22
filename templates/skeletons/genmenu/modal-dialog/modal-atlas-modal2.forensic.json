@@ -1,0 +1,122 @@
+{
+ "slug": "modal-atlas-modal2",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-4",
+   "bg-slate-950/50",
+   "backdrop-blur-[2px]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white",
+    "text": "slate-900"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Delete workspace permanently"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "All 14 deployments, environment secrets, and audit history for will be erased im"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Type to confirm  acme-prod  Keep workspace  Delete forever",
+     "fields": 1
+    }
+   ],
+   "elements": 19,
+   "text_len": 191,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.95,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=modal2-desc",
+   "aria-label=Close delete workspace dialog",
+   "aria-labelledby=modal2-title",
+   "aria-modal=true",
+   "disabled"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "focus": 4,
+   "disabled": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-[2px]",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Delete workspace permanently"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Type to confirm  acme-prod"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Keep workspace"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Delete forever"
+  }
+ ]
+}

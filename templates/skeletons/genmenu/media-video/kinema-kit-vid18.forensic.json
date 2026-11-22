@@ -1,0 +1,129 @@
+{
+ "slug": "kinema-kit-vid18",
+ "topology_id": "media-video",
+ "wrapper": {
+  "tag": "article",
+  "classes": [
+   "bg-white",
+   "border",
+   "border-slate-200",
+   "rounded-xl",
+   "overflow-hidden",
+   "shadow-xs",
+   "flex",
+   "flex-col"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "media",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-950"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 16,
+   "text_len": 12,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "360\u00b0 Spatial Orbit Preview"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Manual azimuth scrub"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Auto Orbit"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 10,
+   "text_len": 60,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "media",
+   "element_share": 0.593,
+   "text_share": 0.167
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.37,
+   "text_share": 0.833
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Pan 360 degree spatial camera angle",
+   "aria-label=Reset 360 camera angle"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-xs"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "360\u00b0 Spatial Orbit Preview"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Auto Orbit"
+  }
+ ]
+}

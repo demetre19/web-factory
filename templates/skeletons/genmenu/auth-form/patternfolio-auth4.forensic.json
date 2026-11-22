@@ -1,0 +1,102 @@
+{
+ "slug": "patternfolio-auth4",
+ "topology_id": "auth-form",
+ "wrapper": {
+  "tag": "main",
+  "classes": [
+   "min-h-[680px]",
+   "w-full",
+   "bg-zinc-50",
+   "text-zinc-900",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-6"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "section",
+   "role": "form",
+   "aria": "Magic link authentication",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Passwordless sign in"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "No password needed. Enter your email and we will deliver an instant sign-in link"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Email address  Works for both new and existing team members.  Send magic link",
+     "fields": 1
+    }
+   ],
+   "elements": 13,
+   "text_len": 203,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.929,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=auth4-hint",
+   "aria-hidden=true",
+   "aria-invalid=false",
+   "aria-label=Magic link authentication"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 5,
+   "hover": 1,
+   "focus-visible": 3
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Passwordless sign in"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email address"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Send magic link"
+  }
+ ]
+}

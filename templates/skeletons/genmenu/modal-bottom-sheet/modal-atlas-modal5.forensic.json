@@ -1,0 +1,155 @@
+{
+ "slug": "modal-atlas-modal5",
+ "topology_id": "modal-bottom-sheet",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-end",
+   "sm:items-center",
+   "justify-center",
+   "sm:p-4",
+   "bg-slate-950/60",
+   "backdrop-blur-md"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-900/75",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Share product feedback"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "How did today's release perform in your workflow?"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Overall rating  1  2  3  4  5  Topic area  Interface & Speed  Keyboard Shortcuts",
+     "fields": 2
+    }
+   ],
+   "elements": 31,
+   "text_len": 222,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 5
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.969,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Close feedback dialog",
+   "aria-labelledby=modal5-title",
+   "aria-modal=true",
+   "aria-pressed=false",
+   "aria-pressed=true",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 8,
+   "focus": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-2xl",
+  "backdrop-blur-md",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-t-2xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Share product feedback"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "1"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "2"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "3"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "4"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "5"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Topic area"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Notes"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cancel"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Send feedback"
+  }
+ ]
+}

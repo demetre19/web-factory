@@ -1,0 +1,106 @@
+{
+ "slug": "navcraft-nav10",
+ "topology_id": "nav-micro",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "flex-col",
+   "gap-3"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "text": "slate-500"
+   },
+   "slots": [],
+   "elements": 3,
+   "text_len": 40,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Chapter navigation",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Previous  01. Getting Started"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Next  03. Webhook Signatures"
+    }
+   ],
+   "elements": 15,
+   "text_len": 59,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.158,
+   "text_share": 0.404
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.789,
+   "text_share": 0.596
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Chapter navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "disabled": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Previous  01. Getting Started"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Next  03. Webhook Signatures"
+  }
+ ]
+}

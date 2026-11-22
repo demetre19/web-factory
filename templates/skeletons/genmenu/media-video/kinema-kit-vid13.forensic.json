@@ -1,0 +1,133 @@
+{
+ "slug": "kinema-kit-vid13",
+ "topology_id": "media-video",
+ "wrapper": {
+  "tag": "article",
+  "classes": [
+   "relative",
+   "bg-white",
+   "border",
+   "border-slate-200",
+   "rounded-xl",
+   "p-5",
+   "shadow-xs",
+   "flex",
+   "flex-col",
+   "justify-between",
+   "gap-4",
+   "min-h-[340px]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Article Companion \u00b7 Dockable Mini Player"
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Picture-in-Picture Reader Mode"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Minimize PiP"
+    }
+   ],
+   "elements": 9,
+   "text_len": 86,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "media",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-950"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Play"
+    }
+   ],
+   "elements": 11,
+   "text_len": 19,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.429,
+   "text_share": 0.819
+  },
+  {
+   "region_index": 1,
+   "role": "media",
+   "element_share": 0.524,
+   "text_share": 0.181
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Play inline PiP video"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-xs",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Picture-in-Picture Reader Mode"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Minimize PiP"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Play"
+  }
+ ]
+}

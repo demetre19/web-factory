@@ -1,0 +1,214 @@
+{
+ "slug": "commerce-kit-20-shop1",
+ "topology_id": "commerce-cart",
+ "wrapper": {
+  "tag": "section",
+  "classes": [
+   "bg-white",
+   "text-slate-900",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "overflow-hidden",
+   "shadow-sm"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "1  Shipping  2  Payment  3  Review",
+     "links": 0
+    }
+   ],
+   "elements": 13,
+   "text_len": 50,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [
+    {
+     "col_span": 7,
+     "child_index": 0,
+     "tag": "form"
+    },
+    {
+     "col_span": 5,
+     "child_index": 1,
+     "tag": "aside"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Shipping details  Enter where your fixtures should be delivered.  Full name  Ema",
+     "fields": 7
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Order summary"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "NL  Nordic Task Lamp 04  Matte Chalk \u00b7 2700K Warm LED \u00b7 Qty 1  $210.00  BT  Weig",
+     "items": 2
+    }
+   ],
+   "elements": 82,
+   "text_len": 516,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   },
+   {
+    "cols": 2
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "form",
+    "axis": "col",
+    "span": 7
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "aside",
+    "axis": "col",
+    "span": 5
+   }
+  ],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.135,
+   "text_share": 0.088
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.854,
+   "text_share": 0.912
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Checkout progress",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 15,
+   "hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Shipping details"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Full name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Street address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "City"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Postal code"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Delivery method"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Standard Ground  4\u20136 business days  Free"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Express Courier  1\u20132 business days  $18.00"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Continue to payment"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Order summary"
+  }
+ ]
+}

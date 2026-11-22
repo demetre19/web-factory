@@ -1,0 +1,374 @@
+{
+ "slug": "navmenu-architect-dropdownmenu10",
+ "topology_id": "nav-mega-panel",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "bg-[#0D3B2E]",
+   "text-emerald-50"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Field Trials  Impact",
+     "links": 2
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Verdant Bio"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Growers  Solutions",
+     "links": 1
+    }
+   ],
+   "elements": 18,
+   "text_len": 53,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white",
+    "text": "emerald-950"
+   },
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Verdant Bio solutions"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 10,
+   "text_len": 69,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 12,
+   "span_map": [
+    {
+     "col_span": 8,
+     "child_index": 0,
+     "tag": "div"
+    },
+    {
+     "col_span": 4,
+     "child_index": 1,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Crop Science"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Soil Microbiome  Nitrogen Fixation  Root Resilience",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Lab & Formulation"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Bio-Assay Screening  Precision Dosing  Moisture Retention",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Field Sustainability"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Carbon Capture Plots  Circular Packaging  Seed Coating Trials",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Regional Pilot"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "2026 Harvest Study"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "18% Yield Stability Across Dryland Acreage"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Explore multi-season soil data from 42 commercial partner farms."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "View Dataset"
+    }
+   ],
+   "elements": 97,
+   "text_len": 388,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#F4F1EA]"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Request an agronomic soil sample kit tailored to your watershed region."
+    },
+    {
+     "kind": "cta",
+     "tag": "a",
+     "text": "Order Kit"
+    }
+   ],
+   "elements": 8,
+   "text_len": 82,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   },
+   {
+    "cols": 12
+   },
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 8
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.134,
+   "text_share": 0.09
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.075,
+   "text_share": 0.117
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.724,
+   "text_share": 0.655
+  },
+  {
+   "region_index": 3,
+   "role": "content",
+   "element_share": 0.06,
+   "text_share": 0.139
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Primary Navigation",
+   "aria-label=Secondary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 23,
+   "focus-visible": 3,
+   "focus": 2,
+   "group-hover": 9
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-emerald-950/10",
+  "shadow-xl",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Field Trials"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Impact"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Verdant Bio"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Growers"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Solutions"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Verdant Bio solutions"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Crop Science"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Soil Microbiome"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Nitrogen Fixation"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Root Resilience"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Lab & Formulation"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Bio-Assay Screening"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Precision Dosing"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Moisture Retention"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Field Sustainability"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Carbon Capture Plots"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Circular Packaging"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Seed Coating Trials"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Regional Pilot"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "View Dataset"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Order Kit"
+  }
+ ]
+}

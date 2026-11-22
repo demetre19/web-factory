@@ -1,0 +1,94 @@
+{
+ "slug": "microcraft-micro16",
+ "topology_id": "ui-tooltip",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "pt-2",
+   "pb-32",
+   "flex",
+   "items-center",
+   "justify-center"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Exponential Backoff"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Failed deliveries wait 10s, 60s, and 5m between consecutive attempts."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Use recommended (3x)"
+    }
+   ],
+   "elements": 13,
+   "text_len": 133,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.929,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=_R_0_",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Webhook retry schedule info"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 3,
+   "focus-visible": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "rounded-xl",
+  "shadow-lg",
+  "shadow-xs",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Use recommended (3x)"
+  }
+ ]
+}

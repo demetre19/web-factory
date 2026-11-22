@@ -1,0 +1,87 @@
+{
+ "slug": "wayfinding-atlas-way12",
+ "topology_id": "nav-breadcrumb",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "bg-white",
+   "p-5",
+   "rounded-xl",
+   "border",
+   "border-slate-200"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Breadcrumb with sibling switchers",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ol",
+     "text": "Northstar Labs  /  Q4 Funnel  /  Conversion Events",
+     "items": 3
+    }
+   ],
+   "elements": 19,
+   "text_len": 50,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.95,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=page",
+   "aria-expanded=false",
+   "aria-haspopup=menu",
+   "aria-hidden=true",
+   "aria-label=Breadcrumb with sibling switchers"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus-visible": 9,
+   "hover": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Northstar Labs"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Q4 Funnel"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Conversion Events"
+  }
+ ]
+}

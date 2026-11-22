@@ -1,0 +1,332 @@
+{
+ "slug": "formspecimen-form15",
+ "topology_id": "form-block",
+ "wrapper": {
+  "tag": "form",
+  "classes": [
+   "max-w-3xl",
+   "bg-zinc-950",
+   "border",
+   "border-zinc-800",
+   "rounded-xl",
+   "divide-y",
+   "divide-zinc-800",
+   "text-zinc-100",
+   "tracking-[0.01em]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Notification & Quiet Hours"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Dark carded settings with accessible toggle switches and dirty-state tracking."
+    }
+   ],
+   "elements": 5,
+   "text_len": 125,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Notification Display Name"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 4,
+   "text_len": 25,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-1.5",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Email Digest Cadence"
+    }
+   ],
+   "elements": 6,
+   "text_len": 66,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-4",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h4",
+     "text": "Channel Toggles"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Weekly Activity Digest"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Receive a summary of workspace commits and mentions."
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Critical Security Alerts"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Immediate notifications for new sign-ins and token rotations."
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Release Notes & Changelogs"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Monthly overview of shipped runtime improvements."
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    }
+   ],
+   "elements": 24,
+   "text_len": 261,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-end justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Quiet Hours Start"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Quiet Hours End"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 8,
+   "text_len": 34,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Save Preferences"
+    }
+   ],
+   "elements": 2,
+   "text_len": 16,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 2
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.1,
+   "text_share": 0.237
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.08,
+   "text_share": 0.047
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.12,
+   "text_share": 0.125
+  },
+  {
+   "region_index": 3,
+   "role": "content",
+   "element_share": 0.48,
+   "text_share": 0.495
+  },
+  {
+   "region_index": 4,
+   "role": "form",
+   "element_share": 0.16,
+   "text_share": 0.065
+  },
+  {
+   "region_index": 5,
+   "role": "content",
+   "element_share": 0.04,
+   "text_share": 0.03
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-checked=false",
+   "aria-checked=true",
+   "aria-invalid=false",
+   "checked",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 13,
+   "focus-visible": 8,
+   "peer-checked": 6,
+   "hover": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Notification & Quiet Hours"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Notification Display Name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email Digest Cadence"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Channel Toggles"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Weekly Activity Digest"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Critical Security Alerts"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Release Notes & Changelogs"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Quiet Hours Start"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Quiet Hours End"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Save Preferences"
+  }
+ ]
+}

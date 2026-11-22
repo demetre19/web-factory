@@ -1,0 +1,144 @@
+{
+ "slug": "formspecimen-form8",
+ "topology_id": "form-block",
+ "wrapper": {
+  "tag": "form",
+  "classes": [
+   "max-w-2xl",
+   "bg-zinc-950",
+   "border",
+   "border-zinc-800",
+   "rounded-xl",
+   "p-4",
+   "sm:p-5",
+   "text-zinc-100",
+   "space-y-3",
+   "tracking-[0.01em]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-end",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Command & Resource Lookup"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 8,
+   "text_len": 25,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-1",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Category"
+    }
+   ],
+   "elements": 7,
+   "text_len": 42,
+   "has_media": false
+  },
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "text": "zinc-950",
+    "bg": "emerald-400"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 10,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.471,
+   "text_share": 0.325
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.412,
+   "text_share": 0.545
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.059,
+   "text_share": 0.13
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-invalid=false",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 9,
+   "hover": 1,
+   "focus-visible": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Command & Resource Lookup"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Category"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Run Lookup"
+  }
+ ]
+}

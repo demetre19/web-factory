@@ -1,0 +1,340 @@
+{
+ "slug": "navmenu-architect-dropdownmenu13",
+ "topology_id": "nav-mega-panel",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "bg-[#1C1917]",
+   "text-stone-100"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Tundra Gear"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Tundra Gear catalog"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 8,
+   "text_len": 39,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Primary Navigation",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Field Reports  Repair Lab  Equipment",
+     "items": 3
+    }
+   ],
+   "elements": 12,
+   "text_len": 36,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#FAF7F2]",
+    "text": "stone-900"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Alpine Shelter"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "4-Season Geodesic Tents  14  Ultralight Bivy Sacks  08  Down Expedition Bags  19",
+     "items": 4
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Technical Outerwear"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "3-Layer Hardshell Jackets  22  Merino Midweight Base  16  Summit Belay Parkas  0",
+     "items": 4
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Packs & Hardware"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Haul & Alpine Packs  15  Carbon Trekking Poles  07  Titanium Cook Systems  12  A",
+     "items": 4
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Seasonal Drop"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Winter Ridge Capsule"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Sub-Zero Dyneema Alpine Kit"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Tested at 4,200m with reinforced storm seams and repair patches included."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Explore Capsule"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Lifetime hardware warranty & complimentary seam resealing at all regional outpos"
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Warranty Details"
+    }
+   ],
+   "elements": 80,
+   "text_len": 638,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   },
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 8
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.079,
+   "text_share": 0.055
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.119,
+   "text_share": 0.05
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.792,
+   "text_share": 0.895
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Primary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 2,
+   "hover": 28,
+   "focus-visible": 3,
+   "group-hover": 12
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-stone-950/20",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Tundra Gear"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Tundra Gear catalog"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Field Reports"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Repair Lab"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Equipment"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Alpine Shelter"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "4-Season Geodesic Tents  14"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Ultralight Bivy Sacks  08"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Down Expedition Bags  19"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Insulated Sleeping Pads  11"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Technical Outerwear"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "3-Layer Hardshell Jackets  22"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Merino Midweight Base  16"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Summit Belay Parkas  09"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Waterproof Gaiters  06"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Packs & Hardware"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Haul & Alpine Packs  15"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Carbon Trekking Poles  07"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Titanium Cook Systems  12"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Avalanche Safety Kits  05"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Seasonal Drop"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Explore Capsule"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Warranty Details"
+  }
+ ]
+}

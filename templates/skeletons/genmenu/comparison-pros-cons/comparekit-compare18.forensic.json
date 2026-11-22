@@ -1,0 +1,183 @@
+{
+ "slug": "comparekit-compare18",
+ "topology_id": "comparison-pros-cons",
+ "wrapper": {
+  "tag": "section",
+  "classes": [
+   "w-full",
+   "bg-zinc-950",
+   "text-zinc-100",
+   "border",
+   "border-zinc-800",
+   "rounded-xl",
+   "p-6",
+   "md:p-8"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Dark 3-Column Pros & Cons Matrix"
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Frontend Rendering Strategy Comparison"
+    }
+   ],
+   "elements": 3,
+   "text_len": 72,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h4",
+     "text": "Static Generation (SSG)"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Best for: Marketing sites & docs"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Instant CDN edge cache hits  Zero origin compute cost per view",
+     "items": 2
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Full rebuilds slow down at 10k+ pages  Stale data without ISR webhooks",
+     "items": 2
+    },
+    {
+     "kind": "headline",
+     "tag": "h4",
+     "text": "Streaming SSR"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Best for: Dynamic SaaS & commerce"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Always fresh, personalized HTML on first byte  Progressive Suspense boundaries k",
+     "items": 3
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Requires active server or edge worker runtime",
+     "items": 1
+    },
+    {
+     "kind": "headline",
+     "tag": "h4",
+     "text": "Client-Only SPA"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Best for: Authenticated internal tools"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Simple static bucket hosting  Instant client-side route transitions",
+     "items": 2
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Blank shell or spinner before JS hydrates  Poor organic crawler indexing",
+     "items": 2
+    }
+   ],
+   "elements": 105,
+   "text_len": 686,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.028,
+   "text_share": 0.095
+  },
+  {
+   "region_index": 1,
+   "role": "list",
+   "element_share": 0.963,
+   "text_share": 0.905
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-labelledby=compare18-heading"
+  ],
+  "data": [],
+  "pseudo_classes": {},
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Frontend Rendering Strategy Comparison"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Static Generation (SSG)"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Streaming SSR"
+  },
+  {
+   "kind": "headline",
+   "tag": "h4",
+   "text": "Client-Only SPA"
+  }
+ ]
+}

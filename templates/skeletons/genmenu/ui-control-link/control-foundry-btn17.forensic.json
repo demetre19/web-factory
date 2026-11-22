@@ -1,0 +1,162 @@
+{
+ "slug": "control-foundry-btn17",
+ "topology_id": "ui-control-link",
+ "wrapper": {
+  "tag": "article",
+  "classes": [
+   "flex",
+   "flex-col",
+   "justify-between",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "p-6",
+   "transition-colors",
+   "duration-150",
+   "hover:border-slate-300"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Animated Underline Link"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Editorial navigation anchors featuring a GPU-composited left-to-right underline "
+    }
+   ],
+   "elements": 9,
+   "text_len": 175,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-50/70"
+   },
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Token Architecture  Motion Curves  Keyboard Map",
+     "links": 3
+    }
+   ],
+   "elements": 14,
+   "text_len": 107,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "text": "slate-500"
+   },
+   "slots": [],
+   "elements": 2,
+   "text_len": 66,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.346,
+   "text_share": 0.503
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.538,
+   "text_share": 0.307
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.077,
+   "text_share": 0.19
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=page",
+   "aria-hidden=true",
+   "aria-label=Specification chapters"
+  ],
+  "data": [
+   "data-testid=specimen-Btn17"
+  ],
+  "pseudo_classes": {
+   "hover": 5,
+   "focus-visible": 14,
+   "group-hover": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "duration-200",
+  "ease-out",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "rounded-xs",
+  "scale-x-0",
+  "scale-x-100",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Animated Underline Link"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Token Architecture"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Motion Curves"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Keyboard Map"
+  }
+ ]
+}
