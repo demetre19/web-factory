@@ -53,6 +53,10 @@ PACK_META = {
     "comparekit": ("comparison-table", "comparison", ["comparison"], "comparison"),
     "tabular": ("data-table", "element", ["data"], "data table"),
     "feedback": ("ui-feedback", "element", ["feedback"], "feedback"),
+    "navcraft": ("nav-micro", "navigation", ["navigation"], "nav element"),
+    "plate": ("media-block", "element", ["media"], "media display"),
+    "microcraft": ("ui-micro", "element", ["micro interaction"], "micro interaction"),
+    "wayfinding": ("wayfinding", "navigation", ["navigation"], "wayfinding"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -243,6 +247,58 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if has("top-0 inset-x", "bottom-0 inset-x", "announcement"):
             return "ui-banner", "medium"
         return "ui-feedback", "medium"
+    if baseline == "nav-micro":
+        low = c.lower()
+        if "breadcrumb" in low:
+            return "nav-breadcrumb", "medium"
+        if "command" in low and ("search" in low or "⌘" in c):
+            return "nav-command-palette", "medium"
+        if "aria-label=\"pagination\"" in c or "pagination" in low:
+            return "nav-pagination", "medium"
+        if 'role="tablist"' in c or "tablist" in c:
+            return "nav-tabs", "medium"
+        if 'role="tree"' in c or "treeview" in c:
+            return "nav-tree", "medium"
+        if 'role="menu"' in c or 'role="menubar"' in c:
+            return "nav-menu", "medium"
+        if has("bottom-0", "fixed bottom"):
+            return "nav-bottom-bar", "medium"
+        return "nav-micro", "medium"
+    if baseline == "media-block":
+        low = c.lower()
+        if "carousel" in low or "slide" in low:
+            return "media-carousel", "medium"
+        if "marquee" in low:
+            return "media-marquee", "medium"
+        if "avatar" in low:
+            return "media-avatars", "medium"
+        if "figcaption" in low or "<figcaption" in c:
+            return "media-figure", "medium"
+        if "comparison" in low or ("before" in low and "after" in low):
+            return "media-compare", "medium"
+        return "media-block", "medium"
+    if baseline == "ui-micro":
+        low = c.lower()
+        if "tooltip" in low or 'role="tooltip"' in c:
+            return "ui-tooltip", "medium"
+        if "popover" in low or "popper" in low:
+            return "ui-popover", "medium"
+        if "badge" in low or "indicator" in low or "dot" in low:
+            return "ui-badge", "medium"
+        if 'role="menu"' in c or "menu" in low:
+            return "ui-menu", "medium"
+        return "ui-micro", "medium"
+    if baseline == "wayfinding":
+        low = c.lower()
+        if "breadcrumb" in low:
+            return "nav-breadcrumb", "medium"
+        if "step" in low or 'aria-current="step"' in c:
+            return "data-stepper", "medium"
+        if "anchor" in low or "table of contents" in low or "toc" in low:
+            return "nav-anchor", "medium"
+        if "<h1" in c and ("actions" in low or "button" in low):
+            return "page-header", "medium"
+        return "wayfinding", "medium"
     return baseline, "high" if baseline in ("auth-form", "empty-state") else "low"
 
 
