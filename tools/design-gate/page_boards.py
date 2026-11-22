@@ -28,6 +28,7 @@ each preview a page TYPE, not the one emitted article. This producer:
   outputs  <page>/PAGE-BOARDS.json
            (--emit) <page>/boards/site/dist/preview/lo-<board>-<nn>/
 """
+import glob
 import hashlib
 import json
 import math
@@ -618,6 +619,37 @@ def _inputs_sha(ctx):
                'ELEMENT-PICKS.json'):
         h.update(_sha(os.path.join(pd, fn)).encode())
     h.update(_sha(os.path.abspath(__file__)).encode())
+    return h.hexdigest()[:16]
+
+
+def render_sha(ctx, doc):
+    """The built boards' cache key: the plan inputs plus everything the
+    build copies or imports — brief media, tokens, the page site's
+    shared src, the contracts cloned per section, the emitter and the
+    option recipes' skeleton files."""
+    h = hashlib.sha256((doc.get('inputs_sha') or '').encode())
+    try:
+        media = gate._brief(ctx).get('media') or []
+    except Exception:
+        media = []
+    h.update(json.dumps(media, sort_keys=True, default=str).encode())
+    files = [os.path.join(ctx.dir, 'TOKENS.json'),
+             os.path.join(HERE, 'preview_build.py')]
+    for sub in ('layouts', 'styles', '_shared', 'assets'):
+        for root, _d, fns in os.walk(os.path.join(ctx.site, 'src', sub)):
+            files += [os.path.join(root, f) for f in fns]
+    sec = os.path.join(ctx.dir, 'sections')
+    if os.path.isdir(sec):
+        files += [os.path.join(sec, f) for f in os.listdir(sec)]
+    recipes = {r for b in (doc.get('boards') or {}).values()
+               for o in b.get('options') or []
+               for r in (o.get('recipes') or {}).values() if r}
+    for r in sorted(recipes):
+        files += glob.glob(os.path.join(REPO, 'templates', 'skeletons',
+                                        r + '.*'))
+    for f in sorted(set(files)):
+        h.update(f.encode())
+        h.update(_sha(f).encode())
     return h.hexdigest()[:16]
 
 

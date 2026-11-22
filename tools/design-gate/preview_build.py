@@ -1128,8 +1128,9 @@ def _emit_page_boards(ctx, doc):
     if not ok:
         return msg, set(comps)
     _rewrite_dist(bctx)
+    import page_boards as PBD
     stamp = os.path.join(bctx.site, '.inputs_sha')
     with open(stamp, 'w') as fh:
-        fh.write(doc.get('inputs_sha', ''))
+        fh.write(PBD.render_sha(ctx, doc))
     return {oid: _dist_page(bctx, f'lo-{oid}') for oid in pages}, \
         set(comps)
