@@ -1,0 +1,104 @@
+{
+ "embed_model": "nvidia/nemotron-3.5-embed-8b:free",
+ "bank": [
+  "gm-auth-form-patternfolio-auth1",
+  "gm-footer-mega-footercraft-footer1",
+  "gm-pricing-tiers-pricing-atlas-pricing1",
+  "gm-hero-split-hero-architecture-hero11",
+  "gm-hero-centered-hero-architecture-hero15",
+  "gm-card-block-folio-twenty-card1",
+  "gm-data-table-meridian-data1",
+  "gm-checkout-checkout-components-checkout1",
+  "gm-empty-state-patternfolio-error1",
+  "gm-comparison-table-comparekit-compare1"
+ ],
+ "queries": [
+  {
+   "query": "gm-deco-quote-folio-ornamenta-deco1",
+   "cosine_top5": [
+    [
+     0.2054029937447545,
+     "gm-card-block-folio-twenty-card1"
+    ],
+    [
+     0.16319928223455576,
+     "gm-hero-centered-hero-architecture-hero15"
+    ],
+    [
+     0.1280835036640911,
+     "gm-auth-form-patternfolio-auth1"
+    ],
+    [
+     0.12373186006408811,
+     "gm-hero-split-hero-architecture-hero11"
+    ],
+    [
+     0.11255732458530167,
+     "gm-empty-state-patternfolio-error1"
+    ]
+   ],
+   "rerank_order_top8": null,
+   "rerank_error": "HTTP Error 422: Unprocessable Entity"
+  },
+  {
+   "query": "gm-data-grid-meridian-data3",
+   "cosine_top5": [
+    [
+     0.188764147516977,
+     "gm-pricing-tiers-pricing-atlas-pricing1"
+    ],
+    [
+     0.17661063075525027,
+     "gm-hero-split-hero-architecture-hero11"
+    ],
+    [
+     0.15371687006527807,
+     "gm-comparison-table-comparekit-compare1"
+    ],
+    [
+     0.14192701668651597,
+     "gm-data-table-meridian-data1"
+    ],
+    [
+     0.12495997276756499,
+     "gm-empty-state-patternfolio-error1"
+    ]
+   ],
+   "rerank_order_top8": [
+    [
+     3,
+     0.0433
+    ],
+    [
+     0,
+     0.0432
+    ],
+    [
+     2,
+     0.0385
+    ],
+    [
+     6,
+     0.0382
+    ],
+    [
+     1,
+     0.038
+    ],
+    [
+     4,
+     0.038
+    ],
+    [
+     7,
+     0.036
+    ],
+    [
+     5,
+     0.0357
+    ]
+   ],
+   "rerank_error": null
+  }
+ ]
+}
