@@ -4269,8 +4269,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
   overflow:hidden;margin-left:auto;flex:none}
 .xdev button{border:0;background:none;color:var(--muted);cursor:pointer;
-  font:600 11px var(--mono);padding:5px 10px}
+  padding:5px 10px;min-width:44px;min-height:44px;
+  display:inline-flex;align-items:center;justify-content:center}
 .xdev button.on{background:var(--accent);color:var(--accent-ink)}
+.xdev button:focus-visible{outline:2px solid var(--accent);
+  outline-offset:1px;z-index:1}
+.xdev button svg{display:block}
 #xpBar .xth,#xpBar .xnav,#xpBar .xopen,#xpBar #xpX{
   background:var(--bg-2);color:var(--ink);border:1px solid var(--line);
   border-radius:7px;padding:5px 10px;cursor:pointer;font-size:12px;
@@ -5451,10 +5455,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var w0=innerWidth<=480?390:innerWidth<=900?768:1280;
     ov.innerHTML='<div id="xpBar"><span class="xttl">'+
       esc(opts.title||'preview')+'</span>'+
-      '<div class="xdev">'+
-      [['D1280',1280],['T768',768],['M390',390]].map(function(d){
-        return '<button data-w="'+d[1]+'"'+(d[1]===w0?' class="on"':'')+
-               '>'+d[0]+'</button>'}).join('')+'</div>'+
+      '<div class="xdev" role="group" aria-label="preview width">'+
+      [[1280,'Desktop 1280','M3 4h18v11H3zM12 15v4M9 19h6'],
+       [768,'Tablet 768','M6.5 2.5h11a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-17a1 1 0 0 1 1-1zM10 18h4'],
+       [390,'Mobile 390','M8.5 2h7a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 19h2']].map(function(d){
+        return '<button data-w="'+d[0]+'" aria-label="'+d[1]+
+               '" title="'+d[1]+'" aria-pressed="'+(d[0]===w0)+'"'+
+               (d[0]===w0?' class="on"':'')+
+               '><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+d[2]+'"/></svg></button>'}).join('')+'</div>'+
       '<button class="xth" title="toggle preview theme">'+
       (theme==='dark'?'☀':'☾')+'</button>'+
       '<button class="xnav xpP" title="previous">&#8249;</button>'+
@@ -5473,7 +5481,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       ov.querySelector('.xstage').style.padding=pad+'px';
       fr.style.width=w+'px';
       ov.querySelectorAll('.xdev button').forEach(function(b){
-        b.classList.toggle('on',+b.dataset.w===w)})}
+        b.classList.toggle('on',+b.dataset.w===w);
+        b.setAttribute('aria-pressed',+b.dataset.w===w)})}
     setW(w0);
     im.addEventListener('load',function(){
       // keydown inside a same-origin preview still reaches Esc/arrows
