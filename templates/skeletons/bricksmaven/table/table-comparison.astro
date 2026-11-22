@@ -61,6 +61,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           {list.length > 0 &&           <div class="bm-table-2__thead">
             {list.length > 0 &&             <div class="bm-table-2__tr">
               {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+                <>
                   <div class="bm-table-2__th card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -68,6 +69,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
+                </>
                 ))}</div>}
             </div>
             }
@@ -76,6 +78,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div class="bm-table-2__tbody">
             {links.length > 0 &&             <div class="bm-table-2__tr">
               {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+                <>
                   <div class="bm-table-2__td card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -83,11 +86,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
+                </>
                 ))}</div>}
             </div>
             }
             {links.length > 0 &&             <div class="bm-table-2__tr">
               {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+                <>
                   <div class="bm-table-2__td card">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
@@ -95,6 +100,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
+                </>
                 ))}</div>}
             </div>
             }

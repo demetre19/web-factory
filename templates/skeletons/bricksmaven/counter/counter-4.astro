@@ -58,10 +58,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="counter-4-list">{(list || []).map((it) => (
+            <>
               <div class="counter-4-list-card card">
                 <h3>{it.stat || it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
+            </>
             ))}</div>}
       </div>
       {image &&       <div>

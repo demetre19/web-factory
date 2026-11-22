@@ -60,23 +60,27 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
           <div>
             {list.length > 0 &&             <div>
               {list.length > 0 && <div class="bm-feature-62-feature-list">{(list || []).map((it) => (
+                  <>
                     <div class="bm-feature-62-feature-card card">
                       <div class="bm-feature-62-feature-card__top">
                         <h3 class="text-fluid-1">{it.term || it.title}</h3>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
+                  </>
                   ))}</div>}
             </div>
             }
             {links.length > 0 &&             <div>
               {links.length > 0 && <div class="bm-feature-62-feature-list">{(links || []).map((it) => (
+                  <>
                     <div class="bm-feature-62-feature-card card">
                       <div class="bm-feature-62-feature-card__top">
                         <h3 class="text-fluid-1">{it.term || it.title}</h3>
                         <p class="text-fluid-0">{it.text}</p>
                       </div>
                     </div>
+                  </>
                   ))}</div>}
             </div>
             }

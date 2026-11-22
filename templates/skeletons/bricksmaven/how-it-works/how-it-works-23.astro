@@ -57,6 +57,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>}
 
       {list.length > 0 && <div class="bm-how-it-works-23-list">{(list || []).map((it) => (
+          <>
             <div class="bm-how-it-works-23-card card">
               <div class="bm-how-it-works-23-card__number-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
@@ -68,6 +69,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               {(it.items || []).length > 0 && <div class="bm-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                  <>
                     <div class="bm-list-item card">
                       {it2.icon && <IconChip name={it2.icon} />}
                       <div class="stack">
@@ -75,9 +77,11 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                         {it2.text && (it2.term || it2.title) && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
                     </div>
+                  </>
                   ))}</div>
               </div>}
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

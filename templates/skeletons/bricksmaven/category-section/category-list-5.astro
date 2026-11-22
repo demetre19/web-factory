@@ -65,6 +65,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 && <div class="category-list-5__list">{(list || []).map((it) => (
+          <>
             <div class="category-list-5-card card">
               <div class="category-list-5__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -72,6 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="category-list-5-card__text text-fluid-0">{it.text}</p>
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

@@ -61,6 +61,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         <div class="grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           {list.length > 0 && <div class="bm-contact-40-contact-list">{(list || []).map((it) => (
+              <>
                 <div class="bm-contact-40-contact-item card">
                   <div class="bm-contact-40-contact-item__content">
                     {it.icon && <IconChip name={it.icon} />}
@@ -71,6 +72,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
+              </>
               ))}</div>}
         </div>
       </div>
@@ -82,6 +84,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     {links.length > 0 &&     <div>
       {links.length > 0 &&       <div>
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+          <>
             <div class="bm-hero-86-card card">
               <div class="bm-hero-86-card__content">
                 <div class="bm-hero-86-card__top">
@@ -94,6 +97,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
+          </>
           ))}</div>}
       </div>
       }

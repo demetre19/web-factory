@@ -74,12 +74,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
           }
         </div>
         {links.length > 0 && <div class="bm-feature-67-list">{(links || []).map((it) => (
+            <>
               <div class="bm-feature-67-card card">
                 <div class="bm-feature-67-card__content">
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
+            </>
             ))}</div>}
       </div>
     </div>

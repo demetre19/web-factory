@@ -59,6 +59,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="feature-23-list-ul">{(list || []).map((it) => (
+            <>
               <div class="feature-23-list-card card">
                 <div>
                   {it.icon && <IconChip name={it.icon} />}
@@ -68,6 +69,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                 </div>
               </div>
+            </>
             ))}</div>}
       </div>
       {image &&       <div>

@@ -50,6 +50,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   <div class="sec-inner">
     <div>
       {list.length > 0 && <div class="bm-login-3__inner">{(list || []).map((it) => (
+          <>
             <div class="bm-login-3__form-wrapper card">
               <div class="login-form-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
@@ -58,10 +59,12 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 </form>
                 {(it.items || []).length > 0 && <div class="login-footer">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    <>
                       <div class="card">
                         <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>
                         {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
+                    </>
                     ))}</div>
                 </div>}
               </div>
@@ -70,14 +73,17 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <h3 class="text-fluid-4">{it.term || it.title}</h3>
                 {(it.items || []).length > 0 && <div class="login-footer">
                   <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                    <>
                       <div class="card">
                         <h3 class="text-fluid-1"><a class="text-fluid-0" href={it2.href}>{it2.icon && <IconChip name={it2.icon} />} {it2.label || it2.term || it2.anchor || it2.text}</a></h3>
                         {(it2.label || it2.term || it2.anchor) && it2.text && <p class="text-fluid-0">{it2.text}</p>}
                       </div>
+                    </>
                     ))}</div>
                 </div>}
               </div>
             </div>
+          </>
           ))}</div>}
       <div class="bm-login-3__footer">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}

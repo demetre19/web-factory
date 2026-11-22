@@ -52,11 +52,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div class="feature-16-container">
       {list.length > 0 && <div class="feature-16-content">{(list || []).map((it) => (
+          <>
             <div class="feature-16-content__intro card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
     }

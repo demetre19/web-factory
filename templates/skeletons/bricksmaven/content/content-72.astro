@@ -62,6 +62,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 && <div class="bm-content-72-achievement-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <>
               <div class="bm-content-72-achievement-list-item card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
@@ -69,6 +70,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
+            </>
             ))}</div>
         </div>}
       </div>
@@ -76,6 +78,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     {links.length > 0 &&     <div>
       {links.length > 0 &&       <div class="bm-card-floating-list">
         {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+          <>
             <div class="bm-card-floating card">
               <div>
                 {it.icon && <IconChip name={it.icon} />}
@@ -85,6 +88,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>}
       </div>
       }

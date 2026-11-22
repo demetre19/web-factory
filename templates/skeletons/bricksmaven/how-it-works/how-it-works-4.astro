@@ -55,11 +55,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       {list.length > 0 && <div class="hworks-4-grid-ul">{(list || []).map((it) => (
+          <>
             <div class="hworks-4-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

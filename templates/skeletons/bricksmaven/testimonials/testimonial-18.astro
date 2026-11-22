@@ -61,6 +61,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       {list.length > 0 &&       <div>
         {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <>
             <div class="testimonial-18-list__slide card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -75,6 +76,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>}
       </div>
       }

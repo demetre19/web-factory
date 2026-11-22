@@ -72,6 +72,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     }
     {links.length > 0 &&     <div class="bm-portfolio-single-10__results-container">
       {links.length > 0 && <div class="bm-portfolio-single-10-data-list">{(links || []).map((it) => (
+          <>
             <div class="bm-portfolio-single-10-data card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -80,6 +81,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
               </div>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
     }
@@ -104,6 +106,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     {links.length > 0 &&     <div class="bm-portfolio-single-10__footer-container">
       {links.length > 0 && <div class="bm-portfolio-8-related-list">{(links || []).map((it) => (
+          <>
             <div class="bm-portfolio-8-related-card card">
               <div class="bm-portfolio-8-related-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -112,6 +115,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
     }

@@ -64,10 +64,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           {list.length > 0 && <div class="bm-contact-27__contact-details">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <>
                 <div class="bm-contact-27__detail-wrapper card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
+              </>
               ))}</div>
           </div>}
         </div>

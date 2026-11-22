@@ -62,6 +62,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {list.length > 0 &&         <div>
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <>
               <div class="card">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
@@ -69,13 +70,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
               </div>
+            </>
             ))}</div>}
         </div>
         }
         {links.length > 0 &&         <div>
           {links.length > 0 && <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
+            <>
               {(it.items || []).length > 0 &&               <div class="card">
                 {(it.items || []).length > 0 && <div class="blog-archive-12-archive-list">{((it.items || []) || []).map((it2) => (
+                    <>
                       <div class="blog-archive-12-archive-card card">
                         <div class="blog-archive-12-archive-card__content">
                           <div class="blog-archive-12-archive-card__meta">
@@ -95,9 +99,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                           </div>
                         </div>
                       </div>
+                    </>
                     ))}</div>}
               </div>
               }
+            </>
             ))}</div>}
         </div>
         }

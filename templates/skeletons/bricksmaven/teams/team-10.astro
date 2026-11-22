@@ -65,12 +65,14 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 && <div class="team-10-content">{(list || []).map((it) => (
+          <>
             <div class="team-10-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

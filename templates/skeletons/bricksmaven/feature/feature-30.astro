@@ -64,6 +64,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {list.length > 0 &&         <div class="feature-30__feature-content">
           {list.length > 0 && <div class="feature-30-list-ul">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+              <>
                 <div class="feature-30-list-card card">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
@@ -72,6 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
+              </>
               ))}</div>
           </div>}
         </div>

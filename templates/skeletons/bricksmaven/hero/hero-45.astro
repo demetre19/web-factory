@@ -61,10 +61,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       <div class="hero-45__footer">
         {list.length > 0 && <div class="hero-45-data-list">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <>
               <div class="hero-45-data-item card">
                 <h3>{it.stat || it.term || it.title}</h3>
                 <p class="text-fluid-0">{it.text}</p>
               </div>
+            </>
             ))}</div>
         </div>}
         <div class="hero-45__statement-wrapper">

@@ -77,6 +77,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         }
       </div>
       {list.length > 0 && <div class="shop-hero-1-usp">{(list || []).map((it) => (
+          <>
             <div class="shop-hero-1-usp-card card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -84,6 +85,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

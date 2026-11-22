@@ -55,6 +55,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 && <div class="hworks-grid-ul">{(list || []).map((it) => (
+          <>
             <div class="hworks-card card">
               <div class="hworks-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -62,6 +63,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

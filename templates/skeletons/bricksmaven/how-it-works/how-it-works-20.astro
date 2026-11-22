@@ -66,6 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <>
             <div class="hworks-20-card card">
               <div class="hworks-20-card__content">
                 {it.icon && <IconChip name={it.icon} />}
@@ -73,6 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
+          </>
           ))}</div>
       </div>}
     </div>

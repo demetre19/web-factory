@@ -59,11 +59,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       {list.length > 0 &&       <div class="bm-order-receipts__content">
         {list.length > 0 &&         <div class="bm-order-receipts__lists">
           {list.length > 0 && <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+            <>
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                 {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
+            </>
             ))}</div>}
         </div>
         }

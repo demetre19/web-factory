@@ -57,6 +57,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>}
 
       {list.length > 0 && <div class="bm-how-it-works-24-list-ul">{(list || []).map((it) => (
+          <>
             <div class="bm-how-it-works-24-card card">
               {it.icon && <IconChip name={it.icon} />}
               <h3 class="text-fluid-1">{it.term || it.title}</h3>
@@ -65,6 +66,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
               </div>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

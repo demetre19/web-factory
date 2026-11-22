@@ -66,6 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       {list.length > 0 && <div>
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <>
             <div class="bm-event-section-11-card card">
               <div class="bm-event-section-11-card__content">
                 <div class="bm-event-section-11-card__top">
@@ -75,6 +76,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     {(it.items || []).length > 0 &&                     <div>
                       {(it.items || []).length > 0 &&                       <div>
                         {(it.items || []).length > 0 && <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
+                          <>
                             <div class="card">
                               <div>
                                 {it2.icon && <IconChip name={it2.icon} />}
@@ -87,6 +89,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                                 <p class="text-fluid-0">{it2.text}</p>
                               </div>
                             </div>
+                          </>
                           ))}</div>}
                       </div>
                       }
@@ -104,6 +107,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>
       </div>}
     </div>

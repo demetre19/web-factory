@@ -60,6 +60,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {list.length > 0 &&   <div class="sec-inner">
     {list.length > 0 &&     <div>
       {list.length > 0 && <div class="testimonial-17-list-ul">{(list || []).map((it) => (
+          <>
             <div class="card">
               <div class="testimonial-17-list-card__wrapper">
                 <div class="testimonial-17-list-card__content">
@@ -72,6 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
     }

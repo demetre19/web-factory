@@ -991,7 +991,7 @@ def translate(payload, stem):
                 if _own_grid:
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>'
                            f'{{({coll} || []).map(({var}) => (\n'
-                           + _item
+                           + _frag(_item, pad)
                            + f'{pad}    ))}}'
                            f'</div>}}\n')
                 else:
@@ -1004,7 +1004,7 @@ def translate(payload, stem):
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>\n'
                            f'{pad}  <div class="{_wrap}">'
                            f'{{({coll} || []).map(({var}) => (\n'
-                           + _item
+                           + _frag(_item, pad)
                            + f'{pad}    ))}}'
                            f'</div>\n' + f'{pad}</div>}}\n')
                 if coll == 'links' and cat == 'footer':
@@ -1068,7 +1068,7 @@ def translate(payload, stem):
                 inner += (f'{pad}  {{{coll}.length > 0 && '
                           f'<div class="{_wrap}">'
                           f'{{({coll} || []).map(({var}) => (\n'
-                          + _item
+                          + _frag(_item, pad)
                           + f'{pad}    ))}}'
                           f'</div>}}\n')
                 if coll == 'links' and cat == 'footer':
@@ -1416,6 +1416,20 @@ def translate(payload, stem):
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
+
+
+def _frag(item, pad):
+    """A map callback returns ONE expression: an item template with two
+    or more top-level siblings rides a fragment, else esbuild rejects
+    the compiled arrow (`Expected ")" but found "{"`)."""
+    lines = [ln for ln in item.split('\n') if ln.strip()]
+    if not lines:
+        return item
+    ind = min(len(ln) - len(ln.lstrip()) for ln in lines)
+    tops = [ln for ln in lines if len(ln) - len(ln.lstrip()) == ind]
+    if len(tops) < 2:
+        return item
+    return f'{pad}    <>\n' + item + f'{pad}    </>\n'
 
 
 def iter_payloads(limit=None):

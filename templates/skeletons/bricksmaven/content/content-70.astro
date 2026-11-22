@@ -55,6 +55,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       {list.length > 0 && <div class="bm-content-70-usp-list">{(list || []).map((it) => (
+          <>
             <div class="bm-content-70-card card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
@@ -62,6 +63,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
                 {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

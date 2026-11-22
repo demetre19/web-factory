@@ -64,11 +64,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {act.label && <p class="mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
       </div>
       {list.length > 0 && <div class="counter-10-grid-ul">{(list || []).map((it) => (
+          <>
             <div class="counter-10-card card">
               <h3>{it.stat || it.term || it.title}</h3>
               <p class="text-fluid-0">{it.text}</p>
               <p class="text-fluid-0">{it.text}</p>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

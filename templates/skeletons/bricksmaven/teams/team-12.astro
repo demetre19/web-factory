@@ -64,6 +64,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 && <div class="team-12-list">{(list || []).map((it) => (
+          <>
             <div class="team-12-card card">
               <div class="team-12-card__content">
                 <div class="team-12-card__inner-content">
@@ -72,6 +73,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>}
     </div>
   </div>

@@ -66,6 +66,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
       {list.length > 0 && <div class="counter-9-grid-ul">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <>
             <div class="counter-9-feature card">
               <div class="counter-9-feature__box">
                 <h3>{it.stat || it.term || it.title}</h3>
@@ -74,6 +75,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>
+          </>
           ))}</div>
       </div>}
       {act.label &&       <div class="hero-1__cta">

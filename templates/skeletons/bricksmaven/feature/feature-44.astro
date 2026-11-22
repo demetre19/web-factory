@@ -61,6 +61,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     {list.length > 0 &&     <div>
       {list.length > 0 && <div class="feature-44-list">
         <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
+          <>
             <div class="card">
               <div class="feature-44-card__content">
                 <div class="feature-44-card__intro">
@@ -73,6 +74,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                 </div>
               </div>
             </div>
+          </>
           ))}</div>
       </div>}
     </div>
