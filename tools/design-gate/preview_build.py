@@ -61,6 +61,15 @@ def _calc_wrap(css):
     return w
 
 
+# every banked chrome comp — one board variant each (C). Derived
+# from the canonical recipe table, never a hand list.
+_CHROME_VARIANTS = tuple(
+    (comp, 'nav' if comp.startswith('nav-') else 'footer')
+    for comp in sorted(gate.RECIPE_FOR_COMP)
+    if comp.startswith(('nav-h', 'nav-shop', 'nav-mega',
+                        'nav-offcanvas', 'footer-')))
+
+
 def _contracts(ctx):
     """Contracts for the CURRENT page slug with the plan row attached
     for the instance serializer (copy_ref/vector/items/cta ride the
@@ -106,10 +115,12 @@ def _emit_components(ctx, contracts_rows, extra_comps=()):
              if c['composition']} | set(extra_comps or ())
     bank_css = []
     for comp in sorted(comps):
-        if comp in bank:
-            css = PE._bank_copy(ctx, comp, bank[comp])
+        recipe = bank.get(comp) or str(
+            gate.RECIPE_FOR_COMP.get(comp) or '')
+        if recipe.startswith('bricksmaven/'):
+            css = PE._bank_copy(ctx, comp, recipe)
             if css:
-                bank_css.append(f'/* {bank[comp]} */\n' + css)
+                bank_css.append(f'/* {recipe} */\n' + css)
         else:
             PE._comp_copy(ctx, comp)
     # no pruning here — preview pages the same build still compiles
@@ -608,6 +619,7 @@ def emit_layouts(ctx):
     # components emit once (bank recipes stay recipe-bound)
     extra = {comp for _, _, _, ov in options
              for comp in ov.values()}
+    extra |= {c for c, _s in _CHROME_VARIANTS}
     bank_css, emitted = _emit_components(ctx, contracts_rows, extra)
     _ensure_shell(ctx)
     _ensure_assets(ctx)
@@ -733,6 +745,24 @@ def emit_layouts(ctx):
             PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                                f'lo-{oid}-{bid}.astro'),
                   _page_astro(ctx, b_rows, bcopy, bank_css))
+    # per-type chrome boards (C): every banked nav/footer comp gets
+    # its own page binding that recipe on the chrome contract row —
+    # the same producers inside the same single build, so board
+    # cards slice real emitted renders, never re-rendered skeletons
+    for comp, sec in _CHROME_VARIANTS:
+        crow = next((c for c, _r in contracts_rows
+                     if c['section'] == sec), None)
+        if crow is None:
+            continue
+        prow = next((r for c, r in contracts_rows
+                     if c['section'] == sec), {})
+        cc = dict(crow)
+        cc['composition'] = comp
+        cc['recipe'] = gate.RECIPE_FOR_COMP.get(comp, cc.get('recipe'))
+        cc['wf_ref'] = f'preview/chrome.html#{comp}'
+        PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
+                           f'chrome-{comp}.astro'),
+              _page_astro(ctx, [(cc, prow)], copy, bank_css))
     _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:

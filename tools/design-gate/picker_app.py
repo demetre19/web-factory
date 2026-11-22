@@ -636,6 +636,95 @@ def emit_element_previews(pd):
     return emitted
 
 
+def emit_chrome_docs(pd):
+    """preview/elements/<comp>.html for every chrome-* variant page
+    preview_build emitted — the real render sliced from the same
+    build's dist (never a re-rendered skeleton)."""
+    dist = os.path.join(pd, 'site', 'dist')
+    pdir = os.path.join(dist, 'preview')
+    out = {}
+    if not os.path.isdir(pdir):
+        return out
+    for fn in sorted(os.listdir(pdir)):
+        if not fn.startswith('chrome-'):
+            continue
+        fp = os.path.join(pdir, fn, 'index.html')
+        if not os.path.isfile(fp):
+            continue
+        comp = fn[7:]
+        txt = open(fp, encoding='utf-8', errors='replace').read()
+        head = re.search(r'<head>(.*?)</head>', txt, re.S | re.I)
+        body = re.search(r'<body([^>]*)>', txt, re.I)
+        prs = _CompBlocks()
+        prs.feed(txt)
+        block = next((b for c, _s, _i, b in prs.blocks if c == comp),
+                     prs.blocks[0][3] if prs.blocks else None)
+        if not block:
+            continue
+        dst = os.path.join(dist, 'preview', 'elements',
+                           comp + '.html')
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        with open(dst, 'w', encoding='utf-8') as fh:
+            fh.write(_doc(head.group(1) if head else '',
+                          body.group(1) if body else '', block))
+        out[comp] = f'preview/elements/{comp}.html'
+    return out
+
+
+_CHROME_TYPE_ORDER = {
+    'header': ('off-canvas', 'mega', 'topbar', 'centred', 'shop',
+               'dropdown', 'bar'),
+    'footer': ('mega', 'columns', 'cta', 'contact-rich', 'minimal'),
+}
+_CHROME_TYPE_LABEL = {
+    'off-canvas': 'Off-canvas', 'mega': 'Mega', 'topbar': 'Topbar + nav',
+    'centred': 'Centred logo', 'shop': 'Shop', 'dropdown': 'Dropdown',
+    'bar': 'Bar', 'columns': 'Columns', 'cta': 'CTA',
+    'contact-rich': 'Contact-rich', 'minimal': 'Minimal'}
+
+
+def _chrome_type(comp):
+    """Type bucket for a banked chrome comp — detected from the
+    skeleton payload's own structure (topbar/off-canvas/mega/
+    brand-nav/cart/dropdown for headers; contact/cta/columns for
+    footers), not a hand list."""
+    recipe = str(G.RECIPE_FOR_COMP.get(comp) or '')
+    parts = recipe.split('/')
+    low = ''
+    if len(parts) == 3:
+        pay = os.path.join(_SKEL_ROOT, parts[1], parts[2] + '.json')
+        try:
+            low = open(pay, encoding='utf-8',
+                       errors='replace').read().lower()
+        except OSError:
+            pass
+    if comp.startswith('nav-'):
+        if comp.startswith('nav-mega') or ('off-canvas' not in low
+                                           and 'mega' in low):
+            return 'mega'
+        if 'off-canvas' in low or 'offcanvas' in low:
+            return 'off-canvas'
+        if 'topbar' in low or 'top-bar' in low:
+            return 'topbar'
+        if 'brand-nav' in low:
+            return 'centred'
+        if 'cart' in low:
+            return 'shop'
+        if 'dropdown' in low:
+            return 'dropdown'
+        return 'bar'
+    if 'contact' in low or 'address' in low:
+        return 'contact-rich'
+    if 'mega' in low:
+        return 'mega'
+    if 'cta' in low or 'form' in low or 'newsletter' in low or \
+            'subscribe' in low:
+        return 'cta'
+    if 'column' in low:
+        return 'columns'
+    return 'minimal'
+
+
 # ------------------------------------------------------------------
 # vibe emit — kitchen-sink page per family (fragments are served
 # through /frame for every OTHER preview, so nothing needs files)
@@ -2120,6 +2209,8 @@ def app_data(pipeline):
     if not os.path.isdir(pd):
         return None, f'pipeline {pipeline} not found'
     emitted = emit_element_previews(pd)
+    chrome_emitted = emit_chrome_docs(pd)
+    emitted.update(chrome_emitted)
     vibes_emitted = emit_vibe_previews(pd)
     contrast = contrast_audit(pd)
     scrub, bank_depth = emit_section_fragments(pd)
@@ -2143,6 +2234,11 @@ def app_data(pipeline):
                   for k, v in (lo.get('allowed') or {}).items()}
     galleries = {}
     for g in ELEMENT_GALLERIES:
+        if g['id'] == 'chrome':
+            # one board per header/footer type (C) — the flat
+            # Header·Footer rail is replaced by the per-type
+            # galleries emitted below
+            continue
         gcards = []
         for grp in g['groups']:
             comps = grp['comps']
@@ -2228,6 +2324,38 @@ def app_data(pipeline):
         galleries[g['id']] = dict(
             g, cards=gcards,
             emitted_n=sum(1 for c in gcards if c['emitted']))
+
+    # one board per header type + one per footer type (C) — every
+    # emitted bank variant of that type, all real-render docs
+    hdr_types, ftr_types = {}, {}
+    for comp in sorted(chrome_emitted):
+        t = _chrome_type(comp)
+        (hdr_types if comp.startswith('nav-') else
+         ftr_types).setdefault(t, []).append(comp)
+    for element, types in (('header', hdr_types),
+                           ('footer', ftr_types)):
+        for t in _CHROME_TYPE_ORDER[element]:
+            comps = types.get(t)
+            if not comps:
+                continue
+            gid = f'chrome-{element}-{t}'
+            gcards = [{
+                'id': c, 'name': c.replace('-', ' '),
+                'preview': '/built/' + urllib.parse.quote(
+                    os.path.join(pd, 'site', 'dist',
+                                 chrome_emitted[c])),
+                'tags': [c, t], 'emitted': True,
+                'element': element, 'variant': c, 'grp': None,
+                'mobile': False} for c in comps]
+            galleries[gid] = dict(
+                id=gid,
+                title=('Header · ' if element == 'header' else
+                       'Footer · ') + _CHROME_TYPE_LABEL[t],
+                icon='bars',
+                desc='every banked ' + _CHROME_TYPE_LABEL[t].lower() +
+                     ' ' + element + ' — real emitted renders, same '
+                     'chrome as the built page',
+                cards=gcards, emitted_n=len(gcards))
 
     boards = {}
     # step 1 — VIBE: the coarse family scrub
