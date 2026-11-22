@@ -1211,6 +1211,49 @@ def emit_section_fragments(pd):
     return spec, depth
 
 
+def emit_layout_previews(pd):
+    """preview/layouts/<opt>.html — each LAYOUT-OPTIONS d-option
+    rendered as the real stacked page: every block's chosen comp in
+    plan order (the section's own emitted block where the option
+    keeps it, else the comp's skeleton bound to that block's slots).
+    Returns {option_id: dist-relative path}."""
+    lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
+    options = lo.get('options') or []
+    blocks, rows = _comp_blocks(pd)
+    if not options or not rows:
+        return {}
+    head, battr = rows[0][4], rows[0][5]
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'layouts')
+    os.makedirs(outdir, exist_ok=True)
+    dist = os.path.join(pd, 'site', 'dist')
+    out = {}
+    for o in options:
+        oid = o.get('id')
+        comp_map = o.get('compositions') or {}
+        parts = []
+        for sec, bid, comp, block, h2, b2 in rows:
+            want = comp_map.get(bid, comp)
+            if want == comp:
+                parts.append(block)
+                continue
+            inner, _unmap = _slot_frag(want, _copy_slot(pd, bid))
+            if inner is None:
+                continue
+            parts.append(
+                '<section class="sec-band surface-base density-regular"'
+                ' data-sec="' + str(sec) + '" data-comp="' + str(want) +
+                '"><div class="sec-inner">' + inner +
+                '</div></section>')
+        if not parts:
+            continue
+        fp = os.path.join(outdir, str(oid) + '.html')
+        with open(fp, 'w', encoding='utf-8') as fh:
+            fh.write(_doc(head, battr, '\n'.join(parts),
+                          css=_LOREM_CSS))
+        out[oid] = os.path.relpath(fp, dist)
+    return out
+
+
 # ------------------------------------------------------------------
 # option sets — the same blocks /approve accepts (F-27)
 # ------------------------------------------------------------------
@@ -1267,20 +1310,33 @@ def _picker_cards(ctx, pd):
     return cards
 
 
-def _composition_board(pd):
-    """Service/Location/Contact/Blog boards: the compositions the
-    plan offers per section (LAYOUT-OPTIONS.json) — informational
-    until the machinery emits page-type boards."""
+def _composition_board(pd, layout_prevs=None):
+    """The layout vocabulary boards: per-option rendered previews
+    (stacked section fragments in plan order) with the b-rows matrix
+    demoted to secondary detail."""
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json')
     if not lo:
         return None
+    dist = os.path.join(pd, 'site', 'dist')
+    opts = []
+    for o in lo.get('options') or []:
+        rel = (layout_prevs or {}).get(o.get('id'))
+        comps = o.get('compositions') or {}
+        opts.append({
+            'id': o.get('id'), 'name': o.get('label') or o.get('id'),
+            'score': o.get('score'),
+            'preview': ('/built/' + urllib.parse.quote(
+                os.path.join(dist, rel))) if rel else None,
+            'tags': ['layout'] + sorted(set(comps.values())),
+            'element': 'layout', 'variant': o.get('id'),
+            'desc': ' · '.join(k + ' ' + v for k, v in
+                              list(comps.items())[:4]) +
+                    (' …' if len(comps) > 4 else ''),
+            'compositions': comps})
     return {'allowed': {k: list(dict.fromkeys(v or []))
                         for k, v in
                         (lo.get('allowed') or {}).items()},
-            'options': [{'id': o.get('id'), 'label': o.get('label'),
-                         'score': o.get('score'),
-                         'compositions': o.get('compositions') or {}}
-                        for o in lo.get('options') or []],
+            'options': opts,
             'pick': lo.get('pick')}
 
 
@@ -1541,6 +1597,8 @@ def app_data(pipeline):
                 'row swaps that section\'s composition/topology '
                 'in place; ✓ signs the row\'s choice.',
         'scrub': scrub, 'cards': []}
+    layout_prevs = emit_layout_previews(pd)
+    comp = _composition_board(pd, layout_prevs)
     for b in PAGE_BOARDS:
         if b['id'] == 'home':
             boards[b['id']] = dict(
@@ -1548,7 +1606,8 @@ def app_data(pipeline):
                           cards['fine']))
         else:
             boards[b['id']] = dict(
-                b, cards=[], compositions=_composition_board(pd))
+                b, cards=(comp or {}).get('options') or [],
+                compositions=comp)
 
     knobs = (tokens.get('knobs') or {}) if isinstance(
         tokens, dict) else {}
@@ -2133,6 +2192,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   background:var(--bg2);color:var(--fg);border:1px solid var(--line);
   border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
 
+.compmat{margin-top:22px;border:1px solid var(--line);border-radius:10px;
+  padding:10px 14px;background:var(--bg-2)}
+.compmat>summary{cursor:pointer;font:600 12px var(--font);color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -2607,7 +2670,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       setTheme(document.documentElement.dataset.theme);
       return;
     }
-    if(o.compositions){el.innerHTML=h+compBoard(o.compositions);return}
+    if(o.compositions){
+      var oh='<div class="grid">';
+      (o.cards||[]).forEach(function(c,i){oh+=card(c,i)});
+      oh+='</div><details class="compmat"><summary>composition '+
+          'matrix — the b-row vocabulary</summary>'+
+          compBoard(o.compositions)+'</details>';
+      el.innerHTML=h+oh;
+      el.querySelectorAll('.pick').forEach(function(b){
+        b.onclick=function(){doPick(b)}});
+      el.querySelectorAll('.xp').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+      el.querySelectorAll('.cb iframe').forEach(function(f){
+        f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+      setTimeout(fitIframes,150);
+      applyTheme(document.documentElement.dataset.theme);
+      return}
     var tags=[];(o.cards||[]).forEach(function(c){
       (c.tags||[]).forEach(function(t){if(tags.indexOf(t)<0)tags.push(t)})});
     if(o.emitted_n!=null&&DATA.palette){
