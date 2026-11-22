@@ -2514,6 +2514,12 @@ def app_data(pipeline):
             'saved_systems': list_systems(pd),
             'remix_sources': dna_sources(pd),
             'remix_groups': REMIX_GROUPS,
+            'site_index': (
+                '/built/' + urllib.parse.quote(
+                    pd + '/site/dist/index.html')
+                if os.path.isfile(
+                    os.path.join(pd, 'site', 'dist', 'index.html'))
+                else None),
             'contrast': contrast,
             'design': {
                 'site': dna.get('site') or pd.rsplit('/', 3)[-3],
@@ -4816,6 +4822,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   var BAKED = '';          // the picked vibe family id ('' = baseline)
   var SEL = 0;             // selected card index (keyboard scrub)
   var ROW = 0;             // selected section row on the scrub board
+  var RMSLOTS = null, RMOVER = null;  // the remix mix survives warm swaps
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,
     function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -5773,15 +5780,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function remixPane(el){
     var SRC=DATA.remix_sources||[{id:'design',label:'this design'}];
     var GRP=DATA.remix_groups||{};
-    var page=null;
-    [DATA.boards,DATA.galleries].forEach(function(B){
-      Object.keys(B||{}).forEach(function(k){
-        (B[k].cards||[]).forEach(function(c){
-          if(!page&&c.preview)page=c.preview})})});
-    var slots=[{id:'design',sh:60},
+    // the preview is the emitted site page re-rendered under the
+    // remix bundle — falling back to the first board card only when
+    // the page was never emitted
+    var page=DATA.site_index||null;
+    if(!page)
+      [DATA.boards,DATA.galleries].forEach(function(B){
+        Object.keys(B||{}).forEach(function(k){
+          (B[k].cards||[]).forEach(function(c){
+            if(!page&&c.preview)page=c.preview})})});
+    // slots/over are hoisted (RMSLOTS/RMOVER) so a warm swap re-renders
+    // the pane with the mix the user was shaping, not the defaults
+    if(!RMSLOTS)
+      RMSLOTS=[{id:'design',sh:60},
                {id:(SRC[1]||{}).id||null,sh:40},
                {id:null,sh:0}];
-    var over={};   // group -> 'mix' | slot index
+    if(!RMOVER)RMOVER={};
+    var slots=RMSLOTS, over=RMOVER;   // group -> 'mix' | slot index
     var t=null;
     var FAV=new Set((function(){try{
       return JSON.parse(localStorage.getItem('wf-rmfav')||'[]')}
