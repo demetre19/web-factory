@@ -66,11 +66,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-      </div>
-    {before.length > 0 && <div class="flow mt-stack">
-{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-    </div>}
-
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+    </div>
     }
   </div>
   }

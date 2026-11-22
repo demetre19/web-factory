@@ -73,11 +73,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-        </div>
-      {before.length > 0 && <div class="flow mt-stack">
-{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>}
-
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+      </div>
       }
       {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>

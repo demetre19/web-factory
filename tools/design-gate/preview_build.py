@@ -958,6 +958,13 @@ def _broken_comps(site, msg, comps):
                        errors='replace').read()
             if '=> <' in txt:
                 out[m.group(1)] = 'compiled chunk carries raw JSX'
+    # a compile error names the component file it failed in
+    loc = re.search(r'src/components/([\w.-]+)\.astro:\d+', msg)
+    if loc and loc.group(1) in comps and loc.group(1) not in out:
+        why = next((ln.strip() for ln in msg.split('\n')
+                    if 'Expected' in ln or 'Error' in ln),
+                   'compile error')
+        out[loc.group(1)] = why[-120:]
     frame = re.search(r'at (?:\S+ \()?file://\S*?/chunks/comp-'
                       r'([\w.-]+?)_[\w-]{8}\.mjs', msg)
     if frame and frame.group(1) in comps and frame.group(1) not in out:

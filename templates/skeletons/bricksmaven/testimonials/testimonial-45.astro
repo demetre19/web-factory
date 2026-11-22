@@ -76,11 +76,8 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
-        </div>
-      {before.length > 0 && <div class="flow mt-stack">
-{before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-      </div>}
-
+  {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
+      </div>
       }
       {links.length > 0 &&       <div>
         {links.length > 0 &&         <div>
