@@ -4445,7 +4445,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function xpOpts(b){
     var cd=b.closest('.card,.vprev,.srow');
     var pk=cd&&cd.querySelector('.pick,.spick,#vBake');
-    var nm=cd&&(cd.querySelector('.nm')||cd.querySelector('.vname'));
+    var nm=cd&&cd.querySelector('.nm,.vname,.sname');
     return {xp:b,
       title:nm?nm.textContent:'preview',
       primary:pk?pk.textContent.trim():null,
