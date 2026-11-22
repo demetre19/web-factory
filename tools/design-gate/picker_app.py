@@ -3131,24 +3131,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 @container board (min-width:1100px){
   .grid{grid-template-columns:1fr 1fr}}
 .card.fxw{grid-column:1/-1}
-.grid.fxgrid{grid-template-columns:repeat(auto-fill,minmax(460px,1fr))}
-.grid.fxgrid .card{grid-template-columns:minmax(0,1fr) 240px}
 .card.mini .cb{min-height:0}
 .card.mini .cb.done,.card.mini .cb.err{height:auto}
 .card.mini iframe{height:clamp(240px,30vw,380px)!important}
 .card{background:var(--panel);border:1px solid var(--line);
-     border-radius:var(--r);overflow:hidden;display:grid;
-     grid-template-columns:minmax(0,1fr) 280px;
-     grid-template-rows:auto 1fr}
-.card .ch{grid-row:1;grid-column:1/3}
-.card .cb{grid-row:2;grid-column:1;border-right:1px solid var(--line);
-     min-width:0;overflow:hidden}
-.card .cf{grid-row:2;grid-column:2;flex-direction:column;
-     align-items:stretch;justify-content:flex-start;gap:8px;
-     border-top:0}
-.card .cf .crow{margin-top:auto}
-.card.mobile{display:flex;flex-direction:column}
-.card.mobile .cb{border-right:0}
+     border-radius:var(--r);overflow:hidden;display:flex;
+     flex-direction:column;min-width:0}
+.card .cb{min-width:0;overflow:hidden}
+.card .cf .crow{margin-left:auto}
 .fxlab{display:flex;align-items:center;gap:8px;font:600 11px var(--mono);
      color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .fxsel{flex:1;min-width:0;background:var(--bg-2);border:1px solid var(--line);
@@ -3192,7 +3182,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      background:var(--panel);color:var(--muted);border-radius:6px;
      font:600 11px var(--font);padding:3px 7px;cursor:pointer}
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
-.card .cf{display:flex;align-items:center;justify-content:center;
+.card .cf{display:flex;align-items:center;justify-content:flex-start;
      gap:10px;padding:10px 12px;border-top:1px solid var(--line);
      min-height:44px}
 .card .cb{min-height:300px}
@@ -3366,11 +3356,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 }
 .compmob{display:none}
 @media(max-width:560px){
-  .grid.fxgrid{grid-template-columns:1fr}
-  .card,.grid.fxgrid .card{grid-template-columns:minmax(0,1fr);
-    grid-template-rows:auto auto auto}
-  .card .cf{grid-row:3;grid-column:1;border-top:1px solid var(--line);
-    flex-direction:row;flex-wrap:wrap}
+  .card .cf{flex-wrap:wrap}
   .card .cf .crow{margin-top:0}
   .compwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;
     display:none}
@@ -4053,6 +4039,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     var f=rowEl.querySelector('iframe');
     f.dataset.src=frame(u);
     f.src=frame(u)+'?theme='+document.documentElement.dataset.theme;
+    var xp=rowEl.querySelector('.xp');
+    if(xp)xp.dataset.x=frame(u);
     rowEl.querySelector('[data-role="nm"]').textContent=alt.id;
     rowEl.querySelector('[data-role="pos"]').textContent=
       (r.idx+1)+'/'+r.alts.length;
