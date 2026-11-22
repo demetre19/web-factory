@@ -1,0 +1,232 @@
+{
+ "slug": "modalnav-kit-modalmenu13",
+ "topology_id": "nav-modal",
+ "wrapper": null,
+ "regions": [
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "slate-100",
+    "text": "slate-900"
+   },
+   "slots": [],
+   "elements": 6,
+   "text_len": 19,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-center",
+   "tone": {
+    "bg": "slate-950/55"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Three-Pane Miller Browser"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Workspace \u203a Projects"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search all column paths"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "01. Domain"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Workspace  Engineering  Operations",
+     "items": 3
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "02. Category"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Projects  Teams & Access",
+     "items": 2
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "03. Destinations  Active Environments  Production and preview deployments  Build",
+     "links": 3
+    }
+   ],
+   "elements": 63,
+   "text_len": 331,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   }
+  ],
+  "spans": [
+   {
+    "tag": "section",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "section",
+    "axis": "col",
+    "span": 4
+   },
+   {
+    "tag": "nav",
+    "axis": "col",
+    "span": 5
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.087,
+   "text_share": 0.054
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.913,
+   "text_share": 0.946
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Categories",
+   "aria-label=Close Miller column menu",
+   "aria-label=Domains",
+   "aria-label=Leaf destinations",
+   "aria-labelledby=_R_0_",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 10,
+   "focus-visible": 15,
+   "focus": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-xs",
+  "opacity-60",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Miller Columns"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Three-Pane Miller Browser"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search all column paths"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "01. Domain"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Workspace"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Engineering"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Operations"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "02. Category"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Projects"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Teams & Access"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "03. Destinations"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Active Environments  Production and preview deployments"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Build Queue  Pending and running worker jobs"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Artifact Registry  Immutable container snapshots"
+  }
+ ]
+}

@@ -1,0 +1,329 @@
+{
+ "slug": "navmenu-architect-dropdownmenu12",
+ "topology_id": "nav-mega-panel",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "border-b",
+   "border-slate-200",
+   "bg-white",
+   "text-slate-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Helios Pay"
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Pricing  Developers  Solutions",
+     "links": 2
+    }
+   ],
+   "elements": 14,
+   "text_len": 42,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Startups"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Enterprise"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search payment solutions"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 12,
+   "text_len": 46,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 12,
+   "span_map": [
+    {
+     "col_span": 8,
+     "child_index": 0,
+     "tag": "div"
+    },
+    {
+     "col_span": 4,
+     "child_index": 1,
+     "tag": "div"
+    }
+   ],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Accept Payments"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Hosted Checkout  Drop-in conversion links  Recurring Billing  Usage & seat subsc",
+     "items": 2
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Launch & Incorporate"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Business Banking  FDIC-insured founder accounts  Automated Invoices  Tax-ready P",
+     "items": 2
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Developer Stack"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Webhooks SDK  Typed event delivery  Sandbox Emulator  Deterministic card tests",
+     "items": 2
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Featured Integration"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Founder Bundle"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Zero-Fee First $50k Processing"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Launch billing, banking, and tax compliance with one SDK."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Activate Credit"
+    }
+   ],
+   "elements": 86,
+   "text_len": 462,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   },
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 8
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 4
+   }
+  ],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.124,
+   "text_share": 0.076
+  },
+  {
+   "region_index": 1,
+   "role": "form",
+   "element_share": 0.106,
+   "text_share": 0.084
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.761,
+   "text_share": 0.84
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Audience mode",
+   "aria-label=Primary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 22,
+   "focus-visible": 3,
+   "focus": 2,
+   "group-hover": 12
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-slate-900/5",
+  "shadow-sm",
+  "shadow-xl",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Helios Pay"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Pricing"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Developers"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Solutions"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Startups"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Enterprise"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search payment solutions"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Accept Payments"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Hosted Checkout  Drop-in conversion links"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Recurring Billing  Usage & seat subscriptions"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Launch & Incorporate"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Business Banking  FDIC-insured founder accounts"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Automated Invoices  Tax-ready PDF billing"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Developer Stack"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Webhooks SDK  Typed event delivery"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Sandbox Emulator  Deterministic card tests"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Featured Integration"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Activate Credit"
+  }
+ ]
+}

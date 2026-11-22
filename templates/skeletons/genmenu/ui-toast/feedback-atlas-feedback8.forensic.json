@@ -1,0 +1,122 @@
+{
+ "slug": "feedback-atlas-feedback8",
+ "topology_id": "ui-toast",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "w-full",
+   "max-w-md",
+   "flex-col",
+   "gap-3"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Archive 2 Logs"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "prod-api-014.log  active",
+     "items": 1
+    }
+   ],
+   "elements": 14,
+   "text_len": 67,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "status",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "slate-900",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Undo"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 16,
+   "text_len": 36,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "list",
+   "element_share": 0.452,
+   "text_share": 0.65
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.516,
+   "text_share": 0.35
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Close confirmation snackbar",
+   "aria-live=polite"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "animate-feedback-enter",
+  "rounded-lg",
+  "rounded-md",
+  "shadow-lg",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Archive 2 Logs"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Undo"
+  }
+ ]
+}

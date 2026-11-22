@@ -1,0 +1,196 @@
+{
+ "slug": "modal-atlas-modal18",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "justify-end",
+   "bg-slate-950/55",
+   "backdrop-blur-sm"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "justify-between",
+   "tone": {
+    "bg": "white",
+    "text": "slate-900"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Workspace upgrade"
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Confirm Studio Pro plan"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Annual ($18/seat)"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Monthly ($24/seat)"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Team seats"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "-"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "+"
+    }
+   ],
+   "elements": 29,
+   "text_len": 173,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-end",
+   "tone": {
+    "bg": "slate-50"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Cancel"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Confirm upgrade"
+    }
+   ],
+   "elements": 3,
+   "text_len": 23,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.879,
+   "text_share": 0.883
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.091,
+   "text_share": 0.117
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Close upgrade drawer",
+   "aria-label=Decrease seats",
+   "aria-label=Increase seats",
+   "aria-labelledby=modal18-title",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 6
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-sm",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-xs",
+  "transition-all",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Confirm Studio Pro plan"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Annual ($18/seat)"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Monthly ($24/seat)"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Team seats"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "-"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cancel"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Confirm upgrade"
+  }
+ ]
+}

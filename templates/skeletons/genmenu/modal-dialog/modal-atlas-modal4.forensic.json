@@ -1,0 +1,124 @@
+{
+ "slug": "modal-atlas-modal4",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-4",
+   "bg-stone-950/55",
+   "backdrop-blur-[2px]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#FAF7F2]",
+    "text": "[#1C1917]"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Sunday Almanac \u00b7 Issue 148"
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Letters on craft, paper, and form"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "One thoughtful dispatch every Sunday morning. Zero syndication, zero trackers, a"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Choose sections to receive  Essays  Typography  Print Archive  Book Notes  Email",
+     "fields": 5
+    }
+   ],
+   "elements": 30,
+   "text_len": 281,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.968,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Close newsletter dialog",
+   "aria-labelledby=modal4-title",
+   "aria-modal=true",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 3,
+   "focus": 6
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-[2px]",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Letters on craft, paper, and form"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Choose sections to receive"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email address"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Subscribe"
+  }
+ ]
+}

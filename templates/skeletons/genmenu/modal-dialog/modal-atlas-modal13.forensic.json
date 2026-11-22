@@ -1,0 +1,180 @@
+{
+ "slug": "modal-atlas-modal13",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "justify-end",
+   "bg-slate-950/55",
+   "backdrop-blur-md"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "justify-between",
+   "tone": {
+    "bg": "slate-900/80",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Audio & Studio Preferences"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Adjust local monitoring output and keyboard bindings."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Monitor gain"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Low-latency monitoring  Bypass software DSP during live capture."
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Binaural spatial fold-down  Simulate near-field room acoustics on headphones."
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Active shortcuts"
+    }
+   ],
+   "elements": 34,
+   "text_len": 315,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-end",
+   "tone": {
+    "bg": "slate-950/40"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Close"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Apply audio settings"
+    }
+   ],
+   "elements": 3,
+   "text_len": 27,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.895,
+   "text_share": 0.921
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.079,
+   "text_share": 0.079
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Close studio preferences drawer",
+   "aria-labelledby=modal13-title",
+   "aria-modal=true",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-2xl",
+  "backdrop-blur-md",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Audio & Studio Preferences"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Monitor gain"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Low-latency monitoring  Bypass software DSP during live capture."
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Binaural spatial fold-down  Simulate near-field room acoustics on headphones."
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Active shortcuts"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Close"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Apply audio settings"
+  }
+ ]
+}

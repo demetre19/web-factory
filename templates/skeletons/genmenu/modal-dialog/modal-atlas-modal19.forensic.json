@@ -1,0 +1,117 @@
+{
+ "slug": "modal-atlas-modal19",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-end",
+   "justify-center",
+   "sm:justify-end",
+   "p-4",
+   "bg-black/35"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "zinc-950",
+    "text": "zinc-100"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Background sync paused"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Your local changes are safe in browser storage, but upstream sync timed out afte"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Work offline"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Retry sync"
+    }
+   ],
+   "elements": 14,
+   "text_len": 143,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.933,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Dismiss sync alert dialog",
+   "aria-labelledby=modal19-title",
+   "aria-modal=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "disabled": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-2xl",
+  "rounded-lg",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Background sync paused"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Work offline"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Retry sync"
+  }
+ ]
+}

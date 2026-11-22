@@ -1,0 +1,178 @@
+{
+ "slug": "meridian-data10",
+ "topology_id": "data-display",
+ "wrapper": {
+  "tag": "section",
+  "classes": [
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "p-6"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Infrastructure Cutover Timeline"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Select any milestone to inspect phase deliverables"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "All"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Completed"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "In Progress"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Upcoming"
+    }
+   ],
+   "elements": 9,
+   "text_len": 122,
+   "has_media": false
+  },
+  {
+   "tag": "ol",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "space-y-6",
+   "align": "",
+   "tone": {
+    "bg": "slate-200"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Phase 01  \u00b7  Nov 02, 2026  \u00b7  Storage Guild  Completed  Dual-Write Replication C"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Phase 02  \u00b7  Nov 18, 2026  \u00b7  Edge Platform  In Progress  Tenant Routing & DNS C"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Phase 03  \u00b7  Dec 04, 2026  \u00b7  Core Infrastructure  Upcoming  Legacy Cluster Deco"
+    }
+   ],
+   "elements": 50,
+   "text_len": 350,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 4
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.15,
+   "text_share": 0.258
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.833,
+   "text_share": 0.742
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=false",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Filter milestones by status",
+   "aria-label=Migration milestone timeline view",
+   "aria-pressed=false",
+   "aria-pressed=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-sm",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Infrastructure Cutover Timeline"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "All"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Completed"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "In Progress"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Upcoming"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Phase 01  \u00b7  Nov 02, 2026  \u00b7  Storage Guild  Completed  Dual-Write Replication C"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Phase 02  \u00b7  Nov 18, 2026  \u00b7  Edge Platform  In Progress  Tenant Routing & DNS C"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Phase 03  \u00b7  Dec 04, 2026  \u00b7  Core Infrastructure  Upcoming  Legacy Cluster Deco"
+  }
+ ]
+}

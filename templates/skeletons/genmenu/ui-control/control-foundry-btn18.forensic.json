@@ -1,0 +1,162 @@
+{
+ "slug": "control-foundry-btn18",
+ "topology_id": "ui-control",
+ "wrapper": {
+  "tag": "article",
+  "classes": [
+   "flex",
+   "flex-col",
+   "justify-between",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "p-6",
+   "transition-colors",
+   "duration-150",
+   "hover:border-slate-300"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Visited State Link"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Archive reading list distinguishing unvisited cobalt links from visited violet e"
+    }
+   ],
+   "elements": 9,
+   "text_len": 173,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-50/70"
+   },
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "RFC-14 \u00b7 Focus Ring Contrast Ratios  Visited  RFC-19 \u00b7 Disabled vs Aria-Disabled",
+     "items": 3
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Reset read history"
+    }
+   ],
+   "elements": 15,
+   "text_len": 176,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "text": "slate-500"
+   },
+   "slots": [],
+   "elements": 2,
+   "text_len": 72,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.333,
+   "text_share": 0.411
+  },
+  {
+   "region_index": 1,
+   "role": "list",
+   "element_share": 0.556,
+   "text_share": 0.418
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.074,
+   "text_share": 0.171
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true"
+  ],
+  "data": [
+   "data-testid=specimen-Btn18"
+  ],
+  "pseudo_classes": {
+   "hover": 6,
+   "focus-visible": 15
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rounded-lg",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Visited State Link"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "RFC-14 \u00b7 Focus Ring Contrast Ratios"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "RFC-19 \u00b7 Disabled vs Aria-Disabled Patterns"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "RFC-23 \u00b7 Touch Target Geometry Audit"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Reset read history"
+  }
+ ]
+}

@@ -1,0 +1,184 @@
+{
+ "slug": "elements-element3",
+ "topology_id": "ui-element",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "overflow-hidden",
+   "rounded-3xl",
+   "bg-white",
+   "shadow-xl",
+   "shadow-violet-200/50",
+   "ring-1",
+   "ring-violet-100"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "gradient-to-r",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Projects"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Filter projects"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "All"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "On track"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "At risk"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Blocked"
+    }
+   ],
+   "elements": 14,
+   "text_len": 58,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "media",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "No projects match"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Nothing found for \u201cquantum\u201d. Try a different search."
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Clear filters"
+    }
+   ],
+   "elements": 20,
+   "text_len": 120,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.4,
+   "text_share": 0.326
+  },
+  {
+   "region_index": 1,
+   "role": "media",
+   "element_share": 0.571,
+   "text_share": 0.674
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Status filter",
+   "aria-pressed=false",
+   "aria-pressed=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 3,
+   "hover": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "ring-1",
+  "ring-violet-100",
+  "rotate-6",
+  "rounded-2xl",
+  "rounded-3xl",
+  "rounded-full",
+  "shadow-md",
+  "shadow-violet-200/50",
+  "shadow-violet-300",
+  "shadow-xl",
+  "transition"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Projects"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Filter projects"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "All"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "On track"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "At risk"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Blocked"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Clear filters"
+  }
+ ]
+}

@@ -1,0 +1,338 @@
+{
+ "slug": "navmenu-architect-dropdownmenu7",
+ "topology_id": "nav-dropdown-menu",
+ "wrapper": {
+  "tag": "header",
+  "classes": [
+   "relative",
+   "z-20",
+   "w-full",
+   "border-b",
+   "border-zinc-800",
+   "bg-[#0A0D10]",
+   "text-zinc-100"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Onyx Systems"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search Onyx products"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    }
+   ],
+   "elements": 9,
+   "text_len": 37,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Primary Navigation",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Changelog  Pricing  Products",
+     "items": 3
+    }
+   ],
+   "elements": 12,
+   "text_len": 28,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "list",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "[#0F1318]"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Spotlight"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Zero-Trust Enclaves"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Hardware-attested confidential workloads with isolated key custody."
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "Explore Enclaves"
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Compute & Storage"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Bare Metal Nodes  Dedicated NVMe compute  Object Vault  Zero-egress S3 storage  ",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Developer Workflow"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Build Runners  Cached container pipelines  CLI Control Plane  Scriptable fleet o",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "h3",
+     "text": "Network & Defense"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "Private Mesh  Encrypted WireGuard overlay  DDoS Shield  Edge packet scrubbing  A",
+     "items": 3
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Migrating multi-cluster workloads? Book a complimentary topology review with our"
+    },
+    {
+     "kind": "link",
+     "tag": "a",
+     "text": "API Reference"
+    },
+    {
+     "kind": "cta",
+     "tag": "a",
+     "text": "Book Review"
+    }
+   ],
+   "elements": 140,
+   "text_len": 670,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 12
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 3
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.056,
+   "text_share": 0.05
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.074,
+   "text_share": 0.038
+  },
+  {
+   "region_index": 2,
+   "role": "list",
+   "element_share": 0.864,
+   "text_share": 0.912
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-haspopup=true",
+   "aria-hidden=true",
+   "aria-label=Primary Navigation"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 2,
+   "hover": 32,
+   "focus-visible": 3,
+   "group-hover": 18
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "duration-150",
+  "rotate-180",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-black/60",
+  "transition-colors",
+  "transition-transform"
+ ],
+ "copy_slots": [
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Onyx Systems"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search Onyx products"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Changelog"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Pricing"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Products"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Spotlight"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Explore Enclaves"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Compute & Storage"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Bare Metal Nodes  Dedicated NVMe compute"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Object Vault  Zero-egress S3 storage"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Distributed SQL  Multi-region consensus"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Developer Workflow"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Build Runners  Cached container pipelines"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "CLI Control Plane  Scriptable fleet ops"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Command Palette  Keyboard-first deploys"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Network & Defense"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Private Mesh  Encrypted WireGuard overlay"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "DDoS Shield  Edge packet scrubbing"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Anomaly Radar  Real-time threat rules"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "API Reference"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Book Review"
+  }
+ ]
+}

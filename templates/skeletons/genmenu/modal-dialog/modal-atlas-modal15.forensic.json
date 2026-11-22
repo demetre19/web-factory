@@ -1,0 +1,163 @@
+{
+ "slug": "modal-atlas-modal15",
+ "topology_id": "modal-dialog",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-4",
+   "bg-slate-950/60",
+   "backdrop-blur-sm"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "form",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white",
+    "text": "slate-900"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Configure project identity"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Project slug"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Primary deployment region"
+    }
+   ],
+   "elements": 23,
+   "text_len": 142,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "slate-50"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Cancel"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Continue"
+    }
+   ],
+   "elements": 3,
+   "text_len": 16,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "form",
+   "element_share": 0.852,
+   "text_share": 0.899
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.111,
+   "text_share": 0.101
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Close setup wizard dialog",
+   "aria-labelledby=modal15-title",
+   "aria-modal=true",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "focus": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-sm",
+  "rounded-2xl",
+  "rounded-full",
+  "rounded-lg",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Configure project identity"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Project slug"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Primary deployment region"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Cancel"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Continue"
+  }
+ ]
+}

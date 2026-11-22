@@ -1,0 +1,212 @@
+{
+ "slug": "modalnav-kit-modalmenu18",
+ "topology_id": "nav-modal",
+ "wrapper": null,
+ "regions": [
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "[#161318]",
+    "text": "rose-100"
+   },
+   "slots": [],
+   "elements": 5,
+   "text_len": 17,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-center",
+   "tone": {
+    "bg": "black/75"
+   },
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Workspace & Pinned Shelf"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Production"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Staging"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search workspace routes"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Pinned Shelf (2)  Active Deployments  12 live regions  Primary Database  us-east",
+     "links": 8
+    }
+   ],
+   "elements": 83,
+   "text_len": 420,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.057,
+   "text_share": 0.039
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.943,
+   "text_share": 0.961
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=All Destinations",
+   "aria-label=Close workspace pinned shelf",
+   "aria-label=Environment context",
+   "aria-label=Pin Compliance Audit Feed",
+   "aria-label=Pin KMS Secret Store",
+   "aria-label=Pin Pager & Incident Rules",
+   "aria-label=Pin Webhook Deliveries",
+   "aria-label=Pinned Shelf",
+   "aria-label=Pinned and workspace routes",
+   "aria-label=Unpin Active Deployments",
+   "aria-label=Unpin Primary Database",
+   "aria-labelledby=_R_0_",
+   "aria-modal=true",
+   "aria-pressed=false",
+   "aria-pressed=true"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 28,
+   "focus-visible": 6,
+   "focus": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-sm",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Pinned Shelf"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Workspace & Pinned Shelf"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Production"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Staging"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search workspace routes"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Pinned Shelf (2)"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Active Deployments  12 live regions"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Primary Database  us-east-1 cluster"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "All Production Destinations"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Active Deployments  12 live regions"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Primary Database  us-east-1 cluster"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Webhook Deliveries  99.98% delivery"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Pager & Incident Rules  On-call escalation"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "KMS Secret Store  Hardware HSM"
+  },
+  {
+   "kind": "link",
+   "tag": "a",
+   "text": "Compliance Audit Feed  365-day retention"
+  }
+ ]
+}

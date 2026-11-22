@@ -1,0 +1,166 @@
+{
+ "slug": "menucraft-react-sheetmenu6",
+ "topology_id": "nav-top-sheet",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "relative",
+   "h-full",
+   "w-full",
+   "overflow-hidden",
+   "bg-slate-100",
+   "text-slate-900",
+   "flex",
+   "flex-col"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {
+    "bg": "white"
+   },
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Done"
+    }
+   ],
+   "elements": 7,
+   "text_len": 18,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Workspace  Docs  People  Sprint Board  18 open issues  Q4 Roadmap  3 milestones ",
+     "links": 0
+    },
+    {
+     "kind": "headline",
+     "tag": "h3",
+     "text": "Sprint Board"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Tabbed-scope top drop-down switching geometry between Workspace list rows, 2-col"
+    }
+   ],
+   "elements": 40,
+   "text_len": 270,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.146,
+   "text_share": 0.062
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.833,
+   "text_share": 0.938
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-controls=_R_0_",
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Close Linearis backdrop",
+   "aria-label=Close Linearis tabbed menu",
+   "aria-label=Scoped tabbed navigation",
+   "aria-label=Search workspace"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 5,
+   "focus-visible": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-xl",
+  "shadow-xs",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Done"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Workspace"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Docs"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "People"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Sprint Board  18 open issues"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Q4 Roadmap  3 milestones"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Release Train  Ready for QA"
+  },
+  {
+   "kind": "headline",
+   "tag": "h3",
+   "text": "Sprint Board"
+  }
+ ]
+}

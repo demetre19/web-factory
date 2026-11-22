@@ -1,0 +1,183 @@
+{
+ "slug": "navcraft-nav3",
+ "topology_id": "nav-command-palette",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "flex-col",
+   "gap-3"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center justify-between",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Close Palette  \u2318K"
+    }
+   ],
+   "elements": 6,
+   "text_len": 17,
+   "has_media": false
+  },
+  {
+   "tag": "nav",
+   "role": "nav",
+   "aria": "Command palette",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Search commands"
+    },
+    {
+     "kind": "field",
+     "tag": "input",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "ESC"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Go to Deployments  G D"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Open Runtime Logs  G L"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Manage Team Members  G T"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Create New Collection  \u2318\u21e7N"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Export Configuration JSON  \u2318E"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Open Keyboard Shortcuts  \u2318/"
+    }
+   ],
+   "elements": 64,
+   "text_len": 213,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.085,
+   "text_share": 0.074
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.901,
+   "text_share": 0.926
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-expanded=true",
+   "aria-hidden=true",
+   "aria-label=Command palette"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 8,
+   "focus-visible": 2,
+   "focus": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "ring-1",
+  "ring-slate-900/5",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-xl",
+  "shadow-xs",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Close Palette  \u2318K"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Search commands"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "ESC"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Go to Deployments  G D"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Runtime Logs  G L"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Manage Team Members  G T"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Create New Collection  \u2318\u21e7N"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Export Configuration JSON  \u2318E"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Open Keyboard Shortcuts  \u2318/"
+  }
+ ]
+}

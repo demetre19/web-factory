@@ -1,0 +1,121 @@
+{
+ "slug": "feedback-atlas-feedback1",
+ "topology_id": "ui-toast",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "animate-feedback-enter",
+   "w-full",
+   "max-w-sm",
+   "overflow-hidden",
+   "rounded-xl",
+   "border",
+   "border-slate-200",
+   "bg-white",
+   "shadow-md"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 3,
+   "span_map": [],
+   "gap": "",
+   "align": "items-start",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Payment processed"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Invoice for settled cleanly.  #INV-2048  $480.00"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "View invoice"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    }
+   ],
+   "elements": 18,
+   "text_len": 90,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-100"
+   },
+   "slots": [],
+   "elements": 2,
+   "text_len": 0,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.857,
+   "text_share": 1.0
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.095,
+   "text_share": 0.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Dismiss payment processed notification",
+   "aria-live=polite"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 3,
+   "focus-visible": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "animate-feedback-enter",
+  "duration-100",
+  "ease-linear",
+  "rounded-lg",
+  "rounded-md",
+  "rounded-xl",
+  "shadow-md",
+  "transition-[width]",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "View invoice"
+  }
+ ]
+}

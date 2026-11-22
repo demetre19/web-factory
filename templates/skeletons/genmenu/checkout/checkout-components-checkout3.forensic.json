@@ -1,0 +1,197 @@
+{
+ "slug": "checkout-components-checkout3",
+ "topology_id": "checkout",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "min-h-screen",
+   "bg-yellow-300",
+   "font-sans",
+   "text-black",
+   "lg:grid",
+   "lg:grid-cols-[minmax(0,420px)_1fr]"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "aside",
+   "role": "sidebar",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "violet-600",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "LOUD\u00a0GOODS"
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Your haul"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "RH  Riot Hoodie  Hot Pink \u00b7 L \u00b7 \u00d71  $78  SB  Sticker Bomb Pack  40 pcs \u00b7 \u00d73  $36",
+     "items": 3
+    }
+   ],
+   "elements": 34,
+   "text_len": 189,
+   "has_media": true
+  },
+  {
+   "tag": "main",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "Ship  1  Pay  2  Review  3",
+     "links": 0
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Where to?  Name  Street  City  Zip  Speed  Normal  $5 \u00b7 5 days  Rocket  $15 \u00b7 to",
+     "fields": 6
+    }
+   ],
+   "elements": 43,
+   "text_len": 120,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   },
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   }
+  ],
+  "flex_wraps": 1
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "sidebar",
+   "element_share": 0.436,
+   "text_share": 0.612
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.551,
+   "text_share": 0.388
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=step",
+   "aria-hidden=true",
+   "aria-label=Checkout steps",
+   "aria-labelledby=c3-bag",
+   "aria-labelledby=c3-speed",
+   "checked"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 8,
+   "active": 3
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "shadow-[4px_4px_0_0_#000]"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Your haul"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Ship  1"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Pay  2"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Review  3"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Where to?"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Street"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "City"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Zip"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Next"
+  }
+ ]
+}

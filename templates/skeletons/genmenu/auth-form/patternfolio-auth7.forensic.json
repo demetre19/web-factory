@@ -1,0 +1,162 @@
+{
+ "slug": "patternfolio-auth7",
+ "topology_id": "auth-form",
+ "wrapper": {
+  "tag": "main",
+  "classes": [
+   "min-h-[680px]",
+   "w-full",
+   "bg-[#090D16]",
+   "text-slate-100",
+   "flex",
+   "items-center",
+   "justify-center",
+   "p-6",
+   "relative",
+   "overflow-hidden"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "indigo-500/15"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "sky-500/10"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "section",
+   "role": "form",
+   "aria": "Dark glass sign in",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "white/[0.05]"
+   },
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Vault Console"
+    },
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Sign in to enclave"
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Email address  Password  Include 6-digit 2FA authenticator code  Authenticate",
+     "fields": 2
+    }
+   ],
+   "elements": 24,
+   "text_len": 112,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.037,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.037,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 2,
+   "role": "form",
+   "element_share": 0.889,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Dark glass sign in",
+   "aria-label=Show password"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "focus": 11,
+   "hover": 3,
+   "focus-visible": 5
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-xl",
+  "blur-3xl",
+  "rounded-2xl",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Sign in to enclave"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Password"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Include 6-digit 2FA authenticator code"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Authenticate"
+  }
+ ]
+}

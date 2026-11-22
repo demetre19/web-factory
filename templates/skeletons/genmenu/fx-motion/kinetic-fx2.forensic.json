@@ -1,0 +1,125 @@
+{
+ "slug": "kinetic-fx2",
+ "topology_id": "fx-motion",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "items-center",
+   "justify-around",
+   "gap-8",
+   "w-full",
+   "py-3"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "Scroll down using mouse indicator",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "zinc-50"
+   },
+   "slots": [],
+   "elements": 4,
+   "text_len": 9,
+   "has_media": false
+  },
+  {
+   "tag": "div",
+   "role": "content",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "zinc-200"
+   },
+   "slots": [],
+   "elements": 1,
+   "text_len": 0,
+   "has_media": false
+  },
+  {
+   "tag": "button",
+   "role": "content",
+   "aria": "Scroll down using cascading chevron indicator",
+   "cols": 2,
+   "span_map": [],
+   "gap": "",
+   "align": "items-center",
+   "tone": {
+    "bg": "zinc-50"
+   },
+   "slots": [],
+   "elements": 9,
+   "text_len": 15,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "content",
+   "element_share": 0.267,
+   "text_share": 0.375
+  },
+  {
+   "region_index": 1,
+   "role": "content",
+   "element_share": 0.067,
+   "text_share": 0.0
+  },
+  {
+   "region_index": 2,
+   "role": "content",
+   "element_share": 0.6,
+   "text_share": 0.625
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-hidden=true",
+   "aria-label=Scroll down using cascading chevron indi",
+   "aria-label=Scroll down using mouse indicator"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 6,
+   "focus-visible": 6,
+   "group-hover": 4
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "fx-animate-chevron-1",
+  "fx-animate-chevron-2",
+  "fx-animate-chevron-3",
+  "fx-animate-wheel",
+  "rounded-full",
+  "rounded-xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Mouse Cue"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Chevron Cascade"
+  }
+ ]
+}

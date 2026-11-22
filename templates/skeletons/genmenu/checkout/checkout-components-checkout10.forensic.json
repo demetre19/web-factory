@@ -1,0 +1,282 @@
+{
+ "slug": "checkout-components-checkout10",
+ "topology_id": "checkout",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "min-h-screen",
+   "bg-[#fbfaf7]",
+   "text-stone-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "text-center",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "PARIS \u2014 LONDON \u2014 KYOTO"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Officine Laurier"
+    }
+   ],
+   "elements": 3,
+   "text_len": 40,
+   "has_media": false
+  },
+  {
+   "tag": "main",
+   "role": "hero",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "headline",
+     "tag": "h1",
+     "text": "Your Bag"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "3 pieces, reserved for 60 minutes"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "F  Eau de Parfum \u2014 Figuier Noir  100 ml \u00b7 Flacon in smoked glass  \u00a3285.00  Qty  ",
+     "items": 3
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Presentation"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": "Handwritten card message"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "0 / 180"
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Order total"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Have a privilege code?"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Proceed to checkout"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Complimentary samples selected by our perfumers accompany every order."
+    }
+   ],
+   "elements": 94,
+   "text_len": 733,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 3
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.031,
+   "text_share": 0.052
+  },
+  {
+   "region_index": 1,
+   "role": "hero",
+   "element_share": 0.959,
+   "text_share": 0.948
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-describedby=c10-note-count",
+   "aria-expanded=false",
+   "aria-label=Decrease",
+   "aria-label=Increase",
+   "aria-label=Quantity of Bougie Parfum\u00e9e \u2014 Ambre",
+   "aria-label=Quantity of Eau de Parfum \u2014 Figuier Noir",
+   "aria-label=Quantity of Savon de Marseille",
+   "aria-labelledby=c10-gift",
+   "aria-labelledby=c10-total",
+   "aria-live=polite",
+   "checked",
+   "disabled"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "disabled": 6,
+   "hover": 7,
+   "focus": 2
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-full",
+  "transition"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h1",
+   "text": "Your Bag"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Eau de Parfum \u2014 Figuier Noir"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Save for later"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Remove"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Bougie Parfum\u00e9e \u2014 Ambre"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Save for later"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Remove"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Savon de Marseille"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "\u2212"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "+"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Save for later"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Remove"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Presentation"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Gift wrapping"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Handwritten card message"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Order total"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Have a privilege code?"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Proceed to checkout"
+  }
+ ]
+}

@@ -1,0 +1,150 @@
+{
+ "slug": "checkout-components-checkout2",
+ "topology_id": "order-confirm",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "flex",
+   "min-h-screen",
+   "items-center",
+   "justify-center",
+   "bg-zinc-950",
+   "p-4",
+   "font-sans",
+   "text-zinc-100",
+   "sm:p-10"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "zinc-900/60"
+   },
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "pulse/audio  1  Shipping  Where should we send it?  2  Payment  How would you li",
+     "links": 0
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Shipping address  Full name  Address  City  Postal code  Country  United States ",
+     "fields": 5
+    }
+   ],
+   "elements": 52,
+   "text_len": 257,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "nav",
+   "element_share": 0.981,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-controls=c2-sum",
+   "aria-current=step",
+   "aria-expanded=false",
+   "aria-hidden=true",
+   "aria-label=Checkout steps",
+   "disabled",
+   "selected"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "disabled": 3,
+   "focus": 20,
+   "hover": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "rounded-2xl",
+  "rounded-full",
+  "rounded-lg",
+  "rounded-xl",
+  "shadow-2xl",
+  "shadow-black/50",
+  "transition"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Shipping  Where should we send it?"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Payment  How would you like to pay?"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Review  Confirm and place order"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Shipping address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Full name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "City"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Postal code"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Country"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Order summary  $182.50"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Continue"
+  }
+ ]
+}

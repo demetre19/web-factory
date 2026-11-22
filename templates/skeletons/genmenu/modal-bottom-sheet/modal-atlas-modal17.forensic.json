@@ -1,0 +1,127 @@
+{
+ "slug": "modal-atlas-modal17",
+ "topology_id": "modal-bottom-sheet",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "fixed",
+   "inset-0",
+   "z-50",
+   "flex",
+   "items-end",
+   "sm:items-center",
+   "justify-center",
+   "sm:p-4",
+   "bg-slate-950/65",
+   "backdrop-blur-md"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "div",
+   "role": "hero",
+   "aria": "dialog",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {
+    "bg": "slate-900/80",
+    "text": "white"
+   },
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": ""
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Revoke production API token?"
+    },
+    {
+     "kind": "subhead",
+     "tag": "p",
+     "text": "Token will stop authenticating incoming webhook requests immediately.  pk_live_9"
+    },
+    {
+     "kind": "label",
+     "tag": "label",
+     "text": ""
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Keep token"
+    },
+    {
+     "kind": "cta",
+     "tag": "button",
+     "text": "Revoke token"
+    }
+   ],
+   "elements": 17,
+   "text_len": 210,
+   "has_media": true
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [],
+  "spans": [],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "hero",
+   "element_share": 0.944,
+   "text_share": 1.0
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-label=Close revoke API token dialog",
+   "aria-labelledby=modal17-title",
+   "aria-modal=true",
+   "disabled"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "hover": 4,
+   "disabled": 3
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "backdrop-blur-2xl",
+  "backdrop-blur-md",
+  "rounded-lg",
+  "rounded-t-2xl",
+  "rounded-xl",
+  "shadow-2xl",
+  "transition-colors"
+ ],
+ "copy_slots": [
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Revoke production API token?"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Keep token"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Revoke token"
+  }
+ ]
+}

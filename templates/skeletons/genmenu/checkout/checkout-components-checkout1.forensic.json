@@ -1,0 +1,219 @@
+{
+ "slug": "checkout-components-checkout1",
+ "topology_id": "checkout",
+ "wrapper": {
+  "tag": "div",
+  "classes": [
+   "min-h-screen",
+   "bg-white",
+   "font-sans",
+   "text-slate-900"
+  ]
+ },
+ "regions": [
+  {
+   "tag": "header",
+   "role": "header",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "media",
+     "tag": "svg",
+     "text": ""
+    }
+   ],
+   "elements": 6,
+   "text_len": 26,
+   "has_media": true
+  },
+  {
+   "tag": "div",
+   "role": "nav",
+   "aria": "",
+   "cols": 1,
+   "span_map": [],
+   "gap": "",
+   "align": "",
+   "tone": {},
+   "slots": [
+    {
+     "kind": "nav-links",
+     "tag": "nav",
+     "text": "1  Shipping  2  Payment  3  Review",
+     "links": 0
+    },
+    {
+     "kind": "form",
+     "tag": "form",
+     "text": "Contact  Email address  Shipping address  First name  Last name  Street address ",
+     "fields": 9
+    },
+    {
+     "kind": "headline",
+     "tag": "h2",
+     "text": "Order summary"
+    },
+    {
+     "kind": "list",
+     "tag": "ul",
+     "text": "1  Field Jacket  Olive / M  $168.00  2  Merino Crew Sock  Charcoal / 3-pack  $64",
+     "items": 2
+    }
+   ],
+   "elements": 96,
+   "text_len": 416,
+   "has_media": false
+  }
+ ],
+ "grid_anatomy": {
+  "grids": [
+   {
+    "cols": 2
+   },
+   {
+    "cols": 2
+   },
+   {
+    "cols": 2
+   }
+  ],
+  "spans": [
+   {
+    "tag": "div",
+    "axis": "col",
+    "span": 2
+   }
+  ],
+  "flex_wraps": 0
+ },
+ "visual_weight": [
+  {
+   "region_index": 0,
+   "role": "header",
+   "element_share": 0.058,
+   "text_share": 0.059
+  },
+  {
+   "region_index": 1,
+   "role": "nav",
+   "element_share": 0.932,
+   "text_share": 0.941
+  }
+ ],
+ "states": {
+  "aria": [
+   "aria-current=step",
+   "aria-hidden=true",
+   "aria-label=Checkout progress",
+   "aria-labelledby=c1-summary",
+   "checked",
+   "disabled"
+  ],
+  "data": [],
+  "pseudo_classes": {
+   "disabled": 3,
+   "focus": 28,
+   "hover": 1
+  },
+  "details_summary": false
+ },
+ "decoration_hooks": [
+  "ring-1",
+  "ring-slate-900",
+  "rounded-full",
+  "rounded-md",
+  "shadow-sm"
+ ],
+ "copy_slots": [
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "1  Shipping"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "2  Payment"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "3  Review"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Contact"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Email address"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Shipping address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "First name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Last name"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Street address"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "City"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "State"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "ZIP"
+  },
+  {
+   "kind": "headline",
+   "tag": "legend",
+   "text": "Delivery method"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Standard  4\u20136 business days  Free"
+  },
+  {
+   "kind": "label",
+   "tag": "label",
+   "text": "Express  1\u20132 business days  $18.00"
+  },
+  {
+   "kind": "cta",
+   "tag": "button",
+   "text": "Continue to payment"
+  },
+  {
+   "kind": "headline",
+   "tag": "h2",
+   "text": "Order summary"
+  }
+ ]
+}
