@@ -3183,6 +3183,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .sbchip b{font-weight:650;color:var(--muted);flex:0 0 auto}
 .sbchip.has b{color:var(--accent)}
 .sbchip.sbr{flex:0 0 auto;max-width:none}
+.sbchip.sbnext{background:transparent;border-color:var(--accent);
+  color:var(--accent)}
 .sbsp{flex:1 0 8px;min-width:8px}
 .sbr{background:var(--accent);color:var(--accent-ink);
   border-color:transparent;font-weight:650}
@@ -3812,8 +3814,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       h+='<button class="sbchip'+(v?' has':'')+'" data-b="'+c.board+
          '"><b>'+c.label+'</b> '+esc(v?String(v).replace(/^atlas:/,''):'—')+
          '</button>'});
-    h+='<span class="sbsp"></span>'+
-       '<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
+    h+='<span class="sbsp"></span>';
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0]))
+      h+='<button class="sbchip sbr sbnext" data-b="'+nx[0]+
+         '">Next: '+esc(nx[1])+' →</button>';
+    h+='<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
     return h}
   function wireFlow(){
     document.querySelectorAll('#stepper .stp,#selbar .sbchip')
