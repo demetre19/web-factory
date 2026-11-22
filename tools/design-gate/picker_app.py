@@ -864,17 +864,19 @@ body{margin:0;font-family:var(--font-body,ui-sans-serif,system-ui)}
 .tscols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .tscol>h4{font:600 11px ui-monospace,monospace;margin:0 0 6px;
      color:var(--text-muted,#888)}
-.tsrow{display:grid;grid-template-columns:108px 1fr;gap:12px;
-     align-items:baseline;padding:7px 0;
+.tsrow{display:grid;grid-template-columns:108px minmax(0,1fr);
+     gap:12px;align-items:baseline;padding:7px 0;
      border-bottom:1px dashed var(--border,#ddd)}
 .tsmeta{font:600 11px ui-monospace,monospace;
-     color:var(--text-muted,#888)}
+     color:var(--text-muted,#888);min-width:0}
 .tsmeta i{display:block;font-style:normal;opacity:.75}
-.tsspec{overflow-wrap:break-word;
+.tsspec{overflow-wrap:break-word;max-width:100%;min-width:0;
      font-family:var(--font-display,var(--font-body,ui-sans-serif))}
 .tsnum{font:11px ui-monospace,monospace;
      color:var(--text-muted,#888)}
 @media (max-width:840px){.tscols{grid-template-columns:1fr}}
+@media (max-width:560px){.tsrow{grid-template-columns:1fr;gap:2px;
+     padding:10px 0}.tsmeta{display:flex;gap:8px}.tsmeta i{display:inline}}
 """
 
 
@@ -941,7 +943,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
             os.path.getmtime(fp) >= os.path.getmtime(tp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:ts:v1' not in rf.read(4096)
+                stale = 'wf:ts:v2' not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
@@ -969,7 +971,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
         css = ((_fam_css(bundle) if bundle else '') + _TYPESCRIPT_CSS)
         os.makedirs(outdir, exist_ok=True)
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:ts:v1-->' + _doc(head, battr, body,
+            fh.write('<!--wf:ts:v2-->' + _doc(head, battr, body,
                                               css=css))
     return 'preview/typescale/' + name + '.html'
 
@@ -3531,9 +3533,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,
     function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  function toast(t){var e=document.getElementById('toast');
+  var _tq=[],_tBusy=false;
+  function toast(t){_tq.push(t);if(!_tBusy)_tNext()}
+  function _tNext(){var t=_tq.shift();
+    if(t==null){_tBusy=false;return}
+    _tBusy=true;var e=document.getElementById('toast');
     e.textContent=t;e.classList.add('show');
-    setTimeout(function(){e.classList.remove('show')},2600)}
+    setTimeout(function(){e.classList.remove('show');
+      setTimeout(_tNext,140)},2400)}
   function api(path,body){
     return fetch(path,{method:'POST',
       headers:{'Content-Type':'application/json',
@@ -3590,6 +3597,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   document.getElementById('scrim').onclick=function(){
     document.getElementById('rail').classList.remove('open');
     document.getElementById('scrim').classList.remove('open')};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      var r=document.getElementById('rail');
+      if(r.classList.contains('open')){
+        r.classList.remove('open');
+        document.getElementById('scrim').classList.remove('open')}
+      var dp=document.getElementById('dnaPop');
+      if(dp&&dp.open)dp.open=false}});
+  document.addEventListener('click',function(e){
+    var dp=document.getElementById('dnaPop');
+    if(dp&&dp.open&&!dp.contains(e.target))dp.open=false});
 
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
@@ -3667,12 +3685,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   // AND picker — chips are conjunctive facets: every selected tag
   // must be present on a card (e.g. light AND professional)
+  var FTAG_LABEL={
+    'fv1':'variant 1','fv2':'variant 2','fv3':'variant 3',
+    'v1':'variant 1','v2':'variant 2','v3':'variant 3',
+    'bank-option':'in bank','bank':'in bank'};
   function filters(tags){
-    var n=Object.keys(FILT).length;
+    var n=Object.keys(FILT).length,seen={};
     var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
          'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
-      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'</button>'});
+      var lab=FTAG_LABEL[t]||t;
+      if(seen[lab])return;seen[lab]=1;
+      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(lab)+'</button>'});
     return h;
   }
 
@@ -3717,7 +3741,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         ((ca.light||{}).fails||[]).concat((ca.dark||{}).fails||[]).join('; ')
         ||'WCAG AA min ratio')+'">AA '+mn.join('/')+(bad?' ✗':'')+'</span>'}
     h+='</div><div class="cf"><div class="tags">'+
-       tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
+       tags.filter(function(t){var tl=String(t).toLowerCase();
+         return tl!==String(c.name||'').toLowerCase()&&
+                tl!==String(c.id||'').toLowerCase()})
+        .map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
        '</div>';
     // first-class effect control — the per-element decorator, labeled
     if(!c.bank&&c.element&&c.element!=='vibe'&&c.element!=='layout'&&
@@ -3767,7 +3794,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span class="vchips">'+(gkeys.length?gkeys.map(function(k){
          return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
                 esc(VGENES[k])+' ×</span>'}).join(''):
-        '<span class="chip">baseline</span>')+'</span>'+
+        '<span class="chip">baseline genes</span>')+'</span>'+
        '<button class="xp" id="vXp" title="expand" data-x="'+
        esc(VRES&&VRES.preview||'')+'">⤢</button>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
@@ -3902,6 +3929,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         VSRC=cards[+b.dataset.i].name||'';
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         vibePane(el,o);
+        var vp=el.querySelector('.vprev');
+        if(vp)vp.scrollIntoView({block:'nearest'});
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
@@ -4673,8 +4702,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         m[g.element]=1;return m},{}):{}).forEach(function(e){
         bl+=bk[e]||0});
       if(bl)h+='<div class="desc" style="opacity:.7">emitted '+
-        o.emitted_n+' · raw skeleton backlog ~'+bl+
-        ' (awaiting vectorisation)</div>';}
+        o.emitted_n+' · '+bl+' more in the bank</div>';}
     h+='<div class="filters">'+filters(tags)+'</div>'+
        '<div class="grid'+(CUR==='fx'?' fxgrid':'')+'">';
     var lastGrp=null,shown2=0;
@@ -4830,7 +4858,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         api('/approve',{wave:b.dataset.wave,pipeline:PIPELINE,
           nonce:n.nonce,design:b.dataset.d}).then(function(j){
           stat.className='pstat '+(j.ok?'ok':'bad');
-          stat.textContent=j.message||(j.ok?'recorded':'refused');
+          var rw=!j.ok&&(j.message||'').match(/re-gate (w\d+)/);
+          if(rw){stat.textContent='inputs changed since '+rw[1]+
+              ' passed — re-gate it, then pick again. ';
+            var rb=document.createElement('button');
+            rb.className='abtn';rb.textContent='Re-gate '+rw[1];
+            rb.onclick=function(){rb.disabled=true;
+              api('/regate',{wave:rw[1],pipeline:PIPELINE})
+                .then(function(g){toast(g.message);rb.disabled=false;
+                  if(g.ok)stat.textContent=rw[1]+
+                    ' clean — pick again'})};
+            stat.appendChild(rb);
+          }else stat.textContent=(j.message||(j.ok?'recorded':'refused'))
+            .replace(/^approve REFUSED:? ?/,'');
           if(j.ok){b.textContent='picked ✓';
             b.closest('.card').classList.add('picked');
             toast(j.message)}else b.disabled=false})})

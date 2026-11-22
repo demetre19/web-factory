@@ -980,6 +980,36 @@ def _handler():
                                              body.get('pipeline', ''))
                 self._send(200 if code == 0 else 400,
                            {'ok': code == 0, 'message': txt})
+            elif self.path == '/regate':
+                # re-run a wave's gate via the machinery CLI —
+                # gate.py <wave> <pipeline-dir> is the only path
+                import re as _re
+                import subprocess as _sp
+                wv = body.get('wave', '')
+                pd = os.path.realpath(body.get('pipeline', ''))
+                if not _re.fullmatch(r'w\d+', wv or '') or \
+                        not os.path.isdir(pd):
+                    self._send(400, {'ok': False,
+                                     'message': 'bad wave or pipeline'})
+                    return
+                try:
+                    r = _sp.run(
+                        [sys.executable,
+                         os.path.join(os.path.dirname(
+                             os.path.abspath(__file__)), 'gate.py'),
+                         wv, pd],
+                        capture_output=True, text=True, timeout=600)
+                    tail = (r.stdout + r.stderr).strip()[-3000:]
+                    self._send(200 if r.returncode == 0 else 400,
+                               {'ok': r.returncode == 0,
+                                'exit': r.returncode,
+                                'message': f'{wv} re-gate exit '
+                                           f'{r.returncode}',
+                                'tail': tail})
+                except _sp.TimeoutExpired:
+                    self._send(400, {'ok': False,
+                                     'message': f'{wv} re-gate timed '
+                                                'out (10m)'})
             else:
                 self._send(404, {'error': 'unknown path'})
 
