@@ -1084,6 +1084,7 @@ def emit_page_boards(ctx, doc=None, tries=40):
 
 
 _HERO_SURFACES = ('base', 'inverse', 'muted', 'brand')
+_HERO_DENSITY = ('regular', 'spacious', 'compact')
 
 
 def _emit_page_boards(ctx, doc):
@@ -1116,6 +1117,13 @@ def _emit_page_boards(ctx, doc):
                            if v.get('block')]}
         for oi, o in enumerate(b['options']):
             oid = o['id']
+            # the hero band's surface × height (density rung) is a
+            # 12-way grid the options walk in order: no more than
+            # ceil(n/12) options of a board ever share a first-screen
+            # band, whatever topology they retrieved
+            _band = oi % (len(_HERO_SURFACES) * len(_HERO_DENSITY))
+            hero_surface = _HERO_SURFACES[_band % len(_HERO_SURFACES)]
+            hero_density = _HERO_DENSITY[_band // len(_HERO_SURFACES)]
             rows, alt = [], 0
             for ri, p in enumerate(prog):
                 role = p['role']
@@ -1137,12 +1145,17 @@ def _emit_page_boards(ctx, doc):
                     # the hero band rotates with the option — a light,
                     # inverse, brand or muted first screen, never 30
                     # cream bands with different markup inside
-                    surface = _HERO_SURFACES[oi % len(_HERO_SURFACES)]
+                    surface = hero_surface
+                    cc['density'] = hero_density
                 elif tk == 'act':
                     surface = 'brand'
                 elif tk == 'content':
                     alt += 1
-                    surface = 'muted' if alt % 2 else 'base'
+                    # the content rhythm's phase flips every 4
+                    # options: the band under a short page-header
+                    # hero (blog, contact) is part of the first screen
+                    surface = 'muted' if (alt + oi // len(
+                        _HERO_SURFACES)) % 2 else 'base'
                 content = dict(tc.get('content') or {})
                 content.update(heading=None, fs=None, body=None,
                                h1=role == 'hero',
