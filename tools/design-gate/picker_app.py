@@ -4434,6 +4434,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           st.textContent=r.message||'';
           toast(r.message||'saved')})};
     go();
+    wireXp(el);
   }
 
   // expand — full-screen preview overlay (spec §3): device-width
@@ -4446,6 +4447,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // context for expand() from the ⤢ that opened it — title, the
   // card's own Pick/Bake/Apply as the primary action, and its
   // position in the board for ‹ › navigation
+  // open-in-new-tab targets the real /built/ URL, not the
+  // family-bound /frame/ wrapper
+  function builtUrl(u){
+    return u.replace(/^\/frame\/[^/?]+/,'/built')}
   function xpOpts(b){
     var cd=b.closest('.card,.vprev,.srow');
     var pk=cd&&cd.querySelector('.pick,.spick,#vBake');
@@ -4499,19 +4504,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       im.src=s;ov.querySelector('.xopen').href=s};
     function nav(d){
       if(cur<0||!xps.length)return;
-      cur=(cur+d+xps.length)%xps.length;
-      var xp=xps[cur],cd=xp.closest('.card');
-      u=xp.dataset.x;
-      ov.querySelector('.xttl').textContent=
-        cd?(cd.querySelector('.nm')||{}).textContent:opts.title||'preview';
+      var hops=xps.length;
+      do{cur=(cur+d+xps.length)%xps.length}while(
+        !xps[cur].dataset.x&&--hops);
+      var o=xpOpts(xps[cur]);
+      u=xps[cur].dataset.x;if(!u)return;
+      ov.querySelector('.xttl').textContent=o.title;
       var s=themed(u,theme);im.src=s;
-      ov.querySelector('.xopen').href=s;
-      var pb=ov.querySelector('.xpPrim'),np=cd&&cd.querySelector('.pick');
-      if(np){if(!pb){pb=document.createElement('button');
+      ov.querySelector('.xopen').href=builtUrl(s);
+      var pb=ov.querySelector('.xpPrim');
+      if(o.primary){
+        if(!pb){pb=document.createElement('button');
           pb.className='xpPrim';
           ov.querySelector('.xopen').before(pb)}
-        pb.textContent=np.textContent.trim();
-        pb.onclick=function(){np.click();close()}}
+        pb.textContent=o.primary;
+        pb.onclick=function(){o.onprimary();close()}}
       else if(pb)pb.remove()}
     ov.querySelector('.xpP').onclick=function(){nav(-1)};
     ov.querySelector('.xpN').onclick=function(){nav(1)};
@@ -4621,6 +4628,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             stat.textContent=j.ok?'signed ✓':(j.message||'refused');
             if(j.ok)toast(j.message)})};
       });
+      wireXp(el);
       setTheme(document.documentElement.dataset.theme);
       return;
     }
