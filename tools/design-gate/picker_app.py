@@ -1606,7 +1606,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 #vwCtl{display:flex;border:1px solid var(--line);border-radius:999px;
      overflow:hidden}
 #vwCtl button{border:0;background:var(--panel);color:var(--muted);
-     padding:6px 10px;font:600 11px var(--font);cursor:pointer}
+     padding:8px 15px;font:600 12px var(--font);cursor:pointer}
 #vwCtl button.on{background:var(--accent);color:var(--accent-ink)}
 .card .cb iframe,.srow iframe{max-width:var(--vw,100%);
      margin-inline:auto}
@@ -1650,7 +1650,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .fchip.on{background:var(--accent);border-color:var(--accent);
      color:var(--accent-ink)}
 .grid{display:grid;gap:16px;
-     grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+     grid-template-columns:repeat(auto-fill,minmax(560px,1fr))}
 .card{background:var(--panel);border:1px solid var(--line);
      border-radius:var(--r);overflow:hidden;display:flex;
      flex-direction:column}
@@ -1664,7 +1664,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
 .card .cb{position:relative;background:var(--bg);min-height:64px}
-.card .cb iframe{display:block;width:100%;height:430px;border:0}
+.card .cb iframe{display:block;width:100%;height:480px;border:0}
 .card.mobile .cb iframe{max-width:var(--vw,340px);margin:0 auto;
      border-left:1px solid var(--line);
      border-right:1px solid var(--line)}
