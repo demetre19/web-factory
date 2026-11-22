@@ -1248,6 +1248,10 @@ def _clean_type_spec(spec, fluid):
     bmax = _n('bmax', 10, 40, float(f.get('text_base_desk') or 18))
     rmin = _n('rmin', 1.0, 1.8, float(f.get('text_scale_mob') or 1.2))
     rmax = _n('rmax', 1.0, 1.9, float(f.get('text_scale_desk') or 1.333))
+    if bmin > bmax:
+        bmin, bmax = bmax, bmin
+    if rmin > rmax:
+        rmin, rmax = rmax, rmin
     vpm = int(_n('vpmin', 240, 1024, int(f.get('vp_min') or 320)))
     vpx = int(_n('vpmax', 241, 1920, int(f.get('vp_max') or 1280)))
     if vpx <= vpm:
@@ -6160,7 +6164,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       head_face:g('ts-hf')||null,body_face:g('ts-bf')||null}}
 
   var _tsT=null;
+  function tsValidate(){
+    var sp=tsSpec(),msg=null;
+    ['bmin','bmax','vpmin','vpmax','steps'].forEach(function(k){
+      var el=document.getElementById('ts-'+k);
+      if(el)el.style.outline=Number.isFinite(sp[k])
+        ?'':'2px solid #b42318'});
+    if(!Number.isFinite(sp.bmin)||!Number.isFinite(sp.bmax)||
+       !Number.isFinite(sp.vpmin)||!Number.isFinite(sp.vpmax)||
+       !Number.isFinite(sp.steps))msg='empty/invalid number field';
+    else if(sp.bmin>sp.bmax)msg='base min > base max — swap them';
+    else if(sp.rmin>sp.rmax)msg='ratio min > ratio max — swap them';
+    else if(sp.vpmin>=sp.vpmax)msg='vp min must be < vp max';
+    return msg}
   function tsRefresh(){
+    var vm=tsValidate(),st=document.getElementById('ts-stat');
+    if(vm){if(st){st.className='pstat bad';st.textContent=vm}return}
     api('/type-ladder',{pipeline:PIPELINE,spec:tsSpec()})
       .then(function(j){
         if(!j||!j.ok){var st=document.getElementById('ts-stat');
@@ -6177,13 +6196,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               TS_ROWS.forEach(function(r){
                 var k=r[1]||r[0],p=(px[k]||{})[vp];
                 if(p==null)return;
+                // steps caps the number of heading rungs — hide
+                // heads beyond it (they collapse to text ratio)
+                if(r[0][0]==='h'&&(+r[0].slice(1))>(+spec.steps))
+                  return;
+                var fh=r[0][0]==='h'?'h':'b';
                 h2+='<div class="tsr"><span class="tsrn">'+r[0]+
-                    '</span><span class="tsrx" style="font-size:'+p+
-                    'px;font-family:'+(r[0][0]==='h'
-                      ?TS_FACE[hf]:TS_FACE[bf])+'">'+
+                    '</span><span class="tsrx" data-f="'+fh+
+                    '" style="font-size:'+p+'px">'+
                     (r[0]==='small'?'Aa small':'Aa '+r[0])+
                     '</span><span class="tsrp">'+p+'px</span></div>'});
-              el.innerHTML=h2}};
+              el.innerHTML=h2;
+              // faces go through style objects — TS_FACE strings
+              // contain quotes that break inline style attributes
+              el.querySelectorAll('.tsrx').forEach(function(x){
+                x.style.fontFamily=
+                  x.dataset.f==='h'?TS_FACE[hf]:TS_FACE[bf]})}};
         var vp=Object.keys(px['text-m']||{320:1,1280:1});
         render('ts-pa',vp[0]);render('ts-pb',vp[1]);
         var v=document.getElementById('ts-vars');
@@ -6206,8 +6234,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         else toast('select + copy the vars manually')}};
     var us=document.getElementById('ts-use');
     if(us)us.onclick=function(){
-      us.disabled=true;
       var st=document.getElementById('ts-stat');
+      var vm=tsValidate();
+      if(vm){if(st){st.className='pstat bad';st.textContent=vm}return}
+      us.disabled=true;
       api('/element-pick',{pipeline:PIPELINE,element:'type',
         variant:'custom',spec:tsSpec()}).then(function(j){
         us.disabled=false;
