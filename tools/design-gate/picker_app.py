@@ -6809,17 +6809,39 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         '<h1>picker</h1><div class="desc">open with '+
         '<code>?pipeline=&lt;abs pipeline dir&gt;</code></div>';
       return}
-    fetch('/app-data?pipeline='+encodeURIComponent(PIPELINE))
-      .then(function(r){return r.json()}).then(function(d){
-        if(d.error){document.getElementById('board').innerHTML=
+    var warmTries=0;
+    function showLoading(){
+      if(DATA)return;
+      document.getElementById('board').innerHTML=
+        '<div class="empty">emitting previews — the service is '+
+        'warming up, this page loads itself when it is ready…</div>'}
+    function take(d){
+      if(d.error&&!d._warming){
+        document.getElementById('board').innerHTML=
           '<div class="empty">'+esc(d.error)+'</div>';return}
-        DATA=d;CUR='vibe';
-        DATA.vibe_genes=d.vibe_genes||{};
-        // a signed type pick rebinds previews under its resolved
-        // bundle — it carries the vibe genes + its own overrides
-        BAKED=(d.picked_elements||{}).type||
-          (d.picked_elements||{}).vibe||'';
-        topchips();rail();board()});
+      DATA=d;CUR='vibe';
+      DATA.vibe_genes=d.vibe_genes||{};
+      // a signed type pick rebinds previews under its resolved
+      // bundle — it carries the vibe genes + its own overrides
+      BAKED=(d.picked_elements||{}).type||
+        (d.picked_elements||{}).vibe||'';
+      topchips();rail();board();
+      // a last-good payload marked _warming is swapped for the
+      // fresh emit when the background warm finishes — the
+      // re-render also re-points any iframe that raced the emit
+      if(d._warming)setTimeout(function(){loadData(0)},5000)}
+    function loadData(attempt){
+      fetch('/app-data?pipeline='+encodeURIComponent(PIPELINE))
+        .then(function(r){
+          if(r.status===503)throw{warm:true};
+          return r.json()})
+        .then(take)
+        .catch(function(){
+          showLoading();
+          warmTries++;
+          setTimeout(function(){loadData(attempt+1)},
+            Math.min(3000*Math.pow(1.5,attempt),15000))})}
+    loadData(0);
   });
 })();
 </script>

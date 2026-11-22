@@ -87,6 +87,88 @@ _PICKER_FILES = {
 _LAST_PD = None
 _EMIT_LOCK = threading.Lock()
 
+# app-data warming: a cold app_data() call emits every preview doc
+# (~minutes), so a fresh restart used to leave the page staring at
+# "design-file not loaded". Now: a disk-cached last-good payload is
+# served instantly (marked _warming) while a background thread
+# re-emits; with no cache at all the endpoint answers 503 until the
+# first payload is ready.
+_WARM_LOCK = threading.Lock()
+_WARM = {}            # pd -> {'data': payload|None, 'busy': bool}
+_CACHE_DIR = os.path.join(os.path.expanduser('~'), '.cache',
+                          'wf-appdata')
+
+
+def _cache_path(pd):
+    return os.path.join(
+        _CACHE_DIR, hashlib.sha256(pd.encode()).hexdigest() + '.json')
+
+
+def _read_cache(pd):
+    try:
+        with open(_cache_path(pd), encoding='utf-8') as fh:
+            return json.load(fh)
+    except Exception:
+        return None
+
+
+def _warm_thread(pd):
+    import picker_app
+    try:
+        data, _err = picker_app.app_data(pd)
+    except Exception:
+        data = None
+    with _WARM_LOCK:
+        st = _WARM.get(pd) or {}
+        st['data'] = data if data is not None else st.get('data')
+        st['busy'] = False
+        _WARM[pd] = st
+    if data:
+        try:
+            os.makedirs(_CACHE_DIR, exist_ok=True)
+            fp = _cache_path(pd)
+            with open(fp + '.tmp', 'w', encoding='utf-8') as fh:
+                json.dump(data, fh)
+            os.replace(fp + '.tmp', fp)
+        except Exception:
+            pass
+
+
+def _start_warm(pd):
+    """Begin (or notice) a background app_data emit for pd."""
+    with _WARM_LOCK:
+        st = _WARM.get(pd)
+        if st and st['busy']:
+            return
+        _WARM[pd] = {'data': (st or {}).get('data'), 'busy': True}
+    threading.Thread(target=_warm_thread, args=(pd,),
+                     daemon=True).start()
+
+
+def _app_data_response(pd):
+    """(code, payload, extra_headers) for a /app-data request."""
+    with _WARM_LOCK:
+        st = _WARM.get(pd)
+        data = st['data'] if st else None
+        busy = bool(st and st['busy'])
+    if data is not None:
+        if busy:
+            data = dict(data)
+            data['_warming'] = True
+        else:
+            data = dict(data)
+        return 200, data, {}
+    if not busy:
+        _start_warm(pd)
+    cached = _read_cache(pd)
+    if cached is not None:
+        cached = dict(cached)
+        cached['_warming'] = True
+        return 200, cached, {}
+    return 503, {'warming': True,
+                 'error': 'emitting previews — warming'}, \
+        {'Retry-After': '3'}
+
 
 def _rewrite_assets(fp, txt):
     """A built page links its css/media by root-absolute (/_astro/*)
@@ -726,11 +808,13 @@ def _handler():
                 body = {}
             return body
 
-        def _send(self, code, obj):
+        def _send(self, code, obj, headers=None):
             b = json.dumps(obj).encode()
             self.send_response(code)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', str(len(b)))
+            for k, v in (headers or {}).items():
+                self.send_header(k, v)
             self.end_headers()
             self.wfile.write(b)
 
@@ -795,11 +879,14 @@ def _handler():
                     _LAST_PD = G.Ctx(args['pipeline']).dir
                 if q.path == '/app':
                     self._send_html(200, picker_app.app_shell())
+                    # page load starts the emit immediately — the
+                    # client's /app-data poll rides on the warm
+                    if _LAST_PD:
+                        _start_warm(_LAST_PD)
                     return
                 if _LAST_PD:
-                    data, err = picker_app.app_data(_LAST_PD)
-                    self._send(200 if data else 404,
-                               data or {'error': err})
+                    code, data, hdrs = _app_data_response(_LAST_PD)
+                    self._send(code, data, hdrs)
                 else:
                     self._send(400, {'error': 'no pipeline'})
                 return
