@@ -508,7 +508,9 @@ def _system(ctx, comps, contracts, by_name, copy):
         c = by_comp.get(comp) or {'composition': comp, 'content': {}}
         row = by_name.get(str(c.get('section'))) or {}
         _comp, _camel, frag = _instance_body(ctx, c, row, copy)
-        tags.append(f'<div data-comp="{comp}">' + frag + '</div>')
+        tags.append(f'<div data-comp="{comp}" data-align="'
+            + str(c.get('align') or '') + '">'
+            + frag + '</div>')
     _w(os.path.join(ctx.site, 'src', 'pages', 'system.astro'),
        '---\n'
        "import '../styles/global.css';\n"

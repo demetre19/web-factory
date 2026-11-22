@@ -21,6 +21,7 @@ interface Props {
   intent?: string;
   content?: string;
   cols?: string;
+  align?: string;
   recipe?: string;
   seam?: string;
   'seam-shape-top'?: string;
@@ -31,6 +32,7 @@ interface Props {
 const {
   sec, comp, 'wf-ref': wfRef, ratio = 'none', disclosure = 'open',
   surface = 'base', density = 'regular', intent, content, cols,
+  align = '',
   mode = 'band', tag = '',
   recipe, seam, 'seam-shape-top': seamTop,
   'seam-shape-bottom': seamBottom, skeleton,
@@ -50,6 +52,7 @@ const Tag = tag || 'section';
   {...(intent ? { 'data-intent': intent } : {})}
   {...(content ? { 'data-content': content } : {})}
   {...(cols ? { 'data-cols': cols } : {})}
+  {...(align ? { 'data-align': align } : {})}
   {...(recipe ? { 'data-recipe': recipe } : {})}
   {...(seam ? { 'data-seam': seam } : {})}
   {...(seamTop ? { 'data-seam-shape-top': seamTop } : {})}
