@@ -1,0 +1,552 @@
+{
+ "label": "preline/dropdown/auto-close-behavior",
+ "source": "preline",
+ "sourceUrl": "",
+ "version": "1",
+ "topology_id": "band-strip",
+ "element_sig": {
+  "btn": 3,
+  "icn": 3,
+  "form": 2,
+  "a": 8
+ },
+ "tree": [
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "sm:inline-flex",
+    "gap-x-3"
+   ],
+   "depth": 0
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-1",
+    "mx-1",
+    "sm:mt-1",
+    "hs-dropdown",
+    "[--auto-close:inside]",
+    "relative",
+    "sm:inline-flex",
+    "z-20"
+   ],
+   "depth": 1
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "py-3",
+    "px-4",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-open:rotate-180",
+    "size-2.5"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "transition-[opacity,margin]",
+    "duration",
+    "hs-dropdown-open:opacity-100",
+    "opacity-0",
+    "hidden",
+    "bg-dropdown",
+    "border"
+   ],
+   "depth": 2
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-1",
+    "space-y-0.5"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "hover:bg-dropdown-item-hover"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-0.5",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "grow"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "block",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "hover:bg-dropdown-item-hover"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "input",
+   "tag": "input",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-0.5",
+    "shrink-0",
+    "size-4",
+    "bg-transparent",
+    "border-line-3",
+    "rounded-sm",
+    "shadow-2xs",
+    "text-primary"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "label",
+   "tag": "label",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "grow"
+   ],
+   "depth": 7
+  },
+  {
+   "name": "span",
+   "tag": "span",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "block",
+    "text-sm",
+    "text-foreground"
+   ],
+   "depth": 8
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-40",
+    "mx-1",
+    "sm:mt-1",
+    "hs-dropdown",
+    "[--auto-close:outside]",
+    "relative",
+    "sm:inline-flex",
+    "z-10"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "py-3",
+    "px-4",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-open:rotate-180",
+    "size-2.5"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "transition-[opacity,margin]",
+    "duration",
+    "hs-dropdown-open:opacity-100",
+    "opacity-0",
+    "hidden",
+    "bg-dropdown",
+    "border"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-1",
+    "space-y-0.5"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "mt-60",
+    "mx-1",
+    "sm:mt-1",
+    "hs-dropdown",
+    "[--auto-close:false]",
+    "relative",
+    "sm:inline-flex"
+   ],
+   "depth": 3
+  },
+  {
+   "name": "button",
+   "tag": "button",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-toggle",
+    "py-3",
+    "px-4",
+    "inline-flex",
+    "items-center",
+    "gap-x-2",
+    "text-sm",
+    "font-medium"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "svg",
+   "tag": "svg",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-open:rotate-180",
+    "size-2.5"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "hs-dropdown-menu",
+    "transition-[opacity,margin]",
+    "duration",
+    "hs-dropdown-open:opacity-100",
+    "opacity-0",
+    "hidden",
+    "bg-dropdown",
+    "border"
+   ],
+   "depth": 4
+  },
+  {
+   "name": "div",
+   "tag": "div",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "p-1",
+    "space-y-0.5"
+   ],
+   "depth": 5
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  },
+  {
+   "name": "a",
+   "tag": "a",
+   "label": null,
+   "loop": false,
+   "classes": [
+    "flex",
+    "items-center",
+    "gap-x-3.5",
+    "py-2",
+    "px-3",
+    "rounded-lg",
+    "text-sm",
+    "text-dropdown-item-foreground"
+   ],
+   "depth": 6
+  }
+ ],
+ "classes": [
+  "[--auto-close:false]",
+  "[--auto-close:inside]",
+  "[--auto-close:outside]",
+  "bg-dropdown",
+  "bg-layer",
+  "bg-transparent",
+  "block",
+  "border",
+  "border-dropdown-line",
+  "border-layer-line",
+  "border-line-3",
+  "checked:bg-primary-checked",
+  "checked:border-primary-checked",
+  "disabled:opacity-50",
+  "disabled:pointer-events-none",
+  "duration",
+  "flex",
+  "focus:bg-dropdown-item-focus",
+  "focus:bg-layer-focus",
+  "focus:outline-hidden",
+  "focus:ring-0",
+  "focus:ring-offset-0",
+  "font-medium",
+  "gap-x-2",
+  "gap-x-3",
+  "gap-x-3.5",
+  "grow",
+  "hidden",
+  "hover:bg-dropdown-item-hover",
+  "hover:bg-layer-hover",
+  "hs-dropdown",
+  "hs-dropdown-menu",
+  "hs-dropdown-open:opacity-100",
+  "hs-dropdown-open:rotate-180",
+  "hs-dropdown-toggle",
+  "inline-flex",
+  "items-center",
+  "mt-0.5",
+  "mt-1",
+  "mt-2",
+  "mt-40",
+  "mt-60",
+  "mx-1",
+  "opacity-0",
+  "p-1",
+  "px-3",
+  "px-4",
+  "py-2",
+  "py-3",
+  "relative",
+  "rounded-lg",
+  "rounded-sm",
+  "shadow-2xs",
+  "shadow-md",
+  "shrink-0",
+  "size-2.5",
+  "size-4",
+  "sm:inline-flex",
+  "sm:mt-1",
+  "space-y-0.5"
+ ]
+}
