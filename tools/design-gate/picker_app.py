@@ -2596,6 +2596,12 @@ _BANK_STAGE_CSS = (
     # frame edge and no dead band stacks around the widget
     '.wf-stage{position:relative;overflow:auto;'
     'transform:translateZ(0);display:flex;'
+    # safe centering: children smaller than the frame center as
+    # before, but an oversized fragment (mob-chrome is a 712px
+    # surface in a 360px phone frame) left/top-anchors instead of
+    # losing its start edge outside the scrollable area (audit
+    # F-6 — 44 docs clipped)
+    'justify-content:safe center;align-items:safe center;'
     'border-radius:14px;'
     'box-shadow:0 10px 34px rgba(15,18,30,.16);'
     # content-sized both axes — a fragment wider than its siblings'
@@ -2886,7 +2892,7 @@ def _bank_fallback_css():
                 toks.update(html.unescape(cm.group(1)).split())
     rules = []
     for tok in sorted(toks):
-        if tok.startswith(('wf-', 'lucide')):
+        if tok.startswith(('wf-', 'lucide')) or '[&' in tok:
             continue
         bi = tok.find('[')
         base = tok[tok.rfind(':', 0, bi if bi >= 0 else
@@ -2899,7 +2905,10 @@ def _bank_fallback_css():
             (tok.rfind(':') if ':' in tok else -1)
         var = tok[:cix] if cix > 0 else ''
         decl = _util_rule(tok)
-        if not decl:
+        if not decl or decl.count('[') != decl.count(']'):
+            # an unbalanced '[' inside the braces opens a square
+            # block that swallows every later rule in the sheet
+            # (audit F-7: the [&>*] variant decls did exactly this)
             continue
         sel = '.' + _css_esc(tok)
         if var in ('sm', 'md', 'lg', 'xl', '2xl'):
@@ -2916,7 +2925,108 @@ def _bank_fallback_css():
         elif not var:
             rules.append(f'{sel}{{{decl}}}')
         # pseudo-el/other variants unhandled → skip silently
-    return ''.join(rules)
+    # ?theme=dark — fragments authored light-only keep pale surfaces
+    # + dark text unless a dark: utility overrides them. The map
+    # binds the common light tokens to the frame's dark roles at
+    # [data-theme] + class weight (0-2-0): it beats every plain
+    # class rule including doc-inline styles (audit F-9: :where()
+    # tied at 0-1-0 and the later inline rule won). Authored
+    # .dark:.utilities sit at the same 0-2-0 — the dark sheet
+    # loads BEFORE bank-preview.css so they still win on ties.
+    dark = []
+    for tok in sorted(toks):
+        if ':' in tok or ('[' in tok and '[#' not in tok):
+            continue
+        decl = _bank_dark_map(tok)
+        if not decl:
+            continue
+        sel = '.' + _css_esc(tok)
+        if tok.startswith('divide-'):
+            # tailwind divide-color styles the children's shared
+            # borders — the utility itself paints nothing
+            sel += '>*+*'
+        dark.append('[data-theme="dark"] ' + sel +
+                    '{' + decl + '}')
+    return ''.join(rules), ''.join(dark)
+
+
+# light-utility → dark-role bindings for fragments that ship no
+# dark: variant — surfaces drop to the frame's dark palette, dark
+# text lifts to light, hairlines dim. Families: slate/gray/neutral/
+# zinc/stone + white/black; /NN alpha modifiers keep their alpha.
+_DARK_FAMILIES = ('slate', 'gray', 'neutral', 'zinc', 'stone')
+_DARK_BG = {'50': (22, 26, 34), '100': (29, 34, 44),
+            '200': (38, 45, 58)}
+_DARK_TEXT_HI = '#e8eaef'
+_DARK_TEXT_MID = '#9aa2b1'
+_DARK_LINE = '#2a2f3a'
+
+
+def _bank_dark_map(tok):
+    """the dark-role decl for a light-only utility token, or None."""
+    arb = re.fullmatch(r'(bg|text)-\[#([0-9a-fA-F]{3,8})\]', tok)
+    if arb:
+        prop, hexv = arb.groups()
+        rgb = _hex_rgb(hexv)
+        if rgb is None:
+            return None
+        lum = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255
+        # near-black text disappears on the darkened surfaces;
+        # near-white surfaces blind on the dark frame
+        if prop == 'text' and lum < 0.35:
+            return 'color:' + _DARK_TEXT_HI
+        if prop == 'bg' and lum > 0.55:
+            return 'background-color:' + (
+                '#%02x%02x%02x' % (22, 26, 34))
+        return None
+    # any palette family counts, not just the neutrals —
+    # bg-emerald-50/70 and bg-red-50 are light surfaces too
+    # (audit F-9); shade rules below do the filtering
+    m = re.fullmatch(
+        r'(bg|text|border|divide)-(white|black|[a-z]+)' +
+        r'(?:-(\d{2,3}))?(?:/(\d{1,3}))?', tok)
+    if not m:
+        return None
+    prop, name, shade, alpha = m.groups()
+    a = int(alpha) / 100 if alpha else 1
+
+    def rgba(rgb):
+        if a >= 1:
+            return '#%02x%02x%02x' % rgb
+        return 'rgba(%d,%d,%d,%.2f)' % (rgb + (a,))
+
+    if prop == 'bg':
+        if name == 'white':
+            return 'background-color:' + rgba((22, 26, 34))
+        if name == 'opacity':
+            # bg-opacity-NN sets --tw-bg-opacity, never a colour
+            return None
+        rgb = _DARK_BG.get(shade or '')
+        return ('background-color:' + rgba(rgb)) if rgb else None
+    if prop == 'text':
+        if name == 'black' or shade in ('950', '900', '800', '700'):
+            return 'color:' + _DARK_TEXT_HI
+        if shade in ('600', '500'):
+            return 'color:' + _DARK_TEXT_MID
+        return None
+    # border / divide — light hairlines go dark-line. divide-*
+    # reaches the children's borders via the caller's >*+* selector
+    if name in ('white', 'black') or shade in ('50', '100',
+                                             '200', '300'):
+        return 'border-color:' + _DARK_LINE
+    return None
+
+
+def _hex_rgb(h):
+    """#rgb/#rgba/#rrggbb/#rrggbbaa → (r,g,b) ints, or None."""
+    if len(h) in (3, 4):
+        h = ''.join(c * 2 for c in h)
+    if len(h) != 8 and len(h) != 6:
+        return None
+    try:
+        return (int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16))
+    except ValueError:
+        return None
 
 
 def _bank_scale(frag):
@@ -3145,11 +3255,16 @@ def emit_bank_previews(pd):
             blob = fi.read()
         with open(css_dst, 'wb') as fo:
             fo.write(blob)
-    extra = _bank_fallback_css()
+    extra, dark_extra = _bank_fallback_css()
     extra_dst = os.path.join(outdir, 'bank-preview-extra.css')
     with open(extra_dst, 'w') as fh:
         fh.write('/* generated fallback utilities — vendored '
                  'tailwind v3 dialect gaps */\n' + extra)
+    dark_dst = os.path.join(outdir, 'bank-preview-dark.css')
+    with open(dark_dst, 'w') as fh:
+        fh.write('/* generated light-utility → dark-role map — '
+                 'own sheet so a malformed utility rule cannot '
+                 'starve it */\n' + dark_extra)
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
             # U.3 — ?theme=dark / localStorage bind the doc like the
@@ -3161,6 +3276,8 @@ def emit_bank_previews(pd):
             'documentElement.dataset.theme=m;document.'
             'documentElement.classList.toggle("dark",m==="dark")'
             '})()</script>'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(dark_dst) + '">'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
@@ -3187,7 +3304,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v7-->' not in open(
+                    '<!--wf:bank:v8-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3240,7 +3357,7 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v7-->' +
+                        fh.write('<!--wf:bank:v8-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
@@ -4657,7 +4774,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       <path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></button>
     <div class="mark">wf</div>
     <div class="who"><span id="whoName">picker</span>
-      <small id="whoSub">design-file not loaded</small></div>
+      <small id="whoSub">emitting previews…</small></div>
     <div class="sp"></div>
     <div id="vwCtl" title="preview breakpoint — applies to every preview">
       <span class="vind" aria-hidden="true"></span>
@@ -6621,13 +6738,32 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(d.error&&!d._warming){
         document.getElementById('board').innerHTML=
           '<div class="empty">'+esc(d.error)+'</div>';return}
-      DATA=d;CUR='vibe';
+      DATA=d;
+      // a warm swap must not yank the user back to the vibe board
+      // or drop their scroll — only the first load picks the tab
+      if(CUR==null)CUR='vibe';
       DATA.vibe_genes=d.vibe_genes||{};
       // a signed type pick rebinds previews under its resolved
       // bundle — it carries the vibe genes + its own overrides
       BAKED=(d.picked_elements||{}).type||
         (d.picked_elements||{}).vibe||'';
+      var bEl=document.getElementById('board'),
+          bst=bEl?bEl.scrollTop:0;
       topchips();rail();board();
+      if(bEl){bEl.scrollTop=bst;
+        // iframes (type-scale specimen) grow the board after the
+        // swap and clamp the offset — keep re-applying until the
+        // value sticks, capped ~2s and cancelled by a user scroll
+        // (audit F-8: 600 kept landing at 422)
+        var last,t0=Date.now();
+        (function re(){
+          if(last!==undefined&&bEl.scrollTop!==last)return;
+          bEl.scrollTop=bst;last=bEl.scrollTop;
+          if(last<bst-10&&Date.now()-t0<2000)
+            requestAnimationFrame(re)})()}
+      if(d._warming)
+        document.getElementById('whoSub').textContent=
+          'refreshing previews…';
       // a last-good payload marked _warming is swapped for the
       // fresh emit when the background warm finishes — the
       // re-render also re-points any iframe that raced the emit
