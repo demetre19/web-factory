@@ -7,7 +7,7 @@
   .wf-hero-84 .bm-hero-84__intro {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-hero-84 .bm-hero-84__intro-top {
@@ -68,13 +68,17 @@
 
   .wf-hero-84 .bm-hero-84__media {
     display: grid;
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: var(--space-m);
   }
 
   @media (max-width: 44rem) {
+    .wf-hero-84 .bm-hero-84__intro { grid-template-columns: 1fr; }
+    .wf-hero-84 .bm-hero-84__media { grid-template-columns: 1fr; }
     .wf-hero-84 .cta-combo { flex-direction: column; }
     .wf-hero-84 .bm-review-star { flex-direction: column; }
     .wf-hero-84 .testimonial-36-card__head { flex-direction: column; }
     .wf-hero-84 .testimonial-36-card__avatar { flex-direction: column; }
   }
+  .wf-hero-84 .bm-hero-84__intro > :only-child { grid-column: 1 / -1; }
+  .wf-hero-84 .bm-hero-84__media > :only-child { grid-column: 1 / -1; }

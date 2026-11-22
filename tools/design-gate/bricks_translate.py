@@ -66,6 +66,10 @@ def map_var(name):
     if name in EXACT:
         return EXACT[name]
     m = re.match(r'grid--?(\d+)(?:-(\d+))?$', name)
+    if m and m.group(2):
+        # ACSS ratio grids: --grid-1-2 is TWO tracks 1fr 2fr, never a
+        # single 200% column (the 390px overflow in hero-79/85, grid-35)
+        return f'RATIO:{int(m.group(1))}/{int(m.group(2))}'
     if m:      # ACSS grid fractions: --grid-2 and --at-grid--2 → 50%
         num = int(m.group(2) or 1)
         return f'GRID:{num}/{int(m.group(1))}'
@@ -93,8 +97,7 @@ def map_var(name):
         base = name.split('-trans-')[0]
         t = map_var(base)          # resolve the base then tint it
         pct = name.rsplit('-', 1)[-1]
-        if t and not t.startswith('GRID:') and not t.startswith(
-                'MIX:'):
+        if t and not t.startswith(('GRID:', 'RATIO:', 'MIX:')):
             return f'MIX:{t}:{pct}'
         return 'bg-subtle'
     m = re.match(r'content-gap(?:--\w+)?$', name)
@@ -185,6 +188,9 @@ def translate_value(v, unmapped):
         if t.startswith('GRID:'):
             num, den = t[5:].split('/')
             return f'calc(100% * {num} / {den})'
+        if t.startswith('RATIO:'):
+            a, b = t[6:].split('/')
+            return f'minmax(0, {a}fr) minmax(0, {b}fr)'
         if t.startswith('MIX:'):
             _, base, pct = t.split(':', 2)
             return (f'color-mix(in srgb, var(--{base}) '
@@ -516,6 +522,22 @@ def translate(payload, stem):
                         else None
         return None
 
+    def _as_nav(depth):
+        """A header's top-level link collection IS the primary nav
+        (N.select): it binds the nav-menu contract once. Beside a
+        nav-menu it would repeat the same links as a second desktop
+        row (H.1, N.dup), so it binds nothing."""
+        if seen.get('nav_menu') or 'nav-menu' in _names:
+            return ''
+        els['__nav'] = {'id': '__nav', 'name': 'nav-menu',
+                        'settings': {}, 'children': []}
+        out = render('__nav', depth)
+        if has_toggle:
+            # the payload's own toggle is the burger — never two
+            out = ''.join(ln for ln in out.splitlines(True)
+                          if 'class="burger"' not in ln)
+        return out
+
     def render(el_id, depth, ivar=None, card=False, in_card=False):
         # card marks THIS element's role; in_card is the context for
         # descendants (heading promotion, chip rules) — it persists
@@ -636,11 +658,17 @@ def translate(payload, stem):
                     in (el.get('label') or '').lower()):
                 # a background figure is the band's surface, not a
                 # content item — emit the .media-bg layer (edge-to-edge
-                # cover behind the content, token scrim keeps contrast)
-                return (f'{pad}{{image && image.src && '
+                # cover behind the content, token scrim keeps contrast).
+                # It spends the row's next asset like any pane — a
+                # band beside a content figure never repeats its photo
+                k = seen.get('img_n', 0)
+                seen['img_n'] = k + 1
+                m = f'images[{k - 1}]' if k else 'image'
+                src = f'mediaOf({m})' if k else 'mediaSrc || image.src'
+                return (f'{pad}{{{m} && {m}.src && '
                         '<figure class="media-bg" aria-hidden="true">'
-                        '<Image src={mediaSrc || image.src} '
-                        "alt={image.alt || ''} "
+                        f'<Image src={{{src}}} '
+                        f"alt={{{m}.alt || ''}} "
                         'widths={[960, 1440, 1920]} '
                         'sizes="100vw" width={1600} height={900} '
                         'loading="eager" fetchpriority="high" />'
@@ -651,6 +679,22 @@ def translate(payload, stem):
                 # zero times; lift it to one figure beside the copy
                 seen['loop_img'] = True
                 return ''
+            k = seen.get('img_n', 0)
+            seen['img_n'] = k + 1
+            if k:
+                # a second/third media pane takes the row's NEXT asset
+                # (images[k-1]) — never the hero photo again; with no
+                # further asset the pane drops (single-media layout)
+                m = f'images[{k - 1}]'
+                return (f'{pad}{{{m} && {m}.src && '
+                        f'<figure{cattr}><div class="media-round" '
+                        'data-ratio={(image && image.ratio) || null}>'
+                        f'<Image src={{mediaOf({m})}} '
+                        f"alt={{{m}.alt || ''}} "
+                        'widths={[480, 960, 1440]} '
+                        'sizes="(min-width: 48rem) 50vw, 100vw" '
+                        'width={900} height={600} loading="lazy" />'
+                        '</div></figure>}\n')
             return (f'{pad}{{image && image.src && '
                     f'<figure{cattr}><div class="media-round" '
                     'data-ratio={image.ratio || null}>'
@@ -749,6 +793,12 @@ def translate(payload, stem):
             # chrome, never copy)
             if not seen.get('top_list'):
                 seen['top_list'] = True
+            # every nav-menu binds the same plan links — a second menu
+            # (topbar/utility row) would repeat them as another desktop
+            # row (H.1, N.dup); the first menu is the primary nav
+            if seen.get('nav_menu'):
+                return ''
+            seen['nav_menu'] = True
             if has_offcanvas:
                 # the payload's offcanvas IS the mobile surface —
                 # this menu is the desktop row (.nav-desk hides
@@ -759,10 +809,16 @@ def translate(payload, stem):
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
                        f' aria-label="Primary"><ul class="row '
                        f'gap-fluid-m list-plain">'
-                       f'{{(list || []).map((it) => <li>'
+                       f'{{(navOver ? list.slice(0, navCut) : list)'
+                       f'.map((it) => <li>'
                        f'<a class="nav-link" href={{it.href}}>'
                        f'{{it.label || it.term || it.title || '
                        f'it.text}}</a></li>)}}</ul></nav>}}\n')
+                # N.select — links past the bar's budget open from
+                # "More" (the offcanvas holds the full list)
+                out += (f'{pad}{{navOver && <button class="nav-more" '
+                        f'type="button" aria-label="More links">More'
+                        f'</button>}}\n')
                 if not has_toggle:
                     out += (f'{pad}{{list.length > 0 && '
                             f'<button class="burger" type="button" '
@@ -798,7 +854,7 @@ def translate(payload, stem):
             _head = (f'<div class="nav-sheet-head">'
                      f'<span class="logo nav-sheet-brand">{{brand}}</span>'
                      f'{_close}</div>')
-            return (f'{pad}{{list.length > 0 && list.length < 7 && '
+            return (f'{pad}{{list.length > 0 && !navOver && '
                     f'<nav class="{ncls}" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
@@ -809,7 +865,7 @@ def translate(payload, stem):
                     .replace('gi > 0 ? Math.ceil(list.length / 2) : 0',
                              '0')
                     + f'</ul></div></div></nav>}}\n'
-                    f'{pad}{{list.length > 6 && <nav '
+                    f'{pad}{{navOver && <nav '
                     f'class="{ncls} nav-mega" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
@@ -823,10 +879,10 @@ def translate(payload, stem):
                     + _links
                     + f'</ul></div>))}}'
                     f'</div></nav>}}\n'
-                    f'{pad}{{list.length > 6 && <Fragment><nav '
+                    f'{pad}{{navOver && <Fragment><nav '
                     f'class="nav-priority" aria-label="Primary">'
                     f'<ul class="row gap-fluid-m list-plain">'
-                    f'{{list.slice(0, 4).map((it) => <li>'
+                    f'{{list.slice(0, navCut).map((it) => <li>'
                     f'<a class="nav-link" href={{it.href}}>'
                     f'{{it.label || it.term || it.title || it.text}}'
                     f'</a></li>)}}</ul></nav>'
@@ -912,6 +968,8 @@ def translate(payload, stem):
                                 f'{pad}</div>\n')
             elif name == 'heading' and not seen['h'] and txt:
                 seen['h'] = True
+                if tag in ('h1', 'h2'):
+                    return f'{pad}{_ranked_head(cattr)}\n'
                 return (f'{pad}{{head && <{tag}{cattr}>'
                         f'{{head}}</{tag}>}}\n')
             elif name in ('text-basic', 'text') and \
@@ -966,6 +1024,9 @@ def translate(payload, stem):
                 or str(p).startswith('grid-template')
                 for _i in _classes_of(el)
                 for p, v in (rules.get(gc_names.get(_i)) or []))
+            if cat == 'header' and not ivar \
+                    and not seen.get('in_flyout'):
+                return _as_nav(depth)
             if ivar:
                 coll, var = f'({ivar}.items || [])', ivar + '2'
             elif seen.get('in_flyout'):
@@ -991,7 +1052,7 @@ def translate(payload, stem):
                 if _own_grid:
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>'
                            f'{{({coll} || []).map(({var}) => (\n'
-                           + _item
+                           + _frag(_item, pad)
                            + f'{pad}    ))}}'
                            f'</div>}}\n')
                 else:
@@ -1004,7 +1065,7 @@ def translate(payload, stem):
                     out = (f'{pad}{{{coll}.length > 0 && <div{cattr}>\n'
                            f'{pad}  <div class="{_wrap}">'
                            f'{{({coll} || []).map(({var}) => (\n'
-                           + _item
+                           + _frag(_item, pad)
                            + f'{pad}    ))}}'
                            f'</div>\n' + f'{pad}</div>}}\n')
                 if coll == 'links' and cat == 'footer':
@@ -1026,6 +1087,14 @@ def translate(payload, stem):
                 # nested repeats iterate the parent's row: it.items;
                 # the collection guards its grid so an empty list
                 # leaves no dead column in the DOM (L.15)
+                if cat == 'header' and not ivar \
+                        and not seen.get('in_flyout'):
+                    sub = _as_nav(depth + 1)
+                    if sub.strip():
+                        inner += sub
+                        _parts += 1
+                        _static = True
+                    continue
                 if ivar:
                     coll, var = f'({ivar}.items || [])', ivar + '2'
                 elif seen.get('in_flyout'):
@@ -1068,7 +1137,7 @@ def translate(payload, stem):
                 inner += (f'{pad}  {{{coll}.length > 0 && '
                           f'<div class="{_wrap}">'
                           f'{{({coll} || []).map(({var}) => (\n'
-                          + _item
+                          + _frag(_item, pad)
                           + f'{pad}    ))}}'
                           f'</div>}}\n')
                 if coll == 'links' and cat == 'footer':
@@ -1122,16 +1191,32 @@ def translate(payload, stem):
             root_names.update(_classes_of(_e))
     body = ''.join(render(r, 1) for r in roots)
     if cat == 'header' and 'brand-mark' not in body:
-        body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
-                + body)
+        # a skeleton with no logo slot gets the brand as the FIRST item
+        # of its bar row — never a stray line above it (H.1 one row)
+        bar = re.search(r'^( *)<div class="[^"]*\brow between\b[^"]*">\n',
+                        body, re.M)
+        if bar:
+            at = bar.end()
+            body = (body[:at] + bar.group(1)
+                    + '  <span class="logo brand-mark">{brand}</span>\n'
+                    + body[at:])
+        else:
+            body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
+                    + body)
+    if cat == 'header':
+        # the bar's CTA sits on the row's centre line — the prose
+        # block-start margin belongs to body copy, not chrome (H.1)
+        body = body.replace('<p class="nav-cta mt-fluid-m">',
+                            '<p class="nav-cta">').replace(
+            '<p class="mt-fluid-m"><a class="wf-cta-button"',
+            '<p class="nav-cta"><a class="wf-cta-button"')
     # §4.3 heading fallback — a pure-collection skeleton (grid of
     # cards, list of links) has no section-heading slot; the block's
     # h2 is still copy that must render (F.1, PS.8). Chrome rows
     # (header/footer) skip every prose fallback: an h2/lede rendered
     # inside the bar breaks the chrome (user-visible nav defect).
     if '{head && ' not in body and cat not in ('header', 'footer'):
-        body = ('  {head && <h2 class="text-fluid-2">{head}</h2>}\n'
-                + body)
+        body = f'  {_ranked_head("")}\n' + body
     # §4.3 fallback — a skeleton without a long-text slot still
     # renders the answer + before paragraphs (verbatim, F.1), placed
     # right after the heading emit when one exists
@@ -1140,7 +1225,7 @@ def translate(payload, stem):
                    'set:html={inline(sub)} />}\n'
                    '  {before.map((p) => <p class="mt-flow '
                    'text-fluid-0" set:html={inline(p)} />)}\n')
-        hm = re.search(r'^(\s*)\{head && <h', body, re.M)
+        hm = re.search(r'^(\s*)\{head && (?:\(h1 \? )?<h', body, re.M)
         if hm:
             eol = body.index('\n', hm.end()) + 1
             # the h2 emit may sit inside a collapsed `{head && <div>…}`
@@ -1148,7 +1233,7 @@ def translate(payload, stem):
             # lands after the line that closes that wrapper, not inside.
             # `head` emits exactly once: a non-leaf `{head &&` line is
             # the wrapper opener, and the leaf is nested in it.
-            nested = re.search(r'^\s*\{head && (?!<h)',
+            nested = re.search(r'^\s*\{head && (?!<h|\(h1 \? <h)',
                                body[:hm.start()], re.M)
             if nested:
                 depth = 0
@@ -1373,7 +1458,9 @@ def translate(payload, stem):
            '             label?: string; href?: string;\n'
            '             icon?: string; items?: any[] }[];\n'
            '  image?: { src: string; alt: string };\n'
+           '  images?: { src: string; alt: string }[];\n'
            '  copy?: any;\n'
+           '  h1?: boolean;\n'
            '}\n'
            "import { inline } from '../_shared/inline';\n"
            + (("import IconChip from '../_shared/IconChip.astro';\n")
@@ -1387,7 +1474,9 @@ def translate(payload, stem):
            "  cta = { label: '', href: '#' },\n"
            '  items = [],\n'
            '  image,\n'
+           '  images = [],\n'
            '  copy,\n'
+           '  h1 = false,\n'
            '} = Astro.props;\n'
            '// §4.3 — a copy slot binds verbatim article copy onto\n'
            "// the skeleton's native props (F.1 — nothing dropped)\n"
@@ -1397,6 +1486,16 @@ def translate(payload, stem):
            'const before = cp.before || [];\n'
            'const list = (cp.items && cp.items.length\n'
            '  ? cp.items : items) || [];\n'
+           '// N.select — the desktop bar keeps the leading links whose\n'
+           '// labels fit its budget; the rest open behind "More"\n'
+           "const _lbl = (it) => String(it.label || it.term || it.title "
+           "|| it.text || '');\n"
+           'const navFit = (() => { let w = 0, n = 0;\n'
+           '  for (const it of list) { w += _lbl(it).length + 2;\n'
+           '    if (w > 56) break; n++; }\n'
+           '  return n; })();\n'
+           'const navOver = list.length > 6 || navFit < list.length;\n'
+           'const navCut = Math.max(1, Math.min(navFit, 4));\n'
            'const qas = cp.qa || [];\n'
            'const links = cp.links || [];\n'
            'const after = cp.after || [];\n'
@@ -1411,11 +1510,45 @@ def translate(payload, stem):
                "const _mn = image ? String(image.src).split('/').pop()"
                " : null;\n"
                "const mediaSrc = _mn ? (_media[`../assets/media/"
-               "${_mn}`]?.default ?? null) : null;\n")
+               "${_mn}`]?.default ?? null) : null;\n"
+               "const mediaOf = (m) => _media[`../assets/media/"
+               "${String(m.src).split('/').pop()}`]?.default ?? m.src;\n")
               if _has_media else '')
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,
                  'unmapped_vars': sorted(unmapped)}
+
+
+def _ranked_head(cattr):
+    """The block heading's rank is the ROW's, not the payload's: the
+    page binds exactly one h1 (the hero row's `h1` prop), every other
+    block heading is an h2 — a bank payload tagged h1 in a contact
+    band must not mint a second h1, an h2-tagged hero must not leave
+    the page with none."""
+    m = re.search(r'class="([^"]*)"', cattr or '')
+    keep = ' '.join(c for c in (m.group(1).split() if m else [])
+                    if not c.startswith('text-fluid-'))
+    k = (' ' + keep) if keep else ''
+    return (f'{{head && (h1 ? <h1 class="text-fluid-4{k}">{{head}}</h1>'
+            f' : <h2 class="text-fluid-2{k}">{{head}}</h2>)}}')
+
+
+def _frag(item, pad):
+    """A map callback returns ONE element: an item template with two or
+    more top-level siblings (or a bare `{…}` root) rides a fragment,
+    else esbuild rejects the compiled arrow."""
+    lines = [ln for ln in item.split('\n') if ln.strip()]
+    if not lines:
+        return item
+    ind = min(len(ln) - len(ln.lstrip()) for ln in lines)
+    tops = [ln.lstrip() for ln in lines
+            if len(ln) - len(ln.lstrip()) == ind
+            and not ln.lstrip().startswith('</')]
+    # a lone `{cond && …}` root is an expression, not an element — the
+    # arrow would return an object literal; it needs the fragment too
+    if len(tops) < 2 and not (tops and tops[0].startswith('{')):
+        return item
+    return f'{pad}    <>\n' + item + f'{pad}    </>\n'
 
 
 def iter_payloads(limit=None):

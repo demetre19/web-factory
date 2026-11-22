@@ -5,7 +5,7 @@
   .wf-content-59 .bm-content-59__row {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-content-59 .bm-content-59__intro {
@@ -24,5 +24,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-content-59 .bm-content-59__row { grid-template-columns: 1fr; }
     .wf-content-59 .bm-social-share { flex-direction: column; }
   }
+  .wf-content-59 .bm-content-59__row > :only-child { grid-column: 1 / -1; }

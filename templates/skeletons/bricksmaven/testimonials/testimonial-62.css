@@ -11,5 +11,10 @@
   .wf-testimonial-62 .bm-testimonial-62-card {
     display: grid;
     gap: calc(var(--space-m) / 2);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-62 .bm-testimonial-62-card { grid-template-columns: 1fr; }
+  }
+  .wf-testimonial-62 .bm-testimonial-62-card > :only-child { grid-column: 1 / -1; }

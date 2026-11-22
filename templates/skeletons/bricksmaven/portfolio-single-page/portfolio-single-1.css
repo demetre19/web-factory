@@ -5,7 +5,7 @@
   .wf-portfolio-single-1 .bm-portfolio-single-1__container {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-portfolio-single-1 .bm-portfolio-single-1__aside {
@@ -87,6 +87,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-portfolio-single-1 .bm-portfolio-single-1__container { grid-template-columns: 1fr; }
     .wf-portfolio-single-1 .bm-live-website-btn { flex-direction: column; }
     .wf-portfolio-single-1 .bm-contact-widget-link { flex-direction: column; }
     .wf-portfolio-single-1 .bm-contact-widget-link__icon-wrapper { flex-direction: column; }
@@ -94,3 +95,4 @@
     .wf-portfolio-single-1 .testimonial-17-list-card__wrapper { flex-direction: column; }
     .wf-portfolio-single-1 .bm-portfolio-related-card__content { flex-direction: column; }
   }
+  .wf-portfolio-single-1 .bm-portfolio-single-1__container > :only-child { grid-column: 1 / -1; }

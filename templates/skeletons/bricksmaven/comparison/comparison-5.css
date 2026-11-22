@@ -15,7 +15,7 @@
   .wf-comparison-5 .bm-comparison-5-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
   }
 
   .wf-comparison-5 .bm-comparison-5-card__intro {
@@ -57,8 +57,10 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-comparison-5 .bm-comparison-5-card { grid-template-columns: 1fr; }
     .wf-comparison-5 .bm-comparison-5-card__icon-wrapper { flex-direction: column; }
     .wf-comparison-5 .bm-comparison-5-step-list { flex-direction: column; }
     .wf-comparison-5 .bm-comparison-5-step-item__marker { flex-direction: column; }
     .wf-comparison-5 .bm-comparison-5-step-item__circle { flex-direction: column; }
   }
+  .wf-comparison-5 .bm-comparison-5-card > :only-child { grid-column: 1 / -1; }

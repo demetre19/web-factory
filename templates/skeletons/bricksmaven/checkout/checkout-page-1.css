@@ -23,7 +23,7 @@
   .wf-checkout-page-1 .checkout-page-1__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
 
   .wf-checkout-page-1 .checkout-page-1__details {
@@ -33,5 +33,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-checkout-page-1 .checkout-page-1__content { grid-template-columns: 1fr; }
     .wf-checkout-page-1 .checkout-page-1__container { flex-direction: column; }
   }
+  .wf-checkout-page-1 .checkout-page-1__content > :only-child { grid-column: 1 / -1; }

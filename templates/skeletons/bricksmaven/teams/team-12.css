@@ -17,7 +17,7 @@
   .wf-team-12 .team-12-card {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-team-12 .team-12-card__content {
@@ -35,5 +35,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-team-12 .team-12-card { grid-template-columns: 1fr; }
     .wf-team-12 .bm-social-list { flex-direction: column; }
   }
+  .wf-team-12 .team-12-card > :only-child { grid-column: 1 / -1; }

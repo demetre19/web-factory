@@ -1,6 +1,6 @@
   .wf-contact-32 .bm-contact-32__container {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: calc(var(--space-m) * 2);
   }
 
@@ -24,5 +24,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-contact-32 .bm-contact-32__container { grid-template-columns: 1fr; }
     .wf-contact-32 .bm-accordion-clean-card__icon-wrapper { flex-direction: column; }
   }
+  .wf-contact-32 .bm-contact-32__container > :only-child { grid-column: 1 / -1; }

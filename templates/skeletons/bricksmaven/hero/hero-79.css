@@ -14,7 +14,7 @@
   .wf-hero-79 .bm-hero-79__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-hero-79 .bm-testimonial-card-79__review {
@@ -41,7 +41,9 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-hero-79 .bm-hero-79__content { grid-template-columns: 1fr; }
     .wf-hero-79 .cta-combo { flex-direction: column; }
     .wf-hero-79 .testimonial-36-card__head { flex-direction: column; }
     .wf-hero-79 .testimonial-36-card__avatar { flex-direction: column; }
   }
+  .wf-hero-79 .bm-hero-79__content > :only-child { grid-column: 1 / -1; }

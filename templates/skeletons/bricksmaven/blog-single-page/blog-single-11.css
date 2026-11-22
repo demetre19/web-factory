@@ -35,7 +35,7 @@
 
   .wf-blog-single-11 .bm-newsletter-widget-card-1 {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -75,6 +75,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-blog-single-11 .bm-newsletter-widget-card-1 { grid-template-columns: 1fr; }
     .wf-blog-single-11 .blog-single-2__meta { flex-direction: column; }
     .wf-blog-single-11 .blog-single-2__author { flex-direction: column; }
     .wf-blog-single-11 .blog-single-head__details { flex-direction: column; }
@@ -82,3 +83,4 @@
     .wf-blog-single-11 .bm-review-widget { flex-direction: column; }
     .wf-blog-single-11 .bm-team-list { flex-direction: column; }
   }
+  .wf-blog-single-11 .bm-newsletter-widget-card-1 > :only-child { grid-column: 1 / -1; }

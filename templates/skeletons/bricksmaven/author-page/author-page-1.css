@@ -1,7 +1,7 @@
   .wf-author-page-1 .bm-author-page-1__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
 
   .wf-author-page-1 .bm-author-card-1 {
@@ -32,5 +32,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-author-page-1 .bm-author-page-1__content { grid-template-columns: 1fr; }
     .wf-author-page-1 .bm-social-share { flex-direction: column; }
   }
+  .wf-author-page-1 .bm-author-page-1__content > :only-child { grid-column: 1 / -1; }

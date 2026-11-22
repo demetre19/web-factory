@@ -16,7 +16,9 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
+  images?: { src: string; alt: string }[];
   copy?: any;
+  h1?: boolean;
 }
 import { inline } from '../_shared/inline';
 import IconChip from '../_shared/IconChip.astro';
@@ -28,7 +30,9 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
+  images = [],
   copy,
+  h1 = false,
 } = Astro.props;
 // §4.3 — a copy slot binds verbatim article copy onto
 // the skeleton's native props (F.1 — nothing dropped)
@@ -38,6 +42,15 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
+// N.select — the desktop bar keeps the leading links whose
+// labels fit its budget; the rest open behind "More"
+const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const navFit = (() => { let w = 0, n = 0;
+  for (const it of list) { w += _lbl(it).length + 2;
+    if (w > 56) break; n++; }
+  return n; })();
+const navOver = list.length > 6 || navFit < list.length;
+const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -49,13 +62,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
 const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
+const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
 ---
 
 <div class="wf-contact-13">
   <div class="sec-inner">
     <div class="contact-13-container">
       <div class="intro">
-        {head && <h2 class="text-fluid-2">{head}</h2>}
+        {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
       {before.length > 0 && <div class="flow mt-stack">

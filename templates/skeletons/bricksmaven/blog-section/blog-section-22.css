@@ -23,7 +23,7 @@
   .wf-blog-section-22 .bm-blog-section-22-card {
     flex-direction: row;
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -32,5 +32,6 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-blog-section-22 .bm-blog-section-22-card { flex-direction: column; }
+    .wf-blog-section-22 .bm-blog-section-22-card { grid-template-columns: 1fr; }
   }
+  .wf-blog-section-22 .bm-blog-section-22-card > :only-child { grid-column: 1 / -1; }
