@@ -790,27 +790,104 @@ def _fs_render(files, dist):
             out = {}
             for i, fp in enumerate(files):
                 png = os.path.join(td, f'{i}.png')
-                if not os.path.isfile(png):
-                    continue
-                try:
-                    from PIL import Image
-                    import numpy as np
-                    out[fp] = np.asarray(
-                        Image.open(png).convert('L'), dtype=np.int16)
-                except ImportError:
-                    return {}
+                if os.path.isfile(png):
+                    out[fp] = _png_gray(png)
             return out
     return {}
+
+
+# downsampled grayscale grid the first-screen diff runs over —
+# cheap, dependency-free, and stable enough for a structural delta
+_FS_GW, _FS_GH = 320, 180
+
+
+def _png_gray(path):
+    """flat [_FS_GW*_FS_GH] grayscale sample of a PNG screenshot.
+    PIL fast path; the fallback decodes PNG with stdlib zlib only
+    (8-bit, non-interlaced, colour types 0/2/3/4/6), so the dedupe
+    never depends on numpy/PIL being installed."""
+    try:
+        from PIL import Image
+        im = Image.open(path).convert('L').resize(
+            (_FS_GW, _FS_GH))
+        return list(im.getdata())
+    except ImportError:
+        pass
+    import struct, zlib
+    d = open(path, 'rb').read()
+    if d[:8] != b'\x89PNG\r\n\x1a\n':
+        raise ValueError('not png')
+    pos, idat, plte = 8, b'', []
+    w = h = ct = None
+    while pos + 8 <= len(d):
+        ln = int.from_bytes(d[pos:pos + 4], 'big')
+        typ, chunk = d[pos + 4:pos + 8], d[pos + 8:pos + 8 + ln]
+        pos += 12 + ln
+        if typ == b'IHDR':
+            w, h, bd, ct, _cm, _f, il = struct.unpack(
+                '>IIBBBBB', chunk)
+            if bd != 8 or il:
+                raise ValueError('png fmt')
+        elif typ == b'PLTE':
+            plte = [chunk[i:i + 3]
+                    for i in range(0, len(chunk) - 2, 3)]
+        elif typ == b'IDAT':
+            idat += chunk
+        elif typ == b'IEND':
+            break
+    bpp = {0: 1, 2: 3, 3: 1, 4: 2, 6: 4}[ct]
+    raw = zlib.decompress(idat)
+    stride = w * bpp
+    prev, rows, p = bytearray(stride), [], 0
+    for _y in range(h):
+        f = raw[p]
+        p += 1
+        line = bytearray(raw[p:p + stride])
+        p += stride
+        if f == 1:
+            for i in range(bpp, stride):
+                line[i] = (line[i] + line[i - bpp]) & 255
+        elif f == 2:
+            for i in range(stride):
+                line[i] = (line[i] + prev[i]) & 255
+        elif f == 3:
+            for i in range(stride):
+                a = line[i - bpp] if i >= bpp else 0
+                line[i] = (line[i] + ((a + prev[i]) >> 1)) & 255
+        elif f == 4:
+            for i in range(stride):
+                a = line[i - bpp] if i >= bpp else 0
+                b = prev[i]
+                c = prev[i - bpp] if i >= bpp else 0
+                pr = a + b - c
+                pa, pb, pc = abs(pr - a), abs(pr - b), abs(pr - c)
+                line[i] = (line[i] + (
+                    a if pa <= pb and pa <= pc
+                    else b if pb <= pc else c)) & 255
+        rows.append(line)
+        prev = line
+    out = []
+    for y in range(0, h, max(1, h // _FS_GH)):
+        row = rows[y]
+        for x in range(0, w, max(1, w // _FS_GW)):
+            i = x * bpp
+            if ct == 3:
+                r, g, b = plte[row[i]]
+            elif bpp >= 3:
+                r, g, b = row[i], row[i + 1], row[i + 2]
+            else:
+                r = g = b = row[i]
+            out.append((r * 299 + g * 587 + b * 114) // 1000)
+    return out
 
 
 def _fs_delta(a, b):
     """mean absolute pixel difference of the rendered first screen
     (0–255 scale) — the rendered Δ the audit measures, not a markup
     signature."""
-    import numpy as np
-    if a.shape != b.shape:
+    if len(a) != len(b):
         return 99.0
-    return float(np.abs(a - b).mean())
+    return sum(abs(x - y) for x, y in zip(a, b)) / len(a)
 
 
 def _fs_dedupe_rows(spec, dist):
