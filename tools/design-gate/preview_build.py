@@ -323,7 +323,12 @@ def _system_astro(ctx, comps):
 
 def _build(ctx):
     """Clone the vendored toolchain + astro build once. Returns
-    (ok, message)."""
+    (ok, message). WF_DEFER_BUILD skips the toolchain+build entirely —
+    callers set it when this emit's dist output is never consumed
+    (a following emit's build covers every preview page, or the emit
+    runs inside a byte-compare replay)."""
+    if os.environ.get('WF_DEFER_BUILD'):
+        return True, ''
     ok = PE._toolchain(ctx)
     if not ok:
         return False, 'no vendored node_modules — npm ci needed'

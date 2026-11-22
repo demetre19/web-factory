@@ -139,7 +139,9 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
 
 def _run_step(d, wave, step, env):
     """Run one producer step and record its receipt. Returns rc."""
-    label, argv, inputs, writes = step
+    label, argv, inputs, writes = step[:4]
+    if len(step) > 4:
+        env = dict(env, **step[4])     # per-step env overrides
     before = _manifest(d)
     r = subprocess.run(argv, env=env)
     after = _manifest(d)
@@ -279,7 +281,11 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'LAYOUT-OPTIONS.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/layouts.html', 'site/dist/']),
+                 ['preview/layouts.html', 'site/dist/'],
+                 # w2 already built the identical preview pages —
+                 # re-emitting the sources is free, the astro build
+                 # would reproduce byte-identical dist output
+                 {'WF_DEFER_BUILD': '1'}),
                 ('section contracts',
                  [PY, T('gate.py'), 'contracts', pdir],
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
@@ -297,7 +303,11 @@ def _steps(pdir, wave, build, site_dir):
                   os.path.join(pdir, 'VARIANT-GATES.json'),
                   os.path.join(pdir, 'TOKENS.json'),
                   os.path.join(pdir, 'COPY.json')],
-                 ['preview/variants.html', 'site/dist/']),
+                 ['preview/variants.html', 'site/dist/'],
+                 # the fine round's build renders EVERY preview page
+                 # (variants' look-*.astro included) — deferring this
+                 # emit's own build dedupes a second full astro pass
+                 {'WF_DEFER_BUILD': '1'}),
                 ('fine picker', asm + ['--fine'],
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'TOKENS.json'),
