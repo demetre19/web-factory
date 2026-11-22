@@ -835,13 +835,18 @@ def _bank_items():
                 key = (fd, stem)
                 if key not in best or rank[ext] < best[key][0]:
                     best[key] = (rank[ext], ext, os.path.join(fd, fn))
-    return [{
+    # matching-critical banks first (operator order), then the rest
+    PRIORITY = ('genmenu', 'mobbin')
+    items = [{
         'id': f"{os.path.relpath(fd, SKEL).replace('/', '-')}-{stem}"
               .replace(os.sep, '-'),
         'kind': 'image' if ext == '.webp' else 'markup',
+        'bank': os.path.relpath(fd, SKEL).split(os.sep)[0],
         'path': path, 'ext': ext,
         'out': os.path.join(fd, stem + '.classify.json')}
-        for (fd, stem), (_, ext, path) in sorted(best.items())]
+        for (fd, stem), (_, ext, path) in best.items()]
+    return sorted(items, key=lambda i: (
+        i['bank'] not in PRIORITY, i['bank'], i['path']))
 
 
 def _item_struct(it):
