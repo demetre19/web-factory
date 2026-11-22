@@ -537,6 +537,25 @@ def _iframe_rel(ctx, page_name):
     return f'../site/dist/preview/{page_name}/index.html'
 
 
+def _boards_meta(ctx):
+    """LAYOUT-OPTIONS.json['boards'] — board id → {type, copy, real}
+    written by board_copy via plan_from_copy; empty when absent."""
+    p = os.path.join(ctx.dir, 'LAYOUT-OPTIONS.json')
+    try:
+        return (json.load(open(p, encoding='utf-8')) or {}) \
+            .get('boards') or {}
+    except Exception:
+        return {}
+
+
+def _board_copy(ctx, bm):
+    """The COPY doc a board binds — boards/<b>.copy.json for
+    boilerplate boards, COPY.json for the real-type board."""
+    rel = bm.get('copy') or 'COPY.json'
+    return json.load(open(os.path.join(ctx.dir, rel),
+                          encoding='utf-8'))
+
+
 def emit_layouts(ctx):
     """w3 — one real page per computed LAYOUT-OPTIONS option: the
     option's composition overrides applied to the row contracts, all
@@ -546,6 +565,7 @@ def emit_layouts(ctx):
     if not contracts_rows:
         raise SystemExit('preview_build: no contracts for this page')
     copy = PE._load_copy(ctx)
+    boards_meta = _boards_meta(ctx)
     by_ref = {}
     for c, row in contracts_rows:
         if row.get('copy_ref'):
@@ -640,6 +660,29 @@ def emit_layouts(ctx):
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'lo-{oid}.astro'), txt)
+        # content classification: a board whose type isn't the
+        # input's renders the same option under its own boilerplate
+        # COPY (lo-<oid>-<board>) — the boards stop sharing one
+        # article's body copy. The board matching the input's type
+        # reuses the real-copy page already written.
+        for bid, bm in boards_meta.items():
+            if bm.get('real'):
+                continue
+            bcopy = _board_copy(ctx, bm)
+            # boilerplate boards must not project the source
+            # article's row items/qa — chrome keeps its link rows
+            # (they're site chrome, not body copy); body rows bind
+            # the board copy's own terms/qa fill
+            b_rows = []
+            for cc, r2 in ov_rows:
+                r3 = dict(r2)
+                if 'chrome' not in (r3.get('speech_act') or []):
+                    r3.pop('items', None)
+                    r3.pop('qa', None)
+                b_rows.append((cc, r3))
+            PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
+                               f'lo-{oid}-{bid}.astro'),
+                  _page_astro(ctx, b_rows, bcopy, bank_css))
     _write_system_astro(ctx, emitted)
     ok, msg = _build(ctx)
     if not ok:

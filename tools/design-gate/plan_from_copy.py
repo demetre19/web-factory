@@ -779,8 +779,14 @@ def build(pdir, option=None):
     _write(os.path.join(pdir, 'STUB.md'),
            stamp + '\n' + render_stub(copy, blocks, name_of, rows,
                                       brand, media))
+    # content classification: the input's page type decides which pick
+    # board binds the real COPY — every other board gets a per-type
+    # boilerplate COPY (boards/<b>.copy.json) so the Service/Location/
+    # Contact/Blog boards stop rendering one article's body copy.
+    import board_copy
     lay = {'generated_by': TOOL, 'copy_sha256': copy_sha, 'pick': pick,
            'allowed': allowed, 'options': table,
+           'boards': board_copy.build(pdir),
            'score_formula': f'{SCORE_BASE} - 0.1*orphan_rows '
                             '- 0.05*long_card_texts '
                             '- 0.04*adjacent_same_composition '
