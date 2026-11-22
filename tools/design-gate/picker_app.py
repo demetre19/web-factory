@@ -767,7 +767,8 @@ def emit_vibe_doc(pd, fam, bundle):
                  '"dark")</script>'
                  if bundle.get('theme') == 'dark' else '')
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write(_doc(head, battr, body, theme, css))
+            fh.write('<!--wf:vibe:v3-->' + _doc(head, battr, body,
+                                                theme, css))
     return 'preview/vibes/' + fam + '.html'
 
 
@@ -815,6 +816,35 @@ class _Raw(str):
 
 _L = ('<em class="wf-lorem" data-slot="{s}">Lorem ipsum — '
       'unmapped {s}</em>')
+_SEQ_CSS = ('.wf-seq{list-style:none;padding-left:0;counter-reset:'
+            'wstep;display:grid;gap:1em}'
+            '.wf-seq .wf-seq-num{display:inline-block;min-width:1.8em;'
+            'font-weight:800;color:var(--action-primary,#555)}'
+            '.wf-seq-spine{position:relative;padding-left:2.4em}'
+            '.wf-seq-spine::before{content:"";position:absolute;'
+            'left:.8em;top:.4em;bottom:.4em;width:2px;'
+            'background:var(--border-default,#999)}'
+            '.wf-seq-spine .wf-seq-row{position:relative}'
+            '.wf-seq-spine .wf-seq-num{position:absolute;left:-2.4em;'
+            'top:.1em;width:1.8em;height:1.8em;min-width:0;'
+            'border-radius:50%;background:var(--action-primary,#555);'
+            'color:var(--bg-base,#fff);display:flex;align-items:center;'
+            'justify-content:center;font-size:.72em}'
+            '.wf-seq-rail{grid-template-columns:repeat(auto-fit,'
+            'minmax(200px,1fr));gap:1.2em}'
+            '.wf-seq-rail .wf-seq-row{border-top:3px solid '
+            'var(--action-primary,#555);padding-top:.5em}'
+            '.wf-seq-rail .wf-seq-num{display:block;font-size:2.2em;'
+            'line-height:1;margin-bottom:.2em}'
+            '.wf-seq-badge .wf-seq-row{display:flex;gap:.9em;'
+            'align-items:flex-start;background:var(--bg-elevated,'
+            '#f2f2f2);border:1px solid var(--border-default,#ddd);'
+            'border-radius:12px;padding:.9em}'
+            '.wf-seq-badge .wf-seq-num{flex:none;width:2em;height:2em;'
+            'min-width:0;border-radius:10px;background:'
+            'var(--action-primary,#555);color:var(--bg-base,#fff);'
+            'display:flex;align-items:center;justify-content:center}')
+
 _LOREM_CSS = ('.wf-lorem{display:inline-block;outline:1px dashed '
               'var(--action-primary,#999);outline-offset:2px;'
               'font-style:italic;opacity:.75;padding:0 .3em;'
@@ -1034,6 +1064,28 @@ def _slot_frag(comp, slot):
                     for n, i in enumerate(its)) + '</ul>'
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in after) + '</div>'
+    elif comp in ('timeline-spine', 'numbered-rail', 'icon-badge'):
+        # shape variants of the step section — used for option rows
+        # the plan did not emit (emit can't reach non-own comps)
+        shape = {'timeline-spine': 'wf-seq-spine',
+                 'numbered-rail': 'wf-seq-rail',
+                 'icon-badge': 'wf-seq-badge'}[comp]
+        h += '<div><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        its = items or [{'term': _Raw(_L.format(s='items[]')),
+                         'text': _Raw(_L.format(s='items[]'))}
+                        for _i in range(4)]
+        if not items:
+            unmapped.append('items')
+        h += f'<ol class="wf-seq {shape} list-plain">' + \
+            ''.join(f'<li class="wf-seq-row"><span class="wf-seq-num">'
+                    f'{n + 1:02d}</span><div><h3 class="t0 sub-h">'
+                    f'{_val(i.get("term") or i.get("title") or "")}'
+                    f'</h3><p class="t0 sub-p">'
+                    f'{_val(i.get("text") or "")}</p></div></li>'
+                    for n, i in enumerate(its)) + '</ol></div>'
     elif comp == 'sequence':
         h += '<div><div class="sec-head">' \
              f'<h2 class="text-fluid-3">{head}</h2>'
@@ -1279,6 +1331,11 @@ def emit_section_fragments(pd):
         unmapped_map = {}
         cand = list(dict.fromkeys(
             ([comp] if comp else []) + (allowed.get(bid) or [])))
+        # sequence shape variety: the emitted block's own topo
+        # variants cover it when present; non-own rows get the three
+        # shape comps (they render via _slot_frag, no artifact needed)
+        if 'sequence' in cand and 'sequence' not in blocks:
+            cand += ['timeline-spine', 'numbered-rail', 'icon-badge']
         for c in cand:
             src = blocks.get(c)
             if src:
