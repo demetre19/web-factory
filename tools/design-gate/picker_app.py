@@ -815,6 +815,158 @@ def emit_vibe_doc(pd, fam, bundle):
     return 'preview/vibes/' + fam + '.html'
 
 
+_LH_FALLBACK = {'-1': 1.5, '0': 1.6, '1': 1.5, '2': 1.35,
+                '3': 1.25, '4': 1.2, '5': 1.15}
+
+
+def _lh_ladder():
+    """emitted --lh-N ladder, parsed from the producer's own
+    constants in emit_global.py so the annotation can't drift."""
+    try:
+        with open(os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                'emit_global.py'), encoding='utf-8',
+                errors='replace') as fh:
+            m = {k: float(v) for k, v in re.findall(
+                r'--lh-(-?\d+):\s*([0-9.]+)', fh.read())}
+        return m or _LH_FALLBACK
+    except OSError:
+        return _LH_FALLBACK
+
+
+_TS_ROWS = [
+    ('h1', 'display'), ('h2', 'h1'), ('h3', 'h2'), ('h4', 'h3'),
+    ('h5', 'h4'), ('h6', 'h5'),
+    ('text-xxl', 'hero lead'), ('text-xl', 'lead'),
+    ('text-l', 'large'), ('text-m', 'body'),
+    ('text-s', 'small'), ('text-xs', 'caption'),
+]
+_TS_H_LH = {'h1': '5', 'h2': '4', 'h3': '3', 'h4': '2',
+            'h5': '1', 'h6': '1'}
+_TS_SPEC = 'Grumpy wizards make toxic brew for the king'
+
+_TYPESCRIPT_CSS = """
+body{margin:0;font-family:var(--font-body,ui-sans-serif,system-ui)}
+.tscap{padding:14px 22px 0;font:600 11px ui-monospace,monospace;
+     color:var(--text-muted,#888)}
+.tspanel{padding:6px 22px 22px;background:var(--bg-canvas,#fff);
+     color:var(--text-primary,#111)}
+.tspanel h3{font:700 11px ui-monospace,monospace;margin:14px 0 8px;
+     text-transform:uppercase;letter-spacing:.08em;
+     color:var(--text-muted,#888)}
+.tscols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.tscol>h4{font:600 11px ui-monospace,monospace;margin:0 0 6px;
+     color:var(--text-muted,#888)}
+.tsrow{display:grid;grid-template-columns:108px 1fr;gap:12px;
+     align-items:baseline;padding:7px 0;
+     border-bottom:1px dashed var(--border,#ddd)}
+.tsmeta{font:600 11px ui-monospace,monospace;
+     color:var(--text-muted,#888)}
+.tsmeta i{display:block;font-style:normal;opacity:.75}
+.tsspec{overflow-wrap:break-word;
+     font-family:var(--font-display,var(--font-body,ui-sans-serif))}
+.tsnum{font:11px ui-monospace,monospace;
+     color:var(--text-muted,#888)}
+@media (max-width:840px){.tscols{grid-template-columns:1fr}}
+"""
+
+
+def _ts_col(sizes, vp, lh, dw, trk):
+    """one ladder column rendered at the emitted px for viewport vp
+    ('320' or '1280'), annotated with px · ratio · lh · weight."""
+    out = ''
+    prev = None
+    for key, role in _TS_ROWS:
+        s = sizes.get(key) or {}
+        px = (s.get('px') or {}).get(vp)
+        if px is None:
+            continue
+        is_h = key.startswith('h')
+        lhv = lh.get(_TS_H_LH.get(key, '0' if key != 'text-xs'
+                                     else '-1'), 1.5)
+        wt = dw if is_h else 400
+        rat = (' · ×%.3g' % (px / prev)) if prev else ''
+        prev = px
+        tk = ' · tr %g' % trk if (is_h and trk) else ''
+        out += ('<div class="tsrow"><div class="tsmeta"><b>' + key +
+                '</b><i>' + role + '</i></div><div>'
+                '<div class="tsspec" style="font-size:' +
+                ('%g' % px) + 'px;line-height:' + str(lhv) +
+                ';font-weight:' + str(wt) + '">' + _TS_SPEC +
+                '</div><div class="tsnum">' + ('%g' % px) + 'px' +
+                rat + ' · lh ' + str(lhv) + ' · ' + str(wt) + tk +
+                '</div></div></div>')
+    # button/label row — the emitted button type (body size, label wt)
+    s = sizes.get('text-m') or {}
+    px = (s.get('px') or {}).get(vp)
+    if px is not None:
+        out += ('<div class="tsrow"><div class="tsmeta"><b>button'
+                '</b><i>label</i></div><div><div class="tsspec" '
+                'style="font-size:' + ('%g' % px) + 'px;line-height:'
+                + str(lh.get('0', 1.5)) + ';font-weight:600;'
+                'text-transform:none">Get a quote</div>'
+                '<div class="tsnum">' + ('%g' % px) +
+                'px · lh ' + str(lh.get('0', 1.5)) + ' · 600'
+                '</div></div></div>')
+    return out
+
+
+def emit_typescale_doc(pd, name='current', bundle=None):
+    """preview/typescale/<name>.html — the resolved type ladder at
+    emitted px: mobile (320) vs desktop (1280) columns, light + dark
+    panels. Reads TOKENS.json sizes — what emit actually produces —
+    so a re-bake re-emits the ladder. Returns dist-relative path."""
+    tp = os.path.join(pd, 'TOKENS.json')
+    if not os.path.isfile(tp):
+        return None
+    try:
+        with open(tp, encoding='utf-8') as fh:
+            tok = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return None
+    sizes = tok.get('sizes') or {}
+    fluid = tok.get('fluid') or {}
+    knobs = tok.get('knobs') or {}
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'typescale')
+    fp = os.path.join(outdir, name + '.html')
+    stale = True
+    if os.path.isfile(fp) and \
+            os.path.getmtime(fp) >= os.path.getmtime(tp):
+        try:
+            with open(fp, encoding='utf-8', errors='replace') as rf:
+                stale = 'wf:ts:v1' not in rf.read(4096)
+        except OSError:
+            stale = True
+    if stale:
+        blocks, _rows = _comp_blocks(pd)
+        head, battr = (blocks[next(iter(blocks))][1:3]
+                       if blocks else ('<meta charset="utf-8">', ''))
+        lh = _lh_ladder()
+        dw = int(knobs.get('type.display_weight') or 700)
+        trk = knobs.get('type.tracking_display') or 0
+        mob = _ts_col(sizes, '320', lh, dw, trk)
+        desk = _ts_col(sizes, '1280', lh, dw, trk)
+        cap = ('resolved ladder — emitted px at mobile 320 vs desktop '
+               '1280 · text ratio ' + str(fluid.get('text_scale_mob'))
+               + '→' + str(fluid.get('text_scale_desk')) +
+               ' · heading ratio ' + str(fluid.get('heading_scale_mob'))
+               + '→' + str(fluid.get('heading_scale_desk')))
+        panels = ''
+        for th in ('light', 'dark'):
+            panels += ('<section class="tspanel" data-theme="' + th +
+                       '"><h3>' + th + '</h3><div class="tscols">'
+                       '<div class="tscol"><h4>mobile · 320px</h4>' +
+                       mob + '</div><div class="tscol"><h4>desktop · '
+                       '1280px</h4>' + desk + '</div></div></section>')
+        body = '<div class="tscap">' + cap + '</div>' + panels
+        css = ((_fam_css(bundle) if bundle else '') + _TYPESCRIPT_CSS)
+        os.makedirs(outdir, exist_ok=True)
+        with open(fp, 'w', encoding='utf-8') as fh:
+            fh.write('<!--wf:ts:v1-->' + _doc(head, battr, body,
+                                              css=css))
+    return 'preview/typescale/' + name + '.html'
+
+
 def emit_vibe_previews(pd):
     """preview/vibes/<fam>.html — the standard row set under each
     family's var bundle. Returns {fam: relpath}."""
@@ -1846,6 +1998,18 @@ def app_data(pipeline):
                   'element': 'vibe', 'variant': fam,
                   'contrast': contrast.get(fam)}
                  for fam, f in VIBE_FAMILIES.items()]}
+    # the resolved type ladder (TOKENS.json px @ 320 / 1280)
+    ts_rel = emit_typescale_doc(pd)
+    boards['typescale'] = {
+        'id': 'typescale', 'title': 'Type scale',
+        'icon': 'type',
+        'desc': 'The resolved type ladder at emitted px — mobile '
+                '(320) vs desktop (1280) columns, light + dark '
+                'samples. Re-resolving genes re-emits it.',
+        'typescale': True,
+        'tsdoc': ('/built/' + urllib.parse.quote(
+                  os.path.join(pd, 'site', 'dist', ts_rel))
+                  if ts_rel else None)}
     # step 2 — LAYOUT: whole-page scrub over section topologies,
     # then the option boards
     boards['page'] = {
@@ -2021,11 +2185,16 @@ def vibe_resolve(pd, genes):
     if vibe_atlas is None:
         return {'error': 'vibe atlas unavailable'}
     r = vibe_atlas.resolve(genes)
-    rel = emit_vibe_doc(pd, 'gen-' + vibe_atlas.gene_hash(genes), r)
+    ghash = vibe_atlas.gene_hash(genes)
+    rel = emit_vibe_doc(pd, 'gen-' + ghash, r)
     if not rel:
         return {'error': 'no emitted blocks'}
+    tsrel = emit_typescale_doc(pd, 'gen-' + ghash, r)
     return {'preview': '/built/' + urllib.parse.quote(
                 os.path.join(pd, 'site', 'dist', rel)),
+            'typescale': ('/built/' + urllib.parse.quote(
+                os.path.join(pd, 'site', 'dist', tsrel))
+                if tsrel else None),
             'name': r['name'], 'genes': r['genes'],
             'tokens': r['tokens'], 'theme': r['theme'],
             'resolved': {k: r.get(k) for k in
@@ -3261,6 +3430,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     news:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2.5" width="10" height="11" rx="1.5"/><path d="M4.5 5.5h5M4.5 8h5M4.5 10.5h3"/><path d="M12 5h1.5a1 1 0 011 1v6a1.5 1.5 0 01-1.5 1.5H4"/></svg>',
     vibe:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="5" cy="8" r="2.6"/><circle cx="8" cy="8" r="2.6" opacity=".7"/><circle cx="11" cy="8" r="2.6" opacity=".4"/></svg>',
     mix:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 3h10M5 6.5h6M7 10h2M8 3v10" opacity=".9"/></svg>',
+    type:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 4h11M8 4v9.5M5.5 13.5h5"/></svg>',
     page:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="1.5" width="10" height="13" rx="1.5"/><path d="M5.5 4.5h5M5.5 7h5M5.5 9.5h5M5.5 12h3"/></svg>',
     bars:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="3" width="13" height="4" rx="1"/><path d="M3.5 10h9M3.5 13h5"/></svg>',
     burger:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg>',
@@ -3284,6 +3454,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          (n?'<span class="cnt">'+n+'</span>':'')+'</button>';}
     h+='<div class="railgrp">1 · Vibe</div>';
     item('b',DATA.boards.vibe);
+    if(DATA.boards.typescale)item('b',DATA.boards.typescale);
     h+='<div class="railgrp">2 · Layout</div>';
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
@@ -3554,6 +3725,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           var cb=document.getElementById('vprevCb');
           if(cb)cb.innerHTML='<iframe src="'+esc(j.preview)+
             '"></iframe>';
+          var tsf=document.querySelector('.tsfr');
+          if(tsf&&j.typescale)tsf.src=j.typescale+
+            (document.documentElement.dataset.theme==='dark'
+             ?'?theme=dark':'');
           var vn=document.querySelector('.vname');
           if(vn)vn.textContent=j.name;
           el.querySelector('.vchips').innerHTML=
@@ -3958,6 +4133,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(!o){el.innerHTML='<div class="empty">pick a board</div>';return}
     if(o.atlas){vibePane(el,o);return}
     var h='<h1>'+esc(o.title)+'</h1><div class="desc">'+esc(o.desc||'')+'</div>';
+    if(o.typescale){
+      el.innerHTML=h+'<div class="vprev" style="max-width:none">'+
+        '<div class="cb" style="height:auto">'+
+        (o.tsdoc?'<iframe class="tsfr" src="'+esc(o.tsdoc)+
+        (document.documentElement.dataset.theme==='dark'
+         ?'?theme=dark':'')+'" style="width:100%;height:1180px;'+
+        'border:0;display:block"></iframe>':
+        '<div class="noprev">TOKENS.json not emitted for this '+
+        'pipeline yet</div>')+'</div></div>';
+      return}
     if(o.scrub){
       el.innerHTML=h+scrubView(o);
       el.querySelectorAll('.srow').forEach(function(rowEl){
