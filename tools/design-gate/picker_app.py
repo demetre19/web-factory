@@ -33,6 +33,10 @@ try:
     import vibe_atlas
 except ImportError:
     vibe_atlas = None
+try:
+    import clamp
+except ImportError:
+    clamp = None
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -1058,6 +1062,23 @@ def type_candidates(pd):
     cur_hm = float(fluid.get('heading_scale_mob') or cur_hr)
     base = _current_vibe_genes(pd)
     cur_face = base.get('display-face')
+
+    def _ladder_css(tm, tr, hm, hr):
+        """the candidate's rungs as ACSS clamp vars — signing it
+        rebinds every preview's type scale, not just the doc."""
+        if clamp is None:
+            return ''
+        s = dict(fluid)
+        s.update(text_scale_mob=tm, text_scale_desk=tr,
+                 heading_scale_mob=hm, heading_scale_desk=hr)
+        try:
+            rungs = clamp.sizes(s)
+        except Exception:
+            return ''
+        return ';'.join('--%s:%s' % (k, v) for k, v in
+                        rungs.items()
+                        if k.startswith('text-') or
+                        re.fullmatch(r'h[1-6]', k))
     # ratio sweep at the resolved face, then the resolved ladder
     # through each other display-face allele the vibe allows
     specs = [
@@ -1072,14 +1093,27 @@ def type_candidates(pd):
                           cur_hr, f))
     cards, seen = [], set()
     for label, tm, tr, hm, hr, face in specs:
-        genes = dict(base)
-        if face:
-            genes['display-face'] = face
-        gh = vibe_atlas.gene_hash(genes)
+        # card genes are the candidate's own overrides — the pick
+        # merges them onto the CURRENT signed vibe at click time, so
+        # a re-bake never leaves a stale base baked into the card
+        overrides = {'display-face': face} if face else {}
+        merged = dict(base)
+        merged.update(overrides)
+        # the variant binds genes AND the ladder — two candidates
+        # that share genes but differ on ratios are distinct picks
+        gh = hashlib.sha256(json.dumps(
+            {'g': sorted(merged.items()), 'f': [tm, tr, hm, hr]},
+            sort_keys=True).encode()).hexdigest()[:10]
         if gh in seen:
             continue
         seen.add(gh)
-        bundle = vibe_atlas.resolve(genes)
+        bundle = vibe_atlas.resolve(merged)
+        ladder = _ladder_css(tm, tr, hm, hr)
+        if ladder:
+            bundle['css'] = (bundle.get('css') or '') + \
+                (';' if bundle.get('css') else '') + ladder
+            bundle['css_dark'] = (bundle.get('css_dark') or '') + \
+                (';' if bundle.get('css_dark') else '') + ladder
         ctok = dict(tok)
         ctok['sizes'] = _ts_sizes_for(sizes, tm, tr, hm, hr)
         rel = emit_typescale_doc(pd, 'cand-' + gh, bundle=bundle,
@@ -1097,7 +1131,7 @@ def type_candidates(pd):
             'tags': tags,
             'desc': 'mobile 320 · desktop 1280 — h1-h4, lead, body',
             'element': 'type', 'variant': 'genes:' + gh,
-            'genes': genes,
+            'genes': overrides,
             'fluid': {'text_scale_mob': tm, 'text_scale_desk': tr,
                       'heading_scale_mob': hm,
                       'heading_scale_desk': hr}})
@@ -2171,6 +2205,7 @@ def app_data(pipeline):
               for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
+            'vibe_genes': _current_vibe_genes(pd),
             'bank_depth': bank_depth,
             'palette': _palette(galleries),
             'saved_systems': list_systems(pd),
@@ -4382,8 +4417,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
     if(idx===SEL)cls+=' sel';
     if(isPicked)cls+=' picked';
-    var src=c.preview?((c.element==='vibe'||c.bank)?c.preview:
-            frame(c.preview)):'';
+    var src=c.preview?((c.element==='vibe'||c.element==='type'||
+            c.bank)?c.preview:frame(c.preview)):'';
     var h='<div class="'+cls+'" data-idx="'+idx+
           '" data-tags="'+esc(tags.join(' '))+'">';
     h+='<div class="ch"><span class="id">'+esc(c.id)+'</span>'+
@@ -4587,6 +4622,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           resolved:VRES&&VRES.resolved}}).then(
         function(j){toast(j.message||(j.ok?'baked':'refused'));
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
+            DATA.vibe_genes=Object.assign({},VGENES);
             setTheme((VRES&&VRES.theme)||'light')}})};
     el.querySelectorAll('.vmood').forEach(function(m){
       m.onclick=function(){
@@ -4612,6 +4648,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           bundle:{genes:c.genes}}).then(function(j){
           toast(j.message||(j.ok?'baked':'refused'));
           if(j.ok){BAKED=v;DATA.picked_elements.vibe=v;
+            DATA.vibe_genes=Object.assign({},c.genes||{});
             setTheme((c.tags||[]).indexOf('dark')>=0
               ?'dark':'light')}})}});
     wireXp(el);
@@ -5605,12 +5642,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
             board()}
           else b.disabled=false})};
       // a type pick signs the resolved ladder's gene bundle — same
-      // path as the vibe bake (resolve → sign → previews reframe)
-      if(b.dataset.elem==='type'&&b.dataset.genes)
-        api('/vibe-resolve',{pipeline:PIPELINE,
-          genes:JSON.parse(b.dataset.genes)}).then(function(r){
-          _sign({genes:JSON.parse(b.dataset.genes),
-            tokens:r.tokens,resolved:r.resolved})});
+      // path as the vibe bake (resolve → sign → previews reframe).
+      // The card carries only its own overrides; they merge onto
+      // the CURRENTLY baked vibe's genes so a re-bake never signs a
+      // stale base.
+      if(b.dataset.elem==='type'&&b.dataset.genes){
+        var mg=Object.assign({},DATA.vibe_genes||{},
+          JSON.parse(b.dataset.genes));
+        api('/vibe-resolve',{pipeline:PIPELINE,genes:mg}).then(
+          function(r){_sign({genes:mg,tokens:r.tokens,
+            resolved:r.resolved})})}
       else _sign(null)}
   }
 
@@ -5628,6 +5669,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(d.error){document.getElementById('board').innerHTML=
           '<div class="empty">'+esc(d.error)+'</div>';return}
         DATA=d;CUR='vibe';
+        DATA.vibe_genes=d.vibe_genes||{};
         // a signed type pick rebinds previews under its resolved
         // bundle — it carries the vibe genes + its own overrides
         BAKED=(d.picked_elements||{}).type||
