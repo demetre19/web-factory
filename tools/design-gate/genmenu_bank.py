@@ -68,6 +68,7 @@ PACK_META = {
     "folio-ornaments": ("deco-ornament", "decoration", ["ornament"], "ornament"),
     "cursor": ("fx-cursor", "decoration", ["micro interaction"], "cursor effect"),
     "viscous": ("fx-goo", "decoration", ["micro interaction"], "liquid effect"),
+    "scroll": ("fx-scroll", "decoration", ["scroll animation"], "scroll effect"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -336,6 +337,17 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "trail" in low or "cursor" in low or "follower" in low or "mousemove" in c:
             return "fx-cursor", "medium"
         return "fx-cursor", "low"
+    if baseline == "fx-scroll":
+        # the pack labels each specimen "<name> · <family> · <technique>"
+        if "Sticky &amp; Pinned" in c or "Sticky & Pinned" in c:
+            return "fx-pinned", "high"
+        if "Spatial &amp; Media" in c or "Spatial & Media" in c:
+            return "fx-parallax", "high"
+        if "Typography &amp; Data" in c or "Typography & Data" in c:
+            return "fx-meter", "high"
+        if "CSS Timeline" in c:
+            return "fx-timeline", "high"
+        return "fx-scroll", "low"
     if baseline == "ui-badge":
         low = c.lower()
         if "ribbon" in low or "corner" in low or "rotate" in low:
