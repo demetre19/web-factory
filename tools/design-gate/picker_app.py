@@ -2061,8 +2061,11 @@ def app_data(pipeline):
         if k in genotype:
             chips.append({'k': k, 'v': genotype[k]})
 
-    picked = {w: (gates.get(w) or {}).get('pick') or
-                 (gates.get(w) or {}).get('design')
+    # a wave pick counts only when the gate verified the signed
+    # operator record — write_gate stores `design` even when the
+    # wave fails or approval is absent
+    picked = {w: ((gates.get(w) or {}).get('design')
+                  if (gates.get(w) or {}).get('approved') else None)
               for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
