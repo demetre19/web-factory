@@ -3588,7 +3588,10 @@ def atlas_family(pd, fam):
     if vibe_atlas is None or not fam:
         return None
     if fam.startswith('atlas:'):
-        p = vibe_atlas.PRESET_BY_ID.get(fam[6:])
+        pid = fam[6:]
+        p = vibe_atlas.PRESET_BY_ID.get(pid) or \
+            vibe_atlas.PRESET_BY_ID.get(
+                vibe_atlas.PRESET_ALIAS.get(pid, ''))
         return vibe_atlas.resolve(p['genes']) if p else None
     if fam.startswith(('genes:', 'custom:')) and pd:
         ep = _json_at(os.path.dirname(pd.rstrip('/'))

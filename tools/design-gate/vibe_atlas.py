@@ -502,8 +502,14 @@ def _struct_sig(r):
             fil(r['tokens']['dark']))
 
 
+# dropped candidate id → the survivor id it was deduped into;
+# stored picks naming a culled preset still resolve to a real vibe
+# instead of falling back to null
+_PRESET_ALIAS = {}
+
+
 def _build_presets():
-    out, seen, seen_sig = [], set(), set()
+    out, seen, seen_sig = [], set(), {}
     for cluster, n, _base in _CLUSTERS:
         got = 0
         i = 0
@@ -530,18 +536,22 @@ def _build_presets():
                 tries += 1
             seen.add(sig)
             ssig = _struct_sig(r)
+            pid = f'{cluster}-{i:02d}'
             if ssig in seen_sig:
                 # structural twin of an earlier preset — same face /
                 # radius / spacing / shape, differing only in colour;
-                # skip it rather than minting a near-identical card
+                # skip it rather than minting a near-identical card,
+                # but alias the would-be id to the survivor so stored
+                # picks keep resolving
+                _PRESET_ALIAS[pid] = seen_sig[ssig]
                 continue
-            seen_sig.add(ssig)
+            seen_sig[ssig] = pid
             got += 1
             # id from the generation index, not the kept count: the
             # sweep is deterministic on (cluster, i), so structural-
             # dedupe changes leave gaps instead of silently
             # renumbering ids that signed picks already reference
-            out.append({'id': f'{cluster}-{i:02d}',
+            out.append({'id': pid,
                         'name': f'{cluster.title()} {i:02d}',
                         'cluster': cluster, 'genes': genes,
                         'theme': r['theme']})
@@ -550,3 +560,4 @@ def _build_presets():
 
 PRESETS = _build_presets()
 PRESET_BY_ID = {p['id']: p for p in PRESETS}
+PRESET_ALIAS = dict(_PRESET_ALIAS)
