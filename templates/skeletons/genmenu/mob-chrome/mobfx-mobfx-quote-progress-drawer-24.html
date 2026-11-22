@@ -406,5 +406,31 @@
   
     })();
   </script>
+<script>
+/* a11y: hidden chrome must not stay keyboard-focusable.
+   Keeps `inert` in sync with the classes/styles that hide each
+   mobfx element, so reveal/hide toggles never leave hidden controls
+   in the tab order. */
+(function () {
+  var HIDDEN_CLS = ["opacity-0", "pointer-events-none", "hidden",
+                    "invisible", "translate-y-full", "-translate-y-full",
+                    "translate-x-full", "-translate-x-full"];
+  function hidden(el) {
+    for (var i = 0; i < HIDDEN_CLS.length; i++) {
+      if (el.classList.contains(HIDDEN_CLS[i])) return true;
+    }
+    var s = el.style;
+    return s.display === "none" || s.visibility === "hidden" ||
+           s.opacity === "0" || s.maxHeight === "0px";
+  }
+  document.querySelectorAll('[id^="mobfx-"]').forEach(function (el) {
+    function sync() { el.inert = hidden(el); }
+    sync();
+    new MutationObserver(sync).observe(el, {
+      attributes: true, attributeFilter: ["class", "style"]
+    });
+  });
+})();
+</script>
 </body>
 </html>

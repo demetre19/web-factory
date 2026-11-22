@@ -119,7 +119,9 @@ class Tree(HTMLParser):
             self.all_classes.extend(cls.split())
         node = {
             "tag": tag,
+            "id": a.get("id") or "",
             "classes": cls.split()[:6],
+            "_cls_all": cls.split(),
             "label": a.get("aria-label") or "",
             "role": a.get("role") or "",
             "children": [],
@@ -154,6 +156,52 @@ class Tree(HTMLParser):
             "h1", "h2", "h3", "h4", "button", "a", "span", "label"
         ):
             self.text_hints.append(s)
+
+
+def component_roots(roots: list[dict], prefix: str) -> list[dict] | None:
+    """Body-level subtrees containing an `id^=prefix` element — the actual
+    component when an exemplar wraps itself in demo-page scaffolding."""
+
+    def has_id(n: dict) -> bool:
+        return n["id"].startswith(prefix) or any(
+            has_id(c) for c in n["children"])
+
+    body = next((n for n in roots if n["tag"] == "body"), None)
+    if body is None:
+        for r in roots:
+            body = next((c for c in r["children"] if c["tag"] == "body"), None)
+            if body is not None:
+                break
+    cands = body["children"] if body is not None else roots
+    hits = [n for n in cands if has_id(n)]
+    return hits or None
+
+
+def restrict_tree(t: Tree, roots: list[dict]) -> None:
+    """Re-scope sig/classes/panel to the given subtrees (drop scaffolding)."""
+    t.roots = roots
+    t.sig = {}
+    t.all_classes = []
+    t.panel_classes = []
+
+    def walk(n: dict, in_svg: int) -> None:
+        tag = n["tag"]
+        if in_svg == 0:
+            t2 = TAG_RENAME.get(tag, tag)
+            t.sig[t2] = t.sig.get(t2, 0) + 1
+        cls = n["_cls_all"]
+        t.all_classes.extend(cls)
+        if not t.panel_classes and (
+            n["role"] == "dialog"
+            or tag in ("aside", "dialog", "nav", "footer", "section",
+                       "main", "form")
+        ):
+            t.panel_classes = cls
+        for c in n["children"]:
+            walk(c, in_svg + 1 if tag == "svg" else in_svg)
+
+    for r in roots:
+        walk(r, 0)
 
 
 def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
@@ -749,6 +797,11 @@ def main() -> int:
                     continue
         t = Tree()
         t.feed(html_text)
+        # If the fragment wraps the real component in demo scaffolding
+        # (id-marked component elements), scope the signature to it.
+        roots = component_roots(t.roots, f"{_meta_key}-")
+        if roots is not None:
+            restrict_tree(t, roots)
         spec = bank_item(slug, args.pack, comp, html_text, topo_class, conf, t,
                          outdir, sc, cat, qw, comp_source, is_new_topo)
         rows.append({"slug": slug, "topology_class": topo_class,
