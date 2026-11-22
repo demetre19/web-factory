@@ -32,6 +32,10 @@ SECTION_CLASS = {
     'ios-sheets': 'overlay', 'ios-onboarding': 'flow',
     'ios-settings': 'utility', 'ios-paywalls': 'monetisation',
     'ios-empty-states': 'feedback', 'ios-auth': 'flow',
+    'ios-search': 'utility', 'ios-notifications': 'feedback',
+    'ios-profile': 'utility', 'ios-lists': 'content',
+    'ios-checkout': 'monetisation', 'ios-on-demand': 'flow',
+    'ios-verification': 'flow',
 }
 
 
