@@ -1,15 +1,15 @@
 {
- "dist_sha256": "e6f736471a5bac0f",
+ "dist_sha256": "3984eeff9e75f125",
  "findings": [
   {
    "metric": "image_coverage",
    "op": ">=",
    "page": "strata-cleaning-melbourne",
-   "pass": false,
+   "pass": true,
    "rule": "J.12",
-   "severity": "fail",
-   "threshold": 0.06,
-   "value": 0.0551
+   "severity": "warn",
+   "threshold": 0.1,
+   "value": 0.0744
   },
   {
    "metric": "tap_target_min_px",
@@ -22,7 +22,7 @@
    "value": 15
   }
  ],
- "measure_sha256": "3ce7135168b7b176",
+ "measure_sha256": "0322ad104d5c227c",
  "thresholds": {
   "contrast_min_ratio": {
    "fail": 3.0,
@@ -62,7 +62,7 @@
   }
  },
  "tool": "judge.py",
- "verdict": "fail",
+ "verdict": "pass",
  "version": 1,
  "vertical": "services"
 }

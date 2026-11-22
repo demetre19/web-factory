@@ -31,6 +31,7 @@ import gate          # noqa: E402
 import pipeline_emit as PE  # noqa: E402
 import emit_global   # noqa: E402
 import site_folder as SF  # noqa: E402
+import plan_from_copy as PC  # noqa: E402
 
 
 _REM_LIT = re.compile(r'(?<![\w.])(-?\d*\.?\d+)rem\b')
@@ -670,6 +671,19 @@ def emit_layouts(ctx):
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
             ov_rows.append((cc, r2))
+        # and after the split-media rows, the same media-pane rows
+        # the plan's post-pass fills — the card locks the ratios the
+        # shipped page renders (P.7)
+        for cc2, r3 in ov_rows:
+            if (r3.get('image')
+                    or cc2.get('composition') not in PC.MEDIA_PANE_EXTRA):
+                continue
+            m = next(left, None)
+            if m is None:
+                break
+            r3['image'] = {'src': m['src'], 'alt': m['alt']}
+            r3['media_ratio'] = '4:3'
+            cc2['media_ratio'] = '4:3'
         txt = _page_astro(ctx, ov_rows, copy, bank_css)
         PE._w(os.path.join(ctx.site, 'src', 'pages', 'preview',
                            f'lo-{oid}.astro'), txt)
