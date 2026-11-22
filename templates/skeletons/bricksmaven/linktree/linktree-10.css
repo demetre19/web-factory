@@ -1,28 +1,28 @@
-  .wf-linktree-10 .bm-linktree-10__link-cover {
+  .wf-linktree-10 .wf-linktree-10__link-cover {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-linktree-10 .bm-social-share {
+  .wf-linktree-10 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-10 .bm-linktree-10__links {
+  .wf-linktree-10 .wf-linktree-10__links {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-linktree-10 .bm-linktree-9__link-row {
+  .wf-linktree-10 .wf-linktree-9__link-row {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-linktree-10 .bm-linktree-list {
+  .wf-linktree-10 .wf-linktree-list {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
   @media (max-width: 44rem) {
-    .wf-linktree-10 .bm-social-share { flex-direction: column; }
+    .wf-linktree-10 .wf-social-share { flex-direction: column; }
   }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-product-single-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-product-single-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (product-single-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,7 +53,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-product-single-1">
   <div class="sec-inner">
-    <div class="bm-product-single-1__container">
+    <div class="wf-product-single-1__container">
       <div>
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -62,13 +62,13 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
     </div>
-    <div class="bm-product-single__related-products-container">
+    <div class="wf-product-single__related-products-container">
       {head && <h2 class="text-fluid-2">{head}</h2>}
-      {image &&       <div class="bm-related-products-list-1__list">
+      {image &&       <div class="wf-related-products-list-1__list">
         {image &&         <div>
-          {image &&           <div class="bm-related-products-list-1-card">
+          {image &&           <div class="wf-related-products-list-1-card">
             {image &&             <div>
-              {image && image.src && <figure class="bm-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+              {image && image.src && <figure class="wf-related-products-list-1-card__image ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>

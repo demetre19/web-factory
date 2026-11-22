@@ -1,22 +1,22 @@
-  .wf-coming-soon-6 .bm-coming-soon-6__container {
+  .wf-coming-soon-6 .wf-coming-soon-6__container {
     row-gap: var(--space-s);
   }
 
-  .wf-coming-soon-6 .bm-coming-soon-6__inner {
+  .wf-coming-soon-6 .wf-coming-soon-6__inner {
     row-gap: var(--space-s);
   }
 
-  .wf-coming-soon-6 .bm-coming-soon-6__media-wrapper {
+  .wf-coming-soon-6 .wf-coming-soon-6__media-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-coming-soon-6 .bm-coming-soon-6__content {
+  .wf-coming-soon-6 .wf-coming-soon-6__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-coming-soon-6 .bm-social-share {
+  .wf-coming-soon-6 .wf-social-share {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -24,5 +24,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-coming-soon-6 .bm-social-share { flex-direction: column; }
+    .wf-coming-soon-6 .wf-social-share { flex-direction: column; }
   }

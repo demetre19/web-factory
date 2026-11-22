@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-archive-28 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-archive-28 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-archive-28.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -63,10 +63,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       <div class="blog-archive-28__archive-articles">
-        {list.length > 0 && <div class="blog-archive-28-list">{(list || []).map((it) => (
-              <div class="blog-archive-28-article-card card">
-                <div class="blog-archive-28-article-card__meta-data">
-                  <div class="blog-archive-28-article-card__terms-wrapper">
+        {list.length > 0 && <div class="wf-blog-archive-28-list">{(list || []).map((it) => (
+              <div class="wf-blog-archive-28-article-card card">
+                <div class="wf-blog-archive-28-article-card__meta-data">
+                  <div class="wf-blog-archive-28-article-card__terms-wrapper">
                     {it.icon && <IconChip name={it.icon} />}
                     <div class="stack">
                       <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -80,10 +80,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
-                <div class="blog-archive-28-article-card__content">
+                <div class="wf-blog-archive-28-article-card__content">
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <div class="blog-archive-28-article-card__author">
+                  <div class="wf-blog-archive-28-article-card__author">
                     <p class="text-fluid-0">{it.text}</p>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         {links.length > 0 &&         <div>
           {links.length > 0 && <div>
             <div class="grid-auto gap-fluid-m">{(links || []).map((it) => (
-                <div class="blog-archive-28-category-list-items card">
+                <div class="wf-blog-archive-28-category-list-items card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>

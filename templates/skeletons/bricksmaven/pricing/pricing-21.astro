@@ -1,6 +1,6 @@
 ---
 /**
- * bm-pricing-21 — TRANSLATED Bricksmaven skeleton.
+ * wf-pricing-21 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (pricing-21.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,7 +55,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-pricing-21__container">
+    <div class="wf-pricing-21__container">
       <div class="intro">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
@@ -64,10 +64,10 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
       </div>}
 
-      {list.length > 0 && <div class="bm-pricing-21-pricing-wrapper">{(list || []).map((it) => (
-            <div class="bm-pricing-21-card card">
-              <div class="bm-pricing-21-card__top">
-                <div class="bm-pricing-21-card__footer">
+      {list.length > 0 && <div class="wf-pricing-21-pricing-wrapper">{(list || []).map((it) => (
+            <div class="wf-pricing-21-card card">
+              <div class="wf-pricing-21-card__top">
+                <div class="wf-pricing-21-card__footer">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -76,9 +76,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              {(it.items || []).length > 0 && <div class="bm-list">
+              {(it.items || []).length > 0 && <div class="wf-list">
                 <div class="grid-auto gap-fluid-m">{((it.items || []) || []).map((it2) => (
-                    <div class="bm-list-item card">
+                    <div class="wf-list-item card">
                       {it2.icon && <IconChip name={it2.icon} />}
                       <div class="stack">
                         <h3 class="text-fluid-1">{it2.term || it2.title || it2.text}</h3>
@@ -87,7 +87,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                     </div>
                   ))}</div>
               </div>}
-              <div class="bm-pricing-21-card__cta-wrapper">
+              <div class="wf-pricing-21-card__cta-wrapper">
                 {it.icon && <IconChip name={it.icon} />}
                 <div class="stack">
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

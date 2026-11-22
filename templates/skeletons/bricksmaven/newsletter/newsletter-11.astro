@@ -1,6 +1,6 @@
 ---
 /**
- * bm-newsletter-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-newsletter-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (newsletter-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,9 +55,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="bm-newsletter-11__container">
-      <div class="bm-newsletter-11__newsletter">
-        <div class="bm-newsletter-11__top">
+    <div class="wf-newsletter-11__container">
+      <div class="wf-newsletter-11__newsletter">
+        <div class="wf-newsletter-11__top">
           {head && <h2 class="text-fluid-2">{head}</h2>}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                   </div>
@@ -65,20 +65,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         </div>}
 
-        <form class="bm-form-widget" novalidate>
+        <form class="wf-form-widget" novalidate>
         </form>
       </div>
-      {links.length > 0 && <div class="bm-testimonial-40-list bm-testimonial-40-list--alt">{(links || []).map((it) => (
-            <div class="bm-testimonial-40-card card">
-              <div class="bm-testimonial-40-card__content">
-                <div class="bm-testimonial-40-card__top">
+      {links.length > 0 && <div class="wf-testimonial-40-list wf-testimonial-40-list--alt">{(links || []).map((it) => (
+            <div class="wf-testimonial-40-card card">
+              <div class="wf-testimonial-40-card__content">
+                <div class="wf-testimonial-40-card__top">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                     {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
                 </div>
-                <div class="bm-testimonial-40-card__client">
+                <div class="wf-testimonial-40-card__client">
                   <p class="text-fluid-0">{it.text}</p>
                   <p class="text-fluid-0">{it.text}</p>
                 </div>

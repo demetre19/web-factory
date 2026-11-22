@@ -1,6 +1,6 @@
 ---
 /**
- * bm-category-list-5 — TRANSLATED Bricksmaven skeleton.
+ * wf-category-list-5 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (category-list-5.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -65,11 +65,11 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 && <div class="category-list-5__list">{(list || []).map((it) => (
-            <div class="category-list-5-card card">
+            <div class="wf-category-list-5-card card">
               <div class="category-list-5__content">
                 {it.icon && <IconChip name={it.icon} />}
-                <h3 class="category-list-5-card__heading text-fluid-1">{it.term || it.title}</h3>
-                <p class="category-list-5-card__text text-fluid-0">{it.text}</p>
+                <h3 class="wf-category-list-5-card__heading text-fluid-1">{it.term || it.title}</h3>
+                <p class="wf-category-list-5-card__text text-fluid-0">{it.text}</p>
               </div>
             </div>
           ))}</div>}

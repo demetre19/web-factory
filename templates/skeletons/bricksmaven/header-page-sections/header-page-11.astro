@@ -1,6 +1,6 @@
 ---
 /**
- * bm-header-page-11 — TRANSLATED Bricksmaven skeleton.
+ * wf-header-page-11 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (header-page-11.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,16 +53,16 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-header-page-11">
   <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
-    <div class="bm-header-page-11__container row between">
-      <div class="bm-header-page-11__intro row between">
-        {head &&         <div class="bm-header-page-11__top row between">
+    <div class="wf-header-page-11__container row between">
+      <div class="wf-header-page-11__intro row between">
+        {head &&         <div class="wf-header-page-11__top row between">
           {head && <h1 class="text-fluid-4">{head}</h1>}
         </div>
         }
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         {act.label &&         <div class="cta-combo row between">
-          {act.label && <p class="mt-fluid-m"><a class="wf-cta-button nav-cta" href={act.href}>{act.label}</a></p>}
+          {act.label && <p class="nav-cta mt-fluid-m"><a class="wf-cta-button" href={act.href}>{act.label}</a></p>}
         </div>
         }
       </div>

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-23 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-23 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-23.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,14 +47,14 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-23">
   <div class="sec-inner">
-    <div class="bm-footer-23__top-container row between">
-      <div class="bm-footer-23__contact row between">
-        {head &&         <div class="bm-footer-23__top row between">
+    <div class="wf-footer-23__top-container row between">
+      <div class="wf-footer-23__contact row between">
+        {head &&         <div class="wf-footer-23__top row between">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }
         {list.length > 0 &&         <div class="row between">
-          {list.length > 0 && <div class="bm-footer-22-social-links row between">
+          {list.length > 0 && <div class="wf-footer-22-social-links row between">
             <div class="row gap-fluid-m">{(list || []).map((it) => (
                 <div>
                   <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
@@ -87,7 +87,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       </div>
       }
     </div>
-    <div class="bm-footer-23__footer-container row between">
+    <div class="wf-footer-23__footer-container row between">
       <div>
         <div class="footer-nav-legal">
           {links.length > 0 && <div class="footer-legal-nav row between">

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-author-page-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-author-page-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (author-page-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -54,15 +54,15 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 <div class="wf-author-page-1">
   <div class="sec-inner">
     <div>
-      <div class="bm-author-page-1__content">
-        {image &&         <div class="bm-author-card-1">
+      <div class="wf-author-page-1__content">
+        {image &&         <div class="wf-author-card-1">
           {image &&           <div>
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
           </div>
           }
         </div>
         }
-        {head &&         <div class="bm-author-page-1__post-container">
+        {head &&         <div class="wf-author-page-1__post-container">
           {head && <h2 class="text-fluid-2">{head}</h2>}
         </div>
         }

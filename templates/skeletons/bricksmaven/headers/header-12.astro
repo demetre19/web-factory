@@ -1,6 +1,6 @@
 ---
 /**
- * bm-header-12 — TRANSLATED Bricksmaven skeleton.
+ * wf-header-12 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (header-12.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,17 +47,17 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-header-12">
   <div class="sec-inner">
-    <div class="bm-header-12__container row between">
+    <div class="wf-header-12__container row between">
       <div>
         <span class="logo brand-mark">{brand}</span>
       </div>
       <div>
         <div>
           {list.length > 0 && <div class="row between">
-            <div class="row gap-fluid-m">{(list || []).map((it) => (<>
+            <div class="row gap-fluid-m">{(list || []).map((it) => (
                 <a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a>
                 {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
-              </>))}</div>
+              ))}</div>
           </div>}
           {list.length > 0 && <button class="burger" type="button" aria-label="Menu"><span aria-hidden="true">≡</span></button>}
         </div>

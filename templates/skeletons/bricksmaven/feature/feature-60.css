@@ -1,4 +1,4 @@
-  .wf-feature-60 .bm-feature-60__container {
+  .wf-feature-60 .wf-feature-60__container {
     row-gap: var(--space-s);
   }
 
@@ -8,18 +8,18 @@
     row-gap: var(--flow-spacing);
   }
 
-  .wf-feature-60 .bm-feature-60__list {
+  .wf-feature-60 .wf-feature-60__list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-feature-60 .bm-feature-60-card {
+  .wf-feature-60 .wf-feature-60-card {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: calc(100% * 2 / 1);
   }
 
-  .wf-feature-60 .bm-feature-60-card__content {
+  .wf-feature-60 .wf-feature-60-card__content {
     row-gap: var(--flow-spacing);
   }

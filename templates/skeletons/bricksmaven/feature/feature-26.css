@@ -1,23 +1,23 @@
-  .wf-feature-26 .feature-26-container {
+  .wf-feature-26 .wf-feature-26-container {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xl);
   }
 
-  .wf-feature-26 .bm-omega-feature-list-ul {
+  .wf-feature-26 .wf-omega-feature-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-feature-26 .bm-omega-feature-list-card {
+  .wf-feature-26 .wf-omega-feature-list-card {
     display: flex;
     flex-direction: row;
     column-gap: var(--space-s);
     row-gap: var(--space-s);
   }
 
-  .wf-feature-26 .bm-omega-feature-list-card__content {
+  .wf-feature-26 .wf-omega-feature-list-card__content {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-s);
@@ -25,5 +25,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-feature-26 .bm-omega-feature-list-card { flex-direction: column; }
+    .wf-feature-26 .wf-omega-feature-list-card { flex-direction: column; }
   }

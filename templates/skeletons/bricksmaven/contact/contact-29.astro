@@ -1,6 +1,6 @@
 ---
 /**
- * bm-contact-29 — TRANSLATED Bricksmaven skeleton.
+ * wf-contact-29 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (contact-29.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -53,20 +53,20 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
 <div class="wf-contact-29">
   <div class="sec-inner">
-    <div class="bm-contact-29__container">
-      <div class="bm-contact-29__content">
+    <div class="wf-contact-29__container">
+      <div class="wf-contact-29__content">
         {head &&         <div>
           {head && <h1 class="text-fluid-4">{head}</h1>}
         </div>
         }
   {sub && <p class="mt-stack lede" set:html={inline(sub)} />}
   {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
-        {list.length > 0 && <div class="bm-contact-29-contact-details">
+        {list.length > 0 && <div class="wf-contact-29-contact-details">
           <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
-              <div class="bm-contact-29-row card">
+              <div class="wf-contact-29-row card">
                 {it.icon && <IconChip name={it.icon} />}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                <div class="bm-contact-29-row__footer">
+                <div class="wf-contact-29-row__footer">
                   <p class="text-fluid-0">{it.text}</p>
                   <div>
                     <p class="text-fluid-0">{it.text}</p>

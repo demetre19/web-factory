@@ -1,6 +1,6 @@
 ---
 /**
- * bm-blog-section-8 — TRANSLATED Bricksmaven skeleton.
+ * wf-blog-section-8 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (blog-section-8.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,8 +55,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   <div class={image && image.src ? 'split' : undefined}>
     <div class="stack">
   <div class="sec-inner">
-    <div class="blog-section-8-container">
-      <div class="blog-section-8-head">
+    <div class="wf-blog-section-8-container">
+      <div class="wf-blog-section-8-head">
         {head && <h2 class="text-fluid-2">{head}</h2>}
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
               </div>
@@ -65,9 +65,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       </div>}
 
       {list.length > 0 &&       <div>
-        {list.length > 0 && <div class="blog-section-8-wrapper">{(list || []).map((it) => (
-              <div class="blog-section-8-card card">
-                <div class="blog-section-8-card__meta">
+        {list.length > 0 && <div class="wf-blog-section-8-wrapper">{(list || []).map((it) => (
+              <div class="wf-blog-section-8-card card">
+                <div class="wf-blog-section-8-card__meta">
                   {it.icon && <IconChip name={it.icon} />}
                   <div class="stack">
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
@@ -75,8 +75,8 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   </div>
                   {it.icon && <IconChip name={it.icon} />}
                   <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <div class="blog-section-8-card__author grid-auto gap-fluid-l">
-                    <div class="blog-section-8-card__meta">
+                  <div class="wf-blog-section-8-card__author grid-auto gap-fluid-l">
+                    <div class="wf-blog-section-8-card__meta">
                       {it.icon && <IconChip name={it.icon} />}
                       <h4 class="text-fluid-1">{it.term || it.title}</h4>
                       <p class="text-fluid-0">{it.text}</p>

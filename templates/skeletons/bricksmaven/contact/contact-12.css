@@ -1,4 +1,4 @@
-  .wf-contact-12 .contact-12-container {
+  .wf-contact-12 .wf-contact-12-container {
     row-gap: var(--space-xl);
   }
 
@@ -8,25 +8,25 @@
     row-gap: var(--space-s);
   }
 
-  .wf-contact-12 .contact-12-content {
+  .wf-contact-12 .wf-contact-12-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-l);
   }
 
-  .wf-contact-12 .contact-12-content-list-ul {
+  .wf-contact-12 .wf-contact-12-content-list-ul {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--space-m);
   }
 
-  .wf-contact-12 .contact-12-content-list-location {
+  .wf-contact-12 .wf-contact-12-content-list-location {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
     gap: var(--grid-gap);
   }
 
-  .wf-contact-12 .contact-12-content-list-location__detail {
+  .wf-contact-12 .wf-contact-12-content-list-location__detail {
     display: flex;
     flex-direction: column;
     row-gap: var(--space-xs);

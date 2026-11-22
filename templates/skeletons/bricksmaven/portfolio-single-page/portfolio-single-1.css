@@ -1,56 +1,56 @@
-  .wf-portfolio-single-1 .bm-portfolio-single-1 {
+  .wf-portfolio-single-1 .wf-portfolio-single-1 {
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1__container {
+  .wf-portfolio-single-1 .wf-portfolio-single-1__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1__aside {
+  .wf-portfolio-single-1 .wf-portfolio-single-1__aside {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-1 .bm-live-website-btn {
+  .wf-portfolio-single-1 .wf-live-website-btn {
     display: flex;
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 4);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-meta-data-1 {
+  .wf-portfolio-single-1 .wf-portfolio-single-meta-data-1 {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-1 .bm-contact-widget-2 {
+  .wf-portfolio-single-1 .wf-contact-widget-2 {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-1 .bm-contact-widget-2__footer {
+  .wf-portfolio-single-1 .wf-contact-widget-2__footer {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-1 .bm-contact-widget-link {
+  .wf-portfolio-single-1 .wf-contact-widget-link {
     display: flex;
     column-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-1 .bm-contact-widget-link__icon-wrapper {
+  .wf-portfolio-single-1 .wf-contact-widget-link__icon-wrapper {
     display: flex;
     gap: var(--space-s);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1__content {
+  .wf-portfolio-single-1 .wf-portfolio-single-1__content {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1-media {
+  .wf-portfolio-single-1 .wf-portfolio-single-1-media {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1-testimonial {
+  .wf-portfolio-single-1 .wf-portfolio-single-1-testimonial {
     row-gap: var(--flow-spacing);
   }
 
@@ -71,26 +71,26 @@
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-single-1__footer-container {
+  .wf-portfolio-single-1 .wf-portfolio-single-1__footer-container {
     row-gap: var(--space-s);
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-related-list {
+  .wf-portfolio-single-1 .wf-portfolio-related-list {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-portfolio-single-1 .bm-portfolio-related-card__content {
+  .wf-portfolio-single-1 .wf-portfolio-related-card__content {
     row-gap: calc(var(--flow-spacing) / 2);
     display: flex;
   }
 
   @media (max-width: 44rem) {
-    .wf-portfolio-single-1 .bm-live-website-btn { flex-direction: column; }
-    .wf-portfolio-single-1 .bm-contact-widget-link { flex-direction: column; }
-    .wf-portfolio-single-1 .bm-contact-widget-link__icon-wrapper { flex-direction: column; }
+    .wf-portfolio-single-1 .wf-live-website-btn { flex-direction: column; }
+    .wf-portfolio-single-1 .wf-contact-widget-link { flex-direction: column; }
+    .wf-portfolio-single-1 .wf-contact-widget-link__icon-wrapper { flex-direction: column; }
     .wf-portfolio-single-1 .testimonial-17-list-card { flex-direction: column; }
     .wf-portfolio-single-1 .testimonial-17-list-card__wrapper { flex-direction: column; }
-    .wf-portfolio-single-1 .bm-portfolio-related-card__content { flex-direction: column; }
+    .wf-portfolio-single-1 .wf-portfolio-related-card__content { flex-direction: column; }
   }

@@ -1,6 +1,6 @@
 ---
 /**
- * bm-footer-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-footer-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (footer-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -47,8 +47,8 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 
 <div class="wf-footer-2">
   <div class="sec-inner">
-    <div class="footer-2-container row between">
-      <div class="footer-2-column-left">
+    <div class="wf-footer-2-container row between">
+      <div class="wf-footer-2-column-left">
         <span class="logo brand-mark">{brand}</span>
       </div>
       {list.length > 0 &&       <div>
@@ -64,7 +64,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
       }
     </div>
     <div>
-      <div class="footer-2-bottom__container row between">
+      <div class="wf-footer-2-bottom__container row between">
         {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
         {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
         <div>

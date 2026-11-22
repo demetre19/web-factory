@@ -1,4 +1,4 @@
-  .wf-pricing-11 .pricing-11-container {
+  .wf-pricing-11 .wf-pricing-11-container {
     row-gap: var(--space-s);
   }
 
@@ -14,22 +14,22 @@
     gap: var(--space-s);
   }
 
-  .wf-pricing-11 .pricing-11-list {
+  .wf-pricing-11 .wf-pricing-11-list {
     row-gap: calc(var(--flow-spacing) * 1.6);
     display: block;
   }
 
-  .wf-pricing-11 .pricing-11-card {
+  .wf-pricing-11 .wf-pricing-11-card {
     display: grid;
     gap: calc(var(--space-m) * 2);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-pricing-11 .pricing-11-card__menu-item {
+  .wf-pricing-11 .wf-pricing-11-card__menu-item {
     row-gap: calc(var(--flow-spacing) / 2);
   }
 
-  .wf-pricing-11 .pricing-11-card__price-wrapper {
+  .wf-pricing-11 .wf-pricing-11-card__price-wrapper {
     display: flex;
     flex-direction: row;
     column-gap: calc(var(--flow-spacing) / 6);
@@ -37,5 +37,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-pricing-11 .pricing-11-card__price-wrapper { flex-direction: column; }
+    .wf-pricing-11 .wf-pricing-11-card__price-wrapper { flex-direction: column; }
   }

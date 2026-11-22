@@ -1,6 +1,6 @@
 ---
 /**
- * bm-linktree-2 — TRANSLATED Bricksmaven skeleton.
+ * wf-linktree-2 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (linktree-2.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -55,9 +55,9 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
   {head && <h2 class="text-fluid-2">{head}</h2>}
   <div class="sec-inner">
     <div>
-      <div class="bm-linktree-2__bio-wrapper">
+      <div class="wf-linktree-2__bio-wrapper">
         <div>
-          <div class="bm-linktree-2-bio__bio-data grid-auto gap-fluid-l">
+          <div class="wf-linktree-2-bio__bio-data grid-auto gap-fluid-l">
             {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
                       </div>
@@ -67,7 +67,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
 
         </div>
         {list.length > 0 &&         <div>
-          {list.length > 0 && <div class="bm-linktree-list">
+          {list.length > 0 && <div class="wf-linktree-list">
             <div class="grid-auto gap-fluid-m">{(list || []).map((it) => (
                 <div class="card">
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>

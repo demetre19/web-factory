@@ -1,6 +1,6 @@
 ---
 /**
- * bm-shop-hero-1 — TRANSLATED Bricksmaven skeleton.
+ * wf-shop-hero-1 — TRANSLATED Bricksmaven skeleton.
  * Produced by bricks_translate.py from the ACSS payload
  * beside this file (shop-hero-1.json). Bank source, NOT a gold
  * exemplar: the SOP adapts props/copy/rhythm before
@@ -67,17 +67,17 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     }
     <div>
       <div class="shop-hero-1__choice-container">
-        {image &&         <div class="shop-hero-1-card grid-auto gap-fluid-l">
+        {image &&         <div class="wf-shop-hero-1-card grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
-        {image &&         <div class="shop-hero-1-card grid-auto gap-fluid-l">
+        {image &&         <div class="wf-shop-hero-1-card grid-auto gap-fluid-l">
           {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
       </div>
-      {list.length > 0 && <div class="shop-hero-1-usp">{(list || []).map((it) => (
-            <div class="shop-hero-1-usp-card card">
+      {list.length > 0 && <div class="wf-shop-hero-1-usp">{(list || []).map((it) => (
+            <div class="wf-shop-hero-1-usp-card card">
               {it.icon && <IconChip name={it.icon} />}
               <div class="stack">
                 <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>

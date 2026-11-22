@@ -1,14 +1,14 @@
-  .wf-how-it-works-25 .bm-how-it-works-25__container {
+  .wf-how-it-works-25 .wf-how-it-works-25__container {
     display: grid;
     gap: var(--space-m);
     grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
   }
 
-  .wf-how-it-works-25 .bm-how-it-works-25__intro {
+  .wf-how-it-works-25 .wf-how-it-works-25__intro {
     row-gap: var(--flow-spacing);
   }
 
-  .wf-how-it-works-25 .bm-how-it-works-25-card__top {
+  .wf-how-it-works-25 .wf-how-it-works-25-card__top {
     display: flex;
     flex-wrap: nowrap;
     column-gap: calc(var(--flow-spacing) / 2);
@@ -16,5 +16,5 @@
   }
 
   @media (max-width: 44rem) {
-    .wf-how-it-works-25 .bm-how-it-works-25-card__top { flex-direction: column; }
+    .wf-how-it-works-25 .wf-how-it-works-25-card__top { flex-direction: column; }
   }
