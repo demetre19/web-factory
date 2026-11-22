@@ -576,14 +576,16 @@ def build(pdir, option=None):
         nav_items.append({'label': l['anchor'], 'href': l['href']})
     hero_cta = (copy.get('closing') or {}).get('cta')
     rows.append(base_row(
-        'nav', 'flyout-nav', speech_act=['chrome'], category='headers',
+        'nav', 'flyout-nav', label='Header', speech_act=['chrome'],
+        category='headers',
         surface='base', density='compact', emphasis='nav',
         align='center-axis', stack='text-first', collapse='burger',
         media_ratio='none', disclosure='open', intent='chrome',
         items=nav_items,
         cta={'label': phone, 'href': tel}))
     rows.append(base_row(
-        'hero', hero_comp, speech_act=['promise'], category='hero',
+        'hero', hero_comp, label='Hero', speech_act=['promise'],
+        category='hero',
         surface='media' if hero_comp == 'hero-act-merge' else 'base',
         density='regular', emphasis='headline',
         align='center-axis', stack='text-first', collapse='stacked',
@@ -617,7 +619,8 @@ def build(pdir, option=None):
         if prev == comp and rows[-1].get('density') == dens:
             dens = 'regular' if dens == 'compact' else 'compact'
         row = base_row(
-            name_of[bid], comp, speech_act=[act], category='content',
+            name_of[bid], comp, label=strip_md(b['h2']) or name_of[bid],
+            speech_act=[act], category='content',
             surface=surfaces[i % 2], density=dens, emphasis=emph,
             align=align, stack='text-first', collapse=collapse,
             media_ratio='none', disclosure='open',
@@ -654,7 +657,7 @@ def build(pdir, option=None):
         folded = geno.get('disclosure-tier') == 'folded'
         rows.append(base_row(
             'end-act', 'modal-form' if folded else 'form-panel',
-            speech_act=['act'],
+            label='Contact', speech_act=['act'],
             category='contact', surface='brand', density='spacious',
             emphasis='action', align='col-1-edge', stack='text-first',
             collapse='stacked', media_ratio='none',
@@ -662,7 +665,8 @@ def build(pdir, option=None):
             intent='cta', content_ids=['c-close'], copy_ref='closing',
             cta=clo['cta']))
     rows.append(base_row(
-        'footer', 'footer-bar', speech_act=['chrome'], category='footer',
+        'footer', 'footer-bar', label='Footer', speech_act=['chrome'],
+        category='footer',
         surface='base', density='compact', emphasis='links',
         align='center-axis', stack='text-first', collapse='1-col',
         media_ratio='none', disclosure='open', intent='chrome',
@@ -786,6 +790,11 @@ def build(pdir, option=None):
     import board_copy
     lay = {'generated_by': TOOL, 'copy_sha256': copy_sha, 'pick': pick,
            'allowed': allowed, 'options': table,
+           # human row titles — the picker's scrub rows display these,
+           # never the machine name (which is a slug, sometimes rule
+           # text e.g. 'faq-no-link-before-its-concept-defined')
+           'labels': {r['name']: r.get('label') or r['name']
+                      for r in rows},
            'boards': board_copy.build(pdir),
            'score_formula': f'{SCORE_BASE} - 0.1*orphan_rows '
                             '- 0.05*long_card_texts '
