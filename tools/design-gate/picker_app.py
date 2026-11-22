@@ -1706,6 +1706,127 @@ def run_ingest(pipeline, url='', html='', css_text=''):
                              css_text=css_text or '')
 
 
+# ------------------------------------------------------------------
+# donor DNA — a staged ingest donor as a CONSUMABLE dna vector in
+# the same knob space VIBE_FAMILIES binds (css/css_dark/theme).
+# DNA-DRAFTS/<slug>.json is staged state only — nothing auto-applies
+# it to a real BRIEF.
+# ------------------------------------------------------------------
+def _hex_mix(a, b, amt):
+    ha, hb = a.lstrip('#'), b.lstrip('#')
+    if len(ha) < 6 or len(hb) < 6:
+        return a
+    ta = tuple(int(ha[i:i + 2], 16) for i in (0, 2, 4))
+    tb = tuple(int(hb[i:i + 2], 16) for i in (0, 2, 4))
+    return '#%02x%02x%02x' % tuple(
+        max(0, min(255, int(round(x + (y - x) * amt))))
+        for x, y in zip(ta, tb))
+
+
+def _hex_lum(hexs):
+    h = (hexs or '').lstrip('#')
+    if len(h) == 3:
+        h = ''.join(c * 2 for c in h)
+    if len(h) < 6:
+        return 0.5
+    try:
+        r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    except ValueError:
+        return 0.5
+    f = lambda c: c / 12.92 if c <= 0.04045 else \
+        ((c + 0.055) / 1.055) ** 2.4
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+
+
+def _cr(a, b):
+    la, lb = _hex_lum(a), _hex_lum(b)
+    hi, lo = max(la, lb), min(la, lb)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+_DENSITY_GAP = {'tight': 'var(--space-s)', 'regular': None,
+                'spacious': 'var(--space-l)'}
+
+
+def _bundle(canvas, ink, accent, acc_ink, hover, rpx, font, gap):
+    return ('--bg-canvas:' + canvas +
+            ';--bg-surface:' + _hex_mix(canvas, ink, 0.045) +
+            ';--bg-elevated:' + _hex_mix(canvas, ink, 0.09) +
+            ';--border-default:' + _hex_mix(canvas, ink, 0.16) +
+            ';--text-primary:' + ink +
+            ';--text-secondary:' + _hex_mix(ink, canvas, 0.42) +
+            ';--action-primary:' + accent +
+            ';--action-primary-hover:' + hover +
+            ';--action-primary-ink:' + acc_ink + ';'
+            + (('--radius:' + rpx + ';--primitive-radius:' + rpx +
+                ';--r-card:' + rpx + ';') if rpx else '')
+            + (('--primitive-font-display:' + font +
+                ';--font-display:' + font + ';') if font else '')
+            + (('--flow-spacing:' + gap + ';--grid-gap:' + gap +
+                ';--content-gap:' + gap + ';') if gap else ''))
+
+
+def donor_vector(draft):
+    """dna_draft -> canonical vector {knobs, family} in the emitter's
+    knob space. family is a VIBE_FAMILIES-shaped bundle so the /frame
+    machinery renders any design wearing the donor unchanged."""
+    d = draft or {}
+    ty = d.get('type') or {}
+    fams = [f for f in (ty.get('families') or []) if isinstance(f, str)]
+    ink = d.get('ink') or '#17171a'
+    surface = d.get('surface') or '#ffffff'
+    accent = d.get('accent_guess') or d.get('accent') or '#17171a'
+    radius = d.get('radius_px_median')
+    rpx = ('%gpx' % radius) if isinstance(radius, (int, float)) else ''
+    density = d.get('density_guess') or 'regular'
+    palette = [c for c in (d.get('palette') or [])
+               if isinstance(c, str)] or [ink, surface, accent]
+    dark = _hex_lum(surface) < 0.45
+    acc_ink = ink if _cr(ink, accent) >= _cr(surface, accent) \
+        else surface
+    hover = _hex_mix(accent,
+                     '#000000' if _hex_lum(accent) > 0.45
+                     else '#ffffff', 0.18)
+    gap = _DENSITY_GAP.get(density)
+    font = (','.join('"' + f + '"' for f in fams[:2]) +
+            ',ui-sans-serif,system-ui,sans-serif') if fams else ''
+    if dark:
+        # donor's native look is the dark bundle; derive light
+        lcan = _hex_mix(ink, '#ffffff', 0.94)
+        css = _bundle(lcan, ink, accent, acc_ink, hover, rpx,
+                      font, gap)
+        d_ink = '#f4f4f6' if _cr('#f4f4f6', surface) >= _cr(
+            ink, surface) else ink
+        css_dark = _bundle(surface, d_ink, accent, acc_ink, hover,
+                           rpx, font, gap)
+    else:
+        css = _bundle(surface, ink, accent, acc_ink, hover, rpx,
+                      font, gap)
+        dcan = _hex_mix(ink, '#000000', 0.10)
+        css_dark = _bundle(dcan, surface, accent, acc_ink, hover,
+                           rpx, font, gap)
+    vec = {'knobs': {'palette': palette, 'ink': ink,
+                     'surface': surface, 'accent': accent,
+                     'radius_px': radius, 'density': density,
+                     'type': {'families': fams}, 'motion': 0},
+           'family': {'css': css, 'css_dark': css_dark, 'shape': '',
+                      'theme': 'dark' if dark else None,
+                      'genes': ['donor', 'ingest']}}
+    return vec
+
+
+def donor_family(pd, fam):
+    """resolve a /frame family name of the form donor-<slug> to the
+    staged DNA-DRAFTS bundle; None when absent."""
+    if not (fam or '').startswith('donor-') or not pd:
+        return None
+    slug = re.sub(r'[^a-z0-9-]+', '', fam[6:].lower())
+    rec = _json_at(pd, 'DNA-DRAFTS', slug + '.json') or {}
+    f = rec.get('family')
+    return dict(f) if isinstance(f, dict) and f.get('css') is not None \
+        else None
+
+
 def ingest_donor(pipeline, name, payload):
     '''Stage an ingested style as a donor draft inside the pipeline
     dir — INGEST-DRAFTS/<slug>.json, next to SAVED-SYSTEMS.'''
@@ -1728,8 +1849,20 @@ def ingest_donor(pipeline, name, payload):
                timespec='seconds')}
     fp = dd / (nm.lower() + '.json')
     fp.write_text(json.dumps(rec, indent=1))
-    return 0, f'donor draft saved → {fp.name}', {
-        'name': nm, 'file': str(fp)}
+    # stage the consumable DNA vector beside it — DNA-DRAFTS/<slug>
+    # is the donor rendered into the emitter's own knob space
+    vec = donor_vector(rec['dna_draft'])
+    vd = Path(pd) / 'DNA-DRAFTS'
+    vd.mkdir(exist_ok=True)
+    vf = vd / (nm.lower() + '.json')
+    vf.write_text(json.dumps(
+        {'name': nm.lower(), 'kind': 'dna-draft',
+         'source': 'ingest-donor', 'donor': str(fp),
+         'knobs': vec['knobs'], 'family': vec['family'],
+         'created': rec['created']}, indent=1))
+    return 0, f'donor draft saved → {fp.name} + {vf.name}', {
+        'name': nm, 'file': str(fp), 'dna': str(vf),
+        'dna_slug': 'donor-' + nm.lower()}
 
 
 def save_system(pipeline, name, mode=None):
@@ -2479,7 +2612,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       var nm=out.querySelector('#donorName').value.trim();
       if(!nm){toast('name the donor');return}
       api('/ingest-donor',{pipeline:PIPELINE,name:nm,data:INGEST})
-        .then(function(r){toast(r.message||'saved')})};
+        .then(function(r){
+          toast(r.message||'saved');
+          if(r.dna_slug){
+            // 'wear it' — bake the donor's staged DNA into every
+            // preview frame (still staged; nothing touches a BRIEF)
+            BAKED=r.dna_slug;DATA.picked_elements.vibe=BAKED;
+            toast('donor DNA staged — previews now wear it')}})};
   }
 
   function board(){
