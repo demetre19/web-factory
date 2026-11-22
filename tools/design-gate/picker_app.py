@@ -966,6 +966,7 @@ def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
     panels. Reads TOKENS.json sizes — what emit actually produces —
     so a re-bake re-emits the ladder. `tok` overrides the token
     bundle for candidate ladders. Returns dist-relative path."""
+    given_tok = tok is not None
     if tok is None:
         tp = os.path.join(pd, 'TOKENS.json')
         if not os.path.isfile(tp):
@@ -981,7 +982,7 @@ def emit_typescale_doc(pd, name='current', bundle=None, tok=None):
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'typescale')
     fp = os.path.join(outdir, name + '.html')
     stale = True
-    if tok is not None:
+    if given_tok:
         # candidate ladders re-emit only when their own spec changed
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
