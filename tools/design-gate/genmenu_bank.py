@@ -50,6 +50,8 @@ PACK_META = {
     "hero": ("hero-section", "hero", ["hero"], "hero"),
     "folio": ("card-block", "element", ["card"], "card"),
     "formspecimen": ("form-block", "form", ["form"], "form"),
+    "comparekit": ("comparison-table", "comparison", ["comparison"], "comparison"),
+    "tabular": ("data-table", "element", ["data"], "data table"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -212,6 +214,21 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if has("grid-cols-2", "lg:grid-cols-2", "md:grid-cols-2"):
             return "hero-split", "high"
         return "hero-centered", "high"
+    if baseline == "comparison-table":
+        low = c.lower()
+        if "before" in low and "after" in low:
+            return "comparison-before-after", "medium"
+        if "pros" in low or "cons" in low:
+            return "comparison-pros-cons", "medium"
+        if "<table" in c:
+            return "comparison-table", "high"
+        if has("grid-cols-2", "grid-cols-3", "md:grid-cols", "lg:grid-cols"):
+            return "comparison-cards", "medium"
+        return "comparison-cards", "low"
+    if baseline == "data-table":
+        if "aria-expanded" in c or "aria-controls" in c:
+            return "data-table-expandable", "medium"
+        return "data-table", "high"
     return baseline, "high" if baseline in ("auth-form", "empty-state") else "low"
 
 
