@@ -7792,7 +7792,8 @@ def _section_tag(c, brand=''):
         ('disclosure', c['disclosure']), ('surface', c['surface']),
         ('density', c['density']), ('intent', c.get('intent')),
         ('content', ' '.join(c.get('content_ids') or [])),
-        ('cols', c.get('cols')), ('recipe', c.get('recipe')),
+        ('cols', c.get('cols')), ('align', c.get('align')),
+        ('recipe', c.get('recipe')),
         ('mode', 'bar' if c.get('category') in ('headers', 'footer')
          else 'band'),
         ('tag', {'headers': 'header', 'footer': 'footer'}.get(
