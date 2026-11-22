@@ -162,7 +162,10 @@ def _menu_closed(frag):
 # banked nav snapshots render CLOSED, but their triggers carry no
 # handlers — this driver reopens the drawer/sheet on a control click
 # (and closes again on scrim click) so operators can inspect the
-# open chrome the exemplar was banked for
+# open chrome the exemplar was banked for. Controls inside the
+# closed-panel keep their meaning only when they are close controls
+# (an icon-only X or a 'close' label/class) — a menu item or an
+# accordion inside the open drawer must not dismiss the whole chrome
 _MENU_DRIVER = (
     '<script>(function(){'
     'document.addEventListener("click",function(e){'
@@ -172,6 +175,9 @@ _MENU_DRIVER = (
     'if(e.target.closest(\'[class*="fixed inset-0"][class*="opacity-0"]\'))'
     'document.body.classList.remove("wf-nav-open");'
     'return}'
+    'if(t.closest(\'[class*="wf-menu-closed"]\')&&'
+    '!t.closest(\'[aria-label*="lose" i],[title*="lose" i],'
+    '[class~="close"]\')&&t.textContent.trim()!=="")return;'
     'var on=document.body.classList.toggle("wf-nav-open");'
     'if(t.hasAttribute("aria-expanded"))'
     't.setAttribute("aria-expanded",on?"true":"false")'
@@ -3417,7 +3423,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v14-->' not in open(
+                    '<!--wf:bank:v16-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -3472,7 +3478,7 @@ def emit_bank_previews(pd):
                         'body{background:#0b0e14}'
                         if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v14-->' +
+                        fh.write('<!--wf:bank:v16-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
