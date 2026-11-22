@@ -307,8 +307,9 @@ VIBE_FAMILIES = {
         'shape': '.wf-hero-1 .hero-1-container{display:grid;'
                  'grid-template-columns:3fr 1fr;gap:var(--space-m);'
                  'align-items:center}'
-                 '.counter-1-grid-ul,.gridcard-1-grid-ul{'
-                 'grid-template-columns:repeat(4,1fr)!important}',
+                 '@media (min-width:720px){.counter-1-grid-ul,'
+                 '.gridcard-1-grid-ul{'
+                 'grid-template-columns:repeat(4,1fr)!important}}',
         'css': '--radius:2px;--primitive-radius:2px;--r-card:2px;'
                '--flow-spacing:var(--space-s);--grid-gap:var(--space-s);'
                '--content-gap:var(--space-s);'
@@ -644,125 +645,12 @@ def emit_element_previews(pd):
 # through /frame for every OTHER preview, so nothing needs files)
 # ------------------------------------------------------------------
 def _topo_variants(block, comp):
-    """[(topo_id, markup, extra_css)] — structural alternatives
-    emitted from the same skeleton: media side / full-bleed /
-    text-only. A variant is a markup class flip or a layout-rule
-    injection — token-bound, no new skeletons invented."""
-    out = [('as-built', block, '')]
-    if 'class="split' in block:
-        if 'media-first' in block:
-            flip = block.replace('split media-first', 'split', 1)
-            out.append(('media-last', flip, ''))
-        else:
-            flip = block.replace('class="split"',
-                                 'class="split media-first"', 1)
-            out.append(('media-first', flip, ''))
-        out.append(('text-wide', block,
-                    'figure{display:none!important}'
-                    '.split{grid-template-columns:1fr!important}'))
-    elif 'hero-1-container' in block:
-        out.append(('media-left', block,
-                    '.hero-1-container{direction:rtl}'
-                    '.hero-1-container>*{direction:ltr}'))
-        out.append(('centered', block,
-                    '.hero-1-container{grid-template-columns:1fr!'
-                    'important;text-align:center}'
-                    '.hero-1-container>div:nth-child(2)'
-                    '{display:none!important}'))
-        out.append(('media-bg', block,
-                    '.hero-1-container{grid-template-columns:1fr!'
-                    'important;position:relative}'
-                    '.hero-1-container>div:nth-child(2){position:'
-                    'absolute;inset:0;z-index:0;opacity:.22}'
-                    '.hero-1-container>div:nth-child(2) figure,'
-                    '.hero-1-container>div:nth-child(2) .media-round'
-                    '{height:100%}.hero-1__content{position:relative;'
-                    'z-index:1}'))
-    elif '<figure' in block:
-        out.append(('media-flip', block,
-                    '[data-comp="' + comp + '"]{direction:rtl}'
-                    '[data-comp="' + comp + '"] *{direction:ltr}'))
-        out.append(('text-wide', block,
-                    'figure{display:none!important}'))
-    if 'flow-list' in block:
-        # sequence topology: spine / rail / badge variants over the
-        # real emitted flow-list markup — structural CSS only
-        out.append(('timeline-spine', block,
-                    '.flow-list{list-style:none;position:relative;'
-                    'padding-left:2.2em}'
-                    '.flow-list::before{content:"";position:absolute;'
-                    'left:.8em;top:.4em;bottom:.4em;width:2px;'
-                    'background:var(--border-default,#888)}'
-                    '.flow-row{position:relative}'
-                    '.flow-row .num{position:absolute;left:-2.2em;'
-                    'top:.15em;width:1.6em;height:1.6em;border-radius:50%;'
-                    'background:var(--action-primary,#555);'
-                    'color:var(--bg-base,#fff);display:inline-flex;'
-                    'align-items:center;justify-content:center;'
-                    'font-size:.72em;line-height:1}'))
-        out.append(('numbered-rail', block,
-                    '.flow-list{list-style:none;display:grid;'
-                    'grid-template-columns:repeat(auto-fit,'
-                    'minmax(200px,1fr));gap:1.2em;padding-left:0}'
-                    '.flow-row{display:grid;'
-                    'grid-template-rows:auto 1fr;border-top:3px solid '
-                    'var(--action-primary,#555);padding-top:.6em}'
-                    '.flow-row .num{font-size:2.4em;font-weight:800;'
-                    'line-height:1;color:var(--action-primary,#555);'
-                    'display:block;margin-bottom:.25em}'))
-        out.append(('icon-badge', block,
-                    '.flow-list{list-style:none;padding-left:0;'
-                    'display:grid;gap:.9em}'
-                    '.flow-row{display:flex;align-items:flex-start;'
-                    'gap:.8em;background:var(--bg-elevated,#f2f2f2);'
-                    'border:1px solid var(--border-default,#ddd);'
-                    'border-radius:12px;padding:.9em}'
-                    '.flow-row .num{flex:none;width:2em;height:2em;'
-                    'border-radius:10px;background:var(--action-primary,'
-                    '#555);color:var(--bg-base,#fff);display:'
-                    'inline-flex;align-items:center;justify-content:'
-                    'center;font-weight:700}'))
-    if 'hworks-grid-ul' in block:
-        # the emitted how-it-works recipe: same steps, three real
-        # shapes — spine / numbered rail / badge wall
-        out.append(('timeline-spine', block,
-                    '.hworks-grid-ul{display:grid!important;'
-                    'grid-template-columns:1fr!important;gap:1em;'
-                    'position:relative;padding-left:2.4em}'
-                    '.hworks-grid-ul::before{content:"";position:'
-                    'absolute;left:.9em;top:.5em;bottom:.5em;width:2px;'
-                    'background:var(--border-default,#999)}'
-                    '.hworks-card{position:relative}'
-                    '.hworks-card .icon-chip{position:absolute;'
-                    'left:-2.4em;top:.6em;width:1.8em;height:1.8em;'
-                    'border-radius:50%;background:var(--action-primary,'
-                    '#555)!important;color:var(--bg-base,#fff);'
-                    'display:flex;align-items:center;'
-                    'justify-content:center}'))
-        out.append(('numbered-rail', block,
-                    '.hworks-grid-ul{counter-reset:wstep;display:grid!'
-                    'important;grid-template-columns:repeat(auto-fit,'
-                    'minmax(200px,1fr))!important;gap:1em}'
-                    '.hworks-card{border-top:3px solid '
-                    'var(--action-primary,#555);position:relative}'
-                    '.hworks-card::before{counter-increment:wstep;'
-                    'content:counter(wstep,decimal-leading-zero);'
-                    'display:block;font-size:2em;font-weight:800;'
-                    'line-height:1;color:var(--action-primary,#555);'
-                    'padding:.4em 0 .2em}'))
-        out.append(('icon-badge', block,
-                    '.hworks-card{border-radius:14px!important;'
-                    'box-shadow:0 4px 18px rgba(0,0,0,.10);'
-                    'text-align:center}'
-                    '.hworks-card .icon-chip{width:3em!important;'
-                    'height:3em!important;border-radius:14px;'
-                    'margin:.6em auto .3em;display:flex;'
-                    'align-items:center;justify-content:center;'
-                    'background:var(--action-primary,#555)!important;'
-                    'color:var(--bg-base,#fff)}'
-                    '.hworks-card .icon-chip svg{width:1.6em;'
-                    'height:1.6em}'))
-    return out
+    """[(topo_id, markup, extra_css)] — the audit found the injected
+    CSS 'variants' were fake alternates: identical markup with Δ<9px
+    (hero centered vs media-bg, process shapes, media flips). A
+    topology candidate must be a real emitted comp (or a real bank
+    topology), so this yields only the comp's own as-built doc."""
+    return [('as-built', block, '')]
 
 
 # the menu trigger is a designed affordance, not a text pill — the
@@ -1468,6 +1356,27 @@ def type_candidates(pd):
                              text_scale_desk=tr,
                              heading_scale_mob=hm,
                              heading_scale_desk=hr)
+        if merged == base and [tm, tr, hm, hr] == \
+                [cur_tm, cur_tr, cur_hm, cur_hr]:
+            # this spec IS the current ladder through the signed vibe
+            # — a cand- doc of it would be a near-identical fake. The
+            # card previews the real current doc instead, and every
+            # spec that resolves to this state folds in as an alias.
+            cur = emit_typescale_doc(pd)
+            cards.append({
+                'id': 'tsc-' + gh, 'name': 'Ladder — resolved',
+                'preview': ('/built/' + urllib.parse.quote(
+                    os.path.join(pd, 'site', 'dist', cur)))
+                if cur else None,
+                'tags': ['current'],
+                'desc': 'the current ladder — as signed on this vibe',
+                'element': 'type', 'variant': 'genes:' + gh,
+                'genes': overrides,
+                'fluid': {'text_scale_mob': tm, 'text_scale_desk': tr,
+                          'heading_scale_mob': hm,
+                          'heading_scale_desk': hr}})
+            by_ch[ch] = cards[-1]
+            continue
         rel = emit_typescale_doc(pd, 'cand-' + ch, bundle=bundle,
                                  tok=ctok)
         if not rel:
@@ -3079,10 +2988,18 @@ def vibe_resolve(pd, genes):
         return {'error': 'vibe atlas unavailable'}
     r = vibe_atlas.resolve(genes)
     ghash = vibe_atlas.gene_hash(genes)
-    rel = emit_vibe_doc(pd, 'gen-' + ghash, r)
+    if not r['genes']:
+        # empty genes = the pipeline's own DNA — the emitted doc
+        # is byte-identical to vibes/baseline.html, so reuse it
+        # instead of writing a gen-<hash> duplicate
+        rel = emit_vibe_doc(pd, 'baseline', r)
+    else:
+        rel = emit_vibe_doc(pd, 'gen-' + ghash, r)
     if not rel:
         return {'error': 'no emitted blocks'}
-    tsrel = emit_typescale_doc(pd, 'gen-' + ghash, r)
+    tsrel = emit_typescale_doc(
+        pd, 'gen-' + ghash, r) if r['genes'] else \
+        emit_typescale_doc(pd)
     return {'preview': '/built/' + urllib.parse.quote(
                 os.path.join(pd, 'site', 'dist', rel)),
             'typescale': ('/built/' + urllib.parse.quote(
