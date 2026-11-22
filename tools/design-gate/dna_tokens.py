@@ -312,6 +312,13 @@ def _lum(hexv):
     return gate._lum(rgb) if rgb else None
 
 
+def _contrast(a, b):
+    la, lb = _lum(a), _lum(b)
+    if la is None or lb is None:
+        return None
+    return (max(la, lb) + .05) / (min(la, lb) + .05)
+
+
 def css_vars(knobs, geno, accent, roles_light, fluid=None):
     """knobs + roles → the css custom-property strings. The ONLY
     place these strings are authored — every size is a clamp.py
@@ -368,7 +375,20 @@ def roles_for(geno, accent):
     light = dict(canvas)
     darkm = dict(NEUTRAL_DARK)
     darkm['accent'] = accent
-    darkm['accent_foreground'] = canvas['accent_foreground']
+    # the dark-mode ink on accent must reach 4.5:1 like the light
+    # pairing — the light canvas's pick can sit in the dead zone
+    # (#0EA5E9 ink #14181A = 4.44). Try the dark family first (dark
+    # accents are usually mid-luminance), then the lights.
+    for c in (NEUTRAL_DARK['bg'], '#000000', canvas['accent_foreground'],
+              NEUTRAL_LIGHT['bg']):
+        if c == canvas['accent_foreground'] and                 (_contrast(c, accent) or 0) >= 4.5:
+            darkm['accent_foreground'] = c
+            break
+        if (_contrast(c, accent) or 0) >= 4.5:
+            darkm['accent_foreground'] = c
+            break
+    else:
+        darkm['accent_foreground'] = canvas['accent_foreground']
     return light, darkm
 
 

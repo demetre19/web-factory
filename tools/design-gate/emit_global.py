@@ -1025,9 +1025,11 @@ def _ds_specs(tokens):
         '  .ds-shadow-card { box-shadow: var(--shadow-card); }',
         '  .ds-shadow-pop { box-shadow: var(--shadow-pop); }',
         '  .ds-label { font-size: var(--fs--1);',
-        '      color: var(--text-secondary); }',
+        '      color: color-mix(in oklch, var(--sec-fg) 92%,',
+        '          var(--sec-bg)); }',
         '  .ds-value { font-size: var(--fs--1);',
-        '      color: var(--text-muted); }']
+        '      color: color-mix(in oklch, var(--sec-fg) 75%,',
+        '          var(--sec-bg)); }']
     for name in sorted(clamp.sizes(fl)):
         if name.startswith(('text-', 'h')):
             out.append(f'  .ds-tx-{name} {{ font-size: var(--{name}); }}')
@@ -1180,10 +1182,20 @@ def tailwind_config(tokens):
     # (trailing comma) and keeps sucrase from reading the next
     # key as an expression continuation.
     colour_lines = colour_lines.rstrip() + '\n   '
+    # the density-* classes reach the markup through Section.astro's
+    # density-${density} expression — invisible to the content scan —
+    # while the L.14/L.7 gate reads them off the built tag, so they
+    # must be safelisted to keep their @layer rules in dist css.
+    dens = sorted((tokens.get('knobs') or {})
+                  .get('space.section_py') or {})
+    if not dens:
+        dens = ['compact', 'regular', 'spacious']
+    safe = ', '.join(f"'density-{d}'" for d in dens)
     return f'''/** generated from TOKENS.json — emit_global.tailwind_config */
 export default {{
   darkMode: 'class',
   content: ['./src/**/*.{{astro,html}}'],
+  safelist: [{safe}],
   theme: {{ extend: {{
     colors: {{{colour_lines}}},
     fontSize: {{
