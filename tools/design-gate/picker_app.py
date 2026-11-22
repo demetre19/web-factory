@@ -3859,6 +3859,13 @@ def emit_bank_previews(pd):
                     frag = re.sub(
                         r'<script[^>]*_aistudio-iframe[^>]*>'
                         r'\s*</script>', '', frag)
+                    # the tailwind CDN play script re-injects utilities
+                    # at runtime, bypassing every emit-time floor;
+                    # the vendored bank-preview.css already carries the
+                    # classes it would compile
+                    frag = re.sub(
+                        r'<script[^>]*cdn\.tailwindcss\.com[^>]*>'
+                        r'\s*</script>', '', frag)
                     # G.floor — the fragment's own <style> blocks and
                     # inline style= attributes carry gap declarations
                     # the external css pass never sees
