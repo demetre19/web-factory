@@ -89,10 +89,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="bm-testimonial-56-card__user-data">
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+                {it.tag &&                 <div class="bm-testimonial-56-card__user-data">
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
+                }
               </div>
               {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
             </div>

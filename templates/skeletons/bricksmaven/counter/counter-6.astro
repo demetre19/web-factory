@@ -21,7 +21,6 @@ interface Props {
   h1?: boolean;
 }
 import { inline } from '../_shared/inline';
-import IconChip from '../_shared/IconChip.astro';
 const {
   brand = 'Brand',
   heading = '',
@@ -75,8 +74,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
             <div class="counter-6-card card">
               <h3>{it.stat || it.term || it.title}</h3>
               <div class="counter-6-card__box">
-                {it.icon && <IconChip name={it.icon} />}
-                <h3 class="text-fluid-1">{it.term || it.title}</h3>
+                {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                 <p class="text-fluid-0">{it.text}</p>
               </div>
             </div>

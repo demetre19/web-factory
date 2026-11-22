@@ -633,6 +633,12 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   }
   .nav-links ul, .nav-desk ul { flex-wrap: nowrap; }
   .nav-link { white-space: nowrap; }
+  /* post-card meta (author · date · read time) and the category /
+     attribution tag a card's second text slot binds */
+  .meta { color: var(--text-secondary); }
+  .tag { display: inline-block; align-self: flex-start;
+         padding: .15em .6em; border: 1px solid var(--border-default);
+         border-radius: var(--r-card); color: var(--text-secondary); }
   /* a two-tier bank header (links in a topbar, brand + CTA in the
      row below) folds into ONE desktop row: brand · links · CTA (H.1).
      :has() never nests, so the tiers are read by position */
@@ -959,6 +965,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
     color: var(--text-primary); }
   :is([data-surface="brand"], [data-surface="inverse"]) .card
       :is(.lede, .attrib, .helper) { color: var(--text-secondary); }
+  /* an inverse band's card sits on a dark mix — its copy reads in
+     the band's own ink, never the light-canvas text roles */
+  [data-surface="inverse"] .card, .surface-inverse .card {
+    color: var(--sec-fg); }
+  [data-surface="inverse"] .card :is(p, .meta, .tag, .lede, .attrib,
+      .helper), .surface-inverse .card :is(p, .meta, .tag) {
+    color: color-mix(in srgb, var(--sec-fg) 82%, transparent); }
   [data-surface="brand"] .card .wf-cta-button {
     background: var(--action-primary);
     color: var(--action-primary-ink); }

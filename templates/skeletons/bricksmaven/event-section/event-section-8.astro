@@ -86,30 +86,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                     <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                     {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                   </div>
-                  <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
-                <div class="bm-event-section-8-card__content">
-                  <div class="bm-event-section-8-card__head">
-                    <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                    <p class="text-fluid-0">{it.text}</p>
+                {it.meta &&                 <div class="bm-event-section-8-card__content">
+                  {it.meta &&                   <div class="bm-event-section-8-card__head">
+                    {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                   </div>
-                  <div class="bm-event-section-1-card__mid--alt">
-                    <div class="bm-event-section-1-card__date--alt">
-                      <div class="bm-event-section-1-card__date-time--alt">
-                        <div>
-                          <p class="text-fluid-0">{it.text}</p>
-                        </div>
-                        <div>
-                          <p class="text-fluid-0">{it.text}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bm-event-section-1-card__location--alt">
-                      <p class="text-fluid-0">{it.text}</p>
-                    </div>
-                  </div>
+                  }
                 </div>
+                }
               </div>
             ))}</div>}
         </div>

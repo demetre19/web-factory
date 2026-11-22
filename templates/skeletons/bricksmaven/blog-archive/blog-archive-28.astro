@@ -87,20 +87,15 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                       {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                     </div>
                   </div>
-                  <div>
-                    <p class="text-fluid-0">{it.text}</p>
+                  {it.tag &&                   <div>
+                    {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                   </div>
-                  <div>
-                    <p class="text-fluid-0">{it.text}</p>
-                  </div>
+                  }
                 </div>
-                <div class="blog-archive-28-article-card__content">
-                  {it.icon && <IconChip name={it.icon} />}
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <div class="blog-archive-28-article-card__author">
-                    <p class="text-fluid-0">{it.text}</p>
-                  </div>
+                {it.meta &&                 <div class="blog-archive-28-article-card__content">
+                  {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                 </div>
+                }
               </div>
             ))}</div>}
         {links.length > 0 &&         <div>

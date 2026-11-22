@@ -78,7 +78,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   <h3 class="text-fluid-1">{it.term || it.title || it.text}</h3>
                   {it.text && (it.term || it.title) && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <p class="text-fluid-0">{it.text}</p>
+                {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
               </div>
             ))}</div>}
         </div>
@@ -107,7 +107,7 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                 <h3 class="text-fluid-1">{it.term || it.title}</h3>
                 <div class="bm-portfolio-section-9-card__footer">
                   <p class="text-fluid-0">{it.text}</p>
-                  <p class="text-fluid-0">{it.text}</p>
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
               </div>
             </div>

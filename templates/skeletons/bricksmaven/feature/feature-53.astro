@@ -91,9 +91,10 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   <h3 class="text-fluid-1"><a class="text-fluid-0" href={it.href}>{it.icon && <IconChip name={it.icon} />} {it.label || it.term || it.anchor || it.text}</a></h3>
                   {(it.label || it.term || it.anchor) && it.text && <p class="text-fluid-0">{it.text}</p>}
                 </div>
-                <div class="bm-feature-53-feature-item-card__media grid-auto gap-fluid-l">
-                  <p class="text-fluid-0">{it.text}</p>
+                {it.tag &&                 <div class="bm-feature-53-feature-item-card__media grid-auto gap-fluid-l">
+                  {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                 </div>
+                }
               </div>
             </div>
           </div>

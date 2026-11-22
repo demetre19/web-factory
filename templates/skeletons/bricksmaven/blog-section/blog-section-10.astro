@@ -88,13 +88,11 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
                   </div>
                 </div>
                 <div class="blog-section-10-card__meta">
-                  <div class="blog-section-10-card__author grid-auto gap-fluid-l">
-                    <p class="text-fluid-0">{it.text}</p>
-                    <p class="text-fluid-0">{it.text}</p>
+                  {it.tag &&                   <div class="blog-section-10-card__author grid-auto gap-fluid-l">
+                    {it.tag && <span class="tag text-fluid--1">{it.tag}</span>}
                   </div>
-                  {it.icon && <IconChip name={it.icon} />}
-                  <h3 class="text-fluid-1">{it.term || it.title}</h3>
-                  <p class="text-fluid-0">{it.text}</p>
+                  }
+                  {it.meta && <p class="meta text-fluid--1">{it.meta}</p>}
                 </div>
               </div>
             ))}</div>
