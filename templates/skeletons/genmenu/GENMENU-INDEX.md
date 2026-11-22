@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-860 exemplars generated with Google AI Studio / Claude (operator-supplied
+880 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -131,8 +131,14 @@ calls).
 | `fx-letter/` | fx-letter | 3 | kinetik-foundry |
 | `fx-ink/` | fx-ink | 3 | kinetik-foundry |
 | `fx-marquee/` | fx-marquee | 1 | kinetik-foundry |
+| `fx-expand/` | fx-expand | 6 | morphology |
+| `fx-iconmorph/` | fx-iconmorph | 4 | morphology |
+| `fx-tabslide/` | fx-tabslide | 4 | morphology |
+| `fx-morph/` | fx-morph | 4 | morphology |
+| `fx-menumorph/` | fx-menumorph | 1 | morphology |
+| `fx-loadmorph/` | fx-loadmorph | 1 | morphology |
 
-Counts are per `tags.json` (860 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (880 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
 `modal-*`, `comparison-*`, `data-table-expandable`, `ui-*`, `nav-micro`,

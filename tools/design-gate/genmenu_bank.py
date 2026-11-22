@@ -74,6 +74,7 @@ PACK_META = {
     "icfx": ("fx-image", "decoration", ["image treatment"], "image effect"),
     "springwork": ("fx-phys", "decoration", ["physics animation"], "physics effect"),
     "kinetik": ("fx-ktxt", "decoration", ["kinetic typography"], "text animation"),
+    "morphology": ("fx-morph", "decoration", ["morphing ui"], "morph effect"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -422,6 +423,21 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "blur" in low or "focus" in low or "mask" in low or "wipe" in low:
             return "fx-textreveal", "medium"
         return "fx-ktxt", "low"
+    if baseline == "fx-morph":
+        low = c.lower()
+        if "aria-pressed" in low or "play" in low or "pause" in low or "hamburger" in low:
+            return "fx-iconmorph", "medium"
+        if "fab" in low or "fan" in low or "speed-dial" in low:
+            return "fx-fab", "medium"
+        if "expand" in low or "dialog" in low or "modal" in low or "detail" in low:
+            return "fx-expand", "medium"
+        if "tab" in low or "segmented" in low or "indicator" in low or "pill" in low:
+            return "fx-tabslide", "medium"
+        if "spinner" in low or "loading" in low or "progress" in low:
+            return "fx-loadmorph", "medium"
+        if "menu" in low or "dropdown" in low or "options" in low:
+            return "fx-menumorph", "medium"
+        return "fx-morph", "low"
     if baseline == "ui-badge":
         low = c.lower()
         if "ribbon" in low or "corner" in low or "rotate" in low:
