@@ -19,8 +19,7 @@ const {
   body = '', cta, items = [], image, h1,
 } = Astro.props;
 // the map is the section: it centres on the first area the items list
-const area = [items.map((it) => it.label || it.title || it.term).find(Boolean),
-              'Victoria, Australia'].filter(Boolean).join(', ');
+const area = items.map((it) => it.label || it.title || it.term).find(Boolean) || heading;
 ---
 
 <div class="grid gap-fluid-l md:grid-cols-2">

@@ -73,11 +73,13 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
         <div>
           <div class="bm-contact-39__form-wrapper">
             <form novalidate>
-              <label class="field flow"><span class="text-fluid--1">Name</span><input type="text" name="name" autocomplete="name" required /></label>
-              <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
-              <label class="field flow"><span class="text-fluid--1">Subject</span><input type="text" name="subject" required /></label>
-              <label class="field flow"><span class="text-fluid--1">Phone</span><input type="tel" name="phone" autocomplete="tel" required /></label>
-              <label class="field flow"><span class="text-fluid--1">Message</span><textarea name="message" rows="4" required></textarea></label>
+              <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
+              <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
+              <label class="field flow"><span class="text-fluid--1">Subject <span aria-hidden="true">*</span></span><input type="text" name="subject" required aria-required="true" /></label>
+              <label class="field flow"><span class="text-fluid--1">Phone <span aria-hidden="true">*</span></span><input type="tel" name="phone" autocomplete="tel" required aria-required="true" /></label>
+              <label class="field flow"><span class="text-fluid--1">Message <span aria-hidden="true">*</span></span><textarea name="message" rows="4" required aria-required="true"></textarea></label>
+              <p class="form-error text-fluid--1" role="alert" hidden></p>
+              <p class="form-success text-fluid--1" role="status" hidden></p>
               <button type="submit" class="wf-cta-button">Submit Form</button>
             </form>
           </div>

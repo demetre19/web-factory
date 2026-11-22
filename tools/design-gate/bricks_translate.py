@@ -439,14 +439,20 @@ def _form_fields(s, cat, pad):
     for key, t, lab in rows:
         fid = re.sub(r'[^a-z0-9]+', '-', key.lower()).strip('-') or 'f'
         ac = f' autocomplete="{_FORM_AC[key]}"' if key in _FORM_AC else ''
-        ctl = (f'<textarea name="{fid}" rows="4" required></textarea>'
+        req = 'required aria-required="true"'
+        ctl = (f'<textarea name="{fid}" rows="4" {req}></textarea>'
                if t == 'textarea' else
-               f'<input type="{t}" name="{fid}"{ac} required />')
+               f'<input type="{t}" name="{fid}"{ac} {req} />')
         lab = lab.replace('{', '&#123;').replace('<', '&lt;')
         out += (f'{pad}<label class="field flow"><span '
-                f'class="text-fluid--1">{lab}</span>{ctl}</label>\n')
+                f'class="text-fluid--1">{lab} <span aria-hidden="true">'
+                f'*</span></span>{ctl}</label>\n')
     btn = str(s.get('submitButtonText') or 'Send').replace('{', '')
-    return out + (f'{pad}<button type="submit" class="wf-cta-button">'
+    # S.9 — the form's error / success states
+    return out + (f'{pad}<p class="form-error text-fluid--1" role="alert" '
+                  f'hidden></p>\n{pad}<p class="form-success text-fluid--1" '
+                  f'role="status" hidden></p>\n'
+                  f'{pad}<button type="submit" class="wf-cta-button">'
                   f'{btn}</button>\n')
 
 
@@ -917,6 +923,10 @@ def translate(payload, stem):
             _head = (f'<div class="nav-sheet-head">'
                      f'<span class="logo nav-sheet-brand">{{brand}}</span>'
                      f'{_close}</div>')
+            # the drawer docks the header CTA (.nav-cta hides below 60rem)
+            _cta = (f'{{act.label && <p class="nav-sheet-cta mt-fluid-m">'
+                    f'<a class="wf-cta-button" href={{act.href}}>'
+                    f'{{act.label}}</a></p>}}')
             return (f'{pad}{{list.length > 0 && !navOver && '
                     f'<nav class="{ncls}" '
                     f'aria-label="Primary">{_head}{_search}'
@@ -927,7 +937,7 @@ def translate(payload, stem):
                     + _links.replace('{grp.map', '{list.map')
                     .replace('gi > 0 ? Math.ceil(list.length / 2) : 0',
                              '0')
-                    + f'</ul></div></div></nav>}}\n'
+                    + f'</ul></div></div>{_cta}</nav>}}\n'
                     f'{pad}{{navOver && <nav '
                     f'class="{ncls} nav-mega" '
                     f'aria-label="Primary">{_head}{_search}'
@@ -941,7 +951,7 @@ def translate(payload, stem):
                     f'<ul class="row gap-fluid-m list-plain">'
                     + _links
                     + f'</ul></div>))}}'
-                    f'</div></nav>}}\n'
+                    f'</div>{_cta}</nav>}}\n'
                     f'{pad}{{navOver && <Fragment><nav '
                     f'class="nav-priority" aria-label="Primary">'
                     f'<ul class="row gap-fluid-m list-plain">'
