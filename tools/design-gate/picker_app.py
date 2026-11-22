@@ -4507,7 +4507,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .vmood.on{background:var(--accent);border-color:var(--accent);
  color:var(--btn-ink,#fff)}
 .card.live .cb iframe{pointer-events:auto}
-.vprev iframe{pointer-events:none}
+.vprev .cb iframe{pointer-events:auto}
 .vadv{margin:2px 0 4px}
 .vadv>summary{cursor:pointer;font:600 11px var(--mono);
  letter-spacing:.08em;text-transform:uppercase;
@@ -5254,7 +5254,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         h+='<div class="glabel">'+esc(c.grp)+'</div>'}
       shown++;
       var sw=(c.swatch&&c.swatch[0])||[];
-      h+='<div class="card pg" data-i="'+i+'"><div class="ch">'+
+      h+='<div class="card pg live" data-i="'+i+'"><div class="ch">'+
          '<span class="id">'+esc(c.id)+'</span>'+
          '<span class="nm" title="'+esc(c.name)+'">'+esc(c.name)+'</span>'+
          '<span class="vsw">'+(sw[2]?'<i style="background:'+
@@ -6123,6 +6123,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         f.style.width=W+'px';
         f.style.transform='scale('+s+')';
         f.style.transformOrigin='0 0';
+        var crd=f.closest('.card'),
+            liveBox=!!cb.closest('.vprev')||
+              !!(crd&&crd.classList.contains('live'));
         try{var hh=f.contentDocument.body.scrollHeight;
           if(tsDoc){// specimen docs can report a viewport-tall
             // body — measure the deepest rendered element instead
@@ -6138,6 +6141,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               // cropping the row (its header would be cut)
               f.style.marginBottom='-'+Math.max(0,
                 Math.round(hh*(1-s)))+'px'
+            }else if(liveBox){
+              // full-page previews are interactive: the frame keeps
+              // a viewport-sized height so the real document scrolls
+              // inside the card — the whole emitted page is reachable
+              var boxH=fixedBox?cb.clientHeight
+                :Math.min(hh*s,Math.min(cb.clientWidth/1.6,560));
+              if(!fixedBox){cb.style.height=boxH+'px';
+                cb.style.minHeight='0'}
+              f.style.height=Math.max(1,Math.round(boxH/s))+'px'
             }else if(!fixedBox){
               // 16:10 preview, capped 560px; short strips keep
               // their content height — type-specimen docs are
@@ -6147,7 +6159,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
               cb.style.minHeight='0'}}}catch(e){}
       }else{
         f.style.maxWidth='';f.style.width='';f.style.transform='';
-        f.style.height='';f.style.marginBottom='';
+        f.style.marginBottom='';
+        // live boxes keep a scrollable full-height frame at M/T too
+        var lb=!!cb.closest('.vprev')||
+          !!f.closest('.card.live');
+        f.style.height=lb?'100%':'';
         if(!fixedBox){cb.style.height='';cb.style.minHeight=''}}
     })}
 
