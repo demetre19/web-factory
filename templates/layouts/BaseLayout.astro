@@ -69,22 +69,25 @@ import '../styles/global.css';
     });
   });
   markHead();
+  var nl = document.querySelector('.nav-links');
+  var setNav = function (open, opts) {
+    if (!nl) return;
+    nl.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    var b = document.querySelector('.burger');
+    if (b) {
+      b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (!open && opts && opts.refocus) b.focus();
+    }
+    if (open) {
+      var first = nl.querySelector('a, button, input');
+      if (first) first.focus();
+    }
+  };
   document.addEventListener('click', function (e) {
     if (e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) {
       window.__wfSetTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
     }
-    var nl = document.querySelector('.nav-links');
-    var setNav = function (open) {
-      if (!nl) return;
-      nl.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
-      var b = document.querySelector('.burger');
-      if (b) b.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) {
-        var first = nl.querySelector('a, button, input');
-        if (first) first.focus();
-      }
-    };
     var burger = e.target && e.target.closest &&
                  e.target.closest('.burger, .nav-more');
     if (burger) {
@@ -116,10 +119,13 @@ import '../styles/global.css';
     }
   });
   document.addEventListener('keydown', function (e) {
-    var nl = document.querySelector('.nav-links');
     if (e.key === 'Escape') {
-      if (nl) nl.classList.remove('open');
-      document.body.style.overflow = '';
+      // Esc closes with the same contract as the close control:
+      // .open off, scroll lock lifted, aria-expanded reset, focus
+      // handed back to the trigger (W4.1 flyout spec)
+      if (nl && nl.classList.contains('open')) {
+        setNav(false, { refocus: true });
+      }
       var fo = document.querySelector('.flyout');
       if (fo) fo.classList.remove('open');
     }
