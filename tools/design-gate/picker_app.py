@@ -3952,8 +3952,8 @@ _BANK_MENU_CSS = (
     # open state must clear every hiding mechanism the bank ships
     'html.wf-menu-open [data-wf-panel]{opacity:1 !important;'
     'visibility:visible !important;transform:none !important;'
-    'pointer-events:auto !important;max-height:100% !important;'
-    'max-width:100% !important;overflow-y:auto !important}')
+    'pointer-events:auto !important;max-height:100vh !important;'
+    'max-width:100vw !important;overflow-y:auto !important}')
 _BANK_MENU_DRV = (
     '<script>(function(){var d=document,r=d.documentElement;'
     'function so(o){r.classList.toggle("wf-menu-open",o);'
@@ -4288,7 +4288,7 @@ def emit_bank_previews(pd):
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
                      os.path.getmtime(dst)) or \
-                    '<!--wf:bank:v16-->' not in open(
+                    '<!--wf:bank:v17-->' not in open(
                         dst, encoding='utf-8',
                         errors='replace').read(64)
                 if stale:
@@ -4365,7 +4365,7 @@ def emit_bank_previews(pd):
                         if nav_d else '') + (
                         _FOOTER_RESP_CSS if foot_d else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write('<!--wf:bank:v16-->' +
+                        fh.write('<!--wf:bank:v17-->' +
                                  _doc(head, '', stage,
                                       extra=(_STAGE_SCROLL_SHIM
                                              if not page else '') +
