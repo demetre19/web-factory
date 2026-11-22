@@ -2104,6 +2104,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 }
 @media(min-width:761px){#railBtn{display:none !important}}
 
+.xp{border:1px solid var(--line);background:var(--bg2);color:var(--fg);
+  border-radius:6px;padding:0 7px;height:20px;line-height:1;
+  font-size:11px;cursor:pointer;margin-left:auto}
+.xp:hover{background:var(--bg3)}
+#xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center}
+#xpOv iframe{width:96vw;height:94vh;border:0;border-radius:10px;
+  background:#fff}
+#xpX{position:absolute;top:14px;right:18px;z-index:61;
+  background:var(--bg2);color:var(--fg);border:1px solid var(--line);
+  border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+
 </style>
 </head>
 <body>
@@ -2287,16 +2299,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
     if(idx===SEL)cls+=' sel';
     if(isPicked)cls+=' picked';
+    var src=c.preview?((c.element==='vibe'||c.bank)?c.preview:
+            frame(c.preview)):'';
     var h='<div class="'+cls+'" data-idx="'+idx+
           '" data-tags="'+esc(tags.join(' '))+'">';
     h+='<div class="ch"><span class="id">'+esc(c.id)+'</span>'+
        '<span class="nm">'+esc(c.name)+'</span>'+
-       (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+'</div>';
+       (c.preview?'<button class="xp" title="expand" data-x="'+
+        esc(src)+'">&#x2922;</button>':'')+
+       (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+
+       '</div>';
     h+='<div class="cb">';
     if(c.preview){
       // vibe cards carry their own family bundle — never reframe
       // them through the baked vibe
-      var src=(c.element==='vibe'||c.bank)?c.preview:frame(c.preview);
       h+='<iframe data-src="'+esc(src)+'" src="'+esc(src)+
          '" loading="lazy" title="'+esc(c.name)+'"></iframe>';
     }else{
@@ -2493,6 +2509,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         .then(function(r){toast(r.message||'saved')})};
   }
 
+  // expand — one click, fullscreen overlay; Esc or X closes
+  function expand(u){
+    var ov=document.createElement('div');ov.id='xpOv';
+    ov.innerHTML='<button id="xpX">&#x2715; close</button>'+
+      '<iframe src="'+esc(u)+'"></iframe>';
+    document.body.appendChild(ov);
+    function close(){ov.remove();
+      document.removeEventListener('keydown',k)}
+    function k(e){if(e.key==='Escape')close()}
+    document.addEventListener('keydown',k);
+    ov.querySelector('#xpX').onclick=close;
+    ov.onclick=function(e){if(e.target===ov)close()}}
+
   function board(){
     var el=document.getElementById('board');
     if(CUR==='ingest'){ingestPane(el);return}
@@ -2557,6 +2586,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         board()}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
+    el.querySelectorAll('.xp').forEach(function(b){
+      b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
     applyTheme(document.documentElement.dataset.theme);
   }
 
