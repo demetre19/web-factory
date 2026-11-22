@@ -1533,8 +1533,9 @@ def _enum_stat(answer):
         return None
     sentence = re.split(r'[.;:…]', tail[0])[0]
     # the list ends where a relative clause starts ("… sign-off the
-    # strata manager files"); an article after "and" / "," is a part
-    clause, *rest = re.split(r'(?<! and)(?<!,) (?:the|that|which) ',
+    # strata manager files", ", which prove …"); an article after
+    # "and" / "," is a part, a relative pronoun never is
+    clause, *rest = re.split(r'(?<! and)(?<!,) the |,?\s(?:that|which)\s',
                              sentence, maxsplit=1)
     if rest and re.search(r',|\sand\s', rest[0]):
         return None
