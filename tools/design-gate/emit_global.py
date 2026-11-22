@@ -844,6 +844,59 @@ def _derive_tokens(dna):
         geno, vertical, {'accent': accent})
 
 
+def look_record(rec, deltas):
+    """TOKENS record + a look variant's knob deltas → the record the
+    picked look emits from: knobs merged, then the pinned `fluid`
+    block re-derived the way the delta moves it — TOKENS pins resolved
+    settings, so a raw knob delta alone leaves the clamps unchanged.
+    Each fluid field the delta moves scales the record's own resolved
+    value by the fluid_settings ratio; enum aliases map absolute.
+    Pure in (rec, deltas): the same signed pick projects the same
+    record (X.1)."""
+    import dna_tokens as _dt
+    knobs0 = dict((rec or {}).get('knobs') or {})
+    knobs1 = dict(knobs0)
+    knobs1.update(deltas or {})
+    tv = json.loads(json.dumps(rec or {}))
+    tv['knobs'] = knobs1
+    if knobs1 == knobs0:
+        return tv
+    fs0 = _dt.fluid_settings(knobs0)
+    fs1 = _dt.fluid_settings(knobs1)
+    res = dict(emit_tokens.fluid_of(tv))
+    for k, v1 in fs1.items():
+        v0 = fs0.get(k)
+        if v0 == v1:
+            continue
+        r = res.get(k)
+        if (isinstance(r, (int, float)) and
+                isinstance(v0, (int, float)) and
+                isinstance(v1, (int, float)) and v0):
+            res[k] = r * (v1 / v0)   # scale the record's value
+        else:
+            res[k] = v1              # enum aliases map absolute
+    tv['fluid'] = res
+    return tv
+
+
+def look_scope(rec, deltas):
+    """Knob deltas → the ``--var`` override map the real emit moves:
+    emit the token record merged with the deltas and diff every
+    ``--name: value`` declaration vs the record's own emit. The ONE
+    knob→css projection — preview variant scopes and the shipped
+    look layer both bind this, never a parallel table. Pure in
+    (rec, deltas): same pick → same vars (X.1)."""
+    import re as _re
+    def decls(css):
+        return dict(_re.findall(r'(--[\w-]+)\s*:\s*([^;{}]+);', css))
+
+    def emit_of(tv):
+        return emit_tokens.emit(tv) + _base_css(tv)
+    b = decls(emit_of(look_record(rec, {})))
+    v = decls(emit_of(look_record(rec, deltas)))
+    return {k: x.strip() for k, x in v.items() if b.get(k) != x}
+
+
 def tailwind_config(tokens):
     """TOKENS record → tailwind.config.js text. Every hex in
     color.modes lands verbatim (check_tailwind_derivation); theme

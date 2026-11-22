@@ -262,6 +262,17 @@ def record_approval(wave, pipeline, nonce=None, design=None,
     except (AttributeError, TypeError):
         body = _approval_body(ctx, wave, design=design, nonce=nonce,
                               chat=chat, run=run_tok)
+    if wave == 'w4':
+        # pin the signed pick's knob vector IN the signed record —
+        # fine-round regens rebuild FINE-VARIANTS.json around the new
+        # pick, so resolving the id at emit time could project a look
+        # the operator never signed. The emit prefers this.
+        deltas = G.look_deltas(ctx, design)
+        if deltas is None:
+            return 1, (f'approve REFUSED: design "{design}" has no '
+                       'declared look vector — the pick binds '
+                       'rendered output, not a name')
+        body['look_deltas'] = deltas
     import approval_key as AK
     body['sig'] = AK.sign_body(body, _seed())
     # w4 locks the DNA map to v1 — the look lock, once, here, and

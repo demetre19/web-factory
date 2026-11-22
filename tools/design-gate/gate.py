@@ -10280,6 +10280,28 @@ def _variant_entries(ctx):
             for e in _variants(ctx)}
 
 
+def look_deltas(ctx, design):
+    """The knob-delta vector a w4 design id projects: look ids from
+    VARIANT-GATES (_variant_entries), fine ids from the record
+    assemble_fine persists (FINE-VARIANTS.json — fv* never live in
+    VARIANT-GATES). None when the id is not a declared variant. For a
+    SIGNED pick the approval record's look_deltas is authoritative —
+    it pins what the operator signed; this is the sign-time and
+    legacy fallback resolution."""
+    entry = (_variant_entries(ctx) or {}).get(str(design))
+    if entry:
+        return dict((entry[0] or {}).get('deltas') or {})
+    fp = os.path.join(ctx.dir, 'FINE-VARIANTS.json')
+    if os.path.isfile(fp):
+        try:
+            rec = (json.load(open(fp)) or {}).get(str(design)) or {}
+        except Exception:
+            rec = {}
+        if rec:
+            return dict(rec.get('deltas') or {})
+    return None
+
+
 def _knob_vars(kn, base, knobs):
     """CSS custom-property overrides for one variant's knob vector."""
     out = {}
@@ -10349,6 +10371,17 @@ def assemble_fine(ctx):
     pick = ((read_approvals(ctx) or {}).get('w4') or {}).get('design')
     computed = _variant_entries(ctx)
     entry = (computed.get(str(pick)) or (None,))[0]
+    if not entry:
+        # a signed fine pick: the fine round nudges the SIGNED vector
+        # — the approval record pins it (look_deltas), so re-emitting
+        # this round stays byte-stable. look_deltas(ctx, pick) covers
+        # approvals signed before the vector rode the record.
+        fv = ((read_approvals(ctx) or {}).get('w4') or {}).get(
+            'look_deltas')
+        if fv is None:
+            fv = look_deltas(ctx, pick)
+        if fv is not None:
+            entry = {'id': str(pick), 'deltas': fv}
     if not entry:
         # no approval recorded (operator hasn't picked) — fall back to
         # the first declared variant so the file still exists; the
@@ -10453,6 +10486,16 @@ def assemble_fine(ctx):
             'deltas': deltas,
             'wildcard_breaks': [],
             'pick_of': pick}, [])
+    # persist the fv knob vectors: a signed fine pick (fv*) must
+    # project into the shipped artifact the same way a look pick
+    # does — pipeline_emit._picked_look resolves the design id
+    # through VARIANT-GATES first, then this record (the ids only
+    # exist here — VARIANT-GATES declares look rounds only)
+    with open(os.path.join(ctx.dir, 'FINE-VARIANTS.json'), 'w') as fh:
+        json.dump({vid: {'deltas': v['deltas'], 'pick_of': v['pick_of']}
+                   for vid, (v, _fails) in variants.items()},
+                  fh, indent=1, sort_keys=True)
+        fh.write('\n')
     return preview_build.emit_variants(
         ctx, entries=variants, fname='fine.html', marker='--fine')
 
