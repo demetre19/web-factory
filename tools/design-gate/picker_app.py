@@ -4434,8 +4434,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     gridCards.forEach(function(c){if(c.grp&&!(c.grp in grpIx))
       grpIx[c.grp]=Object.keys(grpIx).length});
     gridCards.sort(function(a,b){
-      var ga=(a.grp in grpIx)?grpIx[a.grp]:1e9,
-          gb=(b.grp in grpIx)?grpIx[b.grp]:1e9;
+      // ungrouped build previews lead; named bank groups keep
+      // first-appearance order; bank-only ungrouped rows sink last
+      var ga=(a.grp in grpIx)?grpIx[a.grp]+1:(a.preview?0:1e9),
+          gb=(b.grp in grpIx)?grpIx[b.grp]+1:(b.preview?0:1e9);
       if(ga!==gb)return ga-gb;
       return (b.preview?1:0)-(a.preview?1:0)});
     gridCards.forEach(function(c,i){
