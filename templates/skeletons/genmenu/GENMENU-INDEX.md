@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-460 exemplars generated with Google AI Studio / Claude (operator-supplied
+480 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -49,12 +49,17 @@ calls).
 | `comparison-pros-cons/` | comparison-pros-cons | 3 | comparekit |
 | `comparison-before-after/` | comparison-before-after | 2 | comparekit |
 | `comparison-cards/` | comparison-cards | 1 | comparekit |
+| `ui-toast/` | ui-toast | 14 | feedback-atlas |
+| `ui-skeleton/` | ui-skeleton | 3 | feedback-atlas |
+| `ui-consent/` | ui-consent | 2 | feedback-atlas |
+| `ui-progress/` | ui-progress | 1 | feedback-atlas |
 
-Counts are per `tags.json` (460 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (480 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
 (iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
-`modal-*`, `comparison-*` and `data-table-expandable` classes are new to this
-corpus (generator families, distinct from the mobbin corpus signatures).
+`modal-*`, `comparison-*`, `data-table-expandable` and `ui-*` classes are
+new to this corpus (generator families, distinct from the mobbin corpus
+signatures).
 
 ## Per-exemplar files
 

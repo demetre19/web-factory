@@ -52,6 +52,7 @@ PACK_META = {
     "formspecimen": ("form-block", "form", ["form"], "form"),
     "comparekit": ("comparison-table", "comparison", ["comparison"], "comparison"),
     "tabular": ("data-table", "element", ["data"], "data table"),
+    "feedback": ("ui-feedback", "element", ["feedback"], "feedback"),
 }
 
 # component-name prefix -> (baseline, section_class, category, query) override
@@ -229,6 +230,19 @@ def sniff_topology(html_text: str, baseline: str) -> tuple[str, str]:
         if "aria-expanded" in c or "aria-controls" in c:
             return "data-table-expandable", "medium"
         return "data-table", "high"
+    if baseline == "ui-feedback":
+        low = c.lower()
+        if "cookie" in low or "consent" in low:
+            return "ui-consent", "medium"
+        if "animate-pulse" in c or "skeleton" in low:
+            return "ui-skeleton", "medium"
+        if 'role="progressbar"' in c or "progress" in low:
+            return "ui-progress", "medium"
+        if 'role="status"' in c or 'role="alert"' in c or "toast" in low or "snackbar" in low:
+            return "ui-toast", "medium"
+        if has("top-0 inset-x", "bottom-0 inset-x", "announcement"):
+            return "ui-banner", "medium"
+        return "ui-feedback", "medium"
     return baseline, "high" if baseline in ("auth-form", "empty-state") else "low"
 
 
