@@ -9,5 +9,10 @@
   .wf-content-68 .bm-content-68__content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-68 .bm-content-68__content { grid-template-columns: 1fr; }
+  }
+  .wf-content-68 .bm-content-68__content > :only-child { grid-column: 1 / -1; }

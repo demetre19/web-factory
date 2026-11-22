@@ -9,7 +9,7 @@
   .wf-content-58 .bm-content-58__content-wrapper {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-content-58 .bm-content-58__column {
@@ -36,5 +36,7 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-content-58 .bm-content-58__content-wrapper { grid-template-columns: 1fr; }
     .wf-content-58 .bm-social-share { flex-direction: column; }
   }
+  .wf-content-58 .bm-content-58__content-wrapper > :only-child { grid-column: 1 / -1; }

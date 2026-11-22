@@ -1,6 +1,6 @@
   .wf-testimonial-10 .testimonial-10__container {
     display: grid;
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
     gap: var(--space-m);
   }
 
@@ -9,3 +9,8 @@
     flex-direction: column;
     row-gap: var(--flow-spacing);
   }
+
+  @media (max-width: 44rem) {
+    .wf-testimonial-10 .testimonial-10__container { grid-template-columns: 1fr; }
+  }
+  .wf-testimonial-10 .testimonial-10__container > :only-child { grid-column: 1 / -1; }

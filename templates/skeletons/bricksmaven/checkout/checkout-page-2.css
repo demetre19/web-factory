@@ -1,6 +1,6 @@
   .wf-checkout-page-2 .checkout-page-2__container {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--grid-gap);
   }
 
@@ -21,3 +21,8 @@
     flex-direction: column;
     gap: var(--space-s);
   }
+
+  @media (max-width: 44rem) {
+    .wf-checkout-page-2 .checkout-page-2__container { grid-template-columns: 1fr; }
+  }
+  .wf-checkout-page-2 .checkout-page-2__container > :only-child { grid-column: 1 / -1; }

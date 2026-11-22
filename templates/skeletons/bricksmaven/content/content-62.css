@@ -4,10 +4,15 @@
 
   .wf-content-62 .bm-content-62__intro {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: var(--grid-gap);
   }
 
   .wf-content-62 .bm-content-62__content {
     row-gap: var(--flow-spacing);
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-62 .bm-content-62__intro { grid-template-columns: 1fr; }
+  }
+  .wf-content-62 .bm-content-62__intro > :only-child { grid-column: 1 / -1; }

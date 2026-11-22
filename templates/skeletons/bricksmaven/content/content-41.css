@@ -1,7 +1,7 @@
   .wf-content-41 .content-41__main {
     display: grid;
     gap: calc(var(--space-m) * 4);
-    grid-template-columns: calc(100% * 2 / 3);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   }
 
   .wf-content-41 .content-41__column {
@@ -12,3 +12,8 @@
     row-gap: calc(var(--flow-spacing) / 2);
     flex-wrap: nowrap;
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-41 .content-41__main { grid-template-columns: 1fr; }
+  }
+  .wf-content-41 .content-41__main > :only-child { grid-column: 1 / -1; }

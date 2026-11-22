@@ -26,5 +26,10 @@
   .wf-content-38 .bm-content-38__media {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-38 .bm-content-38__media { grid-template-columns: 1fr; }
+  }
+  .wf-content-38 .bm-content-38__media > :only-child { grid-column: 1 / -1; }

@@ -1,7 +1,7 @@
   .wf-content-55 .bm-content-55__intro {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-content-55 .bm-content-55__column {
@@ -17,3 +17,8 @@
   .wf-content-55 .bm-content-55-card {
     row-gap: var(--flow-spacing);
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-55 .bm-content-55__intro { grid-template-columns: 1fr; }
+  }
+  .wf-content-55 .bm-content-55__intro > :only-child { grid-column: 1 / -1; }

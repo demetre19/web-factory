@@ -4,7 +4,7 @@
 
   .wf-remove-this-div .bm-contact-27__container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--space-m);
   }
 
@@ -32,11 +32,15 @@
 
   .wf-remove-this-div .bm-contact-27-container-sub {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--space-s);
   }
 
   @media (max-width: 44rem) {
+    .wf-remove-this-div .bm-contact-27__container { grid-template-columns: 1fr; }
+    .wf-remove-this-div .bm-contact-27-container-sub { grid-template-columns: 1fr; }
     .wf-remove-this-div .bm-contact-27__intro { flex-direction: column; }
     .wf-remove-this-div .bm-contact-27__detail-wrapper { flex-direction: column; }
   }
+  .wf-remove-this-div .bm-contact-27__container > :only-child { grid-column: 1 / -1; }
+  .wf-remove-this-div .bm-contact-27-container-sub > :only-child { grid-column: 1 / -1; }

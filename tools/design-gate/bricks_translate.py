@@ -66,6 +66,10 @@ def map_var(name):
     if name in EXACT:
         return EXACT[name]
     m = re.match(r'grid--?(\d+)(?:-(\d+))?$', name)
+    if m and m.group(2):
+        # ACSS ratio grids: --grid-1-2 is TWO tracks 1fr 2fr, never a
+        # single 200% column (the 390px overflow in hero-79/85, grid-35)
+        return f'RATIO:{int(m.group(1))}/{int(m.group(2))}'
     if m:      # ACSS grid fractions: --grid-2 and --at-grid--2 → 50%
         num = int(m.group(2) or 1)
         return f'GRID:{num}/{int(m.group(1))}'
@@ -93,8 +97,7 @@ def map_var(name):
         base = name.split('-trans-')[0]
         t = map_var(base)          # resolve the base then tint it
         pct = name.rsplit('-', 1)[-1]
-        if t and not t.startswith('GRID:') and not t.startswith(
-                'MIX:'):
+        if t and not t.startswith(('GRID:', 'RATIO:', 'MIX:')):
             return f'MIX:{t}:{pct}'
         return 'bg-subtle'
     m = re.match(r'content-gap(?:--\w+)?$', name)
@@ -185,6 +188,9 @@ def translate_value(v, unmapped):
         if t.startswith('GRID:'):
             num, den = t[5:].split('/')
             return f'calc(100% * {num} / {den})'
+        if t.startswith('RATIO:'):
+            a, b = t[6:].split('/')
+            return f'minmax(0, {a}fr) minmax(0, {b}fr)'
         if t.startswith('MIX:'):
             _, base, pct = t.split(':', 2)
             return (f'color-mix(in srgb, var(--{base}) '

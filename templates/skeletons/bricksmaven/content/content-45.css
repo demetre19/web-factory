@@ -6,7 +6,7 @@
 
   .wf-content-45 .bm-content-45__intro {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
 
@@ -28,6 +28,13 @@
 
   .wf-content-45 .bm-content-45__content {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: var(--space-m);
   }
+
+  @media (max-width: 44rem) {
+    .wf-content-45 .bm-content-45__intro { grid-template-columns: 1fr; }
+    .wf-content-45 .bm-content-45__content { grid-template-columns: 1fr; }
+  }
+  .wf-content-45 .bm-content-45__intro > :only-child { grid-column: 1 / -1; }
+  .wf-content-45 .bm-content-45__content > :only-child { grid-column: 1 / -1; }

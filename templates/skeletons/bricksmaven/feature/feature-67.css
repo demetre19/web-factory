@@ -21,7 +21,7 @@
   .wf-feature-67 .bm-feature-67-media-list {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: calc(100% * 3 / 2);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .wf-feature-67 .bm-feature-67-list {
@@ -45,6 +45,8 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-feature-67 .bm-feature-67-media-list { grid-template-columns: 1fr; }
     .wf-feature-67 .bm-feature-67-card { flex-direction: column; }
     .wf-feature-67 .bm-feature-67-card__icon-wrapper { flex-direction: column; }
   }
+  .wf-feature-67 .bm-feature-67-media-list > :only-child { grid-column: 1 / -1; }

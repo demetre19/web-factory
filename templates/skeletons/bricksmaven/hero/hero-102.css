@@ -6,7 +6,7 @@
   .wf-hero-102 .bm-hero-102__inner-content {
     display: grid;
     gap: var(--space-m);
-    grid-template-columns: repeat(auto-fit, minmax(min(max(var(--grid-floor,var(--grid-min,28rem)), calc((100% - (var(--grid-cap,99) - 1) * var(--grid-gap)) / var(--grid-cap,99))), 100%), 1fr));
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   }
 
   .wf-hero-102 .bm-hero-102__intro {
@@ -19,7 +19,7 @@
 
   .wf-hero-102 .bm-hero-102-card {
     display: grid;
-    grid-template-columns: calc(100% * 2 / 1);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
     gap: 0;
   }
 
@@ -50,7 +50,11 @@
   }
 
   @media (max-width: 44rem) {
+    .wf-hero-102 .bm-hero-102__inner-content { grid-template-columns: 1fr; }
+    .wf-hero-102 .bm-hero-102-card { grid-template-columns: 1fr; }
     .wf-hero-102 .bm-list--inline { flex-direction: column; }
     .wf-hero-102 .bm-list-item { flex-direction: column; }
     .wf-hero-102 .bm-list-item__icon-wrapper { flex-direction: column; }
   }
+  .wf-hero-102 .bm-hero-102__inner-content > :only-child { grid-column: 1 / -1; }
+  .wf-hero-102 .bm-hero-102-card > :only-child { grid-column: 1 / -1; }
