@@ -58,7 +58,47 @@ ELEMENT_GALLERIES = [
      'groups': [
          {'label': None, 'element': 'modals',
           'comps': ['modal-form', 'form-panel'], 'suffix': '-open'}]},
+    {'id': 'footers', 'title': 'Footers · bank', 'icon': 'bars',
+     'desc': 'Reference footer topologies from the genmenu bank — '
+             'rendered as-banked (reference fidelity), not vibe-bound.',
+     'groups': []},
+    {'id': 'pricing', 'title': 'Pricing · bank', 'icon': 'doc',
+     'desc': 'Reference pricing topologies — tiers, single, table.',
+     'groups': []},
+    {'id': 'auth', 'title': 'Auth · bank', 'icon': 'doc',
+     'desc': 'Reference auth forms — sign-up / login screens.',
+     'groups': []},
+    {'id': 'empty-states', 'title': 'Empty states · bank',
+     'icon': 'doc',
+     'desc': 'Reference empty/error states (404s, blank screens).',
+     'groups': []},
+    {'id': 'commerce', 'title': 'Commerce · bank', 'icon': 'doc',
+     'desc': 'Reference commerce screens — checkout, order '
+             'confirm, product page, flows.',
+     'groups': []},
+    {'id': 'ui-elements', 'title': 'UI elements · bank',
+     'icon': 'doc',
+     'desc': 'Reference atomic UI elements — pickers, toggles, '
+             'chips, controls.',
+     'groups': []},
 ]
+
+# genmenu bank exemplars surfaced as scrubbable cards — gallery id
+# → the topology dirs whose .html fragments render as-banked
+_BANK_DIRS = {
+    'menu': ('nav-dock-left-drawer', 'nav-top-sheet',
+             'nav-bottom-sheet', 'nav-dropdown-menu',
+             'nav-mega-panel', 'nav-modal'),
+    'modals': ('modal-dialog', 'modal-bottom-sheet',
+               'modal-slide-over'),
+    'footers': ('footer-mega', 'footer-columns', 'footer-minimal'),
+    'pricing': ('pricing-tiers', 'pricing-single', 'pricing-table'),
+    'auth': ('auth-form',),
+    'empty-states': ('empty-state',),
+    'commerce': ('checkout', 'order-confirm', 'product-page',
+                 'commerce-flow'),
+    'ui-elements': ('ui-element',),
+}
 
 PAGE_BOARDS = [
     {'id': 'home', 'title': 'Home', 'icon': 'home',
@@ -1331,6 +1371,7 @@ def app_data(pipeline):
 
     # element galleries — emitted preview cards (+ derived geometry
     # topos on menus) + bank options the build didn't emit
+    bank_cards = emit_bank_previews(pd)
     galleries = {}
     for g in ELEMENT_GALLERIES:
         gcards = []
@@ -1378,6 +1419,7 @@ def app_data(pipeline):
                             'variant': key,
                             'grp': grp.get('label'),
                             'mobile': bool(g.get('mobile'))})
+        gcards += bank_cards.get(g['id'], [])
         if g['id'] == 'modals' and not any(
                 c['emitted'] for c in gcards):
             # seed: builds predating modal emission leave the gallery
@@ -1533,6 +1575,87 @@ def _palette(galleries):
             'skeleton_backlog': backlog}
 
 
+_GENMENU = os.path.join(_SKEL_ROOT, 'genmenu')
+
+
+def _genmenu_tags():
+    fp = os.path.join(_GENMENU, 'tags.json')
+    try:
+        rows = (json.load(open(fp)) or {}).get('rows') or []
+    except Exception:
+        return {}
+    return {r.get('path'): r for r in rows if r.get('path')}
+
+
+def emit_bank_previews(pd):
+    """preview/bank/<cls>/<slug>.html — every genmenu exemplar
+    rendered standalone under bank-preview.css: reference fidelity
+    (the exemplar's own Tailwind), NOT bound into the baked family.
+    Returns {gallery_id: [cards]}."""
+    if not os.path.isdir(_GENMENU):
+        return {}
+    tags = _genmenu_tags()
+    css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
+    os.makedirs(outdir, exist_ok=True)
+    css_dst = os.path.join(outdir, 'bank-preview.css')
+    if os.path.isfile(css_src) and (
+            not os.path.isfile(css_dst) or
+            os.path.getmtime(css_src) > os.path.getmtime(css_dst)):
+        with open(css_src, 'rb') as fi:
+            blob = fi.read()
+        with open(css_dst, 'wb') as fo:
+            fo.write(blob)
+    head = ('<meta charset="utf-8"><meta name="viewport" '
+            'content="width=device-width,initial-scale=1">'
+            '<link rel="stylesheet" href="/built/' +
+            urllib.parse.quote(os.path.join(
+                pd, 'site', 'dist', 'preview', 'bank',
+                'bank-preview.css')) + '">')
+    out = {}
+    for gid, dirs in _BANK_DIRS.items():
+        cards = []
+        for cls in dirs:
+            cdir = os.path.join(_GENMENU, cls)
+            if not os.path.isdir(cdir):
+                continue
+            for fn in sorted(os.listdir(cdir)):
+                if not fn.endswith('.html'):
+                    continue
+                slug = fn[:-5]
+                fp = os.path.join(cdir, fn)
+                dst = os.path.join(outdir, cls, slug + '.html')
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                stale = (not os.path.isfile(dst)) or \
+                    os.path.getmtime(fp) > os.path.getmtime(dst) or \
+                    (os.path.isfile(css_dst) and
+                     os.path.getmtime(css_dst) >
+                     os.path.getmtime(dst))
+                if stale:
+                    frag = open(fp, encoding='utf-8').read()
+                    with open(dst, 'w', encoding='utf-8') as fh:
+                        fh.write(_doc(head, '', frag))
+                row = tags.get(cls + '/' + slug) or {}
+                ctags = [cls, 'bank'] + \
+                    list(row.get('style') or []) + \
+                    list(row.get('category') or [])
+                if row.get('mode'):
+                    ctags.append(row['mode'])
+                if row.get('platform'):
+                    ctags.append(row['platform'])
+                cards.append({
+                    'id': slug, 'name': slug,
+                    'preview': '/built/' + urllib.parse.quote(
+                        os.path.join(pd, 'site', 'dist', 'preview',
+                                     'bank', cls, slug + '.html')),
+                    'tags': ctags, 'emitted': True, 'bank': True,
+                    'element': cls, 'variant': slug,
+                    'grp': 'bank · ' + cls,
+                    'mobile': gid == 'menu'})
+        out[gid] = cards
+    return out
+
+
 def save_system(pipeline, name, mode=None):
     """Persist the current combination — vibe + element + section
     picks + the chosen default mode — as a named design-system file
@@ -1599,7 +1722,8 @@ def record_element_pick(pipeline, element, variant):
     is the element-choice registry the plan consumes later."""
     valid = {grp['element'] for g in ELEMENT_GALLERIES
              for grp in g['groups']} | {'vibe', 'header', 'footer',
-                                        'mobile-menu', 'modals'}
+                                        'mobile-menu', 'modals'} | \
+            {d for dirs in _BANK_DIRS.values() for d in dirs}
     if element not in valid and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
@@ -1981,7 +2105,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.preview){
       // vibe cards carry their own family bundle — never reframe
       // them through the baked vibe
-      var src=c.element==='vibe'?c.preview:frame(c.preview);
+      var src=(c.element==='vibe'||c.bank)?c.preview:frame(c.preview);
       h+='<iframe data-src="'+esc(src)+'" src="'+esc(src)+
          '" loading="lazy" title="'+esc(c.name)+'"></iframe>';
     }else{

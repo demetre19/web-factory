@@ -358,13 +358,58 @@ def bank_item(
     return spec
 
 
+def preview_css(root: Path = BANK) -> int:
+    """Compile bank-preview.css — every Tailwind utility the banked
+    fragments use, built by the vendored toolchain (no network).
+    The picker serves it inside bank-exemplar preview docs so the
+    reference fragments render faithfully."""
+    import shutil
+    import subprocess
+    bin_ = REPO / "templates" / "astro" / "node_modules" / ".bin" / "tailwindcss"
+    if not bin_.exists():
+        print(f"vendored tailwindcss not found at {bin_}", file=sys.stderr)
+        return 2
+    node = shutil.which("node")
+    if not node:
+        cands = sorted(Path.home().glob(
+            ".nvm/versions/node/*/bin/node"))
+        node = str(cands[-1]) if cands else None
+    if not node:
+        print("node not found (PATH + ~/.nvm)", file=sys.stderr)
+        return 2
+    cfg = root / "tailwind.preview.cjs"
+    src = root / "bank-preview-src.css"
+    cfg.write_text(
+        "module.exports={content:['" +
+        str(root / "**" / "*.html") + "'],theme:{extend:{}}}\n")
+    src.write_text("@tailwind base;\n@tailwind components;\n"
+                   "@tailwind utilities;\n")
+    out = root / "bank-preview.css"
+    r = subprocess.run(
+        [node, str(bin_), "-c", str(cfg), "-i", str(src), "-o",
+         str(out), "--minify"], cwd=REPO)
+    src.unlink()
+    cfg.unlink()
+    if r.returncode:
+        print(f"tailwindcss exited {r.returncode}", file=sys.stderr)
+        return r.returncode
+    print(f"bank-preview.css: {out.stat().st_size} bytes")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("render_dir", type=Path)
-    ap.add_argument("tsx_dir", type=Path)
-    ap.add_argument("--pack", required=True)
+    ap.add_argument("--preview-css", action="store_true",
+                    help="compile bank-preview.css and exit")
+    ap.add_argument("render_dir", type=Path, nargs="?")
+    ap.add_argument("tsx_dir", type=Path, nargs="?")
+    ap.add_argument("--pack")
     ap.add_argument("--root", type=Path, default=BANK)
     args = ap.parse_args()
+    if args.preview_css:
+        return preview_css(args.root)
+    if not (args.render_dir and args.tsx_dir and args.pack):
+        ap.error("render_dir, tsx_dir and --pack are required")
 
     baseline, section_class, category, query_word = PACK_META[args.pack.split("-")[0]]
     rendered = sorted(args.render_dir.glob("*.html"))
