@@ -2153,10 +2153,337 @@ _BANK_STAGE_CSS = (
     'transform:translateZ(0);display:flex;'
     'border-radius:14px;background:#fff;'
     'box-shadow:0 10px 34px rgba(15,18,30,.16);'
-    'width:min(100%,640px);height:min(70vh,460px)}'
+    # content-sized both axes — a fragment wider than its siblings'
+    # fixed widths expands the box instead of clipping inside it
+    'width:max-content;min-width:min(100%,420px);max-width:96vw;'
+    'max-height:78vh;'
+    'padding:clamp(16px,3vw,32px);box-sizing:border-box}'
     '.wf-stage>*{margin:auto;flex:none}'
+    # edge-pinned fx (fab strips, sheet handles) absolutely anchor
+    # to the nearest positioned ancestor — this inner wrapper keeps
+    # them inside the stage padding, ≥16px inset on every side
+    '.wf-stage-in{position:relative;width:100%;min-height:100%;'
+    'margin:auto;flex:none}'
     '.wf-stage.mob{width:min(360px,96%);height:min(660px,86vh);'
-    'border-radius:24px}')
+    'border-radius:24px}'
+    # E1 — section/page-scale fragments never sit in the compact
+    # stage (the 640x460 box clipped mega footers and tier pages):
+    # full viewport width, content height, the fragment's own
+    # surface edge-to-edge
+    # page-scale fragments render at natural width (a 1440px
+    # checkout would clip inside a 1280 box); the doc scrolls
+    # horizontally instead, the picker scales the whole doc
+    '.wf-page{position:relative;width:max-content;min-width:100%;'
+    'min-height:100vh}'
+    '.wf-fx-bar{display:flex;gap:8px}'
+    '.wf-fx-bar button{font:600 12px/1 system-ui,sans-serif;'
+    'padding:8px 12px;border-radius:8px;'
+    'border:1px solid #d5d7dc;background:#fff;'
+    'color:#333;cursor:pointer}'
+    '.wf-fx-bar button[aria-pressed="true"]{'
+    'background:#1c1f26;color:#fff;border-color:#1c1f26}'
+    # an explicit motion toggle is the ONLY reduced-motion switch in
+    # preview docs (the emit pass strips the fragments\' own
+    # prefers-reduced-motion freezes — E1 live-play contract)
+    'body[data-motion="off"] .wf-stage *,'
+    'body[data-motion="off"] .wf-page *{'
+    'animation-play-state:paused!important;'
+    'transition:none!important}'
+    # ?theme=dark — the frame chrome follows the doc theme; the
+    # fragment's own dark: utilities come from the class build
+    '[data-theme="dark"] body{background:#14171d}'
+    '[data-theme="dark"] .wf-stage{'
+    'box-shadow:0 10px 34px rgba(0,0,0,.5)}'
+    '[data-theme="dark"] .wf-fx-bar button{background:#23262e;'
+    'color:#e4e6ea;border-color:#3a3e47}'
+    '[data-theme="dark"] .wf-fx-bar button[aria-pressed="true"]{'
+    'background:#e8eaef;color:#1c1f26;border-color:#e8eaef}')
+
+
+# E1 — fragment interactions are authored against a REAL surface:
+# hover/click handlers listen on the fragment tree, scroll-driven
+# fx read the stage's scroll metrics (mapped by the shim above).
+# The driver replays that reality: one scroll sweep, a synthetic
+# pointer pass over the deepest interactive node, and a loop that
+# restarts finite animations so one-shot sequences never sit
+# frozen in their end state. Replay re-runs the same pass.
+_FX_DRIVER = (
+    '<script>(function(){'
+    'var st=document.querySelector(".wf-stage");'
+    'var pg=document.querySelector(".wf-page");'
+    'var sc=st||pg;if(!sc)return;'
+    'function scrollTo_(y){if(st)st.scrollTop=y;'
+    'else window.scrollTo(0,y)}'
+    'function scrollMax(){if(st)return st.scrollHeight-st.clientHeight;'
+    'return Math.max(0,document.documentElement.scrollHeight'
+    '-window.innerHeight)}'
+    'function anim(){return document.getAnimations?'
+    'document.getAnimations():[]}'
+    'function play(){anim().forEach(function(a){'
+    'try{a.cancel();a.play()}catch(e){}})}'
+    'function drive(){'
+    'var top=scrollMax();'
+    'if(top>8){'
+    'var t0=performance.now();'
+    '(function sweep(t){var k=Math.min(1,(t-t0)/2400);'
+    'scrollTo_(top*(k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2));'
+    'if(k<1)requestAnimationFrame(sweep)})(t0);}'
+    'var hit=sc.querySelector("button,a,[role=button],summary,'
+    'input,select,[data-hover],[tabindex]");'
+    'if(hit){["pointerover","mouseover","pointerdown","pointerup",'
+    '"click","pointerout"].forEach(function(n,i){'
+    'setTimeout(function(){try{hit.dispatchEvent('
+    'new MouseEvent(n,{bubbles:true}))}catch(e){'
+    'hit.dispatchEvent(new Event(n,{bubbles:true}))}},'
+    '2600+i*140)})}}'
+    'var loop=setInterval(function(){'
+    'if(document.body.dataset.motion==="off")return;'
+    'var a=anim().filter(function(x){'
+    'return x.playState==="finished"||x.playState==="idle"});'
+    'var all=anim();'
+    'if(a.length&&a.length===all.length){play()}'
+    '},1500);'
+    'setTimeout(drive,900);'
+    'var r=document.querySelector(".wf-replay");'
+    'if(r)r.addEventListener("click",function(){'
+    'scrollTo_(0);play();drive()});'
+    'var m=document.querySelector(".wf-motion");'
+    'if(m)m.addEventListener("click",function(){'
+    'var off=document.body.dataset.motion==="off";'
+    'document.body.dataset.motion=off?"on":"off";'
+    'm.setAttribute("aria-pressed",off?"false":"true");'
+    'if(off)anim().forEach(function(a){try{a.play()}catch(e){}})'
+    '})'
+    '})();</script>')
+
+
+def _css_esc(name):
+    return re.sub(r'([^a-zA-Z0-9_-])', r'\\\1', name)
+
+
+def _util_rule(tok):
+    """tailwind v4-dialect utility → a css declaration for the
+    vendored v3 compiler's gaps (shadow-xs, w-13, ease-[…],
+    duration-250 …). Returns 'prop:value' or None (font families
+    resolve by name only — unresolvable)."""
+    # variant prefix = up to the last ':' before the first '['
+    bi = tok.find('[')
+    base = tok[tok.rfind(':', 0, bi if bi >= 0 else len(tok)) + 1:] \
+        if bi >= 0 else tok.split(':')[-1]
+    base = base.split('/')[0] if '/[' not in base else base
+    v = base[base.index('[') + 1:-1].replace('_', ' ') \
+        if base.endswith(']') and '[' in base else None
+    if base.startswith('[') and ':' in base[1:-1]:
+        prop, val = base[1:-1].split(':', 1)
+        return f'{prop}:{val.replace("_", " ")}'
+    SP = 0.25  # rem per spacing unit
+    m = re.fullmatch(
+        r'(w|h|size|min-w|max-w|min-h|max-h|p|px|py|pt|pb|pl|pr|'
+        r'm|mx|my|mt|mb|ml|mr|inset|inset-x|inset-y|top|right|'
+        r'bottom|left|gap|gap-x|gap-y|space-x|space-y|basis)-'
+        r'(\d+(?:\.\d+)?)', base)
+    if m:
+        rem = float(m.group(2)) * SP
+        prop = {
+            'w': 'width', 'h': 'height', 'size': 'width;height',
+            'min-w': 'min-width', 'max-w': 'max-width',
+            'min-h': 'min-height', 'max-h': 'max-height',
+            'p': 'padding', 'px': 'padding-inline',
+            'py': 'padding-block', 'pt': 'padding-top',
+            'pb': 'padding-bottom', 'pl': 'padding-left',
+            'pr': 'padding-right', 'm': 'margin',
+            'mx': 'margin-inline', 'my': 'margin-block',
+            'mt': 'margin-top', 'mb': 'margin-bottom',
+            'ml': 'margin-left', 'mr': 'margin-right',
+            'inset': 'inset', 'inset-x': 'inset-inline',
+            'inset-y': 'inset-block', 'top': 'top',
+            'right': 'right', 'bottom': 'bottom', 'left': 'left',
+            'gap': 'gap', 'gap-x': 'column-gap',
+            'gap-y': 'row-gap', 'basis': 'flex-basis',
+        }[m.group(1)]
+        if m.group(1) == 'size':
+            return f'width:{rem}rem;height:{rem}rem'
+        if m.group(1) in ('space-x', 'space-y'):
+            a = 'left' if m.group(1).endswith('x') else 'top'
+            return (f'>*+*{{margin-{a}:{rem}rem}}')
+        return f'{prop}:{rem}rem'
+    if base.startswith('ease-['):
+        return f'transition-timing-function:{v}'
+    if base.startswith(('duration-', 'delay-')):
+        n = base.split('-', 1)[1]
+        ms = v or (n if n.isdigit() else None)
+        if ms:
+            prop = ('transition-duration' if base[0] == 'd' and
+                    base[1] == 'u' else 'transition-delay')
+            return f'{prop}:{ms}ms'
+    if base.startswith('shadow-['):
+        return f'box-shadow:{v}'
+    named = {
+        'shadow-xs': 'box-shadow:0 1px 2px 0 rgb(0 0 0/.05)',
+        'shadow-sm': 'box-shadow:0 1px 3px 0 rgb(0 0 0/.1),'
+                     '0 1px 2px -1px rgb(0 0 0/.1)',
+        'rounded-xs': 'border-radius:.125rem',
+        'rounded-xxs': 'border-radius:.0625rem',
+        'will-change-transform': 'will-change:transform',
+        'will-change-opacity': 'will-change:opacity',
+        'will-change-scroll': 'will-change:scroll-position',
+        'will-change-contents': 'will-change:contents',
+        'will-change-auto': 'will-change:auto',
+        'transition-colors': 'transition-property:color,'
+                             'background-color,border-color',
+        'transition-transform': 'transition-property:transform',
+        'transition-all': 'transition-property:all',
+        'transition-shadow': 'transition-property:box-shadow',
+        'transition-opacity': 'transition-property:opacity',
+    }
+    if base in named:
+        return named[base]
+    if base.startswith('transition-['):
+        return f'transition-property:{v}'
+    if base.startswith('will-change-['):
+        return f'will-change:{v}'
+    if base.startswith('content-['):
+        return f'content:{v}'
+    if base.startswith('animate-['):
+        return f'animation:{v}'
+    for pre, prop in (
+            ('bg-[', 'background-color'), ('text-[', 'color'),
+            ('border-[', 'border-color'), ('ring-[', 'box-shadow'),
+            ('fill-[', 'fill'), ('stroke-[', 'stroke'),
+            ('accent-[', 'accent-color'),
+            ('min-h-[', 'min-height'), ('min-w-[', 'min-width'),
+            ('max-h-[', 'max-height'), ('max-w-[', 'max-width'),
+            ('w-[', 'width'), ('h-[', 'height'), ('inset-[', 'inset'),
+            ('top-[', 'top'), ('bottom-[', 'bottom'),
+            ('left-[', 'left'), ('right-[', 'right'),
+            ('grid-cols-[', 'grid-template-columns'),
+            ('grid-rows-[', 'grid-template-rows'),
+            ('blur-[', 'filter:blur('), ('z-[', 'z-index'),
+            ('opacity-[', 'opacity'), ('scale-[', 'transform:scale('),
+            ('rotate-[', 'transform:rotate('),
+            ('tracking-[', 'letter-spacing'),
+            ('leading-[', 'line-height'),
+            ('cursor-[', 'cursor'), ('aspect-[', 'aspect-ratio'),
+            ('origin-[', 'transform-origin'),
+            ('outline-[', 'outline-color'),
+            ('decoration-[', 'text-decoration-color'),
+            ('caret-[', 'caret-color')):
+        if base.startswith(pre) and v:
+            if pre == 'text-[' and re.fullmatch(r'[\d.]+(px|rem|em)', v):
+                prop = 'font-size'
+            if pre in ('blur-[', 'scale-[', 'rotate-['):
+                return f'{prop}{v})'
+            if pre == 'ring-[':
+                return f'box-shadow:0 0 0 3px {v}'
+            return f'{prop}:{v}'
+    return None
+
+
+def _bank_fallback_css():
+    """every class token the bank uses that the compiled
+    bank-preview.css doesn't carry → a generated fallback rule.
+    Fragment <style> blocks are checked too (amb15-mote & co. are
+    fragment-local, never missing)."""
+    css_path = os.path.join(_GENMENU, 'bank-preview.css')
+    css = open(css_path, errors='replace').read() \
+        if os.path.isfile(css_path) else ''
+    frag_styles = []
+    toks = set()
+    for r, _ds, fns in os.walk(_GENMENU):
+        for fn in fns:
+            if not fn.endswith('.html'):
+                continue
+            blob = open(os.path.join(r, fn), encoding='utf-8',
+                        errors='replace').read()
+            frag_styles += re.findall(
+                r'<style[^>]*>(.*?)</style>', blob, re.S | re.I)
+            for cm in re.finditer(r'class="([^"]+)"', blob):
+                toks.update(html.unescape(cm.group(1)).split())
+    rules = []
+    for tok in sorted(toks):
+        if tok.startswith(('wf-', 'lucide')):
+            continue
+        bi = tok.find('[')
+        base = tok[tok.rfind(':', 0, bi if bi >= 0 else
+                            len(tok)) + 1:]
+        sel = '.' + _css_esc(tok)
+        if sel in css or ('.' + _css_esc(base)) in css or \
+                ('.' + _css_esc(base.split('/')[0])) in css:
+            continue
+        cix = tok.rfind(':', 0, bi) if bi >= 0 else \
+            (tok.rfind(':') if ':' in tok else -1)
+        var = tok[:cix] if cix > 0 else ''
+        decl = _util_rule(tok)
+        if not decl:
+            continue
+        sel = '.' + _css_esc(tok)
+        if var in ('sm', 'md', 'lg', 'xl', '2xl'):
+            bp = {'sm': 640, 'md': 768, 'lg': 1024,
+                  'xl': 1280, '2xl': 1536}[var]
+            rules.append(f'@media(min-width:{bp}px)'
+                         f'{{{sel}{{{decl}}}}}')
+        elif var == 'hover':
+            rules.append(f'{sel}:hover{{{decl}}}')
+        elif var == 'dark':
+            rules.append(f'[data-theme="dark"] {sel}{{{decl}}}')
+        elif var in ('before', 'after'):
+            rules.append(f'{sel}::{var}{{{decl}}}')
+        elif not var:
+            rules.append(f'{sel}{{{decl}}}')
+        # pseudo-el/other variants unhandled → skip silently
+    return ''.join(rules)
+
+
+def _bank_scale(frag):
+    """E1 — widget vs page scale, derived from the fragment's own
+    root: anything that isn't clearly a small widget is page-scale
+    and renders edge-to-edge (the compact stage clips section-scale
+    fragments — footers, tiers, heroes). Widget cues: a fixed narrow
+    width/max-w, an inline root, or a span."""
+    m = re.search(r'<([a-zA-Z0-9-]+)([^>]*)>', frag)
+    if not m:
+        return 'widget'
+    tag, attrs = m.group(1).lower(), m.group(2)
+    cm = re.search(r'class="([^"]+)"', attrs)
+    cls = cm.group(1) if cm else ''
+    mw = re.search(r'(?:max-w|w|size)-\[(\d+)px\]', cls)
+    if mw and int(mw.group(1)) < 640:
+        return 'widget'
+    if re.search(r'max-w-(xs|sm|md|prose)\b', cls):
+        return 'widget'
+    if re.search(r'\b(w-fit|inline-flex|inline-block|'
+                 r'inline-grid)\b', cls) or tag == 'span':
+        return 'widget'
+    return 'page'
+
+
+def _fx_strip_freeze(frag):
+    """E1 — a preview doc must PLAY the effect: the banked
+    fragment's prefers-reduced-motion media blocks freeze it in
+    its end state when the preview runs under reduced-motion.
+    Strip those blocks at emit (the bank file keeps them); the
+    emitted doc's own motion toggle is the a11y switch."""
+    out = []
+    i = 0
+    pat = re.compile(r'@media\s*\([^{)]*prefers-reduced-motion')
+    while True:
+        m = pat.search(frag, i)
+        if not m:
+            out.append(frag[i:])
+            break
+        out.append(frag[i:m.start()])
+        # balance braces from the media block's opening {
+        j = frag.index('{', m.end())
+        depth = 1
+        j += 1
+        while depth and j < len(frag):
+            if frag[j] == '{':
+                depth += 1
+            elif frag[j] == '}':
+                depth -= 1
+            j += 1
+        i = j
+    return ''.join(out)
 
 
 def _genmenu_tags():
@@ -2280,6 +2607,41 @@ def emit_bank_previews(pd):
         os.path.isdir(os.path.join(_GENMENU, d))))
     tags = _genmenu_tags()
     css_src = os.path.join(_GENMENU, 'bank-preview.css')
+    # E1 — the committed css must cover the CURRENT bank: an exemplar
+    # banked after the last compile loses its arbitrary-value surface
+    # (bg-[#…] etc.), so its white text renders on the stage's
+    # near-white in light mode. mtime can't see that (a checkout
+    # bumps everything together) — hash every banked source; a stamp
+    # mismatch means the css predates the bank and must recompile:
+    # vendored tailwind, deterministic, no network.
+    bh = hashlib.sha256()
+    # config-version salt — a compiler-setting change (e.g. darkMode
+    # 'class' below) must also recompile; the bank-content hash alone
+    # can't see it
+    bh.update(b'bank-preview-config:v2-darkmode-class')
+    for r, _ds, fns in os.walk(_GENMENU):
+        for fn in sorted(fns):
+            if fn.endswith(('.html', '.tsx')):
+                fp_ = os.path.join(r, fn)
+                try:
+                    bh.update(os.path.relpath(fp_, _GENMENU).encode())
+                    bh.update(open(fp_, 'rb').read())
+                except OSError:
+                    pass
+    stamp_fp = os.path.join(css_src + '.sha256')
+    stamp = (open(stamp_fp).read() if os.path.isfile(stamp_fp)
+             else '')
+    if stamp != bh.hexdigest():
+        try:
+            sys.path.insert(0, HERE)
+            import genmenu_bank
+            if genmenu_bank.preview_css() == 0:
+                with open(stamp_fp, 'w') as fh:
+                    fh.write(bh.hexdigest())
+                print('  bank-preview.css recompiled '
+                      '(bank content changed)')
+        except Exception as e:
+            print(f'  ! bank-preview.css recompile skipped: {e}')
     outdir = os.path.join(pd, 'site', 'dist', 'preview', 'bank')
     os.makedirs(outdir, exist_ok=True)
     css_dst = os.path.join(outdir, 'bank-preview.css')
@@ -2292,6 +2654,15 @@ def emit_bank_previews(pd):
             fo.write(blob)
     head = ('<meta charset="utf-8"><meta name="viewport" '
             'content="width=device-width,initial-scale=1">'
+            # U.3 — ?theme=dark / localStorage bind the doc like the
+            # system sheet: data-theme on <html> + the .dark class
+            # the bank tailwind build (darkMode:'class') keys on
+            '<script>(function(){var m=new URLSearchParams('
+            'location.search).get("theme")||localStorage.'
+            'getItem("theme")||"light";document.'
+            'documentElement.dataset.theme=m;document.'
+            'documentElement.classList.toggle("dark",m==="dark")'
+            '})()</script>'
             '<link rel="stylesheet" href="/built/' +
             urllib.parse.quote(os.path.join(
                 pd, 'site', 'dist', 'preview', 'bank',
@@ -2310,21 +2681,73 @@ def emit_bank_previews(pd):
                 fp = os.path.join(cdir, fn)
                 dst = os.path.join(outdir, cls, slug + '.html')
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
+                row = tags.get(cls + '/' + slug) or {}
                 stale = (not os.path.isfile(dst)) or \
                     os.path.getmtime(fp) > os.path.getmtime(dst) or \
                     (os.path.isfile(css_dst) and
                      os.path.getmtime(css_dst) >
-                     os.path.getmtime(dst))
+                     os.path.getmtime(dst)) or \
+                    '<!--wf:bank:v5-->' not in open(
+                        dst, encoding='utf-8',
+                        errors='replace').read(64)
                 if stale:
                     frag = open(fp, encoding='utf-8').read()
+                    # E4 — banked fragments may keep the source app's
+                    # /src/assets/… refs; that tree is never shipped,
+                    # so every fx load 404s the image. Bind them to
+                    # the pipeline's emitted placeholder figure.
+                    frag = re.sub(
+                        r'/src/assets/[^\s"\'()]+',
+                        '/built/' + urllib.parse.quote(
+                            os.path.join(
+                                pd, 'site', 'dist', 'media',
+                                'placeholder.svg')), frag)
+                    # the AI-Studio harness shim is never vendored —
+                    # it 404s on every load; the fx driver below is
+                    # the replacement interaction layer
+                    frag = re.sub(
+                        r'<script[^>]*_aistudio-iframe[^>]*>'
+                        r'\s*</script>', '', frag)
+                    fx = cls.startswith(('fx-', 'imgfx-', 'mobfx-'))
+                    if fx:
+                        frag = _fx_strip_freeze(frag)
                     mob = gid == 'menu' or cls.startswith('mob')
-                    stage = ('<div class="wf-stage' +
-                             (' mob' if mob else '') + '">' + frag +
-                             '</div>')
+                    page = (not mob) and _bank_scale(frag) == 'page'
+                    if page:
+                        stage = ('<div class="wf-page">' + frag +
+                                 '</div>')
+                    else:
+                        stage = ('<div class="wf-stage' +
+                                 (' mob' if mob else '') + '">'
+                                 '<div class="wf-stage-in">' + frag +
+                                 '</div></div>')
+                    # E1 — fx cards carry the demo chrome (replay +
+                    # motion toggle) and the interaction driver; the
+                    # burger icon css is nav-only chrome, never fx
+                    if fx:
+                        stage += ('<div class="wf-fx-bar">'
+                                  '<button class="wf-replay" '
+                                  'type="button">Replay</button>'
+                                  '<button class="wf-motion" '
+                                  'type="button" aria-pressed="false">'
+                                  'Reduce motion</button></div>')
+                    # dark-mode fragments keep transparent inner
+                    # surfaces — the stage underlay binds their
+                    # intended surface or light text sits on the
+                    # light frame (E1 readability)
+                    css_ = _BANK_STAGE_CSS + (
+                        'body{padding:0}' if page else '') + (
+                        'body{background:#0b0e14}'
+                        if row.get('mode') == 'dark' else '')
                     with open(dst, 'w', encoding='utf-8') as fh:
-                        fh.write(_doc(head, '', stage,
-                                      extra=_STAGE_SCROLL_SHIM,
-                                      css=_BANK_STAGE_CSS))
+                        fh.write('<!--wf:bank:v5-->' +
+                                 _doc(head, '', stage,
+                                      extra=(_STAGE_SCROLL_SHIM
+                                             if not page else '') +
+                                      (_FX_DRIVER if fx else ''),
+                                      css=css_,
+                                      chrome=gid == 'menu' or
+                                      cls.startswith('nav-')))
                 row = tags.get(cls + '/' + slug) or {}
                 ctags = [cls, 'bank'] + \
                     list(row.get('style') or []) + \
