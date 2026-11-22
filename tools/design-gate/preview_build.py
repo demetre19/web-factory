@@ -620,9 +620,9 @@ def emit_layouts(ctx):
         for sec, comp in (o.get('chrome') or {}).items():
             if comp:
                 override[sec] = comp
-        for sec, surf in (o.get('surfaces') or {}).items():
-            if surf in gate.SURFACES:
-                override[f'{sec}@surface'] = surf
+        for sec, dens in (o.get('densities') or {}).items():
+            if dens in ('compact', 'regular', 'spacious'):
+                override[f'{sec}@density'] = dens
         options.append((str(o.get('id')), o.get('label') or
                         o.get('id'), float(o.get('score') or 0),
                         override))
@@ -722,11 +722,14 @@ def emit_layouts(ctx):
                 if r2.pop('image', None) is not None:
                     r2['media_ratio'] = 'none'
                     cc['media_ratio'] = 'none'
-            surf = override.get(f"{c['section']}@surface")
-            # a media-band comp owns its band; any other comp takes the
-            # option's surface, even over a media-band plan default
-            if surf and cc.get('composition') not in PC.MEDIA_BAND_HEROES:
-                cc['surface'] = r2['surface'] = surf
+            dens = override.get(f"{c['section']}@density")
+            if dens:
+                cc['density'] = r2['density'] = dens
+            # a non-media-band hero over a media-band plan default
+            # drops the media band (the projection binds base)
+            if (c['section'] == 'hero' and cc.get('surface') == 'media'
+                    and cc.get('composition') not in PC.MEDIA_BAND_HEROES):
+                cc['surface'] = r2['surface'] = 'base'
             ov_rows.append((cc, r2))
         # and after the split-media rows, the same media-pane rows
         # the plan's post-pass fills — the card locks the ratios the

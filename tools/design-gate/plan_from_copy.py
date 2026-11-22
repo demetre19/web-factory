@@ -540,7 +540,6 @@ def recorded_pick(pdir):
         return None
 
 
-HERO_SURFACES = ('inverse', 'muted', 'brand')
 MEDIA_BAND_HEROES = {'hero-act-merge'}
 
 
@@ -634,48 +633,30 @@ def build(pdir, option=None):
         nav_pool = [signed['header']]
     if signed.get('footer') in foot_pool:
         foot_pool = [signed['footer']]
-    # the hero rotation is anchored on the signed pick: the picked
-    # option keeps the plan-default hero (re-projecting never swaps
-    # the shipped hero), every other option opens on the next comp
-    # in the pool — d1..d5 differ above the fold. The anchor is
-    # recorded and reused: approving another option later re-projects
-    # the SAME table, so the approved page wears the hero it previewed
+    # every option opens on its own comp of the hero pool, in pool
+    # order — d1 (the plan default) keeps the default hero, so the
+    # table never depends on which option is picked (re-projecting an
+    # approval, or a clean repro rebuild, yields the same table)
     pick = option or recorded_pick(pdir) or 'd1'
-    try:
-        prior = json.load(open(os.path.join(pdir, 'LAYOUT-OPTIONS.json'),
-                               encoding='utf-8'))
-    except Exception:
-        prior = {}
-    ids = [o[0] for o in opts]
-    anchor = (prior.get('hero_anchor') if prior.get('hero_anchor') in ids
-              else pick if pick in ids else ids[0] if ids else pick)
-    p_at = ids.index(anchor) if anchor in ids else 0
-    # the unpicked options' hero bands rotate surface too (strongest
-    # contrast first) — a comp that owns its band (a media hero)
-    # keeps it, the pick keeps the plan's
-    surf_at, k = {}, 0
-    for oi in range(len(opts)):
-        hc = hero_pool[(oi - p_at) % len(hero_pool)]
-        if oi != p_at and hc not in MEDIA_BAND_HEROES:
-            surf_at[oi] = HERO_SURFACES[k % len(HERO_SURFACES)]
-            k += 1
     zone_of = {b['id']: b['zone'] for b in blocks}
     table = []
     row_media = max(0, len(media) - 1)
     for oi, (oid, label, v) in enumerate(opts):
-        ri = oi - p_at
         seq = repair_rhythm([(b['id'], v[b['id']]) for b in blocks],
                             allowed, zone_of)
         seq = [(bid, eff_comp(by[bid], c, allowed[bid], row_media))
                for bid, c in seq]
         s, inputs = score(seq, by)
+        # a hero that shares the first body row's comp steps density
+        # (compact) — adjacent rows never share comp AND density
+        hc = hero_pool[oi % len(hero_pool)]
         table.append({'id': oid, 'label': label,
                       'compositions': {bid: c for bid, c in seq},
-                      'chrome': {'nav': nav_pool[ri % len(nav_pool)],
-                                 'hero': hero_pool[ri % len(hero_pool)],
-                                 'footer': foot_pool[ri % len(foot_pool)]},
-                      **({'surfaces': {'hero': surf_at[oi]}}
-                         if oi in surf_at else {}),
+                      'chrome': {'nav': nav_pool[oi % len(nav_pool)],
+                                 'hero': hc,
+                                 'footer': foot_pool[oi % len(foot_pool)]},
+                      **({'densities': {'hero': 'compact'}}
+                         if seq and seq[0][1] == hc else {}),
                       'score': s, 'score_inputs': inputs})
     chosen = next((o for o in table if o['id'] == pick), None)
     if chosen is None:
@@ -727,9 +708,9 @@ def build(pdir, option=None):
     rows.append(base_row(
         'hero', hero_comp, label='Hero', speech_act=['promise'],
         category='hero',
-        surface=('media' if hero_comp in MEDIA_BAND_HEROES else
-                 (chosen.get('surfaces') or {}).get('hero') or 'base'),
-        density='regular', emphasis='headline',
+        surface='media' if hero_comp in MEDIA_BAND_HEROES else 'base',
+        density=(chosen.get('densities') or {}).get('hero') or 'regular',
+        emphasis='headline',
         align='center-axis', stack='text-first', collapse='stacked',
         media_ratio='none', disclosure='open', intent='hero',
         content_ids=['c-h1'], copy_ref='lede',
@@ -937,7 +918,6 @@ def build(pdir, option=None):
     # Contact/Blog boards stop rendering one article's body copy.
     import board_copy
     lay = {'generated_by': TOOL, 'copy_sha256': copy_sha, 'pick': pick,
-           'hero_anchor': anchor,
            'allowed': allowed, 'options': table,
            # human row titles — the picker's scrub rows display these,
            # never the machine name (which is a slug, sometimes rule
