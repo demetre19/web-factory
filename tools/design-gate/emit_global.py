@@ -422,6 +422,13 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      .nav-links one below) or a dead zone opens where the header
      shows brand alone */
   .nav-cta { display: none; }
+  @media (max-width: 60rem) {
+    /* an empty CTA lane beside the burger must not hold flex space —
+       hide a wrapper whose only element is the hidden .nav-cta, so
+       the burger pins to the row's far end (N.flyout) */
+    header[data-sec="nav"] div:has(> .nav-cta:only-child) {
+            display: none; }
+  }
   @media (min-width: 60rem) {
     /* a stray CTA class on the trigger must not resurrect it: the
        doubled class keeps this rule ahead of ANY later

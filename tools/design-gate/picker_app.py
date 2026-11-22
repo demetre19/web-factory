@@ -760,13 +760,14 @@ def _topo_variants(block, comp):
 # bank's .burger renders "Menu" text; this turns it into a hamburger
 # icon button bound to tokens, applied to every emitted preview doc
 _CHROME_CSS = (
-    '.burger{display:inline-flex;align-items:center;'
+    '.burger{display:none;align-items:center;'
     'justify-content:center;width:44px;height:44px;min-width:44px;'
     'min-height:44px;padding:0!important;font-size:0!important;'
-    'border:1px solid var(--border-default);'
-    'border-radius:var(--radius,10px);background:var(--bg-elevated);'
+    'border:1px solid var(--border-subtle,var(--border-default));'
+    'border-radius:var(--radius,10px);background:transparent;'
     'color:var(--text-primary);box-shadow:none!important;'
     'cursor:pointer}'
+    '@media (max-width:60rem){.burger{display:inline-flex}}'
     '.burger::after{content:"";width:20px;height:14px;'
     'background:repeating-linear-gradient(to bottom,'
     'currentColor 0 2px,transparent 2px 6px)}')
