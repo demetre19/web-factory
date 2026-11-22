@@ -1267,7 +1267,7 @@ MUT = {
      ('DEL','site/dist/design-system/index.html')),
  'check_tile_is_system': (lambda files: files.update({
      'site/dist/preview/system/index.html': re.sub(
-         r'<div data-comp="split-media">.*?</div>', '',
+         r'<div data-comp="split-media"[^>]*>.*?</div>', '',
          files['site/dist/preview/system/index.html'],
          count=1, flags=re.S)})),
  'check_class_subset': mut(('REPL','site/dist/home/index.html',
