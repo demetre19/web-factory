@@ -102,6 +102,8 @@ def _call(key, model, img_path):
 
 def main():
     args = sys.argv[1:]
+    if '--test' in args:
+        return  # handled by test_run() below
     tags = json.load(open(TAGS))
     items = _items(tags)
     cp = _checkpoint()
@@ -153,3 +155,315 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+# -------------------------------------------------------------------
+# --test mode — two-model classifier experiment (24 exemplars, lite
+# vs flash). Writes tools/design-gate/classify_test/*.json + REPORT.
+# -------------------------------------------------------------------
+
+TEST_DIR = os.path.join(HERE, 'classify_test')
+GENMENU = os.path.join(REPO, 'templates', 'skeletons', 'genmenu')
+PREVIEW_CSS = os.path.join(GENMENU, 'bank-preview.css')
+MODEL_LITE = 'google/gemini-2.5-flash-lite'
+MODEL_FLASH = 'google/gemini-2.5-flash'
+MODELS_URL = 'https://openrouter.ai/api/v1/models'
+
+# Full working axis set for the test: the 24 GENES axes (vocab from
+# genome.py) + the ~57 new axes the operator named, each with
+# candidate alleles ("*" = free short snake-case label).
+NEW_AXES = {
+ 'colour-scheme': ['light', 'dark', 'mixed'],
+ 'colour-temperature': ['neutral', 'warm', 'cool'],
+ 'saturation': ['muted', 'medium', 'vivid'],
+ 'accent-hue-family': ['blue', 'green', 'red', 'orange', 'yellow',
+                       'purple', 'pink', 'neutral', 'multi'],
+ 'surface-tone': ['white', 'off-white', 'grey', 'tinted', 'dark'],
+ 'contrast-level': ['low', 'medium', 'high'],
+ 'gradient-use': ['none', 'subtle', 'feature', 'dominant'],
+ 'margin-generosity': ['tight', 'regular', 'generous', 'airy'],
+ 'card-padding': ['compact', 'regular', 'spacious'],
+ 'section-gap-rhythm': ['uniform', 'alternating', 'progressive'],
+ 'content-measure': ['narrow', 'medium', 'wide', 'full-bleed'],
+ 'alignment-grammar': ['left-grid', 'centered', 'mixed',
+                       'asymmetric'],
+ 'type-mood': ['neo-grotesque', 'geometric', 'humanist',
+               'serif-editorial', 'mono-technical', 'display'],
+ 'case-style': ['sentence', 'title', 'upper', 'mixed'],
+ 'letter-spacing': ['normal', 'tight', 'wide'],
+ 'weight-contrast': ['low', 'medium', 'high'],
+ 'text-scale-drama': ['subtle', 'moderate', 'extreme'],
+ 'border-treatment': ['none', 'hairline', 'prominent', 'double'],
+ 'elevation-style': ['flat', 'soft-shadow', 'hard-shadow',
+                     'layered', 'glow'],
+ 'surface-texture': ['solid', 'gradient', 'glass', 'pattern',
+                     'image'],
+ 'container-style': ['cards', 'bands', 'panels', 'frameless',
+                     'bordered'],
+ 'divider-language': ['lines', 'spacing', 'ornament', 'none'],
+ 'image-framing': ['full-bleed', 'card-contained', 'masked',
+                   'arched', 'cropped', 'none'],
+ 'icon-language': ['none', 'line', 'solid', 'duotone', 'emoji',
+                   '3d'],
+ 'fx-classes-present': ['*multi'],
+ 'hover-behavior': ['none', 'subtle', 'lift', 'scale', 'color'],
+ 'transition-tempo': ['instant', 'fast', 'eased', 'slow'],
+ 'vibe-primary': ['professional', 'playful', 'premium', 'bold',
+                  'technical', 'warm', 'editorial', 'minimal'],
+ 'brand-weight': ['generic', 'moderate', 'strong'],
+ 'copy-tone': ['formal', 'conversational', 'technical', 'marketing',
+               'poetic'],
+ 'header-style': ['bar', 'split', 'centered', 'overlay', 'none'],
+ 'footer-style': ['simple', 'columns', 'mega', 'none'],
+ 'sticky-elements': ['none', 'header', 'cta', 'nav'],
+ 'overlay-language': ['modal', 'drawer', 'toast', 'none'],
+ 'breadcrumb-presence': ['yes', 'no'],
+ 'button-style': ['filled', 'outline', 'ghost', 'pill', 'mixed'],
+ 'button-size-presence': ['small', 'medium', 'large', 'mixed'],
+ 'input-style': ['boxed', 'underline', 'filled', 'none'],
+ 'control-density': ['sparse', 'regular', 'dense'],
+ 'ornament-level': ['none', 'minimal', 'moderate', 'heavy'],
+ 'badge-chip-usage': ['none', 'few', 'many'],
+ 'illustration-detail': ['none', 'simple', 'detailed'],
+ '3d-depth': ['flat', 'subtle', 'prominent'],
+ 'symmetry': ['symmetric', 'asymmetric', 'mixed'],
+ 'visual-hierarchy-strength': ['weak', 'clear', 'strong'],
+ 'scroll-experience': ['static', 'snap', 'parallax', 'immersive'],
+ 'card-shape-variety': ['uniform', 'varied', 'none'],
+ 'polish-level': ['rough', 'production', 'polished'],
+ 'copy-density': ['sparse', 'balanced', 'dense'],
+ 'data-heaviness': ['none', 'light', 'moderate', 'heavy'],
+ 'social-proof-density': ['none', 'light', 'moderate', 'heavy'],
+ 'personalization-feel': ['generic', 'tailored', 'immersive'],
+ 'domain-vertical': ['saas', 'ecommerce', 'editorial', 'portfolio',
+                     'agency', 'fintech', 'health', 'education',
+                     'gaming', 'nonprofit', 'dev-tools', 'other'],
+ 'audience': ['consumer', 'b2b', 'developer', 'internal', 'mixed'],
+ 'device-feel': ['desktop', 'mobile-first', 'responsive'],
+ 'era-signature': ['retro', 'current-2025', 'emerging', 'timeless'],
+}
+
+
+def _axis_spec():
+    spec = dict(NEW_AXES)
+    try:
+        import genome
+        for name, vocab in genome.GENES:
+            spec.setdefault(name, list(vocab))
+    except Exception:
+        pass
+    return spec
+
+
+def _test_prompt(spec):
+    lines = []
+    for name, vocab in spec.items():
+        if vocab == ['*multi']:
+            lines.append(f'"{name}": {{"alleles": [labels]}} '
+                         f'(multi-tag)')
+        else:
+            lines.append(f'"{name}": {{"allele": one of '
+                         f'{"|".join(vocab)}, "confidence": 0-1}}')
+    return (
+        'Classify this web-design exemplar (screenshot + markup). '
+        'Return ONE JSON object, every key present, vocab values '
+        'only, no prose:\n{\n' + ',\n'.join(lines) + '\n}')
+
+
+def _render(fragment_path, out_png, pw):
+    """Wrap a genmenu fragment in the bank preview page + shot."""
+    frag = open(fragment_path).read()
+    css = open(PREVIEW_CSS).read()
+    html = ('<!doctype html><meta charset=utf-8><style>' + css +
+            '</style><body style="margin:0">' + frag + '</body>')
+    pg = pw.new_page(viewport={'width': 1280, 'height': 1100})
+    pg.set_content(html, wait_until='load')
+    pg.wait_for_timeout(400)
+    pg.screenshot(path=out_png)
+    pg.close()
+    return out_png
+
+
+def _test_call(key, model, img_path, mime, struct_text, prompt):
+    data = base64.b64encode(open(img_path, 'rb').read()).decode()
+    body = {
+        'model': model,
+        'messages': [{'role': 'user', 'content': [
+            {'type': 'text',
+             'text': prompt + '\n\nSTRUCTURE:\n' +
+             struct_text[:3000]},
+            {'type': 'image_url', 'image_url':
+             {'url': f'data:{mime};base64,{data}'}}]}],
+        'response_format': {'type': 'json_object'},
+        'max_tokens': 4000,
+    }
+    req = urllib.request.Request(
+        API, data=json.dumps(body).encode(),
+        headers={'Authorization': f'Bearer {key}',
+                 'Content-Type': 'application/json'})
+    with urllib.request.urlopen(req, timeout=90) as r:
+        return json.loads(r.read())
+
+
+def _test_items():
+    """~24 exemplars: mixed genmenu families + mobbin site pages."""
+    pick_g = [
+        'auth-form', 'footer-mega', 'pricing-tiers', 'hero-split',
+        'hero-centered', 'card-block', 'data-table', 'checkout',
+        'empty-state', 'comparison-table', 'deco-quote', 'data-grid',
+        'bg-gradient', 'nav-mega-panel', 'modal-dialog',
+        'product-page', 'ui-badge', 'fx-reveal',
+    ]
+    pick_m = ['site-landing', 'site-dashboard', 'site-pricing',
+              'site-article', 'site-checkout', 'site-portfolio']
+    out = []
+    for fam in pick_g:
+        d = os.path.join(GENMENU, fam)
+        if not os.path.isdir(d):
+            continue
+        f = sorted(x for x in os.listdir(d)
+                   if x.endswith('.html'))[:1]
+        if f:
+            out.append({'id': 'gm-' + fam + '-' + f[0][:-5],
+                        'kind': 'genmenu',
+                        'path': os.path.join(d, f[0])})
+    for fam in pick_m:
+        d = os.path.join(MOBBIN, fam)
+        if os.path.isdir(d):
+            f = sorted(x for x in os.listdir(d)
+                       if x.endswith('.webp'))[:1]
+            if f:
+                out.append({'id': 'mb-' + fam + '-' + f[0][:-5],
+                            'kind': 'mobbin',
+                            'path': os.path.join(d, f[0])})
+    return out
+
+
+def _prices(key):
+    try:
+        req = urllib.request.Request(
+            MODELS_URL,
+            headers={'Authorization': f'Bearer {key}'})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            for m in json.loads(r.read())['data']:
+                if m['id'] in (MODEL_LITE, MODEL_FLASH):
+                    yield m['id'], m.get('pricing', {})
+    except Exception:
+        return
+
+
+def _agreement(run):
+    per_axis = {}
+    ids = {v['id'] for v in run.values()}
+    lite = {k: v for k, v in run.items() if v['model'] == MODEL_LITE}
+    flash = {k: v for k, v in run.items()
+             if v['model'] == MODEL_FLASH}
+    for i in ids:
+        a = lite.get(i, {}).get('labels', {})
+        b = flash.get(i, {}).get('labels', {})
+        for ax in set(a) | set(b):
+            va = a.get(ax, {}).get('allele') or \
+                tuple(a.get(ax, {}).get('alleles', []))
+            vb = b.get(ax, {}).get('allele') or \
+                tuple(b.get(ax, {}).get('alleles', []))
+            if isinstance(va, list):
+                va = tuple(sorted(va))
+            if isinstance(vb, list):
+                vb = tuple(sorted(vb))
+            st = per_axis.setdefault(ax, {'agree': 0, 'dis': []})
+            if va == vb:
+                st['agree'] += 1
+            else:
+                st['dis'].append(
+                    (i.split('-', 1)[-1][:18], va, vb))
+    return per_axis
+
+
+def test_run():
+    key = os.environ.get('OPENROUTER_API_KEY')
+    if not key:
+        sys.exit('OPENROUTER_API_KEY not set')
+    os.makedirs(TEST_DIR, exist_ok=True)
+    os.makedirs(os.path.join(TEST_DIR, 'shots'), exist_ok=True)
+    spec = _axis_spec()
+    prompt = _test_prompt(spec)
+    items = _test_items()
+    print(f'{len(items)} exemplars x 2 models, {len(spec)} axes')
+    from playwright.sync_api import sync_playwright
+    pw_ctx = sync_playwright().start()
+    pw = pw_ctx.chromium.launch()
+    run = {}
+    usage = {m: {'in': 0, 'out': 0, 'calls': 0}
+             for m in (MODEL_LITE, MODEL_FLASH)}
+    for it in items:
+        if it['kind'] == 'genmenu':
+            png = os.path.join(
+                TEST_DIR, 'shots', it['id'] + '.png')
+            _render(it['path'], png, pw)
+            img, mime = png, 'image/png'
+            struct = open(it['path']).read()
+        else:
+            img, mime = it['path'], 'image/webp'
+            sp = it['path'].replace('.webp', '.topo.json')
+            struct = open(sp).read() if os.path.exists(sp) else ''
+        for model in (MODEL_LITE, MODEL_FLASH):
+            fp = os.path.join(
+                TEST_DIR,
+                it['id'] + '.' + model.split('/')[-1] + '.json')
+            if os.path.exists(fp):
+                res = json.load(open(fp))
+                run[it['id'] + '|' + model] = res
+                usage[model]['in'] += res['usage']['in']
+                usage[model]['out'] += res['usage']['out']
+                usage[model]['calls'] += 1
+                continue
+            try:
+                d = _test_call(key, model, img, mime, struct,
+                               prompt)
+                labels = json.loads(
+                    d['choices'][0]['message']['content'])
+            except Exception as e:
+                labels = {'_error': str(e)}
+                d = {'usage': {}}
+            u = d.get('usage') or {}
+            res = {'id': it['id'], 'kind': it['kind'],
+                   'model': model, 'labels': labels,
+                   'usage': {'in': u.get('prompt_tokens', 0),
+                             'out': u.get('completion_tokens', 0)}}
+            run[it['id'] + '|' + model] = res
+            json.dump(res, open(fp, 'w'), indent=1)
+            usage[model]['in'] += res['usage']['in']
+            usage[model]['out'] += res['usage']['out']
+            usage[model]['calls'] += 1
+            print(f"{it['id']} {model.split('/')[-1]} "
+                  f"in={res['usage']['in']} out={res['usage']['out']}"
+                  + ('' if '_error' not in labels
+                     else ' ERROR'))
+    pw.close()
+    pw_ctx.stop()
+    prices = dict(_prices(key))
+    cost = {}
+    for m, u in usage.items():
+        p = prices.get(m, {})
+        cost[m] = round(
+            u['in'] * float(p.get('prompt', 0) or 0) +
+            u['out'] * float(p.get('completion', 0) or 0), 4)
+    agree = _agreement(run)
+    out = {
+        'axes': sorted(spec), 'prices': prices, 'usage': usage,
+        'cost_usd': cost,
+        'per_axis_agreement': {
+            k: {'agree': v['agree'], 'of': len(items),
+                'disagree_examples': v['dis'][:5]}
+            for k, v in sorted(agree.items())},
+    }
+    json.dump(out, open(os.path.join(TEST_DIR, 'RUN.json'), 'w'),
+              indent=1)
+    n = sum(1 for v in run.values() if '_error' in v['labels'])
+    print(f"done: {usage[MODEL_LITE]['calls']}+{usage[MODEL_FLASH]['calls']} calls, "
+          f"{n} errors, cost lite=${cost.get(MODEL_LITE)} "
+          f"flash=${cost.get(MODEL_FLASH)}")
+
+
+if '--test' in sys.argv:
+    test_run()
