@@ -392,9 +392,12 @@ def _dead_href(href, routes):
     not routes."""
     if not isinstance(href, str) or not href.startswith('/') or             href.startswith('//'):
         return False
-    if '.' in href.rsplit('/', 1)[-1]:
+    path = href.split('#', 1)[0].split('?', 1)[0]
+    if not path:
+        path = '/'
+    if '.' in path.rsplit('/', 1)[-1]:
         return False
-    return href.rstrip('/') + '/' not in routes
+    return path.rstrip('/') + '/' not in routes
 
 
 def _san_links(v, routes):
@@ -459,7 +462,11 @@ def _instance_body(ctx, contract, row, copy=None):
         # branch uses instead of shipping a dead file
         _adir = os.path.join(ctx.site, 'src', 'assets', 'media')
         _name = os.path.basename(_asset)
-        if _name and not os.path.isfile(_asset) and                 not os.path.isfile(os.path.join(_adir, _name)):
+        # remote srcs aren't files on this filesystem — skip the
+        # existence check and let the comp render the URL as-is
+        _remote = str(img.get('src') or '').startswith(
+            ('http://', 'https://', '//'))
+        if _name and not _remote and not os.path.isfile(_asset) and                 not os.path.isfile(os.path.join(_adir, _name)):
             gen = recraft.fill(
                 comp + '-' + str(row.get('name') or row.get('id') or
                                  ''),
