@@ -50,6 +50,8 @@ import re
 import secrets
 import subprocess
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
@@ -63,6 +65,8 @@ WAVES = [SITE_WAVE] + ORDER
 APPROVABLE = {'w3', 'w4'}   # operator picks LAYOUT + LOOK only (decree)
 # receipt manifests skip these — they are machinery state, not outputs
 _SKIP_DIRS = {'node_modules', '.git', '__pycache__', '.receipts'}
+# parallel steps in one wave share the wave receipt's read-append-write
+_REC_LOCK = threading.Lock()
 
 
 def T(name):
@@ -115,10 +119,6 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
         if sha:
             outs.setdefault(rel, sha)
     recs_p = os.path.join(d, '.receipts', wave + '.json')
-    try:
-        recs = json.load(open(recs_p))
-    except Exception:
-        recs = {'steps': []}
     rec = {
         'label': label,
         'argv': [os.path.basename(x) if x.startswith(HERE) else x
@@ -132,15 +132,20 @@ def _record(d, wave, label, argv, inputs, writes, before, after, rc):
     key = G.op_key(create=True)
     if key:
         rec['sig'] = G._sig(rec, key)
-    recs['steps'].append(rec)
-    os.makedirs(os.path.dirname(recs_p), exist_ok=True)
-    json.dump(recs, open(recs_p, 'w'), indent=1)
+    with _REC_LOCK:
+        try:
+            recs = json.load(open(recs_p))
+        except Exception:
+            recs = {'steps': []}
+        recs['steps'].append(rec)
+        os.makedirs(os.path.dirname(recs_p), exist_ok=True)
+        json.dump(recs, open(recs_p, 'w'), indent=1)
 
 
 def _run_step(d, wave, step, env):
     """Run one producer step and record its receipt. Returns rc."""
     label, argv, inputs, writes = step[:4]
-    if len(step) > 4:
+    if len(step) > 4 and step[4]:
         env = dict(env, **step[4])     # per-step env overrides
     before = _manifest(d)
     r = subprocess.run(argv, env=env)
@@ -317,10 +322,11 @@ def _steps(pdir, wave, build, site_dir):
         return [('system sheet', asm + ['--system'],
                  [os.path.join(pdir, 'DESIGN-PLAN.md'),
                   os.path.join(pdir, 'TOKENS.json')],
-                 ['preview/system.html', 'site/dist/']),
+                 ['preview/system.html', 'site/dist/'], None, 'p5'),
                 ('corpus artifacts', [PY, T('corpus_publish.py'), pdir],
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
-                 ['SOP-CONSTANTS.json', 'CANON-PADDING.json'])]
+                 ['SOP-CONSTANTS.json', 'CANON-PADDING.json'],
+                 None, 'p5')]
     if wave == 'w6':
         em = [PY, T('pipeline_emit.py'), pdir]
         if build:
@@ -333,9 +339,9 @@ def _steps(pdir, wave, build, site_dir):
     if wave == 'w7':
         return [('page assembly', asm,
                  [os.path.join(pdir, 'DESIGN-PLAN.md')],
-                 ['SPEC.md', 'ASSEMBLED.md']),
+                 ['SPEC.md', 'ASSEMBLED.md'], None, 'p7'),
                 ('page evidence', [PY, T('evidence.py'), pdir], [],
-                 []),
+                 [], None, 'p7'),
                 ('page measure', [PY, T('measure.py'), pdir], [],
                  ['MEASURE.json'])]
     if wave == 'w8':
@@ -764,12 +770,35 @@ def run(pdir, frm=None, to=None, no_stop=False, wait=False,
                 except Exception:
                     pass
         print(f'=== {wave} ===')
-        for step in _steps(d, wave, build, site_dir):
-            rc = _run_step(d, wave, step, env)
-            if rc != 0:
-                print(f'{wave} BLOCKED — {step[0]} exited {rc}')
-                if not no_stop:
-                    return 1
+        # consecutive steps carrying the same par tag (step[5]) run
+        # concurrently — they write disjoint outputs, and _record
+        # locks the shared receipt
+        steps = _steps(d, wave, build, site_dir)
+        i = 0
+        while i < len(steps):
+            step = steps[i]
+            key = step[5] if len(step) > 5 else None
+            grp = [step]
+            i += 1
+            while key and i < len(steps) and len(steps[i]) > 5 \
+                    and steps[i][5] == key:
+                grp.append(steps[i])
+                i += 1
+            if len(grp) == 1:
+                rc = _run_step(d, wave, grp[0], env)
+                if rc != 0:
+                    print(f'{wave} BLOCKED — {grp[0][0]} exited {rc}')
+                    if not no_stop:
+                        return 1
+            else:
+                with ThreadPoolExecutor(len(grp)) as ex:
+                    rcs = list(ex.map(
+                        lambda s: _run_step(d, wave, s, env), grp))
+                for s, rc in zip(grp, rcs):
+                    if rc != 0:
+                        print(f'{wave} BLOCKED — {s[0]} exited {rc}')
+                        if not no_stop:
+                            return 1
         if _checklist(d, wave, env) != 0:
             print(f'{wave} BLOCKED — checklist producer failed')
             if not no_stop:

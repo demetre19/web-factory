@@ -865,6 +865,17 @@ def check_astro_build(ctx):
         return ['P.1 no site/package.json — not an Astro project']
     if not os.path.isdir(os.path.join(ctx.site, 'node_modules')):
         return ['P.1 site/node_modules missing — npm ci first']
+    # w6's emit+build receipt already proves the project builds this
+    # run — astro is the terminal packaging step, not something to
+    # re-verify at every gate (rebuilding empties+rewrites dist too)
+    try:
+        recs = json.load(open(os.path.join(ctx.dir,
+                                           '.receipts', 'w6.json')))
+        if any(s.get('label') == 'emit + build' and s.get('rc') == 0
+               for s in recs.get('steps', [])):
+            return []
+    except Exception:
+        pass
     r = subprocess.run(['npm', 'run', 'build', '--', '--silent'],
                        cwd=ctx.site, capture_output=True, text=True,
                        env=node_env(), timeout=300)
