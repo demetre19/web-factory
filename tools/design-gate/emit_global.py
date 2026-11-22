@@ -603,7 +603,8 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
   .nav-links.open .nav-group a { font-size: var(--fs-1);
               white-space: normal; color: var(--text-primary);
               text-decoration: none; display: inline-flex;
-              align-items: center; gap: var(--space-s); }
+              align-items: center; gap: var(--space-s);
+              padding-block: var(--space-s); }
   /* drawer furniture — search, group heads, row numerals — exists
      only inside the open flyout; the desktop bar stays brand + links
      + CTA (N.flyout) */
@@ -626,7 +627,7 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
               tabular-nums; }
   .nav-links.open .nav-link { display: flex; width: 100%;
               align-items: center; gap: var(--space-s);
-              padding-block: var(--space-xs);
+              padding-block: var(--space-s);
               border-block-end: 1px solid var(--border-default); }
   /* nav selection (N.select): >6 links switch to the hybrid —
      .nav-priority keeps the first four inline on desktop, the full

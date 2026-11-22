@@ -588,7 +588,12 @@ def emit_element_previews(pd):
                        'n.classList.add("open");})()</script>')
             # desktop surface — the nav as a bar, drawer never forced
             # open: burger hidden, links inline (menu board at D)
-            _MENU_DESK = ('.burger,.nav-close{display:none !important}'
+            # the desktop-menu state only exists at/above the bar
+            # breakpoint — below it the fragment must show the real
+            # mobile chrome (burger + closed drawer), not a forced
+            # desktop row (r6 @390)
+            _MENU_DESK = ('@media (min-width:60rem){'
+                          '.burger,.nav-close{display:none !important}'
                           '.nav-links{position:static !important;'
                           'display:flex !important;transform:none '
                           '!important;visibility:visible !important;'
@@ -597,7 +602,7 @@ def emit_element_previews(pd):
                           'inset:auto !important;border:0 !important;'
                           'box-shadow:none !important;padding:0 '
                           '!important;background:transparent '
-                          '!important}')
+                          '!important}}')
             fp = os.path.join(outdir, comp + '-menu-desktop.html')
             with open(fp, 'w', encoding='utf-8') as fh:
                 fh.write(_doc(head, battr, block, '', _MENU_DESK))
