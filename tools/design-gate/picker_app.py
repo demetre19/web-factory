@@ -65,8 +65,8 @@ ELEMENT_GALLERIES = [
          {'label': None, 'element': 'modals',
           'comps': ['modal-form', 'form-panel'], 'suffix': '-open'}]},
     {'id': 'footers', 'title': 'Footers · bank', 'icon': 'bars',
-     'desc': 'Reference footer topologies from the genmenu bank — '
-             'rendered as-banked (reference fidelity), not vibe-bound.',
+     'desc': 'Reference footer designs — shown exactly as stored '
+             'in the bank, not recoloured to the vibe.',
      'groups': []},
     {'id': 'pricing', 'title': 'Pricing · bank', 'icon': 'doc',
      'desc': 'Reference pricing topologies — tiers, single, table.',
@@ -865,17 +865,19 @@ body{margin:0;font-family:var(--font-body,ui-sans-serif,system-ui)}
 .tscols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .tscol>h4{font:600 11px ui-monospace,monospace;margin:0 0 6px;
      color:var(--text-muted,#888)}
-.tsrow{display:grid;grid-template-columns:108px 1fr;gap:12px;
-     align-items:baseline;padding:7px 0;
+.tsrow{display:grid;grid-template-columns:108px minmax(0,1fr);
+     gap:12px;align-items:baseline;padding:7px 0;
      border-bottom:1px dashed var(--border,#ddd)}
 .tsmeta{font:600 11px ui-monospace,monospace;
-     color:var(--text-muted,#888)}
+     color:var(--text-muted,#888);min-width:0}
 .tsmeta i{display:block;font-style:normal;opacity:.75}
-.tsspec{overflow-wrap:break-word;
+.tsspec{overflow-wrap:break-word;max-width:100%;min-width:0;
      font-family:var(--font-display,var(--font-body,ui-sans-serif))}
 .tsnum{font:11px ui-monospace,monospace;
      color:var(--text-muted,#888)}
 @media (max-width:840px){.tscols{grid-template-columns:1fr}}
+@media (max-width:560px){.tsrow{grid-template-columns:1fr;gap:2px;
+     padding:10px 0}.tsmeta{display:flex;gap:8px}.tsmeta i{display:inline}}
 """
 
 
@@ -942,7 +944,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
             os.path.getmtime(fp) >= os.path.getmtime(tp):
         try:
             with open(fp, encoding='utf-8', errors='replace') as rf:
-                stale = 'wf:ts:v1' not in rf.read(4096)
+                stale = 'wf:ts:v2' not in rf.read(4096)
         except OSError:
             stale = True
     if stale:
@@ -970,7 +972,7 @@ def emit_typescale_doc(pd, name='current', bundle=None):
         css = ((_fam_css(bundle) if bundle else '') + _TYPESCRIPT_CSS)
         os.makedirs(outdir, exist_ok=True)
         with open(fp, 'w', encoding='utf-8') as fh:
-            fh.write('<!--wf:ts:v1-->' + _doc(head, battr, body,
+            fh.write('<!--wf:ts:v2-->' + _doc(head, battr, body,
                                               css=css))
     return 'preview/typescale/' + name + '.html'
 
@@ -2031,7 +2033,12 @@ def app_data(pipeline):
         if k in genotype:
             chips.append({'k': k, 'v': genotype[k]})
 
-    picked = {w: (gates.get(w) or {}).get('pick') for w in ('w3', 'w4')}
+    # a wave pick counts only when the gate verified the signed
+    # operator record — write_gate stores `design` even when the
+    # wave fails or approval is absent
+    picked = {w: ((gates.get(w) or {}).get('design')
+                  if (gates.get(w) or {}).get('approved') else None)
+              for w in ('w3', 'w4')}
     return {'pipeline': pd,
             'picked_elements': epicks,
             'bank_depth': bank_depth,
@@ -2948,7 +2955,8 @@ def record_element_pick(pipeline, element, variant, bundle=None):
                                   G.op_key(create=True))
                 with open(fp, 'w') as fh:
                     json.dump(data, fh, indent=1, sort_keys=True)
-                return 0, (f'{element} {old_v} → {variant} '
+                return 0, ('Vibe baked' if element == 'vibe'
+                           else f'{element} {old_v} → {variant} '
                            '(superseded, signed into ELEMENT-PICKS.json)')
         rec = {'element': element, 'variant': variant, 'ts': now}
         if isinstance(bundle, dict):
@@ -2957,7 +2965,9 @@ def record_element_pick(pipeline, element, variant, bundle=None):
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
             json.dump(data, fh, indent=1, sort_keys=True)
-    return 0, f'{element} → {variant} (signed into ELEMENT-PICKS.json)'
+    return 0, ('Vibe baked' if element == 'vibe'
+               else f'{element} → {variant} '
+               '(signed into ELEMENT-PICKS.json)')
 
 
 # ------------------------------------------------------------------
@@ -3112,11 +3122,69 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .ritem svg{width:15px;height:15px;flex:none;opacity:.85}
 .ritem .cnt{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
+.railbank{margin:2px 0}
+.railbank summary{display:flex;align-items:center;gap:10px;
+     padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;
+     font:600 12.5px var(--font);color:var(--muted);list-style:none}
+.railbank summary::-webkit-details-marker{display:none}
+.railbank summary svg{width:15px;height:15px;flex:none;opacity:.85}
+.railbank summary:hover{background:var(--panel-2)}
+.railbank summary .cnt{margin-left:auto;font:600 11px var(--mono)}
+.railbank[open] summary{color:var(--ink)}
+.railbank .ritem{padding-left:26px}
 
 /* --- board --- */
-#board{overflow-y:auto;padding:22px 26px 60px;
+#board{overflow-y:auto;overflow-x:hidden;padding:22px 26px 108px;
      container-type:inline-size;container-name:board}
 #board>*{max-width:1600px;margin-left:auto;margin-right:auto}
+#board>#stepper{max-width:none;position:sticky;top:-22px;z-index:15;
+  display:flex;align-items:center;gap:6px;padding:9px 22px;
+  margin:-22px -26px 16px;background:var(--bg-2);
+  border-bottom:1px solid var(--line);overflow-x:auto}
+.stplab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.stp{display:flex;align-items:center;gap:7px;border:0;background:none;
+  color:var(--muted);cursor:pointer;padding:5px 8px;border-radius:7px;
+  white-space:nowrap;font:600 12px var(--font);flex:none}
+.stp .n{width:18px;height:18px;border-radius:50%;display:grid;
+  place-items:center;font:700 10px var(--mono);
+  border:1.5px solid var(--line);flex:none}
+.stp.done{color:var(--ink)}
+.stp.done .n{background:var(--ok,#1a7f37);border-color:transparent;
+  color:#fff}
+.stp.on{color:var(--ink);background:var(--panel)}
+.stp.on .n{border-color:var(--accent);color:var(--accent)}
+.stp .sub{font-weight:500;font-size:11px;color:var(--muted);
+  max-width:130px;overflow:hidden;text-overflow:ellipsis}
+.stp.done .sub{color:var(--ok,#1a7f37)}
+.stparr{color:var(--line);flex:none}
+.nextstep{display:block;margin:26px auto 10px;padding:10px 22px;
+  border:1px solid var(--line);border-radius:999px;background:var(--panel);
+  color:var(--ink);font:650 13px var(--font);cursor:pointer}
+.nextstep:hover{border-color:var(--accent);color:var(--accent)}
+#selbar{display:none}
+@media(min-width:768px){
+  #selbar{position:fixed;left:0;right:0;bottom:0;z-index:40;
+    display:flex;align-items:center;gap:8px;padding:8px 18px;
+    overflow:hidden;white-space:nowrap;
+    background:var(--panel);border-top:1px solid var(--line)}}
+@media(min-width:1025px){#selbar{left:232px}}
+.sblab{font:700 11px var(--font);color:var(--muted);
+  letter-spacing:.08em;text-transform:uppercase;flex:0 0 auto}
+.sbchip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);
+  background:var(--bg-2);color:var(--muted);border-radius:999px;
+  padding:6px 13px;font:500 12px var(--font);cursor:pointer;
+  flex:0 1 auto;min-width:0;max-width:190px;overflow:hidden;
+  text-overflow:ellipsis}
+.sbchip.has{color:var(--ink);border-color:var(--accent)}
+.sbchip b{font-weight:650;color:var(--muted);flex:0 0 auto}
+.sbchip.has b{color:var(--accent)}
+.sbchip.sbr{flex:0 0 auto;max-width:none}
+.sbchip.sbnext{background:transparent;border-color:var(--accent);
+  color:var(--accent)}
+.sbsp{flex:1 0 8px;min-width:8px}
+.sbr{background:var(--accent);color:var(--accent-ink);
+  border-color:transparent;font-weight:650}
 #scrim{display:none}
 #board h1{margin:0;font-size:19px;font-weight:650}
 #board .desc{color:var(--muted);font-size:13px;margin:5px 0 18px}
@@ -3154,7 +3222,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .crow .pick{margin-left:auto}
 .card.picked{border-color:var(--ok)}
 .card .ch{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-bottom:1px solid var(--line)}
+     padding:10px 12px;border-bottom:1px solid var(--line);
+     min-width:0;max-width:100%;box-sizing:border-box}
 .card .ch .nm{font-weight:650;font-size:13px;flex:1;
  min-width:0;overflow:hidden;text-overflow:ellipsis;
  white-space:nowrap}
@@ -3165,7 +3234,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      padding:1px 5px}
 .card .ch .score{margin-left:auto;font:600 11px var(--mono);
      color:var(--muted)}
-.card .cb{position:relative;background:var(--bg);min-height:64px}
+.card .cb{position:relative;background:var(--bg);min-height:64px;
+     max-width:100%;box-sizing:border-box}
 .card .cb:has(iframe)::before{content:'';position:absolute;inset:0;
      background:linear-gradient(100deg,var(--bg) 30%,var(--bg-2) 50%,var(--bg) 70%);
      background-size:200% 100%;animation:cbsk 1.3s linear infinite}
@@ -3190,7 +3260,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
 .card .cf{display:flex;align-items:center;justify-content:flex-start;
      gap:10px;padding:10px 12px;border-top:1px solid var(--line);
-     min-height:44px}
+     min-height:44px;min-width:0;max-width:100%;
+     box-sizing:border-box;flex-wrap:wrap}
 .card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 11px var(--mono);color:var(--muted);
@@ -3427,12 +3498,12 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   display:flex;flex-direction:column}
 #xpBar{display:flex;align-items:center;gap:8px;padding:9px 14px;
   background:var(--panel);border-bottom:1px solid var(--line);
-  flex:none;flex-wrap:wrap}
+  flex:none;flex-wrap:wrap;row-gap:6px}
 #xpBar .xdev{flex:none}
 .xttl{font:600 12.5px var(--font);color:var(--ink);max-width:26%;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xdev{display:flex;border:1px solid var(--line);border-radius:7px;
-  overflow:hidden;margin-left:auto}
+  overflow:hidden;margin-left:auto;flex:none}
 .xdev button{border:0;background:none;color:var(--muted);cursor:pointer;
   font:600 11px var(--mono);padding:5px 10px}
 .xdev button.on{background:var(--accent);color:var(--accent-ink)}
@@ -3515,6 +3586,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   <nav id="rail"></nav>
   <div id="scrim"></div>
   <main id="board"></main>
+  <div id="selbar"></div>
 </div>
 <div id="toast"></div>
 <script>
@@ -3528,9 +3600,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,
     function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  function toast(t){var e=document.getElementById('toast');
+  var _tq=[],_tBusy=false;
+  function toast(t){_tq.push(t);if(!_tBusy)_tNext()}
+  function _tNext(){var t=_tq.shift();
+    if(t==null){_tBusy=false;return}
+    _tBusy=true;var e=document.getElementById('toast');
     e.textContent=t;e.classList.add('show');
-    setTimeout(function(){e.classList.remove('show')},2600)}
+    setTimeout(function(){e.classList.remove('show');
+      setTimeout(_tNext,140)},2400)}
   function api(path,body){
     return fetch(path,{method:'POST',
       headers:{'Content-Type':'application/json',
@@ -3587,6 +3664,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   document.getElementById('scrim').onclick=function(){
     document.getElementById('rail').classList.remove('open');
     document.getElementById('scrim').classList.remove('open')};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      var r=document.getElementById('rail');
+      if(r.classList.contains('open')){
+        r.classList.remove('open');
+        document.getElementById('scrim').classList.remove('open')}
+      var dp=document.getElementById('dnaPop');
+      if(dp&&dp.open)dp.open=false}});
+  document.addEventListener('click',function(e){
+    var dp=document.getElementById('dnaPop');
+    if(dp&&dp.open&&!dp.contains(e.target))dp.open=false});
 
   var ICON={
     home:'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 7l6-5 6 5v6a1 1 0 01-1 1H3a1 1 0 01-1-1z"/></svg>',
@@ -3625,8 +3713,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     LAYOUT_TABS.forEach(function(k){
       if(DATA.boards[k])item('b',DATA.boards[k])});
     h+='<div class="railgrp">3 · Sections · Elements</div>';
+    var banked=[];
     Object.keys(DATA.galleries).forEach(function(k){
-      if(k!=='fx')item('g',DATA.galleries[k])});
+      if(k==='fx')return;
+      var g=DATA.galleries[k];
+      if(/\u00b7\s*bank/.test(g.title||''))banked.push(g);
+      else item('g',g)});
+    if(banked.length){
+      h+='<details class="railbank"><summary>'+ICON.bars+
+         'Bank (reference)<span class="cnt">'+banked.length+
+         '</span></summary>';
+      banked.forEach(function(g){item('g',g)});
+      h+='</details>'}
     h+='<div class="railgrp">4 · Effects</div>';
     if(DATA.galleries.fx)item('g',DATA.galleries.fx);
     h+='<div class="railgrp">5 · Systems</div>';
@@ -3643,12 +3741,86 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span>URL · HTML</span></button>';
     el.innerHTML=h;
     el.querySelectorAll('.ritem').forEach(function(b){
-      b.onclick=function(){CUR=b.dataset.k;FILT={};SEL=0;ROW=0;
-        if(innerWidth<=1024){
-          document.getElementById('rail').classList.remove('open');
-          document.getElementById('scrim').classList.remove('open')}
-        rail();board()}});
+      b.onclick=function(){gotoBoard(b.dataset.k)}});
   }
+
+  function gotoBoard(k){CUR=k;FILT={};SEL=0;ROW=0;
+    if(innerWidth<=1024){
+      document.getElementById('rail').classList.remove('open');
+      document.getElementById('scrim').classList.remove('open')}
+    rail();board()}
+
+  // spec §1 flow — Vibe → Type → Layout → Sections → Effects → Review
+  var STEPS=[
+    {id:'vibe',label:'Vibe',board:'vibe'},
+    {id:'type',label:'Type',board:'typescale'},
+    {id:'layout',label:'Layout',board:'home'},
+    {id:'sections',label:'Sections',board:'page'},
+    {id:'effects',label:'Effects',board:'fx'},
+    {id:'review',label:'Review & save',board:'saved'}];
+  var NEXTSTEP={vibe:['typescale','Type'],typescale:['home','Layout'],
+    home:['page','Sections'],service:['page','Sections'],
+    location:['page','Sections'],contact:['page','Sections'],
+    blog:['page','Sections'],page:['fx','Effects'],
+    fx:['saved','Review & save']};
+  var SELCHIPS=[
+    {k:'vibe',label:'vibe',board:'vibe'},
+    {k:'layout',label:'layout',board:'home'},
+    {k:'header',label:'header',board:'chrome'},
+    {k:'footer',label:'footer',board:'chrome'},
+    {k:'menu',label:'menu',board:'menu'},
+    {k:'fx:default',label:'effect',board:'fx'}];
+  function _boardExists(b){
+    return b==='saved'||b==='remix'||!!((DATA.boards||{})[b]||
+      (DATA.galleries||{})[b])}
+  function stepDone(s){var p=(DATA&&DATA.picked_elements)||{};
+    if(s==='vibe')return (BAKED||p.vibe)?(VSRC||BAKED||p.vibe):null;
+    if(s==='type')return p.type||null;
+    // the signed w3 pick lives in the wave gates, not
+    // ELEMENT-PICKS — derive it so a reload shows the choice
+    if(s==='layout')return p.layout||
+      ((DATA.waves||{}).picked||{}).w3||null;
+    if(s==='sections'){var n=Object.keys(p).filter(function(k){
+      return k.indexOf('sec:')===0}).length;
+      return n?n+' signed':null}
+    if(s==='effects'){var f=p['fx:default'];
+      return f&&f!=='none'?f:null}
+    return null}
+  function stepperHtml(){
+    var h='<span class="stplab">pick the look</span>';
+    STEPS.forEach(function(s,i){
+      if(!_boardExists(s.board))return;
+      var dn=stepDone(s.id),cur=(CUR===s.board||
+        (s.id==='layout'&&LAYOUT_TABS.indexOf(CUR)>=0&&
+         CUR!=='page'));
+      h+='<span class="stparr">→</span>'+
+         '<button class="stp'+(dn?' done':'')+(cur?' on':'')+
+         '" data-b="'+s.board+'"><span class="n">'+(dn?'✓':(i+1))+
+         '</span>'+s.label+
+         (dn?'<span class="sub">'+esc(String(dn))+'</span>':'')+
+         '</button>'});
+    return h}
+  function selbarHtml(){
+    var p=(DATA&&DATA.picked_elements)||{},
+        h='<span class="sblab">picked</span>';
+    SELCHIPS.forEach(function(c){
+      var v=c.k==='vibe'?(VSRC||BAKED||p.vibe):
+        c.k==='layout'?(p.layout||
+          ((DATA.waves||{}).picked||{}).w3):p[c.k];
+      if(!v||v==='none'||v==='baseline')v=null;
+      h+='<button class="sbchip'+(v?' has':'')+'" data-b="'+c.board+
+         '"><b>'+c.label+'</b> '+esc(v?String(v).replace(/^atlas:/,''):'—')+
+         '</button>'});
+    h+='<span class="sbsp"></span>';
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0]))
+      h+='<button class="sbchip sbr sbnext" data-b="'+nx[0]+
+         '">Next: '+esc(nx[1])+' →</button>';
+    h+='<button class="sbchip sbr" data-b="saved">Review &amp; save →</button>';
+    return h}
+  function wireFlow(){
+    document.querySelectorAll('#stepper .stp,#selbar .sbchip')
+      .forEach(function(b){b.onclick=function(){gotoBoard(b.dataset.b)}})}
 
   function topchips(){
     var d=DATA.design,h='';
@@ -3664,12 +3836,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 
   // AND picker — chips are conjunctive facets: every selected tag
   // must be present on a card (e.g. light AND professional)
+  var FTAG_LABEL={
+    'fv1':'variant 1 · fine-tuned','fv2':'variant 2 · fine-tuned',
+    'fv3':'variant 3 · fine-tuned',
+    'v1':'variant 1','v2':'variant 2','v3':'variant 3',
+    'index-led':'index layout','prose-led':'editorial layout',
+    'copy default':'standard layout','best-predicted':'recommended',
+    'bank-option':'bank only — not emitted','bank':'in bank',
+    'derived':'from this design','web':'from the web'};
   function filters(tags){
-    var n=Object.keys(FILT).length;
+    var n=Object.keys(FILT).length,seen={};
     var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
          'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
-      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'</button>'});
+      var lab=FTAG_LABEL[t]||t;
+      if(seen[t])return;seen[t]=1;
+      h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(lab)+'</button>'});
     return h;
   }
 
@@ -3714,7 +3896,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         ((ca.light||{}).fails||[]).concat((ca.dark||{}).fails||[]).join('; ')
         ||'WCAG AA min ratio')+'">AA '+mn.join('/')+(bad?' ✗':'')+'</span>'}
     h+='</div><div class="cf"><div class="tags">'+
-       tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+
+       tags.filter(function(t){var tl=String(t).toLowerCase();
+         return tl!==String(c.name||'').toLowerCase()&&
+                tl!==String(c.id||'').toLowerCase()})
+        .map(function(t){return '<span class="tag">'+
+          esc(FTAG_LABEL[t]||t)+'</span>'}).join('')+
        '</div>';
     // first-class effect control — the per-element decorator, labeled
     if(!c.bank&&c.element&&c.element!=='vibe'&&
@@ -3765,7 +3951,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        '<span class="vchips">'+(gkeys.length?gkeys.map(function(k){
          return '<span class="chip on" data-ax="'+k+'">'+esc(k)+':'+
                 esc(VGENES[k])+' ×</span>'}).join(''):
-        '<span class="chip">baseline</span>')+'</span>'+
+        '<span class="chip">baseline genes</span>')+'</span>'+
        '<button class="xp" id="vXp" title="expand" data-x="'+
        esc(VRES&&VRES.preview||'')+'">⤢</button>'+
        '<button class="pick" id="vBake">Bake</button></div></div>';
@@ -3900,6 +4086,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         VSRC=cards[+b.dataset.i].name||'';
         VGENES=Object.assign({},cards[+b.dataset.i].genes||{});
         vibePane(el,o);
+        var vp=el.querySelector('.vprev');
+        if(vp)vp.scrollIntoView({block:'nearest'});
         resolveVibe(el,o)}});
     el.querySelectorAll('.cf .pick:not(#vBake)').forEach(function(b){
       b.onclick=function(){
@@ -4151,7 +4339,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function wireSaved(){
     var q=document.getElementById('ssq');
     if(q)q.oninput=function(){SSQ=q.value.toLowerCase();
-      var el=document.getElementById('board');
+      var el=document.getElementById('pane')||
+        document.getElementById('board');
       var keep=q.selectionStart;
       el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved();
       var q2=document.getElementById('ssq');
@@ -4161,7 +4350,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         if(!t)SSF={};
         else if(SSF[t])delete SSF[t];
         else{SSF={};SSF[t]=1}
-        var el=document.getElementById('board');
+        var el=document.getElementById('pane')||
+          document.getElementById('board');
         el.innerHTML='<h1>Saved systems</h1>'+savedView();wireSaved()}});
     var save=document.getElementById('sysSave');
     if(save)save.onclick=function(){
@@ -4597,6 +4787,18 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   function board(){
     var el=document.getElementById('board');
     el.dataset.pane=CUR;
+    el.innerHTML='<div id="stepper">'+stepperHtml()+'</div>'+
+      '<div id="pane"></div>';
+    var el0=document.getElementById('selbar');
+    if(el0)el0.innerHTML=selbarHtml();
+    el=el.querySelector('#pane');
+    var nx=NEXTSTEP[CUR];
+    if(nx&&_boardExists(nx[0])){
+      var nb=document.createElement('button');
+      nb.className='nextstep';nb.textContent='Next: '+nx[1]+' →';
+      nb.onclick=function(){gotoBoard(nx[0])};
+      el.after(nb)}
+    wireFlow();
     if(CUR==='ingest'){ingestPane(el);return}
     if(CUR==='remix'){remixPane(el);return}
     if(CUR==='saved'){
@@ -4671,8 +4873,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         m[g.element]=1;return m},{}):{}).forEach(function(e){
         bl+=bk[e]||0});
       if(bl)h+='<div class="desc" style="opacity:.7">emitted '+
-        o.emitted_n+' · raw skeleton backlog ~'+bl+
-        ' (awaiting vectorisation)</div>';}
+        o.emitted_n+' · '+bl+' more in the bank</div>';}
     h+='<div class="filters">'+filters(tags)+'</div>'+
        '<div class="grid'+(CUR==='fx'?' fxgrid':'')+'">';
     var lastGrp=null,shown2=0;
@@ -4828,9 +5029,43 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         api('/approve',{wave:b.dataset.wave,pipeline:PIPELINE,
           nonce:n.nonce,design:b.dataset.d}).then(function(j){
           stat.className='pstat '+(j.ok?'ok':'bad');
-          stat.textContent=j.message||(j.ok?'recorded':'refused');
+          // ORDER refusals name the earliest wave to re-gate:
+          // "re-gate wN", "ORDER: wN has not passed — run it first",
+          // "wN inputs changed since it passed"
+          var rw=!j.ok&&(j.message||'').match(
+            /re-gate (w\d+)|ORDER: (w\d+)|(w\d+) has not passed/);
+          if(rw){var wv=rw[1]||rw[2]||rw[3];
+            stat.textContent='earlier wave '+wv+
+              ' isn’t clean — re-gate it, then pick again. ';
+            var rb=document.createElement('button');
+            rb.className='abtn';rb.textContent='Re-gate '+wv;
+            rb.onclick=function(){rb.disabled=true;
+              api('/regate',{wave:wv,pipeline:PIPELINE})
+                .then(function(g){
+                  var msg=g.ok?g.message:(g.reason||g.message);
+                  toast(msg);rb.disabled=false;
+                  if(g.ok)stat.textContent=wv+
+                    ' clean — pick again';
+                  else{stat.textContent=msg+' ';
+                    // keep the re-gate control alive — a pause
+                    // (pick gate) or a new failure still needs it
+                    stat.appendChild(rb)}
+                })};
+            stat.appendChild(rb);
+          }else stat.textContent=(j.message||(j.ok?'recorded':'refused'))
+            .replace(/^approve REFUSED:? ?/,'');
           if(j.ok){b.textContent='picked ✓';
             b.closest('.card').classList.add('picked');
+            // reflect the signed approval in the flow UI: a w3
+            // pick IS the layout pick, w4 the page-design pick
+            DATA.picked_elements=DATA.picked_elements||{};
+            if(b.dataset.wave==='w3')
+              DATA.picked_elements.layout=b.dataset.d;
+            var st=document.getElementById('stepper');
+            if(st)st.innerHTML=stepperHtml();
+            var sb=document.getElementById('selbar');
+            if(sb)sb.innerHTML=selbarHtml();
+            wireFlow();
             toast(j.message)}else b.disabled=false})})
     }else{
       api('/element-pick',{pipeline:PIPELINE,
