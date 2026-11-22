@@ -522,6 +522,22 @@ def translate(payload, stem):
                         else None
         return None
 
+    def _as_nav(depth):
+        """A header's top-level link collection IS the primary nav
+        (N.select): it binds the nav-menu contract once. Beside a
+        nav-menu it would repeat the same links as a second desktop
+        row (H.1, N.dup), so it binds nothing."""
+        if seen.get('nav_menu') or 'nav-menu' in _names:
+            return ''
+        els['__nav'] = {'id': '__nav', 'name': 'nav-menu',
+                        'settings': {}, 'children': []}
+        out = render('__nav', depth)
+        if has_toggle:
+            # the payload's own toggle is the burger — never two
+            out = ''.join(ln for ln in out.splitlines(True)
+                          if 'class="burger"' not in ln)
+        return out
+
     def render(el_id, depth, ivar=None, card=False, in_card=False):
         # card marks THIS element's role; in_card is the context for
         # descendants (heading promotion, chip rules) — it persists
@@ -642,11 +658,17 @@ def translate(payload, stem):
                     in (el.get('label') or '').lower()):
                 # a background figure is the band's surface, not a
                 # content item — emit the .media-bg layer (edge-to-edge
-                # cover behind the content, token scrim keeps contrast)
-                return (f'{pad}{{image && image.src && '
+                # cover behind the content, token scrim keeps contrast).
+                # It spends the row's next asset like any pane — a
+                # band beside a content figure never repeats its photo
+                k = seen.get('img_n', 0)
+                seen['img_n'] = k + 1
+                m = f'images[{k - 1}]' if k else 'image'
+                src = f'mediaOf({m})' if k else 'mediaSrc || image.src'
+                return (f'{pad}{{{m} && {m}.src && '
                         '<figure class="media-bg" aria-hidden="true">'
-                        '<Image src={mediaSrc || image.src} '
-                        "alt={image.alt || ''} "
+                        f'<Image src={{{src}}} '
+                        f"alt={{{m}.alt || ''}} "
                         'widths={[960, 1440, 1920]} '
                         'sizes="100vw" width={1600} height={900} '
                         'loading="eager" fetchpriority="high" />'
@@ -657,6 +679,22 @@ def translate(payload, stem):
                 # zero times; lift it to one figure beside the copy
                 seen['loop_img'] = True
                 return ''
+            k = seen.get('img_n', 0)
+            seen['img_n'] = k + 1
+            if k:
+                # a second/third media pane takes the row's NEXT asset
+                # (images[k-1]) — never the hero photo again; with no
+                # further asset the pane drops (single-media layout)
+                m = f'images[{k - 1}]'
+                return (f'{pad}{{{m} && {m}.src && '
+                        f'<figure{cattr}><div class="media-round" '
+                        'data-ratio={(image && image.ratio) || null}>'
+                        f'<Image src={{mediaOf({m})}} '
+                        f"alt={{{m}.alt || ''}} "
+                        'widths={[480, 960, 1440]} '
+                        'sizes="(min-width: 48rem) 50vw, 100vw" '
+                        'width={900} height={600} loading="lazy" />'
+                        '</div></figure>}\n')
             return (f'{pad}{{image && image.src && '
                     f'<figure{cattr}><div class="media-round" '
                     'data-ratio={image.ratio || null}>'
@@ -755,6 +793,12 @@ def translate(payload, stem):
             # chrome, never copy)
             if not seen.get('top_list'):
                 seen['top_list'] = True
+            # every nav-menu binds the same plan links — a second menu
+            # (topbar/utility row) would repeat them as another desktop
+            # row (H.1, N.dup); the first menu is the primary nav
+            if seen.get('nav_menu'):
+                return ''
+            seen['nav_menu'] = True
             if has_offcanvas:
                 # the payload's offcanvas IS the mobile surface —
                 # this menu is the desktop row (.nav-desk hides
@@ -765,10 +809,16 @@ def translate(payload, stem):
                 out = (f'{pad}{{list.length > 0 && <nav class="{ncls}"'
                        f' aria-label="Primary"><ul class="row '
                        f'gap-fluid-m list-plain">'
-                       f'{{(list || []).map((it) => <li>'
+                       f'{{(navOver ? list.slice(0, navCut) : list)'
+                       f'.map((it) => <li>'
                        f'<a class="nav-link" href={{it.href}}>'
                        f'{{it.label || it.term || it.title || '
                        f'it.text}}</a></li>)}}</ul></nav>}}\n')
+                # N.select — links past the bar's budget open from
+                # "More" (the offcanvas holds the full list)
+                out += (f'{pad}{{navOver && <button class="nav-more" '
+                        f'type="button" aria-label="More links">More'
+                        f'</button>}}\n')
                 if not has_toggle:
                     out += (f'{pad}{{list.length > 0 && '
                             f'<button class="burger" type="button" '
@@ -804,7 +854,7 @@ def translate(payload, stem):
             _head = (f'<div class="nav-sheet-head">'
                      f'<span class="logo nav-sheet-brand">{{brand}}</span>'
                      f'{_close}</div>')
-            return (f'{pad}{{list.length > 0 && list.length < 7 && '
+            return (f'{pad}{{list.length > 0 && !navOver && '
                     f'<nav class="{ncls}" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
@@ -815,7 +865,7 @@ def translate(payload, stem):
                     .replace('gi > 0 ? Math.ceil(list.length / 2) : 0',
                              '0')
                     + f'</ul></div></div></nav>}}\n'
-                    f'{pad}{{list.length > 6 && <nav '
+                    f'{pad}{{navOver && <nav '
                     f'class="{ncls} nav-mega" '
                     f'aria-label="Primary">{_head}{_search}'
                     f'<div class="nav-mega-cols">'
@@ -829,10 +879,10 @@ def translate(payload, stem):
                     + _links
                     + f'</ul></div>))}}'
                     f'</div></nav>}}\n'
-                    f'{pad}{{list.length > 6 && <Fragment><nav '
+                    f'{pad}{{navOver && <Fragment><nav '
                     f'class="nav-priority" aria-label="Primary">'
                     f'<ul class="row gap-fluid-m list-plain">'
-                    f'{{list.slice(0, 4).map((it) => <li>'
+                    f'{{list.slice(0, navCut).map((it) => <li>'
                     f'<a class="nav-link" href={{it.href}}>'
                     f'{{it.label || it.term || it.title || it.text}}'
                     f'</a></li>)}}</ul></nav>'
@@ -974,6 +1024,9 @@ def translate(payload, stem):
                 or str(p).startswith('grid-template')
                 for _i in _classes_of(el)
                 for p, v in (rules.get(gc_names.get(_i)) or []))
+            if cat == 'header' and not ivar \
+                    and not seen.get('in_flyout'):
+                return _as_nav(depth)
             if ivar:
                 coll, var = f'({ivar}.items || [])', ivar + '2'
             elif seen.get('in_flyout'):
@@ -1034,6 +1087,14 @@ def translate(payload, stem):
                 # nested repeats iterate the parent's row: it.items;
                 # the collection guards its grid so an empty list
                 # leaves no dead column in the DOM (L.15)
+                if cat == 'header' and not ivar \
+                        and not seen.get('in_flyout'):
+                    sub = _as_nav(depth + 1)
+                    if sub.strip():
+                        inner += sub
+                        _parts += 1
+                        _static = True
+                    continue
                 if ivar:
                     coll, var = f'({ivar}.items || [])', ivar + '2'
                 elif seen.get('in_flyout'):
@@ -1130,8 +1191,25 @@ def translate(payload, stem):
             root_names.update(_classes_of(_e))
     body = ''.join(render(r, 1) for r in roots)
     if cat == 'header' and 'brand-mark' not in body:
-        body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
-                + body)
+        # a skeleton with no logo slot gets the brand as the FIRST item
+        # of its bar row — never a stray line above it (H.1 one row)
+        bar = re.search(r'^( *)<div class="[^"]*\brow between\b[^"]*">\n',
+                        body, re.M)
+        if bar:
+            at = bar.end()
+            body = (body[:at] + bar.group(1)
+                    + '  <span class="logo brand-mark">{brand}</span>\n'
+                    + body[at:])
+        else:
+            body = (f'  <span class="logo brand-mark">{{brand}}</span>\n'
+                    + body)
+    if cat == 'header':
+        # the bar's CTA sits on the row's centre line — the prose
+        # block-start margin belongs to body copy, not chrome (H.1)
+        body = body.replace('<p class="nav-cta mt-fluid-m">',
+                            '<p class="nav-cta">').replace(
+            '<p class="mt-fluid-m"><a class="wf-cta-button"',
+            '<p class="nav-cta"><a class="wf-cta-button"')
     # §4.3 heading fallback — a pure-collection skeleton (grid of
     # cards, list of links) has no section-heading slot; the block's
     # h2 is still copy that must render (F.1, PS.8). Chrome rows
@@ -1380,6 +1458,7 @@ def translate(payload, stem):
            '             label?: string; href?: string;\n'
            '             icon?: string; items?: any[] }[];\n'
            '  image?: { src: string; alt: string };\n'
+           '  images?: { src: string; alt: string }[];\n'
            '  copy?: any;\n'
            '  h1?: boolean;\n'
            '}\n'
@@ -1395,6 +1474,7 @@ def translate(payload, stem):
            "  cta = { label: '', href: '#' },\n"
            '  items = [],\n'
            '  image,\n'
+           '  images = [],\n'
            '  copy,\n'
            '  h1 = false,\n'
            '} = Astro.props;\n'
@@ -1406,6 +1486,16 @@ def translate(payload, stem):
            'const before = cp.before || [];\n'
            'const list = (cp.items && cp.items.length\n'
            '  ? cp.items : items) || [];\n'
+           '// N.select — the desktop bar keeps the leading links whose\n'
+           '// labels fit its budget; the rest open behind "More"\n'
+           "const _lbl = (it) => String(it.label || it.term || it.title "
+           "|| it.text || '');\n"
+           'const navFit = (() => { let w = 0, n = 0;\n'
+           '  for (const it of list) { w += _lbl(it).length + 2;\n'
+           '    if (w > 56) break; n++; }\n'
+           '  return n; })();\n'
+           'const navOver = list.length > 6 || navFit < list.length;\n'
+           'const navCut = Math.max(1, Math.min(navFit, 4));\n'
            'const qas = cp.qa || [];\n'
            'const links = cp.links || [];\n'
            'const after = cp.after || [];\n'
@@ -1420,7 +1510,9 @@ def translate(payload, stem):
                "const _mn = image ? String(image.src).split('/').pop()"
                " : null;\n"
                "const mediaSrc = _mn ? (_media[`../assets/media/"
-               "${_mn}`]?.default ?? null) : null;\n")
+               "${_mn}`]?.default ?? null) : null;\n"
+               "const mediaOf = (m) => _media[`../assets/media/"
+               "${String(m.src).split('/').pop()}`]?.default ?? m.src;\n")
               if _has_media else '')
            + f'---\n\n<div class="wf-{stem}">\n' + body + '</div>\n')
     return src, {'stem': stem, 'rules': 0, 'css': style,

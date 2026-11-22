@@ -16,6 +16,7 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
+  images?: { src: string; alt: string }[];
   copy?: any;
   h1?: boolean;
 }
@@ -27,6 +28,7 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
+  images = [],
   copy,
   h1 = false,
 } = Astro.props;
@@ -38,6 +40,15 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
+// N.select — the desktop bar keeps the leading links whose
+// labels fit its budget; the rest open behind "More"
+const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const navFit = (() => { let w = 0, n = 0;
+  for (const it of list) { w += _lbl(it).length + 2;
+    if (w > 56) break; n++; }
+  return n; })();
+const navOver = list.length > 6 || navFit < list.length;
+const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -47,9 +58,9 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 ---
 
 <div class="wf-header-page-5">
-  <span class="logo brand-mark">{brand}</span>
   <div class="sec-inner">
     <div class="header-page-5-container row between">
+      <span class="logo brand-mark">{brand}</span>
       {head &&       <div>
         {head && (h1 ? <h1 class="text-fluid-4">{head}</h1> : <h2 class="text-fluid-2">{head}</h2>)}
       </div>

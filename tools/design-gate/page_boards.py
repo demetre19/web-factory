@@ -63,9 +63,11 @@ _HERO_CATALOG_TOPO = {'stacked-hero': 'hero-media-top',
                       'cutout-hero-split': 'hero-cutout'}
 
 # header gold exemplars with their own markup (nav-h* are verbatim
-# copies of the translated bank headers, so the bank rows cover them)
-_NAV_CATALOG = ['nav-bar', 'flyout-nav', 'nav-offcanvas'] + \
-    [f'nav-mega-{i}' for i in range(1, 8)]
+# copies of the translated bank headers, so the bank rows cover them).
+# nav-offcanvas / nav-mega-* are overlay PANELS (a drawer body with no
+# brand bar or desktop link row), not headers — they never rotate
+# into the header slot
+_NAV_CATALOG = ['nav-bar', 'flyout-nav']
 
 
 def _nav_family(c):
@@ -681,7 +683,7 @@ def build(pd, excluded=None):
     return doc
 
 
-# exclusion reasons the boards render probe (preview_build) assigns
+# exclusion reasons the retired boards render probe recorded
 PROBE_REASONS = ('navprobe@', 'overflows 390px', 'renders no h1',
                  'mints a second h1')
 
@@ -698,11 +700,10 @@ def ensure(pd, force=False, exclude=None):
     if not force and not exclude and cur and \
             cur.get('inputs_sha') == _inputs_sha(ctx):
         return cur
-    if not exclude:
-        # a probe verdict depends on copy/tokens/media — the inputs
-        # moved, so those comps get re-probed (compile failures stay)
-        excluded = {c: w for c, w in excluded.items()
-                    if not w.startswith(PROBE_REASONS)}
+    # render verdicts are gate.py's (BR.*), never a producer filter —
+    # scrub any probe exclusion an older build recorded
+    excluded = {c: w for c, w in excluded.items()
+                if not w.startswith(PROBE_REASONS)}
     excluded.update(exclude or {})
     doc = build(ctx.dir, excluded)
     with open(p, 'w', encoding='utf-8') as fh:

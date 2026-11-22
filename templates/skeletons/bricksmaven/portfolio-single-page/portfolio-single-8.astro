@@ -16,6 +16,7 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
+  images?: { src: string; alt: string }[];
   copy?: any;
   h1?: boolean;
 }
@@ -29,6 +30,7 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
+  images = [],
   copy,
   h1 = false,
 } = Astro.props;
@@ -40,6 +42,15 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
+// N.select — the desktop bar keeps the leading links whose
+// labels fit its budget; the rest open behind "More"
+const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const navFit = (() => { let w = 0, n = 0;
+  for (const it of list) { w += _lbl(it).length + 2;
+    if (w > 56) break; n++; }
+  return n; })();
+const navOver = list.length > 6 || navFit < list.length;
+const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -51,6 +62,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
 const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
+const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
 ---
 
 <div class="wf-portfolio-single-8">
@@ -83,19 +95,19 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
     </div>
     <div class="bm-portfolio-single-8__work-container">
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {images[0] &&       <div>
+        {images[0] && images[0].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {images[1] &&       <div>
+        {images[1] && images[1].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[1])} alt={images[1].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>
-    {image &&     <div>
-      {image &&       <div class="bm-portfolio-single-8__paragraph">
-        {image &&         <div>
-          {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+    {images[2] &&     <div>
+      {images[2] &&       <div class="bm-portfolio-single-8__paragraph">
+        {images[2] &&         <div>
+          {images[2] && images[2].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[2])} alt={images[2].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
         </div>
         }
       </div>
@@ -103,12 +115,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
     </div>
     }
     <div class="bm-portfolio-single-8__work-container">
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {images[3] &&       <div>
+        {images[3] && images[3].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[3])} alt={images[3].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
-      {image &&       <div>
-        {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+      {images[4] &&       <div>
+        {images[4] && images[4].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[4])} alt={images[4].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
       </div>
       }
     </div>
@@ -125,12 +137,12 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
       }
     </div>
     }
-    {image &&     <div class="bm-portfolio-single-8__cta-container">
-      {image &&       <div class="bm-contact-widget-8">
-        {image &&         <div class="bm-contact-widget-8__right">
-          {image &&           <div class="bm-contact-widget-8__manager-data">
-            {image &&             <div>
-              {image && image.src && <figure class="ratio-portrait"><div class="media-round" data-ratio={image.ratio || null}><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
+    {images[5] &&     <div class="bm-portfolio-single-8__cta-container">
+      {images[5] &&       <div class="bm-contact-widget-8">
+        {images[5] &&         <div class="bm-contact-widget-8__right">
+          {images[5] &&           <div class="bm-contact-widget-8__manager-data">
+            {images[5] &&             <div>
+              {images[5] && images[5].src && <figure class="ratio-portrait"><div class="media-round" data-ratio={(image && image.ratio) || null}><Image src={mediaOf(images[5])} alt={images[5].alt || ''} widths={[480, 960, 1440]} sizes="(min-width: 48rem) 50vw, 100vw" width={900} height={600} loading="lazy" /></div></figure>}
             </div>
             }
           </div>
@@ -151,7 +163,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
                   <p class="text-fluid-0">{it.text}</p>
                 </div>
               </div>
-              {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
+              {images[6] && images[6].src && <figure class="media-bg" aria-hidden="true"><Image src={mediaOf(images[6])} alt={images[6].alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
             </div>
           ))}</div>}
     </div>

@@ -426,6 +426,7 @@ def _instance_body(ctx, contract, row, copy=None):
                    ('items', row.get('items')),
                    ('fields', row.get('fields')),
                    ('image', img),
+                   ('images', row.get('images')),
                    ('attrib', row.get('attrib'))):
         if src:
             props.append(f'{k}={{({json.dumps(src)})}}')

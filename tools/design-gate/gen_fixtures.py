@@ -1987,6 +1987,17 @@ def main():
     for _wv in ('w2', 'w3', 'w5'):
         _p, _t = CE.emit(base_dir, _wv)
         BASE[f'CHECKLIST/{_wv}.md'] = _t
+    # check_board_render — fail: a built board option whose header
+    # wraps onto two rows with 9px links, with no h1 and a 900px band
+    # that overflows 390px (pass: _base has no boards dist)
+    MUT['check_board_render'] = mut(('SET',
+        'boards/site/dist/preview/lo-home-01/index.html',
+        '<!doctype html><html><body style="margin:0">'
+        '<header data-sec="header" data-comp="hdr-x"><a href="/">Brand</a>'
+        '<div style="margin-top:60px"><a href="/a" style="font-size:9px">'
+        'Area</a></div></header><section data-sec="hero" '
+        'data-comp="hero-x"><h2>No h1</h2><div style="width:900px">'
+        'wide</div></section></body></html>'))
     for name, fn in MUT.items():
         for want, sub in ((BASE, 'fail'),):
             files = dict(BASE)

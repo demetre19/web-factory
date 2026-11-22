@@ -15446,6 +15446,169 @@ def check_tailwind_preview(ctx):
     return f
 
 
+# ---------------------------------------------- BR: page boards
+# render probe over every built board option — the nav spec (#104:
+# one desktop row, links ≥15px, burger hidden ≥60rem, no search field
+# in the bar), exactly one h1, no 390px overflow, and a 1280×900
+# first-screen thumbnail for the variety metric
+_BR_1280 = r"""() => {
+ const vis = e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e);
+   return r.width > 1 && r.height > 1 && s.visibility !== 'hidden' && s.display !== 'none' && +s.opacity > 0; };
+ const h1s = [...document.querySelectorAll('h1')].filter(vis)
+   .map(h => { const s = h.closest('[data-comp]'); return s ? s.dataset.comp : ''; });
+ const hdr = document.querySelector('[data-sec="header"]');
+ const out = {h1: h1s, hdr: null, media: 0, hcomp: hdr ? (hdr.dataset.comp || '') : ''};
+ const hero = document.querySelector('[data-sec="hero"]');
+ if (hero) out.media = Math.max(0, ...[...hero.querySelectorAll('img,iframe,video')].filter(vis)
+   .map(i => { const r = i.getBoundingClientRect(); return Math.round(Math.max(0, Math.min(r.bottom, 900) - Math.max(r.top, 0)) * r.width); }));
+ if (hdr) {
+   const items = [...hdr.querySelectorAll('a,button,input,img,svg,.logo')].filter(vis);
+   const tops = [];
+   items.forEach(e => { const r = e.getBoundingClientRect(), c = r.top + r.height / 2;
+     if (!tops.some(t => Math.abs(t - c) < 24)) tops.push(c); });
+   const links = [...hdr.querySelectorAll('a')].filter(vis)
+     .filter(a => !a.querySelector('img,svg') && a.textContent.trim() && !a.closest('.nav-cta,.wf-cta-button') && !a.classList.contains('wf-cta-button'));
+   const b = [...hdr.querySelectorAll('.burger')].some(vis);
+   const inp = [...hdr.querySelectorAll('input,[role=search]')].some(vis);
+   const txt = links.map(a => a.textContent.trim());
+   const boxes = [...hdr.querySelectorAll('a,button,.logo,img')].filter(vis)
+     .filter(e => !e.parentElement.closest('a,button,.logo')).map(e => e.getBoundingClientRect());
+   let overlap = 0;
+   boxes.forEach((a, i) => boxes.slice(i + 1).forEach(b => {
+     const w = Math.min(a.right, b.right) - Math.max(a.left, b.left), h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+     if (w > 4 && h > 4) overlap++; }));
+   out.hdr = {overlap, rows: tops.length, minfs: links.length ? Math.min(...links.map(a => parseFloat(getComputedStyle(a).fontSize))) : 0,
+              burger: b, search: inp, dup: txt.length - new Set(txt).size, links: links.length};
+ }
+ return out; }"""
+_BR_390 = r"""() => { const W = document.documentElement.clientWidth;
+ if (document.documentElement.scrollWidth <= W + 1) return null;
+ let worst = null, wr = W + 1;
+ for (const e of document.querySelectorAll('body *')) { const r = e.getBoundingClientRect();
+   if (r.right > wr && r.width > 0) { wr = r.right; const s = e.closest('[data-comp]'); worst = s ? s.dataset.comp : e.tagName; } }
+ return worst; }"""
+_BR_THUMB = r"""async (u) => { const im = new Image(); im.src = u; await im.decode();
+ const c = document.createElement('canvas'); c.width = 32; c.height = 23;
+ const x = c.getContext('2d'); x.drawImage(im, 0, 0, 32, 23);
+ return Array.from(x.getImageData(0, 0, 32, 23).data).filter((_, i) => i % 4 !== 3); }"""
+# two first screens are one cluster when their 32×23 RGB thumbnails
+# differ by < 4% mean absolute channel delta (leader clustering)
+BR_FS_SAME = 0.04
+
+
+def _br_clusters(thumbs):
+    leaders = []
+    for oid, t in thumbs:
+        for ld in leaders:
+            if sum(abs(a - b) for a, b in zip(t, ld[1])) / (
+                    255.0 * max(1, len(t))) < BR_FS_SAME:
+                ld[2].append(oid)
+                break
+        else:
+            leaders.append([oid, t, [oid]])
+    return [ld[2] for ld in leaders]
+
+
+def _br_probe(dist, oids):
+    """{oid: metrics} over the built boards dist (local http, headless
+    chromium at 1280×900 and 390×844)."""
+    import base64
+    import functools
+    import http.server
+    import threading
+    from playwright.sync_api import sync_playwright
+
+    class _Q(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+    srv = http.server.ThreadingHTTPServer(
+        ('127.0.0.1', 0), functools.partial(
+            _Q, directory=dist))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    base = f'http://127.0.0.1:{srv.server_address[1]}/preview/'
+    res = {}
+    try:
+        with sync_playwright() as pw:
+            br = pw.chromium.launch()
+            pg = br.new_page(viewport={'width': 1280, 'height': 900})
+            pm = br.new_page(viewport={'width': 390, 'height': 844})
+            pt = br.new_page()
+            for oid in oids:
+                pg.goto(base + f'lo-{oid}/', wait_until='load')
+                try:
+                    pg.wait_for_function(
+                        "[...document.images].filter(i => i.getBoundingClientRect().top < 900).every(i => i.complete)",
+                        timeout=4000)
+                except Exception:
+                    pass
+                r = pg.evaluate(_BR_1280)
+                shot = base64.b64encode(pg.screenshot(
+                    type='jpeg', quality=70)).decode()
+                r['thumb'] = pt.evaluate(
+                    _BR_THUMB, 'data:image/jpeg;base64,' + shot)
+                pm.goto(base + f'lo-{oid}/', wait_until='load')
+                r['o390'] = pm.evaluate(_BR_390)
+                res[oid] = r
+            br.close()
+    finally:
+        srv.shutdown()
+    return res
+
+
+BR_MIN_CLUSTERS = 12
+
+
+def check_board_render(ctx):
+    """BR — every built page-board option (boards/site/dist/preview/
+    lo-<board>-<nn>, emitted by preview_build.emit_page_boards) renders
+    to spec. BR.1 header = #104 nav: one desktop row, links ≥15px,
+    burger hidden ≥60rem, no search field in the bar, no duplicated or
+    overlapping items. BR.2 exactly one visible <h1>. BR.3 no
+    horizontal overflow at 390px. BR.4 ≥ BR_MIN_CLUSTERS distinct
+    1280×900 first screens per board (all, when a board has fewer)."""
+    dist = os.path.join(ctx.dir, 'boards', 'site', 'dist')
+    pv = os.path.join(dist, 'preview')
+    if not os.path.isdir(pv):
+        return []
+    oids = sorted(d[3:] for d in os.listdir(pv)
+                  if re.match(r'lo-[a-z]+-\d+$', d)
+                  and os.path.isfile(os.path.join(pv, d, 'index.html')))
+    if not oids:
+        return []
+    pr = _br_probe(dist, oids)
+    f = []
+    for oid in oids:
+        r = pr[oid]
+        h = r.get('hdr')
+        if h:
+            why = [w for w, bad in (
+                (f"rows={h['rows']}", h['rows'] > 1),
+                (f"links {h['minfs']:.0f}px", 0 < h['minfs'] < 15),
+                ('no desktop links', h['links'] == 0),
+                ('burger shown >=60rem', h['burger']),
+                ('search field in bar', h['search']),
+                ('duplicated links', h['dup'] > 0),
+                ('items overlap', h.get('overlap', 0) > 0)) if bad]
+            if why:
+                f.append(f"BR.1 lo-{oid} header {r.get('hcomp')}: "
+                         + ', '.join(why))
+        if len(r.get('h1') or []) != 1:
+            f.append(f"BR.2 lo-{oid}: {len(r.get('h1') or [])} "
+                     'visible <h1> — exactly one')
+        if r.get('o390'):
+            f.append(f"BR.3 lo-{oid}: overflows 390px ({r['o390']})")
+    boards = {}
+    for oid in oids:
+        boards.setdefault(oid.rsplit('-', 1)[0], []).append(oid)
+    for board, ids in sorted(boards.items()):
+        cl = _br_clusters([(i, pr[i]['thumb']) for i in ids])
+        need = min(BR_MIN_CLUSTERS, len(ids))
+        if len(cl) < need:
+            f.append(f'BR.4 board {board}: {len(cl)} distinct 1280x900 '
+                     f'first screens < {need}')
+    return f
+
+
 WAVE_CHECKS = {
     's0': [check_discovery_provenance],
     'w0': [check_scaffold, check_source_bind, check_copy_coverage,
@@ -15543,6 +15706,7 @@ WARN_CHECKS = {'w7': [check_serial_build_warn]}
 
 WAVE_CHECKS['w7'].append(check_parallel_build)
 WAVE_CHECKS['w8'].append(check_bounded_review)
+WAVE_CHECKS['w3'].append(check_board_render)
 WAVE_CHECKS['w8'].append(check_measured_evidence)
 WAVE_CHECKS['w8'].append(check_judged_verdict)
 

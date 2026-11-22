@@ -16,6 +16,7 @@ interface Props {
              label?: string; href?: string;
              icon?: string; items?: any[] }[];
   image?: { src: string; alt: string };
+  images?: { src: string; alt: string }[];
   copy?: any;
   h1?: boolean;
 }
@@ -29,6 +30,7 @@ const {
   cta = { label: '', href: '#' },
   items = [],
   image,
+  images = [],
   copy,
   h1 = false,
 } = Astro.props;
@@ -40,6 +42,15 @@ const sub = cp.answer || cp.text || fs;
 const before = cp.before || [];
 const list = (cp.items && cp.items.length
   ? cp.items : items) || [];
+// N.select — the desktop bar keeps the leading links whose
+// labels fit its budget; the rest open behind "More"
+const _lbl = (it) => String(it.label || it.term || it.title || it.text || '');
+const navFit = (() => { let w = 0, n = 0;
+  for (const it of list) { w += _lbl(it).length + 2;
+    if (w > 56) break; n++; }
+  return n; })();
+const navOver = list.length > 6 || navFit < list.length;
+const navCut = Math.max(1, Math.min(navFit, 4));
 const qas = cp.qa || [];
 const links = cp.links || [];
 const after = cp.after || [];
@@ -51,6 +62,7 @@ const tel = phone ? 'tel:' + phone.replace(/[^0-9+]/g, '') : '';
 const _media = import.meta.glob('../assets/media/*.{jpg,jpeg,png,webp}', { eager: true });
 const _mn = image ? String(image.src).split('/').pop() : null;
 const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : null;
+const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}`]?.default ?? m.src;
 ---
 
 <div class="wf-hero-102">
@@ -92,7 +104,7 @@ const mediaSrc = _mn ? (_media[`../assets/media/${_mn}`]?.default ?? null) : nul
         </div>}
       </div>
       }
-      {image && image.src && <figure class="media-bg" aria-hidden="true"><Image src={mediaSrc || image.src} alt={image.alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
+      {images[0] && images[0].src && <figure class="media-bg" aria-hidden="true"><Image src={mediaOf(images[0])} alt={images[0].alt || ''} widths={[960, 1440, 1920]} sizes="100vw" width={1600} height={900} loading="eager" fetchpriority="high" /></figure>}
     </div>
   </div>
   {qas.length > 0 && <dl class="mt-stack">{qas.map((qa) => <><dt class="text-fluid-0" set:html={inline(qa.q)} /><dd class="text-fluid-0" set:html={inline(qa.a)} /></>)}</dl>}
