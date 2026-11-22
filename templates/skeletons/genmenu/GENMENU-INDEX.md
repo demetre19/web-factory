@@ -1,6 +1,6 @@
 # GENMENU-INDEX — AI-Studio-generated exemplars
 
-400 exemplars generated with Google AI Studio / Claude (operator-supplied
+460 exemplars generated with Google AI Studio / Claude (operator-supplied
 React + Tailwind sources), SSR-rendered to static open-state fragments and
 vectorised by `tools/design-gate/genmenu_bank.py` (deterministic — no paid
 calls).
@@ -25,31 +25,36 @@ calls).
 | `modal-bottom-sheet/` | modal-bottom-sheet | 3 | modal-atlas |
 | `modal-slide-over/` | modal-slide-over | 1 | modal-atlas |
 | `ui-element/` | ui-element | 20 | ui-elements |
-| `checkout/` | checkout | 16 | checkout-components, commerce-kit-20 |
-| `order-confirm/` | order-confirm | 9 | checkout-components, commerce-kit-20 |
-| `product-page/` | product-page | 5 | checkout-components, commerce-kit-20 |
-| `commerce-flow/` | commerce-flow | 6 | checkout-components, commerce-kit-20 |
+| `checkout/` | checkout | 21 | checkout-components, commerce-kit-20, commerce-atlas |
+| `order-confirm/` | order-confirm | 10 | checkout-components, commerce-kit-20, commerce-atlas |
+| `product-page/` | product-page | 9 | checkout-components, commerce-kit-20, commerce-atlas |
+| `commerce-flow/` | commerce-flow | 10 | checkout-components, commerce-kit-20, commerce-atlas |
 | `proof-testimonial/` | proof-testimonial | 5 | proofatlas |
 | `proof-rating/` | proof-rating | 8 | proofatlas |
 | `proof-logo-cloud/` | proof-logo-cloud | 3 | proofatlas |
 | `proof-quote/` | proof-quote | 4 | proofatlas |
 | `data-display/` | data-display | 11 | meridian-data-components |
 | `data-grid/` | data-grid | 3 | meridian-data-components |
-| `data-table/` | data-table | 4 | meridian-data-components |
+| `data-table/` | data-table | 15 | meridian-data-components, tabular |
+| `data-table-expandable/` | data-table-expandable | 9 | tabular |
 | `data-stepper/` | data-stepper | 2 | meridian-data-components |
 | `hero-centered/` | hero-centered | 6 | hero-architecture |
 | `hero-split/` | hero-split | 3 | hero-architecture |
 | `hero-media-bg/` | hero-media-bg | 11 | hero-architecture |
 | `card-block/` | card-block | 20 | folio-twenty |
 | `form-block/` | form-block | 20 | formspecimen |
-| `commerce-cart/` | commerce-cart | 3 | commerce-kit-20 |
-| `product-grid/` | product-grid | 1 | commerce-kit-20 |
+| `commerce-cart/` | commerce-cart | 7 | commerce-kit-20, commerce-atlas |
+| `product-grid/` | product-grid | 3 | commerce-kit-20, commerce-atlas |
+| `comparison-table/` | comparison-table | 14 | comparekit |
+| `comparison-pros-cons/` | comparison-pros-cons | 3 | comparekit |
+| `comparison-before-after/` | comparison-before-after | 2 | comparekit |
+| `comparison-cards/` | comparison-cards | 1 | comparekit |
 
-Counts are per `tags.json` (400 rows). `nav-bottom-sheet` and `nav-top-sheet`
+Counts are per `tags.json` (460 rows). `nav-bottom-sheet` and `nav-top-sheet`
 are NEW topology ids — web Mobbin returned no exemplars for these classes
-(iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state` and
-`modal-*` classes are new to this corpus (generator families, distinct from
-the mobbin corpus signatures).
+(iOS-heavy classes). `footer-*`, `pricing-*`, `auth-form`, `empty-state`,
+`modal-*`, `comparison-*` and `data-table-expandable` classes are new to this
+corpus (generator families, distinct from the mobbin corpus signatures).
 
 ## Per-exemplar files
 
