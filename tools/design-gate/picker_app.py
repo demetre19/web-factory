@@ -1531,11 +1531,19 @@ def _enum_stat(answer):
                     maxsplit=1)[1:]
     if not tail:
         return None
-    clause = re.split(r'[.;:]| the | that | which ', tail[0])[0]
+    sentence = re.split(r'[.;:…]', tail[0])[0]
+    # the list ends where a relative clause starts ("… sign-off the
+    # strata manager files"); an article after "and" / "," is a part
+    clause, *rest = re.split(r'(?<! and)(?<!,) (?:the|that|which) ',
+                             sentence, maxsplit=1)
+    if rest and re.search(r',|\sand\s', rest[0]):
+        return None
     parts = [re.sub(r'^(a|an|the)\s+', '', x.strip())
              for x in re.split(r',\s*(?:and\s+)?|\s+and\s+', clause)]
-    parts = [x for x in parts if x and len(x.split()) <= 4]
-    if not 2 <= len(parts) <= 6:
+    # a count is only proof when the list is whole: any empty or
+    # sentence-length part means this isn't a clean enumeration
+    if not all(x and len(x.split()) <= 4 for x in parts) \
+            or not 2 <= len(parts) <= 6:
         return None
     return {'value': str(len(parts)), 'label': ' · '.join(parts)}
 
