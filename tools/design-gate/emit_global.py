@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; }
   /* ACSS list vocab (U.10): markers' indent and item rhythm bind the
      spacing scale — no list-* tokens are emitted by clamp */
   --list-indent-spacing: var(--space-l);
-  --list-spacing: var(--space-s);
+  --list-spacing: var(--list-item-spacing);
 
   /* ACSS names only (U.10). The ACSS size family (--text-*, --h1..6,
      --space-*, --section-space-*, --gutter, --grid-gap, --content-gap,
@@ -207,6 +207,14 @@ input { border: 1px solid var(--input-border); padding: var(--input-py) var(--in
      renders as cards touching. */
   [class*="-grid-ul"], [class*="-grid"], ul[class*="grid"] {
       gap: var(--grid-gap); }
+  /* wrapped-sibling floor (smart spacing): a container of wrapped
+     elements — cards/panels/tiles/collection items — always resolves
+     a nonzero --elements-gap. Prose is exempt by selector scope:
+     .flow paragraphs and .list-items text runs bind --flow-spacing
+     margins only, never a sibling gap. */
+  [class*="-cards"], [class*="-tiles"], [class*="-panels"],
+  .card-grid, ul.list-plain,
+  [class*="-items"]:not(.list-items) { gap: var(--elements-gap); }
   /* logo-wall: a row of marks at one optical height — client artwork
      keeps its colours, the row sets scale and rhythm */
   .logo-row { display: flex; flex-wrap: wrap; align-items: center;
