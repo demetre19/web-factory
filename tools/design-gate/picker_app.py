@@ -4428,9 +4428,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     h+='<div class="filters">'+filters(tags)+'</div><div class="grid">';
     var lastGrp=null,shown2=0;
     var gridCards=(o.cards||[]).slice();
-    // emitted options first — bank-only (no preview) rows sink
-    if(!gridCards.some(function(c){return c.grp}))
-      gridCards.sort(function(a,b){return (b.preview?1:0)-(a.preview?1:0)});
+    // emitted options first — bank-only (no preview) rows sink,
+    // inside each group too (group order = first appearance)
+    var grpIx={};
+    gridCards.forEach(function(c){if(c.grp&&!(c.grp in grpIx))
+      grpIx[c.grp]=Object.keys(grpIx).length});
+    gridCards.sort(function(a,b){
+      var ga=(a.grp in grpIx)?grpIx[a.grp]:1e9,
+          gb=(b.grp in grpIx)?grpIx[b.grp]:1e9;
+      if(ga!==gb)return ga-gb;
+      return (b.preview?1:0)-(a.preview?1:0)});
     gridCards.forEach(function(c,i){
       var show=Object.keys(FILT).every(function(t){
         return (c.tags||[]).indexOf(t)>=0});
