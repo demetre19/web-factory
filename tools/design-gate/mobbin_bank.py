@@ -42,6 +42,8 @@ NAV_INDEX_MD = os.path.join(REPO, 'docs', 'machinery', 'design',
                             'MOBBIN-NAV-INDEX.md')
 SECTIONS_INDEX_MD = os.path.join(REPO, 'docs', 'machinery', 'design',
                                  'MOBBIN-SECTIONS-INDEX.md')
+SITES_INDEX_MD = os.path.join(REPO, 'docs', 'machinery', 'design',
+                              'MOBBIN-SITES-INDEX.md')
 
 FAMILY_FOR = {
     'top-bar': 'nav-top-bar',
@@ -64,6 +66,14 @@ FAMILY_FOR = {
     'steps': 'how-it-works', 'logo-cloud': 'logos',
     'stats-row': 'stats', 'timeline': 'timeline',
     'newsletter-band': 'newsletter',
+    # web site/page classes
+    'landing-page': 'site-landing', 'dashboard': 'site-dashboard',
+    'onboarding': 'site-onboarding', 'settings-page': 'site-settings',
+    'pricing-page': 'site-pricing', 'checkout': 'site-checkout',
+    'profile-page': 'site-profile', 'search-results': 'site-search',
+    'blog-article': 'site-article', 'auth-form': 'site-auth',
+    'notifications-feed': 'site-notifications',
+    'error-screen': 'site-error',
 }
 
 # topology_class → (closest existing bank topology_id, confidence)
@@ -97,6 +107,20 @@ MATCHED_TOPO = {
     'stats-row': ('grid-4col-uniform', 'medium'),
     'timeline': ('list-vertical-rows', 'high'),
     'newsletter-band': ('form-centered', 'high'),
+    # web site/page classes — full pages matched onto closest
+    # bank signatures; most are page-level so confidence stays low/med
+    'landing-page': ('hero-media-bg', 'low'),
+    'dashboard': ('grid-4col-uniform', 'low'),
+    'onboarding': ('split-50-50', 'medium'),
+    'settings-page': ('list-vertical-rows', 'high'),
+    'pricing-page': ('grid-3col-uniform', 'medium'),
+    'checkout': ('form-split', 'high'),
+    'profile-page': ('hero-media-bg', 'medium'),
+    'search-results': ('list-cards', 'medium'),
+    'blog-article': ('content', 'high'),
+    'auth-form': ('form-centered', 'high'),
+    'notifications-feed': ('list-vertical-rows', 'high'),
+    'error-screen': ('content', 'high'),
 }
 
 ELEMENT_SIG = {
@@ -129,6 +153,21 @@ ELEMENT_SIG = {
     'stats-row': {'h': 1, 'stat': 4},
     'timeline': {'ul': 1, 'li': 5, 'h': 5, 'p': 5},
     'newsletter-band': {'h': 1, 'p': 1, 'input': 1, 'btn': 1},
+    # web site/page classes — page-level dominant structures
+    'landing-page': {'nav': 1, 'h': 4, 'p': 4, 'btn': 4, 'img': 6,
+                     'card': 4},
+    'dashboard': {'aside': 1, 'nav': 1, 'h': 2, 'card': 6, 'table': 1,
+                  'chart': 2},
+    'onboarding': {'h': 1, 'p': 1, 'img': 1, 'btn': 2, 'input': 1},
+    'settings-page': {'h': 2, 'ul': 1, 'li': 10, 'icn': 10, 'input': 4},
+    'pricing-page': {'h': 2, 'card': 3, 'ul': 3, 'btn': 3, 'table': 1},
+    'checkout': {'h': 2, 'form': 2, 'input': 6, 'btn': 2, 'ul': 1},
+    'profile-page': {'img': 2, 'h': 2, 'p': 2, 'btn': 2, 'ul': 1},
+    'search-results': {'input': 1, 'h': 1, 'card': 8, 'a': 8},
+    'blog-article': {'h': 4, 'p': 10, 'img': 3, 'blockquote': 1},
+    'auth-form': {'h': 1, 'input': 3, 'btn': 2, 'a': 2},
+    'notifications-feed': {'h': 1, 'ul': 1, 'li': 10, 'icn': 10},
+    'error-screen': {'h': 1, 'p': 1, 'btn': 1, 'img': 1},
 }
 
 
@@ -197,7 +236,9 @@ def _tree(topology_class):
                  'btn': 'button', 'a': 'text-link', 'icn': 'icon',
                  'card': 'block', 'li': 'block', 'input': 'input',
                  'table': 'table', 'th': 'block', 'td': 'block',
-                 'ul': 'block', 'stat': 'block'}.get(el, 'block'),
+                 'ul': 'block', 'stat': 'block', 'nav': 'nav-nested',
+                 'aside': 'block', 'form': 'block', 'chart': 'image',
+                 'blockquote': 'text-basic'}.get(el, 'block'),
                 el, None, 1 + (i > 0)))
     return tree
 
@@ -387,12 +428,15 @@ def _write_indexes(rows):
     os.makedirs(os.path.dirname(NAV_INDEX_MD), exist_ok=True)
     nav_rows = [r for r in rows
                 if r['family'].startswith('nav-')]
+    site_rows = [r for r in rows
+                 if r['family'].startswith('site-')]
     sec_rows = [r for r in rows
-                if not r['family'].startswith('nav-')]
+                if not r['family'].startswith(('nav-', 'site-'))]
     for path, title, group in (
             (NAV_INDEX_MD, 'MOBBIN NAV/MENU/MODAL INDEX', nav_rows),
             (SECTIONS_INDEX_MD, 'MOBBIN WEB SECTIONS INDEX',
-             sec_rows)):
+             sec_rows),
+            (SITES_INDEX_MD, 'MOBBIN WEB SITES INDEX', site_rows)):
         if not group:
             continue
         lines = [f'# {title}', '',
