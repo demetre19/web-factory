@@ -271,7 +271,11 @@ def _steps(pdir, wave, build, site_dir):
     if wave == 'w1':
         return [('candidate registry + picker',
                  [PY, T('candidates_emit.py'), pdir], [],
-                 ['CANDIDATES.json', 'preview/candidates.html'])]
+                 ['CANDIDATES.json', 'preview/candidates.html']),
+                ('bake design systems',
+                 [PY, T('bake_systems.py'), pdir],
+                 [os.path.join(site_dir, 'DNA.json')],
+                 ['SAVED-SYSTEMS/'])]
     if wave == 'w2':
         return [('layouts picker', asm + ['--layouts'],
                  [os.path.join(pdir, 'STUB.md'),
