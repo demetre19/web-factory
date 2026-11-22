@@ -81,10 +81,12 @@ const mediaOf = (m) => _media[`../assets/media/${String(m.src).split('/').pop()}
           {sub && <p class="text-fluid-0" set:html={inline(sub)} />}
           {before.map((p) => <p class="mt-flow text-fluid-0" set:html={inline(p)} />)}
           <form novalidate>
-            <label class="field flow"><span class="text-fluid--1">Name</span><input type="text" name="name" autocomplete="name" required /></label>
-            <label class="field flow"><span class="text-fluid--1">Email</span><input type="email" name="email" autocomplete="email" required /></label>
-            <label class="field flow"><span class="text-fluid--1">Subject</span><input type="text" name="subject" required /></label>
-            <label class="field flow"><span class="text-fluid--1">Your Message</span><textarea name="message" rows="4" required></textarea></label>
+            <label class="field flow"><span class="text-fluid--1">Name <span aria-hidden="true">*</span></span><input type="text" name="name" autocomplete="name" required aria-required="true" /></label>
+            <label class="field flow"><span class="text-fluid--1">Email <span aria-hidden="true">*</span></span><input type="email" name="email" autocomplete="email" required aria-required="true" /></label>
+            <label class="field flow"><span class="text-fluid--1">Subject <span aria-hidden="true">*</span></span><input type="text" name="subject" required aria-required="true" /></label>
+            <label class="field flow"><span class="text-fluid--1">Your Message <span aria-hidden="true">*</span></span><textarea name="message" rows="4" required aria-required="true"></textarea></label>
+            <p class="form-error text-fluid--1" role="alert" hidden></p>
+            <p class="form-success text-fluid--1" role="status" hidden></p>
             <button type="submit" class="wf-cta-button">Submit Form</button>
           </form>
         </div>
