@@ -537,6 +537,23 @@ def emit_element_previews(pd):
                        'document.querySelector('
                        '".nav-links");if(n)n.classList.'
                        'add("open");})()</script>')
+            # desktop surface — the nav as a bar, drawer never forced
+            # open: burger hidden, links inline (menu board at D)
+            _MENU_DESK = ('.burger,.nav-close{display:none !important}'
+                          '.nav-links{position:static !important;'
+                          'display:flex !important;transform:none '
+                          '!important;visibility:visible !important;'
+                          'opacity:1 !important;width:auto '
+                          '!important;max-height:none !important;'
+                          'inset:auto !important;border:0 !important;'
+                          'box-shadow:none !important;padding:0 '
+                          '!important;background:transparent '
+                          '!important}')
+            fp = os.path.join(outdir, comp + '-menu-desktop.html')
+            with open(fp, 'w', encoding='utf-8') as fh:
+                fh.write(_doc(head, battr, block, '', _MENU_DESK))
+            emitted[comp + '-menu-desktop'] = \
+                f'preview/elements/{comp}-menu-desktop.html'
             for topo, gcss in _MENU_TOPOS.items():
                 fp = os.path.join(
                     outdir, comp + '-menu' + ('-' + topo if topo else '')
@@ -1149,11 +1166,11 @@ def emit_section_fragments(pd):
         cand = list(dict.fromkeys(
             ([comp] if comp else []) + (allowed.get(bid) or [])))
         for c in cand:
-            src = blocks.get(c) if c == comp else None
+            src = blocks.get(c)
             if src:
-                # only the row's OWN emitted comp carries this
-                # section's copy — every other candidate renders its
-                # skeleton bound to this block's §4.3 slots instead
+                # HARD RULE: a candidate renders the comp's real
+                # emitted fragment — the pipeline's own file — never
+                # a re-rendered skeleton when an artifact exists
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
                 inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
@@ -1192,6 +1209,57 @@ def emit_section_fragments(pd):
                       'emitted': emitted, 'missing': missing,
                       'unmapped': unmapped_map})
     return spec, depth
+
+
+def emit_layout_previews(pd):
+    """preview/layouts/<opt>.html — each LAYOUT-OPTIONS d-option
+    rendered as the real stacked page: every block's chosen comp in
+    plan order (the section's own emitted block where the option
+    keeps it, else the comp's skeleton bound to that block's slots).
+    Returns {option_id: dist-relative path}."""
+    lo = _json_at(pd, 'LAYOUT-OPTIONS.json') or {}
+    options = lo.get('options') or []
+    blocks, rows = _comp_blocks(pd)
+    if not options or not rows:
+        return {}
+    head, battr = rows[0][4], rows[0][5]
+    outdir = os.path.join(pd, 'site', 'dist', 'preview', 'layouts')
+    os.makedirs(outdir, exist_ok=True)
+    dist = os.path.join(pd, 'site', 'dist')
+    out = {}
+    for o in options:
+        oid = o.get('id')
+        comp_map = o.get('compositions') or {}
+        parts = []
+        for sec, bid, comp, block, h2, b2 in rows:
+            want = comp_map.get(bid, comp)
+            if want == comp:
+                parts.append(block)
+                continue
+            # HARD RULE: previews show emitted output, never an
+            # interpretation — reuse the comp's real emitted fragment
+            # (the same HTML the pipeline wrote for another page);
+            # _slot_frag is the last resort when no artifact exists
+            frag = blocks.get(want)
+            if frag:
+                parts.append(frag[0])
+                continue
+            inner, _unmap = _slot_frag(want, _copy_slot(pd, bid))
+            if inner is None:
+                continue
+            parts.append(
+                '<section class="sec-band surface-base density-regular"'
+                ' data-sec="' + str(sec) + '" data-comp="' + str(want) +
+                '"><div class="sec-inner">' + inner +
+                '</div></section>')
+        if not parts:
+            continue
+        fp = os.path.join(outdir, str(oid) + '.html')
+        with open(fp, 'w', encoding='utf-8') as fh:
+            fh.write(_doc(head, battr, '\n'.join(parts),
+                          css=_LOREM_CSS))
+        out[oid] = os.path.relpath(fp, dist)
+    return out
 
 
 # ------------------------------------------------------------------
@@ -1250,20 +1318,45 @@ def _picker_cards(ctx, pd):
     return cards
 
 
-def _composition_board(pd):
-    """Service/Location/Contact/Blog boards: the compositions the
-    plan offers per section (LAYOUT-OPTIONS.json) — informational
-    until the machinery emits page-type boards."""
+def _composition_board(pd, layout_prevs=None):
+    """The layout vocabulary boards: per-option rendered previews
+    (stacked section fragments in plan order) with the b-rows matrix
+    demoted to secondary detail."""
     lo = _json_at(pd, 'LAYOUT-OPTIONS.json')
     if not lo:
         return None
+    dist = os.path.join(pd, 'site', 'dist')
+    opts = []
+    for o in lo.get('options') or []:
+        oid = o.get('id')
+        # the fully-built option page wins when the emit produced
+        # one (real imagery/copy); the stacked fragment doc is the
+        # fallback for options without a build
+        built = os.path.join(dist, 'preview',
+                             'lo-' + str(oid), 'index.html')
+        if os.path.isfile(built):
+            prev = built
+        else:
+            rel = (layout_prevs or {}).get(oid)
+            prev = os.path.join(dist, rel) if rel else None
+        comps = o.get('compositions') or {}
+        opts.append({
+            'id': oid, 'name': o.get('label') or oid,
+            'score': o.get('score'),
+            'preview': ('/built/' + urllib.parse.quote(prev))
+                       if prev else None,
+            'tags': ['layout'] + sorted(set(comps.values())),
+            'element': 'layout', 'variant': o.get('id'),
+            'desc': 'rendered on the home page — the only page '
+                    'with a build · ' +
+                    ' · '.join(k + ' ' + v for k, v in
+                              list(comps.items())[:4]) +
+                    (' …' if len(comps) > 4 else ''),
+            'compositions': comps})
     return {'allowed': {k: list(dict.fromkeys(v or []))
                         for k, v in
                         (lo.get('allowed') or {}).items()},
-            'options': [{'id': o.get('id'), 'label': o.get('label'),
-                         'score': o.get('score'),
-                         'compositions': o.get('compositions') or {}}
-                        for o in lo.get('options') or []],
+            'options': opts,
             'pick': lo.get('pick')}
 
 
@@ -1524,6 +1617,8 @@ def app_data(pipeline):
                 'row swaps that section\'s composition/topology '
                 'in place; ✓ signs the row\'s choice.',
         'scrub': scrub, 'cards': []}
+    layout_prevs = emit_layout_previews(pd)
+    comp = _composition_board(pd, layout_prevs)
     for b in PAGE_BOARDS:
         if b['id'] == 'home':
             boards[b['id']] = dict(
@@ -1531,7 +1626,8 @@ def app_data(pipeline):
                           cards['fine']))
         else:
             boards[b['id']] = dict(
-                b, cards=[], compositions=_composition_board(pd))
+                b, cards=(comp or {}).get('options') or [],
+                compositions=comp)
 
     knobs = (tokens.get('knobs') or {}) if isinstance(
         tokens, dict) else {}
@@ -2217,7 +2313,8 @@ def record_element_pick(pipeline, element, variant):
     is the element-choice registry the plan consumes later."""
     valid = {grp['element'] for g in ELEMENT_GALLERIES
              for grp in g['groups']} | {'vibe', 'header', 'footer',
-                                        'mobile-menu', 'modals'} | \
+                                        'mobile-menu', 'modals',
+                                        'layout'} | \
             {d for dirs in _BANK_DIRS.values() for d in dirs}
     if element not in valid and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
@@ -2231,14 +2328,24 @@ def record_element_pick(pipeline, element, variant):
         data = _json_at(pd, 'ELEMENT-PICKS.json') or {
             'generated_by': 'approve_service.py',
             'picks': []}
+        now = datetime.datetime.now().isoformat(timespec='seconds')
         for p in data.get('picks', []):
             if p.get('element') == element:
-                return 1, (f'{element} already picked '
-                           f'({p.get("variant")}) — one decision per '
-                           'gallery')
-        rec = {'element': element, 'variant': variant,
-               'ts': datetime.datetime.now().isoformat(
-                   timespec='seconds')}
+                if p.get('variant') == variant:
+                    return 0, (f'{element} already is {variant} — '
+                               'still signed')
+                old_v = p.get('variant')
+                p['variant'] = variant
+                p['ts'] = now
+                p['prev'] = old_v
+                p['sig'] = G._sig({k: v for k, v in p.items()
+                                   if k != 'sig'},
+                                  G.op_key(create=True))
+                with open(fp, 'w') as fh:
+                    json.dump(data, fh, indent=1, sort_keys=True)
+                return 0, (f'{element} {old_v} → {variant} '
+                           '(superseded, signed into ELEMENT-PICKS.json)')
+        rec = {'element': element, 'variant': variant, 'ts': now}
         rec['sig'] = G._sig(rec, G.op_key(create=True))
         data.setdefault('picks', []).append(rec)
         with open(fp, 'w') as fh:
@@ -2316,13 +2423,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      font:600 12px var(--font);cursor:pointer}
 #themeBtn svg{width:15px;height:15px}
 #themeBtn:hover{border-color:var(--line-2)}
-#vwCtl{display:flex;border:1px solid var(--line);border-radius:999px;
-     overflow:hidden}
-#vwCtl button{border:0;background:var(--panel);color:var(--muted);
-     padding:8px 15px;font:600 12px var(--font);cursor:pointer;
-     display:grid;place-items:center}
+#vwCtl{display:flex;gap:2px;border:1px solid var(--line);
+     border-radius:999px;padding:2px;background:var(--bg-2);
+     position:relative}
+#vwCtl .vind{position:absolute;top:2px;left:0;height:calc(100% - 4px);
+     border-radius:999px;background:var(--ink);z-index:0;width:0;
+     transition:transform .18s ease,width .18s ease}
+#vwCtl button{border:0;background:transparent;color:var(--muted);
+     padding:6px 12px;min-width:38px;font:600 12px var(--font);
+     cursor:pointer;display:grid;place-items:center;
+     border-radius:999px;transition:color .12s;position:relative;
+     z-index:1}
+#vwCtl button:hover{color:var(--ink)}
 #vwCtl button svg{width:15px;height:15px}
-#vwCtl button.on{background:var(--accent);color:var(--accent-ink)}
+#vwCtl button.on{color:var(--bg)}
 #dnaPop{position:relative}
 #dnaPop>summary{list-style:none;width:34px;height:34px;
      display:grid;place-items:center;border:1px solid var(--line);
@@ -2352,6 +2466,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
 .railgrp:first-child{margin-top:2px}
 /* --- ingest --- */
 .ingbar{display:grid;gap:8px;margin:14px 0;max-width:640px}
+.abtn{justify-self:start;padding:8px 18px;border:0;
+  border-radius:8px;background:var(--ink);color:var(--bg);
+  font:650 12.5px var(--font);cursor:pointer}
+.abtn:disabled{opacity:.45;cursor:default}
 .ingbar input,.ingbar textarea{background:var(--bg-2);color:var(--ink);
   border:1px solid var(--line);border-radius:8px;padding:10px 12px;
   font:13px var(--font)}
@@ -2432,8 +2550,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      background:var(--panel);color:var(--muted);border-radius:6px;
      font:600 10px var(--font);padding:3px 7px;cursor:pointer}
 .card .vp button.on{color:var(--accent);border-color:var(--accent)}
-.card .cf{display:flex;align-items:center;gap:8px;
-     padding:10px 12px;border-top:1px solid var(--line)}
+.card .cf{display:flex;align-items:center;justify-content:center;
+     gap:10px;padding:10px 12px;border-top:1px solid var(--line);
+     min-height:44px}
+.card .cb{min-height:300px}
 .card .tags{display:flex;gap:5px;flex-wrap:wrap}
 .tag{font:600 10px var(--mono);color:var(--muted);
      border:1px solid var(--line);border-radius:4px;padding:2px 6px}
@@ -2536,6 +2656,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
      border-radius:var(--r);overflow:hidden;height:520px}
 .rmprev iframe{width:100%;height:100%;border:0;background:#fff}
 
+.xp{border:1px solid var(--line);background:var(--bg2);color:var(--fg);
+  border-radius:6px;padding:0 7px;height:20px;line-height:1;
+  font-size:11px;cursor:pointer;margin-left:auto}
+.xp:hover{background:var(--bg3)}
+#xpOv{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center}
+#xpOv iframe{width:96vw;height:94vh;border:0;border-radius:10px;
+  background:#fff}
+#xpX{position:absolute;top:14px;right:18px;z-index:61;
+  background:var(--bg2);color:var(--fg);border:1px solid var(--line);
+  border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+
+.compmat{margin-top:22px;border:1px solid var(--line);border-radius:10px;
+  padding:10px 14px;background:var(--bg-2)}
+.compmat>summary{cursor:pointer;font:600 12px var(--font);color:var(--muted)}
+
 </style>
 </head>
 <body>
@@ -2550,6 +2686,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       <small id="whoSub">design-file not loaded</small></div>
     <div class="sp"></div>
     <div id="vwCtl" title="preview breakpoint — applies to every preview">
+      <span class="vind" aria-hidden="true"></span>
       <button data-w="340px" title="mobile" aria-label="mobile">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
           stroke-width="1.4"><rect x="4.5" y="1.5" width="7"
@@ -2626,12 +2763,21 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       if(!localStorage.getItem('wfapp-theme'))
         applyTheme(e.matches?'dark':'light')})}catch(e){}
 
-  // one global preview breakpoint — M/T/D, every frame at once
+  // one global preview breakpoint — M/T/D, every frame at once;
+  // sliding indicator tracks the active segment
+  function _vind(){
+    var ind=document.querySelector('#vwCtl .vind'),
+        on=document.querySelector('#vwCtl button.on')||
+           document.querySelector('#vwCtl button');
+    if(ind&&on){ind.style.width=on.offsetWidth+'px';
+      ind.style.transform='translateX('+on.offsetLeft+'px)'}}
   document.querySelectorAll('#vwCtl button').forEach(function(b){
     b.onclick=function(){
       document.querySelectorAll('#vwCtl button').forEach(
         function(x){x.classList.toggle('on',x===b)});
-      document.documentElement.style.setProperty('--vw',b.dataset.w)}});
+      document.documentElement.style.setProperty('--vw',b.dataset.w);
+      _vind()}});
+  _vind();window.addEventListener('resize',_vind);
 
   // rail collapse — hamburger on narrow screens, auto-close on pick
   document.getElementById('railBtn').onclick=function(){
@@ -2710,7 +2856,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
   // must be present on a card (e.g. light AND professional)
   function filters(tags){
     var n=Object.keys(FILT).length;
-    var h='<button class="fchip'+(!n?' on':'')+'" data-f="">all</button>';
+    var h='<button class="fchip'+(!n?' on':'')+'" data-f="" '+
+         'title="clear all filters">clear all</button>';
     tags.forEach(function(t){
       h+='<button class="fchip'+(FILT[t]?' on':'')+'" data-f="'+esc(t)+'">'+esc(t)+'</button>'});
     return h;
@@ -2723,16 +2870,20 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(c.element==='vibe'&&BAKED===c.variant)isPicked=true;
     if(idx===SEL)cls+=' sel';
     if(isPicked)cls+=' picked';
+    var src=c.preview?((c.element==='vibe'||c.bank)?c.preview:
+            frame(c.preview)):'';
     var h='<div class="'+cls+'" data-idx="'+idx+
           '" data-tags="'+esc(tags.join(' '))+'">';
     h+='<div class="ch"><span class="id">'+esc(c.id)+'</span>'+
        '<span class="nm">'+esc(c.name)+'</span>'+
-       (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+'</div>';
+       (c.preview?'<button class="xp" title="expand" data-x="'+
+        esc(src)+'">&#x2922;</button>':'')+
+       (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+
+       '</div>';
     h+='<div class="cb">';
     if(c.preview){
       // vibe cards carry their own family bundle — never reframe
       // them through the baked vibe
-      var src=(c.element==='vibe'||c.bank)?c.preview:frame(c.preview);
       h+='<iframe data-src="'+esc(src)+'" src="'+esc(src)+
          '" loading="lazy" title="'+esc(c.name)+'"></iframe>';
     }else{
@@ -3043,6 +3194,55 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     go();
   }
 
+  // expand — one click, fullscreen overlay; Esc or X closes
+  function expand(u){
+    var ov=document.createElement('div');ov.id='xpOv';
+    ov.innerHTML='<button id="xpX">&#x2715; close</button>'+
+      '<iframe src="'+esc(u)+'"></iframe>';
+    document.body.appendChild(ov);
+    function close(){ov.remove();
+      document.removeEventListener('keydown',k)}
+    function k(e){if(e.key==='Escape')close()}
+    document.addEventListener('keydown',k);
+    ov.querySelector('#xpX').onclick=close;
+    ov.onclick=function(e){if(e.target===ov)close()}}
+
+  // viewport fit — desktop (vw=100%) renders iframes at 1280px and
+  // scales them into the card; M/T keep the real small widths.
+  // Menu cards swap to the -menu-desktop fragment at desktop.
+  function fitIframes(){
+    var vw=document.documentElement.style.getPropertyValue('--vw')
+        ||'100%';
+    document.querySelectorAll('.card .cb iframe').forEach(function(f){
+      // remember each frame's own src once — derived variants come
+      // back from it, never from a previously-swapped one
+      var orig=f.dataset.orig||(f.dataset.src||f.src.split('?')[0]);
+      if(!f.dataset.orig)f.dataset.orig=orig;
+      var u=(vw==='100%'&&/-menu(-[a-z-]+)?\.html/.test(orig))
+        ?orig.replace(/-menu(-[a-z-]+)?\.html/,'-menu-desktop.html')
+        :orig;
+      var cur=(f.dataset.src||'').split('?')[0];
+      if(u!==cur){f.dataset.src=u;
+        f.src=u+(document.documentElement.dataset.theme==='dark'
+          ?'?theme=dark':'')}
+      var cb=f.parentElement;
+      if(vw==='100%'){
+        var W=1280,s=Math.min(1,cb.clientWidth/W)||1;
+        f.style.maxWidth='none';   // --vw cap would clamp the 1280 render
+        f.style.width=W+'px';
+        f.style.transform='scale('+s+')';
+        f.style.transformOrigin='0 0';
+        try{var hh=f.contentDocument.body.scrollHeight;
+          if(hh>0){f.style.height=hh+'px';
+            cb.style.height=(hh*s)+'px'}}catch(e){}
+      }else{
+        f.style.maxWidth='';f.style.width='';f.style.transform='';
+        f.style.height='';cb.style.height=''}
+    })}
+
+  document.querySelectorAll('#vwCtl button').forEach(function(b){
+    b.addEventListener('click',function(){setTimeout(fitIframes,80)})});
+
   function board(){
     var el=document.getElementById('board');
     if(CUR==='ingest'){ingestPane(el);return}
@@ -3076,7 +3276,22 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
       setTheme(document.documentElement.dataset.theme);
       return;
     }
-    if(o.compositions){el.innerHTML=h+compBoard(o.compositions);return}
+    if(o.compositions){
+      var oh='<div class="grid">';
+      (o.cards||[]).forEach(function(c,i){oh+=card(c,i)});
+      oh+='</div><details class="compmat"><summary>composition '+
+          'matrix — the b-row vocabulary</summary>'+
+          compBoard(o.compositions)+'</details>';
+      el.innerHTML=h+oh;
+      el.querySelectorAll('.pick').forEach(function(b){
+        b.onclick=function(){doPick(b)}});
+      el.querySelectorAll('.xp').forEach(function(b){
+        b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+      el.querySelectorAll('.cb iframe').forEach(function(f){
+        f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+      setTimeout(fitIframes,150);
+      applyTheme(document.documentElement.dataset.theme);
+      return}
     var tags=[];(o.cards||[]).forEach(function(c){
       (c.tags||[]).forEach(function(t){if(tags.indexOf(t)<0)tags.push(t)})});
     if(o.emitted_n!=null&&DATA.palette){
@@ -3100,11 +3315,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
     if(!(o.cards||[]).length)h+='<div class="empty">nothing emitted here yet</div>';
     el.innerHTML=h;
     el.querySelectorAll('.fchip').forEach(function(b){
-      b.onclick=function(){var t=b.dataset.f;
-        if(!t)FILT={};else if(FILT[t])delete FILT[t];
-        else FILT[t]=1;board()}});
+      b.onclick=function(ev){var t=b.dataset.f;
+        if(!t)FILT={};
+        else if(ev.shiftKey||ev.metaKey||ev.ctrlKey){
+          if(FILT[t])delete FILT[t];else FILT[t]=1}
+        else{var was=FILT[t];FILT={};if(!was)FILT[t]=1}
+        board()}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
+    el.querySelectorAll('.xp').forEach(function(b){
+      b.onclick=function(e){e.stopPropagation();expand(b.dataset.x)}});
+    el.querySelectorAll('.cb iframe').forEach(function(f){
+      f.addEventListener('load',function(){setTimeout(fitIframes,90)})});
+    setTimeout(fitIframes,150);
     applyTheme(document.documentElement.dataset.theme);
   }
 
@@ -3157,10 +3380,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         stat.className='pstat '+(j.ok?'ok':'bad');
         stat.textContent=j.message||(j.ok?'recorded':'refused');
         if(j.ok){b.textContent='picked ✓';toast(j.message);
-          if(b.dataset.elem==='vibe'){
+          DATA.picked_elements=DATA.picked_elements||{};
+          DATA.picked_elements[b.dataset.elem]=b.dataset.var;
+          if(b.dataset.elem==='vibe')
             BAKED=b.dataset.var;      // bake: every preview reframes
-            DATA.picked_elements=DATA.picked_elements||{};
-            DATA.picked_elements.vibe=BAKED;board()}}
+          board()}
         else b.disabled=false})}
   }
 

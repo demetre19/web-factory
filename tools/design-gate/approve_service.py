@@ -88,6 +88,50 @@ _LAST_PD = None
 _EMIT_LOCK = threading.Lock()
 
 
+def _rewrite_assets(fp, txt):
+    """A built page links its css/media by root-absolute (/_astro/*)
+    or relative (../_astro/*) URLs — under /frame or /built those
+    resolve against the service path and 404. Rewrite every asset
+    URL to /built/<quoted-abs-path> so the file resolves by path,
+    no _LAST_PD involved."""
+    dist_root = fp.split('/site/', 1)[0] + '/site/dist'
+    base_dir = os.path.dirname(fp)
+
+    def map_url(url):
+        if re.match(r'^(https?:|//|data:|#|/built/|/frame/|mailto:|'
+                    r'tel:|javascript:)', url):
+            return url
+        tgt = (os.path.normpath(dist_root + url)
+               if url.startswith('/') else
+               os.path.normpath(os.path.join(base_dir, url)))
+        if '/site/' not in tgt:
+            return url
+        if os.path.isdir(tgt):
+            tgt = tgt.rstrip('/') + '/index.html'
+        return '/built/' + urllib.parse.quote(tgt)
+
+    def fix(m):
+        url = m.group(2)
+        mapped = map_url(url)
+        if mapped == url:
+            return m.group(0)
+        return m.group(1) + mapped + m.group(3)
+
+    txt = re.sub(r'(href="|src="|poster=")([^"#]+)(")', fix, txt)
+
+    def fix_srcset(m):
+        out = []
+        for cand in m.group(2).split(','):
+            cand = cand.strip()
+            if not cand:
+                continue
+            u, _, desc = cand.partition(' ')
+            out.append(map_url(u) + ((' ' + desc) if desc else ''))
+        return m.group(1) + ', '.join(out) + m.group(3)
+
+    return re.sub(r'(srcset=")([^"]+)(")', fix_srcset, txt)
+
+
 def _ensure_preview(fp):
     """A preview doc under <pd>/site/dist/preview/ missing on disk —
     re-emit that pipeline's previews (app_data emits vibe + section
@@ -674,6 +718,7 @@ def _handler():
             self.send_response(code)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
             self.send_header('Content-Length', str(len(b)))
+            self.send_header('Cache-Control', 'no-store')
             self.end_headers()
             self.wfile.write(b)
 
@@ -781,6 +826,7 @@ def _handler():
                 txt = txt.replace(
                     '</head>',
                     '<style>' + css + '</style></head>', 1)
+                txt = _rewrite_assets(fp, txt)
                 self._send_html(200, txt.encode('utf-8'))
                 return
             if q.path.startswith('/built/'):
@@ -795,6 +841,12 @@ def _handler():
                 if not (os.path.isfile(fp) and
                         re.search(r'/site/', fp)):
                     self._send(404, {'error': 'not found'})
+                    return
+                if fp.lower().endswith(('.html', '.htm')):
+                    txt = open(fp, encoding='utf-8',
+                               errors='replace').read()
+                    self._send_html(200, _rewrite_assets(
+                        fp, txt).encode('utf-8'))
                     return
                 ext = os.path.splitext(fp)[1].lower()
                 mime = {'.html': 'text/html; charset=utf-8',
