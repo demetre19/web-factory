@@ -76,11 +76,14 @@ def bake(pdir):
         _write(sdir, rec)
         written.append(rec['slug'])
     # every deterministic preset in the vibe space — resolved through
-    # the same resolve() the picker frames bind
+    # the same resolve() the picker frames bind. vibe carries the
+    # atlas reference the picker's atlas_family resolves; the slug is
+    # prefixed so an automatic bake can never overwrite a user's own
+    # saved system of the same name (save_system shares the dir)
     for pr in VA.PRESETS:
         r = VA.resolve(pr['genes'])
-        rec = _rec(pr['name'], _slug(pr['id']), pr['cluster'],
-                   pr['cluster'], pr['genes'], r)
+        rec = _rec(pr['name'], _slug('vibe-' + pr['id']),
+                   f"atlas:{pr['id']}", pr['cluster'], pr['genes'], r)
         _write(sdir, rec)
         written.append(rec['slug'])
     return written
@@ -88,12 +91,16 @@ def bake(pdir):
 
 def _genes_map(fam):
     """Named families label their genes as strings ('dark-first') —
-    split into an axis map where possible, else keep as tags."""
+    split into an axis map where possible; colon-free labels survive
+    under 'labels' so list_systems can still show the family's own
+    gene names instead of an empty map."""
     out = {}
     for g in fam.get('genes') or []:
         ax, _, al = str(g).partition(':')
         if al:
             out[ax] = al
+        else:
+            out.setdefault('labels', []).append(str(g))
     return out
 
 
