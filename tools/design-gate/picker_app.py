@@ -594,6 +594,10 @@ def _copy_slot(pd, bid):
     return slot
 
 
+def _iterm(i):
+    return (i or {}).get('term') or (i or {}).get('title') or ''
+
+
 def _slot_frag(comp, slot):
     """Static render of a bank comp's skeleton bound to `slot`.
     Mirrors templates/sections/<comp>/*.astro markup + classes."""
@@ -602,7 +606,7 @@ def _slot_frag(comp, slot):
 
     def req(name, val):
         if val:
-            return val
+            return _inline(val)
         unmapped.append(name)
         return _L.format(s=name)
 
@@ -669,7 +673,8 @@ def _slot_frag(comp, slot):
              'justify-between gap-stack">'
         if stat:
             h += '<div class="row"><p class="text-fluid-1 t0">' \
-                 f'<span class="font-bold">{stat["value"]}</span>'
+                 f'<span class="font-bold">{_inline(stat["value"])}' \
+                 '</span>'
             if stat.get('label'):
                 h += f' <span class="text-fluid--1">' \
                      f'{_inline(stat["label"])}</span>'
@@ -716,9 +721,201 @@ def _slot_frag(comp, slot):
         h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
                      f'{_inline(p)}</p>' for p in after)
         h += '</div>'
+    elif comp == 'cards-n':
+        h += '<div><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before) + '</div>'
+        if items:
+            h += '<ul class="mt-sec grid-auto list-plain">' + \
+                ''.join(f'<li class="card"><span class="num">'
+                        f'{n + 1:02d}</span><h3 class="t0 sub-h">'
+                        f'{_inline(i.get("term") or i.get("title") or "")}'
+                        f'</h3><p class="t0 sub-p">'
+                        f'{_inline(i.get("text") or "")}</p></li>'
+                        for n, i in enumerate(items)) + '</ul>'
+        h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after) + '</div>'
+    elif comp == 'sequence':
+        h += '<div><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before) + '</div>'
+        if items:
+            h += '<ol class="flow-list mt-sec list-plain">' + \
+                ''.join(f'<li class="flow-row"><span class="num '
+                        f'num-prom">{n + 1:02d}</span><div>'
+                        f'<h3 class="t0 sub-h">'
+                        f'{_inline(i.get("term") or i.get("title") or "")}'
+                        f'</h3><p class="t0 sub-p sub-flow">'
+                        f'{_inline(i.get("text") or "")}</p></div></li>'
+                        for n, i in enumerate(items)) + '</ol>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after) + '</div>'
+    elif comp == 'comparison':
+        h += '<div>' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack max-w-prose text-fluid-0">' \
+                 f'{_inline(sub)}</p>'
+        if items:
+            h += '<div class="mt-fluid-l grid gap-stack ' \
+                 'md:grid-cols-2">' + \
+                ''.join(f'<div class="card"><h3 class="t0 sub-h">'
+                        f'{_inline(i.get("term") or i.get("title") or "")}'
+                        f'</h3><p class="mt-fluid-s text-fluid-0">'
+                        f'{_inline(i.get("text") or "")}</p></div>'
+                        for i in items) + '</div>'
+        for seq in (before, after):
+            h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                         f'{_inline(p)}</p>' for p in seq)
+        if links:
+            h += '<ul class="mt-stack grid-auto list-plain ' \
+                 'text-fluid-0">' + ''.join(
+                     f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        h += '</div>'
+    elif comp == 'stat-band':
+        h += '<div>' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack max-w-prose text-fluid-0">' \
+                 f'{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        stats = items
+        if stats:
+            h += '<dl class="mt-stack grid-auto gap-stack">' + \
+                ''.join(f'<div><dd class="text-fluid-4 font-bold">'
+                        f'{_inline(i.get("value") or i.get("term") or "")}'
+                        f'</dd><dt class="mt-fluid-s text-fluid--1">'
+                        f'{_inline(i.get("label") or i.get("text") or "")}'
+                        '</dt></div>' for i in stats) + '</dl>'
+        else:
+            unmapped.append('items')
+        if links:
+            h += '<ul class="mt-stack grid-auto list-plain ' \
+                 'text-fluid-0">' + ''.join(
+                     f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after) + '</div>'
+    elif comp == 'link-grid':
+        h += '<div>' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="mt-stack max-w-prose text-fluid-0">' \
+                 f'{_inline(sub)}</p>'
+        h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in before)
+        if links:
+            h += '<ul class="mt-stack grid-auto list-plain ' \
+                 'text-fluid-0">' + ''.join(
+                     f'<li>{_inline(t)}</li>' for t in links) + '</ul>'
+        else:
+            unmapped.append('links')
+        if items:
+            h += '<ul class="mt-stack max-w-prose list-items ' \
+                 'text-fluid-0">' + \
+                ''.join(f'<li><strong>{_inline(_iterm(i))}</strong>'
+                        f' – <span>{_inline(i.get("text") or "")}'
+                        '</span></li>' for i in items) + '</ul>'
+        h += ''.join(f'<p class="mt-stack max-w-prose text-fluid-0">'
+                     f'{_inline(p)}</p>' for p in after) + '</div>'
+    elif comp == 'faq':
+        h += '<div><div class="sec-head">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="lede">{_inline(sub)}</p>'
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in before) + '</div>'
+        qas = slot.get('qa') or []
+        if qas:
+            h += '<div class="mt-sec">' + \
+                ''.join(f'<details class="faq-item"><summary '
+                        f'class="faq-q">{_inline(q.get("q") or "")}'
+                        f'</summary><p class="t0 faq-a">'
+                        f'{_inline(q.get("a") or "")}</p></details>'
+                        for q in qas) + '</div>'
+        else:
+            unmapped.append('qa')
+        h += ''.join(f'<p class="t0 sub-p">{_inline(t)}</p>'
+                     for t in links)
+        h += ''.join(f'<p class="t0 sub-p">{_inline(p)}</p>'
+                     for p in after) + '</div>'
+    elif comp == 'form-panel':
+        h += '<div class="split"><div class="stack">' \
+             f'<h2 class="t0 h-section text-fluid-3">{head}</h2>'
+        for p in before:
+            h += f'<p class="t0 lede">{_inline(p)}</p>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        for p in after:
+            h += f'<p class="t0 lede">{_inline(p)}</p>'
+        h += ('</div><form class="stack form" onsubmit="return false">'
+              '<input class="input" placeholder="Name">'
+              '<input class="input" placeholder="Email">'
+              '<textarea class="input" rows="4" placeholder="Message">'
+              '</textarea><button class="btn" type="submit">'
+              'Get in touch</button></form></div>')
+    elif comp == 'split-media':
+        h += '<div class="split"><div class="stack">' \
+             f'<h2 class="text-fluid-3">{head}</h2>'
+        if sub:
+            h += f'<p class="t0 lede">{_inline(sub)}</p>'
+        for p in before:
+            h += f'<p class="t0 lede">{_inline(p)}</p>'
+        if items:
+            h += '<ul class="mt-stack list-items text-fluid-0">' + \
+                ''.join(f'<li><strong>{_inline(_iterm(i))}</strong>'
+                        f' – <span>{_inline(i.get("text") or "")}'
+                        '</span></li>' for i in items) + '</ul>'
+        for p in after:
+            h += f'<p class="t0 lede">{_inline(p)}</p>'
+        h += ('</div><figure class="media-round"><div class="ph-media">'
+              'media slot</div></figure></div>')
     else:
-        return None, []
+        return _generic_frag(slot, unmapped), unmapped
     return h, unmapped
+
+
+def _generic_frag(slot, unmapped):
+    """Neutral content-band render of a section's slot copy — used
+    when an allowed comp has neither an emitted block for this
+    section nor a bespoke mirror: the copy is real and section-
+    bound, the band is a plain topology approximation."""
+    slot = slot or {}
+    h = '<div><div class="max-w-prose">'
+    head = slot.get('heading')
+    if head:
+        h += f'<h2 class="text-fluid-3">{_inline(head)}</h2>'
+    if slot.get('answer'):
+        h += f'<p class="mt-stack lede">{_inline(slot["answer"])}</p>'
+    for p in slot.get('before') or []:
+        h += f'<p class="mt-stack text-fluid-0">{_inline(p)}</p>'
+    its = slot.get('items') or []
+    if its:
+        h += '<ul class="mt-stack list-items text-fluid-0">' + \
+            ''.join(f'<li><strong>'
+                    f'{_inline(i.get("term") or i.get("title") or "")}'
+                    f'</strong> – <span>{_inline(i.get("text") or "")}'
+                    '</span></li>' for i in its) + '</ul>'
+    for q in slot.get('qa') or []:
+        h += ('<details class="mt-stack"><summary class="text-fluid-0">'
+              f'{_inline(q.get("q") or q.get("term") or "")}</summary>'
+              f'<p class="text-fluid-0">'
+              f'{_inline(q.get("a") or q.get("text") or "")}</p>'
+              '</details>')
+    for t in slot.get('links') or []:
+        h += f'<p class="mt-stack text-fluid-0">' \
+             f'{_inline(t.get("text") or t.get("anchor") or "")}</p>'
+    for p in slot.get('after') or []:
+        h += f'<p class="mt-stack text-fluid-0">{_inline(p)}</p>'
+    return h + '</div></div>'
 
 
 def emit_section_fragments(pd):
@@ -747,12 +944,13 @@ def emit_section_fragments(pd):
         cand = list(dict.fromkeys(
             ([comp] if comp else []) + (allowed.get(bid) or [])))
         for c in cand:
-            src = blocks.get(c)
+            src = blocks.get(c) if c == comp else None
             if src:
+                # only the row's OWN emitted comp carries this
+                # section's copy — every other candidate renders its
+                # skeleton bound to this block's §4.3 slots instead
                 markup, bhead, battr, css = src[0], src[1], src[2], ''
             else:
-                # bank comp not emitted in this build — render its
-                # skeleton bound to this block's §4.3 copy slots
                 inner, unmap = _slot_frag(c, _copy_slot(pd, bid))
                 if inner is None:
                     missing.append(c)
@@ -1119,7 +1317,7 @@ def record_element_pick(pipeline, element, variant):
     if element not in valid and not re.fullmatch(
             r'sec:[\w-]{1,40}', element or ''):
         return 1, f'unknown element gallery {element}'
-    if not variant or not re.fullmatch(r'[\w-]{1,64}', variant):
+    if not variant or not re.fullmatch(r'[\w:-]{1,64}', variant):
         return 1, 'invalid variant id'
     ctx = G.Ctx(pipeline)
     pd = ctx.dir
@@ -1461,7 +1659,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
        (c.score!=null?'<span class="score">'+esc(c.score)+'</span>':'')+'</div>';
     h+='<div class="cb">';
     if(c.preview){
-      var src=frame(c.preview);
+      // vibe cards carry their own family bundle — never reframe
+      // them through the baked vibe
+      var src=c.element==='vibe'?c.preview:frame(c.preview);
       h+='<div class="vp"><button data-w="340">M</button>'+
          '<button data-w="700">T</button><button class="on" data-w="">D</button></div>'+
          '<iframe data-src="'+esc(src)+'" src="'+esc(src)+
@@ -1502,8 +1702,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
          '<button data-d="1">›</button></div>'+
          '<button class="spick" title="sign this row\'s choice">✓</button>'+
          '<span class="sstat"></span></div>'+
-         '<iframe data-src="/built/'+esc(encodeURI(DATA.pipeline+'/site/dist/'+alt.preview))+
-         '" src="/built/'+esc(encodeURI(DATA.pipeline+'/site/dist/'+alt.preview))+
+         '<iframe data-src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
+         '" src="'+esc(frame('/built/'+encodeURI(DATA.pipeline+'/site/dist/'+alt.preview)))+
          '" loading="lazy"></iframe></div>';
     });
     return h;
@@ -1579,8 +1779,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
           return x.slug===b.dataset.load})[0];
         if(!s)return;
         BAKED=s.vibe||'baseline';
-        DATA.picked_elements=DATA.picked_elements||{};
-        DATA.picked_elements.vibe=BAKED;
+        DATA.picked_elements={vibe:BAKED};
+        (s.picks||[]).forEach(function(p){
+          DATA.picked_elements[p.element]=p.variant});
         toast('system “'+s.name+'” loaded — vibe '+BAKED+
               ' · picks shown are its signed registry');
         CUR='vibe';rail();board()}});
@@ -1649,7 +1850,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--ink);
         b.parentElement.querySelectorAll('button').forEach(
           function(x){x.classList.toggle('on',x===b)});
         var f=b.closest('.cb').querySelector('iframe');
-        f.style.maxWidth=b.dataset.w||'100%'}});
+        f.style.maxWidth=b.dataset.w?b.dataset.w+'px':'100%'}});
     el.querySelectorAll('.pick').forEach(function(b){
       b.onclick=function(){doPick(b)}});
     setTheme(document.documentElement.dataset.theme);
