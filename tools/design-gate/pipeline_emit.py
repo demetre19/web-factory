@@ -974,19 +974,30 @@ def main(argv):
     if flags & {'--with-toolchain', '--build', '--html', '--astro'}:
         ok = _toolchain(ctx)
         print(f'  toolchain: {"cloned" if ok else "missing"}')
-        if flags & {'--build', '--html', '--astro'} and ok:
-            # astro does not empty outDir — hashed assets from an
-            # earlier wave's build would linger and fail X.1
-            shutil.rmtree(os.path.join(ctx.site, 'dist'),
-                          ignore_errors=True)
-            r = subprocess.run(['npm', 'run', 'build'], cwd=ctx.site,
-                               capture_output=True, text=True,
-                               env=gate.node_env(), timeout=300)
-            tail = '\n'.join(
-                (r.stdout + r.stderr).strip().split('\n')[-6:])
-            print(f'  astro build exit {r.returncode}\n  {tail}')
-            rc |= r.returncode
-        if '--html' in flags and not rc:
+        if flags & {'--build', '--html', '--astro'}:
+            if not ok:
+                # a requested build that cannot run must not exit 0 —
+                # --html would otherwise republish whatever stale dist
+                # happens to be on disk
+                print('  ! build requested but toolchain missing')
+                rc |= 2
+            else:
+                # astro does not empty outDir — hashed assets from an
+                # earlier wave's build would linger and fail X.1
+                shutil.rmtree(os.path.join(ctx.site, 'dist'),
+                              ignore_errors=True)
+                r = subprocess.run(['npm', 'run', 'build'],
+                                   cwd=ctx.site, capture_output=True,
+                                   text=True, env=gate.node_env(),
+                                   timeout=300)
+                tail = '\n'.join(
+                    (r.stdout + r.stderr).strip().split('\n')[-6:])
+                print(f'  astro build exit {r.returncode}\n  {tail}')
+                rc |= r.returncode
+        if not rc and ('--html' in flags or os.path.isdir(
+                os.path.join(ctx.site, 'html'))):
+            # an --astro/--build run after --html replaces dist — the
+            # derived artifact must regenerate or it serves stale html
             wrote = _html_artifacts(ctx, tokens)
             print(f'  site/html/: {len(wrote)} artifact(s) '
                   f'({", ".join(wrote)})')

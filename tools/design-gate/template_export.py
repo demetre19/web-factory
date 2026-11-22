@@ -48,7 +48,13 @@ def main():
     out_dir = os.path.join(pdir, 'templates')
     os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, f'{ptype}.html')
-    shutil.copyfile(src, out)
+    txt = open(src, encoding='utf-8').read()
+    # the artifact resolves dist assets as '../dist/…' from site/html/;
+    # templates/ sits a level higher, so the same refs rebase one more
+    # directory up — '../site/dist/…' reaches the real build output
+    if os.sep.join(['site', 'html']) in src.replace(os.sep, '/'):
+        txt = txt.replace('../dist/', '../site/dist/')
+    open(out, 'w', encoding='utf-8').write(txt)
     man = {'page_type': ptype, 'template': f'templates/{ptype}.html',
            'source': os.path.relpath(src, pdir)}
     json.dump(man, open(os.path.join(out_dir, 'TEMPLATES.json'), 'w'),
